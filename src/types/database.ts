@@ -1,12 +1,32 @@
 export type UserRole = 'admin' | 'moderator' | 'agent' | 'user'
-export type UserType = 'private' | 'agent'
+export type UserType = 'private' | 'agent' | 'developer'
+export type UserStatus = 'active' | 'blocked' | 'inactive'
+
+export interface LocationRequest {
+  city: string
+  region?: string
+}
+
+export interface UserChangeLog {
+  id: string
+  user_id: string
+  changed_by: string | null
+  field_name: string
+  old_value: string | null
+  new_value: string | null
+  changed_at: string
+}
+
+export type LandLegalStatus = 'agricultural' | 'urban' | 'forest' | 'pasture'
+export type LandZoning = 'residential' | 'commercial' | 'tourism' | 'industrial' | 'mixed_use'
+export type LandDevelopmentPotential = 'buildable' | 'change_of_use_required' | 'non_buildable'
 
 export type ListingType = 'sale' | 'rent'
-export type PropertyType = 'apartment' | 'house' | 'land' | 'commercial' | 'office' | 'garage' | 'storage' | 'other'
+export type PropertyType = 'apartment' | 'house' | 'room' | 'land' | 'commercial' | 'office' | 'garage' | 'parking' | 'warehouse' | 'other'
 export type ListingCondition = 'new_build' | 'good' | 'needs_repair' | 'needs_renovation' | 'under_construction'
 export type WallType = 'brick' | 'concrete' | 'panel' | 'wood' | 'other'
 export type HeatingType = 'electric' | 'wood' | 'central' | 'gas' | 'none'
-export type ListingStatus = 'active' | 'inactive' | 'sold' | 'rented' | 'archived'
+export type ListingStatus = 'active' | 'inactive' | 'sold' | 'rented' | 'archived' | 'pending'
 export type ListingCurrency = 'ALL' | 'EUR'
 export type LocationType = 'region' | 'city' | 'village' | 'district'
 export type TicketStatus = 'open' | 'in_progress' | 'resolved' | 'closed'
@@ -18,14 +38,24 @@ export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_s
 export interface User {
   id: string
   name: string | null
+  last_name: string | null
   phone: string | null
   whatsapp: string | null
   avatar_url: string | null
   role: UserRole
   user_type: UserType
+  status: UserStatus
+  block_reason: string | null
   company_name: string | null
+  company_logo_url: string | null
+  website: string | null
   is_verified: boolean
   social_provider: string | null
+  location_id: number | null
+  position: string | null
+  year_started: number | null
+  deleted_at: string | null
+  location_request: LocationRequest | null
   created_at: string
 }
 
@@ -64,6 +94,10 @@ export interface Listing {
   area_net: number | null
   floor: number | null
   total_floors: number | null
+  multi_storey_building: boolean
+  land_legal_status: LandLegalStatus | null
+  land_zoning: LandZoning | null
+  land_development_potential: LandDevelopmentPotential | null
   year_built: number | null
   address: string | null
   lat: number | null
@@ -215,6 +249,12 @@ export interface Language {
   name_en: string
   is_active: boolean
   is_default: boolean
+}
+
+export interface SiteSetting {
+  key: string
+  value: string
+  updated_at: string
 }
 
 export interface AgentReview {

@@ -4,6 +4,7 @@
 - Always use best UI/UX practices when creating or editing components.
 - Follow mobile-first approach — every component must be fully responsive.
 - Use shadcn/ui components as base, extend with Tailwind CSS.
+- Note: underlying UI primitives are @base-ui/react (not Radix), so Radix-only patterns like `asChild` may not apply.
 - Keep components small and reusable.
 - Reference site for UI/UX features and patterns: https://dom.ria.com/.
 

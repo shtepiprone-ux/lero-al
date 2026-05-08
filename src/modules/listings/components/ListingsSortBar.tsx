@@ -3,6 +3,8 @@
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -33,7 +35,8 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
   const from = Math.min((page - 1) * perPage + 1, total)
   const to = Math.min(page * perPage, total)
 
-  function setSort(value: string) {
+  function setSort(value: string | null) {
+    if (!value) return
     const params = new URLSearchParams(searchParams.toString())
     params.set('sort', value)
     params.delete('page')
@@ -41,7 +44,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
   }
 
   return (
-    <div className="flex items-center justify-between gap-3 py-3 border-b">
+    <div className="listings-sort-bar flex items-center justify-between gap-3 py-3 border-b">
       {/* Left: count + range */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 min-w-0">
         <span className="font-semibold text-sm text-foreground">
@@ -57,9 +60,11 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
       {/* Right: filters btn (mobile) + sort + view toggle */}
       <div className="flex items-center gap-2 shrink-0">
         {/* Mobile filters button */}
-        <button
+        <Button
+          variant="outline"
+          size="sm"
+          className="lg:hidden h-9 px-3 rounded-xl relative gap-1.5"
           onClick={onFiltersOpen}
-          className="lg:hidden flex items-center gap-1.5 h-9 px-3 rounded-xl border border-border text-sm font-medium hover:border-primary/50 transition-colors relative"
         >
           <SlidersHorizontal className="h-4 w-4" />
           <span className="hidden sm:block">{t('filters_title')}</span>
@@ -68,42 +73,40 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
               {activeFiltersCount}
             </span>
           )}
-        </button>
+        </Button>
 
         {/* Sort select */}
-        <select
-          value={sort}
-          onChange={e => setSort(e.target.value)}
-          className="h-9 rounded-xl border border-input bg-background px-2 pr-7 text-sm focus:outline-none focus:ring-2 focus:ring-ring cursor-pointer"
-          aria-label={t('sort_by')}
-        >
-          {SORT_OPTIONS.map(o => (
-            <option key={o.value} value={o.value}>{t(o.labelKey)}</option>
-          ))}
-        </select>
+        <Select value={sort} onValueChange={setSort}>
+          <SelectTrigger variant="outline" size="sm" aria-label={t('sort_by')}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {SORT_OPTIONS.map(o => (
+              <SelectItem key={o.value} value={o.value}>{t(o.labelKey)}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         {/* Grid / List toggle */}
         <div className="hidden sm:flex items-center border border-border rounded-xl overflow-hidden">
-          <button
+          <Button
+            variant={view === 'grid' ? 'default' : 'ghost'}
+            size="icon"
+            className="h-9 w-9 rounded-none"
             onClick={() => onViewChange('grid')}
-            className={cn(
-              'h-9 w-9 flex items-center justify-center transition-colors',
-              view === 'grid' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
-            )}
             aria-label={t('view_grid')}
           >
             <LayoutGrid className="h-4 w-4" />
-          </button>
-          <button
+          </Button>
+          <Button
+            variant={view === 'list' ? 'default' : 'ghost'}
+            size="icon"
+            className="h-9 w-9 rounded-none"
             onClick={() => onViewChange('list')}
-            className={cn(
-              'h-9 w-9 flex items-center justify-center transition-colors',
-              view === 'list' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
-            )}
             aria-label={t('view_list')}
           >
             <List className="h-4 w-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

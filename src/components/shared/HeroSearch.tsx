@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { useRouter } from 'next/navigation'
-import { Search, SlidersHorizontal, MapPin, ChevronDown } from 'lucide-react'
+import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { FiltersPanel, type FilterValues } from '@/components/shared/FiltersPanel'
-import { PROPERTY_TYPES } from '@/modules/listings/constants'
+import { LocationCombobox } from '@/components/shared/LocationCombobox'
+import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import type { ListingType } from '@/types/database'
 
 export function HeroSearch() {
@@ -16,40 +16,53 @@ export function HeroSearch() {
   const tl = useTranslations('listing')
   const th = useTranslations('home')
   const locale = useLocale()
-  const router = useRouter()
 
-  const { locations, loading: locationsLoading } = useLocations()
+  const { locations } = useLocations()
 
   const [listingType, setListingType] = useState<ListingType>('sale')
   const [propertyType, setPropertyType] = useState<string>('')
   const [locationId, setLocationId] = useState<string>('')
-  const [locationSearch, setLocationSearch] = useState<string>('')
-  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false)
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [filters, setFilters] = useState<FilterValues>({})
 
-  const filteredLocations = useMemo(() => {
-    if (!locationSearch) return locations.slice(0, 20)
-    const q = locationSearch.toLowerCase()
-    return locations.filter(l => l.name_al.toLowerCase().includes(q)).slice(0, 20)
-  }, [locations, locationSearch])
+  const activeFiltersCount = Object.entries(filters).filter(([, v]) => {
+    if (Array.isArray(v)) return v.length > 0
+    return v !== undefined && v !== ''
+  }).length
 
-  const selectedLocation = locations.find(l => String(l.id) === locationId)
-
-  const activeFiltersCount = Object.values(filters).filter(v => v !== undefined && v !== '').length
-
-  function handleSearch() {
+  function handleSearch(filterOverride?: FilterValues) {
+    const f = filterOverride ?? filters
     const params = new URLSearchParams()
     params.set('type', listingType)
-    if (propertyType) params.set('property_type', propertyType)
-    if (locationId) params.set('location_id', locationId)
-    if (filters.price_min) params.set('price_min', String(filters.price_min))
-    if (filters.price_max) params.set('price_max', String(filters.price_max))
-    if (filters.area_min) params.set('area_min', String(filters.area_min))
-    if (filters.area_max) params.set('area_max', String(filters.area_max))
-    if (filters.rooms) params.set('rooms', String(filters.rooms))
-    if (filters.condition) params.set('condition', filters.condition)
-    if (filters.heating) params.set('heating', filters.heating)
+
+    const pt = propertyType || f.property_type || ''
+    const lid = locationId || f.location_id || ''
+    if (pt) params.set('property_type', pt)
+    if (lid) params.set('location_id', lid)
+
+    if (f.price_min) params.set('price_min', String(f.price_min))
+    if (f.price_max) params.set('price_max', String(f.price_max))
+    if (f.area_min) params.set('area_min', String(f.area_min))
+    if (f.area_max) params.set('area_max', String(f.area_max))
+    if (f.rooms?.length) params.set('rooms', f.rooms.join(','))
+    if (f.floor_min) params.set('floor_min', String(f.floor_min))
+    if (f.floor_max) params.set('floor_max', String(f.floor_max))
+    if (f.floors_total_min) params.set('floors_total_min', String(f.floors_total_min))
+    if (f.floors_total_max) params.set('floors_total_max', String(f.floors_total_max))
+    if (f.currency && f.currency !== 'ALL') params.set('currency', f.currency)
+    if (f.condition) params.set('condition', f.condition)
+    if (f.heating) params.set('heating', f.heating)
+    if (f.wall_type) params.set('wall_type', f.wall_type)
+    if (f.year_built_min) params.set('year_built_min', String(f.year_built_min))
+    if (f.year_built_max) params.set('year_built_max', String(f.year_built_max))
+    if (f.market_type) params.set('market_type', f.market_type)
+    if (f.layout_features?.length) params.set('layout_features', f.layout_features.join(','))
+    if (f.offer_type) params.set('offer_type', f.offer_type)
+    if (f.purchase_conditions?.length) params.set('purchase_conditions', f.purchase_conditions.join(','))
+    if (f.date_from) params.set('date_from', f.date_from)
+    if (f.date_to) params.set('date_to', f.date_to)
+    if (f.listing_id) params.set('listing_id', f.listing_id)
+
     window.location.href = `/${locale}/listings?${params.toString()}`
   }
 
@@ -59,22 +72,23 @@ export function HeroSearch() {
 
   return (
     <>
-      <div className="w-full max-w-3xl mx-auto">
+      <div className="hero-search w-full max-w-3xl mx-auto">
         {/* Listing type tabs */}
         <div className="flex mb-0">
           {(['sale', 'rent'] as ListingType[]).map(type => (
-            <button
+            <Button
               key={type}
+              variant="ghost"
               onClick={() => setListingType(type)}
               className={cn(
-                'px-6 py-2.5 text-sm font-medium rounded-t-xl transition-colors border border-b-0',
+                'px-6 py-2.5 h-auto text-sm font-medium rounded-t-xl rounded-b-none border border-b-0',
                 listingType === type
-                  ? 'bg-background text-foreground border-border'
+                  ? 'bg-background text-foreground border-border hover:bg-background'
                   : 'bg-primary-foreground/15 text-primary-foreground/80 hover:text-primary-foreground border-transparent hover:bg-primary-foreground/25'
               )}
             >
               {tl(type)}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -82,85 +96,27 @@ export function HeroSearch() {
         <div className="bg-background rounded-b-2xl rounded-tr-2xl border shadow-xl p-3">
           <div className="flex flex-col sm:flex-row gap-2">
 
-            {/* Property type selector */}
-            <div className="relative sm:w-48 shrink-0">
-              <select
-                value={propertyType}
-                onChange={e => setPropertyType(e.target.value)}
-                className="w-full h-11 pl-3 pr-8 text-sm text-foreground bg-muted border-0 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring"
-                aria-label={t('all_types')}
-              >
-                <option value="">{t('all_types')}</option>
-                {PROPERTY_TYPES.map(pt => (
-                  <option key={pt.value} value={pt.value}>
-                    {tl(pt.labelKey as any)}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-            </div>
+            <PropertyTypeCombobox
+              value={propertyType}
+              onChange={setPropertyType}
+              onKeyDown={handleKeyDown}
+            />
 
-            {/* Location combobox */}
-            <div className="relative flex-1">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-              <input
-                type="text"
-                value={selectedLocation ? selectedLocation.name_al : locationSearch}
-                onChange={e => {
-                  setLocationSearch(e.target.value)
-                  setLocationId('')
-                  setLocationDropdownOpen(true)
-                }}
-                onFocus={() => setLocationDropdownOpen(true)}
-                onBlur={() => setTimeout(() => setLocationDropdownOpen(false), 150)}
-                onKeyDown={handleKeyDown}
-                placeholder={th('hero_placeholder_location')}
-                className="w-full h-11 pl-9 pr-3 text-sm text-foreground bg-muted border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-                aria-label={t('all_locations')}
-                aria-autocomplete="list"
-                aria-expanded={locationDropdownOpen}
-              />
-              {locationDropdownOpen && filteredLocations.length > 0 && (
-                <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover border rounded-lg shadow-lg max-h-56 overflow-y-auto">
-                  <button
-                    type="button"
-                    className="w-full px-3 py-2 text-sm text-left hover:bg-muted text-muted-foreground"
-                    onMouseDown={() => { setLocationId(''); setLocationSearch(''); setLocationDropdownOpen(false) }}
-                  >
-                    {t('all_locations')}
-                  </button>
-                  {filteredLocations.map(loc => (
-                    <button
-                      key={loc.id}
-                      type="button"
-                      className="w-full px-3 py-2 text-sm text-left hover:bg-muted flex items-center justify-between"
-                      onMouseDown={() => {
-                        setLocationId(String(loc.id))
-                        setLocationSearch(loc.name_al)
-                        setLocationDropdownOpen(false)
-                      }}
-                    >
-                      <span>{loc.name_al}</span>
-                      <span className="text-xs text-muted-foreground capitalize">{loc.type}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <LocationCombobox
+              locations={locations}
+              value={locationId}
+              onChange={id => setLocationId(id ?? '')}
+              onKeyDown={handleKeyDown}
+              placeholder={th('hero_placeholder_location')}
+              className="flex-1"
+            />
 
-            {/* Buttons */}
+            {/* Action buttons */}
             <div className="flex gap-2 shrink-0">
-              {/* Advanced filters */}
-              <button
-                type="button"
+              <Button
+                variant={activeFiltersCount > 0 ? 'default' : 'outline'}
+                className="h-11 px-3 gap-2 relative"
                 onClick={() => setFiltersOpen(true)}
-                className={cn(
-                  'relative h-11 px-3 rounded-lg border text-sm flex items-center gap-2 transition-colors',
-                  activeFiltersCount > 0
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'border-border hover:bg-muted'
-                )}
-                data-track="filter_apply"
                 aria-label={t('advanced_filters')}
               >
                 <SlidersHorizontal className="h-4 w-4" />
@@ -170,13 +126,11 @@ export function HeroSearch() {
                     {activeFiltersCount}
                   </span>
                 )}
-              </button>
+              </Button>
 
-              {/* Search button */}
               <Button
-                onClick={handleSearch}
+                onClick={() => handleSearch()}
                 className="h-11 px-6 gap-2 font-semibold"
-                data-track="search"
               >
                 <Search className="h-4 w-4" />
                 <span>{t('search')}</span>
@@ -192,6 +146,7 @@ export function HeroSearch() {
         values={filters}
         onChange={setFilters}
         onApply={handleSearch}
+        locations={locations}
       />
     </>
   )

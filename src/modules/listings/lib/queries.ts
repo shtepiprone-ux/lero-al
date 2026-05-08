@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache'
 import { createClient } from '@/lib/supabase/client'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import type { PropertyType, ListingType, ListingStatus } from '@/types/database'
@@ -97,14 +98,22 @@ export async function getListings(filters: ListingFilters = {}) {
   return { listings: data ?? [], total: count ?? 0 }
 }
 
-export async function getSiteStats() {
-  const supabase = createClient()
-  const [{ count: listingsCount }, { count: locationsCount }] = await Promise.all([
-    supabase.from('listings').select('id', { count: 'exact', head: true }).eq('status', 'active'),
-    supabase.from('locations').select('id', { count: 'exact', head: true }).eq('type', 'city'),
-  ])
-  return {
-    listings: listingsCount ?? 0,
-    cities: locationsCount ?? 0,
-  }
-}
+// Site stats (active listing count + city count) are global, not locale-keyed, and
+// change slowly. Cache for 1 hour to eliminate per-request Supabase round-trips.
+// The first request per revalidation period hits Supabase; all subsequent requests
+// within that window are served from the Next.js data cache.
+export const getSiteStats = unstable_cache(
+  async () => {
+    const supabase = createClient()
+    const [{ count: listingsCount }, { count: locationsCount }] = await Promise.all([
+      supabase.from('listings').select('id', { count: 'exact', head: true }).eq('status', 'active'),
+      supabase.from('locations').select('id', { count: 'exact', head: true }).eq('type', 'city'),
+    ])
+    return {
+      listings: listingsCount ?? 0,
+      cities: locationsCount ?? 0,
+    }
+  },
+  ['site-stats'],
+  { revalidate: 3600, tags: ['site-stats'] },
+)

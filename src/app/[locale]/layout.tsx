@@ -1,14 +1,16 @@
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { resolveSession } from '@/lib/auth/server'
+import { AuthProvider } from '@/modules/auth/context/AuthContext'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import '../globals.css'
-
-const geist = Geist({ subsets: ['latin'] })
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
+import { WebVitalsReporter } from '@/components/shared/WebVitalsReporter'
+import { PerformanceStoreInit } from '@/components/shared/PerformanceStoreInit'
+import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
 
 export const metadata: Metadata = {
   title: 'Shtepi.al — Imobiliare në Shqipëri',
@@ -30,15 +32,26 @@ export default async function LocaleLayout({
 
   const messages = await getMessages()
 
+  // resolveSession is the single SSR entry point for auth state.
+  // It never throws — on any error it returns { user: null } so the layout
+  // always renders and AuthProvider simply starts with no authenticated user.
+  const { user: initialUser } = await resolveSession()
+
   return (
     <NextIntlClientProvider messages={messages}>
-      <div lang={locale} className={geist.className}>
-        <Header />
-        <main className="min-h-[calc(100vh-4rem)]">
-          {children}
-        </main>
-        <Footer />
-      </div>
+      <AuthProvider initialUser={initialUser}>
+        <div lang={locale}>
+          <Header />
+          <main className="min-h-[calc(100vh-4rem)] pb-14 md:pb-0">
+            {children}
+          </main>
+          <Footer />
+          <MobileBottomNav />
+          <WebVitalsReporter />
+          <PerformanceStoreInit />
+          <PerfDevOverlay />
+        </div>
+      </AuthProvider>
     </NextIntlClientProvider>
   )
 }

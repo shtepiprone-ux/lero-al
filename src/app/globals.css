@@ -53,6 +53,10 @@
   --color-badge-reduced:         var(--badge-reduced);
   --color-verified:              var(--verified);
   --color-whatsapp:              var(--whatsapp);
+  --color-status-success:        var(--status-success);
+  --color-status-warning:        var(--status-warning);
+  --color-status-info:           var(--status-info);
+  --color-status-rented:         var(--status-rented);
   --color-surface-1:             var(--surface-1);
   --color-surface-2:             var(--surface-2);
 
@@ -167,6 +171,12 @@
   --badge-premium:       oklch(0.700 0.162 65);      /* Gold ≈ #D97706 */
   --badge-reduced:       var(--brand-700);
   --verified:            oklch(0.527 0.173 150);
+
+  /* Semantic status colors — listing status, validation states */
+  --status-success: oklch(0.527 0.173 150);          /* green — active, confirmed */
+  --status-warning: oklch(0.700 0.162 65);           /* amber — inactive, pending */
+  --status-info:    oklch(0.577 0.174 240);           /* blue  — sold, informational */
+  --status-rented:  oklch(0.577 0.174 295);           /* purple — rented */
   --whatsapp:            oklch(0.563 0.183 148);
 
   /* Alternating section backgrounds — neutral, subtle rhythm */
@@ -284,6 +294,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+  }
+
+  /* data-scroll-behavior is the official Next.js opt-in that suppresses the
+     router's scroll-behavior warning while preserving smooth scroll. */
+  html[data-scroll-behavior="smooth"] {
     scroll-behavior: smooth;
   }
 
@@ -369,5 +384,65 @@
       oklch(0.614 0.158 23 / 55%) 60%,   /* EC5447 brand tint */
       oklch(0.100 0 0 / 82%) 100%        /* neutral dark */
     );
+  }
+
+  /* Safe-area inset utilities for notched phones (viewport-fit=cover) */
+  .pb-safe    { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe    { padding-top:    env(safe-area-inset-top);    }
+  .pl-safe    { padding-left:   env(safe-area-inset-left);   }
+  .pr-safe    { padding-right:  env(safe-area-inset-right);  }
+  .mb-safe    { margin-bottom:  env(safe-area-inset-bottom); }
+
+  /* Bottom nav height token — used by fixed bottom bars */
+  .h-bottom-nav { height: 3.5rem; } /* 56px icon area */
+
+  /* ── Performance tier adaptation ─────────────────────────────────────────
+     Set via PerformanceStoreInit on <html data-perf-tier="..."> after hydration.
+     Applied once after React hydration — never during SSR (no hydration mismatch).
+
+     ╔══════════════════════════════════════════════════════════════════════╗
+     ║  SAFETY CONTRACT — DO NOT VIOLATE                                   ║
+     ║  Every rule in this block MUST satisfy ALL of these conditions:     ║
+     ║  ✓ No changes to: width, height, margin, padding, position, float   ║
+     ║  ✓ No display or visibility changes (display:none / visibility:hidden║
+     ║    are FORBIDDEN — they hide content and may collapse layout)        ║
+     ║  ✓ No content removal or reordering                                 ║
+     ║  ✓ Only paint/composite properties: box-shadow, transition,         ║
+     ║    backdrop-filter, filter, opacity (on decorative elements only)   ║
+     ║  CLS risk: ZERO — no layout box properties modified                 ║
+     ║  UX contract: interactions still work; only visual polish changes   ║
+     ╚══════════════════════════════════════════════════════════════════════╝
+
+     To add a new LOW-tier rule:
+     1. Confirm the property is paint-only (not layout)
+     2. Add the SAFE comment with the specific reason
+     3. Test that the feature still works without the visual effect
+  ─────────────────────────────────────────────────────────────────────────── */
+
+  /* SAFE: box-shadow is a paint/composite property only.
+     No effect on element dimensions, position, or content visibility.
+     Reduces paint layer cost on card grids (which can have 20+ cards per page). */
+  [data-perf-tier="low"] .card {
+    box-shadow: none !important;
+  }
+
+  /* SAFE: transition-duration:0ms makes transitions instant, not absent.
+     Elements still transition through their states — the animation simply
+     has no duration. No layout reflow. No content hiding.
+     The FiltersPanel slide-in, modal enter/exit, and image load-fade all
+     still fire; they complete in 0ms rather than being removed entirely.
+     Effect: reduces composite layer updates during interactions. */
+  [data-perf-tier="low"] .transition,
+  [data-perf-tier="low"] [class*="transition-"] {
+    transition-duration: 0ms !important;
+  }
+
+  /* SAFE: backdrop-filter is a GPU compositing effect applied to the element's
+     background. It has no effect on the element's box model, dimensions, or
+     content. Removing it may make frosted-glass UI appear opaque, but all
+     content remains visible and interactive.
+     Effect: eliminates backdrop-filter GPU layers (expensive on low-end GPUs). */
+  [data-perf-tier="low"] [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
   }
 }

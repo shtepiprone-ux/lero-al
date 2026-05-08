@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import { getTranslations, getLocale } from 'next-intl/server'
 import { Search, Home, Phone, Building2, MapPin, TrendingUp, Users } from 'lucide-react'
-import { HeroSearch } from '@/components/shared/HeroSearch'
+import { HeroSearchClient } from '@/components/shared/HeroSearchClient'
 import { FeaturedListings } from '@/modules/listings/components/FeaturedListings'
 import { LatestListings } from '@/modules/listings/components/LatestListings'
 import { PopularLocations } from '@/modules/locations/components/PopularLocations'
 import { getSiteStats } from '@/modules/listings/lib/queries'
+import { formatCount } from '@/lib/formatters'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -30,7 +31,7 @@ export default async function HomePage() {
               {t('hero_subtitle')}
             </p>
           </div>
-          <HeroSearch />
+          <HeroSearchClient />
         </div>
       </section>
 
@@ -39,7 +40,7 @@ export default async function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-3 divide-x divide-primary-foreground/20">
             <div className="flex flex-col items-center py-5 px-4 text-center">
-              <span className="text-2xl font-bold">{stats.listings.toLocaleString()}+</span>
+              <span className="text-2xl font-bold">{formatCount(stats.listings, locale)}+</span>
               <span className="text-sm text-primary-foreground/80 flex items-center gap-1 mt-0.5">
                 <TrendingUp className="h-3.5 w-3.5" />
                 {t('stats_listings')}
@@ -64,7 +65,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Featured listings ── */}
-      <section className="py-12 md:py-16 bg-muted/30">
+      <section className="py-12 md:py-16 bg-muted/30 [content-visibility:auto] [contain-intrinsic-size:auto_600px]">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl sm:text-2xl font-bold">{tl('featured')}</h2>
@@ -80,7 +81,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Latest listings ── */}
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 [content-visibility:auto] [contain-intrinsic-size:auto_500px]">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl sm:text-2xl font-bold">{tl('latest')}</h2>
@@ -96,7 +97,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Popular locations ── */}
-      <section className="py-12 md:py-16 bg-muted/30">
+      <section className="py-12 md:py-16 bg-muted/30 [content-visibility:auto] [contain-intrinsic-size:auto_380px]">
         <div className="container mx-auto px-4">
           <h2 className="text-xl sm:text-2xl font-bold mb-6">{t('popular_locations')}</h2>
           <PopularLocations />
@@ -104,7 +105,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── How it works ── */}
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 [content-visibility:auto] [contain-intrinsic-size:auto_340px]">
         <div className="container mx-auto px-4">
           <h2 className="text-xl sm:text-2xl font-bold text-center mb-10">{t('how_it_works')}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
@@ -129,7 +130,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── Agent CTA ── */}
-      <section className="py-12 md:py-16 bg-gradient-to-br from-primary/10 to-primary/5">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-primary/10 to-primary/5 [content-visibility:auto] [contain-intrinsic-size:auto_280px]">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <Building2 className="h-12 w-12 text-primary mx-auto mb-4" />

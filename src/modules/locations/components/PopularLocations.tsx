@@ -42,7 +42,7 @@ export function PopularLocations() {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+    <div className="popular-locations grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
       {locations.map((loc, i) => (
         <Link
           key={loc.id}

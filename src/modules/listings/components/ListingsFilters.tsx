@@ -1,23 +1,48 @@
 'use client'
 
-import { useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { X, SlidersHorizontal } from 'lucide-react'
+import { X, SlidersHorizontal, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import { PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, ROOMS_OPTIONS } from '@/modules/listings/constants'
+import {
+  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES, ROOMS_OPTIONS,
+  MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
+  ALL_FILTER_SECTIONS, FILTER_SECTION_PARAMS,
+  type FilterSection,
+} from '@/modules/listings/constants'
+import { getSchema, getFloorFilterMin } from '@/modules/listings/domain/propertyTypeSchema'
+import type { ListingField } from '@/modules/listings/domain/listingFields'
+import { LocationCombobox } from '@/components/shared/LocationCombobox'
+import { YearCombobox } from '@/components/shared/YearCombobox'
+import { DatePicker } from '@/components/shared/DatePicker'
+import { useExchangeRate } from '@/hooks/useExchangeRate'
 
-interface Location {
-  id: number
-  name_al: string
-  type: string
-}
+interface Location { id: number; name_al: string; type: string }
+interface Props { locations: Location[]; className?: string; onClose?: () => void }
 
-interface Props {
-  locations: Location[]
-  className?: string
-  onClose?: () => void
+function AccordionSection({
+  title, open, onToggle, children,
+}: {
+  title: string; open: boolean; onToggle: () => void; children: React.ReactNode
+}) {
+  return (
+    <div className="border-b border-border last:border-b-0 py-4">
+      <button
+        type="button"
+        onClick={onToggle}
+        className="flex w-full items-center justify-between select-none group"
+      >
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors duration-150">
+          {title}
+        </span>
+        <ChevronDown className={cn('h-3.5 w-3.5 text-muted-foreground/60 transition-transform duration-200 shrink-0', open && 'rotate-180')} />
+      </button>
+      {open && <div className="mt-3">{children}</div>}
+    </div>
+  )
 }
 
 export function ListingsFilters({ locations, className, onClose }: Props) {
@@ -26,248 +51,451 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const { rate } = useExchangeRate()
+
+  const [sections, setSections] = useState({
+    type: true,
+    market_type: false,
+    property_type: true,
+    location: true,
+    rooms: true,
+    price: true,
+    area: false,
+    floor: false,
+    floors_total: false,
+    condition: false,
+    layout_features: false,
+    year_built: false,
+    heating: false,
+    wall_type: false,
+    offer_type: false,
+    purchase_conditions: false,
+    period: false,
+    listing_id: false,
+  })
+
+  const toggle = (key: keyof typeof sections) =>
+    setSections(prev => ({ ...prev, [key]: !prev[key] }))
 
   const get = (key: string) => searchParams.get(key) ?? ''
 
-  const updateParams = useCallback((updates: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString())
-    params.delete('page')
-    Object.entries(updates).forEach(([key, val]) => {
-      if (val === null || val === '') params.delete(key)
-      else params.set(key, val)
-    })
-    router.push(`${pathname}?${params.toString()}`)
-  }, [searchParams, router, pathname])
-
-  const reset = () => {
-    router.push(pathname)
-    onClose?.()
+  const getMulti = (key: string): string[] => {
+    const val = get(key)
+    return val ? val.split(',').filter(Boolean) : []
   }
 
-  const activeCount = ['type', 'property_type', 'location_id', 'price_min', 'price_max',
-    'area_min', 'area_max', 'rooms', 'bedrooms', 'condition', 'heating']
-    .filter(k => searchParams.get(k)).length
+  const updateParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.delete('page')
+      Object.entries(updates).forEach(([key, val]) => {
+        if (val === null || val === '') params.delete(key)
+        else params.set(key, val)
+      })
+      router.push(`${pathname}?${params.toString()}`)
+    },
+    [searchParams, router, pathname]
+  )
+
+  const toggleMulti = (key: string, value: string) => {
+    const current = getMulti(key)
+    const next = current.includes(value) ? current.filter(v => v !== value) : [...current, value]
+    updateParams({ [key]: next.join(',') || null })
+  }
+
+  // When property type changes, clear irrelevant filter params
+  function handlePropertyTypeChange(pt: string | null) {
+    const params = new URLSearchParams(searchParams.toString())
+    params.delete('page')
+    if (pt) params.set('property_type', pt)
+    else params.delete('property_type')
+
+    const applicable = pt ? getSchema(pt).ui.filters : ALL_FILTER_SECTIONS
+    ALL_FILTER_SECTIONS.forEach(section => {
+      if (!applicable.includes(section)) {
+        FILTER_SECTION_PARAMS[section].forEach(p => params.delete(p))
+      }
+    })
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
+  function handleFloorChange(key: 'floor_min' | 'floor_max', val: string) {
+    const n = parseInt(val)
+    updateParams({ [key]: (!isNaN(n) && n >= floorFilterMin) ? String(n) : null })
+  }
+
+  function handleFloorsChange(key: 'floors_total_min' | 'floors_total_max', val: string) {
+    const n = parseInt(val)
+    updateParams({ [key]: (!isNaN(n) && n >= 1) ? String(n) : null })
+  }
+
+  const activeCount = [
+    'type', 'market_type', 'property_type', 'location_id',
+    'price_min', 'price_max', 'area_min', 'area_max',
+    'rooms', 'floor_min', 'floor_max', 'floors_total_min', 'floors_total_max',
+    'condition', 'layout_features', 'heating', 'wall_type', 'year_built_min', 'year_built_max',
+    'offer_type', 'purchase_conditions', 'date_from', 'date_to', 'listing_id',
+  ].filter(k => searchParams.get(k)).length
+
+  const selectedRooms = getMulti('rooms')
+  const selectedLayoutFeatures = getMulti('layout_features')
+  const selectedPurchaseConditions = getMulti('purchase_conditions')
+
+  const currentPropertyType = get('property_type')
+  const visibleSections: readonly ListingField[] = currentPropertyType
+    ? getSchema(currentPropertyType).ui.filters
+    : ALL_FILTER_SECTIONS
+  const shows = (key: FilterSection) => visibleSections.includes(key)
+  // Domain-aware floor minimum: -10 for garage/parking/warehouse, 0 for all others.
+  const floorFilterMin = getFloorFilterMin(currentPropertyType)
+
+  const currency = get('currency') || 'ALL'
+  const priceLabel = `${tc('price_range')} (${currency})`
 
   return (
-    <div className={cn('flex flex-col gap-6', className)}>
+    <div className={cn('listings-filters flex flex-col', className)}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-primary" />
-          <span className="font-semibold text-sm">{t('filters_title')}</span>
-          {activeCount > 0 && (
-            <span className="text-xs bg-primary text-primary-foreground rounded-full px-2 py-0.5">
-              {activeCount}
-            </span>
+      <div className="flex items-center gap-2 mb-4">
+        <SlidersHorizontal className="h-4 w-4 text-primary" />
+        <span className="font-semibold text-sm">{t('filters_title')}</span>
+        {activeCount > 0 && (
+          <span className="text-[11px] bg-primary text-primary-foreground rounded-full px-2 py-0.5 font-medium">
+            {activeCount}
+          </span>
+        )}
+        {onClose && (
+          <Button variant="ghost" size="icon" onClick={onClose} className="lg:hidden h-8 w-8 ml-auto" aria-label={tc('close')}>
+            <X className="h-5 w-5" />
+          </Button>
+        )}
+      </div>
+
+      <div>
+
+        {/* Listing type */}
+        <AccordionSection title={tc('listing_type')} open={sections.type} onToggle={() => toggle('type')}>
+          <div className="flex gap-2">
+            {(['', 'sale', 'rent'] as const).map(type => (
+              <Button
+                key={type}
+                variant={get('type') === type || (!get('type') && type === '') ? 'default' : 'outline'}
+                size="sm"
+                className="flex-1 h-9 rounded-xl text-xs"
+                onClick={() => updateParams({ type: type || null })}
+              >
+                {type === '' ? tc('all') : t(type as any)}
+              </Button>
+            ))}
+          </div>
+        </AccordionSection>
+
+        {/* Property type */}
+        <AccordionSection title={tc('property_type')} open={sections.property_type} onToggle={() => toggle('property_type')}>
+          <div className="grid grid-cols-2 gap-1.5">
+            <Button
+              variant="outline"
+              className={cn('py-2 px-3 h-auto text-xs justify-start rounded-xl whitespace-normal leading-snug text-left', !get('property_type') && 'bg-primary/10 text-primary border-primary/30 font-semibold')}
+              onClick={() => handlePropertyTypeChange(null)}
+            >
+              {tc('all_types')}
+            </Button>
+            {PROPERTY_TYPES.map(pt => (
+              <Button
+                key={pt.value}
+                variant="outline"
+                className={cn('py-2 px-3 h-auto text-xs justify-start rounded-xl whitespace-normal leading-snug text-left', get('property_type') === pt.value && 'bg-primary/10 text-primary border-primary/30 font-semibold')}
+                onClick={() => handlePropertyTypeChange(get('property_type') === pt.value ? null : pt.value)}
+              >
+                {t(pt.labelKey as any)}
+              </Button>
+            ))}
+          </div>
+        </AccordionSection>
+
+        {/* Location */}
+        <AccordionSection title={tc('location')} open={sections.location} onToggle={() => toggle('location')}>
+          <LocationCombobox
+            locations={locations}
+            value={get('location_id')}
+            onChange={id => updateParams({ location_id: id })}
+          />
+        </AccordionSection>
+
+        {/* Market type */}
+        {shows('market_type') && (
+          <AccordionSection title={tc('market_type')} open={sections.market_type} onToggle={() => toggle('market_type')}>
+            <div className="flex gap-2">
+              <Button
+                variant={!get('market_type') ? 'default' : 'outline'}
+                size="sm"
+                className="flex-1 h-9 rounded-xl text-xs"
+                onClick={() => updateParams({ market_type: null })}
+              >
+                {tc('all')}
+              </Button>
+              {MARKET_TYPES.map(mt => (
+                <Button
+                  key={mt.value}
+                  variant={get('market_type') === mt.value ? 'default' : 'outline'}
+                  size="sm"
+                  className="flex-1 h-9 rounded-xl text-xs whitespace-normal leading-snug"
+                  onClick={() => updateParams({ market_type: get('market_type') === mt.value ? null : mt.value })}
+                >
+                  {t(mt.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Rooms */}
+        {shows('rooms') && (
+          <AccordionSection title={tc('rooms_label')} open={sections.rooms} onToggle={() => toggle('rooms')}>
+            <div className="flex gap-1.5 flex-wrap">
+              {ROOMS_OPTIONS.map(r => (
+                <Button
+                  key={r}
+                  variant={selectedRooms.includes(String(r)) ? 'default' : 'outline'}
+                  size="icon"
+                  className="h-9 w-9 rounded-xl text-xs"
+                  onClick={() => toggleMulti('rooms', String(r))}
+                >
+                  {r === 5 ? '5+' : r}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Price */}
+        <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')}>
+          <div className="flex gap-1.5 mb-2">
+            {(['ALL', 'EUR'] as const).map(cur => (
+              <button
+                key={cur}
+                type="button"
+                onClick={() => updateParams({ currency: cur === 'ALL' ? null : cur })}
+                className={cn(
+                  'text-xs font-semibold px-3 py-1 rounded-lg border transition-colors duration-150',
+                  currency === cur
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'border-border text-muted-foreground hover:text-foreground'
+                )}
+              >
+                {cur}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <Input type="number" placeholder={tc('min')} value={get('price_min')} onChange={e => updateParams({ price_min: e.target.value || null })} className="h-10 rounded-xl" />
+            <Input type="number" placeholder={tc('max')} value={get('price_max')} onChange={e => updateParams({ price_max: e.target.value || null })} className="h-10 rounded-xl" />
+          </div>
+          {currency === 'EUR' && (
+            <p className="text-xs text-muted-foreground mt-2">
+              {tc('exchange_rate')}:{' '}
+              {rate != null ? `1 EUR = ${rate.toFixed(2)} ALL` : '…'}
+            </p>
           )}
-        </div>
-        <div className="flex items-center gap-2">
-          {activeCount > 0 && (
-            <button
-              onClick={reset}
-              className="text-xs text-muted-foreground hover:text-destructive transition-colors flex items-center gap-1"
-            >
-              <X className="h-3 w-3" />
-              {tc('reset_filters')}
-            </button>
-          )}
-          {onClose && (
-            <button onClick={onClose} className="lg:hidden text-muted-foreground hover:text-foreground">
-              <X className="h-5 w-5" />
-            </button>
-          )}
-        </div>
-      </div>
+        </AccordionSection>
 
-      {/* Listing type */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('listing_type')}
-        </label>
-        <div className="flex gap-2">
-          {(['', 'sale', 'rent'] as const).map(type => (
-            <button
-              key={type}
-              onClick={() => updateParams({ type: type || null })}
-              className={cn(
-                'flex-1 py-2 rounded-xl text-sm font-medium border transition-colors',
-                get('type') === type || (!get('type') && type === '')
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-background text-foreground border-border hover:border-primary/50'
-              )}
-            >
-              {type === '' ? tc('any') : t(type as any)}
-            </button>
-          ))}
-        </div>
-      </div>
+        {/* Area — area_range already includes "(m²)" in translation */}
+        {shows('area') && (
+          <AccordionSection title={tc('area_range')} open={sections.area} onToggle={() => toggle('area')}>
+            <div className="flex gap-2">
+              <Input type="number" min={0} placeholder={tc('min')} value={get('area_min')} onChange={e => updateParams({ area_min: e.target.value ? String(Math.max(0, Number(e.target.value))) : null })} className="h-10 rounded-xl" />
+              <Input type="number" placeholder={tc('max')} value={get('area_max')} onChange={e => updateParams({ area_max: e.target.value || null })} className="h-10 rounded-xl" />
+            </div>
+          </AccordionSection>
+        )}
 
-      {/* Property type */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('property_type')}
-        </label>
-        <div className="grid grid-cols-2 gap-1.5">
-          <button
-            onClick={() => updateParams({ property_type: null })}
-            className={cn(
-              'py-2 px-3 rounded-xl text-sm border transition-colors text-left',
-              !get('property_type')
-                ? 'bg-primary/10 text-primary border-primary/30 font-medium'
-                : 'bg-background border-border hover:border-primary/40'
-            )}
-          >
-            {tc('all_types')}
-          </button>
-          {PROPERTY_TYPES.map(pt => (
-            <button
-              key={pt.value}
-              onClick={() => updateParams({ property_type: pt.value })}
-              className={cn(
-                'py-2 px-3 rounded-xl text-sm border transition-colors text-left',
-                get('property_type') === pt.value
-                  ? 'bg-primary/10 text-primary border-primary/30 font-medium'
-                  : 'bg-background border-border hover:border-primary/40'
-              )}
-            >
-              {t(pt.labelKey as any)}
-            </button>
-          ))}
-        </div>
-      </div>
+        {/* Floor — domain-aware min (negative for garage/parking/warehouse, 0 otherwise) */}
+        {shows('floor') && (
+          <AccordionSection title={tc('floor_range')} open={sections.floor} onToggle={() => toggle('floor')}>
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                min={floorFilterMin}
+                placeholder={tc('min')}
+                value={get('floor_min')}
+                onChange={e => handleFloorChange('floor_min', e.target.value)}
+                className="h-10 rounded-xl"
+              />
+              <Input
+                type="number"
+                min={floorFilterMin}
+                placeholder={tc('max')}
+                value={get('floor_max')}
+                onChange={e => handleFloorChange('floor_max', e.target.value)}
+                className="h-10 rounded-xl"
+              />
+            </div>
+          </AccordionSection>
+        )}
 
-      {/* Location */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('location')}
-        </label>
-        <select
-          value={get('location_id')}
-          onChange={e => updateParams({ location_id: e.target.value || null })}
-          className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          <option value="">{tc('all_locations')}</option>
-          {locations.filter(l => l.type === 'city' || l.type === 'region').map(l => (
-            <option key={l.id} value={l.id}>{l.name_al}</option>
-          ))}
-        </select>
-      </div>
+        {/* Building floors — min 1 */}
+        {shows('floors_total') && (
+          <AccordionSection title={tc('floors_total_range')} open={sections.floors_total} onToggle={() => toggle('floors_total')}>
+            <div className="flex gap-2">
+              <Input
+                type="number"
+                min={1}
+                placeholder={tc('min')}
+                value={get('floors_total_min')}
+                onChange={e => handleFloorsChange('floors_total_min', e.target.value)}
+                className="h-10 rounded-xl"
+              />
+              <Input
+                type="number"
+                min={1}
+                placeholder={tc('max')}
+                value={get('floors_total_max')}
+                onChange={e => handleFloorsChange('floors_total_max', e.target.value)}
+                className="h-10 rounded-xl"
+              />
+            </div>
+          </AccordionSection>
+        )}
 
-      {/* Price range */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('price_range')}
-        </label>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            placeholder={tc('min')}
-            value={get('price_min')}
-            onChange={e => updateParams({ price_min: e.target.value || null })}
-            className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+        {/* Condition */}
+        {shows('condition') && (
+          <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')}>
+            <div className="flex flex-col gap-1.5">
+              <Button variant={!get('condition') ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs" onClick={() => updateParams({ condition: null })}>
+                {tc('any')}
+              </Button>
+              {CONDITIONS.map(c => (
+                <Button key={c.value} variant={get('condition') === c.value ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ condition: get('condition') === c.value ? null : c.value })}>
+                  {t(c.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Layout features */}
+        {shows('layout_features') && (
+          <AccordionSection title={tc('layout_features')} open={sections.layout_features} onToggle={() => toggle('layout_features')}>
+            <div className="flex flex-wrap gap-1.5">
+              {LAYOUT_FEATURES.map(lf => (
+                <Button key={lf.value} variant={selectedLayoutFeatures.includes(lf.value) ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs whitespace-normal leading-snug" onClick={() => toggleMulti('layout_features', lf.value)}>
+                  {t(lf.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Year built — dropdown per dom.ria.com */}
+        {shows('year_built') && (
+          <AccordionSection title={tc('year_built_range')} open={sections.year_built} onToggle={() => toggle('year_built')}>
+            <div className="grid grid-cols-2 gap-2">
+              <YearCombobox
+                value={get('year_built_min') ? parseInt(get('year_built_min')) : undefined}
+                onChange={v => updateParams({ year_built_min: v != null ? String(v) : null })}
+                placeholder={tc('year_from')}
+              />
+              <YearCombobox
+                value={get('year_built_max') ? parseInt(get('year_built_max')) : undefined}
+                onChange={v => updateParams({ year_built_max: v != null ? String(v) : null })}
+                placeholder={tc('year_to')}
+              />
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Heating */}
+        {shows('heating') && (
+          <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')}>
+            <div className="flex flex-wrap gap-1.5">
+              <Button variant={!get('heating') ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: null })}>{tc('any_n')}</Button>
+              {HEATING_TYPES.map(h => (
+                <Button key={h.value} variant={get('heating') === h.value ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: get('heating') === h.value ? null : h.value })}>
+                  {t(h.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Wall type */}
+        {shows('wall_type') && (
+          <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')}>
+            <div className="flex flex-wrap gap-1.5">
+              <Button variant={!get('wall_type') ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: null })}>{tc('any')}</Button>
+              {WALL_TYPES.map(w => (
+                <Button key={w.value} variant={get('wall_type') === w.value ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: get('wall_type') === w.value ? null : w.value })}>
+                  {t(w.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Offer type */}
+        {shows('offer_type') && (
+          <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')}>
+            <div className="flex flex-col gap-1.5">
+              <Button variant={!get('offer_type') ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs" onClick={() => updateParams({ offer_type: null })}>{tc('any')}</Button>
+              {OFFER_TYPES.map(ot => (
+                <Button key={ot.value} variant={get('offer_type') === ot.value ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ offer_type: get('offer_type') === ot.value ? null : ot.value })}>
+                  {t(ot.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Purchase conditions */}
+        {shows('purchase_conditions') && (
+          <AccordionSection title={tc('purchase_conditions')} open={sections.purchase_conditions} onToggle={() => toggle('purchase_conditions')}>
+            <div className="flex flex-col gap-1.5">
+              {PURCHASE_CONDITIONS.map(pc => (
+                <Button key={pc.value} variant={selectedPurchaseConditions.includes(pc.value) ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => toggleMulti('purchase_conditions', pc.value)}>
+                  {t(pc.labelKey as any)}
+                </Button>
+              ))}
+            </div>
+          </AccordionSection>
+        )}
+
+        {/* Posting period — custom date pickers */}
+        <AccordionSection title={tc('period')} open={sections.period} onToggle={() => toggle('period')}>
+          <div className="flex flex-col gap-2">
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">{tc('date_from')}</label>
+              <DatePicker
+                value={get('date_from') || undefined}
+                onChange={v => updateParams({ date_from: v ?? null })}
+                placeholder={tc('select_date')}
+              />
+            </div>
+            <div>
+              <label className="text-xs text-muted-foreground mb-1.5 block">{tc('date_to')}</label>
+              <DatePicker
+                value={get('date_to') || undefined}
+                onChange={v => updateParams({ date_to: v ?? null })}
+                placeholder={tc('select_date')}
+              />
+            </div>
+          </div>
+        </AccordionSection>
+
+        {/* Search by ID */}
+        <AccordionSection title={tc('listing_id_label')} open={sections.listing_id} onToggle={() => toggle('listing_id')}>
+          <Input
+            type="text"
+            placeholder={tc('listing_id_placeholder')}
+            value={get('listing_id')}
+            onChange={e => updateParams({ listing_id: e.target.value || null })}
+            className="h-10 rounded-xl"
           />
-          <input
-            type="number"
-            placeholder={tc('max')}
-            value={get('price_max')}
-            onChange={e => updateParams({ price_max: e.target.value || null })}
-            className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-          />
-        </div>
+        </AccordionSection>
+
       </div>
 
-      {/* Area range */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('area_range')}
-        </label>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            placeholder={tc('min')}
-            value={get('area_min')}
-            onChange={e => updateParams({ area_min: e.target.value || null })}
-            className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-          />
-          <input
-            type="number"
-            placeholder={tc('max')}
-            value={get('area_max')}
-            onChange={e => updateParams({ area_max: e.target.value || null })}
-            className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-          />
-        </div>
-      </div>
-
-      {/* Rooms */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('rooms_label')}
-        </label>
-        <div className="flex gap-1.5">
-          <button
-            onClick={() => updateParams({ rooms: null })}
-            className={cn(
-              'h-9 px-3 rounded-xl text-sm border transition-colors',
-              !get('rooms') ? 'bg-primary text-primary-foreground border-primary' : 'border-border hover:border-primary/40'
-            )}
-          >
-            {tc('any')}
-          </button>
-          {ROOMS_OPTIONS.map(r => (
-            <button
-              key={r}
-              onClick={() => updateParams({ rooms: get('rooms') === String(r) ? null : String(r) })}
-              className={cn(
-                'h-9 w-9 rounded-xl text-sm border transition-colors font-medium',
-                get('rooms') === String(r)
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'border-border hover:border-primary/40'
-              )}
-            >
-              {r === 5 ? '5+' : r}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Condition */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('condition')}
-        </label>
-        <select
-          value={get('condition')}
-          onChange={e => updateParams({ condition: e.target.value || null })}
-          className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          <option value="">{tc('any')}</option>
-          {CONDITIONS.map(c => (
-            <option key={c.value} value={c.value}>{t(c.labelKey as any)}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Heating */}
-      <div className="flex flex-col gap-2">
-        <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          {tc('heating')}
-        </label>
-        <select
-          value={get('heating')}
-          onChange={e => updateParams({ heating: e.target.value || null })}
-          className="w-full h-10 rounded-xl border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-        >
-          <option value="">{tc('any')}</option>
-          {HEATING_TYPES.map(h => (
-            <option key={h.value} value={h.value}>{t(h.labelKey as any)}</option>
-          ))}
-        </select>
-      </div>
-
-      {/* Apply on mobile */}
+      {/* Mobile apply button */}
       {onClose && (
-        <Button className="lg:hidden mt-2" onClick={onClose}>
+        <Button className="lg:hidden mt-4 h-11" onClick={onClose}>
           {tc('apply_filters')}
           {activeCount > 0 && ` (${activeCount})`}
         </Button>

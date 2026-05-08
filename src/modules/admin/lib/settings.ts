@@ -1,0 +1,24 @@
+import { createClient } from '@/lib/supabase/server'
+import { ARCHIVED_NOINDEX_DAYS } from '@/modules/listings/constants'
+
+export async function getSetting(key: string, fallback: string): Promise<string> {
+  const supabase = await createClient()
+  const { data } = await supabase
+    .from('site_settings')
+    .select('value')
+    .eq('key', key)
+    .single()
+  return data?.value ?? fallback
+}
+
+export async function getArchivedNoindexDays(): Promise<number> {
+  const raw = await getSetting('archived_noindex_days', String(ARCHIVED_NOINDEX_DAYS))
+  const n = parseInt(raw)
+  return Number.isFinite(n) && n > 0 ? n : ARCHIVED_NOINDEX_DAYS
+}
+
+export async function getAllSettings(): Promise<Record<string, string>> {
+  const supabase = await createClient()
+  const { data } = await supabase.from('site_settings').select('key, value')
+  return Object.fromEntries((data ?? []).map(r => [r.key, r.value]))
+}

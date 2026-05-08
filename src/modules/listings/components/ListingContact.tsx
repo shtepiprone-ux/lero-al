@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
+import { formatPrice } from '@/lib/formatters'
 import { Phone, MessageCircle, Heart, Share2, CheckCircle } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -25,10 +26,6 @@ interface ListingContactProps {
   listingUrl: string
   price: number
   currency: string
-}
-
-function formatPrice(price: number, currency: string) {
-  return `${new Intl.NumberFormat('sq-AL').format(price)} ${currency}`
 }
 
 export function ListingContact({ owner, listingTitle, listingUrl, price, currency }: ListingContactProps) {
@@ -76,7 +73,7 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
 
       {/* Price (mobile sidebar) */}
       <div className="hidden lg:block py-3 border-y">
-        <p className="text-2xl font-bold text-primary">{formatPrice(price, currency)}</p>
+        <p className="text-2xl font-bold text-primary">{formatPrice(price, currency, locale)}</p>
       </div>
 
       {/* Action buttons */}
@@ -125,7 +122,6 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
           aria-label={t('add_favorite')}
         >
           <Heart className={cn('h-4 w-4', favorited && 'fill-destructive text-destructive')} />
-          <span className="hidden sm:inline">{t('add_favorite')}</span>
         </button>
         <button
           onClick={handleShare}
@@ -142,17 +138,17 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
   return (
     <>
       {/* Desktop sticky sidebar */}
-      <div className="hidden lg:block sticky top-20">
+      <div className="listing-contact hidden lg:block sticky top-20">
         <div className="rounded-2xl border bg-card shadow-md p-5">
           <ContactCard />
         </div>
       </div>
 
       {/* Mobile fixed bottom bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 py-3">
+      <div className="listing-contact-mobile lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 py-3">
         <div className="flex items-center gap-3 max-w-lg mx-auto">
           <div className="flex-1 min-w-0">
-            <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency)}</p>
+            <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency, locale)}</p>
             <p className="text-xs text-muted-foreground truncate">{owner.name}</p>
           </div>
           <div className="flex gap-2 shrink-0">

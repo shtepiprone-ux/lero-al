@@ -21,7 +21,8 @@ All project rules are split into focused files inside `/docs/`.
 - `docs/integrations.md` — external services setup and integration rules (Supabase, Cloudinary, Resend, Sentry, etc.).
 - `docs/qa-rules.md` — QA process, validation, error handling, pre-commit checks, and manual testing checklist.
 - `docs/rls-rules.md` — Supabase RLS rules, permission boundaries, auth/session safety, and security constraints.
-- `docs/ui-rules.md` — UI/UX standards, responsive behavior, accessibility, visual quality, and interface patterns.
+- `docs/ui-rules.md` — UI Gate (no hardcode + component-first + Combobox-only) + dom.ria.com reference.
+- `docs/performance.md` — Core Web Vitals RUM layer: collector, reporter, budgets, logging, and analytics dispatch contract.
 
 ## Documentation Update Rule
 

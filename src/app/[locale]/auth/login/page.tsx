@@ -1,5 +1,10 @@
-import { LoginForm } from '@/modules/auth/components/LoginForm'
+import { LoginFormClient } from '@/modules/auth/components/LoginFormClient'
 
-export default function LoginPage() {
-  return <LoginForm />
+interface Props {
+  searchParams: Promise<{ next?: string }>
+}
+
+export default async function LoginPage({ searchParams }: Props) {
+  const { next } = await searchParams
+  return <LoginFormClient next={next} />
 }

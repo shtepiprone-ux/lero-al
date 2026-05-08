@@ -1,50 +1,173 @@
+import { Suspense } from 'react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-import { getTranslations, getLocale } from 'next-intl/server'
-import { MapPin, Eye, CalendarDays, Home, BedDouble, Bath, Maximize2, Layers, Flag } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
+import { MapPin, Eye, CalendarDays, Flag } from 'lucide-react'
+import { formatDistanceToNow } from 'date-fns'
+import { enUS, it, uk, sq } from 'date-fns/locale'
+import type { Locale } from 'date-fns'
 import { createClient } from '@/lib/supabase/server'
-import { ListingGallery } from '@/modules/listings/components/ListingGallery'
-import { ListingContact } from '@/modules/listings/components/ListingContact'
+import { getUser } from '@/lib/auth/server'
+import { GalleryStaticFrame } from '@/modules/listings/components/GalleryStaticFrame'
+import { GalleryIsland } from '@/modules/listings/components/GalleryIsland'
 import { SimilarListings } from '@/modules/listings/components/SimilarListings'
 import { MapWrapper } from '@/components/shared/MapWrapper'
 import { Badge } from '@/components/ui/badge'
-import { formatDistanceToNow } from 'date-fns'
+import { ListingBackButton } from '@/modules/listings/components/ListingBackButton'
+import { ListingStatusBanner } from '@/modules/listings/components/ListingStatusBanner'
+import { ListingMobileCTA } from '@/modules/listings/components/ListingMobileCTA'
+import { ViewTracker } from '@/modules/listings/components/ViewTracker'
+import { getArchivedNoindexDays } from '@/modules/admin/lib/settings'
+import { formatPrice } from '@/lib/formatters'
+import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
+import { isListingArchived, isListingVisible } from '@/modules/listings/domain'
+import type { ListingStatus } from '@/types/database'
+import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
+import { preload } from 'react-dom'
+import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
+import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
+
+// ── Lazy client island — ListingContact ──────────────────────────────────────
+//
+// ListingContact: ssr: true — keeps the phone/WhatsApp links in the SSR HTML for
+// SEO and screen readers, but splits the JS into a separate lazily-loaded chunk
+// so the main bundle is smaller and above-fold hydration starts earlier.
+//
+// ListingGallery lazy loading is handled by GalleryIsland (a 'use client' wrapper)
+// because `ssr: false` is not permitted in Server Components (Next.js App Router rule).
+
+const LazyListingContact = dynamic(
+  () => import('@/modules/listings/components/ListingContact').then(m => ({ default: m.ListingContact })),
+  { ssr: true }
+)
+
+// ── Date-fns locale map (mirrors RelativeTime.tsx — server-side only) ─────────
+const DATE_LOCALE_MAP: Record<string, Locale> = { sq, en: enUS, uk, it }
+
+// ── Similar listings Suspense fallback ────────────────────────────────────────
+function SimilarListingsSkeleton() {
+  return (
+    <div>
+      <div className="h-7 w-48 rounded-lg bg-muted animate-pulse mb-5" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="rounded-2xl border overflow-hidden">
+            <div className="aspect-[4/3] bg-muted animate-pulse" />
+            <div className="p-3 space-y-2">
+              <div className="h-4 w-full bg-muted rounded animate-pulse" />
+              <div className="h-5 w-32 bg-muted rounded animate-pulse" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>
 }
 
+// generateMetadata and ListingPage intentionally use SEPARATE Supabase queries.
+//
+// React's cache() is documented to work between generateMetadata and the page
+// component, but in Next.js App Router the two functions run in different
+// rendering phases with separate React roots. In practice the cache does not
+// persist across these phases, so wrapping the heavy JOIN query in cache() only
+// makes both phases run the heavy query — doubling server latency.
+//
+// The correct approach is:
+//   - generateMetadata → lightweight SELECT (4 columns, no JOINs) → fast
+//   - ListingPage      → full SELECT (*, 3 JOINs) in parallel with getUser()
+//
+// This keeps metadata fast and avoids any cross-phase coupling.
+
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const supabase = await createClient()
-  const { data } = await supabase.from('listings').select('title, description, price, currency').eq('slug', slug).single()
+  const { data } = await supabase
+    .from('listings')
+    .select('title, description, status, updated_at')
+    .eq('slug', slug)
+    .single()
   if (!data) return {}
+
+  let robots: { index: boolean; follow: boolean } | undefined
+  if (isListingArchived(data.status as ListingStatus)) {
+    const noindexDays = await getArchivedNoindexDays()
+    const daysSince = Math.floor((Date.now() - new Date(data.updated_at).getTime()) / 86400000)
+    if (daysSince >= noindexDays) {
+      robots = { index: false, follow: true }
+    }
+  }
+
   return {
     title: `${data.title} | Shtepi.al`,
     description: data.description?.slice(0, 160),
+    ...(robots && { robots }),
   }
-}
-
-function formatPrice(price: number, currency: string) {
-  return `${new Intl.NumberFormat('sq-AL').format(price)} ${currency}`
 }
 
 export default async function ListingPage({ params }: Props) {
   const { slug, locale } = await params
   const t = await getTranslations('listing')
+  const tNav = await getTranslations('nav')
 
+  // One client instance for the entire page — reused for listing + favorites.
+  // getUser() creates its own client internally (separate auth API call).
+  // Running both in parallel saves the sequential auth-then-query waterfall.
   const supabase = await createClient()
-  const { data: listing } = await supabase
-    .from('listings')
-    .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order"), owner:users!listings_user_id_fkey(id, name, phone, whatsapp, avatar_url, user_type, is_verified, company_name)`)
-    .eq('slug', slug)
-    .eq('status', 'active')
-    .single()
+  const [authUser, { data: listing }] = await Promise.all([
+    getUser(),
+    supabase
+      .from('listings')
+      .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order"), owner:users!listings_user_id_fkey(id, name, phone, whatsapp, avatar_url, user_type, is_verified, company_name)`)
+      .eq('slug', slug)
+      .in('status', ['active', 'sold', 'rented', 'archived'])
+      .single(),
+  ])
 
   if (!listing) notFound()
 
+  let isInitiallyFavorited = false
+  if (authUser) {
+    const { data: fav } = await supabase
+      .from('favorites')
+      .select('id')
+      .eq('user_id', authUser.id)
+      .eq('listing_id', listing.id)
+      .maybeSingle()
+    isInitiallyFavorited = !!fav
+  }
+
   const owner = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
   const images = listing.images ?? []
+
+  // Sort images to find the cover — same logic used by GalleryStaticFrame and
+  // ListingGallery. Both must agree on which image is first so the swap is seamless.
+  const sortedImages = [...images].sort((a, b) => {
+    if (a.is_cover) return -1
+    if (b.is_cover) return 1
+    return (a.order ?? 0) - (b.order ?? 0)
+  })
+  const coverImage = sortedImages[0]
+
+  const galleryPreload = buildGalleryMainPreloadAttrs(coverImage?.url)
+
+  // Emit a server-side <link rel="preload"> for the gallery LCP candidate via
+  // React 19's resource API. Works in Server Components: emits into <head> in the
+  // SSR HTML before any client JS executes. Bypasses the client-only tier-gate in
+  // AppImage (shouldPreload = false on medium/low tier), ensuring the LCP image
+  // fetch starts as soon as HTML is parsed on all devices including mobile.
+  if (galleryPreload) {
+    preload(galleryPreload.href, {
+      as: 'image',
+      imageSrcSet: galleryPreload.imageSrcSet,
+      imageSizes: galleryPreload.imageSizes,
+    })
+  }
+
   const pricePerSqm = listing.area_gross ? Math.round(listing.price / listing.area_gross) : null
   const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://shtepi.al'}/${locale}/listings/${slug}`
 
@@ -52,30 +175,36 @@ export default async function ListingPage({ params }: Props) {
   const isNew = new Date(listing.created_at) > sevenDaysAgo
   const isPriceReduced = listing.price_old && listing.price < listing.price_old
 
-  const features = [
-    listing.rooms && { icon: Home, label: t('rooms'), value: listing.rooms },
-    listing.bedrooms && { icon: BedDouble, label: t('bedrooms'), value: listing.bedrooms },
-    listing.bathrooms && { icon: Bath, label: t('bathrooms'), value: listing.bathrooms },
-    listing.toilets && { icon: Bath, label: t('toilets'), value: listing.toilets },
-    listing.area_gross && { icon: Maximize2, label: t('area_gross_label'), value: `${listing.area_gross} m²` },
-    listing.area_net && { icon: Maximize2, label: t('area_net'), value: `${listing.area_net} m²` },
-    listing.floor && { icon: Layers, label: t('floor'), value: listing.total_floors ? `${listing.floor} / ${listing.total_floors}` : listing.floor },
-    listing.year_built && { icon: CalendarDays, label: t('year_built'), value: listing.year_built },
-  ].filter(Boolean) as { icon: any; label: string; value: any }[]
+  const features    = getDetailFeatures(listing)
+  const detailAttrs = getDetailAttributes(listing)
 
-  const details = [
-    listing.condition && { label: t('condition_label'), value: t(`condition_${listing.condition}` as any) },
-    listing.heating && { label: t('heating_label'), value: t(`heating_${listing.heating}` as any) },
-    listing.wall_type && { label: t('wall_type_label'), value: t(`wall_${listing.wall_type}` as any) },
-  ].filter(Boolean) as { label: string; value: string }[]
+  const formattedPrice = formatPrice(listing.price, listing.currency, locale)
+
+  // Relative time formatted server-side — removes RelativeTime ('use client') from
+  // the above-fold hydration tree. date-fns runs on the server; locale is known
+  // from the route params. Static string is passed as JSX, no hydration needed.
+  const dfLocale = DATE_LOCALE_MAP[locale] ?? enUS
+  const relativeTimeStr = formatDistanceToNow(new Date(listing.created_at), { addSuffix: true, locale: dfLocale })
 
   return (
-    <div className="pb-24 lg:pb-8">
+    <div className="pb-32 md:pb-20 lg:pb-8">
+      <ViewTracker slug={slug} />
+
+      {/* Sticky mobile contact bar — shown only on mobile, above the bottom nav */}
+      {!isListingArchived(listing.status as ListingStatus) && owner && (
+        <ListingMobileCTA
+          price={formattedPrice}
+          phone={owner.phone ?? null}
+          whatsapp={owner.whatsapp ?? null}
+          listingTitle={listing.title}
+        />
+      )}
+
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
         <div className="container mx-auto px-4 py-2.5">
           <nav className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap" aria-label="Breadcrumb">
-            <Link href={`/${locale}`} className="hover:text-foreground transition-colors">{t('back_to_listings').split(' ')[0]}</Link>
+            <Link href={`/${locale}`} className="hover:text-foreground transition-colors">{tNav('home')}</Link>
             <span>/</span>
             <Link href={`/${locale}/listings`} className="hover:text-foreground transition-colors">{t('all_listings')}</Link>
             {listing.location && (<><span>/</span><Link href={`/${locale}/listings?location_id=${listing.location.id}`} className="hover:text-foreground transition-colors">{listing.location.name_al}</Link></>)}
@@ -85,14 +214,54 @@ export default async function ListingPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-6 max-w-7xl">
+      <div className="container mx-auto px-4 pt-4 pb-6 max-w-7xl">
+        <div className="mb-5">
+          <ListingBackButton locale={locale} label={t('back_to_listings')} />
+        </div>
+
+        {!isListingVisible(listing.status as ListingStatus) && (
+          <ListingStatusBanner
+            status={listing.status as 'sold' | 'rented' | 'archived'}
+            message={t(`status_banner_${listing.status}` as any)}
+            similarLabel={t('similar_listings')}
+          />
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
 
           {/* ── Left column ── */}
           <div className="flex flex-col gap-8 min-w-0">
 
-            {/* Gallery */}
-            <ListingGallery images={images} title={listing.title} />
+            {/* ── Gallery — LCP-optimised RSC + lazy interactive shell ─────────
+                Phase 1 (SSR): GalleryStaticFrame renders the cover image as a
+                plain <img> with fetchPriority="high". Chrome composites this on
+                the GPU thread independently of React hydration — eliminating the
+                main-thread hydration-blocked paint gap.
+
+                Phase 2 (client): LazyListingGallery (ssr:false) mounts in the
+                hidden shell after the main bundle executes. Its useEffect removes
+                the static frame and reveals the interactive grid atomically in a
+                single JS task — no intermediate layout recalculation, zero CLS. */}
+            {/* Static gallery wrapper — ONE flex item (matches the interactive shell below).
+                Wrapping frame + button-placeholder in a single div ensures the flex gap
+                (gap-8 from the parent flex-col) is identical before and after the swap:
+                  before: [this wrapper] ── gap-8 ── [title section]
+                  after:  [shell]        ── gap-8 ── [title section]
+                Both wrappers must have the same height for zero CLS.
+                  - GalleryStaticFrame: h-[340px] (mobile) exactly matches listing-gallery
+                  - gallery-btn-placeholder (mt-3 h-5): matches the "All photos" button in
+                    ListingGallery (also mt-3, text-sm ≈ 20px height)
+                ListingGallery.useEffect removes this entire wrapper and reveals the shell
+                atomically in one JS task — no intermediate layout recalculation, zero CLS. */}
+            <div id="gallery-wrapper-static">
+              <GalleryStaticFrame coverUrl={coverImage?.url ?? null} title={listing.title} />
+              {images.length > 1 && (
+                <div id="gallery-btn-placeholder" className="mt-3 h-5" aria-hidden="true" />
+              )}
+            </div>
+            <div id="gallery-interactive-shell" className="hidden">
+              <GalleryIsland images={images} title={listing.title} />
+            </div>
 
             {/* Title + price + badges */}
             <div className="flex flex-col gap-3">
@@ -104,12 +273,21 @@ export default async function ListingPage({ params }: Props) {
                 <Badge variant="outline">{t(`property_type_${listing.property_type}` as any)}</Badge>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold leading-tight">{listing.title}</h1>
+              <div className="flex items-start justify-between gap-3">
+                <h1 className="text-2xl sm:text-3xl font-bold leading-tight">{listing.title}</h1>
+                {authUser && (
+                  <FavoriteButton
+                    listingId={listing.id}
+                    isFavorited={isInitiallyFavorited}
+                    className="shrink-0 mt-1"
+                  />
+                )}
+              </div>
 
               <div className="flex items-baseline gap-3 flex-wrap">
-                <span className="text-3xl font-bold text-primary">{formatPrice(listing.price, listing.currency)}</span>
-                {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(listing.price_old!, listing.currency)}</span>}
-                {pricePerSqm && <span className="text-sm text-muted-foreground">{formatPrice(pricePerSqm, listing.currency)}/{t('per_sqm').split('/')[1] ?? 'm²'}</span>}
+                <span className="text-3xl font-bold text-primary">{formatPrice(listing.price, listing.currency, locale)}</span>
+                {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(listing.price_old!, listing.currency, locale)}</span>}
+                {pricePerSqm && <span className="text-sm text-muted-foreground">{formatPrice(pricePerSqm, listing.currency, locale)}/{t('per_sqm').split('/')[1] ?? 'm²'}</span>}
               </div>
 
               <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
@@ -117,9 +295,11 @@ export default async function ListingPage({ params }: Props) {
                   <span className="flex items-center gap-1"><MapPin className="h-4 w-4" />{listing.location.name_al}</span>
                 )}
                 <span className="flex items-center gap-1"><Eye className="h-4 w-4" />{listing.views_count} {t('views')}</span>
+                {/* Date formatted server-side — RelativeTime ('use client') removed
+                    from above-fold hydration tree to reduce initial JS work. */}
                 <span className="flex items-center gap-1">
                   <CalendarDays className="h-4 w-4" />
-                  {formatDistanceToNow(new Date(listing.created_at), { addSuffix: true })}
+                  <span>{relativeTimeStr}</span>
                 </span>
               </div>
             </div>
@@ -128,10 +308,13 @@ export default async function ListingPage({ params }: Props) {
             {features.length > 0 && (
               <div className="rounded-2xl border bg-card shadow-sm p-5">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                  {features.map(({ icon: Icon, label, value }) => (
-                    <div key={label} className="flex flex-col gap-1">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1"><Icon className="h-3.5 w-3.5" />{label}</span>
-                      <span className="font-semibold text-sm">{value}</span>
+                  {features.map(f => (
+                    <div key={f.key} className="flex flex-col gap-1">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
+                        {t(f.labelKey as any)}
+                      </span>
+                      <span className="font-semibold text-sm">{f.value}</span>
                     </div>
                   ))}
                 </div>
@@ -147,14 +330,14 @@ export default async function ListingPage({ params }: Props) {
             )}
 
             {/* Additional details */}
-            {details.length > 0 && (
+            {detailAttrs.length > 0 && (
               <div className="rounded-2xl border bg-card shadow-sm p-5">
                 <h2 className="font-bold text-lg mb-4">{t('amenities_label')}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {details.map(({ label, value }) => (
-                    <div key={label} className="flex flex-col gap-0.5">
-                      <span className="text-xs text-muted-foreground">{label}</span>
-                      <span className="text-sm font-medium">{value}</span>
+                  {detailAttrs.map(a => (
+                    <div key={a.labelKey} className="flex flex-col gap-0.5">
+                      <span className="text-xs text-muted-foreground">{t(a.labelKey as any)}</span>
+                      <span className="text-sm font-medium">{t(a.valueKey as any)}</span>
                     </div>
                   ))}
                 </div>
@@ -177,17 +360,26 @@ export default async function ListingPage({ params }: Props) {
               </button>
             </div>
 
-            {/* Similar listings */}
-            <SimilarListings
-              currentId={listing.id}
-              propertyType={listing.property_type}
-              locationId={listing.location?.id ?? null}
-            />
+            {/* Similar listings — Server Component streamed below the fold.
+                Suspense boundary lets React flush the above-fold section (gallery,
+                title, price) to the browser immediately, then stream the similar
+                listings section in a subsequent flush. The Supabase query for
+                similar listings runs inside the Suspense boundary, not at page
+                top-level, so it does not delay the above-fold time-to-first-byte. */}
+            <div id="similar-listings">
+              <Suspense fallback={<SimilarListingsSkeleton />}>
+                <SimilarListings
+                  currentId={listing.id}
+                  propertyType={listing.property_type}
+                  locationId={listing.location?.id ?? null}
+                />
+              </Suspense>
+            </div>
           </div>
 
           {/* ── Right column: contact sidebar ── */}
           {owner && (
-            <ListingContact
+            <LazyListingContact
               owner={owner}
               listingTitle={listing.title}
               listingUrl={listingUrl}

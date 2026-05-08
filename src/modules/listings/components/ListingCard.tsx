@@ -1,76 +1,135 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
-import { MapPin, BedDouble, Bath, Maximize2, Layers, Camera, Heart } from 'lucide-react'
+import { AppImage } from '@/components/ui/AppImage'
+import type { ListingLayoutContext } from '@/lib/imageDelivery'
+import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
+import { formatPrice } from '@/lib/formatters'
+import { MapPin, Camera, Maximize2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { formatDistanceToNow } from 'date-fns'
+import { RelativeTime } from '@/components/shared/RelativeTime'
 import { cn } from '@/lib/utils'
+import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
+import { isListingClosed } from '@/modules/listings/domain'
+import type { ListingStatus } from '@/types/database'
+import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
+import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 
-interface ListingCardProps {
-  listing: any
-  variant?: 'vertical' | 'horizontal'
+interface CardListingData extends ListingSnapshot {
+  id:            string
+  slug:          string
+  title:         string
+  price:         number
+  price_old:     number | null
+  currency:      string
+  listing_type:  string
+  is_premium:    boolean
+  status:        string
+  created_at:    string
+  images?:       { url: string; is_cover: boolean; order: number }[] | null
+  location?:     { id: number; name_al: string; slug: string; type: string } | null
 }
 
-function getBadges(listing: any) {
+interface ListingCardProps {
+  listing: CardListingData
+  variant?: 'vertical' | 'horizontal'
+  onBeforeNavigate?: (slug: string) => void
+  displayCurrency?: string
+  exchangeRate?: number | null
+  isFavorited?: boolean
+  onFavoriteToggled?: (newState: boolean) => void
+  /** Mark the card image as LCP-priority. Use getImagePriority() from imageDelivery to decide. */
+  priority?: boolean
+  /** Grid layout context for the listing image sizes hint. See ListingLayoutContext in imageDelivery.ts. */
+  layoutContext?: ListingLayoutContext
+}
+
+function getBadges(listing: CardListingData) {
   const badges: { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline'; className: string }[] = []
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+
+  // Status badges take priority for non-active listings
+  if (listing.status === 'sold') {
+    badges.push({ label: 'status_sold', variant: 'default', className: 'bg-status-info text-primary-foreground' })
+    return badges
+  }
+  if (listing.status === 'rented') {
+    badges.push({ label: 'status_rented', variant: 'default', className: 'bg-status-rented text-primary-foreground' })
+    return badges
+  }
+  if (listing.status === 'archived') {
+    badges.push({ label: 'status_archived', variant: 'outline', className: 'border-border text-muted-foreground' })
+    return badges
+  }
+
+  // Active listing badges
+  const sevenDaysAgo = new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
   if (new Date(listing.created_at) > sevenDaysAgo) {
     badges.push({ label: 'new', variant: 'default', className: 'bg-badge-new hover:bg-badge-new/90 text-primary-foreground' })
   }
-  if (listing.is_premium) {
-    badges.push({ label: 'premium', variant: 'default', className: 'bg-badge-premium hover:bg-badge-premium/90 text-primary-foreground' })
-  }
+  // Premium is expressed through card styling, not a text badge
   if (listing.price_old && listing.price < listing.price_old) {
     badges.push({ label: 'price_reduced', variant: 'default', className: 'bg-badge-reduced hover:bg-badge-reduced/90 text-primary-foreground' })
   }
   return badges
 }
 
-function formatPrice(price: number, currency: string) {
-  const formatter = new Intl.NumberFormat('sq-AL', { maximumFractionDigits: 0 })
-  return `${formatter.format(price)} ${currency}`
+function convertPrice(price: number, from: string, to: string, rate: number): number {
+  if (from === to) return price
+  if (to === 'EUR' && from === 'ALL') return Math.round(price / rate)
+  if (to === 'ALL' && from === 'EUR') return Math.round(price * rate)
+  return price
 }
 
-export function ListingCard({ listing, variant = 'vertical' }: ListingCardProps) {
+export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, exchangeRate, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
 
   const coverImage = listing.images?.find((img: any) => img.is_cover) || listing.images?.[0]
   const imageCount = listing.images?.length ?? 0
-  const pricePerSqm = listing.area_gross && listing.area_gross > 0
-    ? Math.round(listing.price / listing.area_gross)
-    : null
   const locationName = listing.location?.name_al ?? ''
+
+  const activeCurrency = (displayCurrency && exchangeRate) ? displayCurrency : listing.currency
+  const rate = exchangeRate ?? 1
+  const displayPrice = (displayCurrency && exchangeRate)
+    ? convertPrice(listing.price, listing.currency, displayCurrency, rate)
+    : listing.price
+  const displayPriceOld = listing.price_old
+    ? ((displayCurrency && exchangeRate) ? convertPrice(listing.price_old, listing.currency, displayCurrency, rate) : listing.price_old)
+    : null
+  const pricePerSqm = listing.area_gross && listing.area_gross > 0
+    ? Math.round(displayPrice / listing.area_gross)
+    : null
 
   if (variant === 'horizontal') {
     return (
       <Link
         href={`/${locale}/listings/${listing.slug}`}
-        className="group flex gap-3 rounded-xl border bg-card hover:shadow-md transition-shadow overflow-hidden"
+        className={cn(
+          "listing-card listing-card--horizontal group flex gap-3 rounded-xl border bg-card transition-shadow overflow-hidden",
+          listing.is_premium
+            ? "border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)] hover:shadow-[0_4px_16px_oklch(0.700_0.162_65_/_0.25)]"
+            : "hover:shadow-md",
+          listing.status === 'archived' && "grayscale opacity-60 hover:opacity-70",
+        )}
         data-track="listing_click"
+        data-listing-slug={listing.slug}
+        onClick={() => onBeforeNavigate?.(listing.slug)}
       >
         {/* Image */}
-        <div className="relative w-32 shrink-0 sm:w-44">
+        <div className="relative w-32 shrink-0 sm:w-44 self-stretch min-h-[80px] overflow-hidden bg-muted">
           {coverImage ? (
-            <Image
-              src={coverImage.url}
-              alt={listing.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 128px, 176px"
-            />
+            <AppImage variant="listing-thumb" src={coverImage.url} alt={listing.title} priority={priority} predictive />
           ) : (
-            <div className="absolute inset-0 bg-muted flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center">
               <Maximize2 className="h-6 w-6 text-muted-foreground" />
             </div>
           )}
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {badges.map(b => (
-              <Badge key={b.label} className={cn('text-[10px] px-1.5 py-0', b.className)}>
+              <Badge key={b.label} variant={b.variant} className={cn('text-[10px] px-1.5 py-0', b.className)}>
                 {t(b.label as any)}
               </Badge>
             ))}
@@ -80,24 +139,46 @@ export function ListingCard({ listing, variant = 'vertical' }: ListingCardProps)
         {/* Info */}
         <div className="flex flex-col justify-between py-3 pr-3 flex-1 min-w-0">
           <div>
-            <p className="text-xs text-muted-foreground mb-1">
-              {t(listing.listing_type as any)} · {t((`property_type_${listing.property_type}`) as any)}
-            </p>
+            <div className="flex items-start justify-between gap-1 mb-1">
+              <p className="text-xs text-muted-foreground">
+                {t(listing.listing_type as any)} · {t((`property_type_${listing.property_type}`) as any)}
+              </p>
+              <FavoriteButton
+                listingId={listing.id}
+                isFavorited={isFavorited}
+                onToggled={onFavoriteToggled}
+                className="opacity-0 group-hover:opacity-100 shrink-0 -mt-0.5 -mr-1"
+              />
+            </div>
             <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
               {listing.title}
             </h3>
           </div>
           <div>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-base font-bold text-primary">{formatPrice(listing.price, listing.currency)}</span>
-              {listing.price_old && (
-                <span className="text-xs text-muted-foreground line-through">{formatPrice(listing.price_old, listing.currency)}</span>
+              <span className="text-base font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
+              {displayPriceOld && (
+                <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
               )}
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
-              {listing.rooms && <span className="flex items-center gap-1"><BedDouble className="h-3 w-3" />{listing.rooms}</span>}
-              {listing.area_gross && <span className="flex items-center gap-1"><Maximize2 className="h-3 w-3" />{listing.area_gross} m²</span>}
-              {locationName && <span className="flex items-center gap-1"><MapPin className="h-3 w-3" />{locationName}</span>}
+              {getCardFeatures(listing).map(f => (
+                <span key={f.key} className="flex items-center gap-1">
+                  <ListingFeatureIcon name={f.icon} className="h-3 w-3" />
+                  {f.value}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center justify-between mt-1 text-xs text-muted-foreground">
+              {locationName ? (
+                <span className="flex items-center gap-1 truncate">
+                  <MapPin className="h-3 w-3 shrink-0" />
+                  {locationName}
+                </span>
+              ) : <span />}
+              <span className="ml-auto shrink-0 pl-2">
+                <RelativeTime date={listing.created_at} />
+              </span>
             </div>
           </div>
         </div>
@@ -108,29 +189,47 @@ export function ListingCard({ listing, variant = 'vertical' }: ListingCardProps)
   return (
     <Link
       href={`/${locale}/listings/${listing.slug}`}
-      className="group flex flex-col rounded-xl border bg-card overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+      className={cn(
+        "listing-card listing-card--vertical group flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-200",
+        listing.is_premium
+          ? "border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)] hover:shadow-[0_8px_24px_oklch(0.700_0.162_65_/_0.2)] hover:-translate-y-0.5"
+          : "hover:shadow-lg hover:-translate-y-0.5",
+        listing.status === 'archived' && "grayscale opacity-60 hover:opacity-70",
+      )}
       data-track="listing_click"
+      data-listing-slug={listing.slug}
+      onClick={() => onBeforeNavigate?.(listing.slug)}
     >
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-        {coverImage ? (
-          <Image
-            src={coverImage.url}
-            alt={listing.title}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          />
-        ) : (
+      {/* Premium top stripe */}
+      {listing.is_premium && (
+        <div className="h-0.5 bg-gradient-to-r from-badge-premium/0 via-badge-premium to-badge-premium/0 shrink-0" />
+      )}
+
+      {/* Image — AppImage owns the aspect-[4/3] container; overlays go inside as children */}
+      <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
+        {/* No-image fallback */}
+        {!coverImage && (
           <div className="absolute inset-0 flex items-center justify-center">
             <Maximize2 className="h-8 w-8 text-muted-foreground" />
+          </div>
+        )}
+
+        {/* Sold/Rented overlay */}
+        {isListingClosed(listing.status as ListingStatus) && (
+          <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
+            <span className={cn(
+              'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
+              listing.status === 'sold' ? 'bg-status-info/80 border-status-info' : 'bg-status-rented/80 border-status-rented',
+            )}>
+              {t(`status_${listing.status}` as any).toUpperCase()}
+            </span>
           </div>
         )}
 
         {/* Badges top-left */}
         <div className="absolute top-2 left-2 flex flex-wrap gap-1">
           {badges.map(b => (
-            <Badge key={b.label} className={cn('text-[10px] px-1.5 py-0', b.className)}>
+            <Badge key={b.label} variant={b.variant} className={cn('text-[10px] px-1.5 py-0', b.className)}>
               {t(b.label as any)}
             </Badge>
           ))}
@@ -145,15 +244,13 @@ export function ListingCard({ listing, variant = 'vertical' }: ListingCardProps)
         )}
 
         {/* Favorite button */}
-        <button
-          className="absolute top-2 right-2 h-8 w-8 rounded-full bg-card/80 hover:bg-card flex items-center justify-center transition-colors opacity-0 group-hover:opacity-100"
-          onClick={e => { e.preventDefault(); e.stopPropagation() }}
-          aria-label="Add to favorites"
-          data-track="add_favorite"
-        >
-          <Heart className="h-4 w-4 text-foreground" />
-        </button>
-      </div>
+        <FavoriteButton
+          listingId={listing.id}
+          isFavorited={isFavorited}
+          onToggled={onFavoriteToggled}
+          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 shadow-sm"
+        />
+      </AppImage>
 
       {/* Content */}
       <div className="flex flex-col gap-2 p-3">
@@ -170,42 +267,24 @@ export function ListingCard({ listing, variant = 'vertical' }: ListingCardProps)
         {/* Price */}
         <div className="flex items-baseline justify-between">
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold text-primary">{formatPrice(listing.price, listing.currency)}</span>
-            {listing.price_old && (
-              <span className="text-xs text-muted-foreground line-through">{formatPrice(listing.price_old, listing.currency)}</span>
+            <span className="text-lg font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
+            {displayPriceOld && (
+              <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
             )}
           </div>
           {pricePerSqm && (
-            <span className="text-xs text-muted-foreground">{formatPrice(pricePerSqm, '')} {t('per_sqm')}</span>
+            <span className="text-xs text-muted-foreground">{formatPrice(pricePerSqm, '', locale)} {t('per_sqm')}</span>
           )}
         </div>
 
         {/* Features row */}
         <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2">
-          {listing.rooms && (
-            <span className="flex items-center gap-1">
-              <BedDouble className="h-3.5 w-3.5" />
-              {listing.rooms}
+          {getCardFeatures(listing).map(f => (
+            <span key={f.key} className="flex items-center gap-1">
+              <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
+              {f.value}
             </span>
-          )}
-          {listing.bathrooms && (
-            <span className="flex items-center gap-1">
-              <Bath className="h-3.5 w-3.5" />
-              {listing.bathrooms}
-            </span>
-          )}
-          {listing.area_gross && (
-            <span className="flex items-center gap-1">
-              <Maximize2 className="h-3.5 w-3.5" />
-              {listing.area_gross} m²
-            </span>
-          )}
-          {listing.floor && (
-            <span className="flex items-center gap-1">
-              <Layers className="h-3.5 w-3.5" />
-              {listing.floor}
-            </span>
-          )}
+          ))}
         </div>
 
         {/* Location + date */}
@@ -216,9 +295,7 @@ export function ListingCard({ listing, variant = 'vertical' }: ListingCardProps)
               {locationName}
             </span>
           )}
-          <span className="ml-auto">
-            {formatDistanceToNow(new Date(listing.created_at), { addSuffix: true })}
-          </span>
+          <RelativeTime date={listing.created_at} className="ml-auto" />
         </div>
       </div>
     </Link>

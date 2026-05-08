@@ -24,5 +24,5 @@ export async function getPopularLocations(): Promise<(Location & { listing_count
     .limit(8)
 
   if (error) throw error
-  return (data ?? []).map(loc => ({ ...loc, listing_count: 0 }))
+  return (data ?? []).map((loc: Location) => ({ ...loc, listing_count: 0 }))
 }

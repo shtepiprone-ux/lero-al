@@ -4,14 +4,19 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
-import { createClient } from '@/lib/supabase/client'
+import { signIn, signInWithOAuth } from '@/lib/auth/browser'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Loader2 } from 'lucide-react'
 
-export function LoginForm() {
+interface Props {
+  next?: string
+}
+
+export function LoginForm({ next }: Props) {
   const t = useTranslations('auth')
   const locale = useLocale()
   const router = useRouter()
@@ -20,36 +25,35 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
+  // Only accept same-origin paths to prevent open redirect
+  const redirectTo = next?.startsWith('/') ? next : `/${locale}`
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-
-    if (error) {
-      setError(error.message)
+    try {
+      const { error } = await signIn(email, password)
+      if (error) {
+        setError(error.message)
+        return
+      }
+      router.push(redirectTo)
+    } finally {
       setLoading(false)
-      return
     }
-
-    router.push(`/${locale}`)
-    router.refresh()
   }
 
   async function handleGoogleLogin() {
-    const supabase = createClient()
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/${locale}`
-      }
-    })
+    await signInWithOAuth(
+      'google',
+      `${window.location.origin}/auth/callback?next=${redirectTo}`
+    )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="login-page min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Shtepi.al</CardTitle>
@@ -70,6 +74,7 @@ export function LoginForm() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
+                className="h-11 rounded-xl"
               />
             </div>
             <div className="space-y-2">
@@ -80,10 +85,11 @@ export function LoginForm() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
+                className="h-11 rounded-xl"
               />
             </div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? '...' : t('login')}
+            <Button type="submit" className="w-full h-11" disabled={loading}>
+              {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('login')}
             </Button>
           </form>
 
@@ -98,7 +104,7 @@ export function LoginForm() {
 
           <Button
             variant="outline"
-            className="w-full"
+            className="w-full h-11"
             onClick={handleGoogleLogin}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">

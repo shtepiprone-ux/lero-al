@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -41,59 +42,47 @@ export function ListingsPagination({ total, page, perPage }: Props) {
   }
 
   return (
-    <nav className="flex items-center justify-center gap-1 py-8" aria-label="Pagination">
-      {/* Prev */}
-      <button
+    <nav className="listings-pagination flex items-center justify-center gap-1 py-8" aria-label="Pagination">
+      <Button
+        variant="outline"
+        size="icon"
         onClick={() => goTo(page - 1)}
         disabled={page === 1}
-        className={cn(
-          'h-10 w-10 rounded-xl border flex items-center justify-center transition-colors',
-          page === 1
-            ? 'border-border text-muted-foreground cursor-not-allowed opacity-50'
-            : 'border-border hover:border-primary/50 hover:text-primary'
-        )}
-        aria-label="Previous page"
+        className="h-10 w-10 rounded-xl"
+        aria-label={tc('aria_prev_page')}
       >
         <ChevronLeft className="h-4 w-4" />
-      </button>
+      </Button>
 
-      {/* Pages */}
       {getPages().map((p, i) =>
         p === 'ellipsis' ? (
           <span key={`ellipsis-${i}`} className="h-10 w-10 flex items-center justify-center text-muted-foreground text-sm">
             …
           </span>
         ) : (
-          <button
+          <Button
             key={p}
+            variant={p === page ? 'default' : 'outline'}
+            size="icon"
             onClick={() => goTo(p)}
-            className={cn(
-              'h-10 w-10 rounded-xl border text-sm font-medium transition-colors',
-              p === page
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'border-border hover:border-primary/50 hover:text-primary'
-            )}
+            className="h-10 w-10 rounded-xl text-sm font-medium"
             aria-current={p === page ? 'page' : undefined}
           >
             {p}
-          </button>
+          </Button>
         )
       )}
 
-      {/* Next */}
-      <button
+      <Button
+        variant="outline"
+        size="icon"
         onClick={() => goTo(page + 1)}
         disabled={page === totalPages}
-        className={cn(
-          'h-10 w-10 rounded-xl border flex items-center justify-center transition-colors',
-          page === totalPages
-            ? 'border-border text-muted-foreground cursor-not-allowed opacity-50'
-            : 'border-border hover:border-primary/50 hover:text-primary'
-        )}
-        aria-label="Next page"
+        className="h-10 w-10 rounded-xl"
+        aria-label={tc('aria_next_page')}
       >
         <ChevronRight className="h-4 w-4" />
-      </button>
+      </Button>
     </nav>
   )
 }

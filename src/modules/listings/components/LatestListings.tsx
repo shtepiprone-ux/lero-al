@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useLatestListings } from '@/modules/listings/hooks/useListings'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
 import { Skeleton } from '@/components/ui/skeleton'
+import { getImagePriority } from '@/lib/imageDelivery'
 
 function RowSkeleton() {
   return (
@@ -25,7 +26,7 @@ export function LatestListings() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div className="latest-listings grid grid-cols-1 md:grid-cols-2 gap-3">
         {Array.from({ length: 4 }).map((_, i) => <RowSkeleton key={i} />)}
       </div>
     )
@@ -39,8 +40,8 @@ export function LatestListings() {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-      {listings.map(listing => (
-        <ListingCard key={listing.id} listing={listing} variant="horizontal" />
+      {listings.map((listing, index) => (
+        <ListingCard key={listing.id} listing={listing} variant="horizontal" priority={getImagePriority(index, 'latest')} />
       ))}
     </div>
   )

@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, Globe, ChevronDown, User, ListPlus, Heart, LogOut, LayoutList } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
+import { Menu, Globe, ChevronDown, User, ListPlus, Heart, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -28,9 +27,10 @@ const LOCALES = [
 
 export function Header() {
   const t = useTranslations('nav')
+  const tc = useTranslations('common')
   const locale = useLocale()
   const router = useRouter()
-  const { user, loading } = useUser()
+  const { user, loading, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   function switchLocale(newLocale: string) {
@@ -39,11 +39,8 @@ export function Header() {
     router.push(`/${newLocale}${pathWithoutLocale}`)
   }
 
-  async function handleLogout() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push(`/${locale}`)
-    router.refresh()
+  function handleLogout() {
+    signOut(() => router.push(`/${locale}`))
   }
 
   const currentLocale = LOCALES.find(l => l.code === locale)
@@ -71,7 +68,7 @@ export function Header() {
   )
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="site-header sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href={`/${locale}`} className="flex items-center gap-1 font-bold text-xl">
@@ -110,71 +107,80 @@ export function Header() {
           </DropdownMenu>
 
           {/* Auth / user menu — desktop */}
-          {!loading && (
-            <>
-              {user ? (
-                <DropdownMenu>
-                  <DropdownMenuTrigger
-                    className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-2 px-2 hidden md:flex')}
-                  >
-                    <Avatar className="h-7 w-7">
-                      <AvatarImage src={user.avatar_url ?? undefined} />
-                      <AvatarFallback className="text-xs">{userInitials}</AvatarFallback>
-                    </Avatar>
-                    <span className="text-sm max-w-[120px] truncate">{user.name}</span>
-                    <ChevronDown className="h-3 w-3 opacity-60" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem>
-                      <Link href={`/${locale}/profile`} className="flex items-center gap-2 w-full">
-                        <User className="h-4 w-4" />
-                        {t('profile')}
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href={`/${locale}/my-listings`} className="flex items-center gap-2 w-full">
-                        <LayoutList className="h-4 w-4" />
-                        {t('my_listings')}
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link href={`/${locale}/favorites`} className="flex items-center gap-2 w-full">
-                        <Heart className="h-4 w-4" />
-                        {t('favorites')}
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <Link href={`/${locale}/listings/create`} className="flex items-center gap-2 w-full">
-                        <ListPlus className="h-4 w-4" />
-                        {t('add_listing')}
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-destructive cursor-pointer">
-                      <LogOut className="h-4 w-4" />
-                      {t('logout')}
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              ) : (
-                <div className="hidden md:flex items-center gap-2">
-                  <Link href={`/${locale}/auth/login`} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
-                    {t('login')}
-                  </Link>
-                  <Link href={`/${locale}/auth/register`} className={cn(buttonVariants({ size: 'sm' }))}>
-                    {t('register')}
-                  </Link>
-                </div>
-              )}
-            </>
-          )}
+          <div className="hidden md:flex items-center gap-2">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-2 px-2')}
+                >
+                  <Avatar className="h-7 w-7">
+                    <AvatarImage src={user.avatar_url ?? undefined} />
+                    <AvatarFallback className="text-xs">{userInitials}</AvatarFallback>
+                  </Avatar>
+                  <span className="text-sm max-w-[120px] truncate">{user.name}</span>
+                  <ChevronDown className="h-3 w-3 opacity-60" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem>
+                    <Link href={`/${locale}/cabinet`} className="flex items-center gap-2 w-full">
+                      <User className="h-4 w-4" />
+                      {t('profile')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href={`/${locale}/cabinet?tab=listings`} className="flex items-center gap-2 w-full">
+                      <LayoutList className="h-4 w-4" />
+                      {t('my_listings')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href={`/${locale}/favorites`} className="flex items-center gap-2 w-full">
+                      <Heart className="h-4 w-4" />
+                      {t('favorites')}
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Link href={`/${locale}/listings/create`} className="flex items-center gap-2 w-full">
+                      <ListPlus className="h-4 w-4" />
+                      {t('add_listing')}
+                    </Link>
+                  </DropdownMenuItem>
+                  {(user.role === 'admin' || user.role === 'moderator') && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        <Link href="/admin" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 w-full text-primary font-medium">
+                          <LayoutDashboard className="h-4 w-4" />
+                          Dashboard
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-destructive cursor-pointer">
+                    <LogOut className="h-4 w-4" />
+                    {t('logout')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Link href={`/${locale}/auth/login`} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+                  {t('login')}
+                </Link>
+                <Link href={`/${locale}/auth/register`} className={cn(buttonVariants({ size: 'sm' }))}>
+                  {t('register')}
+                </Link>
+              </>
+            )}
+          </div>
 
           {/* Mobile hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger
               className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'md:hidden')}
-              aria-label="Open menu"
+              aria-label={tc('aria_open_menu')}
             >
               <Menu className="h-5 w-5" />
             </SheetTrigger>
@@ -199,14 +205,14 @@ export function Header() {
                   {user && (
                     <>
                       <Link
-                        href={`/${locale}/profile`}
+                        href={`/${locale}/cabinet`}
                         className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
                         {t('profile')}
                       </Link>
                       <Link
-                        href={`/${locale}/my-listings`}
+                        href={`/${locale}/cabinet?tab=listings`}
                         className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
@@ -232,18 +238,18 @@ export function Header() {
 
                 {/* Mobile locale switcher */}
                 <div className="border-t pt-4">
-                  <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">Language</p>
+                  <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">{t('language')}</p>
                   <div className="flex flex-wrap gap-2">
                     {LOCALES.map(loc => (
-                      <button
+                      <Button
                         key={loc.code}
+                        variant={locale === loc.code ? 'default' : 'outline'}
+                        size="sm"
+                        className="min-h-[44px]"
                         onClick={() => { switchLocale(loc.code); setMobileOpen(false) }}
-                        className={`text-sm px-3 py-1.5 rounded-md border transition-colors min-h-[44px] ${
-                          locale === loc.code ? 'bg-primary text-primary-foreground border-primary' : 'hover:bg-muted'
-                        }`}
                       >
                         {loc.flag} {loc.label}
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 </div>

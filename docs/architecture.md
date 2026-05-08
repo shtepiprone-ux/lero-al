@@ -4,7 +4,7 @@
 - **Images**: Cloudinary ✅ account registered (25GB free, auto-resize, WebP).
 - **Hosting**: Cloudflare Pages (free, no commercial restrictions).
 - **i18n**: next-intl (sq, en, uk, it).
-- **Components**: shadcn/ui (27 components installed).
+- **Components**: shadcn/ui (component set / generator), built on @base-ui/react primitives (not Radix UI).
 - **Forms**: react-hook-form + Zod + @hookform/resolvers.
 - **Dates**: date-fns.
 - **Monitoring**: Sentry ✅ configured.
@@ -152,6 +152,20 @@ Each module owns its tables — only that module queries them directly:
 - More than 3 levels of prop drilling (use a hook instead).
 - A single file over 300 lines.
 - A component doing both data fetching AND complex rendering.
+
+### Listing Detail Page — Above-Fold RSC Rule
+
+Above-the-fold UI on `/[locale]/listings/[slug]` must remain Server-Component-renderable.
+New `'use client'` directives added to a component that renders above the fold on this page
+require a written inventory entry (in `docs/performance.md` — Listing Detail Hydration
+Budget table) and an explicit justification.
+
+**Islands pattern:** above-fold interactive widgets must be split into a static RSC frame
+(renders HTML, zero JS) + a thin client island (handles interactivity, lazy-loaded).
+The `GalleryStaticFrame` / `GalleryIsland` / `ListingGallery` split is the canonical example.
+
+**Below-fold dynamic sections** must be wrapped in `<Suspense fallback={<Skeleton />}>` so
+React can stream above-fold content first and defer below-fold data fetches and hydration.
 
 ## Database (Supabase)
 **25 tables:**

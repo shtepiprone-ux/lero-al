@@ -3,7 +3,10 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
-const nextConfig = {}
+const nextConfig = {
+  allowedDevOrigins: ['192.168.20.252'],
+  // No images config needed — AppImage delivers via direct Cloudinary URLs (no next/image proxy).
+}
 
 export default withSentryConfig(withNextIntl(nextConfig), {
   // For all available options, see:

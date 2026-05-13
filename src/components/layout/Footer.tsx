@@ -1,12 +1,14 @@
 import Link from 'next/link'
-import { useLocale, useTranslations } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { getSetting } from '@/modules/admin/lib/settings'
 
 export async function Footer() {
-  const t = useTranslations('nav')
-  const locale = useLocale()
+  const [t, locale, siteName] = await Promise.all([
+    getTranslations('nav'),
+    getLocale(),
+    getSetting('site_name', 'Lero.al'),
+  ])
   const year = new Date().getFullYear()
-  const siteName = await getSetting('site_name', 'Lero.al')
   const [brand, tld] = siteName.includes('.') ? [siteName.split('.')[0], '.' + siteName.split('.').slice(1).join('.')] : [siteName, '']
 
   return (

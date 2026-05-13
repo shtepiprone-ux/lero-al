@@ -65,7 +65,7 @@ function NavItem({ href, label, icon: Icon, active, onClick }: {
   )
 }
 
-function SidebarContent({ onClose }: { onClose?: () => void }) {
+function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName: string }) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -87,8 +87,8 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
       {/* Header */}
       <div className="flex items-center justify-between px-5 py-5 border-b shrink-0">
         <Link href="/admin" className="flex items-center gap-2 font-bold text-base" onClick={onClose}>
-          <span className="text-primary">Shtepi</span>
-          <span className="text-foreground">.al</span>
+          <span className="text-primary">{siteName.split('.')[0]}</span>
+          <span className="text-foreground">.{siteName.split('.').slice(1).join('.')}</span>
           <span className="bg-primary/10 text-primary text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
             Admin
           </span>
@@ -150,14 +150,15 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
 interface AdminSidebarProps {
   mobileOpen?: boolean
   onMobileOpenChange?: (open: boolean) => void
+  siteName?: string
 }
 
-export function AdminSidebar({ mobileOpen = false, onMobileOpenChange }: AdminSidebarProps) {
+export function AdminSidebar({ mobileOpen = false, onMobileOpenChange, siteName = 'Lero.al' }: AdminSidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-60 shrink-0 border-r h-screen sticky top-0">
-        <SidebarContent />
+        <SidebarContent siteName={siteName} />
       </aside>
 
       {/* Mobile drawer — state is lifted to AdminShell */}
@@ -168,7 +169,7 @@ export function AdminSidebar({ mobileOpen = false, onMobileOpenChange }: AdminSi
             onClick={() => onMobileOpenChange?.(false)}
           />
           <div className="relative w-64 shadow-2xl">
-            <SidebarContent onClose={() => onMobileOpenChange?.(false)} />
+            <SidebarContent siteName={siteName} onClose={() => onMobileOpenChange?.(false)} />
           </div>
         </div>
       )}

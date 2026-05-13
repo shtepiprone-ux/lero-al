@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
+import { getAllSettings } from '@/modules/admin/lib/settings'
 import messages from '../../../messages/en.json'
 
 export const metadata = { title: 'Admin — Lero.al' }
@@ -22,9 +23,12 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const isAuthorized = profile?.role === 'admin' || profile?.role === 'moderator'
   if (!isAuthorized) redirect('/')
 
+  const settings = await getAllSettings()
+  const siteName = settings['site_name'] ?? 'Lero.al'
+
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
-      <AdminShell>{children}</AdminShell>
+      <AdminShell siteName={siteName}>{children}</AdminShell>
     </NextIntlClientProvider>
   )
 }

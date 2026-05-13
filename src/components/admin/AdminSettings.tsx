@@ -6,8 +6,8 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { CheckCircle2, Save, Loader2 } from 'lucide-react'
-import { saveSetting } from '@/modules/admin/actions'
+import { CheckCircle2, Save, Loader2, AlertCircle } from 'lucide-react'
+import { saveSettings } from '@/modules/admin/actions'
 
 const TABS = [
   { key: 'general',  label: 'Загальне' },
@@ -19,12 +19,36 @@ const TABS = [
 
 type Tab = typeof TABS[number]['key']
 
-interface InitialSettings {
-  archived_noindex_days: number
+// All persisted keys per tab
+const TAB_KEYS: Record<Tab, string[]> = {
+  general: ['site_name', 'tagline', 'contact_email', 'contact_phone'],
+  brand:   ['logo_url', 'logo_dark_url', 'favicon_url'],
+  footer:  ['social_facebook', 'social_instagram', 'social_linkedin', 'about_al', 'about_uk'],
+  seo:     ['meta_title', 'meta_desc', 'og_image', 'archived_noindex_days'],
+  i18n:    [],
+}
+
+export interface AllSettings {
+  site_name: string
+  tagline: string
+  contact_email: string
+  contact_phone: string
+  logo_url: string
+  logo_dark_url: string
+  favicon_url: string
+  social_facebook: string
+  social_instagram: string
+  social_linkedin: string
+  about_al: string
+  about_uk: string
+  meta_title: string
+  meta_desc: string
+  og_image: string
+  archived_noindex_days: string
 }
 
 interface Props {
-  initialSettings: InitialSettings
+  initialSettings: AllSettings
 }
 
 function Field({ label, id, hint, children }: { label: string; id?: string; hint?: string; children: React.ReactNode }) {
@@ -48,22 +72,36 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function AdminSettings({ initialSettings }: Props) {
   const [tab, setTab] = useState<Tab>('general')
-  const [saved, setSaved] = useState(false)
+  const [saveState, setSaveState] = useState<'idle' | 'saved' | 'error'>('idle')
   const [isPending, startTransition] = useTransition()
+  const [settings, setSettings] = useState<AllSettings>(initialSettings)
 
-  const [noindexDays, setNoindexDays] = useState(String(initialSettings.archived_noindex_days))
-
-  async function handleSave() {
-    if (tab === 'seo') {
-      startTransition(async () => {
-        await saveSetting('archived_noindex_days', noindexDays)
-        setSaved(true)
-        setTimeout(() => setSaved(false), 3000)
-      })
-    } else {
-      setSaved(true)
-      setTimeout(() => setSaved(false), 3000)
+  function set(key: keyof AllSettings) {
+    return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setSettings(prev => ({ ...prev, [key]: e.target.value }))
+      if (saveState !== 'idle') setSaveState('idle')
     }
+  }
+
+  function handleSave() {
+    const keys = TAB_KEYS[tab]
+    if (keys.length === 0) {
+      setSaveState('saved')
+      setTimeout(() => setSaveState('idle'), 3000)
+      return
+    }
+    const entries: Record<string, string> = {}
+    keys.forEach(k => { entries[k] = settings[k as keyof AllSettings] })
+
+    startTransition(async () => {
+      const result = await saveSettings(entries)
+      if (result.error) {
+        setSaveState('error')
+      } else {
+        setSaveState('saved')
+        setTimeout(() => setSaveState('idle'), 3000)
+      }
+    })
   }
 
   return (
@@ -73,7 +111,7 @@ export function AdminSettings({ initialSettings }: Props) {
         {TABS.map(t => (
           <button
             key={t.key}
-            onClick={() => { setTab(t.key); setSaved(false) }}
+            onClick={() => { setTab(t.key); setSaveState('idle') }}
             className={cn(
               'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
               tab === t.key ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
@@ -90,17 +128,17 @@ export function AdminSettings({ initialSettings }: Props) {
         {tab === 'general' && (
           <>
             <Section title="Основна інформація">
-              <Field label="Назва сайту" id="site-name">
-                <Input id="site-name" defaultValue="Lero.al" className="h-10 rounded-xl" />
+              <Field label="Назва сайту" id="site-name" hint="Відображається у логотипі, футері та адмін-панелі">
+                <Input id="site-name" value={settings.site_name} onChange={set('site_name')} className="h-10 rounded-xl" />
               </Field>
               <Field label="Слоган" id="tagline">
-                <Input id="tagline" defaultValue="Tregu kryesor i pasurive të paluajtshme në Shqipëri." className="h-10 rounded-xl" />
+                <Input id="tagline" value={settings.tagline} onChange={set('tagline')} className="h-10 rounded-xl" />
               </Field>
               <Field label="Контактний email" id="contact-email">
-                <Input id="contact-email" type="email" placeholder="info@lero.al" className="h-10 rounded-xl" />
+                <Input id="contact-email" type="email" value={settings.contact_email} onChange={set('contact_email')} placeholder="info@lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="Контактний телефон" id="contact-phone">
-                <Input id="contact-phone" placeholder="+355 XX XXX XXXX" className="h-10 rounded-xl" />
+                <Input id="contact-phone" value={settings.contact_phone} onChange={set('contact_phone')} placeholder="+355 XX XXX XXXX" className="h-10 rounded-xl" />
               </Field>
             </Section>
           </>
@@ -110,13 +148,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title="Брендинг">
               <Field label="URL логотипу (SVG/PNG)" id="logo-url">
-                <Input id="logo-url" placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
+                <Input id="logo-url" value={settings.logo_url} onChange={set('logo_url')} placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
               </Field>
               <Field label="URL логотипу для темного фону" id="logo-dark-url">
-                <Input id="logo-dark-url" placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
+                <Input id="logo-dark-url" value={settings.logo_dark_url} onChange={set('logo_dark_url')} placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
               </Field>
               <Field label="Favicon URL" id="favicon">
-                <Input id="favicon" placeholder="https://..." className="h-10 rounded-xl" />
+                <Input id="favicon" value={settings.favicon_url} onChange={set('favicon_url')} placeholder="https://..." className="h-10 rounded-xl" />
               </Field>
             </Section>
             <Section title="Кольори (CSS змінні)">
@@ -131,21 +169,21 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title="Соціальні мережі">
               <Field label="Facebook" id="facebook">
-                <Input id="facebook" placeholder="https://facebook.com/lero.al" className="h-10 rounded-xl" />
+                <Input id="facebook" value={settings.social_facebook} onChange={set('social_facebook')} placeholder="https://facebook.com/lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="Instagram" id="instagram">
-                <Input id="instagram" placeholder="https://instagram.com/lero.al" className="h-10 rounded-xl" />
+                <Input id="instagram" value={settings.social_instagram} onChange={set('social_instagram')} placeholder="https://instagram.com/lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="LinkedIn" id="linkedin">
-                <Input id="linkedin" placeholder="https://linkedin.com/company/lero-al" className="h-10 rounded-xl" />
+                <Input id="linkedin" value={settings.social_linkedin} onChange={set('social_linkedin')} placeholder="https://linkedin.com/company/lero-al" className="h-10 rounded-xl" />
               </Field>
             </Section>
             <Section title="Футер — текст">
               <Field label="Текст про компанію (AL)" id="about-al">
-                <Textarea id="about-al" rows={3} placeholder="Tregu kryesor i pasurive..." className="rounded-xl resize-none" />
+                <Textarea id="about-al" rows={3} value={settings.about_al} onChange={set('about_al')} placeholder="Tregu kryesor i pasurive..." className="rounded-xl resize-none" />
               </Field>
               <Field label="Текст про компанію (UK)" id="about-uk">
-                <Textarea id="about-uk" rows={3} placeholder="Головний ринок нерухомості..." className="rounded-xl resize-none" />
+                <Textarea id="about-uk" rows={3} value={settings.about_uk} onChange={set('about_uk')} placeholder="Головний ринок нерухомості..." className="rounded-xl resize-none" />
               </Field>
             </Section>
           </>
@@ -155,13 +193,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title="SEO за замовчуванням">
               <Field label="Meta title" id="meta-title">
-                <Input id="meta-title" defaultValue="Lero.al — Imobiliare në Shqipëri" className="h-10 rounded-xl" />
+                <Input id="meta-title" value={settings.meta_title} onChange={set('meta_title')} className="h-10 rounded-xl" />
               </Field>
               <Field label="Meta description" id="meta-desc">
-                <Textarea id="meta-desc" rows={3} defaultValue="Gjeni shtëpinë tuaj të ëndrrave në Shqipëri." className="rounded-xl resize-none" />
+                <Textarea id="meta-desc" rows={3} value={settings.meta_desc} onChange={set('meta_desc')} className="rounded-xl resize-none" />
               </Field>
               <Field label="OG Image URL" id="og-image">
-                <Input id="og-image" placeholder="https://lero.al/og-image.jpg" className="h-10 rounded-xl" />
+                <Input id="og-image" value={settings.og_image} onChange={set('og_image')} placeholder="https://lero.al/og-image.jpg" className="h-10 rounded-xl" />
               </Field>
             </Section>
             <Section title="Архівні оголошення">
@@ -175,8 +213,8 @@ export function AdminSettings({ initialSettings }: Props) {
                   type="number"
                   min={1}
                   max={365}
-                  value={noindexDays}
-                  onChange={e => setNoindexDays(e.target.value)}
+                  value={settings.archived_noindex_days}
+                  onChange={set('archived_noindex_days')}
                   className="h-10 rounded-xl w-32"
                 />
               </Field>
@@ -214,19 +252,27 @@ export function AdminSettings({ initialSettings }: Props) {
           </>
         )}
 
-        <div className="flex justify-end pt-2 border-t">
-          <Button
-            type="button"
-            className="gap-2 rounded-xl h-10"
-            disabled={saved || isPending}
-            onClick={handleSave}
-          >
-            {isPending
-              ? <><Loader2 className="h-4 w-4 animate-spin" /> Збереження...</>
-              : saved
-              ? <><CheckCircle2 className="h-4 w-4" /> Збережено</>
-              : <><Save className="h-4 w-4" /> Зберегти зміни</>}
-          </Button>
+        <div className="flex items-center justify-between pt-2 border-t">
+          {saveState === 'error' && (
+            <span className="flex items-center gap-1.5 text-sm text-destructive">
+              <AlertCircle className="h-4 w-4" />
+              Помилка збереження
+            </span>
+          )}
+          <div className="ml-auto">
+            <Button
+              type="button"
+              className="gap-2 rounded-xl h-10"
+              disabled={isPending}
+              onClick={handleSave}
+            >
+              {isPending
+                ? <><Loader2 className="h-4 w-4 animate-spin" /> Збереження...</>
+                : saveState === 'saved'
+                ? <><CheckCircle2 className="h-4 w-4" /> Збережено</>
+                : <><Save className="h-4 w-4" /> Зберегти зміни</>}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

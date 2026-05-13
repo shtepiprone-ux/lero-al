@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
+import { getSetting } from '@/modules/admin/lib/settings'
 
-export function Footer() {
+export async function Footer() {
   const t = useTranslations('nav')
   const locale = useLocale()
   const year = new Date().getFullYear()
+  const siteName = await getSetting('site_name', 'Lero.al')
+  const [brand, tld] = siteName.includes('.') ? [siteName.split('.')[0], '.' + siteName.split('.').slice(1).join('.')] : [siteName, '']
 
   return (
     <footer className="site-footer border-t bg-surface-2">
@@ -14,8 +17,8 @@ export function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-4">
             <Link href={`/${locale}`} className="font-bold text-xl w-fit">
-              <span className="text-primary">Shtepi</span>
-              <span className="text-foreground">.al</span>
+              <span className="text-primary">{brand}</span>
+              <span className="text-foreground">{tld}</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">
               {t('tagline')}
@@ -62,7 +65,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">
-            © {year} Lero.al — {t('all_rights')}
+            © {year} {siteName} — {t('all_rights')}
           </p>
           <div className="flex items-center gap-5">
             <span className="text-xs text-muted-foreground hidden sm:block">{t('follow_us')}:</span>

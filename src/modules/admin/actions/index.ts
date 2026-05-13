@@ -174,6 +174,35 @@ export async function saveSetting(key: string, value: string) {
     .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' })
   if (error) console.error('saveSetting failed', { error, key })
   revalidatePath('/admin/settings')
+  // Brand-related settings require full revalidation so Header/Footer/Sidebar reflect the change
+  if (['site_name', 'logo_url', 'logo_dark_url', 'favicon_url'].includes(key)) {
+    revalidatePath('/', 'layout')
+    revalidatePath('/admin', 'layout')
+  }
+}
+
+export async function saveSettings(entries: Record<string, string>): Promise<{ error?: string }> {
+  await assertAdminAccess()
+  const db = createAdminClient()
+  const rows = Object.entries(entries).map(([key, value]) => ({
+    key,
+    value,
+    updated_at: new Date().toISOString(),
+  }))
+  const { error } = await db
+    .from('site_settings')
+    .upsert(rows, { onConflict: 'key' })
+  if (error) {
+    console.error('saveSettings failed', { error })
+    return { error: 'Не вдалось зберегти налаштування' }
+  }
+  revalidatePath('/admin/settings')
+  const brandKeys = ['site_name', 'logo_url', 'logo_dark_url', 'favicon_url']
+  if (rows.some(r => brandKeys.includes(r.key))) {
+    revalidatePath('/', 'layout')
+    revalidatePath('/admin', 'layout')
+  }
+  return {}
 }
 
 // ── Legal pages ──────────────────────────────────────────────────────────────

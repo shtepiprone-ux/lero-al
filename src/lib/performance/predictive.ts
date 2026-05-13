@@ -171,7 +171,7 @@ export function attemptPredictivePreload(
 
 function dispatchPredictiveEvent(payload: PredictivePreloadPayload): void {
   if (typeof window === 'undefined') return
-  window.dispatchEvent(new CustomEvent('shtepi:vitals', { detail: payload }))
+  window.dispatchEvent(new CustomEvent('lero:vitals', { detail: payload }))
 }
 
 // ── usePredictivePreload hook ─────────────────────────────────────────────────

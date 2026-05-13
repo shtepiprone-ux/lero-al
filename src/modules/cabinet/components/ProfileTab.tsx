@@ -1,146 +1,524 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState, useMemo, useTransition, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
-import { CheckCircle2, AlertCircle } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
+import { toast } from 'sonner'
+import { CheckCircle2, AlertCircle, Camera, UserCircle2, Loader2, MapPin, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
+import { AppImage } from '@/components/ui/AppImage'
 import { cn } from '@/lib/utils'
-import type { User, UserType } from '@/types/database'
+import {
+  updateCabinetProfile,
+  deleteOwnAccount,
+  uploadCabinetAvatar,
+  initiateEmailChange,
+  resendEmailVerification,
+} from '@/modules/cabinet/actions'
+import type { User, PreferredCurrency } from '@/types/database'
+import { useRouter } from 'next/navigation'
+
+// ── Constants ─────────────────────────────────────────────────────────────────
+
+const MAX_AVATAR_BYTES = 2 * 1024 * 1024
+const REQUIRED_AVATAR_DIM = 256
+const VALID_AVATAR_MIME = ['image/jpeg', 'image/png', 'image/webp']
+
+const COUNTRY_CODES = [
+  { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
+  { code: '+39', flag: '🇮🇹' }, { code: '+44', flag: '🇬🇧' },
+  { code: '+1', flag: '🇺🇸' }, { code: '+49', flag: '🇩🇪' },
+  { code: '+33', flag: '🇫🇷' }, { code: '+90', flag: '🇹🇷' },
+  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
+  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
+  { code: '+389', flag: '🇲🇰' },
+]
+
+interface CityOption { id: number; name_al: string; region_id: number | null }
+interface RegionOption { id: number; name_al: string }
 
 interface Props {
   profile: User | null
   locale: string
+  cities: CityOption[]
+  regions: RegionOption[]
 }
 
-export function ProfileTab({ profile, locale: _locale }: Props) {
+// ── Phone input sub-component ─────────────────────────────────────────────────
+
+function parsePhone(val: string) {
+  const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
+  return match
+    ? { code: match.code, local: val.slice(match.code.length) }
+    : { code: '+355', local: val.replace(/^\+/, '') }
+}
+
+function PhoneField({ label, value, onChange }: {
+  label: string; value: string; onChange: (v: string) => void
+}) {
+  const [code, setCode] = useState(() => parsePhone(value).code)
+  const [local, setLocal] = useState(() => parsePhone(value).local)
+
+  function update(c: string, l: string) {
+    setCode(c); setLocal(l)
+    onChange(`${c}${l.replace(/\s/g, '')}`)
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label className="text-sm">{label}</Label>
+      <div className="flex gap-2">
+        <Select value={code} onValueChange={c => { if (c) update(c, local) }}>
+          <SelectTrigger variant="outline" size="sm" className="w-24 h-11 shrink-0 rounded-xl">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {COUNTRY_CODES.map(c => (
+              <SelectItem key={c.code} value={c.code}>{c.flag} {c.code}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Input
+          value={local}
+          onChange={e => update(code, e.target.value)}
+          placeholder="69 123 456"
+          className="h-11 rounded-xl"
+        />
+      </div>
+    </div>
+  )
+}
+
+// ── Settlement combobox sub-component ────────────────────────────────────────
+
+function SettlementCombobox({ cities, regions, value, onChange, label }: {
+  cities: CityOption[]
+  regions: RegionOption[]
+  value: number | null
+  onChange: (id: number | null) => void
+  label: string
+}) {
+  const [search, setSearch] = useState('')
+  const [open, setOpen] = useState(false)
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
+  const [mounted, setMounted] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  // Track client mount for portal
+  useEffect(() => { setMounted(true) }, [])
+
+  // Recompute dropdown position whenever it opens
+  useEffect(() => {
+    if (!open || !inputRef.current) return
+    const rect = inputRef.current.getBoundingClientRect()
+    setDropdownStyle({
+      position: 'fixed',
+      top: rect.bottom + 4,
+      left: rect.left,
+      width: rect.width,
+      zIndex: 9999,
+    })
+  }, [open])
+
+  const selected = cities.find(c => c.id === value)
+  const region = regions.find(r => r.id === selected?.region_id)
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return cities.slice(0, 20)
+    const q = search.toLowerCase()
+    return cities.filter(c => c.name_al.toLowerCase().includes(q)).slice(0, 20)
+  }, [cities, search])
+
+  const dropdown = open && mounted ? createPortal(
+    <div
+      style={dropdownStyle}
+      className="bg-popover border rounded-xl shadow-lg max-h-48 overflow-y-auto"
+    >
+      {filtered.length === 0
+        ? <p className="px-3 py-2 text-sm text-muted-foreground">Nuk ka rezultate</p>
+        : filtered.map(c => (
+            <button
+              key={c.id}
+              type="button"
+              className={`w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors ${value === c.id ? 'bg-primary/10 text-primary font-medium' : ''}`}
+              onMouseDown={() => { onChange(c.id); setSearch(''); setOpen(false) }}
+            >
+              {c.name_al}
+              {regions.find(r => r.id === c.region_id) && (
+                <span className="ml-2 text-xs text-muted-foreground">{regions.find(r => r.id === c.region_id)?.name_al}</span>
+              )}
+            </button>
+          ))}
+    </div>,
+    document.body,
+  ) : null
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label className="text-sm">{label}</Label>
+      <div className="relative">
+        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
+        <input
+          ref={inputRef}
+          type="text"
+          value={selected ? selected.name_al : search}
+          onChange={e => { setSearch(e.target.value); if (selected) onChange(null); setOpen(true) }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 180)}
+          placeholder="Kërko qytetin..."
+          className="w-full h-11 pl-9 pr-3 text-sm bg-muted/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring"
+        />
+      </div>
+      {region && <p className="text-xs text-muted-foreground">{region.name_al}</p>}
+      {dropdown}
+    </div>
+  )
+}
+
+// ── Currency combobox sub-component ──────────────────────────────────────────
+
+function CurrencySelector({ value, onChange, labelAll, labelEur, fieldLabel }: {
+  value: PreferredCurrency
+  onChange: (v: PreferredCurrency) => void
+  labelAll: string
+  labelEur: string
+  fieldLabel: string
+}) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label className="text-sm">{fieldLabel}</Label>
+      <div className="flex gap-2">
+        {(['ALL', 'EUR'] as PreferredCurrency[]).map(cur => (
+          <button
+            key={cur}
+            type="button"
+            onClick={() => onChange(cur)}
+            className={cn(
+              'flex-1 h-11 rounded-xl border text-sm font-medium transition-all duration-150',
+              value === cur
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'bg-background text-foreground border-border hover:border-primary/50',
+            )}
+          >
+            {cur === 'ALL' ? labelAll : labelEur}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Avatar upload sub-component ───────────────────────────────────────────────
+
+async function validateAvatarDimensions(file: File): Promise<boolean> {
+  return new Promise(resolve => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img.naturalWidth === REQUIRED_AVATAR_DIM && img.naturalHeight === REQUIRED_AVATAR_DIM) }
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(false) }
+    img.src = url
+  })
+}
+
+function AvatarUpload({ currentUrl, onUpload }: {
+  currentUrl: string | null
+  onUpload: (url: string | null) => void
+}) {
+  const t = useTranslations('cabinet')
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [url, setUrl] = useState(currentUrl)
+
+  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    e.target.value = ''
+    setError(null)
+
+    if (!VALID_AVATAR_MIME.includes(file.type)) { setError(t('avatar_error_type')); return }
+    if (file.size > MAX_AVATAR_BYTES) { setError(t('avatar_error_size')); return }
+    const dimOk = await validateAvatarDimensions(file)
+    if (!dimOk) { setError(t('avatar_error_dimensions')); return }
+
+    setUploading(true)
+    const fd = new FormData()
+    fd.append('avatar', file)
+    const result = await uploadCabinetAvatar(fd)
+    setUploading(false)
+    if (result.error) { setError(result.error); return }
+    if (result.url) { setUrl(result.url); onUpload(result.url) }
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative">
+        <div
+          className="h-20 w-20 rounded-full overflow-hidden border-2 border-border bg-muted flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => inputRef.current?.click()}
+        >
+          {url
+            ? <AppImage src={url} variant="avatar" alt="Avatar" priority={false} />
+            : <UserCircle2 className="h-10 w-10 text-muted-foreground" />
+          }
+        </div>
+        {uploading
+          ? <div className="absolute inset-0 rounded-full bg-black/30 flex items-center justify-center"><Loader2 className="h-5 w-5 text-white animate-spin" /></div>
+          : <button type="button" onClick={() => inputRef.current?.click()} className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md"><Camera className="h-3 w-3" /></button>
+        }
+      </div>
+      <div className="flex gap-2 text-xs">
+        <button type="button" onClick={() => inputRef.current?.click()} className="text-primary hover:underline">
+          {url ? t('avatar_replace') : t('avatar_upload')}
+        </button>
+      </div>
+      <p className="text-[10px] text-muted-foreground text-center max-w-[120px]">{t('avatar_hint')}</p>
+      {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
+      <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFile} />
+    </div>
+  )
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
+
+export function ProfileTab({ profile, locale, cities, regions }: Props) {
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
+  // Form state
   const [name, setName] = useState(profile?.name ?? '')
   const [phone, setPhone] = useState(profile?.phone ?? '')
   const [whatsapp, setWhatsapp] = useState(profile?.whatsapp ?? '')
   const [companyName, setCompanyName] = useState(profile?.company_name ?? '')
-  const [userType, setUserType] = useState<UserType>(profile?.user_type ?? 'private')
-  const [status, setStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+  const [userType, setUserType] = useState<'private' | 'agent'>(
+    profile?.user_type === 'agent' ? 'agent' : 'private',
+  )
+  const [locationId, setLocationId] = useState<number | null>(profile?.location_id ?? null)
+  const [currency, setCurrency] = useState<PreferredCurrency>(profile?.preferred_currency ?? 'ALL')
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url ?? null)
+
+  // Email change state
+  const [newEmail, setNewEmail] = useState('')
+  const [pendingEmail, setPendingEmail] = useState<string | null>(profile?.pending_email ?? null)
+  const [emailChangeStatus, setEmailChangeStatus] = useState<'idle' | 'pending' | 'sending' | 'error'>('idle')
+  const [emailError, setEmailError] = useState<string | null>(null)
+
+  // Save status
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
+
+  // Delete account dialog
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [deleteConfirm, setDeleteConfirm] = useState('')
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState<string | null>(null)
 
   async function handleSave() {
-    if (!profile?.id) return
-    setStatus('saving')
-    const supabase = createClient()
-    const { error } = await supabase
-      .from('users')
-      .update({
-        name: name.trim() || null,
-        phone: phone.trim() || null,
-        whatsapp: whatsapp.trim() || null,
-        company_name: userType === 'agent' ? (companyName.trim() || null) : null,
-        user_type: userType,
-      })
-      .eq('id', profile.id)
-
-    if (error) {
-      console.error('Profile update failed', { error, userId: profile.id })
-      setStatus('error')
+    setSaveStatus('saving')
+    const result = await updateCabinetProfile({
+      name,
+      phone,
+      whatsapp,
+      companyName: userType === 'agent' ? companyName : null,
+      userType,
+      locationId,
+      preferredCurrency: currency,
+    })
+    if (result.error) {
+      setSaveStatus('error')
     } else {
-      setStatus('saved')
-      setTimeout(() => setStatus('idle'), 3000)
+      setSaveStatus('saved')
+      setTimeout(() => setSaveStatus('idle'), 3000)
+      startTransition(() => router.refresh())
     }
   }
 
+  async function handleEmailChange() {
+    if (!newEmail.trim()) return
+    setEmailChangeStatus('sending')
+    setEmailError(null)
+    const result = await initiateEmailChange({ newEmail: newEmail.trim(), locale })
+    if (result.error) {
+      setEmailChangeStatus('error')
+      setEmailError(result.error)
+    } else {
+      setPendingEmail(result.pendingEmail ?? newEmail.trim())
+      setEmailChangeStatus('pending')
+      setNewEmail('')
+    }
+  }
+
+  async function handleResendVerification() {
+    setEmailChangeStatus('sending')
+    const result = await resendEmailVerification({ locale })
+    if (result.error) {
+      setEmailChangeStatus('error')
+      setEmailError(result.error)
+    } else {
+      setEmailChangeStatus('pending')
+    }
+  }
+
+  async function handleDeleteAccount() {
+    setDeleting(true)
+    setDeleteError(null)
+    const result = await deleteOwnAccount()
+    setDeleting(false)
+    if (result.error) {
+      setDeleteError(result.error)
+      return
+    }
+    setShowDeleteDialog(false)
+    toast.success(t('delete_account_success'))
+    router.push(`/${locale}`)
+  }
+
+  const deleteConfirmOk = deleteConfirm.trim().toUpperCase() === 'DELETE'
+
   return (
-    <div className="profile-tab bg-card rounded-2xl border shadow-sm p-6">
-      <h2 className="font-semibold text-base mb-6">{t('profile_tab')}</h2>
+    <div className="flex flex-col gap-6">
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-
-        {/* Name */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="name" className="text-sm">{t('name')}</Label>
-          <Input
-            id="name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            className="h-11 rounded-xl"
-            placeholder={t('name')}
-          />
-        </div>
-
-        {/* Phone */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="phone" className="text-sm">{t('phone')}</Label>
-          <Input
-            id="phone"
-            type="tel"
-            value={phone}
-            onChange={e => setPhone(e.target.value)}
-            className="h-11 rounded-xl"
-            placeholder={tc('phone_placeholder')}
-          />
-        </div>
-
-        {/* WhatsApp */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="whatsapp" className="text-sm">{t('whatsapp')}</Label>
-          <Input
-            id="whatsapp"
-            type="tel"
-            value={whatsapp}
-            onChange={e => setWhatsapp(e.target.value)}
-            className="h-11 rounded-xl"
-            placeholder={tc('phone_placeholder')}
-          />
-        </div>
-
-        {/* Account type */}
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-sm">{t('user_type_label')}</Label>
-          <div className="flex gap-2">
-            {(['private', 'agent'] as UserType[]).map(type => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => setUserType(type)}
-                className={cn(
-                  'flex-1 h-11 rounded-xl border text-sm font-medium transition-all duration-150',
-                  userType === type
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-background text-foreground border-border hover:border-primary/50'
-                )}
-              >
-                {type === 'private' ? t('user_type_private') : t('user_type_agent')}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Company name — agent only */}
-        {userType === 'agent' && (
-          <div className="flex flex-col gap-1.5 sm:col-span-2">
-            <Label htmlFor="company" className="text-sm">{t('company_name')}</Label>
+      {/* ── Identity card ─────────────────────────────────────────────────── */}
+      <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col sm:flex-row gap-6 items-start">
+        <AvatarUpload currentUrl={avatarUrl} onUpload={setAvatarUrl} />
+        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="name" className="text-sm">{t('name')}</Label>
             <Input
-              id="company"
-              value={companyName}
-              onChange={e => setCompanyName(e.target.value)}
+              id="name"
+              value={name}
+              onChange={e => setName(e.target.value)}
               className="h-11 rounded-xl"
-              placeholder={t('company_name')}
+              placeholder={t('name')}
             />
           </div>
-        )}
-
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-sm">{t('user_type_label')}</Label>
+            <div className="flex gap-2">
+              {(['private', 'agent'] as ('private' | 'agent')[]).map(type => (
+                <button
+                  key={type}
+                  type="button"
+                  onClick={() => setUserType(type)}
+                  className={cn(
+                    'flex-1 h-11 rounded-xl border text-sm font-medium transition-all duration-150',
+                    userType === type
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'bg-background text-foreground border-border hover:border-primary/50',
+                  )}
+                >
+                  {type === 'private' ? t('user_type_private') : t('user_type_agent')}
+                </button>
+              ))}
+            </div>
+          </div>
+          {userType === 'agent' && (
+            <div className="flex flex-col gap-1.5 sm:col-span-2">
+              <Label htmlFor="company" className="text-sm">{t('company_name')}</Label>
+              <Input
+                id="company"
+                value={companyName}
+                onChange={e => setCompanyName(e.target.value)}
+                className="h-11 rounded-xl"
+                placeholder={t('company_name')}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between mt-8 pt-5 border-t gap-4">
-        {status === 'saved' && (
+      {/* ── Contact & Location ─────────────────────────────────────────────── */}
+      <div className="bg-card rounded-2xl border shadow-sm p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <PhoneField
+          label={t('phone')}
+          value={phone}
+          onChange={setPhone}
+        />
+        <PhoneField
+          label={t('whatsapp')}
+          value={whatsapp}
+          onChange={setWhatsapp}
+        />
+        <div className="sm:col-span-2">
+          <SettlementCombobox
+            cities={cities}
+            regions={regions}
+            value={locationId}
+            onChange={setLocationId}
+            label={t('city_label')}
+          />
+        </div>
+      </div>
+
+      {/* ── Currency preference ────────────────────────────────────────────── */}
+      <div className="bg-card rounded-2xl border shadow-sm p-6">
+        <CurrencySelector
+          value={currency}
+          onChange={setCurrency}
+          labelAll={t('currency_ALL')}
+          labelEur={t('currency_EUR')}
+          fieldLabel={t('preferred_currency_label')}
+        />
+      </div>
+
+      {/* ── Email change ───────────────────────────────────────────────────── */}
+      <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col gap-3">
+        <Label className="text-sm font-semibold">{t('email_label')}</Label>
+        {pendingEmail ? (
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-muted-foreground">
+              {t('email_change_pending').replace('{email}', pendingEmail)}
+            </p>
+            <button
+              type="button"
+              onClick={handleResendVerification}
+              disabled={emailChangeStatus === 'sending'}
+              className="text-sm text-primary hover:underline disabled:opacity-50 w-fit"
+            >
+              {emailChangeStatus === 'sending' ? tc('loading') : t('email_change_resend')}
+            </button>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <Input
+              type="email"
+              value={newEmail}
+              onChange={e => { setNewEmail(e.target.value); setEmailError(null) }}
+              placeholder={t('email_change_hint')}
+              className="h-11 rounded-xl flex-1"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              className="h-11 rounded-xl shrink-0"
+              onClick={handleEmailChange}
+              disabled={!newEmail.trim() || emailChangeStatus === 'sending'}
+            >
+              {emailChangeStatus === 'sending' ? <Loader2 className="h-4 w-4 animate-spin" /> : tc('save')}
+            </Button>
+          </div>
+        )}
+        {emailError && (
+          <p className="text-xs text-destructive flex items-center gap-1">
+            <AlertCircle className="h-3 w-3 shrink-0" />{emailError}
+          </p>
+        )}
+      </div>
+
+      {/* ── Save button ────────────────────────────────────────────────────── */}
+      <div className="flex items-center justify-between pt-1">
+        {saveStatus === 'saved' && (
           <span className="flex items-center gap-1.5 text-sm text-status-success">
             <CheckCircle2 className="h-4 w-4" />
             {t('profile_updated')}
           </span>
         )}
-        {status === 'error' && (
+        {saveStatus === 'error' && (
           <span className="flex items-center gap-1.5 text-sm text-destructive">
             <AlertCircle className="h-4 w-4" />
             {t('error_saving')}
@@ -149,13 +527,72 @@ export function ProfileTab({ profile, locale: _locale }: Props) {
         <div className="ml-auto">
           <Button
             onClick={handleSave}
-            disabled={status === 'saving'}
+            disabled={saveStatus === 'saving' || isPending}
             className="h-11 px-8 rounded-xl"
           >
-            {status === 'saving' ? t('saving') : t('save_changes')}
+            {saveStatus === 'saving' ? t('saving') : t('save_changes')}
           </Button>
         </div>
       </div>
+
+      {/* ── Danger zone ────────────────────────────────────────────────────── */}
+      <div className="bg-destructive/5 border border-destructive/20 rounded-2xl p-6 flex flex-col gap-3">
+        <p className="text-sm font-semibold text-destructive">{t('delete_account')}</p>
+        <p className="text-xs text-muted-foreground">{t('delete_account_body')}</p>
+        <Button
+          variant="destructive"
+          size="sm"
+          className="w-fit rounded-xl gap-1.5"
+          onClick={() => setShowDeleteDialog(true)}
+        >
+          <Trash2 className="h-4 w-4" />
+          {t('delete_account')}
+        </Button>
+      </div>
+
+      {/* ── Delete confirm dialog ───────────────────────────────────────────── */}
+      {showDeleteDialog && (
+        <Dialog open onOpenChange={open => { if (!open) setShowDeleteDialog(false) }}>
+          <DialogContent showCloseButton={false} className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-destructive">
+                <Trash2 className="h-5 w-5" /> {t('delete_account_title')}
+              </DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-3">
+              <p className="text-sm text-muted-foreground">{t('delete_account_body')}</p>
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs text-muted-foreground">{t('delete_account_type_confirm')}</Label>
+                <Input
+                  value={deleteConfirm}
+                  onChange={e => setDeleteConfirm(e.target.value)}
+                  placeholder="DELETE"
+                  className="h-10 rounded-xl font-mono"
+                  autoComplete="off"
+                />
+              </div>
+              {deleteError && (
+                <p className="text-xs text-destructive flex items-center gap-1">
+                  <AlertCircle className="h-3 w-3 shrink-0" />{deleteError}
+                </p>
+              )}
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowDeleteDialog(false)} disabled={deleting}>
+                {tc('cancel')}
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={handleDeleteAccount}
+                disabled={!deleteConfirmOk || deleting}
+              >
+                {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                {t('delete_account_confirm')}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   )
 }

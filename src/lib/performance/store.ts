@@ -115,7 +115,7 @@ function handleVitalsEvent(event: Event): void {
   // The collector dispatches LCP, CLS, and INP only — FCP and TTFB are not
   // collected or dispatched anywhere in this codebase and therefore cannot reach
   // this handler. The allow-list additionally guards against non-WebVitalMetric
-  // payloads that share the shtepi:vitals channel (dropped-sample envelopes,
+  // payloads that share the lero:vitals channel (dropped-sample envelopes,
   // predictive-preload signals, image-guard events) to prevent spurious store
   // mutations and unnecessary re-renders.
   if (payload?.name !== 'LCP' && payload?.name !== 'CLS' && payload?.name !== 'INP') return
@@ -170,11 +170,11 @@ export function initPerformanceStore(): () => void {
   // Guard against double-registration in React strict mode
   if (vitalsHandler) return () => {}
   vitalsHandler = handleVitalsEvent
-  window.addEventListener('shtepi:vitals', vitalsHandler)
+  window.addEventListener('lero:vitals', vitalsHandler)
 
   return () => {
     if (vitalsHandler) {
-      window.removeEventListener('shtepi:vitals', vitalsHandler)
+      window.removeEventListener('lero:vitals', vitalsHandler)
       vitalsHandler = null
     }
   }

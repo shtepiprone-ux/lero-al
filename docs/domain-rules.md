@@ -1,3 +1,43 @@
+## User Profile Data Model
+
+Core fields (all users): `id`, `name`, `last_name`, `phone`, `whatsapp`, `avatar_url`, `role`, `user_type`, `status`, `block_reason`, `location_id`, `deleted_at`, `preferred_currency`, `pending_email`, `created_at`.
+
+Agent/developer additional fields: `company_name`, `company_logo_url`, `website`, `position`, `year_started`.
+
+Immutable after creation: `id`, `email` (email changes go through the cabinet email-change flow — stored in `pending_email` until verified).
+
+Currency preference: `preferred_currency IN ('ALL', 'EUR')` — defaults to `'ALL'`. Drives the price display across the product.
+
+## User Status Enum & Transitions
+
+Status values: `active`, `blocked`, `inactive`, `self_deleted` (written to `user_status_history`).
+
+Listing archiving: when a user self-deletes, all their non-sold/non-rented listings are set to `archived` in one update.
+
+`user_status_history` logs every status transition: `old_status`, `new_status`, `reason` (required when `new_status = 'blocked'`), `changed_by`, `changed_at`.
+
+## Owner-Deleted Listing Rule
+
+A user with `deleted_at IS NOT NULL` is considered deleted. Their archived listings remain accessible by direct URL but:
+- Do NOT appear in public index, search, or similar listings queries.
+- The `ListingContact` block on the detail page renders a "Owner deleted their account" placeholder instead of phone/WhatsApp/message buttons.
+
+## Email Change Lifecycle
+
+1. User submits new email in cabinet profile → stored as `users.pending_email`; verification token created in `email_change_tokens` (expires 24h, single-use).
+2. Verification email sent to new address; security notification sent to old address (via Resend when Task 34 lands).
+3. User clicks link → `/[locale]/auth/confirm-email?token=...` → token consumed, `users.email` updated, old sessions invalidated.
+4. Before confirmation: old email is valid for login; new email is not.
+5. After confirmation: only new email is valid; `pending_email` cleared.
+
+## Role Mutation Surface
+
+- **Sole entry point for role changes**: the user profile edit page (`/admin/users/[id]`), via `updateUserProfileFull` → `profileTypeToDb`.
+- **Admin-only gate**: `updateUserProfileFull` checks `myProfile.role === 'admin'` before writing `role`/`user_type`; moderators see the field as read-only.
+- **Moderator restrictions**: Moderator CANNOT delete users AND CANNOT change user role. Both enforced at UI layer (delete button hidden, role field read-only) and Server Action layer.
+- **Admin users table (`/admin/users`)**: the "Role" column is a read-only `<Badge>` — no inline editor, no Select, no Combobox, no click-to-cycle. Any future code that re-introduces an editable control in that cell is a violation.
+- **Audit log**: role changes via profile edit are written to `user_change_log` (field `profile_type`). Status changes written to `user_status_history`.
+
 ## Permissions
 
 - **Create listing**: any authenticated user (private person or agent).

@@ -22,7 +22,7 @@ import {
   approveLocationRequest, rejectLocationRequest, createAdminUser,
   type ProfileType,
 } from '@/modules/admin/actions'
-import type { User, UserChangeLog } from '@/types/database'
+import type { User, UserChangeLog, UserStatusHistory } from '@/types/database'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -39,6 +39,7 @@ interface Props {
   cities: CityOption[]
   regions: RegionOption[]
   changeLog: UserChangeLog[]
+  statusHistory: UserStatusHistory[]
   isAdmin: boolean
 }
 
@@ -91,10 +92,10 @@ const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
   { code: '+39', flag: '🇮🇹' }, { code: '+44', flag: '🇬🇧' },
   { code: '+1', flag: '🇺🇸' }, { code: '+49', flag: '🇩🇪' },
-  { code: '+33', flag: '🇫🇷' }, { code: '+7', flag: '🇷🇺' },
-  { code: '+90', flag: '🇹🇷' }, { code: '+383', flag: '🇽🇰' },
-  { code: '+382', flag: '🇲🇪' }, { code: '+387', flag: '🇧🇦' },
-  { code: '+381', flag: '🇷🇸' }, { code: '+389', flag: '🇲🇰' },
+  { code: '+33', flag: '🇫🇷' }, { code: '+90', flag: '🇹🇷' },
+  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
+  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
+  { code: '+389', flag: '🇲🇰' },
 ]
 
 function parsePhone(val: string) {
@@ -389,7 +390,7 @@ function PasswordInfo() {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-export function AdminUserProfile({ user, email: authEmail, cities, regions, changeLog, isAdmin }: Props) {
+export function AdminUserProfile({ user, email: authEmail, cities, regions, changeLog, statusHistory, isAdmin }: Props) {
   const router = useRouter()
 
   // Mode derivation — create if no user, otherwise view/edit toggle
@@ -653,7 +654,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
       {/* ── Basic info ──────────────────────────────────────────────────────── */}
       <SectionCard title="Основна інформація">
-        {/* Email — editable in create, readonly in view/edit */}
+        {/* Email — editable in create, read-only in view/edit */}
         {isCreate ? (
           <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
             <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">Email *</Label>
@@ -669,9 +670,15 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
             </div>
           </div>
         ) : (
-          <FieldRow label="Email" mode="view"
-            viewValue={<span className="text-muted-foreground">{authEmail} <span className="text-xs">(незмінний)</span></span>}
-          />
+          <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
+            <span className="text-sm text-muted-foreground sm:pt-2 leading-none">Email</span>
+            <div className="min-w-0">
+              <span className="text-sm font-medium break-all">{authEmail}</span>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Email is immutable. The user can change their email from their profile.
+              </p>
+            </div>
+          </div>
         )}
 
         <FieldRow label="Ім'я *" mode={currentMode}
@@ -835,6 +842,34 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                   {' · '}
                   <span className="font-medium capitalize">{entry.old_value}</span>{' → '}
                   <span className="font-medium capitalize">{entry.new_value}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </SectionCard>
+      )}
+
+      {/* ── Status history (not shown in create mode) ───────────────────────── */}
+      {!isCreate && statusHistory.length > 0 && (
+        <SectionCard title="Історія змін статусу">
+          <div className="flex flex-col gap-2">
+            {statusHistory.slice(0, 10).map(entry => (
+              <div key={entry.id} className="flex items-start gap-3 text-xs">
+                <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
+                <div className="min-w-0 flex flex-col gap-0.5">
+                  <div>
+                    <span className="text-muted-foreground">
+                      {new Date(entry.changed_at).toLocaleDateString('uk-UA', {
+                        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+                      })}
+                    </span>
+                    {' · '}
+                    <span className="font-medium capitalize">{entry.old_status ?? '—'}</span>{' → '}
+                    <span className="font-medium capitalize">{entry.new_status}</span>
+                  </div>
+                  {entry.reason && (
+                    <span className="text-muted-foreground">Причина: {entry.reason}</span>
+                  )}
                 </div>
               </div>
             ))}

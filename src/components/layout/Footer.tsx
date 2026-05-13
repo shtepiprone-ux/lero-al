@@ -62,7 +62,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-muted-foreground">
-            © {year} Shtepi.al — {t('all_rights')}
+            © {year} Lero.al — {t('all_rights')}
           </p>
           <div className="flex items-center gap-5">
             <span className="text-xs text-muted-foreground hidden sm:block">{t('follow_us')}:</span>

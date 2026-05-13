@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { cn } from '@/lib/utils'
 import { createLocation, updateLocation, deleteLocation } from '@/modules/admin/actions'
 
 const TYPES = ['region', 'city', 'village', 'district'] as const
@@ -19,6 +19,128 @@ function toSlug(str: string) {
 }
 
 interface Location { id: number; name_al: string; name_en?: string | null; type: string; slug: string; parent_id?: number | null }
+
+// ── TypeCombobox ──────────────────────────────────────────────────────────────
+// Combobox for the four settlement type values (region / city / village / district).
+// Value is always one of TYPES; display label comes from TYPE_LABEL (never the raw enum literal).
+function TypeCombobox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const [search, setSearch] = useState('')
+  const [open, setOpen] = useState(false)
+
+  const filtered = useMemo(() => {
+    if (!search) return [...TYPES]
+    const q = search.toLowerCase()
+    return TYPES.filter(t => TYPE_LABEL[t].toLowerCase().includes(q))
+  }, [search])
+
+  const INPUT_CLS = 'w-full h-10 px-3 text-sm text-foreground border border-input bg-transparent rounded-xl outline-none focus:border-ring focus:ring-2 focus:ring-ring placeholder:text-muted-foreground'
+  const LIST_CLS  = 'absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-hidden'
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        value={open ? search : (TYPE_LABEL[value] ?? value)}
+        onChange={e => { setSearch(e.target.value); setOpen(true) }}
+        onFocus={() => { setSearch(''); setOpen(true) }}
+        onBlur={() => setTimeout(() => { setOpen(false); setSearch('') }, 150)}
+        placeholder="Оберіть тип"
+        className={INPUT_CLS}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      />
+      {open && (
+        <div role="listbox" className={LIST_CLS}>
+          {filtered.map(t => (
+            <Button
+              key={t}
+              variant="ghost"
+              className={cn('w-full px-3 py-2 h-auto text-sm justify-start rounded-none', value === t && 'bg-primary/10 text-primary')}
+              onMouseDown={() => { onChange(t); setSearch(''); setOpen(false) }}
+              role="option"
+              aria-selected={value === t}
+            >
+              {TYPE_LABEL[t]}
+            </Button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── ParentCombobox ────────────────────────────────────────────────────────────
+// Combobox for the parent region/city selection. Supports typeahead over the full
+// parent candidates list. Empty value → no parent (sentinel '' / null in the DB).
+function ParentCombobox({ value, onChange, parents, excludeId }: {
+  value: string; onChange: (v: string) => void; parents: Location[]; excludeId?: number
+}) {
+  const [search, setSearch] = useState('')
+  const [open, setOpen] = useState(false)
+
+  const candidates = useMemo(
+    () => parents.filter(p => p.id !== excludeId),
+    [parents, excludeId],
+  )
+
+  const filtered = useMemo(() => {
+    if (!search) return candidates.slice(0, 20)
+    const q = search.toLowerCase()
+    return candidates.filter(p => p.name_al.toLowerCase().includes(q)).slice(0, 20)
+  }, [candidates, search])
+
+  const selected = candidates.find(p => String(p.id) === value) ?? null
+  const displayLabel = selected ? `${selected.name_al} (${TYPE_LABEL[selected.type] ?? selected.type})` : ''
+
+  const INPUT_CLS = 'w-full h-10 px-3 text-sm text-foreground border border-input bg-transparent rounded-xl outline-none focus:border-ring focus:ring-2 focus:ring-ring placeholder:text-muted-foreground'
+  const LIST_CLS  = 'absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto'
+
+  return (
+    <div className="relative">
+      <input
+        type="text"
+        value={open ? search : displayLabel}
+        onChange={e => { setSearch(e.target.value); setOpen(true) }}
+        onFocus={() => { setSearch(''); setOpen(true) }}
+        onBlur={() => setTimeout(() => { setOpen(false); setSearch('') }, 150)}
+        placeholder="— Немає —"
+        className={INPUT_CLS}
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+      />
+      {open && (
+        <div role="listbox" className={LIST_CLS}>
+          <Button
+            variant="ghost"
+            className={cn('w-full px-3 py-2 h-auto text-sm justify-start rounded-none', !value && 'bg-primary/10 text-primary')}
+            onMouseDown={() => { onChange(''); setSearch(''); setOpen(false) }}
+            role="option"
+            aria-selected={!value}
+          >
+            — Немає —
+          </Button>
+          {filtered.map(p => (
+            <Button
+              key={p.id}
+              variant="ghost"
+              className={cn('w-full px-3 py-2 h-auto text-sm justify-between rounded-none', value === String(p.id) && 'bg-primary/10 text-primary')}
+              onMouseDown={() => { onChange(String(p.id)); setSearch(''); setOpen(false) }}
+              role="option"
+              aria-selected={value === String(p.id)}
+            >
+              <span>{p.name_al}</span>
+              <span className="text-xs text-muted-foreground ml-2">{TYPE_LABEL[p.type] ?? p.type}</span>
+            </Button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 function LocationModal({
   location, parents, onClose, onDone,
@@ -68,12 +190,7 @@ function LocationModal({
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs">Тип</Label>
-            <Select value={type} onValueChange={v => v && setType(v)}>
-              <SelectTrigger className="h-10 w-full"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                {TYPES.map(t => <SelectItem key={t} value={t}>{TYPE_LABEL[t]}</SelectItem>)}
-              </SelectContent>
-            </Select>
+            <TypeCombobox value={type} onChange={setType} />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs">Slug</Label>
@@ -81,15 +198,7 @@ function LocationModal({
           </div>
           <div className="flex flex-col gap-1.5 col-span-2">
             <Label className="text-xs">Батьківський регіон/місто</Label>
-            <Select value={parentId || '__none__'} onValueChange={v => setParentId(!v || v === '__none__' ? '' : v)}>
-              <SelectTrigger className="h-10 w-full"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                <SelectItem value="__none__">— Немає —</SelectItem>
-                {parents.filter(p => p.id !== location?.id).map(p => (
-                  <SelectItem key={p.id} value={String(p.id)}>{p.name_al} ({TYPE_LABEL[p.type]})</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <ParentCombobox value={parentId} onChange={setParentId} parents={parents} excludeId={location?.id} />
           </div>
         </div>
 

@@ -3,7 +3,7 @@ export const revalidate = 3600 // ISR: re-fetch at most once per hour
 async function fetchEurAllRate(): Promise<number | null> {
   try {
     const res = await fetch('https://iliria98.com/', {
-      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; shtepi.al/1.0)' },
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; lero.al/1.0)' },
     })
     if (!res.ok) return null
     const html = await res.text()

@@ -9,24 +9,35 @@ interface Props {
 export function ViewTracker({ slug }: Props) {
   useEffect(() => {
     const controller = new AbortController()
+    let timerId: number | undefined
 
-    // Delay by 1500 ms before firing the view increment.
-    // Rationale: firing immediately on mount means bots, accidental clicks,
-    // and back-navigation all inflate view counts. A 1.5 s delay ensures the
-    // user has genuinely started reading before the POST is sent.
-    //
-    // StrictMode safety: the timer is cleared by cleanup before it fires on
-    // the first (discarded) mount. Only the second mount's timer completes,
-    // preserving the "exactly one POST per real mount" guarantee.
-    const timer = window.setTimeout(() => {
-      fetch(`/api/listings/${slug}/view`, {
-        method: 'POST',
-        signal: controller.signal,
-      }).catch(() => {})
-    }, 1500)
+    // Schedule the POST after 1500 ms — ensures the user has genuinely started
+    // reading before incrementing (filters bounce-backs and accidental clicks).
+    function schedulePost() {
+      timerId = window.setTimeout(() => {
+        fetch(`/api/listings/${slug}/view`, {
+          method: 'POST',
+          signal: controller.signal,
+        }).catch(() => {})
+      }, 1500)
+    }
 
+    // Speculation Rules guard: don't increment during a prerender that the user
+    // never activates. document.prerendering is true while the page is in the
+    // speculative prerender browsing context. On activation it fires
+    // 'prerenderingchange' and becomes false.
+    if ((document as any).prerendering) {
+      document.addEventListener('prerenderingchange', schedulePost, { once: true })
+    } else {
+      schedulePost()
+    }
+
+    // StrictMode safety: cleanup clears the pending timer (so mount #1's timer
+    // never fires); only mount #2's timer completes. Also removes the prerender
+    // listener and aborts any in-flight fetch on navigation away.
     return () => {
-      window.clearTimeout(timer)
+      if (timerId !== undefined) window.clearTimeout(timerId)
+      document.removeEventListener('prerenderingchange', schedulePost)
       controller.abort()
     }
   }, [slug])

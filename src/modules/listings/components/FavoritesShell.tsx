@@ -8,6 +8,8 @@ import { buttonVariants } from '@/components/ui/button'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
 import { FavoritesTypeFilter } from '@/modules/listings/components/FavoritesTypeFilter'
 import { useFavoritesRealtime } from '@/modules/listings/hooks/useFavoritesRealtime'
+import { useExchangeRate } from '@/hooks/useExchangeRate'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -20,6 +22,9 @@ interface Props {
 export function FavoritesShell({ listings: initialListings, userId, typeFilter, typeCounts }: Props) {
   const t = useTranslations('favorites')
   const locale = useLocale()
+  const { rate } = useExchangeRate()
+  const { user } = useAuth()
+  const displayCurrency = user?.preferred_currency ?? 'ALL'
 
   const [displayedListings, setDisplayedListings] = useState<any[]>(initialListings)
 
@@ -115,6 +120,8 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
               isFavorited={true}
               onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
               layoutContext="3-col-xl"
+              displayCurrency={displayCurrency}
+              exchangeRate={rate}
             />
           ))}
         </div>

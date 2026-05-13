@@ -45,6 +45,18 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
     changeLog = log ?? []
   } catch {}
 
+  // Status history — new table; degrade gracefully if migration not yet applied
+  let statusHistory: any[] = []
+  try {
+    const { data: hist } = await db
+      .from('user_status_history')
+      .select('*')
+      .eq('user_id', id)
+      .order('changed_at', { ascending: false })
+      .limit(10)
+    statusHistory = hist ?? []
+  } catch {}
+
   // Email from auth
   let email = ''
   try {
@@ -66,6 +78,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
         cities={cities ?? []}
         regions={regions ?? []}
         changeLog={changeLog}
+        statusHistory={statusHistory}
         isAdmin={isAdmin}
       />
     </div>

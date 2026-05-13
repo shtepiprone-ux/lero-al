@@ -32,6 +32,7 @@ export default async function AdminUserNewPage() {
         cities={cities ?? []}
         regions={regions ?? []}
         changeLog={[]}
+        statusHistory={[]}
         isAdmin={isAdmin}
       />
     </div>

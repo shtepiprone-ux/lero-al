@@ -103,6 +103,7 @@ Critical paths to test:
 - [ ] View on desktop (1280px);
 - [ ] Listing detail page: photo gallery lightbox;
 - [ ] Listing detail page: map loads;
+- [ ] Listing detail page: contact block (WhatsApp, Call, Send Message) renders in Firefox — verify in Firefox latest stable on the listing detail page for at least one active listing with an owner contact;
 - [ ] Admin: change listing status;
 - [ ] Admin: verify agent;
 - [ ] Admin: edit static page;

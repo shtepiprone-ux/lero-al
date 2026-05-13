@@ -72,7 +72,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href={`/${locale}`} className="flex items-center gap-1 font-bold text-xl">
-          <span className="text-primary">Shtepi</span>
+          <span className="text-primary">Lero</span>
           <span className="text-foreground">.al</span>
         </Link>
 

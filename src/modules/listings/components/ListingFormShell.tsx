@@ -356,7 +356,7 @@ export function ListingFormShell(props: Props) {
                 placeholder={t('field_description_placeholder')}
                 rows={4}
                 maxLength={5000}
-                className="rounded-xl resize-none"
+                className="rounded-xl resize-y min-h-40 max-h-[32rem]"
               />
               <p className="text-xs text-muted-foreground text-right">{(data.description ?? '').length}/5000</p>
             </div>

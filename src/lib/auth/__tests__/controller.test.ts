@@ -67,6 +67,8 @@ const MOCK_USER: User = {
   year_started: null,
   deleted_at: null,
   location_request: null,
+  preferred_currency: 'ALL',
+  pending_email: null,
   created_at: '2026-01-01T00:00:00.000Z',
 }
 

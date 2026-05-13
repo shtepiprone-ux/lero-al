@@ -9,7 +9,7 @@
 
 ### SEO
 - Every page must have unique title and description via Next.js metadata API.
-- Title format: `{listing title} — {city} | Shtepi.al`.
+- Title format: `{listing title} — {city} | Lero.al`.
 - Listings must use slug-based URLs: `/sq/listings/apartament-2-dhoma-tirane`.
 - Use Next.js `generateMetadata()` for dynamic pages.
 - Structured data (JSON-LD) for listing pages (RealEstateListing schema).

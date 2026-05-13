@@ -91,7 +91,7 @@ function commit(next: GuardStats): void {
   if (next.pressure !== lastPressure) {
     lastPressure = next.pressure
     if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('shtepi:vitals', {
+      window.dispatchEvent(new CustomEvent('lero:vitals', {
         detail: { name: 'pressure-state-change', pressure: next.pressure },
       }))
     }
@@ -222,7 +222,7 @@ export function notifyGuardBlock(
   })
 
   if (typeof window !== 'undefined') {
-    window.dispatchEvent(new CustomEvent('shtepi:vitals', {
+    window.dispatchEvent(new CustomEvent('lero:vitals', {
       detail: {
         name: isDuplicate ? 'preload-suppressed' : 'image-guard-trigger',
         reason,

@@ -7,7 +7,7 @@ import { resetPredictiveBudget, resetScrollTracker } from '@/lib/performance/pre
 import { resetGuard } from '@/lib/performance/imageGuard'
 
 export function PerformanceStoreInit() {
-  // Initialize store once — applies data-perf-tier to DOM + subscribes to shtepi:vitals
+  // Initialize store once — applies data-perf-tier to DOM + subscribes to lero:vitals
   useEffect(() => {
     return initPerformanceStore()
   }, [])

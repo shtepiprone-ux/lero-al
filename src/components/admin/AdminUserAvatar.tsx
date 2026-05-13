@@ -4,12 +4,30 @@ import { useRef, useState } from 'react'
 import { UserCircle2, Camera, Trash2, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { uploadUserAvatar, removeUserAvatar } from '@/modules/admin/actions'
+import { AppImage } from '@/components/ui/AppImage'
+
+const MAX_SIZE_BYTES = 2 * 1024 * 1024 // 2 MB
+const REQUIRED_DIM = 256
+const VALID_MIME = ['image/jpeg', 'image/png', 'image/webp']
 
 interface Props {
-  userId: string | null   // null in create mode — no upload until user is saved
+  userId: string | null
   avatarUrl: string | null
   mode: 'view' | 'edit' | 'create'
   onAvatarChange: (url: string | null) => void
+}
+
+async function validateDimensions(file: File): Promise<boolean> {
+  return new Promise(resolve => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      resolve(img.naturalWidth === REQUIRED_DIM && img.naturalHeight === REQUIRED_DIM)
+    }
+    img.onerror = () => { URL.revokeObjectURL(url); resolve(false) }
+    img.src = url
+  })
 }
 
 export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Props) {
@@ -27,9 +45,19 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
     e.target.value = ''
     setError(null)
 
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-    if (!validTypes.includes(file.type)) { setError('Тільки JPG, PNG або WEBP'); return }
-    if (file.size > 5 * 1024 * 1024) { setError('Максимальний розмір — 5 МБ'); return }
+    if (!VALID_MIME.includes(file.type)) {
+      setError('Тільки JPG, PNG або WEBP')
+      return
+    }
+    if (file.size > MAX_SIZE_BYTES) {
+      setError('Максимальний розмір — 2 МБ')
+      return
+    }
+    const dimOk = await validateDimensions(file)
+    if (!dimOk) {
+      setError(`Зображення повинно бути рівно ${REQUIRED_DIM}×${REQUIRED_DIM} пікселів`)
+      return
+    }
 
     setUploading(true)
     const fd = new FormData()
@@ -63,7 +91,12 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
           title={canEdit ? 'Клікніть щоб змінити' : undefined}
         >
           {currentUrl ? (
-            <img src={currentUrl} alt="Avatar" className="w-full h-full object-cover" />
+            <AppImage
+              src={currentUrl}
+              variant="avatar"
+              alt="Avatar"
+              priority={false}
+            />
           ) : (
             <UserCircle2 className="h-12 w-12 text-muted-foreground" />
           )}
@@ -101,13 +134,19 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
         </div>
       )}
 
+      {canEdit && (
+        <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
+          JPG / PNG / WEBP, {REQUIRED_DIM}×{REQUIRED_DIM} px, макс. 2 МБ
+        </p>
+      )}
+
       {mode === 'create' && (
         <p className="text-xs text-muted-foreground text-center max-w-[120px]">
           Аватар можна додати після збереження
         </p>
       )}
 
-      {error && <p className="text-xs text-destructive text-center max-w-[120px]">{error}</p>}
+      {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
 
       <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFileChange} />
     </div>

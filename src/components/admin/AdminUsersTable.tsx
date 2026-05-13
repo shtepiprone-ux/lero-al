@@ -7,9 +7,8 @@ import { ShieldCheck, ShieldOff, Loader2, ExternalLink, MapPin } from 'lucide-re
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { RelativeTime } from '@/components/shared/RelativeTime'
-import { updateUserRole, toggleUserVerified } from '@/modules/admin/actions'
+import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
 
 const ROLES: UserRole[] = ['user', 'agent', 'moderator', 'admin']
@@ -128,24 +127,9 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <Select
-                        value={u.role}
-                        onValueChange={v => {
-                          if (!v || v === u.role) return
-                          withLoading(u.id, () => updateUserRole(u.id, v as UserRole))
-                        }}
-                      >
-                        <SelectTrigger variant="outline" size="sm" className="w-28 h-7 text-xs">
-                          <SelectValue>
-                            <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-[11px] h-5 capitalize">
-                              {u.role}
-                            </Badge>
-                          </SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          {ROLES.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}
-                        </SelectContent>
-                      </Select>
+                      <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-[11px] h-5 capitalize">
+                        {u.role}
+                      </Badge>
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell">
                       <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-[11px] h-5">

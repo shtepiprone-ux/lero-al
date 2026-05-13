@@ -88,7 +88,7 @@ export default async function AdminDashboard() {
     <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <AdminPageHeader
         title="Dashboard"
-        subtitle="Загальний стан платформи Shtepi.al"
+        subtitle="Загальний стан платформи Lero.al"
       />
 
       {/* Stats grid */}

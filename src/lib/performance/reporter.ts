@@ -38,7 +38,7 @@ function normalizeRoute(route: string): string {
 
 // ── Dropped-sample envelope ───────────────────────────────────────────────────
 // When a metric is gated and not classified, a typed envelope is dispatched via
-// shtepi:vitals so analytics sinks can observe the drop rate without receiving
+// lero:vitals so analytics sinks can observe the drop rate without receiving
 // a POOR classification. Consumers check `name.endsWith('-dropped')`.
 export interface DroppedMetricEnvelope {
   name: string           // e.g. 'LCP-dropped'
@@ -218,10 +218,10 @@ function dispatchVitalsEvent(metric: WebVitalMetric): void {
   if (typeof window === 'undefined') return
   try {
     // Decoupled analytics hook — subscribe in any future provider init:
-    //   window.addEventListener('shtepi:vitals', (e) => provider.track('web_vitals', e.detail))
+    //   window.addEventListener('lero:vitals', (e) => provider.track('web_vitals', e.detail))
     // The metric payload now includes `env` and `wasHiddenDuringCollection`
     // so providers can filter dev noise or backgrounded measurements client-side.
-    window.dispatchEvent(new CustomEvent('shtepi:vitals', { detail: metric }))
+    window.dispatchEvent(new CustomEvent('lero:vitals', { detail: metric }))
   } catch {
     // Dispatcher must never throw into the collection pipeline
   }
@@ -230,7 +230,7 @@ function dispatchVitalsEvent(metric: WebVitalMetric): void {
 function dispatchDroppedEvent(envelope: DroppedMetricEnvelope): void {
   if (typeof window === 'undefined') return
   try {
-    window.dispatchEvent(new CustomEvent('shtepi:vitals', { detail: envelope }))
+    window.dispatchEvent(new CustomEvent('lero:vitals', { detail: envelope }))
   } catch {
     // Dispatcher must never throw into the collection pipeline
   }

@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { ExternalLink, Pencil, Trash2, Star, StarOff, Loader2, Calendar } from 'lucide-react'
+import { ExternalLink, Pencil, Trash2, Star, StarOff, Loader2, Calendar, Copy, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -124,6 +124,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const [loadingId, setLoadingId] = useState<string | null>(null)
   const [premiumDialog, setPremiumDialog] = useState<any | null>(null)
   const [items, setItems] = useState(init)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
   const totalPages = Math.ceil(total / perPage)
 
   function navigate(updates: Record<string, string | null>) {
@@ -195,9 +196,30 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                       }`}
                     >
                       <td className="px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium shrink-0" />}
-                          <span className="font-medium truncate max-w-[200px]">{l.title}</span>
+                        <div className="flex flex-col gap-0.5">
+                          <div className="flex items-center gap-2">
+                            {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium shrink-0" />}
+                            <span className="font-medium truncate max-w-[200px]">{l.title}</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={e => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              navigator.clipboard?.writeText(l.id).catch(() => {})
+                              setCopiedId(l.id)
+                              setTimeout(() => setCopiedId(prev => prev === l.id ? null : prev), 1500)
+                            }}
+                            title={l.id}
+                            aria-label={copiedId === l.id ? 'Copied!' : 'Copy listing ID'}
+                            className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                          >
+                            #{l.id.slice(0, 8)}
+                            {copiedId === l.id
+                              ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
+                              : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+                            }
+                          </button>
                         </div>
                       </td>
                       <td className="px-4 py-3 hidden md:table-cell text-muted-foreground capitalize text-xs">
@@ -209,9 +231,14 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                       <td className="px-4 py-3">
                         <Select
                           value={l.status}
-                          onValueChange={v => {
-                            if (!v || v === l.status) return
-                            withLoading(l.id, () => updateListingStatus(l.id, v as ListingStatus))
+                          onValueChange={newStatus => {
+                            if (!newStatus || newStatus === l.status) return
+                            withLoading(l.id, async () => {
+                              await updateListingStatus(l.id, newStatus as ListingStatus)
+                              setItems(prev => prev.map(item =>
+                                item.id === l.id ? { ...item, status: newStatus } : item
+                              ))
+                            })
                           }}
                         >
                           <SelectTrigger variant="outline" size="sm" className="w-28 h-7 text-xs">

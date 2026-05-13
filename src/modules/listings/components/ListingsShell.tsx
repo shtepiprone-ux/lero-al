@@ -27,6 +27,7 @@ import { ActiveFilterChips } from '@/modules/listings/components/ActiveFilterChi
 import { ListingsStatusTabs } from '@/modules/listings/components/ListingsStatusTabs'
 import { Button } from '@/components/ui/button'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 
 const RESTORE_KEY = 'listings_restore'
@@ -51,7 +52,9 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   const t = useTranslations('listing')
   const searchParams = useSearchParams()
   const { rate } = useExchangeRate()
-  const displayCurrency = searchParams.get('currency') || 'ALL'
+  const { user } = useAuth()
+  // URL param takes precedence; fall back to user's preference, then 'ALL'
+  const displayCurrency = searchParams.get('currency') || user?.preferred_currency || 'ALL'
   const favoriteSet = useMemo(() => new Set(favoriteIds ?? []), [favoriteIds])
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [filtersOpen, setFiltersOpen] = useState(false)

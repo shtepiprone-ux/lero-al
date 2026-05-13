@@ -5,7 +5,7 @@ import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
 import messages from '../../../messages/en.json'
 
-export const metadata = { title: 'Admin — Shtepi.al' }
+export const metadata = { title: 'Admin — Lero.al' }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const user = await getUser()

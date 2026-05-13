@@ -2,9 +2,39 @@
 
 ## User Roles
 - `admin` — full access, can create/delete any user including moderators.
-- `moderator` — manage listings, users (agent/user only), support tickets, conversations. CANNOT create/delete admins.
+- `moderator` — manage listings, users (agent/user only), support tickets, conversations. CANNOT create/delete admins. CANNOT delete users. CANNOT change user role.
 - `agent` — real estate agent, can be private person or with company.
 - `user` — private person, standard access.
+
+## Admin Profile Mutation Matrix (Task 17)
+
+| Action | Admin | Moderator |
+|---|---|---|
+| View user profile | ✅ | ✅ |
+| Edit user profile (name, phone, etc.) | ✅ | ✅ |
+| Change user role | ✅ | ❌ (read-only field) |
+| Change user status | ✅ | ✅ |
+| Delete user (soft-delete) | ✅ | ❌ (button hidden + Server Action rejects) |
+| Upload/change avatar | ✅ | ✅ |
+
+## Cabinet Self-Mutation Rules
+
+- Users can only mutate their own row (`users.id = auth.uid()`).
+- `deleteOwnAccount`: requires authenticated session; soft-deletes own row + archives own listings. Cannot delete another user's account.
+- `updateCabinetProfile`: user-scoped Supabase client enforces RLS.
+- `uploadCabinetAvatar`: same user-scoped client.
+
+## user_status_history Access Policy
+
+- SELECT: admin and moderator only.
+- INSERT: service-role only (via admin client in Server Actions). No direct user INSERT.
+
+## Email-Change Token Policy
+
+- `email_change_tokens` table: no direct user RLS access.
+- All operations via service-role in Server Actions (`initiateEmailChange`, `consumeEmailChangeToken`).
+- Token is valid for 24h, single-use (consumed_at set atomically with email mutation).
+- Verification landing page (`/[locale]/auth/confirm-email`) uses service-role to validate and consume the token — it is an unauthenticated public route (the token IS the auth credential for the action).
 
 ## Security Rules
 

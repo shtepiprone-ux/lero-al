@@ -16,6 +16,9 @@ type Tab = 'profile' | 'listings' | 'searches'
 
 import type { ListingVisibilityGroup } from '@/modules/cabinet/components/ListingsTab'
 
+interface CityOption { id: number; name_al: string; region_id: number | null }
+interface RegionOption { id: number; name_al: string }
+
 interface Props {
   profile: UserType | null
   listings: any[]
@@ -24,9 +27,11 @@ interface Props {
   initialFilter: ListingVisibilityGroup
   initialPremium: boolean
   locale: string
+  cities: CityOption[]
+  regions: RegionOption[]
 }
 
-export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale }: Props) {
+export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions }: Props) {
   const t = useTranslations('cabinet')
   const router = useRouter()
   const pathname = usePathname()
@@ -110,7 +115,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         </div>
 
         {/* Tab content */}
-        {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} />}
+        {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} />}
         {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} />}
         {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} locale={locale} />}
 

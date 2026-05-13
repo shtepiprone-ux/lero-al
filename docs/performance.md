@@ -100,23 +100,23 @@ indicates a competing above-fold image or missing `priority` annotation.
 
 ### Production
 
-Silent. No console output. Only the `shtepi:vitals` custom event is dispatched.
+Silent. No console output. Only the `lero:vitals` custom event is dispatched.
 
 ---
 
 ## Where Metrics Are Sent
 
-Metrics are dispatched as a DOM `CustomEvent` named `shtepi:vitals`:
+Metrics are dispatched as a DOM `CustomEvent` named `lero:vitals`:
 
 ```ts
-window.dispatchEvent(new CustomEvent('shtepi:vitals', { detail: metric }))
+window.dispatchEvent(new CustomEvent('lero:vitals', { detail: metric }))
 ```
 
 This decouples the collection layer from any specific analytics provider.
 When a provider is integrated (Plausible, PostHog, GA4, etc.), subscribe in its init:
 
 ```ts
-window.addEventListener('shtepi:vitals', (e) => {
+window.addEventListener('lero:vitals', (e) => {
   const metric = (e as CustomEvent<WebVitalMetric>).detail
   provider.track('web_vitals', metric)
 })
@@ -160,7 +160,7 @@ This allows correlating slow metrics with specific pages, device classes, and vi
 Any metric with `rating === 'poor'` triggers:
 
 1. `console.warn` in dev with the threshold context (suppressed in prod)
-2. The standard `shtepi:vitals` event (analytics layer can add alerting)
+2. The standard `lero:vitals` event (analytics layer can add alerting)
 
 No regression data is stored in the database — this is a RUM/observability layer only.
 
@@ -195,7 +195,7 @@ any `useEffect` fires. This prevents the "wrong tier on first render → flicker
 
 Initialization sequence:
 1. Module loads → `readInitialTier()` → sessionStorage saved tier OR hardware heuristic
-2. `PerformanceStoreInit.useEffect` → applies `data-perf-tier` DOM attribute + subscribes to `shtepi:vitals`
+2. `PerformanceStoreInit.useEffect` → applies `data-perf-tier` DOM attribute + subscribes to `lero:vitals`
 3. When INP arrives (first user interaction) → tier locked from measurement; never changes again this session
 
 ```ts
@@ -211,7 +211,7 @@ This prevents mid-session UI changes that would cause inconsistent behavior.
 ```
 Page 1 load:      hardware heuristic → tier = 'medium', isLocked = false
 User interacts:   INP measured → tier = 'low', isLocked = true
-                  tier saved to sessionStorage('shtepi:perf-tier')
+                  tier saved to sessionStorage('lero:perf-tier')
 Page 2 load:      sessionStorage read → tier = 'low', isLocked = true (immediately)
                   no waiting for new INP measurement
 ```
@@ -241,7 +241,7 @@ A saved tier always came from a prior INP measurement in the same session.
 | medium | 120 ms ≤ INP ≤ 300 ms | default |
 | high | INP < 120 ms | cores ≥ 8 AND memory ≥ 4 GB |
 
-The tier is **persisted in sessionStorage** (`shtepi:perf-tier`) across page navigations
+The tier is **persisted in sessionStorage** (`lero:perf-tier`) across page navigations
 within a session. On browsers without `deviceMemory` (Firefox, Safari), `memory` defaults
 to 4 GB, so classification falls back to `cores` only.
 
@@ -352,7 +352,7 @@ Colors: `text-destructive` (LOW), `text-status-warning` (MEDIUM), `text-status-s
 Clear sessionStorage to reset the tier:
 ```js
 // browser console
-sessionStorage.removeItem('shtepi:perf-tier')
+sessionStorage.removeItem('lero:perf-tier')
 ```
 
 Override the `data-perf-tier` attribute to test CSS adaptation without reloading:
@@ -503,9 +503,9 @@ in `appImageConfig.ts`. Never build `res.cloudinary.com` URLs inline in componen
 4. Update `handleVitalsEvent` in `store.ts` if the signal comes from a vitals metric
 
 **Add a new analytics provider:**
-Subscribe to the `shtepi:vitals` event in the provider's initialization code:
+Subscribe to the `lero:vitals` event in the provider's initialization code:
 ```ts
-window.addEventListener('shtepi:vitals', (e) => {
+window.addEventListener('lero:vitals', (e) => {
   const metric = (e as CustomEvent<WebVitalMetric>).detail
   provider.track('web_vitals', metric)
 })
@@ -609,7 +609,7 @@ Passing `predictive={true}` on LOW tier is safe (hook is a complete no-op).
 
 ### Observability
 
-Every preload attempt dispatches `shtepi:vitals`:
+Every preload attempt dispatches `lero:vitals`:
 
 ```ts
 {
@@ -697,7 +697,7 @@ It appears in yellow (NORMAL) or red+bold (HIGH) only when the system is under l
 Per-block debug logs are suppressed — stats are surfaced via the dev overlay's
 `dup×N` / `sup×N` counters instead.
 
-Pressure transitions fire `shtepi:vitals` events with `name: 'pressure-state-change'`.
+Pressure transitions fire `lero:vitals` events with `name: 'pressure-state-change'`.
 
 ### Page Reset
 
@@ -706,7 +706,7 @@ This clears: `preloadedUrls`, `recentPreloadTimes`, all system state, stats, and
 
 ### Observability Events
 
-All dispatched via `shtepi:vitals` CustomEvent:
+All dispatched via `lero:vitals` CustomEvent:
 
 | Event name | Emitted when |
 |------------|-------------|
@@ -772,7 +772,7 @@ export function usePredictiveImageCount(): number {
 - `updateImageSystemState()` — calls `recompute()` → `commit()` → `statsListeners`
 - `setStore()` in `store.ts` — calls `listeners` synchronously
 - `notifyPriorityCount()` / `notifyPredictiveCount()` — call subscriber sets directly
-- `window.dispatchEvent(new CustomEvent('shtepi:vitals', ...))` — synchronously invokes
+- `window.dispatchEvent(new CustomEvent('lero:vitals', ...))` — synchronously invokes
   `handleVitalsEvent` → `setStore` → `listeners`
 
 All of these ultimately notify `useSyncExternalStore` subscriber callbacks. Calling them
@@ -811,7 +811,7 @@ mount → cleanup → mount. Every effect in this system must satisfy:
 
 | Effect | Cleanup requirement | Idempotency guarantee |
 |--------|--------------------|-----------------------|
-| `initPerformanceStore` | Removes `shtepi:vitals` listener, nulls `vitalsHandler` | Guard `if (vitalsHandler) return () => {}` prevents double-registration |
+| `initPerformanceStore` | Removes `lero:vitals` listener, nulls `vitalsHandler` | Guard `if (vitalsHandler) return () => {}` prevents double-registration |
 | `notifyPriorityPreload` | No cleanup (URL registrations are page-scoped) | `preloadedUrls.has(url)` prevents double rate-counting |
 | Priority image counter | Cleanup decrements counter | StrictMode: +1 −1 +1 = final count is 1 (correct) |
 | `usePredictivePreload` | Removes mouse listeners, disconnects observer, clears timer | StrictMode: `preloadedUrls.has(url)` on second mount → `duplicate-url` gate → no double preload |
@@ -950,15 +950,15 @@ function MyComponent() {
 
 **4. Synchronous window.dispatchEvent from render**
 ```ts
-// ❌ dispatchEvent fires shtepi:vitals listener → setStore → listeners → re-render during render
+// ❌ dispatchEvent fires lero:vitals listener → setStore → listeners → re-render during render
 function MyComponent() {
-  window.dispatchEvent(new CustomEvent('shtepi:vitals', { detail: metric }))
+  window.dispatchEvent(new CustomEvent('lero:vitals', { detail: metric }))
   return null
 }
 
 // ✓ Dispatch from event handlers, effects, or PerformanceObserver callbacks only
 window.addEventListener('pagehide', () => {
-  window.dispatchEvent(new CustomEvent('shtepi:vitals', { detail: metric }))
+  window.dispatchEvent(new CustomEvent('lero:vitals', { detail: metric }))
 })
 ```
 
@@ -1043,10 +1043,10 @@ the `[Perf Regression]` warning path.
 
 | Condition | Log output | Analytics dispatch |
 |-----------|-----------|-------------------|
-| Sample dropped (any gate above) | `console.debug [perf-reporter] dropped invalid sample` | `shtepi:vitals` with `name: 'LCP-dropped'` envelope |
-| Dev mode + `rating === 'poor'` | `console.info [perf-reporter] dev-only LCP=Nms route=/...` | `shtepi:vitals` with normal metric (includes `env: 'development'`) |
-| Production + `rating === 'poor'` + first occurrence | `console.warn [Perf Regression] ...` | `shtepi:vitals` with normal metric |
-| Any metric, any rating | `console.log [LCP] Nms — GOOD ...` (in debug mode) | `shtepi:vitals` with normal metric |
+| Sample dropped (any gate above) | `console.debug [perf-reporter] dropped invalid sample` | `lero:vitals` with `name: 'LCP-dropped'` envelope |
+| Dev mode + `rating === 'poor'` | `console.info [perf-reporter] dev-only LCP=Nms route=/...` | `lero:vitals` with normal metric (includes `env: 'development'`) |
+| Production + `rating === 'poor'` + first occurrence | `console.warn [Perf Regression] ...` | `lero:vitals` with normal metric |
+| Any metric, any rating | `console.log [LCP] Nms — GOOD ...` (in debug mode) | `lero:vitals` with normal metric |
 
 **`[Perf Regression]` is reserved for production-equivalent samples that survive
 all validity gates.** Every line with this tag is an actionable regression on a
@@ -1075,7 +1075,7 @@ in a new page load is never silently swallowed by a stale Set entry from the pre
 
 ### Dropped-Sample Envelope Shape
 
-Dropped samples dispatch a `shtepi:vitals` CustomEvent whose `detail` matches
+Dropped samples dispatch a `lero:vitals` CustomEvent whose `detail` matches
 `DroppedMetricEnvelope` from `reporter.ts`. Consumers check `name.endsWith('-dropped')`.
 
 ```ts
@@ -1091,7 +1091,7 @@ interface DroppedMetricEnvelope {
 
 Example analytics listener:
 ```ts
-window.addEventListener('shtepi:vitals', (e) => {
+window.addEventListener('lero:vitals', (e) => {
   const payload = (e as CustomEvent).detail
   if (typeof payload.name === 'string' && payload.name.endsWith('-dropped')) {
     provider.track('lcp_dropped', payload)
@@ -1118,8 +1118,8 @@ Existing analytics consumers that only read `name`, `value`, `rating`, `route`,
 
 ### Dropped-Sample Dashboard Contract
 
-All analytics consumers of the `shtepi:vitals` CustomEvent **must** isolate dropped samples
-from valid metrics. The only in-codebase consumer of `shtepi:vitals` is `store.ts`
+All analytics consumers of the `lero:vitals` CustomEvent **must** isolate dropped samples
+from valid metrics. The only in-codebase consumer of `lero:vitals` is `store.ts`
 (`handleVitalsEvent`), which is guarded against non-`WebVitalMetric` events (drops,
 predictive, guard events) by an explicit name filter:
 
@@ -1146,11 +1146,11 @@ dimension, never folded into the regression rate.
 | Future analytics provider | (not yet integrated) | Must check `payload.name.endsWith('-dropped')` before calling regression-rate aggregation |
 
 No external analytics provider is currently integrated. When one is added, subscribe via
-the `shtepi:vitals` pattern and use the `DroppedMetricEnvelope.reason` field to route
+the `lero:vitals` pattern and use the `DroppedMetricEnvelope.reason` field to route
 dropped samples to a separate `dropped_metrics` counter:
 
 ```ts
-window.addEventListener('shtepi:vitals', (e) => {
+window.addEventListener('lero:vitals', (e) => {
   const payload = (e as CustomEvent).detail
   if (typeof payload.name === 'string' && payload.name.endsWith('-dropped')) {
     // Route to dropped-metrics counter — NEVER to regression-rate aggregation
@@ -1185,7 +1185,7 @@ for `sq`, `en`, `uk`, and `it` locales.
 
 ## Store Metric Handling Contract
 
-The `shtepi:vitals` channel is shared by several subsystems (collector, reporter, predictive
+The `lero:vitals` channel is shared by several subsystems (collector, reporter, predictive
 preload, image guard). `handleVitalsEvent` in `store.ts` uses an allow-list so only the
 three Core Web Vitals produced by `collector.ts` mutate the performance store:
 
@@ -1342,7 +1342,7 @@ Reference slug: `test-2-mokkj60o`. All checks confirmed via `curl -s` (no JS).
 
 | Locale | `<title>` | `<h1>` | Price text | Gallery `<img>` w/ `fetchpriority="high"` | Description | Spec-rules | Spec-rules with `Save-Data: on` |
 |--------|-----------|--------|-----------|------------------------------------------|-------------|------------|----------------------------------|
-| sq | ✅ "Test #2 \| Shtepi.al" | ✅ "Test #2" | ✅ "1 249 999 ALL" | ✅ 1 img | ✅ present | ❌ (no similar listings in DB) | ❌ (would be suppressed) |
+| sq | ✅ "Test #2 \| Lero.al" | ✅ "Test #2" | ✅ "1 249 999 ALL" | ✅ 1 img | ✅ present | ❌ (no similar listings in DB) | ❌ (would be suppressed) |
 | en | ✅ same | ✅ same | ✅ present | ✅ 1 img | ✅ present | ❌ same | ❌ same |
 | uk | ✅ same | ✅ same | ✅ "1 249 999 ALL" | ✅ 1 img | ✅ present | ❌ same | ❌ same |
 | it | ✅ same | ✅ same | ✅ present | ✅ 1 img | ✅ present | ❌ same | ❌ same |

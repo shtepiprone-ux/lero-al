@@ -15,7 +15,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'listing' })
-  return { title: `${t('edit_listing')} | Shtepi.al` }
+  return { title: `${t('edit_listing')} | Lero.al` }
 }
 
 export default async function EditListingPage({ params }: Props) {

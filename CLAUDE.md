@@ -1,4 +1,4 @@
-# Shtepi.al — Project Intelligence
+# Lero.al — Project Intelligence
 
 ## Project Context
 Real Estate Marketplace for the Albanian market.

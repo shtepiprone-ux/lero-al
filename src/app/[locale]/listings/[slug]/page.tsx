@@ -27,6 +27,7 @@ import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeature
 import { preload } from 'react-dom'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
+import { getExchangeRate, convertPrice } from '@/lib/getExchangeRate'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
 //
@@ -103,7 +104,7 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: `${data.title} | Shtepi.al`,
+    title: `${data.title} | Lero.al`,
     description: data.description?.slice(0, 160),
     ...(robots && { robots }),
   }
@@ -118,27 +119,29 @@ export default async function ListingPage({ params }: Props) {
   // getUser() creates its own client internally (separate auth API call).
   // Running both in parallel saves the sequential auth-then-query waterfall.
   const supabase = await createClient()
-  const [authUser, { data: listing }] = await Promise.all([
+  const [authUser, { data: listing }, exchangeRate] = await Promise.all([
     getUser(),
     supabase
       .from('listings')
-      .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order"), owner:users!listings_user_id_fkey(id, name, phone, whatsapp, avatar_url, user_type, is_verified, company_name)`)
+      .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order"), owner:users!listings_user_id_fkey(id, name, phone, whatsapp, avatar_url, user_type, is_verified, company_name, deleted_at)`)
       .eq('slug', slug)
       .in('status', ['active', 'sold', 'rented', 'archived'])
       .single(),
+    getExchangeRate(),
   ])
 
   if (!listing) notFound()
 
+  // Parallel: favorites check + user's preferred currency (both need authUser)
   let isInitiallyFavorited = false
+  let preferredCurrency: 'ALL' | 'EUR' = 'ALL'
   if (authUser) {
-    const { data: fav } = await supabase
-      .from('favorites')
-      .select('id')
-      .eq('user_id', authUser.id)
-      .eq('listing_id', listing.id)
-      .maybeSingle()
-    isInitiallyFavorited = !!fav
+    const [favResult, profileResult] = await Promise.all([
+      supabase.from('favorites').select('id').eq('user_id', authUser.id).eq('listing_id', listing.id).maybeSingle(),
+      supabase.from('users').select('preferred_currency').eq('id', authUser.id).single(),
+    ])
+    isInitiallyFavorited = !!favResult.data
+    preferredCurrency = (profileResult.data?.preferred_currency as 'ALL' | 'EUR') ?? 'ALL'
   }
 
   const owner = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
@@ -169,7 +172,7 @@ export default async function ListingPage({ params }: Props) {
   }
 
   const pricePerSqm = listing.area_gross ? Math.round(listing.price / listing.area_gross) : null
-  const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://shtepi.al'}/${locale}/listings/${slug}`
+  const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'}/${locale}/listings/${slug}`
 
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
   const isNew = new Date(listing.created_at) > sevenDaysAgo
@@ -178,7 +181,14 @@ export default async function ListingPage({ params }: Props) {
   const features    = getDetailFeatures(listing)
   const detailAttrs = getDetailAttributes(listing)
 
-  const formattedPrice = formatPrice(listing.price, listing.currency, locale)
+  // Currency conversion — use user's preferred_currency when authenticated and exchange rate is available
+  const needsConversion = !!exchangeRate && !!authUser && preferredCurrency !== listing.currency
+  const displayPrice = needsConversion ? convertPrice(listing.price, listing.currency, preferredCurrency, exchangeRate) : listing.price
+  const displayCurrencyCode = needsConversion ? preferredCurrency : listing.currency
+  // Original price line shown below converted price on detail page
+  const originalPriceStr = needsConversion ? formatPrice(listing.price, listing.currency, locale) : null
+
+  const formattedPrice = formatPrice(displayPrice, displayCurrencyCode, locale)
 
   // Relative time formatted server-side — removes RelativeTime ('use client') from
   // the above-fold hydration tree. date-fns runs on the server; locale is known
@@ -284,10 +294,15 @@ export default async function ListingPage({ params }: Props) {
                 )}
               </div>
 
-              <div className="flex items-baseline gap-3 flex-wrap">
-                <span className="text-3xl font-bold text-primary">{formatPrice(listing.price, listing.currency, locale)}</span>
-                {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(listing.price_old!, listing.currency, locale)}</span>}
-                {pricePerSqm && <span className="text-sm text-muted-foreground">{formatPrice(pricePerSqm, listing.currency, locale)}/{t('per_sqm').split('/')[1] ?? 'm²'}</span>}
+              <div className="flex flex-col gap-0.5">
+                <div className="flex items-baseline gap-3 flex-wrap">
+                  <span className="text-3xl font-bold text-primary">{formattedPrice}</span>
+                  {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(listing.price_old!, displayCurrencyCode, locale)}</span>}
+                  {pricePerSqm && <span className="text-sm text-muted-foreground">{formatPrice(pricePerSqm, displayCurrencyCode, locale)}/{t('per_sqm').split('/')[1] ?? 'm²'}</span>}
+                </div>
+                {originalPriceStr && (
+                  <span className="text-xs text-muted-foreground">{t('original_price')}: {originalPriceStr}</span>
+                )}
               </div>
 
               <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
@@ -383,8 +398,10 @@ export default async function ListingPage({ params }: Props) {
               owner={owner}
               listingTitle={listing.title}
               listingUrl={listingUrl}
-              price={listing.price}
-              currency={listing.currency}
+              price={displayPrice}
+              currency={displayCurrencyCode}
+              originalPrice={originalPriceStr ?? undefined}
+              originalPriceLabel={t('original_price')}
             />
           )}
         </div>

@@ -1,11 +1,49 @@
 'use server'
 
+import { createHash } from 'crypto'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType } from '@/types/database'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
+
+// ── Cloudinary signed upload helper ──────────────────────────────────────────
+
+async function uploadToCloudinary(
+  bytes: ArrayBuffer,
+  mimeType: string,
+  folder: string,
+): Promise<{ url: string; publicId: string; width?: number; height?: number }> {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+  const apiKey = process.env.CLOUDINARY_API_KEY
+  const apiSecret = process.env.CLOUDINARY_API_SECRET
+  if (!cloudName || !apiKey || !apiSecret) {
+    throw new Error('Cloudinary env vars missing')
+  }
+
+  const timestamp = Math.round(Date.now() / 1000)
+  const paramsToSign = `folder=${folder}&timestamp=${timestamp}`
+  const signature = createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex')
+
+  const form = new FormData()
+  form.append('file', new Blob([bytes], { type: mimeType }))
+  form.append('timestamp', String(timestamp))
+  form.append('api_key', apiKey)
+  form.append('signature', signature)
+  form.append('folder', folder)
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: 'POST',
+    body: form,
+  })
+  if (!res.ok) {
+    const errText = await res.text().catch(() => String(res.status))
+    throw new Error(`Cloudinary upload failed: ${errText}`)
+  }
+  const data = await res.json() as { secure_url: string; public_id: string; width?: number; height?: number }
+  return { url: data.secure_url, publicId: data.public_id, width: data.width, height: data.height }
+}
 
 // ── Actor resolution ──────────────────────────────────────────────────────────
 //
@@ -74,14 +112,6 @@ export async function deleteListing(listingId: string) {
 }
 
 // ── Users ────────────────────────────────────────────────────────────────────
-
-export async function updateUserRole(userId: string, role: UserRole) {
-  await assertAdminAccess()
-  const db = createAdminClient()
-  const { error } = await db.from('users').update({ role }).eq('id', userId)
-  if (error) console.error('updateUserRole failed', { error, userId })
-  revalidatePath('/admin/users')
-}
 
 export async function updateUserProfile(
   userId: string,
@@ -251,7 +281,7 @@ export async function updateUserProfileFull(
   }
 
   const db = createAdminClient()
-  const { data: oldUser } = await db.from('users').select('role, user_type').eq('id', userId).single()
+  const { data: oldUser } = await db.from('users').select('role, user_type, status').eq('id', userId).single()
 
   const isBusiness = ['agent', 'developer'].includes(data.profileType)
   const update: Record<string, unknown> = {
@@ -277,13 +307,15 @@ export async function updateUserProfileFull(
     if (oldUser) {
       const oldType = profileTypeFromDb(oldUser.role as UserRole, oldUser.user_type)
       if (oldType !== data.profileType) {
-        await db.from('user_change_log').insert({
-          user_id: userId,
-          changed_by: me.id,
-          field_name: 'profile_type',
-          old_value: oldType,
-          new_value: data.profileType,
-        })
+        try {
+          await db.from('user_change_log').insert({
+            user_id: userId,
+            changed_by: me.id,
+            field_name: 'profile_type',
+            old_value: oldType,
+            new_value: data.profileType,
+          })
+        } catch {}
       }
     }
   }
@@ -292,6 +324,19 @@ export async function updateUserProfileFull(
   if (error) {
     console.error('updateUserProfileFull failed', { error, userId })
     return { error: 'Не вдалось оновити профіль' }
+  }
+
+  // Write status change history if status changed
+  if (oldUser && oldUser.status !== data.status) {
+    try {
+      await db.from('user_status_history').insert({
+        user_id: userId,
+        old_status: oldUser.status,
+        new_status: data.status,
+        reason: data.status === 'blocked' ? (data.blockReason ?? null) : null,
+        changed_by: me.id,
+      })
+    } catch {}
   }
 
   revalidatePath(`/admin/users/${userId}`)
@@ -389,29 +434,29 @@ export async function uploadUserAvatar(userId: string, formData: FormData): Prom
 
   const validTypes = ['image/jpeg', 'image/png', 'image/webp']
   if (!validTypes.includes(file.type)) return { error: 'Тільки JPG, PNG або WEBP' }
-  if (file.size > 5 * 1024 * 1024) return { error: 'Максимальний розмір файлу — 5 МБ' }
+  if (file.size > 2 * 1024 * 1024) return { error: 'Максимальний розмір файлу — 2 МБ' }
 
-  const db = createAdminClient()
-  const ext = file.type === 'image/jpeg' ? 'jpg' : file.type === 'image/png' ? 'png' : 'webp'
-  const path = `${userId}/avatar_${Date.now()}.${ext}`
   const bytes = await file.arrayBuffer()
 
-  const { error: uploadError } = await db.storage.from('avatars').upload(path, bytes, {
-    contentType: file.type,
-    upsert: true,
-  })
-
-  if (uploadError) {
-    console.error('uploadUserAvatar failed', { error: uploadError, userId })
+  let cloudUrl: string
+  try {
+    const result = await uploadToCloudinary(bytes, file.type, 'avatars')
+    // Server-side dimension enforcement via Cloudinary response
+    if (result.width && result.height && (result.width !== 256 || result.height !== 256)) {
+      return { error: 'Зображення повинно бути рівно 256×256 пікселів' }
+    }
+    cloudUrl = result.url
+  } catch (e) {
+    console.error('uploadUserAvatar Cloudinary failed', { error: e, userId })
     return { error: 'Помилка завантаження аватара' }
   }
 
-  const { data: urlData } = db.storage.from('avatars').getPublicUrl(path)
-  const { error: updateError } = await db.from('users').update({ avatar_url: urlData.publicUrl }).eq('id', userId)
+  const db = createAdminClient()
+  const { error: updateError } = await db.from('users').update({ avatar_url: cloudUrl }).eq('id', userId)
   if (updateError) console.error('uploadUserAvatar update failed', { error: updateError, userId })
 
   revalidatePath(`/admin/users/${userId}`)
-  return { url: urlData.publicUrl }
+  return { url: cloudUrl }
 }
 
 export async function removeUserAvatar(userId: string): Promise<{ error?: string }> {

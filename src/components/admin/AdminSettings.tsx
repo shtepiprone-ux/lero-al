@@ -91,13 +91,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title="Основна інформація">
               <Field label="Назва сайту" id="site-name">
-                <Input id="site-name" defaultValue="Shtepi.al" className="h-10 rounded-xl" />
+                <Input id="site-name" defaultValue="Lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="Слоган" id="tagline">
                 <Input id="tagline" defaultValue="Tregu kryesor i pasurive të paluajtshme në Shqipëri." className="h-10 rounded-xl" />
               </Field>
               <Field label="Контактний email" id="contact-email">
-                <Input id="contact-email" type="email" placeholder="info@shtepi.al" className="h-10 rounded-xl" />
+                <Input id="contact-email" type="email" placeholder="info@lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="Контактний телефон" id="contact-phone">
                 <Input id="contact-phone" placeholder="+355 XX XXX XXXX" className="h-10 rounded-xl" />
@@ -131,13 +131,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title="Соціальні мережі">
               <Field label="Facebook" id="facebook">
-                <Input id="facebook" placeholder="https://facebook.com/shtepi.al" className="h-10 rounded-xl" />
+                <Input id="facebook" placeholder="https://facebook.com/lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="Instagram" id="instagram">
-                <Input id="instagram" placeholder="https://instagram.com/shtepi.al" className="h-10 rounded-xl" />
+                <Input id="instagram" placeholder="https://instagram.com/lero.al" className="h-10 rounded-xl" />
               </Field>
               <Field label="LinkedIn" id="linkedin">
-                <Input id="linkedin" placeholder="https://linkedin.com/company/shtepi-al" className="h-10 rounded-xl" />
+                <Input id="linkedin" placeholder="https://linkedin.com/company/lero-al" className="h-10 rounded-xl" />
               </Field>
             </Section>
             <Section title="Футер — текст">
@@ -155,13 +155,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title="SEO за замовчуванням">
               <Field label="Meta title" id="meta-title">
-                <Input id="meta-title" defaultValue="Shtepi.al — Imobiliare në Shqipëri" className="h-10 rounded-xl" />
+                <Input id="meta-title" defaultValue="Lero.al — Imobiliare në Shqipëri" className="h-10 rounded-xl" />
               </Field>
               <Field label="Meta description" id="meta-desc">
                 <Textarea id="meta-desc" rows={3} defaultValue="Gjeni shtëpinë tuaj të ëndrrave në Shqipëri." className="rounded-xl resize-none" />
               </Field>
               <Field label="OG Image URL" id="og-image">
-                <Input id="og-image" placeholder="https://shtepi.al/og-image.jpg" className="h-10 rounded-xl" />
+                <Input id="og-image" placeholder="https://lero.al/og-image.jpg" className="h-10 rounded-xl" />
               </Field>
             </Section>
             <Section title="Архівні оголошення">

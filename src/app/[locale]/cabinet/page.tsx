@@ -19,7 +19,7 @@ interface Props {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'cabinet' })
-  return { title: `${t('title')} | Shtepi.al` }
+  return { title: `${t('title')} | Lero.al` }
 }
 
 export default async function CabinetPage({ params, searchParams }: Props) {
@@ -50,10 +50,12 @@ export default async function CabinetPage({ params, searchParams }: Props) {
     .eq('user_id', authUser.id)
     .order('created_at', { ascending: false })
 
-  const [{ data: profile }, { data: listings }, { data: savedSearches }] = await Promise.all([
+  const [{ data: profile }, { data: listings }, { data: savedSearches }, { data: cities }, { data: regions }] = await Promise.all([
     supabase.from('users').select('*').eq('id', authUser.id).single(),
     buildCabinetListingsQuery(baseListingsQuery, visibility, attribute),
     supabase.from('saved_searches').select('*').eq('user_id', authUser.id).order('created_at', { ascending: false }),
+    supabase.from('locations').select('id, name_al, region_id').in('type', ['city', 'village']).order('name_al'),
+    supabase.from('locations').select('id, name_al').eq('type', 'region').order('name_al'),
   ])
 
   return (
@@ -65,6 +67,8 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       initialFilter={visibility}
       initialPremium={isPremium}
       locale={locale}
+      cities={cities ?? []}
+      regions={regions ?? []}
     />
   )
 }

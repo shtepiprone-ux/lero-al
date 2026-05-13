@@ -56,7 +56,7 @@ export function LoginForm({ next }: Props) {
     <div className="login-page min-h-screen flex items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl">Shtepi.al</CardTitle>
+          <CardTitle className="text-2xl">Lero.al</CardTitle>
           <CardDescription>{t('login')}</CardDescription>
         </CardHeader>
         <CardContent>

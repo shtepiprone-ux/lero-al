@@ -1,12 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { formatPrice } from '@/lib/formatters'
-import { MapPin, Camera, Maximize2 } from 'lucide-react'
+import { MapPin, Camera, Maximize2, Copy, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { cn } from '@/lib/utils'
@@ -85,6 +86,15 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
+  const [idCopied, setIdCopied] = useState(false)
+
+  function copyId(e: React.MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    navigator.clipboard?.writeText(listing.id).catch(() => {})
+    setIdCopied(true)
+    setTimeout(() => setIdCopied(false), 1500)
+  }
 
   const coverImage = listing.images?.find((img: any) => img.is_cover) || listing.images?.[0]
   const imageCount = listing.images?.length ?? 0
@@ -147,7 +157,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                 listingId={listing.id}
                 isFavorited={isFavorited}
                 onToggled={onFavoriteToggled}
-                className="opacity-0 group-hover:opacity-100 shrink-0 -mt-0.5 -mr-1"
+                className="shrink-0 -mt-0.5 -mr-1"
               />
             </div>
             <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
@@ -176,7 +186,20 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                   {locationName}
                 </span>
               ) : <span />}
-              <span className="ml-auto shrink-0 pl-2">
+              <span className="ml-auto shrink-0 pl-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={copyId}
+                  title={listing.id}
+                  aria-label={idCopied ? t('id_copied') : t('copy_id')}
+                  className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                >
+                  #{listing.id.slice(0, 8)}
+                  {idCopied
+                    ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
+                    : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+                  }
+                </button>
                 <RelativeTime date={listing.created_at} />
               </span>
             </div>
@@ -248,7 +271,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           listingId={listing.id}
           isFavorited={isFavorited}
           onToggled={onFavoriteToggled}
-          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 shadow-sm"
+          className="absolute top-2 right-2 shadow-sm"
         />
       </AppImage>
 
@@ -287,15 +310,30 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           ))}
         </div>
 
-        {/* Location + date */}
+        {/* Location + date + ID */}
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           {locationName && (
-            <span className="flex items-center gap-1">
-              <MapPin className="h-3 w-3" />
+            <span className="flex items-center gap-1 truncate">
+              <MapPin className="h-3 w-3 shrink-0" />
               {locationName}
             </span>
           )}
-          <RelativeTime date={listing.created_at} className="ml-auto" />
+          <span className="ml-auto shrink-0 pl-2 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={copyId}
+              title={listing.id}
+              aria-label={idCopied ? t('id_copied') : t('copy_id')}
+              className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+            >
+              #{listing.id.slice(0, 8)}
+              {idCopied
+                ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
+                : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+              }
+            </button>
+            <RelativeTime date={listing.created_at} />
+          </span>
         </div>
       </div>
     </Link>

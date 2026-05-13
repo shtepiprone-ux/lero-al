@@ -11,9 +11,10 @@ import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { WebVitalsReporter } from '@/components/shared/WebVitalsReporter'
 import { PerformanceStoreInit } from '@/components/shared/PerformanceStoreInit'
 import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
+import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
-  title: 'Shtepi.al — Imobiliare në Shqipëri',
+  title: 'Lero.al — Real estate marketplace in Albania',
   description: 'Gjeni shtëpinë tuaj të ëndrrave në Shqipëri',
 }
 
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
           <WebVitalsReporter />
           <PerformanceStoreInit />
           <PerfDevOverlay />
+          <Toaster />
         </div>
       </AuthProvider>
     </NextIntlClientProvider>

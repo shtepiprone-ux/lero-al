@@ -27,7 +27,7 @@ function parsePropertyType(raw: unknown): PropertyType | undefined {
 export async function generateMetadata({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'favorites' })
-  return { title: `${t('page_title')} | Shtepi.al` }
+  return { title: `${t('page_title')} | Lero.al` }
 }
 
 export default async function FavoritesPage({ params, searchParams }: Props) {

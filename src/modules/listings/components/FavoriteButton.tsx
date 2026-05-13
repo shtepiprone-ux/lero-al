@@ -47,7 +47,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled }:
     <button
       type="button"
       className={cn(
-        'flex items-center justify-center rounded-full w-8 h-8 transition-all duration-150',
+        'flex items-center justify-center rounded-full w-8 h-8 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
         favorited
           ? 'bg-destructive/10 text-destructive hover:bg-destructive/20'
           : 'bg-card/80 text-foreground hover:bg-card hover:text-destructive',

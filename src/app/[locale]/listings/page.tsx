@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'listing' })
   return {
-    title: `${t('listings_page_title')} | Shtepi.al`,
+    title: `${t('listings_page_title')} | Lero.al`,
   }
 }
 

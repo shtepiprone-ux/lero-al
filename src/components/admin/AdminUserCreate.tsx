@@ -60,8 +60,10 @@ const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
   { code: '+39', flag: '🇮🇹' }, { code: '+44', flag: '🇬🇧' },
   { code: '+1', flag: '🇺🇸' }, { code: '+49', flag: '🇩🇪' },
-  { code: '+33', flag: '🇫🇷' }, { code: '+7', flag: '🇷🇺' },
-  { code: '+90', flag: '🇹🇷' }, { code: '+383', flag: '🇽🇰' },
+  { code: '+33', flag: '🇫🇷' }, { code: '+90', flag: '🇹🇷' },
+  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
+  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
+  { code: '+389', flag: '🇲🇰' },
 ]
 
 function parsePhone(val: string) {

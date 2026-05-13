@@ -11,7 +11,7 @@ export default async function AdminSettingsPage() {
     <div className="p-6 lg:p-8 max-w-3xl mx-auto">
       <AdminPageHeader
         title="Налаштування сайту"
-        subtitle="Загальні налаштування платформи Shtepi.al"
+        subtitle="Загальні налаштування платформи Lero.al"
       />
       <AdminSettings initialSettings={{ archived_noindex_days: archivedNoindexDays }} />
     </div>

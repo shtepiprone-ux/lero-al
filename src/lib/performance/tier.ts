@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 export type PerformanceTier = 'high' | 'medium' | 'low'
 
-const SESSION_KEY = 'shtepi:perf-tier'
+const SESSION_KEY = 'lero:perf-tier'
 
 // ── Classification ────────────────────────────────────────────────────────────
 

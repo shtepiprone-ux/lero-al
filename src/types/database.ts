@@ -1,6 +1,7 @@
 export type UserRole = 'admin' | 'moderator' | 'agent' | 'user'
 export type UserType = 'private' | 'agent' | 'developer'
 export type UserStatus = 'active' | 'blocked' | 'inactive'
+export type PreferredCurrency = 'ALL' | 'EUR'
 
 export interface LocationRequest {
   city: string
@@ -56,6 +57,28 @@ export interface User {
   year_started: number | null
   deleted_at: string | null
   location_request: LocationRequest | null
+  preferred_currency: PreferredCurrency
+  pending_email: string | null
+  created_at: string
+}
+
+export interface UserStatusHistory {
+  id: string
+  user_id: string
+  old_status: string | null
+  new_status: string
+  reason: string | null
+  changed_by: string | null
+  changed_at: string
+}
+
+export interface EmailChangeToken {
+  id: string
+  user_id: string
+  new_email: string
+  token_hash: string
+  expires_at: string
+  consumed_at: string | null
   created_at: string
 }
 

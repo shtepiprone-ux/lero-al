@@ -23,7 +23,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  // Exclude API routes — they handle auth internally and must not get locale prefixes.
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 }

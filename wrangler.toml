@@ -3,9 +3,6 @@ name = "lero-al"
 pages_build_output_dir = ".vercel/output/static"
 compatibility_date = "2026-05-14"
 
-[build]
-command = "npx @cloudflare/next-on-pages@1"
-
 [env.production.vars]
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME = "die7okukn"
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET = "shtepi_listings"

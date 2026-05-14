@@ -20,7 +20,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
-  updateUserProfileFull, softDeleteUser, addLocation,
+  updateUserProfileFull, softDeleteUser, hardDeleteUser, addLocation,
   approveLocationRequest, rejectLocationRequest, createAdminUser,
   type ProfileType,
 } from '@/modules/admin/actions'
@@ -324,27 +324,49 @@ function CancelConfirmDialog({ onConfirm, onReturn }: { onConfirm: () => void; o
   )
 }
 
-function DeleteConfirmDialog({ userName, email, onConfirm, onReturn, deleting }: {
-  userName: string; email: string; onConfirm: () => void; onReturn: () => void; deleting: boolean
+function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, deleting }: {
+  userName: string; email: string; mode: 'soft' | 'hard'
+  onConfirm: () => void; onReturn: () => void; deleting: boolean
 }) {
+  const isHard = mode === 'hard'
   return (
     <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
       <DialogContent showCloseButton={false} className="max-w-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-destructive">
-            <Trash2 className="h-5 w-5" /> Видалити профіль?
+            <Trash2 className="h-5 w-5" />
+            {isHard ? 'Видалити назавжди?' : 'Деактивувати профіль?'}
           </DialogTitle>
         </DialogHeader>
-        <div className="text-sm space-y-1">
-          <p className="text-muted-foreground">Ви збираєтесь видалити профіль:</p>
+        <div className="text-sm space-y-2">
+          <p className="text-muted-foreground">
+            {isHard ? 'Ви збираєтесь назавжди видалити профіль:' : 'Ви збираєтесь деактивувати профіль:'}
+          </p>
           <p className="font-semibold">{userName}</p>
           <p className="text-muted-foreground text-xs">{email}</p>
-          <p className="text-destructive font-medium mt-2">⚠️ Цю дію неможливо відмінити.</p>
+          <div className={`rounded-lg p-3 mt-1 text-xs space-y-1 ${isHard ? 'bg-destructive/10 border border-destructive/20' : 'bg-orange-50 border border-orange-200'}`}>
+            {isHard ? (
+              <>
+                <p className="font-semibold text-destructive">⚠️ Незворотна дія!</p>
+                <p className="text-muted-foreground">• Акаунт та дані профілю буде повністю видалено</p>
+                <p className="text-muted-foreground">• Всі оголошення отримають статус «Архів»</p>
+                <p className="text-muted-foreground">• Відновлення неможливе</p>
+              </>
+            ) : (
+              <>
+                <p className="font-semibold text-orange-700">Профіль буде деактивовано</p>
+                <p className="text-muted-foreground">• Користувач не зможе входити на сайт</p>
+                <p className="text-muted-foreground">• Всі оголошення отримають статус «Архів»</p>
+                <p className="text-muted-foreground">• Дані профілю збережуться в системі</p>
+              </>
+            )}
+          </div>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={onReturn} disabled={deleting}>Скасувати</Button>
           <Button variant="destructive" onClick={onConfirm} disabled={deleting}>
-            {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />} Видалити
+            {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+            {isHard ? 'Видалити назавжди' : 'Деактивувати'}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -426,6 +448,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   // Dialogs
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [deleteMode, setDeleteMode] = useState<'soft' | 'hard'>('soft')
   // Navigation guard dialog state (logic delegated to useUnsavedChangesGuard hook)
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavHref, setPendingNavHref] = useState<string | null>(null)
@@ -578,7 +601,9 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   async function handleDelete() {
     if (!user) return
     setDeleting(true)
-    const result = await softDeleteUser(user.id)
+    const result = deleteMode === 'hard'
+      ? await hardDeleteUser(user.id)
+      : await softDeleteUser(user.id)
     setDeleting(false)
     if (result.error) { setSaveError(result.error); setShowDeleteDialog(false); return }
     router.push('/admin/users')
@@ -644,9 +669,16 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                 <Pencil className="h-4 w-4" /> Редагувати профіль
               </Button>
               {isAdmin && (
-                <Button variant="destructive" size="sm" className="gap-1.5 rounded-xl" onClick={() => setShowDeleteDialog(true)}>
-                  <Trash2 className="h-4 w-4" /> Видалити
-                </Button>
+                <div className="flex gap-1.5">
+                  <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-orange-300 text-orange-700 hover:bg-orange-50"
+                    onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
+                    <Trash2 className="h-4 w-4" /> Деактивувати
+                  </Button>
+                  <Button variant="destructive" size="sm" className="gap-1.5 rounded-xl"
+                    onClick={() => { setDeleteMode('hard'); setShowDeleteDialog(true) }}>
+                    <Trash2 className="h-4 w-4" /> Видалити назавжди
+                  </Button>
+                </div>
               )}
             </>
           )}
@@ -966,6 +998,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       {showDeleteDialog && user && (
         <DeleteConfirmDialog
           userName={displayName} email={authEmail}
+          mode={deleteMode}
           onConfirm={handleDelete} onReturn={() => setShowDeleteDialog(false)} deleting={deleting}
         />
       )}

@@ -249,6 +249,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         <Combobox
                           options={STATUS_OPTIONS}
                           value={l.status}
+                          portal
                           onChange={newStatus => {
                             if (!newStatus || newStatus === l.status) return
                             withLoading(l.id, async () => {

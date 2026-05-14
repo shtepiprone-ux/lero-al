@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { createPortal } from 'react-dom'
 import { ChevronDown, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -30,6 +31,12 @@ interface ComboboxProps {
   size?: 'default' | 'sm' | 'xs'
   /** Extra classes for the trigger element */
   triggerClassName?: string
+  /**
+   * Render the dropdown via a React portal into document.body.
+   * Use inside tables or any container with overflow:hidden/auto that would clip
+   * the dropdown. Portal uses fixed positioning calculated from the trigger rect.
+   */
+  portal?: boolean
 }
 
 const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
@@ -49,9 +56,11 @@ export function Combobox({
   variant = 'input',
   size = 'default',
   triggerClassName,
+  portal = false,
 }: ComboboxProps) {
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
   const selected = options.find(o => o.value === value)
@@ -69,16 +78,49 @@ export function Combobox({
     if (!value) setSearch('')
   }, [value])
 
-  const heights: Record<string, string> = {
-    default: 'h-11',
-    sm: 'h-9',
-    xs: 'h-8',
-  }
-  const textSizes: Record<string, string> = {
-    default: 'text-sm',
-    sm: 'text-sm',
-    xs: 'text-xs',
-  }
+  // Recalculate portal dropdown position
+  const updateDropdownPosition = useCallback(() => {
+    if (!portal || !containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const spaceBelow = window.innerHeight - rect.bottom
+    const spaceAbove = rect.top
+    const maxH = 224 // max-h-56 = 14rem = 224px
+
+    if (spaceBelow >= Math.min(maxH, 150) || spaceBelow >= spaceAbove) {
+      setDropdownStyle({
+        position: 'fixed',
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+        maxHeight: Math.min(maxH, spaceBelow - 8),
+        zIndex: 9999,
+      })
+    } else {
+      // Open upward
+      setDropdownStyle({
+        position: 'fixed',
+        bottom: window.innerHeight - rect.top + 4,
+        left: rect.left,
+        width: rect.width,
+        maxHeight: Math.min(maxH, spaceAbove - 8),
+        zIndex: 9999,
+      })
+    }
+  }, [portal])
+
+  useEffect(() => {
+    if (!open || !portal) return
+    updateDropdownPosition()
+    window.addEventListener('scroll', updateDropdownPosition, true)
+    window.addEventListener('resize', updateDropdownPosition)
+    return () => {
+      window.removeEventListener('scroll', updateDropdownPosition, true)
+      window.removeEventListener('resize', updateDropdownPosition)
+    }
+  }, [open, portal, updateDropdownPosition])
+
+  const heights: Record<string, string> = { default: 'h-11', sm: 'h-9', xs: 'h-8' }
+  const textSizes: Record<string, string> = { default: 'text-sm', sm: 'text-sm', xs: 'text-xs' }
   const h = heights[size]
   const ts = textSizes[size]
 
@@ -92,22 +134,50 @@ export function Combobox({
     triggerClassName
   )
 
+  const dropdownContent = open && !disabled && (
+    <div
+      className={cn(
+        'bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-y-auto',
+        !portal && 'absolute top-full mt-1 left-0 right-0 z-50 max-h-56'
+      )}
+      style={portal ? dropdownStyle : undefined}
+    >
+      {filtered.length === 0 ? (
+        <p className="px-3 py-2 text-sm text-muted-foreground">Нічого не знайдено</p>
+      ) : filtered.map(opt => (
+        <button
+          key={opt.value}
+          type="button"
+          className={cn(
+            'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
+            value === opt.value && 'bg-primary/10 text-primary'
+          )}
+          onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
+        >
+          <span className="flex-1 truncate">{opt.label}</span>
+          {opt.description && (
+            <span className="text-xs text-muted-foreground shrink-0">{opt.description}</span>
+          )}
+          {value === opt.value && <Check className="h-3.5 w-3.5 shrink-0" />}
+        </button>
+      ))}
+    </div>
+  )
+
   return (
     <div ref={containerRef} className={cn('relative', className)}>
-      {/* Leading icon */}
       {icon && (
         <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10 text-muted-foreground">
           {icon}
         </span>
       )}
 
-      {/* Trigger */}
       {variant === 'input' ? (
         <input
           type="text"
           value={selected ? selected.label : search}
           onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true) }}
-          onFocus={() => setOpen(true)}
+          onFocus={() => { setOpen(true); updateDropdownPosition() }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           placeholder={placeholder}
           disabled={disabled}
@@ -116,7 +186,7 @@ export function Combobox({
       ) : (
         <button
           type="button"
-          onClick={() => { if (!disabled) setOpen(o => !o) }}
+          onClick={() => { if (!disabled) { setOpen(o => !o); updateDropdownPosition() } }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           disabled={disabled}
           className={cn(triggerBase, 'cursor-pointer')}
@@ -127,7 +197,6 @@ export function Combobox({
         </button>
       )}
 
-      {/* Chevron */}
       <ChevronDown
         className={cn(
           'absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none transition-transform',
@@ -135,30 +204,12 @@ export function Combobox({
         )}
       />
 
-      {/* Dropdown */}
-      {open && !disabled && (
-        <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto">
-          {filtered.length === 0 ? (
-            <p className="px-3 py-2 text-sm text-muted-foreground">Нічого не знайдено</p>
-          ) : filtered.map(opt => (
-            <button
-              key={opt.value}
-              type="button"
-              className={cn(
-                'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
-                value === opt.value && 'bg-primary/10 text-primary'
-              )}
-              onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
-            >
-              <span className="flex-1 truncate">{opt.label}</span>
-              {opt.description && (
-                <span className="text-xs text-muted-foreground shrink-0">{opt.description}</span>
-              )}
-              {value === opt.value && <Check className="h-3.5 w-3.5 shrink-0" />}
-            </button>
-          ))}
-        </div>
-      )}
+      {portal
+        ? (typeof document !== 'undefined' && dropdownContent
+            ? createPortal(dropdownContent, document.body)
+            : null)
+        : dropdownContent
+      }
 
       {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>

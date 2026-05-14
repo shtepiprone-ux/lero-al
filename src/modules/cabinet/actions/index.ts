@@ -107,7 +107,7 @@ export async function deleteOwnAccount(): Promise<{ error?: string }> {
 // ── Cloudinary avatar upload for cabinet ────────────────────────────────────
 
 async function uploadToCloudinary(
-  bytes: ArrayBuffer,
+  buf: Buffer,      // Node.js Buffer — avoids ArrayBuffer slice-offset issues
   mimeType: string,
   folder: string,
 ): Promise<string> {
@@ -121,7 +121,7 @@ async function uploadToCloudinary(
   const signature = createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex')
 
   const form = new FormData()
-  form.append('file', new Blob([bytes], { type: mimeType }))
+  form.append('file', new Blob([new Uint8Array(buf)], { type: mimeType }), 'image.jpg')
   form.append('timestamp', String(timestamp))
   form.append('api_key', apiKey)
   form.append('signature', signature)
@@ -131,33 +131,41 @@ async function uploadToCloudinary(
     method: 'POST',
     body: form,
   })
-  if (!res.ok) throw new Error(`Cloudinary upload failed: ${res.status}`)
+  if (!res.ok) {
+    const errText = await res.text().catch(() => String(res.status))
+    throw new Error(`Cloudinary upload failed: ${errText}`)
+  }
   const data = await res.json() as { secure_url: string; width?: number; height?: number }
-  // Server-side dimension enforcement via Cloudinary response
   if (data.width && data.height && (data.width !== 256 || data.height !== 256)) {
     throw new Error(`Avatar must be exactly 256×256 px, got ${data.width}×${data.height}`)
   }
   return data.secure_url
 }
 
-export async function uploadCabinetAvatar(formData: FormData): Promise<{ url?: string; error?: string }> {
+// ROOT CAUSE FIX (Task 11d): same base64 fix as admin uploadUserAvatar.
+// Next.js Server Action FormData binary transmission corrupts File bytes.
+export async function uploadCabinetAvatar(
+  imageBase64: string,   // base64-encoded JPEG from AvatarCropModal canvas
+  mimeType: string,      // always 'image/jpeg' from canvas.toBlob
+): Promise<{ url?: string; error?: string }> {
   const userId = await resolveAuthUser()
   if (!userId) return { error: 'Unauthorized' }
 
-  const file = formData.get('avatar') as File | null
-  if (!file) return { error: 'Файл не надано' }
-
   const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-  if (!validTypes.includes(file.type)) return { error: 'Тільки JPG, PNG або WEBP' }
-  if (file.size > 2 * 1024 * 1024) return { error: 'Максимальний розмір — 2 МБ' }
+  if (!validTypes.includes(mimeType)) return { error: 'Тільки JPG, PNG або WEBP' }
 
-  const bytes = await file.arrayBuffer()
+  const bytes = Buffer.from(imageBase64, 'base64')
+  console.log('[uploadCabinetAvatar] received bytes:', bytes.length, 'mimeType:', mimeType)
+  if (bytes.length === 0) return { error: 'Файл порожній — спробуйте ще раз' }
+  if (bytes.length > 2 * 1024 * 1024) return { error: 'Максимальний розмір — 2 МБ' }
+
   let cloudUrl: string
   try {
-    cloudUrl = await uploadToCloudinary(bytes, file.type, 'avatars')
+    cloudUrl = await uploadToCloudinary(bytes, mimeType, 'avatars')
   } catch (e) {
-    console.error('uploadCabinetAvatar: Cloudinary failed', { error: e, userId })
-    return { error: 'Помилка завантаження аватара' }
+    const msg = e instanceof Error ? e.message : String(e)
+    console.error('[uploadCabinetAvatar] Cloudinary failed:', msg, '| userId:', userId, '| bytes:', bytes.length)
+    return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'Помилка завантаження аватара' }
   }
 
   const supabase = await createClient()
@@ -167,7 +175,8 @@ export async function uploadCabinetAvatar(formData: FormData): Promise<{ url?: s
     .eq('id', userId)
 
   if (error) {
-    console.error('uploadCabinetAvatar: DB update failed', { error, userId })
+    console.error('[uploadCabinetAvatar] DB update failed', { error, userId })
+    return { error: 'Аватар завантажено, але не вдалось зберегти — спробуйте ще раз' }
   }
 
   revalidatePath('/cabinet')

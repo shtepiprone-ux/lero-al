@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef, useState, useMemo, useTransition, useEffect } from 'react'
+import { useRef, useState, useMemo, useTransition, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { CheckCircle2, AlertCircle, Camera, UserCircle2, Loader2, MapPin, Trash2 } from 'lucide-react'
+import { CheckCircle2, AlertCircle, Camera, UserCircle2, Loader2, MapPin, Trash2, AlertTriangle } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,6 +13,7 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AppImage } from '@/components/ui/AppImage'
 import { cn } from '@/lib/utils'
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateCabinetProfile,
   deleteOwnAccount,
@@ -282,52 +283,43 @@ function AvatarUpload({ currentUrl, onUpload }: {
     console.log('[AvatarFlow] crop_modal_open', { mode: 'cabinet' })
   }
 
-  // Returns Promise<void> and always resolves — never rejects to the modal.
-  // The modal awaits this; we handle all error paths here so the modal's
-  // finally{setSaving(false)} always runs and the modal stays open on error.
+  // ROOT CAUSE FIX: base64 encoding to avoid Next.js Server Action binary data corruption.
   async function handleCropConfirm(blob: Blob): Promise<void> {
     console.log('[AvatarFlow] crop_save_clicked', { mode: 'cabinet' })
     console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size })
     setUploading(true)
-    console.log('[AvatarFlow] upload_started', {
-      route: window.location.pathname,
-      mode: 'cabinet',
-      hasUserId: true,
-      endpoint: 'uploadCabinetAvatar',
-    })
+    console.log('[AvatarFlow] upload_started', { mode: 'cabinet', endpoint: 'uploadCabinetAvatar' })
     try {
-      const fd = new FormData()
-      fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
-      console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet' })
-      const result = await uploadCabinetAvatar(fd)
-      console.log('[AvatarFlow] upload_response_received', {
-        success: !result.error,
-        payload: result,
+      // Encode as base64 to avoid binary serialization issues in Next.js Server Actions
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => {
+          const dataUrl = reader.result as string
+          resolve(dataUrl.slice(dataUrl.indexOf(',') + 1))
+        }
+        reader.onerror = reject
+        reader.readAsDataURL(blob)
       })
+      console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet', base64Length: base64.length })
+      const result = await uploadCabinetAvatar(base64, 'image/jpeg')
+      console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
       if (result.error) {
+        // ERROR PATH: toast (visible above modal), modal stays open for retry
         toast.error(result.error)
-        return  // modal stays open (cropSrc unchanged)
+        return
       }
+      // SUCCESS PATH ONLY: close modal and update preview
       const src = cropSrc
-      setCropSrc(null)       // unmounts modal
+      setCropSrc(null)
       setUrl(result.url ?? null)
       onUpload(result.url ?? null)
       if (src) URL.revokeObjectURL(src)
-      console.log('[AvatarFlow] avatar_state_updated', {
-        avatarUrl: result.url,
-        previewUrl: null,
-        pendingBlob: false,
-        mode: 'cabinet',
-      })
+      console.log('[AvatarFlow] avatar_state_updated', { avatarUrl: result.url, mode: 'cabinet' })
       console.log('[AvatarFlow] modal_close_requested', { reason: 'upload_success', mode: 'cabinet' })
     } catch (err) {
-      console.log('[AvatarFlow] upload_exception', {
-        error: String(err),
-        stack: err instanceof Error ? err.stack : undefined,
-        mode: 'cabinet',
-      })
+      console.log('[AvatarFlow] upload_exception', { error: String(err), mode: 'cabinet' })
       toast.error(t('avatar_upload_error'))
-      // modal stays open (cropSrc unchanged)
+      // ERROR PATH: modal stays open (cropSrc unchanged)
     } finally {
       setUploading(false)
     }
@@ -414,6 +406,30 @@ export function ProfileTab({ profile, locale, cities, regions }: Props) {
   const [deleteConfirm, setDeleteConfirm] = useState('')
   const [deleting, setDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
+
+  // Unsaved-changes guard state
+  const [showGuardDialog, setShowGuardDialog] = useState(false)
+  const [pendingGuardHref, setPendingGuardHref] = useState<string | null>(null)
+
+  // Dirty state: true if any form field differs from the saved profile values
+  const isDirty = useMemo(() => {
+    if (!profile) return false
+    return (
+      name !== (profile.name ?? '') ||
+      phone !== (profile.phone ?? '') ||
+      whatsapp !== (profile.whatsapp ?? '') ||
+      companyName !== (profile.company_name ?? '') ||
+      userType !== (profile.user_type === 'agent' ? 'agent' : 'private') ||
+      locationId !== (profile.location_id ?? null) ||
+      currency !== (profile.preferred_currency ?? 'ALL')
+    )
+  }, [name, phone, whatsapp, companyName, userType, locationId, currency, profile])
+
+  const handleShowGuardDialog = useCallback((href: string | null) => {
+    setPendingGuardHref(href)
+    setShowGuardDialog(true)
+  }, [])
+  const { interceptHref, confirmLeave } = useUnsavedChangesGuard(isDirty, handleShowGuardDialog)
 
   async function handleSave() {
     setSaveStatus('saving')
@@ -685,6 +701,32 @@ export function ProfileTab({ profile, locale, cities, regions }: Props) {
               >
                 {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
                 {t('delete_account_confirm')}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+
+      {/* ── Unsaved-changes confirmation dialog ────────────────────────────── */}
+      {showGuardDialog && (
+        <Dialog open onOpenChange={open => { if (!open) setShowGuardDialog(false) }}>
+          <DialogContent showCloseButton={false} className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-status-warning" />
+                {t('unsaved_title')}
+              </DialogTitle>
+            </DialogHeader>
+            <p className="text-sm text-muted-foreground">{t('unsaved_body')}</p>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowGuardDialog(false)}>
+                {t('unsaved_stay')}
+              </Button>
+              <Button variant="destructive" onClick={() => {
+                setShowGuardDialog(false)
+                confirmLeave(pendingGuardHref)
+              }}>
+                {t('unsaved_leave')}
               </Button>
             </DialogFooter>
           </DialogContent>

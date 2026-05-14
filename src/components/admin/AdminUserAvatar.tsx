@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { removeUserAvatar } from '@/modules/admin/actions'
-import { AppImage } from '@/components/ui/AppImage'
 
 const MAX_SOURCE_BYTES = 10 * 1024 * 1024  // 10 MB — source before crop
 const MIN_DIM = 256
@@ -155,9 +154,8 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
           title={canEdit ? 'Клікніть щоб змінити' : undefined}
         >
           {currentUrl ? (
-            currentUrl.startsWith('blob:')
-              ? <img src={currentUrl} alt="Avatar preview" className="w-full h-full object-cover" />
-              : <AppImage src={currentUrl} variant="avatar" alt="Avatar" priority={false} />
+            // eslint-disable-next-line @next/next/no-img-element -- admin avatar preview, no CDN optimization needed
+            <img src={currentUrl} alt="Avatar preview" className="w-full h-full object-cover" />
           ) : (
             <UserCircle2 className="h-12 w-12 text-muted-foreground" />
           )}

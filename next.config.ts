@@ -12,8 +12,8 @@ const baseConfig = withNextIntl(nextConfig)
 
 export default process.env.SENTRY_AUTH_TOKEN
   ? withSentryConfig(baseConfig, {
-      org: "lero.al",
-      project: "lero.al",
+      org: "lero-al",
+      project: "lero-al",
       silent: !process.env.CI,
       widenClientFileUpload: true,
       webpack: {

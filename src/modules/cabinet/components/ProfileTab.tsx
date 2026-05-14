@@ -9,7 +9,7 @@ import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Combobox } from '@/components/shared/Combobox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AppImage } from '@/components/ui/AppImage'
 import { cn } from '@/lib/utils'
@@ -80,16 +80,15 @@ function PhoneField({ label, value, onChange }: {
     <div className="flex flex-col gap-1.5">
       <Label className="text-sm">{label}</Label>
       <div className="flex gap-2">
-        <Select value={code} onValueChange={c => { if (c) update(c, local) }}>
-          <SelectTrigger variant="outline" size="sm" className="w-24 h-11 shrink-0 rounded-xl">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {COUNTRY_CODES.map(c => (
-              <SelectItem key={c.code} value={c.code}>{c.flag} {c.code}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Combobox
+          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
+          value={code}
+          onChange={c => { if (c) update(c, local) }}
+          variant="button"
+          size="default"
+          className="w-24 shrink-0"
+          triggerClassName="w-24 shrink-0"
+        />
         <Input
           value={local}
           onChange={e => update(code, e.target.value)}

@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Combobox } from '@/components/shared/Combobox'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
@@ -165,14 +165,15 @@ function PhoneInputField({ value, onChange, error }: { value: string; onChange: 
   return (
     <div>
       <div className="flex gap-2">
-        <Select value={code} onValueChange={c => update(c ?? code, local)}>
-          <SelectTrigger variant="outline" size="sm" className="w-20 h-10 shrink-0 rounded-xl">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {COUNTRY_CODES.map(c => <SelectItem key={c.code} value={c.code}>{c.flag} {c.code}</SelectItem>)}
-          </SelectContent>
-        </Select>
+        <Combobox
+          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
+          value={code}
+          onChange={c => update(c || code, local)}
+          variant="button"
+          size="sm"
+          triggerClassName="w-20 h-10 shrink-0"
+          className="w-20 shrink-0"
+        />
         <Input value={local} onChange={e => update(code, e.target.value)} placeholder="69 123 456" className="h-10 rounded-xl" />
       </div>
       {error && <p className="text-xs text-destructive mt-1">{error}</p>}
@@ -713,12 +714,14 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           mode={isAdmin ? currentMode : 'view'}
           viewValue={PROFILE_TYPE_LABELS[profileTypeFromUser(user ?? { role: 'user', user_type: 'private' })]}
           editContent={
-            <Select value={profileType} onValueChange={v => setValue('profileType', v as ProfileType)}>
-              <SelectTrigger variant="outline" className="h-10 rounded-xl"><SelectValue /></SelectTrigger>
-              <SelectContent>
-                {PROFILE_TYPES.map(t => <SelectItem key={t} value={t}>{PROFILE_TYPE_LABELS[t]}</SelectItem>)}
-              </SelectContent>
-            </Select>
+            <Combobox
+              options={PROFILE_TYPES.map(t => ({ value: t, label: PROFILE_TYPE_LABELS[t] }))}
+              value={profileType}
+              onChange={v => { if (v) setValue('profileType', v as ProfileType) }}
+              variant="button"
+              size="sm"
+              triggerClassName="h-10"
+            />
           }
           error={errors.profileType?.message}
         />
@@ -823,14 +826,18 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
               </Badge>
             }
             editContent={
-              <Select value={statusValue} onValueChange={v => setValue('status', v as any)}>
-                <SelectTrigger variant="outline" className="h-10 rounded-xl"><SelectValue /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">Активний</SelectItem>
-                  <SelectItem value="blocked">Заблокований</SelectItem>
-                  <SelectItem value="inactive">Неактивний</SelectItem>
-                </SelectContent>
-              </Select>
+              <Combobox
+                options={[
+                  { value: 'active', label: 'Активний' },
+                  { value: 'blocked', label: 'Заблокований' },
+                  { value: 'inactive', label: 'Неактивний' },
+                ]}
+                value={statusValue ?? ''}
+                onChange={v => { if (v) setValue('status', v as any) }}
+                variant="button"
+                size="sm"
+                triggerClassName="h-10"
+              />
             }
             error={errors.status?.message}
           />

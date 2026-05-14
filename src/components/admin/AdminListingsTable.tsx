@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Combobox } from '@/components/shared/Combobox'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { updateListingStatus, setListingPremium, deleteListing } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
@@ -20,6 +20,13 @@ const STATUSES: ListingStatus[] = ['pending', 'active', 'inactive', 'sold', 'ren
 const STATUS_VARIANT: Record<ListingStatus, 'success' | 'warning' | 'info' | 'rented' | 'neutral'> = {
   pending: 'warning', active: 'success', inactive: 'neutral', sold: 'info', rented: 'rented', archived: 'neutral',
 }
+
+const STATUS_LABEL: Record<ListingStatus, string> = {
+  pending: 'На розгляді', active: 'Активне', inactive: 'Неактивне',
+  sold: 'Продано', rented: 'Орендовано', archived: 'Архів',
+}
+
+const STATUS_OPTIONS = STATUSES.map(s => ({ value: s, label: STATUS_LABEL[s] }))
 
 const PREMIUM_PRESETS = [
   { label: '1 місяць',  days: 30 },
@@ -230,9 +237,10 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         {formatPrice(l.price, l.currency, 'sq')}
                       </td>
                       <td className="px-4 py-3">
-                        <Select
+                        <Combobox
+                          options={STATUS_OPTIONS}
                           value={l.status}
-                          onValueChange={newStatus => {
+                          onChange={newStatus => {
                             if (!newStatus || newStatus === l.status) return
                             withLoading(l.id, async () => {
                               await updateListingStatus(l.id, newStatus as ListingStatus)
@@ -241,18 +249,11 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                               ))
                             })
                           }}
-                        >
-                          <SelectTrigger variant="outline" size="sm" className="w-28 h-7 text-xs">
-                            <SelectValue>
-                              <Badge variant={STATUS_VARIANT[l.status as ListingStatus]} className="text-[11px] h-5">
-                                {l.status}
-                              </Badge>
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                            {STATUSES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                          </SelectContent>
-                        </Select>
+                          variant="button"
+                          size="xs"
+                          disabled={loadingId === l.id}
+                          className="w-32"
+                        />
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
                         {l.owner?.name ?? '—'}

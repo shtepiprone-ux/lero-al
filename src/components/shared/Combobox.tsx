@@ -1,0 +1,166 @@
+'use client'
+
+import { useState, useMemo, useRef, useEffect } from 'react'
+import { ChevronDown, Check } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+export interface ComboboxOption {
+  value: string
+  label: string
+  description?: string
+}
+
+interface ComboboxProps {
+  options: ComboboxOption[]
+  value: string
+  onChange: (value: string) => void
+  placeholder?: string
+  disabled?: boolean
+  className?: string
+  /** Validation error shown below the field */
+  error?: string
+  /** Leading icon inside the input */
+  icon?: React.ReactNode
+  /**
+   * 'input'  — searchable text input (default, for longer lists)
+   * 'button' — click-to-open trigger, no typing (for short static lists ≤ 8 items)
+   */
+  variant?: 'input' | 'button'
+  /** 'default' = h-11 | 'sm' = h-9 | 'xs' = h-8 text-xs (inline compact) */
+  size?: 'default' | 'sm' | 'xs'
+  /** Extra classes for the trigger element */
+  triggerClassName?: string
+}
+
+const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
+function normalize(s: string) {
+  return s.normalize('NFD').replace(COMBINING, '').toLowerCase()
+}
+
+export function Combobox({
+  options,
+  value,
+  onChange,
+  placeholder = 'Оберіть...',
+  disabled = false,
+  className,
+  error,
+  icon,
+  variant = 'input',
+  size = 'default',
+  triggerClassName,
+}: ComboboxProps) {
+  const [search, setSearch] = useState('')
+  const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const selected = options.find(o => o.value === value)
+
+  const filtered = useMemo(() => {
+    if (!search || variant === 'button') return options
+    const q = normalize(search)
+    return options.filter(o =>
+      normalize(o.label).includes(q) ||
+      (o.description && normalize(o.description).includes(q))
+    )
+  }, [options, search, variant])
+
+  useEffect(() => {
+    if (!value) setSearch('')
+  }, [value])
+
+  const heights: Record<string, string> = {
+    default: 'h-11',
+    sm: 'h-9',
+    xs: 'h-8',
+  }
+  const textSizes: Record<string, string> = {
+    default: 'text-sm',
+    sm: 'text-sm',
+    xs: 'text-xs',
+  }
+  const h = heights[size]
+  const ts = textSizes[size]
+
+  const triggerBase = cn(
+    'w-full flex items-center justify-between gap-2 bg-muted border-0 rounded-xl',
+    'focus:outline-none focus:ring-2 focus:ring-ring',
+    'disabled:opacity-50 disabled:cursor-not-allowed',
+    'placeholder:text-muted-foreground text-foreground',
+    h, ts,
+    icon ? 'pl-9 pr-3' : 'pl-3 pr-3',
+    triggerClassName
+  )
+
+  return (
+    <div ref={containerRef} className={cn('relative', className)}>
+      {/* Leading icon */}
+      {icon && (
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10 text-muted-foreground">
+          {icon}
+        </span>
+      )}
+
+      {/* Trigger */}
+      {variant === 'input' ? (
+        <input
+          type="text"
+          value={selected ? selected.label : search}
+          onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true) }}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={cn(triggerBase, 'cursor-text')}
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => { if (!disabled) setOpen(o => !o) }}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          disabled={disabled}
+          className={cn(triggerBase, 'cursor-pointer')}
+        >
+          <span className={cn(!selected && 'text-muted-foreground')}>
+            {selected ? selected.label : placeholder}
+          </span>
+        </button>
+      )}
+
+      {/* Chevron */}
+      <ChevronDown
+        className={cn(
+          'absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none transition-transform',
+          open && 'rotate-180'
+        )}
+      />
+
+      {/* Dropdown */}
+      {open && !disabled && (
+        <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto">
+          {filtered.length === 0 ? (
+            <p className="px-3 py-2 text-sm text-muted-foreground">Нічого не знайдено</p>
+          ) : filtered.map(opt => (
+            <button
+              key={opt.value}
+              type="button"
+              className={cn(
+                'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
+                value === opt.value && 'bg-primary/10 text-primary'
+              )}
+              onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
+            >
+              <span className="flex-1 truncate">{opt.label}</span>
+              {opt.description && (
+                <span className="text-xs text-muted-foreground shrink-0">{opt.description}</span>
+              )}
+              {value === opt.value && <Check className="h-3.5 w-3.5 shrink-0" />}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
+    </div>
+  )
+}

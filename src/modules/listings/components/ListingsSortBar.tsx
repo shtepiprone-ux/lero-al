@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Combobox } from '@/components/shared/Combobox'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -75,17 +75,15 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           )}
         </Button>
 
-        {/* Sort select */}
-        <Select value={sort} onValueChange={setSort}>
-          <SelectTrigger variant="outline" size="sm" aria-label={t('sort_by')}>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {SORT_OPTIONS.map(o => (
-              <SelectItem key={o.value} value={o.value}>{t(o.labelKey)}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {/* Sort combobox */}
+        <Combobox
+          options={SORT_OPTIONS.map(o => ({ value: o.value, label: t(o.labelKey) }))}
+          value={sort}
+          onChange={v => { if (v) setSort(v) }}
+          variant="button"
+          size="sm"
+          className="w-auto min-w-[140px]"
+        />
 
         {/* Grid / List toggle */}
         <div className="hidden sm:flex items-center border border-border rounded-xl overflow-hidden">

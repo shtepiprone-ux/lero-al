@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Combobox } from '@/components/shared/Combobox'
 import { Checkbox } from '@/components/ui/checkbox'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
@@ -86,14 +86,15 @@ function PhoneInputField({ value, onChange, error }: { value: string; onChange: 
   return (
     <div>
       <div className="flex gap-2">
-        <Select value={code} onValueChange={c => update(c ?? code, local)}>
-          <SelectTrigger variant="outline" size="sm" className="w-20 h-10 shrink-0 rounded-xl">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {COUNTRY_CODES.map(c => <SelectItem key={c.code} value={c.code}>{c.flag} {c.code}</SelectItem>)}
-          </SelectContent>
-        </Select>
+        <Combobox
+          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
+          value={code}
+          onChange={c => update(c || code, local)}
+          variant="button"
+          size="sm"
+          triggerClassName="w-20 h-10 shrink-0"
+          className="w-20 shrink-0"
+        />
         <Input value={local} onChange={e => update(code, e.target.value)} placeholder="69 123 456" className="h-10 rounded-xl" />
       </div>
       {error && <p className="text-xs text-destructive mt-1">{error}</p>}
@@ -224,16 +225,14 @@ export function AdminUserCreate({ cities, regions }: Props) {
 
             <div className="flex flex-col gap-1.5">
               <Label className="text-sm">Тип акаунту <span className="text-destructive">*</span></Label>
-              <Select value={watch('profileType')} onValueChange={v => setValue('profileType', v as ProfileType)}>
-                <SelectTrigger variant="outline" className="h-10 rounded-xl">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {PROFILE_TYPES.map(t => (
-                    <SelectItem key={t} value={t}>{PROFILE_TYPE_LABELS[t]}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Combobox
+                options={PROFILE_TYPES.map(t => ({ value: t, label: PROFILE_TYPE_LABELS[t] }))}
+                value={watch('profileType')}
+                onChange={v => { if (v) setValue('profileType', v as ProfileType) }}
+                variant="button"
+                size="sm"
+                triggerClassName="h-10"
+              />
               {errors.profileType && <p className="text-xs text-destructive">{errors.profileType.message}</p>}
             </div>
           </div>

@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { MapPin, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
+import { Combobox } from '@/components/shared/Combobox'
 import { cn } from '@/lib/utils'
 
 export interface LocationOption {
@@ -148,19 +148,14 @@ export function LocationCombobox({
                 placeholder="Назва (алб.)"
                 className="h-9 rounded-xl text-sm"
               />
-              <Select
+              <Combobox
+                options={regions!.map(r => ({ value: r.id.toString(), label: r.name_al }))}
                 value={addRegionId?.toString() ?? ''}
-                onValueChange={v => setAddRegionId(Number(v))}
-              >
-                <SelectTrigger variant="outline" size="sm" className="h-9 rounded-xl">
-                  <SelectValue placeholder="Оберіть регіон" />
-                </SelectTrigger>
-                <SelectContent>
-                  {regions!.map(r => (
-                    <SelectItem key={r.id} value={r.id.toString()}>{r.name_al}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                onChange={v => setAddRegionId(v ? Number(v) : null)}
+                placeholder="Оберіть регіон"
+                variant="button"
+                size="sm"
+              />
               <div className="flex gap-2">
                 <Button
                   type="button" size="sm" className="h-8 rounded-xl"

@@ -26,8 +26,10 @@ The following external service accounts are already registered and available for
 - Avatars uploaded via `uploadUserAvatar` (admin) or `uploadCabinetAvatar` (cabinet) Server Actions.
 - Server-side signed upload: `POST https://api.cloudinary.com/v1_1/{cloud}/image/upload` with SHA-1 signature.
 - Upload folder: `avatars/`.
-- Client-side validation before upload: MIME ∈ {image/jpeg, image/png, image/webp}, size ≤ 2 MB, dimensions = 256×256 px.
-- Server-side validation: MIME + size only (trusted client dimension check).
+- Avatar input accepts any dimensions ≥ 256×256 and ≤ 10 MB across JPG/PNG/WEBP. The client crops to 256×256 via canvas; the server validates the cropped result (MIME, size ≤ 2 MB, dimensions = 256×256).
+- Client-side validation before crop modal: MIME ∈ {image/jpeg, image/png, image/webp}, source size ≤ 10 MB, source dimensions ≥ 256×256.
+- Client crop: user pans/zooms inside a square crop frame; AvatarCropModal (react-easy-crop) renders 256×256 JPEG at q=0.92 via canvas.
+- Server-side validation: MIME + size ≤ 2 MB + dimensions = 256×256 via Cloudinary response.
 - Stored URL is the raw Cloudinary URL. Display via `<AppImage variant="avatar">` applies `w_192,h_192,c_fill` transform at render time.
 - Display via `AppImage` `variant="avatar"` for Cloudinary-first delivery and srcset.
   

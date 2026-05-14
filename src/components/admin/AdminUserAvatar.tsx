@@ -2,13 +2,20 @@
 
 import { useRef, useState } from 'react'
 import { UserCircle2, Camera, Trash2, Loader2 } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { uploadUserAvatar, removeUserAvatar } from '@/modules/admin/actions'
 import { AppImage } from '@/components/ui/AppImage'
 
-const MAX_SIZE_BYTES = 2 * 1024 * 1024 // 2 MB
-const REQUIRED_DIM = 256
+const MAX_SOURCE_BYTES = 10 * 1024 * 1024  // 10 MB — source file before crop
+const MIN_DIM = 256
 const VALID_MIME = ['image/jpeg', 'image/png', 'image/webp']
+
+// Lazy crop modal — chunk loads only when user picks a file
+const AvatarCropModal = dynamic(
+  () => import('@/components/shared/AvatarCropModal').then(m => m.AvatarCropModal),
+  { ssr: false },
+)
 
 interface Props {
   userId: string | null
@@ -17,15 +24,18 @@ interface Props {
   onAvatarChange: (url: string | null) => void
 }
 
-async function validateDimensions(file: File): Promise<boolean> {
+async function validateSourceImage(file: File): Promise<{ w: number; h: number; error?: 'unreadable' }> {
   return new Promise(resolve => {
     const img = new Image()
     const url = URL.createObjectURL(file)
     img.onload = () => {
       URL.revokeObjectURL(url)
-      resolve(img.naturalWidth === REQUIRED_DIM && img.naturalHeight === REQUIRED_DIM)
+      resolve({ w: img.naturalWidth, h: img.naturalHeight })
     }
-    img.onerror = () => { URL.revokeObjectURL(url); resolve(false) }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      resolve({ w: 0, h: 0, error: 'unreadable' })
+    }
     img.src = url
   })
 }
@@ -36,6 +46,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
   const [removing, setRemoving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [currentUrl, setCurrentUrl] = useState(avatarUrl)
+  const [cropSrc, setCropSrc] = useState<string | null>(null)
 
   const canEdit = mode === 'edit' && userId !== null
 
@@ -49,24 +60,43 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
       setError('Тільки JPG, PNG або WEBP')
       return
     }
-    if (file.size > MAX_SIZE_BYTES) {
-      setError('Максимальний розмір — 2 МБ')
+    if (file.size > MAX_SOURCE_BYTES) {
+      setError('Максимальний розмір файлу — 10 МБ')
       return
     }
-    const dimOk = await validateDimensions(file)
-    if (!dimOk) {
-      setError(`Зображення повинно бути рівно ${REQUIRED_DIM}×${REQUIRED_DIM} пікселів`)
+    const { w, h, error: imgError } = await validateSourceImage(file)
+    if (imgError === 'unreadable') {
+      setError('Не вдалося прочитати це зображення')
+      return
+    }
+    if (w < MIN_DIM || h < MIN_DIM) {
+      setError(`Зображення занадто мале — мінімум ${MIN_DIM}×${MIN_DIM} пікселів`)
       return
     }
 
+    setCropSrc(URL.createObjectURL(file))
+  }
+
+  async function handleCropConfirm(blob: Blob) {
+    if (!userId) return
     setUploading(true)
     const fd = new FormData()
-    fd.append('avatar', file)
+    fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
     const result = await uploadUserAvatar(userId, fd)
     setUploading(false)
-
-    if (result.error) { setError(result.error); return }
+    if (result.error) {
+      setError(result.error)
+      return
+    }
+    URL.revokeObjectURL(cropSrc!)
+    setCropSrc(null)
     if (result.url) { setCurrentUrl(result.url); onAvatarChange(result.url) }
+  }
+
+  function handleCropCancel() {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    setError(null)
   }
 
   async function handleRemove() {
@@ -136,7 +166,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
 
       {canEdit && (
         <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
-          JPG / PNG / WEBP, {REQUIRED_DIM}×{REQUIRED_DIM} px, макс. 2 МБ
+          JPG / PNG / WEBP — буде обрізано до квадрата
         </p>
       )}
 
@@ -149,6 +179,20 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
       {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
 
       <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFileChange} />
+
+      {cropSrc && (
+        <AvatarCropModal
+          imageSrc={cropSrc}
+          title="Обрізання аватара"
+          hint="Перетягніть фото для позиціонування. Стисніть або прокрутіть для збільшення."
+          zoomLabel="Масштаб"
+          cancelLabel="Скасувати"
+          saveLabel="Зберегти"
+          uploading={uploading}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   )
 }

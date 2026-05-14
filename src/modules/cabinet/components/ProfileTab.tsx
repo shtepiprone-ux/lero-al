@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import { CheckCircle2, AlertCircle, Camera, UserCircle2, Loader2, MapPin, Trash2 } from 'lucide-react'
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -24,9 +25,16 @@ import { useRouter } from 'next/navigation'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const MAX_AVATAR_BYTES = 2 * 1024 * 1024
-const REQUIRED_AVATAR_DIM = 256
+const MAX_SOURCE_BYTES = 10 * 1024 * 1024  // 10 MB — source file before crop
+const MIN_AVATAR_DIM = 256                  // minimum source dimension
 const VALID_AVATAR_MIME = ['image/jpeg', 'image/png', 'image/webp']
+
+// ── Lazy crop modal (loads only when user picks a file) ───────────────────────
+
+const AvatarCropModal = dynamic(
+  () => import('@/components/shared/AvatarCropModal').then(m => m.AvatarCropModal),
+  { ssr: false },
+)
 
 const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
@@ -214,12 +222,18 @@ function CurrencySelector({ value, onChange, labelAll, labelEur, fieldLabel }: {
 
 // ── Avatar upload sub-component ───────────────────────────────────────────────
 
-async function validateAvatarDimensions(file: File): Promise<boolean> {
+async function validateSourceImage(file: File): Promise<{ w: number; h: number; error?: 'unreadable' }> {
   return new Promise(resolve => {
     const img = new Image()
     const url = URL.createObjectURL(file)
-    img.onload = () => { URL.revokeObjectURL(url); resolve(img.naturalWidth === REQUIRED_AVATAR_DIM && img.naturalHeight === REQUIRED_AVATAR_DIM) }
-    img.onerror = () => { URL.revokeObjectURL(url); resolve(false) }
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      resolve({ w: img.naturalWidth, h: img.naturalHeight })
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      resolve({ w: 0, h: 0, error: 'unreadable' })
+    }
     img.src = url
   })
 }
@@ -229,10 +243,12 @@ function AvatarUpload({ currentUrl, onUpload }: {
   onUpload: (url: string | null) => void
 }) {
   const t = useTranslations('cabinet')
+  const tc = useTranslations('common')
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [url, setUrl] = useState(currentUrl)
+  const [cropSrc, setCropSrc] = useState<string | null>(null)
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -241,17 +257,34 @@ function AvatarUpload({ currentUrl, onUpload }: {
     setError(null)
 
     if (!VALID_AVATAR_MIME.includes(file.type)) { setError(t('avatar_error_type')); return }
-    if (file.size > MAX_AVATAR_BYTES) { setError(t('avatar_error_size')); return }
-    const dimOk = await validateAvatarDimensions(file)
-    if (!dimOk) { setError(t('avatar_error_dimensions')); return }
+    if (file.size > MAX_SOURCE_BYTES) { setError(t('avatar_error_size')); return }
 
+    const { w, h, error: imgError } = await validateSourceImage(file)
+    if (imgError === 'unreadable') { setError(t('avatar_error_unreadable')); return }
+    if (w < MIN_AVATAR_DIM || h < MIN_AVATAR_DIM) { setError(t('avatar_error_too_small')); return }
+
+    setCropSrc(URL.createObjectURL(file))
+  }
+
+  async function handleCropConfirm(blob: Blob) {
     setUploading(true)
     const fd = new FormData()
-    fd.append('avatar', file)
+    fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
     const result = await uploadCabinetAvatar(fd)
     setUploading(false)
-    if (result.error) { setError(result.error); return }
+    if (result.error) {
+      toast.error(result.error)
+      return
+    }
+    URL.revokeObjectURL(cropSrc!)
+    setCropSrc(null)
     if (result.url) { setUrl(result.url); onUpload(result.url) }
+  }
+
+  function handleCropCancel() {
+    if (cropSrc) URL.revokeObjectURL(cropSrc)
+    setCropSrc(null)
+    setError(null)
   }
 
   return (
@@ -279,6 +312,19 @@ function AvatarUpload({ currentUrl, onUpload }: {
       <p className="text-[10px] text-muted-foreground text-center max-w-[120px]">{t('avatar_hint')}</p>
       {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
       <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFile} />
+      {cropSrc && (
+        <AvatarCropModal
+          imageSrc={cropSrc}
+          title={t('avatar_crop_title')}
+          hint={t('avatar_crop_hint')}
+          zoomLabel={t('avatar_zoom_label')}
+          cancelLabel={tc('cancel')}
+          saveLabel={tc('save')}
+          uploading={uploading}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
     </div>
   )
 }

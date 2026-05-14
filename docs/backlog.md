@@ -1,5 +1,9 @@
 # Project Status & Immediate Tasks
 
+## Avatar Crop UX (Task 11) — 2026-05-14
+
+- [x] **Avatar upload — replaced strict 256×256 input rule with in-app crop UX; output contract preserved (256×256, ≤ 2 MB, JPG/PNG/WEBP).** Strict "exactly 256×256" client-side rejection removed. New flow: user picks any image ≥ 256×256 and ≤ 10 MB → `AvatarCropModal` (lazy via `next/dynamic`) opens → user pans/zooms inside square crop frame → Save crops to 256×256 JPEG via canvas → uploaded through existing Cloudinary pipeline. Server continues to enforce MIME + size ≤ 2 MB + dimensions = 256×256 via Cloudinary response. Library: `react-easy-crop@^5.5.7` (MIT, ~25 kB gzipped, loaded lazily). Files modified: `AvatarCropModal.tsx` (new, shared), `ProfileTab.tsx`, `AdminUserAvatar.tsx`, 4 locale message files, `globals.css`, `docs/integrations.md`, `docs/dependencies.md`.
+
 ## Consolidated User Profile Pass (Task 10/11/17/24/35/36) — 2026-05-14
 
 - [x] **Phase 0 — Task 10 admin profile verification**: Task 10 was PARTIALLY done. Gaps found: avatar used Supabase Storage (not Cloudinary), 5 MB limit (not 2 MB), no 256×256 dimension validation, no status history table (only profile_type change log), +7 (Russia) in phone country codes, ProfileTab used client-side Supabase writes (architecture violation).

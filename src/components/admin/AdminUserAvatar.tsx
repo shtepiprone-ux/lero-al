@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { UserCircle2, Camera, Trash2, Loader2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
@@ -22,6 +22,9 @@ interface Props {
   avatarUrl: string | null
   mode: 'view' | 'edit' | 'create'
   onAvatarChange: (url: string | null) => void
+  // Create mode: called with the cropped Blob so the parent can upload it after
+  // user creation. Called with null when the pending avatar is cleared.
+  onBlobReady?: (blob: Blob | null) => void
 }
 
 async function validateSourceImage(file: File): Promise<{ w: number; h: number; error?: 'unreadable' }> {
@@ -40,7 +43,7 @@ async function validateSourceImage(file: File): Promise<{ w: number; h: number; 
   })
 }
 
-export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Props) {
+export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlobReady }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [removing, setRemoving] = useState(false)
@@ -48,11 +51,25 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
   const [currentUrl, setCurrentUrl] = useState(avatarUrl)
   const [cropSrc, setCropSrc] = useState<string | null>(null)
 
-  const canEdit = mode === 'edit' && userId !== null
+  // Track any active blob preview URL so we can revoke it on unmount.
+  const blobUrlRef = useRef<string | null>(null)
+  useEffect(() => {
+    if (currentUrl?.startsWith('blob:')) blobUrlRef.current = currentUrl
+    else blobUrlRef.current = null
+  }, [currentUrl])
+  useEffect(() => {
+    return () => {
+      if (blobUrlRef.current) URL.revokeObjectURL(blobUrlRef.current)
+    }
+  }, [])
+
+  // Editable in edit mode (with a real userId) OR in create mode (before userId exists)
+  const canEdit = mode === 'create' || (mode === 'edit' && userId !== null)
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
-    if (!file || !userId) return
+    if (!file) return
+    if (mode === 'edit' && !userId) return  // edit always needs a userId
     e.target.value = ''
     setError(null)
 
@@ -78,6 +95,21 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
   }
 
   async function handleCropConfirm(blob: Blob): Promise<void> {
+    if (mode === 'create') {
+      // Create mode: no userId yet — store blob for upload after user creation.
+      // Show a local blob preview so the admin can see what they selected.
+      const previewUrl = URL.createObjectURL(blob)
+      if (currentUrl?.startsWith('blob:')) URL.revokeObjectURL(currentUrl)
+      const src = cropSrc
+      setCropSrc(null)       // unmounts modal
+      setCurrentUrl(previewUrl)
+      onAvatarChange(previewUrl)
+      onBlobReady?.(blob)
+      if (src) URL.revokeObjectURL(src)
+      return
+    }
+
+    // Edit mode: upload immediately
     if (!userId) return
     setUploading(true)
     try {
@@ -108,6 +140,15 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
   }
 
   async function handleRemove() {
+    if (mode === 'create') {
+      // Create mode: revoke preview blob and clear pending avatar
+      if (currentUrl?.startsWith('blob:')) URL.revokeObjectURL(currentUrl)
+      setCurrentUrl(null)
+      onAvatarChange(null)
+      onBlobReady?.(null)
+      return
+    }
+
     if (!userId) return
     setRemoving(true)
     setError(null)
@@ -129,12 +170,9 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
           title={canEdit ? 'Клікніть щоб змінити' : undefined}
         >
           {currentUrl ? (
-            <AppImage
-              src={currentUrl}
-              variant="avatar"
-              alt="Avatar"
-              priority={false}
-            />
+            currentUrl.startsWith('blob:')
+              ? <img src={currentUrl} alt="Avatar preview" className="w-full h-full object-cover" />
+              : <AppImage src={currentUrl} variant="avatar" alt="Avatar" priority={false} />
           ) : (
             <UserCircle2 className="h-12 w-12 text-muted-foreground" />
           )}
@@ -178,9 +216,9 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
         </p>
       )}
 
-      {mode === 'create' && (
-        <p className="text-xs text-muted-foreground text-center max-w-[120px]">
-          Аватар можна додати після збереження
+      {mode === 'create' && !currentUrl && (
+        <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
+          Необов&apos;язково — можна додати після створення
         </p>
       )}
 

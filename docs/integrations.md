@@ -28,10 +28,10 @@ The following external service accounts are already registered and available for
 - Upload folder: `avatars/`.
 - Avatar input accepts any dimensions ≥ 256×256 and ≤ 10 MB across JPG/PNG/WEBP. The client crops to 256×256 via canvas; the server validates the cropped result (MIME, size ≤ 2 MB, dimensions = 256×256).
 - Client-side validation before crop modal: MIME ∈ {image/jpeg, image/png, image/webp}, source size ≤ 10 MB, source dimensions ≥ 256×256.
-- Client crop: user pans/zooms inside a square crop frame; AvatarCropModal (react-easy-crop) renders 256×256 JPEG at q=0.92 via canvas.
+- Client crop: user pans/zooms inside a square crop frame; `AvatarCropModal` (react-easy-crop, lazy `next/dynamic`) renders 256×256 JPEG at q=0.92 via canvas.
+- Admin create-user flow: avatar is optional. If selected, the cropped blob is held in memory and uploaded after `createAdminUser` succeeds with a userId. Upload failure is non-fatal.
 - Server-side validation: MIME + size ≤ 2 MB + dimensions = 256×256 via Cloudinary response.
 - Stored URL is the raw Cloudinary URL. Display via `<AppImage variant="avatar">` applies `w_192,h_192,c_fill` transform at render time.
-- Display via `AppImage` `variant="avatar"` for Cloudinary-first delivery and srcset.
   
 ### Resend Setup
 - Account is registered at https://resend.com .

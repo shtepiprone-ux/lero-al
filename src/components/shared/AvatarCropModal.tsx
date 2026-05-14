@@ -134,7 +134,8 @@ export function AvatarCropModal({
           <Button variant="outline" onClick={onCancel} disabled={saving}>
             {cancelLabel}
           </Button>
-          <Button onClick={handleSave} disabled={saving}>
+          {/* Also disabled when crop area not yet initialized (image still loading) */}
+          <Button onClick={handleSave} disabled={saving || !croppedAreaPixels}>
             {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             {saveLabel}
           </Button>

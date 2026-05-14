@@ -20,6 +20,7 @@ import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
 import {
   updateUserProfileFull, softDeleteUser, addLocation,
   approveLocationRequest, rejectLocationRequest, createAdminUser,
+  uploadUserAvatar,
   type ProfileType,
 } from '@/modules/admin/actions'
 import type { User, UserChangeLog, UserStatusHistory } from '@/types/database'
@@ -279,6 +280,29 @@ function CitySelectField({ cities, regions, value, onChange, mode, error, isAdmi
 
 // ── Dialogs ───────────────────────────────────────────────────────────────────
 
+// Shown when navigating away (sidebar, back button) with unsaved changes.
+function UnsavedChangesDialog({ onLeave, onStay }: { onLeave: () => void; onStay: () => void }) {
+  return (
+    <Dialog open onOpenChange={open => { if (!open) onStay() }}>
+      <DialogContent showCloseButton={false} className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-status-warning" />
+            Незбережені зміни
+          </DialogTitle>
+        </DialogHeader>
+        <p className="text-sm text-muted-foreground">
+          Є незбережені зміни. Якщо залишити сторінку — всі зміни буде втрачено.
+        </p>
+        <DialogFooter>
+          <Button variant="outline" onClick={onStay}>Залишитися</Button>
+          <Button variant="destructive" onClick={onLeave}>Залишити без збереження</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 function CancelConfirmDialog({ onConfirm, onReturn }: { onConfirm: () => void; onReturn: () => void }) {
   return (
     <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
@@ -401,12 +425,17 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   // Dialogs
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  // Navigation guard — shown when user navigates away with unsaved form changes
+  const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
+  const [pendingNavHref, setPendingNavHref] = useState<string | null>(null)
 
   // Async state
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url ?? null)
+  // Create mode: pending avatar blob uploaded after user creation
+  const [pendingAvatarBlob, setPendingAvatarBlob] = useState<Blob | null>(null)
 
   // Email state — editable in create mode only
   const [createEmail, setCreateEmail] = useState('')
@@ -438,7 +467,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
         },
   })
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = form
+  const { register, handleSubmit, watch, setValue, formState: { errors, isDirty } } = form
   const profileType = watch('profileType')
   const statusValue = watch('status')
   const useMainPhone = watch('useMainPhone')
@@ -450,12 +479,49 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const regionName = regions.find(r => r.id === cities.find(c => c.id === locationIdValue)?.region_id)?.name_al
     ?? (user as any)?.location?.parent?.name_al
 
+  // Navigation guard — true when form is dirty and we are in an editable mode.
+  // Avatar changes in edit mode are persisted immediately and don't contribute
+  // to this flag. In create mode, the entire form starts clean.
+  const needsGuard = isDirty && currentMode !== 'view'
+
   // Side effects
   useEffect(() => { if (useMainPhone) setValue('whatsapp', phoneValue) }, [useMainPhone, phoneValue, setValue])
   useEffect(() => { if (statusValue !== 'blocked') setValue('blockReason', '') }, [statusValue, setValue])
   useEffect(() => {
     if (!isBusiness) { setValue('companyName', ''); setValue('website', ''); setValue('position', ''); setValue('yearStarted', undefined) }
   }, [profileType, isBusiness, setValue])
+
+  // ── Navigation guard effects ──────────────────────────────────────────────
+
+  // Browser refresh / tab-close / external navigation
+  useEffect(() => {
+    if (!needsGuard) return
+    const handle = (e: BeforeUnloadEvent) => { e.preventDefault(); e.returnValue = '' }
+    window.addEventListener('beforeunload', handle)
+    return () => window.removeEventListener('beforeunload', handle)
+  }, [needsGuard])
+
+  // Sidebar <Link> clicks and any other <a> tag navigation within the admin
+  useEffect(() => {
+    if (!needsGuard) return
+    function intercept(e: MouseEvent) {
+      const anchor = (e.target as Element).closest('a[href]') as HTMLAnchorElement | null
+      if (!anchor) return
+      const href = anchor.getAttribute('href')
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return
+      try {
+        const url = new URL(href, window.location.origin)
+        if (url.origin !== window.location.origin) return  // external — let browser handle
+        if (url.pathname === window.location.pathname) return  // same page
+      } catch { return }
+      e.preventDefault()
+      e.stopImmediatePropagation()
+      setPendingNavHref(href)
+      setShowUnsavedDialog(true)
+    }
+    document.addEventListener('click', intercept, true)
+    return () => document.removeEventListener('click', intercept, true)
+  }, [needsGuard])
 
   // ── Email validation (create mode) ──
 
@@ -487,8 +553,21 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
         yearStarted: data.yearStarted ?? null,
       }),
     })
+    if (result.error) { setSaveError(result.error); setSaving(false); return }
+
+    // Upload pending avatar if the admin selected one during creation.
+    // Failure is non-fatal — avatar can always be added in edit mode.
+    if (pendingAvatarBlob && result.userId) {
+      try {
+        const fd = new FormData()
+        fd.append('avatar', new File([pendingAvatarBlob], 'avatar.jpg', { type: 'image/jpeg' }))
+        await uploadUserAvatar(result.userId, fd)
+      } catch {
+        // silently ignore — user profile is created; admin can add avatar later
+      }
+    }
+
     setSaving(false)
-    if (result.error) { setSaveError(result.error); return }
     if (result.userId) router.push(`/admin/users/${result.userId}`)
   }
 
@@ -507,6 +586,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     })
     setSaving(false)
     if (result.error) { setSaveError(result.error); return }
+    // Reset isDirty so the navigation guard deactivates immediately after save.
+    form.reset(data)
     setEditActive(false); router.refresh()
   }
 
@@ -528,6 +609,19 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     } else {
       form.reset(); setEditActive(false)
     }
+  }
+
+  // Called by the navigation guard confirm ("Leave without saving")
+  function handleConfirmLeave() {
+    const href = pendingNavHref
+    setShowUnsavedDialog(false)
+    setPendingNavHref(null)
+    if (href) router.push(href)
+  }
+
+  // Called by AdminUserAvatar in create mode when user selects/clears an avatar
+  function handleBlobReady(blob: Blob | null) {
+    setPendingAvatarBlob(blob)
   }
 
   async function handleApproveRequest(locationId: number) {
@@ -553,7 +647,10 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
       {/* ── Toolbar ─────────────────────────────────────────────────────────── */}
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => router.push('/admin/users')}>
+        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => {
+          if (needsGuard) { setPendingNavHref('/admin/users'); setShowUnsavedDialog(true) }
+          else router.push('/admin/users')
+        }}>
           <ChevronLeft className="h-4 w-4" /> Користувачі
         </Button>
         <div className="ml-auto flex gap-2">
@@ -599,6 +696,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           avatarUrl={avatarUrl}
           mode={currentMode}
           onAvatarChange={setAvatarUrl}
+          onBlobReady={isCreate ? handleBlobReady : undefined}
         />
         <div className="flex flex-col gap-2 min-w-0 pt-1">
           {isCreate ? (
@@ -885,6 +983,12 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
         <DeleteConfirmDialog
           userName={displayName} email={authEmail}
           onConfirm={handleDelete} onReturn={() => setShowDeleteDialog(false)} deleting={deleting}
+        />
+      )}
+      {showUnsavedDialog && (
+        <UnsavedChangesDialog
+          onLeave={handleConfirmLeave}
+          onStay={() => { setShowUnsavedDialog(false); setPendingNavHref(null) }}
         />
       )}
     </div>

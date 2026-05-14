@@ -71,7 +71,15 @@
       "Bash(powershell.exe -Command ' *)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3002/sq/listings/test-2-mokkj60o)",
       "Bash(curl -s --max-time 15 \"http://localhost:3003/sq/listings/test-2-mokkj60o\")",
-      "Bash(cp /tmp/sq_final.html \"D:/Work/Claude_Code_Projects/shtepi-al/sq_final.html\")"
+      "Bash(cp /tmp/sq_final.html \"D:/Work/Claude_Code_Projects/shtepi-al/sq_final.html\")",
+      "WebFetch(domain:pagespeed.web.dev)",
+      "WebFetch(domain:www.googleapis.com)",
+      "Bash(findstr \"css\")",
+      "Bash(Select-String -Pattern \"next-themes|sonner\")",
+      "Bash(Start-Process -NoNewWindow -FilePath \"npm\" -ArgumentList \"run\",\"dev\" -PassThru)",
+      "Bash(Start-Sleep 8)",
+      "Bash(Test-NetConnection -ComputerName localhost -Port 3000 -InformationLevel Quiet)",
+      "Bash(rm -rf .next)"
     ]
   }
 }

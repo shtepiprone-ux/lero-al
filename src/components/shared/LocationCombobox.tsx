@@ -12,7 +12,7 @@ export interface LocationOption {
   id: number
   name_al: string
   type?: string
-  region_id?: number
+  region_id?: number | null
 }
 
 export interface RegionOption {

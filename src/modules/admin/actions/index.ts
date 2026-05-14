@@ -107,7 +107,7 @@ export async function deleteListing(listingId: string) {
     console.error('deleteListing failed', { error, listingId })
     return
   }
-  revalidateTag('site-stats', 'default')
+  revalidateTag('site-stats')
   revalidatePath('/admin/listings')
 }
 

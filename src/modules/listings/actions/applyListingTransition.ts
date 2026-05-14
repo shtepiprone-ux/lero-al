@@ -106,7 +106,7 @@ async function executeTransition(
 
   // Invalidate the homepage stats counter — any status transition may affect the
   // public active-listing count (approve: +1, deactivate/archive: -1, etc.)
-  revalidateTag('site-stats', 'default')
+  revalidateTag('site-stats')
 
   return { ok: true, nextStatus: transition.nextStatus, listingId }
 }

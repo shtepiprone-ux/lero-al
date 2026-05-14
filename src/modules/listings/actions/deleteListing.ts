@@ -30,6 +30,6 @@ export async function deleteListingAction(
     return { error: error.message }
   }
 
-  revalidateTag('site-stats', 'default')
+  revalidateTag('site-stats')
   return {}
 }

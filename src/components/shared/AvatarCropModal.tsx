@@ -70,18 +70,31 @@ export function AvatarCropModal({
   async function handleSave() {
     if (!croppedAreaPixels || saving) return
     setSaving(true)
+    console.log('[AvatarFlow] crop_save_clicked')
     try {
       const blob = await cropImageToBlob(imageSrc, croppedAreaPixels)
+      console.log('[AvatarFlow] crop_blob_created', {
+        mime: blob.type,
+        size: blob.size,
+        width: 256,
+        height: 256,
+      })
       // Await the full upload. Parent resolves on both success and error,
       // handling its own error display. On success the parent clears cropSrc,
       // unmounting this modal. On error the modal stays open for retry.
       await onConfirm(blob)
-    } catch {
+    } catch (err) {
       // cropImageToBlob failed (canvas unavailable, toBlob null, etc.) — rare.
       // Parent-level errors are always caught by the parent and resolve normally.
+      console.log('[AvatarFlow] upload_exception', {
+        error: String(err),
+        stack: err instanceof Error ? err.stack : undefined,
+        stage: 'cropImageToBlob',
+      })
     } finally {
       // Always reset: handles the unmounted-component case silently in React 18+.
       setSaving(false)
+      console.log('[AvatarFlow] modal_unmounted', { reason: 'save_finally' })
     }
   }
 

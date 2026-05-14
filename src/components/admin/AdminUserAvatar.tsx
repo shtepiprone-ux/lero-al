@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { UserCircle2, Camera, Trash2, Loader2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { uploadUserAvatar, removeUserAvatar } from '@/modules/admin/actions'
 import { AppImage } from '@/components/ui/AppImage'
@@ -73,6 +74,13 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
     e.target.value = ''
     setError(null)
 
+    console.log('[AvatarFlow] file_selected', {
+      route: window.location.pathname,
+      mode,
+      mime: file.type,
+      size: file.size,
+    })
+
     if (!VALID_MIME.includes(file.type)) {
       setError('Тільки JPG, PNG або WEBP')
       return
@@ -91,10 +99,25 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       return
     }
 
+    console.log('[AvatarFlow] file_selected', {
+      route: window.location.pathname,
+      mode,
+      mime: file.type,
+      size: file.size,
+      dimensions: `${w}×${h}`,
+    })
+
     setCropSrc(URL.createObjectURL(file))
+    console.log('[AvatarFlow] crop_modal_open', { mode })
   }
 
   async function handleCropConfirm(blob: Blob): Promise<void> {
+    console.log('[AvatarFlow] crop_save_clicked', { mode })
+    console.log('[AvatarFlow] crop_blob_created', {
+      mime: blob.type,
+      size: blob.size,
+    })
+
     if (mode === 'create') {
       // Create mode: no userId yet — store blob for upload after user creation.
       // Show a local blob preview so the admin can see what they selected.
@@ -106,34 +129,68 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       onAvatarChange(previewUrl)
       onBlobReady?.(blob)
       if (src) URL.revokeObjectURL(src)
+      console.log('[AvatarFlow] avatar_state_updated', {
+        avatarUrl: 'blob:preview',
+        previewUrl: 'blob:preview',
+        pendingBlob: true,
+        mode: 'create',
+      })
+      console.log('[AvatarFlow] modal_close_requested', { reason: 'create_preview_ready' })
       return
     }
 
     // Edit mode: upload immediately
     if (!userId) return
     setUploading(true)
+    console.log('[AvatarFlow] upload_started', {
+      route: window.location.pathname,
+      mode,
+      hasUserId: !!userId,
+      endpoint: 'uploadUserAvatar',
+    })
     try {
       const fd = new FormData()
       fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      console.log('[AvatarFlow] upload_request_sent', { userId })
       const result = await uploadUserAvatar(userId, fd)
+      console.log('[AvatarFlow] upload_response_received', {
+        success: !result.error,
+        payload: result,
+      })
       if (result.error) {
-        setError(result.error)
-        return  // modal stays open
+        // BUG FIX: use toast so the error is visible ABOVE the open crop modal.
+        // Previously setError() showed text below the avatar — invisible while modal is open.
+        toast.error(result.error)
+        return  // modal stays open for retry
       }
       const src = cropSrc
       setCropSrc(null)       // unmounts modal
       setCurrentUrl(result.url ?? null)
       onAvatarChange(result.url ?? null)
       if (src) URL.revokeObjectURL(src)
-    } catch {
-      setError('Помилка завантаження аватара')
-      // modal stays open
+      console.log('[AvatarFlow] avatar_state_updated', {
+        avatarUrl: result.url,
+        previewUrl: null,
+        pendingBlob: false,
+        mode: 'edit',
+      })
+      console.log('[AvatarFlow] modal_close_requested', { reason: 'upload_success' })
+    } catch (err) {
+      console.log('[AvatarFlow] upload_exception', {
+        error: String(err),
+        stack: err instanceof Error ? err.stack : undefined,
+        mode,
+        userId,
+      })
+      // BUG FIX: toast — visible above the open modal (was setError: invisible)
+      toast.error('Помилка завантаження аватара')
     } finally {
       setUploading(false)
     }
   }
 
   function handleCropCancel() {
+    console.log('[AvatarFlow] modal_unmounted', { reason: 'cancel' })
     if (cropSrc) URL.revokeObjectURL(cropSrc)
     setCropSrc(null)
     setError(null)

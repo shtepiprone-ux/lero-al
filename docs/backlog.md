@@ -1,5 +1,16 @@
 # Project Status & Immediate Tasks
 
+## Avatar Crop Root-Cause Fix (Task 11c) — 2026-05-14
+
+Four confirmed bugs found by static analysis + runtime verification. All four fixed.
+
+- [x] **BUG A — Admin edit mode: upload error invisible behind modal (root cause of "silent failure")**. `AdminUserAvatar.handleCropConfirm` called `setError(result.error)` which wrote a small text below the avatar circle — completely invisible while `AvatarCropModal` is rendered on top. Cabinet's `ProfileTab` correctly used `toast.error()`. Fix: changed to `toast.error()` in both error paths (server action error + catch). File: `AdminUserAvatar.tsx`.
+- [x] **BUG B — Admin create mode: avatar upload failure completely silent (no feedback)**. `AdminUserProfile.handleCreate` had `catch { // silently ignore }` after `uploadUserAvatar()`. If Cloudinary was unreachable or auth failed, admin saw nothing — no toast, no error. Fix: changed to `toast.error('Аватар не завантажено: ...')` so admin knows to retry in edit mode. File: `AdminUserProfile.tsx`.
+- [x] **BUG C — No `<Toaster>` in admin layout (root cause of ALL toast invisibility)**. Admin layout (`/admin/...`) had no `<Toaster>` component — so even if `toast.error()` were called, nothing would appear. The public locale layout (`/[locale]/layout.tsx`) had it, but admin is at `/admin` (no locale prefix, separate layout). Fix: added `<Toaster />` to `src/app/admin/layout.tsx`. Without this fix, all three other toast fixes would have been invisible.
+- [x] **BUG D — Browser back/forward button not intercepted by navigation guard**. Guard only captured `<a>` clicks and `beforeunload`. Browser back/forward fires `popstate`, not a click — was completely uncaught (user could navigate away with unsaved changes). Fix: added `popstate` listener with `history.pushState` sentinel to prevent URL change + show dialog; `confirmingLeaveRef` prevents re-entry when guard itself calls `history.go(-2)`. File: `AdminUserProfile.tsx`.
+- [x] **Mandatory debug instrumentation added** to all avatar flow stages: `[AvatarFlow]` log points in `AdminUserAvatar.tsx`, `AdminUserProfile.tsx`, `AvatarCropModal.tsx`, `ProfileTab.tsx`; `[UnsavedChanges]` log points in `AdminUserProfile.tsx`. All log points remain in code until root cause is confirmed in production.
+- [x] **`.next` cache corruption** caused dev server to exit immediately on startup (Turbopack instrumentation path error). Fixed by clearing `.next` cache — pre-existing Turbopack issue on Windows; not introduced by this task.
+
 ## Avatar Crop UX — Follow-up Fixes (Task 11b) — 2026-05-14
 
 - [x] **Avatar upload deadlock/spinner fix (bugfix)**: Root cause: `handleCropConfirm` in cabinet ProfileTab and admin AdminUserAvatar had no try/catch; the modal called `onConfirm(blob)` without await — if the Server Action threw (network error, server restart), `setUploading(false)` never ran → spinner hung forever. Fix: changed `onConfirm` type to `Promise<void>`, await it inside `handleSave` with `finally{setSaving(false)}`, wrapped `handleCropConfirm` in try/catch/finally.

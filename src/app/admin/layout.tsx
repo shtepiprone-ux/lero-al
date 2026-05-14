@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { getAllSettings } from '@/modules/admin/lib/settings'
+import { Toaster } from '@/components/ui/sonner'
 import messages from '../../../messages/en.json'
 
 export const metadata = { title: 'Admin — Lero.al' }
@@ -29,6 +30,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <NextIntlClientProvider locale="en" messages={messages}>
       <AdminShell siteName={siteName}>{children}</AdminShell>
+      <Toaster />
     </NextIntlClientProvider>
   )
 }

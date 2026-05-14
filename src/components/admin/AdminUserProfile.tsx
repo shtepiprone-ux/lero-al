@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { toast } from 'sonner'
 import {
   Pencil, Trash2, Save, X, ChevronLeft, Loader2,
   ShieldCheck, MapPin, History, AlertTriangle, UserPlus,
@@ -428,6 +429,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   // Navigation guard — shown when user navigates away with unsaved form changes
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavHref, setPendingNavHref] = useState<string | null>(null)
+  // Ref: prevents our own history.go() from re-triggering the popstate guard
+  const confirmingLeaveRef = useRef(false)
 
   // Async state
   const [saving, setSaving] = useState(false)
@@ -484,6 +487,11 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   // to this flag. In create mode, the entire form starts clean.
   const needsGuard = isDirty && currentMode !== 'view'
 
+  // Log when dirty state changes
+  useEffect(() => {
+    console.log('[AvatarFlow] dirty_state_changed', { isDirty, currentMode, needsGuard })
+  }, [isDirty, currentMode, needsGuard])
+
   // Side effects
   useEffect(() => { if (useMainPhone) setValue('whatsapp', phoneValue) }, [useMainPhone, phoneValue, setValue])
   useEffect(() => { if (statusValue !== 'blocked') setValue('blockReason', '') }, [statusValue, setValue])
@@ -496,7 +504,10 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   // Browser refresh / tab-close / external navigation
   useEffect(() => {
     if (!needsGuard) return
-    const handle = (e: BeforeUnloadEvent) => { e.preventDefault(); e.returnValue = '' }
+    const handle = (e: BeforeUnloadEvent) => {
+      e.preventDefault(); e.returnValue = ''
+      console.log('[UnsavedChanges] navigation_blocked', { type: 'beforeunload' })
+    }
     window.addEventListener('beforeunload', handle)
     return () => window.removeEventListener('beforeunload', handle)
   }, [needsGuard])
@@ -516,11 +527,34 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       } catch { return }
       e.preventDefault()
       e.stopImmediatePropagation()
+      console.log('[UnsavedChanges] route_change_attempt', { source: 'link_click', href })
+      console.log('[UnsavedChanges] navigation_blocked', { type: 'link_click', href })
       setPendingNavHref(href)
       setShowUnsavedDialog(true)
     }
     document.addEventListener('click', intercept, true)
     return () => document.removeEventListener('click', intercept, true)
+  }, [needsGuard])
+
+  // Browser back / forward button — fires popstate, not a click event.
+  // BUG FIX: was completely unhandled — pressing Back with unsaved changes
+  // silently navigated away without showing the confirmation dialog.
+  useEffect(() => {
+    if (!needsGuard) return
+    function handlePopState() {
+      if (confirmingLeaveRef.current) {
+        confirmingLeaveRef.current = false
+        return
+      }
+      // Re-push current state so the URL appears unchanged to the user
+      window.history.pushState(null, document.title, window.location.href)
+      console.log('[UnsavedChanges] route_change_attempt', { source: 'browser_back_forward' })
+      console.log('[UnsavedChanges] navigation_blocked', { type: 'popstate' })
+      setShowUnsavedDialog(true)
+      setPendingNavHref(null)  // null = back/forward (handled by history.go)
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
   }, [needsGuard])
 
   // ── Email validation (create mode) ──
@@ -556,14 +590,35 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     if (result.error) { setSaveError(result.error); setSaving(false); return }
 
     // Upload pending avatar if the admin selected one during creation.
-    // Failure is non-fatal — avatar can always be added in edit mode.
+    // Failure is non-fatal — user profile is already created; avatar can be added in edit mode.
     if (pendingAvatarBlob && result.userId) {
+      console.log('[AvatarFlow] upload_started', {
+        route: window.location.pathname,
+        mode: 'create',
+        hasUserId: true,
+        endpoint: 'uploadUserAvatar',
+      })
       try {
         const fd = new FormData()
         fd.append('avatar', new File([pendingAvatarBlob], 'avatar.jpg', { type: 'image/jpeg' }))
-        await uploadUserAvatar(result.userId, fd)
-      } catch {
-        // silently ignore — user profile is created; admin can add avatar later
+        console.log('[AvatarFlow] upload_request_sent', { userId: result.userId })
+        const uploadResult = await uploadUserAvatar(result.userId, fd)
+        console.log('[AvatarFlow] upload_response_received', {
+          success: !uploadResult.error,
+          payload: uploadResult,
+        })
+        // BUG FIX: was completely silent — now shows toast so admin knows avatar needs retry
+        if (uploadResult.error) {
+          toast.error(`Аватар не завантажено: ${uploadResult.error}. Можна додати у режимі редагування.`)
+        }
+      } catch (err) {
+        console.log('[AvatarFlow] upload_exception', {
+          error: String(err),
+          stack: err instanceof Error ? err.stack : undefined,
+          mode: 'create',
+          userId: result.userId,
+        })
+        toast.error('Аватар не завантажено — можна додати у режимі редагування.')
       }
     }
 
@@ -616,7 +671,15 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     const href = pendingNavHref
     setShowUnsavedDialog(false)
     setPendingNavHref(null)
-    if (href) router.push(href)
+    console.log('[UnsavedChanges] navigation_confirmed', { href: href ?? '__back__' })
+    if (href) {
+      router.push(href)
+    } else {
+      // Back/forward button case: pop our sentinel state + the original navigation
+      // history stack: [..., prev, current, sentinel]  →  go(-2)  →  [..., prev (current)]
+      confirmingLeaveRef.current = true
+      window.history.go(-2)
+    }
   }
 
   // Called by AdminUserAvatar in create mode when user selects/clears an avatar
@@ -648,8 +711,13 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       {/* ── Toolbar ─────────────────────────────────────────────────────────── */}
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => {
-          if (needsGuard) { setPendingNavHref('/admin/users'); setShowUnsavedDialog(true) }
-          else router.push('/admin/users')
+          if (needsGuard) {
+            console.log('[UnsavedChanges] route_change_attempt', { source: 'toolbar_back_button', href: '/admin/users' })
+            console.log('[UnsavedChanges] navigation_blocked', { type: 'toolbar_button' })
+            setPendingNavHref('/admin/users'); setShowUnsavedDialog(true)
+          } else {
+            router.push('/admin/users')
+          }
         }}>
           <ChevronLeft className="h-4 w-4" /> Користувачі
         </Button>

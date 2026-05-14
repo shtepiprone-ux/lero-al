@@ -256,6 +256,13 @@ function AvatarUpload({ currentUrl, onUpload }: {
     e.target.value = ''
     setError(null)
 
+    console.log('[AvatarFlow] file_selected', {
+      route: window.location.pathname,
+      mode: 'cabinet',
+      mime: file.type,
+      size: file.size,
+    })
+
     if (!VALID_AVATAR_MIME.includes(file.type)) { setError(t('avatar_error_type')); return }
     if (file.size > MAX_SOURCE_BYTES) { setError(t('avatar_error_size')); return }
 
@@ -263,18 +270,40 @@ function AvatarUpload({ currentUrl, onUpload }: {
     if (imgError === 'unreadable') { setError(t('avatar_error_unreadable')); return }
     if (w < MIN_AVATAR_DIM || h < MIN_AVATAR_DIM) { setError(t('avatar_error_too_small')); return }
 
+    console.log('[AvatarFlow] file_selected', {
+      route: window.location.pathname,
+      mode: 'cabinet',
+      mime: file.type,
+      size: file.size,
+      dimensions: `${w}×${h}`,
+    })
+
     setCropSrc(URL.createObjectURL(file))
+    console.log('[AvatarFlow] crop_modal_open', { mode: 'cabinet' })
   }
 
   // Returns Promise<void> and always resolves — never rejects to the modal.
   // The modal awaits this; we handle all error paths here so the modal's
   // finally{setSaving(false)} always runs and the modal stays open on error.
   async function handleCropConfirm(blob: Blob): Promise<void> {
+    console.log('[AvatarFlow] crop_save_clicked', { mode: 'cabinet' })
+    console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size })
     setUploading(true)
+    console.log('[AvatarFlow] upload_started', {
+      route: window.location.pathname,
+      mode: 'cabinet',
+      hasUserId: true,
+      endpoint: 'uploadCabinetAvatar',
+    })
     try {
       const fd = new FormData()
       fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet' })
       const result = await uploadCabinetAvatar(fd)
+      console.log('[AvatarFlow] upload_response_received', {
+        success: !result.error,
+        payload: result,
+      })
       if (result.error) {
         toast.error(result.error)
         return  // modal stays open (cropSrc unchanged)
@@ -284,7 +313,19 @@ function AvatarUpload({ currentUrl, onUpload }: {
       setUrl(result.url ?? null)
       onUpload(result.url ?? null)
       if (src) URL.revokeObjectURL(src)
-    } catch {
+      console.log('[AvatarFlow] avatar_state_updated', {
+        avatarUrl: result.url,
+        previewUrl: null,
+        pendingBlob: false,
+        mode: 'cabinet',
+      })
+      console.log('[AvatarFlow] modal_close_requested', { reason: 'upload_success', mode: 'cabinet' })
+    } catch (err) {
+      console.log('[AvatarFlow] upload_exception', {
+        error: String(err),
+        stack: err instanceof Error ? err.stack : undefined,
+        mode: 'cabinet',
+      })
       toast.error(t('avatar_upload_error'))
       // modal stays open (cropSrc unchanged)
     } finally {

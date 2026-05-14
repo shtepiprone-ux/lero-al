@@ -77,20 +77,28 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
     setCropSrc(URL.createObjectURL(file))
   }
 
-  async function handleCropConfirm(blob: Blob) {
+  async function handleCropConfirm(blob: Blob): Promise<void> {
     if (!userId) return
     setUploading(true)
-    const fd = new FormData()
-    fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
-    const result = await uploadUserAvatar(userId, fd)
-    setUploading(false)
-    if (result.error) {
-      setError(result.error)
-      return
+    try {
+      const fd = new FormData()
+      fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      const result = await uploadUserAvatar(userId, fd)
+      if (result.error) {
+        setError(result.error)
+        return  // modal stays open
+      }
+      const src = cropSrc
+      setCropSrc(null)       // unmounts modal
+      setCurrentUrl(result.url ?? null)
+      onAvatarChange(result.url ?? null)
+      if (src) URL.revokeObjectURL(src)
+    } catch {
+      setError('Помилка завантаження аватара')
+      // modal stays open
+    } finally {
+      setUploading(false)
     }
-    URL.revokeObjectURL(cropSrc!)
-    setCropSrc(null)
-    if (result.url) { setCurrentUrl(result.url); onAvatarChange(result.url) }
   }
 
   function handleCropCancel() {
@@ -188,7 +196,6 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange }: Pro
           zoomLabel="Масштаб"
           cancelLabel="Скасувати"
           saveLabel="Зберегти"
-          uploading={uploading}
           onConfirm={handleCropConfirm}
           onCancel={handleCropCancel}
         />

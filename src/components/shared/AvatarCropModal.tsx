@@ -28,7 +28,7 @@ async function cropImageToBlob(src: string, pixelCrop: Area): Promise<Blob> {
   ctx.drawImage(img, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, 256, 256)
   return new Promise((resolve, reject) => {
     canvas.toBlob(
-      blob => { if (blob) resolve(blob); else reject(new Error('toBlob failed')) },
+      blob => { if (blob) resolve(blob); else reject(new Error('toBlob returned null')) },
       'image/jpeg',
       0.92,
     )
@@ -36,6 +36,12 @@ async function cropImageToBlob(src: string, pixelCrop: Area): Promise<Blob> {
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
+//
+// onConfirm: async — the modal awaits the full upload before resetting its
+// loading state. The parent MUST resolve (not reject) on upload error and
+// handle error display itself (toast, inline), so the modal stays open for
+// retry. Parent resolves on success after clearing cropSrc — the modal then
+// unmounts naturally.
 
 export interface AvatarCropModalProps {
   imageSrc: string
@@ -44,14 +50,13 @@ export interface AvatarCropModalProps {
   zoomLabel: string
   cancelLabel: string
   saveLabel: string
-  uploading: boolean
-  onConfirm: (blob: Blob) => void
+  onConfirm: (blob: Blob) => Promise<void>
   onCancel: () => void
 }
 
 export function AvatarCropModal({
   imageSrc, title, hint, zoomLabel, cancelLabel, saveLabel,
-  uploading, onConfirm, onCancel,
+  onConfirm, onCancel,
 }: AvatarCropModalProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
@@ -63,24 +68,28 @@ export function AvatarCropModal({
   }, [])
 
   async function handleSave() {
-    if (!croppedAreaPixels || saving || uploading) return
+    if (!croppedAreaPixels || saving) return
     setSaving(true)
     try {
       const blob = await cropImageToBlob(imageSrc, croppedAreaPixels)
-      setSaving(false)
-      onConfirm(blob)
+      // Await the full upload. Parent resolves on both success and error,
+      // handling its own error display. On success the parent clears cropSrc,
+      // unmounting this modal. On error the modal stays open for retry.
+      await onConfirm(blob)
     } catch {
+      // cropImageToBlob failed (canvas unavailable, toBlob null, etc.) — rare.
+      // Parent-level errors are always caught by the parent and resolve normally.
+    } finally {
+      // Always reset: handles the unmounted-component case silently in React 18+.
       setSaving(false)
     }
   }
 
-  const busy = saving || uploading
-
   return (
-    <Dialog open onOpenChange={open => { if (!open && !busy) onCancel() }}>
+    <Dialog open onOpenChange={open => { if (!open && !saving) onCancel() }}>
       <DialogContent showCloseButton={false} className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle id="avatar-crop-title">{title}</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
@@ -122,11 +131,11 @@ export function AvatarCropModal({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={onCancel} disabled={busy}>
+          <Button variant="outline" onClick={onCancel} disabled={saving}>
             {cancelLabel}
           </Button>
-          <Button onClick={handleSave} disabled={busy}>
-            {busy && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+          <Button onClick={handleSave} disabled={saving}>
+            {saving && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             {saveLabel}
           </Button>
         </DialogFooter>

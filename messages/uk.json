@@ -377,6 +377,7 @@
     "avatar_crop_title": "Обрізання аватара",
     "avatar_crop_hint": "Перетягніть фото для позиціонування. Стисніть або прокрутіть для збільшення.",
     "avatar_zoom_label": "Масштаб",
+    "avatar_upload_error": "Завантаження не вдалося. Спробуйте ще раз.",
     "avatar_upload": "Завантажити",
     "avatar_replace": "Замінити",
     "avatar_remove": "Видалити"

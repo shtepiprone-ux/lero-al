@@ -377,6 +377,7 @@
     "avatar_crop_title": "Crop avatar",
     "avatar_crop_hint": "Drag the photo to position it. Pinch or scroll to zoom.",
     "avatar_zoom_label": "Zoom",
+    "avatar_upload_error": "Upload failed. Please try again.",
     "avatar_upload": "Upload",
     "avatar_replace": "Replace",
     "avatar_remove": "Remove"

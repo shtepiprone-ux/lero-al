@@ -266,19 +266,30 @@ function AvatarUpload({ currentUrl, onUpload }: {
     setCropSrc(URL.createObjectURL(file))
   }
 
-  async function handleCropConfirm(blob: Blob) {
+  // Returns Promise<void> and always resolves — never rejects to the modal.
+  // The modal awaits this; we handle all error paths here so the modal's
+  // finally{setSaving(false)} always runs and the modal stays open on error.
+  async function handleCropConfirm(blob: Blob): Promise<void> {
     setUploading(true)
-    const fd = new FormData()
-    fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
-    const result = await uploadCabinetAvatar(fd)
-    setUploading(false)
-    if (result.error) {
-      toast.error(result.error)
-      return
+    try {
+      const fd = new FormData()
+      fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      const result = await uploadCabinetAvatar(fd)
+      if (result.error) {
+        toast.error(result.error)
+        return  // modal stays open (cropSrc unchanged)
+      }
+      const src = cropSrc
+      setCropSrc(null)       // unmounts modal
+      setUrl(result.url ?? null)
+      onUpload(result.url ?? null)
+      if (src) URL.revokeObjectURL(src)
+    } catch {
+      toast.error(t('avatar_upload_error'))
+      // modal stays open (cropSrc unchanged)
+    } finally {
+      setUploading(false)
     }
-    URL.revokeObjectURL(cropSrc!)
-    setCropSrc(null)
-    if (result.url) { setUrl(result.url); onUpload(result.url) }
   }
 
   function handleCropCancel() {
@@ -320,7 +331,6 @@ function AvatarUpload({ currentUrl, onUpload }: {
           zoomLabel={t('avatar_zoom_label')}
           cancelLabel={tc('cancel')}
           saveLabel={tc('save')}
-          uploading={uploading}
           onConfirm={handleCropConfirm}
           onCancel={handleCropCancel}
         />

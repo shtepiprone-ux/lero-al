@@ -377,6 +377,7 @@
     "avatar_crop_title": "Ritaglia avatar",
     "avatar_crop_hint": "Trascina la foto per posizionarla. Pizzica o scorri per ingrandire.",
     "avatar_zoom_label": "Zoom",
+    "avatar_upload_error": "Caricamento fallito. Riprova.",
     "avatar_upload": "Carica",
     "avatar_replace": "Sostituisci",
     "avatar_remove": "Rimuovi"

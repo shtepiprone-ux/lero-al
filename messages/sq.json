@@ -377,6 +377,7 @@
     "avatar_crop_title": "Prerja e avatarës",
     "avatar_crop_hint": "Zvarritni foton për ta pozicionuar. Shtypni ose rrotulloni rrotën për ta zmadhuar.",
     "avatar_zoom_label": "Zmadho",
+    "avatar_upload_error": "Ngarkimi dështoi. Ju lutemi provoni përsëri.",
     "avatar_upload": "Ngarkoni",
     "avatar_replace": "Zëvendësoni",
     "avatar_remove": "Hiqni"

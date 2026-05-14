@@ -292,7 +292,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
           <div className="p-5 flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="firstName" className="text-sm">Ім'я <span className="text-destructive">*</span></Label>
+                <Label htmlFor="firstName" className="text-sm">Ім&apos;я <span className="text-destructive">*</span></Label>
                 <Input id="firstName" {...register('firstName')} className="h-10 rounded-xl" placeholder="Ім'я" />
                 {errors.firstName && <p className="text-xs text-destructive">{errors.firstName.message}</p>}
               </div>

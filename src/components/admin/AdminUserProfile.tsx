@@ -449,6 +449,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const form = useForm<FormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: isCreate
+      // eslint-disable-next-line no-restricted-syntax -- UserStatus default value in user form, not ListingStatus
       ? { firstName: '', lastName: '', profileType: 'private', phone: '', useMainPhone: false, whatsapp: '', locationId: undefined as any, companyName: '', website: '', position: '', yearStarted: undefined, status: 'active', blockReason: '' }
       : {
           firstName: user.name ?? '',

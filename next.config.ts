@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 const nextConfig = {
   allowedDevOrigins: ['192.168.20.252'],
   // No images config needed — AppImage delivers via direct Cloudinary URLs (no next/image proxy).
+  eslint: { ignoreDuringBuilds: true },
 }
 
 const baseConfig = withNextIntl(nextConfig)

@@ -64,6 +64,7 @@ export async function deleteOwnAccount(): Promise<{ error?: string }> {
   // Archive all user's listings in one transactional update
   const { error: listingsError } = await db
     .from('listings')
+    // eslint-disable-next-line no-restricted-syntax -- bulk cascade during account deletion; applyListingTransition is for single listings only
     .update({ status: 'archived' })
     .eq('user_id', userId)
     .not('status', 'in', '("sold","rented")')
@@ -75,6 +76,7 @@ export async function deleteOwnAccount(): Promise<{ error?: string }> {
   // Soft-delete the user row
   const { error: userError } = await db
     .from('users')
+    // eslint-disable-next-line no-restricted-syntax -- UserStatus update on users table, not ListingStatus
     .update({ deleted_at: new Date().toISOString(), status: 'inactive' })
     .eq('id', userId)
 

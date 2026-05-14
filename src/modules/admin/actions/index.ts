@@ -414,6 +414,7 @@ export async function createAdminUser(data: {
     role,
     user_type,
     location_id: data.locationId,
+    // eslint-disable-next-line no-restricted-syntax -- UserStatus initial value in user upsert, not ListingStatus
     status: 'active',
     is_verified: false,
     company_name: isBusiness ? (data.companyName ?? null) : null,

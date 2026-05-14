@@ -13,6 +13,7 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import { updateListingStatus, setListingPremium, deleteListing } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
 import type { ListingStatus } from '@/types/database'
+import { isListingArchived } from '@/modules/listings/domain'
 
 const STATUSES: ListingStatus[] = ['pending', 'active', 'inactive', 'sold', 'rented', 'archived']
 
@@ -192,7 +193,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                     <tr
                       key={l.id}
                       className={`hover:bg-muted/20 transition-colors ${isLoading ? 'opacity-50' : ''} ${
-                        l.status === 'archived' ? 'grayscale opacity-70' : ''
+                        isListingArchived(l.status as ListingStatus) ? 'grayscale opacity-70' : ''
                       }`}
                     >
                       <td className="px-4 py-3">

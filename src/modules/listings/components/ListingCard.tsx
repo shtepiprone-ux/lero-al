@@ -12,7 +12,7 @@ import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { cn } from '@/lib/utils'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
-import { isListingClosed } from '@/modules/listings/domain'
+import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
@@ -50,15 +50,17 @@ function getBadges(listing: CardListingData) {
   const badges: { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline'; className: string }[] = []
 
   // Status badges take priority for non-active listings
+  // eslint-disable-next-line no-restricted-syntax -- badge color depends on sold vs rented individually; no single-status domain helper
   if (listing.status === 'sold') {
     badges.push({ label: 'status_sold', variant: 'default', className: 'bg-status-info text-primary-foreground' })
     return badges
   }
+  // eslint-disable-next-line no-restricted-syntax -- badge color depends on sold vs rented individually; no single-status domain helper
   if (listing.status === 'rented') {
     badges.push({ label: 'status_rented', variant: 'default', className: 'bg-status-rented text-primary-foreground' })
     return badges
   }
-  if (listing.status === 'archived') {
+  if (isListingArchived(listing.status as ListingStatus)) {
     badges.push({ label: 'status_archived', variant: 'outline', className: 'border-border text-muted-foreground' })
     return badges
   }
@@ -121,7 +123,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           listing.is_premium
             ? "border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)] hover:shadow-[0_4px_16px_oklch(0.700_0.162_65_/_0.25)]"
             : "hover:shadow-md",
-          listing.status === 'archived' && "grayscale opacity-60 hover:opacity-70",
+          isListingArchived(listing.status as ListingStatus) && "grayscale opacity-60 hover:opacity-70",
         )}
         data-track="listing_click"
         data-listing-slug={listing.slug}
@@ -217,7 +219,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         listing.is_premium
           ? "border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)] hover:shadow-[0_8px_24px_oklch(0.700_0.162_65_/_0.2)] hover:-translate-y-0.5"
           : "hover:shadow-lg hover:-translate-y-0.5",
-        listing.status === 'archived' && "grayscale opacity-60 hover:opacity-70",
+        isListingArchived(listing.status as ListingStatus) && "grayscale opacity-60 hover:opacity-70",
       )}
       data-track="listing_click"
       data-listing-slug={listing.slug}
@@ -240,6 +242,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         {/* Sold/Rented overlay */}
         {isListingClosed(listing.status as ListingStatus) && (
           <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
+            {/* eslint-disable-next-line no-restricted-syntax -- sold/rented badge color differs; no single-status domain helper */}
             <span className={cn(
               'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
               listing.status === 'sold' ? 'bg-status-info/80 border-status-info' : 'bg-status-rented/80 border-status-rented',

@@ -283,43 +283,34 @@ function AvatarUpload({ currentUrl, onUpload }: {
     console.log('[AvatarFlow] crop_modal_open', { mode: 'cabinet' })
   }
 
-  // ROOT CAUSE FIX: base64 encoding to avoid Next.js Server Action binary data corruption.
+  // Restored original FormData/File upload contract (Task 11 stable baseline).
   async function handleCropConfirm(blob: Blob): Promise<void> {
     console.log('[AvatarFlow] crop_save_clicked', { mode: 'cabinet' })
     console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size })
     setUploading(true)
     console.log('[AvatarFlow] upload_started', { mode: 'cabinet', endpoint: 'uploadCabinetAvatar' })
     try {
-      // Encode as base64 to avoid binary serialization issues in Next.js Server Actions
-      const base64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => {
-          const dataUrl = reader.result as string
-          resolve(dataUrl.slice(dataUrl.indexOf(',') + 1))
-        }
-        reader.onerror = reject
-        reader.readAsDataURL(blob)
-      })
-      console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet', base64Length: base64.length })
-      const result = await uploadCabinetAvatar(base64, 'image/jpeg')
+      const fd = new FormData()
+      fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet' })
+      const result = await uploadCabinetAvatar(fd)
       console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
       if (result.error) {
-        // ERROR PATH: toast (visible above modal), modal stays open for retry
+        // ERROR: toast above modal — modal stays open for retry
         toast.error(result.error)
         return
       }
-      // SUCCESS PATH ONLY: close modal and update preview
+      // SUCCESS ONLY: close modal and update preview
       const src = cropSrc
       setCropSrc(null)
       setUrl(result.url ?? null)
       onUpload(result.url ?? null)
       if (src) URL.revokeObjectURL(src)
       console.log('[AvatarFlow] avatar_state_updated', { avatarUrl: result.url, mode: 'cabinet' })
-      console.log('[AvatarFlow] modal_close_requested', { reason: 'upload_success', mode: 'cabinet' })
     } catch (err) {
       console.log('[AvatarFlow] upload_exception', { error: String(err), mode: 'cabinet' })
       toast.error(t('avatar_upload_error'))
-      // ERROR PATH: modal stays open (cropSrc unchanged)
+      // ERROR: modal stays open (cropSrc unchanged)
     } finally {
       setUploading(false)
     }

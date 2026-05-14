@@ -530,23 +530,15 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     })
     if (result.error) { setSaveError(result.error); setSaving(false); return }
 
-    // Upload pending avatar if the admin selected one during creation.
-    // Uses base64 to avoid Next.js Server Action binary data corruption.
+    // Upload pending avatar using the original FormData/File contract.
     // Failure is non-fatal — user is created, admin can add avatar in edit mode.
     if (pendingAvatarBlob && result.userId) {
       console.log('[AvatarFlow] upload_started', { mode: 'create', hasUserId: true })
       try {
-        const base64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader()
-          reader.onload = () => {
-            const dataUrl = reader.result as string
-            resolve(dataUrl.slice(dataUrl.indexOf(',') + 1))
-          }
-          reader.onerror = reject
-          reader.readAsDataURL(pendingAvatarBlob)
-        })
-        console.log('[AvatarFlow] upload_request_sent', { userId: result.userId, base64Length: base64.length })
-        const uploadResult = await uploadUserAvatar(result.userId, base64, 'image/jpeg')
+        const fd = new FormData()
+        fd.append('avatar', new File([pendingAvatarBlob], 'avatar.jpg', { type: 'image/jpeg' }))
+        console.log('[AvatarFlow] upload_request_sent', { userId: result.userId })
+        const uploadResult = await uploadUserAvatar(result.userId, fd)
         console.log('[AvatarFlow] upload_response_received', { success: !uploadResult.error, payload: uploadResult })
         if (uploadResult.error) {
           toast.error(`Аватар не завантажено: ${uploadResult.error}. Можна додати у режимі редагування.`)

@@ -11,7 +11,7 @@ import { applyListingTransitionByStatus } from '@/modules/listings/actions/apply
 // ── Cloudinary signed upload helper ──────────────────────────────────────────
 
 async function uploadToCloudinary(
-  buf: Buffer,      // Node.js Buffer — avoids ArrayBuffer slice-offset issues
+  bytes: ArrayBuffer,
   mimeType: string,
   folder: string,
 ): Promise<{ url: string; publicId: string; width?: number; height?: number }> {
@@ -27,8 +27,7 @@ async function uploadToCloudinary(
   const signature = createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex')
 
   const form = new FormData()
-  // Buffer extends Uint8Array — valid BlobPart, no slice-offset risk
-  form.append('file', new Blob([new Uint8Array(buf)], { type: mimeType }), 'image.jpg')
+  form.append('file', new Blob([bytes], { type: mimeType }))
   form.append('timestamp', String(timestamp))
   form.append('api_key', apiKey)
   form.append('signature', signature)
@@ -457,28 +456,25 @@ export async function softDeleteUser(userId: string): Promise<{ error?: string }
   return {}
 }
 
-// ROOT CAUSE FIX (Task 11d): Next.js Server Actions corrupt binary File data when
-// passed via FormData direct invocation (not <form action>). file.arrayBuffer()
-// returns an empty ArrayBuffer → Cloudinary returns 400 "Invalid image file".
-// Fix: pass image as base64 string — strings are always correctly serialized.
-export async function uploadUserAvatar(
-  userId: string,
-  imageBase64: string,   // base64-encoded JPEG produced by AvatarCropModal canvas
-  mimeType: string,      // always 'image/jpeg' from canvas.toBlob
-): Promise<{ url?: string; error?: string }> {
+// Restored original FormData/File upload contract (Task 11 stable baseline).
+// The crop layer produces a Blob → wrapped into File → FormData → this action.
+// Transport is identical to pre-crop-refactor; only the source image differs.
+export async function uploadUserAvatar(userId: string, formData: FormData): Promise<{ url?: string; error?: string }> {
   await assertAdminAccess()
 
-  const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-  if (!validTypes.includes(mimeType)) return { error: 'Тільки JPG, PNG або WEBP' }
+  const file = formData.get('avatar') as File | null
+  if (!file) return { error: 'Файл не надано' }
 
-  const bytes = Buffer.from(imageBase64, 'base64')
-  console.log('[uploadUserAvatar] received bytes:', bytes.length, 'mimeType:', mimeType, 'userId:', userId)
-  if (bytes.length === 0) return { error: 'Файл порожній — спробуйте ще раз' }
-  if (bytes.length > 2 * 1024 * 1024) return { error: 'Максимальний розмір файлу — 2 МБ' }
+  const validTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if (!validTypes.includes(file.type)) return { error: 'Тільки JPG, PNG або WEBP' }
+  if (file.size > 2 * 1024 * 1024) return { error: 'Максимальний розмір файлу — 2 МБ' }
+
+  const bytes = await file.arrayBuffer()
+  console.log('[uploadUserAvatar] received bytes:', bytes.byteLength, 'type:', file.type, 'userId:', userId)
 
   let cloudUrl: string
   try {
-    const result = await uploadToCloudinary(bytes, mimeType, 'avatars')
+    const result = await uploadToCloudinary(bytes, file.type, 'avatars')
     console.log('[uploadUserAvatar] Cloudinary ok:', result.width, 'x', result.height, result.url.slice(0, 60))
     if (result.width && result.height && (result.width !== 256 || result.height !== 256)) {
       return { error: `Розмір зображення: ${result.width}×${result.height} (потрібно 256×256)` }
@@ -486,7 +482,7 @@ export async function uploadUserAvatar(
     cloudUrl = result.url
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e)
-    console.error('[uploadUserAvatar] Cloudinary failed:', msg, '| userId:', userId, '| bytes:', bytes.length)
+    console.error('[uploadUserAvatar] Cloudinary failed:', msg, '| userId:', userId, '| bytes:', bytes.byteLength)
     return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'Помилка завантаження аватара' }
   }
 

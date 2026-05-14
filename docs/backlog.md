@@ -1,5 +1,10 @@
 # Project Status & Immediate Tasks
 
+## Avatar Upload Pipeline Restore (Task 11e) — 2026-05-14
+
+- [x] **Restored original FormData/File upload contract**. Task 11d unnecessarily replaced the stable `FormData+File` transport with `base64` based on incorrect diagnosis (the "evidence" was a malformed test JPEG returning 400 from Cloudinary, not a FormData serialization failure). The base64 approach also failed. Fix: reverted `uploadUserAvatar` and `uploadCabinetAvatar` signatures back to `FormData`, restored `file.arrayBuffer()` → `ArrayBuffer` → Cloudinary. Crop layer is untouched — it still produces a 256×256 JPEG Blob, which is wrapped into `File` + `FormData` exactly as in the original Task 11 design. Files: `admin/actions/index.ts`, `cabinet/actions/index.ts`, `AdminUserAvatar.tsx`, `ProfileTab.tsx`, `AdminUserProfile.tsx`.
+- [x] **Kept all non-transport improvements** from Task 11c/11d: Toaster in admin layout, toast error visibility (not setError behind modal), modal only closes on success, `useUnsavedChangesGuard` hook, cabinet guard, improved server-side error logging (`console.error` with real Cloudinary message), dev-mode error propagation.
+
 ## Avatar Crop Root-Cause Fix (Task 11c) — 2026-05-14
 
 Four confirmed bugs found by static analysis + runtime verification. All four fixed.

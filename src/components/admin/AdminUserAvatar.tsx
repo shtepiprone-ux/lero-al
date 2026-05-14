@@ -35,19 +35,6 @@ async function validateSourceImage(file: File): Promise<{ w: number; h: number; 
   })
 }
 
-/** Convert a Blob to base64 string (no data-url prefix). */
-function blobToBase64(blob: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => {
-      const dataUrl = reader.result as string
-      resolve(dataUrl.slice(dataUrl.indexOf(',') + 1))
-    }
-    reader.onerror = reject
-    reader.readAsDataURL(blob)
-  })
-}
-
 export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlobReady }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
@@ -76,7 +63,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
     if (file.size > MAX_SOURCE_BYTES) { setError('Максимальний розмір файлу — 10 МБ'); return }
     const { w, h, error: imgError } = await validateSourceImage(file)
     if (imgError === 'unreadable') { setError('Не вдалося прочитати це зображення'); return }
-    if (w < MIN_DIM || h < MIN_DIM) { setError(`Зображення занадто мале — мінімум ${MIN_DIM}×${MIN_DIM}пікселів`); return }
+    if (w < MIN_DIM || h < MIN_DIM) { setError(`Зображення занадто мале — мінімум ${MIN_DIM}×${MIN_DIM} пікселів`); return }
 
     console.log('[AvatarFlow] file_selected', { route: window.location.pathname, mode, mime: file.type, size: file.size, dimensions: `${w}×${h}` })
     setCropSrc(URL.createObjectURL(file))
@@ -88,58 +75,56 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
     console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size, width: 256, height: 256 })
 
     if (mode === 'create') {
-      // Create mode: no userId yet — store blob for upload after user creation.
+      // Create mode: no userId yet — store blob; parent uploads after user creation.
       const previewUrl = URL.createObjectURL(blob)
       if (currentUrl?.startsWith('blob:')) URL.revokeObjectURL(currentUrl)
       const src = cropSrc
-      setCropSrc(null)        // SUCCESS path — unmount modal
+      setCropSrc(null)        // SUCCESS — unmount modal
       setCurrentUrl(previewUrl)
       onAvatarChange(previewUrl)
       onBlobReady?.(blob)
       if (src) URL.revokeObjectURL(src)
       console.log('[AvatarFlow] avatar_state_updated', { mode: 'create', pendingBlob: true })
-      console.log('[AvatarFlow] modal_close_requested', { reason: 'create_preview_ready' })
       return
     }
 
-    // Edit mode — upload immediately via base64 (not FormData/File to avoid binary corruption)
+    // Edit mode: upload immediately using the original FormData/File contract
     if (!userId) return
     setUploading(true)
-    console.log('[AvatarFlow] upload_started', { route: window.location.pathname, mode, hasUserId: true, endpoint: 'uploadUserAvatar' })
+    console.log('[AvatarFlow] upload_started', { route: window.location.pathname, mode, hasUserId: true })
 
     try {
-      const base64 = await blobToBase64(blob)
-      console.log('[AvatarFlow] upload_request_sent', { userId, base64Length: base64.length })
+      const fd = new FormData()
+      fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      console.log('[AvatarFlow] upload_request_sent', { userId })
 
-      const result = await uploadUserAvatar(userId, base64, 'image/jpeg')
+      const result = await uploadUserAvatar(userId, fd)
       console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
 
       if (result.error) {
-        // ERROR PATH: show toast above modal — DO NOT close modal, user can retry
+        // ERROR: show toast above the open modal — do NOT close modal (user can retry)
         toast.error(result.error)
         console.log('[AvatarFlow] upload_failed', { reason: result.error })
         return
       }
 
-      // SUCCESS PATH ONLY: close modal and update preview
+      // SUCCESS ONLY: close modal and update avatar preview
       const src = cropSrc
       setCropSrc(null)
       setCurrentUrl(result.url ?? null)
       onAvatarChange(result.url ?? null)
       if (src) URL.revokeObjectURL(src)
       console.log('[AvatarFlow] avatar_state_updated', { avatarUrl: result.url, mode: 'edit' })
-      console.log('[AvatarFlow] modal_close_requested', { reason: 'upload_success' })
     } catch (err) {
       console.log('[AvatarFlow] upload_exception', { error: String(err), stack: err instanceof Error ? err.stack : undefined })
-      // ERROR PATH: show toast — DO NOT close modal
       toast.error('Помилка завантаження аватара')
+      // ERROR: modal stays open — cropSrc unchanged
     } finally {
       setUploading(false)
     }
   }
 
   function handleCropCancel() {
-    console.log('[AvatarFlow] modal_close_requested', { reason: 'user_cancel' })
     if (cropSrc) URL.revokeObjectURL(cropSrc)
     setCropSrc(null)
     setError(null)

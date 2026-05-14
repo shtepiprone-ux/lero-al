@@ -23,8 +23,9 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Exclude API routes — they handle auth internally and must not get locale prefixes.
+  // Exclude API and auth routes — they must not receive locale prefixes.
+  // /auth/callback is a Supabase OAuth callback that lives outside the [locale] tree.
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+    '/((?!api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 }

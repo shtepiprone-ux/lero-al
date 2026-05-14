@@ -10,6 +10,7 @@ export default async function AdminListingsPage({
 }) {
   const sp = await searchParams
   const status = sp.status ?? ''
+  const q = sp.q?.trim() ?? ''
   const page = Math.max(1, Number(sp.page ?? 1))
   const PER_PAGE = 25
   const from = (page - 1) * PER_PAGE
@@ -27,6 +28,7 @@ export default async function AdminListingsPage({
     .range(from, to)
 
   if (status) query = query.eq('status', status as any)
+  if (q) query = query.or(`id.ilike.%${q}%,title.ilike.%${q}%`)
 
   const { data: listings, count } = await query
 
@@ -42,6 +44,7 @@ export default async function AdminListingsPage({
         page={page}
         perPage={PER_PAGE}
         activeStatus={status}
+        searchQuery={q}
       />
     </div>
   )

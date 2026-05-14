@@ -330,6 +330,7 @@ export default async function ListingPage({ params }: Props) {
                   <CalendarDays className="h-4 w-4" />
                   <span>{relativeTimeStr}</span>
                 </span>
+                <span className="font-mono text-xs text-muted-foreground/70">ID: #{listing.id.slice(0, 8)}</span>
               </div>
             </div>
 

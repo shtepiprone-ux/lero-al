@@ -12,6 +12,7 @@ export default async function AdminUsersPage({
 }) {
   const sp = await searchParams
   const role = sp.role ?? ''
+  const q = sp.q?.trim() ?? ''
   const locationRequest = sp.location_request === '1'
   const page = Math.max(1, Number(sp.page ?? 1))
   const PER_PAGE = 25
@@ -28,6 +29,7 @@ export default async function AdminUsersPage({
 
   if (role) query = query.eq('role', role as any)
   if (locationRequest) query = query.not('location_request', 'is', null)
+  if (q) query = query.or(`id.ilike.%${q}%,name.ilike.%${q}%,last_name.ilike.%${q}%,phone.ilike.%${q}%,company_name.ilike.%${q}%`)
 
   const { data: users, count } = await query
 
@@ -58,6 +60,7 @@ export default async function AdminUsersPage({
         perPage={PER_PAGE}
         activeRole={role}
         locationRequestFilter={locationRequest}
+        searchQuery={q}
       />
     </div>
   )

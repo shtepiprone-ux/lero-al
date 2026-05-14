@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { ExternalLink, Pencil, Trash2, Star, StarOff, Loader2, Calendar, Copy, Check } from 'lucide-react'
+import { ExternalLink, Pencil, Trash2, Star, StarOff, Loader2, Calendar, Copy, Check, Search } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -36,7 +36,7 @@ const PREMIUM_PRESETS = [
 ]
 
 interface Props {
-  listings: any[]; total: number; page: number; perPage: number; activeStatus: string
+  listings: any[]; total: number; page: number; perPage: number; activeStatus: string; searchQuery?: string
 }
 
 function PremiumDialog({ listing, onClose, onDone }: {
@@ -124,7 +124,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
   )
 }
 
-export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus }: Props) {
+export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '' }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -160,21 +160,32 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
       )}
 
       <div className="admin-listings-table flex flex-col gap-4">
-        {/* Status filter */}
-        <div className="flex gap-2 flex-wrap">
-          {['', ...STATUSES].map(s => (
-            <button
-              key={s || 'all'}
-              onClick={() => navigate({ status: s || null, page: null })}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                activeStatus === s
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'border-border text-muted-foreground hover:text-foreground'
-              }`}
-            >
-              {s || 'Всі'}
-            </button>
-          ))}
+        {/* Search + Status filter */}
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1 max-w-sm">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+            <Input
+              defaultValue={searchQuery}
+              placeholder="Пошук по ID або назві..."
+              className="h-9 pl-9 rounded-xl"
+              onChange={e => navigate({ q: e.target.value || null, page: null })}
+            />
+          </div>
+          <div className="flex gap-2 flex-wrap items-center">
+            {['', ...STATUSES].map(s => (
+              <button
+                key={s || 'all'}
+                onClick={() => navigate({ status: s || null, page: null })}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  activeStatus === s
+                    ? 'bg-primary text-primary-foreground border-primary'
+                    : 'border-border text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {s || 'Всі'}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
@@ -182,6 +193,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b bg-muted/40">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell w-24">ID</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Оголошення</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">Тип</th>
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground">Ціна</th>
@@ -193,7 +205,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
               </thead>
               <tbody className="divide-y">
                 {items.length === 0 ? (
-                  <tr><td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">Оголошень не знайдено</td></tr>
+                  <tr><td colSpan={8} className="px-4 py-12 text-center text-muted-foreground">Оголошень не знайдено</td></tr>
                 ) : items.map(l => {
                   const isLoading = loadingId === l.id
                   return (
@@ -203,6 +215,24 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         isListingArchived(l.status as ListingStatus) ? 'grayscale opacity-70' : ''
                       }`}
                     >
+                      <td className="px-4 py-3 hidden sm:table-cell">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            navigator.clipboard?.writeText(l.id).catch(() => {})
+                            setCopiedId(l.id)
+                            setTimeout(() => setCopiedId(prev => prev === l.id ? null : prev), 1500)
+                          }}
+                          title={l.id}
+                          className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                        >
+                          {copiedId === l.id
+                            ? <Check className="h-3 w-3 text-status-success" />
+                            : <Copy className="h-3 w-3 opacity-50" />
+                          }
+                          #{l.id.slice(0, 8)}
+                        </button>
+                      </td>
                       <td className="px-4 py-3">
                         <div className="flex flex-col gap-0.5">
                           <div className="flex items-center gap-2">

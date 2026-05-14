@@ -115,9 +115,9 @@ function profileTypeFromUser(user: Pick<User, 'role' | 'user_type'>): ProfileTyp
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionCard({ title, children, allowOverflow }: { title: string; children: React.ReactNode; allowOverflow?: boolean }) {
   return (
-    <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
+    <div className={cn("bg-card rounded-2xl border shadow-sm", allowOverflow ? "overflow-visible" : "overflow-hidden")}>
       <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
         {title}
       </p>
@@ -196,8 +196,12 @@ function CitySelectField({ cities, regions, value, onChange, mode, error, isAdmi
 
   const filtered = useMemo(() => {
     if (!search.trim()) return cities.slice(0, 20)
-    const q = search.toLowerCase()
-    return cities.filter(c => c.name_al.toLowerCase().includes(q)).slice(0, 20)
+    // NFD decomposes ë→e+combining-diaeresis, then strip combining chars (U+0300–U+036F).
+    // This makes "e" match "ë", "c" match "ç", etc.
+    const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
+    const normalize = (s: string) => s.normalize('NFD').replace(COMBINING, '').toLowerCase()
+    const q = normalize(search)
+    return cities.filter(c => normalize(c.name_al).includes(q)).slice(0, 20)
   }, [cities, search])
 
   if (mode === 'view') {
@@ -383,8 +387,10 @@ function ApprovalCityCombobox({ cities, onApprove, disabled }: {
   const [open, setOpen] = useState(false)
   const filtered = useMemo(() => {
     if (!search.trim()) return cities.slice(0, 15)
-    const q = search.toLowerCase()
-    return cities.filter(c => c.name_al.toLowerCase().includes(q)).slice(0, 15)
+    const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
+    const normalize = (s: string) => s.normalize('NFD').replace(COMBINING, '').toLowerCase()
+    const q = normalize(search)
+    return cities.filter(c => normalize(c.name_al).includes(q)).slice(0, 15)
   }, [cities, search])
 
   return (
@@ -854,7 +860,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       </SectionCard>
 
       {/* ── Location ────────────────────────────────────────────────────────── */}
-      <SectionCard title={`Локація${isBusiness ? ' (місто роботи)' : ' (місто реєстрації)'}`}>
+      <SectionCard title={`Локація${isBusiness ? ' (місто роботи)' : ' (місто реєстрації)'}`} allowOverflow>
         <FieldRow label="Місто *" mode={currentMode}
           editContent={
             <CitySelectField cities={cities} regions={regions}

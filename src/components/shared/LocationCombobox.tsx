@@ -32,8 +32,10 @@ export function LocationCombobox({ locations, value, onChange, onKeyDown, placeh
 
   const filtered = useMemo(() => {
     if (!search) return locations.slice(0, 15)
-    const q = search.toLowerCase()
-    return locations.filter(l => l.name_al.toLowerCase().includes(q)).slice(0, 15)
+    const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
+    const normalize = (s: string) => s.normalize('NFD').replace(COMBINING, '').toLowerCase()
+    const q = normalize(search)
+    return locations.filter(l => normalize(l.name_al).includes(q)).slice(0, 15)
   }, [locations, search])
 
   const selected = locations.find(l => String(l.id) === value)

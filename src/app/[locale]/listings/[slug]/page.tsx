@@ -145,11 +145,20 @@ export default async function ListingPage({ params }: Props) {
   }
 
   const ownerRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
-  // If the owner was hard-deleted from the DB the join returns null.
-  // Provide a placeholder so the contact block always renders with a "deleted" notice.
-  const owner = ownerRaw ?? (isListingArchived(listing.status as ListingStatus)
-    ? { id: '', name: null, phone: null, whatsapp: null, avatar_url: null, user_type: 'private', is_verified: false, company_name: null, deleted_at: 'deleted' }
-    : null)
+  // The owner JOIN returns null when the user row is hidden by RLS (soft-deleted) or
+  // was removed from the DB. Always fall back to a "deleted" placeholder so the
+  // contact block renders with a proper notice instead of disappearing entirely.
+  const owner = ownerRaw ?? {
+    id: '' as string,
+    name: null as string | null,
+    phone: null as string | null,
+    whatsapp: null as string | null,
+    avatar_url: null as string | null,
+    user_type: 'private' as string,
+    is_verified: false,
+    company_name: null as string | null,
+    deleted_at: 'deleted' as string,
+  }
   const images = listing.images ?? []
 
   // Sort images to find the cover — same logic used by GalleryStaticFrame and
@@ -397,18 +406,16 @@ export default async function ListingPage({ params }: Props) {
             </div>
           </div>
 
-          {/* ── Right column: contact sidebar ── */}
-          {owner && (
-            <LazyListingContact
-              owner={owner}
-              listingTitle={listing.title}
-              listingUrl={listingUrl}
-              price={displayPrice}
-              currency={displayCurrencyCode}
-              originalPrice={originalPriceStr ?? undefined}
-              originalPriceLabel={t('original_price')}
-            />
-          )}
+          {/* ── Right column: contact sidebar — always rendered ── */}
+          <LazyListingContact
+            owner={owner}
+            listingTitle={listing.title}
+            listingUrl={listingUrl}
+            price={displayPrice}
+            currency={displayCurrencyCode}
+            originalPrice={originalPriceStr ?? undefined}
+            originalPriceLabel={t('original_price')}
+          />
         </div>
       </div>
     </div>

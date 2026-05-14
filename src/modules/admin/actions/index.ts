@@ -453,7 +453,51 @@ export async function softDeleteUser(userId: string): Promise<{ error?: string }
     return { error: 'Не вдалось видалити профіль' }
   }
 
+  // Archive all active listings so they no longer appear as contactable.
+  // eslint-disable-next-line no-restricted-syntax -- bulk cascade on user deletion; applyListingTransition is for single listings
+  await db.from('listings')
+    .update({ status: 'archived' })
+    .eq('user_id', userId)
+    .not('status', 'in', '("sold","rented","archived")')
+
   revalidatePath('/admin/users')
+  revalidatePath('/admin/listings')
+  return {}
+}
+
+export async function hardDeleteUser(userId: string): Promise<{ error?: string }> {
+  const me = await getUser()
+  if (!me) return { error: 'Unauthorized' }
+  const supabase = await createClient()
+  const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()
+  if (myProfile?.role !== 'admin') return { error: 'Тільки адміністратор може видаляти профілі' }
+
+  const db = createAdminClient()
+
+  // 1. Archive all listings before removing the user so they remain in the
+  //    system with a "deleted owner" notice rather than disappearing.
+  // eslint-disable-next-line no-restricted-syntax -- bulk cascade on user deletion
+  await db.from('listings')
+    .update({ status: 'archived' })
+    .eq('user_id', userId)
+    .not('status', 'in', '("sold","rented","archived")')
+
+  // 2. Remove the user profile row (cascades to related records via FK).
+  const { error: profileError } = await db.from('users').delete().eq('id', userId)
+  if (profileError) {
+    console.error('hardDeleteUser profile failed', { error: profileError, userId })
+    return { error: 'Не вдалось видалити профіль' }
+  }
+
+  // 3. Remove from Supabase Auth (permanent — cannot be undone).
+  const { error: authError } = await db.auth.admin.deleteUser(userId)
+  if (authError) {
+    console.error('hardDeleteUser auth failed', { error: authError, userId })
+    return { error: 'Профіль видалено, але не вдалось видалити обліковий запис' }
+  }
+
+  revalidatePath('/admin/users')
+  revalidatePath('/admin/listings')
   return {}
 }
 

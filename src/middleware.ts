@@ -23,9 +23,11 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Exclude API and auth routes — they must not receive locale prefixes.
-  // /auth/callback is a Supabase OAuth callback that lives outside the [locale] tree.
+  // Only run on [locale]/* routes. Exclude routes that live outside the locale tree:
+  //   api/*    — API routes handle auth internally
+  //   auth/*   — Supabase OAuth callback, must not get a locale prefix
+  //   admin/*  — admin panel has no [locale] segment in the URL
   matcher: [
-    '/((?!api|auth|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
+    '/((?!api|auth|admin|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)',
   ],
 }

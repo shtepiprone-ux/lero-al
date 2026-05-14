@@ -5,7 +5,7 @@ import { UserCircle2, Camera, Trash2, Loader2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { uploadUserAvatar, removeUserAvatar } from '@/modules/admin/actions'
+import { removeUserAvatar } from '@/modules/admin/actions'
 import { AppImage } from '@/components/ui/AppImage'
 
 const MAX_SOURCE_BYTES = 10 * 1024 * 1024  // 10 MB — source before crop
@@ -88,17 +88,19 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       return
     }
 
-    // Edit mode: upload immediately using the original FormData/File contract
+    // Edit mode: upload via API route (standard HTTP multipart — binary-safe)
     if (!userId) return
     setUploading(true)
-    console.log('[AvatarFlow] upload_started', { route: window.location.pathname, mode, hasUserId: true })
+    console.log('[AvatarFlow] upload_started', { route: window.location.pathname, mode, hasUserId: true, endpoint: '/api/upload-avatar' })
 
     try {
       const fd = new FormData()
       fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      fd.append('userId', userId)
       console.log('[AvatarFlow] upload_request_sent', { userId })
 
-      const result = await uploadUserAvatar(userId, fd)
+      const res = await fetch('/api/upload-avatar', { method: 'POST', body: fd })
+      const result = await res.json() as { url?: string; error?: string }
       console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
 
       if (result.error) {

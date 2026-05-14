@@ -22,7 +22,6 @@ import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateUserProfileFull, softDeleteUser, addLocation,
   approveLocationRequest, rejectLocationRequest, createAdminUser,
-  uploadUserAvatar,
   type ProfileType,
 } from '@/modules/admin/actions'
 import type { User, UserChangeLog, UserStatusHistory } from '@/types/database'
@@ -530,15 +529,17 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     })
     if (result.error) { setSaveError(result.error); setSaving(false); return }
 
-    // Upload pending avatar using the original FormData/File contract.
+    // Upload pending avatar via API route (binary-safe standard HTTP multipart).
     // Failure is non-fatal — user is created, admin can add avatar in edit mode.
     if (pendingAvatarBlob && result.userId) {
       console.log('[AvatarFlow] upload_started', { mode: 'create', hasUserId: true })
       try {
         const fd = new FormData()
         fd.append('avatar', new File([pendingAvatarBlob], 'avatar.jpg', { type: 'image/jpeg' }))
+        fd.append('userId', result.userId)
         console.log('[AvatarFlow] upload_request_sent', { userId: result.userId })
-        const uploadResult = await uploadUserAvatar(result.userId, fd)
+        const res = await fetch('/api/upload-avatar', { method: 'POST', body: fd })
+        const uploadResult = await res.json() as { url?: string; error?: string }
         console.log('[AvatarFlow] upload_response_received', { success: !uploadResult.error, payload: uploadResult })
         if (uploadResult.error) {
           toast.error(`Аватар не завантажено: ${uploadResult.error}. Можна додати у режимі редагування.`)

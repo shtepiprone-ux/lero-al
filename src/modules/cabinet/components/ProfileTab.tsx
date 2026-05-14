@@ -17,7 +17,6 @@ import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateCabinetProfile,
   deleteOwnAccount,
-  uploadCabinetAvatar,
   initiateEmailChange,
   resendEmailVerification,
 } from '@/modules/cabinet/actions'
@@ -283,17 +282,19 @@ function AvatarUpload({ currentUrl, onUpload }: {
     console.log('[AvatarFlow] crop_modal_open', { mode: 'cabinet' })
   }
 
-  // Restored original FormData/File upload contract (Task 11 stable baseline).
+  // Upload via API route — standard HTTP multipart, binary-safe
   async function handleCropConfirm(blob: Blob): Promise<void> {
     console.log('[AvatarFlow] crop_save_clicked', { mode: 'cabinet' })
     console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size })
     setUploading(true)
-    console.log('[AvatarFlow] upload_started', { mode: 'cabinet', endpoint: 'uploadCabinetAvatar' })
+    console.log('[AvatarFlow] upload_started', { mode: 'cabinet', endpoint: '/api/upload-avatar' })
     try {
       const fd = new FormData()
       fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
+      // No userId → API route uploads for own profile
       console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet' })
-      const result = await uploadCabinetAvatar(fd)
+      const res = await fetch('/api/upload-avatar', { method: 'POST', body: fd })
+      const result = await res.json() as { url?: string; error?: string }
       console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
       if (result.error) {
         // ERROR: toast above modal — modal stays open for retry

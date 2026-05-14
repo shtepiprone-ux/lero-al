@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import {
-  Loader2, ChevronLeft, UserPlus, Mail, CheckCircle2, Circle, MapPin,
+  Loader2, ChevronLeft, UserPlus, Mail, CheckCircle2, Circle,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,6 +14,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
+import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { createAdminUser, addLocation, type ProfileType } from '@/modules/admin/actions'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -100,93 +101,6 @@ function PhoneInputField({ value, onChange, error }: { value: string; onChange: 
   )
 }
 
-function CitySelectField({
-  cities, regions, value, onChange, error,
-}: {
-  cities: CityOption[]; regions: RegionOption[]
-  value: number | undefined; onChange: (id: number) => void; error?: string
-}) {
-  const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
-  const [showAdd, setShowAdd] = useState(false)
-  const [addName, setAddName] = useState('')
-  const [addRegionId, setAddRegionId] = useState<number | null>(null)
-  const [adding, setAdding] = useState(false)
-
-  const selected = cities.find(c => c.id === value)
-  const filtered = useMemo(() => {
-    if (!search.trim()) return cities.slice(0, 20)
-    const q = search.toLowerCase()
-    return cities.filter(c => c.name_al.toLowerCase().includes(q)).slice(0, 20)
-  }, [cities, search])
-
-  async function handleAdd() {
-    if (!addName.trim() || !addRegionId) return
-    setAdding(true)
-    const result = await addLocation({ name_al: addName.trim(), region_id: addRegionId })
-    setAdding(false)
-    if (result.id) { onChange(result.id); setShowAdd(false); setAddName(''); setAddRegionId(null) }
-  }
-
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="relative">
-        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-        <input
-          type="text"
-          value={selected ? selected.name_al : search}
-          onChange={e => { setSearch(e.target.value); if (selected) onChange(0 as any); setOpen(true) }}
-          onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 180)}
-          placeholder="Введіть назву міста..."
-          className="w-full h-10 pl-9 pr-3 text-sm bg-muted border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring"
-        />
-        {open && (
-          <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover border rounded-xl shadow-lg max-h-48 overflow-y-auto">
-            {filtered.length === 0
-              ? <p className="px-3 py-2 text-sm text-muted-foreground">Нічого не знайдено</p>
-              : filtered.map(c => (
-                  <button
-                    key={c.id} type="button"
-                    className={`w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors ${value === c.id ? 'bg-primary/10 text-primary font-medium' : ''}`}
-                    onMouseDown={() => { onChange(c.id); setSearch(''); setOpen(false) }}
-                  >
-                    {c.name_al}
-                    {regions.find(r => r.id === c.region_id) && (
-                      <span className="ml-2 text-xs text-muted-foreground">{regions.find(r => r.id === c.region_id)?.name_al}</span>
-                    )}
-                  </button>
-                ))}
-          </div>
-        )}
-      </div>
-      {error && <p className="text-xs text-destructive">{error}</p>}
-      <button type="button" className="text-xs text-primary hover:underline w-fit" onClick={() => setShowAdd(v => !v)}>
-        + Додати населений пункт
-      </button>
-      {showAdd && (
-        <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30">
-          <p className="text-xs font-semibold">Новий населений пункт</p>
-          <Input value={addName} onChange={e => setAddName(e.target.value)} placeholder="Назва (алб.)" className="h-9 rounded-xl text-sm" />
-          <Select value={addRegionId?.toString() ?? ''} onValueChange={v => setAddRegionId(Number(v))}>
-            <SelectTrigger variant="outline" size="sm" className="h-9 rounded-xl">
-              <SelectValue placeholder="Оберіть регіон" />
-            </SelectTrigger>
-            <SelectContent>
-              {regions.map(r => <SelectItem key={r.id} value={r.id.toString()}>{r.name_al}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <div className="flex gap-2">
-            <Button type="button" size="sm" className="h-8 rounded-xl" onClick={handleAdd} disabled={adding}>
-              {adding ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Додати'}
-            </Button>
-            <Button type="button" variant="ghost" size="sm" className="h-8 rounded-xl" onClick={() => setShowAdd(false)}>Скасувати</Button>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
 
 function PasswordRequirements() {
   const requirements = [
@@ -368,12 +282,14 @@ export function AdminUserCreate({ cities, regions }: Props) {
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <Label className="text-sm">Місто <span className="text-destructive">*</span></Label>
-              <CitySelectField
-                cities={cities}
-                regions={regions}
-                value={locationIdValue}
-                onChange={id => setValue('locationId', id, { shouldValidate: true })}
+              <LocationCombobox
+                locations={cities}
+                value={locationIdValue ? String(locationIdValue) : ''}
+                onChange={id => setValue('locationId', id ? Number(id) : (undefined as any), { shouldValidate: true })}
                 error={errors.locationId?.message}
+                placeholder="Введіть назву міста..."
+                regions={regions}
+                onAddLocation={addLocation}
               />
             </div>
             {locationIdValue && (() => {

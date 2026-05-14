@@ -144,7 +144,12 @@ export default async function ListingPage({ params }: Props) {
     preferredCurrency = (profileResult.data?.preferred_currency as 'ALL' | 'EUR') ?? 'ALL'
   }
 
-  const owner = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
+  const ownerRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
+  // If the owner was hard-deleted from the DB the join returns null.
+  // Provide a placeholder so the contact block always renders with a "deleted" notice.
+  const owner = ownerRaw ?? (isListingArchived(listing.status as ListingStatus)
+    ? { id: '', name: null, phone: null, whatsapp: null, avatar_url: null, user_type: 'private', is_verified: false, company_name: null, deleted_at: 'deleted' }
+    : null)
   const images = listing.images ?? []
 
   // Sort images to find the cover — same logic used by GalleryStaticFrame and

@@ -60,22 +60,28 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
         <div className="rounded-2xl border bg-card shadow-md p-5">
           <div className="flex flex-col gap-4">
             {/* Owner info */}
-            <div className="flex items-center gap-3">
+            <div className={cn("flex items-center gap-3", ownerDeleted && "opacity-50")}>
               <Avatar className="h-12 w-12 border-2 border-border">
-                <AvatarImage src={owner.avatar_url ?? undefined} />
-                <AvatarFallback className="font-semibold">{initials}</AvatarFallback>
+                {!ownerDeleted && <AvatarImage src={owner.avatar_url ?? undefined} />}
+                <AvatarFallback className="font-semibold">
+                  {ownerDeleted ? <UserX className="h-5 w-5" /> : initials}
+                </AvatarFallback>
               </Avatar>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <p className="font-semibold text-sm truncate">{owner.name ?? 'N/A'}</p>
-                  {owner.is_verified && (
+                  <p className="font-semibold text-sm truncate">
+                    {ownerDeleted ? t('owner_deleted_label') : (owner.name ?? 'N/A')}
+                  </p>
+                  {!ownerDeleted && owner.is_verified && (
                     <CheckCircle className="h-4 w-4 text-verified shrink-0" aria-label={t('verified_agent')} />
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {owner.user_type === 'agent'
-                    ? owner.company_name || t('agent_label')
-                    : t('private_person')}
+                  {ownerDeleted
+                    ? '—'
+                    : owner.user_type === 'agent'
+                      ? owner.company_name || t('agent_label')
+                      : t('private_person')}
                 </p>
               </div>
             </div>
@@ -88,11 +94,16 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
               )}
             </div>
 
-            {/* Action buttons — or owner-deleted placeholder */}
+            {/* Action buttons — or owner-deleted notice */}
             {ownerDeleted ? (
-              <div className="flex flex-col items-center gap-2 py-3 text-muted-foreground">
-                <UserX className="h-8 w-8 opacity-50" />
-                <p className="text-sm text-center">{t('owner_deleted')}</p>
+              <div className="rounded-xl border border-border/60 bg-muted/40 px-4 py-5 flex flex-col items-center gap-3 text-center">
+                <div className="h-10 w-10 rounded-full bg-muted border border-border flex items-center justify-center">
+                  <UserX className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm font-semibold text-foreground/80">{t('owner_deleted')}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{t('owner_deleted_desc')}</p>
+                </div>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
@@ -190,8 +201,9 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
             </div>
           )}
           {ownerDeleted && (
-            <div className="shrink-0 flex items-center gap-1.5 text-muted-foreground text-sm">
-              <UserX className="h-5 w-5" />
+            <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted text-muted-foreground text-xs font-medium">
+              <UserX className="h-3.5 w-3.5 shrink-0" />
+              <span>{t('owner_deleted_label')}</span>
             </div>
           )}
         </div>

@@ -104,6 +104,8 @@
     "private_person": "Persona privata",
     "agent_label": "Agente",
     "owner_deleted": "Il proprietario ha eliminato il suo account",
+    "owner_deleted_desc": "Questo annuncio rimane disponibile, ma non è più possibile contattare il proprietario.",
+    "owner_deleted_label": "Account eliminato",
     "original_price": "Prezzo originale",
     "create_listing": "Crea annuncio",
     "create_listing_subtitle": "Inserisci i dettagli della tua proprietà",

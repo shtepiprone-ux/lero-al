@@ -104,6 +104,8 @@
     "private_person": "Person privat",
     "agent_label": "Agjent",
     "owner_deleted": "Pronari e fshiu llogarinë e tij",
+    "owner_deleted_desc": "Ky njoftim mbetet aktiv, por kontakti me pronarin nuk është më i mundshëm.",
+    "owner_deleted_label": "Llogaria u fshi",
     "original_price": "Çmimi origjinal",
     "create_listing": "Shto njoftim",
     "create_listing_subtitle": "Plotëso detajet e pronës suaj",

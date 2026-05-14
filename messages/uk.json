@@ -104,6 +104,8 @@
     "private_person": "Приватна особа",
     "agent_label": "Агент",
     "owner_deleted": "Власник видалив свій акаунт",
+    "owner_deleted_desc": "Оголошення залишається доступним, але зв'язатись з власником більше неможливо.",
+    "owner_deleted_label": "Акаунт видалено",
     "original_price": "Початкова ціна",
     "create_listing": "Додати оголошення",
     "create_listing_subtitle": "Заповніть інформацію про нерухомість",

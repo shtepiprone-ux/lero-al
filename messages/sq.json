@@ -417,5 +417,29 @@
     "filter_label": "Filtro sipas llojit të pronës",
     "empty_filtered_title": "Nuk ka rezultate për këtë filtër",
     "empty_filtered_desc": "Provoni të zgjidhni një lloj tjetër prone ose shikoni të gjitha të preferuarat"
+  },
+  "admin": {
+    "locations": {
+      "type_region": "Rajon",
+      "type_city": "Qytet",
+      "type_village": "Fshat",
+      "type_district": "Bashki",
+      "no_parent": "Pa prind",
+      "select_type": "Zgjidhni llojin...",
+      "filter_all": "Të gjitha",
+      "add_btn": "Shto",
+      "edit_title": "Ndrysho vendndodhjen",
+      "add_title": "Shto vendndodhje",
+      "delete_confirm": "Të fshihet kjo vendndodhje?",
+      "name_al_label": "Emri (AL)",
+      "name_en_label": "Emri (EN)",
+      "type_label": "Lloji",
+      "slug_label": "Slug",
+      "parent_label": "Rajoni / qyteti prind",
+      "nothing_found": "Asgjë nuk u gjet",
+      "save": "Ruaj",
+      "cancel": "Anulo",
+      "actions_col": "Veprime"
+    }
   }
 }

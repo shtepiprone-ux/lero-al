@@ -417,5 +417,29 @@
     "filter_label": "Filter by property type",
     "empty_filtered_title": "No results for this filter",
     "empty_filtered_desc": "Try selecting a different property type or view all favorites"
+  },
+  "admin": {
+    "locations": {
+      "type_region": "Region",
+      "type_city": "City",
+      "type_village": "Village",
+      "type_district": "District",
+      "no_parent": "No parent",
+      "select_type": "Select type...",
+      "filter_all": "All",
+      "add_btn": "Add",
+      "edit_title": "Edit location",
+      "add_title": "Add location",
+      "delete_confirm": "Delete this location?",
+      "name_al_label": "Name (AL)",
+      "name_en_label": "Name (EN)",
+      "type_label": "Type",
+      "slug_label": "Slug",
+      "parent_label": "Parent region / city",
+      "nothing_found": "Nothing found",
+      "save": "Save",
+      "cancel": "Cancel",
+      "actions_col": "Actions"
+    }
   }
 }

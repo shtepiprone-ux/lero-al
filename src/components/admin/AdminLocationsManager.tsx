@@ -1,18 +1,14 @@
 'use client'
 
 import { useState, useTransition, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Combobox } from '@/components/shared/Combobox'
 import { createLocation, updateLocation, deleteLocation } from '@/modules/admin/actions'
-
-const TYPES = ['region', 'city', 'village', 'district'] as const
-const TYPE_LABEL: Record<string, string> = {
-  region: 'Область', city: 'Місто', village: 'Село', district: 'Район',
-}
 
 function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -20,139 +16,41 @@ function toSlug(str: string) {
 
 interface Location { id: number; name_al: string; name_en?: string | null; type: string; slug: string; parent_id?: number | null }
 
-// ── TypeCombobox ──────────────────────────────────────────────────────────────
-// Combobox for the four settlement type values (region / city / village / district).
-// Value is always one of TYPES; display label comes from TYPE_LABEL (never the raw enum literal).
-function TypeCombobox({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
-
-  const filtered = useMemo(() => {
-    if (!search) return [...TYPES]
-    const q = search.toLowerCase()
-    return TYPES.filter(t => TYPE_LABEL[t].toLowerCase().includes(q))
-  }, [search])
-
-  const INPUT_CLS = 'w-full h-10 px-3 text-sm text-foreground border border-input bg-transparent rounded-xl outline-none focus:border-ring focus:ring-2 focus:ring-ring placeholder:text-muted-foreground'
-  const LIST_CLS  = 'absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-hidden'
-
-  return (
-    <div className="relative">
-      <input
-        type="text"
-        value={open ? search : (TYPE_LABEL[value] ?? value)}
-        onChange={e => { setSearch(e.target.value); setOpen(true) }}
-        onFocus={() => { setSearch(''); setOpen(true) }}
-        onBlur={() => setTimeout(() => { setOpen(false); setSearch('') }, 150)}
-        placeholder="Оберіть тип"
-        className={INPUT_CLS}
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded={open}
-        aria-haspopup="listbox"
-      />
-      {open && (
-        <div role="listbox" className={LIST_CLS}>
-          {filtered.map(t => (
-            <Button
-              key={t}
-              variant="ghost"
-              className={cn('w-full px-3 py-2 h-auto text-sm justify-start rounded-none', value === t && 'bg-primary/10 text-primary')}
-              onMouseDown={() => { onChange(t); setSearch(''); setOpen(false) }}
-              role="option"
-              aria-selected={value === t}
-            >
-              {TYPE_LABEL[t]}
-            </Button>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
-// ── ParentCombobox ────────────────────────────────────────────────────────────
-// Combobox for the parent region/city selection. Supports typeahead over the full
-// parent candidates list. Empty value → no parent (sentinel '' / null in the DB).
-function ParentCombobox({ value, onChange, parents, excludeId }: {
-  value: string; onChange: (v: string) => void; parents: Location[]; excludeId?: number
-}) {
-  const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
-
-  const candidates = useMemo(
-    () => parents.filter(p => p.id !== excludeId),
-    [parents, excludeId],
-  )
-
-  const filtered = useMemo(() => {
-    if (!search) return candidates.slice(0, 20)
-    const q = search.toLowerCase()
-    return candidates.filter(p => p.name_al.toLowerCase().includes(q)).slice(0, 20)
-  }, [candidates, search])
-
-  const selected = candidates.find(p => String(p.id) === value) ?? null
-  const displayLabel = selected ? `${selected.name_al} (${TYPE_LABEL[selected.type] ?? selected.type})` : ''
-
-  const INPUT_CLS = 'w-full h-10 px-3 text-sm text-foreground border border-input bg-transparent rounded-xl outline-none focus:border-ring focus:ring-2 focus:ring-ring placeholder:text-muted-foreground'
-  const LIST_CLS  = 'absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto'
-
-  return (
-    <div className="relative">
-      <input
-        type="text"
-        value={open ? search : displayLabel}
-        onChange={e => { setSearch(e.target.value); setOpen(true) }}
-        onFocus={() => { setSearch(''); setOpen(true) }}
-        onBlur={() => setTimeout(() => { setOpen(false); setSearch('') }, 150)}
-        placeholder="— Немає —"
-        className={INPUT_CLS}
-        role="combobox"
-        aria-autocomplete="list"
-        aria-expanded={open}
-        aria-haspopup="listbox"
-      />
-      {open && (
-        <div role="listbox" className={LIST_CLS}>
-          <Button
-            variant="ghost"
-            className={cn('w-full px-3 py-2 h-auto text-sm justify-start rounded-none', !value && 'bg-primary/10 text-primary')}
-            onMouseDown={() => { onChange(''); setSearch(''); setOpen(false) }}
-            role="option"
-            aria-selected={!value}
-          >
-            — Немає —
-          </Button>
-          {filtered.map(p => (
-            <Button
-              key={p.id}
-              variant="ghost"
-              className={cn('w-full px-3 py-2 h-auto text-sm justify-between rounded-none', value === String(p.id) && 'bg-primary/10 text-primary')}
-              onMouseDown={() => { onChange(String(p.id)); setSearch(''); setOpen(false) }}
-              role="option"
-              aria-selected={value === String(p.id)}
-            >
-              <span>{p.name_al}</span>
-              <span className="text-xs text-muted-foreground ml-2">{TYPE_LABEL[p.type] ?? p.type}</span>
-            </Button>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
-
 function LocationModal({
   location, parents, onClose, onDone,
 }: {
   location?: Location; parents: Location[]; onClose: () => void; onDone: () => void
 }) {
+  const t = useTranslations('admin.locations')
   const [nameAl, setNameAl] = useState(location?.name_al ?? '')
   const [nameEn, setNameEn] = useState(location?.name_en ?? '')
   const [type, setType] = useState(location?.type ?? 'city')
   const [slug, setSlug] = useState(location?.slug ?? '')
   const [parentId, setParentId] = useState<string>(location?.parent_id ? String(location.parent_id) : '')
   const [saving, setSaving] = useState(false)
+
+  const typeOptions = useMemo(() => [
+    { value: 'region',   label: t('type_region') },
+    { value: 'city',     label: t('type_city') },
+    { value: 'village',  label: t('type_village') },
+    { value: 'district', label: t('type_district') },
+  ], [t])
+
+  const parentOptions = useMemo(() => {
+    const labelMap: Record<string, string> = {
+      region: t('type_region'),
+      city: t('type_city'),
+      village: t('type_village'),
+      district: t('type_district'),
+    }
+    return parents
+      .filter(p => p.id !== location?.id)
+      .map(p => ({
+        value: String(p.id),
+        label: p.name_al,
+        description: labelMap[p.type] ?? p.type,
+      }))
+  }, [parents, location?.id, t])
 
   async function handleSave() {
     if (!nameAl.trim()) return
@@ -177,35 +75,51 @@ function LocationModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-md flex flex-col gap-4">
-        <h3 className="font-bold text-base">{location ? 'Редагувати' : 'Додати'} населений пункт</h3>
+        <h3 className="font-bold text-base">{location ? t('edit_title') : t('add_title')}</h3>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">Назва (AL) *</Label>
-            <Input value={nameAl} onChange={e => { setNameAl(e.target.value); if (!location) setSlug(toSlug(e.target.value)) }} className="h-10 rounded-xl" />
+            <Label className="text-xs">{t('name_al_label')} *</Label>
+            <Input
+              value={nameAl}
+              onChange={e => { setNameAl(e.target.value); if (!location) setSlug(toSlug(e.target.value)) }}
+              className="h-10 rounded-xl"
+            />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">Назва (EN)</Label>
+            <Label className="text-xs">{t('name_en_label')}</Label>
             <Input value={nameEn} onChange={e => setNameEn(e.target.value)} className="h-10 rounded-xl" />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">Тип</Label>
-            <TypeCombobox value={type} onChange={setType} />
+            <Label className="text-xs">{t('type_label')}</Label>
+            <Combobox
+              options={typeOptions}
+              value={type}
+              onChange={v => { if (v) setType(v) }}
+              variant="button"
+              size="sm"
+            />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">Slug</Label>
+            <Label className="text-xs">{t('slug_label')}</Label>
             <Input value={slug} onChange={e => setSlug(e.target.value)} className="h-10 rounded-xl font-mono text-xs" />
           </div>
           <div className="flex flex-col gap-1.5 col-span-2">
-            <Label className="text-xs">Батьківський регіон/місто</Label>
-            <ParentCombobox value={parentId} onChange={setParentId} parents={parents} excludeId={location?.id} />
+            <Label className="text-xs">{t('parent_label')}</Label>
+            <Combobox
+              options={parentOptions}
+              value={parentId}
+              onChange={setParentId}
+              placeholder={t('no_parent')}
+              portal
+            />
           </div>
         </div>
 
         <div className="flex gap-2 pt-2">
-          <Button variant="outline" onClick={onClose} className="flex-1 h-10 rounded-xl">Скасувати</Button>
+          <Button variant="outline" onClick={onClose} className="flex-1 h-10 rounded-xl">{t('cancel')}</Button>
           <Button onClick={handleSave} disabled={saving || !nameAl.trim()} className="flex-1 h-10 rounded-xl">
-            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Зберегти'}
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
           </Button>
         </div>
       </div>
@@ -216,11 +130,27 @@ function LocationModal({
 interface Props { locations: any[]; parents: any[]; activeType: string }
 
 export function AdminLocationsManager({ locations: init, parents, activeType }: Props) {
+  const t = useTranslations('admin.locations')
   const router = useRouter()
   const [, startTransition] = useTransition()
   const [modal, setModal] = useState<'create' | Location | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [items, setItems] = useState(init)
+
+  const typeLabels: Record<string, string> = {
+    region: t('type_region'),
+    city: t('type_city'),
+    village: t('type_village'),
+    district: t('type_district'),
+  }
+
+  const typeFilters: [string, string][] = [
+    ['', t('filter_all')],
+    ['region', t('type_region')],
+    ['city', t('type_city')],
+    ['village', t('type_village')],
+    ['district', t('type_district')],
+  ]
 
   function openCreate() { setModal('create') }
   function openEdit(loc: any) { setModal(loc) }
@@ -231,11 +161,11 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
   }
 
   async function handleDelete(id: number) {
-    if (!confirm('Видалити населений пункт?')) return
+    if (!confirm(t('delete_confirm'))) return
     setDeletingId(id)
     startTransition(async () => {
       await deleteLocation(id)
-      setItems(prev => prev.filter(l => l.id !== id))
+      setItems(prev => prev.filter((l: any) => l.id !== id))
       setDeletingId(null)
     })
   }
@@ -252,10 +182,9 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
       )}
 
       <div className="flex flex-col gap-4">
-        {/* Type filter + add button */}
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex gap-2 flex-wrap">
-            {[['', 'Всі'], ...Object.entries(TYPE_LABEL)].map(([key, label]) => (
+            {typeFilters.map(([key, label]) => (
               <a
                 key={key}
                 href={`/admin/locations${key ? `?type=${key}` : ''}`}
@@ -271,7 +200,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
           </div>
           <Button onClick={openCreate} className="gap-2 rounded-xl h-9">
             <Plus className="h-4 w-4" />
-            Додати
+            {t('add_btn')}
           </Button>
         </div>
 
@@ -280,15 +209,15 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
             <thead>
               <tr className="border-b bg-muted/40">
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">ID</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Назва (AL)</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">Назва (EN)</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Тип</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Дії</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('name_al_label')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('name_en_label')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('type_label')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('actions_col')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {items.length === 0 ? (
-                <tr><td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">Нічого не знайдено</td></tr>
+                <tr><td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
               ) : items.map((l: any) => (
                 <tr key={l.id} className={`hover:bg-muted/20 transition-colors ${deletingId === l.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3 text-muted-foreground text-xs">{l.id}</td>
@@ -296,7 +225,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                   <td className="px-5 py-3 text-muted-foreground hidden md:table-cell">{l.name_en ?? '—'}</td>
                   <td className="px-5 py-3">
                     <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
-                      {TYPE_LABEL[l.type] ?? l.type}
+                      {typeLabels[l.type] ?? l.type}
                     </span>
                   </td>
                   <td className="px-5 py-3">

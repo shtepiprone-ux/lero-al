@@ -417,5 +417,29 @@
     "filter_label": "Фільтр за типом нерухомості",
     "empty_filtered_title": "Немає результатів для цього фільтру",
     "empty_filtered_desc": "Спробуйте обрати інший тип нерухомості або перегляньте все обране"
+  },
+  "admin": {
+    "locations": {
+      "type_region": "Область",
+      "type_city": "Місто",
+      "type_village": "Село",
+      "type_district": "Район",
+      "no_parent": "Без батьківського",
+      "select_type": "Оберіть тип...",
+      "filter_all": "Всі",
+      "add_btn": "Додати",
+      "edit_title": "Редагувати населений пункт",
+      "add_title": "Додати населений пункт",
+      "delete_confirm": "Видалити цей населений пункт?",
+      "name_al_label": "Назва (AL)",
+      "name_en_label": "Назва (EN)",
+      "type_label": "Тип",
+      "slug_label": "Slug",
+      "parent_label": "Батьківський регіон / місто",
+      "nothing_found": "Нічого не знайдено",
+      "save": "Зберегти",
+      "cancel": "Скасувати",
+      "actions_col": "Дії"
+    }
   }
 }

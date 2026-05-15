@@ -417,5 +417,29 @@
     "filter_label": "Filtra per tipo di proprietà",
     "empty_filtered_title": "Nessun risultato per questo filtro",
     "empty_filtered_desc": "Prova a selezionare un tipo di proprietà diverso o visualizza tutti i preferiti"
+  },
+  "admin": {
+    "locations": {
+      "type_region": "Regione",
+      "type_city": "Città",
+      "type_village": "Villaggio",
+      "type_district": "Distretto",
+      "no_parent": "Nessun genitore",
+      "select_type": "Seleziona tipo...",
+      "filter_all": "Tutti",
+      "add_btn": "Aggiungi",
+      "edit_title": "Modifica località",
+      "add_title": "Aggiungi località",
+      "delete_confirm": "Eliminare questa località?",
+      "name_al_label": "Nome (AL)",
+      "name_en_label": "Nome (EN)",
+      "type_label": "Tipo",
+      "slug_label": "Slug",
+      "parent_label": "Regione / città genitore",
+      "nothing_found": "Nessun risultato",
+      "save": "Salva",
+      "cancel": "Annulla",
+      "actions_col": "Azioni"
+    }
   }
 }

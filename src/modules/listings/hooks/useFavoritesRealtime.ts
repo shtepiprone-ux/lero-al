@@ -36,11 +36,20 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
   onEventRef.current = onEvent
 
   useEffect(() => {
-    // Cancellation flag prevents dispatching into an unmounted component tree.
-    // Set to true in cleanup before removeChannel so in-flight async fetches
-    // that complete after unmount are silently dropped rather than triggering
-    // setState on a dead component.
+    // Cancellation flag: set true in cleanup so in-flight INSERT fetches that
+    // complete after unmount are silently dropped.
     let cancelled = false
+
+    // Race guard: tracks listing IDs that received a DELETE event while their
+    // INSERT fetch was still in flight. Without this, a fast DELETE→INSERT→fetch
+    // sequence could resurrect a listing the user just unfavorited.
+    //
+    // Timeline this guards against:
+    //   T0: INSERT event fires for listing X → fetch starts
+    //   T1: DELETE event fires for listing X → removed from UI
+    //   T2: INSERT fetch completes → would add X back (wrong!)
+    // With this guard: T2 sees X in deletedDuringFetch → suppresses the add.
+    const deletedDuringFetch = new Set<string>()
 
     const supabase = createClient()
 
@@ -74,6 +83,13 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
             // Bail out if the component unmounted while the fetch was in flight.
             if (cancelled) return
 
+            // Bail out if a DELETE for this listing arrived while the fetch was running.
+            if (deletedDuringFetch.has(listingId)) {
+              deletedDuringFetch.delete(listingId)
+              console.info('[FavoritesRealtime] INSERT superseded by concurrent DELETE — suppressed', { listingId, userId })
+              return
+            }
+
             if (listing) {
               onEventRef.current({ type: 'INSERT', listing: listing as CardListingData })
             } else if (error) {
@@ -92,7 +108,12 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
             // listing_id is available because REPLICA IDENTITY FULL is set on the table.
             // Graceful fallback: if listing_id is absent (migration not applied), skip silently.
             const listingId = payload.old.listing_id
-            if (listingId && !cancelled) {
+            if (!listingId) return
+
+            // Register the DELETE so any concurrent INSERT fetch for this ID is suppressed.
+            deletedDuringFetch.add(listingId)
+
+            if (!cancelled) {
               onEventRef.current({ type: 'DELETE', listingId })
             }
           }
@@ -106,6 +127,7 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
 
     return () => {
       cancelled = true
+      deletedDuringFetch.clear()
       supabase.removeChannel(channel)
     }
   }, [userId]) // re-subscribe only if userId changes

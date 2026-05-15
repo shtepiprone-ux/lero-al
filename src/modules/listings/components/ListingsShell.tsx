@@ -81,11 +81,16 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [scrollTargetSlug, setScrollTargetSlug] = useState<string | null>(null)
 
-  // Reset appended listings when the server page changes (filter/pagination nav)
+  // Reset appended listings when the filter or pagination URL changes.
+  // Keying on the serialized search params (not the listings prop) means
+  // router.refresh() calls that arrive with the same URL (e.g. ViewTracker updating
+  // views_count) do NOT discard the user's loaded-more state. Only genuine filter or
+  // page navigation — which always changes the URL — triggers the reset.
+  const searchParamsStr = searchParams.toString()
   useEffect(() => {
     setExtraListings([])
     setLoadedExtraPage(0)
-  }, [listings])
+  }, [searchParamsStr])
 
   // On mount: restore position from sessionStorage if returning from a listing
   useEffect(() => {

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition, useEffect } from 'react'
+import { useState, useTransition, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -18,12 +18,26 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled }:
   const [favorited, setFavorited] = useState(isFavorited)
   const [isPending, startTransition] = useTransition()
 
-  // Re-sync when external authority (router.refresh, cross-surface navigation, or
-  // parent state update) changes the prop. The parent's onToggled callback keeps
-  // isFavorited in sync after each transition, so this effect reconciles cross-tab
-  // and cross-surface changes without fighting in-flight optimistic updates.
+  // Tracks isPending without adding it to the isFavorited effect's dependency array.
+  // Declared as a ref so reads inside effects always see the committed value.
+  const isPendingRef = useRef(false)
+
+  // Authority rules:
+  //   pending  → internal optimistic state wins; external prop updates are ignored
+  //   settled  → external prop (router.refresh, cross-tab, parent re-render) becomes authority
+  //
+  // Two-effect pattern — DECLARATION ORDER IS REQUIRED:
+  //   [isPending] must be declared first so it fires before [isFavorited] in renders
+  //   where both change simultaneously (transition settling + parent prop update).
+
+  // Effect 1: keep ref in sync with committed isPending value.
   useEffect(() => {
-    setFavorited(isFavorited)
+    isPendingRef.current = isPending
+  }, [isPending])
+
+  // Effect 2: re-sync from external authority only when no transition is in flight.
+  useEffect(() => {
+    if (!isPendingRef.current) setFavorited(isFavorited)
   }, [isFavorited])
 
   function handleClick(e: React.MouseEvent) {

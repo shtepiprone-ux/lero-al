@@ -96,24 +96,43 @@ describe('FavoriteButton', () => {
     expect(onToggled).toHaveBeenCalledWith(true)
   })
 
-  it('converges to server truth after external prop update during optimistic window', async () => {
-    // Sequence: click (optimistic=true) → external prop update (false) → transition settles (true)
-    // After settle, the parent's onToggled wires back the correct prop, so the final state is true.
+  it('external prop update during pending transition does NOT override optimistic state (isPendingRef guard)', async () => {
+    // Sequence: click (optimistic=true) → external prop update (false) while pending
+    // Expected: button stays optimistically true until server settles
+    let resolveToggle!: (val: { isFavorited: boolean }) => void
+    mockToggleFavorite.mockReturnValue(new Promise(r => { resolveToggle = r }))
+
+    const { rerender } = renderButton({ isFavorited: false })
+
+    // Start transition (optimistic: true, isPending: true)
+    fireEvent.click(getButton())
+    expect(getButton()).toHaveAttribute('aria-pressed', 'true')
+
+    // External prop update arrives while pending — isPendingRef guard should block sync
+    await act(async () => {
+      rerender(<FavoriteButton listingId="test-id" isFavorited={false} />)
+    })
+
+    // Optimistic state must survive: button still shows true
+    expect(getButton()).toHaveAttribute('aria-pressed', 'true')
+
+    // Settle transition
+    await act(async () => { resolveToggle({ isFavorited: true }) })
+    expect(getButton()).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('converges to server truth after transition settles', async () => {
     let resolveToggle!: (val: { isFavorited: boolean }) => void
     mockToggleFavorite.mockReturnValue(new Promise(r => { resolveToggle = r }))
 
     const onToggled = vi.fn()
     const { rerender } = renderButton({ isFavorited: false, onToggled })
 
-    // Start transition (optimistic: true)
     fireEvent.click(getButton())
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
 
-    // Settle: server confirms true → onToggled fires → parent re-renders with true
-    await act(async () => {
-      resolveToggle({ isFavorited: true })
-    })
-    // Simulate parent acknowledging onToggled result (sets isFavorited=true)
+    await act(async () => { resolveToggle({ isFavorited: true }) })
+    // Simulate parent acknowledging onToggled → prop updates to true
     await act(async () => {
       rerender(<FavoriteButton listingId="test-id" isFavorited={true} onToggled={onToggled} />)
     })

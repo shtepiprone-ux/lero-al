@@ -17,19 +17,20 @@ import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 
-interface CardListingData extends ListingSnapshot {
-  id:            string
-  slug:          string
-  title:         string
-  price:         number
-  price_old:     number | null
-  currency:      string
-  listing_type:  string
-  is_premium:    boolean
-  status:        string
-  created_at:    string
-  images?:       { url: string; is_cover: boolean; order: number }[] | null
-  location?:     { id: number; name_al: string; slug: string; type: string } | null
+export interface CardListingData extends ListingSnapshot {
+  id:           string
+  slug:         string
+  title:        string
+  price:        number
+  price_old?:   number | null
+  currency:     string
+  listing_type: string
+  is_premium:   boolean
+  status:       ListingStatus
+  created_at:   string
+  images?:      { url: string; is_cover: boolean; order: number }[] | null
+  location?:    { id: number; name_al: string; slug: string; type: string } | null
+  views_count?: number
 }
 
 interface ListingCardProps {
@@ -44,6 +45,12 @@ interface ListingCardProps {
   priority?: boolean
   /** Grid layout context for the listing image sizes hint. See ListingLayoutContext in imageDelivery.ts. */
   layoutContext?: ListingLayoutContext
+}
+
+// Display map — allowed by domain policy (badge colors are presentation-layer constants).
+const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
+  sold:   'bg-status-info/80 border-status-info',
+  rented: 'bg-status-rented/80 border-status-rented',
 }
 
 function getBadges(listing: CardListingData) {
@@ -98,7 +105,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     setTimeout(() => setIdCopied(false), 1500)
   }
 
-  const coverImage = listing.images?.find((img: any) => img.is_cover) || listing.images?.[0]
+  const coverImage = listing.images?.find(img => img.is_cover) || listing.images?.[0]
   const imageCount = listing.images?.length ?? 0
   const locationName = listing.location?.name_al ?? ''
 
@@ -142,7 +149,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {badges.map(b => (
               <Badge key={b.label} variant={b.variant} className={cn('text-[10px] px-1.5 py-0', b.className)}>
-                {t(b.label as any)}
+                {t(b.label)}
               </Badge>
             ))}
           </div>
@@ -153,7 +160,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           <div>
             <div className="flex items-start justify-between gap-1 mb-1">
               <p className="text-xs text-muted-foreground">
-                {t(listing.listing_type as any)} · {t((`property_type_${listing.property_type}`) as any)}
+                {t(listing.listing_type)} · {t(`property_type_${listing.property_type}`)}
               </p>
               <FavoriteButton
                 listingId={listing.id}
@@ -242,12 +249,11 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         {/* Sold/Rented overlay */}
         {isListingClosed(listing.status as ListingStatus) && (
           <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
-            {/* eslint-disable-next-line no-restricted-syntax -- sold/rented badge color differs; no single-status domain helper */}
             <span className={cn(
               'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
-              listing.status === 'sold' ? 'bg-status-info/80 border-status-info' : 'bg-status-rented/80 border-status-rented',
+              CLOSED_OVERLAY_STYLE[listing.status],
             )}>
-              {t(`status_${listing.status}` as any).toUpperCase()}
+              {t(`status_${listing.status}`).toUpperCase()}
             </span>
           </div>
         )}
@@ -256,7 +262,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         <div className="absolute top-2 left-2 flex flex-wrap gap-1">
           {badges.map(b => (
             <Badge key={b.label} variant={b.variant} className={cn('text-[10px] px-1.5 py-0', b.className)}>
-              {t(b.label as any)}
+              {t(b.label)}
             </Badge>
           ))}
         </div>
@@ -282,7 +288,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
       <div className="flex flex-col gap-2 p-3">
         {/* Type label */}
         <p className="text-xs text-muted-foreground">
-          {t(listing.listing_type as any)} · {t((`property_type_${listing.property_type}`) as any)}
+          {t(listing.listing_type)} · {t(`property_type_${listing.property_type}`)}
         </p>
 
         {/* Title */}

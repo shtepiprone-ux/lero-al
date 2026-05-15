@@ -453,12 +453,16 @@ export async function softDeleteUser(userId: string): Promise<{ error?: string }
     return { error: 'Не вдалось видалити профіль' }
   }
 
-  // Archive all active listings so they no longer appear as contactable.
-  // eslint-disable-next-line no-restricted-syntax -- bulk cascade on user deletion; applyListingTransition is for single listings
-  await db.from('listings')
-    .update({ status: 'archived' })
+  // Archive all non-terminal listings through the mutation gateway so they no longer appear as contactable.
+  const { data: listingsToArchive } = await db
+    .from('listings')
+    .select('id')
     .eq('user_id', userId)
     .not('status', 'in', '("sold","rented","archived")')
+  const actor = { userId: me.id, role: 'admin', source: 'admin_panel' as const }
+  await Promise.all(
+    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
+  )
 
   revalidatePath('/admin/users')
   revalidatePath('/admin/listings')
@@ -474,13 +478,17 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
 
   const db = createAdminClient()
 
-  // 1. Archive all listings before removing the user so they remain in the
-  //    system with a "deleted owner" notice rather than disappearing.
-  // eslint-disable-next-line no-restricted-syntax -- bulk cascade on user deletion
-  await db.from('listings')
-    .update({ status: 'archived' })
+  // 1. Archive all non-terminal listings through the mutation gateway before removing the user
+  //    so they remain in the system with a "deleted owner" notice rather than disappearing.
+  const { data: listingsToArchive } = await db
+    .from('listings')
+    .select('id')
     .eq('user_id', userId)
     .not('status', 'in', '("sold","rented","archived")')
+  const actor = { userId: me.id, role: 'admin', source: 'admin_panel' as const }
+  await Promise.all(
+    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
+  )
 
   // 2. Remove the user profile row (cascades to related records via FK).
   const { error: profileError } = await db.from('users').delete().eq('id', userId)

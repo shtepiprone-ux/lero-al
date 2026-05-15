@@ -10,7 +10,8 @@ import { ProfileTab } from '@/modules/cabinet/components/ProfileTab'
 import { ListingsTab } from '@/modules/cabinet/components/ListingsTab'
 import { SavedSearchesTab } from '@/modules/cabinet/components/SavedSearchesTab'
 import { RelativeTime } from '@/components/shared/RelativeTime'
-import type { User as UserType } from '@/types/database'
+import type { User as UserType, SavedSearch } from '@/types/database'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 
 type Tab = 'profile' | 'listings' | 'searches'
 
@@ -21,8 +22,8 @@ interface RegionOption { id: number; name_al: string }
 
 interface Props {
   profile: UserType | null
-  listings: any[]
-  savedSearches: any[]
+  listings: CardListingData[]
+  savedSearches: SavedSearch[]
   initialTab: string
   initialFilter: ListingVisibilityGroup
   initialPremium: boolean

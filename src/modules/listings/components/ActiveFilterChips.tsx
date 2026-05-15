@@ -47,18 +47,18 @@ export function ActiveFilterChips({ locations }: Props) {
   const chips: Chip[] = []
 
   const type = searchParams.get('type')
-  if (type) chips.push({ key: 'type', label: tl(type as any), paramKey: 'type' })
+  if (type) chips.push({ key: 'type', label: tl(type), paramKey: 'type' })
 
   const propType = searchParams.get('property_type')
   if (propType) {
     const pt = PROPERTY_TYPES.find(p => p.value === propType)
-    if (pt) chips.push({ key: 'property_type', label: tl(pt.labelKey as any), paramKey: 'property_type' })
+    if (pt) chips.push({ key: 'property_type', label: tl(pt.labelKey), paramKey: 'property_type' })
   }
 
   const marketType = searchParams.get('market_type')
   if (marketType) {
     const mt = MARKET_TYPES.find(m => m.value === marketType)
-    if (mt) chips.push({ key: 'market_type', label: tl(mt.labelKey as any), paramKey: 'market_type' })
+    if (mt) chips.push({ key: 'market_type', label: tl(mt.labelKey), paramKey: 'market_type' })
   }
 
   const locationId = searchParams.get('location_id')
@@ -107,7 +107,7 @@ export function ActiveFilterChips({ locations }: Props) {
   const condition = searchParams.get('condition')
   if (condition) {
     const c = CONDITIONS.find(c => c.value === condition)
-    if (c) chips.push({ key: 'condition', label: tl(c.labelKey as any), paramKey: 'condition' })
+    if (c) chips.push({ key: 'condition', label: tl(c.labelKey), paramKey: 'condition' })
   }
 
   // Layout features — individual chip per feature
@@ -115,20 +115,20 @@ export function ActiveFilterChips({ locations }: Props) {
   if (layoutParam) {
     layoutParam.split(',').filter(Boolean).forEach(f => {
       const feat = LAYOUT_FEATURES.find(lf => lf.value === f)
-      if (feat) chips.push({ key: `layout_${f}`, label: tl(feat.labelKey as any), paramKey: 'layout_features', multiValue: f })
+      if (feat) chips.push({ key: `layout_${f}`, label: tl(feat.labelKey), paramKey: 'layout_features', multiValue: f })
     })
   }
 
   const heating = searchParams.get('heating')
   if (heating) {
     const h = HEATING_TYPES.find(h => h.value === heating)
-    if (h) chips.push({ key: 'heating', label: tl(h.labelKey as any), paramKey: 'heating' })
+    if (h) chips.push({ key: 'heating', label: tl(h.labelKey), paramKey: 'heating' })
   }
 
   const wallType = searchParams.get('wall_type')
   if (wallType) {
     const w = WALL_TYPES.find(w => w.value === wallType)
-    if (w) chips.push({ key: 'wall_type', label: tl(w.labelKey as any), paramKey: 'wall_type' })
+    if (w) chips.push({ key: 'wall_type', label: tl(w.labelKey), paramKey: 'wall_type' })
   }
 
   const yearBuiltMin = searchParams.get('year_built_min')
@@ -140,7 +140,7 @@ export function ActiveFilterChips({ locations }: Props) {
   const offerType = searchParams.get('offer_type')
   if (offerType) {
     const ot = OFFER_TYPES.find(o => o.value === offerType)
-    if (ot) chips.push({ key: 'offer_type', label: tl(ot.labelKey as any), paramKey: 'offer_type' })
+    if (ot) chips.push({ key: 'offer_type', label: tl(ot.labelKey), paramKey: 'offer_type' })
   }
 
   // Purchase conditions — individual chip per condition
@@ -148,7 +148,7 @@ export function ActiveFilterChips({ locations }: Props) {
   if (purchaseParam) {
     purchaseParam.split(',').filter(Boolean).forEach(pc => {
       const cond = PURCHASE_CONDITIONS.find(c => c.value === pc)
-      if (cond) chips.push({ key: `purchase_${pc}`, label: tl(cond.labelKey as any), paramKey: 'purchase_conditions', multiValue: pc })
+      if (cond) chips.push({ key: `purchase_${pc}`, label: tl(cond.labelKey), paramKey: 'purchase_conditions', multiValue: pc })
     })
   }
 

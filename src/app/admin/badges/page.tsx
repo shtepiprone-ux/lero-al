@@ -1,6 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
-import { AdminBadgesTable } from '@/components/admin/AdminBadgesTable'
+import { AdminBadgesTable, type PremiumListing, type VerifiedUser } from '@/components/admin/AdminBadgesTable'
 
 export const metadata = { title: 'Бейджі — Admin' }
 
@@ -41,8 +41,8 @@ export default async function AdminBadgesPage() {
       </div>
 
       <AdminBadgesTable
-        premiumListings={premiumListings ?? []}
-        verifiedUsers={verifiedUsers ?? []}
+        premiumListings={(premiumListings ?? []) as unknown as PremiumListing[]}
+        verifiedUsers={(verifiedUsers ?? []) as unknown as VerifiedUser[]}
       />
     </div>
   )

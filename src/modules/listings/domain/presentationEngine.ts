@@ -21,19 +21,19 @@ import type { FieldDefinition, PresentationIcon } from './listingFields'
  * Both ListingCard and the detail page supply objects that satisfy this shape.
  */
 export interface ListingSnapshot {
-  property_type: string
-  rooms:         number | null
-  bedrooms:      number | null
-  bathrooms:     number | null
-  toilets:       number | null
-  area_gross:    number | null
-  area_net:      number | null
-  floor:         number | null
-  total_floors:  number | null
-  year_built:    number | null
-  condition:     string | null
-  heating:       string | null
-  wall_type:     string | null
+  property_type:  string
+  rooms?:         number | null
+  bedrooms?:      number | null
+  bathrooms?:     number | null
+  toilets?:       number | null
+  area_gross?:    number | null
+  area_net?:      number | null
+  floor?:         number | null
+  total_floors?:  number | null
+  year_built?:    number | null
+  condition?:     string | null
+  heating?:       string | null
+  wall_type?:     string | null
 }
 
 // ── Output types ──────────────────────────────────────────────────────────────

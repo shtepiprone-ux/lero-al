@@ -23,9 +23,9 @@ export async function GET(req: NextRequest) {
     .select(LISTING_SELECT, { count: 'exact' })
 
   if (tab === 'closed') {
-    query = query.in('status', ['sold', 'rented'] as any)
+    query = query.in('status', ['sold', 'rented'])
   } else {
-    query = query.eq('status', 'active' as any).gte('expires_at', now)
+    query = query.eq('status', 'active').gte('expires_at', now)
   }
 
   query = applyListingFilters(query, filters)

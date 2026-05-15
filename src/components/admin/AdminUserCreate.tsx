@@ -284,7 +284,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
               <LocationCombobox
                 locations={cities}
                 value={locationIdValue ? String(locationIdValue) : ''}
-                onChange={id => setValue('locationId', id ? Number(id) : (undefined as any), { shouldValidate: true })}
+                onChange={id => setValue('locationId', id ? Number(id) : (undefined as unknown as number), { shouldValidate: true })}
                 error={errors.locationId?.message}
                 placeholder="Введіть назву міста..."
                 regions={regions}

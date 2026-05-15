@@ -43,11 +43,11 @@ export function StepPreview({ data, error }: Props) {
         <div className="p-5 flex flex-col gap-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="text-xs">
-              {t(data.listing_type as any)}
+              {t(data.listing_type)}
             </Badge>
             {data.property_type && (
               <Badge variant="outline" className="text-xs">
-                {t(`property_type_${data.property_type}` as any)}
+                {t(`property_type_${data.property_type}`)}
               </Badge>
             )}
           </div>

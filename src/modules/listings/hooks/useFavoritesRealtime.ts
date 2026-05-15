@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 
 const LISTING_SELECT =
   'id, slug, title, price, price_old, currency, listing_type, property_type, ' +
@@ -11,7 +12,7 @@ const LISTING_SELECT =
   'images:listing_images(url, is_cover, order)'
 
 export type FavoritesRealtimeEvent =
-  | { type: 'INSERT'; listing: any }
+  | { type: 'INSERT'; listing: CardListingData }
   | { type: 'DELETE'; listingId: string }
 
 interface FavoriteRow {
@@ -53,9 +54,10 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
           table: 'favorites',
           filter: `user_id=eq.${userId}`,
         },
-        async (payload: any) => {
+        async (payload: { eventType: string; new: Partial<FavoriteRow>; old: Partial<FavoriteRow> }) => {
           if (payload.eventType === 'INSERT') {
-            const listingId = (payload.new as FavoriteRow).listing_id
+            const listingId = payload.new.listing_id
+            if (!listingId) return
 
             // Skip the fetch if the listing is already in the displayed set.
             // This covers the case where the same tab's optimistic update already
@@ -70,12 +72,12 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
               .maybeSingle()
 
             if (listing) {
-              onEventRef.current({ type: 'INSERT', listing })
+              onEventRef.current({ type: 'INSERT', listing: listing as CardListingData })
             }
           } else if (payload.eventType === 'DELETE') {
             // listing_id is available because REPLICA IDENTITY FULL is set on the table.
             // Graceful fallback: if listing_id is absent (migration not applied), skip silently.
-            const listingId = (payload.old as Partial<FavoriteRow>).listing_id
+            const listingId = payload.old.listing_id
             if (listingId) {
               onEventRef.current({ type: 'DELETE', listingId })
             }

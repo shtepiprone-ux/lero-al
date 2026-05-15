@@ -139,7 +139,7 @@ export function StepDetails({ data, onChange }: Props) {
               <button
                 key={c.value}
                 type="button"
-                onClick={() => onChange({ condition: data.condition === c.value ? undefined : c.value as any })}
+                onClick={() => onChange({ condition: data.condition === c.value ? undefined : c.value })}
                 className={cn(
                   'h-10 px-3 rounded-xl border text-sm text-left transition-colors',
                   data.condition === c.value
@@ -147,7 +147,7 @@ export function StepDetails({ data, onChange }: Props) {
                     : 'border-border hover:border-primary/40'
                 )}
               >
-                {t(c.labelKey as any)}
+                {t(c.labelKey)}
               </button>
             ))}
           </div>
@@ -166,9 +166,9 @@ export function StepDetails({ data, onChange }: Props) {
                 variant={data.heating === h.value ? 'default' : 'outline'}
                 size="sm"
                 className="h-9 rounded-xl"
-                onClick={() => onChange({ heating: data.heating === h.value ? undefined : h.value as any })}
+                onClick={() => onChange({ heating: data.heating === h.value ? undefined : h.value })}
               >
-                {t(h.labelKey as any)}
+                {t(h.labelKey)}
               </Button>
             ))}
           </div>
@@ -187,9 +187,9 @@ export function StepDetails({ data, onChange }: Props) {
                 variant={data.wall_type === w.value ? 'default' : 'outline'}
                 size="sm"
                 className="h-9 rounded-xl"
-                onClick={() => onChange({ wall_type: data.wall_type === w.value ? undefined : w.value as any })}
+                onClick={() => onChange({ wall_type: data.wall_type === w.value ? undefined : w.value })}
               >
-                {t(w.labelKey as any)}
+                {t(w.labelKey)}
               </Button>
             ))}
           </div>

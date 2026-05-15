@@ -24,8 +24,8 @@ export default async function proxy(request: NextRequest) {
   const i18nResponse = handleI18n(request)
 
   // Carry any Supabase-refreshed cookies into the final response.
-  supabaseResponse.cookies.getAll().forEach(({ name, value, ...rest }) => {
-    i18nResponse.cookies.set(name, value, rest as any)
+  supabaseResponse.cookies.getAll().forEach(({ name, value }) => {
+    i18nResponse.cookies.set(name, value)
   })
 
   return i18nResponse

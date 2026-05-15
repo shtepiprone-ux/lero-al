@@ -5,11 +5,12 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Search, Trash2, ArrowRight, Mail } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
+import type { SavedSearch } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 
 interface Props {
-  savedSearches: any[]
+  savedSearches: SavedSearch[]
   locale: string
 }
 
@@ -31,8 +32,8 @@ function FilterSummary({ filters }: { filters: Record<string, unknown> }) {
   const tc = useTranslations('common')
 
   const parts: string[] = []
-  if (filters.type) parts.push(tl(filters.type as any))
-  if (filters.property_type) parts.push(tl(`property_type_${filters.property_type}` as any))
+  if (filters.type) parts.push(tl(String(filters.type)))
+  if (filters.property_type) parts.push(tl(`property_type_${filters.property_type}`))
   if (filters.price_min || filters.price_max) {
     const from = filters.price_min ? String(filters.price_min) : ''
     const to = filters.price_max ? String(filters.price_max) : ''

@@ -23,7 +23,7 @@ export function NumInputField({ fieldDef, formValues, errors, onChange }: FieldR
   const t = useTranslations('listing')
 
   const meta  = LABEL_KEYS[fieldDef.key]
-  const label = meta ? t(meta.key as any) : fieldDef.key
+  const label = meta ? t(meta.key) : fieldDef.key
   const bounds = FIELD_BOUNDS[fieldDef.key]
   const formKey = fieldDef.key as keyof FormValues
   const value = formValues[formKey] as number | undefined

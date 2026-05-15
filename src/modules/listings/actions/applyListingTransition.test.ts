@@ -20,7 +20,7 @@ function makeMockDb(selectResult: MockSelectResult, updateResult: MockUpdateResu
   const eqUpdateFn = () => Promise.resolve(updateResult)
   const updateFn = () => ({ eq: eqUpdateFn })
   const fromFn = () => ({ select: selectFn, update: updateFn })
-  return { from: fromFn } as any
+  return { from: fromFn } as unknown as NonNullable<Parameters<typeof applyListingTransition>[3]>
 }
 
 // ── Actor fixtures ────────────────────────────────────────────────────────────

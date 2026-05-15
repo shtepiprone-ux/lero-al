@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import type { PropertyType } from '@/types/database'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 
 const FAVORITE_LISTING_SELECT =
   'id, slug, title, price, price_old, currency, listing_type, property_type, ' +
@@ -49,10 +50,11 @@ export async function getFavoriteListings(userId: string, propertyType?: Propert
   }
 
   // Preserve favorites order (most recently added first)
-  const listingMap = new Map((listings ?? []).map((l: any) => [l.id, l]))
+  const rows = (listings ?? []) as unknown as CardListingData[]
+  const listingMap = new Map(rows.map(l => [l.id, l]))
   return listingIds
-    .map((id: string) => listingMap.get(id))
-    .filter(Boolean) as any[]
+    .map(id => listingMap.get(id))
+    .filter((l): l is CardListingData => l != null)
 }
 
 export async function getFavoriteTypeCounts(userId: string): Promise<Record<string, number>> {

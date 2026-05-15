@@ -22,7 +22,7 @@ const ListingsFilters = dynamic(
 )
 import { ListingsSortBar } from '@/modules/listings/components/ListingsSortBar'
 import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
-import { ListingCard } from '@/modules/listings/components/ListingCard'
+import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { ActiveFilterChips } from '@/modules/listings/components/ActiveFilterChips'
 import { ListingsStatusTabs } from '@/modules/listings/components/ListingsStatusTabs'
 import { Button } from '@/components/ui/button'
@@ -39,7 +39,7 @@ interface Location {
 }
 
 interface Props {
-  listings: any[]
+  listings: CardListingData[]
   total: number
   page: number
   locations: Location[]
@@ -58,7 +58,7 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   const favoriteSet = useMemo(() => new Set(favoriteIds ?? []), [favoriteIds])
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const [extraListings, setExtraListings] = useState<any[]>([])
+  const [extraListings, setExtraListings] = useState<CardListingData[]>([])
   const [loadedExtraPage, setLoadedExtraPage] = useState(0)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const [scrollTargetSlug, setScrollTargetSlug] = useState<string | null>(null)
@@ -80,13 +80,13 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
 
       if (restore.extraPage > 0) {
         ;(async () => {
-          const accumulated: any[] = []
+          const accumulated: CardListingData[] = []
           for (let i = 1; i <= restore.extraPage; i++) {
             const params = new URLSearchParams(searchParams.toString())
             params.set('page', String(page + i))
             const res = await fetch(`/api/listings?${params.toString()}`)
             if (res.ok) {
-              const { listings: batch } = await res.json()
+              const { listings: batch } = await res.json() as { listings: CardListingData[] }
               accumulated.push(...batch)
             }
           }
@@ -126,7 +126,7 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
       params.set('page', String(nextPage))
       const res = await fetch(`/api/listings?${params.toString()}`)
       if (res.ok) {
-        const { listings: batch } = await res.json()
+        const { listings: batch } = await res.json() as { listings: CardListingData[] }
         setExtraListings(prev => [...prev, ...batch])
         setLoadedExtraPage(prev => prev + 1)
       }

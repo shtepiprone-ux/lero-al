@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { MapPin } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { getPopularLocations } from '@/modules/locations/lib/queries'
+import type { Location } from '@/types/database'
 import { Skeleton } from '@/components/ui/skeleton'
 
 const CITY_GRADIENTS = [
@@ -21,7 +22,7 @@ const CITY_GRADIENTS = [
 export function PopularLocations() {
   const locale = useLocale()
   const t = useTranslations('home')
-  const [locations, setLocations] = useState<any[]>([])
+  const [locations, setLocations] = useState<(Location & { listing_count: number })[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

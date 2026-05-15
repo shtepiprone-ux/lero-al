@@ -30,7 +30,7 @@ export function PropertyTypeCombobox({
   const filtered = useMemo(() => {
     if (!search) return PROPERTY_TYPES
     const q = search.toLowerCase()
-    return PROPERTY_TYPES.filter(pt => tl(pt.labelKey as any).toLowerCase().includes(q))
+    return PROPERTY_TYPES.filter(pt => tl(pt.labelKey).toLowerCase().includes(q))
   }, [search, tl])
 
   const resolvedPlaceholder = placeholder ?? t('all_types')
@@ -40,7 +40,7 @@ export function PropertyTypeCombobox({
       <Home className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
       <input
         type="text"
-        value={selected ? tl(selected.labelKey as any) : search}
+        value={selected ? tl(selected.labelKey) : search}
         onChange={e => {
           setSearch(e.target.value)
           onChange('')
@@ -82,7 +82,7 @@ export function PropertyTypeCombobox({
               role="option"
               aria-selected={value === pt.value}
             >
-              {tl(pt.labelKey as any)}
+              {tl(pt.labelKey)}
             </Button>
           ))}
         </div>

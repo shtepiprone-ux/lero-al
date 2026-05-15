@@ -55,7 +55,7 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
           )}
           aria-pressed={currentType === pt.value}
         >
-          {t(pt.labelKey as any)} <span className="opacity-70">{typeCounts[pt.value]}</span>
+          {t(pt.labelKey)} <span className="opacity-70">{typeCounts[pt.value]}</span>
         </button>
       ))}
     </div>

@@ -12,18 +12,35 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
 
+type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info' | 'neutral'
+
 const ROLES: UserRole[] = ['user', 'agent', 'moderator', 'admin']
 
-const ROLE_VARIANT: Record<UserRole, any> = {
+const ROLE_VARIANT: Record<UserRole, BadgeVariant> = {
   user: 'neutral', agent: 'info', moderator: 'warning', admin: 'success',
 }
 
-const STATUS_VARIANT: Record<string, any> = {
+const STATUS_VARIANT: Record<string, BadgeVariant> = {
   active: 'success', blocked: 'destructive', inactive: 'warning',
 }
 
+export interface AdminUser {
+  id: string
+  name: string | null
+  last_name: string | null
+  phone: string | null
+  role: UserRole
+  user_type: string
+  is_verified: boolean
+  company_name: string | null
+  status: string | null
+  location_request: { city: string; region?: string } | null
+  created_at: string
+  avatar_url?: string | null
+}
+
 interface Props {
-  users: any[]
+  users: AdminUser[]
   total: number
   page: number
   perPage: number

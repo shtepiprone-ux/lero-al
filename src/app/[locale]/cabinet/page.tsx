@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { CabinetShell } from '@/modules/cabinet/components/CabinetShell'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import {
   buildCabinetListingsQuery,
   CABINET_LISTING_SELECT,
@@ -61,7 +62,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
   return (
     <CabinetShell
       profile={profile}
-      listings={listings ?? []}
+      listings={(listings ?? []) as CardListingData[]}
       savedSearches={savedSearches ?? []}
       initialTab={tab}
       initialFilter={visibility}

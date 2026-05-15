@@ -14,7 +14,7 @@ function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
-interface Location { id: number; name_al: string; name_en?: string | null; type: string; slug: string; parent_id?: number | null }
+export interface Location { id: number; name_al: string; name_en?: string | null; type: string; slug?: string; parent_id?: number | null }
 
 function LocationModal({
   location, parents, onClose, onDone,
@@ -127,7 +127,7 @@ function LocationModal({
   )
 }
 
-interface Props { locations: any[]; parents: any[]; activeType: string }
+interface Props { locations: Location[]; parents: Location[]; activeType: string }
 
 export function AdminLocationsManager({ locations: init, parents, activeType }: Props) {
   const t = useTranslations('admin.locations')
@@ -153,7 +153,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
   ]
 
   function openCreate() { setModal('create') }
-  function openEdit(loc: any) { setModal(loc) }
+  function openEdit(loc: Location) { setModal(loc) }
 
   function handleDone() {
     setModal(null)
@@ -165,7 +165,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
     setDeletingId(id)
     startTransition(async () => {
       await deleteLocation(id)
-      setItems(prev => prev.filter((l: any) => l.id !== id))
+      setItems(prev => prev.filter(l => l.id !== id))
       setDeletingId(null)
     })
   }
@@ -218,7 +218,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
             <tbody className="divide-y">
               {items.length === 0 ? (
                 <tr><td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
-              ) : items.map((l: any) => (
+              ) : items.map((l) => (
                 <tr key={l.id} className={`hover:bg-muted/20 transition-colors ${deletingId === l.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3 text-muted-foreground text-xs">{l.id}</td>
                   <td className="px-5 py-3 font-medium">{l.name_al}</td>

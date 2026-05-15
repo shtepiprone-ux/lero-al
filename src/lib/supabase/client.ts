@@ -72,8 +72,8 @@ export function createClient() {
       {
         auth: {
           lock: authLock,
-        } as any,
-      }
+        },
+      } as Parameters<typeof createBrowserClient>[2]
     )
   }
   return _client

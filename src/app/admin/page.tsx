@@ -39,10 +39,29 @@ async function getStats() {
 
   return {
     totalListings, activeListings, premiumListings, totalUsers, newUsers, openTickets,
-    recentListings: recentListings ?? [],
-    locationRequestUsers: locationRequestUsers ?? [],
+    recentListings: (recentListings ?? []) as unknown as RecentListing[],
+    locationRequestUsers: (locationRequestUsers ?? []) as unknown as LocationRequestUser[],
     locationRequestCount: locationRequestCount ?? 0,
   }
+}
+
+interface RecentListing {
+  id: string
+  slug: string
+  title: string
+  status: string
+  is_premium: boolean
+  price: number
+  currency: string
+  created_at: string
+  owner: { name: string | null } | null
+}
+
+interface LocationRequestUser {
+  id: string
+  name: string | null
+  last_name: string | null
+  location_request: { city: string; region?: string } | null
 }
 
 interface StatCardProps {
@@ -123,7 +142,7 @@ export default async function AdminDashboard() {
               </Link>
             </div>
             <div className="divide-y">
-              {locationRequestUsers.map((u: any) => (
+              {locationRequestUsers.map((u) => (
                 <Link
                   key={u.id}
                   href={`/admin/users/${u.id}`}
@@ -157,12 +176,12 @@ export default async function AdminDashboard() {
             </Link>
           </div>
           <div className="divide-y">
-            {recentListings.map((l: any) => (
+            {recentListings.map((l) => (
               <div key={l.id} className="px-6 py-3.5 flex items-center gap-4 hover:bg-muted/30 transition-colors">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{l.title}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">
-                    {(l.owner as any)?.name ?? '—'}
+                    {l.owner?.name ?? '—'}
                   </p>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">

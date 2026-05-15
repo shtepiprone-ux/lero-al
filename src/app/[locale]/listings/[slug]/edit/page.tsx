@@ -64,8 +64,8 @@ export default async function EditListingPage({ params }: Props) {
 
   // Map DB images to component format; use DB row id as stable public_id key
   const images: ListingImage[] = (listing.images ?? [])
-    .sort((a: any, b: any) => a.order - b.order)
-    .map((img: any) => ({
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map((img) => ({
       url: img.url,
       public_id: img.id,
       is_cover: img.is_cover,

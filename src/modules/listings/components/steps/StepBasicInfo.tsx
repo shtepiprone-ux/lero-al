@@ -37,7 +37,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
                   : 'bg-background border-border hover:border-primary/40'
               )}
             >
-              {t(type as any)}
+              {t(type)}
             </button>
           ))}
         </div>
@@ -51,7 +51,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
             <button
               key={pt.value}
               type="button"
-              onClick={() => onChange({ property_type: pt.value as any })}
+              onClick={() => onChange({ property_type: pt.value })}
               className={cn(
                 'h-10 px-3 rounded-xl border text-sm transition-all text-left',
                 data.property_type === pt.value
@@ -59,7 +59,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
                   : 'bg-background border-border hover:border-primary/40'
               )}
             >
-              {t(pt.labelKey as any)}
+              {t(pt.labelKey)}
             </button>
           ))}
         </div>
@@ -132,7 +132,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
           <Input
             type="number"
             value={data.price ?? ''}
-            onChange={e => onChange({ price: e.target.value ? Number(e.target.value) : undefined as any })}
+            onChange={e => onChange({ price: e.target.value ? Number(e.target.value) : undefined })}
             placeholder="0"
             min={0}
             className={cn('h-11 rounded-xl flex-1', errors.price && 'border-destructive')}

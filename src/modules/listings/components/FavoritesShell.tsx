@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
-import { ListingCard } from '@/modules/listings/components/ListingCard'
+import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { FavoritesTypeFilter } from '@/modules/listings/components/FavoritesTypeFilter'
 import { useFavoritesRealtime } from '@/modules/listings/hooks/useFavoritesRealtime'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
@@ -13,7 +13,7 @@ import { useAuth } from '@/modules/auth/context/AuthContext'
 import { cn } from '@/lib/utils'
 
 interface Props {
-  listings: any[]
+  listings: CardListingData[]
   userId: string
   typeFilter?: string
   typeCounts: Record<string, number>
@@ -26,7 +26,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
   const { user } = useAuth()
   const displayCurrency = user?.preferred_currency ?? 'ALL'
 
-  const [displayedListings, setDisplayedListings] = useState<any[]>(initialListings)
+  const [displayedListings, setDisplayedListings] = useState<CardListingData[]>(initialListings)
 
   // Sync with server-provided listings whenever the filter changes (URL navigation
   // causes a server re-render which passes fresh initialListings).
@@ -37,7 +37,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
   // Ref updated synchronously on every render so the async realtime handler
   // always sees the current displayed IDs. Same pattern as onEventRef in the hook.
   const displayedIdsRef = useRef(new Set<string>())
-  displayedIdsRef.current = new Set(displayedListings.map((l: any) => l.id as string))
+  displayedIdsRef.current = new Set(displayedListings.map(l => l.id))
 
   // Realtime cross-tab sync — subscribes to the favorites table for this user.
   // The onEvent callback is kept stable via the ref inside the hook, so changing
@@ -47,15 +47,15 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
     displayedIdsRef,
     onEvent: (event) => {
       if (event.type === 'DELETE') {
-        setDisplayedListings(prev => prev.filter((l: any) => l.id !== event.listingId))
+        setDisplayedListings(prev => prev.filter(l => l.id !== event.listingId))
       } else if (event.type === 'INSERT') {
         const listing = event.listing
         // Respect the current type filter: skip if listing doesn't match.
         if (typeFilter && listing.property_type !== typeFilter) return
         // Avoid duplicates (same tab may already have it via optimistic update).
         setDisplayedListings(prev => {
-          if (prev.some((l: any) => l.id === listing.id)) return prev
-          return [listing, ...prev]
+          if (prev.some(l => l.id === listing.id)) return prev
+          return [listing as CardListingData, ...prev]
         })
       }
     },
@@ -63,7 +63,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
 
   function handleFavoriteToggled(listingId: string, newState: boolean) {
     if (!newState) {
-      setDisplayedListings(prev => prev.filter((l: any) => l.id !== listingId))
+      setDisplayedListings(prev => prev.filter(l => l.id !== listingId))
     }
   }
 
@@ -113,7 +113,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-          {displayedListings.map((listing: any) => (
+          {displayedListings.map((listing) => (
             <ListingCard
               key={listing.id}
               listing={listing}

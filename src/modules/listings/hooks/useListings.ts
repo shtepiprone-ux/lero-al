@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react'
 import { getFeaturedListings, getLatestListings } from '@/modules/listings/lib/queries'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 
 export function useFeaturedListings() {
-  const [listings, setListings] = useState<any[]>([])
+  const [listings, setListings] = useState<CardListingData[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export function useFeaturedListings() {
 }
 
 export function useLatestListings() {
-  const [listings, setListings] = useState<any[]>([])
+  const [listings, setListings] = useState<CardListingData[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

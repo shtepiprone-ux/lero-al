@@ -378,8 +378,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const form = useForm<FormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: isCreate
-      // eslint-disable-next-line no-restricted-syntax -- UserStatus default value in user form, not ListingStatus
-      ? { firstName: '', lastName: '', profileType: 'private', phone: '', useMainPhone: false, whatsapp: '', locationId: undefined as any, companyName: '', website: '', position: '', yearStarted: undefined, status: 'active', blockReason: '' }
+      ? { firstName: '', lastName: '', profileType: 'private', phone: '', useMainPhone: false, whatsapp: '', locationId: undefined as unknown as number, companyName: '', website: '', position: '', yearStarted: undefined, status: 'active' as const, blockReason: '' }
       : {
           firstName: user.name ?? '',
           lastName: user.last_name ?? '',
@@ -387,13 +386,13 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           phone: user.phone ?? '',
           useMainPhone: !!(user.phone && user.phone === user.whatsapp),
           whatsapp: user.whatsapp ?? '',
-          locationId: user.location_id ?? undefined as any,
+          locationId: user.location_id ?? (undefined as unknown as number),
           companyName: user.company_name ?? '',
           companyLogoUrl: user.company_logo_url ?? '',
           website: user.website ?? '',
           position: user.position ?? '',
           yearStarted: user.year_started ?? undefined,
-          status: (user.status as any) ?? 'active',
+          status: user.status ?? 'active',
           blockReason: user.block_reason ?? '',
         },
   })
@@ -408,7 +407,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const isBusiness = ['agent', 'developer'].includes(profileType)
   const displayName = user ? [user.name, user.last_name].filter(Boolean).join(' ') || '—' : ''
   const regionName = regions.find(r => r.id === cities.find(c => c.id === locationIdValue)?.region_id)?.name_al
-    ?? (user as any)?.location?.parent?.name_al
+    ?? user?.location?.parent?.name_al
 
   // Navigation guard — true when form is dirty and we are in an editable mode.
   const needsGuard = isDirty && currentMode !== 'view'
@@ -768,7 +767,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
             <LocationCombobox
               locations={cities}
               value={locationIdValue ? String(locationIdValue) : ''}
-              onChange={id => setValue('locationId', id ? (Number(id) as any) : (undefined as any), { shouldValidate: true })}
+              onChange={id => setValue('locationId', (id ? Number(id) : undefined) as unknown as number, { shouldValidate: true })}
               error={errors.locationId?.message}
               placeholder="Введіть назву міста..."
               regions={isAdmin ? regions : undefined}
@@ -777,9 +776,9 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           }
           viewValue={
             <div className="flex flex-col gap-0.5">
-              <span>{(user as any)?.location?.name_al ?? '—'}</span>
-              {(user as any)?.location?.parent?.name_al && (
-                <span className="text-xs text-muted-foreground">{(user as any).location.parent.name_al}</span>
+              <span>{user?.location?.name_al ?? '—'}</span>
+              {user?.location?.parent?.name_al && (
+                <span className="text-xs text-muted-foreground">{user.location.parent.name_al}</span>
               )}
             </div>
           }
@@ -834,7 +833,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                   { value: 'inactive', label: 'Неактивний' },
                 ]}
                 value={statusValue ?? ''}
-                onChange={v => { if (v) setValue('status', v as any) }}
+                onChange={v => { if (v) setValue('status', v as 'active' | 'blocked' | 'inactive') }}
                 variant="button"
                 size="sm"
                 triggerClassName="h-10"

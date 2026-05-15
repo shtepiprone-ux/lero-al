@@ -90,7 +90,21 @@
       "PowerShell(Get-Process *)",
       "Bash(npm audit *)",
       "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(v['severity'], v['title'], '| fix:', v.get\\('fixAvailable'\\)\\) for v in d.get\\('vulnerabilities',{}\\).values\\(\\)]\")",
-      "Bash(npm info *)"
+      "Bash(npm info *)",
+      "Bash(dir \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\node_modules\\\\eslint-config-next\\\\\" | grep -E \"flat)",
+      "Bash(index\" 2>/dev/null || ls \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\node_modules\\\\eslint-config-next/\" | head -20)",
+      "Bash(git rm *)",
+      "Bash(cd /d \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\")",
+      "Bash(findstr /R \"from.*@/components/ui/select\" src\\\\**\\\\*.tsx src\\\\**\\\\*.ts)",
+      "Bash(python *)",
+      "Bash(grep -v \"//\")",
+      "Bash(pkill -f \"next build\")",
+      "Bash(pkill -f \"next-server\")",
+      "Bash(pkill -9 node)",
+      "Bash(echo \"BUILD_EXIT_CODE: $?\")",
+      "Bash(dir \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\" /b)",
+      "Bash(dir \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\scripts\" /b)",
+      "Bash(echo \"EXIT:$?\")"
     ]
   }
 }

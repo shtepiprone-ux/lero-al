@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { UserPlus } from 'lucide-react'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { AdminUsersTable } from '@/components/admin/AdminUsersTable'
+import { AdminUsersTable, type AdminUser } from '@/components/admin/AdminUsersTable'
 
 export const metadata = { title: 'Users — Admin' }
 
@@ -27,7 +27,7 @@ export default async function AdminUsersPage({
     .order('created_at', { ascending: false })
     .range(from, to)
 
-  if (role) query = query.eq('role', role as any)
+  if (role) query = query.eq('role', role)
   if (locationRequest) query = query.not('location_request', 'is', null)
   if (q) query = query.or(`id.ilike.%${q}%,name.ilike.%${q}%,last_name.ilike.%${q}%,phone.ilike.%${q}%,company_name.ilike.%${q}%`)
 
@@ -54,7 +54,7 @@ export default async function AdminUsersPage({
         </div>
       </div>
       <AdminUsersTable
-        users={users ?? []}
+        users={(users ?? []) as unknown as AdminUser[]}
         total={count ?? 0}
         page={page}
         perPage={PER_PAGE}

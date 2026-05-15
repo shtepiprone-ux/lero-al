@@ -13,6 +13,7 @@ import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { cn } from '@/lib/utils'
 import type { ListingStatus } from '@/types/database'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import type { VariantProps } from 'class-variance-authority'
 import { badgeVariants } from '@/components/ui/badge'
 import {
@@ -24,7 +25,7 @@ import {
 export type { ListingVisibilityGroup }
 
 interface Props {
-  listings:        any[]
+  listings:        CardListingData[]
   locale:          string
   initialFilter:   ListingVisibilityGroup
   initialPremium:  boolean
@@ -76,7 +77,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
   // Memoized projection: recomputes only when the server dataset or the UI overlay
   // changes — NOT on every render triggered by useSearchParams / URL updates.
   const items = useMemo(
-    () => initial.filter((l: any) => !deletedIds.has(l.id)),
+    () => initial.filter(l => !deletedIds.has(l.id)),
     [initial, deletedIds],
   )
 
@@ -140,7 +141,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
               : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
           )}
         >
-          {t(`filter_${key}` as any)}
+          {t(`filter_${key}`)}
         </button>
       ))}
 
@@ -241,7 +242,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
       </div>
 
       {items.map(listing => {
-        const cover  = listing.images?.find((i: any) => i.is_cover) ?? listing.images?.[0]
+        const cover  = listing.images?.find(i => i.is_cover) ?? listing.images?.[0]
         const status = listing.status as ListingStatus
 
         return (
@@ -265,7 +266,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
                   <Badge variant={STATUS_VARIANT[status]} className="text-[11px] px-1.5 py-0 h-5">
-                    {t(`status_${status}` as any)}
+                    {t(`status_${status}`)}
                   </Badge>
                   {listing.is_premium && (
                     <Badge className="text-[11px] px-1.5 py-0 h-5 bg-badge-premium text-primary-foreground">
@@ -273,7 +274,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
                     </Badge>
                   )}
                   <span className="text-xs text-muted-foreground">
-                    {tl(listing.listing_type)} · {tl(`property_type_${listing.property_type}` as any)}
+                    {tl(listing.listing_type)} · {tl(`property_type_${listing.property_type}`)}
                   </span>
                 </div>
                 <Link

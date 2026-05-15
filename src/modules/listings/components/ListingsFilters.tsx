@@ -183,7 +183,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 className="flex-1 h-9 rounded-xl text-xs"
                 onClick={() => updateParams({ type: type || null })}
               >
-                {type === '' ? tc('all') : t(type as any)}
+                {type === '' ? tc('all') : t(type)}
               </Button>
             ))}
           </div>
@@ -206,7 +206,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 className={cn('py-2 px-3 h-auto text-xs justify-start rounded-xl whitespace-normal leading-snug text-left', get('property_type') === pt.value && 'bg-primary/10 text-primary border-primary/30 font-semibold')}
                 onClick={() => handlePropertyTypeChange(get('property_type') === pt.value ? null : pt.value)}
               >
-                {t(pt.labelKey as any)}
+                {t(pt.labelKey)}
               </Button>
             ))}
           </div>
@@ -241,7 +241,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                   className="flex-1 h-9 rounded-xl text-xs whitespace-normal leading-snug"
                   onClick={() => updateParams({ market_type: get('market_type') === mt.value ? null : mt.value })}
                 >
-                  {t(mt.labelKey as any)}
+                  {t(mt.labelKey)}
                 </Button>
               ))}
             </div>
@@ -365,7 +365,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               </Button>
               {CONDITIONS.map(c => (
                 <Button key={c.value} variant={get('condition') === c.value ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ condition: get('condition') === c.value ? null : c.value })}>
-                  {t(c.labelKey as any)}
+                  {t(c.labelKey)}
                 </Button>
               ))}
             </div>
@@ -378,7 +378,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             <div className="flex flex-wrap gap-1.5">
               {LAYOUT_FEATURES.map(lf => (
                 <Button key={lf.value} variant={selectedLayoutFeatures.includes(lf.value) ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs whitespace-normal leading-snug" onClick={() => toggleMulti('layout_features', lf.value)}>
-                  {t(lf.labelKey as any)}
+                  {t(lf.labelKey)}
                 </Button>
               ))}
             </div>
@@ -410,7 +410,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               <Button variant={!get('heating') ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: null })}>{tc('any_n')}</Button>
               {HEATING_TYPES.map(h => (
                 <Button key={h.value} variant={get('heating') === h.value ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: get('heating') === h.value ? null : h.value })}>
-                  {t(h.labelKey as any)}
+                  {t(h.labelKey)}
                 </Button>
               ))}
             </div>
@@ -424,7 +424,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               <Button variant={!get('wall_type') ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: null })}>{tc('any')}</Button>
               {WALL_TYPES.map(w => (
                 <Button key={w.value} variant={get('wall_type') === w.value ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: get('wall_type') === w.value ? null : w.value })}>
-                  {t(w.labelKey as any)}
+                  {t(w.labelKey)}
                 </Button>
               ))}
             </div>
@@ -438,7 +438,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               <Button variant={!get('offer_type') ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs" onClick={() => updateParams({ offer_type: null })}>{tc('any')}</Button>
               {OFFER_TYPES.map(ot => (
                 <Button key={ot.value} variant={get('offer_type') === ot.value ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ offer_type: get('offer_type') === ot.value ? null : ot.value })}>
-                  {t(ot.labelKey as any)}
+                  {t(ot.labelKey)}
                 </Button>
               ))}
             </div>
@@ -451,7 +451,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             <div className="flex flex-col gap-1.5">
               {PURCHASE_CONDITIONS.map(pc => (
                 <Button key={pc.value} variant={selectedPurchaseConditions.includes(pc.value) ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => toggleMulti('purchase_conditions', pc.value)}>
-                  {t(pc.labelKey as any)}
+                  {t(pc.labelKey)}
                 </Button>
               ))}
             </div>

@@ -6,25 +6,37 @@ import Link from 'next/link'
 
 export const metadata = { title: 'Support — Admin' }
 
-const STATUS_VARIANT: Record<string, any> = {
+type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info' | 'neutral'
+
+const STATUS_VARIANT: Record<string, BadgeVariant> = {
   open:        'warning',
   in_progress: 'info',
   resolved:    'success',
   closed:      'neutral',
 }
 
+interface AdminTicket {
+  id: string
+  subject: string
+  status: string
+  created_at: string
+  user: { name: string | null } | null
+}
+
 export default async function AdminSupportPage() {
   const db = createAdminClient()
-  const { data: tickets } = await db
+  const { data: rawTickets } = await db
     .from('support_tickets')
     .select('id, subject, status, created_at, user:users!support_tickets_user_id_fkey(name, phone)')
     .order('created_at', { ascending: false })
     .limit(50)
 
+  const tickets = (rawTickets ?? []) as unknown as AdminTicket[]
+
   const grouped = {
-    open:        tickets?.filter(t => t.status === 'open') ?? [],
-    in_progress: tickets?.filter(t => t.status === 'in_progress') ?? [],
-    resolved:    tickets?.filter(t => t.status === 'resolved' || t.status === 'closed') ?? [],
+    open:        tickets.filter(t => t.status === 'open'),
+    in_progress: tickets.filter(t => t.status === 'in_progress'),
+    resolved:    tickets.filter(t => t.status === 'resolved' || t.status === 'closed'),
   }
 
   return (
@@ -50,7 +62,7 @@ export default async function AdminSupportPage() {
         <div className="divide-y">
           {!tickets?.length ? (
             <p className="px-6 py-12 text-center text-muted-foreground">Тікетів немає</p>
-          ) : tickets.map((t: any) => (
+          ) : tickets.map((t) => (
             <div key={t.id} className="px-6 py-4 flex items-center gap-4 hover:bg-muted/30 transition-colors">
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{t.subject}</p>

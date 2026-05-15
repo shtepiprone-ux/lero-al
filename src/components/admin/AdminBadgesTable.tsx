@@ -6,9 +6,25 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import { toggleListingPremium, toggleUserVerified } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
 
+export interface PremiumListing {
+  id: string
+  title: string
+  price: number | null
+  currency: string | null
+  created_at: string
+  owner: { name: string | null } | null
+}
+
+export interface VerifiedUser {
+  id: string
+  name: string | null
+  company_name: string | null
+  created_at: string
+}
+
 interface Props {
-  premiumListings: any[]
-  verifiedUsers: any[]
+  premiumListings: PremiumListing[]
+  verifiedUsers: VerifiedUser[]
 }
 
 export function AdminBadgesTable({ premiumListings: initListings, verifiedUsers: initUsers }: Props) {

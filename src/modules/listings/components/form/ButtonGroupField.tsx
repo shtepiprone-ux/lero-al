@@ -30,7 +30,7 @@ export function ButtonGroupField({ fieldDef, formValues, onChange }: FieldRender
 
   return (
     <div className="flex flex-col gap-2">
-      <Label className="text-sm font-medium">{t(labelKey as any)}</Label>
+      <Label className="text-sm font-medium">{t(labelKey)}</Label>
       <div className="flex flex-wrap gap-2">
         {options.map(o => (
           <Button
@@ -41,7 +41,7 @@ export function ButtonGroupField({ fieldDef, formValues, onChange }: FieldRender
             className="h-9 rounded-xl"
             onClick={() => onChange({ [fieldDef.key]: currentValue === o.value ? undefined : o.value })}
           >
-            {t(o.labelKey as any)}
+            {t(o.labelKey)}
           </Button>
         ))}
       </div>

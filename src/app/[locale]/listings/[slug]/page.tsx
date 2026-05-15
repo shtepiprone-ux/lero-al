@@ -246,7 +246,7 @@ export default async function ListingPage({ params }: Props) {
         {!isListingVisible(listing.status as ListingStatus) && (
           <ListingStatusBanner
             status={listing.status as 'sold' | 'rented' | 'archived'}
-            message={t(`status_banner_${listing.status}` as any)}
+            message={t(`status_banner_${listing.status}`)}
             similarLabel={t('similar_listings')}
           />
         )}
@@ -293,8 +293,8 @@ export default async function ListingPage({ params }: Props) {
                 {isNew && <Badge className="bg-badge-new text-primary-foreground">{t('new')}</Badge>}
                 {listing.is_premium && <Badge className="bg-badge-premium text-primary-foreground">{t('premium')}</Badge>}
                 {isPriceReduced && <Badge className="bg-badge-reduced text-primary-foreground">{t('price_reduced')}</Badge>}
-                <Badge variant="outline">{t(listing.listing_type as any)}</Badge>
-                <Badge variant="outline">{t(`property_type_${listing.property_type}` as any)}</Badge>
+                <Badge variant="outline">{t(listing.listing_type)}</Badge>
+                <Badge variant="outline">{t(`property_type_${listing.property_type}`)}</Badge>
               </div>
 
               <div className="flex items-start justify-between gap-3">
@@ -342,7 +342,7 @@ export default async function ListingPage({ params }: Props) {
                     <div key={f.key} className="flex flex-col gap-1">
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
                         <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
-                        {t(f.labelKey as any)}
+                        {t(f.labelKey)}
                       </span>
                       <span className="font-semibold text-sm">{f.value}</span>
                     </div>
@@ -366,8 +366,8 @@ export default async function ListingPage({ params }: Props) {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {detailAttrs.map(a => (
                     <div key={a.labelKey} className="flex flex-col gap-0.5">
-                      <span className="text-xs text-muted-foreground">{t(a.labelKey as any)}</span>
-                      <span className="text-sm font-medium">{t(a.valueKey as any)}</span>
+                      <span className="text-xs text-muted-foreground">{t(a.labelKey)}</span>
+                      <span className="text-sm font-medium">{t(a.valueKey)}</span>
                     </div>
                   ))}
                 </div>

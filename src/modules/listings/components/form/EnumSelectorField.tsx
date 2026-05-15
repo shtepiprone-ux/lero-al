@@ -37,7 +37,7 @@ export function EnumSelectorField({ fieldDef, formValues, errors, onChange }: Fi
 
   return (
     <div className="flex flex-col gap-2">
-      <Label className="text-sm font-medium">{t(labelKey as any)}</Label>
+      <Label className="text-sm font-medium">{t(labelKey)}</Label>
       <div className="flex flex-col gap-1.5">
         {options.map(o => (
           <button
@@ -51,7 +51,7 @@ export function EnumSelectorField({ fieldDef, formValues, errors, onChange }: Fi
                 : 'border-border hover:border-primary/40',
             )}
           >
-            {t(o.labelKey as any)}
+            {t(o.labelKey)}
           </button>
         ))}
       </div>

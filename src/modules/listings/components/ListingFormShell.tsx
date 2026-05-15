@@ -304,7 +304,7 @@ export function ListingFormShell(props: Props) {
                         : 'bg-background border-border hover:border-primary/40',
                     )}
                   >
-                    {t(type as any)}
+                    {t(type)}
                   </button>
                 ))}
               </div>
@@ -387,7 +387,7 @@ export function ListingFormShell(props: Props) {
                 <Input
                   type="number"
                   value={data.price ?? ''}
-                  onChange={e => patch({ price: e.target.value ? Number(e.target.value) : undefined as any })}
+                  onChange={e => patch({ price: e.target.value ? Number(e.target.value) : undefined })}
                   placeholder="0"
                   min={0}
                   className={cn('h-11 rounded-xl flex-1', errors.price && 'border-destructive')}

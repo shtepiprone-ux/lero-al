@@ -1,7 +1,7 @@
 import { getTranslations, getLocale } from 'next-intl/server'
 import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
-import { ListingCard } from '@/modules/listings/components/ListingCard'
+import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 
 interface Props {
   currentId: string
@@ -65,7 +65,7 @@ export async function SimilarListings({ currentId, propertyType, locationId }: P
     <div className="similar-listings">
       <h2 className="text-xl font-bold mb-5">{t('similar_listings')}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {(listings as any[]).map(l => (
+        {(listings as unknown as CardListingData[]).map(l => (
           <ListingCard key={l.id} listing={l} layoutContext="4-col" />
         ))}
       </div>

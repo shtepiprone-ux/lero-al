@@ -26,7 +26,7 @@ export function ViewTracker({ slug }: Props) {
     // never activates. document.prerendering is true while the page is in the
     // speculative prerender browsing context. On activation it fires
     // 'prerenderingchange' and becomes false.
-    if ((document as any).prerendering) {
+    if ((document as Document & { prerendering?: boolean }).prerendering) {
       document.addEventListener('prerenderingchange', schedulePost, { once: true })
     } else {
       schedulePost()

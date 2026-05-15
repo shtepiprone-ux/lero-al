@@ -1,6 +1,6 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
-import { AdminLocationsManager } from '@/components/admin/AdminLocationsManager'
+import { AdminLocationsManager, type Location } from '@/components/admin/AdminLocationsManager'
 
 export const metadata = { title: 'Населені пункти — Admin' }
 
@@ -16,7 +16,7 @@ export default async function AdminLocationsPage({
     .select('id, name_al, name_en, type, slug, parent_id', { count: 'exact' })
     .order('type').order('name_al').limit(200)
 
-  if (type) query = query.eq('type', type as any)
+  if (type) query = query.eq('type', type)
 
   const { data: locations, count } = await query
 
@@ -30,8 +30,8 @@ export default async function AdminLocationsPage({
     <div className="p-6 lg:p-8 max-w-5xl mx-auto">
       <AdminPageHeader title="Населені пункти" subtitle={`${count ?? 0} записів`} />
       <AdminLocationsManager
-        locations={locations ?? []}
-        parents={parents ?? []}
+        locations={(locations ?? []) as Location[]}
+        parents={(parents ?? []) as Location[]}
         activeType={type}
       />
     </div>

@@ -3,6 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
+import type { UserChangeLog, UserStatusHistory } from '@/types/database'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -30,11 +31,11 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
   if (userError) console.error('AdminUserProfilePage: user query failed', { error: userError, id })
   if (!user) notFound()
 
-  // Soft-delete check: deleted_at column may not exist yet if migration is pending
-  if ((user as any).deleted_at) notFound()
+  // Soft-delete check
+  if (user.deleted_at) notFound()
 
   // Change log — table may not exist yet; degrade gracefully
-  let changeLog: any[] = []
+  let changeLog: UserChangeLog[] = []
   try {
     const { data: log } = await db
       .from('user_change_log')
@@ -46,7 +47,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
   } catch {}
 
   // Status history — new table; degrade gracefully if migration not yet applied
-  let statusHistory: any[] = []
+  let statusHistory: UserStatusHistory[] = []
   try {
     const { data: hist } = await db
       .from('user_status_history')
@@ -73,7 +74,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
   return (
     <div className="p-6 lg:p-8 max-w-3xl mx-auto">
       <AdminUserProfile
-        user={user as any}
+        user={user}
         email={email}
         cities={cities ?? []}
         regions={regions ?? []}

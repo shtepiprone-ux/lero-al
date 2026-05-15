@@ -228,7 +228,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
     }
     ALL_FILTER_SECTIONS.forEach(section => {
       if (!applicable.includes(section)) {
-        sectionFields[section].forEach(field => { cleared[field] = undefined as any })
+        sectionFields[section].forEach(field => { delete cleared[field] })
       }
     })
     setLocal(prev => ({ ...prev, ...cleared }))
@@ -339,7 +339,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                     )}
                     onClick={() => handlePropertyTypeChange(local.property_type === pt.value ? undefined : pt.value)}
                   >
-                    {tl(pt.labelKey as any)}
+                    {tl(pt.labelKey)}
                   </Button>
                 ))}
               </div>
@@ -366,7 +366,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                       className="flex-1 h-9 rounded-xl text-xs whitespace-normal leading-snug"
                       onClick={() => update({ market_type: local.market_type === mt.value ? undefined : mt.value })}
                     >
-                      {tl(mt.labelKey as any)}
+                      {tl(mt.labelKey)}
                     </Button>
                   ))}
                 </div>
@@ -500,7 +500,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   options={CONDITIONS}
                   value={local.condition}
                   onChange={v => update({ condition: v })}
-                  getLabel={k => tl(k as any)}
+                  getLabel={k => tl(k)}
                 />
               </div>
             )}
@@ -513,7 +513,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   options={LAYOUT_FEATURES}
                   value={local.layout_features}
                   onChange={v => update({ layout_features: v.length > 0 ? v : undefined })}
-                  getLabel={k => tl(k as any)}
+                  getLabel={k => tl(k)}
                 />
               </div>
             )}
@@ -526,7 +526,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   options={HEATING_TYPES}
                   value={local.heating}
                   onChange={v => update({ heating: v })}
-                  getLabel={k => tl(k as any)}
+                  getLabel={k => tl(k)}
                 />
               </div>
             )}
@@ -539,7 +539,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   options={WALL_TYPES}
                   value={local.wall_type}
                   onChange={v => update({ wall_type: v })}
-                  getLabel={k => tl(k as any)}
+                  getLabel={k => tl(k)}
                 />
               </div>
             )}
@@ -552,7 +552,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   options={OFFER_TYPES}
                   value={local.offer_type}
                   onChange={v => update({ offer_type: v })}
-                  getLabel={k => tl(k as any)}
+                  getLabel={k => tl(k)}
                 />
               </div>
             )}
@@ -565,7 +565,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   options={PURCHASE_CONDITIONS}
                   value={local.purchase_conditions}
                   onChange={v => update({ purchase_conditions: v.length > 0 ? v : undefined })}
-                  getLabel={k => tl(k as any)}
+                  getLabel={k => tl(k)}
                 />
               </div>
             )}

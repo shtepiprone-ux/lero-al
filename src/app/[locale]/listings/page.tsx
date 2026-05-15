@@ -3,6 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { ListingsShell } from '@/modules/listings/components/ListingsShell'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { parseSearchParams, applyListingFilters, countActiveFilters } from '@/modules/listings/domain/filterEngine'
 
@@ -48,9 +49,9 @@ export default async function ListingsPage({ params, searchParams }: Props) {
     .select(LISTING_SELECT, { count: 'exact' })
 
   if (tab === 'closed') {
-    query = query.in('status', ['sold', 'rented'] as any)
+    query = query.in('status', ['sold', 'rented'])
   } else {
-    query = query.eq('status', 'active' as any).gte('expires_at', now)
+    query = query.eq('status', 'active').gte('expires_at', now)
   }
 
   query = applyListingFilters(query, filters)
@@ -97,7 +98,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
 
       <div className="container mx-auto px-4 py-6 max-w-7xl">
         <ListingsShell
-          listings={listings ?? []}
+          listings={(listings ?? []) as unknown as CardListingData[]}
           total={count ?? 0}
           page={page}
           locations={locations ?? []}

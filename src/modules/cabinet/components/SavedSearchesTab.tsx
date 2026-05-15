@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Search, Trash2, ArrowRight, Mail } from 'lucide-react'
-import { createClient } from '@/lib/supabase/client'
+import { toast } from 'sonner'
 import type { SavedSearch } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { RelativeTime } from '@/components/shared/RelativeTime'
+import { deleteSavedSearch, updateSavedSearchNotify } from '@/modules/cabinet/actions'
 
 interface Props {
   savedSearches: SavedSearch[]
@@ -62,10 +63,10 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
 
   async function handleDelete(id: string) {
     setDeletingId(id)
-    const supabase = createClient()
-    const { error } = await supabase.from('saved_searches').delete().eq('id', id)
-    if (error) {
-      console.error('Failed to delete saved search', { error, searchId: id })
+    const result = await deleteSavedSearch(id)
+    if (result.error) {
+      console.error('Failed to delete saved search', { error: result.error, searchId: id })
+      toast.error(t('error_deleting'))
     } else {
       setItems(prev => prev.filter(s => s.id !== id))
     }
@@ -73,12 +74,8 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
   }
 
   async function toggleNotify(id: string, current: boolean) {
-    const supabase = createClient()
-    const { error } = await supabase
-      .from('saved_searches')
-      .update({ notify_email: !current })
-      .eq('id', id)
-    if (!error) {
+    const result = await updateSavedSearchNotify(id, !current)
+    if (!result.error) {
       setItems(prev => prev.map(s => s.id === id ? { ...s, notify_email: !current } : s))
     }
   }

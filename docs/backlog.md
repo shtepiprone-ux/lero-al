@@ -87,6 +87,13 @@ Four confirmed bugs found by static analysis + runtime verification. All four fi
 - [ ] **Security audit log**: email-change attempts not logged to a separate audit log (no such log exists yet). Deferred.
 - [ ] **Rate-limit primitive**: cabinet email-change uses a count-based rate limit (max 3/hour). No global rate-limit middleware exists yet.
 
+## Task 10 Audit Fixes — 2026-05-15
+
+- [x] **R-01 `updateListing.ts` — revalidatePath після редагування оголошення**: додано `revalidatePath` для всіх 4 локалей (`sq/en/uk/it`) для сторінки деталей оголошення. Виправляє стале відображення даних при поверненні на сторінку після редагування. Файл: `src/modules/listings/actions/updateListing.ts`.
+- [x] **R-02 `ListingsTab.tsx` — toast при помилці видалення**: замість тихого `console.error` тепер показується `toast.error(t('error_deleting'))` при невдалому видаленні оголошення. Ключ `error_deleting` вже існує в усіх 4 локалях. Файл: `src/modules/cabinet/components/ListingsTab.tsx`.
+- [x] **R-04 `SavedSearchesTab.tsx` — міграція з прямого Supabase client на server actions**: видалено пряму мутацію `createClient().from('saved_searches').delete/update` з клієнтського компонента. Додано два нові server actions `deleteSavedSearch` та `updateSavedSearchNotify` у `cabinet/actions/index.ts` (з .eq('user_id', userId) захистом, server-side RLS, error logging). `SavedSearchesTab` тепер використовує ці actions та показує `toast.error` при помилці видалення. Файли: `src/modules/cabinet/actions/index.ts`, `src/modules/cabinet/components/SavedSearchesTab.tsx`.
+- [x] **R-08 `FavoritesShell.tsx` — race condition подвійного декременту liveCounts**: обидва обробники (`handleFavoriteToggled` та realtime DELETE `onEvent`) переведено на функціональний `setDisplayedListings(prev => ...)` патерн. Перший обробник, що виконається, знайде listing у `prev` і декрементує `liveCounts`; другий отримає `prev` без listing (вже видалено) і пропустить декремент. Гарантує атомарну перевірку через committed state — жодного double-decrement. Файл: `src/modules/listings/components/FavoritesShell.tsx`.
+
 ## Runtime Concurrency & Race Hardening (Task 9.4) — 2026-05-15
 
 - [x] **FavoriteButton optimistic-guard hardened (FIX B)**: replaced single `useEffect([isFavorited])` with two-effect `isPendingRef` pattern — `useEffect([isPending])` keeps a ref in sync with committed transition state; `useEffect([isFavorited])` reads the ref as a guard, preventing external prop updates (router.refresh, cross-tab) from overwriting in-flight optimistic state. Declaration order ensures the ref is updated before the guard reads it when both effects fire in the same flush.

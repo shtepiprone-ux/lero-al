@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { listingSchema } from '@/modules/listings/validations'
@@ -7,6 +8,7 @@ import type { ListingImage } from '@/modules/listings/components/ImageUpload'
 import type { ListingInput } from '@/modules/listings/validations'
 import { checkEditPermission } from '@/modules/listings/domain/listingPermissions'
 import type { ListingStatus } from '@/types/database'
+import { routing } from '@/i18n/routing'
 
 interface UpdateListingPayload extends ListingInput {
   images: ListingImage[]
@@ -73,6 +75,12 @@ export async function updateListing(
     if (imgError) {
       console.error('Failed to update listing images', { error: imgError, listingId })
     }
+  }
+
+  // Invalidate the listing detail page for every active locale so that
+  // navigating back (or using a cached router entry) shows the updated data.
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}/listings/${existing.slug}`, 'page')
   }
 
   return { slug: existing.slug }

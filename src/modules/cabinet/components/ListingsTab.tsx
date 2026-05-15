@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { Plus, Pencil, Trash2, Eye, Maximize2, Loader2, Check, X, SlidersHorizontal } from 'lucide-react'
+import { toast } from 'sonner'
 import { deleteListingAction } from '@/modules/listings/actions/deleteListing'
 import { formatPrice } from '@/lib/formatters'
 import { Button } from '@/components/ui/button'
@@ -112,6 +113,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
     const result = await deleteListingAction(id)
     if (result.error) {
       console.error('Failed to delete listing', { error: result.error, listingId: id })
+      toast.error(t('error_deleting'))
     } else {
       setDeletedIds(prev => new Set([...prev, id]))
     }

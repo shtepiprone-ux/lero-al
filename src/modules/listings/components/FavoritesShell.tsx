@@ -64,15 +64,18 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
     displayedIdsRef,
     onEvent: (event) => {
       if (event.type === 'DELETE') {
-        // Capture property_type before removing so liveCounts can be decremented.
-        const removed = displayedListings.find(l => l.id === event.listingId)
-        if (removed) {
-          setLiveCounts(prev => ({
-            ...prev,
-            [removed.property_type]: Math.max(0, (prev[removed.property_type] ?? 0) - 1),
+        // Use functional prev to get the committed state. If the listing is already
+        // absent (handleFavoriteToggled ran first), we skip the liveCounts decrement —
+        // preventing the race where both handlers decrement for the same removal.
+        setDisplayedListings(prev => {
+          const removed = prev.find(l => l.id === event.listingId)
+          if (!removed) return prev   // already removed, guard: no double-decrement
+          setLiveCounts(c => ({
+            ...c,
+            [removed.property_type]: Math.max(0, (c[removed.property_type] ?? 0) - 1),
           }))
-        }
-        setDisplayedListings(prev => prev.filter(l => l.id !== event.listingId))
+          return prev.filter(l => l.id !== event.listingId)
+        })
       } else if (event.type === 'INSERT') {
         const listing = event.listing
         // Respect the current type filter: skip if listing doesn't match.
@@ -97,15 +100,17 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
 
   function handleFavoriteToggled(listingId: string, newState: boolean) {
     if (!newState) {
-      // Decrement liveCounts before removing so the type chip count stays accurate.
-      const listing = displayedListings.find(l => l.id === listingId)
-      if (listing) {
-        setLiveCounts(prev => ({
-          ...prev,
-          [listing.property_type]: Math.max(0, (prev[listing.property_type] ?? 0) - 1),
+      // Use functional prev to get the committed state. If the realtime DELETE handler
+      // already removed the listing, we skip the decrement — no double-decrement race.
+      setDisplayedListings(prev => {
+        const removed = prev.find(l => l.id === listingId)
+        if (!removed) return prev   // already removed, guard: no double-decrement
+        setLiveCounts(c => ({
+          ...c,
+          [removed.property_type]: Math.max(0, (c[removed.property_type] ?? 0) - 1),
         }))
-      }
-      setDisplayedListings(prev => prev.filter(l => l.id !== listingId))
+        return prev.filter(l => l.id !== listingId)
+      })
     }
   }
 

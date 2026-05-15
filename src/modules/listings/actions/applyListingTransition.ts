@@ -38,8 +38,9 @@
 
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import { revalidateTag, revalidatePath } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { routing } from '@/i18n/routing'
 import {
   resolveTransition,
   getTransitionActionForStatus,
@@ -107,6 +108,12 @@ async function executeTransition(
   // Invalidate the homepage stats counter — any status transition may affect the
   // public active-listing count (approve: +1, deactivate/archive: -1, etc.)
   revalidateTag('site-stats')
+
+  // Invalidate the public listings index across all locales so status changes
+  // (activate, archive, sell) are reflected without waiting for navigation.
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}/listings`, 'page')
+  }
 
   return { ok: true, nextStatus: transition.nextStatus, listingId }
 }

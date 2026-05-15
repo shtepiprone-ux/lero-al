@@ -1,8 +1,9 @@
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import { revalidateTag, revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { routing } from '@/i18n/routing'
 
 /**
  * Deletes a listing owned by the authenticated user.
@@ -31,5 +32,9 @@ export async function deleteListingAction(
   }
 
   revalidateTag('site-stats')
+  // Removed listing must disappear from the public listings index immediately.
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}/listings`, 'page')
+  }
   return {}
 }

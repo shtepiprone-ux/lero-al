@@ -87,6 +87,19 @@ Four confirmed bugs found by static analysis + runtime verification. All four fi
 - [ ] **Security audit log**: email-change attempts not logged to a separate audit log (no such log exists yet). Deferred.
 - [ ] **Rate-limit primitive**: cabinet email-change uses a count-based rate limit (max 3/hour). No global rate-limit middleware exists yet.
 
+## Task 10 Cross-Domain Revalidation Fixes — 2026-05-15
+
+- [x] **Cross-domain desync: `applyListingTransition.ts`** — після кожної зміни статусу (publish, archive, approve, reject, sell, rent) тепер викликається `revalidatePath` для `/[locale]/listings` по всіх 4 локалях. Оголошення зникають/з'являються на публічній сторінці відразу, без очікування переходу.
+- [x] **Cross-domain desync: `deleteListingAction.ts` (cabinet)** — після видалення власного оголошення тепер revalidate `/[locale]/listings` по всіх 4 локалях. Видалене оголошення зникає з пошуку одразу.
+- [x] **Cross-domain desync: `admin/actions.deleteListing`** — аналогічно для адмін видалення.
+- [x] **Cross-domain desync: `toggleFavorite.ts`** — після додавання/видалення з обраних revalidate `/[locale]/favorites` по всіх 4 локалях. Холодна навігація (новий таб, кеш браузера) показує актуальний стан.
+
+**Залишені як прийнятне архітектурне рішення (не фікси):**
+- R-05 (cabinet без крос-таб синку) — навмисна SSR-only архітектура, виправлення потребує нову feature realtime.
+- R-06 (дубльований стан SavedSearchesTab) — вже виправлено через `useEffect([initial])` у Task 9.3.
+- R-07 (`onEventRef` render body) — стандартний React-паттерн для stable callbacks, рекомендований документацією React.
+- FB-1..FB-5 (future breakage predictions) — теоретичні сценарії майбутніх фіч; задокументовано в `docs/state-authority.md`, код не змінювався.
+
 ## Task 10 Audit Fixes — 2026-05-15
 
 - [x] **R-01 `updateListing.ts` — revalidatePath після редагування оголошення**: додано `revalidatePath` для всіх 4 локалей (`sq/en/uk/it`) для сторінки деталей оголошення. Виправляє стале відображення даних при поверненні на сторінку після редагування. Файл: `src/modules/listings/actions/updateListing.ts`.

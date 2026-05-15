@@ -1,7 +1,9 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { routing } from '@/i18n/routing'
 
 /**
  * Toggle a listing's favorite status for the current user.
@@ -32,6 +34,15 @@ export async function toggleFavorite(
 
   const supabase = await createClient()
 
+  // Shared helper: invalidates the favorites page for all locales so that
+  // cold navigation (new tab, browser Back from a stale cache) shows accurate data.
+  // Session state is handled by localFavoriteIds + liveCounts on the client.
+  function revalidateFavorites() {
+    for (const locale of routing.locales) {
+      revalidatePath(`/${locale}/favorites`, 'page')
+    }
+  }
+
   if (!currentlyFavorited) {
     // User intent: ADD. INSERT the row.
     // On 23505 (concurrent add already completed) → desired state is already reached.
@@ -39,7 +50,10 @@ export async function toggleFavorite(
       .from('favorites')
       .insert({ user_id: authUser.id, listing_id: listingId })
 
-    if (!error || error.code === '23505') return { isFavorited: true }
+    if (!error || error.code === '23505') {
+      revalidateFavorites()
+      return { isFavorited: true }
+    }
 
     console.error('Failed to add favorite', { error, listingId, userId: authUser.id })
     return { error: error.message }
@@ -58,5 +72,6 @@ export async function toggleFavorite(
     return { error: error.message }
   }
 
+  revalidateFavorites()
   return { isFavorited: false }
 }

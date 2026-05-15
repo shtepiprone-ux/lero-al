@@ -7,6 +7,7 @@ import { getUser } from '@/lib/auth/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType } from '@/types/database'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
+import { routing } from '@/i18n/routing'
 
 // ── Cloudinary signed upload helper ──────────────────────────────────────────
 
@@ -109,6 +110,9 @@ export async function deleteListing(listingId: string) {
   }
   revalidateTag('site-stats')
   revalidatePath('/admin/listings')
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}/listings`, 'page')
+  }
 }
 
 // ── Users ────────────────────────────────────────────────────────────────────

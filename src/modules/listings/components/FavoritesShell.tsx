@@ -42,10 +42,19 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
     setLiveCounts(typeCounts)
   }, [typeCounts])
 
-  // Ref updated synchronously on every render so the async realtime handler
-  // always sees the current displayed IDs. Same pattern as onEventRef in the hook.
-  const displayedIdsRef = useRef(new Set<string>())
-  displayedIdsRef.current = new Set(displayedListings.map(l => l.id))
+  // Tracks the currently displayed listing IDs so the realtime handler can skip
+  // DB fetches for listings that are already on screen (dedup optimization).
+  //
+  // Initialized from the first render's displayedListings; kept in sync via effect.
+  // Using useEffect instead of a render-body mutation preserves React render purity
+  // and is safe under concurrent rendering — the committed state is always reflected.
+  //
+  // Declaration order matters: this effect must be registered before useFavoritesRealtime
+  // so it fires first on mount, ensuring the ref is populated before events arrive.
+  const displayedIdsRef = useRef<ReadonlySet<string>>(new Set(displayedListings.map(l => l.id)))
+  useEffect(() => {
+    displayedIdsRef.current = new Set(displayedListings.map(l => l.id))
+  }, [displayedListings])
 
   // Realtime cross-tab sync — subscribes to the favorites table for this user.
   // The onEvent callback is kept stable via the ref inside the hook, so changing

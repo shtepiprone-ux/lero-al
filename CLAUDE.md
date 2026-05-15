@@ -23,6 +23,7 @@ All project rules are split into focused files inside `/docs/`.
 - `docs/rls-rules.md` — Supabase RLS rules, permission boundaries, auth/session safety, and security constraints.
 - `docs/ui-rules.md` — UI Gate (no hardcode + component-first + Combobox-only) + dom.ria.com reference.
 - `docs/performance.md` — Core Web Vitals RUM layer: collector, reporter, budgets, logging, and analytics dispatch contract.
+- `docs/state-authority.md` — State authority map: SSR vs client authority, optimistic state rules, realtime sync model, cache invalidation, router.refresh behavior, concurrent rendering safety.
 
 ## Documentation Update Rule
 

@@ -2,13 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { parseSearchParams, applyListingFilters } from '@/modules/listings/domain/filterEngine'
-
-const LISTING_SELECT = `
-  id, slug, title, price, price_old, currency, listing_type, property_type,
-  rooms, bedrooms, bathrooms, area_gross, floor, total_floors, is_premium, status, created_at,
-  location:locations(id, name_al, slug, type),
-  images:listing_images(url, is_cover, order)
-`
+import { LISTING_SELECT } from '@/modules/listings/lib/listingSelect'
 
 export async function GET(req: NextRequest) {
   const filters = parseSearchParams(req.nextUrl.searchParams)

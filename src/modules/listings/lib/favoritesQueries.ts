@@ -1,13 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import type { PropertyType } from '@/types/database'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
-
-const FAVORITE_LISTING_SELECT =
-  'id, slug, title, price, price_old, currency, listing_type, property_type, ' +
-  'condition, rooms, bedrooms, bathrooms, area_gross, area_net, floor, total_floors, ' +
-  'year_built, is_premium, status, created_at, views_count, ' +
-  'location:locations(id, name_al, slug, type), ' +
-  'images:listing_images(url, is_cover, order)'
+import { LISTING_SELECT } from './listingSelect'
 
 export async function getFavoriteIds(userId: string): Promise<string[]> {
   const supabase = await createClient()
@@ -34,7 +28,7 @@ export async function getFavoriteListings(userId: string, propertyType?: Propert
 
   let query = supabase
     .from('listings')
-    .select(FAVORITE_LISTING_SELECT)
+    .select(LISTING_SELECT)
     .in('id', listingIds)
     .neq('status', 'archived')
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Search, Trash2, ArrowRight, Mail } from 'lucide-react'
@@ -56,6 +56,9 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
   const router = useRouter()
   const [items, setItems] = useState(initial)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+
+  // Re-sync when a fresh SSR snapshot arrives (filter navigation or router.refresh).
+  useEffect(() => { setItems(initial) }, [initial])
 
   async function handleDelete(id: string) {
     setDeletingId(id)

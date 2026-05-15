@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
@@ -55,7 +55,25 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   const { user } = useAuth()
   // URL param takes precedence; fall back to user's preference, then 'ALL'
   const displayCurrency = searchParams.get('currency') || user?.preferred_currency || 'ALL'
-  const favoriteSet = useMemo(() => new Set(favoriteIds ?? []), [favoriteIds])
+  // Mutable local favorite ID set — initialized from SSR snapshot, updated on every
+  // toggle so FavoriteButton never reads a stale isFavorited prop.
+  const [localFavoriteIds, setLocalFavoriteIds] = useState<ReadonlySet<string>>(
+    () => new Set(favoriteIds ?? [])
+  )
+  // Re-sync from SSR on filter navigation or router.refresh (new favoriteIds array arrives).
+  useEffect(() => {
+    setLocalFavoriteIds(new Set(favoriteIds ?? []))
+  }, [favoriteIds])
+
+  const handleFavoriteToggled = useCallback((listingId: string, newState: boolean) => {
+    setLocalFavoriteIds(prev => {
+      const next = new Set(prev)
+      if (newState) next.add(listingId)
+      else next.delete(listingId)
+      return next
+    })
+  }, [])
+
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [extraListings, setExtraListings] = useState<CardListingData[]>([])
@@ -209,7 +227,8 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
                   onBeforeNavigate={handleBeforeNavigate}
                   displayCurrency={displayCurrency}
                   exchangeRate={rate}
-                  isFavorited={favoriteSet.has(listing.id)}
+                  isFavorited={localFavoriteIds.has(listing.id)}
+                  onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
                   layoutContext={view === 'grid' ? 'sidebar' : undefined}
                 />
               ))}

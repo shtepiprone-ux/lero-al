@@ -28,11 +28,19 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
 
   const [displayedListings, setDisplayedListings] = useState<CardListingData[]>(initialListings)
 
-  // Sync with server-provided listings whenever the filter changes (URL navigation
-  // causes a server re-render which passes fresh initialListings).
+  // Live type counts — initialized from SSR snapshot and updated incrementally as
+  // listings are added/removed in this session. This keeps totalFavorites and the
+  // filter chip counts correct without requiring a round-trip to the server.
+  const [liveCounts, setLiveCounts] = useState<Record<string, number>>(typeCounts)
+
+  // Sync with server-provided state on filter navigation (URL change → SSR re-render).
   useEffect(() => {
     setDisplayedListings(initialListings)
   }, [initialListings])
+
+  useEffect(() => {
+    setLiveCounts(typeCounts)
+  }, [typeCounts])
 
   // Ref updated synchronously on every render so the async realtime handler
   // always sees the current displayed IDs. Same pattern as onEventRef in the hook.
@@ -47,12 +55,29 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
     displayedIdsRef,
     onEvent: (event) => {
       if (event.type === 'DELETE') {
+        // Capture property_type before removing so liveCounts can be decremented.
+        const removed = displayedListings.find(l => l.id === event.listingId)
+        if (removed) {
+          setLiveCounts(prev => ({
+            ...prev,
+            [removed.property_type]: Math.max(0, (prev[removed.property_type] ?? 0) - 1),
+          }))
+        }
         setDisplayedListings(prev => prev.filter(l => l.id !== event.listingId))
       } else if (event.type === 'INSERT') {
         const listing = event.listing
         // Respect the current type filter: skip if listing doesn't match.
         if (typeFilter && listing.property_type !== typeFilter) return
-        // Avoid duplicates (same tab may already have it via optimistic update).
+        // Only increment liveCounts when the listing is not already displayed.
+        // displayedIdsRef is checked by the hook before calling onEvent; this
+        // re-check guards against the narrow concurrent-render race window.
+        const alreadyDisplayed = displayedIdsRef.current.has(listing.id)
+        if (!alreadyDisplayed) {
+          setLiveCounts(prev => ({
+            ...prev,
+            [listing.property_type]: (prev[listing.property_type] ?? 0) + 1,
+          }))
+        }
         setDisplayedListings(prev => {
           if (prev.some(l => l.id === listing.id)) return prev
           return [listing as CardListingData, ...prev]
@@ -63,11 +88,21 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
 
   function handleFavoriteToggled(listingId: string, newState: boolean) {
     if (!newState) {
+      // Decrement liveCounts before removing so the type chip count stays accurate.
+      const listing = displayedListings.find(l => l.id === listingId)
+      if (listing) {
+        setLiveCounts(prev => ({
+          ...prev,
+          [listing.property_type]: Math.max(0, (prev[listing.property_type] ?? 0) - 1),
+        }))
+      }
       setDisplayedListings(prev => prev.filter(l => l.id !== listingId))
     }
   }
 
-  const totalFavorites = Object.values(typeCounts).reduce((a, b) => a + b, 0)
+  // Derived from liveCounts (not the stale SSR typeCounts) so the full-empty-state
+  // branch is correct after in-session unfavorite actions.
+  const totalFavorites = Object.values(liveCounts).reduce((a, b) => a + b, 0)
 
   // Full empty state: user has no favorites at all.
   if (totalFavorites === 0) {
@@ -92,7 +127,8 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
 
   return (
     <div className="flex flex-col gap-6">
-      <FavoritesTypeFilter typeCounts={typeCounts} currentType={typeFilter} />
+      {/* Pass liveCounts so chip counts stay synchronized with displayed listings */}
+      <FavoritesTypeFilter typeCounts={liveCounts} currentType={typeFilter} />
 
       {displayedListings.length === 0 ? (
         // Filtered empty state: user has favorites but none match the selected type.

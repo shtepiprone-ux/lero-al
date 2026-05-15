@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -17,6 +17,14 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled }:
   const tc = useTranslations('common')
   const [favorited, setFavorited] = useState(isFavorited)
   const [isPending, startTransition] = useTransition()
+
+  // Re-sync when external authority (router.refresh, cross-surface navigation, or
+  // parent state update) changes the prop. The parent's onToggled callback keeps
+  // isFavorited in sync after each transition, so this effect reconciles cross-tab
+  // and cross-surface changes without fighting in-flight optimistic updates.
+  useEffect(() => {
+    setFavorited(isFavorited)
+  }, [isFavorited])
 
   function handleClick(e: React.MouseEvent) {
     e.preventDefault()

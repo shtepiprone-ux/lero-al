@@ -6,6 +6,7 @@ import { ListingsShell } from '@/modules/listings/components/ListingsShell'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { parseSearchParams, applyListingFilters, countActiveFilters } from '@/modules/listings/domain/filterEngine'
+import { LISTING_SELECT } from '@/modules/listings/lib/listingSelect'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -19,13 +20,6 @@ export async function generateMetadata({ params }: Props) {
     title: `${t('listings_page_title')} | Lero.al`,
   }
 }
-
-const LISTING_SELECT = `
-  id, slug, title, price, price_old, currency, listing_type, property_type,
-  rooms, bedrooms, bathrooms, area_gross, floor, total_floors, is_premium, status, created_at,
-  location:locations(id, name_al, slug, type),
-  images:listing_images(url, is_cover, order)
-`
 
 export default async function ListingsPage({ params, searchParams }: Props) {
   const { locale } = await params

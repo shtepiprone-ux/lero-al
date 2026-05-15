@@ -3,13 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
-
-const LISTING_SELECT =
-  'id, slug, title, price, price_old, currency, listing_type, property_type, ' +
-  'condition, rooms, bedrooms, bathrooms, area_gross, area_net, floor, total_floors, ' +
-  'year_built, is_premium, status, created_at, views_count, ' +
-  'location:locations(id, name_al, slug, type), ' +
-  'images:listing_images(url, is_cover, order)'
+import { LISTING_SELECT } from '@/modules/listings/lib/listingSelect'
 
 export type FavoritesRealtimeEvent =
   | { type: 'INSERT'; listing: CardListingData }

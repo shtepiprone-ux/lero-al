@@ -3,6 +3,9 @@ import { createClient } from '@/lib/supabase/client'
 import { createClient as createServerClient } from '@/lib/supabase/server'
 import type { PropertyType, ListingType, ListingStatus } from '@/types/database'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
+import { LISTING_SELECT } from './listingSelect'
+
+export { LISTING_SELECT } from './listingSelect'
 
 export interface ListingFilters {
   listing_type?: ListingType
@@ -23,14 +26,6 @@ export interface ListingFilters {
   floor_max?: number
   page?: number
 }
-
-const LISTING_SELECT = `
-  id, slug, title, price, price_old, currency, listing_type, property_type,
-  condition, rooms, bedrooms, bathrooms, area_gross, area_net, floor, total_floors,
-  year_built, is_premium, status, created_at, views_count,
-  location:locations(id, name_al, slug, type),
-  images:listing_images(url, is_cover, order)
-`
 
 export async function getFeaturedListings() {
   const supabase = createClient()

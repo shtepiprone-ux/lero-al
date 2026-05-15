@@ -30,9 +30,10 @@ interface Props {
   locale: string
   cities: CityOption[]
   regions: RegionOption[]
+  userId: string
 }
 
-export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions }: Props) {
+export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId }: Props) {
   const t = useTranslations('cabinet')
   const router = useRouter()
   const pathname = usePathname()
@@ -117,7 +118,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
 
         {/* Tab content */}
         {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} />}
-        {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} />}
+        {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} />}
         {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} locale={locale} />}
 
       </div>

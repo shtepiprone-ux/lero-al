@@ -70,6 +70,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       locale={locale}
       cities={cities ?? []}
       regions={regions ?? []}
+      userId={authUser.id}
     />
   )
 }

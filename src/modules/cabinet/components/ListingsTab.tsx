@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
@@ -21,6 +21,11 @@ import {
   type ListingVisibilityGroup,
   VALID_VISIBILITY_GROUPS,
 } from '@/modules/listings/domain'
+import {
+  useCabinetListingsRealtime,
+  type CabinetListingPatch,
+  type CabinetListingRealtimeEvent,
+} from '@/modules/cabinet/hooks/useCabinetListingsRealtime'
 
 // Re-export so CabinetShell can import from this path without knowing the domain layer path.
 export type { ListingVisibilityGroup }
@@ -30,6 +35,7 @@ interface Props {
   locale:          string
   initialFilter:   ListingVisibilityGroup
   initialPremium:  boolean
+  userId:          string
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -48,7 +54,7 @@ const STATUS_VARIANT: Record<ListingStatus, BadgeVariant> = {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export function ListingsTab({ listings: initial, locale, initialFilter, initialPremium }: Props) {
+export function ListingsTab({ listings: initial, locale, initialFilter, initialPremium, userId }: Props) {
   const t            = useTranslations('cabinet')
   const tl           = useTranslations('listing')
   const activeLocale  = useLocale()
@@ -59,28 +65,59 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
   // ── UI state layer governance ────────────────────────────────────────────────
   //
   // Layer precedence (highest to lowest authority):
-  //   1. server state (initial) — immutable in client, single source of truth
-  //   2. [realtime updates — not applicable in cabinet; extend here if added]
-  //   3. [optimistic edits  — not applicable; extend here if added]
-  //   4. UI overlay: deletedIds — subtract-only, this component's lifecycle only
+  //   1. server state (initial)   — SSR-L2: immutable in client, single source of truth
+  //   2. livePatches              — Live-L3: realtime UPDATE patches (scalar fields only)
+  //                                 Re-initialized on every new initial (filter nav / refresh)
+  //   3. deletedIds               — UI-L4: subtract-only overlay (user deletes + realtime DELETEs)
   //
   // Contract:
-  //   • server state is NEVER mutated on the client
+  //   • server state (initial) is NEVER mutated on the client
+  //   • livePatches ONLY patches scalar fields present in CABINET_LISTING_SELECT
+  //     (no images — joined relations are not in realtime payloads)
+  //   • livePatches is reset on each new initial to prevent SSR/client drift
   //   • deletedIds can ONLY subtract; it cannot add, reorder, or replace rows
-  //   • `items` is the sole consumer of both layers; no other state touches the list
-  //   • deletedIds is component-scoped: no cross-tab bleed, no persistence
-  //   • no reset on filter change is needed — deleted rows never reappear in initial
+  //   • items is the sole consumer of all three layers
 
+  const [livePatches, setLivePatches] = useState<ReadonlyMap<string, CabinetListingPatch>>(
+    () => new Map()
+  )
   const [deletedIds,  setDeletedIds]  = useState<ReadonlySet<string>>(new Set())
   const [deletingId,  setDeletingId]  = useState<string | null>(null)
   const [confirmId,   setConfirmId]   = useState<string | null>(null)
 
-  // Memoized projection: recomputes only when the server dataset or the UI overlay
-  // changes — NOT on every render triggered by useSearchParams / URL updates.
+  // Re-sync Live-L3 when SSR-L2 changes (filter navigation / router.refresh)
+  useEffect(() => {
+    setLivePatches(new Map())
+  }, [initial])
+
+  // Memoized projection: recomputes only when the server dataset or the UI overlays change.
   const items = useMemo(
-    () => initial.filter(l => !deletedIds.has(l.id)),
-    [initial, deletedIds],
+    () =>
+      initial
+        .filter(l => !deletedIds.has(l.id))
+        .map(l => {
+          const patch = livePatches.get(l.id)
+          return patch ? { ...l, ...patch } : l
+        }),
+    [initial, deletedIds, livePatches],
   )
+
+  const handleRealtimeEvent = useCallback(
+    (event: CabinetListingRealtimeEvent) => {
+      if (event.type === 'UPDATE') {
+        setLivePatches(prev => {
+          const next = new Map(prev)
+          next.set(event.listingId, { ...(prev.get(event.listingId) ?? {}), ...event.patch })
+          return next
+        })
+      } else if (event.type === 'DELETE') {
+        setDeletedIds(prev => new Set([...prev, event.listingId]))
+      }
+    },
+    [],
+  )
+
+  useCabinetListingsRealtime({ userId, onEvent: handleRealtimeEvent })
 
   // Active visibility group — URL ?filter= is source of truth; fall back to server-provided initial.
   const rawFilter = searchParams.get('filter') ?? ''

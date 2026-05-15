@@ -37,6 +37,7 @@ UI-L4    Pure UI overlay — no DB backing.
 | `savedSearches.items` | SSR-L2 | Client delete mutations | `useEffect([initial])` re-syncs on parent re-render |
 | `listings` (page 1) | SSR-L2 | Immutable in client | Navigation or `router.refresh()` |
 | `extraListings` | Not from SSR | `/api/listings` client fetch | Resets via `useEffect([listings])` on filter nav |
+| `livePatches` (cabinet listings) | — (empty) | Realtime UPDATE events via `useCabinetListingsRealtime` | `useEffect([initial])` resets to `new Map()` on filter nav |
 
 ---
 
@@ -61,8 +62,8 @@ UI-L4    Pure UI overlay — no DB backing.
 
 ## Realtime Synchronization Model
 
-Only the **favorites page** has a realtime subscription (`useFavoritesRealtime`).
-All other surfaces (/listings, /cabinet) are SSR-snapshot-only with no push updates.
+The **favorites page** (`useFavoritesRealtime`) and the **cabinet listings tab** (`useCabinetListingsRealtime`) have realtime subscriptions.
+The `/listings` public page remains SSR-snapshot-only with no push updates.
 
 ```
 Supabase favorites table
@@ -93,6 +94,31 @@ useFavoritesRealtime:
     subscribe fail → console.error [FavoritesRealtime] subscription error
 ```
 
+```
+useCabinetListingsRealtime:
+  Channel: cabinet-listings:user:{userId}
+  Events: UPDATE, DELETE (via postgres_changes)
+
+  UPDATE flow:
+    1. RLS double-check: payload.new.user_id === userId (skip if mismatch)
+    2. Extract scalar patch fields from payload.new
+    3. Dispatch onEvent UPDATE → ListingsTab merges into livePatches Map
+    (Images are NOT re-fetched — joined relations absent from postgres_changes payload)
+
+  DELETE flow:
+    1. RLS double-check: payload.old.user_id === userId (skip if mismatch)
+    2. Graceful fallback: skip if payload.old.id absent (REPLICA IDENTITY not set)
+    3. Dispatch onEvent DELETE → ListingsTab adds id to deletedIds overlay
+
+  Cancellation:
+    cleanup() sets cancelled=true, then removeChannel()
+
+  Error observability:
+    subscribe fail    → console.error [CabinetListingsRealtime] subscription error
+    missing id        → console.warn  [CabinetListingsRealtime] DELETE payload missing id
+    user_id mismatch  → console.warn  [CabinetListingsRealtime] user_id mismatch — skipped
+```
+
 ---
 
 ## Cache Invalidation Flow
@@ -106,12 +132,15 @@ useFavoritesRealtime:
 | Filter navigation | ALL SSR-L2 snapshots | RSC re-render via router.push |
 | `router.refresh()` | ALL SSR-L2 snapshots for current route | RSC re-render (ViewTracker on detail pages) |
 | `deleteListingAction` | `deletedIds` (UI overlay) | `handleDelete` on success |
+| Realtime UPDATE (cabinet) | `livePatches` | `onEvent` callback → `setLivePatches` merge |
+| Realtime DELETE (cabinet) | `deletedIds` | `onEvent` callback → `setDeletedIds` add |
 | Site-stats counter | Next.js data cache tag `site-stats` | `revalidateTag('site-stats')` in transition gateway |
 
 **Dead zones** (caches that are NOT invalidated by in-session mutations):
 - `favoriteIds` / `favoriteSet` on `/listings` page — healed by `localFavoriteIds` Live-L3 state
 - `typeCounts` on `/favorites` page — healed by `liveCounts` Live-L3 state
-- Cabinet SSR snapshot (profile, listings, savedSearches) — healed by navigation
+- Cabinet SSR snapshot (profile, savedSearches) — healed by navigation
+- Cabinet listings scalar fields — healed by `livePatches` Live-L3 (realtime); full re-sync on navigation
 
 ---
 

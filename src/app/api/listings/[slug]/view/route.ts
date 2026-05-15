@@ -18,7 +18,7 @@ export async function POST(
 
   // Bot filter — silent pass (don't reveal that we skipped them)
   const ua = req.headers.get('user-agent') ?? ''
-  if (BOT_PATTERN.test(ua)) return NextResponse.json({ ok: true })
+  if (BOT_PATTERN.test(ua)) return NextResponse.json({ ok: true, recorded: false })
 
   const db = createAdminClient()
 
@@ -38,7 +38,7 @@ export async function POST(
 
   // Owner self-view exclusion (application-layer; RLS is not involved)
   if (user?.id && user.id === listing.user_id) {
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true, recorded: false })
   }
 
   // Build anonymous fingerprint: SHA-256(IP + first 60 chars of UA), truncated to 24 hex chars.
@@ -54,8 +54,10 @@ export async function POST(
         .slice(0, 24)
     : ''
 
-  // Atomic dedup + increment via Postgres function (SECURITY DEFINER)
-  const { error } = await db.rpc('record_listing_view', {
+  // Atomic dedup + increment via Postgres function (SECURITY DEFINER).
+  // The RPC returns TRUE when a new view row was inserted (real increment),
+  // FALSE when the 24-hour dedup window suppressed it.
+  const { data: recorded, error } = await db.rpc('record_listing_view', {
     p_listing_id: listing.id,
     p_user_id: user?.id ?? null,
     p_ip_hash: ipHash,
@@ -63,7 +65,8 @@ export async function POST(
 
   if (error) {
     console.error('[ViewTracker] record_listing_view rpc failed', { error, slug })
+    return NextResponse.json({ ok: false, recorded: false }, { status: 500 })
   }
 
-  return NextResponse.json({ ok: true })
+  return NextResponse.json({ ok: true, recorded: recorded === true })
 }

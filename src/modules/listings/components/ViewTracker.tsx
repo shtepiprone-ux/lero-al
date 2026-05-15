@@ -1,12 +1,15 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   slug: string
 }
 
 export function ViewTracker({ slug }: Props) {
+  const router = useRouter()
+
   useEffect(() => {
     const controller = new AbortController()
     let timerId: number | undefined
@@ -14,11 +17,21 @@ export function ViewTracker({ slug }: Props) {
     // Schedule the POST after 1500 ms — ensures the user has genuinely started
     // reading before incrementing (filters bounce-backs and accidental clicks).
     function schedulePost() {
-      timerId = window.setTimeout(() => {
-        fetch(`/api/listings/${slug}/view`, {
-          method: 'POST',
-          signal: controller.signal,
-        }).catch(() => {})
+      timerId = window.setTimeout(async () => {
+        try {
+          const res = await fetch(`/api/listings/${slug}/view`, {
+            method: 'POST',
+            signal: controller.signal,
+          })
+          if (res.ok) {
+            const body = await res.json() as { recorded?: boolean }
+            // Refresh RSC data only when a new view was actually written to DB.
+            // Deduped revisits (recorded: false) skip the round-trip.
+            if (body.recorded) router.refresh()
+          }
+        } catch {
+          // Network error or abort — silent, never blocks UX.
+        }
       }, 1500)
     }
 
@@ -40,7 +53,7 @@ export function ViewTracker({ slug }: Props) {
       document.removeEventListener('prerenderingchange', schedulePost)
       controller.abort()
     }
-  }, [slug])
+  }, [slug, router])
 
   return null
 }

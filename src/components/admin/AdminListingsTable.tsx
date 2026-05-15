@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { ExternalLink, Pencil, Trash2, Star, StarOff, Loader2, Calendar, Copy, Check, Search } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
+import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -17,16 +16,13 @@ import { isListingArchived } from '@/modules/listings/domain'
 
 const STATUSES: ListingStatus[] = ['pending', 'active', 'inactive', 'sold', 'rented', 'archived']
 
-const STATUS_VARIANT: Record<ListingStatus, 'success' | 'warning' | 'info' | 'rented' | 'neutral'> = {
-  pending: 'warning', active: 'success', inactive: 'neutral', sold: 'info', rented: 'rented', archived: 'neutral',
-}
-
 const STATUS_LABEL: Record<ListingStatus, string> = {
   pending: 'На розгляді', active: 'Активне', inactive: 'Неактивне',
   sold: 'Продано', rented: 'Орендовано', archived: 'Архів',
 }
 
 const STATUS_OPTIONS = STATUSES.map(s => ({ value: s, label: STATUS_LABEL[s] }))
+const FILTER_STATUS_OPTIONS = [{ value: '', label: 'Всі' }, ...STATUS_OPTIONS]
 
 const PREMIUM_PRESETS = [
   { label: '1 місяць',  days: 30 },
@@ -35,12 +31,26 @@ const PREMIUM_PRESETS = [
   { label: '1 рік',    days: 365 },
 ]
 
+export interface AdminListing {
+  id: string
+  title: string
+  status: ListingStatus
+  is_premium: boolean
+  listing_type: string
+  property_type: string
+  price: number
+  currency: string
+  slug: string
+  created_at: string
+  owner?: { name: string | null } | null
+}
+
 interface Props {
-  listings: any[]; total: number; page: number; perPage: number; activeStatus: string; searchQuery?: string
+  listings: AdminListing[]; total: number; page: number; perPage: number; activeStatus: string; searchQuery?: string
 }
 
 function PremiumDialog({ listing, onClose, onDone }: {
-  listing: any; onClose: () => void; onDone: () => void
+  listing: AdminListing; onClose: () => void; onDone: () => void
 }) {
   const [customDate, setCustomDate] = useState('')
   const [saving, setSaving] = useState(false)
@@ -130,10 +140,22 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const searchParams = useSearchParams()
   const [, startTransition] = useTransition()
   const [loadingId, setLoadingId] = useState<string | null>(null)
-  const [premiumDialog, setPremiumDialog] = useState<any | null>(null)
+  const [premiumDialog, setPremiumDialog] = useState<AdminListing | null>(null)
   const [items, setItems] = useState(init)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [localSearch, setLocalSearch] = useState(searchQuery)
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const totalPages = Math.ceil(total / perPage)
+
+  useEffect(() => { setLocalSearch(searchQuery) }, [searchQuery])
+
+  function handleSearchChange(value: string) {
+    setLocalSearch(value)
+    if (debounceTimer.current) clearTimeout(debounceTimer.current)
+    debounceTimer.current = setTimeout(() => {
+      navigate({ q: value || null, page: null })
+    }, 300)
+  }
 
   function navigate(updates: Record<string, string | null>) {
     const params = new URLSearchParams(searchParams.toString())
@@ -165,27 +187,20 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
           <div className="relative flex-1 max-w-sm">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
             <Input
-              defaultValue={searchQuery}
-              placeholder="Пошук по ID або назві..."
+              value={localSearch}
+              placeholder="Пошук по ID, назві, агенту..."
               className="h-9 pl-9 rounded-xl"
-              onChange={e => navigate({ q: e.target.value || null, page: null })}
+              onChange={e => handleSearchChange(e.target.value)}
             />
           </div>
-          <div className="flex gap-2 flex-wrap items-center">
-            {['', ...STATUSES].map(s => (
-              <button
-                key={s || 'all'}
-                onClick={() => navigate({ status: s || null, page: null })}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-                  activeStatus === s
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'border-border text-muted-foreground hover:text-foreground'
-                }`}
-              >
-                {s || 'Всі'}
-              </button>
-            ))}
-          </div>
+          <Combobox
+            options={FILTER_STATUS_OPTIONS}
+            value={activeStatus}
+            onChange={s => navigate({ status: s || null, page: null })}
+            variant="button"
+            size="sm"
+            className="w-40"
+          />
         </div>
 
         <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
@@ -255,7 +270,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                             withLoading(l.id, async () => {
                               await updateListingStatus(l.id, newStatus as ListingStatus)
                               setItems(prev => prev.map(item =>
-                                item.id === l.id ? { ...item, status: newStatus } : item
+                                item.id === l.id ? { ...item, status: newStatus as ListingStatus } : item
                               ))
                             })
                           }}

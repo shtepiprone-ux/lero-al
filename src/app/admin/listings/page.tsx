@@ -17,6 +17,31 @@ export default async function AdminListingsPage({
   const to = from + PER_PAGE - 1
 
   const supabase = createAdminClient()
+
+  // Resolve owner IDs for agent name / email search (two-step lookup)
+  let ownerIds: string[] = []
+  if (q) {
+    const { data: nameMatches } = await supabase
+      .from('users')
+      .select('id')
+      .or(`name.ilike.%${q}%,last_name.ilike.%${q}%`)
+      .limit(100)
+    ownerIds = (nameMatches ?? []).map(u => u.id)
+
+    // Email lives in auth.users — requires the admin_search_users_by_email RPC
+    // (see supabase/migrations/20260515_admin_search_users_by_email.sql)
+    try {
+      const { data: emailMatches } = await supabase
+        .rpc('admin_search_users_by_email', { q })
+      if (emailMatches) {
+        const emailIds = (emailMatches as { id: string }[]).map(r => r.id)
+        ownerIds = [...new Set([...ownerIds, ...emailIds])]
+      }
+    } catch {
+      // RPC not yet applied — email search silently skipped
+    }
+  }
+
   let query = supabase
     .from('listings')
     .select(`
@@ -27,8 +52,12 @@ export default async function AdminListingsPage({
     .order('created_at', { ascending: false })
     .range(from, to)
 
-  if (status) query = query.eq('status', status as any)
-  if (q) query = query.or(`id.ilike.%${q}%,title.ilike.%${q}%`)
+  if (status) query = query.eq('status', status)
+  if (q) {
+    const conditions = [`id.ilike.%${q}%`, `title.ilike.%${q}%`]
+    if (ownerIds.length > 0) conditions.push(`user_id.in.(${ownerIds.join(',')})`)
+    query = query.or(conditions.join(','))
+  }
 
   const { data: listings, count } = await query
 
@@ -39,7 +68,7 @@ export default async function AdminListingsPage({
         <span className="text-sm text-muted-foreground">{count ?? 0} total</span>
       </div>
       <AdminListingsTable
-        listings={listings ?? []}
+        listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}
         total={count ?? 0}
         page={page}
         perPage={PER_PAGE}

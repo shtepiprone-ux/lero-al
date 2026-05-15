@@ -1,5 +1,9 @@
 # Project Status & Immediate Tasks
 
+## TypeScript `any` Warnings Cleanup — 2026-05-15
+
+- [x] **CLOSED — Unsafe/pre-existing TypeScript `any` warnings cleanup completed.** Eliminated all 144 `@typescript-eslint/no-explicit-any` ESLint warnings across the codebase (reduced from 175 total warnings to 32, all remaining warnings are pre-existing non-`any` issues). Key patterns fixed: translation key casts (`t(key as any)` → `t(key)`), listing data types (`any[]` props → `CardListingData[]`), admin component types (local interfaces replacing `any[]`), Supabase client framework casts (`as any` → typed alternatives), and DOM API extensions (`document as any` → `Document & {}`). No runtime behavior changed, no public APIs modified, no new dependencies added.
+
 ## Avatar Upload Pipeline Restore (Task 11e) — 2026-05-14
 
 - [x] **Restored original FormData/File upload contract**. Task 11d unnecessarily replaced the stable `FormData+File` transport with `base64` based on incorrect diagnosis (the "evidence" was a malformed test JPEG returning 400 from Cloudinary, not a FormData serialization failure). The base64 approach also failed. Fix: reverted `uploadUserAvatar` and `uploadCabinetAvatar` signatures back to `FormData`, restored `file.arrayBuffer()` → `ArrayBuffer` → Cloudinary. Crop layer is untouched — it still produces a 256×256 JPEG Blob, which is wrapped into `File` + `FormData` exactly as in the original Task 11 design. Files: `admin/actions/index.ts`, `cabinet/actions/index.ts`, `AdminUserAvatar.tsx`, `ProfileTab.tsx`, `AdminUserProfile.tsx`.
@@ -82,6 +86,12 @@ Four confirmed bugs found by static analysis + runtime verification. All four fi
 - [ ] **Cloudinary avatar cleanup on soft-delete**: avatars are not removed from Cloudinary when user is soft-deleted. Deferred — requires a Cloudinary delete API call in `deleteOwnAccount`/`softDeleteUser`.
 - [ ] **Security audit log**: email-change attempts not logged to a separate audit log (no such log exists yet). Deferred.
 - [ ] **Rate-limit primitive**: cabinet email-change uses a count-based rate limit (max 3/hour). No global rate-limit middleware exists yet.
+
+## Admin Listings Search + Filter Sync (Task 2) — 2026-05-15
+
+- [x] **Admin Listings — added listing ID visibility and synchronized search/filter support.** Search covers listing title, listing ID, agent name (public.users), and agent email (via `admin_search_users_by_email` RPC — see `supabase/migrations/20260515_admin_search_users_by_email.sql`). Two-step owner lookup: name from `public.users`, email from `auth.users` via RPC with graceful fallback when RPC is not yet applied. Search input is controlled with 300 ms debounce (`useRef` timer). Status filter migrated from button row to project-standard `Combobox` (`variant="button"`, `size="sm"`) with "Всі" (all) + all 6 statuses. URL query params fully synchronized (`?q=`, `?status=`, `?page=`). Pagination and sorting preserved. No new dependencies. Files: `src/app/admin/listings/page.tsx`, `src/components/admin/AdminListingsTable.tsx`, `supabase/migrations/20260515_admin_search_users_by_email.sql`.
+
+**Migration note:** Run `supabase/migrations/20260515_admin_search_users_by_email.sql` in Supabase Dashboard → SQL Editor to enable agent email search. Search degrades gracefully (title + ID + name still work) until the migration is applied.
 
 ## Implemented Features & Current State
 

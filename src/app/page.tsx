@@ -1,6 +1,8 @@
-import { permanentRedirect } from 'next/navigation'
-import { routing } from '@/i18n/routing'
+import { redirect } from 'next/navigation'
+import { getDefaultSiteLocale } from '@/modules/admin/lib/settings'
 
-export default function RootPage() {
-  permanentRedirect(`/${routing.defaultLocale}`)
+// Use temporary redirect (307) so the browser re-checks when default locale changes.
+export default async function RootPage() {
+  const locale = await getDefaultSiteLocale()
+  redirect(`/${locale}`)
 }

@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { Combobox } from '@/components/shared/Combobox'
 import { cn } from '@/lib/utils'
 import { CheckCircle2, Save, Loader2, AlertCircle } from 'lucide-react'
 import { saveSettings } from '@/modules/admin/actions'
@@ -25,8 +26,15 @@ const TAB_KEYS: Record<Tab, string[]> = {
   brand:   ['logo_url', 'logo_dark_url', 'favicon_url'],
   footer:  ['social_facebook', 'social_instagram', 'social_linkedin', 'about_al', 'about_uk'],
   seo:     ['meta_title', 'meta_desc', 'og_image', 'archived_noindex_days'],
-  i18n:    [],
+  i18n:    ['default_locale'],
 }
+
+const LOCALE_OPTIONS = [
+  { value: 'sq', label: '🇦🇱 Shqip' },
+  { value: 'en', label: '🇬🇧 English' },
+  { value: 'uk', label: '🇺🇦 Українська' },
+  { value: 'it', label: '🇮🇹 Italiano' },
+]
 
 export interface AllSettings {
   site_name: string
@@ -45,6 +53,7 @@ export interface AllSettings {
   meta_desc: string
   og_image: string
   archived_noindex_days: string
+  default_locale: string
 }
 
 interface Props {
@@ -225,29 +234,34 @@ export function AdminSettings({ initialSettings }: Props) {
         {tab === 'i18n' && (
           <>
             <Section title="Локалізація">
+              <Field
+                label="Мова за замовчуванням"
+                id="default-locale"
+                hint="Використовується для редиректу з кореневого URL (/) та як fallback мова для публічного сайту. Набирає чинності протягом 5 хвилин."
+              >
+                <Combobox
+                  options={LOCALE_OPTIONS}
+                  value={settings.default_locale || 'sq'}
+                  onChange={v => setSettings(prev => ({ ...prev, default_locale: v || 'sq' }))}
+                  variant="button"
+                  size="sm"
+                  triggerClassName="h-10 w-60"
+                  className="w-60"
+                />
+              </Field>
               <div className="flex flex-col gap-2">
-                {[
-                  { code: 'sq', label: '🇦🇱 Shqip', active: true, default: true },
-                  { code: 'en', label: '🇬🇧 English', active: true, default: false },
-                  { code: 'uk', label: '🇺🇦 Українська', active: true, default: false },
-                  { code: 'it', label: '🇮🇹 Italiano', active: true, default: false },
-                ].map(lang => (
-                  <div key={lang.code} className="flex items-center justify-between px-4 py-3 rounded-xl border">
+                {LOCALE_OPTIONS.map(lang => (
+                  <div key={lang.value} className="flex items-center justify-between px-4 py-3 rounded-xl border">
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-medium">{lang.label}</span>
-                      {lang.default && (
+                      {(settings.default_locale || 'sq') === lang.value && (
                         <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded font-semibold">DEFAULT</span>
                       )}
                     </div>
-                    <span className={`text-xs font-medium ${lang.active ? 'text-status-success' : 'text-muted-foreground'}`}>
-                      {lang.active ? 'Активна' : 'Вимкнена'}
-                    </span>
+                    <span className="text-xs font-medium text-status-success">Активна</span>
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-muted-foreground">
-                Зміна локалей потребує оновлення конфігурації у <code className="bg-muted px-1 py-0.5 rounded text-xs">src/i18n/routing.ts</code>.
-              </p>
             </Section>
           </>
         )}

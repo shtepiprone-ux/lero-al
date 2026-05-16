@@ -23,6 +23,7 @@ const DEFAULTS: AllSettings = {
   meta_desc:            'Gjeni shtëpinë tuaj të ëndrrave në Shqipëri.',
   og_image:             '',
   archived_noindex_days: String(ARCHIVED_NOINDEX_DAYS),
+  default_locale:       'sq',
 }
 
 export default async function AdminSettingsPage() {
@@ -45,6 +46,7 @@ export default async function AdminSettingsPage() {
     meta_desc:            stored['meta_desc']            ?? DEFAULTS.meta_desc,
     og_image:             stored['og_image']             ?? DEFAULTS.og_image,
     archived_noindex_days: stored['archived_noindex_days'] ?? DEFAULTS.archived_noindex_days,
+    default_locale:       stored['default_locale']       ?? DEFAULTS.default_locale,
   }
 
   return (

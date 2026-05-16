@@ -55,7 +55,7 @@ const STATUS_VALUES = ['active', 'blocked', 'inactive'] as const
 
 const profileSchema = z.object({
   firstName:      z.string().min(1, "Ім'я обов'язкове"),
-  lastName:       z.string().optional(),
+  lastName:       z.string().min(1, "Прізвище обов'язкове"),
   profileType:    z.enum(PROFILE_TYPES),
   phone:          z.string().regex(PHONE_RE, 'Формат: +35569123456'),
   useMainPhone:   z.boolean(),
@@ -574,16 +574,10 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                 <Pencil className="h-4 w-4" /> Редагувати профіль
               </Button>
               {isAdmin && (
-                <div className="flex gap-1.5">
-                  <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-orange-300 text-orange-700 hover:bg-orange-50"
-                    onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
-                    <Trash2 className="h-4 w-4" /> Деактивувати
-                  </Button>
-                  <Button variant="destructive" size="sm" className="gap-1.5 rounded-xl"
-                    onClick={() => { setDeleteMode('hard'); setShowDeleteDialog(true) }}>
-                    <Trash2 className="h-4 w-4" /> Видалити назавжди
-                  </Button>
-                </div>
+                <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-orange-300 text-orange-700 hover:bg-orange-50"
+                  onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
+                  <Trash2 className="h-4 w-4" /> Деактивувати профіль
+                </Button>
               )}
             </>
           )}
@@ -705,9 +699,10 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           editContent={<Input {...register('firstName')} className="h-10 rounded-xl" placeholder="Ім'я" />}
           error={errors.firstName?.message}
         />
-        <FieldRow label="Прізвище" mode={currentMode}
+        <FieldRow label="Прізвище *" mode={currentMode}
           viewValue={user?.last_name}
           editContent={<Input {...register('lastName')} className="h-10 rounded-xl" placeholder="Прізвище" />}
+          error={errors.lastName?.message}
         />
         <FieldRow
           label="Тип акаунту *"

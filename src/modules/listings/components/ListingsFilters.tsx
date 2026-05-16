@@ -33,7 +33,7 @@ function AccordionSection({
       <button
         type="button"
         onClick={onToggle}
-        className="flex w-full items-center justify-between select-none group"
+        className="flex w-full items-center justify-between select-none group min-h-[44px]"
       >
         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors duration-150">
           {title}
@@ -180,7 +180,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 key={type}
                 variant={get('type') === type || (!get('type') && type === '') ? 'default' : 'outline'}
                 size="sm"
-                className="flex-1 h-9 rounded-xl text-xs"
+                className="flex-1 h-10 rounded-xl text-xs"
                 onClick={() => updateParams({ type: type || null })}
               >
                 {type === '' ? tc('all') : t(type)}
@@ -228,7 +228,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               <Button
                 variant={!get('market_type') ? 'default' : 'outline'}
                 size="sm"
-                className="flex-1 h-9 rounded-xl text-xs"
+                className="flex-1 h-10 rounded-xl text-xs"
                 onClick={() => updateParams({ market_type: null })}
               >
                 {tc('all')}
@@ -238,7 +238,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                   key={mt.value}
                   variant={get('market_type') === mt.value ? 'default' : 'outline'}
                   size="sm"
-                  className="flex-1 h-9 rounded-xl text-xs whitespace-normal leading-snug"
+                  className="flex-1 h-10 rounded-xl text-xs whitespace-normal leading-snug"
                   onClick={() => updateParams({ market_type: get('market_type') === mt.value ? null : mt.value })}
                 >
                   {t(mt.labelKey)}
@@ -257,7 +257,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                   key={r}
                   variant={selectedRooms.includes(String(r)) ? 'default' : 'outline'}
                   size="icon"
-                  className="h-9 w-9 rounded-xl text-xs"
+                  className="h-10 w-10 rounded-xl text-xs"
                   onClick={() => toggleMulti('rooms', String(r))}
                 >
                   {r === 5 ? '5+' : r}
@@ -360,11 +360,11 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {shows('condition') && (
           <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')}>
             <div className="flex flex-col gap-1.5">
-              <Button variant={!get('condition') ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs" onClick={() => updateParams({ condition: null })}>
+              <Button variant={!get('condition') ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs" onClick={() => updateParams({ condition: null })}>
                 {tc('any')}
               </Button>
               {CONDITIONS.map(c => (
-                <Button key={c.value} variant={get('condition') === c.value ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ condition: get('condition') === c.value ? null : c.value })}>
+                <Button key={c.value} variant={get('condition') === c.value ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ condition: get('condition') === c.value ? null : c.value })}>
                   {t(c.labelKey)}
                 </Button>
               ))}
@@ -377,7 +377,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
           <AccordionSection title={tc('layout_features')} open={sections.layout_features} onToggle={() => toggle('layout_features')}>
             <div className="flex flex-wrap gap-1.5">
               {LAYOUT_FEATURES.map(lf => (
-                <Button key={lf.value} variant={selectedLayoutFeatures.includes(lf.value) ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs whitespace-normal leading-snug" onClick={() => toggleMulti('layout_features', lf.value)}>
+                <Button key={lf.value} variant={selectedLayoutFeatures.includes(lf.value) ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs whitespace-normal leading-snug" onClick={() => toggleMulti('layout_features', lf.value)}>
                   {t(lf.labelKey)}
                 </Button>
               ))}
@@ -407,9 +407,9 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {shows('heating') && (
           <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')}>
             <div className="flex flex-wrap gap-1.5">
-              <Button variant={!get('heating') ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: null })}>{tc('any_n')}</Button>
+              <Button variant={!get('heating') ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: null })}>{tc('any_n')}</Button>
               {HEATING_TYPES.map(h => (
-                <Button key={h.value} variant={get('heating') === h.value ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: get('heating') === h.value ? null : h.value })}>
+                <Button key={h.value} variant={get('heating') === h.value ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: get('heating') === h.value ? null : h.value })}>
                   {t(h.labelKey)}
                 </Button>
               ))}
@@ -421,9 +421,9 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {shows('wall_type') && (
           <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')}>
             <div className="flex flex-wrap gap-1.5">
-              <Button variant={!get('wall_type') ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: null })}>{tc('any')}</Button>
+              <Button variant={!get('wall_type') ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: null })}>{tc('any')}</Button>
               {WALL_TYPES.map(w => (
-                <Button key={w.value} variant={get('wall_type') === w.value ? 'default' : 'outline'} size="sm" className="h-9 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: get('wall_type') === w.value ? null : w.value })}>
+                <Button key={w.value} variant={get('wall_type') === w.value ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: get('wall_type') === w.value ? null : w.value })}>
                   {t(w.labelKey)}
                 </Button>
               ))}
@@ -435,9 +435,9 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {shows('offer_type') && (
           <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')}>
             <div className="flex flex-col gap-1.5">
-              <Button variant={!get('offer_type') ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs" onClick={() => updateParams({ offer_type: null })}>{tc('any')}</Button>
+              <Button variant={!get('offer_type') ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs" onClick={() => updateParams({ offer_type: null })}>{tc('any')}</Button>
               {OFFER_TYPES.map(ot => (
-                <Button key={ot.value} variant={get('offer_type') === ot.value ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ offer_type: get('offer_type') === ot.value ? null : ot.value })}>
+                <Button key={ot.value} variant={get('offer_type') === ot.value ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ offer_type: get('offer_type') === ot.value ? null : ot.value })}>
                   {t(ot.labelKey)}
                 </Button>
               ))}
@@ -450,7 +450,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
           <AccordionSection title={tc('purchase_conditions')} open={sections.purchase_conditions} onToggle={() => toggle('purchase_conditions')}>
             <div className="flex flex-col gap-1.5">
               {PURCHASE_CONDITIONS.map(pc => (
-                <Button key={pc.value} variant={selectedPurchaseConditions.includes(pc.value) ? 'default' : 'outline'} size="sm" className="justify-start h-9 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => toggleMulti('purchase_conditions', pc.value)}>
+                <Button key={pc.value} variant={selectedPurchaseConditions.includes(pc.value) ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => toggleMulti('purchase_conditions', pc.value)}>
                   {t(pc.labelKey)}
                 </Button>
               ))}

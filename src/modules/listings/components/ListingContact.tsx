@@ -8,6 +8,8 @@ import { Phone, MessageCircle, Heart, Share2, CheckCircle, UserX } from 'lucide-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
+import { isListingClosed } from '@/modules/listings/domain'
+import type { ListingStatus } from '@/types/database'
 
 interface Owner {
   id: string
@@ -30,15 +32,18 @@ interface ListingContactProps {
   /** Pre-formatted original price string shown when price is converted */
   originalPrice?: string
   originalPriceLabel?: string
+  listingStatus?: ListingStatus
 }
 
-export function ListingContact({ owner, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel }: ListingContactProps) {
+export function ListingContact({ owner, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const [favorited, setFavorited] = useState(false)
   const [copied, setCopied] = useState(false)
 
   const ownerDeleted = !!(owner.deleted_at)
+  const listingClosed = listingStatus ? isListingClosed(listingStatus) : false
+  const closedLabel = listingClosed && listingStatus ? t(`action_disabled_${listingStatus}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const initials = owner.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) ?? '?'
   const whatsappMsg = encodeURIComponent(`Përshëndetje, jam i interesuar për: ${listingTitle} — ${listingUrl}`)
   const whatsappNumber = (owner.whatsapp || owner.phone || '').replace(/\D/g, '')
@@ -129,29 +134,50 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
                     {t('call')}
                   </a>
                 )}
-                <Link
-                  href={`/${locale}/messages/new?listing=${encodeURIComponent(listingTitle)}`}
-                  className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-colors"
-                  data-track="contact_owner"
-                >
-                  <MessageCircle className="h-5 w-5" />
-                  {t('send_message')}
-                </Link>
+                {listingClosed ? (
+                  <button
+                    type="button"
+                    disabled
+                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-muted text-muted-foreground font-semibold text-sm cursor-not-allowed opacity-60"
+                    title={closedLabel}
+                    aria-disabled="true"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    {t('send_message')}
+                  </button>
+                ) : (
+                  <Link
+                    href={`/${locale}/messages/new?listing=${encodeURIComponent(listingTitle)}`}
+                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-colors"
+                    data-track="contact_owner"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    {t('send_message')}
+                  </Link>
+                )}
+                {listingClosed && closedLabel && (
+                  <p className="text-xs text-muted-foreground text-center">{closedLabel}</p>
+                )}
               </div>
             )}
 
             {/* Secondary actions */}
             <div className="flex gap-2">
               <button
-                onClick={() => setFavorited(f => !f)}
+                onClick={listingClosed ? undefined : () => setFavorited(f => !f)}
+                disabled={listingClosed}
                 className={cn(
                   'flex-1 flex items-center justify-center gap-1.5 h-9 rounded-xl border text-sm transition-all',
-                  favorited ? 'bg-destructive/10 border-destructive/20 text-destructive' : 'border-border hover:bg-muted'
+                  listingClosed
+                    ? 'border-border bg-muted/60 text-muted-foreground cursor-not-allowed opacity-50'
+                    : favorited ? 'bg-destructive/10 border-destructive/20 text-destructive' : 'border-border hover:bg-muted'
                 )}
-                data-track={favorited ? 'remove_favorite' : 'add_favorite'}
-                aria-label={t('add_favorite')}
+                data-track={listingClosed ? undefined : (favorited ? 'remove_favorite' : 'add_favorite')}
+                aria-label={listingClosed ? closedLabel : t('add_favorite')}
+                aria-disabled={listingClosed || undefined}
+                title={listingClosed ? closedLabel : undefined}
               >
-                <Heart className={cn('h-4 w-4', favorited && 'fill-destructive text-destructive')} />
+                <Heart className={cn('h-4 w-4', !listingClosed && favorited && 'fill-destructive text-destructive')} />
               </button>
               <button
                 onClick={handleShare}
@@ -166,8 +192,11 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
         </div>
       </div>
 
-      {/* Mobile fixed bottom bar */}
-      <div className="listing-contact-mobile lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 py-3">
+      {/* Mobile fixed bottom bar — sits above MobileBottomNav (h-14) on small screens */}
+      <div
+        className="listing-contact-mobile lg:hidden fixed bottom-14 md:bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 pt-3"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}
+      >
         <div className="flex items-center gap-3 max-w-lg mx-auto">
           <div className="flex-1 min-w-0">
             <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency, locale)}</p>

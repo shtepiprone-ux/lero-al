@@ -40,7 +40,7 @@ export function MobileBottomNav() {
         )}>
           <Plus className="h-6 w-6 text-primary-foreground" strokeWidth={2.5} />
         </span>
-        <span className="text-[9px] font-medium text-muted-foreground leading-none">{t('add_listing')}</span>
+        <span className="text-[10px] font-medium text-muted-foreground leading-none">{t('add_listing')}</span>
       </Link>
 
       <BottomNavItem
@@ -76,7 +76,7 @@ function BottomNavItem({
       )}
     >
       <Icon className="h-5 w-5" />
-      <span className="text-[9px] font-medium leading-none">{label}</span>
+      <span className="text-[10px] font-medium leading-none">{label}</span>
     </Link>
   )
 }

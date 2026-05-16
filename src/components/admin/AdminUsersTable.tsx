@@ -12,6 +12,13 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
 
+export interface VerifiedAgent {
+  id: string
+  name: string | null
+  company_name: string | null
+  created_at: string
+}
+
 type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info' | 'neutral'
 
 const ROLES: UserRole[] = ['user', 'agent', 'moderator', 'admin']
@@ -47,9 +54,11 @@ interface Props {
   activeRole: string
   locationRequestFilter?: boolean
   searchQuery?: string
+  activeTab?: string
+  verifiedAgents?: VerifiedAgent[]
 }
 
-export function AdminUsersTable({ users: init, total, page, perPage, activeRole, locationRequestFilter, searchQuery = '' }: Props) {
+export function AdminUsersTable({ users: init, total, page, perPage, activeRole, locationRequestFilter, searchQuery = '', activeTab = 'all', verifiedAgents = [] }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -71,6 +80,63 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
 
   return (
     <div className="admin-users-table flex flex-col gap-4">
+      {/* Tabs */}
+      <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
+        {([['all', 'Всі користувачі'], ['verified', '✓ Верифіковані агенти']] as const).map(([t, label]) => (
+          <button
+            key={t}
+            onClick={() => navigate({ tab: t === 'all' ? null : t, page: null, role: null, q: null })}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activeTab === t ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {activeTab === 'verified' ? (
+        <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b bg-muted/40">
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Агент</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">Компанія</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">Дата</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Дії</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {verifiedAgents.length === 0 ? (
+                <tr><td colSpan={4} className="px-5 py-10 text-center text-muted-foreground">Немає верифікованих агентів</td></tr>
+              ) : verifiedAgents.map(u => (
+                <tr key={u.id} className={`hover:bg-muted/20 ${loadingId === u.id ? 'opacity-50' : ''}`}>
+                  <td className="px-5 py-3.5">
+                    <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
+                      {u.name ?? '—'}
+                    </Link>
+                  </td>
+                  <td className="px-5 py-3.5 hidden md:table-cell text-muted-foreground">{u.company_name ?? '—'}</td>
+                  <td className="px-5 py-3.5 hidden lg:table-cell text-muted-foreground text-xs">
+                    <RelativeTime date={u.created_at} />
+                  </td>
+                  <td className="px-5 py-3.5">
+                    {loadingId === u.id ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+                      <button
+                        onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false) })}
+                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors"
+                      >
+                        <ShieldOff className="h-4 w-4" /> Зняти верифікацію
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+      <>
       {/* Search */}
       <div className="relative max-w-sm">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -207,6 +273,8 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
           <span className="text-sm text-muted-foreground">{page} / {totalPages}</span>
           <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => navigate({ page: String(page + 1) })}>Далі</Button>
         </div>
+      )}
+      </>
       )}
     </div>
   )

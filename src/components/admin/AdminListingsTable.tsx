@@ -46,7 +46,7 @@ export interface AdminListing {
 }
 
 interface Props {
-  listings: AdminListing[]; total: number; page: number; perPage: number; activeStatus: string; searchQuery?: string
+  listings: AdminListing[]; total: number; page: number; perPage: number; activeStatus: string; searchQuery?: string; activeTab?: string
 }
 
 function PremiumDialog({ listing, onClose, onDone }: {
@@ -134,7 +134,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
   )
 }
 
-export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '' }: Props) {
+export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all' }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -193,6 +193,21 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
       )}
 
       <div className="admin-listings-table flex flex-col gap-4">
+        {/* Tabs */}
+        <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
+          {([['all', 'Всі оголошення'], ['premium', '⭐ Преміум оголошення']] as const).map(([t, label]) => (
+            <button
+              key={t}
+              onClick={() => navigate({ tab: t === 'all' ? null : t, page: null, status: null })}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeTab === t ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         {/* Search + Status filter */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">

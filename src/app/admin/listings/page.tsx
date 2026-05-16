@@ -9,6 +9,7 @@ export default async function AdminListingsPage({
   searchParams: Promise<Record<string, string | undefined>>
 }) {
   const sp = await searchParams
+  const tab = sp.tab ?? 'all'
   const status = sp.status ?? ''
   const q = sp.q?.trim() ?? ''
   const page = Math.max(1, Number(sp.page ?? 1))
@@ -29,7 +30,6 @@ export default async function AdminListingsPage({
     ownerIds = (nameMatches ?? []).map(u => u.id)
 
     // Email lives in auth.users — requires the admin_search_users_by_email RPC
-    // (see supabase/migrations/20260515_admin_search_users_by_email.sql)
     try {
       const { data: emailMatches } = await supabase
         .rpc('admin_search_users_by_email', { q })
@@ -52,6 +52,9 @@ export default async function AdminListingsPage({
     .order('created_at', { ascending: false })
     .range(from, to)
 
+  // Premium tab: filter to premium only
+  if (tab === 'premium') query = query.eq('is_premium', true)
+
   if (status) query = query.eq('status', status)
   if (q) {
     const conditions = [`id.ilike.%${q}%`, `title.ilike.%${q}%`]
@@ -64,8 +67,8 @@ export default async function AdminListingsPage({
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Listings</h1>
-        <span className="text-sm text-muted-foreground">{count ?? 0} total</span>
+        <h1 className="text-2xl font-bold">Оголошення</h1>
+        <span className="text-sm text-muted-foreground">{count ?? 0} всього</span>
       </div>
       <AdminListingsTable
         listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}
@@ -74,6 +77,7 @@ export default async function AdminListingsPage({
         perPage={PER_PAGE}
         activeStatus={status}
         searchQuery={q}
+        activeTab={tab}
       />
     </div>
   )

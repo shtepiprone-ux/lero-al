@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
-  LayoutDashboard, ListChecks, Users, Award, MessageSquare,
+  LayoutDashboard, ListChecks, Users, MessageSquare,
   MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight,
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
@@ -21,7 +21,6 @@ const GROUPS = [
     items: [
       { href: '/admin/listings',  label: 'Оголошення',         icon: ListChecks },
       { href: '/admin/users',     label: 'Користувачі',        icon: Users },
-      { href: '/admin/badges',    label: 'Бейджі',             icon: Award },
       { href: '/admin/support',   label: 'Support',            icon: MessageSquare },
     ],
   },

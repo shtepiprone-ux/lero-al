@@ -147,7 +147,11 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const totalPages = Math.ceil(total / perPage)
 
-  useEffect(() => { setLocalSearch(searchQuery) }, [searchQuery])
+  // Sync from URL only when no debounce is pending.
+  // If pending, the user is mid-type and we must not override their input.
+  useEffect(() => {
+    if (!debounceTimer.current) setLocalSearch(searchQuery)
+  }, [searchQuery])
 
   // Re-sync items when RSC delivers fresh props (e.g. after router.refresh() from
   // PremiumDialog.onDone). useState(init) ignores prop changes after first mount,
@@ -164,6 +168,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
     setLocalSearch(value)
     if (debounceTimer.current) clearTimeout(debounceTimer.current)
     debounceTimer.current = setTimeout(() => {
+      debounceTimer.current = null  // mark as settled so the sync effect can run
       navigate({ q: value || null, page: null })
     }, 300)
   }

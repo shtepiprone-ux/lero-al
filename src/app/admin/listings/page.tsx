@@ -11,7 +11,10 @@ export default async function AdminListingsPage({
   const sp = await searchParams
   const tab = sp.tab ?? 'all'
   const status = sp.status ?? ''
-  const q = sp.q?.trim() ?? ''
+  // Keep raw value (with spaces) so the client input re-sync works correctly.
+  // Trimmed value is used only for DB queries below.
+  const q = sp.q ?? ''
+  const qTrimmed = q.trim()
   const page = Math.max(1, Number(sp.page ?? 1))
   const PER_PAGE = 25
   const from = (page - 1) * PER_PAGE
@@ -21,18 +24,18 @@ export default async function AdminListingsPage({
 
   // Resolve owner IDs for agent name / email search (two-step lookup)
   let ownerIds: string[] = []
-  if (q) {
+  if (qTrimmed) {
     const { data: nameMatches } = await supabase
       .from('users')
       .select('id')
-      .or(`name.ilike.%${q}%,last_name.ilike.%${q}%`)
+      .or(`name.ilike.%${qTrimmed}%,last_name.ilike.%${qTrimmed}%`)
       .limit(100)
     ownerIds = (nameMatches ?? []).map(u => u.id)
 
     // Email lives in auth.users — requires the admin_search_users_by_email RPC
     try {
       const { data: emailMatches } = await supabase
-        .rpc('admin_search_users_by_email', { q })
+        .rpc('admin_search_users_by_email', { q: qTrimmed })
       if (emailMatches) {
         const emailIds = (emailMatches as { id: string }[]).map(r => r.id)
         ownerIds = [...new Set([...ownerIds, ...emailIds])]
@@ -56,11 +59,16 @@ export default async function AdminListingsPage({
   if (tab === 'premium') query = query.eq('is_premium', true)
 
   if (status) query = query.eq('status', status)
-  if (q) {
-    // id::text cast required — UUID column has no implicit ILIKE operator in PostgreSQL.
-    // Without the cast the entire .or() returns a DB error and data comes back null.
-    const conditions = [`id::text.ilike.%${q}%`, `title.ilike.%${q}%`]
+  if (qTrimmed) {
+    // id.ilike on a UUID column causes a PostgreSQL type error that silently kills the
+    // entire .or() (data returns null). Use only text-safe columns in .or().
+    // Exact UUID match is added separately when q matches the full UUID pattern.
+    const conditions: string[] = [`title.ilike.%${qTrimmed}%`]
     if (ownerIds.length > 0) conditions.push(`user_id.in.(${ownerIds.join(',')})`)
+
+    const FULL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+    if (FULL_UUID.test(qTrimmed)) conditions.push(`id.eq.${qTrimmed}`)
+
     query = query.or(conditions.join(','))
   }
 

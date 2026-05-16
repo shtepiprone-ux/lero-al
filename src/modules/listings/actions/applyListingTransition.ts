@@ -81,6 +81,7 @@ async function executeTransition(
   action: ListingTransitionAction,
   actor: TransitionActorContext,
   db: DbClient,
+  slug: string | null,
 ): Promise<TransitionApplicationResult> {
   const transition = resolveTransition(currentStatus, action)
 
@@ -109,10 +110,13 @@ async function executeTransition(
   // public active-listing count (approve: +1, deactivate/archive: -1, etc.)
   revalidateTag('site-stats')
 
-  // Invalidate the public listings index across all locales so status changes
-  // (activate, archive, sell) are reflected without waiting for navigation.
+  // Invalidate the public listings index AND the detail page across all locales
+  // so status changes (approve, archive, sell) are immediately visible everywhere.
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings`, 'page')
+    if (slug) {
+      revalidatePath(`/${locale}/listings/${slug}`, 'page')
+    }
   }
 
   return { ok: true, nextStatus: transition.nextStatus, listingId }
@@ -141,13 +145,13 @@ export async function applyListingTransition(
 
   const { data: current } = await db
     .from('listings')
-    .select('id, status')
+    .select('id, status, slug')
     .eq('id', listingId)
     .single()
 
   if (!current) return { ok: false, reason: 'not_found' }
 
-  return executeTransition(listingId, current.status as ListingStatus, action, actor, db)
+  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null)
 }
 
 // ── Public gateway — status-based bridge ─────────────────────────────────────
@@ -175,7 +179,7 @@ export async function applyListingTransitionByStatus(
 
   const { data: current } = await db
     .from('listings')
-    .select('id, status')
+    .select('id, status, slug')
     .eq('id', listingId)
     .single()
 
@@ -191,5 +195,5 @@ export async function applyListingTransitionByStatus(
     return { ok: false, reason: 'invalid_transition' }
   }
 
-  return executeTransition(listingId, current.status as ListingStatus, action, actor, db)
+  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null)
 }

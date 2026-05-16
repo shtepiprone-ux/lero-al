@@ -87,13 +87,31 @@ export async function setListingPremium(
 ) {
   await assertAdminAccess()
   const db = createAdminClient()
+
+  // Fetch slug BEFORE the write so we can revalidate the detail page.
+  const { data: listing } = await db
+    .from('listings')
+    .select('slug')
+    .eq('id', listingId)
+    .single()
+
   const update: Record<string, unknown> = { is_premium: isPremium }
   // premium_until column requires DB migration: ALTER TABLE listings ADD COLUMN premium_until timestamptz;
   if (premiumUntil !== undefined) update['premium_until'] = premiumUntil
   const { error } = await db.from('listings').update(update).eq('id', listingId)
   if (error) console.error('setListingPremium failed', { error, listingId })
+
   revalidatePath('/admin/listings')
   revalidatePath('/admin/badges')
+
+  // is_premium affects the listing card (premium badge + sort order is_premium desc)
+  // and the detail page badge — both must be invalidated across all locales.
+  if (listing?.slug) {
+    for (const locale of routing.locales) {
+      revalidatePath(`/${locale}/listings`, 'page')
+      revalidatePath(`/${locale}/listings/${listing.slug}`, 'page')
+    }
+  }
 }
 
 export async function toggleListingPremium(id: string, isPremium: boolean) {

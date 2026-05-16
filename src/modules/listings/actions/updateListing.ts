@@ -77,11 +77,15 @@ export async function updateListing(
     }
   }
 
-  // Invalidate the listing detail page for every active locale so that
-  // navigating back (or using a cached router entry) shows the updated data.
+  // Invalidate the listing detail page AND the public listings index for every
+  // active locale so that navigating back shows updated price/title immediately.
+  // Also invalidate /cabinet so the SSR snapshot picks up the new cover image
+  // (realtime UPDATE events only carry scalar fields, never joined relations).
   for (const locale of routing.locales) {
     revalidatePath(`/${locale}/listings/${existing.slug}`, 'page')
+    revalidatePath(`/${locale}/listings`, 'page')
   }
+  revalidatePath('/cabinet')
 
   return { slug: existing.slug }
 }

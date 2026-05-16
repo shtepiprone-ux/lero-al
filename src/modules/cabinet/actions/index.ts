@@ -5,7 +5,8 @@ import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
+import { routing } from '@/i18n/routing'
 import type { PreferredCurrency } from '@/types/database'
 import { sendEmailChangeEmails } from '@/modules/notifications/lib/emails/emailChange'
 
@@ -71,6 +72,9 @@ export async function deleteSavedSearch(id: string): Promise<{ error?: string }>
     return { error: error.message }
   }
 
+  // Invalidate the cabinet SSR snapshot so cross-tab opens and hard-reloads
+  // don't show the deleted search. In-tab UX is handled by local state.
+  revalidatePath('/cabinet')
   return {}
 }
 
@@ -93,6 +97,9 @@ export async function updateSavedSearchNotify(
     return { error: error.message }
   }
 
+  // Invalidate the cabinet SSR snapshot so toggling email notify is reflected
+  // in other tabs and on hard-reload, not only in the current in-tab state.
+  revalidatePath('/cabinet')
   return {}
 }
 
@@ -114,6 +121,15 @@ export async function deleteOwnAccount(): Promise<{ error?: string }> {
 
   if (listingsError) {
     console.error('deleteOwnAccount: listings archive failed', { error: listingsError, userId })
+  } else {
+    // Bulk-archive bypasses the transition gateway (single-listing-only), so we
+    // must compensate by manually firing the same cache invalidations the gateway
+    // would have triggered. Compare: softDeleteUser/hardDeleteUser in admin actions
+    // which correctly use applyListingTransitionByStatus per-listing.
+    revalidateTag('site-stats')
+    for (const locale of routing.locales) {
+      revalidatePath(`/${locale}/listings`, 'page')
+    }
   }
 
   // Soft-delete the user row

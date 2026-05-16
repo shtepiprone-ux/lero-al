@@ -149,6 +149,17 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
 
   useEffect(() => { setLocalSearch(searchQuery) }, [searchQuery])
 
+  // Re-sync items when RSC delivers fresh props (e.g. after router.refresh() from
+  // PremiumDialog.onDone). useState(init) ignores prop changes after first mount,
+  // so an explicit effect is required — same pattern used above for localSearch.
+  useEffect(() => { setItems(init) }, [init])
+
+  // Clear the debounce timer on unmount to prevent router.push from firing
+  // after the component has navigated away (uncontrolled side-effect).
+  useEffect(() => () => {
+    if (debounceTimer.current) clearTimeout(debounceTimer.current)
+  }, [])
+
   function handleSearchChange(value: string) {
     setLocalSearch(value)
     if (debounceTimer.current) clearTimeout(debounceTimer.current)
@@ -324,6 +335,9 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                                   withLoading(l.id, async () => {
                                     await deleteListing(l.id)
                                     setItems(prev => prev.filter(x => x.id !== l.id))
+                                    // router.refresh() delivers fresh RSC props so the
+                                    // SSR-derived `total` count in the page header updates.
+                                    router.refresh()
                                   })
                                 }}
                                 className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-destructive/40 hover:text-destructive transition-colors"

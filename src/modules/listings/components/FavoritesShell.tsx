@@ -78,9 +78,8 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
         })
       } else if (event.type === 'INSERT') {
         const listing = event.listing
-        // Respect the current type filter: skip if listing doesn't match.
-        if (typeFilter && listing.property_type !== typeFilter) return
-        // Only increment liveCounts when the listing is not already displayed.
+        // liveCounts tracks totals PER TYPE regardless of the active display filter —
+        // it must be updated even when the listing doesn't match the current typeFilter.
         // displayedIdsRef is checked by the hook before calling onEvent; this
         // re-check guards against the narrow concurrent-render race window.
         const alreadyDisplayed = displayedIdsRef.current.has(listing.id)
@@ -90,6 +89,9 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
             [listing.property_type]: (prev[listing.property_type] ?? 0) + 1,
           }))
         }
+        // Respect the current type filter: only add to the displayed list if the
+        // listing matches. liveCounts is updated above regardless of this guard.
+        if (typeFilter && listing.property_type !== typeFilter) return
         setDisplayedListings(prev => {
           if (prev.some(l => l.id === listing.id)) return prev
           return [listing as CardListingData, ...prev]

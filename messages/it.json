@@ -608,6 +608,125 @@
       "col_actions": "Azioni",
       "status_published": "Pubblicato",
       "status_draft": "Bozza"
+    },
+    "user_profile": {
+      "validation": {
+        "firstName_required": "Il nome è obbligatorio",
+        "lastName_required": "Il cognome è obbligatorio",
+        "phone_format": "Formato: +35569123456",
+        "location_required": "La città è obbligatoria",
+        "block_reason_required": "Il motivo del blocco è obbligatorio",
+        "company_name_required": "Il nome dell'azienda è obbligatorio",
+        "website_required": "Il sito dell'azienda è obbligatorio",
+        "email_required": "L'email è obbligatoria",
+        "email_invalid": "Indirizzo email non valido"
+      },
+      "profile_types": {
+        "admin": "Amministratore",
+        "moderator": "Moderatore",
+        "private": "Privato",
+        "agent": "Agente",
+        "developer": "Sviluppatore"
+      },
+      "statuses": {
+        "active": "Attivo",
+        "blocked": "Bloccato",
+        "inactive": "Inattivo"
+      },
+      "sections": {
+        "basic_info": "Informazioni di base",
+        "contact": "Dati di contatto",
+        "location_work": "Posizione (città di lavoro)",
+        "location_home": "Posizione (città di residenza)",
+        "company": "Dati azienda",
+        "account_status": "Stato account",
+        "change_log": "Storico modifiche tipo account",
+        "status_history": "Storico modifiche stato"
+      },
+      "fields": {
+        "email": "Email",
+        "email_create": "Email *",
+        "email_immutable": "L'email non può essere modificata. L'utente può cambiare la propria email dal profilo.",
+        "first_name": "Nome *",
+        "last_name": "Cognome *",
+        "profile_type": "Tipo account *",
+        "phone": "Telefono *",
+        "whatsapp": "WhatsApp",
+        "city": "Città *",
+        "region": "Regione",
+        "company_name": "Nome azienda *",
+        "website": "Sito web *",
+        "position": "Posizione",
+        "year_started": "Anno di inizio",
+        "status": "Stato *",
+        "block_reason": "Motivo blocco",
+        "use_main_phone": "Usa il numero di telefono principale"
+      },
+      "placeholders": {
+        "first_name": "Nome",
+        "last_name": "Cognome",
+        "city_search": "Inserisci il nome della città...",
+        "company_name": "Nome azienda",
+        "website": "https://company.al",
+        "position": "Direttore, Manager...",
+        "block_reason": "Inserisci il motivo del blocco...",
+        "city_assign": "Trova e assegna città..."
+      },
+      "actions": {
+        "back_to_users": "Utenti",
+        "edit_profile": "Modifica profilo",
+        "deactivate_profile": "Disattiva profilo",
+        "cancel": "Annulla",
+        "save": "Salva",
+        "create_user": "Crea utente",
+        "reject_request": "Rifiuta",
+        "region_auto": "(auto)"
+      },
+      "header": {
+        "new_user_title": "Nuovo utente",
+        "new_user_subtitle": "Compila i campi sottostanti per creare il profilo",
+        "verified_badge": "Verificato"
+      },
+      "location_request": {
+        "title": "Richiesta di aggiunta località"
+      },
+      "feedback": {
+        "avatar_upload_failed": "Avatar non caricato: {error}. Può essere aggiunto in modalità modifica.",
+        "avatar_upload_exception": "Avatar non caricato — può essere aggiunto in modalità modifica.",
+        "reason_prefix": "Motivo: {reason}"
+      },
+      "dialogs": {
+        "unsaved_title": "Modifiche non salvate",
+        "unsaved_body": "Hai modifiche non salvate. Se lasci questa pagina, tutte le modifiche andranno perse.",
+        "unsaved_stay": "Rimani",
+        "unsaved_leave": "Esci senza salvare",
+        "cancel_title": "Scartare le modifiche?",
+        "cancel_body": "Tutte le modifiche non salvate andranno perse. Questa azione non può essere annullata.",
+        "cancel_return": "Torna alla modifica",
+        "cancel_confirm": "Conferma annullamento",
+        "delete_hard_title": "Eliminare definitivamente?",
+        "delete_soft_title": "Disattivare il profilo?",
+        "delete_hard_about": "Stai per eliminare definitivamente il profilo:",
+        "delete_soft_about": "Stai per disattivare il profilo:",
+        "delete_hard_warning": "⚠️ Azione irreversibile!",
+        "delete_hard_point1": "• Account e dati del profilo verranno completamente eliminati",
+        "delete_shared_point2": "• Tutti gli annunci riceveranno lo stato 'Archivio'",
+        "delete_hard_point3": "• Il recupero non è possibile",
+        "delete_soft_header": "Il profilo verrà disattivato",
+        "delete_soft_point1": "• L'utente non potrà più accedere al sito",
+        "delete_soft_point3": "• I dati del profilo verranno conservati nel sistema",
+        "delete_cancel": "Annulla",
+        "delete_hard_confirm": "Elimina definitivamente",
+        "delete_soft_confirm": "Disattiva"
+      },
+      "password_info": {
+        "title": "Impostazione password",
+        "body": "Dopo la creazione del profilo, l'utente riceverà un'email con un link per impostare la password.",
+        "rule_length": "Minimo 8 caratteri",
+        "rule_case": "Lettere maiuscole e minuscole",
+        "rule_digits": "Cifre (0–9)",
+        "rule_special": "Caratteri speciali (!, @, #, $, %)"
+      }
     }
   }
 }

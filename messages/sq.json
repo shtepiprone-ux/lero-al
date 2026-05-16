@@ -608,6 +608,125 @@
       "col_actions": "Veprime",
       "status_published": "I publikuar",
       "status_draft": "Projektim"
+    },
+    "user_profile": {
+      "validation": {
+        "firstName_required": "Emri është i detyrueshëm",
+        "lastName_required": "Mbiemri është i detyrueshëm",
+        "phone_format": "Formati: +35569123456",
+        "location_required": "Qyteti është i detyrueshëm",
+        "block_reason_required": "Arsyeja e bllokimit është e detyrueshme",
+        "company_name_required": "Emri i kompanisë është i detyrueshëm",
+        "website_required": "Faqja e kompanisë është e detyrueshme",
+        "email_required": "Email-i është i detyrueshëm",
+        "email_invalid": "Adresë email-i jo e vlefshme"
+      },
+      "profile_types": {
+        "admin": "Administrator",
+        "moderator": "Moderator",
+        "private": "Person privat",
+        "agent": "Agjent",
+        "developer": "Zhvillues"
+      },
+      "statuses": {
+        "active": "Aktiv",
+        "blocked": "Bllokuar",
+        "inactive": "Joaktiv"
+      },
+      "sections": {
+        "basic_info": "Informacion bazë",
+        "contact": "Të dhëna kontakti",
+        "location_work": "Vendndodhja (qyteti i punës)",
+        "location_home": "Vendndodhja (qyteti i regjistrimit)",
+        "company": "Të dhënat e kompanisë",
+        "account_status": "Statusi i llogarisë",
+        "change_log": "Historia e ndryshimeve të llojit të llogarisë",
+        "status_history": "Historia e ndryshimeve të statusit"
+      },
+      "fields": {
+        "email": "Email",
+        "email_create": "Email *",
+        "email_immutable": "Email-i nuk mund të ndryshohet. Përdoruesi mund të ndryshojë email-in nga profili i tij.",
+        "first_name": "Emri *",
+        "last_name": "Mbiemri *",
+        "profile_type": "Lloji i llogarisë *",
+        "phone": "Telefon *",
+        "whatsapp": "WhatsApp",
+        "city": "Qyteti *",
+        "region": "Rajoni",
+        "company_name": "Emri i kompanisë *",
+        "website": "Faqja e internetit *",
+        "position": "Pozicioni",
+        "year_started": "Viti i fillimit",
+        "status": "Statusi *",
+        "block_reason": "Arsyeja e bllokimit",
+        "use_main_phone": "Përdor numrin kryesor të telefonit"
+      },
+      "placeholders": {
+        "first_name": "Emri",
+        "last_name": "Mbiemri",
+        "city_search": "Shkruani emrin e qytetit...",
+        "company_name": "Emri i kompanisë",
+        "website": "https://company.al",
+        "position": "Drejtor, Menaxher...",
+        "block_reason": "Shkruani arsyen e bllokimit...",
+        "city_assign": "Gjej dhe cakto qytetin..."
+      },
+      "actions": {
+        "back_to_users": "Përdoruesit",
+        "edit_profile": "Ndrysho profilin",
+        "deactivate_profile": "Çaktivizo profilin",
+        "cancel": "Anulo",
+        "save": "Ruaj",
+        "create_user": "Krijo përdorues",
+        "reject_request": "Refuzo",
+        "region_auto": "(auto)"
+      },
+      "header": {
+        "new_user_title": "Përdorues i ri",
+        "new_user_subtitle": "Plotësoni fushat më poshtë për të krijuar profilin",
+        "verified_badge": "I verifikuar"
+      },
+      "location_request": {
+        "title": "Kërkesë për shtimin e vendbanimit"
+      },
+      "feedback": {
+        "avatar_upload_failed": "Avatari nuk u ngarkua: {error}. Mund të shtohet në modalitetin e redaktimit.",
+        "avatar_upload_exception": "Avatari nuk u ngarkua — mund të shtohet në modalitetin e redaktimit.",
+        "reason_prefix": "Arsyeja: {reason}"
+      },
+      "dialogs": {
+        "unsaved_title": "Ndryshime të paruajtura",
+        "unsaved_body": "Keni ndryshime të paruajtura. Nëse largoheni nga faqja — të gjitha ndryshimet do të humbasin.",
+        "unsaved_stay": "Qëndroni",
+        "unsaved_leave": "Largohu pa ruajtur",
+        "cancel_title": "Të anulohen ndryshimet?",
+        "cancel_body": "Të gjitha ndryshimet e paruajtura do të humbasin. Kjo veprim nuk mund të zhbëhet.",
+        "cancel_return": "Kthehu te redaktimi",
+        "cancel_confirm": "Konfirmo anulimin",
+        "delete_hard_title": "Të fshihet përgjithmonë?",
+        "delete_soft_title": "Të çaktivizohet profili?",
+        "delete_hard_about": "Jeni duke fshirë përgjithmonë profilin:",
+        "delete_soft_about": "Jeni duke çaktivizuar profilin:",
+        "delete_hard_warning": "⚠️ Veprim i pakthyeshëm!",
+        "delete_hard_point1": "• Llogaria dhe të dhënat e profilit do të fshihen plotësisht",
+        "delete_shared_point2": "• Të gjitha njoftimet do të marrin statusin 'Arkiv'",
+        "delete_hard_point3": "• Rikuperimi nuk është i mundur",
+        "delete_soft_header": "Profili do të çaktivizohet",
+        "delete_soft_point1": "• Përdoruesi nuk do të mund të hyjë në faqe",
+        "delete_soft_point3": "• Të dhënat e profilit do të ruhen në sistem",
+        "delete_cancel": "Anulo",
+        "delete_hard_confirm": "Fshi përgjithmonë",
+        "delete_soft_confirm": "Çaktivizo"
+      },
+      "password_info": {
+        "title": "Konfigurimi i fjalëkalimit",
+        "body": "Pas krijimit të profilit, përdoruesi do të marrë email me një lidhje për të vendosur fjalëkalimin.",
+        "rule_length": "Minimum 8 karaktere",
+        "rule_case": "Shkronja të mëdha dhe të vogla",
+        "rule_digits": "Shifra (0–9)",
+        "rule_special": "Karaktere speciale (!, @, #, $, %)"
+      }
     }
   }
 }

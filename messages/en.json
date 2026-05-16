@@ -608,6 +608,125 @@
       "col_actions": "Actions",
       "status_published": "Published",
       "status_draft": "Draft"
+    },
+    "user_profile": {
+      "validation": {
+        "firstName_required": "First name is required",
+        "lastName_required": "Last name is required",
+        "phone_format": "Format: +35569123456",
+        "location_required": "City is required",
+        "block_reason_required": "Block reason is required",
+        "company_name_required": "Company name is required",
+        "website_required": "Company website is required",
+        "email_required": "Email is required",
+        "email_invalid": "Invalid email address"
+      },
+      "profile_types": {
+        "admin": "Administrator",
+        "moderator": "Moderator",
+        "private": "Private person",
+        "agent": "Agent",
+        "developer": "Developer"
+      },
+      "statuses": {
+        "active": "Active",
+        "blocked": "Blocked",
+        "inactive": "Inactive"
+      },
+      "sections": {
+        "basic_info": "Basic information",
+        "contact": "Contact details",
+        "location_work": "Location (work city)",
+        "location_home": "Location (home city)",
+        "company": "Company details",
+        "account_status": "Account status",
+        "change_log": "Account type history",
+        "status_history": "Status change history"
+      },
+      "fields": {
+        "email": "Email",
+        "email_create": "Email *",
+        "email_immutable": "Email is immutable. The user can change their email from their profile.",
+        "first_name": "First name *",
+        "last_name": "Last name *",
+        "profile_type": "Account type *",
+        "phone": "Phone *",
+        "whatsapp": "WhatsApp",
+        "city": "City *",
+        "region": "Region",
+        "company_name": "Company name *",
+        "website": "Website *",
+        "position": "Position",
+        "year_started": "Year started",
+        "status": "Status *",
+        "block_reason": "Block reason",
+        "use_main_phone": "Use main phone number"
+      },
+      "placeholders": {
+        "first_name": "First name",
+        "last_name": "Last name",
+        "city_search": "Enter city name...",
+        "company_name": "Company name",
+        "website": "https://company.al",
+        "position": "Director, Manager...",
+        "block_reason": "Enter block reason...",
+        "city_assign": "Find and assign city..."
+      },
+      "actions": {
+        "back_to_users": "Users",
+        "edit_profile": "Edit profile",
+        "deactivate_profile": "Deactivate profile",
+        "cancel": "Cancel",
+        "save": "Save",
+        "create_user": "Create user",
+        "reject_request": "Reject",
+        "region_auto": "(auto)"
+      },
+      "header": {
+        "new_user_title": "New user",
+        "new_user_subtitle": "Fill in the fields below to create a profile",
+        "verified_badge": "Verified"
+      },
+      "location_request": {
+        "title": "Location addition request"
+      },
+      "feedback": {
+        "avatar_upload_failed": "Avatar not uploaded: {error}. Can be added in edit mode.",
+        "avatar_upload_exception": "Avatar not uploaded — can be added in edit mode.",
+        "reason_prefix": "Reason: {reason}"
+      },
+      "dialogs": {
+        "unsaved_title": "Unsaved changes",
+        "unsaved_body": "You have unsaved changes. If you leave this page, all changes will be lost.",
+        "unsaved_stay": "Stay",
+        "unsaved_leave": "Leave without saving",
+        "cancel_title": "Discard changes?",
+        "cancel_body": "All unsaved changes will be lost. This action cannot be undone.",
+        "cancel_return": "Return to editing",
+        "cancel_confirm": "Confirm cancellation",
+        "delete_hard_title": "Delete permanently?",
+        "delete_soft_title": "Deactivate profile?",
+        "delete_hard_about": "You are about to permanently delete the profile:",
+        "delete_soft_about": "You are about to deactivate the profile:",
+        "delete_hard_warning": "⚠️ Irreversible action!",
+        "delete_hard_point1": "• Account and profile data will be completely deleted",
+        "delete_shared_point2": "• All listings will receive 'Archive' status",
+        "delete_hard_point3": "• Recovery is not possible",
+        "delete_soft_header": "Profile will be deactivated",
+        "delete_soft_point1": "• User will not be able to log in",
+        "delete_soft_point3": "• Profile data will be preserved in the system",
+        "delete_cancel": "Cancel",
+        "delete_hard_confirm": "Delete permanently",
+        "delete_soft_confirm": "Deactivate"
+      },
+      "password_info": {
+        "title": "Password setup",
+        "body": "After creating the profile, the user will receive an email with a link to set their password.",
+        "rule_length": "Minimum 8 characters",
+        "rule_case": "Uppercase and lowercase letters",
+        "rule_digits": "Digits (0–9)",
+        "rule_special": "Special characters (!, @, #, $, %)"
+      }
     }
   }
 }

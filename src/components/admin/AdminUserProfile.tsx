@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -47,49 +48,11 @@ interface Props {
   isAdmin: boolean
 }
 
-// ── Schema ───────────────────────────────────────────────────────────────────
+// ── Constants ────────────────────────────────────────────────────────────────
 
 const PHONE_RE = /^\+[1-9]\d{5,14}$/
 const PROFILE_TYPES = ['admin', 'moderator', 'private', 'agent', 'developer'] as const
 const STATUS_VALUES = ['active', 'blocked', 'inactive'] as const
-
-const profileSchema = z.object({
-  firstName:      z.string().min(1, "Ім'я обов'язкове"),
-  lastName:       z.string().min(1, "Прізвище обов'язкове"),
-  profileType:    z.enum(PROFILE_TYPES),
-  phone:          z.string().regex(PHONE_RE, 'Формат: +35569123456'),
-  useMainPhone:   z.boolean(),
-  whatsapp:       z.string().optional(),
-  locationId:     z.number().int().min(1, "Місто обов'язкове"),
-  companyName:    z.string().optional(),
-  companyLogoUrl: z.string().optional(),
-  website:        z.string().optional(),
-  position:       z.string().optional(),
-  yearStarted:    z.number().int().min(1900).max(new Date().getFullYear()).nullable().optional(),
-  status:         z.enum(STATUS_VALUES),
-  blockReason:    z.string().optional(),
-})
-.refine(d => d.status !== 'blocked' || !!d.blockReason?.trim(),
-  { message: "Причина блокування обов'язкова", path: ['blockReason'] })
-.refine(d => !['agent', 'developer'].includes(d.profileType) || !!d.companyName?.trim(),
-  { message: "Назва компанії обов'язкова", path: ['companyName'] })
-.refine(d => !['agent', 'developer'].includes(d.profileType) || !!d.website?.trim(),
-  { message: "Сайт компанії обов'язковий", path: ['website'] })
-.refine(d => {
-  if (d.useMainPhone) return true
-  if (!d.whatsapp) return true
-  return PHONE_RE.test(d.whatsapp)
-}, { message: 'Формат: +35569123456', path: ['whatsapp'] })
-
-type FormValues = z.infer<typeof profileSchema>
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-const PROFILE_TYPE_LABELS: Record<ProfileType, string> = {
-  admin: 'Адміністратор', moderator: 'Модератор',
-  private: 'Приватна особа', agent: 'Агент', developer: 'Забудовник',
-}
-const STATUS_LABELS  = { active: 'Активний', blocked: 'Заблокований', inactive: 'Неактивний' }
 const STATUS_VARIANT = { active: 'success', blocked: 'destructive', inactive: 'warning' } as const
 
 const COUNTRY_CODES = [
@@ -101,6 +64,57 @@ const COUNTRY_CODES = [
   { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
   { code: '+389', flag: '🇲🇰' },
 ]
+
+// ── Schema builder ────────────────────────────────────────────────────────────
+
+function buildProfileSchema(t: ReturnType<typeof useTranslations<'admin.user_profile'>>) {
+  return z.object({
+    firstName:      z.string().min(1, t('validation.firstName_required')),
+    lastName:       z.string().min(1, t('validation.lastName_required')),
+    profileType:    z.enum(PROFILE_TYPES),
+    phone:          z.string().regex(PHONE_RE, t('validation.phone_format')),
+    useMainPhone:   z.boolean(),
+    whatsapp:       z.string().optional(),
+    locationId:     z.number().int().min(1, t('validation.location_required')),
+    companyName:    z.string().optional(),
+    companyLogoUrl: z.string().optional(),
+    website:        z.string().optional(),
+    position:       z.string().optional(),
+    yearStarted:    z.number().int().min(1900).max(new Date().getFullYear()).nullable().optional(),
+    status:         z.enum(STATUS_VALUES),
+    blockReason:    z.string().optional(),
+  })
+  .refine(d => d.status !== 'blocked' || !!d.blockReason?.trim(),
+    { message: t('validation.block_reason_required'), path: ['blockReason'] })
+  .refine(d => !['agent', 'developer'].includes(d.profileType) || !!d.companyName?.trim(),
+    { message: t('validation.company_name_required'), path: ['companyName'] })
+  .refine(d => !['agent', 'developer'].includes(d.profileType) || !!d.website?.trim(),
+    { message: t('validation.website_required'), path: ['website'] })
+  .refine(d => {
+    if (d.useMainPhone) return true
+    if (!d.whatsapp) return true
+    return PHONE_RE.test(d.whatsapp)
+  }, { message: t('validation.phone_format'), path: ['whatsapp'] })
+}
+
+type FormValues = {
+  firstName: string
+  lastName: string
+  profileType: typeof PROFILE_TYPES[number]
+  phone: string
+  useMainPhone: boolean
+  whatsapp?: string
+  locationId: number
+  companyName?: string
+  companyLogoUrl?: string
+  website?: string
+  position?: string
+  yearStarted?: number | null
+  status: typeof STATUS_VALUES[number]
+  blockReason?: string
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function parsePhone(val: string) {
   const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
@@ -182,26 +196,23 @@ function PhoneInputField({ value, onChange, error }: { value: string; onChange: 
   )
 }
 
-
 // ── Dialogs ───────────────────────────────────────────────────────────────────
 
-// Shown when navigating away (sidebar, back button) with unsaved changes.
 function UnsavedChangesDialog({ onLeave, onStay }: { onLeave: () => void; onStay: () => void }) {
+  const t = useTranslations('admin.user_profile')
   return (
     <Dialog open onOpenChange={open => { if (!open) onStay() }}>
       <DialogContent showCloseButton={false} className="max-w-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-status-warning" />
-            Незбережені зміни
+            {t('dialogs.unsaved_title')}
           </DialogTitle>
         </DialogHeader>
-        <p className="text-sm text-muted-foreground">
-          Є незбережені зміни. Якщо залишити сторінку — всі зміни буде втрачено.
-        </p>
+        <p className="text-sm text-muted-foreground">{t('dialogs.unsaved_body')}</p>
         <DialogFooter>
-          <Button variant="outline" onClick={onStay}>Залишитися</Button>
-          <Button variant="destructive" onClick={onLeave}>Залишити без збереження</Button>
+          <Button variant="outline" onClick={onStay}>{t('dialogs.unsaved_stay')}</Button>
+          <Button variant="destructive" onClick={onLeave}>{t('dialogs.unsaved_leave')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -209,19 +220,20 @@ function UnsavedChangesDialog({ onLeave, onStay }: { onLeave: () => void; onStay
 }
 
 function CancelConfirmDialog({ onConfirm, onReturn }: { onConfirm: () => void; onReturn: () => void }) {
+  const t = useTranslations('admin.user_profile')
   return (
     <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
       <DialogContent showCloseButton={false} className="max-w-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <AlertTriangle className="h-5 w-5 text-status-warning" />
-            Скасувати зміни?
+            {t('dialogs.cancel_title')}
           </DialogTitle>
         </DialogHeader>
-        <p className="text-sm text-muted-foreground">Усі незбережені зміни буде втрачено. Цю дію неможливо відмінити.</p>
+        <p className="text-sm text-muted-foreground">{t('dialogs.cancel_body')}</p>
         <DialogFooter>
-          <Button variant="outline" onClick={onReturn}>Повернутися до редагування</Button>
-          <Button variant="destructive" onClick={onConfirm}>Підтвердити скасування</Button>
+          <Button variant="outline" onClick={onReturn}>{t('dialogs.cancel_return')}</Button>
+          <Button variant="destructive" onClick={onConfirm}>{t('dialogs.cancel_confirm')}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -232,6 +244,7 @@ function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, delet
   userName: string; email: string; mode: 'soft' | 'hard'
   onConfirm: () => void; onReturn: () => void; deleting: boolean
 }) {
+  const t = useTranslations('admin.user_profile')
   const isHard = mode === 'hard'
   return (
     <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
@@ -239,38 +252,38 @@ function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, delet
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-destructive">
             <Trash2 className="h-5 w-5" />
-            {isHard ? 'Видалити назавжди?' : 'Деактивувати профіль?'}
+            {isHard ? t('dialogs.delete_hard_title') : t('dialogs.delete_soft_title')}
           </DialogTitle>
         </DialogHeader>
         <div className="text-sm space-y-2">
           <p className="text-muted-foreground">
-            {isHard ? 'Ви збираєтесь назавжди видалити профіль:' : 'Ви збираєтесь деактивувати профіль:'}
+            {isHard ? t('dialogs.delete_hard_about') : t('dialogs.delete_soft_about')}
           </p>
           <p className="font-semibold">{userName}</p>
           <p className="text-muted-foreground text-xs">{email}</p>
           <div className={`rounded-lg p-3 mt-1 text-xs space-y-1 ${isHard ? 'bg-destructive/10 border border-destructive/20' : 'bg-orange-50 border border-orange-200'}`}>
             {isHard ? (
               <>
-                <p className="font-semibold text-destructive">⚠️ Незворотна дія!</p>
-                <p className="text-muted-foreground">• Акаунт та дані профілю буде повністю видалено</p>
-                <p className="text-muted-foreground">• Всі оголошення отримають статус «Архів»</p>
-                <p className="text-muted-foreground">• Відновлення неможливе</p>
+                <p className="font-semibold text-destructive">{t('dialogs.delete_hard_warning')}</p>
+                <p className="text-muted-foreground">{t('dialogs.delete_hard_point1')}</p>
+                <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
+                <p className="text-muted-foreground">{t('dialogs.delete_hard_point3')}</p>
               </>
             ) : (
               <>
-                <p className="font-semibold text-orange-700">Профіль буде деактивовано</p>
-                <p className="text-muted-foreground">• Користувач не зможе входити на сайт</p>
-                <p className="text-muted-foreground">• Всі оголошення отримають статус «Архів»</p>
-                <p className="text-muted-foreground">• Дані профілю збережуться в системі</p>
+                <p className="font-semibold text-orange-700">{t('dialogs.delete_soft_header')}</p>
+                <p className="text-muted-foreground">{t('dialogs.delete_soft_point1')}</p>
+                <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
+                <p className="text-muted-foreground">{t('dialogs.delete_soft_point3')}</p>
               </>
             )}
           </div>
         </div>
         <DialogFooter>
-          <Button variant="outline" onClick={onReturn} disabled={deleting}>Скасувати</Button>
+          <Button variant="outline" onClick={onReturn} disabled={deleting}>{t('dialogs.delete_cancel')}</Button>
           <Button variant="destructive" onClick={onConfirm} disabled={deleting}>
             {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {isHard ? 'Видалити назавжди' : 'Деактивувати'}
+            {isHard ? t('dialogs.delete_hard_confirm') : t('dialogs.delete_soft_confirm')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -283,6 +296,7 @@ function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, delet
 function ApprovalCityCombobox({ cities, onApprove, disabled }: {
   cities: CityOption[]; onApprove: (id: number) => void; disabled: boolean
 }) {
+  const t = useTranslations('admin.user_profile')
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
   const filtered = useMemo(() => {
@@ -301,7 +315,7 @@ function ApprovalCityCombobox({ cities, onApprove, disabled }: {
         onChange={e => { setSearch(e.target.value); setOpen(true) }}
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 180)}
-        placeholder="Знайти та призначити місто..."
+        placeholder={t('placeholders.city_assign')}
         disabled={disabled}
         className="w-full h-8 px-2 text-xs bg-muted border-0 rounded-lg focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-50"
       />
@@ -324,14 +338,19 @@ function ApprovalCityCombobox({ cities, onApprove, disabled }: {
 // ── Password requirements (create mode) ──────────────────────────────────────
 
 function PasswordInfo() {
+  const t = useTranslations('admin.user_profile')
+  const rules = [
+    t('password_info.rule_length'),
+    t('password_info.rule_case'),
+    t('password_info.rule_digits'),
+    t('password_info.rule_special'),
+  ]
   return (
     <div className="bg-muted/50 rounded-xl p-4 border flex flex-col gap-2">
-      <p className="text-sm font-medium">Встановлення паролю</p>
-      <p className="text-xs text-muted-foreground">
-        Після створення профілю користувач отримає email з посиланням для встановлення паролю.
-      </p>
+      <p className="text-sm font-medium">{t('password_info.title')}</p>
+      <p className="text-xs text-muted-foreground">{t('password_info.body')}</p>
       <ul className="space-y-1 mt-1">
-        {['Мінімум 8 символів', 'Великі та малі літери', 'Цифри (0–9)', 'Спецсимволи (!, @, #, $, %)'].map(r => (
+        {rules.map(r => (
           <li key={r} className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-status-success shrink-0" />{r}
           </li>
@@ -345,6 +364,21 @@ function PasswordInfo() {
 
 export function AdminUserProfile({ user, email: authEmail, cities, regions, changeLog, statusHistory, isAdmin }: Props) {
   const router = useRouter()
+  const t = useTranslations('admin.user_profile')
+
+  // Label maps derived from translations
+  const PROFILE_TYPE_LABELS: Record<ProfileType, string> = {
+    admin: t('profile_types.admin'),
+    moderator: t('profile_types.moderator'),
+    private: t('profile_types.private'),
+    agent: t('profile_types.agent'),
+    developer: t('profile_types.developer'),
+  }
+  const STATUS_LABELS = {
+    active: t('statuses.active'),
+    blocked: t('statuses.blocked'),
+    inactive: t('statuses.inactive'),
+  }
 
   // Mode derivation — create if no user, otherwise view/edit toggle
   const isCreate = user === null
@@ -355,7 +389,6 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [deleteMode, setDeleteMode] = useState<'soft' | 'hard'>('soft')
-  // Navigation guard dialog state (logic delegated to useUnsavedChangesGuard hook)
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavHref, setPendingNavHref] = useState<string | null>(null)
 
@@ -364,7 +397,6 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const [deleting, setDeleting] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url ?? null)
-  // Create mode: pending avatar blob uploaded after user creation
   const [pendingAvatarBlob, setPendingAvatarBlob] = useState<Blob | null>(null)
 
   // Email state — editable in create mode only
@@ -373,6 +405,9 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
   // Location request
   const [reqLoading, setReqLoading] = useState(false)
+
+  // Schema built with runtime translations
+  const profileSchema = useMemo(() => buildProfileSchema(t), [t])
 
   // Form
   const form = useForm<FormValues>({
@@ -409,17 +444,14 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
   const regionName = regions.find(r => r.id === cities.find(c => c.id === locationIdValue)?.region_id)?.name_al
     ?? user?.location?.parent?.name_al
 
-  // Navigation guard — true when form is dirty and we are in an editable mode.
   const needsGuard = isDirty && currentMode !== 'view'
 
-  // Centralized navigation guard (replaces three scattered effects)
   const handleShowGuardDialog = useCallback((href: string | null) => {
     setPendingNavHref(href)
     setShowUnsavedDialog(true)
   }, [])
   const { interceptHref, confirmLeave } = useUnsavedChangesGuard(needsGuard, handleShowGuardDialog)
 
-  // Side effects
   useEffect(() => { if (useMainPhone) setValue('whatsapp', phoneValue) }, [useMainPhone, phoneValue, setValue])
   useEffect(() => { if (statusValue !== 'blocked') setValue('blockReason', '') }, [statusValue, setValue])
   useEffect(() => {
@@ -430,8 +462,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
   function validateCreateEmail(): boolean {
     const v = createEmail.trim()
-    if (!v) { setCreateEmailError("Email обов'язковий"); return false }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { setCreateEmailError('Некоректний email'); return false }
+    if (!v) { setCreateEmailError(t('validation.email_required')); return false }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { setCreateEmailError(t('validation.email_invalid')); return false }
     setCreateEmailError(null)
     return true
   }
@@ -458,8 +490,6 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     })
     if (result.error) { setSaveError(result.error); setSaving(false); return }
 
-    // Upload pending avatar via API route (binary-safe standard HTTP multipart).
-    // Failure is non-fatal — user is created, admin can add avatar in edit mode.
     if (pendingAvatarBlob && result.userId) {
       console.log('[AvatarFlow] upload_started', { mode: 'create', hasUserId: true })
       try {
@@ -471,11 +501,11 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
         const uploadResult = await res.json() as { url?: string; error?: string }
         console.log('[AvatarFlow] upload_response_received', { success: !uploadResult.error, payload: uploadResult })
         if (uploadResult.error) {
-          toast.error(`Аватар не завантажено: ${uploadResult.error}. Можна додати у режимі редагування.`)
+          toast.error(t('feedback.avatar_upload_failed', { error: uploadResult.error }))
         }
       } catch (err) {
         console.log('[AvatarFlow] upload_exception', { error: String(err), mode: 'create', userId: result.userId })
-        toast.error('Аватар не завантажено — можна додати у режимі редагування.')
+        toast.error(t('feedback.avatar_upload_exception'))
       }
     }
 
@@ -498,7 +528,6 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     })
     setSaving(false)
     if (result.error) { setSaveError(result.error); return }
-    // Reset isDirty so the navigation guard deactivates immediately after save.
     form.reset(data)
     setEditActive(false); router.refresh()
   }
@@ -525,7 +554,6 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     }
   }
 
-  // Called by the UnsavedChangesDialog "Leave without saving" button
   function handleConfirmLeave() {
     const href = pendingNavHref
     setShowUnsavedDialog(false)
@@ -533,7 +561,6 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
     confirmLeave(href)
   }
 
-  // Called by AdminUserAvatar in create mode when user selects/clears an avatar
   function handleBlobReady(blob: Blob | null) {
     setPendingAvatarBlob(blob)
   }
@@ -565,18 +592,18 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           if (!interceptHref('/admin/users')) return
           router.push('/admin/users')
         }}>
-          <ChevronLeft className="h-4 w-4" /> Користувачі
+          <ChevronLeft className="h-4 w-4" /> {t('actions.back_to_users')}
         </Button>
         <div className="ml-auto flex gap-2">
           {currentMode === 'view' && (
             <>
               <Button variant="outline" size="sm" className="gap-1.5 rounded-xl" onClick={() => setEditActive(true)}>
-                <Pencil className="h-4 w-4" /> Редагувати профіль
+                <Pencil className="h-4 w-4" /> {t('actions.edit_profile')}
               </Button>
               {isAdmin && (
                 <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-orange-300 text-orange-700 hover:bg-orange-50"
                   onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
-                  <Trash2 className="h-4 w-4" /> Деактивувати профіль
+                  <Trash2 className="h-4 w-4" /> {t('actions.deactivate_profile')}
                 </Button>
               )}
             </>
@@ -584,14 +611,14 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           {(currentMode === 'edit' || currentMode === 'create') && (
             <>
               <Button variant="outline" size="sm" className="gap-1.5 rounded-xl" onClick={handleCancelClick}>
-                <X className="h-4 w-4" /> Скасувати
+                <X className="h-4 w-4" /> {t('actions.cancel')}
               </Button>
               <Button size="sm" className="gap-1.5 rounded-xl" onClick={handleSubmit(onSubmit)} disabled={saving}>
                 {saving
                   ? <Loader2 className="h-4 w-4 animate-spin" />
                   : isCreate ? <UserPlus className="h-4 w-4" /> : <Save className="h-4 w-4" />
                 }
-                {isCreate ? 'Створити користувача' : 'Зберегти'}
+                {isCreate ? t('actions.create_user') : t('actions.save')}
               </Button>
             </>
           )}
@@ -616,8 +643,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
         <div className="flex flex-col gap-2 min-w-0 pt-1">
           {isCreate ? (
             <>
-              <h1 className="text-xl font-bold">Новий користувач</h1>
-              <p className="text-sm text-muted-foreground">Заповніть поля нижче для створення профілю</p>
+              <h1 className="text-xl font-bold">{t('header.new_user_title')}</h1>
+              <p className="text-sm text-muted-foreground">{t('header.new_user_subtitle')}</p>
             </>
           ) : (
             <>
@@ -631,7 +658,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                 </Badge>
                 {user!.is_verified && (
                   <Badge variant="success" className="text-xs gap-1">
-                    <ShieldCheck className="h-3 w-3" /> Верифікований
+                    <ShieldCheck className="h-3 w-3" /> {t('header.verified_badge')}
                   </Badge>
                 )}
               </div>
@@ -645,7 +672,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       {user?.location_request && (
         <div className="bg-status-warning/10 border border-status-warning/30 rounded-2xl p-4 flex flex-col gap-3">
           <p className="text-sm font-semibold text-status-warning flex items-center gap-2">
-            <MapPin className="h-4 w-4" /> Запит на додавання населеного пункту
+            <MapPin className="h-4 w-4" /> {t('location_request.title')}
           </p>
           <p className="text-sm">
             <strong>{user.location_request.city}</strong>
@@ -659,18 +686,17 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
             />
             <Button variant="ghost" size="sm" className="h-8 text-xs text-destructive hover:bg-destructive/5 shrink-0"
               onClick={handleRejectRequest} disabled={reqLoading}>
-              {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Відхилити'}
+              {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : t('actions.reject_request')}
             </Button>
           </div>
         </div>
       )}
 
       {/* ── Basic info ──────────────────────────────────────────────────────── */}
-      <SectionCard title="Основна інформація">
-        {/* Email — editable in create, read-only in view/edit */}
+      <SectionCard title={t('sections.basic_info')}>
         {isCreate ? (
           <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-            <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">Email *</Label>
+            <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
             <div className="min-w-0">
               <Input
                 type="email"
@@ -684,33 +710,31 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           </div>
         ) : (
           <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-            <span className="text-sm text-muted-foreground sm:pt-2 leading-none">Email</span>
+            <span className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email')}</span>
             <div className="min-w-0">
               <span className="text-sm font-medium break-all">{authEmail}</span>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Email is immutable. The user can change their email from their profile.
-              </p>
+              <p className="text-xs text-muted-foreground mt-0.5">{t('fields.email_immutable')}</p>
             </div>
           </div>
         )}
 
-        <FieldRow label="Ім'я *" mode={currentMode}
+        <FieldRow label={t('fields.first_name')} mode={currentMode}
           viewValue={user?.name}
-          editContent={<Input {...register('firstName')} className="h-10 rounded-xl" placeholder="Ім'я" />}
+          editContent={<Input {...register('firstName')} className="h-10 rounded-xl" placeholder={t('placeholders.first_name')} />}
           error={errors.firstName?.message}
         />
-        <FieldRow label="Прізвище *" mode={currentMode}
+        <FieldRow label={t('fields.last_name')} mode={currentMode}
           viewValue={user?.last_name}
-          editContent={<Input {...register('lastName')} className="h-10 rounded-xl" placeholder="Прізвище" />}
+          editContent={<Input {...register('lastName')} className="h-10 rounded-xl" placeholder={t('placeholders.last_name')} />}
           error={errors.lastName?.message}
         />
         <FieldRow
-          label="Тип акаунту *"
+          label={t('fields.profile_type')}
           mode={isAdmin ? currentMode : 'view'}
           viewValue={PROFILE_TYPE_LABELS[profileTypeFromUser(user ?? { role: 'user', user_type: 'private' })]}
           editContent={
             <Combobox
-              options={PROFILE_TYPES.map(t => ({ value: t, label: PROFILE_TYPE_LABELS[t] }))}
+              options={PROFILE_TYPES.map(pt => ({ value: pt, label: PROFILE_TYPE_LABELS[pt] }))}
               value={profileType}
               onChange={v => { if (v) setValue('profileType', v as ProfileType) }}
               variant="button"
@@ -723,8 +747,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       </SectionCard>
 
       {/* ── Contact ─────────────────────────────────────────────────────────── */}
-      <SectionCard title="Контактні дані">
-        <FieldRow label="Телефон *" mode={currentMode}
+      <SectionCard title={t('sections.contact')}>
+        <FieldRow label={t('fields.phone')} mode={currentMode}
           viewValue={user?.phone}
           editContent={
             <PhoneInputField
@@ -735,13 +759,13 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           }
           error={undefined}
         />
-        <FieldRow label="WhatsApp" mode={currentMode}
+        <FieldRow label={t('fields.whatsapp')} mode={currentMode}
           viewValue={user?.whatsapp}
           editContent={
             <div className="flex flex-col gap-2">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <Checkbox checked={useMainPhone} onCheckedChange={v => setValue('useMainPhone', v === true)} />
-                Використовувати основний номер
+                {t('fields.use_main_phone')}
               </label>
               {!useMainPhone && (
                 <PhoneInputField
@@ -756,15 +780,15 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       </SectionCard>
 
       {/* ── Location ────────────────────────────────────────────────────────── */}
-      <SectionCard title={`Локація${isBusiness ? ' (місто роботи)' : ' (місто реєстрації)'}`} allowOverflow>
-        <FieldRow label="Місто *" mode={currentMode}
+      <SectionCard title={isBusiness ? t('sections.location_work') : t('sections.location_home')} allowOverflow>
+        <FieldRow label={t('fields.city')} mode={currentMode}
           editContent={
             <LocationCombobox
               locations={cities}
               value={locationIdValue ? String(locationIdValue) : ''}
               onChange={id => setValue('locationId', (id ? Number(id) : undefined) as unknown as number, { shouldValidate: true })}
               error={errors.locationId?.message}
-              placeholder="Введіть назву міста..."
+              placeholder={t('placeholders.city_search')}
               regions={isAdmin ? regions : undefined}
               onAddLocation={isAdmin ? addLocation : undefined}
             />
@@ -780,28 +804,28 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           error={undefined}
         />
         {currentMode !== 'view' && regionName && (
-          <FieldRow label="Регіон" mode="view"
-            viewValue={<span className="text-muted-foreground text-sm">{regionName} (авто)</span>}
+          <FieldRow label={t('fields.region')} mode="view"
+            viewValue={<span className="text-muted-foreground text-sm">{regionName} {t('actions.region_auto')}</span>}
           />
         )}
       </SectionCard>
 
       {/* ── Business (Agent / Developer) ────────────────────────────────────── */}
       {(isBusiness || (currentMode === 'view' && user && ['agent', 'developer'].includes(profileTypeFromUser(user)))) && (
-        <SectionCard title="Дані компанії">
-          <FieldRow label="Назва компанії *" mode={currentMode} viewValue={user?.company_name}
-            editContent={<Input {...register('companyName')} className="h-10 rounded-xl" placeholder="Назва компанії" />}
+        <SectionCard title={t('sections.company')}>
+          <FieldRow label={t('fields.company_name')} mode={currentMode} viewValue={user?.company_name}
+            editContent={<Input {...register('companyName')} className="h-10 rounded-xl" placeholder={t('placeholders.company_name')} />}
             error={errors.companyName?.message}
           />
-          <FieldRow label="Сайт *" mode={currentMode}
+          <FieldRow label={t('fields.website')} mode={currentMode}
             viewValue={user?.website ? <a href={user.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{user.website}</a> : undefined}
-            editContent={<Input {...register('website')} className="h-10 rounded-xl" placeholder="https://company.al" />}
+            editContent={<Input {...register('website')} className="h-10 rounded-xl" placeholder={t('placeholders.website')} />}
             error={errors.website?.message}
           />
-          <FieldRow label="Посада" mode={currentMode} viewValue={user?.position}
-            editContent={<Input {...register('position')} className="h-10 rounded-xl" placeholder="Директор, Менеджер..." />}
+          <FieldRow label={t('fields.position')} mode={currentMode} viewValue={user?.position}
+            editContent={<Input {...register('position')} className="h-10 rounded-xl" placeholder={t('placeholders.position')} />}
           />
-          <FieldRow label="Рік початку" mode={currentMode} viewValue={user?.year_started?.toString()}
+          <FieldRow label={t('fields.year_started')} mode={currentMode} viewValue={user?.year_started?.toString()}
             editContent={
               <Input {...register('yearStarted', { valueAsNumber: true })} type="number"
                 min={1900} max={new Date().getFullYear()} className="h-10 rounded-xl w-32" placeholder="2015" />
@@ -813,8 +837,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
       {/* ── Account Status (not shown in create mode) ───────────────────────── */}
       {!isCreate && (
-        <SectionCard title="Статус акаунту">
-          <FieldRow label="Статус *" mode={currentMode}
+        <SectionCard title={t('sections.account_status')}>
+          <FieldRow label={t('fields.status')} mode={currentMode}
             viewValue={
               <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
                 {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
@@ -823,9 +847,9 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
             editContent={
               <Combobox
                 options={[
-                  { value: 'active', label: 'Активний' },
-                  { value: 'blocked', label: 'Заблокований' },
-                  { value: 'inactive', label: 'Неактивний' },
+                  { value: 'active', label: t('statuses.active') },
+                  { value: 'blocked', label: t('statuses.blocked') },
+                  { value: 'inactive', label: t('statuses.inactive') },
                 ]}
                 value={statusValue ?? ''}
                 onChange={v => { if (v) setValue('status', v as 'active' | 'blocked' | 'inactive') }}
@@ -837,10 +861,10 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
             error={errors.status?.message}
           />
           {(statusValue === 'blocked' || user?.block_reason) && (
-            <FieldRow label="Причина блокування" mode={statusValue === 'blocked' ? currentMode : 'view'}
+            <FieldRow label={t('fields.block_reason')} mode={statusValue === 'blocked' ? currentMode : 'view'}
               viewValue={user?.block_reason}
               editContent={
-                <Input {...register('blockReason')} className="h-10 rounded-xl" placeholder="Вкажіть причину блокування..." />
+                <Input {...register('blockReason')} className="h-10 rounded-xl" placeholder={t('placeholders.block_reason')} />
               }
               error={errors.blockReason?.message}
             />
@@ -853,7 +877,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
       {/* ── Change history (not shown in create mode) ───────────────────────── */}
       {!isCreate && changeLog.length > 0 && (
-        <SectionCard title="Історія змін типу акаунту">
+        <SectionCard title={t('sections.change_log')}>
           <div className="flex flex-col gap-2">
             {changeLog.map(entry => (
               <div key={entry.id} className="flex items-start gap-3 text-xs">
@@ -876,7 +900,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
       {/* ── Status history (not shown in create mode) ───────────────────────── */}
       {!isCreate && statusHistory.length > 0 && (
-        <SectionCard title="Історія змін статусу">
+        <SectionCard title={t('sections.status_history')}>
           <div className="flex flex-col gap-2">
             {statusHistory.slice(0, 10).map(entry => (
               <div key={entry.id} className="flex items-start gap-3 text-xs">
@@ -893,7 +917,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                     <span className="font-medium capitalize">{entry.new_status}</span>
                   </div>
                   {entry.reason && (
-                    <span className="text-muted-foreground">Причина: {entry.reason}</span>
+                    <span className="text-muted-foreground">{t('feedback.reason_prefix', { reason: entry.reason })}</span>
                   )}
                 </div>
               </div>

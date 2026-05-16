@@ -608,6 +608,125 @@
       "col_actions": "Дії",
       "status_published": "Опубліковано",
       "status_draft": "Чернетка"
+    },
+    "user_profile": {
+      "validation": {
+        "firstName_required": "Ім'я обов'язкове",
+        "lastName_required": "Прізвище обов'язкове",
+        "phone_format": "Формат: +35569123456",
+        "location_required": "Місто обов'язкове",
+        "block_reason_required": "Причина блокування обов'язкова",
+        "company_name_required": "Назва компанії обов'язкова",
+        "website_required": "Сайт компанії обов'язковий",
+        "email_required": "Email обов'язковий",
+        "email_invalid": "Некоректний email"
+      },
+      "profile_types": {
+        "admin": "Адміністратор",
+        "moderator": "Модератор",
+        "private": "Приватна особа",
+        "agent": "Агент",
+        "developer": "Забудовник"
+      },
+      "statuses": {
+        "active": "Активний",
+        "blocked": "Заблокований",
+        "inactive": "Неактивний"
+      },
+      "sections": {
+        "basic_info": "Основна інформація",
+        "contact": "Контактні дані",
+        "location_work": "Локація (місто роботи)",
+        "location_home": "Локація (місто реєстрації)",
+        "company": "Дані компанії",
+        "account_status": "Статус акаунту",
+        "change_log": "Історія змін типу акаунту",
+        "status_history": "Історія змін статусу"
+      },
+      "fields": {
+        "email": "Email",
+        "email_create": "Email *",
+        "email_immutable": "Email незмінний. Користувач може змінити email у своєму профілі.",
+        "first_name": "Ім'я *",
+        "last_name": "Прізвище *",
+        "profile_type": "Тип акаунту *",
+        "phone": "Телефон *",
+        "whatsapp": "WhatsApp",
+        "city": "Місто *",
+        "region": "Регіон",
+        "company_name": "Назва компанії *",
+        "website": "Сайт *",
+        "position": "Посада",
+        "year_started": "Рік початку",
+        "status": "Статус *",
+        "block_reason": "Причина блокування",
+        "use_main_phone": "Використовувати основний номер"
+      },
+      "placeholders": {
+        "first_name": "Ім'я",
+        "last_name": "Прізвище",
+        "city_search": "Введіть назву міста...",
+        "company_name": "Назва компанії",
+        "website": "https://company.al",
+        "position": "Директор, Менеджер...",
+        "block_reason": "Вкажіть причину блокування...",
+        "city_assign": "Знайти та призначити місто..."
+      },
+      "actions": {
+        "back_to_users": "Користувачі",
+        "edit_profile": "Редагувати профіль",
+        "deactivate_profile": "Деактивувати профіль",
+        "cancel": "Скасувати",
+        "save": "Зберегти",
+        "create_user": "Створити користувача",
+        "reject_request": "Відхилити",
+        "region_auto": "(авто)"
+      },
+      "header": {
+        "new_user_title": "Новий користувач",
+        "new_user_subtitle": "Заповніть поля нижче для створення профілю",
+        "verified_badge": "Верифікований"
+      },
+      "location_request": {
+        "title": "Запит на додавання населеного пункту"
+      },
+      "feedback": {
+        "avatar_upload_failed": "Аватар не завантажено: {error}. Можна додати у режимі редагування.",
+        "avatar_upload_exception": "Аватар не завантажено — можна додати у режимі редагування.",
+        "reason_prefix": "Причина: {reason}"
+      },
+      "dialogs": {
+        "unsaved_title": "Незбережені зміни",
+        "unsaved_body": "Є незбережені зміни. Якщо залишити сторінку — всі зміни буде втрачено.",
+        "unsaved_stay": "Залишитися",
+        "unsaved_leave": "Залишити без збереження",
+        "cancel_title": "Скасувати зміни?",
+        "cancel_body": "Усі незбережені зміни буде втрачено. Цю дію неможливо відмінити.",
+        "cancel_return": "Повернутися до редагування",
+        "cancel_confirm": "Підтвердити скасування",
+        "delete_hard_title": "Видалити назавжди?",
+        "delete_soft_title": "Деактивувати профіль?",
+        "delete_hard_about": "Ви збираєтесь назавжди видалити профіль:",
+        "delete_soft_about": "Ви збираєтесь деактивувати профіль:",
+        "delete_hard_warning": "⚠️ Незворотна дія!",
+        "delete_hard_point1": "• Акаунт та дані профілю буде повністю видалено",
+        "delete_shared_point2": "• Всі оголошення отримають статус «Архів»",
+        "delete_hard_point3": "• Відновлення неможливе",
+        "delete_soft_header": "Профіль буде деактивовано",
+        "delete_soft_point1": "• Користувач не зможе входити на сайт",
+        "delete_soft_point3": "• Дані профілю збережуться в системі",
+        "delete_cancel": "Скасувати",
+        "delete_hard_confirm": "Видалити назавжди",
+        "delete_soft_confirm": "Деактивувати"
+      },
+      "password_info": {
+        "title": "Встановлення паролю",
+        "body": "Після створення профілю користувач отримає email з посиланням для встановлення паролю.",
+        "rule_length": "Мінімум 8 символів",
+        "rule_case": "Великі та малі літери",
+        "rule_digits": "Цифри (0–9)",
+        "rule_special": "Спецсимволи (!, @, #, $, %)"
+      }
     }
   }
 }

@@ -6,7 +6,8 @@ import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { getAllSettings } from '@/modules/admin/lib/settings'
 import { Toaster } from '@/components/ui/sonner'
-import { ADMIN_LOCALE_COOKIE, ADMIN_LOCALE_DEFAULT } from '@/modules/admin/actions/locale'
+const ADMIN_LOCALE_COOKIE = 'admin-locale'
+const ADMIN_LOCALE_DEFAULT = 'en'
 
 // Static imports — all message files bundled, only selected one passed to provider.
 import messagesSq from '../../../messages/sq.json'

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { AdminMobileHeader } from '@/components/admin/AdminMobileHeader'
 
-export function AdminShell({ children, siteName }: { children: React.ReactNode; siteName?: string }) {
+export function AdminShell({ children, siteName, locale }: { children: React.ReactNode; siteName?: string; locale?: string }) {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (

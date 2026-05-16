@@ -1,11 +1,32 @@
 import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { getAllSettings } from '@/modules/admin/lib/settings'
 import { Toaster } from '@/components/ui/sonner'
-import messages from '../../../messages/en.json'
+import { ADMIN_LOCALE_COOKIE, ADMIN_LOCALE_DEFAULT } from '@/modules/admin/actions/locale'
+
+// Static imports — all message files bundled, only selected one passed to provider.
+import messagesSq from '../../../messages/sq.json'
+import messagesEn from '../../../messages/en.json'
+import messagesUk from '../../../messages/uk.json'
+import messagesIt from '../../../messages/it.json'
+
+type Locale = 'sq' | 'en' | 'uk' | 'it'
+
+const MESSAGES: Record<Locale, Record<string, unknown>> = {
+  sq: messagesSq as unknown as Record<string, unknown>,
+  en: messagesEn as unknown as Record<string, unknown>,
+  uk: messagesUk as unknown as Record<string, unknown>,
+  it: messagesIt as unknown as Record<string, unknown>,
+}
+
+function resolveLocale(raw: string | undefined): Locale {
+  const supported: Locale[] = ['sq', 'en', 'uk', 'it']
+  return supported.includes(raw as Locale) ? (raw as Locale) : ADMIN_LOCALE_DEFAULT as Locale
+}
 
 export const metadata = { title: 'Admin — Lero.al' }
 
@@ -27,9 +48,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const settings = await getAllSettings()
   const siteName = settings['site_name'] ?? 'Lero.al'
 
+  const jar = await cookies()
+  const locale = resolveLocale(jar.get(ADMIN_LOCALE_COOKIE)?.value)
+  const messages = MESSAGES[locale]
+
   return (
-    <NextIntlClientProvider locale="en" messages={messages}>
-      <AdminShell siteName={siteName}>{children}</AdminShell>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <AdminShell siteName={siteName} locale={locale}>{children}</AdminShell>
       <Toaster />
     </NextIntlClientProvider>
   )

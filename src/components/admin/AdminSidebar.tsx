@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
+import { AdminLocaleSwitcher } from '@/components/admin/AdminLocaleSwitcher'
 
 const GROUPS = [
   {
@@ -125,7 +126,9 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
       </nav>
 
       {/* Footer */}
-      <div className="px-3 pb-4 pt-3 border-t shrink-0 flex flex-col gap-0.5">
+      <div className="px-3 pb-4 pt-3 border-t shrink-0 flex flex-col gap-3">
+        <AdminLocaleSwitcher />
+        <div className="flex flex-col gap-0.5">
         <Link
           href="/"
           target="_blank"
@@ -141,6 +144,7 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
           <LogOut className="h-4 w-4 shrink-0" />
           Вийти
         </button>
+        </div>
       </div>
     </div>
   )

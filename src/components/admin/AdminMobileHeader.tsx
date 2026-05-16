@@ -7,7 +7,6 @@ const PAGE_TITLES: Record<string, string> = {
   '/admin':              'Dashboard',
   '/admin/listings':     'Оголошення',
   '/admin/users':        'Користувачі',
-  '/admin/badges':       'Бейджі',
   '/admin/support':      'Support',
   '/admin/locations':    'Населені пункти',
   '/admin/legal':        'Правові документи',

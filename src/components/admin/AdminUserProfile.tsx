@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -261,7 +261,7 @@ function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, delet
           </p>
           <p className="font-semibold">{userName}</p>
           <p className="text-muted-foreground text-xs">{email}</p>
-          <div className={`rounded-lg p-3 mt-1 text-xs space-y-1 ${isHard ? 'bg-destructive/10 border border-destructive/20' : 'bg-orange-50 border border-orange-200'}`}>
+          <div className={`rounded-lg p-3 mt-1 text-xs space-y-1 ${isHard ? 'bg-destructive/10 border border-destructive/20' : 'bg-status-warning/10 border border-status-warning/30'}`}>
             {isHard ? (
               <>
                 <p className="font-semibold text-destructive">{t('dialogs.delete_hard_warning')}</p>
@@ -271,7 +271,7 @@ function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, delet
               </>
             ) : (
               <>
-                <p className="font-semibold text-orange-700">{t('dialogs.delete_soft_header')}</p>
+                <p className="font-semibold text-status-warning">{t('dialogs.delete_soft_header')}</p>
                 <p className="text-muted-foreground">{t('dialogs.delete_soft_point1')}</p>
                 <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
                 <p className="text-muted-foreground">{t('dialogs.delete_soft_point3')}</p>
@@ -288,50 +288,6 @@ function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, delet
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
-
-// ── City combobox for location-request approval ───────────────────────────────
-
-function ApprovalCityCombobox({ cities, onApprove, disabled }: {
-  cities: CityOption[]; onApprove: (id: number) => void; disabled: boolean
-}) {
-  const t = useTranslations('admin.user_profile')
-  const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
-  const filtered = useMemo(() => {
-    if (!search.trim()) return cities.slice(0, 15)
-    const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
-    const normalize = (s: string) => s.normalize('NFD').replace(COMBINING, '').toLowerCase()
-    const q = normalize(search)
-    return cities.filter(c => normalize(c.name_al).includes(q)).slice(0, 15)
-  }, [cities, search])
-
-  return (
-    <div className="relative flex-1 min-w-0">
-      <input
-        type="text"
-        value={search}
-        onChange={e => { setSearch(e.target.value); setOpen(true) }}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setTimeout(() => setOpen(false), 180)}
-        placeholder={t('placeholders.city_assign')}
-        disabled={disabled}
-        className="w-full h-8 px-2 text-xs bg-muted border-0 rounded-lg focus:outline-none focus:ring-1 focus:ring-ring disabled:opacity-50"
-      />
-      {open && filtered.length > 0 && (
-        <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover border rounded-xl shadow-lg max-h-40 overflow-y-auto">
-          {filtered.map(c => (
-            <button key={c.id} type="button"
-              className="w-full text-left px-3 py-1.5 text-xs hover:bg-muted transition-colors"
-              onMouseDown={() => { onApprove(c.id); setSearch(''); setOpen(false) }}
-            >
-              {c.name_al}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
   )
 }
 
@@ -365,6 +321,7 @@ function PasswordInfo() {
 export function AdminUserProfile({ user, email: authEmail, cities, regions, changeLog, statusHistory, isAdmin }: Props) {
   const router = useRouter()
   const t = useTranslations('admin.user_profile')
+  const locale = useLocale()
 
   // Label maps derived from translations
   const PROFILE_TYPE_LABELS: Record<ProfileType, string> = {
@@ -601,7 +558,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                 <Pencil className="h-4 w-4" /> {t('actions.edit_profile')}
               </Button>
               {isAdmin && (
-                <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-orange-300 text-orange-700 hover:bg-orange-50"
+                <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-status-warning/40 text-status-warning hover:bg-status-warning/10"
                   onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
                   <Trash2 className="h-4 w-4" /> {t('actions.deactivate_profile')}
                 </Button>
@@ -679,11 +636,14 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
             {user.location_request.region ? `, ${user.location_request.region}` : ''}
           </p>
           <div className="flex gap-2 items-center flex-wrap">
-            <ApprovalCityCombobox
-              cities={cities}
-              onApprove={handleApproveRequest}
-              disabled={reqLoading}
-            />
+            <div className={cn('flex-1 min-w-0', reqLoading && 'pointer-events-none opacity-50')}>
+              <LocationCombobox
+                locations={cities}
+                value=""
+                onChange={id => { if (id) handleApproveRequest(Number(id)) }}
+                placeholder={t('placeholders.city_assign')}
+              />
+            </div>
             <Button variant="ghost" size="sm" className="h-8 text-xs text-destructive hover:bg-destructive/5 shrink-0"
               onClick={handleRejectRequest} disabled={reqLoading}>
               {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : t('actions.reject_request')}
@@ -884,7 +844,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                 <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
                 <div className="min-w-0">
                   <span className="text-muted-foreground">
-                    {new Date(entry.changed_at).toLocaleDateString('uk-UA', {
+                    {new Date(entry.changed_at).toLocaleDateString(locale, {
                       day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
                     })}
                   </span>
@@ -908,7 +868,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
                 <div className="min-w-0 flex flex-col gap-0.5">
                   <div>
                     <span className="text-muted-foreground">
-                      {new Date(entry.changed_at).toLocaleDateString('uk-UA', {
+                      {new Date(entry.changed_at).toLocaleDateString(locale, {
                         day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
                       })}
                     </span>

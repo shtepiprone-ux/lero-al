@@ -141,6 +141,8 @@
     "status_banner_sold": "This property has been sold. See similar available listings below.",
     "status_banner_rented": "This property has been rented. See similar available listings below.",
     "status_banner_archived": "This listing is archived and no longer available.",
+    "action_disabled_sold": "This listing has been sold",
+    "action_disabled_rented": "This listing has been rented",
     "no_results_closed": "No sold or rented listings found",
     "listing_type_sale": "For sale",
     "listing_type_rent": "Per month",

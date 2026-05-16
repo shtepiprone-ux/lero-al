@@ -96,6 +96,8 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const locale = useLocale()
   const badges = getBadges(listing)
   const [idCopied, setIdCopied] = useState(false)
+  const isClosed = isListingClosed(listing.status as ListingStatus)
+  const closedLabel = isClosed ? t(`action_disabled_${listing.status}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
 
   function copyId(e: React.MouseEvent) {
     e.preventDefault()
@@ -166,6 +168,8 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                 listingId={listing.id}
                 isFavorited={isFavorited}
                 onToggled={onFavoriteToggled}
+                disabled={isClosed}
+                disabledLabel={closedLabel}
                 className="shrink-0 -mt-0.5 -mr-1"
               />
             </div>
@@ -280,6 +284,8 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           listingId={listing.id}
           isFavorited={isFavorited}
           onToggled={onFavoriteToggled}
+          disabled={isClosed}
+          disabledLabel={closedLabel}
           className="absolute top-2 right-2 shadow-sm"
         />
       </AppImage>

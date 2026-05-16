@@ -141,6 +141,8 @@
     "status_banner_sold": "Kjo pronë është shitur. Shikoni prona të ngjashme aktive më poshtë.",
     "status_banner_rented": "Kjo pronë është dhënë me qira. Shikoni prona të ngjashme aktive më poshtë.",
     "status_banner_archived": "Ky njoftim është arkivuar dhe nuk është më i disponueshëm.",
+    "action_disabled_sold": "Kjo pronë është shitur",
+    "action_disabled_rented": "Kjo pronë është dhënë me qira",
     "no_results_closed": "Nuk u gjetën prona të shitura ose dhënë me qira",
     "listing_type_sale": "Shitje",
     "listing_type_rent": "Qira me muaj",

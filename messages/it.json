@@ -141,6 +141,8 @@
     "status_banner_sold": "Questo immobile è stato venduto. Vedi annunci simili disponibili qui sotto.",
     "status_banner_rented": "Questo immobile è stato affittato. Vedi annunci simili disponibili qui sotto.",
     "status_banner_archived": "Questo annuncio è archiviato e non è più disponibile.",
+    "action_disabled_sold": "Questo annuncio è stato venduto",
+    "action_disabled_rented": "Questo annuncio è stato affittato",
     "no_results_closed": "Nessun annuncio venduto o affittato trovato",
     "listing_type_sale": "In vendita",
     "listing_type_rent": "Al mese",

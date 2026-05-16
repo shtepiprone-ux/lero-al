@@ -38,18 +38,24 @@ export async function SimilarListings({ currentId, propertyType, locationId }: P
   const locale = await getLocale()
   const supabase = await createClient()
 
-  let query = supabase
-    .from('listings')
-    .select(SELECT)
-    .eq('status', 'active')
-    .eq('property_type', propertyType)
-    .neq('id', currentId)
-    .gte('expires_at', new Date().toISOString())
-    .limit(4)
+  const baseQuery = () =>
+    supabase
+      .from('listings')
+      .select(SELECT)
+      .eq('status', 'active')
+      .eq('property_type', propertyType)
+      .neq('id', currentId)
+      .gte('expires_at', new Date().toISOString())
+      .limit(4)
 
-  if (locationId) query = query.eq('location_id', locationId)
+  // Try with same location first; fall back to any location if no results found.
+  let { data: listings } = locationId
+    ? await baseQuery().eq('location_id', locationId)
+    : await baseQuery()
 
-  const { data: listings } = await query
+  if (!listings?.length && locationId) {
+    ;({ data: listings } = await baseQuery())
+  }
 
   if (!listings?.length) return null
 

@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
-import { updateListingStatus, setListingPremium, deleteListing } from '@/modules/admin/actions'
+import { setListingPremium, deleteListing } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
 import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
@@ -276,24 +276,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         {formatPrice(l.price, l.currency, locale)}
                       </td>
                       <td className="px-4 py-3">
-                        <Combobox
-                          options={STATUS_OPTIONS}
-                          value={l.status}
-                          portal
-                          onChange={newStatus => {
-                            if (!newStatus || newStatus === l.status) return
-                            withLoading(l.id, async () => {
-                              await updateListingStatus(l.id, newStatus as ListingStatus)
-                              setItems(prev => prev.map(item =>
-                                item.id === l.id ? { ...item, status: newStatus as ListingStatus } : item
-                              ))
-                            })
-                          }}
-                          variant="button"
-                          size="xs"
-                          disabled={loadingId === l.id}
-                          className="w-32"
-                        />
+                        <span className="text-xs capitalize">{STATUS_LABEL[l.status]}</span>
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
                         {l.owner?.name ?? '—'}

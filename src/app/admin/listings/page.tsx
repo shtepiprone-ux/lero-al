@@ -57,7 +57,9 @@ export default async function AdminListingsPage({
 
   if (status) query = query.eq('status', status)
   if (q) {
-    const conditions = [`id.ilike.%${q}%`, `title.ilike.%${q}%`]
+    // id::text cast required — UUID column has no implicit ILIKE operator in PostgreSQL.
+    // Without the cast the entire .or() returns a DB error and data comes back null.
+    const conditions = [`id::text.ilike.%${q}%`, `title.ilike.%${q}%`]
     if (ownerIds.length > 0) conditions.push(`user_id.in.(${ownerIds.join(',')})`)
     query = query.or(conditions.join(','))
   }

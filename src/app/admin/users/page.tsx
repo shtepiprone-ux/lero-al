@@ -13,7 +13,8 @@ export default async function AdminUsersPage({
   const sp = await searchParams
   const tab = sp.tab ?? 'all'
   const role = sp.role ?? ''
-  const q = sp.q?.trim() ?? ''
+  const q = sp.q ?? ''
+  const qTrimmed = q.trim()
   const locationRequest = sp.location_request === '1'
   const page = Math.max(1, Number(sp.page ?? 1))
   const PER_PAGE = 25
@@ -35,7 +36,20 @@ export default async function AdminUsersPage({
 
     if (role) query = query.eq('role', role)
     if (locationRequest) query = query.not('location_request', 'is', null)
-    if (q) query = query.or(`id.ilike.%${q}%,name.ilike.%${q}%,last_name.ilike.%${q}%,phone.ilike.%${q}%,company_name.ilike.%${q}%`)
+    if (qTrimmed) {
+      const words = qTrimmed.split(/\s+/).filter(Boolean)
+      // OR across all words and all text fields (no UUID ilike — causes DB type error).
+      // Searching "John Doe" finds users where any field contains "John" or "Doe".
+      const conditions = words.flatMap(w => [
+        `name.ilike.%${w}%`,
+        `last_name.ilike.%${w}%`,
+        `phone.ilike.%${w}%`,
+        `company_name.ilike.%${w}%`,
+      ])
+      const FULL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+      if (FULL_UUID.test(qTrimmed)) conditions.push(`id.eq.${qTrimmed}`)
+      query = query.or(conditions.join(','))
+    }
 
     const { data, count: total } = await query
     users = (data ?? []) as unknown as AdminUser[]

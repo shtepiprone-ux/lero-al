@@ -3,11 +3,11 @@
 import { useState, useTransition } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { ShieldCheck, ShieldOff, Loader2, ExternalLink, MapPin, Search } from 'lucide-react'
+import { ShieldCheck, ShieldOff, Loader2, ExternalLink, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
@@ -138,15 +138,11 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
       ) : (
       <>
       {/* Search */}
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-        <Input
-          defaultValue={searchQuery}
-          placeholder="Пошук по імені, телефону, ID..."
-          className="h-9 pl-9 rounded-xl"
-          onChange={e => navigate({ q: e.target.value || null, page: null })}
-        />
-      </div>
+      <AdminSearchInput
+        value={searchQuery}
+        placeholder="Пошук по імені, телефону, компанії..."
+        className="max-w-sm"
+      />
       {/* Role filter */}
       <div className="flex gap-2 flex-wrap">
         {['', ...ROLES].map(r => (

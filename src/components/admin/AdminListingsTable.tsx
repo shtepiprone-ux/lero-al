@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useTransition, useRef, useEffect } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check, Search } from 'lucide-react'
+import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
 import { RelativeTime } from '@/components/shared/RelativeTime'
+import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { updateListingStatus, setListingPremium, deleteListing } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
 import type { ListingStatus } from '@/types/database'
@@ -143,35 +144,10 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const [premiumDialog, setPremiumDialog] = useState<AdminListing | null>(null)
   const [items, setItems] = useState(init)
   const [copiedId, setCopiedId] = useState<string | null>(null)
-  const [localSearch, setLocalSearch] = useState(searchQuery)
-  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const totalPages = Math.ceil(total / perPage)
 
-  // Sync from URL only when no debounce is pending.
-  // If pending, the user is mid-type and we must not override their input.
-  useEffect(() => {
-    if (!debounceTimer.current) setLocalSearch(searchQuery)
-  }, [searchQuery])
-
-  // Re-sync items when RSC delivers fresh props (e.g. after router.refresh() from
-  // PremiumDialog.onDone). useState(init) ignores prop changes after first mount,
-  // so an explicit effect is required — same pattern used above for localSearch.
+  // Re-sync items when RSC delivers fresh props (e.g. after router.refresh()).
   useEffect(() => { setItems(init) }, [init])
-
-  // Clear the debounce timer on unmount to prevent router.push from firing
-  // after the component has navigated away (uncontrolled side-effect).
-  useEffect(() => () => {
-    if (debounceTimer.current) clearTimeout(debounceTimer.current)
-  }, [])
-
-  function handleSearchChange(value: string) {
-    setLocalSearch(value)
-    if (debounceTimer.current) clearTimeout(debounceTimer.current)
-    debounceTimer.current = setTimeout(() => {
-      debounceTimer.current = null  // mark as settled so the sync effect can run
-      navigate({ q: value || null, page: null })
-    }, 300)
-  }
 
   function navigate(updates: Record<string, string | null>) {
     const params = new URLSearchParams(searchParams.toString())
@@ -215,15 +191,11 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
 
         {/* Search + Status filter */}
         <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-            <Input
-              value={localSearch}
-              placeholder="Пошук по ID, назві, агенту, email..."
-              className="h-9 pl-9 rounded-xl"
-              onChange={e => handleSearchChange(e.target.value)}
-            />
-          </div>
+          <AdminSearchInput
+            value={searchQuery}
+            placeholder="Пошук по назві, агенту, email..."
+            className="flex-1 max-w-sm"
+          />
           <Combobox
             options={FILTER_STATUS_OPTIONS}
             value={activeStatus}

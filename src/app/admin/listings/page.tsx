@@ -60,16 +60,21 @@ export default async function AdminListingsPage({
 
   if (status) query = query.eq('status', status)
   if (qTrimmed) {
-    // id.ilike on a UUID column causes a PostgreSQL type error that silently kills the
-    // entire .or() (data returns null). Use only text-safe columns in .or().
-    // Exact UUID match is added separately when q matches the full UUID pattern.
-    const conditions: string[] = [`title.ilike.%${qTrimmed}%`]
-    if (ownerIds.length > 0) conditions.push(`user_id.in.(${ownerIds.join(',')})`)
+    const words = qTrimmed.split(/\s+/).filter(Boolean)
 
+    // Each word must appear in title (AND). Multiple words use nested and() inside or().
+    // id.ilike on UUID causes a DB type error → use only text columns in or().
+    const wordConds = words.map(w => `title.ilike.%${w}%`).join(',')
+    const titleFilter = words.length > 1 ? `and(${wordConds})` : wordConds
+
+    const orParts: string[] = [titleFilter]
+    if (ownerIds.length > 0) orParts.push(`user_id.in.(${ownerIds.join(',')})`)
+
+    // Exact UUID match when q is a full UUID
     const FULL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
-    if (FULL_UUID.test(qTrimmed)) conditions.push(`id.eq.${qTrimmed}`)
+    if (FULL_UUID.test(qTrimmed)) orParts.push(`id.eq.${qTrimmed}`)
 
-    query = query.or(conditions.join(','))
+    query = query.or(orParts.join(','))
   }
 
   const { data: listings, count } = await query

@@ -12,7 +12,7 @@ export function AdminShell({ children, siteName, locale }: { children: React.Rea
       <AdminSidebar mobileOpen={mobileOpen} onMobileOpenChange={setMobileOpen} siteName={siteName} />
 
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
-        <AdminMobileHeader onOpen={() => setMobileOpen(true)} />
+        <AdminMobileHeader onOpen={() => setMobileOpen(true)} siteName={siteName} />
         <main className="flex-1 overflow-auto">
           {children}
         </main>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { UserCircle2, Camera, Trash2, Loader2 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { toast } from 'sonner'
@@ -35,6 +36,9 @@ async function validateSourceImage(file: File): Promise<{ w: number; h: number; 
 }
 
 export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlobReady }: Props) {
+  const tc = useTranslations('cabinet')
+  const tco = useTranslations('common')
+  const tu = useTranslations('admin.users')
   const inputRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [removing, setRemoving] = useState(false)
@@ -58,11 +62,11 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
     e.target.value = ''
     setError(null)
 
-    if (!VALID_MIME.includes(file.type)) { setError('Тільки JPG, PNG або WEBP'); return }
-    if (file.size > MAX_SOURCE_BYTES) { setError('Максимальний розмір файлу — 10 МБ'); return }
+    if (!VALID_MIME.includes(file.type)) { setError(tc('avatar_error_type')); return }
+    if (file.size > MAX_SOURCE_BYTES) { setError(tc('avatar_error_size')); return }
     const { w, h, error: imgError } = await validateSourceImage(file)
-    if (imgError === 'unreadable') { setError('Не вдалося прочитати це зображення'); return }
-    if (w < MIN_DIM || h < MIN_DIM) { setError(`Зображення занадто мале — мінімум ${MIN_DIM}×${MIN_DIM} пікселів`); return }
+    if (imgError === 'unreadable') { setError(tc('avatar_error_unreadable')); return }
+    if (w < MIN_DIM || h < MIN_DIM) { setError(tc('avatar_error_too_small')); return }
 
     console.log('[AvatarFlow] file_selected', { route: window.location.pathname, mode, mime: file.type, size: file.size, dimensions: `${w}×${h}` })
     setCropSrc(URL.createObjectURL(file))
@@ -74,11 +78,10 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
     console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size, width: 256, height: 256 })
 
     if (mode === 'create') {
-      // Create mode: no userId yet — store blob; parent uploads after user creation.
       const previewUrl = URL.createObjectURL(blob)
       if (currentUrl?.startsWith('blob:')) URL.revokeObjectURL(currentUrl)
       const src = cropSrc
-      setCropSrc(null)        // SUCCESS — unmount modal
+      setCropSrc(null)
       setCurrentUrl(previewUrl)
       onAvatarChange(previewUrl)
       onBlobReady?.(blob)
@@ -87,7 +90,6 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       return
     }
 
-    // Edit mode: upload via API route (standard HTTP multipart — binary-safe)
     if (!userId) return
     setUploading(true)
     console.log('[AvatarFlow] upload_started', { route: window.location.pathname, mode, hasUserId: true, endpoint: '/api/upload-avatar' })
@@ -103,13 +105,11 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
 
       if (result.error) {
-        // ERROR: show toast above the open modal — do NOT close modal (user can retry)
         toast.error(result.error)
         console.log('[AvatarFlow] upload_failed', { reason: result.error })
         return
       }
 
-      // SUCCESS ONLY: close modal and update avatar preview
       const src = cropSrc
       setCropSrc(null)
       setCurrentUrl(result.url ?? null)
@@ -118,8 +118,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       console.log('[AvatarFlow] avatar_state_updated', { avatarUrl: result.url, mode: 'edit' })
     } catch (err) {
       console.log('[AvatarFlow] upload_exception', { error: String(err), stack: err instanceof Error ? err.stack : undefined })
-      toast.error('Помилка завантаження аватара')
-      // ERROR: modal stays open — cropSrc unchanged
+      toast.error(tc('avatar_upload_error'))
     } finally {
       setUploading(false)
     }
@@ -151,7 +150,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
         <div
           className={`h-24 w-24 rounded-full overflow-hidden border-2 border-border bg-muted flex items-center justify-center ${canEdit ? 'cursor-pointer hover:opacity-75 transition-opacity' : ''}`}
           onClick={canEdit ? () => inputRef.current?.click() : undefined}
-          title={canEdit ? 'Клікніть щоб змінити' : undefined}
+          title={canEdit ? tu('avatar_click_to_change') : undefined}
         >
           {currentUrl ? (
             // eslint-disable-next-line @next/next/no-img-element -- admin avatar preview, no CDN optimization needed
@@ -168,7 +167,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
         {canEdit && !uploading && !removing && (
           <button type="button" onClick={() => inputRef.current?.click()}
             className="absolute bottom-0 right-0 h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors"
-            title="Завантажити фото">
+            title={tu('avatar_upload_photo')}>
             <Camera className="h-3.5 w-3.5" />
           </button>
         )}
@@ -178,13 +177,13 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
         <div className="flex gap-2">
           <Button type="button" variant="outline" size="sm" className="h-7 text-xs px-2 rounded-lg"
             onClick={() => inputRef.current?.click()} disabled={uploading || removing}>
-            {currentUrl ? 'Замінити' : 'Завантажити'}
+            {currentUrl ? tc('avatar_replace') : tc('avatar_upload')}
           </Button>
           {currentUrl && (
             <Button type="button" variant="ghost" size="sm"
               className="h-7 text-xs px-2 rounded-lg text-destructive hover:text-destructive hover:bg-destructive/5"
               onClick={handleRemove} disabled={uploading || removing}>
-              <Trash2 className="h-3 w-3 mr-1" /> Видалити
+              <Trash2 className="h-3 w-3 mr-1" /> {tc('avatar_remove')}
             </Button>
           )}
         </div>
@@ -192,12 +191,12 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
 
       {canEdit && (
         <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
-          JPG / PNG / WEBP — буде обрізано до квадрата
+          {tc('avatar_hint')}
         </p>
       )}
       {mode === 'create' && !currentUrl && (
         <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
-          Необов&apos;язково — можна додати після створення
+          {tu('avatar_optional_hint')}
         </p>
       )}
       {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
@@ -207,11 +206,11 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       {cropSrc && (
         <AvatarCropModal
           imageSrc={cropSrc}
-          title="Обрізання аватара"
-          hint="Перетягніть фото для позиціонування. Стисніть або прокрутіть для збільшення."
-          zoomLabel="Масштаб"
-          cancelLabel="Скасувати"
-          saveLabel="Зберегти"
+          title={tc('avatar_crop_title')}
+          hint={tc('avatar_crop_hint')}
+          zoomLabel={tc('avatar_zoom_label')}
+          cancelLabel={tco('cancel')}
+          saveLabel={tco('save')}
           onConfirm={handleCropConfirm}
           onCancel={handleCropCancel}
         />

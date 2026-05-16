@@ -3,6 +3,8 @@
 import { useState, useTransition, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { useLocale } from 'next-intl'
 import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,21 +18,6 @@ import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
 
 const STATUSES: ListingStatus[] = ['pending', 'active', 'inactive', 'sold', 'rented', 'archived']
-
-const STATUS_LABEL: Record<ListingStatus, string> = {
-  pending: 'На розгляді', active: 'Активне', inactive: 'Неактивне',
-  sold: 'Продано', rented: 'Орендовано', archived: 'Архів',
-}
-
-const STATUS_OPTIONS = STATUSES.map(s => ({ value: s, label: STATUS_LABEL[s] }))
-const FILTER_STATUS_OPTIONS = [{ value: '', label: 'Всі' }, ...STATUS_OPTIONS]
-
-const PREMIUM_PRESETS = [
-  { label: '1 місяць',  days: 30 },
-  { label: '3 місяці', days: 90 },
-  { label: '6 місяців', days: 180 },
-  { label: '1 рік',    days: 365 },
-]
 
 export interface AdminListing {
   id: string
@@ -53,8 +40,16 @@ interface Props {
 function PremiumDialog({ listing, onClose, onDone }: {
   listing: AdminListing; onClose: () => void; onDone: () => void
 }) {
+  const t = useTranslations('admin.listings')
   const [customDate, setCustomDate] = useState('')
   const [saving, setSaving] = useState(false)
+
+  const PREMIUM_PRESETS = [
+    { label: t('preset_1m'), days: 30 },
+    { label: t('preset_3m'), days: 90 },
+    { label: t('preset_6m'), days: 180 },
+    { label: t('preset_1y'), days: 365 },
+  ]
 
   async function apply(days?: number) {
     setSaving(true)
@@ -78,12 +73,14 @@ function PremiumDialog({ listing, onClose, onDone }: {
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-sm flex flex-col gap-5">
         <div>
-          <h3 className="font-bold text-base">Premium статус</h3>
+          <h3 className="font-bold text-base">{t('premium_dialog_title')}</h3>
           <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{listing.title}</p>
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Швидкий вибір</Label>
+          <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            {t('premium_quick_label')}
+          </Label>
           <div className="grid grid-cols-2 gap-2">
             {PREMIUM_PRESETS.map(p => (
               <button
@@ -100,7 +97,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
 
         <div className="flex flex-col gap-2">
           <Label htmlFor="custom-date" className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-            Власна дата закінчення
+            {t('premium_custom_date')}
           </Label>
           <div className="flex gap-2">
             <Input
@@ -127,7 +124,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
             disabled={saving}
             className="text-sm text-destructive hover:underline disabled:opacity-50"
           >
-            Зняти Premium статус
+            {t('premium_remove')}
           </button>
         )}
       </div>
@@ -136,6 +133,9 @@ function PremiumDialog({ listing, onClose, onDone }: {
 }
 
 export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all' }: Props) {
+  const t = useTranslations('admin.listings')
+  const tc = useTranslations('cabinet')
+  const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -145,6 +145,18 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const [items, setItems] = useState(init)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const totalPages = Math.ceil(total / perPage)
+
+  const STATUS_LABEL: Record<ListingStatus, string> = {
+    pending:  tc('status_pending'),
+    active:   tc('status_active'),
+    inactive: tc('status_inactive'),
+    sold:     tc('status_sold'),
+    rented:   tc('status_rented'),
+    archived: tc('status_archived'),
+  }
+
+  const STATUS_OPTIONS = STATUSES.map(s => ({ value: s, label: STATUS_LABEL[s] }))
+  const FILTER_STATUS_OPTIONS = [{ value: '', label: tc('filter_ALL') }, ...STATUS_OPTIONS]
 
   // Re-sync items when RSC delivers fresh props (e.g. after router.refresh()).
   useEffect(() => { setItems(init) }, [init])
@@ -176,12 +188,12 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
       <div className="admin-listings-table flex flex-col gap-4">
         {/* Tabs */}
         <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
-          {([['all', 'Всі оголошення'], ['premium', '⭐ Преміум оголошення']] as const).map(([t, label]) => (
+          {([['all', t('tab_all')], ['premium', t('tab_premium')]] as const).map(([tab, label]) => (
             <button
-              key={t}
-              onClick={() => navigate({ tab: t === 'all' ? null : t, page: null, status: null })}
+              key={tab}
+              onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, status: null })}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                activeTab === t ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+                activeTab === tab ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               {label}
@@ -193,7 +205,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
         <div className="flex flex-col sm:flex-row gap-3">
           <AdminSearchInput
             value={searchQuery}
-            placeholder="Пошук по назві, агенту, email..."
+            placeholder={t('search_placeholder')}
             className="flex-1 max-w-sm"
           />
           <Combobox
@@ -212,18 +224,18 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
               <thead>
                 <tr className="border-b bg-muted/40">
                   <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell w-24">ID</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Оголошення</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">Тип</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Ціна</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Статус</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">Агент</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden xl:table-cell">Дата</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Дії</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_listing')}</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_type')}</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_price')}</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_status')}</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_agent')}</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden xl:table-cell">{t('col_date')}</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
                 {items.length === 0 ? (
-                  <tr><td colSpan={8} className="px-4 py-12 text-center text-muted-foreground">Оголошень не знайдено</td></tr>
+                  <tr><td colSpan={8} className="px-4 py-12 text-center text-muted-foreground">{t('empty')}</td></tr>
                 ) : items.map(l => {
                   const isLoading = loadingId === l.id
                   return (
@@ -261,7 +273,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         {l.listing_type} · {l.property_type}
                       </td>
                       <td className="px-4 py-3 font-medium text-sm">
-                        {formatPrice(l.price, l.currency, 'sq')}
+                        {formatPrice(l.price, l.currency, locale)}
                       </td>
                       <td className="px-4 py-3">
                         <Combobox
@@ -296,7 +308,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                               {/* Premium */}
                               <button
                                 onClick={() => setPremiumDialog(l)}
-                                title={l.is_premium ? 'Змінити premium' : 'Встановити premium'}
+                                title={l.is_premium ? t('premium_change') : t('premium_set')}
                                 className={`h-7 w-7 rounded-lg border flex items-center justify-center transition-colors ${
                                   l.is_premium
                                     ? 'border-badge-premium/40 text-badge-premium hover:bg-badge-premium/10'
@@ -307,14 +319,14 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                               </button>
 
                               {/* Edit */}
-                              <Link href={`/sq/listings/${l.slug}/edit`} target="_blank">
-                                <button className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-colors" title="Edit listing">
+                              <Link href={`/${locale}/listings/${l.slug}/edit`} target="_blank">
+                                <button className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-colors" title={tc('edit_listing')}>
                                   <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
                                 </button>
                               </Link>
 
                               {/* View */}
-                              <Link href={`/sq/listings/${l.slug}`} target="_blank">
+                              <Link href={`/${locale}/listings/${l.slug}`} target="_blank">
                                 <button className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-primary/40 transition-colors">
                                   <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                                 </button>
@@ -323,12 +335,10 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                               {/* Delete */}
                               <button
                                 onClick={() => {
-                                  if (!confirm('Видалити оголошення?')) return
+                                  if (!confirm(t('delete_confirm'))) return
                                   withLoading(l.id, async () => {
                                     await deleteListing(l.id)
                                     setItems(prev => prev.filter(x => x.id !== l.id))
-                                    // router.refresh() delivers fresh RSC props so the
-                                    // SSR-derived `total` count in the page header updates.
                                     router.refresh()
                                   })
                                 }}
@@ -351,11 +361,11 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-2">
             <Button variant="outline" size="sm" disabled={page === 1} onClick={() => navigate({ page: String(page - 1) })}>
-              Назад
+              {t('prev_page')}
             </Button>
             <span className="text-sm text-muted-foreground">{page} / {totalPages}</span>
             <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => navigate({ page: String(page + 1) })}>
-              Далі
+              {t('next_page')}
             </Button>
           </div>
         )}

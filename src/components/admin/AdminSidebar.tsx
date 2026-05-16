@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
   MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight,
@@ -9,36 +10,6 @@ import {
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
 import { AdminLocaleSwitcher } from '@/components/admin/AdminLocaleSwitcher'
-
-const GROUPS = [
-  {
-    label: 'Огляд',
-    items: [
-      { href: '/admin',           label: 'Dashboard',          icon: LayoutDashboard },
-    ],
-  },
-  {
-    label: 'Управління',
-    items: [
-      { href: '/admin/listings',  label: 'Оголошення',         icon: ListChecks },
-      { href: '/admin/users',     label: 'Користувачі',        icon: Users },
-      { href: '/admin/support',   label: 'Support',            icon: MessageSquare },
-    ],
-  },
-  {
-    label: 'Контент',
-    items: [
-      { href: '/admin/locations', label: 'Населені пункти',    icon: MapPin },
-      { href: '/admin/legal',     label: 'Правові документи',  icon: FileText },
-    ],
-  },
-  {
-    label: 'Система',
-    items: [
-      { href: '/admin/settings',  label: 'Налаштування сайту', icon: Settings },
-    ],
-  },
-]
 
 function NavItem({ href, label, icon: Icon, active, onClick }: {
   href: string
@@ -66,8 +37,39 @@ function NavItem({ href, label, icon: Icon, active, onClick }: {
 }
 
 function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName: string }) {
+  const t = useTranslations('admin.sidebar')
   const pathname = usePathname()
   const router = useRouter()
+
+  const GROUPS = [
+    {
+      label: t('group_overview'),
+      items: [
+        { href: '/admin',           label: t('item_dashboard'), icon: LayoutDashboard },
+      ],
+    },
+    {
+      label: t('group_management'),
+      items: [
+        { href: '/admin/listings',  label: t('item_listings'),  icon: ListChecks },
+        { href: '/admin/users',     label: t('item_users'),     icon: Users },
+        { href: '/admin/support',   label: t('item_support'),   icon: MessageSquare },
+      ],
+    },
+    {
+      label: t('group_content'),
+      items: [
+        { href: '/admin/locations', label: t('item_locations'), icon: MapPin },
+        { href: '/admin/legal',     label: t('item_legal'),     icon: FileText },
+      ],
+    },
+    {
+      label: t('group_system'),
+      items: [
+        { href: '/admin/settings',  label: t('item_settings'),  icon: Settings },
+      ],
+    },
+  ]
 
   function isActive(href: string) {
     return href === '/admin' ? pathname === '/admin' : pathname.startsWith(href)
@@ -97,7 +99,7 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
           <button
             onClick={onClose}
             className="lg:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-            aria-label="Закрити меню"
+            aria-label={t('aria_close')}
           >
             <X className="h-4 w-4" />
           </button>
@@ -129,21 +131,21 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
       <div className="px-3 pb-4 pt-3 border-t shrink-0 flex flex-col gap-3">
         <AdminLocaleSwitcher />
         <div className="flex flex-col gap-0.5">
-        <Link
-          href="/"
-          target="_blank"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
-        >
-          <ExternalLink className="h-4 w-4 shrink-0" />
-          Відкрити сайт
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/5 transition-colors w-full cursor-pointer"
-        >
-          <LogOut className="h-4 w-4 shrink-0" />
-          Вийти
-        </button>
+          <Link
+            href="/"
+            target="_blank"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+          >
+            <ExternalLink className="h-4 w-4 shrink-0" />
+            {t('open_site')}
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/5 transition-colors w-full cursor-pointer"
+          >
+            <LogOut className="h-4 w-4 shrink-0" />
+            {t('logout')}
+          </button>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,6 +21,7 @@ interface Page { id: number; title: string; slug: string; is_published: boolean;
 function PageModal({ page, onClose, onDone }: {
   page?: Page; onClose: () => void; onDone: () => void
 }) {
+  const t = useTranslations('admin.legal')
   const [title, setTitle] = useState(page?.title ?? '')
   const [slug, setSlug] = useState(page?.slug ?? '')
   const [body, setBody] = useState(typeof page?.content?.body === 'string' ? page.content.body : '')
@@ -48,11 +50,11 @@ function PageModal({ page, onClose, onDone }: {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
-        <h3 className="font-bold text-base">{page ? 'Редагувати' : 'Новий'} документ</h3>
+        <h3 className="font-bold text-base">{page ? t('modal_title_edit') : t('modal_title_new')}</h3>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
-            <Label className="text-xs">Заголовок *</Label>
+            <Label className="text-xs">{t('field_title_label')}</Label>
             <Input value={title} onChange={e => { setTitle(e.target.value); if (!page) setSlug(toSlug(e.target.value)) }} className="h-10 rounded-xl" />
           </div>
           <div className="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
@@ -62,13 +64,13 @@ function PageModal({ page, onClose, onDone }: {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">Вміст (HTML або текст)</Label>
+          <Label className="text-xs">{t('field_content_label')}</Label>
           <Textarea
             value={body}
             onChange={e => setBody(e.target.value)}
             rows={12}
             className="rounded-xl font-mono text-xs resize-none"
-            placeholder="<h2>Заголовок</h2><p>Текст документу...</p>"
+            placeholder="<h2>...</h2><p>...</p>"
           />
         </div>
 
@@ -81,14 +83,14 @@ function PageModal({ page, onClose, onDone }: {
             }`}
           >
             {published ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-            {published ? 'Опубліковано' : 'Чернетка'}
+            {published ? t('toggle_published') : t('toggle_draft')}
           </button>
         </div>
 
         <div className="flex gap-2 pt-2">
-          <Button variant="outline" onClick={onClose} className="flex-1 h-10 rounded-xl">Скасувати</Button>
+          <Button variant="outline" onClick={onClose} className="flex-1 h-10 rounded-xl">{t('btn_cancel')}</Button>
           <Button onClick={handleSave} disabled={saving || !title.trim()} className="flex-1 h-10 rounded-xl">
-            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Зберегти'}
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('btn_save')}
           </Button>
         </div>
       </div>
@@ -99,6 +101,7 @@ function PageModal({ page, onClose, onDone }: {
 interface Props { pages: Page[] }
 
 export function AdminLegalManager({ pages: init }: Props) {
+  const t = useTranslations('admin.legal')
   const router = useRouter()
   const [, startTransition] = useTransition()
   const [modal, setModal] = useState<'create' | Page | null>(null)
@@ -108,7 +111,7 @@ export function AdminLegalManager({ pages: init }: Props) {
   function handleDone() { setModal(null); router.refresh() }
 
   async function handleDelete(id: number) {
-    if (!confirm('Видалити документ?')) return
+    if (!confirm(t('delete_confirm'))) return
     setDeletingId(id)
     startTransition(async () => {
       await deletePage(id)
@@ -131,27 +134,27 @@ export function AdminLegalManager({ pages: init }: Props) {
         <div className="flex justify-end">
           <Button onClick={() => setModal('create')} className="gap-2 rounded-xl h-9">
             <Plus className="h-4 w-4" />
-            Новий документ
+            {t('btn_new_doc')}
           </Button>
         </div>
 
         <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
           {items.length === 0 ? (
             <div className="px-6 py-16 text-center">
-              <p className="text-muted-foreground">Документів ще немає</p>
+              <p className="text-muted-foreground">{t('empty_text')}</p>
               <Button onClick={() => setModal('create')} variant="outline" className="mt-4 gap-2 rounded-xl">
-                <Plus className="h-4 w-4" /> Додати перший
+                <Plus className="h-4 w-4" /> {t('btn_add_first')}
               </Button>
             </div>
           ) : (
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b bg-muted/40">
-                  <th className="text-left px-5 py-3 font-medium text-muted-foreground">Назва</th>
+                  <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_title')}</th>
                   <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">Slug</th>
-                  <th className="text-left px-5 py-3 font-medium text-muted-foreground">Статус</th>
-                  <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">Оновлено</th>
-                  <th className="text-left px-5 py-3 font-medium text-muted-foreground">Дії</th>
+                  <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_status')}</th>
+                  <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_updated')}</th>
+                  <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -161,7 +164,7 @@ export function AdminLegalManager({ pages: init }: Props) {
                     <td className="px-5 py-4 hidden md:table-cell font-mono text-xs text-muted-foreground">{p.slug}</td>
                     <td className="px-5 py-4">
                       <Badge variant={p.is_published ? 'success' : 'neutral'} className="text-xs">
-                        {p.is_published ? 'Опубліковано' : 'Чернетка'}
+                        {p.is_published ? t('status_published') : t('status_draft')}
                       </Badge>
                     </td>
                     <td className="px-5 py-4 hidden lg:table-cell text-xs text-muted-foreground">

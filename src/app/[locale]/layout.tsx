@@ -43,7 +43,7 @@ export default async function LocaleLayout({
   const { user: initialUser } = await resolveSession()
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider initialUser={initialUser}>
         <div lang={locale}>
           <Header />

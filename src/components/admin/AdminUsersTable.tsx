@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { ShieldCheck, ShieldOff, Loader2, ExternalLink, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
@@ -59,6 +60,7 @@ interface Props {
 }
 
 export function AdminUsersTable({ users: init, total, page, perPage, activeRole, locationRequestFilter, searchQuery = '', activeTab = 'all', verifiedAgents = [] }: Props) {
+  const t = useTranslations('admin.users')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -82,12 +84,12 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
     <div className="admin-users-table flex flex-col gap-4">
       {/* Tabs */}
       <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
-        {([['all', 'Всі користувачі'], ['verified', '✓ Верифіковані агенти']] as const).map(([t, label]) => (
+        {([['all', t('tab_all')], ['verified', t('tab_verified')]] as const).map(([tab, label]) => (
           <button
-            key={t}
-            onClick={() => navigate({ tab: t === 'all' ? null : t, page: null, role: null, q: null })}
+            key={tab}
+            onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, role: null, q: null })}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === t ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+              activeTab === tab ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             {label}
@@ -100,15 +102,15 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/40">
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Агент</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">Компанія</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">Дата</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">Дії</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_agent')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_company')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_date')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {verifiedAgents.length === 0 ? (
-                <tr><td colSpan={4} className="px-5 py-10 text-center text-muted-foreground">Немає верифікованих агентів</td></tr>
+                <tr><td colSpan={4} className="px-5 py-10 text-center text-muted-foreground">{t('empty_verified')}</td></tr>
               ) : verifiedAgents.map(u => (
                 <tr key={u.id} className={`hover:bg-muted/20 ${loadingId === u.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3.5">
@@ -126,7 +128,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                         onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false) })}
                         className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors"
                       >
-                        <ShieldOff className="h-4 w-4" /> Зняти верифікацію
+                        <ShieldOff className="h-4 w-4" /> {t('revoke_verify')}
                       </button>
                     )}
                   </td>
@@ -140,12 +142,12 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
       {/* Search */}
       <AdminSearchInput
         value={searchQuery}
-        placeholder="Пошук по імені, телефону, компанії..."
+        placeholder={t('search_placeholder')}
         className="max-w-sm"
       />
       {/* Role filter */}
       <div className="flex gap-2 flex-wrap">
-        {['', ...ROLES].map(r => (
+        {(['', ...ROLES]).map(r => (
           <button
             key={r || 'all'}
             onClick={() => navigate({ role: r || null, page: null })}
@@ -155,7 +157,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                 : 'border-border text-muted-foreground hover:text-foreground'
             }`}
           >
-            {r || 'Всі'}
+            {r || t('filter_all')}
           </button>
         ))}
         {locationRequestFilter && (
@@ -163,7 +165,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
             onClick={() => navigate({ location_request: null, page: null })}
             className="px-3 py-1.5 rounded-lg text-xs font-medium border border-status-warning/50 text-status-warning bg-status-warning/10 flex items-center gap-1"
           >
-            <MapPin className="h-3 w-3" /> Запити на міста ×
+            <MapPin className="h-3 w-3" /> {t('location_request_badge')} ×
           </button>
         )}
       </div>
@@ -173,17 +175,17 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b bg-muted/40">
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Користувач</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Роль</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">Статус</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">Телефон</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">Дата</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">Дії</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_user')}</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_role')}</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">{t('col_status')}</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_phone')}</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_date')}</th>
+                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {items.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-12 text-center text-muted-foreground">Користувачів не знайдено</td></tr>
+                <tr><td colSpan={6} className="px-4 py-12 text-center text-muted-foreground">{t('empty')}</td></tr>
               ) : items.map(u => {
                 const isLoading = loadingId === u.id
                 const initials = u.name
@@ -210,7 +212,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                           )}
                           {u.location_request && (
                             <p className="text-xs text-status-warning flex items-center gap-1 mt-0.5">
-                              <MapPin className="h-2.5 w-2.5" /> Запит на місто
+                              <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
                             </p>
                           )}
                         </div>
@@ -237,13 +239,13 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                           <Link
                             href={`/admin/users/${u.id}`}
                             className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-colors text-muted-foreground"
-                            title="Відкрити профіль"
+                            title={t('open_profile')}
                           >
                             <ExternalLink className="h-3.5 w-3.5" />
                           </Link>
                           <button
                             onClick={() => withLoading(u.id, () => toggleUserVerified(u.id, !u.is_verified))}
-                            title={u.is_verified ? 'Зняти верифікацію' : 'Верифікувати'}
+                            title={u.is_verified ? t('revoke_verify') : t('verify')}
                             className={`h-7 w-7 rounded-lg border flex items-center justify-center transition-colors ${
                               u.is_verified
                                 ? 'border-status-success/30 text-status-success hover:bg-status-success/5'
@@ -265,9 +267,9 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
 
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">
-          <Button variant="outline" size="sm" disabled={page === 1} onClick={() => navigate({ page: String(page - 1) })}>Назад</Button>
+          <Button variant="outline" size="sm" disabled={page === 1} onClick={() => navigate({ page: String(page - 1) })}>{t('prev_page')}</Button>
           <span className="text-sm text-muted-foreground">{page} / {totalPages}</span>
-          <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => navigate({ page: String(page + 1) })}>Далі</Button>
+          <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => navigate({ page: String(page + 1) })}>{t('next_page')}</Button>
         </div>
       )}
       </>

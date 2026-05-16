@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -10,17 +11,8 @@ import { cn } from '@/lib/utils'
 import { CheckCircle2, Save, Loader2, AlertCircle } from 'lucide-react'
 import { saveSettings } from '@/modules/admin/actions'
 
-const TABS = [
-  { key: 'general',  label: 'Загальне' },
-  { key: 'brand',    label: 'Бренд' },
-  { key: 'footer',   label: 'Футер' },
-  { key: 'seo',      label: 'SEO' },
-  { key: 'i18n',     label: 'Локалізація' },
-] as const
+type Tab = 'general' | 'brand' | 'footer' | 'seo' | 'i18n'
 
-type Tab = typeof TABS[number]['key']
-
-// All persisted keys per tab
 const TAB_KEYS: Record<Tab, string[]> = {
   general: ['site_name', 'tagline', 'contact_email', 'contact_phone'],
   brand:   ['logo_url', 'logo_dark_url', 'favicon_url'],
@@ -80,10 +72,19 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export function AdminSettings({ initialSettings }: Props) {
+  const t = useTranslations('admin.settings')
   const [tab, setTab] = useState<Tab>('general')
   const [saveState, setSaveState] = useState<'idle' | 'saved' | 'error'>('idle')
   const [isPending, startTransition] = useTransition()
   const [settings, setSettings] = useState<AllSettings>(initialSettings)
+
+  const TABS: { key: Tab; label: string }[] = [
+    { key: 'general', label: t('tab_general') },
+    { key: 'brand',   label: t('tab_brand') },
+    { key: 'footer',  label: t('tab_footer') },
+    { key: 'seo',     label: t('tab_seo') },
+    { key: 'i18n',    label: t('tab_i18n') },
+  ]
 
   function set(key: keyof AllSettings) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -117,16 +118,16 @@ export function AdminSettings({ initialSettings }: Props) {
     <div className="flex flex-col gap-5">
       {/* Tab bar */}
       <div className="flex gap-1 bg-muted rounded-xl p-1 flex-wrap">
-        {TABS.map(t => (
+        {TABS.map(tb => (
           <button
-            key={t.key}
-            onClick={() => { setTab(t.key); setSaveState('idle') }}
+            key={tb.key}
+            onClick={() => { setTab(tb.key); setSaveState('idle') }}
             className={cn(
               'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-              tab === t.key ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+              tab === tb.key ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
             )}
           >
-            {t.label}
+            {tb.label}
           </button>
         ))}
       </div>
@@ -136,17 +137,17 @@ export function AdminSettings({ initialSettings }: Props) {
 
         {tab === 'general' && (
           <>
-            <Section title="Основна інформація">
-              <Field label="Назва сайту" id="site-name" hint="Відображається у логотипі, футері та адмін-панелі">
+            <Section title={t('section_general_info')}>
+              <Field label={t('field_site_name')} id="site-name" hint={t('field_site_name_hint')}>
                 <Input id="site-name" value={settings.site_name} onChange={set('site_name')} className="h-10 rounded-xl" />
               </Field>
-              <Field label="Слоган" id="tagline">
+              <Field label={t('field_tagline')} id="tagline">
                 <Input id="tagline" value={settings.tagline} onChange={set('tagline')} className="h-10 rounded-xl" />
               </Field>
-              <Field label="Контактний email" id="contact-email">
+              <Field label={t('field_contact_email')} id="contact-email">
                 <Input id="contact-email" type="email" value={settings.contact_email} onChange={set('contact_email')} placeholder="info@lero.al" className="h-10 rounded-xl" />
               </Field>
-              <Field label="Контактний телефон" id="contact-phone">
+              <Field label={t('field_contact_phone')} id="contact-phone">
                 <Input id="contact-phone" value={settings.contact_phone} onChange={set('contact_phone')} placeholder="+355 XX XXX XXXX" className="h-10 rounded-xl" />
               </Field>
             </Section>
@@ -155,20 +156,22 @@ export function AdminSettings({ initialSettings }: Props) {
 
         {tab === 'brand' && (
           <>
-            <Section title="Брендинг">
-              <Field label="URL логотипу (SVG/PNG)" id="logo-url">
+            <Section title={t('section_branding')}>
+              <Field label={t('field_logo_url')} id="logo-url">
                 <Input id="logo-url" value={settings.logo_url} onChange={set('logo_url')} placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
               </Field>
-              <Field label="URL логотипу для темного фону" id="logo-dark-url">
+              <Field label={t('field_logo_dark_url')} id="logo-dark-url">
                 <Input id="logo-dark-url" value={settings.logo_dark_url} onChange={set('logo_dark_url')} placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
               </Field>
-              <Field label="Favicon URL" id="favicon">
+              <Field label={t('field_favicon_url')} id="favicon">
                 <Input id="favicon" value={settings.favicon_url} onChange={set('favicon_url')} placeholder="https://..." className="h-10 rounded-xl" />
               </Field>
             </Section>
-            <Section title="Кольори (CSS змінні)">
+            <Section title={t('section_brand_colors')}>
               <p className="text-xs text-muted-foreground">
-                Кольори бренду визначаються у <code className="bg-muted px-1 py-0.5 rounded text-xs">src/app/globals.css</code> через дизайн-систему oklch.
+                {t('section_brand_colors_desc').split('src/app/globals.css')[0]}
+                <code className="bg-muted px-1 py-0.5 rounded text-xs">src/app/globals.css</code>
+                {t('section_brand_colors_desc').split('src/app/globals.css')[1]}
               </p>
             </Section>
           </>
@@ -176,7 +179,7 @@ export function AdminSettings({ initialSettings }: Props) {
 
         {tab === 'footer' && (
           <>
-            <Section title="Соціальні мережі">
+            <Section title={t('section_social')}>
               <Field label="Facebook" id="facebook">
                 <Input id="facebook" value={settings.social_facebook} onChange={set('social_facebook')} placeholder="https://facebook.com/lero.al" className="h-10 rounded-xl" />
               </Field>
@@ -187,11 +190,11 @@ export function AdminSettings({ initialSettings }: Props) {
                 <Input id="linkedin" value={settings.social_linkedin} onChange={set('social_linkedin')} placeholder="https://linkedin.com/company/lero-al" className="h-10 rounded-xl" />
               </Field>
             </Section>
-            <Section title="Футер — текст">
-              <Field label="Текст про компанію (AL)" id="about-al">
+            <Section title={t('section_footer_text')}>
+              <Field label={t('field_about_al')} id="about-al">
                 <Textarea id="about-al" rows={3} value={settings.about_al} onChange={set('about_al')} placeholder="Tregu kryesor i pasurive..." className="rounded-xl resize-none" />
               </Field>
-              <Field label="Текст про компанію (UK)" id="about-uk">
+              <Field label={t('field_about_uk')} id="about-uk">
                 <Textarea id="about-uk" rows={3} value={settings.about_uk} onChange={set('about_uk')} placeholder="Головний ринок нерухомості..." className="rounded-xl resize-none" />
               </Field>
             </Section>
@@ -200,7 +203,7 @@ export function AdminSettings({ initialSettings }: Props) {
 
         {tab === 'seo' && (
           <>
-            <Section title="SEO за замовчуванням">
+            <Section title={t('section_seo')}>
               <Field label="Meta title" id="meta-title">
                 <Input id="meta-title" value={settings.meta_title} onChange={set('meta_title')} className="h-10 rounded-xl" />
               </Field>
@@ -211,11 +214,11 @@ export function AdminSettings({ initialSettings }: Props) {
                 <Input id="og-image" value={settings.og_image} onChange={set('og_image')} placeholder="https://lero.al/og-image.jpg" className="h-10 rounded-xl" />
               </Field>
             </Section>
-            <Section title="Архівні оголошення">
+            <Section title={t('section_archived')}>
               <Field
-                label="Noindex після N днів в архіві"
+                label={t('field_noindex_days')}
                 id="archived-noindex-days"
-                hint="Після цього терміну (рахується від дати оновлення оголошення) сторінка отримує noindex. Мінімум: 1 день."
+                hint={t('field_noindex_days_hint')}
               >
                 <Input
                   id="archived-noindex-days"
@@ -233,11 +236,11 @@ export function AdminSettings({ initialSettings }: Props) {
 
         {tab === 'i18n' && (
           <>
-            <Section title="Локалізація">
+            <Section title={t('section_i18n')}>
               <Field
-                label="Мова за замовчуванням"
+                label={t('field_default_locale')}
                 id="default-locale"
-                hint="Використовується для редиректу з кореневого URL (/) та як fallback мова для публічного сайту. Набирає чинності протягом 5 хвилин."
+                hint={t('field_default_locale_hint')}
               >
                 <Combobox
                   options={LOCALE_OPTIONS}
@@ -258,7 +261,7 @@ export function AdminSettings({ initialSettings }: Props) {
                         <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded font-semibold">DEFAULT</span>
                       )}
                     </div>
-                    <span className="text-xs font-medium text-status-success">Активна</span>
+                    <span className="text-xs font-medium text-status-success">{t('locale_active')}</span>
                   </div>
                 ))}
               </div>
@@ -270,7 +273,7 @@ export function AdminSettings({ initialSettings }: Props) {
           {saveState === 'error' && (
             <span className="flex items-center gap-1.5 text-sm text-destructive">
               <AlertCircle className="h-4 w-4" />
-              Помилка збереження
+              {t('save_error')}
             </span>
           )}
           <div className="ml-auto">
@@ -281,10 +284,10 @@ export function AdminSettings({ initialSettings }: Props) {
               onClick={handleSave}
             >
               {isPending
-                ? <><Loader2 className="h-4 w-4 animate-spin" /> Збереження...</>
+                ? <><Loader2 className="h-4 w-4 animate-spin" /> {t('saving_btn')}</>
                 : saveState === 'saved'
-                ? <><CheckCircle2 className="h-4 w-4" /> Збережено</>
-                : <><Save className="h-4 w-4" /> Зберегти зміни</>}
+                ? <><CheckCircle2 className="h-4 w-4" /> {t('saved_btn')}</>
+                : <><Save className="h-4 w-4" /> {t('save_btn')}</>}
             </Button>
           </div>
         </div>

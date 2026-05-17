@@ -1,6 +1,46 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27, 28, 29
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
+
+### Task 34 — Settlement Dropdown + Phone Codes — 2026-05-17
+- [x] **CLOSED.** Fixed viewport-safe SettlementCombobox dropdown positioning; audited Russian phone codes (already absent).
+  - **Root cause**: `SettlementCombobox` had fixed portal positioning but no adaptive `maxHeight`, no scroll/resize listeners, no upward-opening fallback → dropdown extended beyond viewport on small screens.
+  - **Fix**: `updatePosition()` callback calculates `spaceBelow`/`spaceAbove`, sets `maxHeight = min(192, space-8)px`, opens upward if insufficient space below. Scroll + resize listeners attached on open, removed on close — matches `Combobox.tsx` logic exactly. `maxHeight` moved from hardcoded Tailwind class into inline style.
+  - **Russian codes audit**: `+7 🇷🇺` never present in any of the three `COUNTRY_CODES` arrays (ProfileTab, AdminUserProfile, AdminUserCreate) — all use 13 Balkans/EU/US/UA codes. No change required.
+  - Zero TypeScript errors.
+
+### Task 33 — Secure Email Change Flow — 2026-05-17
+- [x] **CLOSED.** Hardened email change flow: missing DB migration, hardcoded Ukrainian errors, current email not shown in UI.
+  - **DB migration** (`supabase/migrations/20260517_email_change.sql`): `email_change_tokens` table (uuid PK, user_id FK auth.users, new_email, token_hash UNIQUE, expires_at, consumed_at) + 3 indexes + RLS (service-role only). `ALTER TABLE users ADD COLUMN IF NOT EXISTS pending_email text`.
+  - **Locale-aware errors**: `EMAIL_ERRORS` lookup table (sq/en/uk/it) + `emailError(key, locale)` helper in `cabinet/actions/index.ts`. Replaced 5 hardcoded Ukrainian strings in `initiateEmailChange` and `resendEmailVerification`.
+  - **Current email display**: `email?` prop added to `ProfileTab` → shows "Current email: user@example.com" above change input. Threaded from `authUser.email` through `CabinetShell` → `ProfileTab`.
+  - **SettlementCombobox i18n**: `tc('no_results')` and `t('city_search_placeholder')` replace hardcoded Albanian strings.
+  - **i18n**: `cabinet.email_current_label` + `cabinet.city_search_placeholder` in all 4 locales.
+  - Backend already fully implemented: token lifecycle, rate limiting, email uniqueness, Resend emails, `consumeEmailChangeToken` with replay protection.
+
+### Task 32 — Admin Settings Save Fix — 2026-05-17
+- [x] **CLOSED.** Fixed silent settings save failure caused by RLS blocking reads.
+  - **Root cause**: `getAllSettings()` and `getSetting()` used `createClient()` (user-level, subject to RLS), while `saveSettings()` used `createAdminClient()` (service role). `site_settings` table had no SELECT policy for authenticated users → reads silently returned empty, writes succeeded → data appeared to vanish on refresh.
+  - **Fix** (`settings.ts`): Switch `getAllSettings()` and `getSetting()` to `createAdminClient()` — bypasses RLS, consistent with write path.
+  - **Cache invalidation** (`actions/index.ts`): `saveSettings()` now always calls `revalidatePath('/', 'layout')` + `revalidatePath('/admin', 'layout')` on any setting change, not just brand keys.
+  - **DB migration** (`supabase/migrations/20260517_site_settings.sql`): `CREATE TABLE IF NOT EXISTS site_settings (key text PRIMARY KEY, value text, updated_at timestamptz)` + public SELECT RLS + seeded 17 default keys.
+
+### Task 31 — UI/UX Overlay & i18n Fixes — 2026-05-17
+- [x] **CLOSED.** Fixed overlay overflow, button truncation, and hardcoded localization strings.
+  - **Root causes**: `Combobox.tsx` and `LocationCombobox.tsx` had 5 hardcoded Ukrainian strings; Combobox button-variant span missing `truncate`; admin dialogs missing `max-h/overflow-y-auto`; `DialogContent` no vertical overflow protection.
+  - **Combobox.tsx**: `useTranslations('common')` + `t('no_results')`; `truncate` added to button-variant label span.
+  - **LocationCombobox.tsx**: 5 hardcoded strings → `common.no_results`, `common.add_location`, `common.new_location`, `common.add`, `common.cancel`.
+  - **dialog.tsx**: `DialogContent` gets `max-h-[90dvh] overflow-y-auto`.
+  - **AdminCurrenciesManager + AdminLocationsManager**: Form dialogs get `max-h-[90vh] overflow-y-auto`.
+  - **i18n**: `common.add`, `common.add_location`, `common.new_location` in all 4 locales.
+
+### Task 30 — Date Filter Future Date Prevention — 2026-05-17
+- [x] **CLOSED.** Prevented future date selection in listing date filters.
+  - **Root cause**: `DatePicker` had no `maxDate` prop; all in-month days were clickable. `filterEngine.ts` parsed `date_from`/`date_to` from URL without rejecting future dates.
+  - **DatePicker.tsx**: New `maxDate?: Date` prop; future days `disabled + opacity-20 + pointer-events-none`; "→ next month" button disabled when `viewMonth === maxDate month`.
+  - **filterEngine.ts**: `sanitizeDateParam()` rejects future/invalid dates at parse time — covers URL manipulation, API, SSR, and client paths.
+  - **FiltersPanel + ListingsFilters**: `maxDate={today}` (computed via `useMemo` once per mount) passed to both DatePicker instances.
+  - `FilterCurrency` type broadened from `'ALL' | 'EUR'` to `string`.
 
 ### Task 29 — Currency Management System — 2026-05-17
 - [x] **CLOSED.** Implemented centralized currency management system with DB-backed currency registry, exchange provider registry, admin CRUD page, and dynamic currency selectors throughout the UI.

@@ -3,14 +3,13 @@
 ## Session 2026-05-17 — Tasks 17.1, 21–46
 
 ### Task 46 — Admin Language Switcher Standardization — 2026-05-17
-- [x] **CLOSED.** Replaced admin button-group language switcher with DropdownMenu — same visual architecture as the public site header.
-  - **Global language-switcher standardization**: `AdminLocaleSwitcher.tsx` button group (4 raw `<button>` elements) replaced with `DropdownMenu` + `DropdownMenuTrigger` / `DropdownMenuContent` / `DropdownMenuItem` — matching the public site's `Header.tsx` desktop pattern (Globe icon + current flag + label + ChevronDown).
-  - **Admin/public locale-switching unification**: both surfaces now use the same DropdownMenu visual primitive. Admin routing behavior preserved: `setAdminLocale(locale)` + `router.refresh()` (cookie-based, no URL locale in admin).
-  - **Loading state preserved**: `Loader2` spinner replaces ChevronDown while `isPending` — cleaner than the previous orphan spinner.
-  - **Accessibility**: `aria-label={t('language')}` on trigger, `font-semibold` on active locale item, keyboard-navigable via DropdownMenu semantics.
-  - **`side="top"`**: popover opens upward since the switcher lives at the bottom of the sidebar — no viewport clipping.
-  - **i18n**: `t('language')` label unchanged; no new i18n keys needed.
-  - **File modified**: `src/components/admin/AdminLocaleSwitcher.tsx`.
+- [x] **CLOSED.** Extracted global reusable `LocaleSwitcher` component; replaced admin button-group and public inline DropdownMenu with it — ONE canonical language-switching component across the project.
+  - **Global language-switcher standardization**: created `src/components/shared/LocaleSwitcher.tsx` — exports `LocaleSwitcher` (DropdownMenu: Globe + flag + optional label + ChevronDown/Loader2) and canonical `LOCALES` array. Single source of truth for all locale data.
+  - **`Header.tsx` refactored**: removed module-level `LOCALES` array, removed `Globe` import, removed `currentLocale` variable, replaced inline desktop DropdownMenu with `<LocaleSwitcher onSwitch={switchLocale} className="hidden sm:flex" />`. Mobile sheet still uses button-group (imports `LOCALES` from shared component).
+  - **`AdminLocaleSwitcher.tsx` refactored**: removed button-group UI, all DropdownMenu imports, and local LOCALES array. Now just wires admin routing logic (`setAdminLocale` + `router.refresh()`) into `<LocaleSwitcher onSwitch={handleSwitch} isPending={isPending} showLabel align="start" side="top" className="w-full justify-start gap-1.5" />`.
+  - **Admin/public locale-switching unification**: routing behavior remains correct — public site does URL routing + cookie sync; admin does cookie-only + refresh. The visual component is now shared.
+  - **`side="top"`**: popover opens upward in admin sidebar (switcher at bottom) — no viewport clipping.
+  - **Files modified**: `src/components/shared/LocaleSwitcher.tsx` (new), `src/components/layout/Header.tsx`, `src/components/admin/AdminLocaleSwitcher.tsx`.
 
 ### Task 45 — Favorites Navigation Relocation — 2026-05-17
 - [x] **CLOSED.** Moved "Favorites / Обране" out of user dropdown and placed it directly in the site header beside the language selector.

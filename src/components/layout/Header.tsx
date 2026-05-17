@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, Globe, ChevronDown, User, ListPlus, Heart, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
+import { Menu, ChevronDown, User, ListPlus, Heart, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -19,6 +19,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
+import { LocaleSwitcher, LOCALES } from '@/components/shared/LocaleSwitcher'
 
 const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
@@ -59,13 +60,6 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   )
 }
 
-const LOCALES = [
-  { code: 'sq', label: 'Shqip', flag: '🇦🇱' },
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'uk', label: 'Українська', flag: '🇺🇦' },
-  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
-]
-
 export function Header() {
   const t = useTranslations('nav')
   const tc = useTranslations('common')
@@ -86,7 +80,6 @@ export function Header() {
     signOut(() => router.push(`/${locale}`))
   }
 
-  const currentLocale = LOCALES.find(l => l.code === locale)
   const userInitials = user?.name
     ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
     : '?'
@@ -108,27 +101,7 @@ export function Header() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           {/* Language switcher */}
-          <DropdownMenu>
-            <DropdownMenuTrigger
-              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1 px-2 hidden sm:flex')}
-            >
-              <Globe className="h-4 w-4" />
-              <span className="text-sm">{currentLocale?.flag}</span>
-              <ChevronDown className="h-3 w-3 opacity-60" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {LOCALES.map(loc => (
-                <DropdownMenuItem
-                  key={loc.code}
-                  onClick={() => switchLocale(loc.code)}
-                  className={locale === loc.code ? 'font-semibold' : ''}
-                >
-                  <span className="mr-2">{loc.flag}</span>
-                  {loc.label}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <LocaleSwitcher onSwitch={switchLocale} className="hidden sm:flex" />
 
           {/* Favorites — visible beside language selector on sm+ */}
           <Link

@@ -1,6 +1,86 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34
+## Session 2026-05-17 — Tasks 17.1, 21–44
+
+### Task 44 — last_seen_at Infrastructure — 2026-05-17
+- [x] **CLOSED.** Implemented canonical `last_seen_at` tracking system — API route, hook, DB schema, rendering, i18n.
+  - **DB migration** (`20260517_users_last_seen.sql`): `ALTER TABLE users ADD COLUMN IF NOT EXISTS last_seen_at timestamptz` + sparse index on non-null rows.
+  - **TypeScript**: `last_seen_at: string | null` added to `User` interface. Test fixtures updated.
+  - **API route** (`/api/presence`): POST, user-scoped `createClient()`, server-side throttle via single UPDATE with `.or('last_seen_at.is.null,last_seen_at.lt.{15minAgo}')` — zero DB spam.
+  - **Hook** (`src/hooks/usePresence.ts`): fire-and-forget `fetch('/api/presence')` on mount, errors silently ignored.
+  - **CabinetShell**: `usePresence()` wired in; `last_seen_at` displayed as "Last online: DD.MM.YYYY" below member_since.
+  - **AdminShell**: `usePresence()` wired in for admin tracking.
+  - **AdminUsersTable**: `last_seen_at` shown as second line in date cell; admin users page SELECT extended.
+  - **i18n**: `cabinet.last_seen`, `admin.users.last_seen_short` in all 4 locales. Privacy: date-only granularity.
+
+### Task 43 — Absolute Profile Date Format — 2026-05-17
+- [x] **CLOSED.** Replaced relative "member since X days ago" with absolute date format globally.
+  - **`formatDate(dateStr, locale)`** added to `src/lib/formatters.ts` — `Intl.DateTimeFormat` with explicit locale, SSR-safe, null-safe.
+  - **CabinetShell**: `<RelativeTime>` → `formatDate(profile.created_at, locale)`. `member_since` label + colon.
+  - **AdminUsersTable**: both `<RelativeTime date={u.created_at} />` occurrences → `formatDate(u.created_at, locale)`. Added `useLocale()`.
+  - **Last online gap documented**: `last_seen_at` field didn't exist — resolved in Task 44.
+
+### Task 42 — Location Filter Standardization — 2026-05-17
+- [x] **CLOSED.** Standardized location filter options across HeroSearch + FiltersPanel to city+region only.
+  - **Root cause**: HeroSearch's own LocationCombobox passed ALL location types (region+city+village); FiltersPanel internally filtered to city+region — inconsistent lists in same session.
+  - **Fix** (`HeroSearch.tsx`): `cityRegionLocs = useMemo(filter city|region)` → used for both LocationCombobox and FiltersPanel prop. All location filters now show identical options.
+  - All implementations already used `LocationCombobox` + `location_id` param — no migration needed.
+
+### Task 41 — Create Location Flow Fix — 2026-05-17
+- [x] **CLOSED.** Fixed silent create failure, missing toast feedback, list not refreshing.
+  - **Root cause 1**: `useState(init)` in `AdminLocationsManager` never re-synced from props → list didn't update after `router.refresh()`. Fix: `useEffect(() => { setItems(init) }, [init])`.
+  - **Root cause 2**: `createLocation`, `updateLocation`, `deleteLocation` returned `void` → errors silently swallowed. Fixed to `Promise<{ error?: string }>`.
+  - **Toast feedback**: `toast.success(t('success_created'))` / `toast.error(t('error_save_failed'))` added to all mutation handlers.
+  - **Admin page SELECT**: extended to include `image_url, is_featured, display_order`.
+  - **i18n**: `success_created`, `success_updated`, `success_deleted`, `error_save_failed` in all 4 locales.
+
+### Task 40 — Admin Popular Locations Management — 2026-05-17
+- [x] **CLOSED.** Full admin management for homepage Popular Locations — CRUD, image, featured toggle, ordering.
+  - **DB migration** (`20260517_locations_featured.sql`): `image_url text`, `is_featured boolean DEFAULT false`, `display_order int DEFAULT 99` added to `locations`. Partial index on featured cities.
+  - **TypeScript**: `Location` interface extended with new fields.
+  - **Admin actions**: `toggleLocationFeatured()` added; `createLocation`/`updateLocation` extended with new fields.
+  - **AdminLocationsManager**: city-specific modal fields (image URL + preview, display_order). `★` featured toggle button in table for city rows.
+  - **getPopularLocations()**: now filters `is_featured = true`, orders by `display_order, name_al`.
+  - **PopularLocations component**: city image as background with dark overlay; gradient fallback; localized name (name_en/name_al by locale); graceful empty state.
+  - **i18n**: featured_col, featured_toggle_title, image_url_label, display_order_label in all 4 locales.
+
+### Task 39 — Listings Count Fix + Filter Audit — 2026-05-17
+- [x] **CLOSED.** Fixed doubled listings count ("5 5 оголошень"); confirmed no `<select>` elements exist.
+  - **Root cause**: `{items.length} {tl('found_results', {count})}` rendered count twice. Fix: `{items.length === 1 ? tl('found_results_one') : tl('found_results', {count})}`.
+  - **Audit**: All filter controls (FiltersPanel, ListingsFilters, AdminListingsTable, ListingsTab) already use Combobox/buttons — no migration needed.
+
+### Task 38 — Avatar Global Component — 2026-05-17
+- [x] **CLOSED.** Replaced local `AvatarUpload` duplicate in ProfileTab with shared `AdminUserAvatar`.
+  - **Root cause**: ProfileTab had ~130-line local `AvatarUpload` duplicate; `AdminUserAvatar` already existed and worked correctly in admin.
+  - **AdminUserAvatar**: added `showRemove?: boolean` prop (default true, backward-compat).
+  - **ProfileTab**: removed `AvatarUpload`, `validateSourceImage`, constants, `AvatarCropModal` lazy import (~130 lines). Uses `AdminUserAvatar` with `showRemove={false}`.
+  - **CabinetShell**: `avatarUrl` state lifted + `onAvatarChange` prop — header avatar updates immediately after upload without page refresh.
+
+### Task 36 — Admin Listings Status Read-Only — 2026-05-17
+- [x] **CLOSED.** Status column already read-only; fixed `updateListingStatus` return type + added colored badges.
+  - Status column was already a `<span>` — no inline mutation existed.
+  - `updateListingStatus`: changed return type from `void` to `Promise<{ error?: string }>` — errors now propagate.
+  - `STATUS_BADGE` record with semantic color classes per status (pending→amber, active→green, inactive→gray, sold→blue, rented→purple, archived→gray).
+  - Removed `STATUSES`/`STATUS_OPTIONS` indirection; inline array in `FILTER_STATUS_OPTIONS`.
+  - Dead `saveSetting()` (singular) removed from `actions/index.ts`.
+
+### Task 35 — Admin Settings Save Fix — 2026-05-17
+- [x] **CLOSED.** Same root cause as Task 32. Already fixed. `getAllSettings()`/`getSetting()` use `createAdminClient()`. All settings persist correctly.
+
+### Task 32 — Admin Settings Persistence Fix — 2026-05-17
+- [x] **CLOSED.** Fixed silent settings save failure caused by RLS blocking reads.
+  - **Root cause**: `getAllSettings()` and `getSetting()` used `createClient()` (user-level, RLS-blocked). `saveSettings()` used `createAdminClient()` (service role). Reads returned empty → appeared not persisted.
+  - `settings.ts`: switched to `createAdminClient()` for all reads.
+  - `actions/index.ts`: `saveSettings()` now always revalidates `'/', 'layout'` + `'/admin', 'layout'`.
+  - **DB migration** (`20260517_site_settings.sql`): `CREATE TABLE IF NOT EXISTS site_settings` + public SELECT RLS + 17 default seed keys.
+
+### Task 31 — UI/UX Overlay & i18n Fixes — 2026-05-17
+- [x] **CLOSED.** Fixed overlay overflow, button truncation, and hardcoded localization strings.
+  - `Combobox.tsx`: `t('no_results')` + `truncate` on button-variant span.
+  - `LocationCombobox.tsx`: 5 hardcoded strings → common.* i18n keys.
+  - `dialog.tsx`: `max-h-[90dvh] overflow-y-auto` on DialogContent.
+  - Admin dialogs: `max-h-[90vh] overflow-y-auto` on form dialog containers.
+  - **i18n**: `common.add`, `common.add_location`, `common.new_location` in all 4 locales.
 
 ### Task 34 — Settlement Dropdown + Phone Codes — 2026-05-17
 - [x] **CLOSED.** Fixed viewport-safe SettlementCombobox dropdown positioning; audited Russian phone codes (already absent).

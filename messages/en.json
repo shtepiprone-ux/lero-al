@@ -453,7 +453,11 @@
       "nothing_found": "Nothing found",
       "save": "Save",
       "cancel": "Cancel",
-      "actions_col": "Actions"
+      "actions_col": "Actions",
+      "featured_col": "Homepage",
+      "featured_toggle_title": "Toggle featured on homepage",
+      "image_url_label": "City image URL (Cloudinary)",
+      "display_order_label": "Display order"
     },
     "sidebar": {
       "group_overview": "Overview",

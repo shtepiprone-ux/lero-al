@@ -453,7 +453,11 @@
       "nothing_found": "Asgjë nuk u gjet",
       "save": "Ruaj",
       "cancel": "Anulo",
-      "actions_col": "Veprime"
+      "actions_col": "Veprime",
+      "featured_col": "Faqja kryesore",
+      "featured_toggle_title": "Aktivizo/çaktivizo në faqen kryesore",
+      "image_url_label": "URL e imazhit të qytetit (Cloudinary)",
+      "display_order_label": "Rendi i shfaqjes"
     },
     "sidebar": {
       "group_overview": "Vështrim",

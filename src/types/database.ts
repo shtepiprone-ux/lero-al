@@ -105,6 +105,9 @@ export interface Location {
   region_id: number | null
   lat: number | null
   lng: number | null
+  image_url: string | null
+  is_featured: boolean
+  display_order: number
 }
 
 export interface Listing {

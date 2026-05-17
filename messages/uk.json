@@ -453,7 +453,11 @@
       "nothing_found": "Нічого не знайдено",
       "save": "Зберегти",
       "cancel": "Скасувати",
-      "actions_col": "Дії"
+      "actions_col": "Дії",
+      "featured_col": "Головна",
+      "featured_toggle_title": "Показати/приховати на головній",
+      "image_url_label": "URL зображення міста (Cloudinary)",
+      "display_order_label": "Порядок відображення"
     },
     "sidebar": {
       "group_overview": "Огляд",

@@ -18,8 +18,10 @@ export async function getPopularLocations(): Promise<(Location & { listing_count
   const supabase = createClient()
   const { data, error } = await supabase
     .from('locations')
-    .select('id, name_al, name_en, slug, type, parent_id, region_id, lat, lng')
+    .select('id, name_al, name_en, slug, type, parent_id, region_id, lat, lng, image_url, is_featured, display_order')
     .eq('type', 'city')
+    .eq('is_featured', true)
+    .order('display_order', { ascending: true })
     .order('name_al', { ascending: true })
     .limit(8)
 

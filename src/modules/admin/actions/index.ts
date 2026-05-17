@@ -165,7 +165,8 @@ export async function toggleUserVerified(userId: string, isVerified: boolean) {
 // ── Locations ────────────────────────────────────────────────────────────────
 
 export async function createLocation(data: {
-  name_al: string; name_en?: string; type: string; slug: string; parent_id?: number | null
+  name_al: string; name_en?: string; type: string; slug: string; parent_id?: number | null;
+  image_url?: string | null; is_featured?: boolean; display_order?: number
 }) {
   await assertAdminAccess()
   const db = createAdminClient()
@@ -176,13 +177,22 @@ export async function createLocation(data: {
 
 export async function updateLocation(
   id: number,
-  data: { name_al?: string; name_en?: string; type?: string; slug?: string }
+  data: { name_al?: string; name_en?: string; type?: string; slug?: string; image_url?: string | null; is_featured?: boolean; display_order?: number }
 ) {
   await assertAdminAccess()
   const db = createAdminClient()
   const { error } = await db.from('locations').update(data).eq('id', id)
   if (error) console.error('updateLocation failed', { error, id })
   revalidatePath('/admin/locations')
+}
+
+export async function toggleLocationFeatured(id: number, isFeatured: boolean): Promise<{ error?: string }> {
+  await assertAdminAccess()
+  const db = createAdminClient()
+  const { error } = await db.from('locations').update({ is_featured: isFeatured }).eq('id', id)
+  if (error) { console.error('toggleLocationFeatured failed', { error, id }); return { error: error.message } }
+  revalidatePath('/admin/locations')
+  return {}
 }
 
 export async function deleteLocation(id: number) {

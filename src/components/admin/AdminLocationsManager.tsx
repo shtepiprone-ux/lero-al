@@ -3,18 +3,21 @@
 import { useState, useTransition, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, Star } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Combobox } from '@/components/shared/Combobox'
-import { createLocation, updateLocation, deleteLocation } from '@/modules/admin/actions'
+import { createLocation, updateLocation, deleteLocation, toggleLocationFeatured } from '@/modules/admin/actions'
 
 function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
-export interface Location { id: number; name_al: string; name_en?: string | null; type: string; slug?: string; parent_id?: number | null }
+export interface Location {
+  id: number; name_al: string; name_en?: string | null; type: string; slug?: string; parent_id?: number | null;
+  image_url?: string | null; is_featured?: boolean; display_order?: number
+}
 
 function LocationModal({
   location, parents, onClose, onDone,
@@ -27,7 +30,11 @@ function LocationModal({
   const [type, setType] = useState(location?.type ?? 'city')
   const [slug, setSlug] = useState(location?.slug ?? '')
   const [parentId, setParentId] = useState<string>(location?.parent_id ? String(location.parent_id) : '')
+  const [imageUrl, setImageUrl] = useState(location?.image_url ?? '')
+  const [displayOrder, setDisplayOrder] = useState(location?.display_order ?? 99)
   const [saving, setSaving] = useState(false)
+
+  const isCity = type === 'city'
 
   const typeOptions = useMemo(() => [
     { value: 'region',   label: t('type_region') },
@@ -61,6 +68,7 @@ function LocationModal({
       type,
       slug: slug.trim() || toSlug(nameAl),
       parent_id: parentId ? Number(parentId) : null,
+      ...(isCity && { image_url: imageUrl.trim() || null, display_order: displayOrder }),
     }
     if (location) {
       await updateLocation(location.id, data)
@@ -114,6 +122,35 @@ function LocationModal({
               portal
             />
           </div>
+
+          {isCity && (
+            <>
+              <div className="flex flex-col gap-1.5 col-span-2">
+                <Label className="text-xs">{t('image_url_label')}</Label>
+                <Input
+                  value={imageUrl}
+                  onChange={e => setImageUrl(e.target.value)}
+                  placeholder="https://res.cloudinary.com/..."
+                  className="h-10 rounded-xl font-mono text-xs"
+                />
+                {imageUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={imageUrl} alt="" className="h-20 w-full object-cover rounded-xl mt-1" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                )}
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-xs">{t('display_order_label')}</Label>
+                <Input
+                  type="number"
+                  min={1}
+                  max={999}
+                  value={displayOrder}
+                  onChange={e => setDisplayOrder(Number(e.target.value))}
+                  className="h-10 rounded-xl"
+                />
+              </div>
+            </>
+          )}
         </div>
 
         <div className="flex gap-2 pt-2">
@@ -135,6 +172,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
   const [, startTransition] = useTransition()
   const [modal, setModal] = useState<'create' | Location | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
+  const [togglingId, setTogglingId] = useState<number | null>(null)
   const [items, setItems] = useState(init)
 
   const typeLabels: Record<string, string> = {
@@ -167,6 +205,15 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
       await deleteLocation(id)
       setItems(prev => prev.filter(l => l.id !== id))
       setDeletingId(null)
+    })
+  }
+
+  function handleToggleFeatured(loc: Location) {
+    setTogglingId(loc.id)
+    startTransition(async () => {
+      await toggleLocationFeatured(loc.id, !loc.is_featured)
+      setItems(prev => prev.map(l => l.id === loc.id ? { ...l, is_featured: !l.is_featured } : l))
+      setTogglingId(null)
     })
   }
 
@@ -212,12 +259,13 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('name_al_label')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('name_en_label')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('type_label')}</th>
+                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden sm:table-cell">{t('featured_col')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('actions_col')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {items.length === 0 ? (
-                <tr><td colSpan={5} className="px-5 py-10 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
+                <tr><td colSpan={6} className="px-5 py-10 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
               ) : items.map((l) => (
                 <tr key={l.id} className={`hover:bg-muted/20 transition-colors ${deletingId === l.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3 text-muted-foreground text-xs">{l.id}</td>
@@ -227,6 +275,25 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                     <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
                       {typeLabels[l.type] ?? l.type}
                     </span>
+                  </td>
+                  <td className="px-5 py-3 hidden sm:table-cell">
+                    {l.type === 'city' && (
+                      togglingId === l.id
+                        ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                        : (
+                          <button
+                            onClick={() => handleToggleFeatured(l)}
+                            title={t('featured_toggle_title')}
+                            className={`h-7 w-7 rounded-lg border flex items-center justify-center transition-colors ${
+                              l.is_featured
+                                ? 'border-badge-premium/40 text-badge-premium hover:bg-badge-premium/10'
+                                : 'border-border text-muted-foreground hover:border-badge-premium/40'
+                            }`}
+                          >
+                            <Star className={`h-3.5 w-3.5 ${l.is_featured ? 'fill-current' : ''}`} />
+                          </button>
+                        )
+                    )}
                   </td>
                   <td className="px-5 py-3">
                     {deletingId === l.id ? <Loader2 className="h-4 w-4 animate-spin" /> : (

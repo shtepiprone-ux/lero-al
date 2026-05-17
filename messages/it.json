@@ -453,7 +453,11 @@
       "nothing_found": "Nessun risultato",
       "save": "Salva",
       "cancel": "Annulla",
-      "actions_col": "Azioni"
+      "actions_col": "Azioni",
+      "featured_col": "Homepage",
+      "featured_toggle_title": "Attiva/disattiva in homepage",
+      "image_url_label": "URL immagine città (Cloudinary)",
+      "display_order_label": "Ordine di visualizzazione"
     },
     "sidebar": {
       "group_overview": "Panoramica",

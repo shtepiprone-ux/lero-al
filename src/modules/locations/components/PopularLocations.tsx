@@ -19,6 +19,11 @@ const CITY_GRADIENTS = [
   'from-brand-800 to-brand-950',
 ]
 
+function getLocalizedName(loc: Location, locale: string): string {
+  if (locale === 'sq') return loc.name_al
+  return loc.name_en ?? loc.name_al
+}
+
 export function PopularLocations() {
   const locale = useLocale()
   const t = useTranslations('home')
@@ -42,22 +47,43 @@ export function PopularLocations() {
     )
   }
 
+  if (locations.length === 0) return null
+
   return (
     <div className="popular-locations grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-      {locations.map((loc, i) => (
-        <Link
-          key={loc.id}
-          href={`/${locale}/listings?location_id=${loc.id}`}
-          className={`relative flex flex-col justify-end h-28 rounded-xl overflow-hidden bg-gradient-to-br ${CITY_GRADIENTS[i % CITY_GRADIENTS.length]} p-3 text-primary-foreground hover:opacity-90 transition-opacity`}
-          data-track="listing_click"
-        >
-          <MapPin className="absolute top-3 right-3 h-4 w-4 opacity-70" />
-          <span className="font-semibold text-sm leading-tight">{loc.name_al}</span>
-          {loc.listing_count > 0 && (
-            <span className="text-xs text-primary-foreground/80">{loc.listing_count} {t('listings_in_city')}</span>
-          )}
-        </Link>
-      ))}
+      {locations.map((loc, i) => {
+        const name = getLocalizedName(loc, locale)
+        return (
+          <Link
+            key={loc.id}
+            href={`/${locale}/listings?location_id=${loc.id}`}
+            className="relative flex flex-col justify-end h-28 rounded-xl overflow-hidden p-3 text-primary-foreground hover:opacity-90 transition-opacity"
+            data-track="listing_click"
+          >
+            {loc.image_url ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={loc.image_url}
+                  alt={name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+              </>
+            ) : (
+              <div className={`absolute inset-0 bg-gradient-to-br ${CITY_GRADIENTS[i % CITY_GRADIENTS.length]}`} />
+            )}
+            <div className="relative z-10">
+              <MapPin className="absolute top-0 right-0 translate-y-[-80px] h-4 w-4 opacity-70" aria-hidden />
+              <span className="font-semibold text-sm leading-tight block truncate">{name}</span>
+              {loc.listing_count > 0 && (
+                <span className="text-xs text-primary-foreground/80">{loc.listing_count} {t('listings_in_city')}</span>
+              )}
+            </div>
+          </Link>
+        )
+      })}
     </div>
   )
 }

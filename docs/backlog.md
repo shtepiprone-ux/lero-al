@@ -1,6 +1,25 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26
+
+### Task 26 — Social sharing metadata (OG + Twitter/X) — 2026-05-17
+- [x] **CLOSED.** Implemented full production-grade social sharing metadata for listing detail pages.
+  - **Root cause**: `generateMetadata` only returned `title`, `description`, `robots` — no `openGraph` or `twitter` fields. Crawlers received no preview data.
+  - **Extended `generateMetadata`** in `src/app/[locale]/listings/[slug]/page.tsx`:
+    - Fetches `price`, `currency`, `location(name_al)`, `images(url, is_cover, order)` in a lightweight query alongside existing fields.
+    - Fetches `og_image` fallback from `site_settings` via `getSetting()` (configurable in Admin Settings).
+    - **Open Graph**: `og:title`, `og:description`, `og:type=website`, `og:url`, `og:site_name`, `og:locale` (sq→sq_AL, en→en_US, uk→uk_UA, it→it_IT), `og:image` with `width=1200, height=630, alt`.
+    - **Twitter/X**: `twitter:card=summary_large_image`, `twitter:title`, `twitter:description`, `twitter:images`.
+    - **Description snippet**: `{price} {currency} · {location} — {description}` truncated to 160 chars. HTML stripped via `safeText()`. XSS-safe (no raw HTML in metadata).
+    - **Cover image**: Cloudinary transform `w_1200,h_630,c_fill,g_auto,q_80,f_jpg` applied via URL rewrite for optimal social preview dimensions. Falls back to `og_image` setting or `{SITE_URL}/og-default.png`.
+    - **Privacy**: non-public statuses (`inactive`, `pending`) return minimal metadata only.
+    - **Archived noindex**: existing `robots: { index: false }` logic preserved.
+  - **Backward compat**: `generateMetadata` uses a separate lightweight query (4+2 cols + 2 JOINs) — main `ListingPage` query unchanged (comment preserved).
+  - **Locale-aware**: OG locale set from route `locale` param. No hardcoded locale strings.
+  - Zero TypeScript errors. Zero ESLint errors.
+  - **Deliverable**: Apply migration in Admin → Settings → SEO tab to set a custom `og_image` fallback URL. Add `og-default.png` to `/public/` for the static fallback.
+
+### Task 25 — Listing Details: remove duplicate favorite + unify state — 2026-05-17
 
 ### Task 25 — Listing Details: remove duplicate favorite + unify state — 2026-05-17
 - [x] **CLOSED.** Removed duplicated favorite action from listing details page and established single source of truth.

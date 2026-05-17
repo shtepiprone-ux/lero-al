@@ -18,7 +18,7 @@ import { ListingBackButton } from '@/modules/listings/components/ListingBackButt
 import { ListingStatusBanner } from '@/modules/listings/components/ListingStatusBanner'
 import { ListingMobileCTA } from '@/modules/listings/components/ListingMobileCTA'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
-import { getArchivedNoindexDays } from '@/modules/admin/lib/settings'
+import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
 import { formatPrice } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
 import { isListingArchived, isListingVisible, isListingClosed } from '@/modules/listings/domain'
@@ -84,29 +84,102 @@ interface Props {
 //
 // This keeps metadata fast and avoids any cross-phase coupling.
 
+// OG locale map: next-intl locale → Facebook/OG locale code
+const OG_LOCALE: Record<string, string> = {
+  sq: 'sq_AL', en: 'en_US', uk: 'uk_UA', it: 'it_IT',
+}
+
+/** Apply Cloudinary transform for optimal OG image (1200×630, center crop). */
+function toOgImageUrl(url: string): string {
+  return url.replace('/upload/', '/upload/w_1200,h_630,c_fill,g_auto,q_80,f_jpg/')
+}
+
+/** Strip HTML tags and collapse whitespace for safe metadata text. */
+function safeText(raw: string | null | undefined, maxLen: number): string {
+  if (!raw) return ''
+  return raw.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, maxLen)
+}
+
 export async function generateMetadata({ params }: Props) {
-  const { slug } = await params
+  const { slug, locale } = await params
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
+
   const supabase = await createClient()
-  const { data } = await supabase
-    .from('listings')
-    .select('title, description, status, updated_at')
-    .eq('slug', slug)
-    .single()
+  const [{ data }, fallbackOgImage] = await Promise.all([
+    supabase
+      .from('listings')
+      .select(`
+        title, description, status, updated_at, price, currency,
+        location:locations(name_al),
+        images:listing_images(url, is_cover, "order")
+      `)
+      .eq('slug', slug)
+      .single(),
+    getSetting('og_image', `${siteUrl}/og-default.png`),
+  ])
+
   if (!data) return {}
 
+  // Only publicly visible statuses get full OG metadata
+  const publicStatuses = ['active', 'sold', 'rented', 'archived']
+  if (!publicStatuses.includes(data.status)) return { title: 'Lero.al' }
+
+  // robots noindex for old archived listings
   let robots: { index: boolean; follow: boolean } | undefined
   if (isListingArchived(data.status as ListingStatus)) {
     const noindexDays = await getArchivedNoindexDays()
     const daysSince = Math.floor((Date.now() - new Date(data.updated_at).getTime()) / 86400000)
-    if (daysSince >= noindexDays) {
-      robots = { index: false, follow: true }
-    }
+    if (daysSince >= noindexDays) robots = { index: false, follow: true }
   }
 
+  // Build description snippet: price · location · text
+  const locationName = Array.isArray(data.location) ? data.location[0]?.name_al : (data.location as { name_al: string } | null)?.name_al
+  const priceStr = data.price ? `${new Intl.NumberFormat('en').format(Math.round(data.price))} ${data.currency}` : ''
+  const descriptionParts = [priceStr, locationName].filter(Boolean)
+  const rawDescription = safeText(data.description, 200)
+  const descriptionBody = rawDescription
+    ? `${descriptionParts.join(' · ')} — ${rawDescription}`.slice(0, 160)
+    : descriptionParts.join(' · ')
+  const description = descriptionBody || safeText(data.title, 160)
+
+  // Resolve cover image
+  const images = Array.isArray(data.images) ? (data.images as { url: string; is_cover: boolean; order: number }[]) : []
+  const coverImage = images.find(img => img.is_cover) ?? images.sort((a, b) => a.order - b.order)[0]
+  const rawImageUrl = coverImage?.url ?? ''
+  const ogImageUrl = rawImageUrl
+    ? toOgImageUrl(rawImageUrl)
+    : (fallbackOgImage || `${siteUrl}/og-default.png`)
+
+  const canonicalUrl = `${siteUrl}/${locale}/listings/${slug}`
+  const ogLocale = OG_LOCALE[locale] ?? 'sq_AL'
+  const siteName = 'Lero.al'
+
   return {
-    title: `${data.title} | Lero.al`,
-    description: data.description?.slice(0, 160),
+    title: `${data.title} | ${siteName}`,
+    description,
     ...(robots && { robots }),
+    openGraph: {
+      title: data.title,
+      description,
+      type: 'website' as const,
+      url: canonicalUrl,
+      siteName,
+      locale: ogLocale,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: safeText(data.title, 100),
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image' as const,
+      title: data.title,
+      description,
+      images: [ogImageUrl],
+    },
   }
 }
 

@@ -121,18 +121,48 @@ function SettlementCombobox({ cities, regions, value, onChange, label }: {
   // Track client mount for portal
   useEffect(() => { setMounted(true) }, [])
 
-  // Recompute dropdown position whenever it opens
-  useEffect(() => {
-    if (!open || !inputRef.current) return
+  const MAX_H = 192 // 12rem — matches Tailwind max-h-48
+
+  // Viewport-aware position: opens downward or upward, clamps maxHeight to available space.
+  const updatePosition = useCallback(() => {
+    if (!inputRef.current) return
     const rect = inputRef.current.getBoundingClientRect()
-    setDropdownStyle({
-      position: 'fixed',
-      top: rect.bottom + 4,
-      left: rect.left,
-      width: rect.width,
-      zIndex: 9999,
-    })
-  }, [open])
+    const spaceBelow = window.innerHeight - rect.bottom
+    const spaceAbove = rect.top
+
+    if (spaceBelow >= Math.min(MAX_H, 120) || spaceBelow >= spaceAbove) {
+      setDropdownStyle({
+        position: 'fixed',
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+        maxHeight: Math.min(MAX_H, spaceBelow - 8),
+        zIndex: 9999,
+        overflowY: 'auto',
+      })
+    } else {
+      setDropdownStyle({
+        position: 'fixed',
+        bottom: window.innerHeight - rect.top + 4,
+        left: rect.left,
+        width: rect.width,
+        maxHeight: Math.min(MAX_H, spaceAbove - 8),
+        zIndex: 9999,
+        overflowY: 'auto',
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+    updatePosition()
+    window.addEventListener('scroll', updatePosition, true)
+    window.addEventListener('resize', updatePosition)
+    return () => {
+      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('resize', updatePosition)
+    }
+  }, [open, updatePosition])
 
   const selected = cities.find(c => c.id === value)
   const region = regions.find(r => r.id === selected?.region_id)
@@ -146,7 +176,7 @@ function SettlementCombobox({ cities, regions, value, onChange, label }: {
   const dropdown = open && mounted ? createPortal(
     <div
       style={dropdownStyle}
-      className="bg-popover border rounded-xl shadow-lg max-h-48 overflow-y-auto"
+      className="bg-popover border rounded-xl shadow-lg"
     >
       {filtered.length === 0
         ? <p className="px-3 py-2 text-sm text-muted-foreground">{tc('no_results')}</p>

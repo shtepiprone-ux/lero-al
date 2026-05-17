@@ -218,12 +218,12 @@ export async function saveSettings(entries: Record<string, string>): Promise<{ e
     console.error('saveSettings failed', { error })
     return { error: 'Не вдалось зберегти налаштування' }
   }
+  // Always revalidate the settings page so the admin sees fresh values.
   revalidatePath('/admin/settings')
-  const brandKeys = ['site_name', 'logo_url', 'logo_dark_url', 'favicon_url']
-  if (rows.some(r => brandKeys.includes(r.key))) {
-    revalidatePath('/', 'layout')
-    revalidatePath('/admin', 'layout')
-  }
+  // Any setting change may affect layout (header, footer, SEO metadata) —
+  // revalidate the full layout for both public and admin surfaces.
+  revalidatePath('/', 'layout')
+  revalidatePath('/admin', 'layout')
   return {}
 }
 

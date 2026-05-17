@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { ARCHIVED_NOINDEX_DAYS } from '@/modules/listings/constants'
 
 const SUPPORTED_LOCALES = ['sq', 'en', 'uk', 'it'] as const
@@ -18,8 +18,8 @@ export async function getDefaultSiteLocale(): Promise<SupportedLocale> {
 }
 
 export async function getSetting(key: string, fallback: string): Promise<string> {
-  const supabase = await createClient()
-  const { data } = await supabase
+  const db = createAdminClient()
+  const { data } = await db
     .from('site_settings')
     .select('value')
     .eq('key', key)
@@ -34,7 +34,7 @@ export async function getArchivedNoindexDays(): Promise<number> {
 }
 
 export async function getAllSettings(): Promise<Record<string, string>> {
-  const supabase = await createClient()
-  const { data } = await supabase.from('site_settings').select('key, value')
+  const db = createAdminClient()
+  const { data } = await db.from('site_settings').select('key, value')
   return Object.fromEntries((data ?? []).map(r => [r.key, r.value]))
 }

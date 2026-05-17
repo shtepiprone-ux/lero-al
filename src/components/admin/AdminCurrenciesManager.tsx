@@ -78,7 +78,7 @@ function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-card rounded-2xl shadow-2xl border w-full max-w-lg p-6 flex flex-col gap-5">
+      <div className="relative bg-card rounded-2xl shadow-2xl border w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 flex flex-col gap-5">
         <h2 className="font-semibold text-base">{initial ? t('edit') : t('new')}</h2>
 
         <div className="grid grid-cols-2 gap-4">

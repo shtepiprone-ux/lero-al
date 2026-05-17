@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronDown, Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 
 export interface ComboboxOption {
@@ -63,6 +64,7 @@ export function Combobox({
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
+  const t = useTranslations('common')
   const selected = options.find(o => o.value === value)
 
   const filtered = useMemo(() => {
@@ -143,7 +145,7 @@ export function Combobox({
       style={portal ? dropdownStyle : undefined}
     >
       {filtered.length === 0 ? (
-        <p className="px-3 py-2 text-sm text-muted-foreground">Нічого не знайдено</p>
+        <p className="px-3 py-2 text-sm text-muted-foreground">{t('no_results')}</p>
       ) : filtered.map(opt => (
         <button
           key={opt.value}
@@ -191,7 +193,7 @@ export function Combobox({
           disabled={disabled}
           className={cn(triggerBase, 'cursor-pointer')}
         >
-          <span className={cn(!selected && 'text-muted-foreground')}>
+          <span className={cn('truncate', !selected && 'text-muted-foreground')}>
             {selected ? selected.label : placeholder}
           </span>
         </button>

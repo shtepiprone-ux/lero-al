@@ -107,7 +107,7 @@ export function LocationCombobox({
               {tc('all_locations')}
             </Button>
             {filtered.length === 0 ? (
-              <p className="px-3 py-2 text-sm text-muted-foreground">Нічого не знайдено</p>
+              <p className="px-3 py-2 text-sm text-muted-foreground">{tc('no_results')}</p>
             ) : filtered.map(loc => (
               <Button
                 key={loc.id}
@@ -137,22 +137,21 @@ export function LocationCombobox({
             className="text-xs text-primary hover:underline w-fit mt-1"
             onClick={() => setShowAdd(v => !v)}
           >
-            + Додати населений пункт
+            + {tc('add_location')}
           </button>
           {showAdd && (
             <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30 mt-1">
-              <p className="text-xs font-semibold">Новий населений пункт</p>
+              <p className="text-xs font-semibold">{tc('new_location')}</p>
               <Input
                 value={addName}
                 onChange={e => setAddName(e.target.value)}
-                placeholder="Назва (алб.)"
+                placeholder="Nazva (alb.)"
                 className="h-9 rounded-xl text-sm"
               />
               <Combobox
                 options={regions!.map(r => ({ value: r.id.toString(), label: r.name_al }))}
                 value={addRegionId?.toString() ?? ''}
                 onChange={v => setAddRegionId(v ? Number(v) : null)}
-                placeholder="Оберіть регіон"
                 variant="button"
                 size="sm"
               />
@@ -161,13 +160,13 @@ export function LocationCombobox({
                   type="button" size="sm" className="h-8 rounded-xl"
                   onClick={handleAdd} disabled={adding || !addName.trim() || !addRegionId}
                 >
-                  {adding ? <Loader2 className="h-3 w-3 animate-spin" /> : 'Додати'}
+                  {adding ? <Loader2 className="h-3 w-3 animate-spin" /> : tc('add')}
                 </Button>
                 <Button
                   type="button" variant="ghost" size="sm" className="h-8 rounded-xl"
                   onClick={() => setShowAdd(false)}
                 >
-                  Скасувати
+                  {tc('cancel')}
                 </Button>
               </div>
             </div>

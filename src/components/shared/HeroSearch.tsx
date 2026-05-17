@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -18,6 +18,12 @@ export function HeroSearch() {
   const locale = useLocale()
 
   const { locations } = useLocations()
+
+  // Canonical filter: city and region only — consistent with FiltersPanel's cityRegionLocs.
+  const cityRegionLocs = useMemo(
+    () => locations.filter(l => l.type === 'city' || l.type === 'region'),
+    [locations]
+  )
 
   const [listingType, setListingType] = useState<ListingType>('sale')
   const [propertyType, setPropertyType] = useState<string>('')
@@ -103,7 +109,7 @@ export function HeroSearch() {
             />
 
             <LocationCombobox
-              locations={locations}
+              locations={cityRegionLocs}
               value={locationId}
               onChange={id => setLocationId(id ?? '')}
               onKeyDown={handleKeyDown}
@@ -146,7 +152,7 @@ export function HeroSearch() {
         values={filters}
         onChange={setFilters}
         onApply={handleSearch}
-        locations={locations}
+        locations={cityRegionLocs}
       />
     </>
   )

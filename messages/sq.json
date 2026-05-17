@@ -388,7 +388,9 @@
     "unsaved_title": "Ndryshime të paruajtura",
     "unsaved_body": "Keni ndryshime të paruajtura. Jeni i sigurt që doni të largoheni nga kjo faqe?",
     "unsaved_stay": "Qëndroni",
-    "unsaved_leave": "Largohuni pa ruajtur"
+    "unsaved_leave": "Largohuni pa ruajtur",
+    "currency_USD": "Dollar amerikan (USD)",
+    "currency_GBP": "Paund britanik (GBP)"
   },
   "home": {
     "hero_title": "Gjeni pronën tuaj të ëndrrave",

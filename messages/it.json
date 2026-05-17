@@ -388,7 +388,9 @@
     "unsaved_title": "Modifiche non salvate",
     "unsaved_body": "Hai modifiche non salvate. Sei sicuro di voler lasciare questa pagina?",
     "unsaved_stay": "Rimani",
-    "unsaved_leave": "Esci senza salvare"
+    "unsaved_leave": "Esci senza salvare",
+    "currency_USD": "Dollaro USA (USD)",
+    "currency_GBP": "Sterlina britannica (GBP)"
   },
   "home": {
     "hero_title": "Trova la proprietà dei tuoi sogni",

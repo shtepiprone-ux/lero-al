@@ -22,7 +22,7 @@ interface Props {
 export function FavoritesShell({ listings: initialListings, userId, typeFilter, typeCounts }: Props) {
   const t = useTranslations('favorites')
   const locale = useLocale()
-  const { rate } = useExchangeRate()
+  const { rates } = useExchangeRate()
   const { user } = useAuth()
   const displayCurrency = user?.preferred_currency ?? 'ALL'
 
@@ -173,7 +173,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
               onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
               layoutContext="3-col-xl"
               displayCurrency={displayCurrency}
-              exchangeRate={rate}
+              rates={rates}
             />
           ))}
         </div>

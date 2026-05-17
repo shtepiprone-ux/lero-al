@@ -188,33 +188,41 @@ function SettlementCombobox({ cities, regions, value, onChange, label }: {
 
 // ── Currency combobox sub-component ──────────────────────────────────────────
 
-function CurrencySelector({ value, onChange, labelAll, labelEur, fieldLabel }: {
+const CURRENCY_OPTIONS: { value: PreferredCurrency; symbol: string }[] = [
+  { value: 'ALL', symbol: 'L' },
+  { value: 'EUR', symbol: '€' },
+  { value: 'USD', symbol: '$' },
+  { value: 'GBP', symbol: '£' },
+]
+
+function CurrencySelector({ value, onChange, labels, fieldLabel }: {
   value: PreferredCurrency
   onChange: (v: PreferredCurrency) => void
-  labelAll: string
-  labelEur: string
+  labels: Record<PreferredCurrency, string>
   fieldLabel: string
 }) {
   return (
     <div className="flex flex-col gap-1.5">
       <Label className="text-sm">{fieldLabel}</Label>
-      <div className="flex gap-2">
-        {(['ALL', 'EUR'] as PreferredCurrency[]).map(cur => (
+      <div className="grid grid-cols-4 gap-2">
+        {CURRENCY_OPTIONS.map(({ value: cur, symbol }) => (
           <button
             key={cur}
             type="button"
             onClick={() => onChange(cur)}
             className={cn(
-              'flex-1 h-11 rounded-xl border text-sm font-medium transition-all duration-150',
+              'h-11 rounded-xl border text-sm font-medium transition-all duration-150 flex flex-col items-center justify-center gap-0',
               value === cur
                 ? 'bg-primary text-primary-foreground border-primary'
                 : 'bg-background text-foreground border-border hover:border-primary/50',
             )}
           >
-            {cur === 'ALL' ? labelAll : labelEur}
+            <span className="text-base leading-none">{symbol}</span>
+            <span className="text-[10px] leading-tight opacity-70">{cur}</span>
           </button>
         ))}
       </div>
+      <p className="text-xs text-muted-foreground">{labels[value]}</p>
     </div>
   )
 }
@@ -564,8 +572,12 @@ export function ProfileTab({ profile, locale, cities, regions }: Props) {
         <CurrencySelector
           value={currency}
           onChange={setCurrency}
-          labelAll={t('currency_ALL')}
-          labelEur={t('currency_EUR')}
+          labels={{
+            ALL: t('currency_ALL'),
+            EUR: t('currency_EUR'),
+            USD: t('currency_USD'),
+            GBP: t('currency_GBP'),
+          }}
           fieldLabel={t('preferred_currency_label')}
         />
       </div>

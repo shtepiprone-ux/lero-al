@@ -388,7 +388,9 @@
     "unsaved_title": "Unsaved changes",
     "unsaved_body": "You have unsaved changes. Are you sure you want to leave this page?",
     "unsaved_stay": "Stay",
-    "unsaved_leave": "Leave without saving"
+    "unsaved_leave": "Leave without saving",
+    "currency_USD": "US Dollar (USD)",
+    "currency_GBP": "British Pound (GBP)"
   },
   "home": {
     "hero_title": "Find your dream property",

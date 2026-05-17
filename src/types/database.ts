@@ -1,7 +1,7 @@
 export type UserRole = 'admin' | 'moderator' | 'agent' | 'user'
 export type UserType = 'private' | 'agent' | 'developer'
 export type UserStatus = 'active' | 'blocked' | 'inactive'
-export type PreferredCurrency = 'ALL' | 'EUR'
+export type PreferredCurrency = 'ALL' | 'EUR' | 'USD' | 'GBP'
 
 export interface LocationRequest {
   city: string

@@ -16,6 +16,8 @@ import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
+import { convertPrice as convertPriceMulti } from '@/lib/getExchangeRate'
+import type { ExchangeRates } from '@/lib/getExchangeRate'
 
 export interface CardListingData extends ListingSnapshot {
   id:           string
@@ -38,6 +40,9 @@ interface ListingCardProps {
   variant?: 'vertical' | 'horizontal'
   onBeforeNavigate?: (slug: string) => void
   displayCurrency?: string
+  /** Multi-currency rates map (ALL per 1 foreign currency). Preferred over exchangeRate. */
+  rates?: ExchangeRates | null
+  /** @deprecated use rates instead */
   exchangeRate?: number | null
   isFavorited?: boolean
   onFavoriteToggled?: (newState: boolean) => void
@@ -84,14 +89,7 @@ function getBadges(listing: CardListingData) {
   return badges
 }
 
-function convertPrice(price: number, from: string, to: string, rate: number): number {
-  if (from === to) return price
-  if (to === 'EUR' && from === 'ALL') return Math.round(price / rate)
-  if (to === 'ALL' && from === 'EUR') return Math.round(price * rate)
-  return price
-}
-
-export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, exchangeRate, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
+export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, exchangeRate, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
@@ -111,13 +109,21 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const imageCount = listing.images?.length ?? 0
   const locationName = listing.location?.name_al ?? ''
 
-  const activeCurrency = (displayCurrency && exchangeRate) ? displayCurrency : listing.currency
-  const rate = exchangeRate ?? 1
-  const displayPrice = (displayCurrency && exchangeRate)
-    ? convertPrice(listing.price, listing.currency, displayCurrency, rate)
+  // Resolve active rates: prefer multi-currency rates map, fall back to legacy single rate
+  const effectiveRates: ExchangeRates | null = rates ?? (
+    exchangeRate ? { EUR: exchangeRate, USD: Math.round(exchangeRate / 1.08 * 100) / 100, GBP: Math.round(exchangeRate / 0.86 * 100) / 100 } : null
+  )
+  const showConversion = !!(displayCurrency && effectiveRates && displayCurrency !== listing.currency)
+  const activeCurrency = showConversion ? displayCurrency! : listing.currency
+  const displayPrice = showConversion
+    ? convertPriceMulti(listing.price, listing.currency, displayCurrency!, effectiveRates)
     : listing.price
   const displayPriceOld = listing.price_old
-    ? ((displayCurrency && exchangeRate) ? convertPrice(listing.price_old, listing.currency, displayCurrency, rate) : listing.price_old)
+    ? (showConversion ? convertPriceMulti(listing.price_old, listing.currency, displayCurrency!, effectiveRates) : listing.price_old)
+    : null
+  // Original price shown below converted price when currency differs
+  const originalPriceStr = showConversion
+    ? `${new Intl.NumberFormat('en').format(Math.round(listing.price))} ${listing.currency}`
     : null
   const pricePerSqm = listing.area_gross && listing.area_gross > 0
     ? Math.round(displayPrice / listing.area_gross)
@@ -178,10 +184,15 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
             </h3>
           </div>
           <div>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-base font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
-              {displayPriceOld && (
-                <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
+            <div className="flex flex-col mt-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-base font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
+                {displayPriceOld && (
+                  <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
+                )}
+              </div>
+              {originalPriceStr && (
+                <span className="text-[10px] text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
               )}
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
@@ -303,11 +314,16 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         </h3>
 
         {/* Price */}
-        <div className="flex items-baseline justify-between">
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
-            {displayPriceOld && (
-              <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
+        <div className="flex items-start justify-between">
+          <div className="flex flex-col">
+            <div className="flex items-baseline gap-2">
+              <span className="text-lg font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
+              {displayPriceOld && (
+                <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
+              )}
+            </div>
+            {originalPriceStr && (
+              <span className="text-[10px] text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
             )}
           </div>
           {pricePerSqm && (

@@ -56,7 +56,7 @@ interface Props {
 export function ListingsShell({ listings, total, page, locations, activeFiltersCount, tab, favoriteIds }: Props) {
   const t = useTranslations('listing')
   const searchParams = useSearchParams()
-  const { rate } = useExchangeRate()
+  const { rates } = useExchangeRate()
   const { user } = useAuth()
   // URL param takes precedence; fall back to user's preference, then 'ALL'
   const displayCurrency = searchParams.get('currency') || user?.preferred_currency || 'ALL'
@@ -241,7 +241,7 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
                   variant={view === 'list' ? 'horizontal' : 'vertical'}
                   onBeforeNavigate={handleBeforeNavigate}
                   displayCurrency={displayCurrency}
-                  exchangeRate={rate}
+                  rates={rates}
                   isFavorited={localFavoriteIds.has(listing.id)}
                   onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
                   layoutContext={view === 'grid' ? 'sidebar' : undefined}

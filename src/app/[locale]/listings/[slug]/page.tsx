@@ -27,7 +27,8 @@ import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeature
 import { preload } from 'react-dom'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
-import { getExchangeRate, convertPrice } from '@/lib/getExchangeRate'
+import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
+import type { PreferredCurrency } from '@/types/database'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
 //
@@ -119,7 +120,7 @@ export default async function ListingPage({ params }: Props) {
   // getUser() creates its own client internally (separate auth API call).
   // Running both in parallel saves the sequential auth-then-query waterfall.
   const supabase = await createClient()
-  const [authUser, { data: listing }, exchangeRate] = await Promise.all([
+  const [authUser, { data: listing }, exchangeRates] = await Promise.all([
     getUser(),
     supabase
       .from('listings')
@@ -127,21 +128,21 @@ export default async function ListingPage({ params }: Props) {
       .eq('slug', slug)
       .in('status', ['active', 'sold', 'rented', 'archived'])
       .single(),
-    getExchangeRate(),
+    getExchangeRates(),
   ])
 
   if (!listing) notFound()
 
   // Parallel: favorites check + user's preferred currency (both need authUser)
   let isInitiallyFavorited = false
-  let preferredCurrency: 'ALL' | 'EUR' = 'ALL'
+  let preferredCurrency: PreferredCurrency = 'ALL'
   if (authUser) {
     const [favResult, profileResult] = await Promise.all([
       supabase.from('favorites').select('id').eq('user_id', authUser.id).eq('listing_id', listing.id).maybeSingle(),
       supabase.from('users').select('preferred_currency').eq('id', authUser.id).single(),
     ])
     isInitiallyFavorited = !!favResult.data
-    preferredCurrency = (profileResult.data?.preferred_currency as 'ALL' | 'EUR') ?? 'ALL'
+    preferredCurrency = (profileResult.data?.preferred_currency as PreferredCurrency) ?? 'ALL'
   }
 
   const ownerRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
@@ -202,9 +203,9 @@ export default async function ListingPage({ params }: Props) {
   }
   const isFavoriteClosed = isListingClosed(listing.status as ListingStatus)
 
-  // Currency conversion — use user's preferred_currency when authenticated and exchange rate is available
-  const needsConversion = !!exchangeRate && !!authUser && preferredCurrency !== listing.currency
-  const displayPrice = needsConversion ? convertPrice(listing.price, listing.currency, preferredCurrency, exchangeRate) : listing.price
+  // Currency conversion — use user's preferred_currency when authenticated and exchange rates are available
+  const needsConversion = !!exchangeRates && !!authUser && preferredCurrency !== listing.currency
+  const displayPrice = needsConversion ? convertPrice(listing.price, listing.currency, preferredCurrency, exchangeRates) : listing.price
   const displayCurrencyCode = needsConversion ? preferredCurrency : listing.currency
   // Original price line shown below converted price on detail page
   const originalPriceStr = needsConversion ? formatPrice(listing.price, listing.currency, locale) : null

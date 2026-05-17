@@ -1,6 +1,23 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Task 17.1 + Task 21 + Task 22
+## Session 2026-05-17 — Task 17.1 + Task 21 + Task 22 + Task 23
+
+### Task 23 — Multi-currency conversion (ALL/EUR/USD/GBP) — 2026-05-17
+- [x] **CLOSED.** Extended currency conversion from ALL/EUR only to ALL/EUR/USD/GBP.
+  - **`PreferredCurrency` type**: extended to `'ALL' | 'EUR' | 'USD' | 'GBP'`. Note: task spec said "GBR" — implemented as GBP (ISO 4217 standard code).
+  - **`getExchangeRate.ts`** → `getExchangeRates.ts`: refactored to return `ExchangeRates = { EUR, USD, GBP }` (ALL per 1 foreign currency). EUR from iliria98.com, USD/GBP derived via ECB cross-rates (`open.er-api.com/v6/latest/EUR`, free, no API key) using EUR as pivot: `rate_USD = EUR_ALL / EUR_USD`, `rate_GBP = EUR_ALL / EUR_GBP`. Fallback hardcoded divisors if ECB unavailable.
+  - **`convertPrice`**: generalized — converts between ANY two supported currencies via ALL as pivot (normalize→ALL, then→target). No new library.
+  - **`/api/exchange-rate`**: returns `{ rates: { EUR, USD, GBP }, rate: N, updated_at }` — backward-compat `rate` field kept.
+  - **`useExchangeRate` hook**: returns `{ rates: ExchangeRates | null, rate: number | null, loading }` — `rate` for backward compat.
+  - **`ListingCard`**: new `rates?: ExchangeRates | null` prop (preferred), deprecated `exchangeRate` kept as fallback. "Show original price below" implemented: when `displayCurrency !== listing.currency`, original price shown below converted in `text-[10px] text-muted-foreground/70`. Both card variants (horizontal + vertical) updated.
+  - **`ListingsShell`, `FavoritesShell`**: updated to pass `rates={rates}` instead of `exchangeRate={rate}`.
+  - **`listings/[slug]/page.tsx`**: updated to use `getExchangeRates()`, `convertPrice` with rates map, `preferredCurrency: PreferredCurrency`.
+  - **`ProfileTab.tsx`**: `CurrencySelector` redesigned as 4-column grid (L/ALL, €/EUR, $/USD, £/GBP). Label description shown below selected currency.
+  - **i18n**: added `cabinet.currency_USD` and `cabinet.currency_GBP` in all 4 locales. Zero hardcoded labels.
+  - **SSR/client consistency**: server uses `getExchangeRates()` (cached, same data source), client uses `useExchangeRate()` returning `rates` — both fetch from the same `/api/exchange-rate` endpoint.
+  - Zero TypeScript errors. Zero ESLint errors.
+
+### Task 22 — Saved Searches system — 2026-05-17
 
 ### Task 22 — Saved Searches system — 2026-05-17
 - [x] **CLOSED.** Implemented full production-grade Saved Searches system.

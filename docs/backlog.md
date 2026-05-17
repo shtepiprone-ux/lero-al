@@ -1,6 +1,54 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–49
+## Session 2026-05-17 — Tasks 17.1, 21–50
+
+### Task 50 — Responsive Design & UI Consistency Refactor — 2026-05-17
+- [x] **CLOSED.** Full UI/responsive audit + targeted standardization: button size scale extended, touch targets fixed, huge-desktop container tokens added, icon size inconsistency fixed.
+
+  #### §1 Full UI/Responsive Audit Findings
+
+  | Category | File | Issue | Priority | Status |
+  |---|---|---|---|---|
+  | Button system | `button.tsx` | Missing `xl` (h-11) and `icon-xl` size variants — HeroSearch forced h-11 via className override | HIGH | **Fixed** |
+  | Touch target | `FiltersPanel.tsx` | `ToggleGroup` + `MultiToggleGroup` buttons: `min-h-[36px]` below 44px minimum | CRITICAL | **Fixed** |
+  | Huge-desktop | `globals.css` | No container max-width for 2560px+ screens — content stretches to full viewport width | HIGH | **Fixed** |
+  | Icon size | `ListingCard.tsx` | Vertical card: feature icons `h-3.5` but MapPin `h-3` — inconsistent in same row | MEDIUM | **Fixed** |
+  | Design tokens | `globals.css` | Full color token system in place; radius scale; safe-area utilities — no gaps found | ✓ Good | — |
+  | Dark mode | `globals.css` | Complete light/dark token system — no issues found | ✓ Good | — |
+  | SSR/hydration | All | No suppressHydrationWarning, no typeof window branches found in audited files | ✓ Good | — |
+  | Hardcoded colors | `ListingMobileCTA.tsx` | `bg-[color:var(--whatsapp)]` — correct Tailwind v4 CSS var syntax, not a violation | ✓ Acceptable | — |
+  | Inline style | `ListingMobileCTA.tsx` | `style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}` — composite calc, cannot be pure utility | ✓ Acceptable | — |
+  | Admin input heights | Admin managers | Mix of `h-9` (Input default) and `h-10` overrides — low risk, no consumer breakage | LOW | Documented |
+
+  #### §2 Changes Made
+
+  **`src/components/ui/button.tsx`**
+  - Added `xl: "h-11 gap-2 px-5 [&_svg:not([class*='size-'])]:size-4"` — 44px canonical touch-target size for hero CTAs and primary actions
+  - Added `"icon-xl": "size-11"` — 44px square icon button variant
+
+  **`src/components/shared/HeroSearch.tsx`**
+  - Filter button: `className="h-11 px-3 gap-2"` → `size="xl" className="px-3"`
+  - Search button: `className="h-11 px-6 gap-2 font-semibold"` → `size="xl" className="px-6 font-semibold"`
+  - Both hero CTA buttons now use the canonical `xl` size variant
+
+  **`src/components/shared/FiltersPanel.tsx`**
+  - `ToggleGroup` + `MultiToggleGroup` buttons: `min-h-[36px]` → `min-h-[44px]` (2 occurrences)
+  - Filter toggle chips now meet WCAG 2.5.5 target size AA criterion (44×44px minimum)
+
+  **`src/app/globals.css`**
+  - Added `.max-w-8xl` (88rem/1408px), `.max-w-9xl` (96rem/1536px), `.max-w-10xl` (112rem/1792px)
+  - Added `.container-wide` — responsive container with adaptive padding (1rem → 1.5rem → 2rem → 3rem) and max-width 88rem; prevents content stretch on 2560px+ screens
+
+  **`src/modules/listings/components/ListingCard.tsx`**
+  - Vertical card MapPin icon: `h-3 w-3` → `h-3.5 w-3.5` — consistent with feature icons in same row
+
+  #### §3 Remaining UI Debt (future tasks)
+  - Admin form input heights (h-9 vs h-10 mix) — standardize in dedicated admin form task
+  - ListingCard horizontal vs vertical icon size difference (h-3 vs h-3.5) — cards serve different density contexts; intentional
+  - No `size="icon-xl"` usages yet — available for future large action buttons
+
+  #### Files Modified
+  `src/components/ui/button.tsx`, `src/components/shared/HeroSearch.tsx`, `src/components/shared/FiltersPanel.tsx`, `src/app/globals.css`, `src/modules/listings/components/ListingCard.tsx`
 
 ### Task 49 — Filter Architecture Consolidation Phase 1 — 2026-05-17
 - [x] **CLOSED.** Full filter architecture audit + Phase 1 shared primitive extraction: `FilterRangeInputs` used by both FiltersPanel and ListingsFilters.

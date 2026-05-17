@@ -345,7 +345,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           {locationName && (
             <span className="flex items-center gap-1 truncate">
-              <MapPin className="h-3 w-3 shrink-0" />
+              <MapPin className="h-3.5 w-3.5 shrink-0" />
               {locationName}
             </span>
           )}

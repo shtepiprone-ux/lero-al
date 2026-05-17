@@ -396,6 +396,27 @@
   /* Bottom nav height token — used by fixed bottom bars */
   .h-bottom-nav { height: 3.5rem; } /* 56px icon area */
 
+  /* ── Huge-desktop container constraints ──────────────────────────────────────
+     Prevents content from stretching to full-width on 2560px+ screens.
+     Use .container-wide on page wrappers that sit inside the main layout.
+     Tailwind's default container tops out at 80rem (1280px); these tokens
+     extend the scale for modern wide-viewport scenarios.
+  ────────────────────────────────────────────────────────────────────────── */
+  .max-w-8xl  { max-width: 88rem;  }   /* 1408px — content column */
+  .max-w-9xl  { max-width: 96rem;  }   /* 1536px — listings grid */
+  .max-w-10xl { max-width: 112rem; }   /* 1792px — admin shell */
+  .container-wide {
+    width: 100%;
+    max-width: 88rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: 640px)  { .container-wide { padding-left: 1.5rem; padding-right: 1.5rem; } }
+  @media (min-width: 1024px) { .container-wide { padding-left: 2rem;   padding-right: 2rem;   } }
+  @media (min-width: 1536px) { .container-wide { padding-left: 3rem;   padding-right: 3rem;   } }
+
   /* ── Performance tier adaptation ─────────────────────────────────────────
      Set via PerformanceStoreInit on <html data-perf-tier="..."> after hydration.
      Applied once after React hydration — never during SSR (no hydration mismatch).

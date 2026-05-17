@@ -121,7 +121,8 @@ export function HeroSearch() {
             <div className="flex gap-2 shrink-0">
               <Button
                 variant={activeFiltersCount > 0 ? 'default' : 'outline'}
-                className="h-11 px-3 gap-2 relative"
+                size="xl"
+                className="px-3 relative"
                 onClick={() => setFiltersOpen(true)}
                 aria-label={t('advanced_filters')}
               >
@@ -135,8 +136,9 @@ export function HeroSearch() {
               </Button>
 
               <Button
+                size="xl"
                 onClick={() => handleSearch()}
-                className="h-11 px-6 gap-2 font-semibold"
+                className="px-6 font-semibold"
               >
                 <Search className="h-4 w-4" />
                 <span>{t('search')}</span>

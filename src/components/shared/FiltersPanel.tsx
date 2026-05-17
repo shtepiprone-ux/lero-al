@@ -86,7 +86,7 @@ function ToggleGroup({
           type="button"
           variant={value === opt.value ? 'default' : 'outline'}
           size="sm"
-          className="h-auto px-3 py-2 text-xs min-h-[36px] rounded-xl whitespace-normal leading-snug text-left"
+          className="h-auto px-3 py-2 text-xs min-h-[44px] rounded-xl whitespace-normal leading-snug text-left"
           onClick={() => onChange(value === opt.value ? undefined : opt.value)}
         >
           {getLabel(opt.labelKey)}
@@ -115,7 +115,7 @@ function MultiToggleGroup({
             type="button"
             variant={selected ? 'default' : 'outline'}
             size="sm"
-            className="h-auto px-3 py-2 text-xs min-h-[36px] rounded-xl whitespace-normal leading-snug text-left"
+            className="h-auto px-3 py-2 text-xs min-h-[44px] rounded-xl whitespace-normal leading-snug text-left"
             onClick={() => onChange(selected ? safeValue.filter(v => v !== opt.value) : [...safeValue, opt.value])}
           >
             {getLabel(opt.labelKey)}

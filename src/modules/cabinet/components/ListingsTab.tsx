@@ -269,7 +269,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
         {FilterBar}
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-sm text-muted-foreground">
-            {items.length} {tl('found_results', { count: items.length })}
+            {items.length === 1 ? tl('found_results_one') : tl('found_results', { count: items.length })}
           </span>
           <Link href={`/${locale}/listings/create`}>
             <Button size="sm" className="gap-1.5 rounded-xl h-9">

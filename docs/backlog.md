@@ -1,6 +1,35 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–47
+## Session 2026-05-17 — Tasks 17.1, 21–48
+
+### Task 48 — Global Component Standardization & Hardcode Cleanup — 2026-05-17
+- [x] **CLOSED.** Full architecture audit + targeted refactor pass: extracted canonical search-normalize utility, removed duplicate combobox implementations, fixed hardcoded Ukrainian placeholder, standardized local component clones.
+
+  #### §1 Full Architecture Audit
+  Findings across 50+ files:
+  - **CRITICAL**: `FiltersPanel.tsx` (638 ln) vs `ListingsFilters.tsx` (512 ln) — parallel filter panel implementations sharing ~90% business logic. Not merged this session (high risk, standalone task warranted).
+  - **HIGH**: `normalizeSearch`/`normalize` duplicated in `Combobox.tsx` and `LocationCombobox.tsx` — identical COMBINING regex + NFD normalization. **Fixed.**
+  - **HIGH**: `PropertyTypeCombobox.tsx` — complete reimplementation of `Combobox` (search state, open state, dropdown, blur timeout, icon positioning, ~80 ln). **Fixed.**
+  - **HIGH**: `Combobox.tsx` hardcoded default `placeholder = 'Оберіть...'` (Ukrainian). **Fixed.**
+  - **MEDIUM**: `Combobox` missing `onKeyDown` prop — needed for HeroSearch keyboard submit. **Fixed.**
+  - **MEDIUM**: `LOCALES` array exported from `LocaleSwitcher.tsx` — canonical single source (fixed in Task 46).
+  - **LOW**: `FiltersPanel.SectionHeader` vs `ListingsFilters.AccordionSection` — local section-header clones. Documented for future task.
+  - **LOW**: Admin forms use inline `h-9 rounded-xl` instead of relying on Input defaults — low priority, no consumer risk.
+
+  #### §2 Changes Made
+  - **`src/lib/utils.ts`**: Added exported `normalizeSearch(s)` — canonical Unicode-aware search normalization (NFD + COMBINING strip + lowercase). Single source of truth for all combobox filtering.
+  - **`src/components/shared/Combobox.tsx`**: Removed local `COMBINING` + `normalize`; imports `normalizeSearch` from utils. Fixed hardcoded `placeholder = 'Оберіть...'` → `''`. Added `onKeyDown` prop forwarded to input (needed by HeroSearch / ListingFormShell).
+  - **`src/components/shared/LocationCombobox.tsx`**: Removed local `COMBINING` + `normalizeSearch` definitions; imports `normalizeSearch` from utils.
+  - **`src/components/shared/PropertyTypeCombobox.tsx`**: Replaced ~80-line custom combobox implementation with `<Combobox>` wrapper — builds `options` from `PROPERTY_TYPES` with `tl(labelKey)` translated labels, passes `icon={<Home>}`, `onKeyDown`, `showAllOption` handled via options array. No behavioral regressions.
+
+  #### §3 Remaining Architectural Debt (not in scope this session)
+  - FiltersPanel / ListingsFilters merge — dedicated refactor task needed
+  - `SectionHeader` / `AccordionSection` unification — low priority
+  - Admin form field inline styling standardization — low priority
+  - `usePropertyTypes` hook (dynamic DB) vs `PROPERTY_TYPES` constant — data-source inconsistency, separate task
+
+  #### Files Modified
+  `src/lib/utils.ts`, `src/components/shared/Combobox.tsx`, `src/components/shared/LocationCombobox.tsx`, `src/components/shared/PropertyTypeCombobox.tsx`
 
 ### Task 47 — Admin Property Types Search Fix & UI Standardization — 2026-05-17
 - [x] **CLOSED.** Fixed search scope across all 4 locales; replaced local Input with global `AdminSearchInput`; aligned "New Type" button with project Button standard.

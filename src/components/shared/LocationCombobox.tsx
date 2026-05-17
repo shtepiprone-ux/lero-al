@@ -6,7 +6,7 @@ import { MapPin, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Combobox } from '@/components/shared/Combobox'
-import { cn } from '@/lib/utils'
+import { cn, normalizeSearch } from '@/lib/utils'
 
 export interface LocationOption {
   id: number
@@ -33,13 +33,6 @@ interface Props {
   regions?: RegionOption[]
   /** Admin callback to persist a new city; receives name + region_id, returns the new id */
   onAddLocation?: (data: { name_al: string; region_id: number }) => Promise<{ id?: number; error?: string }>
-}
-
-// Strip combining diacritical marks (U+0300–U+036F) after NFD decomposition
-// so "e" matches "ë", "c" matches "ç", etc.
-const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
-function normalizeSearch(s: string) {
-  return s.normalize('NFD').replace(COMBINING, '').toLowerCase()
 }
 
 export function LocationCombobox({

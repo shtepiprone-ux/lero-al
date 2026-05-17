@@ -4,7 +4,7 @@ import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronDown, Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { cn } from '@/lib/utils'
+import { cn, normalizeSearch } from '@/lib/utils'
 
 export interface ComboboxOption {
   value: string
@@ -38,18 +38,14 @@ interface ComboboxProps {
    * the dropdown. Portal uses fixed positioning calculated from the trigger rect.
    */
   portal?: boolean
-}
-
-const COMBINING = new RegExp('[\\u0300-\\u036f]', 'g')
-function normalize(s: string) {
-  return s.normalize('NFD').replace(COMBINING, '').toLowerCase()
+  onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
 export function Combobox({
   options,
   value,
   onChange,
-  placeholder = 'Оберіть...',
+  placeholder = '',
   disabled = false,
   className,
   error,
@@ -58,6 +54,7 @@ export function Combobox({
   size = 'default',
   triggerClassName,
   portal = false,
+  onKeyDown,
 }: ComboboxProps) {
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
@@ -69,10 +66,10 @@ export function Combobox({
 
   const filtered = useMemo(() => {
     if (!search || variant === 'button') return options
-    const q = normalize(search)
+    const q = normalizeSearch(search)
     return options.filter(o =>
-      normalize(o.label).includes(q) ||
-      (o.description && normalize(o.description).includes(q))
+      normalizeSearch(o.label).includes(q) ||
+      (o.description && normalizeSearch(o.description).includes(q))
     )
   }, [options, search, variant])
 
@@ -181,6 +178,7 @@ export function Combobox({
           onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true) }}
           onFocus={() => { setOpen(true); updateDropdownPosition() }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
+          onKeyDown={onKeyDown}
           placeholder={placeholder}
           disabled={disabled}
           className={cn(triggerBase, 'cursor-text')}

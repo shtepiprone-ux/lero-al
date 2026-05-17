@@ -46,6 +46,7 @@ import {
   getTransitionActionForStatus,
 } from '@/modules/listings/domain/listingTransitionEngine'
 import { canAdminEditListing } from '@/modules/listings/domain/listingPermissions'
+import { createNotification } from '@/modules/notifications/lib/mutations'
 import type { ListingTransitionAction } from '@/modules/listings/domain/listingTransitionEngine'
 import type { ListingStatus } from '@/types/database'
 
@@ -82,6 +83,8 @@ async function executeTransition(
   actor: TransitionActorContext,
   db: DbClient,
   slug: string | null,
+  listingTitle: string | null,
+  ownerId: string | null,
 ): Promise<TransitionApplicationResult> {
   const transition = resolveTransition(currentStatus, action)
 
@@ -104,6 +107,17 @@ async function executeTransition(
       actor: actor.source ?? actor.userId,
     })
     return { ok: false, reason: 'db_error' }
+  }
+
+  // Notify the listing owner about the status change (non-blocking fire-and-forget).
+  if (ownerId && ownerId !== actor.userId) {
+    createNotification({
+      userId: ownerId,
+      type: 'listing_status_change',
+      title: listingTitle ?? listingId,
+      body: `${currentStatus} → ${transition.nextStatus}`,
+      link: slug ? `/listings/${slug}` : undefined,
+    }).catch(e => console.error('[notifications] listing_status_change notify failed', e))
   }
 
   // Invalidate the homepage stats counter — any status transition may affect the
@@ -145,13 +159,13 @@ export async function applyListingTransition(
 
   const { data: current } = await db
     .from('listings')
-    .select('id, status, slug')
+    .select('id, status, slug, title, user_id')
     .eq('id', listingId)
     .single()
 
   if (!current) return { ok: false, reason: 'not_found' }
 
-  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null)
+  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null, current.title ?? null, current.user_id ?? null)
 }
 
 // ── Public gateway — status-based bridge ─────────────────────────────────────
@@ -179,7 +193,7 @@ export async function applyListingTransitionByStatus(
 
   const { data: current } = await db
     .from('listings')
-    .select('id, status, slug')
+    .select('id, status, slug, title, user_id')
     .eq('id', listingId)
     .single()
 
@@ -195,5 +209,5 @@ export async function applyListingTransitionByStatus(
     return { ok: false, reason: 'invalid_transition' }
   }
 
-  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null)
+  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null, current.title ?? null, current.user_id ?? null)
 }

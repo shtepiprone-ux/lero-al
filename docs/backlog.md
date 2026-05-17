@@ -1,6 +1,21 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Task 17.1: Unified Global Locale System
+## Session 2026-05-17 — Task 17.1 + Task 21: Locale System + Notifications
+
+### Task 21 — Full notifications system — 2026-05-17
+- [x] **CLOSED.** Implemented full notifications system with realtime updates, persistence, and multi-device sync.
+  - **DB migration**: `supabase/migrations/20260517_notifications_rls.sql` — creates `notifications` + `notification_settings` tables with RLS, GIN indexes, Realtime publication. Apply via Supabase Dashboard → SQL Editor.
+  - **Server mutations** (`src/modules/notifications/lib/mutations.ts`): `createNotification` (service-role, bypasses RLS), `markNotificationRead`, `markAllNotificationsRead` (user-scoped, RLS enforced).
+  - **Realtime hook** (`src/modules/notifications/hooks/useNotifications.ts`): fetches 30 most recent notifications on mount, subscribes to `postgres_changes` on `notifications` table — any INSERT/UPDATE triggers refetch → multi-device sync out-of-the-box.
+  - **UI components**: `NotificationItem.tsx` (emoji type icon, unread dot, relative time, mark-read on click), `NotificationCenter.tsx` (dropdown panel, mark-all-read button, empty state), `NotificationBell.tsx` (bell icon with unread badge, click-outside/Escape close).
+  - **Header integration**: `NotificationBell` lazily loaded (`dynamic({ ssr: false })`) into `Header.tsx` for authenticated users.
+  - **Listing status change trigger**: `applyListingTransition.ts` — after successful status write, fires `createNotification` for listing owner (fire-and-forget, non-blocking) with `type: listing_status_change`. Self-transitions (actor = owner) are excluded. `title` and `user_id` added to listing select.
+  - **i18n**: 13 new keys under `notifications.*` namespace in all 4 locales (sq/en/uk/it).
+  - **Deduplication/delivery**: Supabase INSERT is atomic, RLS isolation prevents cross-user leakage. No duplicate notifications for same-status no-ops (guarded in `applyListingTransitionByStatus`).
+  - **Scope note**: `new_message` notifications require the messaging module (not yet built). `saved_search_match` requires periodic job (not yet built). Both are triggered by `createNotification` once those modules exist.
+  - Zero TypeScript errors. Zero ESLint errors.
+
+### Task 17.1 — Unified global locale switching system — 2026-05-17
 
 ### Task 17.1 — Unified global locale switching system — 2026-05-17
 - [x] **CLOSED.** Refactored and fixed global localization for Admin + Website using a single shared system.

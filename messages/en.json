@@ -733,5 +733,18 @@
         "requirements_title": "Password requirements:"
       }
     }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "mark_all_read": "Mark all as read",
+    "empty": "No notifications",
+    "unread_count": "{count} unread",
+    "type_new_message": "New message",
+    "type_listing_status_change": "Listing status updated",
+    "type_support_reply": "Support reply",
+    "type_agent_verified": "Account verified",
+    "type_listing_expires_soon": "Listing expiring soon",
+    "type_saved_search_match": "New search results",
+    "type_marketing": "News from Lero.al"
   }
 }

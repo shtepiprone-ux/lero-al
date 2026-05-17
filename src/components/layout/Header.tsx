@@ -18,6 +18,12 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
+import dynamic from 'next/dynamic'
+
+const NotificationBell = dynamic(
+  () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
+  { ssr: false },
+)
 
 // ── NavLinks ──────────────────────────────────────────────────────────────────
 //
@@ -123,6 +129,9 @@ export function Header() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {/* Notification bell — authenticated users only */}
+          {user && <NotificationBell />}
 
           {/* Auth / user menu — desktop */}
           <div className="hidden md:flex items-center gap-2">

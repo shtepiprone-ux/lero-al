@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { X, SlidersHorizontal, ChevronDown } from 'lucide-react'
@@ -56,6 +56,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
   const { rate } = useExchangeRate()
   const { propertyTypes } = usePropertyTypes()
   const { currencies } = useCurrencies()
+  const today = useMemo(() => new Date(), [])
 
   const [sections, setSections] = useState({
     type: true,
@@ -471,6 +472,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 value={get('date_from') || undefined}
                 onChange={v => updateParams({ date_from: v ?? null })}
                 placeholder={tc('select_date')}
+                maxDate={today}
               />
             </div>
             <div>
@@ -479,6 +481,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 value={get('date_to') || undefined}
                 onChange={v => updateParams({ date_to: v ?? null })}
                 placeholder={tc('select_date')}
+                maxDate={today}
               />
             </div>
           </div>

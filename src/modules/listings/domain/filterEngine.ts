@@ -81,6 +81,23 @@ function rawMulti(sp: RawParams, key: string): string[] {
   return s ? s.split(',').filter(Boolean) : []
 }
 
+// ── Date param sanitization ───────────────────────────────────────────────────
+
+/**
+ * Rejects future dates and malformed values.
+ * Returns empty string for invalid/future input (falsy = filter not applied).
+ * Uses end-of-today as the ceiling so "today" is always a valid upper bound.
+ */
+function sanitizeDateParam(raw: string): string {
+  if (!raw) return ''
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return ''
+  const endOfToday = new Date()
+  endOfToday.setHours(23, 59, 59, 999)
+  if (d > endOfToday) return ''
+  return raw
+}
+
 // ── Parse ─────────────────────────────────────────────────────────────────────
 
 /**
@@ -101,8 +118,8 @@ export function parseSearchParams(sp: RawParams): ParsedFilters {
     sort:               (VALID_SORTS.includes(sort as ListingSort) ? sort : 'newest') as ListingSort,
     page:               Math.max(1, n('page') ?? 1),
     currency:           s('currency') === 'EUR' ? 'EUR' : 'ALL',
-    dateFrom:           s('date_from'),
-    dateTo:             s('date_to'),
+    dateFrom:           sanitizeDateParam(s('date_from')),
+    dateTo:             sanitizeDateParam(s('date_to')),
     listingId:          s('listing_id'),
     rooms:              m('rooms').map(Number).filter(v => !isNaN(v) && v > 0),
     priceMin:           n('price_min'),

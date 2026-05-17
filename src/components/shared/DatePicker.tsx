@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import {
   format, startOfMonth, endOfMonth, eachDayOfInterval,
   addMonths, subMonths, startOfWeek, endOfWeek,
-  isSameDay, isSameMonth, isToday, parseISO, isValid,
+  isSameDay, isSameMonth, isToday, parseISO, isValid, isAfter, startOfDay,
 } from 'date-fns'
 import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -17,9 +17,10 @@ interface Props {
   onChange: (v: string | undefined) => void
   placeholder?: string
   className?: string
+  maxDate?: Date          // upper bound — days after this are disabled
 }
 
-export function DatePicker({ value, onChange, placeholder, className }: Props) {
+export function DatePicker({ value, onChange, placeholder, className, maxDate }: Props) {
   const locale = useLocale()
   const t = useTranslations('common')
 
@@ -116,6 +117,7 @@ export function DatePicker({ value, onChange, placeholder, className }: Props) {
               size="icon"
               type="button"
               className="h-8 w-8 rounded-xl"
+              disabled={!!maxDate && isSameMonth(viewMonth, maxDate)}
               onClick={() => setViewMonth(addMonths(viewMonth, 1))}
             >
               <ChevronRight className="h-4 w-4" />
@@ -137,21 +139,23 @@ export function DatePicker({ value, onChange, placeholder, className }: Props) {
           {/* Day cells */}
           <div className="grid grid-cols-7 gap-px">
             {days.map(day => {
-              const inMonth   = isSameMonth(day, viewMonth)
+              const inMonth    = isSameMonth(day, viewMonth)
               const isSelected = !!selected && isSameDay(day, selected)
-              const today     = isToday(day)
+              const todayFlag  = isToday(day)
+              const isFuture   = !!maxDate && isAfter(startOfDay(day), startOfDay(maxDate))
+              const isDisabled = !inMonth || isFuture
               return (
                 <button
                   key={day.toISOString()}
                   type="button"
-                  disabled={!inMonth}
+                  disabled={isDisabled}
                   onClick={() => selectDay(day)}
                   className={cn(
                     'h-8 w-full flex items-center justify-center text-sm rounded-xl transition-colors duration-100',
-                    !inMonth && 'opacity-20 pointer-events-none',
-                    inMonth && !isSelected && 'hover:bg-accent hover:text-accent-foreground',
+                    isDisabled && 'opacity-20 pointer-events-none cursor-not-allowed',
+                    !isDisabled && !isSelected && 'hover:bg-accent hover:text-accent-foreground',
                     isSelected && 'bg-primary text-primary-foreground font-semibold shadow-sm',
-                    !isSelected && today && inMonth && 'font-semibold text-primary ring-1 ring-inset ring-primary/40',
+                    !isSelected && todayFlag && inMonth && 'font-semibold text-primary ring-1 ring-inset ring-primary/40',
                   )}
                 >
                   {day.getDate()}

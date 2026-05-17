@@ -190,6 +190,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
   const { rate } = useExchangeRate()
   const { propertyTypes } = usePropertyTypes()
   const { currencies } = useCurrencies()
+  // Stable "today" reference — computed once on mount, not on every render.
+  const today = useMemo(() => new Date(), [])
 
   // LOW-tier: defer mounting inner content to idle time — reduces main-thread work during
   // initial page load. The panel shell (CSS container) always renders for smooth transitions.
@@ -584,6 +586,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                     value={local.date_from}
                     onChange={v => update({ date_from: v })}
                     placeholder={t('select_date')}
+                    maxDate={today}
                   />
                 </div>
                 <div>
@@ -592,6 +595,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                     value={local.date_to}
                     onChange={v => update({ date_to: v })}
                     placeholder={t('select_date')}
+                    maxDate={today}
                   />
                 </div>
               </div>

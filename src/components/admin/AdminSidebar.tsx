@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
-  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2,
+  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign,
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
@@ -62,6 +62,7 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
         { href: '/admin/locations',       label: t('item_locations'),       icon: MapPin },
         { href: '/admin/legal',           label: t('item_legal'),           icon: FileText },
         { href: '/admin/property-types',  label: t('item_property_types'),  icon: Building2 },
+        { href: '/admin/currency',        label: t('item_currency'),        icon: CircleDollarSign },
       ],
     },
     {

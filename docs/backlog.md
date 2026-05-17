@@ -1,6 +1,20 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27, 28
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27, 28, 29
+
+### Task 29 — Currency Management System — 2026-05-17
+- [x] **CLOSED.** Implemented centralized currency management system with DB-backed currency registry, exchange provider registry, admin CRUD page, and dynamic currency selectors throughout the UI.
+  - **DB migration** (`supabase/migrations/20260517_currency_management.sql`): `currencies` table (code, symbol, localized names, is_active, is_default, decimals). `exchange_providers` table (name, endpoint_url, api_key, refresh_interval_min, priority, mode, is_enabled). Both with public READ RLS, write via service-role. Seeded with ALL (default) + EUR currencies and iliria98/open-er-api providers.
+  - **TypeScript types** (`src/types/database.ts`): Added `DBCurrency` and `DBExchangeProvider` interfaces.
+  - **Currency module** (`src/modules/currency/`): `lib/queries.ts` — `getActiveCurrencies()` via Supabase browser client. `hooks/useCurrencies.ts` — module-level singleton cache (5min TTL), deduplication, FALLBACK to ALL/EUR when table unavailable.
+  - **Server Actions** (`src/modules/admin/actions/currencies.ts`, `exchangeProviders.ts`): Full CRUD with auth guard (admin/moderator). `toggleCurrencyActive` protects default currency. `setDefaultCurrency` uses atomic clear+set. `deleteCurrency` prevents deleting default currency.
+  - **Admin page** (`src/app/admin/currency/page.tsx`): Tabbed UI via `AdminCurrencyTabs.tsx` with Currencies and Providers tabs.
+  - **Admin components**: `AdminCurrenciesManager.tsx` — searchable table, form dialog, optimistic CRUD, set-default action. `AdminExchangeProvidersManager.tsx` — providers table with mode toggle, enable/disable.
+  - **Sidebar**: Added "Currency" link (`CircleDollarSign` icon) in Content group. `AdminMobileHeader` updated with page title mapping for `/admin/currency`.
+  - **Dynamic currencies**: `FiltersPanel.tsx` and `ListingsFilters.tsx` updated to use `useCurrencies()` instead of hardcoded `['ALL', 'EUR']`. `FilterCurrency` type broadened to `string`. Exchange rate hint updated to `1 {currency} ≈ X ALL` for any non-ALL currency.
+  - **i18n**: `admin.currency.*` + `admin.currency.currencies.*` + `admin.currency.providers.*` + `admin.sidebar.item_currency` added to all 4 locale files (sq/en/uk/it). Zero hardcoded labels.
+  - **Preserved backward compat**: `useExchangeRate.ts`, `getExchangeRate.ts`, `ListingCard.tsx`, `StepBasicInfo.tsx` (listing form stays ALL/EUR — DB enum constraint), `validations/index.ts` all unchanged.
+  - Zero TypeScript errors. Zero ESLint errors.
 
 ### Task 28 — Admin Property Types management — 2026-05-17
 - [x] **CLOSED.** Implemented full production-grade admin management system for Property Types with CRUD, localization, dependency protection, and automatic integration with listing/search/filter flows.

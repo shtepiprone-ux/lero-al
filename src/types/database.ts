@@ -273,6 +273,35 @@ export interface CurrencyRate {
   fetched_at: string
 }
 
+export interface DBCurrency {
+  id: number
+  code: string
+  symbol: string
+  name_sq: string
+  name_en: string
+  name_uk: string
+  name_it: string
+  is_active: boolean
+  is_default: boolean
+  decimals: number
+  created_at: string
+  updated_at: string
+}
+
+export interface DBExchangeProvider {
+  id: number
+  name: string
+  endpoint_url: string
+  api_key: string | null
+  refresh_interval_min: number
+  priority: number
+  mode: 'auto' | 'manual' | 'hybrid'
+  is_enabled: boolean
+  notes: string | null
+  created_at: string
+  updated_at: string
+}
+
 export interface Page {
   id: number
   title: string

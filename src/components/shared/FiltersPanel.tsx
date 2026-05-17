@@ -18,10 +18,11 @@ import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
+import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
 
-export type FilterCurrency = 'ALL' | 'EUR'
+export type FilterCurrency = string
 
 export interface FilterValues {
   property_type?: string
@@ -188,6 +189,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
   const [local, setLocal] = useState<FilterValues>(values)
   const { rate } = useExchangeRate()
   const { propertyTypes } = usePropertyTypes()
+  const { currencies } = useCurrencies()
 
   // LOW-tier: defer mounting inner content to idle time — reduces main-thread work during
   // initial page load. The panel shell (CSS container) always renders for smooth transitions.
@@ -380,19 +382,19 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
               <SectionHeader
                 right={
                   <div className="flex gap-1">
-                    {(['ALL', 'EUR'] as FilterCurrency[]).map(cur => (
+                    {currencies.map(cur => (
                       <button
-                        key={cur}
+                        key={cur.code}
                         type="button"
-                        onClick={() => update({ currency: cur })}
+                        onClick={() => update({ currency: cur.code })}
                         className={cn(
                           'text-[11px] font-semibold px-2 py-0.5 rounded-lg transition-colors duration-150',
-                          currency === cur
+                          currency === cur.code
                             ? 'bg-primary text-primary-foreground'
                             : 'text-muted-foreground hover:text-foreground'
                         )}
                       >
-                        {cur}
+                        {cur.code}
                       </button>
                     ))}
                   </div>
@@ -408,10 +410,10 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                 minPlaceholder={t('min')}
                 maxPlaceholder={t('max')}
               />
-              {currency === 'EUR' && (
+              {currency !== 'ALL' && rate != null && (
                 <p className="text-xs text-muted-foreground mt-2">
                   {t('exchange_rate')}:{' '}
-                  {rate != null ? `1 EUR = ${rate.toFixed(2)} ALL` : '…'}
+                  1 {currency} ≈ {rate.toFixed(2)} ALL
                 </p>
               )}
             </div>

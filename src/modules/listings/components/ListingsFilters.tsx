@@ -20,6 +20,7 @@ import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
+import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 
 interface Location { id: number; name_al: string; type: string }
 interface Props { locations: Location[]; className?: string; onClose?: () => void }
@@ -54,6 +55,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
   const searchParams = useSearchParams()
   const { rate } = useExchangeRate()
   const { propertyTypes } = usePropertyTypes()
+  const { currencies } = useCurrencies()
 
   const [sections, setSections] = useState({
     type: true,
@@ -272,19 +274,19 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {/* Price */}
         <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')}>
           <div className="flex gap-1.5 mb-2">
-            {(['ALL', 'EUR'] as const).map(cur => (
+            {currencies.map(cur => (
               <button
-                key={cur}
+                key={cur.code}
                 type="button"
-                onClick={() => updateParams({ currency: cur === 'ALL' ? null : cur })}
+                onClick={() => updateParams({ currency: cur.is_default ? null : cur.code })}
                 className={cn(
                   'text-xs font-semibold px-3 py-1 rounded-lg border transition-colors duration-150',
-                  currency === cur
+                  currency === cur.code
                     ? 'bg-primary text-primary-foreground border-primary'
                     : 'border-border text-muted-foreground hover:text-foreground'
                 )}
               >
-                {cur}
+                {cur.code}
               </button>
             ))}
           </div>
@@ -292,10 +294,10 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             <Input type="number" placeholder={tc('min')} value={get('price_min')} onChange={e => updateParams({ price_min: e.target.value || null })} className="h-10 rounded-xl" />
             <Input type="number" placeholder={tc('max')} value={get('price_max')} onChange={e => updateParams({ price_max: e.target.value || null })} className="h-10 rounded-xl" />
           </div>
-          {currency === 'EUR' && (
+          {currency !== 'ALL' && rate != null && (
             <p className="text-xs text-muted-foreground mt-2">
               {tc('exchange_rate')}:{' '}
-              {rate != null ? `1 EUR = ${rate.toFixed(2)} ALL` : '…'}
+              1 {currency} ≈ {rate.toFixed(2)} ALL
             </p>
           )}
         </AccordionSection>

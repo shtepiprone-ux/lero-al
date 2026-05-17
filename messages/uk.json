@@ -466,7 +466,8 @@
       "open_site": "Відкрити сайт",
       "logout": "Вийти",
       "aria_close": "Закрити меню",
-      "language": "Мова"
+      "language": "Мова",
+      "item_property_types": "Типи нерухомості"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -739,6 +740,34 @@
         "rule_special": "Спецсимволи (!, @, #, $, %)",
         "requirements_title": "Вимоги до паролю:"
       }
+    },
+    "property_types": {
+      "title": "Типи нерухомості",
+      "subtitle": "Управління типами нерухомості",
+      "new": "Новий тип",
+      "name_sq": "Назва (албанська)",
+      "name_en": "Назва (англійська)",
+      "name_uk": "Назва (українська)",
+      "name_it": "Назва (італійська)",
+      "slug_label": "Slug (системний ключ)",
+      "slug_hint": "Автогенерується з албанської назви",
+      "sort_order": "Порядок",
+      "is_active": "Активний",
+      "listings_count": "Оголошень",
+      "delete_confirm": "Видалити тип нерухомості?",
+      "delete_blocked": "Неможливо видалити: {count} оголошень використовують цей тип",
+      "save": "Зберегти",
+      "cancel": "Скасувати",
+      "edit": "Редагувати",
+      "delete": "Видалити",
+      "empty": "Немає типів нерухомості",
+      "error_name_required": "Обовязкова албанська назва",
+      "error_slug_duplicate": "Такий slug вже існує",
+      "success_created": "Тип створено",
+      "success_updated": "Тип оновлено",
+      "success_deleted": "Тип видалено",
+      "deactivate": "Деактивувати",
+      "activate": "Активувати"
     }
   },
   "notifications": {

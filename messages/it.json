@@ -466,7 +466,8 @@
       "open_site": "Apri sito",
       "logout": "Esci",
       "aria_close": "Chiudi menu",
-      "language": "Lingua"
+      "language": "Lingua",
+      "item_property_types": "Tipi di proprietà"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -739,6 +740,34 @@
         "rule_special": "Caratteri speciali (!, @, #, $, %)",
         "requirements_title": "Requisiti password:"
       }
+    },
+    "property_types": {
+      "title": "Tipi di proprietà",
+      "subtitle": "Gestisci i tipi di proprietà immobiliare",
+      "new": "Nuovo tipo",
+      "name_sq": "Nome (albanese)",
+      "name_en": "Nome (inglese)",
+      "name_uk": "Nome (ucraino)",
+      "name_it": "Nome (italiano)",
+      "slug_label": "Slug (chiave sistema)",
+      "slug_hint": "Auto-generato dal nome albanese",
+      "sort_order": "Ordine",
+      "is_active": "Attivo",
+      "listings_count": "Annunci",
+      "delete_confirm": "Eliminare questo tipo di proprietà?",
+      "delete_blocked": "Impossibile eliminare: {count} annunci usano questo tipo",
+      "save": "Salva",
+      "cancel": "Annulla",
+      "edit": "Modifica",
+      "delete": "Elimina",
+      "empty": "Nessun tipo di proprietà",
+      "error_name_required": "Il nome albanese è obbligatorio",
+      "error_slug_duplicate": "Questo slug esiste già",
+      "success_created": "Tipo creato",
+      "success_updated": "Tipo aggiornato",
+      "success_deleted": "Tipo eliminato",
+      "deactivate": "Disattiva",
+      "activate": "Attiva"
     }
   },
   "notifications": {

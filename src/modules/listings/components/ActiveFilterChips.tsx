@@ -5,9 +5,10 @@ import { useTranslations } from 'next-intl'
 import { X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
-  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
+  CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
 } from '@/modules/listings/constants'
+import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
 interface Location { id: number; name_al: string }
 interface Props { locations: Location[] }
@@ -26,6 +27,7 @@ function fmt(n: number) {
 export function ActiveFilterChips({ locations }: Props) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
+  const { propertyTypes } = usePropertyTypes()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const router = useRouter()
@@ -51,8 +53,8 @@ export function ActiveFilterChips({ locations }: Props) {
 
   const propType = searchParams.get('property_type')
   if (propType) {
-    const pt = PROPERTY_TYPES.find(p => p.value === propType)
-    if (pt) chips.push({ key: 'property_type', label: tl(pt.labelKey), paramKey: 'property_type' })
+    const pt = propertyTypes.find(p => p.value === propType)
+    if (pt) chips.push({ key: 'property_type', label: pt.label, paramKey: 'property_type' })
   }
 
   const marketType = searchParams.get('market_type')

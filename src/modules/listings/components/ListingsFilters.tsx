@@ -19,6 +19,7 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
+import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
 interface Location { id: number; name_al: string; type: string }
 interface Props { locations: Location[]; className?: string; onClose?: () => void }
@@ -52,6 +53,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { rate } = useExchangeRate()
+  const { propertyTypes } = usePropertyTypes()
 
   const [sections, setSections] = useState({
     type: true,
@@ -199,14 +201,14 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             >
               {tc('all_types')}
             </Button>
-            {PROPERTY_TYPES.map(pt => (
+            {propertyTypes.map(pt => (
               <Button
                 key={pt.value}
                 variant="outline"
                 className={cn('py-2 px-3 h-auto text-xs justify-start rounded-xl whitespace-normal leading-snug text-left', get('property_type') === pt.value && 'bg-primary/10 text-primary border-primary/30 font-semibold')}
                 onClick={() => handlePropertyTypeChange(get('property_type') === pt.value ? null : pt.value)}
               >
-                {t(pt.labelKey)}
+                {pt.label}
               </Button>
             ))}
           </div>

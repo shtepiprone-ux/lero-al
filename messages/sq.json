@@ -466,7 +466,8 @@
       "open_site": "Hap faqen",
       "logout": "Dil",
       "aria_close": "Mbyll menunë",
-      "language": "Gjuhë"
+      "language": "Gjuhë",
+      "item_property_types": "Llojet e pronës"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -739,6 +740,34 @@
         "rule_special": "Karaktere speciale (!, @, #, $, %)",
         "requirements_title": "Kërkesat e fjalëkalimit:"
       }
+    },
+    "property_types": {
+      "title": "Llojet e pronës",
+      "subtitle": "Menaxhoni llojet e pronës së paluajtshme",
+      "new": "Lloj i ri",
+      "name_sq": "Emri (shqip)",
+      "name_en": "Emri (anglisht)",
+      "name_uk": "Emri (ukrainisht)",
+      "name_it": "Emri (italisht)",
+      "slug_label": "Slug (kod sistemi)",
+      "slug_hint": "Gjenerohet automatikisht nga emri shqip",
+      "sort_order": "Renditja",
+      "is_active": "Aktiv",
+      "listings_count": "Njoftime",
+      "delete_confirm": "Fshi llojin e pronës?",
+      "delete_blocked": "Nuk mund të fshihet: {count} njoftime e përdorin këtë lloj",
+      "save": "Ruaj",
+      "cancel": "Anulo",
+      "edit": "Ndrysho",
+      "delete": "Fshi",
+      "empty": "Nuk ka lloje pronash",
+      "error_name_required": "Emri shqip është i detyrueshëm",
+      "error_slug_duplicate": "Ky slug ekziston tashmë",
+      "success_created": "Lloji u krijua",
+      "success_updated": "Lloji u përditësua",
+      "success_deleted": "Lloji u fshi",
+      "deactivate": "Çaktivizo",
+      "activate": "Aktivizo"
     }
   },
   "notifications": {

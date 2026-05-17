@@ -22,7 +22,8 @@ export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
     '/admin/locations':   t('item_locations'),
     '/admin/legal':       t('item_legal'),
     '/admin/settings':    t('item_settings'),
-    '/admin/pages-admin': t('item_pages'),
+    '/admin/pages-admin':       t('item_pages'),
+    '/admin/property-types':    t('item_property_types'),
   }
 
   const title = PAGE_TITLES[pathname] ?? 'Admin'

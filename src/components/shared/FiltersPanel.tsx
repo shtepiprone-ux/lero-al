@@ -17,6 +17,7 @@ import { LocationCombobox, type LocationOption } from '@/components/shared/Locat
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
+import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
 
@@ -186,6 +187,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
   const tl = useTranslations('listing')
   const [local, setLocal] = useState<FilterValues>(values)
   const { rate } = useExchangeRate()
+  const { propertyTypes } = usePropertyTypes()
 
   // LOW-tier: defer mounting inner content to idle time — reduces main-thread work during
   // initial page load. The panel shell (CSS container) always renders for smooth transitions.
@@ -329,7 +331,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                 >
                   {t('all_types')}
                 </Button>
-                {PROPERTY_TYPES.map(pt => (
+                {propertyTypes.map(pt => (
                   <Button
                     key={pt.value}
                     variant="outline"
@@ -339,7 +341,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                     )}
                     onClick={() => handlePropertyTypeChange(local.property_type === pt.value ? undefined : pt.value)}
                   >
-                    {tl(pt.labelKey)}
+                    {pt.label}
                   </Button>
                 ))}
               </div>

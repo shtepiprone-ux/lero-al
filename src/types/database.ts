@@ -24,6 +24,19 @@ export type LandDevelopmentPotential = 'buildable' | 'change_of_use_required' | 
 
 export type ListingType = 'sale' | 'rent'
 export type PropertyType = 'apartment' | 'house' | 'room' | 'land' | 'commercial' | 'office' | 'garage' | 'parking' | 'warehouse' | 'other'
+
+export interface DBPropertyType {
+  id: number
+  slug: string
+  name_sq: string
+  name_en: string
+  name_uk: string
+  name_it: string
+  is_active: boolean
+  sort_order: number
+  created_at: string
+  updated_at: string
+}
 export type ListingCondition = 'new_build' | 'good' | 'needs_repair' | 'needs_renovation' | 'under_construction'
 export type WallType = 'brick' | 'concrete' | 'panel' | 'wood' | 'other'
 export type HeatingType = 'electric' | 'wood' | 'central' | 'gas' | 'none'

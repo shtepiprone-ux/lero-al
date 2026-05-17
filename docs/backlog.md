@@ -1,6 +1,23 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27, 28
+
+### Task 28 — Admin Property Types management — 2026-05-17
+- [x] **CLOSED.** Implemented full production-grade admin management system for Property Types with CRUD, localization, dependency protection, and automatic integration with listing/search/filter flows.
+  - **DB migration** (`supabase/migrations/20260517_property_types.sql`): `property_types` table — `slug` (unique), `name_sq/en/uk/it` (localized), `is_active`, `sort_order`, timestamps. Seeded with 10 existing property types. Public READ RLS (needed for form/filter SSR). Write via service-role only.
+  - **Server functions** (`src/modules/admin/lib/propertyTypes.ts`): `getPropertyTypes()` cached via `unstable_cache` (1h TTL, tagged `property-types`). `getLocalizedPropertyTypes(locale)` returns `{ value, label }[]` with locale-aware names and Albanian fallback. `revalidateTag(PROPERTY_TYPES_CACHE_TAG)` called after every mutation.
+  - **Server actions** (`src/modules/admin/actions/propertyTypes.ts`): `createPropertyType`, `updatePropertyType`, `deletePropertyType` (with dependency check: COUNT listings), `togglePropertyTypeActive`. Slug normalization (NFD, diacritics strip, lowercase). Auth guard (admin/moderator). Unique constraint → `duplicate_slug` error code.
+  - **Admin page** (`src/app/admin/property-types/page.tsx`): `getAdminLocale()` + `getTranslations('admin.property_types')` + SSR fetch. Full CRUD table.
+  - **Admin component** (`src/components/admin/AdminPropertyTypesManager.tsx`): Table with search, edit dialog (4 localized name fields + slug + sort_order), delete dialog with dependency warning, active/inactive toggle with optimistic update, `AdminLocaleSwitcher`-compatible i18n.
+  - **Sidebar**: Added "Property Types" nav item (`Building2` icon) to Content group in `AdminSidebar.tsx` + `AdminMobileHeader.tsx`. i18n key `admin.sidebar.item_property_types` in all 4 locales.
+  - **API route** (`src/app/api/property-types?locale=sq`): Returns active property types with localized labels. 1h cache. Used by client-side hook.
+  - **Client hook** (`src/hooks/usePropertyTypes.ts`): Module-level singleton fetch per locale. Fallback to hardcoded `PROPERTY_TYPES` on API error. Session-cached — no repeat requests.
+  - **Automatic integration**: All 5 consumer components updated to use `usePropertyTypes()` instead of hardcoded `PROPERTY_TYPES` constant: `StepBasicInfo.tsx` (listing form), `ListingsFilters.tsx`, `FiltersPanel.tsx`, `FavoritesTypeFilter.tsx`, `ActiveFilterChips.tsx`. New property types added in admin → immediately available in all flows.
+  - **Dependency protection**: `deletePropertyType` COUNTs listings using the slug before deletion → returns `has_listings` error code → UI shows localized warning with count.
+  - **i18n**: 22 new keys `admin.property_types.*` + `admin.sidebar.item_property_types` in all 4 locales. Zero hardcoded labels.
+  - Zero TypeScript errors. Zero ESLint errors.
+
+### Task 27 — Listing description on-demand translation — 2026-05-17
 
 ### Task 27 — Listing description on-demand translation — 2026-05-17
 - [x] **CLOSED.** Implemented production-grade listing description translation with provider abstraction, lazy flow, caching, rate limiting, and XSS-safe rendering.

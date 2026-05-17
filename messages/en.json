@@ -466,7 +466,8 @@
       "open_site": "Open site",
       "logout": "Logout",
       "aria_close": "Close menu",
-      "language": "Language"
+      "language": "Language",
+      "item_property_types": "Property Types"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -739,6 +740,34 @@
         "rule_special": "Special characters (!, @, #, $, %)",
         "requirements_title": "Password requirements:"
       }
+    },
+    "property_types": {
+      "title": "Property Types",
+      "subtitle": "Manage real estate property types",
+      "new": "New type",
+      "name_sq": "Name (Albanian)",
+      "name_en": "Name (English)",
+      "name_uk": "Name (Ukrainian)",
+      "name_it": "Name (Italian)",
+      "slug_label": "Slug (system key)",
+      "slug_hint": "Auto-generated from Albanian name",
+      "sort_order": "Sort order",
+      "is_active": "Active",
+      "listings_count": "Listings",
+      "delete_confirm": "Delete this property type?",
+      "delete_blocked": "Cannot delete: {count} listing(s) use this type",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "empty": "No property types",
+      "error_name_required": "Albanian name is required",
+      "error_slug_duplicate": "This slug already exists",
+      "success_created": "Type created",
+      "success_updated": "Type updated",
+      "success_deleted": "Type deleted",
+      "deactivate": "Deactivate",
+      "activate": "Activate"
     }
   },
   "notifications": {

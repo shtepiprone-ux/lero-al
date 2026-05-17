@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { cn } from '@/lib/utils'
-import { PROPERTY_TYPES } from '@/modules/listings/constants'
+import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import type { FormValues } from '@/modules/listings/types/form'
 import type { ListingType } from '@/types/database'
 
@@ -17,6 +17,7 @@ interface Props {
 
 export function StepBasicInfo({ data, onChange, errors }: Props) {
   const t = useTranslations('listing')
+  const { propertyTypes } = usePropertyTypes()
 
   return (
     <div className="flex flex-col gap-6">
@@ -47,11 +48,11 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
       <div className="flex flex-col gap-2">
         <Label className="text-sm font-medium">{t('property_type')}</Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          {PROPERTY_TYPES.map(pt => (
+          {propertyTypes.map(pt => (
             <button
               key={pt.value}
               type="button"
-              onClick={() => onChange({ property_type: pt.value })}
+              onClick={() => onChange({ property_type: pt.value as import('@/types/database').PropertyType })}
               className={cn(
                 'h-10 px-3 rounded-xl border text-sm transition-all text-left',
                 data.property_type === pt.value
@@ -59,7 +60,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
                   : 'bg-background border-border hover:border-primary/40'
               )}
             >
-              {t(pt.labelKey)}
+              {pt.label}
             </button>
           ))}
         </div>

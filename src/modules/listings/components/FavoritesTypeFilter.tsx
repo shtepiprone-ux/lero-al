@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
-import { PROPERTY_TYPES } from '@/modules/listings/constants'
+import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
 interface Props {
   typeCounts: Record<string, number>
@@ -16,8 +16,9 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
   const locale = useLocale()
   const router = useRouter()
 
+  const { propertyTypes } = usePropertyTypes()
   const total = Object.values(typeCounts).reduce((a, b) => a + b, 0)
-  const availableTypes = PROPERTY_TYPES.filter(pt => (typeCounts[pt.value] ?? 0) > 0)
+  const availableTypes = propertyTypes.filter(pt => (typeCounts[pt.value] ?? 0) > 0)
 
   if (availableTypes.length <= 1) return null
 
@@ -55,7 +56,7 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
           )}
           aria-pressed={currentType === pt.value}
         >
-          {t(pt.labelKey)} <span className="opacity-70">{typeCounts[pt.value]}</span>
+          {pt.label} <span className="opacity-70">{typeCounts[pt.value]}</span>
         </button>
       ))}
     </div>

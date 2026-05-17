@@ -69,6 +69,7 @@ const MOCK_USER: User = {
   location_request: null,
   preferred_currency: 'ALL',
   pending_email: null,
+  last_seen_at: null,
   created_at: '2026-01-01T00:00:00.000Z',
 }
 

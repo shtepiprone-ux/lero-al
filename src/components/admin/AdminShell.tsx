@@ -1,10 +1,12 @@
 'use client'
 
 import { useState } from 'react'
+import { usePresence } from '@/hooks/usePresence'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { AdminMobileHeader } from '@/components/admin/AdminMobileHeader'
 
 export function AdminShell({ children, siteName, locale }: { children: React.ReactNode; siteName?: string; locale?: string }) {
+  usePresence()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (

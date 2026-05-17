@@ -33,7 +33,7 @@ export default async function AdminUsersPage({
   if (tab === 'all') {
     let query = supabase
       .from('users')
-      .select('id, name, last_name, phone, user_type, role, is_verified, company_name, status, location_request, created_at', { count: 'exact' })
+      .select('id, name, last_name, phone, user_type, role, is_verified, company_name, status, location_request, created_at, last_seen_at', { count: 'exact' })
       .is('deleted_at', null)
       .order('created_at', { ascending: false })
       .range(from, to)

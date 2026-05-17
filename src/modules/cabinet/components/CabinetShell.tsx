@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { usePresence } from '@/hooks/usePresence'
 import { User, LayoutList, Bookmark } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -40,6 +41,9 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  // Track authenticated presence — throttled server-side to once per 15 min.
+  usePresence()
 
   // Lifted avatar state so header avatar updates immediately on upload without page refresh.
   const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url ?? null)
@@ -87,6 +91,11 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
             <p className="text-sm text-muted-foreground">
               {t('member_since')}: {formatDate(profile?.created_at, locale)}
             </p>
+            {profile?.last_seen_at && (
+              <p className="text-sm text-muted-foreground">
+                {t('last_seen')}: {formatDate(profile.last_seen_at, locale)}
+              </p>
+            )}
           </div>
         </div>
 

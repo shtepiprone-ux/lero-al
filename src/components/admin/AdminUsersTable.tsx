@@ -44,6 +44,7 @@ export interface AdminUser {
   status: string | null
   location_request: { city: string; region?: string } | null
   created_at: string
+  last_seen_at?: string | null
   avatar_url?: string | null
 }
 
@@ -232,7 +233,12 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">{u.phone ?? '—'}</td>
                     <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
-                      {formatDate(u.created_at, locale)}
+                      <div className="flex flex-col gap-0.5">
+                        <span>{formatDate(u.created_at, locale)}</span>
+                        {u.last_seen_at && (
+                          <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-4 py-3">
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (

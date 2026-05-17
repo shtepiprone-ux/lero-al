@@ -1,6 +1,41 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Task 17.1 + Task 21 + Task 22 + Task 23
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24
+
+### Task 24 — Saved Searches hardening pass — 2026-05-17
+- [x] **CLOSED.** Hardening pass for the Saved Searches system (Task 22).
+
+  **Regression audit**: No regressions found in listing search, favorites, notifications, admin pages, or filters after Task 22.
+
+  **Defects found and fixed:**
+
+  1. **Race condition — N+1 + concurrent runs (CRITICAL)**: The original Edge Function issued 1 DB query per saved search (N+1) and had no protection against concurrent pg_cron invocations. Two simultaneous runs would fetch the same `last_checked_at`, count the same new listings, and increment `new_count` twice. **Fix**: Created `process_saved_search_notify(p_now)` SQL function (`supabase/migrations/20260517_saved_search_process_fn.sql`) that: (a) acquires `pg_try_advisory_xact_lock(987654321)` — prevents concurrent runs from executing; (b) processes all searches in a single PL/pgSQL loop (one SQL context, no N+1 network round trips); (c) uses `UPDATE WHERE last_checked_at = expected` optimistic lock for each row — atomic new_count increment, prevents double-counting. Edge Function now calls `.rpc('process_saved_search_notify')` once + bulk-inserts notifications in one `INSERT` call.
+
+  2. **new_count not atomic**: `new_count: search.new_count + newCount` was a read-then-write from application layer — race condition in concurrent runs. **Fix**: Moved to SQL `new_count = new_count + v_count` inside the atomic UPDATE.
+
+  3. **NotificationItem body for saved_search_match**: Body stored as raw number `"3"`. `NotificationItem.tsx` displayed it literally. **Fix**: Client now detects `type === 'saved_search_match'` and formats body via `t('saved_search_match_body', { count: parseInt(body) || 1 })` — fully localized in all 4 locales.
+
+  **Edge cases confirmed OK:**
+  - Rapid clicks: `disabled={isPending}` + `useTransition` prevents duplicate saves ✅
+  - Duplicate search: `23505` unique constraint + pre-check → `already_exists` code ✅
+  - Empty search payload: hash of `{}` → one allowed empty search per user ✅
+  - Pagination params: excluded from `canonicalizeFilters` ✅
+  - Reordered params: hash is alphabetically sorted → same hash ✅
+  - Concurrent saves: unique constraint race handled by `error.code === '23505'` ✅
+  - Expired session: `resolveAuthUser()` returns null → `{ code: 'unauthorized' }` ✅
+  - Edge Function + simultaneous delete: advisory lock + optimistic lock → skip gracefully ✅
+
+  **SSR/hydration**: SavedSearchesTab is fully client-side (inside CabinetShell which is `'use client'`). RelativeTime is also client-side. No hydration mismatch possible. ✅
+
+  **Performance**: 1 RPC call + 1 bulk INSERT replaces N×3 round trips (N SELECT COUNT + N notification INSERT + N UPDATE). Supabase timeout (150s) no longer a risk for 1000+ saved searches.
+
+  **Security re-audit**: "Hardening security audit passed — no new gaps found." RLS policies unchanged. Service-role key server-only. Notification body contains only a count number — no listing content leaked.
+
+  **Notification bell**: `saved_search_match` icon (🔔) renders correctly. Link `/cabinet?tab=searches` navigates to correct tab. `updateLastViewed()` fires when user clicks "Open search" in SavedSearchesTab (correct: resets per-search counter, not on notification click). ✅
+
+  **Files changed**: `supabase/functions/saved-search-notify/index.ts`, `supabase/migrations/20260517_saved_search_process_fn.sql`, `src/modules/notifications/components/NotificationItem.tsx`.
+
+### Task 23 — Multi-currency conversion (ALL/EUR/USD/GBP) — 2026-05-17
 
 ### Task 23 — Multi-currency conversion (ALL/EUR/USD/GBP) — 2026-05-17
 - [x] **CLOSED.** Extended currency conversion from ALL/EUR only to ALL/EUR/USD/GBP.

@@ -56,7 +56,11 @@ export function NotificationItem({ notification, onRead }: Props) {
         <p className={cn('text-sm leading-snug', !notification.is_read && 'font-medium')}>
           {notification.title}
         </p>
-        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{notification.body}</p>
+        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+          {notification.type === 'saved_search_match'
+            ? t('saved_search_match_body', { count: parseInt(notification.body) || 1 })
+            : notification.body}
+        </p>
         <p className="text-[10px] text-muted-foreground/60 mt-1">
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
         </p>

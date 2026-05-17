@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { User, LayoutList, Bookmark } from 'lucide-react'
@@ -40,6 +41,9 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
+  // Lifted avatar state so header avatar updates immediately on upload without page refresh.
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url ?? null)
+
   const activeTab = (searchParams.get('tab') ?? initialTab) as Tab
 
   function setTab(tab: Tab) {
@@ -65,7 +69,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         {/* User card */}
         <div className="bg-card rounded-2xl border shadow-sm p-6 mb-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <Avatar className="h-16 w-16 shrink-0">
-            <AvatarImage src={profile?.avatar_url ?? undefined} />
+            <AvatarImage src={avatarUrl ?? undefined} />
             <AvatarFallback className="text-xl font-semibold bg-primary/10 text-primary">
               {initials}
             </AvatarFallback>
@@ -118,7 +122,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         </div>
 
         {/* Tab content */}
-        {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} />}
+        {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} onAvatarChange={setAvatarUrl} />}
         {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} />}
         {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} />}
 

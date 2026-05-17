@@ -23,6 +23,8 @@ interface Props {
   mode: 'view' | 'edit' | 'create'
   onAvatarChange: (url: string | null) => void
   onBlobReady?: (blob: Blob | null) => void
+  /** Hide the remove-avatar button. Use for non-admin contexts where removal requires a different action. */
+  showRemove?: boolean
 }
 
 async function validateSourceImage(file: File): Promise<{ w: number; h: number; error?: 'unreadable' }> {
@@ -35,7 +37,7 @@ async function validateSourceImage(file: File): Promise<{ w: number; h: number; 
   })
 }
 
-export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlobReady }: Props) {
+export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlobReady, showRemove = true }: Props) {
   const tc = useTranslations('cabinet')
   const tco = useTranslations('common')
   const tu = useTranslations('admin.users')
@@ -179,7 +181,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
             onClick={() => inputRef.current?.click()} disabled={uploading || removing}>
             {currentUrl ? tc('avatar_replace') : tc('avatar_upload')}
           </Button>
-          {currentUrl && (
+          {showRemove && currentUrl && (
             <Button type="button" variant="ghost" size="sm"
               className="h-7 text-xs px-2 rounded-lg text-destructive hover:text-destructive hover:bg-destructive/5"
               onClick={handleRemove} disabled={uploading || removing}>

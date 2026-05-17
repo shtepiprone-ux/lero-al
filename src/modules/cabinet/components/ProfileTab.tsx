@@ -4,14 +4,13 @@ import { useRef, useState, useMemo, useTransition, useEffect, useCallback } from
 import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { CheckCircle2, AlertCircle, Camera, UserCircle2, Loader2, MapPin, Trash2, AlertTriangle } from 'lucide-react'
-import dynamic from 'next/dynamic'
+import { CheckCircle2, AlertCircle, Loader2, MapPin, Trash2, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
-import { AppImage } from '@/components/ui/AppImage'
+import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
 import { cn } from '@/lib/utils'
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
@@ -22,19 +21,6 @@ import {
 } from '@/modules/cabinet/actions'
 import type { User, PreferredCurrency } from '@/types/database'
 import { useRouter } from 'next/navigation'
-
-// ── Constants ─────────────────────────────────────────────────────────────────
-
-const MAX_SOURCE_BYTES = 10 * 1024 * 1024  // 10 MB — source file before crop
-const MIN_AVATAR_DIM = 256                  // minimum source dimension
-const VALID_AVATAR_MIME = ['image/jpeg', 'image/png', 'image/webp']
-
-// ── Lazy crop modal (loads only when user picks a file) ───────────────────────
-
-const AvatarCropModal = dynamic(
-  () => import('@/components/shared/AvatarCropModal').then(m => m.AvatarCropModal),
-  { ssr: false },
-)
 
 const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
@@ -55,6 +41,7 @@ interface Props {
   cities: CityOption[]
   regions: RegionOption[]
   email?: string | null
+  onAvatarChange?: (url: string | null) => void
 }
 
 // ── Phone input sub-component ─────────────────────────────────────────────────
@@ -260,153 +247,9 @@ function CurrencySelector({ value, onChange, labels, fieldLabel }: {
   )
 }
 
-// ── Avatar upload sub-component ───────────────────────────────────────────────
-
-async function validateSourceImage(file: File): Promise<{ w: number; h: number; error?: 'unreadable' }> {
-  return new Promise(resolve => {
-    const img = new Image()
-    const url = URL.createObjectURL(file)
-    img.onload = () => {
-      URL.revokeObjectURL(url)
-      resolve({ w: img.naturalWidth, h: img.naturalHeight })
-    }
-    img.onerror = () => {
-      URL.revokeObjectURL(url)
-      resolve({ w: 0, h: 0, error: 'unreadable' })
-    }
-    img.src = url
-  })
-}
-
-function AvatarUpload({ currentUrl, onUpload }: {
-  currentUrl: string | null
-  onUpload: (url: string | null) => void
-}) {
-  const t = useTranslations('cabinet')
-  const tc = useTranslations('common')
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [uploading, setUploading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [url, setUrl] = useState(currentUrl)
-  const [cropSrc, setCropSrc] = useState<string | null>(null)
-
-  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (!file) return
-    e.target.value = ''
-    setError(null)
-
-    console.log('[AvatarFlow] file_selected', {
-      route: window.location.pathname,
-      mode: 'cabinet',
-      mime: file.type,
-      size: file.size,
-    })
-
-    if (!VALID_AVATAR_MIME.includes(file.type)) { setError(t('avatar_error_type')); return }
-    if (file.size > MAX_SOURCE_BYTES) { setError(t('avatar_error_size')); return }
-
-    const { w, h, error: imgError } = await validateSourceImage(file)
-    if (imgError === 'unreadable') { setError(t('avatar_error_unreadable')); return }
-    if (w < MIN_AVATAR_DIM || h < MIN_AVATAR_DIM) { setError(t('avatar_error_too_small')); return }
-
-    console.log('[AvatarFlow] file_selected', {
-      route: window.location.pathname,
-      mode: 'cabinet',
-      mime: file.type,
-      size: file.size,
-      dimensions: `${w}×${h}`,
-    })
-
-    setCropSrc(URL.createObjectURL(file))
-    console.log('[AvatarFlow] crop_modal_open', { mode: 'cabinet' })
-  }
-
-  // Upload via API route — standard HTTP multipart, binary-safe
-  async function handleCropConfirm(blob: Blob): Promise<void> {
-    console.log('[AvatarFlow] crop_save_clicked', { mode: 'cabinet' })
-    console.log('[AvatarFlow] crop_blob_created', { mime: blob.type, size: blob.size })
-    setUploading(true)
-    console.log('[AvatarFlow] upload_started', { mode: 'cabinet', endpoint: '/api/upload-avatar' })
-    try {
-      const fd = new FormData()
-      fd.append('avatar', new File([blob], 'avatar.jpg', { type: 'image/jpeg' }))
-      // No userId → API route uploads for own profile
-      console.log('[AvatarFlow] upload_request_sent', { mode: 'cabinet' })
-      const res = await fetch('/api/upload-avatar', { method: 'POST', body: fd })
-      const result = await res.json() as { url?: string; error?: string }
-      console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
-      if (result.error) {
-        // ERROR: toast above modal — modal stays open for retry
-        toast.error(result.error)
-        return
-      }
-      // SUCCESS ONLY: close modal and update preview
-      const src = cropSrc
-      setCropSrc(null)
-      setUrl(result.url ?? null)
-      onUpload(result.url ?? null)
-      if (src) URL.revokeObjectURL(src)
-      console.log('[AvatarFlow] avatar_state_updated', { avatarUrl: result.url, mode: 'cabinet' })
-    } catch (err) {
-      console.log('[AvatarFlow] upload_exception', { error: String(err), mode: 'cabinet' })
-      toast.error(t('avatar_upload_error'))
-      // ERROR: modal stays open (cropSrc unchanged)
-    } finally {
-      setUploading(false)
-    }
-  }
-
-  function handleCropCancel() {
-    if (cropSrc) URL.revokeObjectURL(cropSrc)
-    setCropSrc(null)
-    setError(null)
-  }
-
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative">
-        <div
-          className="h-20 w-20 rounded-full overflow-hidden border-2 border-border bg-muted flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
-          onClick={() => inputRef.current?.click()}
-        >
-          {url
-            ? <AppImage src={url} variant="avatar" alt="Avatar" priority={false} />
-            : <UserCircle2 className="h-10 w-10 text-muted-foreground" />
-          }
-        </div>
-        {uploading
-          ? <div className="absolute inset-0 rounded-full bg-black/30 flex items-center justify-center"><Loader2 className="h-5 w-5 text-white animate-spin" /></div>
-          : <button type="button" onClick={() => inputRef.current?.click()} className="absolute bottom-0 right-0 h-6 w-6 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md"><Camera className="h-3 w-3" /></button>
-        }
-      </div>
-      <div className="flex gap-2 text-xs">
-        <button type="button" onClick={() => inputRef.current?.click()} className="text-primary hover:underline">
-          {url ? t('avatar_replace') : t('avatar_upload')}
-        </button>
-      </div>
-      <p className="text-[10px] text-muted-foreground text-center max-w-[120px]">{t('avatar_hint')}</p>
-      {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
-      <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFile} />
-      {cropSrc && (
-        <AvatarCropModal
-          imageSrc={cropSrc}
-          title={t('avatar_crop_title')}
-          hint={t('avatar_crop_hint')}
-          zoomLabel={t('avatar_zoom_label')}
-          cancelLabel={tc('cancel')}
-          saveLabel={tc('save')}
-          onConfirm={handleCropConfirm}
-          onCancel={handleCropCancel}
-        />
-      )}
-    </div>
-  )
-}
-
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function ProfileTab({ profile, locale, cities, regions, email }: Props) {
+export function ProfileTab({ profile, locale, cities, regions, email, onAvatarChange }: Props) {
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
   const router = useRouter()
@@ -530,7 +373,13 @@ export function ProfileTab({ profile, locale, cities, regions, email }: Props) {
 
       {/* ── Identity card ─────────────────────────────────────────────────── */}
       <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col sm:flex-row gap-6 items-start">
-        <AvatarUpload currentUrl={avatarUrl} onUpload={setAvatarUrl} />
+        <AdminUserAvatar
+          userId={profile?.id ?? null}
+          avatarUrl={avatarUrl}
+          mode="edit"
+          showRemove={false}
+          onAvatarChange={url => { setAvatarUrl(url); onAvatarChange?.(url) }}
+        />
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="name" className="text-sm">{t('name')}</Label>

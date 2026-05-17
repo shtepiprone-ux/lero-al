@@ -783,7 +783,8 @@
       "success_updated": "Lloji u përditësua",
       "success_deleted": "Lloji u fshi",
       "deactivate": "Çaktivizo",
-      "activate": "Aktivizo"
+      "activate": "Aktivizo",
+      "search_placeholder": "Kërko sipas emrit ose slug..."
     },
     "currency": {
       "title": "Menaxhimi i Valutave",

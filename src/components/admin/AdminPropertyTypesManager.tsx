@@ -2,11 +2,12 @@
 
 import { useState, useTransition, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2, Search } from 'lucide-react'
+import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import {
@@ -208,23 +209,27 @@ function DeleteDialog({ pt, onClose, onDeleted }: DeleteDialogProps) {
 
 interface Props {
   initialTypes: DBPropertyType[]
+  searchQuery: string
 }
 
-export function AdminPropertyTypesManager({ initialTypes }: Props) {
+export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) {
   const t = useTranslations('admin.property_types')
   const [types, setTypes] = useState(initialTypes)
-  const [search, setSearch] = useState('')
   const [editTarget, setEditTarget] = useState<DBPropertyType | null | 'new'>()
   const [deleteTarget, setDeleteTarget] = useState<DBPropertyType | null>(null)
   const [isPending, startTransition] = useTransition()
 
   const filtered = useMemo(() => {
-    if (!search.trim()) return types
-    const q = search.toLowerCase()
+    const q = searchQuery.trim().toLowerCase()
+    if (!q) return types
     return types.filter(pt =>
-      pt.slug.includes(q) || pt.name_sq.toLowerCase().includes(q) || pt.name_en.toLowerCase().includes(q)
+      pt.slug.includes(q) ||
+      pt.name_sq.toLowerCase().includes(q) ||
+      (pt.name_en?.toLowerCase() ?? '').includes(q) ||
+      (pt.name_uk?.toLowerCase() ?? '').includes(q) ||
+      (pt.name_it?.toLowerCase() ?? '').includes(q)
     )
-  }, [types, search])
+  }, [types, searchQuery])
 
   function handleSaved(updated: DBPropertyType) {
     setTypes(prev => {
@@ -277,16 +282,12 @@ export function AdminPropertyTypesManager({ initialTypes }: Props) {
 
       {/* Toolbar */}
       <div className="flex items-center gap-3 mb-4">
-        <div className="relative flex-1 max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-          <Input
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder={`${t('title')}...`}
-            className="h-9 pl-9 rounded-xl"
-          />
-        </div>
-        <Button size="sm" className="gap-1.5 rounded-xl" onClick={() => setEditTarget('new')}>
+        <AdminSearchInput
+          value={searchQuery}
+          placeholder={t('search_placeholder')}
+          className="flex-1 max-w-xs"
+        />
+        <Button size="sm" className="gap-1.5" onClick={() => setEditTarget('new')}>
           <Plus className="h-4 w-4" />
           {t('new')}
         </Button>

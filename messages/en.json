@@ -783,7 +783,8 @@
       "success_updated": "Type updated",
       "success_deleted": "Type deleted",
       "deactivate": "Deactivate",
-      "activate": "Activate"
+      "activate": "Activate",
+      "search_placeholder": "Search by name or slug..."
     },
     "currency": {
       "title": "Currency Management",

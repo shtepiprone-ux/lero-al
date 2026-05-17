@@ -783,7 +783,8 @@
       "success_updated": "Тип оновлено",
       "success_deleted": "Тип видалено",
       "deactivate": "Деактивувати",
-      "activate": "Активувати"
+      "activate": "Активувати",
+      "search_placeholder": "Пошук за назвою або slug..."
     },
     "currency": {
       "title": "Управління валютами",

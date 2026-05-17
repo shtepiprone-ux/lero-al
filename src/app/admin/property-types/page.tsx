@@ -6,9 +6,15 @@ import { getAllPropertyTypesAdmin } from '@/modules/admin/actions/propertyTypes'
 
 export const metadata = { title: 'Property Types — Admin' }
 
-export default async function AdminPropertyTypesPage() {
+export default async function AdminPropertyTypesPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | undefined>>
+}) {
   await getAdminLocale()
   const t = await getTranslations('admin.property_types')
+  const sp = await searchParams
+  const q = sp.q ?? ''
   const types = await getAllPropertyTypesAdmin()
 
   return (
@@ -17,7 +23,7 @@ export default async function AdminPropertyTypesPage() {
         title={t('title')}
         subtitle={t('subtitle')}
       />
-      <AdminPropertyTypesManager initialTypes={types} />
+      <AdminPropertyTypesManager initialTypes={types} searchQuery={q} />
     </div>
   )
 }

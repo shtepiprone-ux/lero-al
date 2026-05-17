@@ -783,7 +783,8 @@
       "success_updated": "Tipo aggiornato",
       "success_deleted": "Tipo eliminato",
       "deactivate": "Disattiva",
-      "activate": "Attiva"
+      "activate": "Attiva",
+      "search_placeholder": "Cerca per nome o slug..."
     },
     "currency": {
       "title": "Gestione valute",

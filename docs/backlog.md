@@ -1,6 +1,16 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–46
+## Session 2026-05-17 — Tasks 17.1, 21–47
+
+### Task 47 — Admin Property Types Search Fix & UI Standardization — 2026-05-17
+- [x] **CLOSED.** Fixed search scope across all 4 locales; replaced local Input with global `AdminSearchInput`; aligned "New Type" button with project Button standard.
+  - **Admin Property Types search fix**: filter previously searched only `slug + name_sq + name_en` — now searches all 5 fields: `slug`, `name_sq`, `name_en`, `name_uk`, `name_it` with null-safe `.?toLowerCase()` guards.
+  - **Global search component used**: replaced inline `<Input>` + `<Search>` icon wrapper with `<AdminSearchInput value={searchQuery} placeholder={t('search_placeholder')} />` — URL-synced, debounced, `?q=` param preserved.
+  - **`searchQuery` prop**: `page.tsx` now reads `searchParams.q` and passes it as `searchQuery` to `AdminPropertyTypesManager`. Manager's `useMemo` filters on `searchQuery` prop (not local state).
+  - **Global button component**: "New Type" button already used `Button` from `@/components/ui/button`; removed non-standard `rounded-xl` override to align with default admin button style.
+  - **Admin UI primitive standardization on Property Types page**: `Search` icon import removed (now encapsulated in `AdminSearchInput`); local `search` state removed.
+  - **i18n**: added `search_placeholder` key to all 4 locale files (`sq/en/uk/it`) in `admin.property_types` namespace.
+  - **Files modified**: `src/app/admin/property-types/page.tsx`, `src/components/admin/AdminPropertyTypesManager.tsx`, `messages/sq.json`, `messages/en.json`, `messages/uk.json`, `messages/it.json`.
 
 ### Task 46 — Admin Language Switcher Standardization — 2026-05-17
 - [x] **CLOSED.** Extracted global reusable `LocaleSwitcher` component; replaced admin button-group and public inline DropdownMenu with it — ONE canonical language-switching component across the project.

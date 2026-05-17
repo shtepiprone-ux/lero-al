@@ -17,7 +17,14 @@ import { formatPrice } from '@/lib/formatters'
 import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
 
-const STATUSES: ListingStatus[] = ['pending', 'active', 'inactive', 'sold', 'rented', 'archived']
+const STATUS_BADGE: Record<ListingStatus, string> = {
+  pending:  'bg-status-warning/15 text-status-warning border-status-warning/30',
+  active:   'bg-status-success/15 text-status-success border-status-success/30',
+  inactive: 'bg-muted text-muted-foreground border-border',
+  sold:     'bg-status-info/15 text-status-info border-status-info/30',
+  rented:   'bg-status-rented/15 text-status-rented border-status-rented/30',
+  archived: 'bg-muted text-muted-foreground/60 border-border',
+}
 
 export interface AdminListing {
   id: string
@@ -155,8 +162,12 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
     archived: tc('status_archived'),
   }
 
-  const STATUS_OPTIONS = STATUSES.map(s => ({ value: s, label: STATUS_LABEL[s] }))
-  const FILTER_STATUS_OPTIONS = [{ value: '', label: tc('filter_ALL') }, ...STATUS_OPTIONS]
+  const FILTER_STATUS_OPTIONS = [
+    { value: '', label: tc('filter_ALL') },
+    ...(['pending', 'active', 'inactive', 'sold', 'rented', 'archived'] as ListingStatus[]).map(
+      s => ({ value: s, label: STATUS_LABEL[s] })
+    ),
+  ]
 
   // Re-sync items when RSC delivers fresh props (e.g. after router.refresh()).
   useEffect(() => { setItems(init) }, [init])
@@ -276,7 +287,9 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         {formatPrice(l.price, l.currency, locale)}
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-xs capitalize">{STATUS_LABEL[l.status]}</span>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[11px] font-medium ${STATUS_BADGE[l.status]}`}>
+                          {STATUS_LABEL[l.status]}
+                        </span>
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
                         {l.owner?.name ?? '—'}

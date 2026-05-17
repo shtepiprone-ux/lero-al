@@ -71,13 +71,20 @@ async function assertAdminAccess() {
 // Thin adapter — no business logic, no transition validation, no DB writes.
 // All status mutation authority is delegated to applyListingTransitionByStatus().
 
-export async function updateListingStatus(listingId: string, toStatus: ListingStatus) {
+export async function updateListingStatus(
+  listingId: string,
+  toStatus: ListingStatus,
+): Promise<{ error?: string }> {
   const actor = await resolveAdminActor()
   const result = await applyListingTransitionByStatus(listingId, toStatus, actor)
-  if (!result.ok && result.reason !== 'not_found') {
-    console.error('updateListingStatus: transition failed', { result, listingId, toStatus })
+  if (!result.ok) {
+    if (result.reason !== 'not_found') {
+      console.error('updateListingStatus: transition failed', { result, listingId, toStatus })
+    }
+    return { error: result.reason }
   }
   revalidatePath('/admin/listings')
+  return {}
 }
 
 export async function setListingPremium(

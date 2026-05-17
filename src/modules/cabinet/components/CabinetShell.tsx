@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { ProfileTab } from '@/modules/cabinet/components/ProfileTab'
 import { ListingsTab } from '@/modules/cabinet/components/ListingsTab'
 import { SavedSearchesTab } from '@/modules/cabinet/components/SavedSearchesTab'
-import { RelativeTime } from '@/components/shared/RelativeTime'
+import { formatDate } from '@/lib/formatters'
 import type { User as UserType, SavedSearch } from '@/types/database'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
 
@@ -85,9 +85,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
               )}
             </div>
             <p className="text-sm text-muted-foreground">
-              {t('member_since')} {profile?.created_at
-                ? <RelativeTime date={profile.created_at} />
-                : '—'}
+              {t('member_since')}: {formatDate(profile?.created_at, locale)}
             </p>
           </div>
         </div>

@@ -17,3 +17,19 @@ export function formatPrice(price: number, currency: string, locale: string): st
 export function formatCount(value: number, locale: string): string {
   return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(Math.round(value))
 }
+
+/**
+ * Formats an ISO date string as a locale-aware absolute calendar date (DD.MM.YYYY style).
+ * Requires explicit locale for SSR/client parity (no hydration mismatch).
+ * Returns '—' on null, undefined, or invalid input.
+ */
+export function formatDate(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    return new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(d)
+  } catch {
+    return '—'
+  }
+}

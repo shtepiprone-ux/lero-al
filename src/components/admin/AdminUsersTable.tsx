@@ -2,14 +2,14 @@
 
 import { useState, useTransition } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
 import { ShieldCheck, ShieldOff, Loader2, ExternalLink, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
-import { RelativeTime } from '@/components/shared/RelativeTime'
+import { formatDate } from '@/lib/formatters'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
 
@@ -61,6 +61,7 @@ interface Props {
 
 export function AdminUsersTable({ users: init, total, page, perPage, activeRole, locationRequestFilter, searchQuery = '', activeTab = 'all', verifiedAgents = [] }: Props) {
   const t = useTranslations('admin.users')
+  const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -120,7 +121,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                   </td>
                   <td className="px-5 py-3.5 hidden md:table-cell text-muted-foreground">{u.company_name ?? '—'}</td>
                   <td className="px-5 py-3.5 hidden lg:table-cell text-muted-foreground text-xs">
-                    <RelativeTime date={u.created_at} />
+                    {formatDate(u.created_at, locale)}
                   </td>
                   <td className="px-5 py-3.5">
                     {loadingId === u.id ? <Loader2 className="h-4 w-4 animate-spin" /> : (
@@ -231,7 +232,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">{u.phone ?? '—'}</td>
                     <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
-                      <RelativeTime date={u.created_at} />
+                      {formatDate(u.created_at, locale)}
                     </td>
                     <td className="px-4 py-3">
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (

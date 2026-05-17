@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import {
-  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES, ROOMS_OPTIONS,
+  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
   ALL_FILTER_SECTIONS, FILTER_SECTION_PARAMS,
   type FilterSection,
@@ -19,6 +19,9 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
+import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
+import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
+import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
@@ -257,19 +260,10 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {/* Rooms */}
         {shows('rooms') && (
           <AccordionSection title={tc('rooms_label')} open={sections.rooms} onToggle={() => toggle('rooms')}>
-            <div className="flex gap-1.5 flex-wrap">
-              {ROOMS_OPTIONS.map(r => (
-                <Button
-                  key={r}
-                  variant={selectedRooms.includes(String(r)) ? 'default' : 'outline'}
-                  size="icon"
-                  className="h-10 w-10 rounded-xl text-xs"
-                  onClick={() => toggleMulti('rooms', String(r))}
-                >
-                  {r === 5 ? '5+' : r}
-                </Button>
-              ))}
-            </div>
+            <FilterRoomsRow
+              selected={selectedRooms}
+              onToggle={v => toggleMulti('rooms', v)}
+            />
           </AccordionSection>
         )}
 
@@ -356,29 +350,26 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {/* Condition */}
         {shows('condition') && (
           <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')}>
-            <div className="flex flex-col gap-1.5">
-              <Button variant={!get('condition') ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs" onClick={() => updateParams({ condition: null })}>
-                {tc('any')}
-              </Button>
-              {CONDITIONS.map(c => (
-                <Button key={c.value} variant={get('condition') === c.value ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ condition: get('condition') === c.value ? null : c.value })}>
-                  {t(c.labelKey)}
-                </Button>
-              ))}
-            </div>
+            <FilterToggleGroup
+              options={CONDITIONS}
+              value={get('condition') || null}
+              onToggle={v => updateParams({ condition: v })}
+              getLabel={k => t(k)}
+              allLabel={tc('any')}
+              className="flex-col gap-1.5"
+            />
           </AccordionSection>
         )}
 
         {/* Layout features */}
         {shows('layout_features') && (
           <AccordionSection title={tc('layout_features')} open={sections.layout_features} onToggle={() => toggle('layout_features')}>
-            <div className="flex flex-wrap gap-1.5">
-              {LAYOUT_FEATURES.map(lf => (
-                <Button key={lf.value} variant={selectedLayoutFeatures.includes(lf.value) ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs whitespace-normal leading-snug" onClick={() => toggleMulti('layout_features', lf.value)}>
-                  {t(lf.labelKey)}
-                </Button>
-              ))}
-            </div>
+            <FilterMultiToggle
+              options={LAYOUT_FEATURES}
+              selected={selectedLayoutFeatures}
+              onToggle={v => toggleMulti('layout_features', v)}
+              getLabel={k => t(k)}
+            />
           </AccordionSection>
         )}
 
@@ -403,55 +394,53 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {/* Heating */}
         {shows('heating') && (
           <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')}>
-            <div className="flex flex-wrap gap-1.5">
-              <Button variant={!get('heating') ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: null })}>{tc('any_n')}</Button>
-              {HEATING_TYPES.map(h => (
-                <Button key={h.value} variant={get('heating') === h.value ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ heating: get('heating') === h.value ? null : h.value })}>
-                  {t(h.labelKey)}
-                </Button>
-              ))}
-            </div>
+            <FilterToggleGroup
+              options={HEATING_TYPES}
+              value={get('heating') || null}
+              onToggle={v => updateParams({ heating: v })}
+              getLabel={k => t(k)}
+              allLabel={tc('any_n')}
+            />
           </AccordionSection>
         )}
 
         {/* Wall type */}
         {shows('wall_type') && (
           <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')}>
-            <div className="flex flex-wrap gap-1.5">
-              <Button variant={!get('wall_type') ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: null })}>{tc('any')}</Button>
-              {WALL_TYPES.map(w => (
-                <Button key={w.value} variant={get('wall_type') === w.value ? 'default' : 'outline'} size="sm" className="h-10 px-3 rounded-xl text-xs" onClick={() => updateParams({ wall_type: get('wall_type') === w.value ? null : w.value })}>
-                  {t(w.labelKey)}
-                </Button>
-              ))}
-            </div>
+            <FilterToggleGroup
+              options={WALL_TYPES}
+              value={get('wall_type') || null}
+              onToggle={v => updateParams({ wall_type: v })}
+              getLabel={k => t(k)}
+              allLabel={tc('any')}
+            />
           </AccordionSection>
         )}
 
         {/* Offer type */}
         {shows('offer_type') && (
           <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')}>
-            <div className="flex flex-col gap-1.5">
-              <Button variant={!get('offer_type') ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs" onClick={() => updateParams({ offer_type: null })}>{tc('any')}</Button>
-              {OFFER_TYPES.map(ot => (
-                <Button key={ot.value} variant={get('offer_type') === ot.value ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => updateParams({ offer_type: get('offer_type') === ot.value ? null : ot.value })}>
-                  {t(ot.labelKey)}
-                </Button>
-              ))}
-            </div>
+            <FilterToggleGroup
+              options={OFFER_TYPES}
+              value={get('offer_type') || null}
+              onToggle={v => updateParams({ offer_type: v })}
+              getLabel={k => t(k)}
+              allLabel={tc('any')}
+              className="flex-col gap-1.5"
+            />
           </AccordionSection>
         )}
 
         {/* Purchase conditions */}
         {shows('purchase_conditions') && (
           <AccordionSection title={tc('purchase_conditions')} open={sections.purchase_conditions} onToggle={() => toggle('purchase_conditions')}>
-            <div className="flex flex-col gap-1.5">
-              {PURCHASE_CONDITIONS.map(pc => (
-                <Button key={pc.value} variant={selectedPurchaseConditions.includes(pc.value) ? 'default' : 'outline'} size="sm" className="justify-start h-10 rounded-xl text-xs whitespace-normal leading-snug text-left" onClick={() => toggleMulti('purchase_conditions', pc.value)}>
-                  {t(pc.labelKey)}
-                </Button>
-              ))}
-            </div>
+            <FilterMultiToggle
+              options={PURCHASE_CONDITIONS}
+              selected={selectedPurchaseConditions}
+              onToggle={v => toggleMulti('purchase_conditions', v)}
+              getLabel={k => t(k)}
+              className="flex-col gap-1.5"
+            />
           </AccordionSection>
         )}
 

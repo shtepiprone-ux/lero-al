@@ -171,3 +171,19 @@ All fixes must resolve the root architectural issue.
 - Do not "fix" framework dev-mode warnings unless they are reproducible in production builds.
 - Turbopack dev-only preload warnings must be verified in production before any code changes.
 - Never introduce architectural hacks to silence framework/runtime warnings.
+
+### Filter Architecture Anti-Patterns (enforced after Task 50.2)
+- DO NOT duplicate toggle rendering — use `FilterToggleGroup` / `FilterMultiToggle` / `FilterRoomsRow`.
+- DO NOT duplicate filter normalization — `filterEngine.ts` is the canonical layer (`parseSearchParams`, `serializeFilters`, `countActiveFilters`).
+- DO NOT put URL logic inside reusable filter primitives — primitives must be stateless and URL-agnostic.
+- DO NOT put homepage draft-state logic inside reusable filter primitives.
+- DO NOT create a mega-filter component merging FiltersPanel and ListingsFilters — they have irreconcilably different state models (local batch vs URL immediate).
+- DO NOT duplicate coercion logic for filter values — use `filterEngine.ts` utilities.
+
+### UI Primitive Anti-Patterns (enforced after Task 50)
+- DO NOT create local button clones — use `Button` from `@/components/ui/button` with canonical `size` variants (xs, sm, default, lg, xl, icon, icon-sm, icon-xl).
+- DO NOT use `h-11` as a className hack — use `size="xl"` (canonical 44px touch-target button).
+- DO NOT set touch targets below 44px on interactive elements — minimum `min-h-[44px]` for mobile.
+- DO NOT duplicate the `normalizeSearch` function — import from `@/lib/utils`.
+- DO NOT hardcode Ukrainian or other locale strings as default prop values.
+- DO NOT create a new language-switcher component — use `LocaleSwitcher` from `@/components/shared/LocaleSwitcher`.

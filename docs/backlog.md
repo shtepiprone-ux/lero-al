@@ -1,6 +1,48 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–50
+## Session 2026-05-17 — Tasks 17.1, 21–50.2
+
+### Task 50.2 — Filter Toggle Architecture Extraction + Shared Normalization Layer — 2026-05-17
+- [x] **CLOSED.** Extracted `FilterToggleGroup`, `FilterMultiToggle`, `FilterRoomsRow` shared primitives; identified `filterEngine.ts` as canonical normalization layer; updated both filter components.
+
+  #### §1 Toggle Architecture Audit
+
+  | Primitive Candidate | Source: FiltersPanel | Source: ListingsFilters | Shared Behavior | Different Behavior | Status |
+  |---|---|---|---|---|---|
+  | `FilterToggleGroup` | Local `ToggleGroup` fn | Inline per-section button arrays | Options + single-select + toggle | FiltersPanel: no allLabel; ListingsFilters: explicit allLabel + `flex-col` for some | **Extracted** |
+  | `FilterMultiToggle` | Local `MultiToggleGroup` fn | Inline per-section button arrays | Options + multi-select + onToggle | FiltersPanel: uses `string[]` locally; ListingsFilters: uses `toggleMulti()` helper | **Extracted** |
+  | `FilterRoomsRow` | Local `RoomsRow` fn (number[]) | Inline ROOMS_OPTIONS iteration (string[]) | Room count buttons 1-5+ | FiltersPanel: `number[]` state; ListingsFilters: `string[]` URL | **Extracted** (unified as `string[]` interface) |
+  | Normalization layer | Inline `activeCount`, `update()` | Inline `getMulti`, `updateParams`, `toggleMulti` | Filter parsing + count | Different state models (local vs URL) | `filterEngine.ts` already exists — NOT duplicated |
+
+  #### §2 Key Finding — filterEngine.ts is the Canonical Normalization Layer
+  `src/modules/listings/domain/filterEngine.ts` already provides:
+  - `parseSearchParams()` — URL → `ParsedFilters`
+  - `serializeFilters()` — `ParsedFilters` → URLSearchParams
+  - `countActiveFilters()` — active filter count
+  - `applyListingFilters()` — Supabase query builder integration
+  No new normalization file was created — the canonical layer already existed.
+
+  #### §3 Primitives Extracted
+  - **`FilterToggleGroup`** (`src/components/shared/FilterToggleGroup.tsx`): stateless single-select toggle button group. Props: `options`, `value: string|null`, `onToggle(string|null)`, `getLabel`, `allLabel?`, `className?`. `min-h-[44px]` on all buttons.
+  - **`FilterMultiToggle`** (`src/components/shared/FilterMultiToggle.tsx`): stateless multi-select toggle group. Props: `options`, `selected: string[]`, `onToggle(string)`, `getLabel`, `className?`. `min-h-[44px]` on all buttons.
+  - **`FilterRoomsRow`** (`src/components/shared/FilterRoomsRow.tsx`): stateless room-count selector. Props: `selected: string[]`, `onToggle(string)`. `h-11 w-11` buttons (44px × 44px touch target, up from h-9/h-10).
+
+  #### §4 FiltersPanel Changes
+  - Removed local `ToggleGroup`, `MultiToggleGroup`, `RoomsRow` (~80 lines removed)
+  - Removed `ROOMS_OPTIONS` from constants import (now encapsulated in `FilterRoomsRow`)
+  - All 7 toggle sections updated to use shared primitives
+
+  #### §5 ListingsFilters Changes
+  - Replaced 7 inline button-group blocks with shared primitives
+  - `ROOMS_OPTIONS` removed from constants import
+  - `toggleMulti` helper retained (still needed for multi-toggle URL updates)
+  - `FilterRoomsRow` uses `selectedRooms` (already `string[]` via `getMulti`)
+
+  #### §6 docs/ai-behavior.md Updated
+  Added explicit anti-pattern prevention rules for: filter architecture, UI primitives, normalizeSearch, locale strings.
+
+  #### Files Modified
+  `src/components/shared/FilterToggleGroup.tsx` (new), `src/components/shared/FilterMultiToggle.tsx` (new), `src/components/shared/FilterRoomsRow.tsx` (new), `src/components/shared/FiltersPanel.tsx`, `src/modules/listings/components/ListingsFilters.tsx`, `docs/ai-behavior.md`
 
 ### Task 50 — Responsive Design & UI Consistency Refactor — 2026-05-17
 - [x] **CLOSED.** Full UI/responsive audit + targeted standardization: button size scale extended, touch targets fixed, huge-desktop container tokens added, icon size inconsistency fixed.

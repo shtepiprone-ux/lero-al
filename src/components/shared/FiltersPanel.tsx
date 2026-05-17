@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import {
-  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES, ROOMS_OPTIONS,
+  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
   ALL_FILTER_SECTIONS, type FilterSection,
 } from '@/modules/listings/constants'
@@ -17,6 +17,9 @@ import { LocationCombobox, type LocationOption } from '@/components/shared/Locat
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
+import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
+import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
+import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
@@ -66,85 +69,6 @@ function SectionHeader({ children, right }: { children: React.ReactNode; right?:
     <div className="flex items-center justify-between mb-3">
       <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">{children}</p>
       {right}
-    </div>
-  )
-}
-
-function ToggleGroup({
-  options, value, onChange, getLabel,
-}: {
-  options: readonly { value: string; labelKey: string }[]
-  value?: string
-  onChange: (v: string | undefined) => void
-  getLabel: (key: string) => string
-}) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map(opt => (
-        <Button
-          key={opt.value}
-          type="button"
-          variant={value === opt.value ? 'default' : 'outline'}
-          size="sm"
-          className="h-auto px-3 py-2 text-xs min-h-[44px] rounded-xl whitespace-normal leading-snug text-left"
-          onClick={() => onChange(value === opt.value ? undefined : opt.value)}
-        >
-          {getLabel(opt.labelKey)}
-        </Button>
-      ))}
-    </div>
-  )
-}
-
-function MultiToggleGroup({
-  options, value, onChange, getLabel,
-}: {
-  options: readonly { value: string; labelKey: string }[]
-  value?: string[]
-  onChange: (v: string[]) => void
-  getLabel: (key: string) => string
-}) {
-  const safeValue = Array.isArray(value) ? value : []
-  return (
-    <div className="flex flex-wrap gap-2">
-      {options.map(opt => {
-        const selected = safeValue.includes(opt.value)
-        return (
-          <Button
-            key={opt.value}
-            type="button"
-            variant={selected ? 'default' : 'outline'}
-            size="sm"
-            className="h-auto px-3 py-2 text-xs min-h-[44px] rounded-xl whitespace-normal leading-snug text-left"
-            onClick={() => onChange(selected ? safeValue.filter(v => v !== opt.value) : [...safeValue, opt.value])}
-          >
-            {getLabel(opt.labelKey)}
-          </Button>
-        )
-      })}
-    </div>
-  )
-}
-
-function RoomsRow({ value, onChange }: { value?: number[]; onChange: (v: number[]) => void }) {
-  const safeValue = Array.isArray(value) ? value : []
-  return (
-    <div className="flex gap-2 flex-wrap">
-      {ROOMS_OPTIONS.map(opt => {
-        const selected = safeValue.includes(opt)
-        return (
-          <Button
-            key={opt}
-            type="button"
-            variant={selected ? 'default' : 'outline'}
-            size="icon"
-            className="h-9 w-9 text-xs rounded-xl shrink-0"
-            onClick={() => onChange(selected ? safeValue.filter(v => v !== opt) : [...safeValue, opt])}
-          >
-            {opt === 5 ? '5+' : opt}
-          </Button>
-        )
-      })}
     </div>
   )
 }
@@ -411,9 +335,14 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('rooms') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('rooms_label')}</SectionHeader>
-                <RoomsRow
-                  value={local.rooms}
-                  onChange={v => update({ rooms: v.length > 0 ? v : undefined })}
+                <FilterRoomsRow
+                  selected={local.rooms?.map(String) ?? []}
+                  onToggle={v => {
+                    const n = Number(v)
+                    const current = local.rooms ?? []
+                    const next = current.includes(n) ? current.filter(r => r !== n) : [...current, n]
+                    update({ rooms: next.length > 0 ? next : undefined })
+                  }}
                 />
               </div>
             )}
@@ -473,10 +402,10 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('condition') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('condition')}</SectionHeader>
-                <ToggleGroup
+                <FilterToggleGroup
                   options={CONDITIONS}
-                  value={local.condition}
-                  onChange={v => update({ condition: v })}
+                  value={local.condition ?? null}
+                  onToggle={v => update({ condition: v ?? undefined })}
                   getLabel={k => tl(k)}
                 />
               </div>
@@ -486,10 +415,14 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('layout_features') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('layout_features')}</SectionHeader>
-                <MultiToggleGroup
+                <FilterMultiToggle
                   options={LAYOUT_FEATURES}
-                  value={local.layout_features}
-                  onChange={v => update({ layout_features: v.length > 0 ? v : undefined })}
+                  selected={local.layout_features ?? []}
+                  onToggle={v => {
+                    const current = local.layout_features ?? []
+                    const next = current.includes(v) ? current.filter(x => x !== v) : [...current, v]
+                    update({ layout_features: next.length > 0 ? next : undefined })
+                  }}
                   getLabel={k => tl(k)}
                 />
               </div>
@@ -499,10 +432,10 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('heating') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('heating')}</SectionHeader>
-                <ToggleGroup
+                <FilterToggleGroup
                   options={HEATING_TYPES}
-                  value={local.heating}
-                  onChange={v => update({ heating: v })}
+                  value={local.heating ?? null}
+                  onToggle={v => update({ heating: v ?? undefined })}
                   getLabel={k => tl(k)}
                 />
               </div>
@@ -512,10 +445,10 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('wall_type') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('wall_type')}</SectionHeader>
-                <ToggleGroup
+                <FilterToggleGroup
                   options={WALL_TYPES}
-                  value={local.wall_type}
-                  onChange={v => update({ wall_type: v })}
+                  value={local.wall_type ?? null}
+                  onToggle={v => update({ wall_type: v ?? undefined })}
                   getLabel={k => tl(k)}
                 />
               </div>
@@ -525,10 +458,10 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('offer_type') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('offer_type')}</SectionHeader>
-                <ToggleGroup
+                <FilterToggleGroup
                   options={OFFER_TYPES}
-                  value={local.offer_type}
-                  onChange={v => update({ offer_type: v })}
+                  value={local.offer_type ?? null}
+                  onToggle={v => update({ offer_type: v ?? undefined })}
                   getLabel={k => tl(k)}
                 />
               </div>
@@ -538,10 +471,14 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('purchase_conditions') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('purchase_conditions')}</SectionHeader>
-                <MultiToggleGroup
+                <FilterMultiToggle
                   options={PURCHASE_CONDITIONS}
-                  value={local.purchase_conditions}
-                  onChange={v => update({ purchase_conditions: v.length > 0 ? v : undefined })}
+                  selected={local.purchase_conditions ?? []}
+                  onToggle={v => {
+                    const current = local.purchase_conditions ?? []
+                    const next = current.includes(v) ? current.filter(x => x !== v) : [...current, v]
+                    update({ purchase_conditions: next.length > 0 ? next : undefined })
+                  }}
                   getLabel={k => tl(k)}
                 />
               </div>

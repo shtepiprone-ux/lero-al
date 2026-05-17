@@ -1,6 +1,45 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–48
+## Session 2026-05-17 — Tasks 17.1, 21–49
+
+### Task 49 — Filter Architecture Consolidation Phase 1 — 2026-05-17
+- [x] **CLOSED.** Full filter architecture audit + Phase 1 shared primitive extraction: `FilterRangeInputs` used by both FiltersPanel and ListingsFilters.
+
+  #### §1 Master Filter Architecture Audit
+
+  | Concern | FiltersPanel (homepage) | ListingsFilters (listings) | Risk |
+  |---|---|---|---|
+  | State model | Local `FilterValues` object | URL `searchParams` via `router.push` | CRITICAL — fundamentally different, cannot merge |
+  | Apply pattern | Batch apply (Apply button) | Immediate (each change hits URL) | HIGH — different UX contract |
+  | Section UI | Static `SectionHeader` (no collapse) | `AccordionSection` (collapsible) | HIGH |
+  | `handlePropertyTypeChange` | Clears local state fields | Clears URL params via `FILTER_SECTION_PARAMS` | HIGH — same intent, different execution |
+  | `shows(section)` | `getSchema(pt).ui.filters` | identical | LOW — already shared via domain module |
+  | `floorFilterMin` | `getFloorFilterMin(pt)` | identical | LOW |
+  | Currency selector | `currencies.map(...)` inline | identical inline | MEDIUM |
+  | Range inputs (price/area/floor/floors_total) | Local `RangeInputs` component | 4× inline `<div className="flex gap-2">` | **FIXED** |
+  | `ToggleGroup` | Local component | Inline buttons per section | MEDIUM |
+  | `RoomsRow` | Local `number[]` based | Inline `string[]` based | MEDIUM — type mismatch |
+  | Performance tier | `usePerformanceTier` + `useIdleMount` | Not present | LOW |
+
+  **Root cause of architectural divergence:**
+  - FiltersPanel must maintain LOCAL state for batch apply (homepage hero UX — user previews filters, then applies)
+  - ListingsFilters must maintain URL state for SEO / SSR / deep-link (each change is immediately bookmarkable)
+  - These are irreconcilable into a single unified hook without a mode-flag architecture
+
+  #### §2 Phase 1 — Shared Primitive Extraction (implemented)
+  - **`src/components/shared/FilterRangeInputs.tsx`** (new): canonical shared range-input pair — two `<Input>` fields for min/max, `h-10 rounded-xl`, used for price, area, floor, floors_total ranges.
+  - **`FiltersPanel.tsx`**: removed local `RangeInputs` function (~18 ln); replaced 4 call sites with `<FilterRangeInputs>`.
+  - **`ListingsFilters.tsx`**: replaced 4 inline `<div className="flex gap-2"><Input/><Input/></div>` blocks with `<FilterRangeInputs>`. `Input` import retained for listing_id field.
+
+  #### §3 Remaining Filter Architecture Debt (future tasks)
+  - **Extract `FilterToggleGroup`** — ToggleGroup (FiltersPanel) + inline button arrays (ListingsFilters). Needs unified `onChange: (v: string | null) => void` interface.
+  - **Extract `FilterMultiToggle`** — multi-select version. Needs unified `onToggle: (v: string) => void` interface.
+  - **Extract `FilterRoomsRow`** — RoomsRow number[] vs string[] type mismatch must be resolved first.
+  - **State normalization hook** — `useFilterState(mode: 'local' | 'url')` — complex, requires separate task with manual homepage + listings testing.
+  - **Full component merger** — after all primitives extracted and state hook implemented; requires dedicated regression-test session.
+
+  #### Files Modified
+  `src/components/shared/FilterRangeInputs.tsx` (new), `src/components/shared/FiltersPanel.tsx`, `src/modules/listings/components/ListingsFilters.tsx`
 
 ### Task 48 — Global Component Standardization & Hardcode Cleanup — 2026-05-17
 - [x] **CLOSED.** Full architecture audit + targeted refactor pass: extracted canonical search-normalize utility, removed duplicate combobox implementations, fixed hardcoded Ukrainian placeholder, standardized local component clones.

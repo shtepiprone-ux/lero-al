@@ -18,6 +18,7 @@ import type { ListingField } from '@/modules/listings/domain/listingFields'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
+import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
@@ -291,10 +292,14 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               </button>
             ))}
           </div>
-          <div className="flex gap-2">
-            <Input type="number" placeholder={tc('min')} value={get('price_min')} onChange={e => updateParams({ price_min: e.target.value || null })} className="h-10 rounded-xl" />
-            <Input type="number" placeholder={tc('max')} value={get('price_max')} onChange={e => updateParams({ price_max: e.target.value || null })} className="h-10 rounded-xl" />
-          </div>
+          <FilterRangeInputs
+            minValue={get('price_min')}
+            maxValue={get('price_max')}
+            onMinChange={v => updateParams({ price_min: v || null })}
+            onMaxChange={v => updateParams({ price_max: v || null })}
+            minPlaceholder={tc('min')}
+            maxPlaceholder={tc('max')}
+          />
           {currency !== 'ALL' && rate != null && (
             <p className="text-xs text-muted-foreground mt-2">
               {tc('exchange_rate')}:{' '}
@@ -306,58 +311,45 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {/* Area — area_range already includes "(m²)" in translation */}
         {shows('area') && (
           <AccordionSection title={tc('area_range')} open={sections.area} onToggle={() => toggle('area')}>
-            <div className="flex gap-2">
-              <Input type="number" min={0} placeholder={tc('min')} value={get('area_min')} onChange={e => updateParams({ area_min: e.target.value ? String(Math.max(0, Number(e.target.value))) : null })} className="h-10 rounded-xl" />
-              <Input type="number" placeholder={tc('max')} value={get('area_max')} onChange={e => updateParams({ area_max: e.target.value || null })} className="h-10 rounded-xl" />
-            </div>
+            <FilterRangeInputs
+              min={0}
+              minValue={get('area_min')}
+              maxValue={get('area_max')}
+              onMinChange={v => updateParams({ area_min: v ? String(Math.max(0, Number(v))) : null })}
+              onMaxChange={v => updateParams({ area_max: v || null })}
+              minPlaceholder={tc('min')}
+              maxPlaceholder={tc('max')}
+            />
           </AccordionSection>
         )}
 
         {/* Floor — domain-aware min (negative for garage/parking/warehouse, 0 otherwise) */}
         {shows('floor') && (
           <AccordionSection title={tc('floor_range')} open={sections.floor} onToggle={() => toggle('floor')}>
-            <div className="flex gap-2">
-              <Input
-                type="number"
-                min={floorFilterMin}
-                placeholder={tc('min')}
-                value={get('floor_min')}
-                onChange={e => handleFloorChange('floor_min', e.target.value)}
-                className="h-10 rounded-xl"
-              />
-              <Input
-                type="number"
-                min={floorFilterMin}
-                placeholder={tc('max')}
-                value={get('floor_max')}
-                onChange={e => handleFloorChange('floor_max', e.target.value)}
-                className="h-10 rounded-xl"
-              />
-            </div>
+            <FilterRangeInputs
+              min={floorFilterMin}
+              minValue={get('floor_min')}
+              maxValue={get('floor_max')}
+              onMinChange={v => handleFloorChange('floor_min', v)}
+              onMaxChange={v => handleFloorChange('floor_max', v)}
+              minPlaceholder={tc('min')}
+              maxPlaceholder={tc('max')}
+            />
           </AccordionSection>
         )}
 
         {/* Building floors — min 1 */}
         {shows('floors_total') && (
           <AccordionSection title={tc('floors_total_range')} open={sections.floors_total} onToggle={() => toggle('floors_total')}>
-            <div className="flex gap-2">
-              <Input
-                type="number"
-                min={1}
-                placeholder={tc('min')}
-                value={get('floors_total_min')}
-                onChange={e => handleFloorsChange('floors_total_min', e.target.value)}
-                className="h-10 rounded-xl"
-              />
-              <Input
-                type="number"
-                min={1}
-                placeholder={tc('max')}
-                value={get('floors_total_max')}
-                onChange={e => handleFloorsChange('floors_total_max', e.target.value)}
-                className="h-10 rounded-xl"
-              />
-            </div>
+            <FilterRangeInputs
+              min={1}
+              minValue={get('floors_total_min')}
+              maxValue={get('floors_total_max')}
+              onMinChange={v => handleFloorsChange('floors_total_min', v)}
+              onMaxChange={v => handleFloorsChange('floors_total_max', v)}
+              minPlaceholder={tc('min')}
+              maxPlaceholder={tc('max')}
+            />
           </AccordionSection>
         )}
 

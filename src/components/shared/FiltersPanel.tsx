@@ -16,6 +16,7 @@ import type { ListingField } from '@/modules/listings/domain/listingFields'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
+import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
@@ -144,36 +145,6 @@ function RoomsRow({ value, onChange }: { value?: number[]; onChange: (v: number[
           </Button>
         )
       })}
-    </div>
-  )
-}
-
-function RangeInputs({
-  minValue, maxValue, onMinChange, onMaxChange, minPlaceholder, maxPlaceholder, min, type = 'number',
-}: {
-  minValue: string; maxValue: string
-  onMinChange: (v: string) => void; onMaxChange: (v: string) => void
-  minPlaceholder?: string; maxPlaceholder?: string
-  min?: number; type?: string
-}) {
-  return (
-    <div className="grid grid-cols-2 gap-2">
-      <Input
-        type={type}
-        min={min}
-        placeholder={minPlaceholder ?? ''}
-        value={minValue}
-        onChange={e => onMinChange(e.target.value)}
-        className="h-10 rounded-xl"
-      />
-      <Input
-        type={type}
-        min={min}
-        placeholder={maxPlaceholder ?? ''}
-        value={maxValue}
-        onChange={e => onMaxChange(e.target.value)}
-        className="h-10 rounded-xl"
-      />
     </div>
   )
 }
@@ -404,7 +375,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
               >
                 {priceLabel}
               </SectionHeader>
-              <RangeInputs
+              <FilterRangeInputs
                 minValue={local.price_min?.toString() ?? ''}
                 maxValue={local.price_max?.toString() ?? ''}
                 onMinChange={v => update({ price_min: v ? Number(v) : undefined })}
@@ -424,7 +395,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('area') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('area_range')}</SectionHeader>
-                <RangeInputs
+                <FilterRangeInputs
                   min={0}
                   minValue={local.area_min?.toString() ?? ''}
                   maxValue={local.area_max?.toString() ?? ''}
@@ -451,7 +422,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('floor') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('floor_range')}</SectionHeader>
-                <RangeInputs
+                <FilterRangeInputs
                   min={floorFilterMin}
                   minValue={local.floor_min?.toString() ?? ''}
                   maxValue={local.floor_max?.toString() ?? ''}
@@ -467,7 +438,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('floors_total') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('floors_total_range')}</SectionHeader>
-                <RangeInputs
+                <FilterRangeInputs
                   min={1}
                   minValue={local.floors_total_min?.toString() ?? ''}
                   maxValue={local.floors_total_max?.toString() ?? ''}

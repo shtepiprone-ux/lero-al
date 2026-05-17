@@ -1,6 +1,53 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–50.2
+## Session 2026-05-17 — Tasks 17.1, 21–50.3
+
+### Task 50.3 — Filter Adapter Architecture Hardening — 2026-05-17
+- [x] **CLOSED.** Homepage batch adapter (`useHomepageFilters`) + Listings URL adapter (`useListingsUrlFilters`) isolated; `getFilterVisibility` shared utility added to filterEngine; `countActiveFilters(parseSearchParams(...))` replaces hardcoded URL param list.
+
+  #### §1 Adapter/Lifecycle Audit
+
+  | Concern | Homepage (FiltersPanel) | Listings (ListingsFilters) | Shared Candidate | Status |
+  |---|---|---|---|---|
+  | Property type change + schema clearing | Local state fields cleared | URL params cleared via FILTER_SECTION_PARAMS | Same intent, different execution — extracted to each adapter separately | Both adapters use `getFilterVisibility` |
+  | Section visibility (`shows`, `floorFilterMin`) | `getSchema(pt).ui.filters` vs ALL_FILTER_SECTIONS | Identical | **YES — extracted to `getFilterVisibility()`** | Shared via filterEngine |
+  | Active filter count | Object.entries(local) filter | Hardcoded URL param list | `countActiveFilters(parseSearchParams(sp))` replaces hardcoded list | **Fixed in Listings** |
+  | Apply flow | Batch: onChange+onApply+onClose | Immediate: each updateParams() → URL | Irreconcilable — preserved as-is | Isolated per adapter |
+  | Reset flow | Empty `FilterValues` object | No explicit reset (clear via individual param updates) | Cannot share | Isolated per adapter |
+  | URL synchronization | None (local state) | router.push per change | Cannot share | Isolated per adapter |
+  | Accordion sections | N/A (no accordion) | `sections` state + toggle | Not shared (Listings-specific) | In useListingsUrlFilters |
+  | Performance tier (useIdleMount) | `contentReady` for panel | N/A | Homepage-only | Remains in FiltersPanel |
+
+  #### §2 Key Architectural Finding — filterEngine already canonical
+  `filterEngine.ts` contains `parseSearchParams`, `serializeFilters`, `countActiveFilters`. Added `getFilterVisibility(propertyType)` — returns `{ visibleSections, shows, floorFilterMin }`. Used by both adapters, eliminating identical computed-section logic.
+
+  #### §3 Homepage Adapter (`useHomepageFilters`)
+  **`src/components/shared/useHomepageFilters.ts`** — encapsulates:
+  - Local `FilterValues` draft state + `useEffect` sync from parent
+  - `update(patch)`, `handlePropertyTypeChange`, `handleApply`, `handleReset`
+  - `activeCount`, `cityRegionLocs`, `currency`, `visibleSections`, `shows`, `floorFilterMin`
+  - Data hooks: `useExchangeRate`, `usePropertyTypes`, `useCurrencies`
+  - Architecture contract: never writes URL directly; Apply delegates to parent callback
+
+  #### §4 Listings URL Adapter (`useListingsUrlFilters`)
+  **`src/modules/listings/hooks/useListingsUrlFilters.ts`** — encapsulates:
+  - URL state via `useSearchParams` + `router.push`
+  - `get`, `getMulti`, `updateParams` (useCallback), `toggleMulti` (useCallback)
+  - `handlePropertyTypeChange`, `handleFloorChange`, `handleFloorsChange`
+  - Accordion `sections` + `toggle`
+  - `countActiveFilters(parseSearchParams(searchParams))` — replaces hardcoded param list
+  - `getFilterVisibility(currentPropertyType)` — replaces inline schema lookups
+  - Architecture contract: immediate URL update per change; no draft state
+
+  #### §5 Component Changes
+  - **`FiltersPanel.tsx`**: removed 60+ lines of inline state/handler logic; 9 imports removed; uses `useHomepageFilters()`. Keeps: `t`, `tl`, `contentReady` (needs `open` prop), `priceLabel`, `positiveNum`, JSX, `SectionHeader`.
+  - **`ListingsFilters.tsx`**: removed 70+ lines of inline state/handler logic; 10 imports removed; uses `useListingsUrlFilters()`. Keeps: `t`, `tc`, `priceLabel`, `AccordionSection`, JSX.
+
+  #### §6 filterEngine.ts Addition
+  Added `getFilterVisibility(propertyType)` + necessary imports (`getFloorFilterMin`, `ALL_FILTER_SECTIONS`, `FilterSection`, `ListingField`).
+
+  #### Files Modified
+  `src/modules/listings/domain/filterEngine.ts`, `src/components/shared/useHomepageFilters.ts` (new), `src/modules/listings/hooks/useListingsUrlFilters.ts` (new), `src/components/shared/FiltersPanel.tsx`, `src/modules/listings/components/ListingsFilters.tsx`
 
 ### Task 50.2 — Filter Toggle Architecture Extraction + Shared Normalization Layer — 2026-05-17
 - [x] **CLOSED.** Extracted `FilterToggleGroup`, `FilterMultiToggle`, `FilterRoomsRow` shared primitives; identified `filterEngine.ts` as canonical normalization layer; updated both filter components.

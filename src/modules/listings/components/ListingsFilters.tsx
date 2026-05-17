@@ -1,8 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { X, SlidersHorizontal, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,11 +8,7 @@ import { cn } from '@/lib/utils'
 import {
   PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
-  ALL_FILTER_SECTIONS, FILTER_SECTION_PARAMS,
-  type FilterSection,
 } from '@/modules/listings/constants'
-import { getSchema, getFloorFilterMin } from '@/modules/listings/domain/propertyTypeSchema'
-import type { ListingField } from '@/modules/listings/domain/listingFields'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
@@ -22,9 +16,7 @@ import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
-import { useExchangeRate } from '@/hooks/useExchangeRate'
-import { usePropertyTypes } from '@/hooks/usePropertyTypes'
-import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
+import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
 
 interface Location { id: number; name_al: string; type: string }
 interface Props { locations: Location[]; className?: string; onClose?: () => void }
@@ -54,111 +46,17 @@ function AccordionSection({
 export function ListingsFilters({ locations, className, onClose }: Props) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-  const { rate } = useExchangeRate()
-  const { propertyTypes } = usePropertyTypes()
-  const { currencies } = useCurrencies()
-  const today = useMemo(() => new Date(), [])
 
-  const [sections, setSections] = useState({
-    type: true,
-    market_type: false,
-    property_type: true,
-    location: true,
-    rooms: true,
-    price: true,
-    area: false,
-    floor: false,
-    floors_total: false,
-    condition: false,
-    layout_features: false,
-    year_built: false,
-    heating: false,
-    wall_type: false,
-    offer_type: false,
-    purchase_conditions: false,
-    period: false,
-    listing_id: false,
-  })
+  const {
+    get, getMulti, updateParams, toggleMulti,
+    handlePropertyTypeChange, handleFloorChange, handleFloorsChange,
+    sections, toggle,
+    shows, floorFilterMin,
+    currency, activeCount,
+    selectedRooms, selectedLayoutFeatures, selectedPurchaseConditions,
+    today, rate, currencies, propertyTypes,
+  } = useListingsUrlFilters()
 
-  const toggle = (key: keyof typeof sections) =>
-    setSections(prev => ({ ...prev, [key]: !prev[key] }))
-
-  const get = (key: string) => searchParams.get(key) ?? ''
-
-  const getMulti = (key: string): string[] => {
-    const val = get(key)
-    return val ? val.split(',').filter(Boolean) : []
-  }
-
-  const updateParams = useCallback(
-    (updates: Record<string, string | null>) => {
-      const params = new URLSearchParams(searchParams.toString())
-      params.delete('page')
-      Object.entries(updates).forEach(([key, val]) => {
-        if (val === null || val === '') params.delete(key)
-        else params.set(key, val)
-      })
-      router.push(`${pathname}?${params.toString()}`)
-    },
-    [searchParams, router, pathname]
-  )
-
-  const toggleMulti = (key: string, value: string) => {
-    const current = getMulti(key)
-    const next = current.includes(value) ? current.filter(v => v !== value) : [...current, value]
-    updateParams({ [key]: next.join(',') || null })
-  }
-
-  // When property type changes, clear irrelevant filter params
-  function handlePropertyTypeChange(pt: string | null) {
-    const params = new URLSearchParams(searchParams.toString())
-    params.delete('page')
-    if (pt) params.set('property_type', pt)
-    else params.delete('property_type')
-
-    const applicable = pt ? getSchema(pt).ui.filters : ALL_FILTER_SECTIONS
-    ALL_FILTER_SECTIONS.forEach(section => {
-      if (!applicable.includes(section)) {
-        FILTER_SECTION_PARAMS[section].forEach(p => params.delete(p))
-      }
-    })
-    router.push(`${pathname}?${params.toString()}`)
-  }
-
-  function handleFloorChange(key: 'floor_min' | 'floor_max', val: string) {
-    const n = parseInt(val)
-    updateParams({ [key]: (!isNaN(n) && n >= floorFilterMin) ? String(n) : null })
-  }
-
-  function handleFloorsChange(key: 'floors_total_min' | 'floors_total_max', val: string) {
-    const n = parseInt(val)
-    updateParams({ [key]: (!isNaN(n) && n >= 1) ? String(n) : null })
-  }
-
-  const activeCount = [
-    'type', 'market_type', 'property_type', 'location_id',
-    'price_min', 'price_max', 'area_min', 'area_max',
-    'rooms', 'floor_min', 'floor_max', 'floors_total_min', 'floors_total_max',
-    'condition', 'layout_features', 'heating', 'wall_type', 'year_built_min', 'year_built_max',
-    'offer_type', 'purchase_conditions', 'date_from', 'date_to', 'listing_id',
-  ].filter(k => searchParams.get(k)).length
-
-  const selectedRooms = getMulti('rooms')
-  const selectedLayoutFeatures = getMulti('layout_features')
-  const selectedPurchaseConditions = getMulti('purchase_conditions')
-
-  const currentPropertyType = get('property_type')
-  const visibleSections: readonly ListingField[] = currentPropertyType
-    ? getSchema(currentPropertyType).ui.filters
-    : ALL_FILTER_SECTIONS
-  const shows = (key: FilterSection) => visibleSections.includes(key)
-  // Domain-aware floor minimum: -10 for garage/parking/warehouse, 0 for all others.
-  const floorFilterMin = getFloorFilterMin(currentPropertyType)
-
-  const currency = get('currency') || 'ALL'
   const priceLabel = `${tc('price_range')} (${currency})`
 
   return (

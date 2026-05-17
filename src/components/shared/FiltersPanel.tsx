@@ -1,6 +1,5 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { X, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -9,10 +8,7 @@ import { cn } from '@/lib/utils'
 import {
   PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
-  ALL_FILTER_SECTIONS, type FilterSection,
 } from '@/modules/listings/constants'
-import { getSchema, getFloorFilterMin } from '@/modules/listings/domain/propertyTypeSchema'
-import type { ListingField } from '@/modules/listings/domain/listingFields'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
@@ -20,11 +16,9 @@ import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
-import { useExchangeRate } from '@/hooks/useExchangeRate'
-import { usePropertyTypes } from '@/hooks/usePropertyTypes'
-import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
+import { useHomepageFilters } from '@/components/shared/useHomepageFilters'
 
 export type FilterCurrency = string
 
@@ -81,87 +75,19 @@ function positiveNum(v: string): number | undefined {
 export function FiltersPanel({ open, onClose, values, onChange, onApply, locations }: FiltersPanelProps) {
   const t = useTranslations('common')
   const tl = useTranslations('listing')
-  const [local, setLocal] = useState<FilterValues>(values)
-  const { rate } = useExchangeRate()
-  const { propertyTypes } = usePropertyTypes()
-  const { currencies } = useCurrencies()
-  // Stable "today" reference — computed once on mount, not on every render.
-  const today = useMemo(() => new Date(), [])
+
+  const {
+    local, update,
+    handlePropertyTypeChange, handleApply, handleReset,
+    activeCount, cityRegionLocs,
+    currency, visibleSections, shows, floorFilterMin,
+    today, rate, currencies, propertyTypes,
+  } = useHomepageFilters({ values, onChange, onApply, onClose, locations })
 
   // LOW-tier: defer mounting inner content to idle time — reduces main-thread work during
-  // initial page load. The panel shell (CSS container) always renders for smooth transitions.
-  // forceNow=open ensures content is ready the instant the user opens the panel.
+  // initial page load. forceNow=open ensures content is ready the instant the user opens.
   const tier = usePerformanceTier()
   const contentReady = useIdleMount(tier === 'low', open)
-
-  useEffect(() => { setLocal(values) }, [values])
-
-  const cityRegionLocs = useMemo(
-    () => locations.filter(l => l.type === 'city' || l.type === 'region'),
-    [locations]
-  )
-
-  function update(patch: Partial<FilterValues>) {
-    setLocal(prev => ({ ...prev, ...patch }))
-  }
-
-  function handlePropertyTypeChange(pt: string | undefined) {
-    if (!pt) {
-      update({ property_type: undefined })
-      return
-    }
-    const applicable = getSchema(pt).ui.filters
-    // Clear filters that don't apply to the new type
-    const cleared: Partial<FilterValues> = { property_type: pt }
-    const sectionFields: Record<FilterSection, (keyof FilterValues)[]> = {
-      rooms: ['rooms'],
-      floor: ['floor_min', 'floor_max'],
-      floors_total: ['floors_total_min', 'floors_total_max'],
-      area: [],
-      year_built: ['year_built_min', 'year_built_max'],
-      condition: ['condition'],
-      heating: ['heating'],
-      wall_type: ['wall_type'],
-      market_type: ['market_type'],
-      layout_features: ['layout_features'],
-      offer_type: ['offer_type'],
-      purchase_conditions: ['purchase_conditions'],
-    }
-    ALL_FILTER_SECTIONS.forEach(section => {
-      if (!applicable.includes(section)) {
-        sectionFields[section].forEach(field => { delete cleared[field] })
-      }
-    })
-    setLocal(prev => ({ ...prev, ...cleared }))
-  }
-
-  function handleApply() {
-    onChange(local)
-    onApply(local)
-    onClose()
-  }
-
-  function handleReset() {
-    const empty: FilterValues = {}
-    setLocal(empty)
-    onChange(empty)
-  }
-
-  const activeCount = Object.entries(local).filter(([key, v]) => {
-    if (key === 'currency') return false // not a filter
-    if (Array.isArray(v)) return v.length > 0
-    return v !== undefined && v !== ''
-  }).length
-
-  // Visible filter sections based on selected property type
-  const visibleSections: readonly ListingField[] = local.property_type
-    ? getSchema(local.property_type).ui.filters
-    : ALL_FILTER_SECTIONS
-  const shows = (key: FilterSection) => visibleSections.includes(key)
-  // Domain-aware floor minimum: -10 for garage/parking/warehouse, 0 for all others.
-  const floorFilterMin = getFloorFilterMin(local.property_type ?? '')
-
-  const currency = local.currency ?? 'ALL'
   const priceLabel = `${t('price_range')} (${currency})`
 
   return (

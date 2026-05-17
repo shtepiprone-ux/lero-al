@@ -12,7 +12,9 @@
  *  – src/app/[locale]/listings/page.tsx
  */
 
-import { getSchema, getUndergroundFloorTypes } from './propertyTypeSchema'
+import { getSchema, getUndergroundFloorTypes, getFloorFilterMin } from './propertyTypeSchema'
+import { ALL_FILTER_SECTIONS, type FilterSection } from '../constants'
+import type { ListingField } from './listingFields'
 
 // ── Sort ──────────────────────────────────────────────────────────────────────
 
@@ -311,6 +313,30 @@ export function serializeFilters(filters: Partial<ParsedFilters>): URLSearchPara
   if (filters.purchaseConditions?.length) p.set('purchase_conditions', filters.purchaseConditions.join(','))
 
   return p
+}
+
+// ── Filter section visibility ─────────────────────────────────────────────────
+
+/**
+ * Derives which filter sections are visible for a given property type,
+ * plus the domain-aware floor minimum.
+ *
+ * Shared by FiltersPanel (local-state batch UX) and ListingsFilters (URL immediate UX)
+ * — both need identical section-visibility logic with different state sources.
+ */
+export function getFilterVisibility(propertyType: string | undefined): {
+  visibleSections: readonly ListingField[]
+  shows: (key: FilterSection) => boolean
+  floorFilterMin: number
+} {
+  const visibleSections: readonly ListingField[] = propertyType
+    ? getSchema(propertyType).ui.filters
+    : ALL_FILTER_SECTIONS
+  return {
+    visibleSections,
+    shows: (key: FilterSection) => visibleSections.includes(key),
+    floorFilterMin: getFloorFilterMin(propertyType ?? ''),
+  }
 }
 
 // ── Active filter count ───────────────────────────────────────────────────────

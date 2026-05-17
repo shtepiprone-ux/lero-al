@@ -1,6 +1,15 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–44
+## Session 2026-05-17 — Tasks 17.1, 21–45
+
+### Task 45 — Favorites Navigation Relocation — 2026-05-17
+- [x] **CLOSED.** Moved "Favorites / Обране" out of user dropdown and placed it directly in the site header beside the language selector.
+  - **Global Favorites navigation relocation**: removed `DropdownMenuItem` for Favorites from desktop user dropdown; added `<Link>` with `Heart` icon as ghost button (`hidden sm:flex`) between language selector and notification bell in `Header.tsx`.
+  - **Auth behavior preserved**: link routes to `/${locale}/favorites` for authenticated users, `/${locale}/auth/login` for unauthenticated — consistent with `MobileBottomNav` behavior.
+  - **Header navigation consistency improvement**: desktop header now exposes Favorites as a first-class visible control at `sm+` breakpoints; mobile sheet and `MobileBottomNav` unchanged.
+  - **No label hardcoding**: `aria-label={t('favorites')}` uses existing `nav.favorites` i18n key across all 4 locales.
+  - **No duplicate navigation items**: single Favorites implementation in header; no fork of routing or analytics logic.
+  - **File modified**: `src/components/layout/Header.tsx`.
 
 ### Task 44 — last_seen_at Infrastructure — 2026-05-17
 - [x] **CLOSED.** Implemented canonical `last_seen_at` tracking system — API route, hook, DB schema, rendering, i18n.

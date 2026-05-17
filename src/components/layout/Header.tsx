@@ -130,6 +130,15 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Favorites — visible beside language selector on sm+ */}
+          <Link
+            href={user ? `/${locale}/favorites` : `/${locale}/auth/login`}
+            className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1 px-2 hidden sm:flex')}
+            aria-label={t('favorites')}
+          >
+            <Heart className="h-4 w-4" />
+          </Link>
+
           {/* Notification bell — authenticated users only */}
           {user && <NotificationBell />}
 
@@ -158,12 +167,6 @@ export function Header() {
                     <Link href={`/${locale}/cabinet?tab=listings`} className="flex items-center gap-2 w-full">
                       <LayoutList className="h-4 w-4" />
                       {t('my_listings')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href={`/${locale}/favorites`} className="flex items-center gap-2 w-full">
-                      <Heart className="h-4 w-4" />
-                      {t('favorites')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />

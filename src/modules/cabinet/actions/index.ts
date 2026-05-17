@@ -332,6 +332,44 @@ export async function uploadCabinetAvatar(formData: FormData): Promise<{ url?: s
 
 const EMAIL_CHANGE_EXPIRY_HOURS = 24
 
+const EMAIL_ERRORS: Record<string, Record<string, string>> = {
+  rate_limit: {
+    sq: 'Shumë kërkesa. Provoni sërish pas një ore.',
+    en: 'Too many requests. Please try again in one hour.',
+    uk: 'Забагато запитів. Спробуйте за годину.',
+    it: 'Troppe richieste. Riprova tra un\'ora.',
+  },
+  same_email: {
+    sq: 'Ky email është tashmë adresa juaj aktuale.',
+    en: 'This is already your current email address.',
+    uk: 'Це вже ваша поточна електронна адреса.',
+    it: 'Questa è già la tua email attuale.',
+  },
+  email_taken: {
+    sq: 'Ky email është tashmë i regjistruar.',
+    en: 'This email address is already in use.',
+    uk: 'Ця електронна адреса вже використовується.',
+    it: 'Questo indirizzo email è già in uso.',
+  },
+  failed: {
+    sq: 'Ndryshimi i emailit dështoi. Provoni sërish.',
+    en: 'Could not initiate email change. Please try again.',
+    uk: 'Не вдалось ініціювати зміну email. Спробуйте ще раз.',
+    it: 'Impossibile avviare il cambio email. Riprova.',
+  },
+  no_active_request: {
+    sq: 'Nuk ka kërkesë aktive ndryshimi email-i. Filloni një të re.',
+    en: 'No active email change request found. Please start a new request.',
+    uk: 'Немає активного запиту зміни email. Надішліть новий.',
+    it: 'Nessuna richiesta di cambio email attiva. Inizia una nuova.',
+  },
+}
+
+function emailError(key: string, locale: string): string {
+  const msgs = EMAIL_ERRORS[key]
+  return msgs?.[locale] ?? msgs?.['en'] ?? key
+}
+
 export async function initiateEmailChange(data: {
   newEmail: string
   locale: string
@@ -351,7 +389,7 @@ export async function initiateEmailChange(data: {
     .gte('created_at', oneHourAgo)
 
   if ((count ?? 0) >= 3) {
-    return { error: 'Забагато запитів. Спробуйте за годину.' }
+    return { error: emailError('rate_limit', data.locale) }
   }
 
   // Uniqueness: new email must not belong to another active account
@@ -360,7 +398,7 @@ export async function initiateEmailChange(data: {
   const currentEmail = authUser?.user?.email ?? ''
 
   if (newEmailLower === currentEmail.toLowerCase()) {
-    return { error: 'Це вже ваш поточний email' }
+    return { error: emailError('same_email', data.locale) }
   }
 
   const { data: existing } = await db.auth.admin.listUsers()
@@ -368,7 +406,7 @@ export async function initiateEmailChange(data: {
     u => u.email?.toLowerCase() === newEmailLower && u.id !== userId,
   )
   if (taken) {
-    return { error: 'Цей email вже використовується' }
+    return { error: emailError('email_taken', data.locale) }
   }
 
   // Store pending email and create single-use token
@@ -385,7 +423,7 @@ export async function initiateEmailChange(data: {
 
   if (tokenError) {
     console.error('initiateEmailChange: token insert failed', { error: tokenError })
-    return { error: 'Не вдалось ініціювати зміну email' }
+    return { error: emailError('failed', data.locale) }
   }
 
   // Update pending_email on user row
@@ -433,7 +471,7 @@ export async function resendEmailVerification(data: {
     .single()
 
   if (!token) {
-    return { error: 'Немає активного запиту зміни email. Надішліть новий.' }
+    return { error: emailError('no_active_request', data.locale) }
   }
 
   const rawToken = randomBytes(32).toString('hex')

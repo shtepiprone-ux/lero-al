@@ -71,6 +71,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       cities={cities ?? []}
       regions={regions ?? []}
       userId={authUser.id}
+      email={authUser.email ?? null}
     />
   )
 }

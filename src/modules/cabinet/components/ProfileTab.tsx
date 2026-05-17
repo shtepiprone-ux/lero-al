@@ -54,6 +54,7 @@ interface Props {
   locale: string
   cities: CityOption[]
   regions: RegionOption[]
+  email?: string | null
 }
 
 // ── Phone input sub-component ─────────────────────────────────────────────────
@@ -109,6 +110,8 @@ function SettlementCombobox({ cities, regions, value, onChange, label }: {
   onChange: (id: number | null) => void
   label: string
 }) {
+  const tc = useTranslations('common')
+  const t = useTranslations('cabinet')
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
@@ -146,7 +149,7 @@ function SettlementCombobox({ cities, regions, value, onChange, label }: {
       className="bg-popover border rounded-xl shadow-lg max-h-48 overflow-y-auto"
     >
       {filtered.length === 0
-        ? <p className="px-3 py-2 text-sm text-muted-foreground">Nuk ka rezultate</p>
+        ? <p className="px-3 py-2 text-sm text-muted-foreground">{tc('no_results')}</p>
         : filtered.map(c => (
             <button
               key={c.id}
@@ -176,7 +179,7 @@ function SettlementCombobox({ cities, regions, value, onChange, label }: {
           onChange={e => { setSearch(e.target.value); if (selected) onChange(null); setOpen(true) }}
           onFocus={() => setOpen(true)}
           onBlur={() => setTimeout(() => setOpen(false), 180)}
-          placeholder="Kërko qytetin..."
+          placeholder={t('city_search_placeholder')}
           className="w-full h-11 pl-9 pr-3 text-sm bg-muted/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring"
         />
       </div>
@@ -373,7 +376,7 @@ function AvatarUpload({ currentUrl, onUpload }: {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function ProfileTab({ profile, locale, cities, regions }: Props) {
+export function ProfileTab({ profile, locale, cities, regions, email }: Props) {
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
   const router = useRouter()
@@ -585,6 +588,11 @@ export function ProfileTab({ profile, locale, cities, regions }: Props) {
       {/* ── Email change ───────────────────────────────────────────────────── */}
       <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col gap-3">
         <Label className="text-sm font-semibold">{t('email_label')}</Label>
+        {email && (
+          <p className="text-sm text-muted-foreground">
+            {t('email_current_label')}: <span className="font-medium text-foreground">{email}</span>
+          </p>
+        )}
         {pendingEmail ? (
           <div className="flex flex-col gap-2">
             <p className="text-sm text-muted-foreground">

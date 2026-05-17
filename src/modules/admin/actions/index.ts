@@ -188,21 +188,6 @@ export async function deleteLocation(id: number) {
 
 // ── Site settings ────────────────────────────────────────────────────────────
 
-export async function saveSetting(key: string, value: string) {
-  await assertAdminAccess()
-  const db = createAdminClient()
-  const { error } = await db
-    .from('site_settings')
-    .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' })
-  if (error) console.error('saveSetting failed', { error, key })
-  revalidatePath('/admin/settings')
-  // Brand-related settings require full revalidation so Header/Footer/Sidebar reflect the change
-  if (['site_name', 'logo_url', 'logo_dark_url', 'favicon_url'].includes(key)) {
-    revalidatePath('/', 'layout')
-    revalidatePath('/admin', 'layout')
-  }
-}
-
 export async function saveSettings(entries: Record<string, string>): Promise<{ error?: string }> {
   await assertAdminAccess()
   const db = createAdminClient()

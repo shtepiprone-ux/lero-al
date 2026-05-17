@@ -6,7 +6,7 @@ import { getUser } from '@/lib/auth/server'
 import { createClient } from '@/lib/supabase/server'
 import type { DBCurrency } from '@/types/database'
 
-export const CURRENCIES_CACHE_TAG = 'currencies'
+const CURRENCIES_CACHE_TAG = 'currencies'
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
 

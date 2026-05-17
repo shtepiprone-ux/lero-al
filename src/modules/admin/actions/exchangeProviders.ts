@@ -6,7 +6,7 @@ import { getUser } from '@/lib/auth/server'
 import { createClient } from '@/lib/supabase/server'
 import type { DBExchangeProvider } from '@/types/database'
 
-export const EXCHANGE_PROVIDERS_CACHE_TAG = 'exchange_providers'
+const EXCHANGE_PROVIDERS_CACHE_TAG = 'exchange_providers'
 
 // ── Auth guard ────────────────────────────────────────────────────────────────
 

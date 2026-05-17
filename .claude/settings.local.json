@@ -124,7 +124,10 @@
       "Bash(echo \"LINT_ERRORS_COUNT: $\\(npx next lint 2>&1)",
       "Bash(echo \"TS_EXIT: $?\")",
       "Bash(grep -n \"^\\\\[ \\\\] Task 22\\\\|^\\\\[x\\\\] Task 22\\\\|\\\\[ \\\\] Task 22$\" tasks/claude_code_tasks.txt)",
-      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)"
+      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object FullName)",
+      "Bash(python3 *)",
+      "PowerShell(Get-Item *)"
     ]
   }
 }

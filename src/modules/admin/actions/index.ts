@@ -167,23 +167,25 @@ export async function toggleUserVerified(userId: string, isVerified: boolean) {
 export async function createLocation(data: {
   name_al: string; name_en?: string; type: string; slug: string; parent_id?: number | null;
   image_url?: string | null; is_featured?: boolean; display_order?: number
-}) {
+}): Promise<{ error?: string }> {
   await assertAdminAccess()
   const db = createAdminClient()
   const { error } = await db.from('locations').insert(data)
-  if (error) console.error('createLocation failed', { error })
+  if (error) { console.error('createLocation failed', { error }); return { error: error.message } }
   revalidatePath('/admin/locations')
+  return {}
 }
 
 export async function updateLocation(
   id: number,
   data: { name_al?: string; name_en?: string; type?: string; slug?: string; image_url?: string | null; is_featured?: boolean; display_order?: number }
-) {
+): Promise<{ error?: string }> {
   await assertAdminAccess()
   const db = createAdminClient()
   const { error } = await db.from('locations').update(data).eq('id', id)
-  if (error) console.error('updateLocation failed', { error, id })
+  if (error) { console.error('updateLocation failed', { error, id }); return { error: error.message } }
   revalidatePath('/admin/locations')
+  return {}
 }
 
 export async function toggleLocationFeatured(id: number, isFeatured: boolean): Promise<{ error?: string }> {
@@ -195,12 +197,13 @@ export async function toggleLocationFeatured(id: number, isFeatured: boolean): P
   return {}
 }
 
-export async function deleteLocation(id: number) {
+export async function deleteLocation(id: number): Promise<{ error?: string }> {
   await assertAdminAccess()
   const db = createAdminClient()
   const { error } = await db.from('locations').delete().eq('id', id)
-  if (error) console.error('deleteLocation failed', { error, id })
+  if (error) { console.error('deleteLocation failed', { error, id }); return { error: error.message } }
   revalidatePath('/admin/locations')
+  return {}
 }
 
 // ── Site settings ────────────────────────────────────────────────────────────

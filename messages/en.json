@@ -457,7 +457,11 @@
       "featured_col": "Homepage",
       "featured_toggle_title": "Toggle featured on homepage",
       "image_url_label": "City image URL (Cloudinary)",
-      "display_order_label": "Display order"
+      "display_order_label": "Display order",
+      "success_created": "Location created",
+      "success_updated": "Location updated",
+      "success_deleted": "Location deleted",
+      "error_save_failed": "Failed to save location"
     },
     "sidebar": {
       "group_overview": "Overview",

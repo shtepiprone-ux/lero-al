@@ -457,7 +457,11 @@
       "featured_col": "Homepage",
       "featured_toggle_title": "Attiva/disattiva in homepage",
       "image_url_label": "URL immagine città (Cloudinary)",
-      "display_order_label": "Ordine di visualizzazione"
+      "display_order_label": "Ordine di visualizzazione",
+      "success_created": "Posizione creata",
+      "success_updated": "Posizione aggiornata",
+      "success_deleted": "Posizione eliminata",
+      "error_save_failed": "Salvataggio non riuscito"
     },
     "sidebar": {
       "group_overview": "Panoramica",

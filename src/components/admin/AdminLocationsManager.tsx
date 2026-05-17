@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useTransition, useMemo } from 'react'
+import { useState, useTransition, useMemo, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Plus, Pencil, Trash2, Loader2, Star } from 'lucide-react'
+import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -70,12 +71,17 @@ function LocationModal({
       parent_id: parentId ? Number(parentId) : null,
       ...(isCity && { image_url: imageUrl.trim() || null, display_order: displayOrder }),
     }
-    if (location) {
-      await updateLocation(location.id, data)
-    } else {
-      await createLocation(data)
-    }
+    const result = location
+      ? await updateLocation(location.id, data)
+      : await createLocation(data)
+
     setSaving(false)
+
+    if (result.error) {
+      toast.error(t('error_save_failed'))
+      return
+    }
+    toast.success(location ? t('success_updated') : t('success_created'))
     onDone()
   }
 
@@ -175,6 +181,9 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
   const [togglingId, setTogglingId] = useState<number | null>(null)
   const [items, setItems] = useState(init)
 
+  // Re-sync from server after router.refresh() delivers new props.
+  useEffect(() => { setItems(init) }, [init])
+
   const typeLabels: Record<string, string> = {
     region: t('type_region'),
     city: t('type_city'),
@@ -202,9 +211,11 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
     if (!confirm(t('delete_confirm'))) return
     setDeletingId(id)
     startTransition(async () => {
-      await deleteLocation(id)
-      setItems(prev => prev.filter(l => l.id !== id))
+      const result = await deleteLocation(id)
       setDeletingId(null)
+      if (result.error) { toast.error(result.error); return }
+      toast.success(t('success_deleted'))
+      setItems(prev => prev.filter(l => l.id !== id))
     })
   }
 

@@ -17,7 +17,7 @@ export default async function AdminLocationsPage({
   const db = createAdminClient()
   let query = db
     .from('locations')
-    .select('id, name_al, name_en, type, slug, parent_id', { count: 'exact' })
+    .select('id, name_al, name_en, type, slug, parent_id, image_url, is_featured, display_order', { count: 'exact' })
     .order('type').order('name_al').limit(200)
 
   if (type) query = query.eq('type', type)

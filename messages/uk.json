@@ -457,7 +457,11 @@
       "featured_col": "Головна",
       "featured_toggle_title": "Показати/приховати на головній",
       "image_url_label": "URL зображення міста (Cloudinary)",
-      "display_order_label": "Порядок відображення"
+      "display_order_label": "Порядок відображення",
+      "success_created": "Населений пункт створено",
+      "success_updated": "Населений пункт оновлено",
+      "success_deleted": "Населений пункт видалено",
+      "error_save_failed": "Не вдалось зберегти"
     },
     "sidebar": {
       "group_overview": "Огляд",

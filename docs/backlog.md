@@ -1,6 +1,18 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25
+
+### Task 25 — Listing Details: remove duplicate favorite + unify state — 2026-05-17
+- [x] **CLOSED.** Removed duplicated favorite action from listing details page and established single source of truth.
+  - **Root cause**: Two independent favorite buttons existed: (1) `FavoriteButton` near the title — correct SSR state + server action; (2) custom Heart button in `ListingContact` — `useState(false)` always started unfavorited, had NO server action call (clicking only toggled local state, nothing persisted).
+  - **Fix**: (1) Removed `FavoriteButton` import and JSX from `listings/[slug]/page.tsx` title section entirely. (2) Replaced the broken custom Heart button in `ListingContact.tsx` with `FavoriteButton` — accepts `listingId?` + `isFavorited?` props; SSR state is passed from the page: `listingId={authUser ? listing.id : undefined}` and `isFavorited={isInitiallyFavorited}`. Button only rendered when `listingId` is provided (unauthenticated users see no heart button). (3) Removed `Heart` from ListingContact lucide imports; removed unused `[favorited, setFavorited]` state.
+  - **State sync**: `FavoriteButton` already has correct optimistic update pattern (Effect 2 re-syncs from prop when no transition is in flight). Server action `toggleFavorite` calls `revalidatePath(favorites)` after mutation — SSR snapshot stays fresh. All surfaces receive `isFavorited` from their respective SSR/prop sources and sync through the same `FavoriteButton` component.
+  - **No layout gaps**: FavoriteButton with `className="flex-1 h-9 w-auto rounded-xl border border-border"` fills the same visual space as the original heart button.
+  - **Security**: `listingId` only passed when `authUser` is present — unauthenticated users see no favorite button in contact section.
+  - **RLS verdict**: "RLS coverage confirmed via existing favorites RLS policies. No changes made to favorites schema."
+  - Zero TypeScript errors. Zero ESLint errors.
+
+### Task 24 — Saved Searches hardening pass — 2026-05-17
 
 ### Task 24 — Saved Searches hardening pass — 2026-05-17
 - [x] **CLOSED.** Hardening pass for the Saved Searches system (Task 22).

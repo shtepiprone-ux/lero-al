@@ -25,7 +25,6 @@ import { isListingArchived, isListingVisible, isListingClosed } from '@/modules/
 import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { preload } from 'react-dom'
-import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
@@ -307,15 +306,6 @@ export default async function ListingPage({ params }: Props) {
 
               <div className="flex items-start justify-between gap-3">
                 <h1 className="text-2xl sm:text-3xl font-bold leading-tight">{listing.title}</h1>
-                {authUser && (
-                  <FavoriteButton
-                    listingId={listing.id}
-                    isFavorited={isInitiallyFavorited}
-                    className="shrink-0 mt-1"
-                    disabled={isFavoriteClosed}
-                    disabledLabel={isFavoriteClosed ? CLOSED_LABEL[listing.status] : undefined}
-                  />
-                )}
               </div>
 
               <div className="flex flex-col gap-0.5">
@@ -427,6 +417,8 @@ export default async function ListingPage({ params }: Props) {
             originalPrice={originalPriceStr ?? undefined}
             originalPriceLabel={t('original_price')}
             listingStatus={listing.status as ListingStatus}
+            listingId={authUser ? listing.id : undefined}
+            isFavorited={isInitiallyFavorited}
           />
         </div>
       </div>

@@ -4,11 +4,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
-import { Phone, MessageCircle, Heart, Share2, CheckCircle, UserX } from 'lucide-react'
+import { Phone, MessageCircle, Share2, CheckCircle, UserX } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
+import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import type { ListingStatus } from '@/types/database'
 
 interface Owner {
@@ -33,12 +34,15 @@ interface ListingContactProps {
   originalPrice?: string
   originalPriceLabel?: string
   listingStatus?: ListingStatus
+  /** Listing ID required to enable the favorite action. */
+  listingId?: string
+  /** SSR-hydrated initial favorite state. */
+  isFavorited?: boolean
 }
 
-export function ListingContact({ owner, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus }: ListingContactProps) {
+export function ListingContact({ owner, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
-  const [favorited, setFavorited] = useState(false)
   const [copied, setCopied] = useState(false)
 
   const ownerDeleted = !!(owner.deleted_at)
@@ -163,22 +167,15 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
 
             {/* Secondary actions */}
             <div className="flex gap-2">
-              <button
-                onClick={listingClosed ? undefined : () => setFavorited(f => !f)}
-                disabled={listingClosed}
-                className={cn(
-                  'flex-1 flex items-center justify-center gap-1.5 h-9 rounded-xl border text-sm transition-all',
-                  listingClosed
-                    ? 'border-border bg-muted/60 text-muted-foreground cursor-not-allowed opacity-50'
-                    : favorited ? 'bg-destructive/10 border-destructive/20 text-destructive' : 'border-border hover:bg-muted'
-                )}
-                data-track={listingClosed ? undefined : (favorited ? 'remove_favorite' : 'add_favorite')}
-                aria-label={listingClosed ? closedLabel : t('add_favorite')}
-                aria-disabled={listingClosed || undefined}
-                title={listingClosed ? closedLabel : undefined}
-              >
-                <Heart className={cn('h-4 w-4', !listingClosed && favorited && 'fill-destructive text-destructive')} />
-              </button>
+              {listingId && (
+                <FavoriteButton
+                  listingId={listingId}
+                  isFavorited={isFavorited}
+                  disabled={listingClosed}
+                  disabledLabel={closedLabel}
+                  className="flex-1 h-9 w-auto rounded-xl border border-border"
+                />
+              )}
               <button
                 onClick={handleShare}
                 className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-xl border border-border hover:bg-muted text-sm transition-colors"

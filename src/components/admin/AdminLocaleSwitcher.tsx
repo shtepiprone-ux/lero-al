@@ -3,8 +3,16 @@
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
-import { Loader2 } from 'lucide-react'
+import { Globe, ChevronDown, Loader2 } from 'lucide-react'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 const LOCALES = [
   { code: 'sq', label: 'Shqip',      flag: '🇦🇱' },
@@ -19,6 +27,8 @@ export function AdminLocaleSwitcher() {
   const t = useTranslations('admin.sidebar')
   const [isPending, startTransition] = useTransition()
 
+  const current = LOCALES.find(l => l.code === currentLocale)
+
   function handleSwitch(locale: string) {
     if (locale === currentLocale || isPending) return
     startTransition(async () => {
@@ -32,25 +42,37 @@ export function AdminLocaleSwitcher() {
       <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest px-3">
         {t('language')}
       </p>
-      <div className="flex flex-wrap gap-1 px-1">
-        {LOCALES.map(loc => (
-          <button
-            key={loc.code}
-            onClick={() => handleSwitch(loc.code)}
+      <div className="px-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger
             disabled={isPending}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors disabled:opacity-60 ${
-              currentLocale === loc.code
-                ? 'bg-primary/10 border-primary/30 text-primary'
-                : 'border-border text-muted-foreground hover:text-foreground hover:bg-muted/60'
-            }`}
-            title={loc.label}
+            className={cn(
+              buttonVariants({ variant: 'ghost', size: 'sm' }),
+              'gap-1.5 px-2 w-full justify-start',
+            )}
+            aria-label={t('language')}
           >
-            <span>{loc.flag}</span>
-            <span className="uppercase">{loc.code}</span>
-            {isPending && currentLocale !== loc.code && false}
-          </button>
-        ))}
-        {isPending && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground self-center ml-1" />}
+            <Globe className="h-4 w-4 shrink-0" />
+            <span className="text-sm">{current?.flag}</span>
+            <span className="text-sm flex-1 text-left truncate">{current?.label}</span>
+            {isPending
+              ? <Loader2 className="h-3 w-3 animate-spin opacity-60 shrink-0" />
+              : <ChevronDown className="h-3 w-3 opacity-60 shrink-0" />
+            }
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" side="top" className="w-44">
+            {LOCALES.map(loc => (
+              <DropdownMenuItem
+                key={loc.code}
+                onClick={() => handleSwitch(loc.code)}
+                className={currentLocale === loc.code ? 'font-semibold' : ''}
+              >
+                <span className="mr-2">{loc.flag}</span>
+                {loc.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   )

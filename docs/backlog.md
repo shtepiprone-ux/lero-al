@@ -1,6 +1,16 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21–45
+## Session 2026-05-17 — Tasks 17.1, 21–46
+
+### Task 46 — Admin Language Switcher Standardization — 2026-05-17
+- [x] **CLOSED.** Replaced admin button-group language switcher with DropdownMenu — same visual architecture as the public site header.
+  - **Global language-switcher standardization**: `AdminLocaleSwitcher.tsx` button group (4 raw `<button>` elements) replaced with `DropdownMenu` + `DropdownMenuTrigger` / `DropdownMenuContent` / `DropdownMenuItem` — matching the public site's `Header.tsx` desktop pattern (Globe icon + current flag + label + ChevronDown).
+  - **Admin/public locale-switching unification**: both surfaces now use the same DropdownMenu visual primitive. Admin routing behavior preserved: `setAdminLocale(locale)` + `router.refresh()` (cookie-based, no URL locale in admin).
+  - **Loading state preserved**: `Loader2` spinner replaces ChevronDown while `isPending` — cleaner than the previous orphan spinner.
+  - **Accessibility**: `aria-label={t('language')}` on trigger, `font-semibold` on active locale item, keyboard-navigable via DropdownMenu semantics.
+  - **`side="top"`**: popover opens upward since the switcher lives at the bottom of the sidebar — no viewport clipping.
+  - **i18n**: `t('language')` label unchanged; no new i18n keys needed.
+  - **File modified**: `src/components/admin/AdminLocaleSwitcher.tsx`.
 
 ### Task 45 — Favorites Navigation Relocation — 2026-05-17
 - [x] **CLOSED.** Moved "Favorites / Обране" out of user dropdown and placed it directly in the site header beside the language selector.

@@ -218,7 +218,12 @@
     "form_saving": "Salvataggio...",
     "error_updating": "Impossibile salvare le modifiche. Riprova.",
     "edit_success_title": "Modifiche salvate",
-    "edit_success_body": "Il tuo annuncio è stato aggiornato con successo."
+    "edit_success_body": "Il tuo annuncio è stato aggiornato con successo.",
+    "translate_btn": "Traduci",
+    "translating": "Traduzione...",
+    "show_original": "Mostra originale",
+    "translated_automatically": "Tradotto automaticamente",
+    "translation_error": "Traduzione fallita. Riprova."
   },
   "auth": {
     "email": "Email",

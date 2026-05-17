@@ -1,6 +1,20 @@
 # Project Status & Immediate Tasks
 
-## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26
+## Session 2026-05-17 — Tasks 17.1, 21, 22, 23, 24, 25, 26, 27
+
+### Task 27 — Listing description on-demand translation — 2026-05-17
+- [x] **CLOSED.** Implemented production-grade listing description translation with provider abstraction, lazy flow, caching, rate limiting, and XSS-safe rendering.
+  - **Provider abstraction** (`src/lib/translation/providers.ts`): `TranslationProvider` interface with 3 implementations — `MyMemoryProvider` (default, free, no key), `GoogleTranslateProvider` (if `GOOGLE_TRANSLATE_API_KEY` set), `DeepLProvider` (if `DEEPL_API_KEY` set). Factory `getTranslationProvider()` selects via env vars — swap providers without UI changes.
+  - **API route** (`src/app/api/translate/route.ts`): POST `{ text, targetLocale }`. API keys server-side only. Server-side in-memory cache (SHA-256 keyed, 24h TTL, 500-entry LRU). Rate limiting: 20 req/min per IP (sliding window). Supported locales: sq/en/uk/it. Returns 429 on rate limit, 502 on provider error.
+  - **Client island** (`src/modules/listings/components/ListingDescriptionTranslator.tsx`): Replaces static description `<div>`. States: original → loading → translated / error. Client-side `useRef<Map>` session cache — no repeat network calls. `inFlightRef` prevents concurrent requests (rapid click spam). Toggle "Show original" restores immediately (no API call). XSS-safe: output rendered as `whitespace-pre-line` plain text, never `dangerouslySetInnerHTML`. Disclaimer "Translated automatically" shown below translated text.
+  - **UX**: "Translate" button with Languages icon → Loader2 spinner during fetch → "Show original" + RotateCcw when translated → AlertCircle + retry when error. All labels i18n keys (sq/en/uk/it). Hydration-safe: client island renders only after hydration (lazy interaction pattern).
+  - **Performance**: Translation NOT triggered on page load — purely on user click. Description section remains SSR-rendered (no initial JS bundle cost). `ListingDescriptionTranslator` is a small client island.
+  - **i18n**: 5 new keys under `listing.*` namespace in all 4 locales: `translate_btn`, `translating`, `show_original`, `translated_automatically`, `translation_error`.
+  - **Security**: API keys never leave server. Rate limiting prevents abuse. XSS-safe rendering. No unsafe HTML.
+  - Zero TypeScript errors. Zero ESLint errors.
+  - **Env vars needed** (optional — MyMemory works without any key): `GOOGLE_TRANSLATE_API_KEY` or `DEEPL_API_KEY`.
+
+### Task 26 — Social sharing metadata (OG + Twitter/X) — 2026-05-17
 
 ### Task 26 — Social sharing metadata (OG + Twitter/X) — 2026-05-17
 - [x] **CLOSED.** Implemented full production-grade social sharing metadata for listing detail pages.

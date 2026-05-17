@@ -19,6 +19,7 @@ import { ListingStatusBanner } from '@/modules/listings/components/ListingStatus
 import { ListingMobileCTA } from '@/modules/listings/components/ListingMobileCTA'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
 import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
+import { ListingDescriptionTranslator } from '@/modules/listings/components/ListingDescriptionTranslator'
 import { formatPrice } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
 import { isListingArchived, isListingVisible, isListingClosed } from '@/modules/listings/domain'
@@ -424,12 +425,12 @@ export default async function ListingPage({ params }: Props) {
               </div>
             )}
 
-            {/* Description */}
+            {/* Description with on-demand translation */}
             {listing.description && (
-              <div className="rounded-2xl border bg-card shadow-sm p-5">
-                <h2 className="font-bold text-lg mb-3">{t('description_label')}</h2>
-                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{listing.description}</p>
-              </div>
+              <ListingDescriptionTranslator
+                description={listing.description}
+                label={t('description_label')}
+              />
             )}
 
             {/* Additional details */}

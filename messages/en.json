@@ -218,7 +218,12 @@
     "form_saving": "Saving...",
     "error_updating": "Failed to save changes. Please try again.",
     "edit_success_title": "Changes saved",
-    "edit_success_body": "Your listing has been updated successfully."
+    "edit_success_body": "Your listing has been updated successfully.",
+    "translate_btn": "Translate",
+    "translating": "Translating...",
+    "show_original": "Show original",
+    "translated_automatically": "Translated automatically",
+    "translation_error": "Translation failed. Please try again."
   },
   "auth": {
     "email": "Email",

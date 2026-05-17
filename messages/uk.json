@@ -218,7 +218,12 @@
     "form_saving": "Збереження...",
     "error_updating": "Не вдалось зберегти зміни. Спробуйте ще раз.",
     "edit_success_title": "Зміни збережено",
-    "edit_success_body": "Ваше оголошення успішно оновлено."
+    "edit_success_body": "Ваше оголошення успішно оновлено.",
+    "translate_btn": "Перекласти",
+    "translating": "Перекладаю...",
+    "show_original": "Показати оригінал",
+    "translated_automatically": "Перекладено автоматично",
+    "translation_error": "Помилка перекладу. Спробуйте знову."
   },
   "auth": {
     "email": "Email",

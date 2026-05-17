@@ -218,7 +218,12 @@
     "form_saving": "Duke ruajtur...",
     "error_updating": "Ndryshimet nuk u ruajtën. Provo përsëri.",
     "edit_success_title": "Ndryshimet u ruajtën",
-    "edit_success_body": "Njoftimi juaj u përditësua me sukses."
+    "edit_success_body": "Njoftimi juaj u përditësua me sukses.",
+    "translate_btn": "Përkthe",
+    "translating": "Duke përkthyer...",
+    "show_original": "Trego origjinalin",
+    "translated_automatically": "Përkthyer automatikisht",
+    "translation_error": "Përkthimi dështoi. Provoni përsëri."
   },
   "auth": {
     "email": "Email",

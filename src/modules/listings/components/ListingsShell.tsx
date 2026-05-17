@@ -30,6 +30,11 @@ import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 
+const SaveSearchButton = dynamic(
+  () => import('@/modules/listings/components/SaveSearchButton').then(m => m.SaveSearchButton),
+  { ssr: false },
+)
+
 const RESTORE_KEY = 'listings_restore'
 
 interface Location {
@@ -193,15 +198,20 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
       <div className="flex-1 min-w-0 flex flex-col gap-0">
         <ListingsStatusTabs />
         <ActiveFilterChips locations={locations} />
-        <ListingsSortBar
-          total={total}
-          page={page}
-          perPage={LISTINGS_PER_PAGE}
-          view={view}
-          onViewChange={setView}
-          onFiltersOpen={() => setFiltersOpen(true)}
-          activeFiltersCount={activeFiltersCount}
-        />
+        <div className="flex items-center gap-2">
+          <div className="flex-1 min-w-0">
+            <ListingsSortBar
+              total={total}
+              page={page}
+              perPage={LISTINGS_PER_PAGE}
+              view={view}
+              onViewChange={setView}
+              onFiltersOpen={() => setFiltersOpen(true)}
+              activeFiltersCount={activeFiltersCount}
+            />
+          </div>
+          {user && <SaveSearchButton />}
+        </div>
 
         {allListings.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">

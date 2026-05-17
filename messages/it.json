@@ -745,6 +745,24 @@
     "type_agent_verified": "Account verificato",
     "type_listing_expires_soon": "Annuncio in scadenza",
     "type_saved_search_match": "Nuovi risultati ricerca",
-    "type_marketing": "Notizie da Lero.al"
+    "type_marketing": "Notizie da Lero.al",
+    "saved_search_match_title": "Nuovi risultati",
+    "saved_search_match_body": "{count} nuovi annunci corrispondono alla tua ricerca salvata"
+  },
+  "saved_search": {
+    "save_action": "Salva ricerca",
+    "save_modal_title": "Salva ricerca",
+    "name_placeholder": "Nome opzionale...",
+    "already_saved": "Questa ricerca è già salvata",
+    "save_success": "Ricerca salvata",
+    "delete_confirm": "Eliminare questa ricerca salvata?",
+    "delete_all_confirm": "Eliminare tutte le ricerche salvate?",
+    "delete_all_warning": "Questa azione è irreversibile.",
+    "empty_state": "Nessuna ricerca salvata",
+    "new_listings_badge": "{count} nuovi",
+    "open_search": "Apri ricerca",
+    "filter_summary": "Ricerca salvata",
+    "save": "Salva",
+    "cancel": "Annulla"
   }
 }

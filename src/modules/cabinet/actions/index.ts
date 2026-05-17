@@ -56,6 +56,92 @@ export async function updateCabinetProfile(data: {
 
 // ── Saved searches ────────────────────────────────────────────────────────────
 
+export async function saveSavedSearch(
+  rawParams: Record<string, string | string[] | undefined>,
+  name: string,
+): Promise<{ id?: string; error?: string; code?: 'already_exists' | 'unauthorized' }> {
+  const userId = await resolveAuthUser()
+  if (!userId) return { error: 'Unauthorized', code: 'unauthorized' }
+
+  // Import canonicalization utilities from the listings module (listings owns saved_searches).
+  const { canonicalizeFilters, computeFiltersHash } = await import('@/modules/listings/lib/savedSearchCanonicalize')
+  const canonical = canonicalizeFilters(rawParams)
+  const hash = computeFiltersHash(canonical)
+
+  const supabase = await createClient()
+
+  // Deduplication check: reject if the same canonical search already exists for this user.
+  const { data: existing } = await supabase
+    .from('saved_searches')
+    .select('id')
+    .eq('user_id', userId)
+    .eq('filters_hash', hash)
+    .maybeSingle()
+
+  if (existing) return { error: 'already_saved', code: 'already_exists' }
+
+  const { data, error } = await supabase
+    .from('saved_searches')
+    .insert({
+      user_id:      userId,
+      name:         name.trim() || 'Search',
+      filters:      canonical,
+      filters_hash: hash,
+      notify_email: false,
+    })
+    .select('id')
+    .single()
+
+  if (error) {
+    // Unique constraint violation: race condition — treat same as duplicate.
+    if (error.code === '23505') return { error: 'already_saved', code: 'already_exists' }
+    console.error('saveSavedSearch failed', { error, userId })
+    return { error: error.message }
+  }
+
+  revalidatePath('/cabinet')
+  return { id: data.id }
+}
+
+export async function updateLastViewed(id: string): Promise<{ error?: string }> {
+  const userId = await resolveAuthUser()
+  if (!userId) return { error: 'Unauthorized' }
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('saved_searches')
+    .update({ last_viewed_at: new Date().toISOString(), new_count: 0 })
+    .eq('id', id)
+    .eq('user_id', userId)
+
+  if (error) {
+    console.error('updateLastViewed failed', { error, id, userId })
+    return { error: error.message }
+  }
+
+  revalidatePath('/cabinet')
+  return {}
+}
+
+export async function deleteAllSavedSearches(): Promise<{ error?: string }> {
+  const userId = await resolveAuthUser()
+  if (!userId) return { error: 'Unauthorized' }
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('saved_searches')
+    .delete()
+    .eq('user_id', userId)
+
+  if (error) {
+    console.error('deleteAllSavedSearches failed', { error, userId })
+    return { error: error.message }
+  }
+
+  revalidatePath('/cabinet')
+  return {}
+}
+
 export async function deleteSavedSearch(id: string): Promise<{ error?: string }> {
   const userId = await resolveAuthUser()
   if (!userId) return { error: 'Unauthorized' }

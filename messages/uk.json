@@ -745,6 +745,24 @@
     "type_agent_verified": "Аккаунт верифіковано",
     "type_listing_expires_soon": "Оголошення скоро закінчується",
     "type_saved_search_match": "Нові результати пошуку",
-    "type_marketing": "Новини від Lero.al"
+    "type_marketing": "Новини від Lero.al",
+    "saved_search_match_title": "Нові результати",
+    "saved_search_match_body": "{count} нових оголошень відповідають вашому збереженому пошуку"
+  },
+  "saved_search": {
+    "save_action": "Зберегти пошук",
+    "save_modal_title": "Зберегти пошук",
+    "name_placeholder": "Назва (необов'язково)...",
+    "already_saved": "Цей пошук вже збережений",
+    "save_success": "Пошук збережено",
+    "delete_confirm": "Видалити збережений пошук?",
+    "delete_all_confirm": "Видалити всі збережені пошуки?",
+    "delete_all_warning": "Цю дію неможливо скасувати.",
+    "empty_state": "Немає збережених пошуків",
+    "new_listings_badge": "{count} нових",
+    "open_search": "Відкрити пошук",
+    "filter_summary": "Збережений пошук",
+    "save": "Зберегти",
+    "cancel": "Скасувати"
   }
 }

@@ -745,6 +745,24 @@
     "type_agent_verified": "Llogaria u verifikua",
     "type_listing_expires_soon": "Njoftime që skadon së shpejti",
     "type_saved_search_match": "Rezultate të reja të kërkimit",
-    "type_marketing": "Lajme nga Lero.al"
+    "type_marketing": "Lajme nga Lero.al",
+    "saved_search_match_title": "Rezultate të reja",
+    "saved_search_match_body": "{count} njoftime të reja për kërkimin tuaj të ruajtur"
+  },
+  "saved_search": {
+    "save_action": "Ruaj kërkimin",
+    "save_modal_title": "Ruaj kërkimin",
+    "name_placeholder": "Emër opsional...",
+    "already_saved": "Ky kërkim është ruajtur tashmë",
+    "save_success": "Kërkimi u ruajt",
+    "delete_confirm": "Fshi kërkimin e ruajtur?",
+    "delete_all_confirm": "Fshi të gjitha kërkimet e ruajtura?",
+    "delete_all_warning": "Kjo veprim është e pakthyeshme.",
+    "empty_state": "Nuk keni kërkime të ruajtura",
+    "new_listings_badge": "{count} të reja",
+    "open_search": "Hap kërkimin",
+    "filter_summary": "Kërkim i ruajtur",
+    "save": "Ruaj",
+    "cancel": "Anulo"
   }
 }

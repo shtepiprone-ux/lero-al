@@ -745,6 +745,24 @@
     "type_agent_verified": "Account verified",
     "type_listing_expires_soon": "Listing expiring soon",
     "type_saved_search_match": "New search results",
-    "type_marketing": "News from Lero.al"
+    "type_marketing": "News from Lero.al",
+    "saved_search_match_title": "New results",
+    "saved_search_match_body": "{count} new listings match your saved search"
+  },
+  "saved_search": {
+    "save_action": "Save search",
+    "save_modal_title": "Save search",
+    "name_placeholder": "Optional name...",
+    "already_saved": "This search is already saved",
+    "save_success": "Search saved",
+    "delete_confirm": "Delete this saved search?",
+    "delete_all_confirm": "Delete all saved searches?",
+    "delete_all_warning": "This action is irreversible.",
+    "empty_state": "No saved searches yet",
+    "new_listings_badge": "{count} new",
+    "open_search": "Open search",
+    "filter_summary": "Saved search",
+    "save": "Save",
+    "cancel": "Cancel"
   }
 }

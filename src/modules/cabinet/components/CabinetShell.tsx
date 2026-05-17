@@ -119,7 +119,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         {/* Tab content */}
         {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} />}
         {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} />}
-        {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} locale={locale} />}
+        {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} />}
 
       </div>
     </div>

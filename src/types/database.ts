@@ -174,7 +174,12 @@ export interface SavedSearch {
   user_id: string
   name: string
   filters: Record<string, unknown>
+  filters_hash: string | null
   notify_email: boolean
+  last_checked_at: string | null
+  last_viewed_at: string | null
+  new_count: number
+  updated_at: string
   created_at: string
 }
 

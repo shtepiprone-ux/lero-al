@@ -1,5 +1,81 @@
 # Project Status & Immediate Tasks
 
+## Session 2026-05-17 — Task 17.1: Unified Global Locale System
+
+### Task 17.1 — Unified global locale switching system — 2026-05-17
+- [x] **CLOSED.** Refactored and fixed global localization for Admin + Website using a single shared system.
+  - **Root causes fixed**: (1) `AdminLocaleSwitcher.tsx` had hardcoded `"Мова / Language"` (Ukrainian/English mix) — replaced with `t('language')` from `admin.sidebar`; (2) `AdminUserCreate.tsx` had ~30 hardcoded Ukrainian strings (validation, labels, placeholders, buttons) — fully migrated to `useTranslations('admin.user_profile')` + `buildCreateSchema(t)` factory pattern reusing existing keys; (3) `admin/support/page.tsx` showed raw status strings (`open`, `in_progress`) — replaced with translated `STATUS_LABELS` map; (4) `AdminSearchInput.tsx` had default placeholder `'Пошук...'` (Ukrainian) — changed to empty string (callers always pass translated placeholders); (5) 6 admin page files (`page.tsx`, `listings/`, `users/`, `settings/`, `support/`, `legal/`, `locations/`) had hardcoded Ukrainian page titles — replaced with `getTranslations('admin.pages')` + `getAdminLocale()`.
+  - **Locale sync unified**: `Header.tsx` `switchLocale` now calls `setAdminLocale(newLocale)` (server action) in addition to `router.push` — website locale switch syncs admin cookie. `app/page.tsx` root redirect reads `admin-locale` cookie as user preference (before DB default) — admin locale switch syncs website redirect.
+  - **New i18n keys** (all 4 locales): `admin.sidebar.language`, `admin.pages.support_status_{open,in_progress,resolved,closed}`, `admin.user_profile.password_info.requirements_title`, `admin.user_profile.fields.last_name_optional`.
+  - **ESLint fix**: `src/app/[locale]/listings/[slug]/page.tsx` — `listing.status === 'sold'` direct comparison replaced with `CLOSED_LABEL` display map (complies with `no-restricted-syntax` domain rule).
+  - Zero TypeScript errors. Zero ESLint errors. Files: `AdminLocaleSwitcher.tsx`, `AdminUserCreate.tsx`, `AdminSearchInput.tsx`, `admin/support/page.tsx`, `src/app/page.tsx`, `Header.tsx`, all 4 message files, 6 admin page files.
+
+## Session 2026-05-16 — Tasks 12–19 + Admin Search Fixes + AdminUserProfile i18n
+
+### Task 20 — Admin Listings table: read-only status — 2026-05-16
+- [x] **CLOSED.** Removed inline status editing from the Admin Listings table. Status column is now read-only — displays translated label via `STATUS_LABEL[l.status]` (`<span className="text-xs capitalize">`). Removed: `<Combobox>` with `onChange` handler, `updateListingStatus` server action call, and optimistic `setItems` update from the status cell. `updateListingStatus` removed from import (no longer used in the file). Top status filter Combobox, delete action, premium dialog, and edit page link all unaffected. Status changes are now only possible through the listing edit page (`/${locale}/listings/${slug}/edit`). Zero TypeScript errors. File: `src/components/admin/AdminListingsTable.tsx` only.
+
+### AdminUserProfile hardcode fixes — 2026-05-16
+- [x] **CLOSED. Fixed three post-i18n violations in `AdminUserProfile.tsx`.** (1) **Hardcoded locale in dates**: both `toLocaleDateString('uk-UA', ...)` calls in change_log and status_history sections replaced with `toLocaleDateString(locale, ...)` — `useLocale()` from `next-intl` added to imports and called at component top level; dates now format per active admin locale (sq/en/uk/it). (2) **Hardcoded Tailwind color utilities**: `bg-orange-50`, `border-orange-200`, `text-orange-700`, `border-orange-300`, `hover:bg-orange-50` replaced with semantic tokens `bg-status-warning/10`, `border-status-warning/30`, `text-status-warning`, `border-status-warning/40`, `hover:bg-status-warning/10` — token `--status-warning` was already defined in `globals.css` (oklch 0.700 0.162 65). (3) **Duplicate component removed**: `ApprovalCityCombobox` (40-line hand-rolled city search) deleted entirely; its single usage replaced with the existing `LocationCombobox` — `onChange` wired to `handleApproveRequest(Number(id))`, disabled state handled via wrapper `div` with `pointer-events-none opacity-50` when `reqLoading`. Zero TypeScript errors. File: `src/components/admin/AdminUserProfile.tsx` only.
+
+### AdminUserProfile i18n migration — 2026-05-16
+- [x] **CLOSED. Migrated `AdminUserProfile.tsx` from hardcoded Ukrainian strings to `useTranslations('admin.user_profile')`** — the last admin component with hardcoded strings. 93 translation keys added to all four locale files (`en`, `uk`, `sq`, `it`) with identical key sets. Key groups: `validation.*` (9 Zod error messages), `profile_types.*` (5), `statuses.*` (3), `sections.*` (8), `fields.*` (16), `placeholders.*` (8), `actions.*` (8), `header.*` (3), `location_request.*` (1), `feedback.*` (3 with `{error}` / `{reason}` interpolation), `dialogs.*` (15), `password_info.*` (6). Zod schema moved from module level to `buildProfileSchema(t)` factory function; `profileSchema = useMemo(() => buildProfileSchema(t), [t])` inside component (pattern from `AdminUserAvatar.tsx`). `FormValues` type made explicit (no longer derived via `z.infer`) since schema is no longer at module level. `PROFILE_TYPE_LABELS` and `STATUS_LABELS` converted to plain objects built from `t()` inside the component. Sub-components (`UnsavedChangesDialog`, `CancelConfirmDialog`, `DeleteConfirmDialog`, `ApprovalCityCombobox`, `PasswordInfo`) each call `useTranslations('admin.user_profile')` independently. Zero Ukrainian (Cyrillic) strings remain in the component. TypeScript: zero new errors (only pre-existing `.next/types` cache artifact from deleted badges page). Files: `src/components/admin/AdminUserProfile.tsx`, `messages/en.json`, `messages/uk.json`, `messages/sq.json`, `messages/it.json`.
+
+### Task 12 — Disable actions for sold/rented listings
+- [x] **CLOSED.** Disabled "Send message" and "Add to favorites" for listings with status `sold` or `rented` across all UI surfaces (listing detail, listing cards, favorites page, related listings). `FavoriteButton.tsx`: new `disabled` + `disabledLabel` props; guard in `handleClick` prevents server action call even via devtools. `ListingCard.tsx`: passes `disabled={isListingClosed(status)}` + translated label to both card variants. `ListingContact.tsx`: "Send message" renders as `<button disabled>` when closed; heart button disabled with `cursor-not-allowed`; explanatory text shown below buttons. `page.tsx` (listing detail): `FavoriteButton` in title section receives `disabled` + `disabledLabel`; `listingStatus` passed to `LazyListingContact`. Four i18n keys added to all locales (`listing.action_disabled_sold`, `listing.action_disabled_rented`). No new components, no hardcoded strings.
+
+### Task 13 — Fix Related Listings not rendering
+- [x] **CLOSED.** `SimilarListings` returned `null` when no active listings matched both `property_type` AND `location_id`. Fix: two-step query — first attempts location-filtered query; if empty, falls back to location-agnostic query with same `property_type`. Both queries enforce `status=active` and `expires_at >= now()`. File: `src/modules/listings/components/SimilarListings.tsx`.
+
+### Task 14 — Mobile/Desktop UI audit and fixes
+- [x] **CLOSED.** Six UI issues fixed across five files:
+  - `ListingContact.tsx`: mobile bar was at `bottom-0 z-40` — same position as `MobileBottomNav` (`bottom-0 z-40 md:hidden`), causing it to be hidden on mobile. Fixed to `bottom-14 md:bottom-0` + safe-area inline style (`calc(env(safe-area-inset-bottom) + 0.75rem)`).
+  - `input.tsx`: default height `h-8` (32px) below 44px minimum touch target. Changed to `h-9`.
+  - `ListingsFilters.tsx`: `AccordionSection` toggle button had no min-height — added `min-h-[44px]`. All filter buttons `h-9` → `h-10` (40px) across all patterns (`flex-1`, `justify-start`, `px-3`, square rooms).
+  - `MobileBottomNav.tsx`: nav label `text-[9px]` → `text-[10px]` for minimum readability.
+  - `Footer.tsx`: footer bottom content partially hidden behind fixed `MobileBottomNav` on mobile. Added `pb-14 md:pb-0` to `<footer>` element.
+
+### Task 15 — Admin user profile management
+- [x] **CLOSED.** Audit confirmed ~95% already implemented (view/edit/create modes, role-based permissions, avatar upload, phone validation, location combobox, status + block_reason, cancel confirmation, auto-password creation, soft delete). Two gaps fixed: (1) `lastName` changed from `z.string().optional()` to `z.string().min(1)` in Zod schema — task requirement: "last name (required)"; (2) Hard delete button removed from UI — task requirement: "soft delete ONLY". `DeleteConfirmDialog` still functional for soft delete. File: `src/components/admin/AdminUserProfile.tsx`.
+
+### Task 16 — Restructure admin pages (badges → listings/users tabs)
+- [x] **CLOSED.** Restructured three admin pages and deleted "Бейджі" page entirely:
+  - `AdminListingsTable.tsx`: added tab bar "Всі оголошення" / "⭐ Преміум оголошення". Tab state in URL (`?tab=premium`).
+  - `listings/page.tsx`: reads `tab` param; adds `is_premium=true` filter when `tab=premium`.
+  - `AdminUsersTable.tsx`: added tab bar "Всі користувачі" / "✓ Верифіковані агенти". Exports `VerifiedAgent` type. Verified agents table with "Зняти верифікацію" action rendered when `tab=verified`.
+  - `users/page.tsx`: reads `tab` param; fetches verified agents from DB when `tab=verified`.
+  - `AdminSidebar.tsx`: removed "Бейджі" nav item and `Award` icon import.
+  - `AdminMobileHeader.tsx`: removed stale "Бейджі" entry from `PAGE_TITLES`.
+  - **Deleted**: `src/app/admin/badges/page.tsx`, `src/components/admin/AdminBadgesTable.tsx`.
+
+### Task 17 — Admin locale switcher (cookie-based)
+- [x] **CLOSED.** Implemented cookie-based locale switching for the admin panel (independent of public site locale routing):
+  - `admin/actions/locale.ts` (new): Server Action `setAdminLocale(locale)` — validates against `['sq','en','uk','it']`, sets `admin-locale` cookie (httpOnly: false, sameSite: lax, maxAge: 1 year, path: `/`).
+  - `admin/layout.tsx`: reads `admin-locale` cookie; imports all 4 message files statically; resolves locale with fallback to `'en'`; passes correct messages to `NextIntlClientProvider`.
+  - `AdminLocaleSwitcher.tsx` (new): client component using `useLocale()` from next-intl; 4 flag+code buttons; calls server action + `router.refresh()` on switch; shows `Loader2` during pending transition.
+  - `AdminSidebar.tsx`: renders `AdminLocaleSwitcher` in footer section.
+  - `AdminShell.tsx`: `locale` prop added (threaded from layout to sidebar, currently unused but available for future sub-components).
+  - **Constraint respected**: public site locale routing (`proxy.ts`, `i18n/routing.ts`) untouched.
+
+### Task 18 — Admin Settings → default site locale
+- [x] **CLOSED.** Implemented default locale selection in Admin → Settings → Localization tab with global application:
+  - `AdminSettings.tsx`: `default_locale: string` added to `AllSettings` interface; `LOCALE_OPTIONS` constant (4 locales); `TAB_KEYS.i18n = ['default_locale']`; Combobox (project standard) in Localization tab — shows current default; dynamic DEFAULT badge on active locale row.
+  - `settings/page.tsx`: `default_locale` added to `DEFAULTS` (`'sq'`) and `initialSettings` (reads from DB).
+  - `settings.ts`: new `getDefaultSiteLocale()` function — reads `site_settings.default_locale`, validates against supported locales, falls back to `'sq'`.
+  - `app/page.tsx`: root page changed from `permanentRedirect(routing.defaultLocale)` to `redirect(await getDefaultSiteLocale())` — uses temporary redirect (307) so locale change takes effect immediately without browser cache.
+  - `proxy.ts`: middleware now async; reads `default_locale` from Supabase REST API with module-level cache (5-minute TTL, `AbortSignal.timeout(2s)`); creates new `createIntlMiddleware` instance only when locale changes; falls back to `'sq'` on any error. **No breaking changes** to existing middleware behavior.
+  - **Bug fixed in locale.ts**: non-function constants (`ADMIN_LOCALE_COOKIE`, `ADMIN_LOCALE_DEFAULT`) removed from `'use server'` file (Next.js/Vercel build error: "Only async functions are allowed to be exported in a use server file"). Constants inlined into `admin/layout.tsx`.
+
+### Task 19 — Admin listings search/filter (audit)
+- [x] **CLOSED (already implemented).** Full audit confirmed all Task 19 requirements were already implemented: debounced search (300ms), no full page reload (`router.push`), search by title + ID + agent name + email, status filter via Combobox, all 7 statuses, search + filter work together via URL params, pagination reset on search/filter, URL query param sync. Minor fix: search placeholder updated to mention email field.
+
+### Admin Search — Critical Bug Fixes (post-Task-19)
+- [x] **CLOSED — UUID ilike DB type error (root cause of empty search results).** `id.ilike.%q%` on a `uuid` column causes PostgreSQL error `operator does not exist: uuid ~~* unknown`. This killed the entire `.or()` — `data` returned `null`, title search also showed nothing. Fix applied in both `listings/page.tsx` and `users/page.tsx`: removed `id.ilike` from `.or()` entirely; added regex-gated `id.eq.${q}` for exact full UUID match only. `users/page.tsx` also had the same bug in its search query.
+- [x] **CLOSED — Space character lost in search input.** `sp.q?.trim()` on server removed trailing spaces → `searchQuery` prop changed → `useEffect([searchQuery])` reset `localSearch` while user was mid-type. Fix: (1) Server uses `sp.q ?? ''` (raw, no trim); trimmed value `qTrimmed` used only for DB queries. (2) `debounceTimer.current = null` set inside setTimeout callback after it fires. (3) `useEffect` now syncs `localSearch` only when `!debounceTimer.current` (no pending debounce). Applied to both `AdminListingsTable` and unified via `AdminSearchInput`.
+- [x] **CLOSED — Word-split AND search.** Single substring `title.ilike.%test 2%` misses "test #2". Fix: query splits on whitespace into words; uses PostgREST nested `and()` inside `.or()` — e.g. `or=(and(title.ilike.%test%,title.ilike.%2%),user_id.in.(...))` — ALL words must appear in title (AND), combined with owner match (OR). Searching "test 2" now finds "test #2". Applied to `listings/page.tsx`.
+- [x] **CLOSED — Users search word-split + UUID fix.** `users/page.tsx` user search: `id.ilike` removed (UUID type error); word-split OR search across `name`, `last_name`, `phone`, `company_name` — each word is OR'd across all fields, making "John Doe" find any user whose fields contain "John" or "Doe".
+- [x] **CLOSED — Global `AdminSearchInput` component.** Both `AdminListingsTable` and `AdminUsersTable` previously had separate (and inconsistent) search input implementations — listings had debounced controlled input, users had uncontrolled `defaultValue` with no debounce (every keystroke triggered navigation). Created `src/components/admin/AdminSearchInput.tsx`: shared controlled input, 300ms debounce, space-safe sync (pending guard via `debounceTimer.current`), preserves all existing URL params when navigating. Both tables now import and use this component.
+
 ## TypeScript `any` Warnings Cleanup — 2026-05-15
 
 - [x] **CLOSED — Unsafe/pre-existing TypeScript `any` warnings cleanup completed.** Eliminated all 144 `@typescript-eslint/no-explicit-any` ESLint warnings across the codebase (reduced from 175 total warnings to 32, all remaining warnings are pre-existing non-`any` issues). Key patterns fixed: translation key casts (`t(key as any)` → `t(key)`), listing data types (`any[]` props → `CardListingData[]`), admin component types (local interfaces replacing `any[]`), Supabase client framework casts (`as any` → typed alternatives), and DOM API extensions (`document as any` → `Document & {}`). No runtime behavior changed, no public APIs modified, no new dependencies added.

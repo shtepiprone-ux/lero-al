@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { UserPlus } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/components/admin/AdminUsersTable'
 
 export const metadata = { title: 'Users — Admin' }
@@ -10,6 +12,8 @@ export default async function AdminUsersPage({
 }: {
   searchParams: Promise<Record<string, string | undefined>>
 }) {
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
   const sp = await searchParams
   const tab = sp.tab ?? 'all'
   const role = sp.role ?? ''
@@ -73,19 +77,19 @@ export default async function AdminUsersPage({
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Користувачі</h1>
+          <h1 className="text-2xl font-bold">{t('users_title')}</h1>
           {locationRequest && (
-            <p className="text-sm text-status-warning mt-0.5">Фільтр: запити на населені пункти</p>
+            <p className="text-sm text-status-warning mt-0.5">{t('users_location_filter')}</p>
           )}
         </div>
         <div className="flex items-center gap-3">
-          {tab === 'all' && <span className="text-sm text-muted-foreground">{count} всього</span>}
+          {tab === 'all' && <span className="text-sm text-muted-foreground">{t('users_total', { count })}</span>}
           <Link
             href="/admin/users/new"
             className="inline-flex items-center gap-1.5 h-9 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
           >
             <UserPlus className="h-4 w-4" />
-            Новий користувач
+            {t('users_new_btn')}
           </Link>
         </div>
       </div>

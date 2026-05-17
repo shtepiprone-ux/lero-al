@@ -458,7 +458,8 @@
       "item_pages": "Сторінки",
       "open_site": "Відкрити сайт",
       "logout": "Вийти",
-      "aria_close": "Закрити меню"
+      "aria_close": "Закрити меню",
+      "language": "Мова"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -528,15 +529,17 @@
       "locations_title": "Населені пункти",
       "locations_subtitle": "{count} записів",
       "pages_admin_title": "Сторінки",
-      "legal_title": "Правові документи",
       "legal_subtitle": "Публічні сторінки: Умови використання, Приватність тощо",
-      "support_title": "Support",
       "support_subtitle": "Тікети звернень від користувачів",
       "support_open": "Відкриті",
       "support_in_progress": "В роботі",
       "support_resolved": "Вирішені",
       "support_all_tickets": "Всі тікети",
-      "support_empty": "Тікетів немає"
+      "support_empty": "Тікетів немає",
+      "support_status_open": "Відкрито",
+      "support_status_in_progress": "В роботі",
+      "support_status_resolved": "Вирішено",
+      "support_status_closed": "Закрито"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -660,7 +663,8 @@
         "year_started": "Рік початку",
         "status": "Статус *",
         "block_reason": "Причина блокування",
-        "use_main_phone": "Використовувати основний номер"
+        "use_main_phone": "Використовувати основний номер",
+        "last_name_optional": "Прізвище"
       },
       "placeholders": {
         "first_name": "Ім'я",
@@ -725,7 +729,8 @@
         "rule_length": "Мінімум 8 символів",
         "rule_case": "Великі та малі літери",
         "rule_digits": "Цифри (0–9)",
-        "rule_special": "Спецсимволи (!, @, #, $, %)"
+        "rule_special": "Спецсимволи (!, @, #, $, %)",
+        "requirements_title": "Вимоги до паролю:"
       }
     }
   }

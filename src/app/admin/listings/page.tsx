@@ -1,4 +1,6 @@
+import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminListingsTable } from '@/components/admin/AdminListingsTable'
 
 export const metadata = { title: 'Listings — Admin' }
@@ -8,6 +10,8 @@ export default async function AdminListingsPage({
 }: {
   searchParams: Promise<Record<string, string | undefined>>
 }) {
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
   const sp = await searchParams
   const tab = sp.tab ?? 'all'
   const status = sp.status ?? ''
@@ -82,8 +86,8 @@ export default async function AdminListingsPage({
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Оголошення</h1>
-        <span className="text-sm text-muted-foreground">{count ?? 0} всього</span>
+        <h1 className="text-2xl font-bold">{t('listings_title')}</h1>
+        <span className="text-sm text-muted-foreground">{t('listings_total', { count: count ?? 0 })}</span>
       </div>
       <AdminListingsTable
         listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}

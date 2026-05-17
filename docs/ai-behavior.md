@@ -6,6 +6,14 @@
 - If blocked by rules, apply the smallest safe fix to unblock, then refactor into the correct component structure.
 - If docs were already read in this session, do not re-read them again; proceed with execution.
 
+### Pre-Task Mandatory Checklist
+Before writing any code, the agent MUST confirm:
+1. **No duplicate components** — searched `src/components/` for existing similar components; result documented.
+2. **No hardcode planned** — every string in the implementation plan has a corresponding i18n key path.
+3. **Scope is isolated** — files to be modified are listed; no unrelated files will be touched.
+
+Skipping this checklist is a rule violation.
+
 ### Before modifying any shared component or module:
 - Verify the component is directly required for the current task.
 - Audit all dependent usages BEFORE making changes.
@@ -34,6 +42,7 @@
 - Never hardcode text strings in components — always use `useTranslations()`.
 - Keys must be added under correct namespace (nav, listing, auth, common).
 - Default language is Albanian (sq) — always write Albanian text first.
+- **i18n verification is NOT complete until runtime locale switching is confirmed** — matching key counts across files is a necessary but not sufficient check. Every string must visibly change when locale is switched. If a string does not change on locale switch, it is hardcoded and the task is failed.
 
 ### Git Rules
 - Do not commit directly to `main` unless the current project workflow explicitly allows it; prefer feature branches and merge through the approved deployment flow.

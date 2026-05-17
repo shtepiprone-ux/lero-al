@@ -458,7 +458,8 @@
       "item_pages": "Pagine",
       "open_site": "Apri sito",
       "logout": "Esci",
-      "aria_close": "Chiudi menu"
+      "aria_close": "Chiudi menu",
+      "language": "Lingua"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -528,15 +529,17 @@
       "locations_title": "Località",
       "locations_subtitle": "{count} record",
       "pages_admin_title": "Pagine",
-      "legal_title": "Documenti legali",
       "legal_subtitle": "Pagine pubbliche: Termini di utilizzo, Privacy, ecc.",
-      "support_title": "Support",
       "support_subtitle": "Ticket di assistenza dagli utenti",
       "support_open": "Aperti",
       "support_in_progress": "In lavorazione",
       "support_resolved": "Risolti",
       "support_all_tickets": "Tutti i ticket",
-      "support_empty": "Nessun ticket"
+      "support_empty": "Nessun ticket",
+      "support_status_open": "Aperto",
+      "support_status_in_progress": "In lavorazione",
+      "support_status_resolved": "Risolto",
+      "support_status_closed": "Chiuso"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -660,7 +663,8 @@
         "year_started": "Anno di inizio",
         "status": "Stato *",
         "block_reason": "Motivo blocco",
-        "use_main_phone": "Usa il numero di telefono principale"
+        "use_main_phone": "Usa il numero di telefono principale",
+        "last_name_optional": "Cognome"
       },
       "placeholders": {
         "first_name": "Nome",
@@ -725,7 +729,8 @@
         "rule_length": "Minimo 8 caratteri",
         "rule_case": "Lettere maiuscole e minuscole",
         "rule_digits": "Cifre (0–9)",
-        "rule_special": "Caratteri speciali (!, @, #, $, %)"
+        "rule_special": "Caratteri speciali (!, @, #, $, %)",
+        "requirements_title": "Requisiti password:"
       }
     }
   }

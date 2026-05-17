@@ -104,7 +104,25 @@
       "Bash(echo \"BUILD_EXIT_CODE: $?\")",
       "Bash(dir \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\" /b)",
       "Bash(dir \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\scripts\" /b)",
-      "Bash(echo \"EXIT:$?\")"
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(echo \"TSC:$?\")",
+      "Bash(echo \"LINT:$?\")",
+      "Bash(Select-Object Name)",
+      "Bash(Select-Object -First 50)",
+      "Bash(Format-Table FullName)",
+      "Bash(Select-Object -First 100 FullName)",
+      "Bash(dir \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\src\\\\modules\\\\listings\\\\components\" /b)",
+      "Bash(kill %bg0m7uu4c)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Remove-Item -Force \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\src\\\\app\\\\admin\\\\badges\\\\page.tsx\")",
+      "Bash(Remove-Item -Force \"D:\\\\Work\\\\Claude_Code_Projects\\\\lero-al\\\\src\\\\components\\\\admin\\\\AdminBadgesTable.tsx\")",
+      "Bash(git diff *)",
+      "Bash(git stash *)",
+      "Bash(echo \"LINT_ERRORS_COUNT: $\\(npx next lint 2>&1)",
+      "Bash(echo \"TS_EXIT: $?\")"
     ]
   }
 }

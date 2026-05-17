@@ -1,4 +1,6 @@
+import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
@@ -24,6 +26,9 @@ interface AdminTicket {
 }
 
 export default async function AdminSupportPage() {
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
+
   const db = createAdminClient()
   const { data: rawTickets } = await db
     .from('support_tickets')
@@ -33,21 +38,28 @@ export default async function AdminSupportPage() {
 
   const tickets = (rawTickets ?? []) as unknown as AdminTicket[]
 
-  const grouped = {
-    open:        tickets.filter(t => t.status === 'open'),
-    in_progress: tickets.filter(t => t.status === 'in_progress'),
-    resolved:    tickets.filter(t => t.status === 'resolved' || t.status === 'closed'),
+  const STATUS_LABELS: Record<string, string> = {
+    open:        t('support_status_open'),
+    in_progress: t('support_status_in_progress'),
+    resolved:    t('support_status_resolved'),
+    closed:      t('support_status_closed'),
   }
+
+  const grouped = [
+    { label: t('support_open'),        items: tickets.filter(tk => tk.status === 'open') },
+    { label: t('support_in_progress'), items: tickets.filter(tk => tk.status === 'in_progress') },
+    { label: t('support_resolved'),    items: tickets.filter(tk => tk.status === 'resolved' || tk.status === 'closed') },
+  ]
 
   return (
     <div className="p-6 lg:p-8 max-w-5xl mx-auto">
       <AdminPageHeader
-        title="Support"
-        subtitle="Тікети звернень від користувачів"
+        title={t('support_title')}
+        subtitle={t('support_subtitle')}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-6">
-        {Object.entries({ 'Відкриті': grouped.open, 'В роботі': grouped.in_progress, 'Вирішені': grouped.resolved }).map(([label, items]) => (
+        {grouped.map(({ label, items }) => (
           <div key={label} className="bg-card rounded-2xl border shadow-sm p-4 text-center">
             <p className="text-2xl font-bold">{items.length}</p>
             <p className="text-sm text-muted-foreground">{label}</p>
@@ -57,22 +69,22 @@ export default async function AdminSupportPage() {
 
       <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b">
-          <h2 className="font-semibold">Всі тікети</h2>
+          <h2 className="font-semibold">{t('support_all_tickets')}</h2>
         </div>
         <div className="divide-y">
           {!tickets?.length ? (
-            <p className="px-6 py-12 text-center text-muted-foreground">Тікетів немає</p>
-          ) : tickets.map((t) => (
-            <div key={t.id} className="px-6 py-4 flex items-center gap-4 hover:bg-muted/30 transition-colors">
+            <p className="px-6 py-12 text-center text-muted-foreground">{t('support_empty')}</p>
+          ) : tickets.map((tk) => (
+            <div key={tk.id} className="px-6 py-4 flex items-center gap-4 hover:bg-muted/30 transition-colors">
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{t.subject}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{t.user?.name ?? '—'}</p>
+                <p className="text-sm font-medium truncate">{tk.subject}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{tk.user?.name ?? '—'}</p>
               </div>
               <div className="flex items-center gap-3 shrink-0">
-                <Badge variant={STATUS_VARIANT[t.status] ?? 'neutral'} className="text-xs capitalize">
-                  {t.status}
+                <Badge variant={STATUS_VARIANT[tk.status] ?? 'neutral'} className="text-xs">
+                  {STATUS_LABELS[tk.status] ?? tk.status}
                 </Badge>
-                <RelativeTime date={t.created_at} className="text-xs text-muted-foreground hidden sm:block" />
+                <RelativeTime date={tk.created_at} className="text-xs text-muted-foreground hidden sm:block" />
               </div>
             </div>
           ))}

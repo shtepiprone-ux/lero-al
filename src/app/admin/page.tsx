@@ -1,4 +1,6 @@
+import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { formatPrice, formatCount } from '@/lib/formatters'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { RelativeTime } from '@/components/shared/RelativeTime'
@@ -98,6 +100,9 @@ const STATUS_STYLE: Record<string, string> = {
 }
 
 export default async function AdminDashboard() {
+  const locale = await getAdminLocale()
+  const t = await getTranslations('admin.dashboard')
+
   const {
     totalListings, activeListings, premiumListings, totalUsers, newUsers, openTickets,
     recentListings, locationRequestUsers, locationRequestCount,
@@ -106,20 +111,20 @@ export default async function AdminDashboard() {
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto">
       <AdminPageHeader
-        title="Dashboard"
-        subtitle="Загальний стан платформи Lero.al"
+        title={t('title')}
+        subtitle={t('subtitle')}
       />
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
         <div className="col-span-2 lg:col-span-1 xl:col-span-2">
-          <StatCard icon={ListChecks} label="Всього оголошень" value={totalListings} href="/admin/listings" accent="bg-primary/10 text-primary" />
+          <StatCard icon={ListChecks} label={t('stat_total_listings')} value={totalListings} href="/admin/listings" accent="bg-primary/10 text-primary" />
         </div>
-        <StatCard icon={TrendingUp} label="Активних" value={activeListings} href="/admin/listings?status=active" accent="bg-status-success/10 text-status-success" />
-        <StatCard icon={Star} label="Premium" value={premiumListings} href="/admin/listings" accent="bg-badge-premium/10 text-badge-premium" />
-        <StatCard icon={Users} label="Користувачів" value={totalUsers} href="/admin/users" accent="bg-info/10 text-info" />
-        <StatCard icon={Eye} label="Нових (7 днів)" value={newUsers} sub="користувачів" accent="bg-secondary text-secondary-foreground" />
-        <StatCard icon={Clock} label="Відкрито тікетів" value={openTickets} href="/admin/support" accent="bg-status-warning/10 text-status-warning" />
+        <StatCard icon={TrendingUp} label={t('stat_active')} value={activeListings} href="/admin/listings?status=active" accent="bg-status-success/10 text-status-success" />
+        <StatCard icon={Star} label={t('stat_premium')} value={premiumListings} href="/admin/listings" accent="bg-badge-premium/10 text-badge-premium" />
+        <StatCard icon={Users} label={t('stat_users')} value={totalUsers} href="/admin/users" accent="bg-info/10 text-info" />
+        <StatCard icon={Eye} label={t('stat_new_7d')} value={newUsers} sub={t('stat_new_7d_sub')} accent="bg-secondary text-secondary-foreground" />
+        <StatCard icon={Clock} label={t('stat_open_tickets')} value={openTickets} href="/admin/support" accent="bg-status-warning/10 text-status-warning" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -129,7 +134,7 @@ export default async function AdminDashboard() {
             <div className="px-5 py-4 border-b flex items-center justify-between bg-status-warning/5">
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-status-warning" />
-                <h2 className="font-semibold text-sm">Запити на населені пункти</h2>
+                <h2 className="font-semibold text-sm">{t('location_requests_title')}</h2>
                 <span className="bg-status-warning text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                   {locationRequestCount}
                 </span>
@@ -138,7 +143,7 @@ export default async function AdminDashboard() {
                 href="/admin/users?location_request=1"
                 className="text-xs text-primary hover:underline"
               >
-                Переглянути всі →
+                {t('location_requests_view_all')}
               </Link>
             </div>
             <div className="divide-y">
@@ -160,7 +165,7 @@ export default async function AdminDashboard() {
                       </p>
                     )}
                   </div>
-                  <span className="text-xs text-primary shrink-0">Розглянути →</span>
+                  <span className="text-xs text-primary shrink-0">{t('location_requests_review')}</span>
                 </Link>
               ))}
             </div>
@@ -170,9 +175,9 @@ export default async function AdminDashboard() {
         {/* ── Recent listings ── */}
         <div className={`bg-card rounded-2xl border shadow-sm overflow-hidden ${locationRequestCount > 0 ? '' : 'lg:col-span-2'}`}>
           <div className="px-6 py-4 border-b flex items-center justify-between">
-            <h2 className="font-semibold">Останні оголошення</h2>
+            <h2 className="font-semibold">{t('recent_listings_title')}</h2>
             <Link href="/admin/listings" className="text-xs text-primary hover:underline">
-              Всі оголошення →
+              {t('recent_listings_all')}
             </Link>
           </div>
           <div className="divide-y">
@@ -186,7 +191,7 @@ export default async function AdminDashboard() {
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
                   {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium" />}
-                  <span className="text-sm font-medium">{formatPrice(l.price, l.currency, 'sq')}</span>
+                  <span className="text-sm font-medium">{formatPrice(l.price, l.currency, locale)}</span>
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_STYLE[l.status] ?? ''}`}>
                     {l.status}
                   </span>

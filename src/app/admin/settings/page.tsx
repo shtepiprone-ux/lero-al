@@ -1,7 +1,9 @@
+import { getTranslations } from 'next-intl/server'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminSettings } from '@/components/admin/AdminSettings'
 import type { AllSettings } from '@/components/admin/AdminSettings'
 import { getAllSettings } from '@/modules/admin/lib/settings'
+import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { ARCHIVED_NOINDEX_DAYS } from '@/modules/listings/constants'
 
 export const metadata = { title: 'Налаштування — Admin' }
@@ -27,6 +29,8 @@ const DEFAULTS: AllSettings = {
 }
 
 export default async function AdminSettingsPage() {
+  await getAdminLocale()
+  const t = await getTranslations('admin.pages')
   const stored = await getAllSettings()
 
   const initialSettings: AllSettings = {
@@ -52,8 +56,8 @@ export default async function AdminSettingsPage() {
   return (
     <div className="p-6 lg:p-8 max-w-3xl mx-auto">
       <AdminPageHeader
-        title="Налаштування сайту"
-        subtitle="Загальні налаштування платформи Lero.al"
+        title={t('settings_title')}
+        subtitle={t('settings_subtitle')}
       />
       <AdminSettings initialSettings={initialSettings} />
     </div>

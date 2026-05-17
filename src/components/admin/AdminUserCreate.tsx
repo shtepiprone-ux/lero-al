@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { useTranslations } from 'next-intl'
 import {
-  Loader2, ChevronLeft, UserPlus, Mail, CheckCircle2, Circle,
+  Loader2, ChevronLeft, UserPlus, Mail, CheckCircle2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -27,35 +28,10 @@ interface Props {
   regions: RegionOption[]
 }
 
-// ── Schema ───────────────────────────────────────────────────────────────────
+// ── Constants ─────────────────────────────────────────────────────────────────
 
 const PHONE_RE = /^\+[1-9]\d{5,14}$/
 const PROFILE_TYPES = ['admin', 'moderator', 'private', 'agent', 'developer'] as const
-
-const schema = z.object({
-  firstName:    z.string().min(1, "Ім'я обов'язкове"),
-  lastName:     z.string().optional(),
-  email:        z.string().email("Некоректний email"),
-  profileType:  z.enum(PROFILE_TYPES),
-  phone:        z.string().regex(PHONE_RE, 'Формат: +35569123456'),
-  useMainPhone: z.boolean(),
-  whatsapp:     z.string().optional(),
-  locationId:   z.number().min(1, "Місто обов'язкове"),
-})
-.refine(d => {
-  if (d.useMainPhone) return true
-  if (!d.whatsapp) return true
-  return PHONE_RE.test(d.whatsapp)
-}, { message: 'Формат: +35569123456', path: ['whatsapp'] })
-
-type FormValues = z.infer<typeof schema>
-
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-const PROFILE_TYPE_LABELS: Record<ProfileType, string> = {
-  admin: 'Адміністратор', moderator: 'Модератор',
-  private: 'Приватна особа', agent: 'Агент', developer: 'Забудовник',
-}
 
 const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
@@ -66,6 +42,39 @@ const COUNTRY_CODES = [
   { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
   { code: '+389', flag: '🇲🇰' },
 ]
+
+// ── Schema builder ─────────────────────────────────────────────────────────────
+
+function buildCreateSchema(t: ReturnType<typeof useTranslations<'admin.user_profile'>>) {
+  return z.object({
+    firstName:    z.string().min(1, t('validation.firstName_required')),
+    lastName:     z.string().optional(),
+    email:        z.string().email(t('validation.email_invalid')),
+    profileType:  z.enum(PROFILE_TYPES),
+    phone:        z.string().regex(PHONE_RE, t('validation.phone_format')),
+    useMainPhone: z.boolean(),
+    whatsapp:     z.string().optional(),
+    locationId:   z.number().min(1, t('validation.location_required')),
+  })
+  .refine(d => {
+    if (d.useMainPhone) return true
+    if (!d.whatsapp) return true
+    return PHONE_RE.test(d.whatsapp)
+  }, { message: t('validation.phone_format'), path: ['whatsapp'] })
+}
+
+type FormValues = {
+  firstName: string
+  lastName?: string
+  email: string
+  profileType: typeof PROFILE_TYPES[number]
+  phone: string
+  useMainPhone: boolean
+  whatsapp?: string
+  locationId: number
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 function parsePhone(val: string) {
   const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
@@ -102,24 +111,23 @@ function PhoneInputField({ value, onChange, error }: { value: string; onChange: 
   )
 }
 
-
-function PasswordRequirements() {
+function PasswordRequirements({ t }: { t: ReturnType<typeof useTranslations<'admin.user_profile'>> }) {
   const requirements = [
-    'Мінімум 8 символів',
-    'Великі та малі літери',
-    'Цифри (0–9)',
-    'Спецсимволи (!, @, #, $, %)',
+    t('password_info.rule_length'),
+    t('password_info.rule_case'),
+    t('password_info.rule_digits'),
+    t('password_info.rule_special'),
   ]
   return (
     <div className="bg-muted/50 rounded-xl p-4 border">
       <div className="flex items-center gap-2 mb-2">
         <Mail className="h-4 w-4 text-primary" />
-        <p className="text-sm font-medium">Встановлення паролю</p>
+        <p className="text-sm font-medium">{t('password_info.title')}</p>
       </div>
       <p className="text-xs text-muted-foreground mb-3">
-        Після створення профілю користувач отримає email з посиланням для встановлення пароля.
+        {t('password_info.body')}
       </p>
-      <p className="text-xs font-semibold mb-1.5">Вимоги до паролю:</p>
+      <p className="text-xs font-semibold mb-1.5">{t('password_info.requirements_title')}</p>
       <ul className="space-y-1">
         {requirements.map(r => (
           <li key={r} className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -136,8 +144,16 @@ function PasswordRequirements() {
 
 export function AdminUserCreate({ cities, regions }: Props) {
   const router = useRouter()
+  const t = useTranslations('admin.user_profile')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const schema = useMemo(() => buildCreateSchema(t), [t])
+
+  const profileTypeOptions = useMemo(
+    () => PROFILE_TYPES.map(pt => ({ value: pt, label: t(`profile_types.${pt}` as `profile_types.${typeof PROFILE_TYPES[number]}`) })),
+    [t],
+  )
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -182,13 +198,13 @@ export function AdminUserCreate({ cities, regions }: Props) {
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-2">
         <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => router.push('/admin/users')}>
-          <ChevronLeft className="h-4 w-4" /> Користувачі
+          <ChevronLeft className="h-4 w-4" /> {t('actions.back_to_users')}
         </Button>
       </div>
 
       <AdminPageHeader
-        title="Новий користувач"
-        subtitle="Заповніть основні поля для створення профілю"
+        title={t('header.new_user_title')}
+        subtitle={t('header.new_user_subtitle')}
       />
 
       {error && (
@@ -202,31 +218,31 @@ export function AdminUserCreate({ cities, regions }: Props) {
         {/* Basic */}
         <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
           <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
-            Основна інформація
+            {t('sections.basic_info')}
           </p>
           <div className="p-5 flex flex-col gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="firstName" className="text-sm">Ім&apos;я <span className="text-destructive">*</span></Label>
-                <Input id="firstName" {...register('firstName')} className="h-10 rounded-xl" placeholder="Ім'я" />
+                <Label htmlFor="firstName" className="text-sm">{t('fields.first_name')}</Label>
+                <Input id="firstName" {...register('firstName')} className="h-10 rounded-xl" placeholder={t('placeholders.first_name')} />
                 {errors.firstName && <p className="text-xs text-destructive">{errors.firstName.message}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
-                <Label htmlFor="lastName" className="text-sm">Прізвище</Label>
-                <Input id="lastName" {...register('lastName')} className="h-10 rounded-xl" placeholder="Прізвище" />
+                <Label htmlFor="lastName" className="text-sm">{t('fields.last_name_optional')}</Label>
+                <Input id="lastName" {...register('lastName')} className="h-10 rounded-xl" placeholder={t('placeholders.last_name')} />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label htmlFor="email" className="text-sm">Email <span className="text-destructive">*</span></Label>
+              <Label htmlFor="email" className="text-sm">{t('fields.email_create')}</Label>
               <Input id="email" type="email" {...register('email')} className="h-10 rounded-xl" placeholder="user@example.com" />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <Label className="text-sm">Тип акаунту <span className="text-destructive">*</span></Label>
+              <Label className="text-sm">{t('fields.profile_type')}</Label>
               <Combobox
-                options={PROFILE_TYPES.map(t => ({ value: t, label: PROFILE_TYPE_LABELS[t] }))}
+                options={profileTypeOptions}
                 value={watch('profileType')}
                 onChange={v => { if (v) setValue('profileType', v as ProfileType) }}
                 variant="button"
@@ -241,11 +257,11 @@ export function AdminUserCreate({ cities, regions }: Props) {
         {/* Contact */}
         <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
           <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
-            Контактні дані
+            {t('sections.contact')}
           </p>
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <Label className="text-sm">Телефон <span className="text-destructive">*</span></Label>
+              <Label className="text-sm">{t('fields.phone')}</Label>
               <PhoneInputField
                 value={watch('phone')}
                 onChange={v => setValue('phone', v, { shouldValidate: true })}
@@ -254,13 +270,13 @@ export function AdminUserCreate({ cities, regions }: Props) {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Label className="text-sm">WhatsApp</Label>
+              <Label className="text-sm">{t('fields.whatsapp')}</Label>
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <Checkbox
                   checked={useMainPhone}
                   onCheckedChange={v => setValue('useMainPhone', v === true)}
                 />
-                Використовувати основний номер
+                {t('fields.use_main_phone')}
               </label>
               {!useMainPhone && (
                 <PhoneInputField
@@ -276,17 +292,17 @@ export function AdminUserCreate({ cities, regions }: Props) {
         {/* Location */}
         <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
           <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
-            Локація
+            {t('sections.location_work')}
           </p>
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
-              <Label className="text-sm">Місто <span className="text-destructive">*</span></Label>
+              <Label className="text-sm">{t('fields.city')}</Label>
               <LocationCombobox
                 locations={cities}
                 value={locationIdValue ? String(locationIdValue) : ''}
                 onChange={id => setValue('locationId', id ? Number(id) : (undefined as unknown as number), { shouldValidate: true })}
                 error={errors.locationId?.message}
-                placeholder="Введіть назву міста..."
+                placeholder={t('placeholders.city_search')}
                 regions={regions}
                 onAddLocation={addLocation}
               />
@@ -295,23 +311,25 @@ export function AdminUserCreate({ cities, regions }: Props) {
               const city = cities.find(c => c.id === locationIdValue)
               const region = regions.find(r => r.id === city?.region_id)
               return region ? (
-                <p className="text-xs text-muted-foreground pl-1">Регіон: <strong>{region.name_al}</strong> (авто)</p>
+                <p className="text-xs text-muted-foreground pl-1">
+                  {t('fields.region')}: <strong>{region.name_al}</strong> {t('actions.region_auto')}
+                </p>
               ) : null
             })()}
           </div>
         </div>
 
         {/* Password info */}
-        <PasswordRequirements />
+        <PasswordRequirements t={t} />
 
         {/* Submit */}
         <div className="flex gap-3 justify-end">
           <Button type="button" variant="outline" className="rounded-xl" onClick={() => router.push('/admin/users')}>
-            Скасувати
+            {t('actions.cancel')}
           </Button>
           <Button type="submit" className="gap-2 rounded-xl" disabled={submitting}>
             {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : <UserPlus className="h-4 w-4" />}
-            Створити користувача
+            {t('actions.create_user')}
           </Button>
         </div>
       </form>

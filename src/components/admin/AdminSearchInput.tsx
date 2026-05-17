@@ -15,7 +15,7 @@ interface Props {
  * Shared admin search input: controlled, debounced, space-safe.
  * Syncs q + resets page in the URL; preserves all other params.
  */
-export function AdminSearchInput({ value: propValue, placeholder = 'Пошук...', className }: Props) {
+export function AdminSearchInput({ value: propValue, placeholder = '', className }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

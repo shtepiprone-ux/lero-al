@@ -458,7 +458,8 @@
       "item_pages": "Pages",
       "open_site": "Open site",
       "logout": "Logout",
-      "aria_close": "Close menu"
+      "aria_close": "Close menu",
+      "language": "Language"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -528,15 +529,17 @@
       "locations_title": "Locations",
       "locations_subtitle": "{count} records",
       "pages_admin_title": "Pages",
-      "legal_title": "Legal documents",
       "legal_subtitle": "Public pages: Terms of Use, Privacy, etc.",
-      "support_title": "Support",
       "support_subtitle": "User support tickets",
       "support_open": "Open",
       "support_in_progress": "In progress",
       "support_resolved": "Resolved",
       "support_all_tickets": "All tickets",
-      "support_empty": "No tickets"
+      "support_empty": "No tickets",
+      "support_status_open": "Open",
+      "support_status_in_progress": "In progress",
+      "support_status_resolved": "Resolved",
+      "support_status_closed": "Closed"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -660,7 +663,8 @@
         "year_started": "Year started",
         "status": "Status *",
         "block_reason": "Block reason",
-        "use_main_phone": "Use main phone number"
+        "use_main_phone": "Use main phone number",
+        "last_name_optional": "Last name"
       },
       "placeholders": {
         "first_name": "First name",
@@ -725,7 +729,8 @@
         "rule_length": "Minimum 8 characters",
         "rule_case": "Uppercase and lowercase letters",
         "rule_digits": "Digits (0–9)",
-        "rule_special": "Special characters (!, @, #, $, %)"
+        "rule_special": "Special characters (!, @, #, $, %)",
+        "requirements_title": "Password requirements:"
       }
     }
   }

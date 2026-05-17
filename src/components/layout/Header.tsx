@@ -17,6 +17,41 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
+import { setAdminLocale } from '@/modules/admin/actions/locale'
+
+// ── NavLinks ──────────────────────────────────────────────────────────────────
+//
+// Defined at module level (NOT inside Header's render body) so that React sees
+// a stable component type across renders. Defining it inside the render body
+// creates a new function reference on every render, causing React to see a
+// different component type during hydration vs SSR — this shifts the fiber ID
+// counter and breaks Base UI's useId()-generated IDs (hydration mismatch).
+//
+// onNavigate is provided for the mobile sheet usage (closes the drawer).
+// Desktop nav omits it — setMobileOpen(false) is a no-op when sheet is closed.
+
+function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
+  const t = useTranslations('nav')
+  const locale = useLocale()
+  return (
+    <>
+      <Link
+        href={`/${locale}`}
+        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+        onClick={onNavigate}
+      >
+        {t('home')}
+      </Link>
+      <Link
+        href={`/${locale}/listings`}
+        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+        onClick={onNavigate}
+      >
+        {t('listings')}
+      </Link>
+    </>
+  )
+}
 
 const LOCALES = [
   { code: 'sq', label: 'Shqip', flag: '🇦🇱' },
@@ -36,6 +71,8 @@ export function Header() {
   function switchLocale(newLocale: string) {
     const currentPath = window.location.pathname
     const pathWithoutLocale = currentPath.replace(/^\/(sq|en|uk|it)/, '') || '/'
+    // Sync admin-locale cookie so admin panel stays in the same locale.
+    setAdminLocale(newLocale)
     router.push(`/${newLocale}${pathWithoutLocale}`)
   }
 
@@ -47,25 +84,6 @@ export function Header() {
   const userInitials = user?.name
     ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
     : '?'
-
-  const NavLinks = () => (
-    <>
-      <Link
-        href={`/${locale}`}
-        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-        onClick={() => setMobileOpen(false)}
-      >
-        {t('home')}
-      </Link>
-      <Link
-        href={`/${locale}/listings`}
-        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-        onClick={() => setMobileOpen(false)}
-      >
-        {t('listings')}
-      </Link>
-    </>
-  )
 
   return (
     <header className="site-header sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -201,7 +219,7 @@ export function Header() {
 
                 {/* Mobile nav links */}
                 <nav className="flex flex-col gap-4">
-                  <NavLinks />
+                  <NavLinks onNavigate={() => setMobileOpen(false)} />
                   {user && (
                     <>
                       <Link

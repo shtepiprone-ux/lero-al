@@ -12,7 +12,7 @@ export async function Footer() {
   const [brand, tld] = siteName.includes('.') ? [siteName.split('.')[0], '.' + siteName.split('.').slice(1).join('.')] : [siteName, '']
 
   return (
-    <footer className="site-footer border-t bg-surface-2">
+    <footer className="site-footer border-t bg-surface-2 pb-14 md:pb-0">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
 

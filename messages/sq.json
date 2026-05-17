@@ -458,7 +458,8 @@
       "item_pages": "Faqe",
       "open_site": "Hap faqen",
       "logout": "Dil",
-      "aria_close": "Mbyll menunë"
+      "aria_close": "Mbyll menunë",
+      "language": "Gjuhë"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -528,15 +529,17 @@
       "locations_title": "Vendndodhje",
       "locations_subtitle": "{count} regjistrime",
       "pages_admin_title": "Faqe",
-      "legal_title": "Dokumente ligjore",
       "legal_subtitle": "Faqe publike: Kushtet e Përdorimit, Privatësia, etj.",
-      "support_title": "Support",
       "support_subtitle": "Tiketa të mbështetjes nga përdoruesit",
       "support_open": "Të hapura",
       "support_in_progress": "Në punë",
       "support_resolved": "Të zgjidhura",
       "support_all_tickets": "Të gjitha tike-tat",
-      "support_empty": "Nuk ka tiketa"
+      "support_empty": "Nuk ka tiketa",
+      "support_status_open": "Hapur",
+      "support_status_in_progress": "Në punë",
+      "support_status_resolved": "Zgjidhur",
+      "support_status_closed": "Mbyllur"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -660,7 +663,8 @@
         "year_started": "Viti i fillimit",
         "status": "Statusi *",
         "block_reason": "Arsyeja e bllokimit",
-        "use_main_phone": "Përdor numrin kryesor të telefonit"
+        "use_main_phone": "Përdor numrin kryesor të telefonit",
+        "last_name_optional": "Mbiemri"
       },
       "placeholders": {
         "first_name": "Emri",
@@ -725,7 +729,8 @@
         "rule_length": "Minimum 8 karaktere",
         "rule_case": "Shkronja të mëdha dhe të vogla",
         "rule_digits": "Shifra (0–9)",
-        "rule_special": "Karaktere speciale (!, @, #, $, %)"
+        "rule_special": "Karaktere speciale (!, @, #, $, %)",
+        "requirements_title": "Kërkesat e fjalëkalimit:"
       }
     }
   }

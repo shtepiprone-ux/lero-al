@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 
@@ -16,6 +16,7 @@ const LOCALES = [
 export function AdminLocaleSwitcher() {
   const currentLocale = useLocale()
   const router = useRouter()
+  const t = useTranslations('admin.sidebar')
   const [isPending, startTransition] = useTransition()
 
   function handleSwitch(locale: string) {
@@ -29,7 +30,7 @@ export function AdminLocaleSwitcher() {
   return (
     <div className="flex flex-col gap-2">
       <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest px-3">
-        Мова / Language
+        {t('language')}
       </p>
       <div className="flex flex-wrap gap-1 px-1">
         {LOCALES.map(loc => (

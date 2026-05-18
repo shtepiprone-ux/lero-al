@@ -245,3 +245,31 @@ This is applied after hydration via `PerformanceStoreInit` — no SSR/hydration 
 | `ListingsFilters.tsx` | `'use client'` (inside ssr:false) | URL filter state | Acceptable |
 
 **No client boundary sprawl detected.** All client components have clear justification.
+
+---
+
+## §10 — RESPONSIVE SCREENSHOT MATRIX (Phase 5)
+
+**Established:** 2026-05-18
+
+Responsive governance now has a screenshot layer for visual regression detection.
+Full viewport and locale matrices are defined in `docs/responsive-screenshot-matrix.md`.
+
+**Quick reference — canonical viewport matrix:**
+
+| Family | Viewports | Tailwind prefix |
+|---|---|---|
+| Mobile | 320, 360, 375, 390, 412, 480px | (base) |
+| Tablet | 640, 768px | `sm:` / `md:` |
+| Desktop | 1024, 1280, 1440px | `lg:` / `xl:` |
+| Huge desktop | 1720, 1920, 2560px | `2xl:` |
+| Ultrawide | 3440px | `2xl:` |
+
+**Fast-check matrix:** 320, 375, 768, 1280, 1440, 2560px × 4 locales (sq, en, uk, it).
+
+**Run screenshots:**
+```bash
+npm run build-storybook && npm run screenshots:responsive
+```
+
+See `docs/responsive-screenshot-governance.md` for the full governance spec.

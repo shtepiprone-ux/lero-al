@@ -127,7 +127,22 @@
       "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)",
       "Bash(Select-Object FullName)",
       "Bash(python3 *)",
-      "PowerShell(Get-Item *)"
+      "PowerShell(Get-Item *)",
+      "Bash(git *)",
+      "Bash([ -f \"docs/$f\" ])",
+      "Bash(del *)",
+      "Bash(sed -n '101,105p' src/components/admin/AdminPropertyTypesManager.tsx)",
+      "Bash(sed -n '96,100p' src/components/shared/FiltersPanel.tsx)",
+      "Bash(sed -n '204,208p' src/components/admin/AdminListingsTable.tsx)",
+      "Bash(sed -n '124,128p' src/components/admin/AdminSettings.tsx)",
+      "Bash(sed -n '91,95p' src/components/admin/AdminUsersTable.tsx)",
+      "Bash(grep -c \"\\\\\\\\[\\\\\\\\[\\\\\\\\|audit\\\\|entropy\\\\|report dump\" docs/backlog.md)",
+      "Bash(npm -v)",
+      "Bash(npm ls *)",
+      "Bash(]--)",
+      "Bash(grep -E \"^[+`]--)",
+      "Bash(npm view *)",
+      "Bash(dir node_modules/next/dist/build/webpack/plugins/)"
     ]
   }
 }

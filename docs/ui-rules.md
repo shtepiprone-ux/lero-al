@@ -341,3 +341,84 @@ Consider adding in Phase 4:
 - Use `truncate` on text that should not wrap.
 - Use `flex-wrap` on toolbar items that may wrap with long translations.
 - Test with Albanian (sq) and Ukrainian (uk) — longest locale strings.
+
+---
+
+## §13 — TAILWIND UTILITY GOVERNANCE
+
+> Full rules: `docs/tailwind-governance.md`. Canonical fragments: `docs/tailwind-canonical-fragments.md`.
+
+### Class Ordering (summary)
+Layout → Position → Sizing → Spacing → Typography → Colors → Borders → Effects → Transitions → Responsive (sm:/md:/lg:/xl:/2xl:) → State (hover:/focus:)
+
+### Arbitrary Values
+- **Canonical allowed:** `text-[10px]`, `min-h-[44px]`, `max-h-[90vh]`
+- **Forbidden without allowlist:** `text-[11px]`, `w-[Npx]` on translated text, `max-w-[Npx]`
+- **Must allowlist:** Gallery heights, dev-overlay z-index
+
+### Anti-Patterns (enforced from 2026-05-18)
+- DO NOT introduce arbitrary spacing without canonical reason — use canonical scale (§1)
+- DO NOT duplicate utility chains — check `docs/tailwind-canonical-fragments.md` first
+- DO NOT use `whitespace-nowrap` alone — combine with `overflow-hidden truncate`
+- DO NOT add fixed px widths to elements containing translated text
+- DO NOT use arbitrary `2xl:` values — use only `2xl:grid-cols-4`, `2xl:py-20`, `2xl:text-3xl`
+- DO NOT bypass canonical fragments when one exists in `docs/tailwind-canonical-fragments.md`
+
+---
+
+## §12 — AI GOVERNANCE ENFORCEMENT
+
+> This section defines mandatory verification requirements for all future Claude Code UI tasks.
+> See `docs/governance-enforcement.md` for full framework and `docs/governance-checklists.md` for checklists.
+
+### Before Any UI Task
+1. Read `docs/governance-enforcement.md §2` (review checkpoints)
+2. Confirm canonical source for every primitive being used
+3. Complete Checklist A (Pre-Task Gate) from `docs/governance-checklists.md`
+
+### After Any UI Task
+1. Complete Checklist B (Post-Task Gate) from `docs/governance-checklists.md`
+2. Every box must be checked before the task is marked complete
+
+### Quick Governance Reference
+
+| Concern | Rule | Source |
+|---|---|---|
+| Button | `Button` from `@/components/ui/button`, `size="xl"` on mobile | §3 above |
+| Input | `Input` from `@/components/ui/input`, no custom wrappers | §4 above |
+| Mobile drawer | shadcn `Sheet` always — never custom div overlay | §7 / component-governance.md |
+| Modal | shadcn `Dialog` always — never custom div overlay | §7 / component-governance.md |
+| Container | `.container-wide` on public pages — never unbounded | §6 above |
+| Listing grid | Always `2xl:grid-cols-4` — never stop at xl:3 | §6 above |
+| Icons | lucide-react only — no other library | §5 above |
+| Navigation | `router.push()` only — never `window.location.href` | ai-behavior.md |
+| Responsive | CSS-only breakpoints — no viewport JS | §7 above |
+| Touch targets | 44px minimum — `size="xl"` or `min-h-[44px]` | §8 above |
+| Localization | sq/en/uk/it all work — no hardcoded widths | §11 above |
+| Huge desktop | All pages bounded — no whitespace wastelands | §10 above |
+| SSR | No `suppressHydrationWarning`, no `typeof window` in render | ai-behavior.md |
+| i18n | All 4 locale files updated — runtime switch tested | ai-behavior.md |
+
+---
+
+## §14 — Component Reuse Rules (Phase 6)
+
+**DO NOT create a new component before:**
+1. Running `npm run governance:components`
+2. Checking `docs/component-catalog.md` for existing equivalent
+3. Confirming canonical primitives cannot satisfy the requirement
+
+**Component reuse hierarchy:**
+1. Canonical primitives (`src/components/ui/`) — ALWAYS prefer these
+2. Shared components (`src/components/shared/`) — reuse Combobox, LocaleSwitcher, etc.
+3. Module components — create in `src/modules/{module}/components/` only if module-specific
+
+**Forbidden duplication:**
+- Local button clones → use `Button` from `@/components/ui/button`
+- Custom tab implementations → use `Tabs` from `@/components/ui/tabs`
+- Custom dialog overlays → use `Dialog` from `@/components/ui/dialog`
+- Custom mobile drawers → use `Sheet` from `@/components/ui/sheet`
+- New locale-switcher → use `LocaleSwitcher` from `@/components/shared/LocaleSwitcher`
+- New combobox implementation → use `Combobox` from `@/components/shared/Combobox`
+
+See `docs/component-catalog-governance.md` for the full classification model.

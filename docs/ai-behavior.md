@@ -253,3 +253,139 @@ All fixes must resolve the root architectural issue.
 - DO NOT use `container mx-auto px-4` alone on new public pages — use `.container-wide`.
 - DO NOT forget `2xl:grid-cols-4` on listing card grids.
 - DO NOT add dead utility classes to globals.css without active consumers.
+
+### Component Catalog Rules (enforced from 2026-05-18)
+
+Before creating ANY new UI component:
+- DO NOT create a new component before running `npm run governance:components` and checking `docs/component-catalog.md`
+- DO NOT create local primitive clones (local button, local dialog, local sheet, local tabs)
+- DO NOT bypass canonical components — always use `src/components/ui/` primitives
+- DO NOT add untracked components without updating catalog via `npm run catalog:components`
+- DO NOT create components with hardcoded text strings — always use `useTranslations`
+- DO NOT create responsive-unsafe components — mobile-first, no viewport JS
+- DO NOT create locale-unsafe components — test with Ukrainian (uk) before APPROVED
+- DO NOT ignore catalog debt — check `docs/component-risk-register.md` quarterly
+
+When completing any UI task that adds/modifies components:
+- DO update catalog: `npm run catalog:components`
+- DO confirm no new `MANUAL_REVIEW` flags were introduced
+- DO add Storybook story if type is `canonical-primitive` or `shared-ui`
+
+### Storybook Anti-Patterns (enforced from 2026-05-18)
+
+When writing stories:
+- DO NOT use raw `<button>` in executable stories — use `Button` from `@/components/ui/button`
+- DO NOT call live APIs, fetch(), or Supabase in stories — use stable fixtures only
+- DO NOT import auth session or check Supabase user state in stories
+- DO NOT use `Math.random()` or `new Date()` in fixture data — use fixed values
+- DO NOT skip Ukrainian (uk) locale coverage for components with visible text
+- DO NOT forget the `desktop2560` viewport variant for container/grid stories
+- When adding a new shared component: complete Checklist I in `docs/governance-checklists.md`
+- Story files location: `src/components/ui/*.stories.tsx` (primitives), `src/stories/*.stories.tsx` (system)
+
+### Tailwind Entropy Anti-Patterns (enforced from 2026-05-18)
+
+- DO NOT introduce arbitrary spacing without documented canonical reason — use the spacing scale in `docs/ui-rules.md §1`.
+- DO NOT duplicate existing utility chains — check `docs/tailwind-canonical-fragments.md` first.
+- DO NOT create local primitive styling clones (button-like, input-like, dialog-like patterns outside canonical components).
+- DO NOT create ad-hoc responsive wrappers when a canonical responsive pattern already exists.
+- DO NOT use `truncate` or `whitespace-nowrap` on translated UI without a responsive overflow fallback.
+- DO NOT add fixed `w-[Npx]` or `min-w-[Npx]` to elements containing localized labels or action text.
+- DO NOT introduce random `2xl:` behavior — only use: `2xl:grid-cols-4`, `2xl:py-20`, `2xl:text-3xl`.
+- DO NOT bypass canonical fragments when one exists in `docs/tailwind-canonical-fragments.md`.
+- DO NOT suppress governance:tailwind warnings without an allowlist entry in `scripts/governance/tailwind-entropy.allowlist.json`.
+- Before any UI task: run `npm run governance:tailwind` and check `docs/tailwind-canonical-fragments.md`.
+
+### AI Governance Enforcement Rules (enforced from 2026-05-18)
+
+Before starting ANY UI task, Claude Code MUST:
+1. Consult `docs/governance-enforcement.md` for current governance state
+2. Consult `docs/ui-rules.md` §1–§13` for canonical primitives and rules
+3. Consult `docs/tailwind-canonical-fragments.md` for existing utility patterns
+4. Consult `docs/component-governance.md §1` before creating any new component
+5. Complete Pre-Task Governance Gate (Checklist A in `docs/governance-checklists.md`)
+
+After completing ANY UI task, Claude Code MUST:
+1. Complete Post-Task UI Governance Gate (Checklist B in `docs/governance-checklists.md`)
+2. All checklist boxes must be checked before marking the task complete
+3. Governance violations discovered during the task MUST be documented even if not fixed
+
+#### Canonical Usage Enforcement
+
+- **Button:** ALWAYS use `Button` from `@/components/ui/button`. NEVER raw `<button>`. NEVER `h-11` className.
+- **Input:** ALWAYS use `Input` from `@/components/ui/input`. NEVER local input wrappers with custom heights.
+- **Sheet:** ALWAYS use shadcn `Sheet` for ALL mobile drawers, panels, filter overlays. NEVER custom `div.fixed.inset-0`.
+- **Dialog:** ALWAYS use shadcn `Dialog` for ALL modals and confirmation popups. NEVER inline `div.fixed.inset-0`.
+- **Tabs:** ALWAYS use shadcn `Tabs`/`TabsList`/`TabsTrigger`. NEVER local tab button clones.
+- **Container:** ALWAYS use `.container-wide` on public pages. NEVER `container mx-auto px-4` alone.
+- **Grid:** ALWAYS include `2xl:grid-cols-4` on listing card grids. NEVER stop at `xl:grid-cols-3`.
+- **Icons:** ALWAYS use `lucide-react`. NEVER any other icon library.
+- **Navigation:** ALWAYS use `router.push()` from `next/navigation`. NEVER `window.location.href`.
+
+#### Responsive Governance Enforcement
+
+- ALWAYS write mobile-first: base for 320px, scale up with `sm:`/`md:`/`lg:`/`xl:`/`2xl:`.
+- ALWAYS add `2xl:` step for new listing grids (`2xl:grid-cols-4`) and new public containers.
+- NEVER use `typeof window`, `useWindowSize`, `window.innerWidth` for responsive layout decisions.
+- NEVER use arbitrary `min-width`/`max-width` inline breakpoints in className.
+- Touch targets: ALWAYS `size="xl"` (44px) for mobile-reachable buttons, `min-h-[44px]` for other interactive elements.
+
+#### Localization Governance Enforcement
+
+- NEVER hardcode widths for elements containing translatable text.
+- ALWAYS test with Ukrainian (uk) — longest strings.
+- ALWAYS use `flex-wrap` on toolbars where locale text may differ in length.
+- NEVER use `whitespace-nowrap` without `overflow-hidden` + `truncate`.
+- ALL four locale files (sq, en, uk, it) must be updated simultaneously.
+
+#### Huge Desktop Governance Enforcement
+
+- NEVER allow public page to stretch full-width at 2560px — always use `.container-wide`.
+- NEVER allow listing grid to stop at `xl:grid-cols-3` — always add `2xl:grid-cols-4`.
+- NEVER allow admin shell content to stretch full viewport width at 2560px.
+
+#### SSR / Hydration Governance Enforcement
+
+- NEVER introduce `suppressHydrationWarning`.
+- NEVER use `typeof window` in render-path logic for visible UI.
+- NEVER use viewport JS (`window.innerWidth`, `useWindowSize`) for layout decisions.
+- NEVER create `dynamic(..., { ssr: false })` inside Server Components without documented justification.
+- All hydration issues MUST be fixed at the deterministic rendering/data layer.
+
+#### Governance Report Discipline
+
+- Governance reports go in `docs/governance-reports/weekly/`, `monthly/`, `quarterly/` ONLY.
+- Session logs go in `docs/sessions/` ONLY.
+- NEVER append governance audit data to `docs/backlog.md`.
+
+---
+
+### Backlog & Session Log Rules (enforced from 2026-05-18)
+
+`docs/backlog.md` is a **lightweight index** — it must never grow into a log dump.
+
+#### Structure of `docs/backlog.md`
+```
+# Project Backlog
+
+## Last Session        ← short summary (5–10 lines) + link to session file
+## Next Immediate Tasks ← active task queue, as detailed as needed
+## Session Archive     ← table: date | description | tasks | link
+```
+
+#### When closing a session
+1. Create a new session file: `docs/sessions/YYYY-MM-DD-<short-slug>.md`
+   - One file per session (or per epic if a session spans multiple days).
+   - Header: `# Session Archive: <Description> — YYYY-MM-DD`
+   - Content: full task logs, validation checklists, audit tables — everything that was in the old backlog session block.
+2. Update `docs/backlog.md`:
+   - Replace the previous "Last Session" block with a 5–10 line summary of the new session + link to its file.
+   - Add a row to the Session Archive table pointing to the new file.
+   - Update Next Immediate Tasks (remove completed, add new).
+3. Never paste full session logs directly into `docs/backlog.md`.
+
+#### Forbidden
+- DO NOT write multi-hundred-line session logs into `docs/backlog.md`.
+- DO NOT accumulate session history in `docs/backlog.md` — move to `docs/sessions/`.
+- DO NOT create a session file without adding it to the Session Archive table in `docs/backlog.md`.
+- DO NOT leave `docs/backlog.md` larger than ~80 lines of active content (excluding the archive table).

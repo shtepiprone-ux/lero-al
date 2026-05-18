@@ -1,0 +1,47 @@
+{
+  "_comment": "Tailwind entropy allowlist — exceptions to governance rules with documented justification.",
+  "_docs": "See docs/tailwind-governance.md §Allowlist Policy. Every entry requires: rule, file, pattern, reason, reviewer, expires.",
+  "_review_cadence": "Quarterly. Remove entries that are no longer needed.",
+  "entries": [
+    {
+      "rule": "arbitrary-z-index",
+      "file": "src/components/shared/PerfDevOverlay.tsx",
+      "pattern": "z-[9999]",
+      "reason": "Development overlay must sit above all other UI. Only rendered in dev mode.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "Component is dev-only, never ships to production. Does not interfere with user flows."
+    },
+    {
+      "rule": "arbitrary-height",
+      "file": "src/modules/listings/components/ListingGallery.tsx",
+      "pattern": "h-[420px]",
+      "reason": "Gallery container needs fixed height for image crop aspect ratio consistency.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "Gallery is image-only context, not translated text. Locale-agnostic."
+    },
+    {
+      "rule": "arbitrary-height",
+      "file": "src/modules/listings/components/ListingGallery.tsx",
+      "pattern": "h-[500px]",
+      "reason": "Gallery full-size container height. Image-only, not locale-sensitive.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "Image container. No translated content. Consistent visual behavior needed."
+    },
+    {
+      "rule": "arbitrary-height",
+      "file": "src/app/[locale]/listings/[slug]/page.tsx",
+      "pattern": "h-[340px]",
+      "reason": "Static gallery frame height for LCP optimization. Needs fixed height to prevent CLS.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "LCP-critical image container. Changing this height would worsen CLS and Lighthouse scores."
+    }
+  ]
+}

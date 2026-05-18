@@ -1,0 +1,81 @@
+name: Scheduled Governance Scan
+
+on:
+  # Weekly scan — every Monday at 09:00 UTC
+  schedule:
+    - cron: '0 9 * * 1'
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      scan_type:
+        description: 'Scan type'
+        required: false
+        default: 'weekly'
+        type: choice
+        options:
+          - weekly
+          - monthly
+
+jobs:
+  weekly-governance-scan:
+    name: Weekly Governance Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full governance scan with report
+        id: governance
+        run: |
+          npm run governance:report || echo "GOVERNANCE_FAILED=true" >> $GITHUB_ENV
+        continue-on-error: true
+
+      - name: Commit governance report to branch
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          TODAY=$(date +%Y-%m-%d)
+          REPORT_PATH="docs/governance-reports/weekly/weekly-${TODAY}.md"
+          if [ -f "$REPORT_PATH" ]; then
+            git add "$REPORT_PATH"
+            git diff --staged --quiet || git commit -m "chore(governance): weekly scan report ${TODAY}"
+            git push
+          else
+            echo "No report file found — governance script may not have generated it."
+          fi
+        continue-on-error: true
+
+      - name: Post summary to workflow
+        if: always()
+        run: |
+          echo "## Governance Scan Results" >> $GITHUB_STEP_SUMMARY
+          TODAY=$(date +%Y-%m-%d)
+          REPORT_PATH="docs/governance-reports/weekly/weekly-${TODAY}.md"
+          if [ -f "$REPORT_PATH" ]; then
+            cat "$REPORT_PATH" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No report generated." >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Fail if governance violations found
+        if: env.GOVERNANCE_FAILED == 'true'
+        run: |
+          echo "❌ Governance scan found HIGH or CRITICAL violations."
+          echo "   Review the report and fix violations."
+          exit 1

@@ -1,0 +1,34 @@
+{
+  "_comment": "Governance baseline — established 2026-05-18 (Phase 2), updated 2026-05-18 (Phase 3 entropy integration). Pre-existing violations documented as technical debt. CI fails if any category EXCEEDS these counts. Update this file when violations are fixed (run npm run governance:update-baseline).",
+  "_docs": "See docs/governance-enforcement.md §9 for CI governance matrix. Phase 3 entropy: tailwind-entropy.mjs deep analysis, allowlist at tailwind-entropy.allowlist.json.",
+  "primitives": {
+    "CRITICAL": 0,
+    "HIGH": 52,
+    "MEDIUM": 8,
+    "LOW": 0
+  },
+  "ssr": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "responsive": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 15,
+    "LOW": 2
+  },
+  "tailwind": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 14,
+    "LOW": 42
+  },
+  "localization": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 18,
+    "LOW": 3
+  }
+}

@@ -26,6 +26,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Utility scripts are Node.js/CommonJS files — not part of the Next.js app.
+    // They use require() legitimately and should not be linted by next/typescript rules.
+    "scripts/**",
   ]),
 
   // ── Image infrastructure enforcement ──────────────────────────────────────
@@ -190,6 +193,100 @@ const eslintConfig = defineConfig([
             "Direct status write in .update() outside the mutation gateway. " +
             "Use applyListingTransition() or applyListingTransitionByStatus() " +
             "from '@/modules/listings/actions/applyListingTransition'.",
+        },
+      ],
+    },
+  },
+
+  // ── UI Primitive Governance ────────────────────────────────────────────────
+  //
+  // Enforces canonical UI primitive usage as defined in:
+  //   docs/governance-enforcement.md §4A
+  //   docs/ui-rules.md §12
+  //
+  // These rules prevent governance drift at the ESLint level:
+  //   1. Non-lucide icon library imports (only lucide-react approved)
+  //   2. window.location.href navigation (must use router.push)
+  //   3. suppressHydrationWarning (must fix root cause, never mask)
+  {
+    files: ['src/**/*.ts', 'src/**/*.tsx'],
+    rules: {
+      // Non-lucide icon libraries are forbidden — only lucide-react
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@heroicons/*'],
+              message: 'Non-lucide icon library. Use lucide-react only (governance-enforcement.md §4A).',
+            },
+            {
+              group: ['react-icons/*', 'react-icons'],
+              message: 'Non-lucide icon library. Use lucide-react only (governance-enforcement.md §4A).',
+            },
+            {
+              group: ['phosphor-react', '@phosphor-icons/*'],
+              message: 'Non-lucide icon library. Use lucide-react only (governance-enforcement.md §4A).',
+            },
+            {
+              group: ['feather-icons'],
+              message: 'Non-lucide icon library. Use lucide-react only (governance-enforcement.md §4A).',
+            },
+          ],
+        },
+      ],
+      // window.location.href ASSIGNMENT is forbidden — always use router.push.
+      // Read-only accesses (.origin, .pathname, .search, .host) are allowed.
+      // Only catches: window.location.href = "...", window.location.replace(...), window.location.assign(...)
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector:
+            "AssignmentExpression[left.type='MemberExpression']" +
+            "[left.object.type='MemberExpression']" +
+            "[left.object.object.name='window']" +
+            "[left.object.property.name='location']" +
+            "[left.property.name='href']",
+          message:
+            'window.location.href assignment is forbidden. Use router.push() from next/navigation. ' +
+            'See docs/ai-behavior.md — AI Governance Enforcement Rules.',
+        },
+        {
+          selector:
+            "CallExpression[callee.type='MemberExpression']" +
+            "[callee.object.type='MemberExpression']" +
+            "[callee.object.object.name='window']" +
+            "[callee.object.property.name='location']" +
+            "[callee.property.name=/^(replace|assign)$/]",
+          message:
+            'window.location.replace/assign is forbidden. Use router.push() from next/navigation. ' +
+            'See docs/ai-behavior.md — AI Governance Enforcement Rules.',
+        },
+      ],
+    },
+  },
+
+  // ── SSR / Hydration Governance ────────────────────────────────────────────
+  //
+  // suppressHydrationWarning masks hydration mismatches instead of fixing them.
+  // Exception: app/layout.tsx — required by next-themes for dark/light mode FOUC prevention.
+  // All other hydration issues must be fixed at the deterministic rendering/data layer.
+  // See: docs/ai-behavior.md §SSR/Hydration Governance Enforcement
+  {
+    files: ['src/**/*.tsx'],
+    ignores: [
+      // next-themes requires suppressHydrationWarning on <html> to prevent FOUC on theme load
+      'src/app/layout.tsx',
+    ],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "JSXAttribute[name.name='suppressHydrationWarning']",
+          message:
+            'suppressHydrationWarning is forbidden. Fix the hydration mismatch at root cause. ' +
+            'Exception: app/layout.tsx (next-themes). ' +
+            'See docs/ai-behavior.md — SSR/Hydration Governance Enforcement.',
         },
       ],
     },

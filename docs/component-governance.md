@@ -283,3 +283,44 @@ See `ui-audit.md §3`. Key items:
 | `rounded-xl` vs `rounded-2xl` | Mixed | Inconsistent card radius across admin vs listings |
 | `py-12 md:py-16` | 5 sections | Consistent but not a design token |
 | `text-xs font-semibold uppercase tracking-widest` | 3+ | Section group label — should be a utility class |
+
+---
+
+## §5 — COMPONENT CATALOGING SYSTEM (Phase 6)
+
+**Established:** 2026-05-18
+
+The project maintains a machine-readable + human-readable component catalog.
+
+### Commands
+
+```bash
+npm run governance:components   # fast check (CI-safe)
+npm run catalog:components      # full scan + report generation
+```
+
+### Catalog output files
+
+| File | Contents |
+|---|---|
+| `docs/component-catalog.md` | Full component inventory by area |
+| `docs/component-coverage-matrix.md` | Storybook/screenshot/locale/breakpoint coverage |
+| `docs/component-risk-register.md` | Risk register (violations, locale, huge-desktop, TW entropy) |
+| `docs/component-catalog-governance.md` | Classification rules (canonical/approved/debt) |
+| `scripts/governance/reports/component-catalog.latest.json` | Machine-readable catalog (gitignored) |
+
+### Classification model
+
+See `docs/component-catalog-governance.md` for the full classification model.
+
+**Status values:**
+- `CANONICAL` — canonical primitive with story, fully compliant
+- `APPROVED` — approved, no critical flags
+- `NEEDS_STORY` — should have a Storybook story
+- `MANUAL_REVIEW` — has governance flags, requires human review
+
+### Story / screenshot coverage expectations
+
+See `docs/component-catalog-governance.md §4–5` for when stories and screenshot
+targets are required. The current coverage gap is documented in
+`docs/component-coverage-matrix.md § Coverage Gaps`.

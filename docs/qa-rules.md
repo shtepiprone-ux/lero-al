@@ -143,3 +143,45 @@ Critical paths to test:
 Перевірка на набір типових «заборонених» підрядків у JSON-наборі:
 
 `node qa-import/validate-ui-navigation.mjs`
+---
+
+### Responsive Screenshot QA (Phase 5)
+
+**Reference:** `docs/responsive-screenshot-governance.md`, `docs/responsive-screenshot-matrix.md`
+
+#### When screenshots are required
+
+Before merging any PR that changes:
+- Responsive layout classes (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`)
+- Container or grid structure
+- Any component with translatable text
+- Touch targets or interactive element sizing
+
+#### How to run
+
+```bash
+# One-time browser setup:
+npx playwright install chromium
+
+# Build Storybook:
+npm run build-storybook
+
+# Capture fast-check matrix (6 viewports × 4 locales):
+npm run screenshots:responsive
+
+# Validate infrastructure (no browser, CI-safe):
+npm run governance:screenshots
+```
+
+#### Review checklist
+
+- [ ] `mobile-320` and `mobile-375` screenshots: no horizontal overflow
+- [ ] `uk` × `mobile-375`: Ukrainian text fits without breaking layout
+- [ ] `huge-2560`: listing grid shows 4 columns (`2xl:grid-cols-4`)
+- [ ] `huge-2560`: containers bounded, no full-viewport stretch
+- [ ] No screenshots committed to git (`.screenshots/` is gitignored)
+
+#### Output location
+
+`.screenshots/responsive/YYYY-MM-DD/` — gitignored, local only.
+See `docs/responsive-screenshot-governance.md §5` for file naming conventions.

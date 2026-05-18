@@ -45,3 +45,18 @@ next-env.d.ts
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# Storybook — build output and cache (never commit)
+/storybook-static/
+.storybook-cache/
+storybook-static
+
+# Responsive screenshots — generated locally, never committed
+/.screenshots/
+/test-results/
+/playwright-report/
+playwright/.auth/
+
+# Component catalog generated reports — regenerate with npm run catalog:components
+/scripts/governance/reports/*.json
+/scripts/governance/reports/*.md

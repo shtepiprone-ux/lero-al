@@ -1,0 +1,55 @@
+name: Governance Validation (PR)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'scripts/governance/**'
+      - 'eslint.config.mjs'
+      - 'package.json'
+      - 'messages/**'
+
+jobs:
+  governance:
+    name: Governance Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: TypeScript check
+        run: npx tsc --noEmit
+
+      - name: ESLint (with governance rules)
+        run: npm run lint
+
+      - name: Primitive governance scan
+        run: npm run governance:primitives
+
+      - name: SSR/Hydration governance scan
+        run: npm run governance:ssr
+
+      - name: Responsive governance scan
+        run: npm run governance:responsive
+
+      - name: Tailwind entropy scan
+        run: npm run governance:tailwind
+
+      - name: Localization governance scan
+        run: npm run governance:localization
+
+      - name: Full governance report (summary)
+        if: always()
+        run: npm run governance

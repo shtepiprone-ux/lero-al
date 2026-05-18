@@ -57,7 +57,7 @@ export function useExchangeRate(): ExchangeRateResult {
     })
 
     return () => { cancelled = true }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   return { rates, rate: rates?.EUR ?? null, loading }
 }

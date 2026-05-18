@@ -60,3 +60,6 @@ playwright/.auth/
 # Component catalog generated reports — regenerate with npm run catalog:components
 /scripts/governance/reports/*.json
 /scripts/governance/reports/*.md
+
+#Local Settings
+.claude/settings.local.json

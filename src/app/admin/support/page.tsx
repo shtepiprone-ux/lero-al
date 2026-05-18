@@ -4,7 +4,6 @@ import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
-import Link from 'next/link'
 
 export const metadata = { title: 'Support — Admin' }
 

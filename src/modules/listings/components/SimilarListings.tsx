@@ -79,7 +79,6 @@ export async function SimilarListings({ currentId, propertyType, locationId }: P
       {speculationUrls.length > 0 && (
         <script
           type="speculationrules"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               prerender: [{

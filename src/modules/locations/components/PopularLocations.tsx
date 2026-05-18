@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { getPopularLocations } from '@/modules/locations/lib/queries'
 import type { Location } from '@/types/database'
 import { Skeleton } from '@/components/ui/skeleton'
+import { AppImage } from '@/components/ui/AppImage'
 
 const CITY_GRADIENTS = [
   'from-primary to-brand-950',
@@ -62,12 +63,11 @@ export function PopularLocations() {
           >
             {loc.image_url ? (
               <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <AppImage
+                  variant="listing-thumb"
                   src={loc.image_url}
                   alt={name}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="lazy"
+                  className="absolute inset-0"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               </>

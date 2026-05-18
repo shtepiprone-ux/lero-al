@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Combobox } from '@/components/shared/Combobox'
 import { createLocation, updateLocation, deleteLocation, toggleLocationFeatured } from '@/modules/admin/actions'
+import { AppImage } from '@/components/ui/AppImage'
 
 function toSlug(str: string) {
   return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
@@ -140,8 +141,12 @@ function LocationModal({
                   className="h-10 rounded-xl font-mono text-xs"
                 />
                 {imageUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={imageUrl} alt="" className="h-20 w-full object-cover rounded-xl mt-1" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                  <AppImage
+                    variant="listing-thumb"
+                    src={imageUrl}
+                    alt=""
+                    className="h-20 mt-1 rounded-xl"
+                  />
                 )}
               </div>
               <div className="flex flex-col gap-1.5">

@@ -6,7 +6,7 @@ import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
 import { getFilterVisibility } from '@/modules/listings/domain/filterEngine'
-import { ALL_FILTER_SECTIONS, FILTER_SECTION_PARAMS, type FilterSection } from '@/modules/listings/constants'
+import { ALL_FILTER_SECTIONS, type FilterSection } from '@/modules/listings/constants'
 import type { LocationOption } from '@/components/shared/LocationCombobox'
 import type { FilterValues } from '@/components/shared/FiltersPanel'
 

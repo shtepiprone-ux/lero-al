@@ -20,7 +20,7 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { AuthController } from '../controller'
-import type { AuthState, AuthStatus } from '../controller'
+import type { AuthState } from '../controller'
 import type { User } from '@/types/database'
 
 // ── External boundary mocks ────────────────────────────────────────────────────

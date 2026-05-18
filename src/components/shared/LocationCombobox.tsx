@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useId } from 'react'
 import { useTranslations } from 'next-intl'
 import { MapPin, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -69,6 +69,7 @@ export function LocationCombobox({
   }
 
   const canAdd = !!(regions && regions.length > 0 && onAddLocation)
+  const listboxId = useId()
 
   return (
     <div className={cn('location-combobox relative', className)}>
@@ -87,11 +88,14 @@ export function LocationCombobox({
           onKeyDown={onKeyDown}
           placeholder={placeholder ?? tc('all_locations')}
           className="w-full h-11 pl-9 pr-3 text-sm text-foreground bg-muted border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
+          role="combobox"
           aria-autocomplete="list"
           aria-expanded={open}
+          aria-controls={listboxId}
+          aria-haspopup="listbox"
         />
         {open && (
-          <div className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto">
+          <div id={listboxId} className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto">
             <Button
               variant="ghost"
               className="w-full px-3 py-2 h-auto text-sm justify-start rounded-none"

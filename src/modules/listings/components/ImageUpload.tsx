@@ -8,7 +8,6 @@ import type { CloudinaryUploadWidgetResults } from 'next-cloudinary'
 import {
   ImagePlus, Trash2, Star, ChevronUp, ChevronDown, Camera,
 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 

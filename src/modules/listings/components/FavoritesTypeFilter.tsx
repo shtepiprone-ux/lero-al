@@ -11,7 +11,6 @@ interface Props {
 }
 
 export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
-  const t = useTranslations('listing')
   const tf = useTranslations('favorites')
   const locale = useLocale()
   const router = useRouter()

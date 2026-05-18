@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import {
-  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
+  CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
 } from '@/modules/listings/constants'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
@@ -80,7 +80,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
     local, update,
     handlePropertyTypeChange, handleApply, handleReset,
     activeCount, cityRegionLocs,
-    currency, visibleSections, shows, floorFilterMin,
+    currency, shows, floorFilterMin,
     today, rate, currencies, propertyTypes,
   } = useHomepageFilters({ values, onChange, onApply, onClose, locations })
 

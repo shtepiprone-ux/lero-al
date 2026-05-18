@@ -5,7 +5,6 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { LayoutGrid, List, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Combobox } from '@/components/shared/Combobox'
-import { cn } from '@/lib/utils'
 
 interface Props {
   total: number
@@ -26,7 +25,6 @@ const SORT_OPTIONS = [
 
 export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFiltersOpen, activeFiltersCount }: Props) {
   const t = useTranslations('listing')
-  const tc = useTranslations('common')
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

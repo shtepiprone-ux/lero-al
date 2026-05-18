@@ -5,7 +5,6 @@ import { formatPrice, formatCount } from '@/lib/formatters'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { ListChecks, Users, Eye, TrendingUp, Star, Clock, MapPin } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 
 async function getStats() {

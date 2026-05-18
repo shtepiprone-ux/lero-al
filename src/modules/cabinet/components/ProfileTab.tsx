@@ -304,7 +304,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     setPendingGuardHref(href)
     setShowGuardDialog(true)
   }, [])
-  const { interceptHref, confirmLeave } = useUnsavedChangesGuard(isDirty, handleShowGuardDialog)
+  const { confirmLeave } = useUnsavedChangesGuard(isDirty, handleShowGuardDialog)
 
   async function handleSave() {
     setSaveStatus('saving')

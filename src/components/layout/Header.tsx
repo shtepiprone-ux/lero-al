@@ -65,7 +65,7 @@ export function Header() {
   const tc = useTranslations('common')
   const locale = useLocale()
   const router = useRouter()
-  const { user, loading, signOut } = useUser()
+  const { user, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   function switchLocale(newLocale: string) {

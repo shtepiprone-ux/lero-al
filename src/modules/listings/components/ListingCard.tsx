@@ -62,12 +62,12 @@ function getBadges(listing: CardListingData) {
   const badges: { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline'; className: string }[] = []
 
   // Status badges take priority for non-active listings
-  // eslint-disable-next-line no-restricted-syntax -- badge color depends on sold vs rented individually; no single-status domain helper
+  // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'sold') {
     badges.push({ label: 'status_sold', variant: 'default', className: 'bg-status-info text-primary-foreground' })
     return badges
   }
-  // eslint-disable-next-line no-restricted-syntax -- badge color depends on sold vs rented individually; no single-status domain helper
+  // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'rented') {
     badges.push({ label: 'status_rented', variant: 'default', className: 'bg-status-rented text-primary-foreground' })
     return badges

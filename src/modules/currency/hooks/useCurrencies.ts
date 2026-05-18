@@ -56,7 +56,7 @@ export function useCurrencies() {
     })
 
     return () => { cancelled = true }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   return { currencies, loading }
 }

@@ -6,7 +6,7 @@ import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import {
-  ALL_FILTER_SECTIONS, FILTER_SECTION_PARAMS, type FilterSection,
+  ALL_FILTER_SECTIONS, FILTER_SECTION_PARAMS,
 } from '@/modules/listings/constants'
 import {
   getFilterVisibility, parseSearchParams, countActiveFilters,

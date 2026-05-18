@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Filter, Menu, X } from 'lucide-react';
+import { Filter, Menu } from 'lucide-react';
 import { Button } from './button';
 import {
   Sheet,

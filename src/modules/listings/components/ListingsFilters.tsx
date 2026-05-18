@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import {
-  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
+  CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
 } from '@/modules/listings/constants'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
@@ -48,7 +48,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
   const tc = useTranslations('common')
 
   const {
-    get, getMulti, updateParams, toggleMulti,
+    get, updateParams, toggleMulti,
     handlePropertyTypeChange, handleFloorChange, handleFloorsChange,
     sections, toggle,
     shows, floorFilterMin,

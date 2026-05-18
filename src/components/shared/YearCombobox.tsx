@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useId } from 'react'
 import { Calendar } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -21,6 +21,7 @@ interface Props {
 }
 
 export function YearCombobox({ value, onChange, placeholder, className }: Props) {
+  const listboxId = useId()
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
 
@@ -56,10 +57,12 @@ export function YearCombobox({ value, onChange, placeholder, className }: Props)
         aria-autocomplete="list"
         aria-expanded={open}
         aria-haspopup="listbox"
+        aria-controls={listboxId}
         role="combobox"
       />
       {open && filtered.length > 0 && (
         <div
+          id={listboxId}
           role="listbox"
           className="absolute top-full mt-1 left-0 right-0 z-50 bg-popover text-popover-foreground border rounded-xl shadow-lg max-h-56 overflow-y-auto"
         >

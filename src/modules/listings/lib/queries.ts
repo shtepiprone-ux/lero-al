@@ -1,7 +1,6 @@
 import { unstable_cache } from 'next/cache'
 import { createClient } from '@/lib/supabase/client'
-import { createClient as createServerClient } from '@/lib/supabase/server'
-import type { PropertyType, ListingType, ListingStatus } from '@/types/database'
+import type { PropertyType, ListingType } from '@/types/database'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { LISTING_SELECT } from './listingSelect'
 

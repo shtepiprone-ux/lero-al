@@ -16,7 +16,7 @@
  *  – SSR listings page / API listings route (floor safety via helper fns)
  */
 
-import type { FieldDefinition, FieldComponentType, FieldFilter, FieldPresentation, ListingField } from './listingFields'
+import type { FieldDefinition, FieldFilter, FieldPresentation, ListingField } from './listingFields'
 
 // ── Schema shape ──────────────────────────────────────────────────────────────
 

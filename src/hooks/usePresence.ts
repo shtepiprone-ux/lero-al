@@ -11,5 +11,5 @@ import { useEffect } from 'react'
 export function usePresence() {
   useEffect(() => {
     fetch('/api/presence', { method: 'POST' }).catch(() => {})
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 }

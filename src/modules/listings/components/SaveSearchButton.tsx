@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Bookmark, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -14,8 +14,6 @@ import { cn } from '@/lib/utils'
 
 export function SaveSearchButton() {
   const t = useTranslations('saved_search')
-  const locale = useLocale()
-  const router = useRouter()
   const searchParams = useSearchParams()
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')

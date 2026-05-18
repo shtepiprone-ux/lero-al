@@ -26,8 +26,6 @@ export function NotificationItem({ notification, onRead }: Props) {
   const t = useTranslations('notifications')
   const [isPending, startTransition] = useTransition()
 
-  const typeKey = `type_${notification.type}` as `type_${NotificationType}`
-
   function handleClick() {
     if (notification.is_read) return
     startTransition(async () => {

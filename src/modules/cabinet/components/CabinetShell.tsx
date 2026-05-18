@@ -100,10 +100,12 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 bg-card rounded-xl border shadow-sm p-1 mb-6">
+        <div role="tablist" className="flex gap-1 bg-card rounded-xl border shadow-sm p-1 mb-6">
           {tabs.map(({ key, label, icon: Icon, count }) => (
             <button
               key={key}
+              role="tab"
+              aria-selected={activeTab === key}
               onClick={() => setTab(key)}
               className={cn(
                 'flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150',

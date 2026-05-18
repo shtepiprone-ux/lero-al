@@ -26,6 +26,7 @@ import { ListingCard, type CardListingData } from '@/modules/listings/components
 import { ActiveFilterChips } from '@/modules/listings/components/ActiveFilterChips'
 import { ListingsStatusTabs } from '@/modules/listings/components/ListingsStatusTabs'
 import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
@@ -177,22 +178,14 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
       </aside>
 
       {/* ── Mobile filters sheet ── */}
-      {filtersOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-overlay/40 backdrop-blur-sm"
-            onClick={() => setFiltersOpen(false)}
+      <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+        <SheetContent side="left" showCloseButton={false} className="w-80 max-w-[90vw] overflow-y-auto p-5">
+          <ListingsFilters
+            locations={locations}
+            onClose={() => setFiltersOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-80 max-w-[90vw] bg-card shadow-xl overflow-y-auto">
-            <div className="p-5">
-              <ListingsFilters
-                locations={locations}
-                onClose={() => setFiltersOpen(false)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
+        </SheetContent>
+      </Sheet>
 
       {/* ── Main content ── */}
       <div className="flex-1 min-w-0 flex flex-col gap-0">
@@ -231,7 +224,7 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
           <>
             <div className={
               view === 'grid'
-                ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 pt-5'
+                ? 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5 pt-5'
                 : 'flex flex-col gap-3 pt-5'
             }>
               {allListings.map(listing => (

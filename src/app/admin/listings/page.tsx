@@ -84,7 +84,7 @@ export default async function AdminListingsPage({
   const { data: listings, count } = await query
 
   return (
-    <div className="p-6">
+    <div className="p-6 max-w-10xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">{t('listings_title')}</h1>
         <span className="text-sm text-muted-foreground">{t('listings_total', { count: count ?? 0 })}</span>

@@ -7,6 +7,7 @@ import { Search, Trash2, ArrowRight, Mail, Trash } from 'lucide-react'
 import { toast } from 'sonner'
 import type { SavedSearch } from '@/types/database'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import {
   deleteSavedSearch,
@@ -45,37 +46,6 @@ function FilterSummary({ filters }: { filters: Record<string, unknown> }) {
   ) : null
 }
 
-function DeleteAllDialog({
-  count,
-  onConfirm,
-  onCancel,
-  isPending,
-}: {
-  count: number
-  onConfirm: () => void
-  onCancel: () => void
-  isPending: boolean
-}) {
-  const t = useTranslations('saved_search')
-  const tc = useTranslations('cabinet')
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="bg-card rounded-2xl border shadow-xl p-6 max-w-sm mx-4 w-full">
-        <p className="font-semibold text-base mb-1">{t('delete_all_confirm')}</p>
-        <p className="text-sm text-destructive mb-1">{t('delete_all_warning')}</p>
-        <p className="text-xs text-muted-foreground mb-5">{count} {tc('searches_tab')}</p>
-        <div className="flex gap-3 justify-end">
-          <Button variant="outline" size="sm" onClick={onCancel} disabled={isPending}>
-            {t('cancel')}
-          </Button>
-          <Button variant="destructive" size="sm" onClick={onConfirm} disabled={isPending}>
-            {isPending ? '...' : tc('delete')}
-          </Button>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export function SavedSearchesTab({ savedSearches: initial }: Props) {
   const t = useTranslations('saved_search')
@@ -146,14 +116,21 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
 
   return (
     <>
-      {showDeleteAll && (
-        <DeleteAllDialog
-          count={items.length}
-          onConfirm={handleDeleteAll}
-          onCancel={() => setShowDeleteAll(false)}
-          isPending={isPendingDeleteAll}
-        />
-      )}
+      <Dialog open={showDeleteAll} onOpenChange={(open) => !open && setShowDeleteAll(false)}>
+        <DialogContent showCloseButton={false}>
+          <p className="font-semibold text-base">{t('delete_all_confirm')}</p>
+          <p className="text-sm text-destructive">{t('delete_all_warning')}</p>
+          <p className="text-xs text-muted-foreground">{items.length} {tc('searches_tab')}</p>
+          <div className="flex gap-3 justify-end pt-1">
+            <Button variant="outline" size="sm" onClick={() => setShowDeleteAll(false)} disabled={isPendingDeleteAll}>
+              {t('cancel')}
+            </Button>
+            <Button variant="destructive" size="sm" onClick={handleDeleteAll} disabled={isPendingDeleteAll}>
+              {isPendingDeleteAll ? '...' : tc('delete')}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <div className="saved-searches-tab flex flex-col gap-3">
         {/* Delete all button */}

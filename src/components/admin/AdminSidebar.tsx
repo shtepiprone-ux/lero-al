@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { AdminLocaleSwitcher } from '@/components/admin/AdminLocaleSwitcher'
 
 function NavItem({ href, label, icon: Icon, active, onClick }: {
@@ -98,13 +100,15 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
           </span>
         </Link>
         {onClose && (
-          <button
+          <Button
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            variant="ghost"
+            size="icon"
+            className="lg:hidden"
             aria-label={t('aria_close')}
           >
             <X className="h-4 w-4" />
-          </button>
+          </Button>
         )}
       </div>
 
@@ -169,17 +173,11 @@ export function AdminSidebar({ mobileOpen = false, onMobileOpenChange, siteName 
       </aside>
 
       {/* Mobile drawer — state is lifted to AdminShell */}
-      {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex">
-          <div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-            onClick={() => onMobileOpenChange?.(false)}
-          />
-          <div className="relative w-64 shadow-2xl">
-            <SidebarContent siteName={siteName} onClose={() => onMobileOpenChange?.(false)} />
-          </div>
-        </div>
-      )}
+      <Sheet open={mobileOpen} onOpenChange={onMobileOpenChange}>
+        <SheetContent side="left" showCloseButton={false} className="w-64 p-0">
+          <SidebarContent siteName={siteName} onClose={() => onMobileOpenChange?.(false)} />
+        </SheetContent>
+      </Sheet>
     </>
   )
 }

@@ -79,7 +79,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
     <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
-        <div className="container mx-auto px-4 py-2.5">
+        <div className="container-wide py-2.5">
           <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Breadcrumb">
             <Link href={`/${locale}`} className="hover:text-foreground transition-colors">
               {tNav('home')}
@@ -90,7 +90,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-6 max-w-7xl">
+      <div className="container-wide py-6">
         <ListingsShell
           listings={(listings ?? []) as unknown as CardListingData[]}
           total={count ?? 0}

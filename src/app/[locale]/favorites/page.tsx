@@ -51,7 +51,7 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
     <div className="min-h-screen bg-background">
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
-        <div className="container mx-auto px-4 py-2.5">
+        <div className="container-wide py-2.5">
           <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Breadcrumb">
             <Link href={`/${locale}`} className="hover:text-foreground transition-colors flex items-center gap-1">
               <Home className="h-3 w-3" />
@@ -63,7 +63,7 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="container-wide py-8">
         <div className="mb-6">
           <h1 className="text-2xl font-bold">{t('page_title')}</h1>
         </div>

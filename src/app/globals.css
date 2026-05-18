@@ -342,26 +342,6 @@
    UTILITY CLASSES — Real Estate specific
    ───────────────────────────────────────────── */
 @layer utilities {
-  /* Price display */
-  .text-price {
-    color: var(--price);
-    @apply font-bold;
-  }
-
-  /* Premium gold gradient for badge */
-  .badge-premium-gradient {
-    background: linear-gradient(135deg, oklch(0.780 0.165 75), oklch(0.700 0.155 55));
-  }
-
-  /* Card hover lift */
-  .card-hover {
-    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
-  }
-
-  /* Section alternating backgrounds */
-  .section-surface-1 { background-color: var(--surface-1); }
-  .section-surface-2 { background-color: var(--surface-2); }
-
   /* Truncate lines */
   .line-clamp-2 {
     display: -webkit-box;
@@ -374,16 +354,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  /* Hero overlay — dark neutral + brand accent, not all-red */
-  .hero-overlay {
-    background: linear-gradient(
-      160deg,
-      oklch(0.100 0 0 / 88%) 0%,         /* neutral dark */
-      oklch(0.614 0.158 23 / 55%) 60%,   /* EC5447 brand tint */
-      oklch(0.100 0 0 / 82%) 100%        /* neutral dark */
-    );
   }
 
   /* Safe-area inset utilities for notched phones (viewport-fit=cover) */

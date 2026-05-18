@@ -307,7 +307,7 @@ export default async function ListingPage({ params }: Props) {
 
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
-        <div className="container mx-auto px-4 py-2.5">
+        <div className="container-wide py-2.5">
           <nav className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap" aria-label="Breadcrumb">
             <Link href={`/${locale}`} className="hover:text-foreground transition-colors">{tNav('home')}</Link>
             <span>/</span>
@@ -319,7 +319,7 @@ export default async function ListingPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pt-4 pb-6 max-w-7xl">
+      <div className="container-wide pt-4 pb-6">
         <div className="mb-5">
           <ListingBackButton locale={locale} label={t('back_to_listings')} />
         </div>

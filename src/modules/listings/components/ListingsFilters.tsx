@@ -169,19 +169,16 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')}>
           <div className="flex gap-1.5 mb-2">
             {currencies.map(cur => (
-              <button
+              <Button
                 key={cur.code}
                 type="button"
+                size="xs"
+                variant={currency === cur.code ? 'default' : 'outline'}
                 onClick={() => updateParams({ currency: cur.is_default ? null : cur.code })}
-                className={cn(
-                  'text-xs font-semibold px-3 py-1 rounded-lg border transition-colors duration-150',
-                  currency === cur.code
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'border-border text-muted-foreground hover:text-foreground'
-                )}
+                className="text-xs font-semibold"
               >
                 {cur.code}
-              </button>
+              </Button>
             ))}
           </div>
           <FilterRangeInputs

@@ -10,12 +10,12 @@ export default function ListingLoading() {
     <div className="pb-32 md:pb-20 lg:pb-8">
       {/* Breadcrumb bar */}
       <div className="bg-muted/40 border-b">
-        <div className="container mx-auto px-4 py-2.5">
+        <div className="container-wide py-2.5">
           <Skeleton className="h-4 w-52 rounded" />
         </div>
       </div>
 
-      <div className="container mx-auto px-4 pt-4 pb-6 max-w-7xl">
+      <div className="container-wide pt-4 pb-6">
         {/* Back button */}
         <div className="mb-5">
           <Skeleton className="h-8 w-36 rounded-xl" />

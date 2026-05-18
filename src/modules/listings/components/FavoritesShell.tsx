@@ -164,7 +164,7 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {displayedListings.map((listing) => (
             <ListingCard
               key={listing.id}

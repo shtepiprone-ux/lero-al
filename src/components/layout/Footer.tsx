@@ -13,7 +13,7 @@ export async function Footer() {
 
   return (
     <footer className="site-footer border-t bg-surface-2 pb-14 md:pb-0">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container-wide py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
 
           {/* Brand */}

@@ -197,3 +197,59 @@ All fixes must resolve the root architectural issue.
 - DO NOT duplicate the `normalizeSearch` function — import from `@/lib/utils`.
 - DO NOT hardcode Ukrainian or other locale strings as default prop values.
 - DO NOT create a new language-switcher component — use `LocaleSwitcher` from `@/components/shared/LocaleSwitcher`.
+
+### UI Governance Anti-Patterns (enforced after Responsive/UI Governance Epic Phase 1–2)
+
+#### Spacing
+- DO NOT use arbitrary section padding values (py-7, py-10, py-13, py-15) — use the canonical scale: `py-8 md:py-12`, `py-12 md:py-16`, or `py-16 md:py-24`.
+- DO NOT introduce random card padding — use `p-3` for compact cards and `p-5` for standard admin/content cards.
+
+#### Typography
+- DO NOT deviate from the canonical type scale — see docs/ui-rules.md §2.
+- DO NOT add a `text-2xl` or larger on mobile-reachable text without a responsive step (must start at `text-xl` or smaller on base).
+- DO NOT use `text-[10px]` for anything other than badges and micro-labels.
+
+#### Buttons
+- DO NOT use raw `<button>` for interactive UI — always use `Button`.
+- DO NOT use `size="sm"` or smaller on mobile-reachable elements.
+- DO NOT use arbitrary padding overrides on `Button` via className.
+
+#### Inputs
+- DO NOT create local input wrappers with custom height — use canonical `Input`.
+- DO NOT override `Input` height via direct className.
+
+#### Icons
+- DO NOT use icon sizes outside the canonical map (h-3, h-3.5, h-4, h-5, h-6, h-12).
+- DO NOT import from a different icon library — lucide-react only.
+- DO NOT set h-* on icons inside Button — CVA handles it automatically.
+- DO NOT forget `shrink-0` on icons in flex containers.
+
+#### Layout & Containers
+- DO NOT leave any public page without a max-width container constraint.
+- DO NOT use `container mx-auto px-4` alone on new pages — use `.container-wide` for public pages.
+- DO NOT let listing grids stop at `xl:grid-cols-3` — always add `2xl:grid-cols-4`.
+- DO NOT create local container wrappers with arbitrary max-widths — use canonical tokens.
+- DO NOT create duplicated responsive grid logic — follow the canonical grid patterns in docs/ui-rules.md.
+
+#### Responsive
+- DO NOT use JavaScript viewport detection for responsive logic (typeof window, useWindowSize, etc.).
+- DO NOT use arbitrary min-width or max-width in responsive className for breakpoints.
+- DO NOT create custom overlay drawers — use shadcn `Sheet` for all mobile panels and drawers.
+- DO NOT duplicate the mobile drawer pattern — one canonical implementation per use case.
+- DO NOT use inline responsive hacks (overflow-hidden to mask layout bugs, emergency z-index overrides).
+
+#### Huge Desktop
+- DO NOT allow any page to stretch full-width at 2560px without a max-width constraint.
+- DO NOT allow listings grids to render with only 3 columns at 1920px+ — add 2xl: step.
+- DO NOT create whitespace wastelands — always bound content with `.container-wide` or `max-w-8xl`.
+
+#### Primitive Duplication
+- DO NOT create local tab implementations — use shadcn `Tabs` / `TabsList` / `TabsTrigger`.
+- DO NOT create local accordion implementations — use shadcn `Accordion`.
+- DO NOT duplicate the mobile drawer pattern — use `Sheet` from `@/components/ui/sheet`.
+- DO NOT use custom `div.fixed.inset-0.z-50` for mobile drawers or modals — use `Sheet` or `Dialog`.
+- DO NOT inline the card pattern (`bg-card rounded-2xl border shadow-sm`) more than once — extract to a component or use shadcn `Card`.
+- DO NOT add confirmation popups as raw `div.fixed.inset-0` — use `Dialog` from `@/components/ui/dialog`.
+- DO NOT use `container mx-auto px-4` alone on new public pages — use `.container-wide`.
+- DO NOT forget `2xl:grid-cols-4` on listing card grids.
+- DO NOT add dead utility classes to globals.css without active consumers.

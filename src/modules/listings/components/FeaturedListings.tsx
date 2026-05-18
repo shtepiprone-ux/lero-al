@@ -27,7 +27,7 @@ export function FeaturedListings() {
 
   if (loading) {
     return (
-      <div className="featured-listings grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="featured-listings grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}
       </div>
     )
@@ -40,7 +40,7 @@ export function FeaturedListings() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
       {listings.map((listing, index) => (
         <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} />
       ))}

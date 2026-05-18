@@ -174,11 +174,21 @@ All fixes must resolve the root architectural issue.
 
 ### Filter Architecture Anti-Patterns (enforced after Task 50.2)
 - DO NOT duplicate toggle rendering — use `FilterToggleGroup` / `FilterMultiToggle` / `FilterRoomsRow`.
-- DO NOT duplicate filter normalization — `filterEngine.ts` is the canonical layer (`parseSearchParams`, `serializeFilters`, `countActiveFilters`).
+- DO NOT duplicate filter normalization — `filterEngine.ts` is the canonical layer (`parseSearchParams`, `countActiveFilters`, `getFilterVisibility`).
 - DO NOT put URL logic inside reusable filter primitives — primitives must be stateless and URL-agnostic.
 - DO NOT put homepage draft-state logic inside reusable filter primitives.
 - DO NOT create a mega-filter component merging FiltersPanel and ListingsFilters — they have irreconcilably different state models (local batch vs URL immediate).
 - DO NOT duplicate coercion logic for filter values — use `filterEngine.ts` utilities.
+
+### Filter Architecture Anti-Patterns (enforced after Task 50.4 / Task 53)
+- DO NOT use `window.location.href` for navigation within the app — always use `router.push` from `next/navigation`.
+- DO NOT put URL orchestration inside UI primitives or adapter hooks — URL updates must happen at the adapter layer only.
+- DO NOT leave stale filter values from hidden sections in local state — when property type changes, clear all fields for sections that are no longer visible (`handlePropertyTypeChange` must delete from `{ ...prev, property_type: pt }`, not from an empty object).
+- DO NOT count currency as an active filter in badge counts — exclude `currency` key from `activeFiltersCount` calculations.
+- DO NOT export unused utilities from canonical engine files — `filterEngine.ts` exports must all have active consumers.
+- DO NOT mix batch/immediate UX architecture — Homepage uses local draft state + Apply; Listings uses URL-immediate per-change updates; these models must remain isolated.
+- DO NOT introduce hydration workaround hacks — fix root causes via deterministic rendering/data layer.
+- DO NOT duplicate filter lifecycle logic between adapters — shared behavior belongs in `filterEngine.ts` (`getFilterVisibility`, `countActiveFilters`, `parseSearchParams`).
 
 ### UI Primitive Anti-Patterns (enforced after Task 50)
 - DO NOT create local button clones — use `Button` from `@/components/ui/button` with canonical `size` variants (xs, sm, default, lg, xl, icon, icon-sm, icon-xl).

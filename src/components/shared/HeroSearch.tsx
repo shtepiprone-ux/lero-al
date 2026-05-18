@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -16,6 +17,7 @@ export function HeroSearch() {
   const tl = useTranslations('listing')
   const th = useTranslations('home')
   const locale = useLocale()
+  const router = useRouter()
 
   const { locations } = useLocations()
 
@@ -31,7 +33,8 @@ export function HeroSearch() {
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [filters, setFilters] = useState<FilterValues>({})
 
-  const activeFiltersCount = Object.entries(filters).filter(([, v]) => {
+  const activeFiltersCount = Object.entries(filters).filter(([key, v]) => {
+    if (key === 'currency') return false
     if (Array.isArray(v)) return v.length > 0
     return v !== undefined && v !== ''
   }).length
@@ -69,7 +72,7 @@ export function HeroSearch() {
     if (f.date_to) params.set('date_to', f.date_to)
     if (f.listing_id) params.set('listing_id', f.listing_id)
 
-    window.location.href = `/${locale}/listings?${params.toString()}`
+    router.push(`/${locale}/listings?${params.toString()}`)
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {

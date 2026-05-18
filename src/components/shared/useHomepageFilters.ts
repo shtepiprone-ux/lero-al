@@ -65,13 +65,15 @@ export function useHomepageFilters({
       offer_type:         ['offer_type'],
       purchase_conditions:['purchase_conditions'],
     }
-    const cleared: Partial<FilterValues> = { property_type: pt }
-    ALL_FILTER_SECTIONS.forEach(section => {
-      if (!applicable.includes(section)) {
-        sectionFields[section].forEach(field => { delete cleared[field] })
-      }
+    setLocal(prev => {
+      const next = { ...prev, property_type: pt }
+      ALL_FILTER_SECTIONS.forEach(section => {
+        if (!applicable.includes(section)) {
+          sectionFields[section].forEach(field => { delete next[field] })
+        }
+      })
+      return next
     })
-    setLocal(prev => ({ ...prev, ...cleared }))
   }
 
   function handleApply() {

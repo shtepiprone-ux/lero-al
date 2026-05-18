@@ -2,10 +2,10 @@
  * Canonical Filter + Query Engine — Phase 3 of the Dynamic Form Engine.
  *
  * Single source of truth for:
- *  – URL search-param parsing     → parseSearchParams()
+ *  – URL search-param parsing          → parseSearchParams()
  *  – Supabase query filter application → applyListingFilters()
- *  – URL serialization            → serializeFilters()
- *  – Active filter count          → countActiveFilters()
+ *  – Active filter count               → countActiveFilters()
+ *  – Filter section visibility         → getFilterVisibility()
  *
  * Replaces duplicated procedural filter logic previously in:
  *  – src/app/api/listings/route.ts
@@ -269,50 +269,6 @@ export function applyListingFilters<Q>(baseQuery: Q, filters: ParsedFilters): Q 
   }
 
   return q as Q
-}
-
-// ── Serialize filters to URL params ──────────────────────────────────────────
-
-/**
- * Serializes a ParsedFilters object back to URLSearchParams for URL generation.
- * Omits default/empty values so URLs stay clean.
- */
-export function serializeFilters(filters: Partial<ParsedFilters>): URLSearchParams {
-  const p = new URLSearchParams()
-  const set  = (k: string, v: string | undefined) => { if (v)  p.set(k, v) }
-  const setN = (k: string, v: number | undefined) => { if (v !== undefined) p.set(k, String(v)) }
-
-  if (filters.tab === 'closed')                   p.set('tab', 'closed')
-  set('type',          filters.listingType)
-  set('property_type', filters.propertyType)
-  setN('location_id',  filters.locationId)
-  if (filters.sort && filters.sort !== 'newest')  p.set('sort', filters.sort)
-  if (filters.page && filters.page > 1)           p.set('page', String(filters.page))
-  if (filters.currency === 'EUR')                 p.set('currency', 'EUR')
-  set('date_from',  filters.dateFrom)
-  set('date_to',    filters.dateTo)
-  set('listing_id', filters.listingId)
-
-  if (filters.rooms?.length)              p.set('rooms',              filters.rooms.join(','))
-  setN('price_min',           filters.priceMin)
-  setN('price_max',           filters.priceMax)
-  setN('area_min',            filters.areaMin)
-  setN('area_max',            filters.areaMax)
-  setN('floor_min',           filters.floorMin)
-  setN('floor_max',           filters.floorMax)
-  setN('floors_total_min',    filters.floorsTotalMin)
-  setN('floors_total_max',    filters.floorsTotalMax)
-  setN('year_built_min',      filters.yearBuiltMin)
-  setN('year_built_max',      filters.yearBuiltMax)
-  set('condition',  filters.condition)
-  set('heating',    filters.heating)
-  set('wall_type',  filters.wallType)
-  set('market_type',filters.marketType)
-  if (filters.layoutFeatures?.length)     p.set('layout_features',     filters.layoutFeatures.join(','))
-  set('offer_type', filters.offerType)
-  if (filters.purchaseConditions?.length) p.set('purchase_conditions', filters.purchaseConditions.join(','))
-
-  return p
 }
 
 // ── Filter section visibility ─────────────────────────────────────────────────

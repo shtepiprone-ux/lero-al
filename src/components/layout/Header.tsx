@@ -262,14 +262,14 @@ export function Header() {
                   <div className="border-t pt-4 flex flex-col gap-2">
                     <Link
                       href={`/${locale}/auth/login`}
-                      className={cn(buttonVariants({ variant: 'outline' }), 'w-full justify-center')}
+                      className={cn(buttonVariants({ variant: 'outline', size: 'xl' }), 'w-full justify-center')}
                       onClick={() => setMobileOpen(false)}
                     >
                       {t('login')}
                     </Link>
                     <Link
                       href={`/${locale}/auth/register`}
-                      className={cn(buttonVariants(), 'w-full justify-center')}
+                      className={cn(buttonVariants({ size: 'xl' }), 'w-full justify-center')}
                       onClick={() => setMobileOpen(false)}
                     >
                       {t('register')}
@@ -280,13 +280,14 @@ export function Header() {
                 {/* Mobile logout */}
                 {user && (
                   <div className="border-t pt-4">
-                    <button
+                    <Button
+                      variant="ghost"
                       onClick={() => { handleLogout(); setMobileOpen(false) }}
-                      className="flex items-center gap-2 text-sm text-destructive hover:text-destructive/80 transition-colors min-h-[44px]"
+                      className="w-full justify-start gap-2 text-destructive hover:text-destructive/80 hover:bg-destructive/5 min-h-[44px]"
                     >
                       <LogOut className="h-4 w-4" />
                       {t('logout')}
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>

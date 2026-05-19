@@ -68,4 +68,4 @@ playwright/.auth/
 .claude/settings.local.json
 
 #Claude docs
-.claude/
+.claude/tools/orchestrator/

@@ -2,6 +2,19 @@
 
 ## Sprint 0 — Critical Bugfix / Regression Stabilization
 
+**2026-05-19 — Fix mobile spacing and auth buttons (Task 90) ✅ COMPLETED**
+- **Root cause**: Mobile auth buttons in the header Sheet drawer used `buttonVariants()` default size (h-10 = 40px), below the 44px touch target guideline. Mobile logout used a raw `<button>` instead of the shared `Button` component (primitive violation).
+- **Fix**: Mobile login/register links upgraded to `size: 'xl'` (h-11 = 44px). Logout replaced with `Button variant="ghost"` component. Desktop auth buttons were already compliant — unchanged.
+- **Files changed**: `src/components/layout/Header.tsx`
+- **Lint**: 0 errors / 6 warnings (all pre-existing).
+- **Typecheck**: 4 pre-existing errors in test files, 0 new.
+- **Governance**: ✅ All categories pass. Primitives **improved**: H:57 → H:56 (raw logout button removed).
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md`](sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md)
+
+---
+
 **2026-05-19 — Fix dropdown clipping inconsistencies (Task 89) ✅ COMPLETED**
 - **Root cause**: Admin form cards with `overflow-hidden` clipped `Combobox` and `LocationCombobox` absolute-positioned dropdowns. 4 affected locations in `AdminUserProfile.tsx` and `AdminUserCreate.tsx`.
 - **Fix**: Applied existing `allowOverflow` pattern (`overflow-visible`) to the affected cards. `AdminUserProfile.tsx`: added `allowOverflow` to `basic_info` and `account_status` SectionCards. `AdminUserCreate.tsx`: changed `overflow-hidden` → `overflow-visible` on the basic_info and location cards.
@@ -523,6 +536,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Sprint 0 — Fix mobile spacing and auth buttons | Task 90 | [sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md](sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md) |
 | 2026-05-19 | Sprint 0 — Fix dropdown clipping inconsistencies | Task 89 | [sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md](sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md) |
 | 2026-05-19 | Sprint 0 — Fix guest favorite behavior | Task 88 | [sessions/2026-05-19-task-88-guest-favorite-behavior.md](sessions/2026-05-19-task-88-guest-favorite-behavior.md) |
 | 2026-05-19 | Sprint 0 — Fix Ukrainian localization terminology | Task 87 | [sessions/2026-05-19-task-87-ukrainian-localization-terminology.md](sessions/2026-05-19-task-87-ukrainian-localization-terminology.md) |

@@ -2,6 +2,20 @@
 
 ## Sprint 0 — Critical Bugfix / Regression Stabilization
 
+**2026-05-19 — Fix guest favorite behavior (Task 88) ✅ COMPLETED**
+- **Root cause**: `FavoriteButton.tsx` called `setFavorited(nextState)` (optimistic toggle) before any auth check. For guests, server returned `{ error: 'unauthenticated' }` causing a rollback flash.
+- **Fix**: Added `useAuth()` guard at the top of `handleClick`. If `!user && status === 'unauthenticated'`, redirect to `/${locale}/auth/login` and return, preventing any optimistic state change. During `status === 'refreshing'`, do nothing (avoids false redirect on session restore).
+- **Files changed**: `src/modules/listings/components/FavoriteButton.tsx`
+- **Lint**: 0 errors / 6 warnings (all pre-existing).
+- **Typecheck**: 4 pre-existing errors in test files, 0 new.
+- **Governance**: ✅ All categories pass at baseline.
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+- **Note**: `ListingContact` (listing detail) was already correctly guarding guests — no change there.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-88-guest-favorite-behavior.md`](sessions/2026-05-19-task-88-guest-favorite-behavior.md)
+
+---
+
 **2026-05-19 — Fix Ukrainian localization terminology (Task 87) ✅ COMPLETED**
 - **Root cause**: 2 typos in `messages/uk.json`: (1) `"Обовязкова"` missing apostrophe (should be `"Обов'язкова"`); (2) `"Аккаунт"` (Russian double-к) should be `"Акаунт"`. Known bad terms "язик"/"Шкіп" were NOT present — already correct before this task.
 - **Fix**: Corrected both typos in `messages/uk.json`. No other locales touched.
@@ -496,6 +510,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Sprint 0 — Fix guest favorite behavior | Task 88 | [sessions/2026-05-19-task-88-guest-favorite-behavior.md](sessions/2026-05-19-task-88-guest-favorite-behavior.md) |
 | 2026-05-19 | Sprint 0 — Fix Ukrainian localization terminology | Task 87 | [sessions/2026-05-19-task-87-ukrainian-localization-terminology.md](sessions/2026-05-19-task-87-ukrainian-localization-terminology.md) |
 | 2026-05-19 | Sprint 0 — Fix currency label translation issue | Task 86 | [sessions/2026-05-19-task-86-currency-label-translation-issue.md](sessions/2026-05-19-task-86-currency-label-translation-issue.md) |
 | 2026-05-19 | Sprint 0 — Fix Italian localization fallback to Ukrainian | Task 85 | [sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md](sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md) |

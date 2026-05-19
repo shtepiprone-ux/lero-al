@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useTransition, useEffect, useRef } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
+import { useRouter } from 'next/navigation'
 import { Heart } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { toggleFavorite } from '@/modules/listings/actions/toggleFavorite'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 
 interface FavoriteButtonProps {
   listingId: string
@@ -17,6 +19,9 @@ interface FavoriteButtonProps {
 
 export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel }: FavoriteButtonProps) {
   const tc = useTranslations('common')
+  const { user, status } = useAuth()
+  const router = useRouter()
+  const locale = useLocale()
   const [favorited, setFavorited] = useState(isFavorited)
   const [isPending, startTransition] = useTransition()
 
@@ -46,6 +51,16 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     e.preventDefault()
     e.stopPropagation()
     if (disabled) return
+
+    // Guest guard: redirect to login without toggling favorite state.
+    // Only redirect when definitively unauthenticated — do nothing during in-flight
+    // auth transitions (refreshing) to avoid false redirects on session restore.
+    if (!user) {
+      if (status === 'unauthenticated') {
+        router.push(`/${locale}/auth/login`)
+      }
+      return
+    }
 
     const previousState = favorited
     const nextState = !favorited

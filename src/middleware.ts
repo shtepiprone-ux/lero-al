@@ -120,6 +120,23 @@ export async function middleware(request: NextRequest) {
     response.cookies.set(name, value, options)
   }
 
+  // Sync admin-locale cookie from the URL locale on every public-site request.
+  // Ensures the admin panel opens in the same locale even when users arrive
+  // via direct URL / bookmark rather than clicking the locale switcher.
+  const LOCALE_IN_PATH = /^\/(sq|en|uk|it)(\/|$)/
+  const localeFromPath = LOCALE_IN_PATH.exec(pathname)?.[1]
+  if (localeFromPath) {
+    const existingAdminLocale = request.cookies.get('admin-locale')?.value
+    if (existingAdminLocale !== localeFromPath) {
+      response.cookies.set('admin-locale', localeFromPath, {
+        httpOnly: true,
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 24 * 365,
+        path: '/',
+      })
+    }
+  }
+
   if (coverUrl) {
     const variant   = resolveLinkVariant(request, !!slug)
     const linkEntry = buildLcpLinkHeader(coverUrl, variant)

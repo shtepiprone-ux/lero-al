@@ -221,7 +221,7 @@ export async function saveSettings(entries: Record<string, string>): Promise<{ e
     .upsert(rows, { onConflict: 'key' })
   if (error) {
     console.error('saveSettings failed', { error })
-    return { error: 'Не вдалось зберегти налаштування' }
+    return { error: 'save_failed' }
   }
   // Always revalidate the settings page so the admin sees fresh values.
   revalidatePath('/admin/settings')
@@ -379,7 +379,7 @@ export async function updateUserProfileFull(
   const { error } = await db.from('users').update(update).eq('id', userId)
   if (error) {
     console.error('updateUserProfileFull failed', { error, userId })
-    return { error: 'Не вдалось оновити профіль' }
+    return { error: 'update_failed' }
   }
 
   // Write status change history if status changed
@@ -428,8 +428,8 @@ export async function createAdminUser(data: {
   if (authError) {
     console.error('createAdminUser auth failed', { error: authError })
     const msg = authError.message.toLowerCase()
-    if (msg.includes('already') || msg.includes('exists')) return { error: 'Користувач з таким email вже існує' }
-    return { error: 'Не вдалось створити користувача' }
+    if (msg.includes('already') || msg.includes('exists')) return { error: 'email_already_exists' }
+    return { error: 'create_failed' }
   }
 
   const { error: profileError } = await db.from('users').upsert({
@@ -453,7 +453,7 @@ export async function createAdminUser(data: {
   if (profileError) {
     console.error('createAdminUser profile failed', { error: profileError })
     await db.auth.admin.deleteUser(authData.user.id).catch(() => {})
-    return { error: 'Не вдалось створити профіль' }
+    return { error: 'create_profile_failed' }
   }
 
   try {
@@ -471,13 +471,13 @@ export async function softDeleteUser(userId: string): Promise<{ error?: string }
   if (!me) return { error: 'Unauthorized' }
   const supabase = await createClient()
   const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()
-  if (myProfile?.role !== 'admin') return { error: 'Тільки адміністратор може видаляти профілі' }
+  if (myProfile?.role !== 'admin') return { error: 'admin_only' }
 
   const db = createAdminClient()
   const { error } = await db.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', userId)
   if (error) {
     console.error('softDeleteUser failed', { error, userId })
-    return { error: 'Не вдалось видалити профіль' }
+    return { error: 'delete_failed' }
   }
 
   // Archive all non-terminal listings through the mutation gateway so they no longer appear as contactable.
@@ -501,7 +501,7 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
   if (!me) return { error: 'Unauthorized' }
   const supabase = await createClient()
   const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()
-  if (myProfile?.role !== 'admin') return { error: 'Тільки адміністратор може видаляти профілі' }
+  if (myProfile?.role !== 'admin') return { error: 'admin_only' }
 
   const db = createAdminClient()
 
@@ -521,14 +521,14 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
   const { error: profileError } = await db.from('users').delete().eq('id', userId)
   if (profileError) {
     console.error('hardDeleteUser profile failed', { error: profileError, userId })
-    return { error: 'Не вдалось видалити профіль' }
+    return { error: 'delete_failed' }
   }
 
   // 3. Remove from Supabase Auth (permanent — cannot be undone).
   const { error: authError } = await db.auth.admin.deleteUser(userId)
   if (authError) {
     console.error('hardDeleteUser auth failed', { error: authError, userId })
-    return { error: 'Профіль видалено, але не вдалось видалити обліковий запис' }
+    return { error: 'profile_deleted_auth_failed' }
   }
 
   revalidatePath('/admin/users')
@@ -543,11 +543,11 @@ export async function uploadUserAvatar(userId: string, formData: FormData): Prom
   await assertAdminAccess()
 
   const file = formData.get('avatar') as File | null
-  if (!file) return { error: 'Файл не надано' }
+  if (!file) return { error: 'no_file' }
 
   const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-  if (!validTypes.includes(file.type)) return { error: 'Тільки JPG, PNG або WEBP' }
-  if (file.size > 2 * 1024 * 1024) return { error: 'Максимальний розмір файлу — 2 МБ' }
+  if (!validTypes.includes(file.type)) return { error: 'invalid_type' }
+  if (file.size > 2 * 1024 * 1024) return { error: 'file_too_large' }
 
   const bytes = await file.arrayBuffer()
   console.log('[uploadUserAvatar] received bytes:', bytes.byteLength, 'type:', file.type, 'userId:', userId)
@@ -557,20 +557,20 @@ export async function uploadUserAvatar(userId: string, formData: FormData): Prom
     const result = await uploadToCloudinary(bytes, file.type, 'avatars')
     console.log('[uploadUserAvatar] Cloudinary ok:', result.width, 'x', result.height, result.url.slice(0, 60))
     if (result.width && result.height && (result.width !== 256 || result.height !== 256)) {
-      return { error: `Розмір зображення: ${result.width}×${result.height} (потрібно 256×256)` }
+      return { error: 'invalid_dimensions' }
     }
     cloudUrl = result.url
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e)
     console.error('[uploadUserAvatar] Cloudinary failed:', msg, '| userId:', userId, '| bytes:', bytes.byteLength)
-    return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'Помилка завантаження аватара' }
+    return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'upload_failed' }
   }
 
   const db = createAdminClient()
   const { error: updateError } = await db.from('users').update({ avatar_url: cloudUrl }).eq('id', userId)
   if (updateError) {
     console.error('[uploadUserAvatar] DB update failed', { error: updateError, userId })
-    return { error: 'Аватар завантажено, але не вдалось зберегти — спробуйте ще раз' }
+    return { error: 'db_save_failed' }
   }
 
   revalidatePath(`/admin/users/${userId}`)
@@ -583,7 +583,7 @@ export async function removeUserAvatar(userId: string): Promise<{ error?: string
   const { error } = await db.from('users').update({ avatar_url: null }).eq('id', userId)
   if (error) {
     console.error('removeUserAvatar failed', { error, userId })
-    return { error: 'Не вдалось видалити аватар' }
+    return { error: 'delete_failed' }
   }
   revalidatePath(`/admin/users/${userId}`)
   return {}
@@ -605,7 +605,7 @@ export async function addLocation(data: {
 
   if (error) {
     console.error('addLocation failed', { error })
-    return { error: 'Не вдалось додати населений пункт' }
+    return { error: 'add_failed' }
   }
 
   revalidatePath('/admin/users')
@@ -625,7 +625,7 @@ export async function approveLocationRequest(
 
   if (error) {
     console.error('approveLocationRequest failed', { error, userId })
-    return { error: 'Не вдалось підтвердити запит' }
+    return { error: 'confirm_failed' }
   }
 
   revalidatePath(`/admin/users/${userId}`)
@@ -641,7 +641,7 @@ export async function rejectLocationRequest(userId: string): Promise<{ error?: s
 
   if (error) {
     console.error('rejectLocationRequest failed', { error, userId })
-    return { error: 'Не вдалось відхилити запит' }
+    return { error: 'reject_failed' }
   }
 
   revalidatePath(`/admin/users/${userId}`)

@@ -73,16 +73,16 @@ export async function POST(req: NextRequest) {
   const targetUserId = (formData.get('userId') as string | null) ?? null
 
   if (!file) {
-    return NextResponse.json({ error: 'Файл не надано' }, { status: 400 })
+    return NextResponse.json({ error: 'no_file' }, { status: 400 })
   }
 
   // File validation
   const validTypes = ['image/jpeg', 'image/png', 'image/webp']
   if (!validTypes.includes(file.type)) {
-    return NextResponse.json({ error: 'Тільки JPG, PNG або WEBP' }, { status: 400 })
+    return NextResponse.json({ error: 'invalid_type' }, { status: 400 })
   }
   if (file.size > 2 * 1024 * 1024) {
-    return NextResponse.json({ error: 'Максимальний розмір файлу — 2 МБ' }, { status: 400 })
+    return NextResponse.json({ error: 'file_too_large' }, { status: 400 })
   }
 
   // Authorization
@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
   console.log('[upload-avatar] bytes:', bytes.byteLength, 'type:', file.type, 'for:', uploadForUserId)
 
   if (bytes.byteLength === 0) {
-    return NextResponse.json({ error: 'Файл порожній (0 байт) — спробуйте ще раз' }, { status: 400 })
+    return NextResponse.json({ error: 'file_empty' }, { status: 400 })
   }
 
   // Upload to Cloudinary
@@ -109,7 +109,7 @@ export async function POST(req: NextRequest) {
     const result = await uploadToCloudinary(bytes, file.type, 'avatars')
     console.log('[upload-avatar] Cloudinary ok:', result.width, 'x', result.height)
     if (result.width && result.height && (result.width !== 256 || result.height !== 256)) {
-      return NextResponse.json({ error: `Розмір: ${result.width}×${result.height} (потрібно 256×256)` }, { status: 400 })
+      return NextResponse.json({ error: 'invalid_dimensions' }, { status: 400 })
     }
     cloudUrl = result.url
   } catch (e) {
@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
   const { error: updateError } = await db.from('users').update({ avatar_url: cloudUrl }).eq('id', uploadForUserId)
   if (updateError) {
     console.error('[upload-avatar] DB update failed:', updateError)
-    return NextResponse.json({ error: 'Аватар завантажено але не вдалось зберегти URL' }, { status: 500 })
+    return NextResponse.json({ error: 'db_save_failed' }, { status: 500 })
   }
 
   // Cache invalidation

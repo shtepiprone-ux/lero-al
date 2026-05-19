@@ -47,7 +47,7 @@ export async function updateCabinetProfile(data: {
 
   if (error) {
     console.error('updateCabinetProfile failed', { error, userId })
-    return { error: 'Помилка збереження профілю' }
+    return { error: 'save_failed' }
   }
 
   revalidatePath('/cabinet')
@@ -227,7 +227,7 @@ export async function deleteOwnAccount(): Promise<{ error?: string }> {
 
   if (userError) {
     console.error('deleteOwnAccount: user soft-delete failed', { error: userError, userId })
-    return { error: 'Не вдалось видалити акаунт' }
+    return { error: 'delete_failed' }
   }
 
   // Write status history entry
@@ -295,11 +295,11 @@ export async function uploadCabinetAvatar(formData: FormData): Promise<{ url?: s
   if (!userId) return { error: 'Unauthorized' }
 
   const file = formData.get('avatar') as File | null
-  if (!file) return { error: 'Файл не надано' }
+  if (!file) return { error: 'no_file' }
 
   const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-  if (!validTypes.includes(file.type)) return { error: 'Тільки JPG, PNG або WEBP' }
-  if (file.size > 2 * 1024 * 1024) return { error: 'Максимальний розмір — 2 МБ' }
+  if (!validTypes.includes(file.type)) return { error: 'invalid_type' }
+  if (file.size > 2 * 1024 * 1024) return { error: 'file_too_large' }
 
   const bytes = await file.arrayBuffer()
   console.log('[uploadCabinetAvatar] received bytes:', bytes.byteLength, 'type:', file.type)
@@ -310,7 +310,7 @@ export async function uploadCabinetAvatar(formData: FormData): Promise<{ url?: s
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e)
     console.error('[uploadCabinetAvatar] Cloudinary failed:', msg, '| userId:', userId, '| bytes:', bytes.byteLength)
-    return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'Помилка завантаження аватара' }
+    return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'upload_failed' }
   }
 
   const supabase = await createClient()
@@ -321,7 +321,7 @@ export async function uploadCabinetAvatar(formData: FormData): Promise<{ url?: s
 
   if (error) {
     console.error('[uploadCabinetAvatar] DB update failed', { error, userId })
-    return { error: 'Аватар завантажено, але не вдалось зберегти — спробуйте ще раз' }
+    return { error: 'db_save_failed' }
   }
 
   revalidatePath('/cabinet')
@@ -516,9 +516,9 @@ export async function consumeEmailChangeToken(rawToken: string): Promise<{
     .eq('token_hash', tokenHash)
     .single()
 
-  if (!token) return { error: 'Недійсне посилання', errorCode: 'invalid' }
-  if (token.consumed_at) return { error: 'Посилання вже використано', errorCode: 'consumed' }
-  if (new Date(token.expires_at) < new Date()) return { error: 'Посилання застаріло', errorCode: 'expired' }
+  if (!token) return { error: 'invalid_link', errorCode: 'invalid' }
+  if (token.consumed_at) return { error: 'link_already_used', errorCode: 'consumed' }
+  if (new Date(token.expires_at) < new Date()) return { error: 'link_expired', errorCode: 'expired' }
 
   // Atomically consume the token and update the email
   const { error: consumeErr } = await db
@@ -527,7 +527,7 @@ export async function consumeEmailChangeToken(rawToken: string): Promise<{
     .eq('id', token.id)
     .is('consumed_at', null)
 
-  if (consumeErr) return { error: 'Помилка підтвердження', errorCode: 'invalid' }
+  if (consumeErr) return { error: 'confirmation_failed', errorCode: 'invalid' }
 
   // Update Supabase auth email
   const { error: authErr } = await db.auth.admin.updateUserById(token.user_id, {
@@ -537,7 +537,7 @@ export async function consumeEmailChangeToken(rawToken: string): Promise<{
 
   if (authErr) {
     console.error('consumeEmailChangeToken: auth update failed', { error: authErr })
-    return { error: 'Не вдалось оновити email' }
+    return { error: 'email_update_failed' }
   }
 
   // Update users table and clear pending_email

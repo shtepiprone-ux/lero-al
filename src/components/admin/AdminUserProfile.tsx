@@ -458,7 +458,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
         const uploadResult = await res.json() as { url?: string; error?: string }
         console.log('[AvatarFlow] upload_response_received', { success: !uploadResult.error, payload: uploadResult })
         if (uploadResult.error) {
-          toast.error(t('feedback.avatar_upload_failed', { error: uploadResult.error }))
+          toast.error(t('feedback.avatar_upload_exception'))
         }
       } catch (err) {
         console.log('[AvatarFlow] upload_exception', { error: String(err), mode: 'create', userId: result.userId })
@@ -497,7 +497,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       ? await hardDeleteUser(user.id)
       : await softDeleteUser(user.id)
     setDeleting(false)
-    if (result.error) { setSaveError(result.error); setShowDeleteDialog(false); return }
+    if (result.error) { setSaveError(t('feedback.save_error')); setShowDeleteDialog(false); return }
     router.push('/admin/users')
   }
 

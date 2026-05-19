@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
 import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
+import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
 
 const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
@@ -72,6 +73,13 @@ export function Header() {
     uk: t('lang_uk'),
     it: t('lang_it'),
   }
+
+  const localeOptions: ComboboxOption[] = LOCALES.map(loc => ({
+    value: loc.code,
+    label: `${loc.flag} ${loc.code.toUpperCase()}`,
+    description: langLabels[loc.code],
+  }))
+
   const { user, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -118,6 +126,17 @@ export function Header() {
           >
             <Heart className="h-4 w-4" />
           </Link>
+
+          {/* Mobile locale switcher — canonical Combobox visible at 320–639px */}
+          <Combobox
+            variant="button"
+            size="default"
+            options={localeOptions}
+            value={locale}
+            onChange={switchLocale}
+            className="w-24 sm:hidden"
+            portal
+          />
 
           {/* Notification bell — authenticated users only */}
           {user && <NotificationBell />}
@@ -245,24 +264,6 @@ export function Header() {
                     </>
                   )}
                 </nav>
-
-                {/* Mobile locale switcher */}
-                <div className="border-t pt-4">
-                  <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">{t('language')}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {LOCALES.map(loc => (
-                      <Button
-                        key={loc.code}
-                        variant={locale === loc.code ? 'default' : 'outline'}
-                        size="sm"
-                        className="min-h-[44px]"
-                        onClick={() => { switchLocale(loc.code); setMobileOpen(false) }}
-                      >
-                        {loc.flag} {langLabels[loc.code]}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
 
                 {/* Mobile auth buttons */}
                 {!user && (

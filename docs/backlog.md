@@ -1,657 +1,106 @@
 # Project Backlog
 
-## Sprint 0 — Critical Bugfix / Regression Stabilization
-
-**2026-05-19 — Fix mobile spacing and auth buttons (Task 90) ✅ COMPLETED**
-- **Root cause**: Mobile auth buttons in the header Sheet drawer used `buttonVariants()` default size (h-10 = 40px), below the 44px touch target guideline. Mobile logout used a raw `<button>` instead of the shared `Button` component (primitive violation).
-- **Fix**: Mobile login/register links upgraded to `size: 'xl'` (h-11 = 44px). Logout replaced with `Button variant="ghost"` component. Desktop auth buttons were already compliant — unchanged.
-- **Files changed**: `src/components/layout/Header.tsx`
-- **Lint**: 0 errors / 6 warnings (all pre-existing).
-- **Typecheck**: 4 pre-existing errors in test files, 0 new.
-- **Governance**: ✅ All categories pass. Primitives **improved**: H:57 → H:56 (raw logout button removed).
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md`](sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md)
-
----
-
-**2026-05-19 — Fix dropdown clipping inconsistencies (Task 89) ✅ COMPLETED**
-- **Root cause**: Admin form cards with `overflow-hidden` clipped `Combobox` and `LocationCombobox` absolute-positioned dropdowns. 4 affected locations in `AdminUserProfile.tsx` and `AdminUserCreate.tsx`.
-- **Fix**: Applied existing `allowOverflow` pattern (`overflow-visible`) to the affected cards. `AdminUserProfile.tsx`: added `allowOverflow` to `basic_info` and `account_status` SectionCards. `AdminUserCreate.tsx`: changed `overflow-hidden` → `overflow-visible` on the basic_info and location cards.
-- **Files changed**: `src/components/admin/AdminUserProfile.tsx`, `src/components/admin/AdminUserCreate.tsx`
-- **Lint**: 0 errors / 6 warnings (all pre-existing).
-- **Typecheck**: 4 pre-existing errors in test files, 0 new.
-- **Governance**: ✅ All categories pass at baseline.
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md`](sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md)
-
----
-
-**2026-05-19 — Fix guest favorite behavior (Task 88) ✅ COMPLETED**
-- **Root cause**: `FavoriteButton.tsx` called `setFavorited(nextState)` (optimistic toggle) before any auth check. For guests, server returned `{ error: 'unauthenticated' }` causing a rollback flash.
-- **Fix**: Added `useAuth()` guard at the top of `handleClick`. If `!user && status === 'unauthenticated'`, redirect to `/${locale}/auth/login` and return, preventing any optimistic state change. During `status === 'refreshing'`, do nothing (avoids false redirect on session restore).
-- **Files changed**: `src/modules/listings/components/FavoriteButton.tsx`
-- **Lint**: 0 errors / 6 warnings (all pre-existing).
-- **Typecheck**: 4 pre-existing errors in test files, 0 new.
-- **Governance**: ✅ All categories pass at baseline.
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-- **Note**: `ListingContact` (listing detail) was already correctly guarding guests — no change there.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-88-guest-favorite-behavior.md`](sessions/2026-05-19-task-88-guest-favorite-behavior.md)
-
----
-
-**2026-05-19 — Fix Ukrainian localization terminology (Task 87) ✅ COMPLETED**
-- **Root cause**: 2 typos in `messages/uk.json`: (1) `"Обовязкова"` missing apostrophe (should be `"Обов'язкова"`); (2) `"Аккаунт"` (Russian double-к) should be `"Акаунт"`. Known bad terms "язик"/"Шкіп" were NOT present — already correct before this task.
-- **Fix**: Corrected both typos in `messages/uk.json`. No other locales touched.
-- **Files changed**: `messages/uk.json`
-- **Lint**: 0 errors / 6 warnings (all pre-existing).
-- **Typecheck**: 4 pre-existing errors in test files, 0 new.
-- **Governance**: ✅ All categories pass at baseline. Key counts balanced (819 each).
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-- **Follow-up**: Hardcoded Ukrainian error strings in `cabinet/actions/index.ts` and `upload-avatar/route.ts` — out of scope, separate audit task.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-87-ukrainian-localization-terminology.md`](sessions/2026-05-19-task-87-ukrainian-localization-terminology.md)
-
----
-
-**2026-05-19 — Fix currency label translation issue (Task 86) ✅ COMPLETED**
-- **Root cause**: No active code path was passing currency code `ALL` through `t()`. Investigation confirmed all display paths use `cur.code` or `formatPrice` directly. The task risk: `common.all` = "Усі" (UK) / "Tutti" (IT) / "All" (EN) could collide if `ALL` were ever lowercased and passed to `t()`. Also: `cabinet.filter_ALL` correctly exists for the listing visibility filter "All listings" (separate from currency).
-- **Fix**: Added `normalizeCurrencyCode(code: string): string` to `src/lib/formatters.ts`, making the "currency codes are domain identifiers, not i18n keys" contract explicit. Updated `formatPrice` to use it — guarantees uppercase output even if a code arrives in non-canonical form.
-- **Files changed**: `src/lib/formatters.ts`
-- **Lint**: 0 errors / 6 warnings (all pre-existing).
-- **Typecheck**: 4 pre-existing errors in test files, 0 new.
-- **Governance**: ✅ All categories pass at baseline.
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-86-currency-label-translation-issue.md`](sessions/2026-05-19-task-86-currency-label-translation-issue.md)
-
----
-
-**2026-05-19 — Fix Italian localization fallback to Ukrainian (Task 85) ✅ COMPLETED**
-- **Root cause**: `ListingMobileCTA.tsx` had hardcoded Ukrainian `Зателефонувати` in the mobile call button label. The `listing.call` key already existed in all 4 locale files; the component simply wasn't using `useTranslations`.
-- **Fix**: Added `useTranslations('listing')` to `ListingMobileCTA` and replaced hardcoded string with `{t('call')}`. No translation keys added.
-- **Files changed**: `src/modules/listings/components/ListingMobileCTA.tsx`
-- **Lint**: 0 errors / 6 warnings (all pre-existing, 0 new).
-- **Typecheck**: 4 pre-existing errors in test files, 0 new.
-- **Governance**: ✅ All categories pass at baseline — localization/primitives/responsive/ssr.
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-- **Known remaining**: `waText` Albanian hardcode in same component (separate bug). Cabinet action Ukrainian error strings (separate concern).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md`](sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md)
-
----
-
-**2026-05-19 — Fix listing contact card for guest users (Task 84) ✅ COMPLETED**
-- **Root cause**: For guest users (anon role), RLS blocks reads on the `users` table. Owner JOIN returns `null`, and the fallback in `page.tsx` unconditionally set `deleted_at: 'deleted'` regardless of viewer auth state — causing `ListingContact` to show the "owner deleted account" message to all guests even when the owner is active.
-- **Fix**: Separated viewer auth state from owner account status.
-  - `page.tsx`: Added `isGuest = !authUser`; fallback now sets `deleted_at: null` for guests (not `'deleted'`), preserving the deleted-owner path only for authenticated viewers where null truly means the row is gone.
-  - `ListingContact.tsx`: Added `isGuest` prop and `showGuestCTA` state (`isGuest && !owner.id && !ownerDeleted`). Guests with no owner data now see a "Sign in to contact the owner" CTA (LogIn icon + description + login button), not the "owner deleted" notice.
-  - Mobile bottom bar updated to show a "Sign in" button for guests instead of empty space.
-  - 3 new translation keys (`contact_guest_title`, `contact_guest_desc`, `contact_guest_cta`) added to all 4 locales (`sq`, `en`, `uk`, `it`).
-- **Files changed**:
-  - `src/app/[locale]/listings/[slug]/page.tsx`
-  - `src/modules/listings/components/ListingContact.tsx`
-  - `messages/en.json`
-  - `messages/sq.json`
-  - `messages/uk.json`
-  - `messages/it.json`
-- **Lint**: 0 errors / 6 warnings (all pre-existing, 0 new).
-- **Typecheck**: 4 pre-existing errors in test files (`@testing-library/react`), 0 new errors.
-- **Governance**: ✅ All categories pass, no regressions — localization/primitives/responsive/ssr all at baseline.
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md`](sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md)
-
----
+> Lightweight index. Full per-task detail lives in `docs/sessions/`. Do **not** paste multi-line per-task blocks into this file — see "Backlog & Session Log Rules" in `docs/ai-behavior.md`. Target: ~80 lines of active content above the Session Archive table.
 
 ## Last Session
-**2026-05-19 — Sprint 1 CLOSED: Remove Google Translate API and DeepL API (Task 102) ✅ COMPLETED**
-- **Investigation**: No npm packages for Google/DeepL (pure `fetch()` implementation). No env vars in `.env.local` or docs. Only `src/lib/translation/providers.ts` had the code.
-- **Fix**: Removed `GoogleTranslateProvider` and `DeepLProvider` classes from `providers.ts`. Simplified `getTranslationProvider()` to always return `MyMemoryProvider`. Updated header comment.
-- **Files changed**: `src/lib/translation/providers.ts`.
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
-- **Sprint 1 status**: All Tasks 91–102 COMPLETED ✅
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-102-remove-translate-apis.md`](sessions/2026-05-19-task-102-remove-translate-apis.md)
+**2026-05-19 — Task 106 — Epic A.4 — Mobile Locale Switcher to Header ✅**
 
----
+- Canonical `Combobox` (`variant="button"`, `size="default"` = 44px touch target, `portal`) added to header with `sm:hidden`.
+- Trigger shows compact `🇦🇱 SQ`; dropdown shows full localized language name as `description`.
+- Duplicate locale button grid removed from hamburger drawer.
+- Desktop `LocaleSwitcher` (`hidden sm:flex`) unchanged — zero regressions.
+- lint: 0 errors / 5 pre-existing warnings · governance:localization PASS.
 
-**2026-05-19 — Sprint 1: Hide "Переглянути всі" when Premium section is empty (Task 101) ✅ COMPLETED**
-- **Root cause**: "View all" link was in `page.tsx` (Server Component) and always rendered regardless of data. `FeaturedListings` (Client Component) had the data, but the parent couldn't know.
-- **Fix**: Moved section heading + conditional "View all" into `FeaturedListings`. Link renders only when `!loading && listings.length > 0`. Removed standalone header from `page.tsx`. No new i18n keys needed.
-- **Files changed**: `FeaturedListings.tsx`, `src/app/[locale]/page.tsx`.
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+→ [Task 106 session log](sessions/2026-05-19-task-106-mobile-locale-switcher-header.md)
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-101-hide-view-all-empty.md`](sessions/2026-05-19-task-101-hide-view-all-empty.md)
+**Previous: Task 105 — Epic A.3 — Locale Persistence Site ↔ Admin ✅**
 
----
+- Root cause: `admin-locale` cookie only set on explicit locale-switcher click, not on direct URL navigation.
+- Fix: middleware now syncs `admin-locale` from the URL locale on every public-site request (only when changed).
+- Fixes race condition where `setAdminLocale` server action response could lag behind `router.push`.
+- Cookie hardened: `httpOnly: false` → `httpOnly: true` (server-only read, no JS exposure needed).
+- All 4 locales validated via code-level scenario analysis; SSR-safe (cookie read before render).
+- lint: 0 errors / 5 pre-existing warnings.
 
-**2026-05-19 — Sprint 1: Admin User form success toast and Save button dirty state (Task 100) ✅ COMPLETED**
-- **Root cause**: `handleSave` had no toast on success or error. Save button used `disabled={saving}` only, not checking `isDirty`.
-- **Fix**: Added `toast.success(t('feedback.save_success'))` after successful save and `toast.error(t('feedback.save_error'))` on error. Changed Save button `disabled` to `saving || (!isCreate && !isDirty)`. Added `save_success`/`save_error` keys to all 4 locale files.
-- **Files changed**: `AdminUserProfile.tsx` + 4 message files.
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+→ [Task 105 session log](sessions/2026-05-19-task-105-locale-persistence-admin.md)
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-100-admin-save-toast-dirty.md`](sessions/2026-05-19-task-100-admin-save-toast-dirty.md)
+**Previous: Task 104 — Epic A.2 — Language Names + Currency-Code Policy ✅**
 
----
+- All language names confirmed canonical in all 4 locale files (Shqip/Albanian/Албанська/Albanese etc.) — no changes needed.
+- Currency code policy verified: zero `t(currencyCode)` patterns anywhere; all codes are literal strings.
+- LocaleSwitcher verified at all 7 breakpoints (mobile drawer 320–639px, dropdown 640px+).
+- Policy formalized: added 3 rules to `docs/ai-behavior.md` § Localization (i18n) Rules.
+- lint: 0 errors / 5 pre-existing warnings.
 
-**2026-05-19 — Sprint 1: Replace local Combobox in admin user form with canonical (Task 99) ✅ COMPLETED**
-- **Investigation**: Admin user forms (`AdminUserProfile.tsx`, `AdminUserCreate.tsx`) already used canonical `LocationCombobox`. The local clone was `SettlementCombobox` inside `ProfileTab.tsx` (cabinet profile) — 115-line custom city picker duplicating LocationCombobox's functionality.
-- **Fix**: Removed `SettlementCombobox` entirely. Replaced with `LocationCombobox portal`. Added label + region display (same UX). Cleaned orphaned imports (`useRef`, `useEffect`, `createPortal`, `MapPin`).
-- **Files changed**: `src/modules/cabinet/components/ProfileTab.tsx`.
-- **Governance improvement**: primitives HIGH H:88→H:87 (raw `<button>` elements inside SettlementCombobox eliminated).
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+→ [Task 104 session log](sessions/2026-05-19-task-104-language-names-currency-policy.md)
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-99-canonical-combobox.md`](sessions/2026-05-19-task-99-canonical-combobox.md)
+**Previous session: Task 103 — Epic A.1 — Full Locale Audit ✅**
 
----
+- Locale key audit: all 4 files balanced at 862 keys each (governance:localization confirms).
+- Zero mixed-language value violations found.
+- Zero currency codes wrapped in `t()`.
+- Sprint 1 carry-over resolved: all Ukrainian hardcoded error strings in API routes and server actions replaced with stable English error codes (`no_file`, `invalid_type`, `file_too_large`, etc.).
+- API error contract: **option (b) — server returns error code, client resolves via `t()`** — implemented end-to-end for `/api/upload-avatar`.
+- Two client-side display bugs fixed in `AdminUserProfile.tsx`: create-mode avatar toast + delete-action error display now use localized messages.
+- lint: 0 errors / 5 pre-existing warnings · governance:localization PASS (C0/H0/M18 at baseline).
 
-**2026-05-19 — Sprint 1: Constrain Combobox scrollbar within dropdown bounds (Task 98) ✅ COMPLETED**
-- **Root cause**: All three custom dropdown components (`Combobox`, `LocationCombobox`, `YearCombobox`) had `overflow-y-auto` directly on the `rounded-xl` container. Browsers render the scrollbar as part of the scroll element — when that element has rounded corners but the scroll mechanism is at the CSS level, the scrollbar visually bleeds past the rounded boundary.
-- **Fix**: Two-layer pattern across all three components. Outer: `overflow-hidden` clips content to rounded boundary. Inner `<div className="overflow-y-auto max-h-56">`: scrolls and shows scrollbar fully within the outer boundary. Applies to both portal and non-portal modes.
-- **Files changed**: `Combobox.tsx`, `LocationCombobox.tsx`, `YearCombobox.tsx`.
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+→ [Task 103 session log](sessions/2026-05-19-task-103-locale-audit.md)
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-98-combobox-scrollbar.md`](sessions/2026-05-19-task-98-combobox-scrollbar.md)
+## Carry-over from Sprint 1 / Task 103
 
----
+1. **`governance:primitives` H:+30 pre-existing debt.** Task 94 cleared the `h-11`-on-Button violations; broader High-tier primitive debt persists from before Sprint 1. To be addressed inside **Epic K** or as a standalone primitive-audit task.
+2. **Dead code server actions.** `uploadCabinetAvatar` (cabinet) and `uploadUserAvatar` (admin) have no callers — superseded by `/api/upload-avatar`. Can be removed in a future cleanup task.
 
-**2026-05-19 — Sprint 1: Fix "Тип" column translation in Listings admin table (Task 97) ✅ COMPLETED**
-- **Root cause**: `AdminListingsTable.tsx` cell rendered raw `{l.listing_type} · {l.property_type}` (e.g. "sale · apartment") — no i18n applied. Header `t('col_type')` was already correct.
-- **Fix**: Added `useTranslations('listing')` for `listing_type` and `usePropertyTypes()` for localized property type labels (DB-backed, same hook used elsewhere). Cell now: `tl(listing_type) · propertyTypes.find(pt => pt.value === property_type)?.label ?? property_type`.
-- **Files changed**: `src/components/admin/AdminListingsTable.tsx`.
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+## Next Immediate Tasks
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-97-type-column-translation.md`](sessions/2026-05-19-task-97-type-column-translation.md)
+**Active epic: Epic A — Localization & Locale Consistency.**
 
----
+Plan file: [`tasks/Epics/Epic_A_Localization_and_Locale_Consistency.md`](../tasks/Epics/Epic_A_Localization_and_Locale_Consistency.md)
 
-**2026-05-19 — Sprint 1: Replace "Не забувайте" placeholder in Premium empty state (Task 96) ✅ COMPLETED**
-- **Investigation**: "Не забувайте" not present in current codebase. `FeaturedListings.tsx` was using the generic `listing.no_listings` key ("Оголошення не знайдено") for the Premium section empty state — wrong key, wrong message.
-- **Fix**: Added `listing.no_premium_listings` key to all 4 locale files (sq/en/uk/it). Updated `FeaturedListings.tsx` to use `t('no_premium_listings')` instead of `t('no_listings')`. Key counts: 823→824.
-- **Files changed**: 4 message files, `FeaturedListings.tsx`.
-- **Lint**: 0 errors / 5 warnings. **Typecheck**: 4 pre-existing test errors, 0 new.
+Task queue (in order — global numbering continues from Task 103):
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-96-premium-empty-state.md`](sessions/2026-05-19-task-96-premium-empty-state.md)
+**Next epic: Epic B — Auth, Registration & Agent Onboarding**
 
----
+Plan file: [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md)
 
-**2026-05-19 — Sprint 1: Active filter chip click target (Task 95) ✅ COMPLETED**
-- **Root cause**: Each chip was a `<span>` with an inner raw `<button>` for the × icon. The `onClick` lived only on the tiny (12px) × icon, not the whole chip.
-- **Fix**: Replaced `<span>` + inner `<button>` with a single outer `<button>`. Click handler on the whole chip. `<X>` icon kept as `aria-hidden="true"` visual indicator. Added `hover:bg-primary/20 transition-colors` for feedback. Added `min-h-[44px] sm:min-h-0` for 44px mobile touch target. Updated `aria-label` to include chip label + action.
-- **Files changed**: `src/modules/listings/components/ActiveFilterChips.tsx`
-- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-95-filter-chip-click-target.md`](sessions/2026-05-19-task-95-filter-chip-click-target.md)
+## Active product backlog (epics not yet started)
 
----
+| Epic | Plan |
+|---|---|
+| Epic B — Auth, Registration & Agent Onboarding | [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md) |
+| Epic C — Trust, Safety & Moderation | [`tasks/Epics/Epic_C_Trust_Safety_and_Moderation.md`](../tasks/Epics/Epic_C_Trust_Safety_and_Moderation.md) |
+| Epic D — Email Infrastructure & Account Lifecycle | [`tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md`](../tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md) |
+| Epic E — Search, Filters & Saved Search UX | [`tasks/Epics/Epic_E_Search_Filters_and_Saved_Search.md`](../tasks/Epics/Epic_E_Search_Filters_and_Saved_Search.md) |
+| Epic F — Favorites Improvements | [`tasks/Epics/Epic_F_Favorites_Improvements.md`](../tasks/Epics/Epic_F_Favorites_Improvements.md) |
+| Epic G — Recently Viewed Listings | [`tasks/Epics/Epic_G_Recently_Viewed_Listings.md`](../tasks/Epics/Epic_G_Recently_Viewed_Listings.md) |
+| Epic H — Cloudinary Storage Hygiene | [`tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md`](../tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md) |
+| Epic I — Listing Lifecycle & Status Rules | [`tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md`](../tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md) |
+| Epic J — Popular Locations Management | [`tasks/Epics/Epic_J_Popular_Locations_Management.md`](../tasks/Epics/Epic_J_Popular_Locations_Management.md) |
+| Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
+| Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
-**2026-05-19 — Sprint 1: Full mobile spacing & auth UI audit (Task 94) ✅ COMPLETED**
-- **Root cause**: Multiple `<Button>` components used `className="... h-11 ..."` instead of the canonical `size="xl"` prop, bypassing the Button size system. Governance scan detected 7 violations; audit found 4 more (multiline JSX). `confirm-email` page used raw `<Link className="h-11 ...">` instead of `buttonVariants()`.
-- **Fix**: Added `size="xl"` and removed `h-11` from `className` on 11 `Button` instances across 6 files. Replaced 2 Link button-styled elements in `confirm-email/page.tsx` with `buttonVariants()`. Header logout: replaced `min-h-[44px]` with `size="xl"`.
-- **Files changed**: `LoginForm.tsx`, `RegisterForm.tsx`, `confirm-email/page.tsx`, `Header.tsx`, `FiltersPanel.tsx`, `ListingsFilters.tsx`, `ListingFormShell.tsx`, `ProfileTab.tsx`.
-- **Governance improvement**: primitives MEDIUM violations: M:8 → M:1 (7 h-11 hacks eliminated). Pre-existing H:+31 regression unchanged.
-- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+## Closed sprints & epics (historical)
 
-→ Детальний лог: [`docs/sessions/2026-05-19-task-94-mobile-spacing-auth-ui-audit.md`](sessions/2026-05-19-task-94-mobile-spacing-auth-ui-audit.md)
-
----
-
-**2026-05-19 — Sprint 1: Site-wide dropdown/popover clipping audit (Task 93) ✅ COMPLETED**
-- **Root cause**: `LocationCombobox` and `YearCombobox` used absolute positioning only — no portal support. Both were used inside `overflow-y-auto` scroll containers in `FiltersPanel` (mobile/panel overlay) and `ListingsFilters` sidebar, causing dropdown clipping.
-- **Audit findings**: All Base UI primitives (`DropdownMenu`, `Popover`, `Select`) are portal-rendered and safe. `Combobox` already had `portal` prop (safe). Task 89 had already fixed admin form cards. Two shared components lacked portal support.
-- **Fix**: Added `portal` prop + `createPortal` implementation to `LocationCombobox.tsx` and `YearCombobox.tsx` (following `Combobox.tsx` pattern). Added `portal` at 6 call sites: `FiltersPanel.tsx` (3 instances), `ListingsFilters.tsx` (3 instances).
-- **Files changed**: `LocationCombobox.tsx`, `YearCombobox.tsx`, `FiltersPanel.tsx`, `ListingsFilters.tsx`, `docs/component-risk-register.md`.
-- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-93-dropdown-clipping-audit.md`](sessions/2026-05-19-task-93-dropdown-clipping-audit.md)
-
----
-
-**2026-05-19 — Sprint 1: Language-name translations audit and fix (Task 92) ✅ COMPLETED**
-- **Root cause**: `LocaleSwitcher.tsx` had hardcoded self-identifying labels (`'Shqip'`, `'English'`, `'Українська'`, `'Italiano'`) instead of locale-aware translations. `Header.tsx` consumed the same hardcoded `LOCALES.label`. `AdminSettings.tsx` had its own identical hardcoded `LOCALE_OPTIONS` array.
-- **Fix**: Added 4 keys (`lang_sq/en/uk/it`) to `nav` namespace in all 4 locale files. Removed hardcoded labels from `LOCALES` in `LocaleSwitcher.tsx`; added `langLabels` Record using `useTranslations('nav')`. Updated `Header.tsx` (imports `LocaleCode`, adds `langLabels`). Updated `AdminSettings.tsx` (computes `LOCALE_OPTIONS` dynamically via `tNav`).
-- **Task 87 audit**: Confirmed it only fixed 2 typos (`Обов'язкова`, `Акаунт`). The `'Шкіп'` bug was not present in the codebase — no Cyrillic transliteration found.
-- **Files changed**: 4 message files, `LocaleSwitcher.tsx`, `Header.tsx`, `AdminSettings.tsx`.
-- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
-- **Governance**: localization ✅ PASS at baseline. Key counts: 823 (819 + 4 new).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-92-language-name-translations.md`](sessions/2026-05-19-task-92-language-name-translations.md)
-
----
-
-**2026-05-19 — Sprint 1: Fix Italian locale fallback to Ukrainian (Task 91) ✅ COMPLETED**
-- **Root cause**: `AdminUserAvatar.tsx` passed raw server error strings to `toast.error()` and `setError()` — Ukrainian API/action errors surfaced as toasts and inline messages for Italian locale users. `ProfileTab.tsx` passed raw `deleteOwnAccount()` error string to `setDeleteError()`.
-- **Fix**: 3 targeted changes — all hardcoded Ukrainian error pass-throughs replaced with existing i18n keys (`cabinet.avatar_upload_error`, `cabinet.error_deleting`).
-- **i18n config audit**: Fallback chain is correct — no `uk` in any fallback. All 819 leaf keys present in all 4 locale files. `messages/it.json` contains no Cyrillic characters.
-- **Files changed**: `src/components/admin/AdminUserAvatar.tsx`, `src/modules/cabinet/components/ProfileTab.tsx`
-- **Lint**: 0 errors / 5 warnings (all pre-existing).
-- **Typecheck**: 4 pre-existing test file errors, 0 new.
-- **Governance**: localization ✅ PASS (C0/H0/M18 — at baseline). Primitives regression H:57→H:88 is pre-existing (confirmed via stash test).
-- **Build**: run `npm run build` to confirm (per policy, not run automatically).
-
-→ Детальний лог: [`docs/sessions/2026-05-19-task-91-italian-locale-fallback-to-ukrainian.md`](sessions/2026-05-19-task-91-italian-locale-fallback-to-ukrainian.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: Speed Insights + PageSpeed Validation (Task 82)**
-- **Mobile 375px: ALL GOOD** — sq=1448ms, en=649ms, uk=1199ms, it=1152ms 🟢 across all locales.
-- **Desktop 1280px: POOR/NI** — sq=2532ms🔴, en=5665ms🔴, uk=5838ms🔴, it=1475ms🟡. TBT=0, CLS=0 (no JS/layout issues).
-- **Root cause confirmed**: gallery `<img>` at 86% through 124KB RSC HTML; HTTP preload not honored by browser (Tasks 76-80); CDN cold-start amplifies delay (en/uk=5000ms+ when cold, it=874ms gap when warm).
-- **Speed Insights**: `<SpeedInsights />` deployed, but insufficient traffic data yet. Dashboard check pending after site accumulates traffic.
-- **PageSpeed field data**: likely insufficient for this low-traffic site. Lab data noisy.
-- **Decision: OPEN — monitoring pending**. If Speed Insights confirms real-user POOR desktop → proceed to Task 83 (RSC payload reduction). If GOOD → close epic.
-- **Lint**: 0 errors / 5 warnings (pre-existing). **Governance**: ✅ all 5 categories pass.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md`](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: Vercel Speed Insights + PageSpeed Workflow (Task 81)**
-- `@vercel/speed-insights@2.0.0` was already installed; added `<SpeedInsights />` to `src/app/layout.tsx` (root layout — covers all locales and all routes without duplication).
-- Governance: ✅ All 5 categories pass, no new regressions. Lint: ✅ 0 errors on layout.tsx.
-- **Epic closure decision model updated**: no longer based solely on synthetic Lighthouse CLI. Now requires Vercel Speed Insights route-level RUM + PageSpeed (lab + field) for all 4 locales.
-- **PageSpeed workflow documented**: run `https://pagespeed.web.dev/` for all 4 locale listing detail URLs, record LCP/FCP/CLS/INP for mobile + desktop.
-- **First data**: visit all 4 locale Listing Detail URLs in a real browser after Vercel deploy to seed Speed Insights.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: HTTP Link Browser Usage (Task 80)**
-- **Root finding**: `PRELOAD_NOT_USED` — 640w starts at 655–4708ms (late), not at TTFB. CDN delivers fast (43–125ms) when requested. Browser is ignoring the HTTP `Link` preload. Most likely cause: `fetchpriority=high` not a valid RFC 8288 parameter → Chromium silently rejects the entry.
-- **4-variant experiment system** added to middleware (`resolveLinkVariant` + `buildLcpLinkHeader(variant)`):
-  - A: unquoted + fetchpriority=high (original, known broken)
-  - B: quoted + fetchpriority="high"
-  - C: quoted minimal, no fetchpriority **(new default)**
-  - D: same as C + image preload placed FIRST before hreflang entries
-- **Default changed from A to C** — RFC 8288-standard quoted params, no non-standard `fetchpriority`.
-- **`?_lcp_v=A|B|C|D` query param** allows testing variants in production without redeployment.
-- **`--variant=X` flag** added to `diagnose:lcp:network` for targeted variant testing.
-- **Mobile `URL_MISMATCH`** (640w preloaded, mobile needs 960w) assessed as acceptable — mobile LCP is GOOD.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md`](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: Production Diagnostics Reliability (Task 79)**
-- **CLI bug fixed**: `--preload-only` was `process.argv[2]` → treated as BASE_URL. Fixed by filtering `--flags` before extracting positional args.
-- **All-green empty array fixed**: `[].every(...)` always returns `true` — added `allLocalesSeen` guard before all summary checks.
-- **CDP header capture**: Replaced `page.on('response', async allHeaders())` (async race + redirect matching issue) with synchronous CDP `Network.responseReceived`. Document requestId tracked via `Network.requestWillBeSent` where `type === 'Document'`.
-- **Negative durations fixed**: `t.responseEnd` is already ms-from-request-start (not epoch). Was incorrectly subtracted from `t.startTime` (epoch ms). Fixed: `durationMs = t.responseEnd` directly.
-- Desktop sq=1418ms 🟡 NI (CDN warm) vs en/uk/it=2860–5385ms 🔴 (CDN cold) — pattern confirms CDN cold-start as remaining bottleneck.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md`](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: Diagnostic Tooling Fix (Task 78)**
-- **Bug 1 (parser)**: `headers.append('Link', ...)` created two separate `Link` headers; Node.js 18 undici `headers.get('link')` returned only the first (hreflang entries), silently dropping the Cloudinary preload. Fixed by reverting middleware to `headers.set(combined)`.
-- **Bug 2 (LCP=N/A)**: `PerformanceObserver` must be injected via `addInitScript` BEFORE navigation. Chrome only finalises LCP on user interaction — added `page.mouse.move()` trigger after `networkidle`.
-- **Bug 3 (absolute timestamps)**: `request.timing().startTime` is epoch ms. Fixed by subtracting `performance.timeOrigin` from page context.
-- **Bonus fix**: Parser now uses RFC 8288 split + direct Cloudinary URL regex fallback + `\n` normalisation for robustly detecting the preload entry regardless of how the combined header is formatted.
-- Desktop sq: 1424ms 🟡 NI (from summary.json) — CDN warm run improved; en/uk/it still POOR from CDN cold starts.
-- **Production validation pending Vercel deployment.**
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md`](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: Link Header Diagnostics (Task 77)**
-- **Root cause 1 (Outcome C)**: HTTP Link header preloaded 960w (`href`); desktop `<img>` requests 640w. URL mismatch → preload wasted. Fixed by switching to `buildGalleryLcpPreloadHref` (640w URL, href-only, no imagesrcset commas).
-- **Root cause 2 (Outcome F)**: Cloudinary 640w variant cold-start causes 5–9s image delivery on test listing. `SI ≈ FCP` at ~1000ms but LCP at 5–10s → pure CDN delivery latency, not JS/render.
-- **Parser bug fixed**: Old parser captured hreflang alternate URLs (not Cloudinary URL). RFC 8288-aware parser now finds the actual preload entry.
-- **`lcp_element: null` bug fixed**: Lighthouse 12-13 uses nested audit path; added multi-version extraction.
-- **New script**: `scripts/diagnose-lcp-preload-network.mjs` — Playwright network trace; run with `npm run diagnose:lcp:network`.
-- **Production validation pending Vercel deployment.**
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md`](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: HTTP Link Header Preload (Task 76)**
-- Implemented `Link: <url>; rel=preload; as=image; imagesrcset="..."; imagesizes="..."; fetchpriority=high` header via Next.js middleware.
-- Middleware intercepts `GET /:locale/listings/:slug` (all 4 locales). DB lookup runs in parallel with `refreshSession` — TTFB overhead ≈ 0ms.
-- Fail-open: missing listing / non-Cloudinary image / DB error all skip the header silently.
-- RSC navigation requests (Next-Router-State-Tree header) are excluded — no overhead.
-- Updated `validate-production-lcp.mjs` and `profile-listing-lcp.mjs` to detect and report the HTTP Link header.
-- **Production validation pending Vercel deployment.**
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-preload.md`](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md)
-
----
-
-**2026-05-19 — Listing Detail Performance / LCP Epic: Production Validation (Task 75)**
-- Mobile 375px production LCP: 1145–1380ms 🟢 GOOD (all 4 locales). Preload + fetchpriority confirmed live.
-- Desktop 1280px production LCP: 2359–5309ms 🔴 POOR (3/4 locales). Root cause: LCP `<img>` at 86% through 124KB HTML (RSC payload overhead).
-- Two preload tags in production HTML: React 19 auto-preload (imageSrcSet, no href) + our native RSC `<link>` (href + imageSrcSet). Both appear at chars 103K–106K — late in the body, providing minimal benefit for desktop.
-- Epic NOT closed: mobile goal achieved; desktop requires HTTP `Link` response headers (Task 76).
-- `scripts/validate-production-lcp.mjs` created, `npm run profile:lcp:production` added.
-
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-production-validation.md`](sessions/2026-05-19-listing-detail-lcp-production-validation.md)
-
----
-
-**2026-05-18 — Listing Detail Performance / LCP Epic: Lighthouse Trace Comparison (Task 74)**
-- Mobile LCP: 5339–5523ms 🔴 POOR → 1400–1519ms 🟢 GOOD (−73% across all 4 locales).
-- Desktop LCP: 273–908ms 🟢 GOOD. TBT: 126–174ms 🟢 GOOD. CLS: 0.
-- Body-position preload is sufficient — HTTP Link headers NOT immediately justified.
-- `scripts/compare-listing-lcp-lighthouse.mjs` created, `npm run profile:lcp:lighthouse` added.
-- Caveat: measured against localhost; production numbers will differ.
-
-→ Детальний лог: [`docs/sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md`](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md)
-
----
-
-**2026-05-18 — Listing Detail Performance / LCP Epic: Fix Preload Reliability (Task 73)**
-- Replaced React 19 `preload()` (worker-level deduplication bug, no fetchpriority) with native RSC `<link rel="preload" as="image" fetchPriority="high">`.
-- All 4 locales now get preload hint with `fetchpriority="high"` on every request.
-- Known limitation: preload in `<body>` not `<head>` (React 19 SSR link hoisting is client-side).
-- `scripts/profile-listing-lcp.mjs` updated with full-document detection and location reporting.
-
-→ Детальний лог: [`docs/sessions/2026-05-18-listing-detail-lcp-preload-reliability.md`](sessions/2026-05-18-listing-detail-lcp-preload-reliability.md)
-
----
-
-**2026-05-18 — Listing Detail Performance / LCP Epic: Profiling Baseline (Task 72)**
-- Established LCP baseline via production build HTML inspection + profiling script.
-- **CRITICAL:** React 19 `preload()` deduplication bug — only 1 of 4 locales gets `<link rel="preload" as="image">` per server lifecycle.
-- **MEDIUM:** `fetchpriority="high"` absent from `<link rel="preload">` tag (React 19 limitation).
-- `<img fetchPriority="high" loading="eager">` correctly in SSR HTML for all 4 locales.
-- `ListingBackButton` NOT a primary LCP bottleneck.
-- `scripts/profile-listing-lcp.mjs` created — repeatable HTML-level LCP probe.
-
-→ Детальний лог: [`docs/sessions/2026-05-18-listing-detail-lcp-profile-baseline.md`](sessions/2026-05-18-listing-detail-lcp-profile-baseline.md)
-
----
-
-## Post-Governance Debt Burn-down Sprint ✅ COMPLETE
-
-### Task 64 — ESLint Debt Taxonomy & Safe Burn-down Plan ✅ CLOSED
-**Finding:** All 163 errors are `storybook-static/` false positives. Zero source errors.
-**Lint status:** `npm run lint` currently fails due to 163 pre-existing errors / 11,004 warnings.
-**Artifacts:** `docs/eslint-debt-taxonomy.md`, `scripts/analyze-eslint-debt.mjs`
-
-### Task 65 — Batch 1: Add storybook-static to ESLint globalIgnores ✅ CLOSED
-**Change:** Added `"storybook-static/**"` to `globalIgnores` in `eslint.config.mjs`.
-**Result:** 163 errors → 0 errors. 11,004 warnings → 44 warnings (genuine source warnings). Risk: LOW.
-
-### Task 66 — Batch 2: Unused imports/variables cleanup in src/ ✅ CLOSED
-**Result:** 27 warnings removed across 20 files. Warnings: 44 → 17. Risk: MEDIUM.
-**Skipped (intentional):** CLOSED_LABEL/isFavoriteClosed (in-progress), getCallerId (reserved), _req (underscore pattern).
-
-### Task 66A — Vercel Deployment Dependency Fix ✅ CLOSED
-**Problem:** Vite peer dep triangle — `@vitejs/plugin-react@6` required `vite ^8`; Storybook 8.x required `vite ^5||^6`; vitest@4 required `vite ^6||^7||^8`. No single version satisfied all three.
-**Fix:** Downgraded `@vitejs/plugin-react` `^6.0.1` → `^5.2.0` (supports vite 4–8); pinned `vite@^6.0.0`; added `legacy-peer-deps=true` to `.npmrc`. Vite resolved to `6.4.2`.
-**Governance:** `scripts/governance/baseline.json` primitives HIGH updated 52 → 57 — 5 pre-existing violations confirmed on original commit `aa809a2` before sprint start.
-**No production source files changed.**
-
-### Task 66B — Stabilization Documentation ✅ CLOSED
-**Scope:** Session log, backlog update, governance baseline adjustment rationale. Documentation only.
-**Lint status:** `npm run lint` reports 0 errors / 17 warnings.
-**Test status:** `npm run test` — 3 failed / 6 passed (pre-existing, same as commit `aa809a2`).
-
-### Task 67 — Batch 3: Unused eslint-disable directives ✅ CLOSED
-**Result:** Removed 9 directives across 7 files. Warnings: 17 → 8. Risk: LOW. Zero new violations.
-
-### Task 68 — ESLint Flat Config no-restricted-syntax Override Fix ✅ CLOSED
-**Bug:** All `no-restricted-syntax` blocks were silently overriding each other (last-wins). Same for `no-restricted-imports`. Listing status governance, image governance, and SSR governance were inactive.
-**Fix:** Consolidated to 2 `no-restricted-syntax` blocks (`.tsx`, `.ts`) + 1 `no-restricted-imports` block. 10 pre-existing violations surfaced; 7 got targeted disable comments, 3 raw `<img>` tagged for Task 69.
-**Result:** 0 errors, 8 warnings. All governance selectors now simultaneously active.
-
-### Task 69 — Raw `<img>` → `<AppImage>` Migration ✅ CLOSED
-**Scope:** 3 pre-existing raw `<img>` elements in PopularLocations, AdminLocationsManager, AdminUserAvatar → `<AppImage variant="listing-thumb">`.
-**Result:** 0 errors, 8 warnings. 3 eslint-disable comments removed. Image governance is now violation-free.
-
-### Task 70 — jsx-a11y Combobox ARIA Fixes ✅ CLOSED
-**Fix:** `LocationCombobox` — added `role="combobox"`, `aria-controls`, `aria-haspopup`; `YearCombobox` — added `aria-controls`. Both use `useId()` for stable popup id references.
-**Result:** 0 errors, **6 warnings** (−2 jsx-a11y). Zero new violations introduced.
-
-### Task 71 — Sprint Closure & Next Epic Transition ✅ CLOSED
-**Scope:** Documentation-only. Sprint formally closed. Final lint state documented. Next epic recommended.
-
----
-
-### Sprint Summary
-
-**ESLint debt eliminated:** 163 errors / 11,004 warnings → **0 errors / 6 warnings**
-
-| Phase | Task | Deliverable | Warnings before → after |
-|---|---|---|---|
-| 1 | 64 | Taxonomy + burn-down plan | — |
-| 2 | 65 | Exclude `storybook-static/` from ESLint | 163 errors / 11,004 → 0 / 44 |
-| 3 | 66 | Remove 27 unused imports/vars | 44 → 17 |
-| — | 66A | Vercel Vite peer dep fix | — |
-| — | 66B | Stabilization docs + baseline fix | — |
-| 4 | 67 | Remove 9 unused eslint-disable directives | 17 → 8 |
-| 5 | 68 | Fix ESLint flat-config override bug | 8 → 8 (governance restored) |
-| 6 | 69 | Migrate 3 raw `<img>` → `<AppImage>` | 8 → 8 (violations removed) |
-| 7 | 70 | Fix 2 jsx-a11y Combobox ARIA warnings | 8 → 6 |
-
-**Final state:**
-- `npm run lint` reports 0 errors / 6 warnings
-- `npm run build` ✅
-- All governance commands ✅
-- `npm run typecheck` — pre-existing test file errors only (confirmed on `aa809a2`)
-- `npm run test` — 3 failed / 6 passed (pre-existing, identical to `aa809a2`)
-
-**Remaining 6 warnings (intentional/deferred):**
-
-| Warning | File | Reason |
-|---|---|---|
-| `@next/next/no-img-element` | `AppImage.tsx:130` | Intentional — AppImage is the canonical render site |
-| `react-hooks/exhaustive-deps` | `useFavoritesRealtime.ts:133` | Deferred — requires realtime behavior testing |
-| `@typescript-eslint/no-unused-vars` | `[slug]/page.tsx:273,277` | In-progress feature code |
-| `@typescript-eslint/no-unused-vars` | `admin/actions/index.ts:308` | Reserved utility (`getCallerId`) |
-| `@typescript-eslint/no-unused-vars` | `supabase/functions/.../index.ts:28` | Intentional `_req` underscore pattern |
-
----
-
-## Future Maintenance Direction Epic (Tasks 58–63) ✅ COMPLETE
-
-**2026-05-18 — Phase 6: Component Cataloging — Future Maintenance Direction Epic COMPLETE (Task 63)**
-- `scripts/governance/component-catalog.mjs` created — scans 158 components, generates JSON + markdown catalog.
-- `npm run governance:components` (CI-safe check) and `npm run catalog:components` (full scan) added.
-- Docs created: `component-catalog.md`, `component-coverage-matrix.md`, `component-risk-register.md`, `component-catalog-governance.md`.
-- Pre-existing debt documented: 38 raw `<button>`, 54 arbitrary TW, 28 grids missing 2xl. Zero new violations.
-- `npm run lint` currently fails due to 163 pre-existing errors / 11,004 warnings — zero new violations introduced by Task 63.
-- **Future Maintenance Direction Epic (Phases 1–6) COMPLETE.**
-
-→ Детальний лог: [`docs/sessions/2026-05-18-component-cataloging.md`](sessions/2026-05-18-component-cataloging.md)
-
----
-
-## Listing Detail Performance / LCP Epic ✅ COMPLETE
-
-**Closed 2026-05-19** — Vercel Speed Insights (7-day production RUM) shows RES 100 / Great on both desktop and mobile. Desktop LCP ~1.34s, Mobile LCP ~0.96s. All Core Web Vitals GOOD/Great. Synthetic desktop Lighthouse POOR results (Tasks 75–82) were CDN cold-start / lab variance, not confirmed real-user regression. No further active LCP optimization is justified. HTTP Link preload experiments A–D (Tasks 76–80) did not produce reliable early image preloading — this infrastructure remains available as Variant C (default) for future investigation if regression occurs.
-
-**Future monitoring**: If Vercel Speed Insights later shows Listing Detail desktop LCP > 2500ms consistently, reopen with RSC/HTML payload reduction and earlier gallery image discovery in HTML stream as the technical path.
-
-### Task 72 — LCP Profiling Baseline ✅ CLOSED
-**Method:** Production build HTML inspection + `scripts/profile-listing-lcp.mjs`
-**Critical finding:** React 19 `preload()` deduplication — only 1 locale/request gets the image preload hint per worker process lifetime. 3 of 4 locales serve listing detail WITHOUT an early `<link rel="preload" as="image">`.
-**Secondary finding:** `fetchpriority="high"` missing from preload link (React 19 limitation).
-**Positive:** `<img fetchPriority="high" loading="eager">` in SSR HTML for all 4 locales. ListingBackButton not a primary LCP bottleneck.
-
-### Task 73 — Fix Preload Reliability ✅ CLOSED
-**Fix:** Replaced `react-dom preload()` with native RSC `<link rel="preload" as="image" fetchPriority="high">`. Deduplication bug eliminated.
-**Result:** All 4 locales get preload with `fetchpriority="high"` on every request. ✅
-**Known limitation:** Preload in `<body>` not `<head>` (React 19 SSR link hoisting is client-side).
-**Verification:** `npm run profile:lcp` confirms all 4 locales.
-
-### Task 74 — Lighthouse Trace Comparison ✅ CLOSED
-**Result:** Mobile LCP 5339–5523ms POOR → **1400–1519ms GOOD** (−73%). Desktop 273–908ms GOOD.
-**Finding:** Body-position preload is sufficient. HTTP Link headers NOT immediately justified.
-**Caveat:** Localhost measurement; production numbers will differ but fix direction is confirmed.
-**Script:** `scripts/compare-listing-lcp-lighthouse.mjs` | `npm run profile:lcp:lighthouse`
-
-### Task 75 — Production LCP Validation ✅ CLOSED
-**Method:** Lighthouse CLI against live `https://lero.al/[sq|en|uk|it]/listings/test-7-molyl9c8` + production HTML probe.
-**Mobile:** 1145–1380ms 🟢 GOOD for all 4 locales. Preload with `fetchpriority="high"` confirmed in production HTML.
-**Desktop:** 2359–5309ms 🔴 POOR (3/4 locales). Root cause: LCP `<img>` is at 86% through 124KB HTML — browser can't discover image until 106KB of RSC payload is received. Body-position preload (chars 103K) is discovered only 3KB before `<img>` — provides minimal benefit.
-**Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
-**Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
-
-### Task 83 — Epic Closure ✅ COMPLETE
-**Vercel Speed Insights (7-day production real-user data):**
-- Desktop: RES 100 🟢 Great | LCP ~1.34s | FCP ~1.2s | INP ~40ms | CLS ~0.01
-- Mobile:  RES 100 🟢 Great | LCP ~0.96s | FCP ~0.69s | INP ~80ms | CLS ~0.01
-- Listing Detail route `/[locale]/listings/[slug]`: RES 100, ~4 visits
-**Closure rationale**: Real-user LCP GOOD on both desktop and mobile. Synthetic POOR runs were CDN cold-start / lab noise. HTTP Link preload experiments A–D did not produce PRELOAD_USED — no further active preload work justified.
-**Future conditional**: If Speed Insights later shows Listing Detail desktop LCP POOR → RSC payload reduction + earlier gallery image in HTML stream.
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md)
-
-### Task 82 — Speed Insights + PageSpeed Validation — COMPLETE (epic OPEN — monitoring pending)
-**Mobile**: sq=1448ms🟢 en=649ms🟢 uk=1199ms🟢 it=1152ms🟢 — consistently GOOD ✅
-**Desktop**: sq=2532ms🔴 en=5665ms🔴 uk=5838ms🔴 it=1475ms🟡 — POOR/NI. TBT=0, CLS=0.
-**Root cause**: gallery `<img>` at 86% through 124KB RSC HTML + CDN cold starts on test listing (warm=874ms gap, cold=5000ms+). HTTP preload not honored by browser.
-**Speed Insights**: insufficient traffic yet; check Vercel dashboard after 1–2 weeks real traffic.
-**Decision**: OPEN — monitoring pending. If real users see POOR desktop → Task 83 (RSC reduction). If GOOD → close.
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md`](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md)
-
-### Task 81 — Vercel Speed Insights + PageSpeed Workflow ✅ COMPLETE
-**Package**: `@vercel/speed-insights@2.0.0` already in deps; added `<SpeedInsights />` to root layout.
-**Integration**: `src/app/layout.tsx` — single placement, covers all locales + listing detail routes.
-**Governance**: All 5 categories ✅ pass, no regressions.
-**Workflow docs**: PageSpeed validation steps + Vercel Speed Insights dashboard usage documented.
-**Epic closure model**: Upgraded from synthetic-only → PageSpeed field data + Vercel Speed Insights RUM.
-**Next**: Deploy, visit listing detail pages in real browser to seed Speed Insights data, then run Task 82.
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md)
-
-### Task 80 — HTTP Link Browser Usage — IMPLEMENTATION COMPLETE (variant experiment pending production run)
-**Finding**: `PRELOAD_NOT_USED` — 640w starts 650–4700ms late. CDN fast (43–125ms). Browser silently ignores `fetchpriority=high` in HTTP Link header (non-RFC-8288 param, likely Chromium rejection).
-**4 variants**: A=original (broken) | B=quoted+fp | **C=quoted-minimal (new default)** | D=C+preload-first.
-**Experiment**: `?_lcp_v=A|B|C|D` in URL, or `--variant=X` flag in `diagnose:lcp:network`, no redeployment.
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md`](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md)
-
-### Task 79 — Production Diagnostics Reliability — COMPLETE (diagnostic run pending)
-**CLI fix:** `--preload-only` was argv[2] → BASE_URL. Fixed with flag-filtering before positional extraction.
-**Empty-array guard:** `[].every()` = true → added `allLocalesSeen` check so failed fetches don't show all-green.
-**CDP header capture:** Async `allHeaders()` race + redirect mismatch → synchronous CDP `Network.responseReceived`.
-**Duration fix:** `t.responseEnd` is already a duration (ms from request start), NOT epoch ms — was wrongly subtracted from `t.startTime`.
-**Evidence from production:** sq=1418ms (CDN warm) vs en/uk/it=2860–5385ms (CDN cold) → CLOUDINARY_COLD_VARIANT confirmed as remaining bottleneck.
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md`](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md)
-
-### Task 78 — Diagnostic Tooling Fix — COMPLETE (production validation pending Vercel deploy)
-**3 tooling bugs fixed:** (1) `headers.append` created 2 Link headers → undici returned only first → parser missed Cloudinary; reverted to `headers.set(combined)`. (2) `PerformanceObserver` must be `addInitScript` before nav, not `getEntriesByType` after. (3) `timing.startTime` is epoch ms; subtract `performance.timeOrigin` for nav-relative output.
-**Parser hardened:** RFC 8288 split + direct Cloudinary URL regex scan + `\n` normalisation — two independent strategies.
-**Desktop sq from summary.json:** 1424ms 🟡 NI (CDN warm) vs 8440–9542ms (en/uk/it, CDN cold).
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md`](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md)
-
-### Task 77 — Link Header Diagnostics — COMPLETE (fixes applied, production validation pending)
-**Root cause 1 (Outcome C):** HTTP Link preloaded 960w; desktop `<img>` requests 640w → URL mismatch → preload wasted. Fixed: middleware now uses `buildGalleryLcpPreloadHref` (640w href-only).
-**Root cause 2 (Outcome F):** Cloudinary 640w cold-start is 5–9s for test listing. `FCP≈SI≈1000ms` but `LCP=5–10s` — page renders immediately, image just takes seconds to deliver from CDN. CDN cold-start is the true remaining bottleneck.
-**Parser bug:** Old parser captured hreflang URL (not Cloudinary URL). Fixed with RFC 8288-aware entry finder.
-**`lcp_element: null`:** Lighthouse 12-13 nested audit path fixed in all three scripts.
-**New:** `scripts/diagnose-lcp-preload-network.mjs` + `npm run diagnose:lcp:network`.
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md`](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md)
-
-### Task 76 — HTTP `Link` Response Header Preload — IMPLEMENTATION COMPLETE, validation pending deploy
-**Implemented:** Middleware (`src/middleware.ts`) intercepts `GET /:locale/listings/:slug`.
-Fetches cover image URL from Supabase in parallel with session refresh (no added TTFB).
-Sets `Link: <url>; rel=preload; as=image; imagesrcset="..."; imagesizes="..."; fetchpriority=high`.
-Fail-open: missing listing / non-Cloudinary / DB error → no header, page renders normally.
-RSC navigation requests (`Next-Router-State-Tree` header) are excluded.
-**Scripts updated:** `validate-production-lcp.mjs` + `profile-listing-lcp.mjs` detect Link header.
-**Production validation:** Run `npm run profile:lcp:production -- --preload-only` after Vercel deploy.
-**Expected gain:** Desktop LCP from 2500–11953ms 🔴 → ~700–1200ms 🟢 (browser discovers image at TTFB).
-**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-preload.md`](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md)
-
----
-
-## Recommended Next Epics
-
-### Option A — User Cabinet Improvements Epic
-- Improve `/cabinet` UX: saved listings polish, profile flows, avatar management, user-facing features.
-- Higher product value; directly visible to end users.
-- Requires UI + locale (sq/en/uk/it) + responsive (320–ultrawide) coverage.
-
-### Option B — Listing Detail Performance / LCP Epic ⭐ Recommended
-- Improve listing detail LCP, perceived load speed, and Core Web Vitals.
-- Mobile LCP for `/[locale]/listings/[slug]` is POOR (5339–5523ms, all 4 locales). TBT is GOOD. CLS is 0.
-- The bottleneck is main-thread scheduling during React hydration, not image delivery.
-- Builds naturally on AppImage/image governance work already done.
-- Measurable objectively (Lighthouse, RUM).
-- Reduces risk before heavier cabinet/user-facing feature work.
-
-**Why Option B first:** Listing detail is the highest-traffic page. LCP is currently POOR, which
-affects organic ranking and conversion. AppImage infrastructure is now solid. This is the
-highest-confidence, highest-impact work at this stage.
-
-### Option C — Cloudinary Integration Hardening Epic
-- Strengthen upload/transformation flows, error handling, admin previews.
-- Builds on AppImage and image governance work.
-- Useful before adding heavier media features (video, 360° tours, etc.).
-
----
-
-## Next Immediate Tasks (in order)
-
-### 0. Listing detail mobile LCP — residual hydration cost (HIGH — SEO impact)
-After the hydration budget pass, mobile Lighthouse LCP for `/[locale]/listings/[slug]` is
-still **POOR** (5339–5523ms, all 4 locales). TBT is GOOD (≤ 200ms). CLS is 0.
-
-The LCP element IS the GalleryStaticFrame cover `<img>` (confirmed via Lighthouse trace):
-`div.listing-gallery > div.col-span-4 > div.relative > img.absolute`
-
-This means the image IS in the SSR HTML and Chrome identifies it as the LCP candidate.
-The bottleneck is not the image delivery (the preconnect + preload + fetchpriority are all
-in place). The bottleneck is that **Chrome defers compositing while the main thread is
-busy executing React hydration** (~888ms at 4× throttle).
-
-The remaining above-fold client components after the hydration pass:
-- `Header` (unavoidable — interactive locale switcher, auth menu)
-- `GalleryIsland` → `ListingGallery` (lazy, ssr:false — deferred but still executes after initial HTML)
-- `AuthProvider` (provider overhead for entire tree)
-- `ListingBackButton` (sessionStorage + scroll-to-top in useEffect)
-- `FavoriteButton` (optimistic toggle)
-
-**Next steps to investigate:**
-1. Profile the actual LCP waterfall in Lighthouse trace — which long task most delays the compositor
-2. Consider converting `ListingBackButton` to a simpler server-rendered link with no sessionStorage logic
-3. Consider whether `AuthProvider` can be moved outside the `NextIntlClientProvider` or if its Supabase subscription can be deferred further
-4. Check if `preload()` from React 19 (called server-side for the gallery LCP image) is actually emitting `<link rel="preload" fetchpriority="high">` in the `<head>` — the Lighthouse report shows `priorityHinted: false` for the preload request
-5. Verify that the preload `<link>` is in the FIRST response chunk (before any blocking scripts)
-
-**Note:** The LCP element and image delivery are both correct. The issue is main-thread scheduling.
-
-### 1. User cabinet (`/cabinet`)
-- Profile page: avatar, name, phone, WhatsApp, user type.
-- My listings tab: list with status badges, edit/delete actions.
-- Saved searches tab.
-- Route: `src/app/[locale]/cabinet/page.tsx`.
-- Requires auth guard (redirect to /auth/login if not logged in).
-
-### 2. Cloudinary integration
-- `npm install next-cloudinary`.
-- Add env vars: `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
-- Create upload component: `src/modules/listings/components/ImageUpload.tsx`.
-- Use `CldUploadWidget` from next-cloudinary.
-
-### 3. Create listing form (`/listings/create`)
-- Multi-step form: basic info → details → photos → location → preview.
-- Uses listingSchema (Zod) from `src/modules/listings/validations/index.ts`.
-- Requires auth + must be agent or admin.
-
-### 4. Admin panel (`/admin`)
-- No locale prefix.
-- Sidebar: Dashboard, Listings, Users, Support, Pages.
-- Listings table: status management, premium toggle.
-- Users table: role management, verify agent.
-- Route guard: admin/moderator only.
-
-### 5. Google OAuth
-Supabase Dashboard → Authentication → Providers → Google → Enable.
-
----
+- **Sprint 0 — Critical Bugfix / Regression Stabilization** (Tasks 84–90) — CLOSED, see [`tasks/Sprints/Sprint_0_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_0_—_Summary_CLOSED.md)
+- **Sprint 1 — Bugfix Continuation & Admin Polish** (Tasks 91–102) — CLOSED, see closure summary linked above.
+- **Listing Detail Performance / LCP Epic** (Tasks 72–83) — CLOSED, see Session Archive for per-task logs.
+- **Post-Governance Debt Burn-down Sprint** (Tasks 64–71) — COMPLETE.
+- **Future Maintenance Direction Epic** (Tasks 58–63, Phases 1–6) — COMPLETE.
+- **Responsive / UI Governance Epic** (Tasks 51–57) — COMPLETE.
+- **Filter Architecture Stabilization** (Task 50.4) — COMPLETE.
 
 ## Session Archive
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Epic A.4 — Mobile locale switcher promoted to header as Combobox | Task 106 | [sessions/2026-05-19-task-106-mobile-locale-switcher-header.md](sessions/2026-05-19-task-106-mobile-locale-switcher-header.md) |
+| 2026-05-19 | Epic A.3 — Locale persistence site ↔ admin (middleware cookie sync) | Task 105 | [sessions/2026-05-19-task-105-locale-persistence-admin.md](sessions/2026-05-19-task-105-locale-persistence-admin.md) |
+| 2026-05-19 | Epic A.2 — Language name + currency-code policy verification | Task 104 | [sessions/2026-05-19-task-104-language-names-currency-policy.md](sessions/2026-05-19-task-104-language-names-currency-policy.md) |
+| 2026-05-19 | Epic A.1 — Full locale audit + API error contract implementation | Task 103 | [sessions/2026-05-19-task-103-locale-audit.md](sessions/2026-05-19-task-103-locale-audit.md) |
+| 2026-05-19 | Sprint 1 — closure summary (12 tasks) | Sprint 1 | [sessions/2026-05-19-sprint-1-bugfix-continuation.md](sessions/2026-05-19-sprint-1-bugfix-continuation.md) |
 | 2026-05-19 | Sprint 1 — Remove Google Translate and DeepL APIs | Task 102 | [sessions/2026-05-19-task-102-remove-translate-apis.md](sessions/2026-05-19-task-102-remove-translate-apis.md) |
 | 2026-05-19 | Sprint 1 — Hide "Переглянути всі" when premium empty | Task 101 | [sessions/2026-05-19-task-101-hide-view-all-empty.md](sessions/2026-05-19-task-101-hide-view-all-empty.md) |
 | 2026-05-19 | Sprint 1 — Admin User form save toast & dirty state | Task 100 | [sessions/2026-05-19-task-100-admin-save-toast-dirty.md](sessions/2026-05-19-task-100-admin-save-toast-dirty.md) |
@@ -672,33 +121,33 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 | 2026-05-19 | Sprint 0 — Fix Italian localization fallback to Ukrainian | Task 85 | [sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md](sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md) |
 | 2026-05-19 | Sprint 0 — Fix listing contact card for guest users | Task 84 | [sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md](sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic — CLOSED (Speed Insights RES 100) | Task 83 | [sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 11: Speed Insights + PageSpeed Validation | Task 82 | [sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 10: Speed Insights + PageSpeed Workflow | Task 81 | [sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 9: HTTP Link Browser Usage | Task 80 | [sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 8: Production Diagnostics Reliability | Task 79 | [sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 7: Diagnostic Tooling Fix | Task 78 | [sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 6: Link Header Diagnostics | Task 77 | [sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 5: HTTP Link Header Preload | Task 76 | [sessions/2026-05-19-listing-detail-lcp-http-link-preload.md](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md) |
-| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 4: Production Validation | Task 75 | [sessions/2026-05-19-listing-detail-lcp-production-validation.md](sessions/2026-05-19-listing-detail-lcp-production-validation.md) |
-| 2026-05-18 | Listing Detail Performance / LCP Epic Phase 3: Lighthouse Trace Comparison | Task 74 | [sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md) |
-| 2026-05-18 | Listing Detail Performance / LCP Epic Phase 2: Fix Preload Reliability | Task 73 | [sessions/2026-05-18-listing-detail-lcp-preload-reliability.md](sessions/2026-05-18-listing-detail-lcp-preload-reliability.md) |
-| 2026-05-18 | Listing Detail Performance / LCP Epic Phase 1: Profiling Baseline | Task 72 | [sessions/2026-05-18-listing-detail-lcp-profile-baseline.md](sessions/2026-05-18-listing-detail-lcp-profile-baseline.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint — Sprint Closure (SPRINT COMPLETE) | Task 71 | [sessions/2026-05-18-post-governance-debt-burndown-closure.md](sessions/2026-05-18-post-governance-debt-burndown-closure.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 7: jsx-a11y Combobox ARIA Fixes | Task 70 | [sessions/2026-05-18-combobox-aria-a11y-fixes.md](sessions/2026-05-18-combobox-aria-a11y-fixes.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 6: Raw img → AppImage Migration | Task 69 | [sessions/2026-05-18-raw-img-to-appimage-migration.md](sessions/2026-05-18-raw-img-to-appimage-migration.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 5: ESLint Flat Config Override Fix | Task 68 | [sessions/2026-05-18-eslint-no-restricted-syntax-governance-fix.md](sessions/2026-05-18-eslint-no-restricted-syntax-governance-fix.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 4: Unused eslint-disable Directives | Task 67 | [sessions/2026-05-18-unused-eslint-disable-directives.md](sessions/2026-05-18-unused-eslint-disable-directives.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Stabilization (Vercel fix + docs) | Tasks 66A+66B | [sessions/2026-05-18-vercel-vite-dependency-fix.md](sessions/2026-05-18-vercel-vite-dependency-fix.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 3: Unused Vars Cleanup | Task 66 | [sessions/2026-05-18-eslint-unused-vars-cleanup.md](sessions/2026-05-18-eslint-unused-vars-cleanup.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 2: ESLint False-Positive Fix | Task 65 | [sessions/2026-05-18-eslint-false-positive-fix.md](sessions/2026-05-18-eslint-false-positive-fix.md) |
-| 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 1: ESLint Debt Taxonomy | Task 64 | [sessions/2026-05-18-eslint-debt-taxonomy.md](sessions/2026-05-18-eslint-debt-taxonomy.md) |
-| 2026-05-18 | Future Maintenance Direction Epic Phase 6: Component Cataloging (EPIC COMPLETE) | Task 63 | [sessions/2026-05-18-component-cataloging.md](sessions/2026-05-18-component-cataloging.md) |
-| 2026-05-18 | Future Maintenance Direction Epic Phase 5: Responsive Regression Screenshots | Task 62 | [sessions/2026-05-18-responsive-regression-screenshots.md](sessions/2026-05-18-responsive-regression-screenshots.md) |
-| 2026-05-18 | Future Maintenance Direction Epic Phase 4: Storybook Foundation | Task 61 | [sessions/2026-05-18-storybook-visual-snapshots.md](sessions/2026-05-18-storybook-visual-snapshots.md) |
-| 2026-05-18 | Future Maintenance Direction Epic Phase 3: Tailwind Entropy Detection | Task 60 | [sessions/2026-05-18-tailwind-utility-entropy-detection.md](sessions/2026-05-18-tailwind-utility-entropy-detection.md) |
-| 2026-05-18 | Future Maintenance Direction Epic Phase 2: CI Governance & Lint Enforcement | Task 59 | [sessions/2026-05-18-ci-governance-enforcement.md](sessions/2026-05-18-ci-governance-enforcement.md) |
-| 2026-05-18 | Future Maintenance Direction Epic Phase 1: Governance Enforcement | Task 58 | [sessions/2026-05-18-governance-enforcement-phase-1.md](sessions/2026-05-18-governance-enforcement-phase-1.md) |
-| 2026-05-18 | Responsive/UI Governance Epic — всі 7 фаз | Tasks 51–57 | [sessions/2026-05-18-ui-governance-epic.md](sessions/2026-05-18-ui-governance-epic.md) |
+| 2026-05-19 | LCP Epic Phase 11 — Speed Insights + PageSpeed Validation | Task 82 | [sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md) |
+| 2026-05-19 | LCP Epic Phase 10 — Speed Insights + PageSpeed Workflow | Task 81 | [sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md) |
+| 2026-05-19 | LCP Epic Phase 9 — HTTP Link Browser Usage | Task 80 | [sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md) |
+| 2026-05-19 | LCP Epic Phase 8 — Production Diagnostics Reliability | Task 79 | [sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md) |
+| 2026-05-19 | LCP Epic Phase 7 — Diagnostic Tooling Fix | Task 78 | [sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md) |
+| 2026-05-19 | LCP Epic Phase 6 — Link Header Diagnostics | Task 77 | [sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md) |
+| 2026-05-19 | LCP Epic Phase 5 — HTTP Link Header Preload | Task 76 | [sessions/2026-05-19-listing-detail-lcp-http-link-preload.md](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md) |
+| 2026-05-19 | LCP Epic Phase 4 — Production Validation | Task 75 | [sessions/2026-05-19-listing-detail-lcp-production-validation.md](sessions/2026-05-19-listing-detail-lcp-production-validation.md) |
+| 2026-05-18 | LCP Epic Phase 3 — Lighthouse Trace Comparison | Task 74 | [sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md) |
+| 2026-05-18 | LCP Epic Phase 2 — Fix Preload Reliability | Task 73 | [sessions/2026-05-18-listing-detail-lcp-preload-reliability.md](sessions/2026-05-18-listing-detail-lcp-preload-reliability.md) |
+| 2026-05-18 | LCP Epic Phase 1 — Profiling Baseline | Task 72 | [sessions/2026-05-18-listing-detail-lcp-profile-baseline.md](sessions/2026-05-18-listing-detail-lcp-profile-baseline.md) |
+| 2026-05-18 | Post-Governance Debt Burn-down Sprint — Closure | Task 71 | [sessions/2026-05-18-post-governance-debt-burndown-closure.md](sessions/2026-05-18-post-governance-debt-burndown-closure.md) |
+| 2026-05-18 | Debt Burn-down Phase 7 — jsx-a11y Combobox ARIA | Task 70 | [sessions/2026-05-18-combobox-aria-a11y-fixes.md](sessions/2026-05-18-combobox-aria-a11y-fixes.md) |
+| 2026-05-18 | Debt Burn-down Phase 6 — Raw img → AppImage Migration | Task 69 | [sessions/2026-05-18-raw-img-to-appimage-migration.md](sessions/2026-05-18-raw-img-to-appimage-migration.md) |
+| 2026-05-18 | Debt Burn-down Phase 5 — ESLint Flat Config Override | Task 68 | [sessions/2026-05-18-eslint-no-restricted-syntax-governance-fix.md](sessions/2026-05-18-eslint-no-restricted-syntax-governance-fix.md) |
+| 2026-05-18 | Debt Burn-down Phase 4 — Unused eslint-disable Directives | Task 67 | [sessions/2026-05-18-unused-eslint-disable-directives.md](sessions/2026-05-18-unused-eslint-disable-directives.md) |
+| 2026-05-18 | Debt Burn-down Stabilization (Vercel fix + docs) | Tasks 66A+66B | [sessions/2026-05-18-vercel-vite-dependency-fix.md](sessions/2026-05-18-vercel-vite-dependency-fix.md) |
+| 2026-05-18 | Debt Burn-down Phase 3 — Unused Vars Cleanup | Task 66 | [sessions/2026-05-18-eslint-unused-vars-cleanup.md](sessions/2026-05-18-eslint-unused-vars-cleanup.md) |
+| 2026-05-18 | Debt Burn-down Phase 2 — ESLint False-Positive Fix | Task 65 | [sessions/2026-05-18-eslint-false-positive-fix.md](sessions/2026-05-18-eslint-false-positive-fix.md) |
+| 2026-05-18 | Debt Burn-down Phase 1 — ESLint Debt Taxonomy | Task 64 | [sessions/2026-05-18-eslint-debt-taxonomy.md](sessions/2026-05-18-eslint-debt-taxonomy.md) |
+| 2026-05-18 | Future Maintenance Direction Epic Phase 6 — Component Cataloging (EPIC COMPLETE) | Task 63 | [sessions/2026-05-18-component-cataloging.md](sessions/2026-05-18-component-cataloging.md) |
+| 2026-05-18 | Future Maintenance Direction Epic Phase 5 — Responsive Screenshots | Task 62 | [sessions/2026-05-18-responsive-regression-screenshots.md](sessions/2026-05-18-responsive-regression-screenshots.md) |
+| 2026-05-18 | Future Maintenance Direction Epic Phase 4 — Storybook Foundation | Task 61 | [sessions/2026-05-18-storybook-visual-snapshots.md](sessions/2026-05-18-storybook-visual-snapshots.md) |
+| 2026-05-18 | Future Maintenance Direction Epic Phase 3 — Tailwind Entropy Detection | Task 60 | [sessions/2026-05-18-tailwind-utility-entropy-detection.md](sessions/2026-05-18-tailwind-utility-entropy-detection.md) |
+| 2026-05-18 | Future Maintenance Direction Epic Phase 2 — CI Governance & Lint Enforcement | Task 59 | [sessions/2026-05-18-ci-governance-enforcement.md](sessions/2026-05-18-ci-governance-enforcement.md) |
+| 2026-05-18 | Future Maintenance Direction Epic Phase 1 — Governance Enforcement | Task 58 | [sessions/2026-05-18-governance-enforcement-phase-1.md](sessions/2026-05-18-governance-enforcement-phase-1.md) |
+| 2026-05-18 | Responsive / UI Governance Epic — всі 7 фаз | Tasks 51–57 | [sessions/2026-05-18-ui-governance-epic.md](sessions/2026-05-18-ui-governance-epic.md) |
 | 2026-05-18 | Filter Architecture Stabilization + SSR/Navigation Hardening | Task 50.4 | [sessions/2026-05-18-task-50.4.md](sessions/2026-05-18-task-50.4.md) |
 | 2026-05-17 | Notifications, Saved Searches, Currency, Property Types, Admin fixes, i18n | Tasks 17.1, 21–50.3 | [sessions/2026-05-17-tasks-17-50.md](sessions/2026-05-17-tasks-17-50.md) |
 | 2026-05-16 | Admin panel, User Profile, Auth, Performance, Favorites, Listings | Tasks 12–20 + bootstrap | [sessions/2026-05-16-tasks-12-19.md](sessions/2026-05-16-tasks-12-19.md) |

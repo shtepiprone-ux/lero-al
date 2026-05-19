@@ -43,6 +43,9 @@ Skipping this checklist is a rule violation.
 - Keys must be added under correct namespace (nav, listing, auth, common).
 - Default language is Albanian (sq) — always write Albanian text first.
 - **i18n verification is NOT complete until runtime locale switching is confirmed** — matching key counts across files is a necessary but not sufficient check. Every string must visibly change when locale is switched. If a string does not change on locale switch, it is hardcoded and the task is failed.
+- **Currency codes are domain identifiers, never i18n keys.** `ALL`, `EUR`, `USD`, `GBP` must appear as literal strings in UI (e.g. `{currency}`, `'ALL'`). Never call `t(currencyCode)` or `t(currencyCode.toLowerCase())` — `t('all')` resolves to `common.all` ("Të gjitha"), not the currency code. Use `t('currency_ALL')` only to translate the full display name ("Albanian Lek (ALL)"), never to render the code alone.
+- **Language names use canonical i18n keys.** Always use `t('lang_sq')`, `t('lang_en')`, `t('lang_uk')`, `t('lang_it')` from the `nav` namespace. Never hardcode "Albanian", "Ukrainian", etc. in components.
+- **API/server-action errors must return stable English error codes** (e.g. `'no_file'`, `'invalid_type'`), not raw locale strings. Clients resolve to localized messages via `t()`. See `/api/upload-avatar` as the reference implementation (Task 103).
 
 ### Git Rules
 - Do not commit directly to `main` unless the current project workflow explicitly allows it; prefer feature branches and merge through the approved deployment flow.
@@ -389,3 +392,99 @@ After completing ANY UI task, Claude Code MUST:
 - DO NOT accumulate session history in `docs/backlog.md` — move to `docs/sessions/`.
 - DO NOT create a session file without adding it to the Session Archive table in `docs/backlog.md`.
 - DO NOT leave `docs/backlog.md` larger than ~80 lines of active content (excluding the archive table).
+
+---
+
+### Task File Location Rules (enforced from 2026-05-19)
+
+All task, epic, and sprint files MUST be created inside the `/tasks` directory at the project root. This applies to every AI session, regardless of chat or agent.
+
+#### Canonical structure
+```
+/tasks
+├── Epics/      ← epic-level planning files
+└── Sprints/    ← sprint plans containing the tasks for that sprint
+```
+
+#### Placement rules
+- **Epics** → `/tasks/Epics/<EpicName>.md`
+- **Sprints** → `/tasks/Sprints/Sprint_<N>_—_<Title>.md`
+- **Individual tasks** → live as sections inside the relevant Sprint file (no separate `Tasks/` folder).
+
+#### Format
+- New task/epic/sprint files MUST use `.md` (Markdown).
+- Existing `.txt` files (e.g. `Sprint_0_—_Critical_Bugfix_-_Regression_Stabilization.txt`) MUST NOT be renamed or reformatted — leave them as they are.
+
+#### Forbidden
+- DO NOT create task/epic/sprint files anywhere outside `/tasks` (no `docs/tasks/`, no project root, no `src/`).
+- DO NOT introduce new top-level subfolders inside `/tasks` beyond `Epics/` and `Sprints/`.
+- DO NOT use `.txt` for new files — `.md` only.
+- DO NOT rename or convert existing `.txt` task files unless the user explicitly asks.
+
+The `/tasks` directory is tracked in git (it is NOT in `.gitignore`) so task history is versioned and shared.
+
+---
+
+### Canonical Task Template (enforced from 2026-05-19)
+
+Every task in `/tasks/Sprints/*.md` and every epic plan in `/tasks/Epics/*.md` MUST follow this structure. Sonnet 4.6 (or any agent) is forbidden from starting a task that omits any of these sections.
+
+Global task numbering MUST be preserved across sprints (Task 84, 85, 86, … 90, 91, 92, …). NEVER restart numbering as `Task 0.1`, `Task 1.1`, etc.
+
+#### Required sections for every task
+
+```
+### Task <N> — <Short imperative title>
+
+Type:        <bug | feature | refactor | chore | UX>
+Priority:    <critical | high | medium | low>
+Area:        <component / module / domain area>
+
+Pre-read (mandatory before any code change):
+1. docs/backlog.md
+2. docs/ai-behavior.md
+3. Always-governed: docs/env.md, docs/rls-rules.md, docs/component-rules.md
+4. Task-relevant docs:
+   - <list only the docs that actually apply to this task>
+5. Inspect package.json for current validation scripts.
+
+Localization coverage (MANDATORY for any UI/text task):
+- sq, en, uk, it
+- Verify all four locale files in messages/*.json
+- Runtime locale switching must be visually confirmed (matching key counts is NOT sufficient)
+
+Responsive coverage (MANDATORY for any UI/layout task):
+- 320, 375, 390, 768, 1280, 1440, 2560
+
+Bug / Goal:
+<Clear description of what is wrong or what is to be built>
+
+Required investigation:
+1. <step>
+2. <step>
+…
+
+Acceptance criteria:
+- <Verifiable outcome 1>
+- <Verifiable outcome 2>
+- 0 new lint errors / 0 new warnings
+- npm run build passes
+- Governance checks pass (run only those relevant to the changed scope)
+- All four locales render correctly at runtime
+- All seven breakpoints render correctly (if UI scope)
+
+Out of scope:
+- <Explicit list of things the agent must NOT touch>
+```
+
+#### Rules
+
+- DO NOT omit `Pre-read` — the agent must know exactly which docs to load.
+- DO NOT write `Localization coverage: N/A` unless the task literally has zero user-visible text (e.g. a build script). Default is to include all four locales.
+- DO NOT write `Responsive coverage: N/A` unless the task does not touch any rendered UI. Default is to include all seven breakpoints.
+- DO NOT restart task numbering per sprint — preserve the global counter (`docs/backlog.md` is the source of truth for the last used Task number).
+- DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
+
+#### Why this matters
+
+Every previous Sprint 0 task (84–90) used this structure. Tasks that lack `Pre-read` or coverage sections cause Sonnet 4.6 to skip required `docs/` rules, ship incomplete localization, or break responsive layouts. The template is the contract.

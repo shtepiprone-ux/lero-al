@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { Phone, MessageCircle } from 'lucide-react'
 
 interface Props {
@@ -8,6 +9,8 @@ interface Props {
 }
 
 export function ListingMobileCTA({ price, phone, whatsapp, listingTitle }: Props) {
+  const t = useTranslations('listing')
+
   if (!phone && !whatsapp) return null
 
   const cleanPhone   = phone?.replace(/\D/g, '') ?? ''
@@ -29,7 +32,7 @@ export function ListingMobileCTA({ price, phone, whatsapp, listingTitle }: Props
           className="h-11 px-4 inline-flex items-center gap-2 rounded-xl border border-border bg-card text-sm font-medium hover:bg-muted transition-colors shrink-0"
         >
           <Phone className="h-4 w-4" />
-          <span className="hidden sm:inline">Зателефонувати</span>
+          <span className="hidden sm:inline">{t('call')}</span>
         </a>
       )}
 

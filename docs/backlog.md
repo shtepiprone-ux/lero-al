@@ -2,6 +2,20 @@
 
 ## Sprint 0 — Critical Bugfix / Regression Stabilization
 
+**2026-05-19 — Fix Italian localization fallback to Ukrainian (Task 85) ✅ COMPLETED**
+- **Root cause**: `ListingMobileCTA.tsx` had hardcoded Ukrainian `Зателефонувати` in the mobile call button label. The `listing.call` key already existed in all 4 locale files; the component simply wasn't using `useTranslations`.
+- **Fix**: Added `useTranslations('listing')` to `ListingMobileCTA` and replaced hardcoded string with `{t('call')}`. No translation keys added.
+- **Files changed**: `src/modules/listings/components/ListingMobileCTA.tsx`
+- **Lint**: 0 errors / 6 warnings (all pre-existing, 0 new).
+- **Typecheck**: 4 pre-existing errors in test files, 0 new.
+- **Governance**: ✅ All categories pass at baseline — localization/primitives/responsive/ssr.
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+- **Known remaining**: `waText` Albanian hardcode in same component (separate bug). Cabinet action Ukrainian error strings (separate concern).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md`](sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md)
+
+---
+
 **2026-05-19 — Fix listing contact card for guest users (Task 84) ✅ COMPLETED**
 - **Root cause**: For guest users (anon role), RLS blocks reads on the `users` table. Owner JOIN returns `null`, and the fallback in `page.tsx` unconditionally set `deleted_at: 'deleted'` regardless of viewer auth state — causing `ListingContact` to show the "owner deleted account" message to all guests even when the owner is active.
 - **Fix**: Separated viewer auth state from owner account status.
@@ -455,6 +469,8 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Sprint 0 — Fix Italian localization fallback to Ukrainian | Task 85 | [sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md](sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md) |
+| 2026-05-19 | Sprint 0 — Fix listing contact card for guest users | Task 84 | [sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md](sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic — CLOSED (Speed Insights RES 100) | Task 83 | [sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 11: Speed Insights + PageSpeed Validation | Task 82 | [sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 10: Speed Insights + PageSpeed Workflow | Task 81 | [sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md) |

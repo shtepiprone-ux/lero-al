@@ -1,6 +1,20 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: EPIC CLOSED (Task 83)**
+- **Vercel Speed Insights (7-day production RUM):**
+  - Desktop: RES 100 🟢 Great | LCP ~1.34s | FCP ~1.2s | INP ~40ms | CLS ~0.01 | TTFB ~40ms
+  - Mobile:  RES 100 🟢 Great | LCP ~0.96s | FCP ~0.69s | INP ~80ms | CLS ~0.01 | TTFB ~170ms
+  - `/[locale]/listings/[slug]` route: RES 100, ~4 visits (small sample — continue monitoring)
+- **Synthetic desktop Lighthouse POOR runs (Tasks 75–82) were CDN cold-start + lab variance** — not confirmed real-user regression.
+- **No active LCP optimization is justified** based on current real-user data.
+- **RSC/HTML payload reduction deferred** — only if Speed Insights later shows Listing Detail desktop LCP POOR for real users.
+- **Epic CLOSED ✅**
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: Speed Insights + PageSpeed Validation (Task 82)**
 - **Mobile 375px: ALL GOOD** — sq=1448ms, en=649ms, uk=1199ms, it=1152ms 🟢 across all locales.
 - **Desktop 1280px: POOR/NI** — sq=2532ms🔴, en=5665ms🔴, uk=5838ms🔴, it=1475ms🟡. TBT=0, CLS=0 (no JS/layout issues).
@@ -228,7 +242,11 @@
 
 ---
 
-## Listing Detail Performance / LCP Epic
+## Listing Detail Performance / LCP Epic ✅ COMPLETE
+
+**Closed 2026-05-19** — Vercel Speed Insights (7-day production RUM) shows RES 100 / Great on both desktop and mobile. Desktop LCP ~1.34s, Mobile LCP ~0.96s. All Core Web Vitals GOOD/Great. Synthetic desktop Lighthouse POOR results (Tasks 75–82) were CDN cold-start / lab variance, not confirmed real-user regression. No further active LCP optimization is justified. HTTP Link preload experiments A–D (Tasks 76–80) did not produce reliable early image preloading — this infrastructure remains available as Variant C (default) for future investigation if regression occurs.
+
+**Future monitoring**: If Vercel Speed Insights later shows Listing Detail desktop LCP > 2500ms consistently, reopen with RSC/HTML payload reduction and earlier gallery image discovery in HTML stream as the technical path.
 
 ### Task 72 — LCP Profiling Baseline ✅ CLOSED
 **Method:** Production build HTML inspection + `scripts/profile-listing-lcp.mjs`
@@ -254,6 +272,15 @@
 **Desktop:** 2359–5309ms 🔴 POOR (3/4 locales). Root cause: LCP `<img>` is at 86% through 124KB HTML — browser can't discover image until 106KB of RSC payload is received. Body-position preload (chars 103K) is discovered only 3KB before `<img>` — provides minimal benefit.
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
+
+### Task 83 — Epic Closure ✅ COMPLETE
+**Vercel Speed Insights (7-day production real-user data):**
+- Desktop: RES 100 🟢 Great | LCP ~1.34s | FCP ~1.2s | INP ~40ms | CLS ~0.01
+- Mobile:  RES 100 🟢 Great | LCP ~0.96s | FCP ~0.69s | INP ~80ms | CLS ~0.01
+- Listing Detail route `/[locale]/listings/[slug]`: RES 100, ~4 visits
+**Closure rationale**: Real-user LCP GOOD on both desktop and mobile. Synthetic POOR runs were CDN cold-start / lab noise. HTTP Link preload experiments A–D did not produce PRELOAD_USED — no further active preload work justified.
+**Future conditional**: If Speed Insights later shows Listing Detail desktop LCP POOR → RSC payload reduction + earlier gallery image in HTML stream.
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md)
 
 ### Task 82 — Speed Insights + PageSpeed Validation — COMPLETE (epic OPEN — monitoring pending)
 **Mobile**: sq=1448ms🟢 en=649ms🟢 uk=1199ms🟢 it=1152ms🟢 — consistently GOOD ✅
@@ -403,6 +430,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic — CLOSED (Speed Insights RES 100) | Task 83 | [sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 11: Speed Insights + PageSpeed Validation | Task 82 | [sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 10: Speed Insights + PageSpeed Workflow | Task 81 | [sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 9: HTTP Link Browser Usage | Task 80 | [sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md) |

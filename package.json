@@ -31,7 +31,8 @@
     "catalog:components": "node scripts/governance/component-catalog.mjs --write",
     "profile:lcp": "node scripts/profile-listing-lcp.mjs",
     "profile:lcp:lighthouse": "node scripts/compare-listing-lcp-lighthouse.mjs",
-    "profile:lcp:production": "node scripts/validate-production-lcp.mjs"
+    "profile:lcp:production": "node scripts/validate-production-lcp.mjs",
+    "diagnose:lcp:network": "node scripts/diagnose-lcp-preload-network.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

@@ -3,7 +3,7 @@ import { routing } from '@/i18n/routing'
 import { type NextRequest } from 'next/server'
 import { refreshSession } from '@/lib/auth/middleware'
 import { createServerClient } from '@supabase/ssr'
-import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
+import { buildGalleryLcpPreloadHref } from '@/lib/imageDelivery'
 
 const handleI18nRouting = createMiddleware(routing)
 
@@ -16,6 +16,11 @@ const handleI18nRouting = createMiddleware(routing)
 //
 // The DB lookup runs in parallel with refreshSession to minimise added TTFB:
 // both are Supabase edge queries (~50ms); overhead ≈ max(auth, lookup) - auth.
+//
+// Uses href-only (640w) — NOT imagesrcset — to avoid commas inside the srcset
+// value corrupting the combined Link header when next-intl also sets hreflang
+// alternate entries. The 640w URL matches the browser's srcset selection at
+// desktop 1280px DPR=1 (sizes="50vw" → 640px).
 
 const LISTING_DETAIL_RE = /^\/(sq|en|uk|it)\/listings\/([^/?#]+)$/
 
@@ -44,16 +49,9 @@ async function fetchListingCoverUrl(slug: string): Promise<string | null> {
 }
 
 function buildLcpLinkHeader(coverUrl: string): string | null {
-  const attrs = buildGalleryMainPreloadAttrs(coverUrl)
-  if (!attrs) return null
-  return [
-    `<${attrs.href}>`,
-    'rel=preload',
-    'as=image',
-    `imagesrcset="${attrs.imageSrcSet}"`,
-    `imagesizes="${attrs.imageSizes}"`,
-    'fetchpriority=high',
-  ].join('; ')
+  const href = buildGalleryLcpPreloadHref(coverUrl)
+  if (!href) return null
+  return `<${href}>; rel=preload; as=image; fetchpriority=high`
 }
 
 export async function middleware(request: NextRequest) {
@@ -82,8 +80,10 @@ export async function middleware(request: NextRequest) {
   if (coverUrl) {
     const linkHeader = buildLcpLinkHeader(coverUrl)
     if (linkHeader) {
-      const existing = response.headers.get('Link')
-      response.headers.set('Link', existing ? `${existing}, ${linkHeader}` : linkHeader)
+      // append() keeps the preload entry as a separate Link header value,
+      // isolating it from next-intl's hreflang entries. This prevents the
+      // imagesrcset commas from corrupting the combined header when combined.
+      response.headers.append('Link', linkHeader)
     }
   }
 

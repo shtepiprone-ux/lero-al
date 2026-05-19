@@ -75,25 +75,70 @@ const TASK74_BASELINE = {
 }
 
 // ── HTTP Link header analysis ─────────────────────────────────────────────────
+//
+// RFC 8288-aware parser: splits at commas NOT inside quoted strings.
+// The combined Link header contains hreflang alternates from next-intl AND the
+// Cloudinary preload entry. Naively splitting at all commas incorrectly breaks
+// imagesrcset values that contain commas inside quotes.
+
+function splitLinkEntries(rawHeader) {
+  const entries = []
+  let current = ''
+  let inQuotes = false
+  for (let i = 0; i < rawHeader.length; i++) {
+    const ch = rawHeader[i]
+    if (ch === '"') { inQuotes = !inQuotes; current += ch }
+    else if (ch === ',' && !inQuotes) { entries.push(current.trim()); current = '' }
+    else { current += ch }
+  }
+  if (current.trim()) entries.push(current.trim())
+  return entries
+}
 
 function probeLinkHeader(headerValue) {
   if (!headerValue) return { present: false }
-  const hasPreload      = /rel=preload/.test(headerValue)
-  const hasImage        = /as=image/.test(headerValue)
-  const hasFetchPri     = /fetchpriority=high/i.test(headerValue)
-  const hasImgSrcSet    = /imagesrcset=/i.test(headerValue)
-  const isCloudinary    = headerValue.includes('res.cloudinary.com')
-  const urlMatch        = headerValue.match(/<([^>]+)>/)
+
+  const entries = splitLinkEntries(headerValue)
+  const totalEntries = entries.length
+  const alternateCount = entries.filter(e => /rel\s*=\s*"?alternate"?/i.test(e)).length
+
+  // Find the entry with rel=preload + as=image + Cloudinary URL
+  const preloadEntry = entries.find(e => {
+    const lo = e.toLowerCase()
+    return lo.includes('res.cloudinary.com') &&
+           /rel\s*=\s*"?preload"?/.test(lo) &&
+           /as\s*=\s*"?image"?/.test(lo)
+  }) ?? null
+
+  if (!preloadEntry) {
+    return {
+      present: true,
+      hasImagePreload: false,
+      totalEntries,
+      alternateCount,
+      raw: headerValue.slice(0, 600),
+      valid: false,
+    }
+  }
+
+  const urlMatch      = preloadEntry.match(/^<([^>]+)>/)
+  const hasFetchPri   = /fetchpriority=high/i.test(preloadEntry)
+  const hasImgSrcSet  = /imagesrcset=/i.test(preloadEntry)
+
   return {
     present: true,
-    raw: headerValue.slice(0, 500),
-    hasPreload,
-    hasImage,
+    hasImagePreload: true,
+    hasPreload: true,
+    hasImage: true,
     hasFetchPriority: hasFetchPri,
     hasImgSrcSet,
-    isCloudinary,
+    isCloudinary: true,
     url: urlMatch?.[1] ?? null,
-    valid: hasPreload && hasImage && isCloudinary,
+    totalEntries,
+    alternateCount,
+    preloadEntryRaw: preloadEntry.slice(0, 400),
+    raw: headerValue.slice(0, 600),
+    valid: true,
   }
 }
 
@@ -211,6 +256,25 @@ async function runPageSpeedInsights(url, strategy) {
   }
 }
 
+// ── Lighthouse LCP element extraction (multi-version) ────────────────────────
+//
+// Lighthouse 10-11: audits['lcp-element'].details.items[0].node.snippet
+// Lighthouse 12-13: audits['lcp-element'].details.items[0].items[0].node.snippet
+// (The audit was refactored to use a nested table in Lighthouse 12.)
+
+function extractLcpElement(lcpAudit) {
+  if (!lcpAudit?.details?.items?.length) return null
+  const items = lcpAudit.details.items
+  // Lighthouse 10-11 path
+  const v1 = items[0]?.node?.snippet
+  if (v1) return v1
+  // Lighthouse 12-13 nested table path
+  const v2 = items[0]?.items?.[0]?.node?.snippet
+  if (v2) return v2
+  // Fallback: stringify first item for debugging
+  return JSON.stringify(items[0])?.slice(0, 200) ?? null
+}
+
 // ── Lighthouse runner (same as compare-listing-lcp-lighthouse.mjs) ────────────
 
 const CHROME_PATH = process.env.CHROME_PATH
@@ -302,7 +366,7 @@ async function runLighthouse(url, viewport) {
     si_ms:     Math.round(si?.numericValue ?? 0),
     ttfb_ms:   Math.round(ttfb?.numericValue ?? 0),
     perf_score: Math.round((cats?.performance?.score ?? 0) * 100),
-    lcp_element: lcpEl?.details?.items?.[0]?.node?.snippet ?? null,
+    lcp_element: extractLcpElement(lcpEl),
   }
 
   try {

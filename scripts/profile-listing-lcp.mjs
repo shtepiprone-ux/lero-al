@@ -100,15 +100,51 @@ function checkPreloadPosition(html) {
   }
 }
 
+// RFC 8288-aware Link header parser.
+// Splits at commas NOT inside quoted strings to handle imagesrcset values.
+function splitLinkEntries(raw) {
+  const entries = []
+  let cur = '', inQ = false
+  for (const ch of raw) {
+    if (ch === '"') { inQ = !inQ; cur += ch }
+    else if (ch === ',' && !inQ) { entries.push(cur.trim()); cur = '' }
+    else { cur += ch }
+  }
+  if (cur.trim()) entries.push(cur.trim())
+  return entries
+}
+
 function checkLinkHeader(headerValue) {
   if (!headerValue) return { present: false }
+  const entries = splitLinkEntries(headerValue)
+  const preloadEntry = entries.find(e => {
+    const lo = e.toLowerCase()
+    return lo.includes('res.cloudinary.com') &&
+           /rel\s*=\s*"?preload"?/.test(lo) &&
+           /as\s*=\s*"?image"?/.test(lo)
+  }) ?? null
+  if (!preloadEntry) {
+    return {
+      present: true,
+      hasImagePreload: false,
+      totalEntries: entries.length,
+      alternateCount: entries.filter(e => /rel\s*=\s*"?alternate"?/i.test(e)).length,
+      raw: headerValue.slice(0, 300),
+    }
+  }
+  const urlMatch = preloadEntry.match(/^<([^>]+)>/)
   return {
     present: true,
-    hasPreload:   /rel=preload/.test(headerValue),
-    hasImage:     /as=image/.test(headerValue),
-    hasFetchPri:  /fetchpriority=high/i.test(headerValue),
-    isCloudinary: headerValue.includes('res.cloudinary.com'),
+    hasImagePreload: true,
+    hasPreload:  true,
+    hasImage:    true,
+    hasFetchPri: /fetchpriority=high/i.test(preloadEntry),
+    isCloudinary:true,
+    url: urlMatch?.[1] ?? null,
+    totalEntries: entries.length,
+    alternateCount: entries.filter(e => /rel\s*=\s*"?alternate"?/i.test(e)).length,
     raw: headerValue.slice(0, 300),
+    preloadEntryRaw: preloadEntry.slice(0, 200),
   }
 }
 

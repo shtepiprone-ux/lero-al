@@ -1,6 +1,18 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: Link Header Diagnostics (Task 77)**
+- **Root cause 1 (Outcome C)**: HTTP Link header preloaded 960w (`href`); desktop `<img>` requests 640w. URL mismatch → preload wasted. Fixed by switching to `buildGalleryLcpPreloadHref` (640w URL, href-only, no imagesrcset commas).
+- **Root cause 2 (Outcome F)**: Cloudinary 640w variant cold-start causes 5–9s image delivery on test listing. `SI ≈ FCP` at ~1000ms but LCP at 5–10s → pure CDN delivery latency, not JS/render.
+- **Parser bug fixed**: Old parser captured hreflang alternate URLs (not Cloudinary URL). RFC 8288-aware parser now finds the actual preload entry.
+- **`lcp_element: null` bug fixed**: Lighthouse 12-13 uses nested audit path; added multi-version extraction.
+- **New script**: `scripts/diagnose-lcp-preload-network.mjs` — Playwright network trace; run with `npm run diagnose:lcp:network`.
+- **Production validation pending Vercel deployment.**
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md`](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: HTTP Link Header Preload (Task 76)**
 - Implemented `Link: <url>; rel=preload; as=image; imagesrcset="..."; imagesizes="..."; fetchpriority=high` header via Next.js middleware.
 - Middleware intercepts `GET /:locale/listings/:slug` (all 4 locales). DB lookup runs in parallel with `refreshSession` — TTFB overhead ≈ 0ms.
@@ -180,6 +192,14 @@
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
 
+### Task 77 — Link Header Diagnostics — COMPLETE (fixes applied, production validation pending)
+**Root cause 1 (Outcome C):** HTTP Link preloaded 960w; desktop `<img>` requests 640w → URL mismatch → preload wasted. Fixed: middleware now uses `buildGalleryLcpPreloadHref` (640w href-only).
+**Root cause 2 (Outcome F):** Cloudinary 640w cold-start is 5–9s for test listing. `FCP≈SI≈1000ms` but `LCP=5–10s` — page renders immediately, image just takes seconds to deliver from CDN. CDN cold-start is the true remaining bottleneck.
+**Parser bug:** Old parser captured hreflang URL (not Cloudinary URL). Fixed with RFC 8288-aware entry finder.
+**`lcp_element: null`:** Lighthouse 12-13 nested audit path fixed in all three scripts.
+**New:** `scripts/diagnose-lcp-preload-network.mjs` + `npm run diagnose:lcp:network`.
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md`](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md)
+
 ### Task 76 — HTTP `Link` Response Header Preload — IMPLEMENTATION COMPLETE, validation pending deploy
 **Implemented:** Middleware (`src/middleware.ts`) intercepts `GET /:locale/listings/:slug`.
 Fetches cover image URL from Supabase in parallel with session refresh (no added TTFB).
@@ -283,6 +303,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 6: Link Header Diagnostics | Task 77 | [sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 5: HTTP Link Header Preload | Task 76 | [sessions/2026-05-19-listing-detail-lcp-http-link-preload.md](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 4: Production Validation | Task 75 | [sessions/2026-05-19-listing-detail-lcp-production-validation.md](sessions/2026-05-19-listing-detail-lcp-production-validation.md) |
 | 2026-05-18 | Listing Detail Performance / LCP Epic Phase 3: Lighthouse Trace Comparison | Task 74 | [sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md) |

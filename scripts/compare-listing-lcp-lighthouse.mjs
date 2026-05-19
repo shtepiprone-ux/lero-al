@@ -223,7 +223,12 @@ async function runLighthouse(locale, viewport) {
     si_ms:     Math.round(si?.numericValue ?? 0),
     ttfb_ms:   Math.round(ttfb?.numericValue ?? 0),
     perf_score: Math.round((cats?.performance?.score ?? 0) * 100),
-    lcp_element: audits['largest-contentful-paint-element']?.details?.items?.[0]?.node?.snippet ?? null,
+    lcp_element: (() => {
+      const a = audits['largest-contentful-paint-element']
+      if (!a?.details?.items?.length) return null
+      const i = a.details.items
+      return i[0]?.node?.snippet ?? i[0]?.items?.[0]?.node?.snippet ?? JSON.stringify(i[0])?.slice(0, 200) ?? null
+    })(),
   }
 
   // Save HTML report

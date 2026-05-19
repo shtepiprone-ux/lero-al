@@ -33,6 +33,11 @@ function insertCloudinaryTransform(src: string, transform: string): string {
  *
  * Emit in a page Server Component so the browser starts fetching the LCP image
  * while still parsing the HTML, before AppImage hydrates client-side.
+ *
+ * NOTE: Do NOT use imageSrcSet/imageSizes in HTTP Link response headers — the
+ * comma-separated srcset values break combined header parsing (RFC 8288 quoted-
+ * string commas are not respected by all CDN/proxy layers). Use
+ * buildGalleryLcpPreloadHref() for HTTP Link headers instead.
  */
 export function buildGalleryMainPreloadAttrs(src: string | null | undefined): {
   href: string
@@ -45,6 +50,21 @@ export function buildGalleryMainPreloadAttrs(src: string | null | undefined): {
     .map(({ w, h }) => `${insertCloudinaryTransform(src, `w_${w},h_${h},${GALLERY_MAIN_SRCSET_BASE}`)} ${w}w`)
     .join(', ')
   return { href, imageSrcSet, imageSizes: GALLERY_MAIN_SIZES }
+}
+
+/**
+ * Returns the 640w Cloudinary variant URL for use as an HTTP Link preload href.
+ *
+ * Why 640w: at desktop 1280px DPR=1 with sizes="(max-width: 768px) 100vw, 50vw",
+ * 50vw = 640px → browser selects the 640w srcset entry. This must match the href
+ * exactly for the preload to be reused by the <img> request.
+ *
+ * href-only (no imagesrcset): avoids commas inside the srcset value corrupting
+ * combined HTTP Link headers when mixed with hreflang alternate entries.
+ */
+export function buildGalleryLcpPreloadHref(src: string | null | undefined): string | null {
+  if (!src || !src.includes('res.cloudinary.com')) return null
+  return insertCloudinaryTransform(src, `w_640,h_360,${GALLERY_MAIN_SRCSET_BASE}`)
 }
 
 // ── Listing card layout contexts ──────────────────────────────────────────────

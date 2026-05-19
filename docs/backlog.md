@@ -1,6 +1,19 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: Speed Insights + PageSpeed Validation (Task 82)**
+- **Mobile 375px: ALL GOOD** — sq=1448ms, en=649ms, uk=1199ms, it=1152ms 🟢 across all locales.
+- **Desktop 1280px: POOR/NI** — sq=2532ms🔴, en=5665ms🔴, uk=5838ms🔴, it=1475ms🟡. TBT=0, CLS=0 (no JS/layout issues).
+- **Root cause confirmed**: gallery `<img>` at 86% through 124KB RSC HTML; HTTP preload not honored by browser (Tasks 76-80); CDN cold-start amplifies delay (en/uk=5000ms+ when cold, it=874ms gap when warm).
+- **Speed Insights**: `<SpeedInsights />` deployed, but insufficient traffic data yet. Dashboard check pending after site accumulates traffic.
+- **PageSpeed field data**: likely insufficient for this low-traffic site. Lab data noisy.
+- **Decision: OPEN — monitoring pending**. If Speed Insights confirms real-user POOR desktop → proceed to Task 83 (RSC payload reduction). If GOOD → close epic.
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Governance**: ✅ all 5 categories pass.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md`](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: Vercel Speed Insights + PageSpeed Workflow (Task 81)**
 - `@vercel/speed-insights@2.0.0` was already installed; added `<SpeedInsights />` to `src/app/layout.tsx` (root layout — covers all locales and all routes without duplication).
 - Governance: ✅ All 5 categories pass, no new regressions. Lint: ✅ 0 errors on layout.tsx.
@@ -242,6 +255,14 @@
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
 
+### Task 82 — Speed Insights + PageSpeed Validation — COMPLETE (epic OPEN — monitoring pending)
+**Mobile**: sq=1448ms🟢 en=649ms🟢 uk=1199ms🟢 it=1152ms🟢 — consistently GOOD ✅
+**Desktop**: sq=2532ms🔴 en=5665ms🔴 uk=5838ms🔴 it=1475ms🟡 — POOR/NI. TBT=0, CLS=0.
+**Root cause**: gallery `<img>` at 86% through 124KB RSC HTML + CDN cold starts on test listing (warm=874ms gap, cold=5000ms+). HTTP preload not honored by browser.
+**Speed Insights**: insufficient traffic yet; check Vercel dashboard after 1–2 weeks real traffic.
+**Decision**: OPEN — monitoring pending. If real users see POOR desktop → Task 83 (RSC reduction). If GOOD → close.
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md`](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md)
+
 ### Task 81 — Vercel Speed Insights + PageSpeed Workflow ✅ COMPLETE
 **Package**: `@vercel/speed-insights@2.0.0` already in deps; added `<SpeedInsights />` to root layout.
 **Integration**: `src/app/layout.tsx` — single placement, covers all locales + listing detail routes.
@@ -382,6 +403,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 11: Speed Insights + PageSpeed Validation | Task 82 | [sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md](sessions/2026-05-19-listing-detail-lcp-speed-insights-pagespeed-validation.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 10: Speed Insights + PageSpeed Workflow | Task 81 | [sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 9: HTTP Link Browser Usage | Task 80 | [sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 8: Production Diagnostics Reliability | Task 79 | [sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md) |

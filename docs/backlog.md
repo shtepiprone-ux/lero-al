@@ -1,6 +1,17 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: Vercel Speed Insights + PageSpeed Workflow (Task 81)**
+- `@vercel/speed-insights@2.0.0` was already installed; added `<SpeedInsights />` to `src/app/layout.tsx` (root layout — covers all locales and all routes without duplication).
+- Governance: ✅ All 5 categories pass, no new regressions. Lint: ✅ 0 errors on layout.tsx.
+- **Epic closure decision model updated**: no longer based solely on synthetic Lighthouse CLI. Now requires Vercel Speed Insights route-level RUM + PageSpeed (lab + field) for all 4 locales.
+- **PageSpeed workflow documented**: run `https://pagespeed.web.dev/` for all 4 locale listing detail URLs, record LCP/FCP/CLS/INP for mobile + desktop.
+- **First data**: visit all 4 locale Listing Detail URLs in a real browser after Vercel deploy to seed Speed Insights.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: HTTP Link Browser Usage (Task 80)**
 - **Root finding**: `PRELOAD_NOT_USED` — 640w starts at 655–4708ms (late), not at TTFB. CDN delivers fast (43–125ms) when requested. Browser is ignoring the HTTP `Link` preload. Most likely cause: `fetchpriority=high` not a valid RFC 8288 parameter → Chromium silently rejects the entry.
 - **4-variant experiment system** added to middleware (`resolveLinkVariant` + `buildLcpLinkHeader(variant)`):
@@ -231,6 +242,15 @@
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
 
+### Task 81 — Vercel Speed Insights + PageSpeed Workflow ✅ COMPLETE
+**Package**: `@vercel/speed-insights@2.0.0` already in deps; added `<SpeedInsights />` to root layout.
+**Integration**: `src/app/layout.tsx` — single placement, covers all locales + listing detail routes.
+**Governance**: All 5 categories ✅ pass, no regressions.
+**Workflow docs**: PageSpeed validation steps + Vercel Speed Insights dashboard usage documented.
+**Epic closure model**: Upgraded from synthetic-only → PageSpeed field data + Vercel Speed Insights RUM.
+**Next**: Deploy, visit listing detail pages in real browser to seed Speed Insights data, then run Task 82.
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md)
+
 ### Task 80 — HTTP Link Browser Usage — IMPLEMENTATION COMPLETE (variant experiment pending production run)
 **Finding**: `PRELOAD_NOT_USED` — 640w starts 650–4700ms late. CDN fast (43–125ms). Browser silently ignores `fetchpriority=high` in HTTP Link header (non-RFC-8288 param, likely Chromium rejection).
 **4 variants**: A=original (broken) | B=quoted+fp | **C=quoted-minimal (new default)** | D=C+preload-first.
@@ -362,6 +382,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 10: Speed Insights + PageSpeed Workflow | Task 81 | [sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-vercel-speed-insights.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 9: HTTP Link Browser Usage | Task 80 | [sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 8: Production Diagnostics Reliability | Task 79 | [sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 7: Diagnostic Tooling Fix | Task 78 | [sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md) |

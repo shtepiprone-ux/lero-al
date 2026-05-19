@@ -2,6 +2,19 @@
 
 ## Sprint 0 — Critical Bugfix / Regression Stabilization
 
+**2026-05-19 — Fix currency label translation issue (Task 86) ✅ COMPLETED**
+- **Root cause**: No active code path was passing currency code `ALL` through `t()`. Investigation confirmed all display paths use `cur.code` or `formatPrice` directly. The task risk: `common.all` = "Усі" (UK) / "Tutti" (IT) / "All" (EN) could collide if `ALL` were ever lowercased and passed to `t()`. Also: `cabinet.filter_ALL` correctly exists for the listing visibility filter "All listings" (separate from currency).
+- **Fix**: Added `normalizeCurrencyCode(code: string): string` to `src/lib/formatters.ts`, making the "currency codes are domain identifiers, not i18n keys" contract explicit. Updated `formatPrice` to use it — guarantees uppercase output even if a code arrives in non-canonical form.
+- **Files changed**: `src/lib/formatters.ts`
+- **Lint**: 0 errors / 6 warnings (all pre-existing).
+- **Typecheck**: 4 pre-existing errors in test files, 0 new.
+- **Governance**: ✅ All categories pass at baseline.
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-86-currency-label-translation-issue.md`](sessions/2026-05-19-task-86-currency-label-translation-issue.md)
+
+---
+
 **2026-05-19 — Fix Italian localization fallback to Ukrainian (Task 85) ✅ COMPLETED**
 - **Root cause**: `ListingMobileCTA.tsx` had hardcoded Ukrainian `Зателефонувати` in the mobile call button label. The `listing.call` key already existed in all 4 locale files; the component simply wasn't using `useTranslations`.
 - **Fix**: Added `useTranslations('listing')` to `ListingMobileCTA` and replaced hardcoded string with `{t('call')}`. No translation keys added.
@@ -469,6 +482,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Sprint 0 — Fix currency label translation issue | Task 86 | [sessions/2026-05-19-task-86-currency-label-translation-issue.md](sessions/2026-05-19-task-86-currency-label-translation-issue.md) |
 | 2026-05-19 | Sprint 0 — Fix Italian localization fallback to Ukrainian | Task 85 | [sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md](sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md) |
 | 2026-05-19 | Sprint 0 — Fix listing contact card for guest users | Task 84 | [sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md](sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic — CLOSED (Speed Insights RES 100) | Task 83 | [sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md) |

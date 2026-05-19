@@ -1,4 +1,15 @@
 /**
+ * Returns a currency code for display as-is.
+ *
+ * Currency codes are domain identifiers (ISO 4217-style), never i18n keys.
+ * Never pass a currency code through useTranslations/t() — `ALL` is Albanian lek,
+ * not the UI word "all/everything". This function makes that contract explicit.
+ */
+export function normalizeCurrencyCode(code: string): string {
+  return code.toUpperCase()
+}
+
+/**
  * Formats a price for display. Always requires an explicit locale so
  * server-side and client-side rendering produce identical output (hydration-safe).
  *
@@ -8,7 +19,7 @@ export function formatPrice(price: number, currency: string, locale: string): st
   const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(
     Math.round(price),
   )
-  return currency ? `${formatted} ${currency}` : formatted
+  return currency ? `${formatted} ${normalizeCurrencyCode(currency)}` : formatted
 }
 
 /**

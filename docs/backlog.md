@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-19 — Sprint 2 / Task 107 — Remove Dead-Code Avatar Actions ✅**
+**2026-05-19 — Task 108 — Epic B.1 — Side Popup Auth Flow ✅**
+
+- `AuthSheet` (new) — canonical `Sheet` with Login / Register / Register-agent views; internal view switching without closing.
+- Error-code contract: `mapAuthError()` maps Supabase errors → stable i18n keys; zero hardcoded strings.
+- Header: Link auth buttons → Button Sheet triggers; mobile drawer adds "Register as agent" as third entry point.
+- 8 new i18n keys × 4 locales (auth errors + `register_agent`); key counts 862 → 870.
+- Existing `/auth/login` + `/auth/register` pages remain as URL fallbacks.
+- lint 0/5 · governance:localization PASS (870 × 4).
+
+→ [Task 108 session log](sessions/2026-05-19-task-108-side-popup-auth.md)
+
+**Previous: Sprint 2 / Task 107 — Remove Dead-Code Avatar Actions ✅**
 
 - `uploadCabinetAvatar` (cabinet/actions) and `uploadUserAvatar` (admin/actions) deleted — zero callers confirmed.
 - Companion helpers removed: local `uploadToCloudinary` in both files; `createHash` import in admin/actions.
@@ -77,7 +88,7 @@ Kickoff (Task 108): [`tasks/Epics/Epic_B_kickoff_prompt_Task_108.md`](../tasks/E
 Task queue (in order — global numbering continues from Task 106):
 
 - **Task 107** — Sprint 2 cleanup (above).
-- **Task 108** — Epic B.1 — Side popup login/register flow.
+- **Task 109** — Epic B.2 — Agent city selection (canonical Combobox).
 - **Task 109** — Epic B.2 — Agent city selection (canonical Combobox).
 - **Task 110** — Epic B.3 — Agent company selection with logo display (new `companies` table + RLS).
 - **Task 111** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
@@ -118,6 +129,7 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Epic B.1 — Side popup auth (AuthSheet + error-code contract) | Task 108 | [sessions/2026-05-19-task-108-side-popup-auth.md](sessions/2026-05-19-task-108-side-popup-auth.md) |
 | 2026-05-19 | Epic A.4 — Mobile locale switcher promoted to header as Combobox | Task 106 | [sessions/2026-05-19-task-106-mobile-locale-switcher-header.md](sessions/2026-05-19-task-106-mobile-locale-switcher-header.md) |
 | 2026-05-19 | Epic A.3 — Locale persistence site ↔ admin (middleware cookie sync) | Task 105 | [sessions/2026-05-19-task-105-locale-persistence-admin.md](sessions/2026-05-19-task-105-locale-persistence-admin.md) |
 | 2026-05-19 | Epic A.2 — Language name + currency-code policy verification | Task 104 | [sessions/2026-05-19-task-104-language-names-currency-policy.md](sessions/2026-05-19-task-104-language-names-currency-policy.md) |

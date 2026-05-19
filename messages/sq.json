@@ -21,7 +21,8 @@
     "lang_sq": "Shqip",
     "lang_en": "Anglisht",
     "lang_uk": "Ukrainisht",
-    "lang_it": "Italisht"
+    "lang_it": "Italisht",
+    "register_agent": "Regjistrohu si agjent"
   },
   "listing": {
     "sale": "Shitje",
@@ -244,9 +245,16 @@
     "agent": "Agjent",
     "company": "Emri i kompanisë (opsional)",
     "register_as": "Regjistrohu si",
+    "register_agent": "Regjistrohu si agjent",
     "no_account": "Nuk keni llogari?",
     "have_account": "Keni llogari?",
     "or": "ose",
+    "error_invalid_credentials": "Email ose fjalëkalim i gabuar.",
+    "error_email_exists": "Ky email është tashmë i regjistruar.",
+    "error_weak_password": "Fjalëkalimi duhet të ketë të paktën 6 karaktere.",
+    "error_email_not_confirmed": "Ju lutemi konfirmoni emailin para se të hyni.",
+    "error_rate_limit": "Shumë kërkesa. Provoni sërish më vonë.",
+    "error_generic": "Ndodhi një gabim. Provoni sërish.",
     "register_success_title": "Regjistrimi u krye me sukses",
     "register_success_body": "Llogaria juaj u krijua. Ju lutem kontrolloni emailin tuaj dhe verifikoni adresën para se të hyni.",
     "register_success_go_home": "Shko në faqen kryesore",

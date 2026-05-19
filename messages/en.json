@@ -21,7 +21,8 @@
     "lang_sq": "Albanian",
     "lang_en": "English",
     "lang_uk": "Ukrainian",
-    "lang_it": "Italian"
+    "lang_it": "Italian",
+    "register_agent": "Register as agent"
   },
   "listing": {
     "sale": "For sale",
@@ -244,9 +245,16 @@
     "agent": "Agent",
     "company": "Company name (optional)",
     "register_as": "Register as",
+    "register_agent": "Register as agent",
     "no_account": "Don't have an account?",
     "have_account": "Already have an account?",
     "or": "or",
+    "error_invalid_credentials": "Incorrect email or password.",
+    "error_email_exists": "This email is already registered.",
+    "error_weak_password": "Password must be at least 6 characters.",
+    "error_email_not_confirmed": "Please confirm your email before logging in.",
+    "error_rate_limit": "Too many requests. Please try again later.",
+    "error_generic": "An error occurred. Please try again.",
     "register_success_title": "Registration Successful",
     "register_success_body": "Your account has been created. Please check your email and verify your address before logging in.",
     "register_success_go_home": "Go to homepage",

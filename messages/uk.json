@@ -21,7 +21,8 @@
     "lang_sq": "Албанська",
     "lang_en": "Англійська",
     "lang_uk": "Українська",
-    "lang_it": "Італійська"
+    "lang_it": "Італійська",
+    "register_agent": "Зареєструватись як агент"
   },
   "listing": {
     "sale": "Продаж",
@@ -244,9 +245,16 @@
     "agent": "Агент",
     "company": "Назва компанії (опціонально)",
     "register_as": "Зареєструватись як",
+    "register_agent": "Реєстрація як агент",
     "no_account": "Немає акаунту?",
     "have_account": "Вже є акаунт?",
     "or": "або",
+    "error_invalid_credentials": "Невірний email або пароль.",
+    "error_email_exists": "Цей email вже зареєстрований.",
+    "error_weak_password": "Пароль повинен містити не менше 6 символів.",
+    "error_email_not_confirmed": "Будь ласка, підтвердьте email перед входом.",
+    "error_rate_limit": "Забагато спроб. Спробуйте пізніше.",
+    "error_generic": "Виникла помилка. Спробуйте ще раз.",
     "register_success_title": "Реєстрацію завершено",
     "register_success_body": "Ваш акаунт створено. Перевірте електронну пошту та підтвердьте адресу перед входом.",
     "register_success_go_home": "На головну",

@@ -21,6 +21,7 @@ import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
 import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
 import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
+import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 
 const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
@@ -82,6 +83,13 @@ export function Header() {
 
   const { user, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [authOpen, setAuthOpen] = useState(false)
+  const [authView, setAuthView] = useState<AuthView>('login')
+
+  function openAuthSheet(view: AuthView) {
+    setAuthView(view)
+    setAuthOpen(true)
+  }
 
   function switchLocale(newLocale: string) {
     const currentPath = window.location.pathname
@@ -195,12 +203,12 @@ export function Header() {
               </DropdownMenu>
             ) : (
               <>
-                <Link href={`/${locale}/auth/login`} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+                <Button variant="ghost" size="sm" onClick={() => openAuthSheet('login')}>
                   {t('login')}
-                </Link>
-                <Link href={`/${locale}/auth/register`} className={cn(buttonVariants({ size: 'sm' }))}>
+                </Button>
+                <Button size="sm" onClick={() => openAuthSheet('register')}>
                   {t('register')}
-                </Link>
+                </Button>
               </>
             )}
           </div>
@@ -268,20 +276,29 @@ export function Header() {
                 {/* Mobile auth buttons */}
                 {!user && (
                   <div className="border-t pt-4 flex flex-col gap-2">
-                    <Link
-                      href={`/${locale}/auth/login`}
-                      className={cn(buttonVariants({ variant: 'outline', size: 'xl' }), 'w-full justify-center')}
-                      onClick={() => setMobileOpen(false)}
+                    <Button
+                      variant="outline"
+                      size="xl"
+                      className="w-full"
+                      onClick={() => { setMobileOpen(false); openAuthSheet('login') }}
                     >
                       {t('login')}
-                    </Link>
-                    <Link
-                      href={`/${locale}/auth/register`}
-                      className={cn(buttonVariants({ size: 'xl' }), 'w-full justify-center')}
-                      onClick={() => setMobileOpen(false)}
+                    </Button>
+                    <Button
+                      size="xl"
+                      className="w-full"
+                      onClick={() => { setMobileOpen(false); openAuthSheet('register') }}
                     >
                       {t('register')}
-                    </Link>
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="xl"
+                      className="w-full"
+                      onClick={() => { setMobileOpen(false); openAuthSheet('register-agent') }}
+                    >
+                      {t('register_agent')}
+                    </Button>
                   </div>
                 )}
 
@@ -304,6 +321,8 @@ export function Header() {
           </Sheet>
         </div>
       </div>
+
+      <AuthSheet open={authOpen} onOpenChange={setAuthOpen} initialView={authView} />
     </header>
   )
 }

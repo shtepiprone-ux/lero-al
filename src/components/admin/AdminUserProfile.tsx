@@ -653,7 +653,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       )}
 
       {/* ── Basic info ──────────────────────────────────────────────────────── */}
-      <SectionCard title={t('sections.basic_info')}>
+      <SectionCard title={t('sections.basic_info')} allowOverflow>
         {isCreate ? (
           <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
             <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
@@ -797,7 +797,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
 
       {/* ── Account Status (not shown in create mode) ───────────────────────── */}
       {!isCreate && (
-        <SectionCard title={t('sections.account_status')}>
+        <SectionCard title={t('sections.account_status')} allowOverflow>
           <FieldRow label={t('fields.status')} mode={currentMode}
             viewValue={
               <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">

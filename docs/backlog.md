@@ -2,6 +2,19 @@
 
 ## Sprint 0 — Critical Bugfix / Regression Stabilization
 
+**2026-05-19 — Fix dropdown clipping inconsistencies (Task 89) ✅ COMPLETED**
+- **Root cause**: Admin form cards with `overflow-hidden` clipped `Combobox` and `LocationCombobox` absolute-positioned dropdowns. 4 affected locations in `AdminUserProfile.tsx` and `AdminUserCreate.tsx`.
+- **Fix**: Applied existing `allowOverflow` pattern (`overflow-visible`) to the affected cards. `AdminUserProfile.tsx`: added `allowOverflow` to `basic_info` and `account_status` SectionCards. `AdminUserCreate.tsx`: changed `overflow-hidden` → `overflow-visible` on the basic_info and location cards.
+- **Files changed**: `src/components/admin/AdminUserProfile.tsx`, `src/components/admin/AdminUserCreate.tsx`
+- **Lint**: 0 errors / 6 warnings (all pre-existing).
+- **Typecheck**: 4 pre-existing errors in test files, 0 new.
+- **Governance**: ✅ All categories pass at baseline.
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md`](sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md)
+
+---
+
 **2026-05-19 — Fix guest favorite behavior (Task 88) ✅ COMPLETED**
 - **Root cause**: `FavoriteButton.tsx` called `setFavorited(nextState)` (optimistic toggle) before any auth check. For guests, server returned `{ error: 'unauthenticated' }` causing a rollback flash.
 - **Fix**: Added `useAuth()` guard at the top of `handleClick`. If `!user && status === 'unauthenticated'`, redirect to `/${locale}/auth/login` and return, preventing any optimistic state change. During `status === 'refreshing'`, do nothing (avoids false redirect on session restore).
@@ -510,6 +523,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Sprint 0 — Fix dropdown clipping inconsistencies | Task 89 | [sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md](sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md) |
 | 2026-05-19 | Sprint 0 — Fix guest favorite behavior | Task 88 | [sessions/2026-05-19-task-88-guest-favorite-behavior.md](sessions/2026-05-19-task-88-guest-favorite-behavior.md) |
 | 2026-05-19 | Sprint 0 — Fix Ukrainian localization terminology | Task 87 | [sessions/2026-05-19-task-87-ukrainian-localization-terminology.md](sessions/2026-05-19-task-87-ukrainian-localization-terminology.md) |
 | 2026-05-19 | Sprint 0 — Fix currency label translation issue | Task 86 | [sessions/2026-05-19-task-86-currency-label-translation-issue.md](sessions/2026-05-19-task-86-currency-label-translation-issue.md) |

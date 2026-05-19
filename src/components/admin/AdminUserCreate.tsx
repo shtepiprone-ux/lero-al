@@ -216,7 +216,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
 
         {/* Basic */}
-        <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
+        <div className="bg-card rounded-2xl border shadow-sm overflow-visible">
           <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
             {t('sections.basic_info')}
           </p>
@@ -290,7 +290,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
         </div>
 
         {/* Location */}
-        <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
+        <div className="bg-card rounded-2xl border shadow-sm overflow-visible">
           <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
             {t('sections.location_work')}
           </p>

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
-import { Phone, MessageCircle, Share2, CheckCircle, UserX } from 'lucide-react'
+import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
@@ -25,6 +25,8 @@ interface Owner {
 
 interface ListingContactProps {
   owner: Owner
+  /** True when the viewer is unauthenticated. Keeps viewer state separate from owner account status. */
+  isGuest?: boolean
   listingTitle: string
   listingUrl: string
   price: number
@@ -39,12 +41,15 @@ interface ListingContactProps {
   isFavorited?: boolean
 }
 
-export function ListingContact({ owner, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false }: ListingContactProps) {
+export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const [copied, setCopied] = useState(false)
 
   const ownerDeleted = !!(owner.deleted_at)
+  // owner.id is empty string in the fallback object — means no owner data was returned from DB.
+  // For guests this is due to RLS, not because the owner deleted their account.
+  const showGuestCTA = isGuest && !owner.id && !ownerDeleted
   const listingClosed = listingStatus ? isListingClosed(listingStatus) : false
   const closedLabel = listingClosed && listingStatus ? t(`action_disabled_${listingStatus}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const initials = owner.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) ?? '?'
@@ -68,9 +73,9 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
         <div className="rounded-2xl border bg-card shadow-md p-5">
           <div className="flex flex-col gap-4">
             {/* Owner info */}
-            <div className={cn("flex items-center gap-3", ownerDeleted && "opacity-50")}>
+            <div className={cn("flex items-center gap-3", (ownerDeleted || showGuestCTA) && "opacity-50")}>
               <Avatar className="h-12 w-12 border-2 border-border">
-                {!ownerDeleted && <AvatarImage src={owner.avatar_url ?? undefined} />}
+                {!ownerDeleted && !showGuestCTA && <AvatarImage src={owner.avatar_url ?? undefined} />}
                 <AvatarFallback className="font-semibold">
                   {ownerDeleted ? <UserX className="h-5 w-5" /> : initials}
                 </AvatarFallback>
@@ -80,12 +85,12 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
                   <p className="font-semibold text-sm truncate">
                     {ownerDeleted ? t('owner_deleted_label') : (owner.name ?? 'N/A')}
                   </p>
-                  {!ownerDeleted && owner.is_verified && (
+                  {!ownerDeleted && !showGuestCTA && owner.is_verified && (
                     <CheckCircle className="h-4 w-4 text-verified shrink-0" aria-label={t('verified_agent')} />
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {ownerDeleted
+                  {ownerDeleted || showGuestCTA
                     ? '—'
                     : owner.user_type === 'agent'
                       ? owner.company_name || t('agent_label')
@@ -102,7 +107,7 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
               )}
             </div>
 
-            {/* Action buttons — or owner-deleted notice */}
+            {/* Action buttons — owner-deleted notice — or guest sign-in CTA */}
             {ownerDeleted ? (
               <div className="rounded-xl border border-border/60 bg-muted/40 px-4 py-5 flex flex-col items-center gap-3 text-center">
                 <div className="h-10 w-10 rounded-full bg-muted border border-border flex items-center justify-center">
@@ -112,6 +117,22 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
                   <p className="text-sm font-semibold text-foreground/80">{t('owner_deleted')}</p>
                   <p className="text-xs text-muted-foreground leading-relaxed">{t('owner_deleted_desc')}</p>
                 </div>
+              </div>
+            ) : showGuestCTA ? (
+              <div className="rounded-xl border border-border/60 bg-muted/40 px-4 py-5 flex flex-col items-center gap-3 text-center">
+                <div className="h-10 w-10 rounded-full bg-muted border border-border flex items-center justify-center">
+                  <LogIn className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm font-semibold text-foreground/80">{t('contact_guest_title')}</p>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{t('contact_guest_desc')}</p>
+                </div>
+                <a
+                  href={`/${locale}/auth/login`}
+                  className="flex items-center justify-center gap-2 h-10 w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-colors"
+                >
+                  {t('contact_guest_cta')}
+                </a>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
@@ -200,7 +221,7 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
               {ownerDeleted ? t('owner_deleted') : owner.name}
             </p>
           </div>
-          {!ownerDeleted && (
+          {!ownerDeleted && !showGuestCTA && (
             <div className="flex gap-2 shrink-0">
               {whatsappNumber && (
                 <a
@@ -230,6 +251,15 @@ export function ListingContact({ owner, listingTitle, listingUrl, price, currenc
               <UserX className="h-3.5 w-3.5 shrink-0" />
               <span>{t('owner_deleted_label')}</span>
             </div>
+          )}
+          {showGuestCTA && (
+            <a
+              href={`/${locale}/auth/login`}
+              className="shrink-0 h-11 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm flex items-center gap-1.5 transition-colors"
+            >
+              <LogIn className="h-4 w-4" />
+              {t('contact_guest_cta')}
+            </a>
           )}
         </div>
       </div>

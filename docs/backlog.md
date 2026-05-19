@@ -1,5 +1,30 @@
 # Project Backlog
 
+## Sprint 0 — Critical Bugfix / Regression Stabilization
+
+**2026-05-19 — Fix listing contact card for guest users (Task 84) ✅ COMPLETED**
+- **Root cause**: For guest users (anon role), RLS blocks reads on the `users` table. Owner JOIN returns `null`, and the fallback in `page.tsx` unconditionally set `deleted_at: 'deleted'` regardless of viewer auth state — causing `ListingContact` to show the "owner deleted account" message to all guests even when the owner is active.
+- **Fix**: Separated viewer auth state from owner account status.
+  - `page.tsx`: Added `isGuest = !authUser`; fallback now sets `deleted_at: null` for guests (not `'deleted'`), preserving the deleted-owner path only for authenticated viewers where null truly means the row is gone.
+  - `ListingContact.tsx`: Added `isGuest` prop and `showGuestCTA` state (`isGuest && !owner.id && !ownerDeleted`). Guests with no owner data now see a "Sign in to contact the owner" CTA (LogIn icon + description + login button), not the "owner deleted" notice.
+  - Mobile bottom bar updated to show a "Sign in" button for guests instead of empty space.
+  - 3 new translation keys (`contact_guest_title`, `contact_guest_desc`, `contact_guest_cta`) added to all 4 locales (`sq`, `en`, `uk`, `it`).
+- **Files changed**:
+  - `src/app/[locale]/listings/[slug]/page.tsx`
+  - `src/modules/listings/components/ListingContact.tsx`
+  - `messages/en.json`
+  - `messages/sq.json`
+  - `messages/uk.json`
+  - `messages/it.json`
+- **Lint**: 0 errors / 6 warnings (all pre-existing, 0 new).
+- **Typecheck**: 4 pre-existing errors in test files (`@testing-library/react`), 0 new errors.
+- **Governance**: ✅ All categories pass, no regressions — localization/primitives/responsive/ssr all at baseline.
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md`](sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md)
+
+---
+
 ## Last Session
 **2026-05-19 — Listing Detail Performance / LCP Epic: EPIC CLOSED (Task 83)**
 - **Vercel Speed Insights (7-day production RUM):**

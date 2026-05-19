@@ -218,9 +218,11 @@ export default async function ListingPage({ params }: Props) {
   }
 
   const ownerRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
-  // The owner JOIN returns null when the user row is hidden by RLS (soft-deleted) or
-  // was removed from the DB. Always fall back to a "deleted" placeholder so the
-  // contact block renders with a proper notice instead of disappearing entirely.
+  const isGuest = !authUser
+
+  // Viewer auth state (isGuest) and owner account status (deleted_at) are independent concerns.
+  // For guests, RLS blocks reads on the users table, so ownerRaw is null even for active owners.
+  // For authenticated viewers, ownerRaw is null only when the owner row is genuinely gone.
   const owner = ownerRaw ?? {
     id: '' as string,
     name: null as string | null,
@@ -230,7 +232,7 @@ export default async function ListingPage({ params }: Props) {
     user_type: 'private' as string,
     is_verified: false,
     company_name: null as string | null,
-    deleted_at: 'deleted' as string,
+    deleted_at: isGuest ? null : ('deleted' as string),
   }
   const images = listing.images ?? []
 
@@ -484,6 +486,7 @@ export default async function ListingPage({ params }: Props) {
           {/* ── Right column: contact sidebar — always rendered ── */}
           <LazyListingContact
             owner={owner}
+            isGuest={isGuest}
             listingTitle={listing.title}
             listingUrl={listingUrl}
             price={displayPrice}

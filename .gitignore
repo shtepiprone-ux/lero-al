@@ -64,8 +64,8 @@ playwright/.auth/
 /scripts/governance/reports/*.json
 /scripts/governance/reports/*.md
 
-#Local Settings
-.claude/settings.local.json
+# Local Settings
+.claude/
 
-#Claude docs
-.claude/tools/orchestrator/
+# Local tools
+/tools/orchestrator/

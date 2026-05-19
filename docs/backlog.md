@@ -1,6 +1,18 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: Diagnostic Tooling Fix (Task 78)**
+- **Bug 1 (parser)**: `headers.append('Link', ...)` created two separate `Link` headers; Node.js 18 undici `headers.get('link')` returned only the first (hreflang entries), silently dropping the Cloudinary preload. Fixed by reverting middleware to `headers.set(combined)`.
+- **Bug 2 (LCP=N/A)**: `PerformanceObserver` must be injected via `addInitScript` BEFORE navigation. Chrome only finalises LCP on user interaction — added `page.mouse.move()` trigger after `networkidle`.
+- **Bug 3 (absolute timestamps)**: `request.timing().startTime` is epoch ms. Fixed by subtracting `performance.timeOrigin` from page context.
+- **Bonus fix**: Parser now uses RFC 8288 split + direct Cloudinary URL regex fallback + `\n` normalisation for robustly detecting the preload entry regardless of how the combined header is formatted.
+- Desktop sq: 1424ms 🟡 NI (from summary.json) — CDN warm run improved; en/uk/it still POOR from CDN cold starts.
+- **Production validation pending Vercel deployment.**
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md`](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: Link Header Diagnostics (Task 77)**
 - **Root cause 1 (Outcome C)**: HTTP Link header preloaded 960w (`href`); desktop `<img>` requests 640w. URL mismatch → preload wasted. Fixed by switching to `buildGalleryLcpPreloadHref` (640w URL, href-only, no imagesrcset commas).
 - **Root cause 2 (Outcome F)**: Cloudinary 640w variant cold-start causes 5–9s image delivery on test listing. `SI ≈ FCP` at ~1000ms but LCP at 5–10s → pure CDN delivery latency, not JS/render.
@@ -192,6 +204,12 @@
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
 
+### Task 78 — Diagnostic Tooling Fix — COMPLETE (production validation pending Vercel deploy)
+**3 tooling bugs fixed:** (1) `headers.append` created 2 Link headers → undici returned only first → parser missed Cloudinary; reverted to `headers.set(combined)`. (2) `PerformanceObserver` must be `addInitScript` before nav, not `getEntriesByType` after. (3) `timing.startTime` is epoch ms; subtract `performance.timeOrigin` for nav-relative output.
+**Parser hardened:** RFC 8288 split + direct Cloudinary URL regex scan + `\n` normalisation — two independent strategies.
+**Desktop sq from summary.json:** 1424ms 🟡 NI (CDN warm) vs 8440–9542ms (en/uk/it, CDN cold).
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md`](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md)
+
 ### Task 77 — Link Header Diagnostics — COMPLETE (fixes applied, production validation pending)
 **Root cause 1 (Outcome C):** HTTP Link preloaded 960w; desktop `<img>` requests 640w → URL mismatch → preload wasted. Fixed: middleware now uses `buildGalleryLcpPreloadHref` (640w href-only).
 **Root cause 2 (Outcome F):** Cloudinary 640w cold-start is 5–9s for test listing. `FCP≈SI≈1000ms` but `LCP=5–10s` — page renders immediately, image just takes seconds to deliver from CDN. CDN cold-start is the true remaining bottleneck.
@@ -303,6 +321,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 7: Diagnostic Tooling Fix | Task 78 | [sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 6: Link Header Diagnostics | Task 77 | [sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 5: HTTP Link Header Preload | Task 76 | [sessions/2026-05-19-listing-detail-lcp-http-link-preload.md](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 4: Production Validation | Task 75 | [sessions/2026-05-19-listing-detail-lcp-production-validation.md](sessions/2026-05-19-listing-detail-lcp-production-validation.md) |

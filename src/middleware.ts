@@ -80,10 +80,12 @@ export async function middleware(request: NextRequest) {
   if (coverUrl) {
     const linkHeader = buildLcpLinkHeader(coverUrl)
     if (linkHeader) {
-      // append() keeps the preload entry as a separate Link header value,
-      // isolating it from next-intl's hreflang entries. This prevents the
-      // imagesrcset commas from corrupting the combined header when combined.
-      response.headers.append('Link', linkHeader)
+      // Use set() (read-combine-set) to keep a single Link header value.
+      // headers.append() creates a SECOND Link header, which Node.js 18
+      // fetch()/undici may not combine via headers.get() — causing validation
+      // scripts and browsers to miss the Cloudinary preload entry.
+      const existing = response.headers.get('Link')
+      response.headers.set('Link', existing ? `${existing}, ${linkHeader}` : linkHeader)
     }
   }
 

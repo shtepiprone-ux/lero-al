@@ -100,12 +100,13 @@ function checkPreloadPosition(html) {
   }
 }
 
-// RFC 8288-aware Link header parser.
-// Splits at commas NOT inside quoted strings to handle imagesrcset values.
+// RFC 8288-aware Link header parser + direct-search fallback.
+// See validate-production-lcp.mjs for full explanation.
 function splitLinkEntries(raw) {
+  const h = raw.replace(/\r?\n/g, ', ')
   const entries = []
   let cur = '', inQ = false
-  for (const ch of raw) {
+  for (const ch of h) {
     if (ch === '"') { inQ = !inQ; cur += ch }
     else if (ch === ',' && !inQ) { entries.push(cur.trim()); cur = '' }
     else { cur += ch }
@@ -114,37 +115,56 @@ function splitLinkEntries(raw) {
   return entries
 }
 
+function findCloudinaryPreload(rawHeader) {
+  if (!rawHeader) return null
+  const h = rawHeader.replace(/\r?\n/g, ', ')
+  for (const e of splitLinkEntries(h)) {
+    const lo = e.toLowerCase()
+    if (!lo.includes('res.cloudinary.com')) continue
+    if (!/\brel\s*=\s*"?preload"?\b/.test(lo)) continue
+    if (!/\bas\s*=\s*"?image"?\b/.test(lo)) continue
+    const urlM = e.match(/^<([^>]+)>/)
+    if (urlM) return { href: urlM[1], raw: e.slice(0, 200) }
+  }
+  const cdnRe = /<(https:\/\/res\.cloudinary\.com\/[^>]+)>/gi
+  let m
+  while ((m = cdnRe.exec(h)) !== null) {
+    const after = h.slice(m.index + m[0].length, m.index + m[0].length + 200)
+    const lo = after.toLowerCase()
+    if (/\brel\s*=\s*"?preload"?\b/.test(lo) && /\bas\s*=\s*"?image"?\b/.test(lo)) {
+      return { href: m[1], raw: (m[0] + after.split(/[,<]/)[0]).slice(0, 200) }
+    }
+  }
+  return null
+}
+
 function checkLinkHeader(headerValue) {
   if (!headerValue) return { present: false }
-  const entries = splitLinkEntries(headerValue)
-  const preloadEntry = entries.find(e => {
-    const lo = e.toLowerCase()
-    return lo.includes('res.cloudinary.com') &&
-           /rel\s*=\s*"?preload"?/.test(lo) &&
-           /as\s*=\s*"?image"?/.test(lo)
-  }) ?? null
-  if (!preloadEntry) {
+  const h = headerValue.replace(/\r?\n/g, ', ')
+  const entries = splitLinkEntries(h)
+  const found = findCloudinaryPreload(h)
+  if (!found) {
     return {
       present: true,
       hasImagePreload: false,
       totalEntries: entries.length,
-      alternateCount: entries.filter(e => /rel\s*=\s*"?alternate"?/i.test(e)).length,
+      alternateCount: entries.filter(e => /\brel\s*=\s*"?alternate"?\b/i.test(e)).length,
       raw: headerValue.slice(0, 300),
     }
   }
-  const urlMatch = preloadEntry.match(/^<([^>]+)>/)
   return {
     present: true,
     hasImagePreload: true,
-    hasPreload:  true,
-    hasImage:    true,
-    hasFetchPri: /fetchpriority=high/i.test(preloadEntry),
-    isCloudinary:true,
-    url: urlMatch?.[1] ?? null,
+    hasPreload:   true,
+    hasImage:     true,
+    hasFetchPri:  /\bfetchpriority=high\b/i.test(found.raw),
+    isCloudinary: true,
+    url:          found.href,
+    preloadWidth: found.href.match(/[,/]w_(\d+)/)?.[1] ?? null,
     totalEntries: entries.length,
-    alternateCount: entries.filter(e => /rel\s*=\s*"?alternate"?/i.test(e)).length,
-    raw: headerValue.slice(0, 300),
-    preloadEntryRaw: preloadEntry.slice(0, 200),
+    alternateCount: entries.filter(e => /\brel\s*=\s*"?alternate"?\b/i.test(e)).length,
+    raw:          headerValue.slice(0, 300),
+    preloadEntryRaw: found.raw,
   }
 }
 

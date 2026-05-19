@@ -76,41 +76,71 @@ const TASK74_BASELINE = {
 
 // ── HTTP Link header analysis ─────────────────────────────────────────────────
 //
-// RFC 8288-aware parser: splits at commas NOT inside quoted strings.
-// The combined Link header contains hreflang alternates from next-intl AND the
-// Cloudinary preload entry. Naively splitting at all commas incorrectly breaks
-// imagesrcset values that contain commas inside quotes.
+// Two-strategy parser for the combined HTTP Link header.
+//
+// The full header contains hreflang alternates (from next-intl middleware),
+// optional Next.js static-asset preloads, and our Cloudinary image preload.
+// All are combined by the middleware into a single header value.
+//
+// Strategy 1: RFC 8288-aware comma-split (respects quoted strings).
+// Strategy 2: Direct regex scan for the Cloudinary URL (fallback for edge
+//             cases where normalised \\n joins or unusual whitespace confuse
+//             the split).
 
 function splitLinkEntries(rawHeader) {
+  // Normalise: multiple Link header values joined with \\n (e.g. from CDP or
+  // Node.js undici when the server sent two separate Link header fields).
+  const h = rawHeader.replace(/\r?\n/g, ', ')
   const entries = []
-  let current = ''
-  let inQuotes = false
-  for (let i = 0; i < rawHeader.length; i++) {
-    const ch = rawHeader[i]
-    if (ch === '"') { inQuotes = !inQuotes; current += ch }
-    else if (ch === ',' && !inQuotes) { entries.push(current.trim()); current = '' }
-    else { current += ch }
+  let cur = '', inQ = false
+  for (const ch of h) {
+    if (ch === '"') { inQ = !inQ; cur += ch }
+    else if (ch === ',' && !inQ) { entries.push(cur.trim()); cur = '' }
+    else { cur += ch }
   }
-  if (current.trim()) entries.push(current.trim())
+  if (cur.trim()) entries.push(cur.trim())
   return entries
+}
+
+function findCloudinaryPreload(rawHeader) {
+  if (!rawHeader) return null
+  const h = rawHeader.replace(/\r?\n/g, ', ')
+
+  // Strategy 1: RFC 8288-aware entry split
+  for (const e of splitLinkEntries(h)) {
+    const lo = e.toLowerCase()
+    if (!lo.includes('res.cloudinary.com')) continue
+    if (!/\brel\s*=\s*"?preload"?\b/.test(lo)) continue
+    if (!/\bas\s*=\s*"?image"?\b/.test(lo)) continue
+    const urlM = e.match(/^<([^>]+)>/)
+    if (urlM) return { href: urlM[1], raw: e.slice(0, 300), method: 'rfc8288' }
+  }
+
+  // Strategy 2: Locate any Cloudinary URL in the header and check the
+  // parameters that follow it for rel=preload and as=image.
+  const cdnRe = /<(https:\/\/res\.cloudinary\.com\/[^>]+)>/gi
+  let m
+  while ((m = cdnRe.exec(h)) !== null) {
+    const after = h.slice(m.index + m[0].length, m.index + m[0].length + 200)
+    const lo = after.toLowerCase()
+    if (/\brel\s*=\s*"?preload"?\b/.test(lo) && /\bas\s*=\s*"?image"?\b/.test(lo)) {
+      const entry = (m[0] + after.split(/[,<]/)[0]).slice(0, 300)
+      return { href: m[1], raw: entry, method: 'direct' }
+    }
+  }
+  return null
 }
 
 function probeLinkHeader(headerValue) {
   if (!headerValue) return { present: false }
 
-  const entries = splitLinkEntries(headerValue)
-  const totalEntries = entries.length
-  const alternateCount = entries.filter(e => /rel\s*=\s*"?alternate"?/i.test(e)).length
+  const h = headerValue.replace(/\r?\n/g, ', ')
+  const entries   = splitLinkEntries(h)
+  const totalEntries  = entries.length
+  const alternateCount = entries.filter(e => /\brel\s*=\s*"?alternate"?\b/i.test(e)).length
 
-  // Find the entry with rel=preload + as=image + Cloudinary URL
-  const preloadEntry = entries.find(e => {
-    const lo = e.toLowerCase()
-    return lo.includes('res.cloudinary.com') &&
-           /rel\s*=\s*"?preload"?/.test(lo) &&
-           /as\s*=\s*"?image"?/.test(lo)
-  }) ?? null
-
-  if (!preloadEntry) {
+  const found = findCloudinaryPreload(h)
+  if (!found) {
     return {
       present: true,
       hasImagePreload: false,
@@ -121,9 +151,9 @@ function probeLinkHeader(headerValue) {
     }
   }
 
-  const urlMatch      = preloadEntry.match(/^<([^>]+)>/)
-  const hasFetchPri   = /fetchpriority=high/i.test(preloadEntry)
-  const hasImgSrcSet  = /imagesrcset=/i.test(preloadEntry)
+  const hasFetchPri  = /\bfetchpriority=high\b/i.test(found.raw)
+  const hasImgSrcSet = /\bimagesrcset=/i.test(found.raw)
+  const widthMatch   = found.href.match(/[,/]w_(\d+)/)
 
   return {
     present: true,
@@ -133,10 +163,12 @@ function probeLinkHeader(headerValue) {
     hasFetchPriority: hasFetchPri,
     hasImgSrcSet,
     isCloudinary: true,
-    url: urlMatch?.[1] ?? null,
+    url: found.href,
+    preloadWidth: widthMatch ? Number(widthMatch[1]) : null,
+    parserMethod: found.method,
     totalEntries,
     alternateCount,
-    preloadEntryRaw: preloadEntry.slice(0, 400),
+    preloadEntryRaw: found.raw,
     raw: headerValue.slice(0, 600),
     valid: true,
   }

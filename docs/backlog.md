@@ -1,6 +1,29 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: HTTP Link Header Preload (Task 76)**
+- Implemented `Link: <url>; rel=preload; as=image; imagesrcset="..."; imagesizes="..."; fetchpriority=high` header via Next.js middleware.
+- Middleware intercepts `GET /:locale/listings/:slug` (all 4 locales). DB lookup runs in parallel with `refreshSession` — TTFB overhead ≈ 0ms.
+- Fail-open: missing listing / non-Cloudinary image / DB error all skip the header silently.
+- RSC navigation requests (Next-Router-State-Tree header) are excluded — no overhead.
+- Updated `validate-production-lcp.mjs` and `profile-listing-lcp.mjs` to detect and report the HTTP Link header.
+- **Production validation pending Vercel deployment.**
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-preload.md`](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md)
+
+---
+
+**2026-05-19 — Listing Detail Performance / LCP Epic: Production Validation (Task 75)**
+- Mobile 375px production LCP: 1145–1380ms 🟢 GOOD (all 4 locales). Preload + fetchpriority confirmed live.
+- Desktop 1280px production LCP: 2359–5309ms 🔴 POOR (3/4 locales). Root cause: LCP `<img>` at 86% through 124KB HTML (RSC payload overhead).
+- Two preload tags in production HTML: React 19 auto-preload (imageSrcSet, no href) + our native RSC `<link>` (href + imageSrcSet). Both appear at chars 103K–106K — late in the body, providing minimal benefit for desktop.
+- Epic NOT closed: mobile goal achieved; desktop requires HTTP `Link` response headers (Task 76).
+- `scripts/validate-production-lcp.mjs` created, `npm run profile:lcp:production` added.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-production-validation.md`](sessions/2026-05-19-listing-detail-lcp-production-validation.md)
+
+---
+
 **2026-05-18 — Listing Detail Performance / LCP Epic: Lighthouse Trace Comparison (Task 74)**
 - Mobile LCP: 5339–5523ms 🔴 POOR → 1400–1519ms 🟢 GOOD (−73% across all 4 locales).
 - Desktop LCP: 273–908ms 🟢 GOOD. TBT: 126–174ms 🟢 GOOD. CLS: 0.
@@ -150,11 +173,23 @@
 **Caveat:** Localhost measurement; production numbers will differ but fix direction is confirmed.
 **Script:** `scripts/compare-listing-lcp-lighthouse.mjs` | `npm run profile:lcp:lighthouse`
 
-### Task 75 — Production LCP Validation (NEXT)
-**Scope:** Deploy Task 73 changes to production and run Lighthouse PageSpeed Insights against
-live URLs (`https://lero.al/[sq|en|uk|it]/listings/[slug]`) for each locale.
-If production LCP shows NEEDS_IMPROVEMENT: investigate Cloudinary transforms or HTTP Link headers.
-If production LCP shows GOOD: epic is effectively complete.
+### Task 75 — Production LCP Validation ✅ CLOSED
+**Method:** Lighthouse CLI against live `https://lero.al/[sq|en|uk|it]/listings/test-7-molyl9c8` + production HTML probe.
+**Mobile:** 1145–1380ms 🟢 GOOD for all 4 locales. Preload with `fetchpriority="high"` confirmed in production HTML.
+**Desktop:** 2359–5309ms 🔴 POOR (3/4 locales). Root cause: LCP `<img>` is at 86% through 124KB HTML — browser can't discover image until 106KB of RSC payload is received. Body-position preload (chars 103K) is discovered only 3KB before `<img>` — provides minimal benefit.
+**Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
+**Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
+
+### Task 76 — HTTP `Link` Response Header Preload — IMPLEMENTATION COMPLETE, validation pending deploy
+**Implemented:** Middleware (`src/middleware.ts`) intercepts `GET /:locale/listings/:slug`.
+Fetches cover image URL from Supabase in parallel with session refresh (no added TTFB).
+Sets `Link: <url>; rel=preload; as=image; imagesrcset="..."; imagesizes="..."; fetchpriority=high`.
+Fail-open: missing listing / non-Cloudinary / DB error → no header, page renders normally.
+RSC navigation requests (`Next-Router-State-Tree` header) are excluded.
+**Scripts updated:** `validate-production-lcp.mjs` + `profile-listing-lcp.mjs` detect Link header.
+**Production validation:** Run `npm run profile:lcp:production -- --preload-only` after Vercel deploy.
+**Expected gain:** Desktop LCP from 2500–11953ms 🔴 → ~700–1200ms 🟢 (browser discovers image at TTFB).
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-preload.md`](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md)
 
 ---
 
@@ -248,6 +283,8 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 5: HTTP Link Header Preload | Task 76 | [sessions/2026-05-19-listing-detail-lcp-http-link-preload.md](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md) |
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 4: Production Validation | Task 75 | [sessions/2026-05-19-listing-detail-lcp-production-validation.md](sessions/2026-05-19-listing-detail-lcp-production-validation.md) |
 | 2026-05-18 | Listing Detail Performance / LCP Epic Phase 3: Lighthouse Trace Comparison | Task 74 | [sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md) |
 | 2026-05-18 | Listing Detail Performance / LCP Epic Phase 2: Fix Preload Reliability | Task 73 | [sessions/2026-05-18-listing-detail-lcp-preload-reliability.md](sessions/2026-05-18-listing-detail-lcp-preload-reliability.md) |
 | 2026-05-18 | Listing Detail Performance / LCP Epic Phase 1: Profiling Baseline | Task 72 | [sessions/2026-05-18-listing-detail-lcp-profile-baseline.md](sessions/2026-05-18-listing-detail-lcp-profile-baseline.md) |

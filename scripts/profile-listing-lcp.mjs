@@ -100,14 +100,28 @@ function checkPreloadPosition(html) {
   }
 }
 
+function checkLinkHeader(headerValue) {
+  if (!headerValue) return { present: false }
+  return {
+    present: true,
+    hasPreload:   /rel=preload/.test(headerValue),
+    hasImage:     /as=image/.test(headerValue),
+    hasFetchPri:  /fetchpriority=high/i.test(headerValue),
+    isCloudinary: headerValue.includes('res.cloudinary.com'),
+    raw: headerValue.slice(0, 300),
+  }
+}
+
 async function probeLocale(locale) {
   const url = `${BASE_URL}/${locale}/listings/${SLUG}`
   let html = ''
   let status = 0
+  let linkHeader = { present: false }
   try {
     const res = await fetch(url, { headers: { 'Accept': 'text/html' } })
     status = res.status
     html = await res.text()
+    linkHeader = checkLinkHeader(res.headers.get('link') ?? res.headers.get('Link') ?? '')
   } catch (e) {
     return { locale, url, status: 0, error: e.message }
   }
@@ -120,6 +134,7 @@ async function probeLocale(locale) {
     locale,
     url,
     status,
+    linkHeader,
     preload,
     galleryImg: img,
     position,
@@ -150,7 +165,21 @@ async function main() {
     console.log(`  URL    : ${r.url}`)
     console.log(`  Status : ${r.status}`)
     console.log()
-    console.log(`  <link rel="preload" as="image">`)
+    console.log(`  HTTP Link header (Task 76 — early preload)`)
+    if (r.linkHeader?.present) {
+      console.log(`    Present          : ${icon(true)}`)
+      console.log(`    rel=preload      : ${icon(r.linkHeader.hasPreload)}`)
+      console.log(`    as=image         : ${icon(r.linkHeader.hasImage)}`)
+      console.log(`    fetchpriority    : ${icon(r.linkHeader.hasFetchPri)}`)
+      console.log(`    Cloudinary URL   : ${icon(r.linkHeader.isCloudinary)}`)
+      console.log(`    Raw              : ${r.linkHeader.raw}`)
+    } else {
+      console.log(`    Present          : ${icon(false)} (deploy to Vercel to verify production header)`)
+      console.log(`    Note: HTTP Link headers are set in middleware. Running locally against`)
+      console.log(`          http://localhost they require "npm run build && npm start" first.`)
+    }
+    console.log()
+    console.log(`  <link rel="preload" as="image"> (HTML body — Task 73)`)
     console.log(`    Present          : ${icon(r.preload.present)} ${r.preload.present}`)
     if (r.preload.present) {
       console.log(`    Location         : ${r.preload.inHead ? '✅ HEAD (optimal)' : '⚠️  BODY (browser discovers post-head-parse)'}`)
@@ -175,15 +204,19 @@ async function main() {
   console.log('SUMMARY')
   console.log('='.repeat(60))
 
+  const allHaveLinkHeader        = results.every(r => r.linkHeader?.present)
+  const allLinkValid             = results.every(r => r.linkHeader?.present && r.linkHeader?.hasPreload && r.linkHeader?.hasImage && r.linkHeader?.isCloudinary)
   const allHavePreload           = results.every(r => r.preload?.present)
   const allPreloadInHead         = results.every(r => r.preload?.inHead)
   const allHaveFetchPriority     = results.every(r => r.preload?.hasFetchPriority)
   const allHaveGalleryImg        = results.every(r => r.galleryImg?.present)
   const allGalleryImgBeforeScripts = results.every(r => r.galleryImg?.isBeforeScripts)
 
-  console.log(`<link rel="preload" as="image"> in ALL locales : ${icon(allHavePreload)}`)
+  console.log(`HTTP Link header in ALL locales                : ${icon(allHaveLinkHeader)} ${allHaveLinkHeader ? '' : '(missing — check that server runs with middleware enabled)'}`)
+  console.log(`  Link header valid (preload+image+cloudinary) : ${icon(allLinkValid)}`)
+  console.log(`HTML <link rel="preload" as="image"> (all)     : ${icon(allHavePreload)}`)
   console.log(`  Preload in <head> (all)                      : ${icon(allPreloadInHead)} ${allPreloadInHead ? '' : '(body only — browser discovers post-head-parse)'}`)
-  console.log(`fetchpriority on preload in ALL locales        : ${icon(allHaveFetchPriority)}`)
+  console.log(`fetchpriority on html preload in ALL locales   : ${icon(allHaveFetchPriority)}`)
   console.log(`<img fetchPriority="high"> in ALL locales      : ${icon(allHaveGalleryImg)}`)
   console.log(`Gallery img appears BEFORE scripts (all)       : ${icon(allGalleryImgBeforeScripts)}`)
   console.log()
@@ -207,6 +240,12 @@ async function main() {
     issues.push('  The preload is still emitted but browser discovers it during body parsing, not head.')
     issues.push('  For true <head> preload: use Next.js middleware to set HTTP Link response headers.')
     issues.push('  e.g.: Link: <https://res.cloudinary.com/...>; rel=preload; as=image; fetchpriority=high')
+  }
+  if (!allHaveLinkHeader) {
+    const missing = results.filter(r => !r.linkHeader?.present).map(r => r.locale)
+    issues.push(`NOTE: HTTP Link header missing for locales: ${missing.join(', ')}`)
+    issues.push('  Expected in production (Task 76). Requires "npm run build && npm start" locally.')
+    issues.push('  Validate header after deploy: npm run profile:lcp:production -- --preload-only')
   }
   if (issues.length === 0) {
     console.log('No critical preload issues found.')

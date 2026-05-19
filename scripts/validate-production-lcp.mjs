@@ -51,8 +51,11 @@ const __dirname    = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.resolve(__dirname, '..')
 const ARTIFACTS    = path.join(PROJECT_ROOT, '.artifacts', 'production-lcp')
 
-const BASE_URL     = process.argv[2] || 'https://lero.al'
-const SLUG         = process.argv[3] || 'test-7-molyl9c8'
+// Separate flags (--foo) from positional args so --preload-only is never
+// mistaken for BASE_URL when invoked as: npm run profile:lcp:production -- --preload-only
+const _positional  = process.argv.slice(2).filter(a => !a.startsWith('--'))
+const BASE_URL     = _positional[0] || 'https://lero.al'
+const SLUG         = _positional[1] || 'test-7-molyl9c8'
 const PRELOAD_ONLY = process.argv.includes('--preload-only')
 const PSI_KEY      = process.env.PAGESPEED_API_KEY || ''
 
@@ -460,16 +463,26 @@ async function main() {
   }
 
   console.log()
-  const allOk       = htmlResults.filter(r => !r.error)
-  const allHttp200  = allOk.every(r => r.status === 200)
-  const allLinkHdr  = allOk.every(r => r.linkHeader?.present)
-  const allLinkValid= allOk.every(r => r.linkHeader?.valid)
-  const allLinkFP   = allOk.every(r => r.linkHeader?.hasFetchPriority)
-  const allPreload  = allOk.every(r => r.preload?.present)
-  const allFetchPri = allOk.every(r => r.preload?.hasFetchPriority)
-  const allImg      = allOk.every(r => r.galleryImg?.present)
-  const allEager    = allOk.every(r => r.galleryImg?.hasEager)
+  const allOk          = htmlResults.filter(r => !r.error)
+  // Guard: Array.prototype.every() returns true for empty arrays, which would
+  // produce a misleading all-green summary when all fetches failed.
+  const allLocalesSeen = allOk.length === LOCALES.length
+  const allHttp200  = allLocalesSeen && allOk.every(r => r.status === 200)
+  const allLinkHdr  = allLocalesSeen && allOk.every(r => r.linkHeader?.present)
+  const allLinkValid= allLocalesSeen && allOk.every(r => r.linkHeader?.valid)
+  const allLinkFP   = allLocalesSeen && allOk.every(r => r.linkHeader?.hasFetchPriority)
+  const allPreload  = allLocalesSeen && allOk.every(r => r.preload?.present)
+  const allFetchPri = allLocalesSeen && allOk.every(r => r.preload?.hasFetchPriority)
+  const allImg      = allLocalesSeen && allOk.every(r => r.galleryImg?.present)
+  const allEager    = allLocalesSeen && allOk.every(r => r.galleryImg?.hasEager)
 
+  if (!allLocalesSeen) {
+    console.log(`  ⚠️  WARNING: Only ${allOk.length}/${LOCALES.length} locales responded. Fetch errors above.`)
+    console.log(`  Summary below reflects only ${allOk.length} locale(s) — do not treat as all-green.`)
+    console.log()
+  }
+
+  console.log(`  All locales responded (${LOCALES.length}/${LOCALES.length})  : ${icon(allLocalesSeen)}`)
   console.log(`  All locales HTTP 200            : ${icon(allHttp200)}`)
   console.log(`  HTTP Link header in all locales : ${icon(allLinkHdr)}`)
   console.log(`  Link header valid (all)         : ${icon(allLinkValid)}  (rel=preload + as=image + cloudinary)`)

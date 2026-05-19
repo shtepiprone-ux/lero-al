@@ -1,6 +1,17 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: Production Diagnostics Reliability (Task 79)**
+- **CLI bug fixed**: `--preload-only` was `process.argv[2]` → treated as BASE_URL. Fixed by filtering `--flags` before extracting positional args.
+- **All-green empty array fixed**: `[].every(...)` always returns `true` — added `allLocalesSeen` guard before all summary checks.
+- **CDP header capture**: Replaced `page.on('response', async allHeaders())` (async race + redirect matching issue) with synchronous CDP `Network.responseReceived`. Document requestId tracked via `Network.requestWillBeSent` where `type === 'Document'`.
+- **Negative durations fixed**: `t.responseEnd` is already ms-from-request-start (not epoch). Was incorrectly subtracted from `t.startTime` (epoch ms). Fixed: `durationMs = t.responseEnd` directly.
+- Desktop sq=1418ms 🟡 NI (CDN warm) vs en/uk/it=2860–5385ms 🔴 (CDN cold) — pattern confirms CDN cold-start as remaining bottleneck.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md`](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: Diagnostic Tooling Fix (Task 78)**
 - **Bug 1 (parser)**: `headers.append('Link', ...)` created two separate `Link` headers; Node.js 18 undici `headers.get('link')` returned only the first (hreflang entries), silently dropping the Cloudinary preload. Fixed by reverting middleware to `headers.set(combined)`.
 - **Bug 2 (LCP=N/A)**: `PerformanceObserver` must be injected via `addInitScript` BEFORE navigation. Chrome only finalises LCP on user interaction — added `page.mouse.move()` trigger after `networkidle`.
@@ -204,6 +215,14 @@
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
 
+### Task 79 — Production Diagnostics Reliability — COMPLETE (diagnostic run pending)
+**CLI fix:** `--preload-only` was argv[2] → BASE_URL. Fixed with flag-filtering before positional extraction.
+**Empty-array guard:** `[].every()` = true → added `allLocalesSeen` check so failed fetches don't show all-green.
+**CDP header capture:** Async `allHeaders()` race + redirect mismatch → synchronous CDP `Network.responseReceived`.
+**Duration fix:** `t.responseEnd` is already a duration (ms from request start), NOT epoch ms — was wrongly subtracted from `t.startTime`.
+**Evidence from production:** sq=1418ms (CDN warm) vs en/uk/it=2860–5385ms (CDN cold) → CLOUDINARY_COLD_VARIANT confirmed as remaining bottleneck.
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md`](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md)
+
 ### Task 78 — Diagnostic Tooling Fix — COMPLETE (production validation pending Vercel deploy)
 **3 tooling bugs fixed:** (1) `headers.append` created 2 Link headers → undici returned only first → parser missed Cloudinary; reverted to `headers.set(combined)`. (2) `PerformanceObserver` must be `addInitScript` before nav, not `getEntriesByType` after. (3) `timing.startTime` is epoch ms; subtract `performance.timeOrigin` for nav-relative output.
 **Parser hardened:** RFC 8288 split + direct Cloudinary URL regex scan + `\n` normalisation — two independent strategies.
@@ -321,6 +340,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 8: Production Diagnostics Reliability | Task 79 | [sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 7: Diagnostic Tooling Fix | Task 78 | [sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 6: Link Header Diagnostics | Task 77 | [sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 5: HTTP Link Header Preload | Task 76 | [sessions/2026-05-19-listing-detail-lcp-http-link-preload.md](sessions/2026-05-19-listing-detail-lcp-http-link-preload.md) |

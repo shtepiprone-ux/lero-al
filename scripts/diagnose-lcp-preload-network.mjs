@@ -133,36 +133,62 @@ async function diagnoseLocale(browser, locale, viewport) {
     } catch {}
   })
 
-  // ── Bug 3 fix: capture Link header via allHeaders() (all instances) ───────
-  let docLinkHeader = null
+  // ── Task 79 fix: CDP-based document header capture ───────────────────────
+  //
+  // Playwright's response event + allHeaders() has two failure modes:
+  //   1. Async race: page.goto() resolves before allHeaders() completes.
+  //   2. isNavigationRequest() matches the redirect before the final document.
+  //
+  // CDP Network.responseReceived is synchronous (event-driven, no await) and
+  // fires for every response. We track the Document requestId and capture its
+  // headers directly from Chrome DevTools Protocol. Multiple Link header values
+  // are joined with \n in CDP — the parser normalises this.
+  let docLinkHeader = ''
   let docStatus     = 0
   let docFinalUrl   = url
 
-  page.on('response', async res => {
-    if (!res.request().isNavigationRequest()) return
-    if (docLinkHeader) return            // capture only the first navigation response
-    try {
-      docStatus   = res.status()
-      docFinalUrl = res.url()
-      // allHeaders() returns [{name, value}] — preserves duplicate header names
-      const all = await res.allHeaders()
-      const linkVals = all
-        .filter(h => h.name.toLowerCase() === 'link')
-        .map(h => h.value)
-      if (linkVals.length) docLinkHeader = linkVals.join(', ')
-    } catch {}
+  const cdpSession = await context.newCDPSession(page)
+  await cdpSession.send('Network.enable')
+
+  const docRequestIds = new Set()
+
+  cdpSession.on('Network.requestWillBeSent', ({ requestId, type }) => {
+    if (type === 'Document') docRequestIds.add(requestId)
+  })
+
+  cdpSession.on('Network.responseReceived', ({ requestId, response }) => {
+    if (!docRequestIds.has(requestId)) return
+    if (response.status >= 300 && response.status < 400) return  // skip redirects
+    docStatus   = response.status
+    docFinalUrl = response.url
+    // CDP: {headerName: value}, multiple values for same key joined by \n
+    const linkParts = Object.entries(response.headers ?? {})
+      .filter(([k]) => k.toLowerCase() === 'link')
+      .map(([, v]) => v)
+    if (linkParts.length) docLinkHeader = linkParts.join('\n')
   })
 
   // ── Track Cloudinary image requests ─────────────────────────────────────
+  //
+  // Playwright RequestTiming (from Chrome DevTools Protocol):
+  //   t.startTime    — epoch ms when the request was initiated (absolute wall clock)
+  //   t.responseEnd  — ms elapsed since t.startTime when the last byte arrived
+  //                    (i.e. it is ALREADY the duration, NOT an epoch timestamp)
+  //
+  // Bug in Task 77/78: epochEndMs was set to t.responseEnd then later we
+  // computed durationMs = epochEndMs - epochStartMs = (small ms) - (epoch ms)
+  // = huge negative number like -1779175102472ms.
+  //
+  // Fix: store t.responseEnd directly as durationMs.
   const cdnRequests = []
-  page.on('requestfinished', async req => {
+  page.on('requestfinished', req => {
     if (!req.url().includes('res.cloudinary.com')) return
     try {
       const t = req.timing()
       cdnRequests.push({
         url:          req.url(),
-        epochStartMs: Math.round(t.startTime),             // epoch ms, normalised later
-        epochEndMs:   t.responseEnd > 0 ? Math.round(t.responseEnd) : null,
+        startEpochMs: Math.round(t.startTime),
+        durationMs:   t.responseEnd > 0 ? Math.round(t.responseEnd) : null,  // already a duration ✓
         resourceType: req.resourceType(),
       })
     } catch {}
@@ -203,8 +229,10 @@ async function diagnoseLocale(browser, locale, viewport) {
     .filter(r => r.resourceType === 'image' || r.resourceType === 'fetch' || r.resourceType === 'xhr')
     .map(r => ({
       url:        r.url,
-      startMs:    navStartEpoch > 0 ? Math.round(r.epochStartMs - navStartEpoch) : null,
-      durationMs: r.epochEndMs && r.epochStartMs ? Math.round(r.epochEndMs - r.epochStartMs) : null,
+      // startMs: navigation-relative ms (epoch start minus navigation epoch start)
+      startMs:    navStartEpoch > 0 ? Math.round(r.startEpochMs - navStartEpoch) : null,
+      // durationMs: already t.responseEnd (ms from request start) — never negative ✓
+      durationMs: r.durationMs,
     }))
     .sort((a, b) => (a.startMs ?? 0) - (b.startMs ?? 0))
 

@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-19 — Task 106 — Epic A.4 — Mobile Locale Switcher to Header ✅**
+**2026-05-19 — Sprint 2 / Task 107 — Remove Dead-Code Avatar Actions ✅**
+
+- `uploadCabinetAvatar` (cabinet/actions) and `uploadUserAvatar` (admin/actions) deleted — zero callers confirmed.
+- Companion helpers removed: local `uploadToCloudinary` in both files; `createHash` import in admin/actions.
+- `/api/upload-avatar` route untouched — canonical upload path preserved.
+- lint 0/5 · typecheck 4 pre-existing · governance:localization PASS (862 keys × 4 locales).
+
+→ [Task 107 session log](sessions/2026-05-19-task-107-remove-dead-avatar-actions.md) · [Sprint 2 closure](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)
+
+**Previous: Task 106 — Epic A.4 — Mobile Locale Switcher to Header ✅**
 
 - Canonical `Combobox` (`variant="button"`, `size="default"` = 44px touch target, `portal`) added to header with `sm:hidden`.
 - Trigger shows compact `🇦🇱 SQ`; dropdown shows full localized language name as `description`.
@@ -47,22 +56,32 @@
 
 → [Task 103 session log](sessions/2026-05-19-task-103-locale-audit.md)
 
-## Carry-over from Sprint 1 / Task 103
+## Carry-over from Sprint 1 / Epic A
 
 1. **`governance:primitives` H:+30 pre-existing debt.** Task 94 cleared the `h-11`-on-Button violations; broader High-tier primitive debt persists from before Sprint 1. To be addressed inside **Epic K** or as a standalone primitive-audit task.
-2. **Dead code server actions.** `uploadCabinetAvatar` (cabinet) and `uploadUserAvatar` (admin) have no callers — superseded by `/api/upload-avatar`. Can be removed in a future cleanup task.
+2. ~~Dead-code server actions~~ → **DONE** in Sprint 2 / Task 107.
 
 ## Next Immediate Tasks
 
-**Active epic: Epic A — Localization & Locale Consistency.**
+**Next: Sprint 2 — Technical Debt Cleanup (single task).**
 
-Plan file: [`tasks/Epics/Epic_A_Localization_and_Locale_Consistency.md`](../tasks/Epics/Epic_A_Localization_and_Locale_Consistency.md)
+Plan: [`tasks/Sprints/Sprint_2_—_Technical_Debt_Cleanup.md`](../tasks/Sprints/Sprint_2_—_Technical_Debt_Cleanup.md)
 
-Task queue (in order — global numbering continues from Task 103):
+- **Task 107** — Remove dead-code avatar server actions (`uploadCabinetAvatar`, `uploadUserAvatar`). Kickoff prompt: [`tasks/Sprints/Sprint_2_kickoff_prompt_Task_107.md`](../tasks/Sprints/Sprint_2_kickoff_prompt_Task_107.md)
 
-**Next epic: Epic B — Auth, Registration & Agent Onboarding**
+**After Sprint 2: Epic B — Auth, Registration & Agent Onboarding.**
 
 Plan file: [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md)
+Kickoff (Task 108): [`tasks/Epics/Epic_B_kickoff_prompt_Task_108.md`](../tasks/Epics/Epic_B_kickoff_prompt_Task_108.md)
+
+Task queue (in order — global numbering continues from Task 106):
+
+- **Task 107** — Sprint 2 cleanup (above).
+- **Task 108** — Epic B.1 — Side popup login/register flow.
+- **Task 109** — Epic B.2 — Agent city selection (canonical Combobox).
+- **Task 110** — Epic B.3 — Agent company selection with logo display (new `companies` table + RLS).
+- **Task 111** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
+- **Task 112** — Epic B.5 — Admin company management page (Epic K table pattern).
 
 Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
@@ -82,9 +101,12 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 | Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
 | Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
+| 2026-05-19 | Sprint 2 — Remove dead-code avatar server actions | Task 107 | [sessions/2026-05-19-task-107-remove-dead-avatar-actions.md](sessions/2026-05-19-task-107-remove-dead-avatar-actions.md) |
+
 ## Closed sprints & epics (historical)
 
 - **Sprint 0 — Critical Bugfix / Regression Stabilization** (Tasks 84–90) — CLOSED, see [`tasks/Sprints/Sprint_0_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_0_—_Summary_CLOSED.md)
+- **Sprint 2 — Technical Debt Cleanup** (Task 107) — CLOSED, see [`tasks/Sprints/Sprint_2_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)
 - **Sprint 1 — Bugfix Continuation & Admin Polish** (Tasks 91–102) — CLOSED, see closure summary linked above.
 - **Listing Detail Performance / LCP Epic** (Tasks 72–83) — CLOSED, see Session Archive for per-task logs.
 - **Post-Governance Debt Burn-down Sprint** (Tasks 64–71) — COMPLETE.

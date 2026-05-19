@@ -1,6 +1,5 @@
 'use server'
 
-import { createHash } from 'crypto'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
@@ -8,43 +7,6 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType } from '@/types/database'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 import { routing } from '@/i18n/routing'
-
-// ── Cloudinary signed upload helper ──────────────────────────────────────────
-
-async function uploadToCloudinary(
-  bytes: ArrayBuffer,
-  mimeType: string,
-  folder: string,
-): Promise<{ url: string; publicId: string; width?: number; height?: number }> {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-  const apiKey = process.env.CLOUDINARY_API_KEY
-  const apiSecret = process.env.CLOUDINARY_API_SECRET
-  if (!cloudName || !apiKey || !apiSecret) {
-    throw new Error('Cloudinary env vars missing')
-  }
-
-  const timestamp = Math.round(Date.now() / 1000)
-  const paramsToSign = `folder=${folder}&timestamp=${timestamp}`
-  const signature = createHash('sha1').update(`${paramsToSign}${apiSecret}`).digest('hex')
-
-  const form = new FormData()
-  form.append('file', new Blob([bytes], { type: mimeType }))
-  form.append('timestamp', String(timestamp))
-  form.append('api_key', apiKey)
-  form.append('signature', signature)
-  form.append('folder', folder)
-
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-    method: 'POST',
-    body: form,
-  })
-  if (!res.ok) {
-    const errText = await res.text().catch(() => String(res.status))
-    throw new Error(`Cloudinary upload failed: ${errText}`)
-  }
-  const data = await res.json() as { secure_url: string; public_id: string; width?: number; height?: number }
-  return { url: data.secure_url, publicId: data.public_id, width: data.width, height: data.height }
-}
 
 // ── Actor resolution ──────────────────────────────────────────────────────────
 //
@@ -534,47 +496,6 @@ export async function hardDeleteUser(userId: string): Promise<{ error?: string }
   revalidatePath('/admin/users')
   revalidatePath('/admin/listings')
   return {}
-}
-
-// Restored original FormData/File upload contract (Task 11 stable baseline).
-// The crop layer produces a Blob → wrapped into File → FormData → this action.
-// Transport is identical to pre-crop-refactor; only the source image differs.
-export async function uploadUserAvatar(userId: string, formData: FormData): Promise<{ url?: string; error?: string }> {
-  await assertAdminAccess()
-
-  const file = formData.get('avatar') as File | null
-  if (!file) return { error: 'no_file' }
-
-  const validTypes = ['image/jpeg', 'image/png', 'image/webp']
-  if (!validTypes.includes(file.type)) return { error: 'invalid_type' }
-  if (file.size > 2 * 1024 * 1024) return { error: 'file_too_large' }
-
-  const bytes = await file.arrayBuffer()
-  console.log('[uploadUserAvatar] received bytes:', bytes.byteLength, 'type:', file.type, 'userId:', userId)
-
-  let cloudUrl: string
-  try {
-    const result = await uploadToCloudinary(bytes, file.type, 'avatars')
-    console.log('[uploadUserAvatar] Cloudinary ok:', result.width, 'x', result.height, result.url.slice(0, 60))
-    if (result.width && result.height && (result.width !== 256 || result.height !== 256)) {
-      return { error: 'invalid_dimensions' }
-    }
-    cloudUrl = result.url
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e)
-    console.error('[uploadUserAvatar] Cloudinary failed:', msg, '| userId:', userId, '| bytes:', bytes.byteLength)
-    return { error: process.env.NODE_ENV === 'development' ? `Cloudinary: ${msg}` : 'upload_failed' }
-  }
-
-  const db = createAdminClient()
-  const { error: updateError } = await db.from('users').update({ avatar_url: cloudUrl }).eq('id', userId)
-  if (updateError) {
-    console.error('[uploadUserAvatar] DB update failed', { error: updateError, userId })
-    return { error: 'db_save_failed' }
-  }
-
-  revalidatePath(`/admin/users/${userId}`)
-  return { url: cloudUrl }
 }
 
 export async function removeUserAvatar(userId: string): Promise<{ error?: string }> {

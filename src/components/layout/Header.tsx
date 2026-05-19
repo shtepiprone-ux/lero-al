@@ -19,7 +19,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
-import { LocaleSwitcher, LOCALES } from '@/components/shared/LocaleSwitcher'
+import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
 
 const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
@@ -65,6 +65,13 @@ export function Header() {
   const tc = useTranslations('common')
   const locale = useLocale()
   const router = useRouter()
+
+  const langLabels: Record<LocaleCode, string> = {
+    sq: t('lang_sq'),
+    en: t('lang_en'),
+    uk: t('lang_uk'),
+    it: t('lang_it'),
+  }
   const { user, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -251,7 +258,7 @@ export function Header() {
                         className="min-h-[44px]"
                         onClick={() => { switchLocale(loc.code); setMobileOpen(false) }}
                       >
-                        {loc.flag} {loc.label}
+                        {loc.flag} {langLabels[loc.code]}
                       </Button>
                     ))}
                   </div>
@@ -282,8 +289,9 @@ export function Header() {
                   <div className="border-t pt-4">
                     <Button
                       variant="ghost"
+                      size="xl"
                       onClick={() => { handleLogout(); setMobileOpen(false) }}
-                      className="w-full justify-start gap-2 text-destructive hover:text-destructive/80 hover:bg-destructive/5 min-h-[44px]"
+                      className="w-full justify-start text-destructive hover:text-destructive/80 hover:bg-destructive/5"
                     >
                       <LogOut className="h-4 w-4" />
                       {t('logout')}

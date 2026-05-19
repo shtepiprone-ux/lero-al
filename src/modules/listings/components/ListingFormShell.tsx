@@ -446,13 +446,14 @@ export function ListingFormShell(props: Props) {
           <Button
             type="button"
             variant="outline"
+            size="xl"
             onClick={() => isDirty ? setShowCancel(true) : router.back()}
             disabled={submitting}
-            className="h-11 px-6 rounded-xl"
+            className="px-6 rounded-xl"
           >
             {tc('cancel')}
           </Button>
-          <Button type="button" onClick={handleSubmit} disabled={submitting} className="h-11 px-8 rounded-xl">
+          <Button type="button" size="xl" onClick={handleSubmit} disabled={submitting} className="px-8 rounded-xl">
             {submitting
               ? <><Loader2 className="h-4 w-4 animate-spin mr-2" />{isEditMode(mode) ? t('form_saving') : t('form_publishing')}</>
               : (isEditMode(mode) ? t('form_save') : t('form_publish'))}

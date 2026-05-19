@@ -1,5 +1,57 @@
 # Component Risk Register — Lero.al
 Last generated: 2026-05-18
+Last audit: 2026-05-19 (Task 93 — Site-wide dropdown/popover clipping audit)
+
+## Dropdown / Popover Portal Strategy Audit (2026-05-19)
+
+### Portal classification
+
+| Component | File | Portal strategy | Clipping-safe? |
+|---|---|---|---|
+| `DropdownMenu` | `src/components/ui/dropdown-menu.tsx` | Base UI `MenuPrimitive.Portal` → body | ✅ Always safe |
+| `Popover` | `src/components/ui/popover.tsx` | Base UI `PopoverPrimitive.Portal` → body | ✅ Always safe |
+| `Select` | `src/components/ui/select.tsx` | Base UI `SelectPrimitive.Portal` → body | ✅ Always safe |
+| `Sheet` | `src/components/ui/sheet.tsx` | Base UI dialog portal | ✅ Always safe |
+| `DatePicker` | `src/components/shared/DatePicker.tsx` | Uses `Popover` → portal | ✅ Always safe |
+| `Combobox` | `src/components/shared/Combobox.tsx` | Dual-mode: `portal={false}` = absolute (risks clipping), `portal={true}` = createPortal/fixed | ⚠️ Depends on `portal` prop |
+| `LocationCombobox` | `src/components/shared/LocationCombobox.tsx` | Dual-mode as of Task 93: `portal={false}` = absolute, `portal={true}` = createPortal/fixed | ⚠️ Depends on `portal` prop |
+| `YearCombobox` | `src/components/shared/YearCombobox.tsx` | Dual-mode as of Task 93: `portal={false}` = absolute, `portal={true}` = createPortal/fixed | ⚠️ Depends on `portal` prop |
+| `SettlementCombobox` (in ProfileTab) | `src/modules/cabinet/components/ProfileTab.tsx` | Always `createPortal` → body | ✅ Always safe |
+| `NotificationBell` dropdown | `src/modules/notifications/components/NotificationBell.tsx` | Custom absolute positioning | ⚠️ Risk if inside overflow container |
+
+### Fixed by Task 93
+
+| Location | Issue | Fix |
+|---|---|---|
+| `FiltersPanel.tsx` line 138 | `LocationCombobox` inside `overflow-y-auto` scroll container | Added `portal` prop to `LocationCombobox`; pass `portal={true}` at call site |
+| `FiltersPanel.tsx` lines 314–323 | `YearCombobox` ×2 inside `overflow-y-auto` scroll container | Added `portal` prop to `YearCombobox`; pass `portal={true}` at call sites |
+| `ListingsFilters.tsx` line 124 | `LocationCombobox` inside sidebar `overflow-y-auto` (via `ListingsShell`) | Pass `portal={true}` |
+| `ListingsFilters.tsx` lines 276–285 | `YearCombobox` ×2 inside sidebar `overflow-y-auto` | Pass `portal={true}` at both call sites |
+
+### Fixed by Task 89 (prior sprint)
+
+| Location | Issue | Fix |
+|---|---|---|
+| `AdminUserCreate.tsx` basic_info card | `Combobox` inside `overflow-hidden` card | Changed to `overflow-visible` |
+| `AdminUserCreate.tsx` location card | `LocationCombobox` inside `overflow-hidden` card | Changed to `overflow-visible` |
+| `AdminUserProfile.tsx` basic_info SectionCard | `Combobox`/`LocationCombobox` inside `overflow-hidden` SectionCard | Added `allowOverflow` prop |
+| `AdminUserProfile.tsx` account_status SectionCard | `Combobox` inside `overflow-hidden` SectionCard | Added `allowOverflow` prop |
+
+### Safe by design (no action needed)
+
+| Location | Reason |
+|---|---|
+| `HeroSearch` / `HeroSearchClient` | No scroll/overflow parent |
+| `AdminLocationsManager` | Already uses `portal={true}` on `Combobox` |
+| `StepLocation` / `ListingFormShell` | Form flows without scroll clipping parent |
+| `AdminUserProfile` sections with `allowOverflow=true` | SectionCard override renders `overflow-visible` |
+| All `DropdownMenu`, `Popover`, `Select` usages | Base UI portal — always body-rendered |
+
+### Remaining known risk (deferred)
+
+| Location | Risk | Notes |
+|---|---|---|
+| `NotificationBell` dropdown | Absolute positioned panel | Only used in Header which has no overflow parent — low priority |
 
 ## Governance Violations (require fix)
 

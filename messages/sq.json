@@ -17,7 +17,11 @@
     "navigation": "Navigim",
     "information": "Informacion",
     "all_rights": "Të gjitha të drejtat e rezervuara",
-    "follow_us": "Na ndiqni"
+    "follow_us": "Na ndiqni",
+    "lang_sq": "Shqip",
+    "lang_en": "Anglisht",
+    "lang_uk": "Ukrainisht",
+    "lang_it": "Italisht"
   },
   "listing": {
     "sale": "Shitje",
@@ -41,6 +45,7 @@
     "latest": "Të fundit",
     "view_all": "Shiko të gjitha",
     "no_listings": "Nuk ka njoftime",
+    "no_premium_listings": "Aktualisht nuk ka oferta premium.",
     "property_type_apartment": "Apartament",
     "property_type_house": "Shtëpi / Vilë",
     "property_type_land": "Tokë",
@@ -724,7 +729,9 @@
       "feedback": {
         "avatar_upload_failed": "Avatari nuk u ngarkua: {error}. Mund të shtohet në modalitetin e redaktimit.",
         "avatar_upload_exception": "Avatari nuk u ngarkua — mund të shtohet në modalitetin e redaktimit.",
-        "reason_prefix": "Arsyeja: {reason}"
+        "reason_prefix": "Arsyeja: {reason}",
+        "save_success": "Profili u ruajt me sukses.",
+        "save_error": "Gabim gjatë ruajtjes. Ju lutemi provoni sërish."
       },
       "dialogs": {
         "unsaved_title": "Ndryshime të paruajtura",

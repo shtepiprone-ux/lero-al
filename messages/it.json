@@ -17,7 +17,11 @@
     "navigation": "Navigazione",
     "information": "Informazioni",
     "all_rights": "Tutti i diritti riservati",
-    "follow_us": "Seguici"
+    "follow_us": "Seguici",
+    "lang_sq": "Albanese",
+    "lang_en": "Inglese",
+    "lang_uk": "Ucraino",
+    "lang_it": "Italiano"
   },
   "listing": {
     "sale": "In vendita",
@@ -41,6 +45,7 @@
     "latest": "Ultimi",
     "view_all": "Vedi tutti",
     "no_listings": "Nessun annuncio trovato",
+    "no_premium_listings": "Al momento non ci sono annunci premium.",
     "property_type_apartment": "Appartamento",
     "property_type_house": "Casa / Villa",
     "property_type_land": "Terreno",
@@ -724,7 +729,9 @@
       "feedback": {
         "avatar_upload_failed": "Avatar non caricato: {error}. Può essere aggiunto in modalità modifica.",
         "avatar_upload_exception": "Avatar non caricato — può essere aggiunto in modalità modifica.",
-        "reason_prefix": "Motivo: {reason}"
+        "reason_prefix": "Motivo: {reason}",
+        "save_success": "Profilo salvato con successo.",
+        "save_error": "Errore durante il salvataggio. Riprova."
       },
       "dialogs": {
         "unsaved_title": "Modifiche non salvate",

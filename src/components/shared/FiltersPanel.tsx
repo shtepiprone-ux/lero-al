@@ -139,6 +139,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                 locations={cityRegionLocs}
                 value={local.location_id ?? ''}
                 onChange={id => update({ location_id: id ?? undefined })}
+                portal
               />
             </div>
 
@@ -314,11 +315,13 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                     value={local.year_built_min}
                     onChange={v => update({ year_built_min: v })}
                     placeholder={t('year_from')}
+                    portal
                   />
                   <YearCombobox
                     value={local.year_built_max}
                     onChange={v => update({ year_built_max: v })}
                     placeholder={t('year_to')}
+                    portal
                   />
                 </div>
               </div>
@@ -452,11 +455,11 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
 
         {/* Footer */}
         <div className="border-t px-5 py-4 flex gap-3 shrink-0">
-          <Button variant="outline" className="flex-1 gap-2 h-11" onClick={handleReset}>
+          <Button variant="outline" size="xl" className="flex-1" onClick={handleReset}>
             <RotateCcw className="h-4 w-4" />
             {t('reset_filters')}
           </Button>
-          <Button className="flex-1 h-11 relative" onClick={handleApply}>
+          <Button size="xl" className="flex-1 relative" onClick={handleApply}>
             {t('apply_filters')}
             {activeCount > 0 && (
               <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">

@@ -88,7 +88,7 @@ export function LoginForm({ next }: Props) {
                 className="h-11 rounded-xl"
               />
             </div>
-            <Button type="submit" className="w-full h-11" disabled={loading}>
+            <Button type="submit" size="xl" className="w-full" disabled={loading}>
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('login')}
             </Button>
           </form>
@@ -104,7 +104,8 @@ export function LoginForm({ next }: Props) {
 
           <Button
             variant="outline"
-            className="w-full h-11"
+            size="xl"
+            className="w-full"
             onClick={handleGoogleLogin}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">

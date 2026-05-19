@@ -108,7 +108,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       console.log('[AvatarFlow] upload_response_received', { success: !result.error, payload: result })
 
       if (result.error) {
-        toast.error(result.error)
+        toast.error(tc('avatar_upload_error'))
         console.log('[AvatarFlow] upload_failed', { reason: result.error })
         return
       }
@@ -143,7 +143,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
     setRemoving(true); setError(null)
     const result = await removeUserAvatar(userId)
     setRemoving(false)
-    if (result.error) { setError(result.error); return }
+    if (result.error) { setError(tc('error_deleting')); return }
     setCurrentUrl(null); onAvatarChange(null)
   }
 

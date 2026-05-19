@@ -136,30 +136,32 @@ export function Combobox({
   const dropdownContent = open && !disabled && (
     <div
       className={cn(
-        'bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-y-auto',
-        !portal && 'absolute top-full mt-1 left-0 right-0 z-50 max-h-56'
+        'bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-hidden',
+        !portal && 'absolute top-full mt-1 left-0 right-0 z-50'
       )}
       style={portal ? dropdownStyle : undefined}
     >
-      {filtered.length === 0 ? (
-        <p className="px-3 py-2 text-sm text-muted-foreground">{t('no_results')}</p>
-      ) : filtered.map(opt => (
-        <button
-          key={opt.value}
-          type="button"
-          className={cn(
-            'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
-            value === opt.value && 'bg-primary/10 text-primary'
-          )}
-          onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
-        >
-          <span className="flex-1 truncate">{opt.label}</span>
-          {opt.description && (
-            <span className="text-xs text-muted-foreground shrink-0">{opt.description}</span>
-          )}
-          {value === opt.value && <Check className="h-3.5 w-3.5 shrink-0" />}
-        </button>
-      ))}
+      <div className="overflow-y-auto max-h-56">
+        {filtered.length === 0 ? (
+          <p className="px-3 py-2 text-sm text-muted-foreground">{t('no_results')}</p>
+        ) : filtered.map(opt => (
+          <button
+            key={opt.value}
+            type="button"
+            className={cn(
+              'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
+              value === opt.value && 'bg-primary/10 text-primary'
+            )}
+            onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
+          >
+            <span className="flex-1 truncate">{opt.label}</span>
+            {opt.description && (
+              <span className="text-xs text-muted-foreground shrink-0">{opt.description}</span>
+            )}
+            {value === opt.value && <Check className="h-3.5 w-3.5 shrink-0" />}
+          </button>
+        ))}
+      </div>
     </div>
   )
 

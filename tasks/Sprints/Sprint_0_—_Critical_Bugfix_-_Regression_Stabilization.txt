@@ -1,0 +1,3045 @@
+==================================================
+Sprint 0 — Critical Bugfix / Regression Stabilization
+==================================================
+
+Task 84 — Fix listing contact card for guest users
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are starting Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 83.
+This task must be documented as Task 84.
+Do not rename this task to Task 0.1.
+Do not start Task 85 or any other Sprint 0 task.
+
+Current known project state from the previous session:
+- Listing Detail Performance / LCP Epic is closed.
+- Last known lint state: `npm run lint` reports 0 errors / 5 pre-existing warnings.
+- Governance checks were passing after Task 83.
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - current sprint/epic status,
+   - existing documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no duplicate components,
+   - no hardcoded UI text,
+   - no broad unrelated refactors.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/domain-rules.md`
+   - `docs/data-access-rules.md`
+   - `docs/state-authority.md`
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/qa-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - governance,
+   - typecheck,
+   - test,
+   - responsive or screenshot scripts if available.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+On listing detail pages, a guest / unauthenticated user sees a message saying the listing owner deleted their account, even when the owner account is active.
+
+Type:
+Critical bugfix / regression stabilization
+
+Priority:
+Critical
+
+Area:
+- Listing detail
+- Contact card
+- Viewer auth state
+- Owner account status logic
+- Supabase profile/listing owner data access
+- Account status rendering
+
+Goal:
+Fix the listing contact card logic so that viewer authentication state is never confused with listing owner account status.
+
+The key rule:
+A guest viewer must never cause an active listing owner to be treated as deleted.
+
+Required investigation:
+1. Inspect the listing detail page data flow.
+
+2. Find all files involved in:
+   - listing detail page rendering,
+   - listing owner/profile loading,
+   - contact card rendering,
+   - contact card unavailable/deleted states,
+   - viewer auth state detection,
+   - account status mapping.
+
+3. Find where guest / authenticated viewer state is checked.
+
+4. Find where listing owner account status is inferred.
+
+5. Identify why guest users are being shown the “owner deleted account” state.
+
+6. Check whether the bug is caused by one or more of:
+   - missing owner profile data for guests,
+   - Supabase RLS / public query shape differences,
+   - nullable owner fields,
+   - owner profile query returning null for unauthenticated users,
+   - viewer auth state being treated as owner deletion,
+   - incorrect conditional rendering,
+   - incorrect fallback state,
+   - translation fallback,
+   - stale deleted-owner logic,
+   - or another regression.
+
+7. Inspect whether listing detail has different behavior for:
+   - guest users,
+   - authenticated regular users,
+   - agents,
+   - admins.
+
+8. Inspect whether contact/favorite/auth modal behavior shares state with the listing contact card.
+
+Important implementation rules:
+1. Keep the fix narrow and production-safe.
+
+2. Do not do a broad listing detail rewrite.
+
+3. Do not change unrelated auth, favorites, dashboard, admin, or listing behavior unless directly required by this bug.
+
+4. Do not introduce hardcoded UI text.
+
+5. Do not create duplicate contact card components if an existing component should be extended.
+
+6. Do not loosen RLS rules unless absolutely required and allowed by `docs/rls-rules.md`.
+
+7. If a data-access change is required, follow `docs/data-access-rules.md`.
+
+8. If a domain/account-status rule is unclear, follow `docs/domain-rules.md`.
+
+9. Preserve existing visual design unless the current design directly causes the bug.
+
+10. Do not introduce new global design-system debt.
+
+Required implementation:
+1. Separate viewer auth state from listing owner account status.
+
+Viewer state must be treated as its own concept, for example:
+- guest
+- authenticated user
+- agent
+- admin
+
+Owner account status must be treated as its own concept, for example:
+- active
+- deleted
+- suspended
+- banned
+- pending
+- inactive
+- unknown / unavailable
+
+Use the actual project data model and existing enums/status fields.
+Do not invent new database status values unless the project already supports them.
+If some statuses are not represented in the current data model, document that clearly.
+
+2. A guest viewer must not cause owner status to resolve as deleted.
+
+Bad logic example to avoid:
+- owner profile is unavailable to guest
+- therefore owner is treated as deleted
+
+Correct logic:
+- viewer is guest
+- owner status is resolved independently
+- active owner remains active
+- guest gets guest-safe contact behavior
+
+3. For an active owner:
+- Guest users should see the normal guest-safe contact card behavior.
+- If contact actions require authentication, show the existing auth/login CTA or auth modal behavior.
+- Do not show “owner deleted account”.
+- Do not expose private owner data that should not be visible to guests.
+
+4. For a deleted owner:
+- Show the correct deleted/unavailable owner contact card.
+- Hide unsafe contact actions.
+- Use existing translations.
+- Do not label active owners as deleted.
+
+5. For suspended / banned / inactive / pending / unknown owner states:
+- Show a relevant unavailable/contact-disabled state if the project supports that state.
+- Do not incorrectly label these states as deleted unless the account is actually deleted.
+- If the current UI only has a generic unavailable state, use it safely and document the limitation.
+
+6. If a helper/state mapper is needed, create or update a clear centralized function with a project-appropriate name, for example:
+- `getListingOwnerAccountStatus`
+- `getListingContactCardState`
+- `resolveListingContactState`
+- or an existing equivalent if one already exists.
+
+7. The state mapper should make the separation explicit:
+- input: viewer/auth state
+- input: owner/profile/account status
+- output: contact card render state
+
+8. Add comments only where the distinction between viewer auth state and owner account status would otherwise be unclear.
+
+9. Ensure all user-facing text uses the existing i18n system.
+
+10. If translation keys are missing for the corrected state, add them for all locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+11. Avoid fallback behavior where Italian, Albanian, or English accidentally display Ukrainian text.
+This task is not Task 85, but any new Task 84 translation key must still be complete in all locales.
+
+Required QA coverage:
+1. Verify listing detail contact card behavior for viewer types:
+- Guest viewer
+- Authenticated regular user
+- Agent
+- Admin
+
+2. Verify owner account scenarios where the current data model supports them:
+- active owner
+- deleted owner
+- suspended owner
+- banned owner
+- inactive owner
+- pending owner
+- missing / unknown owner data fallback
+
+3. For unsupported owner statuses:
+- Do not fake data model support.
+- Document what is unsupported.
+- Ensure the fallback behavior is safe and does not incorrectly say “deleted”.
+
+4. Verify all localizations:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+5. Verify all responsive breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+6. Confirm no regression in:
+- listing detail layout,
+- contact card spacing,
+- contact card CTA behavior,
+- auth modal / login CTA behavior,
+- guest listing detail behavior,
+- authenticated user listing detail behavior,
+- agent listing detail behavior,
+- admin listing detail behavior,
+- favorites/contact actions if they share viewer auth state.
+
+7. Check both desktop and mobile contact card rendering.
+
+8. Check long translated strings where relevant, especially Ukrainian and Italian.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:*`
+- `npm run governance`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- `npm run governance:responsive`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run targeted tests for listing detail/contact card behavior.
+
+If `npm run typecheck` or `npm run test` still have known pre-existing baseline failures:
+- run them if project convention expects it,
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 84 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Governance checks must pass.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 84 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Sprint 0 — Critical Bugfix / Regression Stabilization if it does not exist.
+   - Add Task 84 under Sprint 0.
+   - Mark Task 84 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-84-listing-contact-card-guest-owner-status.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Implementation summary
+   - Files changed
+   - Owner status logic before vs after
+   - Viewer auth state logic before vs after
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Locate listing detail route/component.
+3. Locate contact card component/state logic.
+4. Locate listing owner/profile fetch logic.
+5. Reproduce or reason through the guest-viewer bug.
+6. Identify the incorrect condition that maps guest/missing profile state to deleted-owner state.
+7. Implement a narrow state separation fix.
+8. Add or update i18n keys only if required, across all locales.
+9. Verify manually across viewer states, owner states, locales, and breakpoints.
+10. Run validation commands.
+11. Update `docs/backlog.md`.
+12. Create the Task 84 session log.
+13. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Behavior before vs after
+4. Owner statuses handled
+5. Viewer states checked
+6. Locales checked
+7. Breakpoints checked
+8. Validation results
+9. Known pre-existing issues, if any
+10. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 85.
+
+
+------------------------------------------------------------------------------------------------------
+
+Task 85 — Fix Italian localization fallback to Ukrainian
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are continuing Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 84.
+Task 84 was completed, manually build-validated by the user, and pushed to git.
+This task must be documented as Task 85.
+Do not rename this task to Task 0.2.
+Do not start Task 86 or any other Sprint 0 task.
+
+Current known project state:
+- Previous completed task: Task 84 — Fix listing contact card for guest users.
+- Task 84 status: PASS.
+- Task 84 build: manually run by the user and passed.
+- Task 84 changes were pushed to git.
+- Last known lint state after Task 84: `npm run lint` reports 0 errors / 6 pre-existing warnings.
+- Typecheck still has 4 pre-existing test-file errors, 0 new from Task 84.
+- Governance checks were passing after Task 84:
+  - localization PASS
+  - primitives PASS
+  - responsive PASS
+  - ssr PASS
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - Sprint 0 status,
+   - existing backlog documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no broad unrelated refactors,
+   - no hardcoded UI text,
+   - no duplicate components.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/domain-rules.md`
+   - `docs/state-authority.md`
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/qa-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - localization governance,
+   - other governance checks,
+   - typecheck,
+   - test,
+   - responsive or screenshot scripts if available.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+When the active locale is Italian (`it`), parts of the UI are displayed in Ukrainian.
+
+Type:
+Critical bugfix / localization regression stabilization
+
+Priority:
+Critical
+
+Area:
+- i18n
+- locale fallback
+- translation JSON files
+- route locale handling
+- translation namespace loading
+- UI copy rendering
+
+Goal:
+Fix the Italian localization fallback so that Italian pages never display Ukrainian text unless the text is intentionally Ukrainian content, not UI translation.
+
+The key rule:
+When locale is `it`, UI strings must resolve to Italian values from the Italian translation files, not Ukrainian fallback values.
+
+Important:
+Do not start Task 86.
+Do not fix currency code translation in this task unless it is directly caused by the same Italian fallback bug.
+Task 86 will handle the `ALL` currency label issue separately.
+Keep this task focused on Italian fallback to Ukrainian.
+
+Required investigation:
+1. Inspect the i18n setup:
+   - locale routing,
+   - middleware locale detection,
+   - message loading,
+   - fallback locale configuration,
+   - default locale configuration,
+   - translation namespace loading,
+   - any custom merge/fallback logic.
+
+2. Identify how the project loads these locales:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+3. Confirm whether `it` accidentally falls back to `uk` because of:
+   - missing keys in `messages/it.json`,
+   - incorrect fallback locale order,
+   - wrong default locale,
+   - wrong import path,
+   - locale aliasing,
+   - message merge order,
+   - copied Ukrainian values inside `it`,
+   - namespace mismatch,
+   - route locale normalization,
+   - middleware rewrite/redirect issue,
+   - or hardcoded Ukrainian text in components.
+
+4. Compare translation key coverage across:
+   - `messages/sq.json`
+   - `messages/en.json`
+   - `messages/uk.json`
+   - `messages/it.json`
+
+5. Search for Ukrainian/Cyrillic text inside Italian translations:
+   - inspect `messages/it.json`,
+   - search for Cyrillic characters,
+   - search for obvious Ukrainian words,
+   - search for copied Ukrainian phrases.
+
+6. Search for hardcoded Ukrainian UI strings in source files that may appear regardless of locale:
+   - `src/app`
+   - `src/components`
+   - `src/modules`
+
+7. Inspect whether only some namespaces are affected or whether the fallback is global.
+
+8. Identify the exact affected keys/namespaces where Italian UI displays Ukrainian.
+
+9. Check whether `governance:localization` currently catches:
+   - missing keys,
+   - hardcoded text,
+   - locale key count mismatch,
+   - but not necessarily wrong-language values.
+   Document any limitation found.
+
+Required implementation:
+1. Fix the root cause of Italian resolving to Ukrainian.
+
+2. If the issue is missing Italian keys:
+   - add proper Italian values to `messages/it.json`,
+   - keep all locale JSON structures synchronized,
+   - do not remove valid keys from other locales.
+
+3. If the issue is incorrect fallback configuration:
+   - correct the fallback/default locale logic,
+   - ensure `it` does not fall back to `uk`,
+   - preserve existing behavior for `sq`, `en`, and `uk`.
+
+4. If the issue is message merge order:
+   - fix the merge/load order so locale-specific messages win correctly,
+   - ensure Italian messages override fallback messages,
+   - avoid broad refactors unless required.
+
+5. If the issue is copied Ukrainian text inside `messages/it.json`:
+   - replace copied Ukrainian UI strings with correct Italian translations,
+   - verify the replacements are in the correct namespace,
+   - preserve JSON formatting and key order style used in the project.
+
+6. If the issue is hardcoded Ukrainian UI text:
+   - move the string to the i18n message files,
+   - add values for all locales:
+     - `sq`
+     - `en`
+     - `uk`
+     - `it`
+   - use the existing translation hook/pattern already used in that component.
+
+7. Do not introduce hardcoded Italian, Ukrainian, Albanian, or English UI text in components.
+
+8. Do not invent a new i18n architecture.
+
+9. Do not remove Ukrainian translations from `messages/uk.json`.
+
+10. Do not make Ukrainian unavailable as a valid locale.
+
+11. Do not change unrelated UI layout or business logic.
+
+12. Keep the fix narrow and production-safe.
+
+13. If a small validation helper script is useful to detect Cyrillic text in Italian translations, it may be added only if it fits existing governance/script conventions. Otherwise, use a temporary local check and document the result without committing a new tool.
+
+Suggested checks during implementation:
+Use project-appropriate commands and Node scripts as needed.
+
+Examples of useful investigation commands:
+- search for Cyrillic characters in Italian messages,
+- compare key paths between all locale files,
+- search hardcoded Ukrainian/Cyrillic strings in source files,
+- inspect i18n config and middleware.
+
+Example temporary Node-style checks are acceptable, but do not commit throwaway scripts unless they are useful and consistent with existing governance conventions.
+
+Required QA coverage:
+1. Verify Italian locale pages do not show Ukrainian UI copy.
+
+2. Verify at minimum these areas in Italian locale:
+   - homepage/header/navigation,
+   - listing cards,
+   - listing detail,
+   - contact card,
+   - filters/search UI,
+   - auth buttons/modals,
+   - footer,
+   - admin/user-facing shared components if they use common namespaces.
+
+3. Verify all localizations still work:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+4. Verify all responsive breakpoints:
+   - `320`
+   - `375`
+   - `390`
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+5. Check long Italian strings at mobile widths:
+   - 320
+   - 375
+   - 390
+
+6. Confirm that no Italian fix causes layout overflow, clipped buttons, or broken responsive behavior.
+
+7. Confirm that Ukrainian locale still displays Ukrainian correctly.
+
+8. Confirm that Albanian and English are unchanged except where shared key synchronization is required.
+
+9. Confirm that translation JSON files remain valid JSON.
+
+10. Confirm that key counts and namespaces remain synchronized across locale files.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:localization`
+- `npm run governance:primitives`
+- `npm run governance:responsive`
+- `npm run governance:ssr`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run any existing i18n/localization validation scripts.
+
+If `npm run typecheck` or `npm run test` still have known pre-existing baseline failures:
+- run them if project convention expects it,
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 85 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Localization governance must pass.
+- Other governance checks must remain at baseline or improve.
+- Translation JSON files must remain valid.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 85 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Task 85 under Sprint 0 — Critical Bugfix / Regression Stabilization.
+   - Mark Task 85 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-85-italian-localization-fallback-to-ukrainian.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Implementation summary
+   - Files changed
+   - Affected namespaces/keys
+   - Italian fallback behavior before vs after
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Locate i18n config, middleware, locale routing, and message loading.
+3. Compare locale JSON structure and key coverage.
+4. Search `messages/it.json` for Cyrillic/Ukrainian values.
+5. Search source files for hardcoded Ukrainian UI strings.
+6. Identify whether the issue is missing keys, copied values, fallback config, merge order, or hardcoded UI text.
+7. Apply the narrowest safe fix.
+8. Verify all locales and all required breakpoints.
+9. Run validation commands.
+10. Update `docs/backlog.md`.
+11. Create the Task 85 session log.
+12. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Affected namespaces/keys
+4. Italian behavior before vs after
+5. Locales checked
+6. Breakpoints checked
+7. Validation results
+8. Known pre-existing issues, if any
+9. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 86.
+
+
+------------------------------------------------------------------------------------------------------
+
+Task 86 — Fix currency label translation issue
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are continuing Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 85.
+Task 85 was completed, manually build-validated by the user, and committed to git.
+This task must be documented as Task 86.
+Do not rename this task to Task 0.3.
+Do not start Task 87 or any other Sprint 0 task.
+
+Current known project state:
+- Previous completed task: Task 85 — Fix Italian localization fallback to Ukrainian.
+- Task 85 status: PASS.
+- Task 85 build: manually run by the user and passed.
+- Task 85 changes were committed to git.
+- Last known lint state after Task 85: `npm run lint` reports 0 errors / 6 pre-existing warnings.
+- Typecheck still has 4 pre-existing test-file errors, 0 new from Task 85.
+- Governance checks were passing after Task 85:
+  - localization PASS
+  - primitives PASS
+  - responsive PASS
+  - ssr PASS
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Git workflow note:
+The project currently uses a single `main` branch.
+If git push instructions are needed in the final report or follow-up, use:
+- `git push`
+Do not suggest:
+- `git push origin HEAD`
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - Sprint 0 status,
+   - existing backlog documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no broad unrelated refactors,
+   - no hardcoded UI text,
+   - no duplicate components.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/domain-rules.md`
+   - `docs/state-authority.md`
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/qa-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - localization governance,
+   - other governance checks,
+   - typecheck,
+   - test,
+   - responsive or screenshot scripts if available.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+The currency code `ALL` is displayed as a translated UI word such as “Всього” instead of the Albanian lek currency code `ALL`.
+
+Type:
+High-priority bugfix / i18n formatting regression
+
+Priority:
+High
+
+Area:
+- currency formatting
+- price rendering
+- i18n
+- listing cards
+- listing detail
+- filters/search UI
+- any price display component
+- currency selector or currency metadata if present
+
+Goal:
+Ensure currency codes are treated as stable currency identifiers, not as translation keys.
+
+The key rule:
+Currency codes must not be translated.
+
+These must always remain currency codes wherever they represent money:
+- `ALL`
+- `EUR`
+- `USD`
+
+Problem details:
+`ALL` is a valid ISO-style currency code used for Albanian lek in the project context.
+It must not be lowercased and passed into general translation logic as `all`, because `all` is also a common UI translation key meaning “all/everything”.
+This can cause incorrect values such as Ukrainian “Всього” to appear where the currency code `ALL` should be displayed.
+
+Important:
+Do not start Task 87.
+Do not perform a broad localization rewrite.
+Do not change unrelated listing, search, pricing, or filter behavior.
+Do not rename currencies unless the existing project domain model requires it.
+Do not translate currency codes through UI translation dictionaries.
+
+Required investigation:
+1. Search all places where prices and currencies are rendered.
+
+2. Inspect components and helpers related to:
+   - listing card prices,
+   - listing detail prices,
+   - listing filters,
+   - search filters,
+   - admin listing forms,
+   - listing create/edit forms,
+   - saved/favorite listings,
+   - related/recommended listings,
+   - mobile CTA areas if price is shown,
+   - any shared price/currency formatter.
+
+3. Search for currency-related logic using terms such as:
+   - `currency`
+   - `currencies`
+   - `price`
+   - `ALL`
+   - `EUR`
+   - `USD`
+   - `formatPrice`
+   - `formatCurrency`
+   - `Intl.NumberFormat`
+   - `t(currency`
+   - `t(` with currency values
+   - `.toLowerCase()` on currency values
+   - translation keys named `all`
+
+4. Identify whether the bug is caused by:
+   - passing `ALL` into `t(...)`,
+   - lowercasing `ALL` to `all`,
+   - using a general filter label translation for a currency code,
+   - currency metadata using localized names incorrectly,
+   - incorrect fallback from currency code to UI label,
+   - an overloaded translation key,
+   - or a shared formatter bug.
+
+5. Inspect translation files:
+   - `messages/sq.json`
+   - `messages/en.json`
+   - `messages/uk.json`
+   - `messages/it.json`
+
+6. Determine whether `ALL`, `EUR`, and `USD` exist as translation keys.
+   - If they do, verify whether they are used for currency code display or currency names.
+   - Document the current structure.
+
+7. Confirm whether the Ukrainian value “Всього” comes from a generic `all` UI key.
+   - If yes, document the collision between currency code `ALL` and UI key `all`.
+
+8. Check whether currency display should show:
+   - currency code only, for example `ALL`,
+   - localized currency name, for example “Albanian lek”,
+   - symbol, for example `L`,
+   - or a project-specific display format.
+
+Use the current project behavior and product intent:
+- This task is specifically about preventing `ALL` from becoming “Всього”.
+- Prefer preserving the existing price format while fixing the translation bug.
+
+Required implementation:
+1. Ensure currency codes are handled as domain values, not translation keys.
+
+2. Create or update a centralized currency display helper if the project does not already have one.
+
+   A project-appropriate helper could be named for example:
+   - `formatCurrencyCode`
+   - `formatPrice`
+   - `getCurrencyDisplay`
+   - `normalizeCurrencyCode`
+   - or use an existing equivalent.
+
+3. The helper should guarantee:
+   - `ALL` displays as `ALL`
+   - `EUR` displays as `EUR`
+   - `USD` displays as `USD`
+
+4. Currency codes must not be passed through `useTranslations` / `t(...)`.
+
+5. Currency codes must not be lowercased for display.
+
+6. If lowercasing is needed for internal lookup, display must still use the canonical uppercase code.
+
+7. If currency names are needed separately, keep them separate from codes:
+   - code: `ALL`
+   - localized name: optional separate label
+   - UI filter “all”: separate translation key
+
+8. Avoid using generic translation keys such as `all` for currency code display.
+
+9. If a currency selector has an “All currencies” option, keep it separate from the `ALL` currency code.
+
+   Example distinction:
+   - filter option meaning all currencies: translated label like “All”
+   - actual currency code: literal `ALL`
+
+10. If `ALL` currently conflicts with an “all” filter value, separate the enum/domain values.
+
+   Example:
+   - filter all value: `__all__`, `all_currencies`, or existing safe project pattern
+   - currency code: `ALL`
+
+   Use the project’s existing conventions. Do not introduce a new pattern if one already exists.
+
+11. Apply the fix to every place where prices/currencies are displayed.
+
+12. Keep UI behavior unchanged except for correcting the currency label.
+
+13. Do not introduce hardcoded UI text.
+
+14. Currency codes themselves may remain literal domain constants:
+   - `ALL`
+   - `EUR`
+   - `USD`
+
+15. If translation keys are needed for labels such as “All currencies”, add or update them across all locales:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+16. Preserve valid Ukrainian translations for normal UI words.
+   The fix must not remove the Ukrainian translation for “all/everything” where it is used correctly.
+
+Required QA coverage:
+1. Verify all visible price displays that include currency:
+   - listing cards,
+   - listing detail page,
+   - listing mobile views,
+   - listing desktop views,
+   - search/filter results,
+   - create/edit listing forms,
+   - admin listing views if applicable,
+   - favorite/saved listing views if applicable.
+
+2. Verify currency display for:
+   - `ALL`
+   - `EUR`
+   - `USD`
+
+3. Verify that `ALL` never displays as:
+   - “Всього”
+   - “All”
+   - “Tutti”
+   - “Të gjitha”
+   - or any translated UI word.
+
+4. Verify that UI labels meaning “All” still translate correctly in all locales.
+
+5. Verify all localizations:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+6. Verify all responsive breakpoints:
+   - `320`
+   - `375`
+   - `390`
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+7. Check small mobile widths:
+   - `320`
+   - `375`
+   - `390`
+
+   Confirm price + currency text does not overflow, wrap badly, or get clipped.
+
+8. Check desktop widths:
+   - `1280`
+   - `1440`
+   - `2560`
+
+   Confirm price alignment and spacing remain unchanged.
+
+9. Confirm no regression in:
+   - listing cards,
+   - listing detail,
+   - filters,
+   - sorting,
+   - admin forms,
+   - localization governance,
+   - responsive governance.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:localization`
+- `npm run governance:primitives`
+- `npm run governance:responsive`
+- `npm run governance:ssr`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run targeted tests for currency formatting or price display.
+
+If no tests exist, document manual/code-review verification clearly.
+
+If `npm run typecheck` or `npm run test` still have known pre-existing baseline failures:
+- run them if project convention expects it,
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 86 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Localization governance must pass.
+- Other governance checks must remain at baseline or improve.
+- Translation JSON files must remain valid.
+- Currency codes must display as codes.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 86 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Task 86 under Sprint 0 — Critical Bugfix / Regression Stabilization.
+   - Mark Task 86 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-86-currency-label-translation-issue.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Implementation summary
+   - Files changed
+   - Currency rendering before vs after
+   - Affected components/helpers
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Locate all currency/price display paths.
+3. Identify where `ALL` becomes `all` or is passed into translation logic.
+4. Confirm whether the incorrect Ukrainian “Всього” comes from a generic `all` translation key.
+5. Add or update a centralized safe currency display helper if needed.
+6. Replace unsafe translation-based currency rendering with canonical currency-code rendering.
+7. Verify `ALL`, `EUR`, and `USD` across all relevant UI surfaces.
+8. Verify all locales and all required breakpoints.
+9. Run validation commands.
+10. Update `docs/backlog.md`.
+11. Create the Task 86 session log.
+12. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Affected components/helpers
+4. Currency rendering before vs after
+5. Locales checked
+6. Breakpoints checked
+7. Validation results
+8. Known pre-existing issues, if any
+9. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 87.
+
+
+------------------------------------------------------------------------------------------------------
+
+Task 87 — Fix Ukrainian localization terminology
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are continuing Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 86.
+Task 86 was completed with PASS and manually build-validated by the user.
+This task must be documented as Task 87.
+Do not rename this task to Task 0.4.
+Do not start Task 88 or any other Sprint 0 task.
+
+Current known project state:
+- Previous completed task: Task 86 — Fix currency label translation issue.
+- Task 86 status: PASS.
+- Task 86 build: manually run by the user and passed.
+- Last known lint state after Task 86: `npm run lint` reports 0 errors / 6 pre-existing warnings.
+- Typecheck still has 4 pre-existing test-file errors, 0 new from Task 86.
+- Governance checks were passing after Task 86:
+  - localization PASS
+  - primitives PASS
+  - responsive PASS
+  - ssr PASS
+  - tailwind PASS
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Git workflow note:
+The project currently uses a single `main` branch.
+If git push instructions are needed in the final report or follow-up, use the full sequence:
+- `git status`
+- `git add ...`
+- `git commit -m "..."`
+- `git push`
+
+Do not suggest:
+- `git push origin HEAD`
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - Sprint 0 status,
+   - existing backlog documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no broad unrelated refactors,
+   - no hardcoded UI text,
+   - no duplicate components.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/domain-rules.md`
+   - `docs/state-authority.md`
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/qa-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - localization governance,
+   - other governance checks,
+   - typecheck,
+   - test,
+   - responsive or screenshot scripts if available.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+The Ukrainian localization contains incorrect terminology and low-quality wording.
+
+Known examples:
+- “язик” is used where Ukrainian UI should use “мова”.
+- “Шкіп” is used where the UI should refer to Albanian / Albanian language correctly.
+- Other Ukrainian UI phrases may contain incorrect, unnatural, or inconsistent terminology.
+
+Type:
+Bug / content quality / localization QA
+
+Priority:
+High
+
+Area:
+- Ukrainian localization
+- translation JSON files
+- locale switcher labels
+- language names
+- core UI copy
+- listing UI copy
+- auth UI copy
+- filters/search copy
+- cabinet/user-facing copy
+- admin-facing copy only where it is part of committed translations
+
+Goal:
+Improve Ukrainian localization terminology so that Ukrainian UI copy is correct, natural, and consistent.
+
+The key rule:
+Do not only replace the two known examples. Perform a focused Ukrainian localization QA pass and fix other obvious terminology issues found in the Ukrainian translation file.
+
+Important:
+Do not start Task 88.
+Do not perform a full rewrite of all Ukrainian copy.
+Do not change business logic.
+Do not change layout unless a Ukrainian string length causes a clear responsive issue.
+Do not change unrelated locales unless key synchronization is required.
+Do not introduce hardcoded Ukrainian text into components.
+Do not remove valid Ukrainian locale support.
+
+Required investigation:
+1. Inspect Ukrainian messages:
+   - `messages/uk.json`
+
+2. Compare relevant Ukrainian keys against:
+   - `messages/en.json`
+   - `messages/sq.json`
+   - `messages/it.json`
+
+3. Search for incorrect or suspicious Ukrainian terminology, including but not limited to:
+   - `язик`
+   - `Шкіп`
+   - `шкіп`
+   - incorrect language names,
+   - machine-translated wording,
+   - Russianisms,
+   - inconsistent formal/informal address,
+   - incorrect real-estate terminology,
+   - incorrect button/action terms,
+   - awkward filter/search labels,
+   - incorrect account/auth terminology.
+
+4. Inspect language selector / locale switcher data and labels.
+   Confirm Ukrainian labels for:
+   - Albanian
+   - English
+   - Ukrainian
+   - Italian
+
+5. Check whether language names are stored in:
+   - translation JSON files,
+   - locale config files,
+   - static arrays,
+   - constants,
+   - source components.
+
+6. Search source files for hardcoded Ukrainian UI strings:
+   - `src/app`
+   - `src/components`
+   - `src/modules`
+
+7. Distinguish between:
+   - valid Ukrainian UI text in `messages/uk.json`,
+   - hardcoded Ukrainian UI text that should use i18n,
+   - test/story fixture text,
+   - admin-only/dev-only text,
+   - server-side errors that may or may not surface to users.
+
+8. Identify whether hardcoded Ukrainian strings are in scope for this task:
+   - If they directly affect visible Ukrainian UI terminology, fix them.
+   - If they are unrelated server action internals or a broader hardcoded-string audit, document as follow-up instead of expanding the task too much.
+
+9. Check whether any Ukrainian strings were copied into other locale files.
+   If discovered, document and fix only if clearly part of this Ukrainian terminology issue.
+   Otherwise defer to a separate localization audit task.
+
+Required implementation:
+1. Fix incorrect Ukrainian terminology in `messages/uk.json`.
+
+2. Known required corrections:
+   - Replace “язик” with the correct Ukrainian UI term “мова” where it refers to language.
+   - Replace incorrect “Шкіп” wording with correct Ukrainian wording for Albanian / Albanian language.
+
+3. Use correct Ukrainian language names:
+   - Albanian language: “албанська”
+   - English language: “англійська”
+   - Ukrainian language: “українська”
+   - Italian language: “італійська”
+
+   Use sentence/context-appropriate capitalization.
+
+4. Use natural Ukrainian UI terminology:
+   - prefer “мова” over “язик” for language UI,
+   - prefer “увійти” for sign in,
+   - prefer “зареєструватися” for register/sign up,
+   - prefer “оголошення” for listing/ad where appropriate,
+   - prefer “обране” for favorites where appropriate,
+   - prefer “власник” for owner where appropriate,
+   - use consistent real-estate terms across listing/search/filter UI.
+
+5. Do not over-translate domain codes or constants:
+   - currency codes remain `ALL`, `EUR`, `USD`, etc.
+   - route segments and technical constants are not UI copy.
+   - internal enum values should not be translated directly unless displayed through translation keys.
+
+6. If a translation key is missing or malformed:
+   - fix the Ukrainian value,
+   - keep key structure synchronized across all locales,
+   - do not add a key only to `uk`.
+
+7. If a user-facing hardcoded Ukrainian string is found in a component and is directly related to this task:
+   - move it to the i18n system,
+   - add equivalent values for all locales:
+     - `sq`
+     - `en`
+     - `uk`
+     - `it`,
+   - use the existing translation hook/pattern already used by that component.
+
+8. If hardcoded Ukrainian strings are found but are broad/out of scope:
+   - document them in the session log as follow-up items,
+   - do not expand Task 87 into a full hardcoded-text cleanup unless necessary.
+
+9. Preserve JSON formatting and project style.
+
+10. Do not change unrelated Albanian, English, or Italian wording unless required for key synchronization.
+
+11. Keep the fix narrow and production-safe.
+
+Required QA coverage:
+1. Verify Ukrainian locale pages use corrected terminology.
+
+2. Verify at minimum these Ukrainian UI areas:
+   - header/navigation,
+   - language switcher,
+   - homepage/search,
+   - listing cards,
+   - listing detail,
+   - contact card,
+   - filters/search UI,
+   - auth buttons/modals,
+   - cabinet/user-facing pages if translation keys are touched,
+   - footer.
+
+3. Verify all localizations still work:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+4. Verify all responsive breakpoints:
+   - `320`
+   - `375`
+   - `390`
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+5. Check long Ukrainian strings at mobile widths:
+   - `320`
+   - `375`
+   - `390`
+
+6. Confirm no layout overflow, clipped buttons, or broken wrapping caused by corrected Ukrainian strings.
+
+7. Confirm language selector labels are correct and readable in Ukrainian.
+
+8. Confirm Ukrainian locale still passes localization governance.
+
+9. Confirm all translation JSON files remain valid JSON.
+
+10. Confirm key counts and namespaces remain synchronized across all locale files.
+
+Suggested Ukrainian QA checklist:
+Look for and fix obvious issues in:
+- language names,
+- auth actions,
+- listing status labels,
+- filters,
+- sort labels,
+- property type labels,
+- contact card messages,
+- favorites labels,
+- empty states,
+- validation/error copy,
+- cabinet/profile labels,
+- admin-facing translation keys if they are in `messages/uk.json`.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:localization`
+- `npm run governance:primitives`
+- `npm run governance:responsive`
+- `npm run governance:ssr`
+- `npm run governance:tailwind`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run any existing i18n/localization validation scripts.
+
+If `npm run typecheck` or `npm run test` still have known pre-existing baseline failures:
+- run them if project convention expects it,
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 87 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Localization governance must pass.
+- Other governance checks must remain at baseline or improve.
+- Translation JSON files must remain valid.
+- Ukrainian terminology must be corrected for known examples.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 87 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Task 87 under Sprint 0 — Critical Bugfix / Regression Stabilization.
+   - Mark Task 87 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-87-ukrainian-localization-terminology.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Investigation summary
+   - Implementation summary
+   - Files changed
+   - Ukrainian terminology before vs after
+   - Affected namespaces/keys
+   - Hardcoded Ukrainian findings, if any
+   - Follow-up items, if any
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Inspect `messages/uk.json`.
+3. Search for known bad terms:
+   - `язик`
+   - `Шкіп`
+   - `шкіп`
+4. Search for other suspicious Ukrainian terminology.
+5. Compare affected Ukrainian keys against English/Albanian/Italian context.
+6. Inspect language selector/locale labels.
+7. Search source files for hardcoded Ukrainian UI strings.
+8. Apply the narrowest safe terminology fixes.
+9. Avoid broad copy rewrites.
+10. Verify all locales and all required breakpoints.
+11. Run validation commands.
+12. Update `docs/backlog.md`.
+13. Create the Task 87 session log.
+14. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Affected namespaces/keys
+4. Ukrainian terminology before vs after
+5. Locales checked
+6. Breakpoints checked
+7. Validation results
+8. Known pre-existing issues, if any
+9. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 88.
+
+
+------------------------------------------------------------------------------------------------------
+
+Task 88 — Fix guest favorite behavior
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are continuing Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 87.
+Task 87 was completed with PASS and manually build-validated by the user.
+This task must be documented as Task 88.
+Do not rename this task to Task 0.5.
+Do not start Task 89 or any other Sprint 0 task.
+
+Current known project state:
+- Previous completed task: Task 87 — Fix Ukrainian localization terminology.
+- Task 87 status: PASS.
+- Task 87 build: manually run by the user and passed.
+- Last known lint state after Task 87: `npm run lint` reports 0 errors / 6 pre-existing warnings.
+- Typecheck still has 4 pre-existing test-file errors, 0 new from previous Sprint 0 tasks.
+- Governance checks were passing after Task 87.
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Git workflow note:
+The project currently uses a single `main` branch.
+If git push instructions are needed in the final report or follow-up, use the full sequence:
+- `git status`
+- `git add ...`
+- `git commit -m "..."`
+- `git push`
+
+Do not suggest:
+- `git push origin HEAD`
+
+Pre-implementation git safety:
+1. Run `git status` before making changes.
+2. Confirm the working tree does not contain unrelated uncommitted changes.
+3. Do not overwrite or mix unrelated work into Task 88.
+4. If Task 87 files are still uncommitted, stop and ask the user to commit/push Task 87 first.
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - Sprint 0 status,
+   - existing backlog documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no broad unrelated refactors,
+   - no hardcoded UI text,
+   - no duplicate components.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/domain-rules.md`
+   - `docs/data-access-rules.md`
+   - `docs/state-authority.md`
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/qa-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - localization governance,
+   - primitives governance,
+   - responsive governance,
+   - SSR governance,
+   - tailwind governance,
+   - typecheck,
+   - test,
+   - responsive or screenshot scripts if available.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+A guest user clicks “Add to favorites”. The favorite button visually activates optimistically, then resets after the auth state/server response catches up.
+
+This creates confusing UX:
+- guest clicks favorite,
+- favorite appears active for a moment,
+- then it becomes inactive again,
+- auth intent is unclear or delayed.
+
+Type:
+High-priority bugfix / UX regression
+
+Priority:
+High
+
+Area:
+- favorites
+- auth state
+- optimistic UI
+- auth modal / login redirect
+- listing cards
+- listing detail
+- mobile favorite controls
+- saved/favorite state handling
+
+Goal:
+Guest users must not trigger optimistic favorite toggles.
+
+The key rule:
+If the viewer is a guest, favorite click must immediately open the authentication flow instead of toggling the favorite state.
+
+Expected behavior:
+1. Guest clicks favorite:
+   - do not optimistically toggle favorite active state,
+   - do not call favorite create/delete server action,
+   - immediately open auth modal or route to login using the existing project auth pattern,
+   - keep visual favorite state unchanged.
+
+2. Authenticated user clicks favorite:
+   - existing optimistic favorite behavior should remain unchanged,
+   - favorite create/delete should continue to work,
+   - errors should still rollback safely.
+
+3. After login/register:
+   - either leave the user on the listing detail/listing context,
+   - or preserve enough context to return naturally,
+   - do not implement a complex replay system unless the project already has one.
+   - If the existing auth modal supports redirect/return URL, use it.
+   - If automatic replay is not already supported, document as follow-up rather than expanding scope.
+
+Important:
+Do not start Task 89.
+Do not rewrite the full favorites system.
+Do not rewrite the full auth system.
+Do not change RLS policies unless absolutely required and allowed by `docs/rls-rules.md`.
+Do not introduce duplicate favorite buttons/components.
+Do not introduce hardcoded UI text.
+Do not change unrelated listing card layout or listing detail layout.
+Keep the fix narrow and production-safe.
+
+Required investigation:
+1. Locate all favorite entry points:
+   - listing card favorite button,
+   - listing detail favorite button,
+   - mobile listing detail favorite control,
+   - any related/recommended listing favorite button,
+   - any saved listings/favorites page controls,
+   - any admin-facing favorite-like control if present.
+
+2. Locate the shared favorite component or hook, likely names such as:
+   - `FavoriteButton`
+   - `useFavorites`
+   - `useFavoritesRealtime`
+   - `toggleFavorite`
+   - `favoriteAction`
+   - `addFavorite`
+   - `removeFavorite`
+
+3. Identify how viewer auth state is known:
+   - user context,
+   - auth context,
+   - Supabase session,
+   - prop passed from server component,
+   - client-side auth hook,
+   - or existing auth modal state.
+
+4. Identify current optimistic update flow:
+   - where local favorite state is toggled,
+   - where server action/API call is made,
+   - where rollback happens,
+   - where unauthenticated errors are handled.
+
+5. Identify why guest users can trigger optimistic state:
+   - auth check missing before optimistic toggle,
+   - auth check happens after optimistic toggle,
+   - server rejects request after UI already changed,
+   - favorite button does not know auth state,
+   - or auth modal opens too late.
+
+6. Inspect existing auth modal/login CTA behavior.
+   Use the project’s existing pattern instead of inventing a new auth popup.
+
+7. Check whether the favorite click currently happens in:
+   - listing cards,
+   - listing detail,
+   - mobile CTA/header,
+   - favorites page,
+   - search results.
+
+8. Check whether favorites realtime logic depends on the same state.
+   Do not break authenticated realtime favorite updates.
+
+Required implementation:
+1. Add a guest guard before any optimistic favorite toggle.
+
+2. The guest guard must run before:
+   - local favorite state changes,
+   - server action/API calls,
+   - realtime subscriptions,
+   - loading spinners that imply the action is being processed.
+
+3. For guest users:
+   - keep current favorite visual state unchanged,
+   - open the existing auth modal or login flow immediately,
+   - do not call favorite mutation,
+   - do not show a temporary active favorite state.
+
+4. For authenticated users:
+   - preserve current optimistic toggle behavior,
+   - preserve rollback behavior,
+   - preserve loading/disabled behavior,
+   - preserve realtime updates.
+
+5. Use the existing auth UI pattern:
+   - existing auth modal if the project has one,
+   - existing login route if that is the established pattern,
+   - existing return URL / redirect handling if available.
+
+6. If the favorite button is shared, prefer fixing the shared component/hook once rather than patching every caller separately.
+
+7. If auth state is not available in the shared component:
+   - pass a clear prop such as `isAuthenticated`, `isGuest`, `userId`, or existing project-appropriate auth signal,
+   - keep prop naming consistent with existing code,
+   - avoid global hacks.
+
+8. If multiple favorite components exist:
+   - identify whether they should be unified later,
+   - fix all guest-facing paths in this task,
+   - document duplicate-component debt only if found.
+
+9. If user-facing copy is needed, use i18n keys.
+   Add/update translations for all locales:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+10. Do not add a new translation key if existing auth/favorites/login copy already fits.
+
+11. Do not alter database schema.
+
+12. Do not weaken RLS or allow anonymous favorite writes.
+
+13. Do not change favorite behavior for authenticated users except where required to preserve correctness.
+
+Required QA coverage:
+1. Guest user:
+   - clicks favorite on listing card,
+   - clicks favorite on listing detail,
+   - clicks favorite on mobile listing detail if present,
+   - favorite does not visually toggle active,
+   - auth modal/login flow opens immediately,
+   - no favorite create/delete call is attempted,
+   - favorite state remains unchanged after auth popup closes.
+
+2. Authenticated regular user:
+   - can add favorite,
+   - can remove favorite,
+   - optimistic UI still works,
+   - rollback still works on failure,
+   - no auth modal opens incorrectly.
+
+3. Agent user:
+   - verify same behavior as authenticated user unless project rules say otherwise.
+
+4. Admin user:
+   - verify same behavior as authenticated user unless project rules say otherwise.
+
+5. Existing favorites page/saved listings:
+   - verify no regression in displaying or removing favorites.
+
+6. Verify all localizations:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+7. Verify all responsive breakpoints:
+   - `320`
+   - `375`
+   - `390`
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+8. Check small mobile widths:
+   - `320`
+   - `375`
+   - `390`
+
+   Confirm favorite tap target remains usable and auth modal/login flow is not clipped.
+
+9. Check tablet/desktop:
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+   Confirm favorite controls remain visually unchanged.
+
+10. Confirm no regression in:
+   - listing cards,
+   - listing detail,
+   - mobile CTA,
+   - auth modal/login page,
+   - favorites realtime behavior,
+   - saved listings page,
+   - localization governance,
+   - responsive governance.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:localization`
+- `npm run governance:primitives`
+- `npm run governance:responsive`
+- `npm run governance:ssr`
+- `npm run governance:tailwind`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run targeted tests for:
+- favorite button guest behavior,
+- authenticated favorite toggle behavior,
+- auth modal/login flow.
+
+If existing tests fail due to known pre-existing baseline issues:
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 88 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Governance checks must pass.
+- Translation JSON files must remain valid if touched.
+- Guest users must not trigger optimistic favorite toggle.
+- Authenticated favorite behavior must remain unchanged.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 88 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Task 88 under Sprint 0 — Critical Bugfix / Regression Stabilization.
+   - Mark Task 88 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-88-guest-favorite-behavior.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Investigation summary
+   - Implementation summary
+   - Files changed
+   - Guest favorite behavior before vs after
+   - Authenticated favorite behavior before vs after
+   - Auth modal/login behavior
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Run `git status` and confirm no unrelated uncommitted work.
+3. Locate all favorite components/hooks/actions.
+4. Reproduce or reason through guest favorite optimistic toggle.
+5. Identify the earliest safe point to guard guest clicks.
+6. Add guest/auth guard before optimistic state mutation.
+7. Wire guest click to existing auth modal/login flow.
+8. Verify authenticated favorite behavior remains unchanged.
+9. Verify all locales and required breakpoints.
+10. Run validation commands.
+11. Update `docs/backlog.md`.
+12. Create the Task 88 session log.
+13. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Favorite behavior before vs after
+4. Guest auth modal/login behavior
+5. Authenticated user behavior
+6. Locales checked
+7. Breakpoints checked
+8. Validation results
+9. Known pre-existing issues, if any
+10. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 89.
+
+
+------------------------------------------------------------------------------------------------------
+
+Task 89 — Fix dropdown clipping inconsistencies
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are continuing Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 88.
+Task 88 was completed with PASS, manually build-validated by the user, and pushed to git.
+This task must be documented as Task 89.
+Do not rename this task to Task 0.6.
+Do not start Task 90 or any other Sprint 0 task.
+
+Current known project state:
+- Previous completed task: Task 88 — Fix guest favorite behavior.
+- Task 88 status: PASS.
+- Task 88 build: manually run by the user and passed.
+- Task 88 changes were pushed to git.
+- Last known lint state after Task 88: `npm run lint` reports 0 errors / 6 pre-existing warnings.
+- Typecheck still has 4 pre-existing test-file errors, 0 new from Sprint 0 tasks.
+- Governance checks were passing after Task 88:
+  - localization PASS
+  - primitives PASS
+  - responsive PASS
+  - ssr PASS
+  - tailwind PASS
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Git workflow note:
+The project currently uses a single `main` branch.
+If git push instructions are needed in the final report or follow-up, use the full sequence:
+- `git status`
+- `git add ...`
+- `git commit -m "..."`
+- `git push`
+
+Do not suggest:
+- `git push origin HEAD`
+
+Pre-implementation git safety:
+1. Run `git status` before making changes.
+2. Confirm the working tree does not contain unrelated uncommitted changes.
+3. Do not overwrite or mix unrelated work into Task 89.
+4. If Task 88 files are still uncommitted locally, stop and ask the user to resolve that first.
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - Sprint 0 status,
+   - existing backlog documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no broad unrelated refactors,
+   - no hardcoded UI text,
+   - no duplicate components.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/component-rules.md`
+   - `docs/state-authority.md`
+   - `docs/qa-rules.md`
+   - `docs/domain-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - localization governance,
+   - primitives governance,
+   - responsive governance,
+   - SSR governance,
+   - tailwind governance,
+   - components governance,
+   - screenshots/responsive scripts,
+   - typecheck,
+   - test.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+The project has inconsistent dropdown behavior.
+
+Some dropdowns / comboboxes / popovers are not clipped by parent containers, while others are clipped inside cards, modals, drawers, admin tables, or mobile layouts.
+
+Type:
+High-priority UI regression / design system debt
+
+Priority:
+High
+
+Area:
+- shared components
+- dropdowns
+- comboboxes
+- popovers
+- portals
+- z-index/layering
+- cards
+- modals
+- drawers
+- admin tables
+- mobile layouts
+- responsive UI consistency
+
+Goal:
+Unify dropdown / combobox / popover clipping behavior so overlays render consistently above parent containers and are not incorrectly clipped by `overflow-hidden`, scroll containers, cards, modals, drawers, or admin table wrappers.
+
+The key rule:
+Dropdown-like overlays must use a consistent project-approved portal/layering strategy unless there is a deliberate local reason not to.
+
+Important:
+Do not start Task 90.
+Do not rewrite the entire design system.
+Do not introduce a new UI library.
+Do not create duplicate dropdown/popover components.
+Do not patch only one visible instance if the root issue is a shared component.
+Do not change unrelated layout or styling.
+Do not add arbitrary z-index values randomly.
+Do not introduce hardcoded UI text.
+Keep the fix narrow, systematic, and production-safe.
+
+Required investigation:
+1. Locate all dropdown-like components and usages, including:
+   - dropdown menus,
+   - comboboxes,
+   - popovers,
+   - select menus,
+   - command menus,
+   - autocomplete lists,
+   - filter dropdowns,
+   - language selector,
+   - sort dropdowns,
+   - location/year comboboxes,
+   - admin table filters,
+   - mobile filters,
+   - cabinet/listing forms.
+
+2. Search source files for relevant patterns:
+   - `Dropdown`
+   - `DropdownMenu`
+   - `Popover`
+   - `Combobox`
+   - `Select`
+   - `Command`
+   - `Listbox`
+   - `Portal`
+   - `createPortal`
+   - `position: fixed`
+   - `z-`
+   - `overflow-hidden`
+   - `overflow-auto`
+   - `overflow-y-auto`
+   - `relative`
+   - `absolute`
+   - `fixed`
+   - `Radix`
+   - `cmdk`
+   - `shadcn`
+
+3. Identify which overlay components already portal correctly and which do not.
+
+4. Identify clipping contexts where the issue appears:
+   - listing cards,
+   - filter panels,
+   - search bars,
+   - modals,
+   - drawers,
+   - admin tables,
+   - mobile containers,
+   - sticky headers,
+   - bottom sheets,
+   - overflow-hidden cards,
+   - scrollable areas.
+
+5. Inspect existing shared components before changing anything.
+   Prefer improving the shared primitive instead of patching individual callers.
+
+6. Check whether the project already has canonical overlay primitives.
+   Examples may include:
+   - shared `DropdownMenu`
+   - shared `Popover`
+   - shared `Select`
+   - custom `LocationCombobox`
+   - custom `YearCombobox`
+   - common filter dropdown components.
+
+7. Determine whether the inconsistency is caused by:
+   - some components rendering inline instead of portaled,
+   - some components using absolute positioning inside clipped parents,
+   - inconsistent z-index tokens/classes,
+   - missing Radix `Portal`,
+   - inconsistent use of `PopoverContent`,
+   - admin tables using overflow wrappers,
+   - mobile drawers using clipped internal containers,
+   - or another root cause.
+
+8. Identify minimal high-impact fixes.
+   Do not attempt to redesign every dropdown if one shared primitive can fix most cases.
+
+Required implementation:
+1. Establish or enforce a consistent portal strategy for dropdown-like overlays.
+
+2. If the project uses Radix/shadcn primitives:
+   - ensure content components use the correct `Portal` pattern where appropriate,
+   - preserve existing component APIs,
+   - preserve animations and accessibility behavior.
+
+3. If the project uses custom comboboxes:
+   - make dropdown lists render in a portal if they are currently clipped,
+   - or switch them to the project’s canonical popover primitive if one exists,
+   - preserve keyboard behavior,
+   - preserve ARIA roles and attributes,
+   - preserve search/filter behavior.
+
+4. If z-index is the issue:
+   - use existing project z-index/layering conventions if present,
+   - avoid arbitrary one-off z-index escalation unless it follows project rules,
+   - document the chosen layering approach.
+
+5. If parent `overflow-hidden` is required for layout:
+   - do not remove it globally unless safe,
+   - fix the overlay rendering strategy instead.
+
+6. If a specific container has accidental clipping:
+   - fix the container only if that is safer than changing the overlay component,
+   - document why.
+
+7. Ensure overlay positioning remains correct:
+   - near viewport edges,
+   - inside scroll containers,
+   - in mobile layouts,
+   - in admin tables,
+   - in modals/drawers.
+
+8. Preserve accessibility:
+   - keyboard navigation,
+   - focus management,
+   - Escape to close,
+   - outside click handling,
+   - ARIA roles,
+   - `aria-expanded`,
+   - `aria-controls`,
+   - `aria-activedescendant` if used.
+
+9. Preserve existing UI appearance as much as possible:
+   - same spacing,
+   - same border radius,
+   - same shadows,
+   - same typography,
+   - same selected/hover states.
+
+10. Do not introduce new user-facing strings.
+    If any string becomes necessary, add it through i18n for all locales:
+    - `sq`
+    - `en`
+    - `uk`
+    - `it`
+
+11. Do not create duplicate dropdown components.
+    If duplicate implementations are found, fix the relevant one now and document consolidation as future debt if needed.
+
+12. Keep changes isolated to dropdown clipping/layering.
+
+Required QA coverage:
+1. Verify dropdown/combobox/popover behavior in public UI:
+   - header navigation if applicable,
+   - language selector,
+   - homepage search/filter controls,
+   - listing search/filter controls,
+   - listing sort controls,
+   - location combobox,
+   - year combobox,
+   - listing forms if they use dropdowns.
+
+2. Verify dropdown/combobox/popover behavior in private/admin UI where applicable:
+   - cabinet filters,
+   - profile forms,
+   - listing create/edit forms,
+   - admin tables,
+   - admin filters,
+   - admin action menus.
+
+3. Verify clipping inside:
+   - cards,
+   - modals,
+   - drawers,
+   - scroll containers,
+   - admin tables,
+   - mobile layouts,
+   - sticky/fixed containers.
+
+4. Verify all localizations:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+5. Verify all responsive breakpoints:
+   - `320`
+   - `375`
+   - `390`
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+6. For mobile widths:
+   - `320`
+   - `375`
+   - `390`
+   Confirm overlays are not clipped, are reachable, and do not overflow unusably off-screen.
+
+7. For tablet/desktop:
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+   Confirm overlays align with triggers and remain above surrounding UI.
+
+8. Confirm keyboard accessibility:
+   - Tab,
+   - Shift+Tab,
+   - Arrow keys where supported,
+   - Enter/Space selection,
+   - Escape close.
+
+9. Confirm pointer behavior:
+   - click/tap opens,
+   - outside click closes,
+   - selecting item closes where expected,
+   - scroll behavior remains usable.
+
+10. Confirm no regression in:
+   - listing filters,
+   - search results,
+   - listing create/edit forms,
+   - admin tables,
+   - language switcher,
+   - auth/header menus,
+   - responsive governance,
+   - primitives governance.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:localization`
+- `npm run governance:primitives`
+- `npm run governance:responsive`
+- `npm run governance:ssr`
+- `npm run governance:tailwind`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run targeted tests for affected dropdown/combobox/popover components.
+
+If existing tests fail due to known pre-existing baseline issues:
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 89 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Governance checks must pass.
+- Translation JSON files must remain valid if touched.
+- Dropdown clipping must be fixed or measurably improved for the affected components.
+- Keyboard/accessibility behavior must remain valid.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 89 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Task 89 under Sprint 0 — Critical Bugfix / Regression Stabilization.
+   - Mark Task 89 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Investigation summary
+   - Implementation summary
+   - Files changed
+   - Components audited
+   - Components changed
+   - Portal/layering strategy before vs after
+   - Accessibility notes
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Run `git status` and confirm no unrelated uncommitted work.
+3. Inventory dropdown/combobox/popover components and usages.
+4. Identify which components are clipped and why.
+5. Identify existing canonical overlay/portal strategy.
+6. Apply the narrowest shared-component fix possible.
+7. Preserve accessibility and existing visual design.
+8. Verify all locales and required breakpoints.
+9. Run validation commands.
+10. Update `docs/backlog.md`.
+11. Create the Task 89 session log.
+12. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Components audited
+4. Components changed
+5. Portal/layering behavior before vs after
+6. Accessibility verification
+7. Locales checked
+8. Breakpoints checked
+9. Validation results
+10. Known pre-existing issues, if any
+11. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 90.
+
+
+------------------------------------------------------------------------------------------------------
+
+Task 90 — Fix mobile spacing and auth buttons
+
+You are Claude Code Sonnet 4.6 working in the `lero-al` project.
+
+Context:
+We are continuing Sprint 0 — Critical Bugfix / Regression Stabilization.
+
+The previous completed task is Task 89.
+Task 89 was completed with PASS, manually build-validated by the user, and pushed to git.
+Repo hygiene cleanup was also pushed:
+- local `.claude/settings.local.json` removed from git tracking,
+- old `docs/sessions.zip` removed,
+- `.gitignore` updated for local Claude settings.
+
+This task must be documented as Task 90.
+Do not rename this task to Task 0.7.
+Do not start Task 91 or any other Sprint 0 task.
+
+Current known project state:
+- Previous completed task: Task 89 — Fix dropdown clipping inconsistencies.
+- Task 89 status: PASS.
+- Task 89 build: manually run by the user and passed.
+- Task 89 changes were pushed to git.
+- Last known git state:
+  - `origin/main` includes Task 89.
+  - `origin/main` includes repo hygiene commit.
+- Last known lint state after Task 89: `npm run lint` reports 0 errors / 6 pre-existing warnings.
+- Typecheck still has 4 pre-existing test-file errors, 0 new from Sprint 0 tasks.
+- Governance checks were passing after Task 89:
+  - localization PASS
+  - primitives PASS
+  - responsive PASS
+  - ssr PASS
+  - tailwind PASS
+- Do not describe lint as fully clean while warnings remain.
+- Preserve global task numbering from the last completed task.
+
+Git workflow note:
+The project currently uses a single `main` branch.
+If git push instructions are needed in the final report or follow-up, use the full sequence:
+- `git status`
+- `git add ...`
+- `git commit -m "..."`
+- `git push`
+
+Do not suggest:
+- `git push origin HEAD`
+
+Pre-implementation git safety:
+1. Run `git status` before making changes.
+2. Confirm the working tree does not contain unrelated uncommitted changes.
+3. Do not overwrite or mix unrelated work into Task 90.
+4. If Task 89 files are still uncommitted locally, stop and ask the user to resolve that first.
+
+Required pre-read before implementation:
+1. Read `docs/backlog.md` to understand:
+   - current task history,
+   - global task numbering,
+   - known debt,
+   - Sprint 0 status,
+   - existing backlog documentation format.
+
+2. Read `docs/ai-behavior.md`, especially:
+   - execution protocol,
+   - pre-task mandatory checklist,
+   - isolated scope requirements,
+   - no broad unrelated refactors,
+   - no hardcoded UI text,
+   - no duplicate components.
+
+3. Read these always-governed project rules:
+   - `docs/env.md`
+   - `docs/rls-rules.md`
+   - `docs/component-rules.md`
+
+4. Read these task-relevant rules:
+   - `docs/ui-rules.md`
+   - `docs/component-governance.md`
+   - `docs/component-rules.md`
+   - `docs/state-authority.md`
+   - `docs/qa-rules.md`
+   - `docs/domain-rules.md`
+
+5. Read responsive and screenshot governance:
+   - `docs/responsive-governance.md`
+   - `docs/responsive-screenshot-governance.md`
+   - `docs/responsive-screenshot-matrix.md`
+
+6. Read governance documentation:
+   - `docs/governance-checklists.md`
+   - `docs/governance-enforcement.md`
+
+7. Inspect `package.json` to identify the current validation scripts, especially:
+   - lint,
+   - build,
+   - localization governance,
+   - primitives governance,
+   - responsive governance,
+   - SSR governance,
+   - tailwind governance,
+   - components governance,
+   - screenshots/responsive scripts,
+   - typecheck,
+   - test.
+
+8. Follow the existing documentation and validation conventions already used in:
+   - `docs/backlog.md`
+   - `docs/sessions/`
+
+9. Do not invent a new documentation format if the project already has one.
+
+10. If this prompt conflicts with a stricter project rule in `docs/`, follow the project docs and document the decision in the session log.
+
+Localization coverage required:
+This task must explicitly verify all project locales:
+- `sq`
+- `en`
+- `uk`
+- `it`
+
+Responsive coverage required:
+This task must explicitly verify all project breakpoints:
+- `320`
+- `375`
+- `390`
+- `768`
+- `1280`
+- `1440`
+- `2560`
+
+Bug:
+Mobile spacing still has visual issues, and the auth buttons “Увійти” / “Зареєструватися” do not match the rest of the UI/design system.
+
+Type:
+High-priority responsive UI bug / design system consistency fix
+
+Priority:
+High
+
+Area:
+- header
+- auth controls
+- mobile layout
+- responsive spacing
+- shared button system
+- navigation
+- mobile menu if present
+- public unauthenticated state
+- authenticated state only if affected by the same header spacing logic
+
+Goal:
+Fix mobile spacing issues and bring auth buttons into alignment with the project’s shared button/design system.
+
+The key rule:
+Auth buttons must visually behave like project-standard buttons across all locales and all responsive breakpoints, especially mobile widths.
+
+Important:
+Do not start Task 91.
+Do not rewrite the full header/navigation system.
+Do not create duplicate button components.
+Do not introduce hardcoded UI text.
+Do not perform broad unrelated layout changes.
+Do not change auth business logic.
+Do not change routing unless required by existing broken auth button links.
+Keep the fix narrow, systematic, and production-safe.
+
+Required investigation:
+1. Locate header/navigation/auth button components, likely in areas such as:
+   - `src/components`
+   - `src/modules/auth`
+   - `src/app/[locale]`
+   - shared layout/header/nav components.
+
+2. Identify all unauthenticated auth controls:
+   - Sign in / Login button
+   - Register / Sign up button
+   - mobile menu auth buttons
+   - desktop header auth buttons
+   - guest CTAs in header/navigation if present.
+
+3. Identify all affected mobile spacing areas:
+   - header horizontal padding,
+   - mobile menu spacing,
+   - auth button gap,
+   - button height,
+   - button radius,
+   - text wrapping,
+   - icon spacing if any,
+   - safe-area/bottom/top spacing if present,
+   - compact widths 320/375/390.
+
+4. Compare current auth buttons against the project’s canonical button system:
+   - shared `Button` component,
+   - button variants,
+   - size variants,
+   - design tokens/classes,
+   - canonical hover/focus states,
+   - canonical disabled states,
+   - canonical mobile touch target size.
+
+5. Search for raw button patterns or inconsistent button styling around auth controls:
+   - `<button`
+   - `<a`
+   - `href="/auth`
+   - `auth/login`
+   - `auth/register`
+   - `sign in`
+   - `register`
+   - `login`
+   - `rounded`
+   - `px-`
+   - `py-`
+   - `bg-`
+   - `border`
+   - arbitrary Tailwind classes.
+
+6. Identify whether the auth buttons are:
+   - plain anchors styled manually,
+   - raw buttons,
+   - shared Button usage,
+   - duplicated across desktop and mobile,
+   - inside a mobile menu/drawer,
+   - inside header layout only.
+
+7. Check whether any existing raw-button or primitive-governance debt applies.
+   Do not increase primitive violations.
+
+8. Inspect whether spacing problems differ by locale:
+   - Ukrainian text may be longer.
+   - Italian text may be longer.
+   - Albanian text may wrap differently.
+   - English may fit but still need consistent layout.
+
+9. Determine the smallest safe fix that:
+   - aligns auth buttons with shared UI,
+   - fixes mobile spacing,
+   - does not regress desktop header,
+   - does not introduce new design debt.
+
+Required implementation:
+1. Bring “Sign in / Login” and “Register / Sign up” auth buttons into the shared button system.
+
+2. Use existing project-approved primitives/components:
+   - shared `Button`,
+   - existing Link/Button wrapper if present,
+   - canonical variants/sizes from the project.
+
+3. Do not create new button primitives unless docs explicitly require it.
+
+4. If auth controls are links, preserve correct semantic navigation:
+   - use existing project Link pattern,
+   - keep locale-prefixed routes,
+   - preserve current destinations:
+     - `/${locale}/auth/login`
+     - `/${locale}/auth/register`
+     - or existing project-specific routes.
+
+5. Ensure auth button labels use i18n.
+   Do not hardcode labels in components.
+
+6. If translation keys are missing, add/update them across all locales:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+7. Fix mobile spacing issues:
+   - align horizontal padding with project standards,
+   - ensure auth buttons have adequate gap,
+   - ensure touch targets are usable,
+   - ensure text does not overflow/clash,
+   - ensure mobile menu/header layout does not become cramped,
+   - ensure responsive classes cover all required breakpoints.
+
+8. Avoid arbitrary Tailwind additions unless project rules allow them.
+   Prefer existing spacing/button tokens and established classes.
+
+9. Preserve desktop layout unless it is directly affected by the same inconsistency.
+
+10. Preserve accessibility:
+   - keyboard focus visible,
+   - tab order logical,
+   - links/buttons semantically correct,
+   - accessible names present,
+   - no duplicate focus traps,
+   - no hidden interactive controls accessible to screen readers.
+
+11. Preserve auth behavior:
+   - guest sees login/register controls,
+   - authenticated user sees the correct authenticated controls,
+   - agent/admin states remain unaffected unless they share the same header control area.
+
+12. If mobile menu/drawer is involved:
+   - confirm open/close behavior unchanged,
+   - confirm auth links close or navigate correctly according to existing pattern,
+   - confirm spacing works inside the menu at 320px.
+
+13. Keep changes isolated to mobile spacing/auth button UI consistency.
+
+Required QA coverage:
+1. Verify unauthenticated header/auth controls:
+   - desktop header,
+   - tablet header,
+   - mobile header,
+   - mobile menu/drawer if present.
+
+2. Verify authenticated header state still works:
+   - regular user,
+   - agent,
+   - admin if header differs by role.
+
+3. Verify auth button destinations:
+   - login button routes correctly,
+   - register button routes correctly,
+   - locale prefix is preserved.
+
+4. Verify all localizations:
+   - `sq`
+   - `en`
+   - `uk`
+   - `it`
+
+5. Verify all responsive breakpoints:
+   - `320`
+   - `375`
+   - `390`
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+6. At mobile widths:
+   - `320`
+   - `375`
+   - `390`
+
+   Confirm:
+   - no horizontal overflow,
+   - auth buttons do not wrap badly,
+   - spacing does not collapse,
+   - tap targets remain usable,
+   - header does not visually crowd logo/menu/search controls,
+   - mobile menu content is not clipped.
+
+7. At tablet/desktop widths:
+   - `768`
+   - `1280`
+   - `1440`
+   - `2560`
+
+   Confirm:
+   - desktop header remains aligned,
+   - auth buttons remain consistent,
+   - layout does not shift unexpectedly,
+   - no regression in navigation spacing.
+
+8. Confirm no regression in:
+   - language switcher,
+   - favorites link,
+   - listing creation CTA if present,
+   - account menu,
+   - mobile menu open/close,
+   - sticky header behavior if present,
+   - responsive governance,
+   - primitive governance.
+
+9. Check long localized labels:
+   - Ukrainian login/register labels,
+   - Italian login/register labels,
+   - Albanian labels,
+   - English labels.
+
+10. Confirm no new hardcoded UI text.
+
+Validation:
+Run the relevant existing checks discovered from `package.json`.
+
+At minimum run:
+- `npm run lint`
+- `npm run build`
+
+Also run all standard existing governance checks for this project.
+Inspect `package.json` and run the actual available scripts, for example any of:
+- `npm run governance:localization`
+- `npm run governance:primitives`
+- `npm run governance:responsive`
+- `npm run governance:ssr`
+- `npm run governance:tailwind`
+- `npm run governance:components`
+- `npm run governance:screenshots`
+- or equivalent scripts that exist in the project.
+
+If available and practical, run targeted checks for header/auth button responsive behavior.
+
+If existing tests fail due to known pre-existing baseline issues:
+- document the exact failures,
+- confirm whether they are pre-existing,
+- confirm Task 90 introduced no new failures.
+
+Expected validation standard:
+- Lint must remain 0 errors.
+- Existing warnings must not increase.
+- Build must pass.
+- Governance checks must pass.
+- Translation JSON files must remain valid if touched.
+- Auth buttons must use the shared button system or approved project primitive.
+- Mobile spacing must be improved at 320/375/390.
+- Desktop layout must not regress.
+- Any pre-existing test/typecheck failures must be explicitly documented as pre-existing.
+- Task 90 must introduce zero new lint/governance violations.
+
+Documentation:
+1. Update `docs/backlog.md`:
+   - Add Task 90 under Sprint 0 — Critical Bugfix / Regression Stabilization.
+   - Mark Task 90 complete only after validation passes.
+   - Mention exact files changed.
+   - Mention final lint/build/governance results.
+   - Mention known pre-existing warnings/failures separately.
+   - Preserve the existing backlog format.
+   - Preserve global task numbering.
+
+2. Create a session log:
+   - `docs/sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md`
+
+3. The session log must follow existing `docs/sessions/` conventions and include:
+   - Task number and title
+   - Problem summary
+   - Root cause
+   - Investigation summary
+   - Implementation summary
+   - Files changed
+   - Auth button behavior before vs after
+   - Mobile spacing before vs after
+   - Shared button/design-system compliance notes
+   - Accessibility notes
+   - Locales checked: `sq`, `en`, `uk`, `it`
+   - Breakpoints checked: `320`, `375`, `390`, `768`, `1280`, `1440`, `2560`
+   - Validation commands and results
+   - Known pre-existing issues, if any
+   - PASS / FAIL status
+
+Suggested implementation path:
+1. Read required docs and inspect `package.json`.
+2. Run `git status` and confirm no unrelated uncommitted work.
+3. Locate header/auth button/mobile menu components.
+4. Identify current mobile spacing problem and non-standard auth button styling.
+5. Locate canonical shared Button usage.
+6. Replace inconsistent auth button styling with approved shared button pattern.
+7. Adjust responsive spacing narrowly.
+8. Verify guest/authenticated/agent/admin header states.
+9. Verify all locales and required breakpoints.
+10. Run validation commands.
+11. Update `docs/backlog.md`.
+12. Create the Task 90 session log.
+13. Return final report.
+
+Final report:
+Return a concise final report with:
+1. Root cause
+2. Files changed
+3. Components audited
+4. Components changed
+5. Auth buttons before vs after
+6. Mobile spacing before vs after
+7. Accessibility verification
+8. Locales checked
+9. Breakpoints checked
+10. Validation results
+11. Known pre-existing issues, if any
+12. Remaining risks or follow-up items, if any
+
+Do not proceed to Task 91.
+
+
+------------------------------------------------------------------------------------------------------
+
+
+
+
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------------------------------------------

@@ -16,6 +16,7 @@ import { setListingPremium, deleteListing } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
 import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
+import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
 const STATUS_BADGE: Record<ListingStatus, string> = {
   pending:  'bg-status-warning/15 text-status-warning border-status-warning/30',
@@ -142,7 +143,9 @@ function PremiumDialog({ listing, onClose, onDone }: {
 export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all' }: Props) {
   const t = useTranslations('admin.listings')
   const tc = useTranslations('cabinet')
+  const tl = useTranslations('listing')
   const locale = useLocale()
+  const { propertyTypes } = usePropertyTypes()
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -280,8 +283,8 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                           <span className="font-medium truncate max-w-[200px]">{l.title}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3 hidden md:table-cell text-muted-foreground capitalize text-xs">
-                        {l.listing_type} · {l.property_type}
+                      <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">
+                        {(tl as (k: string) => string)(l.listing_type)} · {propertyTypes.find(pt => pt.value === l.property_type)?.label ?? l.property_type}
                       </td>
                       <td className="px-4 py-3 font-medium text-sm">
                         {formatPrice(l.price, l.currency, locale)}

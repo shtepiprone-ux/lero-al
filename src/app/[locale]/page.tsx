@@ -67,15 +67,6 @@ export default async function HomePage() {
       {/* ── Featured listings ── */}
       <section className="py-12 md:py-16 2xl:py-20 bg-muted/30 [content-visibility:auto] [contain-intrinsic-size:auto_600px]">
         <div className="container-wide">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{tl('featured')}</h2>
-            <Link
-              href={`/${locale}/listings?is_premium=true`}
-              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
-            >
-              {tl('view_all')}
-            </Link>
-          </div>
           <FeaturedListings />
         </div>
       </section>

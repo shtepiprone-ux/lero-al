@@ -168,20 +168,16 @@ export function ActiveFilterChips({ locations }: Props) {
   return (
     <div className="active-filter-chips flex flex-wrap items-center gap-2 pt-3 pb-1">
       {chips.map(chip => (
-        <span
+        <button
           key={chip.key}
-          className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20 select-none"
+          type="button"
+          onClick={() => removeChip(chip)}
+          className="inline-flex items-center gap-1.5 h-7 pl-3 pr-2 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20 select-none hover:bg-primary/20 transition-colors min-h-[44px] sm:min-h-0"
+          aria-label={`${chip.label} — ${t('aria_remove_filter')}`}
         >
           {chip.label}
-          <button
-            type="button"
-            onClick={() => removeChip(chip)}
-            className="hover:opacity-60 transition-opacity leading-none"
-            aria-label={t('aria_remove_filter')}
-          >
-            <X className="h-3 w-3" />
-          </button>
-        </span>
+          <X className="h-3 w-3 shrink-0" aria-hidden="true" />
+        </button>
       ))}
       <Button
         variant="ghost"

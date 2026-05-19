@@ -161,7 +161,7 @@ export function RegisterForm() {
                 />
               </div>
 
-              <Button type="submit" className="w-full h-11" disabled={loading}>
+              <Button type="submit" size="xl" className="w-full" disabled={loading}>
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('register')}
               </Button>
             </form>
@@ -188,7 +188,7 @@ export function RegisterForm() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mt-2">
-            <DialogClose render={<Button className="w-full h-11" />}>
+            <DialogClose render={<Button size="xl" className="w-full" />}>
               {t('register_success_go_home')}
             </DialogClose>
           </DialogFooter>

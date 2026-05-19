@@ -107,17 +107,133 @@
 ---
 
 ## Last Session
-**2026-05-19 — Listing Detail Performance / LCP Epic: EPIC CLOSED (Task 83)**
-- **Vercel Speed Insights (7-day production RUM):**
-  - Desktop: RES 100 🟢 Great | LCP ~1.34s | FCP ~1.2s | INP ~40ms | CLS ~0.01 | TTFB ~40ms
-  - Mobile:  RES 100 🟢 Great | LCP ~0.96s | FCP ~0.69s | INP ~80ms | CLS ~0.01 | TTFB ~170ms
-  - `/[locale]/listings/[slug]` route: RES 100, ~4 visits (small sample — continue monitoring)
-- **Synthetic desktop Lighthouse POOR runs (Tasks 75–82) were CDN cold-start + lab variance** — not confirmed real-user regression.
-- **No active LCP optimization is justified** based on current real-user data.
-- **RSC/HTML payload reduction deferred** — only if Speed Insights later shows Listing Detail desktop LCP POOR for real users.
-- **Epic CLOSED ✅**
+**2026-05-19 — Sprint 1 CLOSED: Remove Google Translate API and DeepL API (Task 102) ✅ COMPLETED**
+- **Investigation**: No npm packages for Google/DeepL (pure `fetch()` implementation). No env vars in `.env.local` or docs. Only `src/lib/translation/providers.ts` had the code.
+- **Fix**: Removed `GoogleTranslateProvider` and `DeepLProvider` classes from `providers.ts`. Simplified `getTranslationProvider()` to always return `MyMemoryProvider`. Updated header comment.
+- **Files changed**: `src/lib/translation/providers.ts`.
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+- **Sprint 1 status**: All Tasks 91–102 COMPLETED ✅
 
-→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md`](sessions/2026-05-19-listing-detail-lcp-epic-closure-speed-insights.md)
+→ Детальний лог: [`docs/sessions/2026-05-19-task-102-remove-translate-apis.md`](sessions/2026-05-19-task-102-remove-translate-apis.md)
+
+---
+
+**2026-05-19 — Sprint 1: Hide "Переглянути всі" when Premium section is empty (Task 101) ✅ COMPLETED**
+- **Root cause**: "View all" link was in `page.tsx` (Server Component) and always rendered regardless of data. `FeaturedListings` (Client Component) had the data, but the parent couldn't know.
+- **Fix**: Moved section heading + conditional "View all" into `FeaturedListings`. Link renders only when `!loading && listings.length > 0`. Removed standalone header from `page.tsx`. No new i18n keys needed.
+- **Files changed**: `FeaturedListings.tsx`, `src/app/[locale]/page.tsx`.
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-101-hide-view-all-empty.md`](sessions/2026-05-19-task-101-hide-view-all-empty.md)
+
+---
+
+**2026-05-19 — Sprint 1: Admin User form success toast and Save button dirty state (Task 100) ✅ COMPLETED**
+- **Root cause**: `handleSave` had no toast on success or error. Save button used `disabled={saving}` only, not checking `isDirty`.
+- **Fix**: Added `toast.success(t('feedback.save_success'))` after successful save and `toast.error(t('feedback.save_error'))` on error. Changed Save button `disabled` to `saving || (!isCreate && !isDirty)`. Added `save_success`/`save_error` keys to all 4 locale files.
+- **Files changed**: `AdminUserProfile.tsx` + 4 message files.
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-100-admin-save-toast-dirty.md`](sessions/2026-05-19-task-100-admin-save-toast-dirty.md)
+
+---
+
+**2026-05-19 — Sprint 1: Replace local Combobox in admin user form with canonical (Task 99) ✅ COMPLETED**
+- **Investigation**: Admin user forms (`AdminUserProfile.tsx`, `AdminUserCreate.tsx`) already used canonical `LocationCombobox`. The local clone was `SettlementCombobox` inside `ProfileTab.tsx` (cabinet profile) — 115-line custom city picker duplicating LocationCombobox's functionality.
+- **Fix**: Removed `SettlementCombobox` entirely. Replaced with `LocationCombobox portal`. Added label + region display (same UX). Cleaned orphaned imports (`useRef`, `useEffect`, `createPortal`, `MapPin`).
+- **Files changed**: `src/modules/cabinet/components/ProfileTab.tsx`.
+- **Governance improvement**: primitives HIGH H:88→H:87 (raw `<button>` elements inside SettlementCombobox eliminated).
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-99-canonical-combobox.md`](sessions/2026-05-19-task-99-canonical-combobox.md)
+
+---
+
+**2026-05-19 — Sprint 1: Constrain Combobox scrollbar within dropdown bounds (Task 98) ✅ COMPLETED**
+- **Root cause**: All three custom dropdown components (`Combobox`, `LocationCombobox`, `YearCombobox`) had `overflow-y-auto` directly on the `rounded-xl` container. Browsers render the scrollbar as part of the scroll element — when that element has rounded corners but the scroll mechanism is at the CSS level, the scrollbar visually bleeds past the rounded boundary.
+- **Fix**: Two-layer pattern across all three components. Outer: `overflow-hidden` clips content to rounded boundary. Inner `<div className="overflow-y-auto max-h-56">`: scrolls and shows scrollbar fully within the outer boundary. Applies to both portal and non-portal modes.
+- **Files changed**: `Combobox.tsx`, `LocationCombobox.tsx`, `YearCombobox.tsx`.
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-98-combobox-scrollbar.md`](sessions/2026-05-19-task-98-combobox-scrollbar.md)
+
+---
+
+**2026-05-19 — Sprint 1: Fix "Тип" column translation in Listings admin table (Task 97) ✅ COMPLETED**
+- **Root cause**: `AdminListingsTable.tsx` cell rendered raw `{l.listing_type} · {l.property_type}` (e.g. "sale · apartment") — no i18n applied. Header `t('col_type')` was already correct.
+- **Fix**: Added `useTranslations('listing')` for `listing_type` and `usePropertyTypes()` for localized property type labels (DB-backed, same hook used elsewhere). Cell now: `tl(listing_type) · propertyTypes.find(pt => pt.value === property_type)?.label ?? property_type`.
+- **Files changed**: `src/components/admin/AdminListingsTable.tsx`.
+- **Lint**: 0 errors / 5 warnings (pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-97-type-column-translation.md`](sessions/2026-05-19-task-97-type-column-translation.md)
+
+---
+
+**2026-05-19 — Sprint 1: Replace "Не забувайте" placeholder in Premium empty state (Task 96) ✅ COMPLETED**
+- **Investigation**: "Не забувайте" not present in current codebase. `FeaturedListings.tsx` was using the generic `listing.no_listings` key ("Оголошення не знайдено") for the Premium section empty state — wrong key, wrong message.
+- **Fix**: Added `listing.no_premium_listings` key to all 4 locale files (sq/en/uk/it). Updated `FeaturedListings.tsx` to use `t('no_premium_listings')` instead of `t('no_listings')`. Key counts: 823→824.
+- **Files changed**: 4 message files, `FeaturedListings.tsx`.
+- **Lint**: 0 errors / 5 warnings. **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-96-premium-empty-state.md`](sessions/2026-05-19-task-96-premium-empty-state.md)
+
+---
+
+**2026-05-19 — Sprint 1: Active filter chip click target (Task 95) ✅ COMPLETED**
+- **Root cause**: Each chip was a `<span>` with an inner raw `<button>` for the × icon. The `onClick` lived only on the tiny (12px) × icon, not the whole chip.
+- **Fix**: Replaced `<span>` + inner `<button>` with a single outer `<button>`. Click handler on the whole chip. `<X>` icon kept as `aria-hidden="true"` visual indicator. Added `hover:bg-primary/20 transition-colors` for feedback. Added `min-h-[44px] sm:min-h-0` for 44px mobile touch target. Updated `aria-label` to include chip label + action.
+- **Files changed**: `src/modules/listings/components/ActiveFilterChips.tsx`
+- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-95-filter-chip-click-target.md`](sessions/2026-05-19-task-95-filter-chip-click-target.md)
+
+---
+
+**2026-05-19 — Sprint 1: Full mobile spacing & auth UI audit (Task 94) ✅ COMPLETED**
+- **Root cause**: Multiple `<Button>` components used `className="... h-11 ..."` instead of the canonical `size="xl"` prop, bypassing the Button size system. Governance scan detected 7 violations; audit found 4 more (multiline JSX). `confirm-email` page used raw `<Link className="h-11 ...">` instead of `buttonVariants()`.
+- **Fix**: Added `size="xl"` and removed `h-11` from `className` on 11 `Button` instances across 6 files. Replaced 2 Link button-styled elements in `confirm-email/page.tsx` with `buttonVariants()`. Header logout: replaced `min-h-[44px]` with `size="xl"`.
+- **Files changed**: `LoginForm.tsx`, `RegisterForm.tsx`, `confirm-email/page.tsx`, `Header.tsx`, `FiltersPanel.tsx`, `ListingsFilters.tsx`, `ListingFormShell.tsx`, `ProfileTab.tsx`.
+- **Governance improvement**: primitives MEDIUM violations: M:8 → M:1 (7 h-11 hacks eliminated). Pre-existing H:+31 regression unchanged.
+- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-94-mobile-spacing-auth-ui-audit.md`](sessions/2026-05-19-task-94-mobile-spacing-auth-ui-audit.md)
+
+---
+
+**2026-05-19 — Sprint 1: Site-wide dropdown/popover clipping audit (Task 93) ✅ COMPLETED**
+- **Root cause**: `LocationCombobox` and `YearCombobox` used absolute positioning only — no portal support. Both were used inside `overflow-y-auto` scroll containers in `FiltersPanel` (mobile/panel overlay) and `ListingsFilters` sidebar, causing dropdown clipping.
+- **Audit findings**: All Base UI primitives (`DropdownMenu`, `Popover`, `Select`) are portal-rendered and safe. `Combobox` already had `portal` prop (safe). Task 89 had already fixed admin form cards. Two shared components lacked portal support.
+- **Fix**: Added `portal` prop + `createPortal` implementation to `LocationCombobox.tsx` and `YearCombobox.tsx` (following `Combobox.tsx` pattern). Added `portal` at 6 call sites: `FiltersPanel.tsx` (3 instances), `ListingsFilters.tsx` (3 instances).
+- **Files changed**: `LocationCombobox.tsx`, `YearCombobox.tsx`, `FiltersPanel.tsx`, `ListingsFilters.tsx`, `docs/component-risk-register.md`.
+- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-93-dropdown-clipping-audit.md`](sessions/2026-05-19-task-93-dropdown-clipping-audit.md)
+
+---
+
+**2026-05-19 — Sprint 1: Language-name translations audit and fix (Task 92) ✅ COMPLETED**
+- **Root cause**: `LocaleSwitcher.tsx` had hardcoded self-identifying labels (`'Shqip'`, `'English'`, `'Українська'`, `'Italiano'`) instead of locale-aware translations. `Header.tsx` consumed the same hardcoded `LOCALES.label`. `AdminSettings.tsx` had its own identical hardcoded `LOCALE_OPTIONS` array.
+- **Fix**: Added 4 keys (`lang_sq/en/uk/it`) to `nav` namespace in all 4 locale files. Removed hardcoded labels from `LOCALES` in `LocaleSwitcher.tsx`; added `langLabels` Record using `useTranslations('nav')`. Updated `Header.tsx` (imports `LocaleCode`, adds `langLabels`). Updated `AdminSettings.tsx` (computes `LOCALE_OPTIONS` dynamically via `tNav`).
+- **Task 87 audit**: Confirmed it only fixed 2 typos (`Обов'язкова`, `Акаунт`). The `'Шкіп'` bug was not present in the codebase — no Cyrillic transliteration found.
+- **Files changed**: 4 message files, `LocaleSwitcher.tsx`, `Header.tsx`, `AdminSettings.tsx`.
+- **Lint**: 0 errors / 5 warnings (all pre-existing). **Typecheck**: 4 pre-existing test errors, 0 new.
+- **Governance**: localization ✅ PASS at baseline. Key counts: 823 (819 + 4 new).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-92-language-name-translations.md`](sessions/2026-05-19-task-92-language-name-translations.md)
+
+---
+
+**2026-05-19 — Sprint 1: Fix Italian locale fallback to Ukrainian (Task 91) ✅ COMPLETED**
+- **Root cause**: `AdminUserAvatar.tsx` passed raw server error strings to `toast.error()` and `setError()` — Ukrainian API/action errors surfaced as toasts and inline messages for Italian locale users. `ProfileTab.tsx` passed raw `deleteOwnAccount()` error string to `setDeleteError()`.
+- **Fix**: 3 targeted changes — all hardcoded Ukrainian error pass-throughs replaced with existing i18n keys (`cabinet.avatar_upload_error`, `cabinet.error_deleting`).
+- **i18n config audit**: Fallback chain is correct — no `uk` in any fallback. All 819 leaf keys present in all 4 locale files. `messages/it.json` contains no Cyrillic characters.
+- **Files changed**: `src/components/admin/AdminUserAvatar.tsx`, `src/modules/cabinet/components/ProfileTab.tsx`
+- **Lint**: 0 errors / 5 warnings (all pre-existing).
+- **Typecheck**: 4 pre-existing test file errors, 0 new.
+- **Governance**: localization ✅ PASS (C0/H0/M18 — at baseline). Primitives regression H:57→H:88 is pre-existing (confirmed via stash test).
+- **Build**: run `npm run build` to confirm (per policy, not run automatically).
+
+→ Детальний лог: [`docs/sessions/2026-05-19-task-91-italian-locale-fallback-to-ukrainian.md`](sessions/2026-05-19-task-91-italian-locale-fallback-to-ukrainian.md)
 
 ---
 
@@ -536,6 +652,18 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Sprint 1 — Remove Google Translate and DeepL APIs | Task 102 | [sessions/2026-05-19-task-102-remove-translate-apis.md](sessions/2026-05-19-task-102-remove-translate-apis.md) |
+| 2026-05-19 | Sprint 1 — Hide "Переглянути всі" when premium empty | Task 101 | [sessions/2026-05-19-task-101-hide-view-all-empty.md](sessions/2026-05-19-task-101-hide-view-all-empty.md) |
+| 2026-05-19 | Sprint 1 — Admin User form save toast & dirty state | Task 100 | [sessions/2026-05-19-task-100-admin-save-toast-dirty.md](sessions/2026-05-19-task-100-admin-save-toast-dirty.md) |
+| 2026-05-19 | Sprint 1 — Replace local Combobox with canonical | Task 99 | [sessions/2026-05-19-task-99-canonical-combobox.md](sessions/2026-05-19-task-99-canonical-combobox.md) |
+| 2026-05-19 | Sprint 1 — Constrain Combobox scrollbar within bounds | Task 98 | [sessions/2026-05-19-task-98-combobox-scrollbar.md](sessions/2026-05-19-task-98-combobox-scrollbar.md) |
+| 2026-05-19 | Sprint 1 — Fix "Тип" column translation in admin table | Task 97 | [sessions/2026-05-19-task-97-type-column-translation.md](sessions/2026-05-19-task-97-type-column-translation.md) |
+| 2026-05-19 | Sprint 1 — Replace Premium empty state placeholder | Task 96 | [sessions/2026-05-19-task-96-premium-empty-state.md](sessions/2026-05-19-task-96-premium-empty-state.md) |
+| 2026-05-19 | Sprint 1 — Active filter chip click target | Task 95 | [sessions/2026-05-19-task-95-filter-chip-click-target.md](sessions/2026-05-19-task-95-filter-chip-click-target.md) |
+| 2026-05-19 | Sprint 1 — Full mobile spacing & auth UI audit | Task 94 | [sessions/2026-05-19-task-94-mobile-spacing-auth-ui-audit.md](sessions/2026-05-19-task-94-mobile-spacing-auth-ui-audit.md) |
+| 2026-05-19 | Sprint 1 — Site-wide dropdown/popover clipping audit | Task 93 | [sessions/2026-05-19-task-93-dropdown-clipping-audit.md](sessions/2026-05-19-task-93-dropdown-clipping-audit.md) |
+| 2026-05-19 | Sprint 1 — Language-name translations audit and fix | Task 92 | [sessions/2026-05-19-task-92-language-name-translations.md](sessions/2026-05-19-task-92-language-name-translations.md) |
+| 2026-05-19 | Sprint 1 — Fix Italian locale fallback to Ukrainian | Task 91 | [sessions/2026-05-19-task-91-italian-locale-fallback-to-ukrainian.md](sessions/2026-05-19-task-91-italian-locale-fallback-to-ukrainian.md) |
 | 2026-05-19 | Sprint 0 — Fix mobile spacing and auth buttons | Task 90 | [sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md](sessions/2026-05-19-task-90-mobile-spacing-and-auth-buttons.md) |
 | 2026-05-19 | Sprint 0 — Fix dropdown clipping inconsistencies | Task 89 | [sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md](sessions/2026-05-19-task-89-dropdown-clipping-inconsistencies.md) |
 | 2026-05-19 | Sprint 0 — Fix guest favorite behavior | Task 88 | [sessions/2026-05-19-task-88-guest-favorite-behavior.md](sessions/2026-05-19-task-88-guest-favorite-behavior.md) |

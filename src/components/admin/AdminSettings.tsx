@@ -21,12 +21,7 @@ const TAB_KEYS: Record<Tab, string[]> = {
   i18n:    ['default_locale'],
 }
 
-const LOCALE_OPTIONS = [
-  { value: 'sq', label: '🇦🇱 Shqip' },
-  { value: 'en', label: '🇬🇧 English' },
-  { value: 'uk', label: '🇺🇦 Українська' },
-  { value: 'it', label: '🇮🇹 Italiano' },
-]
+// Language labels built inside component using translations (see AdminSettings function)
 
 export interface AllSettings {
   site_name: string
@@ -73,6 +68,13 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function AdminSettings({ initialSettings }: Props) {
   const t = useTranslations('admin.settings')
+  const tNav = useTranslations('nav')
+  const LOCALE_OPTIONS = [
+    { value: 'sq', label: `🇦🇱 ${tNav('lang_sq')}` },
+    { value: 'en', label: `🇬🇧 ${tNav('lang_en')}` },
+    { value: 'uk', label: `🇺🇦 ${tNav('lang_uk')}` },
+    { value: 'it', label: `🇮🇹 ${tNav('lang_it')}` },
+  ]
   const [tab, setTab] = useState<Tab>('general')
   const [saveState, setSaveState] = useState<'idle' | 'saved' | 'error'>('idle')
   const [isPending, startTransition] = useTransition()

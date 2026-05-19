@@ -1,7 +1,7 @@
 'use client'
 
 import { Globe, ChevronDown, Loader2 } from 'lucide-react'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,10 +12,10 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 export const LOCALES = [
-  { code: 'sq', label: 'Shqip',      flag: '🇦🇱' },
-  { code: 'en', label: 'English',    flag: '🇬🇧' },
-  { code: 'uk', label: 'Українська', flag: '🇺🇦' },
-  { code: 'it', label: 'Italiano',   flag: '🇮🇹' },
+  { code: 'sq', flag: '🇦🇱' },
+  { code: 'en', flag: '🇬🇧' },
+  { code: 'uk', flag: '🇺🇦' },
+  { code: 'it', flag: '🇮🇹' },
 ] as const
 
 export type LocaleCode = typeof LOCALES[number]['code']
@@ -38,7 +38,15 @@ export function LocaleSwitcher({
   className,
 }: LocaleSwitcherProps) {
   const currentLocale = useLocale()
+  const t = useTranslations('nav')
   const current = LOCALES.find(l => l.code === currentLocale)
+
+  const langLabels: Record<LocaleCode, string> = {
+    sq: t('lang_sq'),
+    en: t('lang_en'),
+    uk: t('lang_uk'),
+    it: t('lang_it'),
+  }
 
   return (
     <DropdownMenu>
@@ -53,7 +61,7 @@ export function LocaleSwitcher({
         <Globe className="h-4 w-4 shrink-0" />
         <span className="text-sm">{current?.flag}</span>
         {showLabel && (
-          <span className="text-sm flex-1 text-left truncate">{current?.label}</span>
+          <span className="text-sm flex-1 text-left truncate">{langLabels[currentLocale as LocaleCode]}</span>
         )}
         {isPending
           ? <Loader2 className="h-3 w-3 animate-spin opacity-60 shrink-0" />
@@ -68,7 +76,7 @@ export function LocaleSwitcher({
             className={currentLocale === loc.code ? 'font-semibold' : ''}
           >
             <span className="mr-2">{loc.flag}</span>
-            {loc.label}
+            {langLabels[loc.code]}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

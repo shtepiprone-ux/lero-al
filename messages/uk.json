@@ -17,7 +17,11 @@
     "navigation": "Навігація",
     "information": "Інформація",
     "all_rights": "Всі права захищені",
-    "follow_us": "Ми в соцмережах"
+    "follow_us": "Ми в соцмережах",
+    "lang_sq": "Албанська",
+    "lang_en": "Англійська",
+    "lang_uk": "Українська",
+    "lang_it": "Італійська"
   },
   "listing": {
     "sale": "Продаж",
@@ -41,6 +45,7 @@
     "latest": "Останні",
     "view_all": "Переглянути всі",
     "no_listings": "Оголошення не знайдено",
+    "no_premium_listings": "Зараз немає преміум оголошень.",
     "property_type_apartment": "Квартира",
     "property_type_house": "Будинок / Вілла",
     "property_type_land": "Земля",
@@ -724,7 +729,9 @@
       "feedback": {
         "avatar_upload_failed": "Аватар не завантажено: {error}. Можна додати у режимі редагування.",
         "avatar_upload_exception": "Аватар не завантажено — можна додати у режимі редагування.",
-        "reason_prefix": "Причина: {reason}"
+        "reason_prefix": "Причина: {reason}",
+        "save_success": "Профіль збережено успішно.",
+        "save_error": "Помилка збереження профілю. Спробуйте ще раз."
       },
       "dialogs": {
         "unsaved_title": "Незбережені зміни",

@@ -125,6 +125,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             locations={locations}
             value={get('location_id')}
             onChange={id => updateParams({ location_id: id })}
+            portal
           />
         </AccordionSection>
 
@@ -276,11 +277,13 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 value={get('year_built_min') ? parseInt(get('year_built_min')) : undefined}
                 onChange={v => updateParams({ year_built_min: v != null ? String(v) : null })}
                 placeholder={tc('year_from')}
+                portal
               />
               <YearCombobox
                 value={get('year_built_max') ? parseInt(get('year_built_max')) : undefined}
                 onChange={v => updateParams({ year_built_max: v != null ? String(v) : null })}
                 placeholder={tc('year_to')}
+                portal
               />
             </div>
           </AccordionSection>
@@ -378,7 +381,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
       {/* Mobile apply button */}
       {onClose && (
-        <Button className="lg:hidden mt-4 h-11" onClick={onClose}>
+        <Button size="xl" className="lg:hidden mt-4" onClick={onClose}>
           {tc('apply_filters')}
           {activeCount > 0 && ` (${activeCount})`}
         </Button>

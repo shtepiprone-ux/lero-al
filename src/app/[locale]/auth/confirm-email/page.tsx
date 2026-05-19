@@ -2,6 +2,8 @@ import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { CheckCircle2, XCircle } from 'lucide-react'
 import { consumeEmailChangeToken } from '@/modules/cabinet/actions'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -52,7 +54,7 @@ export default async function ConfirmEmailPage({ params, searchParams }: Props) 
             </div>
             <Link
               href={`/${locale}/auth/login`}
-              className="flex items-center justify-center h-11 w-full rounded-xl bg-primary text-primary-foreground font-semibold text-sm hover:bg-primary/90 transition-colors"
+              className={cn(buttonVariants({ size: 'xl' }), 'w-full justify-center')}
             >
               {t('confirm_email_go_login')}
             </Link>
@@ -66,7 +68,7 @@ export default async function ConfirmEmailPage({ params, searchParams }: Props) 
             </div>
             <Link
               href={`/${locale}/cabinet?tab=profile`}
-              className="flex items-center justify-center h-11 w-full rounded-xl border border-border font-semibold text-sm hover:bg-muted transition-colors"
+              className={cn(buttonVariants({ variant: 'outline', size: 'xl' }), 'w-full justify-center')}
             >
               {t('confirm_email_go_login')}
             </Link>

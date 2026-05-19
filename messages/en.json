@@ -17,7 +17,11 @@
     "navigation": "Navigation",
     "information": "Information",
     "all_rights": "All rights reserved",
-    "follow_us": "Follow us"
+    "follow_us": "Follow us",
+    "lang_sq": "Albanian",
+    "lang_en": "English",
+    "lang_uk": "Ukrainian",
+    "lang_it": "Italian"
   },
   "listing": {
     "sale": "For sale",
@@ -41,6 +45,7 @@
     "latest": "Latest",
     "view_all": "View all",
     "no_listings": "No listings found",
+    "no_premium_listings": "No premium listings right now.",
     "property_type_apartment": "Apartment",
     "property_type_house": "House / Villa",
     "property_type_land": "Land",
@@ -724,7 +729,9 @@
       "feedback": {
         "avatar_upload_failed": "Avatar not uploaded: {error}. Can be added in edit mode.",
         "avatar_upload_exception": "Avatar not uploaded — can be added in edit mode.",
-        "reason_prefix": "Reason: {reason}"
+        "reason_prefix": "Reason: {reason}",
+        "save_success": "Profile saved successfully.",
+        "save_error": "Error saving profile. Please try again."
       },
       "dialogs": {
         "unsaved_title": "Unsaved changes",

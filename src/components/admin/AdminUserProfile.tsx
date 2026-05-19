@@ -484,7 +484,8 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
       status: data.status, blockReason: data.blockReason,
     })
     setSaving(false)
-    if (result.error) { setSaveError(result.error); return }
+    if (result.error) { setSaveError(result.error); toast.error(t('feedback.save_error')); return }
+    toast.success(t('feedback.save_success'))
     form.reset(data)
     setEditActive(false); router.refresh()
   }
@@ -570,7 +571,7 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
               <Button variant="outline" size="sm" className="gap-1.5 rounded-xl" onClick={handleCancelClick}>
                 <X className="h-4 w-4" /> {t('actions.cancel')}
               </Button>
-              <Button size="sm" className="gap-1.5 rounded-xl" onClick={handleSubmit(onSubmit)} disabled={saving}>
+              <Button size="sm" className="gap-1.5 rounded-xl" onClick={handleSubmit(onSubmit)} disabled={saving || (!isCreate && !isDirty)}>
                 {saving
                   ? <Loader2 className="h-4 w-4 animate-spin" />
                   : isCreate ? <UserPlus className="h-4 w-4" /> : <Save className="h-4 w-4" />

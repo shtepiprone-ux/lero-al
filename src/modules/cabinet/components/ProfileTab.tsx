@@ -1,14 +1,14 @@
 'use client'
 
-import { useRef, useState, useMemo, useTransition, useEffect, useCallback } from 'react'
-import { createPortal } from 'react-dom'
+import { useState, useMemo, useTransition, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
-import { CheckCircle2, AlertCircle, Loader2, MapPin, Trash2, AlertTriangle } from 'lucide-react'
+import { CheckCircle2, AlertCircle, Loader2, Trash2, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
+import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
 import { cn } from '@/lib/utils'
@@ -90,121 +90,6 @@ function PhoneField({ label, value, onChange }: {
 
 // ── Settlement combobox sub-component ────────────────────────────────────────
 
-function SettlementCombobox({ cities, regions, value, onChange, label }: {
-  cities: CityOption[]
-  regions: RegionOption[]
-  value: number | null
-  onChange: (id: number | null) => void
-  label: string
-}) {
-  const tc = useTranslations('common')
-  const t = useTranslations('cabinet')
-  const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
-  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-  const [mounted, setMounted] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  // Track client mount for portal
-  useEffect(() => { setMounted(true) }, [])
-
-  const MAX_H = 192 // 12rem — matches Tailwind max-h-48
-
-  // Viewport-aware position: opens downward or upward, clamps maxHeight to available space.
-  const updatePosition = useCallback(() => {
-    if (!inputRef.current) return
-    const rect = inputRef.current.getBoundingClientRect()
-    const spaceBelow = window.innerHeight - rect.bottom
-    const spaceAbove = rect.top
-
-    if (spaceBelow >= Math.min(MAX_H, 120) || spaceBelow >= spaceAbove) {
-      setDropdownStyle({
-        position: 'fixed',
-        top: rect.bottom + 4,
-        left: rect.left,
-        width: rect.width,
-        maxHeight: Math.min(MAX_H, spaceBelow - 8),
-        zIndex: 9999,
-        overflowY: 'auto',
-      })
-    } else {
-      setDropdownStyle({
-        position: 'fixed',
-        bottom: window.innerHeight - rect.top + 4,
-        left: rect.left,
-        width: rect.width,
-        maxHeight: Math.min(MAX_H, spaceAbove - 8),
-        zIndex: 9999,
-        overflowY: 'auto',
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!open) return
-    updatePosition()
-    window.addEventListener('scroll', updatePosition, true)
-    window.addEventListener('resize', updatePosition)
-    return () => {
-      window.removeEventListener('scroll', updatePosition, true)
-      window.removeEventListener('resize', updatePosition)
-    }
-  }, [open, updatePosition])
-
-  const selected = cities.find(c => c.id === value)
-  const region = regions.find(r => r.id === selected?.region_id)
-
-  const filtered = useMemo(() => {
-    if (!search.trim()) return cities.slice(0, 20)
-    const q = search.toLowerCase()
-    return cities.filter(c => c.name_al.toLowerCase().includes(q)).slice(0, 20)
-  }, [cities, search])
-
-  const dropdown = open && mounted ? createPortal(
-    <div
-      style={dropdownStyle}
-      className="bg-popover border rounded-xl shadow-lg"
-    >
-      {filtered.length === 0
-        ? <p className="px-3 py-2 text-sm text-muted-foreground">{tc('no_results')}</p>
-        : filtered.map(c => (
-            <button
-              key={c.id}
-              type="button"
-              className={`w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors ${value === c.id ? 'bg-primary/10 text-primary font-medium' : ''}`}
-              onMouseDown={() => { onChange(c.id); setSearch(''); setOpen(false) }}
-            >
-              {c.name_al}
-              {regions.find(r => r.id === c.region_id) && (
-                <span className="ml-2 text-xs text-muted-foreground">{regions.find(r => r.id === c.region_id)?.name_al}</span>
-              )}
-            </button>
-          ))}
-    </div>,
-    document.body,
-  ) : null
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Label className="text-sm">{label}</Label>
-      <div className="relative">
-        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-        <input
-          ref={inputRef}
-          type="text"
-          value={selected ? selected.name_al : search}
-          onChange={e => { setSearch(e.target.value); if (selected) onChange(null); setOpen(true) }}
-          onFocus={() => setOpen(true)}
-          onBlur={() => setTimeout(() => setOpen(false), 180)}
-          placeholder={t('city_search_placeholder')}
-          className="w-full h-11 pl-9 pr-3 text-sm bg-muted/50 border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring"
-        />
-      </div>
-      {region && <p className="text-xs text-muted-foreground">{region.name_al}</p>}
-      {dropdown}
-    </div>
-  )
-}
 
 // ── Currency combobox sub-component ──────────────────────────────────────────
 
@@ -358,7 +243,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     const result = await deleteOwnAccount()
     setDeleting(false)
     if (result.error) {
-      setDeleteError(result.error)
+      setDeleteError(t('error_deleting'))
       return
     }
     setShowDeleteDialog(false)
@@ -438,14 +323,22 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
           value={whatsapp}
           onChange={setWhatsapp}
         />
-        <div className="sm:col-span-2">
-          <SettlementCombobox
-            cities={cities}
-            regions={regions}
-            value={locationId}
-            onChange={setLocationId}
-            label={t('city_label')}
+        <div className="sm:col-span-2 flex flex-col gap-1.5">
+          <Label className="text-sm">{t('city_label')}</Label>
+          <LocationCombobox
+            locations={cities.map(c => ({
+              ...c,
+              type: regions.find(r => r.id === c.region_id)?.name_al,
+            }))}
+            value={locationId ? String(locationId) : ''}
+            onChange={id => setLocationId(id ? Number(id) : null)}
+            portal
           />
+          {(() => {
+            const city = cities.find(c => c.id === locationId)
+            const region = regions.find(r => r.id === city?.region_id)
+            return region ? <p className="text-xs text-muted-foreground">{region.name_al}</p> : null
+          })()}
         </div>
       </div>
 
@@ -498,7 +391,8 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
             <Button
               type="button"
               variant="outline"
-              className="h-11 rounded-xl shrink-0"
+              size="xl"
+              className="rounded-xl shrink-0"
               onClick={handleEmailChange}
               disabled={!newEmail.trim() || emailChangeStatus === 'sending'}
             >
@@ -529,9 +423,10 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
         )}
         <div className="ml-auto">
           <Button
+            size="xl"
             onClick={handleSave}
             disabled={saveStatus === 'saving' || isPending}
-            className="h-11 px-8 rounded-xl"
+            className="px-8 rounded-xl"
           >
             {saveStatus === 'saving' ? t('saving') : t('save_changes')}
           </Button>

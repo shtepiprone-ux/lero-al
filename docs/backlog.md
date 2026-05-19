@@ -1,6 +1,22 @@
 # Project Backlog
 
 ## Last Session
+**2026-05-19 — Listing Detail Performance / LCP Epic: HTTP Link Browser Usage (Task 80)**
+- **Root finding**: `PRELOAD_NOT_USED` — 640w starts at 655–4708ms (late), not at TTFB. CDN delivers fast (43–125ms) when requested. Browser is ignoring the HTTP `Link` preload. Most likely cause: `fetchpriority=high` not a valid RFC 8288 parameter → Chromium silently rejects the entry.
+- **4-variant experiment system** added to middleware (`resolveLinkVariant` + `buildLcpLinkHeader(variant)`):
+  - A: unquoted + fetchpriority=high (original, known broken)
+  - B: quoted + fetchpriority="high"
+  - C: quoted minimal, no fetchpriority **(new default)**
+  - D: same as C + image preload placed FIRST before hreflang entries
+- **Default changed from A to C** — RFC 8288-standard quoted params, no non-standard `fetchpriority`.
+- **`?_lcp_v=A|B|C|D` query param** allows testing variants in production without redeployment.
+- **`--variant=X` flag** added to `diagnose:lcp:network` for targeted variant testing.
+- **Mobile `URL_MISMATCH`** (640w preloaded, mobile needs 960w) assessed as acceptable — mobile LCP is GOOD.
+
+→ Детальний лог: [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md`](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md)
+
+---
+
 **2026-05-19 — Listing Detail Performance / LCP Epic: Production Diagnostics Reliability (Task 79)**
 - **CLI bug fixed**: `--preload-only` was `process.argv[2]` → treated as BASE_URL. Fixed by filtering `--flags` before extracting positional args.
 - **All-green empty array fixed**: `[].every(...)` always returns `true` — added `allLocalesSeen` guard before all summary checks.
@@ -215,6 +231,12 @@
 **Epic status:** OPEN — mobile LCP goal ✅ achieved; desktop LCP requires HTTP `Link` response-header preload.
 **Script:** `scripts/validate-production-lcp.mjs` | `npm run profile:lcp:production`
 
+### Task 80 — HTTP Link Browser Usage — IMPLEMENTATION COMPLETE (variant experiment pending production run)
+**Finding**: `PRELOAD_NOT_USED` — 640w starts 650–4700ms late. CDN fast (43–125ms). Browser silently ignores `fetchpriority=high` in HTTP Link header (non-RFC-8288 param, likely Chromium rejection).
+**4 variants**: A=original (broken) | B=quoted+fp | **C=quoted-minimal (new default)** | D=C+preload-first.
+**Experiment**: `?_lcp_v=A|B|C|D` in URL, or `--variant=X` flag in `diagnose:lcp:network`, no redeployment.
+**Session log:** [`docs/sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md`](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md)
+
 ### Task 79 — Production Diagnostics Reliability — COMPLETE (diagnostic run pending)
 **CLI fix:** `--preload-only` was argv[2] → BASE_URL. Fixed with flag-filtering before positional extraction.
 **Empty-array guard:** `[].every()` = true → added `allLocalesSeen` check so failed fetches don't show all-green.
@@ -340,6 +362,7 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-19 | Listing Detail Performance / LCP Epic Phase 9: HTTP Link Browser Usage | Task 80 | [sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md](sessions/2026-05-19-listing-detail-lcp-http-link-browser-usage.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 8: Production Diagnostics Reliability | Task 79 | [sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md](sessions/2026-05-19-listing-detail-lcp-production-diagnostics-reliability.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 7: Diagnostic Tooling Fix | Task 78 | [sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md](sessions/2026-05-19-listing-detail-lcp-diagnostic-tooling-fix.md) |
 | 2026-05-19 | Listing Detail Performance / LCP Epic Phase 6: Link Header Diagnostics | Task 77 | [sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md](sessions/2026-05-19-listing-detail-lcp-link-header-diagnostics.md) |

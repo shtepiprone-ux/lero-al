@@ -45,9 +45,24 @@ const __dirname    = path.dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = path.resolve(__dirname, '..')
 const ARTIFACTS    = path.join(PROJECT_ROOT, '.artifacts', 'lcp-network-trace')
 
-const BASE_URL = process.argv[2] || 'https://lero.al'
-const SLUG     = process.argv[3] || 'test-7-molyl9c8'
+// Separate flags (--foo) from positional args so --variant=X is not treated
+// as BASE_URL when invoked as: npm run diagnose:lcp:network -- URL SLUG --variant=C
+const _positional = process.argv.slice(2).filter(a => !a.startsWith('--'))
+const BASE_URL    = _positional[0] || 'https://lero.al'
+const SLUG        = _positional[1] || 'test-7-molyl9c8'
+
+// --variant=A|B|C|D — tests header format variants via ?_lcp_v= query param.
+// Passes the variant to middleware without redeployment.
+const _variantArg = process.argv.find(a => a.startsWith('--variant='))?.split('=')[1] ?? null
+const VARIANT     = _variantArg && /^[A-D]$/.test(_variantArg) ? _variantArg : null
+
 const LOCALES  = ['sq', 'en', 'uk', 'it']
+
+// Build the test URL for a given locale, appending ?_lcp_v= when testing a variant
+function buildTestUrl(locale) {
+  const base = `${BASE_URL}/${locale}/listings/${SLUG}`
+  return VARIANT ? `${base}?_lcp_v=${VARIANT}` : base
+}
 
 const VIEWPORTS = [
   { name: '1280-desktop', width: 1280, height: 800,  dpr: 1, isMobile: false },
@@ -101,7 +116,7 @@ function findCloudinaryPreload(rawHeader) {
 // ── Per-locale/viewport diagnostic ───────────────────────────────────────────
 
 async function diagnoseLocale(browser, locale, viewport) {
-  const url = `${BASE_URL}/${locale}/listings/${SLUG}`
+  const url = buildTestUrl(locale)
 
   const context = await browser.newContext({
     viewport:          { width: viewport.width, height: viewport.height },
@@ -325,16 +340,25 @@ async function main() {
   await mkdir(ARTIFACTS, { recursive: true })
 
   console.log('='.repeat(74))
-  console.log('Listing Detail LCP Network Trace (Task 78 — diagnose-lcp-preload-network)')
+  console.log('Listing Detail LCP Network Trace (Task 80 — diagnose-lcp-preload-network)')
   console.log('='.repeat(74))
   console.log(`Base URL : ${BASE_URL}`)
   console.log(`Slug     : ${SLUG}`)
   console.log(`Locales  : ${LOCALES.join(', ')}`)
-  console.log()
-  console.log('Three bugs fixed vs Task 77:')
-  console.log('  1. LCP captured via addInitScript (not post-load getEntriesByType)')
-  console.log('  2. Timings normalised: epoch - performance.timeOrigin = nav-relative ms')
-  console.log('  3. Headers captured via allHeaders() (handles multiple Link headers)')
+
+  const VARIANT_DESCRIPTIONS = {
+    A: 'unquoted params + fetchpriority=high  (original Task 76 format)',
+    B: 'quoted params   + fetchpriority="high"',
+    C: 'quoted params,    no fetchpriority     (default — RFC 8288 standard)',
+    D: 'quoted params,    no fetchpriority,    image preload FIRST in header',
+  }
+  if (VARIANT) {
+    console.log(`Variant  : ${VARIANT} — ${VARIANT_DESCRIPTIONS[VARIANT] ?? VARIANT}`)
+    console.log(`Test URL : ${buildTestUrl(LOCALES[0])}`)
+  } else {
+    console.log(`Variant  : default (server env LINK_PRELOAD_VARIANT or C)`)
+    console.log(`           Pass --variant=A|B|C|D to test specific formats`)
+  }
   console.log()
 
   const allResults = []
@@ -392,6 +416,10 @@ async function main() {
       generatedAt: new Date().toISOString(),
       baseUrl: BASE_URL,
       slug:    SLUG,
+      variant: VARIANT ?? 'default',
+      variantDescription: VARIANT ? (
+        { A: 'unquoted+fetchpriority', B: 'quoted+fetchpriority', C: 'quoted-minimal', D: 'quoted-minimal-first' }[VARIANT] ?? VARIANT
+      ) : 'server env LINK_PRELOAD_VARIANT or C',
       results: allResults,
     }, null, 2))
     console.log()

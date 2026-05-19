@@ -142,7 +142,21 @@
       "Bash(]--)",
       "Bash(grep -E \"^[+`]--)",
       "Bash(npm view *)",
-      "Bash(dir node_modules/next/dist/build/webpack/plugins/)"
+      "Bash(dir node_modules/next/dist/build/webpack/plugins/)",
+      "Bash(grep -E \"^D:\\\\\\\\|^[A-Za-z]:\\\\\\\\\")",
+      "Bash(sed 's/.*  //')",
+      "Bash(grep -v \"^$\")",
+      "Bash(cat .npmrc)",
+      "Bash(cat vercel.json)",
+      "Bash(ls .vercel)",
+      "Bash(ls .env*)",
+      "Bash(ls .env.local)",
+      "Bash(2>&1)",
+      "Bash(taskkill /PID 8832 /F)",
+      "PowerShell(Stop-Process *)",
+      "Read(//Applications/**)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\(x86\\)/Google/Chrome/Application/**)"
     ]
   }
 }

@@ -28,7 +28,9 @@
     "screenshots:responsive:storybook": "node scripts/responsive-screenshots.mjs --storybook-only",
     "governance:screenshots": "node scripts/responsive-screenshots.mjs --check",
     "governance:components": "node scripts/governance/component-catalog.mjs --check",
-    "catalog:components": "node scripts/governance/component-catalog.mjs --write"
+    "catalog:components": "node scripts/governance/component-catalog.mjs --write",
+    "profile:lcp": "node scripts/profile-listing-lcp.mjs",
+    "profile:lcp:lighthouse": "node scripts/compare-listing-lcp-lighthouse.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",
@@ -70,15 +72,16 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.2.0",
     "esbuild": "^0.25.12",
-    "vite": "^6.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.18",
     "jsdom": "^29.1.1",
+    "lighthouse": "^13.3.0",
     "playwright": "^1.60.0",
     "shadcn": "^4.3.0",
     "storybook": "^8.6.18",
     "tailwindcss": "^4",
     "typescript": "^5",
+    "vite": "^6.0.0",
     "vitest": "^4.1.5"
   }
 }

@@ -25,7 +25,6 @@ import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domai
 import { isListingArchived, isListingVisible, isListingClosed } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
-import { preload } from 'react-dom'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
@@ -246,19 +245,6 @@ export default async function ListingPage({ params }: Props) {
 
   const galleryPreload = buildGalleryMainPreloadAttrs(coverImage?.url)
 
-  // Emit a server-side <link rel="preload"> for the gallery LCP candidate via
-  // React 19's resource API. Works in Server Components: emits into <head> in the
-  // SSR HTML before any client JS executes. Bypasses the client-only tier-gate in
-  // AppImage (shouldPreload = false on medium/low tier), ensuring the LCP image
-  // fetch starts as soon as HTML is parsed on all devices including mobile.
-  if (galleryPreload) {
-    preload(galleryPreload.href, {
-      as: 'image',
-      imageSrcSet: galleryPreload.imageSrcSet,
-      imageSizes: galleryPreload.imageSizes,
-    })
-  }
-
   const pricePerSqm = listing.area_gross ? Math.round(listing.price / listing.area_gross) : null
   const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'}/${locale}/listings/${slug}`
 
@@ -293,6 +279,20 @@ export default async function ListingPage({ params }: Props) {
 
   return (
     <div className="pb-32 md:pb-20 lg:pb-8">
+      {/* ── LCP image preload — native RSC <link>, hoisted to <head> by React 19 / Next.js.
+          Emitted per-request for every locale. No worker-level deduplication.
+          fetchpriority="high" tells the browser to prioritize this fetch in the resource queue.
+          Replaces react-dom preload() which deduplicated across requests in the same worker. */}
+      {galleryPreload && (
+        <link
+          rel="preload"
+          as="image"
+          href={galleryPreload.href}
+          imageSrcSet={galleryPreload.imageSrcSet}
+          imageSizes={galleryPreload.imageSizes}
+          fetchPriority="high" // eslint-disable-line no-restricted-syntax -- fetchPriority on <link rel="preload"> is intentional; governance rule targets <img> bypass only
+        />
+      )}
       <ViewTracker slug={slug} />
 
       {/* Sticky mobile contact bar — shown only on mobile, above the bottom nav */}

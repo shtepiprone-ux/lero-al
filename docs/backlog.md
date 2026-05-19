@@ -1,13 +1,36 @@
 # Project Backlog
 
 ## Last Session
-**2026-05-18 — Post-Governance Debt Burn-down Sprint — SPRINT CLOSURE (Task 71)**
-- Sprint formally closed: all 9 tasks (64–70) complete.
-- Final state: `npm run lint` reports 0 errors / 6 warnings. Build, governance, tests all pass.
-- Remaining 6 warnings are intentional/deferred — documented below.
-- Next epic recommendation: Listing Detail Performance / LCP.
+**2026-05-18 — Listing Detail Performance / LCP Epic: Lighthouse Trace Comparison (Task 74)**
+- Mobile LCP: 5339–5523ms 🔴 POOR → 1400–1519ms 🟢 GOOD (−73% across all 4 locales).
+- Desktop LCP: 273–908ms 🟢 GOOD. TBT: 126–174ms 🟢 GOOD. CLS: 0.
+- Body-position preload is sufficient — HTTP Link headers NOT immediately justified.
+- `scripts/compare-listing-lcp-lighthouse.mjs` created, `npm run profile:lcp:lighthouse` added.
+- Caveat: measured against localhost; production numbers will differ.
 
-→ Детальний лог: [`docs/sessions/2026-05-18-post-governance-debt-burndown-closure.md`](sessions/2026-05-18-post-governance-debt-burndown-closure.md)
+→ Детальний лог: [`docs/sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md`](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md)
+
+---
+
+**2026-05-18 — Listing Detail Performance / LCP Epic: Fix Preload Reliability (Task 73)**
+- Replaced React 19 `preload()` (worker-level deduplication bug, no fetchpriority) with native RSC `<link rel="preload" as="image" fetchPriority="high">`.
+- All 4 locales now get preload hint with `fetchpriority="high"` on every request.
+- Known limitation: preload in `<body>` not `<head>` (React 19 SSR link hoisting is client-side).
+- `scripts/profile-listing-lcp.mjs` updated with full-document detection and location reporting.
+
+→ Детальний лог: [`docs/sessions/2026-05-18-listing-detail-lcp-preload-reliability.md`](sessions/2026-05-18-listing-detail-lcp-preload-reliability.md)
+
+---
+
+**2026-05-18 — Listing Detail Performance / LCP Epic: Profiling Baseline (Task 72)**
+- Established LCP baseline via production build HTML inspection + profiling script.
+- **CRITICAL:** React 19 `preload()` deduplication bug — only 1 of 4 locales gets `<link rel="preload" as="image">` per server lifecycle.
+- **MEDIUM:** `fetchpriority="high"` absent from `<link rel="preload">` tag (React 19 limitation).
+- `<img fetchPriority="high" loading="eager">` correctly in SSR HTML for all 4 locales.
+- `ListingBackButton` NOT a primary LCP bottleneck.
+- `scripts/profile-listing-lcp.mjs` created — repeatable HTML-level LCP probe.
+
+→ Детальний лог: [`docs/sessions/2026-05-18-listing-detail-lcp-profile-baseline.md`](sessions/2026-05-18-listing-detail-lcp-profile-baseline.md)
 
 ---
 
@@ -107,6 +130,34 @@
 
 ---
 
+## Listing Detail Performance / LCP Epic
+
+### Task 72 — LCP Profiling Baseline ✅ CLOSED
+**Method:** Production build HTML inspection + `scripts/profile-listing-lcp.mjs`
+**Critical finding:** React 19 `preload()` deduplication — only 1 locale/request gets the image preload hint per worker process lifetime. 3 of 4 locales serve listing detail WITHOUT an early `<link rel="preload" as="image">`.
+**Secondary finding:** `fetchpriority="high"` missing from preload link (React 19 limitation).
+**Positive:** `<img fetchPriority="high" loading="eager">` in SSR HTML for all 4 locales. ListingBackButton not a primary LCP bottleneck.
+
+### Task 73 — Fix Preload Reliability ✅ CLOSED
+**Fix:** Replaced `react-dom preload()` with native RSC `<link rel="preload" as="image" fetchPriority="high">`. Deduplication bug eliminated.
+**Result:** All 4 locales get preload with `fetchpriority="high"` on every request. ✅
+**Known limitation:** Preload in `<body>` not `<head>` (React 19 SSR link hoisting is client-side).
+**Verification:** `npm run profile:lcp` confirms all 4 locales.
+
+### Task 74 — Lighthouse Trace Comparison ✅ CLOSED
+**Result:** Mobile LCP 5339–5523ms POOR → **1400–1519ms GOOD** (−73%). Desktop 273–908ms GOOD.
+**Finding:** Body-position preload is sufficient. HTTP Link headers NOT immediately justified.
+**Caveat:** Localhost measurement; production numbers will differ but fix direction is confirmed.
+**Script:** `scripts/compare-listing-lcp-lighthouse.mjs` | `npm run profile:lcp:lighthouse`
+
+### Task 75 — Production LCP Validation (NEXT)
+**Scope:** Deploy Task 73 changes to production and run Lighthouse PageSpeed Insights against
+live URLs (`https://lero.al/[sq|en|uk|it]/listings/[slug]`) for each locale.
+If production LCP shows NEEDS_IMPROVEMENT: investigate Cloudinary transforms or HTTP Link headers.
+If production LCP shows GOOD: epic is effectively complete.
+
+---
+
 ## Recommended Next Epics
 
 ### Option A — User Cabinet Improvements Epic
@@ -197,6 +248,9 @@ Supabase Dashboard → Authentication → Providers → Google → Enable.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-18 | Listing Detail Performance / LCP Epic Phase 3: Lighthouse Trace Comparison | Task 74 | [sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md](sessions/2026-05-18-listing-detail-lcp-lighthouse-trace-comparison.md) |
+| 2026-05-18 | Listing Detail Performance / LCP Epic Phase 2: Fix Preload Reliability | Task 73 | [sessions/2026-05-18-listing-detail-lcp-preload-reliability.md](sessions/2026-05-18-listing-detail-lcp-preload-reliability.md) |
+| 2026-05-18 | Listing Detail Performance / LCP Epic Phase 1: Profiling Baseline | Task 72 | [sessions/2026-05-18-listing-detail-lcp-profile-baseline.md](sessions/2026-05-18-listing-detail-lcp-profile-baseline.md) |
 | 2026-05-18 | Post-Governance Debt Burn-down Sprint — Sprint Closure (SPRINT COMPLETE) | Task 71 | [sessions/2026-05-18-post-governance-debt-burndown-closure.md](sessions/2026-05-18-post-governance-debt-burndown-closure.md) |
 | 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 7: jsx-a11y Combobox ARIA Fixes | Task 70 | [sessions/2026-05-18-combobox-aria-a11y-fixes.md](sessions/2026-05-18-combobox-aria-a11y-fixes.md) |
 | 2026-05-18 | Post-Governance Debt Burn-down Sprint Phase 6: Raw img → AppImage Migration | Task 69 | [sessions/2026-05-18-raw-img-to-appimage-migration.md](sessions/2026-05-18-raw-img-to-appimage-migration.md) |

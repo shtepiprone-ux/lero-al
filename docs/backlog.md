@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-20 — Task 114 — Epic B.4 — Company Logo Upload ✅**
+**2026-05-20 — Task 115 — Epic B.5 — Admin Company Management ✅**
+
+- `/admin/companies` page: list with logo/name/agent count/date, create/edit Dialog, delete confirmation Dialog.
+- `AdminCompaniesManager`: optimistic local state, `AdminSearchInput` filter, `AppImage variant="avatar"` for Cloudinary logos.
+- Companies nav item added to sidebar (Briefcase icon); mobile header title wired.
+- `updateCompanyAction` + `deleteCompanyAction` server actions with admin/moderator auth guard.
+- 20 new `admin.companies.*` keys + sidebar/pages keys × 4 locales.
+- **Epic B fully closed (Tasks 108, 112–115).**
+
+→ [Task 115 session log](sessions/2026-05-20-task-115-admin-company-management.md)
+
+**Previous: 2026-05-20 — Task 114 — Epic B.4 — Company Logo Upload ✅**
 
 - `/api/upload-company-logo` route: service-role, MIME/size/dimension validation, Cloudinary `companies/` folder, updates `companies.logo_url`.
 - `CompanyField` extended: file picker, blob preview (`new Image()` for dimension check), non-fatal upload after company creation.
@@ -156,7 +167,8 @@ Queue (global numbering continues from Task 112):
 
 - ✅ **Task 112** — Epic B.2 — Agent city selection. CLOSED.
 - ✅ **Task 113** — Epic B.3 — Agent company selection. CLOSED. ⚠️ Needs SQL migration (done).
-- ✅ **Task 114** — Epic B.4 — Company logo upload (API route + client validation + preview). CLOSED.
+- ✅ **Task 114** — Epic B.4 — Company logo upload. CLOSED.
+- ✅ **Task 115** — Epic B.5 — Admin company management page. CLOSED. **Epic B complete.**
 - **Task 114** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
 - **Task 115** — Epic B.5 — Admin company management page (Epic K table pattern).
 
@@ -178,6 +190,7 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 | Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
 | Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
+| 2026-05-20 | Epic B.5 — Admin company management (/admin/companies CRUD, sidebar nav, Dialog modals) | Task 115 | [sessions/2026-05-20-task-115-admin-company-management.md](sessions/2026-05-20-task-115-admin-company-management.md) |
 | 2026-05-20 | Epic B.4 — Company logo upload (API route, client validation, blob preview, non-fatal upload) | Task 114 | [sessions/2026-05-20-task-114-company-logo-upload.md](sessions/2026-05-20-task-114-company-logo-upload.md) |
 | 2026-05-20 | Epic B.3 — Agent company selection (companies table, CompanyField, service-role action, callback update) | Task 113 | [sessions/2026-05-20-task-113-agent-company-selection.md](sessions/2026-05-20-task-113-agent-company-selection.md) |
 | 2026-05-20 | Epic B.2 — Agent city selection (LocationCombobox + portal in AuthSheet, 2 i18n keys × 4 locales) | Task 112 | [sessions/2026-05-20-task-112-agent-city-selection.md](sessions/2026-05-20-task-112-agent-city-selection.md) |

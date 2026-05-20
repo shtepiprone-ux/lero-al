@@ -509,7 +509,8 @@
       "aria_close": "Chiudi menu",
       "language": "Lingua",
       "item_property_types": "Tipi di proprietà",
-      "item_currency": "Valuta"
+      "item_currency": "Valuta",
+      "item_companies": "Aziende"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -590,7 +591,34 @@
       "support_status_open": "Aperto",
       "support_status_in_progress": "In lavorazione",
       "support_status_resolved": "Risolto",
-      "support_status_closed": "Chiuso"
+      "support_status_closed": "Chiuso",
+      "companies_title": "Aziende",
+      "companies_subtitle": "{count} aziende"
+    },
+    "companies": {
+      "add_title": "Aggiungi azienda",
+      "edit_title": "Modifica azienda",
+      "name_label": "Nome",
+      "logo_label": "Logo",
+      "agents_label": "Agenti",
+      "confirm_delete": "Eliminare azienda?",
+      "confirm_delete_body": "Questa azione non può essere annullata. Gli agenti collegati perderanno l'associazione.",
+      "success_created": "Azienda creata",
+      "success_updated": "Azienda aggiornata",
+      "success_deleted": "Azienda eliminata",
+      "error_save_failed": "Salvataggio fallito",
+      "error_delete_failed": "Eliminazione fallita",
+      "error_name_required": "Nome obbligatorio",
+      "empty": "Nessuna azienda",
+      "search_placeholder": "Cerca aziende...",
+      "new_btn": "Nuova azienda",
+      "table_logo": "Logo",
+      "table_name": "Nome",
+      "table_agents": "Agenti",
+      "table_created": "Data",
+      "table_actions": "Azioni",
+      "agents_count_one": "1 agente",
+      "agents_count_other": "{count} agenti"
     },
     "dashboard": {
       "title": "Dashboard",

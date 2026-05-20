@@ -509,7 +509,8 @@
       "aria_close": "Mbyll menunë",
       "language": "Gjuhë",
       "item_property_types": "Llojet e pronës",
-      "item_currency": "Valuta"
+      "item_currency": "Valuta",
+      "item_companies": "Kompanitë"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -590,7 +591,34 @@
       "support_status_open": "Hapur",
       "support_status_in_progress": "Në punë",
       "support_status_resolved": "Zgjidhur",
-      "support_status_closed": "Mbyllur"
+      "support_status_closed": "Mbyllur",
+      "companies_title": "Kompanitë",
+      "companies_subtitle": "{count} kompani"
+    },
+    "companies": {
+      "add_title": "Shto kompani",
+      "edit_title": "Ndrysho kompani",
+      "name_label": "Emri",
+      "logo_label": "Logo",
+      "agents_label": "Agjentë",
+      "confirm_delete": "Fshini kompanin?",
+      "confirm_delete_body": "Kjo veprim nuk mund të zhbëhet. Agjentët e lidhur me këtë kompani do të humbasin asocimin.",
+      "success_created": "Kompania u krijua",
+      "success_updated": "Kompania u përditësua",
+      "success_deleted": "Kompania u fshi",
+      "error_save_failed": "Dështoi ruajtja",
+      "error_delete_failed": "Nuk u fshi",
+      "error_name_required": "Emri është i detyrueshëm",
+      "empty": "Nuk ka kompani",
+      "search_placeholder": "Kërko kompani...",
+      "new_btn": "Shto kompani",
+      "table_logo": "Logo",
+      "table_name": "Emri",
+      "table_agents": "Agjentë",
+      "table_created": "Krijuar",
+      "table_actions": "Veprime",
+      "agents_count_one": "1 agjent",
+      "agents_count_other": "{count} agjentë"
     },
     "dashboard": {
       "title": "Dashboard",

@@ -509,7 +509,8 @@
       "aria_close": "Close menu",
       "language": "Language",
       "item_property_types": "Property Types",
-      "item_currency": "Currency"
+      "item_currency": "Currency",
+      "item_companies": "Companies"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -590,7 +591,34 @@
       "support_status_open": "Open",
       "support_status_in_progress": "In progress",
       "support_status_resolved": "Resolved",
-      "support_status_closed": "Closed"
+      "support_status_closed": "Closed",
+      "companies_title": "Companies",
+      "companies_subtitle": "{count} companies"
+    },
+    "companies": {
+      "add_title": "Add company",
+      "edit_title": "Edit company",
+      "name_label": "Name",
+      "logo_label": "Logo",
+      "agents_label": "Agents",
+      "confirm_delete": "Delete company?",
+      "confirm_delete_body": "This action cannot be undone. Agents linked to this company will lose the association.",
+      "success_created": "Company created",
+      "success_updated": "Company updated",
+      "success_deleted": "Company deleted",
+      "error_save_failed": "Save failed",
+      "error_delete_failed": "Delete failed",
+      "error_name_required": "Name is required",
+      "empty": "No companies yet",
+      "search_placeholder": "Search companies...",
+      "new_btn": "New company",
+      "table_logo": "Logo",
+      "table_name": "Name",
+      "table_agents": "Agents",
+      "table_created": "Created",
+      "table_actions": "Actions",
+      "agents_count_one": "1 agent",
+      "agents_count_other": "{count} agents"
     },
     "dashboard": {
       "title": "Dashboard",

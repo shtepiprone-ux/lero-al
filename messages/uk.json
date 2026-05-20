@@ -509,7 +509,8 @@
       "aria_close": "Закрити меню",
       "language": "Мова",
       "item_property_types": "Типи нерухомості",
-      "item_currency": "Валюта"
+      "item_currency": "Валюта",
+      "item_companies": "Компанії"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -590,7 +591,34 @@
       "support_status_open": "Відкрито",
       "support_status_in_progress": "В роботі",
       "support_status_resolved": "Вирішено",
-      "support_status_closed": "Закрито"
+      "support_status_closed": "Закрито",
+      "companies_title": "Компанії",
+      "companies_subtitle": "{count} компаній"
+    },
+    "companies": {
+      "add_title": "Додати компанію",
+      "edit_title": "Редагувати компанію",
+      "name_label": "Назва",
+      "logo_label": "Логотип",
+      "agents_label": "Агентів",
+      "confirm_delete": "Видалити компанію?",
+      "confirm_delete_body": "Цю дію не можна скасувати. Агенти, пов'язані з цією компанією, втратять асоціацію.",
+      "success_created": "Компанію створено",
+      "success_updated": "Компанію оновлено",
+      "success_deleted": "Компанію видалено",
+      "error_save_failed": "Помилка збереження",
+      "error_delete_failed": "Помилка видалення",
+      "error_name_required": "Назва обов'язкова",
+      "empty": "Компаній немає",
+      "search_placeholder": "Пошук компаній...",
+      "new_btn": "Нова компанія",
+      "table_logo": "Логотип",
+      "table_name": "Назва",
+      "table_agents": "Агентів",
+      "table_created": "Дата",
+      "table_actions": "Дії",
+      "agents_count_one": "1 агент",
+      "agents_count_other": "{count} агентів"
     },
     "dashboard": {
       "title": "Dashboard",

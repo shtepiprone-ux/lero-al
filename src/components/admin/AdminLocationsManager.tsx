@@ -88,7 +88,7 @@ function LocationModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto flex flex-col gap-4">
         <h3 className="font-bold text-base">{location ? t('edit_title') : t('add_title')}</h3>
 
@@ -281,7 +281,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
             </thead>
             <tbody className="divide-y">
               {items.length === 0 ? (
-                <tr><td colSpan={6} className="px-5 py-10 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
+                <tr><td colSpan={6} className="px-5 py-8 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
               ) : items.map((l) => (
                 <tr key={l.id} className={`hover:bg-muted/20 transition-colors ${deletingId === l.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3 text-muted-foreground text-xs">{l.id}</td>

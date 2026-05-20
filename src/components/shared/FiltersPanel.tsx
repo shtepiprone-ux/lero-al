@@ -95,7 +95,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
       {/* Backdrop */}
       <div
         className={cn(
-          'filters-panel-backdrop fixed inset-0 z-40 bg-black/40 transition-opacity duration-300',
+          'filters-panel-backdrop fixed inset-0 z-40 bg-overlay/40 transition-opacity duration-300',
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         )}
         onClick={onClose}
@@ -118,7 +118,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           <div className="flex items-center gap-2">
             <h2 className="font-semibold text-base">{t('advanced_filters')}</h2>
             {activeCount > 0 && (
-              <span className="text-[11px] bg-primary text-primary-foreground rounded-full px-2 py-0.5 font-medium">
+              <span className="text-xs bg-primary text-primary-foreground rounded-full px-2 py-0.5 font-medium">
                 {activeCount}
               </span>
             )}
@@ -212,7 +212,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                         type="button"
                         onClick={() => update({ currency: cur.code })}
                         className={cn(
-                          'text-[11px] font-semibold px-2 py-0.5 rounded-lg transition-colors duration-150',
+                          'text-xs font-semibold px-2 py-0.5 rounded-lg transition-colors duration-150',
                           currency === cur.code
                             ? 'bg-primary text-primary-foreground'
                             : 'text-muted-foreground hover:text-foreground'

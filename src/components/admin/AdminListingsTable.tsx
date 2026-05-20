@@ -78,7 +78,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-sm flex flex-col gap-5">
         <div>
           <h3 className="font-bold text-base">{t('premium_dialog_title')}</h3>
@@ -290,7 +290,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                         {formatPrice(l.price, l.currency, locale)}
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-[11px] font-medium ${STATUS_BADGE[l.status]}`}>
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium ${STATUS_BADGE[l.status]}`}>
                           {STATUS_LABEL[l.status]}
                         </span>
                       </td>

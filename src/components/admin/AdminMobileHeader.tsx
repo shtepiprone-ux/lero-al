@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Menu } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface Props {
   onOpen: () => void
@@ -34,14 +35,16 @@ export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
 
   return (
     <header className="admin-mobile-header lg:hidden sticky top-0 z-30 h-14 bg-card border-b flex items-center gap-3 px-4 shrink-0">
-      <button
+      <Button
         type="button"
+        variant="ghost"
+        size="icon"
         onClick={onOpen}
-        className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+        className="rounded-xl text-muted-foreground hover:text-foreground"
         aria-label={tm('aria_open')}
       >
-        <Menu className="h-5 w-5" />
-      </button>
+        <Menu className="size-5" />
+      </Button>
 
       <div className="flex items-center gap-1.5 font-bold text-sm">
         <span className="text-primary">{brand}</span>

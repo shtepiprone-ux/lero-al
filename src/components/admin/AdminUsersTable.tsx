@@ -112,7 +112,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
             </thead>
             <tbody className="divide-y">
               {verifiedAgents.length === 0 ? (
-                <tr><td colSpan={4} className="px-5 py-10 text-center text-muted-foreground">{t('empty_verified')}</td></tr>
+                <tr><td colSpan={4} className="px-5 py-8 text-center text-muted-foreground">{t('empty_verified')}</td></tr>
               ) : verifiedAgents.map(u => (
                 <tr key={u.id} className={`hover:bg-muted/20 ${loadingId === u.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3.5">
@@ -222,12 +222,12 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-[11px] h-5 capitalize">
+                      <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5 capitalize">
                         {u.role}
                       </Badge>
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell">
-                      <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-[11px] h-5">
+                      <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
                         {u.status ?? 'active'}
                       </Badge>
                     </td>

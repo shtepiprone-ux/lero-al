@@ -222,7 +222,7 @@ export function Header() {
               <Menu className="h-5 w-5" />
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-xs">
-              <div className="flex flex-col gap-6 pt-6">
+              <div className="flex flex-col gap-6 pt-6 px-4">
                 {/* Mobile user info */}
                 {user && (
                   <div className="flex items-center gap-3 pb-4 border-b">

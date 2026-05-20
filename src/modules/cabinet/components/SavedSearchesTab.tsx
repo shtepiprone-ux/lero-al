@@ -171,26 +171,28 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                   )}
                 </div>
                 <FilterSummary filters={filters} />
-                <p className="text-[11px] text-muted-foreground mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   <RelativeTime date={search.created_at} />
                 </p>
               </div>
 
               <div className="flex items-center gap-1.5 shrink-0">
                 {/* Email notify toggle */}
-                <button
+                <Button
                   type="button"
+                  variant="outline"
+                  size="icon-sm"
                   onClick={() => toggleNotify(search.id, search.notify_email)}
                   aria-label={tc('notify_on_email')}
                   title={tc('notify_on_email')}
-                  className={`h-8 w-8 rounded-lg border flex items-center justify-center transition-colors ${
+                  className={`rounded-lg ${
                     search.notify_email
-                      ? 'bg-primary/10 text-primary border-primary/30'
-                      : 'text-muted-foreground border-border hover:border-primary/30'
+                      ? 'bg-primary/10 text-primary border-primary/30 hover:bg-primary/10 hover:text-primary'
+                      : 'text-muted-foreground hover:border-primary/30'
                   }`}
                 >
                   <Mail className="h-3.5 w-3.5" />
-                </button>
+                </Button>
 
                 {/* Open search */}
                 <Button

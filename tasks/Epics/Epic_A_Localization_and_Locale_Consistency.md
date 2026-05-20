@@ -1,9 +1,13 @@
 # Epic A — Localization & Locale Consistency
 
-**Status:** OPEN
+**Status:** CLOSED ✅
 **Opened:** 2026-05-19
-**Owner:** TBD
-**Numbering:** Tasks within this epic continue the global counter (next free Task number after Sprint 1 closes).
+**Closed:** 2026-05-19
+**Epic commit:** `c2f3ecd97`
+**Closure summary:** [`Epic_A_Summary_CLOSED.md`](./Epic_A_Summary_CLOSED.md)
+**Numbering:** Tasks 103–106 (global counter continued from Task 102).
+
+> **All four subtasks (A.1 / A.2 / A.3 / A.4) were completed.** Do NOT restart them. See closure summary for: API error-code contract, locale persistence design, and the two open carry-overs (primitives H:+30, dead server actions).
 
 ## Goal
 

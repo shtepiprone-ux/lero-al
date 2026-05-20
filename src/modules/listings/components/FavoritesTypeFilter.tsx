@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
 interface Props {
@@ -28,35 +29,33 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
 
   return (
     <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide" role="group" aria-label={tf('filter_label')}>
-      <button
+      <Button
         type="button"
+        variant={!currentType ? 'default' : 'secondary'}
         onClick={() => navigate(undefined)}
         className={cn(
-          'shrink-0 px-3 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap',
-          !currentType
-            ? 'bg-primary text-primary-foreground shadow-sm'
-            : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
+          'shrink-0 px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
+          !currentType ? 'shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
         )}
         aria-pressed={!currentType}
       >
         {tf('filter_all')} <span className="opacity-70">{total}</span>
-      </button>
+      </Button>
 
       {availableTypes.map(pt => (
-        <button
+        <Button
           key={pt.value}
           type="button"
+          variant={currentType === pt.value ? 'default' : 'secondary'}
           onClick={() => navigate(pt.value)}
           className={cn(
-            'shrink-0 px-3 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap',
-            currentType === pt.value
-              ? 'bg-primary text-primary-foreground shadow-sm'
-              : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
+            'shrink-0 px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
+            currentType === pt.value ? 'shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
           )}
           aria-pressed={currentType === pt.value}
         >
           {pt.label} <span className="opacity-70">{typeCounts[pt.value]}</span>
-        </button>
+        </Button>
       ))}
     </div>
   )

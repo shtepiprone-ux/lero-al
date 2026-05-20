@@ -4,6 +4,12 @@
 Real Estate Marketplace for the Albanian market.
 Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 
+## Tasks Directory
+
+All task, epic, and sprint files MUST live inside `/tasks` (`/tasks/Epics/`, `/tasks/Sprints/`).
+This applies to every AI session regardless of chat. Detailed placement, naming, and format rules:
+see "Task File Location Rules" in `docs/ai-behavior.md`.
+
 ## Documentation Structure
 
 All project rules are split into focused files inside `/docs/`.  

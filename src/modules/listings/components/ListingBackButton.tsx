@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 const RESTORE_KEY = 'listings_restore'
 
@@ -31,12 +32,13 @@ export function ListingBackButton({ locale, label }: Props) {
   }
 
   return (
-    <button
+    <Button
+      variant="ghost"
       onClick={handleBack}
-      className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+      className="gap-1 text-xs text-muted-foreground hover:text-foreground h-auto p-0"
     >
-      <ArrowLeft className="h-3 w-3" />
+      <ArrowLeft className="h-3 w-3 shrink-0" />
       {label}
-    </button>
+    </Button>
   )
 }

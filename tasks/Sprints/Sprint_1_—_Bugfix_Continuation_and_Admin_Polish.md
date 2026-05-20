@@ -1,8 +1,13 @@
 # Sprint 1 — Bugfix Continuation & Admin Polish
 
-**Status:** OPEN
+**Status:** CLOSED ✅
 **Opened on:** 2026-05-19
+**Closed on:** 2026-05-19
+**Sprint commit:** `4af1c0399`
+**Closure summary:** [`Sprint_1_—_Summary_CLOSED.md`](./Sprint_1_—_Summary_CLOSED.md)
 **Numbering:** Task 91 → Task 102 (global numbering continues from Sprint 0 Task 90)
+
+> **All twelve tasks below were completed.** Do NOT restart them. See the closure summary for carry-over items (Italian server-side API strings, H:+30 primitives debt, `docs/backlog.md` line-count cleanup).
 
 This sprint completes the residual Sprint 0 work (items that Task 84–90 covered only partially) and adds new bugs/tasks discovered during the 2026-05-19 review of `ideas.txt`.
 

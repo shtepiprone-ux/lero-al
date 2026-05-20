@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import type { FormValues } from '@/modules/listings/types/form'
@@ -27,19 +28,19 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
         <Label className="text-sm font-medium">{t('listing_type')}</Label>
         <div className="flex gap-3">
           {(['sale', 'rent'] as ListingType[]).map(type => (
-            <button
+            <Button
               key={type}
               type="button"
-              onClick={() => onChange({ listing_type: type })}
+              variant={data.listing_type === type ? 'default' : 'outline'}
+              size="xl"
               className={cn(
-                'flex-1 h-11 rounded-xl border text-sm font-medium transition-all',
-                data.listing_type === type
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'bg-background border-border hover:border-primary/40'
+                'flex-1 rounded-xl',
+                data.listing_type !== type && 'hover:border-primary/40',
               )}
+              onClick={() => onChange({ listing_type: type })}
             >
               {t(type)}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -49,19 +50,20 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
         <Label className="text-sm font-medium">{t('property_type')}</Label>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
           {propertyTypes.map(pt => (
-            <button
+            <Button
               key={pt.value}
               type="button"
+              variant="outline"
               onClick={() => onChange({ property_type: pt.value as import('@/types/database').PropertyType })}
               className={cn(
-                'h-10 px-3 rounded-xl border text-sm transition-all text-left',
+                'h-10 px-3 rounded-xl text-sm justify-start',
                 data.property_type === pt.value
-                  ? 'bg-primary/10 text-primary border-primary/40 font-semibold'
-                  : 'bg-background border-border hover:border-primary/40'
+                  ? 'bg-primary/10 text-primary border-primary/40 font-semibold hover:bg-primary/10 hover:text-primary'
+                  : 'hover:border-primary/40',
               )}
             >
               {pt.label}
-            </button>
+            </Button>
           ))}
         </div>
         {errors.property_type && <p className="text-xs text-destructive">{errors.property_type}</p>}
@@ -115,19 +117,15 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
           {/* Currency toggle */}
           <div className="flex rounded-xl border overflow-hidden shrink-0">
             {(['ALL', 'EUR'] as const).map(cur => (
-              <button
+              <Button
                 key={cur}
                 type="button"
+                variant={data.currency === cur ? 'default' : 'ghost'}
                 onClick={() => onChange({ currency: cur })}
-                className={cn(
-                  'px-4 h-11 text-sm font-semibold transition-colors',
-                  data.currency === cur
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-background text-foreground hover:bg-muted'
-                )}
+                className="px-4 h-11 text-sm font-semibold rounded-none"
               >
                 {cur}
-              </button>
+              </Button>
             ))}
           </div>
           <Input

@@ -4,6 +4,7 @@ import { useState, useTransition, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Heart } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { toggleFavorite } from '@/modules/listings/actions/toggleFavorite'
 import { useAuth } from '@/modules/auth/context/AuthContext'
@@ -84,10 +85,11 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
   }
 
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       className={cn(
-        'flex items-center justify-center rounded-full w-8 h-8 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+        'rounded-full w-8 h-8 p-0',
         disabled
           ? 'bg-muted/60 text-muted-foreground cursor-not-allowed opacity-50'
           : favorited
@@ -104,6 +106,6 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
       title={disabled ? disabledLabel : undefined}
     >
       <Heart className={cn('h-4 w-4', !disabled && favorited && 'fill-current')} />
-    </button>
+    </Button>
   )
 }

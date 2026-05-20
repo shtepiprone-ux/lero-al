@@ -80,7 +80,7 @@ function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl shadow-2xl border w-full max-w-lg p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
         <h2 className="font-semibold text-base">{initial ? t('edit') : t('new')}</h2>
 
@@ -211,7 +211,7 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
           <tbody>
             {providers.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-10 text-center text-sm text-muted-foreground">{t('empty')}</td>
+                <td colSpan={7} className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</td>
               </tr>
             ) : (
               providers.map(p => (

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
 import { X, ChevronLeft, ChevronRight, Camera, Maximize2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface GalleryImage { url: string; is_cover: boolean; order: number }
@@ -106,37 +107,42 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
         ))}
 
         {/* Mobile photo count badge */}
-        <button
-          className="md:hidden absolute bottom-3 right-3 flex items-center gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10"
+        <Button
+          variant="ghost"
+          className="md:hidden absolute bottom-3 right-3 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70"
           onClick={() => setLightboxIndex(0)}
+          aria-label={t('all_photos')}
         >
-          <Camera className="h-4 w-4" />
+          <Camera className="h-4 w-4 shrink-0" />
           {sorted.length} {t('photo_count')}
-        </button>
+        </Button>
       </div>
 
       {/* All photos button */}
       {sorted.length > 1 && (
-        <button
-          className="mt-3 text-sm text-primary font-medium hover:underline flex items-center gap-1.5"
+        <Button
+          variant="link"
+          className="mt-3 text-sm font-medium gap-1.5 h-auto p-0"
           onClick={() => setLightboxIndex(0)}
         >
-          <Camera className="h-4 w-4" />
+          <Camera className="h-4 w-4 shrink-0" />
           {t('all_photos')} ({sorted.length})
-        </button>
+        </Button>
       )}
 
       {/* Lightbox */}
       {lightboxIndex !== null && (
         <div className="fixed inset-0 z-[100] bg-overlay/95 flex items-center justify-center" role="dialog" aria-modal="true" aria-label={t('close_gallery')}>
           {/* Close */}
-          <button
+          <Button
+            variant="ghost"
+            size="icon-xl"
             onClick={() => setLightboxIndex(null)}
-            className="absolute top-4 right-4 h-11 w-11 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 flex items-center justify-center text-overlay-foreground transition-colors z-10"
+            className="absolute top-4 right-4 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 text-overlay-foreground z-10"
             aria-label={t('close_gallery')}
           >
-            <X className="h-5 w-5" />
-          </button>
+            <X className="size-5" />
+          </Button>
 
           {/* Counter */}
           <div className="absolute top-4 left-1/2 -translate-x-1/2 text-overlay-foreground/80 text-sm">
@@ -145,13 +151,15 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
 
           {/* Prev */}
           {sorted.length > 1 && (
-            <button
+            <Button
+              variant="ghost"
+              size="icon-xl"
               onClick={prev}
-              className="absolute left-3 sm:left-6 h-11 w-11 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 flex items-center justify-center text-overlay-foreground transition-colors"
+              className="absolute left-3 sm:left-6 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 text-overlay-foreground"
               aria-label={tc('aria_prev')}
             >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
+              <ChevronLeft className="size-6" />
+            </Button>
           )}
 
           {/* Image */}
@@ -161,25 +169,28 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
 
           {/* Next */}
           {sorted.length > 1 && (
-            <button
+            <Button
+              variant="ghost"
+              size="icon-xl"
               onClick={next}
-              className="absolute right-3 sm:right-6 h-11 w-11 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 flex items-center justify-center text-overlay-foreground transition-colors"
+              className="absolute right-3 sm:right-6 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 text-overlay-foreground"
               aria-label={tc('aria_next')}
             >
-              <ChevronRight className="h-6 w-6" />
-            </button>
+              <ChevronRight className="size-6" />
+            </Button>
           )}
 
           {/* Thumbnail strip */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-2">
             {sorted.map((img, i) => (
-              <button
+              <Button
                 key={i}
+                variant="ghost"
                 onClick={() => setLightboxIndex(i)}
-                className={cn('relative h-14 w-20 shrink-0 rounded-lg overflow-hidden border-2 transition-all', lightboxIndex === i ? 'border-white' : 'border-transparent opacity-60 hover:opacity-100')}
+                className={cn('relative h-14 w-20 shrink-0 rounded-lg overflow-hidden border-2 p-0 hover:bg-transparent', lightboxIndex === i ? 'border-white' : 'border-transparent opacity-60 hover:opacity-100')}
               >
                 <AppImage variant="gallery-strip" src={img.url} alt="" />
-              </button>
+              </Button>
             ))}
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { CheckCheck } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { markAllNotificationsRead } from '@/modules/notifications/lib/mutations'
 import { NotificationItem } from './NotificationItem'
 import type { Notification } from '@/types/database'
@@ -32,21 +33,23 @@ export function NotificationCenter({ notifications, onRead }: Props) {
       <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>
         {hasUnread && (
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={handleMarkAll}
             disabled={isPending}
-            className="flex items-center gap-1 text-xs text-primary hover:text-primary/80 disabled:opacity-50 transition-colors"
+            className="gap-1 text-xs text-primary hover:text-primary/80 h-auto p-1"
           >
-            <CheckCheck className="h-3.5 w-3.5" />
+            <CheckCheck className="h-3.5 w-3.5 shrink-0" />
             {t('mark_all_read')}
-          </button>
+          </Button>
         )}
       </div>
 
       {/* List */}
       <div className="flex-1 overflow-y-auto divide-y">
         {notifications.length === 0 ? (
-          <p className="px-4 py-10 text-center text-sm text-muted-foreground">{t('empty')}</p>
+          <p className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</p>
         ) : (
           notifications.map(n => (
             <NotificationItem key={n.id} notification={n} onRead={onRead} />

@@ -48,7 +48,7 @@ function PageModal({ page, onClose, onDone }: {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
         <h3 className="font-bold text-base">{page ? t('modal_title_edit') : t('modal_title_new')}</h3>
 

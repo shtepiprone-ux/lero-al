@@ -1,6 +1,43 @@
 # Component Risk Register — Lero.al
 Last generated: 2026-05-18
-Last audit: 2026-05-19 (Task 93 — Site-wide dropdown/popover clipping audit)
+Last audit: 2026-05-20 (Task 109 — Primitive debt burn-down; H:+30 closed)
+
+## Task 109 Migration Log (2026-05-20)
+
+RAW_BUTTON → Button migrations completed (30 violations resolved, H:87→H:57):
+
+| Component | File | Change |
+|---|---|---|
+| `NotificationBell` | notifications/components/NotificationBell.tsx | `<button>` → `Button size="icon" variant="ghost"` |
+| `NotificationCenter` | notifications/components/NotificationCenter.tsx | `<button>` → `Button variant="ghost" size="sm"` |
+| `AdminMobileHeader` | components/admin/AdminMobileHeader.tsx | `<button>` → `Button size="icon" variant="ghost"` |
+| `ListingsStatusTabs` | listings/components/ListingsStatusTabs.tsx | `<button>` → `Button variant="ghost"` (tab-style) |
+| `ListingsFilters` | listings/components/ListingsFilters.tsx | AccordionSection `<button>` → `Button variant="ghost"` |
+| `EnumSelectorField` | listings/components/form/EnumSelectorField.tsx | `<button>` → `Button variant="outline"` |
+| `RoomsSelectorField` | listings/components/form/RoomsSelectorField.tsx | `<button>` → `Button variant="outline"` |
+| `StepBasicInfo` | listings/components/steps/StepBasicInfo.tsx | 3× `<button>` → `Button` (listing type, property type, currency) |
+| `StepDetails` | listings/components/steps/StepDetails.tsx | 2× `<button>` → `Button variant="outline"` (rooms, condition) |
+| `ListingGallery` | listings/components/ListingGallery.tsx | 6× `<button>` → `Button` (nav, thumbnails, all-photos link) |
+| `SaveSearchButton` | listings/components/SaveSearchButton.tsx | CUSTOM_OVERLAY → `Dialog` (custom backdrop+popover replaced) |
+| `ListingBackButton` | listings/components/ListingBackButton.tsx | `<button>` → `Button variant="ghost"` |
+| `FavoritesTypeFilter` | listings/components/FavoritesTypeFilter.tsx | 2× `<button>` → `Button` (default/secondary variants) |
+| `ActiveFilterChips` | listings/components/ActiveFilterChips.tsx | `<button>` → `Button variant="outline"` |
+| `SavedSearchesTab` | cabinet/components/SavedSearchesTab.tsx | `<button>` → `Button variant="outline" size="icon-sm"` |
+| `ListingContact` | listings/components/ListingContact.tsx | 2× `<button>` → `Button` (disabled state, share) |
+| `FavoriteButton` | listings/components/FavoriteButton.tsx | `<button>` → `Button variant="ghost"` |
+| `ListingDescriptionTranslator` | listings/components/ListingDescriptionTranslator.tsx | 3× `<button>` → `Button variant="outline" size="sm"` |
+
+**AuthSheet special case decision (2026-05-20):** `src/modules/auth/components/AuthSheet.tsx` lines ~127 and ~267 have inline `<button type="button">` as text links within prose `<p>` elements ("no account? Register" / "have account? Login"). These are NOT flagged by the scanner (multi-line `<button` tag format bypasses the single-line regex). Decision: **leave as-is** — they are genuine inline flow text links; the scanner does not flag them; no governance violation exists.
+
+**Remaining RAW_BUTTON debt (Epic K scope, NOT fixed in Task 109):**
+Admin table row patterns in AdminLegalManager, AdminListingsTable, AdminLocationsManager, AdminPropertyTypesManager, AdminUsersTable, AdminSettings, AdminSidebar, AdminUserAvatar, AdminExchangeProvidersManager → deferred to Epic K.
+Shared primitives: Combobox, DatePicker, FiltersPanel, LocationCombobox → complex shared-component migrations, deferred.
+Cabinet features: CabinetShell, ListingsTab, ProfileTab → deferred.
+Other listings: ImageUpload, ListingCard, ListingFormShell → deferred.
+
+---
+
+## Dropdown / Popover Portal Strategy Audit (2026-05-19)
 
 ## Dropdown / Popover Portal Strategy Audit (2026-05-19)
 

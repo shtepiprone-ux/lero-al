@@ -8,9 +8,9 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { saveSavedSearch } from '@/modules/cabinet/actions'
 import { canonicalizeFilters } from '@/modules/listings/lib/savedSearchCanonicalize'
-import { cn } from '@/lib/utils'
 
 export function SaveSearchButton() {
   const t = useTranslations('saved_search')
@@ -65,52 +65,47 @@ export function SaveSearchButton() {
   }
 
   return (
-    <div className="relative">
+    <>
       <Button
         variant="outline"
         size="sm"
         className="gap-1.5 h-9 rounded-xl"
-        onClick={() => setOpen(v => !v)}
+        onClick={() => setOpen(true)}
       >
-        <Bookmark className="h-4 w-4" />
+        <Bookmark className="h-4 w-4 shrink-0" />
         <span className="hidden sm:inline">{t('save_action')}</span>
       </Button>
 
-      {open && (
-        <>
-          {/* Backdrop */}
-          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          {/* Modal popover */}
-          <div className={cn(
-            'absolute right-0 top-full mt-2 z-50 bg-card border rounded-2xl shadow-xl p-4 w-72',
-          )}>
-            <p className="font-semibold text-sm mb-3">{t('save_modal_title')}</p>
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-col gap-1.5">
-                <Label className="text-xs text-muted-foreground">{t('name_placeholder')}</Label>
-                <Input
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  placeholder={buildAutoName()}
-                  className="h-9 rounded-xl text-sm"
-                  maxLength={80}
-                  onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
-                  autoFocus
-                />
-              </div>
-              <div className="flex gap-2 justify-end">
-                <Button variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={isPending}>
-                  {t('cancel')}
-                </Button>
-                <Button size="sm" onClick={handleSave} disabled={isPending} className="gap-1.5">
-                  {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Bookmark className="h-3.5 w-3.5" />}
-                  {t('save')}
-                </Button>
-              </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="w-80 max-w-[calc(100vw-2rem)]">
+          <DialogHeader>
+            <DialogTitle className="text-sm font-semibold">{t('save_modal_title')}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">{t('name_placeholder')}</Label>
+              <Input
+                value={name}
+                onChange={e => setName(e.target.value)}
+                placeholder={buildAutoName()}
+                className="h-9 rounded-xl text-sm"
+                maxLength={80}
+                onKeyDown={e => { if (e.key === 'Enter') handleSave() }}
+                autoFocus
+              />
+            </div>
+            <div className="flex gap-2 justify-end">
+              <Button variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={isPending}>
+                {t('cancel')}
+              </Button>
+              <Button size="sm" onClick={handleSave} disabled={isPending} className="gap-1.5">
+                {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Bookmark className="h-3.5 w-3.5 shrink-0" />}
+                {t('save')}
+              </Button>
             </div>
           </div>
-        </>
-      )}
-    </div>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

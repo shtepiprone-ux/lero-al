@@ -6,6 +6,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
 import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
@@ -159,16 +160,18 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                   </a>
                 )}
                 {listingClosed ? (
-                  <button
+                  <Button
                     type="button"
+                    variant="secondary"
+                    size="xl"
                     disabled
-                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-muted text-muted-foreground font-semibold text-sm cursor-not-allowed opacity-60"
+                    className="w-full rounded-xl bg-muted text-muted-foreground font-semibold cursor-not-allowed opacity-60 gap-2"
                     title={closedLabel}
                     aria-disabled="true"
                   >
-                    <MessageCircle className="h-5 w-5" />
+                    <MessageCircle className="h-5 w-5 shrink-0" />
                     {t('send_message')}
-                  </button>
+                  </Button>
                 ) : (
                   <Link
                     href={`/${locale}/messages/new?listing=${encodeURIComponent(listingTitle)}`}
@@ -196,14 +199,15 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                   className="flex-1 h-9 w-auto rounded-xl border border-border"
                 />
               )}
-              <button
+              <Button
+                variant="outline"
                 onClick={handleShare}
-                className="flex-1 flex items-center justify-center gap-1.5 h-9 rounded-xl border border-border hover:bg-muted text-sm transition-colors"
+                className="flex-1 gap-1.5 h-9 rounded-xl border-border"
                 aria-label={t('share_listing')}
               >
-                <Share2 className="h-4 w-4" />
+                <Share2 className="h-4 w-4 shrink-0" />
                 <span className="hidden sm:inline">{copied ? t('link_copied') : t('share')}</span>
-              </button>
+              </Button>
             </div>
           </div>
         </div>

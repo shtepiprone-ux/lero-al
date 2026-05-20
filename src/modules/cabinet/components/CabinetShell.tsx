@@ -118,7 +118,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
               <span className="hidden sm:inline">{label}</span>
               {count !== undefined && count > 0 && (
                 <span className={cn(
-                  'text-[11px] font-bold rounded-full px-1.5 py-0.5 min-w-[20px] text-center leading-none',
+                  'text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[20px] text-center leading-none',
                   activeTab === key
                     ? 'bg-primary-foreground/20 text-primary-foreground'
                     : 'bg-muted text-muted-foreground'

@@ -3,6 +3,7 @@
 import { useState, useRef, useTransition } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { Languages, RotateCcw, Loader2, AlertCircle } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 interface Props {
@@ -86,15 +87,17 @@ export function ListingDescriptionTranslator({ description, label }: Props) {
         {/* Action buttons */}
         <div className="flex items-center gap-2 shrink-0">
           {showOriginal && (
-            <button
+            <Button
               type="button"
+              variant="outline"
+              size="sm"
               onClick={handleTranslate}
-              className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 border border-primary/30 hover:border-primary/60 rounded-lg px-2.5 py-1.5 transition-colors"
+              className="gap-1.5 text-xs text-primary border-primary/30 hover:border-primary/60 hover:text-primary/80 rounded-lg px-2.5 h-auto py-1.5"
               aria-label={t('translate_btn')}
             >
-              <Languages className="h-3.5 w-3.5" />
+              <Languages className="h-3.5 w-3.5 shrink-0" />
               {t('translate_btn')}
-            </button>
+            </Button>
           )}
 
           {showLoading && (
@@ -105,26 +108,30 @@ export function ListingDescriptionTranslator({ description, label }: Props) {
           )}
 
           {showTranslated && (
-            <button
+            <Button
               type="button"
+              variant="outline"
+              size="sm"
               onClick={handleShowOriginal}
-              className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground border border-border rounded-lg px-2.5 py-1.5 transition-colors"
+              className="gap-1.5 text-xs text-muted-foreground hover:text-foreground rounded-lg px-2.5 h-auto py-1.5"
               aria-label={t('show_original')}
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw className="h-3.5 w-3.5 shrink-0" />
               {t('show_original')}
-            </button>
+            </Button>
           )}
 
           {showError && (
-            <button
+            <Button
               type="button"
+              variant="outline"
+              size="sm"
               onClick={() => { setState('original') }}
-              className="flex items-center gap-1.5 text-xs text-destructive hover:text-destructive/80 border border-destructive/30 rounded-lg px-2.5 py-1.5 transition-colors"
+              className="gap-1.5 text-xs text-destructive border-destructive/30 hover:text-destructive/80 rounded-lg px-2.5 h-auto py-1.5"
             >
-              <AlertCircle className="h-3.5 w-3.5" />
+              <AlertCircle className="h-3.5 w-3.5 shrink-0" />
               {t('translate_btn')}
-            </button>
+            </Button>
           )}
         </div>
       </div>
@@ -144,7 +151,7 @@ export function ListingDescriptionTranslator({ description, label }: Props) {
 
       {/* Disclaimer */}
       {showTranslated && (
-        <p className="mt-2 text-[11px] text-muted-foreground/60 italic">
+        <p className="mt-2 text-xs text-muted-foreground/60 italic">
           {t('translated_automatically')}
         </p>
       )}

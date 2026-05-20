@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 export function ListingsStatusTabs() {
   const t = useTranslations('listing')
@@ -40,17 +41,18 @@ export function ListingsStatusTabs() {
 
 function TabButton({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       onClick={onClick}
       className={cn(
-        'px-5 py-3 text-sm font-medium border-b-2 -mb-px transition-colors whitespace-nowrap',
+        'px-5 py-3 h-auto text-sm font-medium border-b-2 -mb-px rounded-none whitespace-nowrap',
         active
-          ? 'border-primary text-primary'
-          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border',
+          ? 'border-primary text-primary hover:bg-transparent hover:text-primary'
+          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border hover:bg-transparent',
       )}
     >
       {label}
-    </button>
+    </Button>
   )
 }

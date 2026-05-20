@@ -28,16 +28,17 @@ function AccordionSection({
 }) {
   return (
     <div className="border-b border-border last:border-b-0 py-4">
-      <button
+      <Button
         type="button"
+        variant="ghost"
         onClick={onToggle}
-        className="flex w-full items-center justify-between select-none group min-h-[44px]"
+        className="flex w-full items-center justify-between select-none min-h-[44px] h-auto rounded-none px-0 hover:bg-transparent group"
       >
         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors duration-150">
           {title}
         </span>
         <ChevronDown className={cn('h-3.5 w-3.5 text-muted-foreground/60 transition-transform duration-200 shrink-0', open && 'rotate-180')} />
-      </button>
+      </Button>
       {open && <div className="mt-3">{children}</div>}
     </div>
   )
@@ -66,7 +67,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         <SlidersHorizontal className="h-4 w-4 text-primary" />
         <span className="font-semibold text-sm">{t('filters_title')}</span>
         {activeCount > 0 && (
-          <span className="text-[11px] bg-primary text-primary-foreground rounded-full px-2 py-0.5 font-medium">
+          <span className="text-xs bg-primary text-primary-foreground rounded-full px-2 py-0.5 font-medium">
             {activeCount}
           </span>
         )}

@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Bell } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import { useNotifications } from '@/modules/notifications/hooks/useNotifications'
 import { NotificationCenter } from './NotificationCenter'
 
@@ -41,24 +42,26 @@ export function NotificationBell() {
 
   return (
     <div className="relative">
-      <button
+      <Button
         ref={buttonRef}
+        variant="ghost"
+        size="icon"
         onClick={() => setOpen(v => !v)}
         aria-label={t('title')}
         aria-expanded={open}
         aria-haspopup="dialog"
         className={cn(
-          'relative h-9 w-9 flex items-center justify-center rounded-xl transition-colors',
-          open ? 'bg-muted text-foreground' : 'text-muted-foreground hover:text-foreground hover:bg-muted/60',
+          'relative rounded-xl',
+          open ? 'bg-muted text-foreground' : 'text-muted-foreground',
         )}
       >
-        <Bell className="h-5 w-5" />
+        <Bell className="size-5" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 h-4 min-w-[1rem] px-0.5 flex items-center justify-center rounded-full bg-destructive text-[9px] font-bold text-destructive-foreground leading-none">
+          <span className="absolute top-1 right-1 h-4 min-w-[1rem] px-0.5 flex items-center justify-center rounded-full bg-destructive text-[10px] font-bold text-destructive-foreground leading-none">
             {unreadCount > 99 ? '99+' : unreadCount}
           </span>
         )}
-      </button>
+      </Button>
 
       {open && (
         <div

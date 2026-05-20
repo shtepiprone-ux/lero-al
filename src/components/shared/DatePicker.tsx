@@ -129,7 +129,7 @@ export function DatePicker({ value, onChange, placeholder, className, maxDate }:
             {weekdays.map((d, i) => (
               <div
                 key={i}
-                className="h-8 flex items-center justify-center text-[11px] font-medium text-muted-foreground"
+                className="h-8 flex items-center justify-center text-xs font-medium text-muted-foreground"
               >
                 {d}
               </div>

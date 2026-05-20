@@ -4,13 +4,43 @@
 
 ## Last Session
 
-**2026-05-19 — Task 108 — Epic B.1 — Side Popup Auth Flow ✅**
+**2026-05-20 — Task 111 — Sprint 3 — Tailwind Entropy Burn-down ✅**
+
+- `governance:tailwind`: M:15→M:0 / L:43→L:31 (**PASS** at new baseline C0/H0/M0/L31).
+- 5× `py-10` → `py-8` (table empty states); 10× `bg-black/*` → `bg-overlay/*` (semantic token); 12× `text-[11px]` → `text-xs`.
+- 31 allowlist entries added for canonical `text-[10px]` badge/micro-label uses.
+- Governance baseline updated: `tailwind.MEDIUM` 14→0, `tailwind.LOW` 42→31.
+- lint 0/0 · governance:localization PASS (870 × 4).
+- **Sprint 3 CLOSED.** Closure: [`tasks/Sprints/Sprint_3_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
+
+→ [Task 111 session log](sessions/2026-05-20-task-111-tailwind-entropy-burndown.md)
+
+**Previous: 2026-05-20 — Task 110 — Sprint 3 — Mobile Drawer Padding Fix ✅**
+
+- Added `px-4` to the mobile hamburger drawer content wrapper in `Header.tsx:225`.
+- Matches canonical `SheetHeader`/`SheetFooter` padding (`p-4`); whole drawer now reads as one consistently padded panel.
+- Both authenticated and unauthenticated drawer states covered by the single wrapper fix.
+- Mobile locale switcher (Task 106) is in the header bar — not inside the drawer — unaffected.
+- governance:tailwind PASS · governance:responsive PASS · lint 0/0.
+
+→ [Task 110 session log](sessions/2026-05-20-task-110-mobile-drawer-padding.md)
+
+**Previous: 2026-05-20 — Task 109 — Sprint 3 — Primitive Debt Burn-down ✅**
+
+- Closed H:+30 governance regression: `governance:primitives` now C0/H57/M1 vs baseline C0/H57/M8 → **PASS**.
+- 30 raw `<button>` + 1 custom `fixed inset-0` overlay migrated to canonical `Button`/`Dialog` across 18 files.
+- Key clusters: NotificationBell, NotificationCenter, AdminMobileHeader, ListingsStatusTabs, ListingsFilters (AccordionSection), EnumSelectorField, RoomsSelectorField, StepBasicInfo (3×), StepDetails (2×), ListingGallery (6×), SaveSearchButton → Dialog, plus 7 additional listings/cabinet files.
+- AuthSheet inline text-link buttons (~127, ~267): not flagged by scanner (multi-line format); documented as leave-as-is.
+- governance:localization PASS (870 × 4 unchanged) · lint 0/0.
+
+→ [Task 109 session log](sessions/2026-05-20-task-109-primitive-debt-burndown.md)
+
+**Previous: 2026-05-19 — Task 108 — Epic B.1 — Side Popup Auth Flow ✅**
 
 - `AuthSheet` (new) — canonical `Sheet` with Login / Register / Register-agent views; internal view switching without closing.
 - Error-code contract: `mapAuthError()` maps Supabase errors → stable i18n keys; zero hardcoded strings.
 - Header: Link auth buttons → Button Sheet triggers; mobile drawer adds "Register as agent" as third entry point.
 - 8 new i18n keys × 4 locales (auth errors + `register_agent`); key counts 862 → 870.
-- Existing `/auth/login` + `/auth/register` pages remain as URL fallbacks.
 - lint 0/5 · governance:localization PASS (870 × 4).
 
 → [Task 108 session log](sessions/2026-05-19-task-108-side-popup-auth.md)
@@ -69,30 +99,35 @@
 
 ## Carry-over from Sprint 1 / Epic A
 
-1. **`governance:primitives` H:+30 pre-existing debt.** Task 94 cleared the `h-11`-on-Button violations; broader High-tier primitive debt persists from before Sprint 1. To be addressed inside **Epic K** or as a standalone primitive-audit task.
-2. ~~Dead-code server actions~~ → **DONE** in Sprint 2 / Task 107.
+~~`governance:primitives` gate H:+30 debt~~ → **DONE** in Sprint 3 / Task 109. Gate now PASSES at C0/H57/M1.
+~~Dead-code server actions~~ → **DONE** in Sprint 2 / Task 107.
 
 ## Next Immediate Tasks
 
-**Next: Sprint 2 — Technical Debt Cleanup (single task).**
+**Now: Sprint 3 — UI Primitive & Drawer Cleanup (clears the governance gate before Epic B continues).**
 
-Plan: [`tasks/Sprints/Sprint_2_—_Technical_Debt_Cleanup.md`](../tasks/Sprints/Sprint_2_—_Technical_Debt_Cleanup.md)
+Plan: [`tasks/Sprints/Sprint_3_—_UI_Primitive_and_Drawer_Cleanup.md`](../tasks/Sprints/Sprint_3_—_UI_Primitive_and_Drawer_Cleanup.md)
 
-- **Task 107** — Remove dead-code avatar server actions (`uploadCabinetAvatar`, `uploadUserAvatar`). Kickoff prompt: [`tasks/Sprints/Sprint_2_kickoff_prompt_Task_107.md`](../tasks/Sprints/Sprint_2_kickoff_prompt_Task_107.md)
+- ✅ **Task 109** — Primitive debt burn-down (close `governance:primitives` H:+30). CLOSED.
+- ✅ **Task 110** — Fix mobile drawer canonical padding. CLOSED.
+- ✅ **Task 111** — Tailwind entropy burn-down (py-10, bg-black, text-[11px]). CLOSED.
 
-**After Sprint 2: Epic B — Auth, Registration & Agent Onboarding.**
+**Sprint 3 CLOSED.** See [`tasks/Sprints/Sprint_3_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
+
+**Now: Resume Epic B — Auth, Registration & Agent Onboarding.**
 
 Plan file: [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md)
-Kickoff (Task 108): [`tasks/Epics/Epic_B_kickoff_prompt_Task_108.md`](../tasks/Epics/Epic_B_kickoff_prompt_Task_108.md)
 
-Task queue (in order — global numbering continues from Task 106):
+Done so far:
+- ✅ **Task 107** — Sprint 2 cleanup (dead-code avatar actions removed). CLOSED.
+- ✅ **Task 108** — Epic B.1 — Side popup auth flow (`AuthSheet`). CLOSED.
 
-- **Task 107** — Sprint 2 cleanup (above).
-- **Task 109** — Epic B.2 — Agent city selection (canonical Combobox).
-- **Task 109** — Epic B.2 — Agent city selection (canonical Combobox).
-- **Task 110** — Epic B.3 — Agent company selection with logo display (new `companies` table + RLS).
-- **Task 111** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
-- **Task 112** — Epic B.5 — Admin company management page (Epic K table pattern).
+Queue (global numbering continues from Task 111):
+
+- **Task 112** — Epic B.2 — Agent city selection (canonical Combobox). Kickoff: [`tasks/Epics/Epic_B_kickoff_prompt_Task_112.md`](../tasks/Epics/Epic_B_kickoff_prompt_Task_112.md)
+- **Task 113** — Epic B.3 — Agent company selection with logo display (new `companies` table + RLS). Replaces the temporary plain-text `company` field added in Task 108.
+- **Task 114** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
+- **Task 115** — Epic B.5 — Admin company management page (Epic K table pattern).
 
 Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
@@ -112,6 +147,9 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 | Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
 | Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
+| 2026-05-20 | Sprint 3 — Task 111 — Tailwind entropy burn-down (M:15→M:0, L:43→L:31, baseline updated) | Task 111 | [sessions/2026-05-20-task-111-tailwind-entropy-burndown.md](sessions/2026-05-20-task-111-tailwind-entropy-burndown.md) |
+| 2026-05-20 | Sprint 3 — Task 110 — Mobile drawer padding fix (px-4 added to Header.tsx drawer content wrapper) | Task 110 | [sessions/2026-05-20-task-110-mobile-drawer-padding.md](sessions/2026-05-20-task-110-mobile-drawer-padding.md) |
+| 2026-05-20 | Sprint 3 — Task 109 — Primitive debt burn-down (H:87→H:57, governance gate PASS) | Task 109 | [sessions/2026-05-20-task-109-primitive-debt-burndown.md](sessions/2026-05-20-task-109-primitive-debt-burndown.md) |
 | 2026-05-19 | Sprint 2 — Remove dead-code avatar server actions | Task 107 | [sessions/2026-05-19-task-107-remove-dead-avatar-actions.md](sessions/2026-05-19-task-107-remove-dead-avatar-actions.md) |
 
 ## Closed sprints & epics (historical)

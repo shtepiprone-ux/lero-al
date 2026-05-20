@@ -100,7 +100,7 @@ function PropertyTypeFormDialog({ initial, onClose, onSaved }: FormDialogProps) 
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay/50 backdrop-blur-sm p-4">
       <div className="bg-card rounded-2xl border shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="px-6 py-5 border-b">
           <p className="font-semibold">{initial ? t('edit') : t('new')}</p>
@@ -189,7 +189,7 @@ function DeleteDialog({ pt, onClose, onDeleted }: DeleteDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay/50 backdrop-blur-sm p-4">
       <div className="bg-card rounded-2xl border shadow-xl w-full max-w-sm p-6">
         <p className="font-semibold mb-1">{t('delete_confirm')}</p>
         <p className="text-sm text-muted-foreground mb-5">{pt.name_sq} <span className="font-mono text-xs text-muted-foreground/60">({pt.slug})</span></p>

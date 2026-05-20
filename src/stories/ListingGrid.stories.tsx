@@ -41,7 +41,7 @@ function StoryListingCard({ listing }: { listing: typeof LISTINGS_GRID_FIXTURE[n
             <Badge variant="success">New</Badge>
           </div>
         )}
-        <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-black/60 rounded px-1.5 py-0.5">
+        <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-overlay/60 rounded px-1.5 py-0.5">
           <Camera className="h-3 w-3 text-white" />
           <span className="text-[10px] text-white">5</span>
         </div>

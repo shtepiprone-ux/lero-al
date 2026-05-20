@@ -66,19 +66,20 @@ export function StepDetails({ data, onChange }: Props) {
           <Label className="text-sm font-medium">{t('rooms')}</Label>
           <div className="flex gap-2 flex-wrap">
             {ROOMS_OPTIONS.map(r => (
-              <button
+              <Button
                 key={r}
                 type="button"
+                variant="outline"
                 onClick={() => onChange({ rooms: data.rooms === r ? undefined : r })}
                 className={cn(
-                  'h-9 w-9 rounded-xl border text-sm font-medium transition-colors',
+                  'h-9 w-9 rounded-xl p-0 text-sm font-medium',
                   data.rooms === r
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'border-border hover:border-primary/40'
+                    ? 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:text-primary-foreground'
+                    : 'border-border hover:border-primary/40',
                 )}
               >
                 {r === 5 ? '5+' : r}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -136,19 +137,20 @@ export function StepDetails({ data, onChange }: Props) {
           <Label className="text-sm font-medium">{t('condition_label')}</Label>
           <div className="flex flex-col gap-1.5">
             {CONDITIONS.map(c => (
-              <button
+              <Button
                 key={c.value}
                 type="button"
+                variant="outline"
                 onClick={() => onChange({ condition: data.condition === c.value ? undefined : c.value })}
                 className={cn(
-                  'h-10 px-3 rounded-xl border text-sm text-left transition-colors',
+                  'h-10 px-3 rounded-xl text-sm justify-start',
                   data.condition === c.value
-                    ? 'bg-primary/10 text-primary border-primary/40 font-medium'
-                    : 'border-border hover:border-primary/40'
+                    ? 'bg-primary/10 text-primary border-primary/40 font-medium hover:bg-primary/10 hover:text-primary'
+                    : 'border-border hover:border-primary/40',
                 )}
               >
                 {t(c.labelKey)}
-              </button>
+              </Button>
             ))}
           </div>
         </div>

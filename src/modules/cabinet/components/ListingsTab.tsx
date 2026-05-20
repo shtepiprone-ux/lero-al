@@ -304,11 +304,11 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
             <div className="flex-1 min-w-0 flex flex-col justify-between gap-1">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <Badge variant={STATUS_VARIANT[status]} className="text-[11px] px-1.5 py-0 h-5">
+                  <Badge variant={STATUS_VARIANT[status]} className="text-xs px-1.5 py-0 h-5">
                     {t(`status_${status}`)}
                   </Badge>
                   {listing.is_premium && (
-                    <Badge className="text-[11px] px-1.5 py-0 h-5 bg-badge-premium text-primary-foreground">
+                    <Badge className="text-xs px-1.5 py-0 h-5 bg-badge-premium text-primary-foreground">
                       {t('filter_PREMIUM')}
                     </Badge>
                   )}

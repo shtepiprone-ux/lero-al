@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
 import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
 import {
   CONDITIONS, LAND_LEGAL_STATUS, LAND_ZONING, LAND_DEVELOPMENT_POTENTIAL,
 } from '@/modules/listings/constants'
@@ -40,19 +41,20 @@ export function EnumSelectorField({ fieldDef, formValues, errors, onChange }: Fi
       <Label className="text-sm font-medium">{t(labelKey)}</Label>
       <div className="flex flex-col gap-1.5">
         {options.map(o => (
-          <button
+          <Button
             key={o.value}
             type="button"
+            variant="outline"
             onClick={() => onChange({ [fieldDef.key]: currentValue === o.value ? undefined : o.value })}
             className={cn(
-              'h-10 px-3 rounded-xl border text-sm text-left transition-colors',
+              'h-10 px-3 rounded-xl text-sm justify-start',
               currentValue === o.value
-                ? 'bg-primary/10 text-primary border-primary/40 font-medium'
+                ? 'bg-primary/10 text-primary border-primary/40 font-medium hover:bg-primary/10 hover:text-primary'
                 : 'border-border hover:border-primary/40',
             )}
           >
             {t(o.labelKey)}
-          </button>
+          </Button>
         ))}
       </div>
       {error && <p className="text-xs text-destructive">{error}</p>}

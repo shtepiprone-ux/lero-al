@@ -16,6 +16,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { useLocations } from '@/modules/locations/hooks/useLocations'
+import { LocationCombobox } from '@/components/shared/LocationCombobox'
 
 export type AuthView = 'login' | 'register' | 'register-agent'
 
@@ -136,6 +138,34 @@ function LoginView({
   )
 }
 
+// ── Agent city field — isolated so useLocations only mounts when isAgent=true ──
+
+function AgentCityField({
+  value,
+  onChange,
+  label,
+  placeholder,
+}: {
+  value: string
+  onChange: (v: string) => void
+  label: string
+  placeholder: string
+}) {
+  const { locations } = useLocations()
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label>{label}</Label>
+      <LocationCombobox
+        locations={locations}
+        value={value}
+        onChange={v => onChange(v ?? '')}
+        placeholder={placeholder}
+        portal
+      />
+    </div>
+  )
+}
+
 // ── Register view ─────────────────────────────────────────────────────────────
 
 function RegisterView({
@@ -154,6 +184,7 @@ function RegisterView({
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
+  const [locationId, setLocationId] = useState<string>('')
   const [password, setPassword] = useState('')
   const [companyName, setCompanyName] = useState('')
   const [errorKey, setErrorKey] = useState<string | null>(null)
@@ -171,6 +202,7 @@ function RegisterView({
         phone: phone || undefined,
         user_type: isAgent ? 'agent' : 'private',
         company_name: isAgent && companyName ? companyName : undefined,
+        location_id: isAgent && locationId ? parseInt(locationId, 10) : undefined,
       },
     })
     setLoading(false)
@@ -232,6 +264,15 @@ function RegisterView({
           autoComplete="tel"
         />
       </div>
+
+      {isAgent && (
+        <AgentCityField
+          value={locationId}
+          onChange={setLocationId}
+          label={t('city')}
+          placeholder={t('city_placeholder')}
+        />
+      )}
 
       {isAgent && (
         <div className="flex flex-col gap-1.5">

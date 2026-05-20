@@ -244,6 +244,8 @@
     "private": "Persona privata",
     "agent": "Agente",
     "company": "Nome azienda (opzionale)",
+    "city": "Città (opzionale)",
+    "city_placeholder": "Seleziona la tua città",
     "register_as": "Registrati come",
     "register_agent": "Registrati come agente",
     "no_account": "Non hai un account?",

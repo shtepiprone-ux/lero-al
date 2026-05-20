@@ -244,6 +244,8 @@
     "private": "Person privat",
     "agent": "Agjent",
     "company": "Emri i kompanisë (opsional)",
+    "city": "Qyteti (opsional)",
+    "city_placeholder": "Zgjidhni qytetin tuaj",
     "register_as": "Regjistrohu si",
     "register_agent": "Regjistrohu si agjent",
     "no_account": "Nuk keni llogari?",

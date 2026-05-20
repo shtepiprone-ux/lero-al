@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-20 — Task 111 — Sprint 3 — Tailwind Entropy Burn-down ✅**
+**2026-05-20 — Task 112 — Epic B.2 — Agent City Selection ✅**
+
+- `AgentCityField` sub-component wraps `useLocations` + `LocationCombobox` (canonical, `portal={true}` to avoid Sheet clipping).
+- Added `locationId` state to `RegisterView`; city passed via `signUp` metadata as `location_id` integer.
+- 2 new i18n keys (`auth.city`, `auth.city_placeholder`) × 4 locales; key counts 870 → 872 per locale.
+- governance:localization PASS · governance:primitives PASS · lint 0/0.
+
+→ [Task 112 session log](sessions/2026-05-20-task-112-agent-city-selection.md)
+
+**Previous: 2026-05-20 — Task 111 — Sprint 3 — Tailwind Entropy Burn-down ✅**
 
 - `governance:tailwind`: M:15→M:0 / L:43→L:31 (**PASS** at new baseline C0/H0/M0/L31).
 - 5× `py-10` → `py-8` (table empty states); 10× `bg-black/*` → `bg-overlay/*` (semantic token); 12× `text-[11px]` → `text-xs`.
@@ -114,17 +123,18 @@ Plan: [`tasks/Sprints/Sprint_3_—_UI_Primitive_and_Drawer_Cleanup.md`](../tasks
 
 **Sprint 3 CLOSED.** See [`tasks/Sprints/Sprint_3_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
 
-**Now: Resume Epic B — Auth, Registration & Agent Onboarding.**
+**Now: Continue Epic B — Auth, Registration & Agent Onboarding.**
 
 Plan file: [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md)
 
 Done so far:
 - ✅ **Task 107** — Sprint 2 cleanup (dead-code avatar actions removed). CLOSED.
 - ✅ **Task 108** — Epic B.1 — Side popup auth flow (`AuthSheet`). CLOSED.
+- ✅ **Task 112** — Epic B.2 — Agent city selection (`LocationCombobox` in AuthSheet). CLOSED.
 
-Queue (global numbering continues from Task 111):
+Queue (global numbering continues from Task 112):
 
-- **Task 112** — Epic B.2 — Agent city selection (canonical Combobox). Kickoff: [`tasks/Epics/Epic_B_kickoff_prompt_Task_112.md`](../tasks/Epics/Epic_B_kickoff_prompt_Task_112.md)
+- ✅ **Task 112** — Epic B.2 — Agent city selection. CLOSED.
 - **Task 113** — Epic B.3 — Agent company selection with logo display (new `companies` table + RLS). Replaces the temporary plain-text `company` field added in Task 108.
 - **Task 114** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
 - **Task 115** — Epic B.5 — Admin company management page (Epic K table pattern).
@@ -147,6 +157,7 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 | Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
 | Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
+| 2026-05-20 | Epic B.2 — Agent city selection (LocationCombobox + portal in AuthSheet, 2 i18n keys × 4 locales) | Task 112 | [sessions/2026-05-20-task-112-agent-city-selection.md](sessions/2026-05-20-task-112-agent-city-selection.md) |
 | 2026-05-20 | Sprint 3 — Task 111 — Tailwind entropy burn-down (M:15→M:0, L:43→L:31, baseline updated) | Task 111 | [sessions/2026-05-20-task-111-tailwind-entropy-burndown.md](sessions/2026-05-20-task-111-tailwind-entropy-burndown.md) |
 | 2026-05-20 | Sprint 3 — Task 110 — Mobile drawer padding fix (px-4 added to Header.tsx drawer content wrapper) | Task 110 | [sessions/2026-05-20-task-110-mobile-drawer-padding.md](sessions/2026-05-20-task-110-mobile-drawer-padding.md) |
 | 2026-05-20 | Sprint 3 — Task 109 — Primitive debt burn-down (H:87→H:57, governance gate PASS) | Task 109 | [sessions/2026-05-20-task-109-primitive-debt-burndown.md](sessions/2026-05-20-task-109-primitive-debt-burndown.md) |

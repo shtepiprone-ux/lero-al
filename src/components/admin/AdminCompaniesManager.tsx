@@ -2,12 +2,11 @@
 
 import { useState, useMemo, useRef, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, Loader2, Building2, ImagePlus } from 'lucide-react'
+import { Plus, Pencil, Trash2, Loader2, Building2, ImagePlus, Search } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AppImage } from '@/components/ui/AppImage'
 import {
@@ -275,12 +274,15 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex items-center gap-3">
-        <AdminSearchInput
-          value={search}
-          onChange={setSearch}
-          placeholder={t('search_placeholder')}
-          className="flex-1 max-w-xs"
-        />
+        <div className="relative flex-1 max-w-xs">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder={t('search_placeholder')}
+            className="h-9 pl-9 rounded-xl"
+          />
+        </div>
         <Button size="sm" className="gap-1.5 ml-auto" onClick={() => setCreating(true)}>
           <Plus className="h-4 w-4 shrink-0" />
           {t('new_btn')}

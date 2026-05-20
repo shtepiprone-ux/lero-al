@@ -28,7 +28,7 @@ export default async function AdminReportsPage() {
         subtitle={t('reports_subtitle', { count: count ?? 0 })}
       />
       <AdminReportsManager
-        reports={(reports ?? []) as ReportRow[]}
+        reports={(reports ?? []) as unknown as ReportRow[]}
         locale={locale}
       />
     </div>

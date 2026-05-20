@@ -22,6 +22,7 @@ export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
     '/admin/support':     t('item_support'),
     '/admin/locations':   t('item_locations'),
     '/admin/companies':   t('item_companies'),
+    '/admin/reports':     t('item_reports'),
     '/admin/legal':       t('item_legal'),
     '/admin/settings':    t('item_settings'),
     '/admin/pages-admin':       t('item_pages'),

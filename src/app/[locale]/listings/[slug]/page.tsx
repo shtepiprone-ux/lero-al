@@ -309,7 +309,7 @@ export default async function ListingPage({ params }: Props) {
             <Link href={`/${locale}/listings`} className="hover:text-foreground transition-colors">{t('all_listings')}</Link>
             {listing.location && (<><span>/</span><Link href={`/${locale}/listings?location_id=${listing.location.id}`} className="hover:text-foreground transition-colors">{listing.location.name_al}</Link></>)}
             <span>/</span>
-            <span className="text-foreground truncate max-w-[200px]">{listing.title}</span>
+            <span className="text-foreground truncate max-w-xs">{listing.title}</span>
           </nav>
         </div>
       </div>

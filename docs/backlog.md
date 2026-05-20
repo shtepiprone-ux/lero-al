@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-20 — Task 117 — Epic C.2 — User Report Flow ✅**
+**2026-05-20 — Task 118 — Epic C.3 — Admin Reports Dashboard ✅**
+
+- `/admin/reports` page with status filter tabs + counts; `AdminReportsManager` table with `ReportDetailDialog`.
+- `ReportDetailDialog`: shows reason/listing/reporter/comment, action buttons (review/resolve/dismiss) + notes.
+- `updateReportStatusAction`: admin/mod auth guard, status UPDATE, `report_actions` audit INSERT.
+- `Flag` icon + Reports nav item in group_management; mobile header title.
+- 22 new `admin.reports.*` + sidebar/pages keys × 4 locales · M:18→M:17 (fixed 2 max-w-[200px]).
+- ⚠️ Requires `report_actions` table SQL (in session log).
+
+→ [Task 118 session log](sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md)
+
+**Previous: 2026-05-20 — Task 117 — Epic C.2 — User Report Flow ✅**
 
 - `ListingReportDialog` — Dialog with 6-reason selector + optional 500-char comment; toast for success/already-reported/error.
 - `reportListingAction` server action — auth guard, one-report-per-user-per-listing guard, INSERT into `listing_reports`.

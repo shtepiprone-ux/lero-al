@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-20 — Task 119 — Epic D.1 — Email Provider Setup + React Email Foundation ✅**
+**2026-05-20 — Task 120 — Epic D.3 — Email Verification ✅**
+
+- `VerifyEmail.tsx` — React Email template on BaseEmail; inline STRINGS sq/en/uk/it; ready for D.6 Send Email Hook delivery.
+- `BaseEmail.tsx` — fixed `lang` attr: now accepts `locale` prop instead of hardcoded `"sq"`.
+- `/[locale]/auth/verified` — signup confirmation landing page (3 new auth i18n keys × 4 locales).
+- Admin user profile shows email confirmation badge (`emailConfirmedAt` from `auth.admin.getUserById`).
+- signUp `emailRedirectTo` updated to land on `/auth/verified` instead of home.
+- ⚠️ NO double emails: Supabase still sends its built-in confirm until D.6 (Task 122). See session log.
+
+→ [Task 120 session log](sessions/2026-05-20-task-120-email-verification.md)
+
+**Previous: 2026-05-20 — Task 119 — Epic D.1 — Email Provider Setup + React Email Foundation ✅**
 
 - `BaseEmail.tsx` — React Email layout matching approved design reference (coral strip, logo, content slot, footer).
 - `send.ts` — single canonical send helper; one `new Resend(...)` instance; renders React → HTML; graceful no-key fallback.
@@ -12,7 +23,6 @@
 - `preferred_locale` column: migration SQL provided (Supabase dashboard); `setAdminLocale` + registration flows now write it.
 - `emailChange.ts` migrated to use `sendEmail` helper; inline STRINGS unchanged.
 - `@react-email/components` + `react-email` installed; `npm run email` preview script added.
-- ⚠️ Requires DB migration: `ALTER TABLE users ADD COLUMN IF NOT EXISTS preferred_locale text NOT NULL DEFAULT 'sq' CONSTRAINT users_preferred_locale_check CHECK (preferred_locale IN ('sq', 'en', 'uk', 'it'));` — run in Supabase Dashboard → SQL Editor.
 
 → [Task 119 session log](sessions/2026-05-20-task-119-email-provider-setup.md)
 
@@ -196,27 +206,28 @@
 - ✅ **Epic B** — Tasks 108, 112–115 (auth side popup, agent city/company, logo upload, admin companies). **COMPLETE.** [summary](../tasks/Epics/Epic_B_Summary_CLOSED.md)
 - ✅ Epic C partial — Tasks 116 (C.1 research), 117 (C.2 report flow), 118 (C.3 reports dashboard).
 - ✅ **Epic D.1** — Task 119 (email foundation: BaseEmail, send helper, preferred_locale, emailChange migration).
+- ✅ **Epic D.3** — Task 120 (VerifyEmail template + BaseEmail locale fix + /auth/verified page + admin email status).
 
 **Epic D — Email Infrastructure & Account Lifecycle** (in progress)
 
 Plan: [`tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md`](../tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md)
 
-Queue (global numbering continues from Task 119):
+Queue (global numbering continues from Task 119; order chosen 2026-05-20 — D.3→D.4→D.6 first to reach the "disable Supabase auto-emails" goal fastest):
 
-- **Task 120** — Epic D.2 — Admin email template manager.
-- **Task 121** — Epic D.3 — Email verification after registration.
-- **Task 122** — Epic D.4 — Password / login recovery email.
-- **Task 123** — Epic D.5 — Inactive account warning emails (3 → 12 month lifecycle).
-- **Task 124** — Epic D.6 — Delegate Supabase Auth emails to our system via Send Email Hook (stops Supabase auto-emails to regular users). Depends on D.1 + D.3 + D.4. ← this is the goal behind "Supabase should not email new users".
+- ✅ **Task 120** — Epic D.3 — Email verification — DONE (VerifyEmail, /auth/verified, admin badge).
+- **Task 121** — Epic D.4 — Password / login recovery email. ← NEXT
+- **Task 122** — Epic D.6 — Delegate Supabase Auth emails via Send Email Hook (needs D.3 + D.4). ← disables Supabase auto-emails to regular users (the main goal).
+- **Task 123** — Epic D.2 — Admin email template manager.
+- **Task 124** — Epic D.5 — Inactive account warning emails (3 → 12 month lifecycle).
 
 **Deferred until Epic D ready:**
-- ⛔ Epic C.4 (reporter notification) — needs D.1 + D.4. Unblocks after Task 122.
+- ⛔ Epic C.4 (reporter notification) — needs D.4. Unblocks after Task 121.
 - ⏭ Epic C.5 (account blocking) — no email dependency; can be slotted in any time.
-- ⚠️ Do NOT disable Supabase "Confirm email" in the dashboard before D.3 exists — auto-confirm security hole. Delegation happens in D.6 (Task 124).
+- ⚠️ Do NOT disable Supabase "Confirm email" in the dashboard before the Send Email Hook (D.6 / Task 122) is live — auto-confirm security hole. D.3 (Task 120) only builds the template + flow; it does NOT fire a parallel email.
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
-> ⚠️ **Incident note (2026-05-20):** a working-tree corruption truncated ~13 files (AuthSheet 347/600 lines, locales −85 keys, etc.). There was NO real "Task 119" — it never existed as a commit or session log. Recovered via `git restore` to HEAD (Task 118); all committed work was safe on `origin/main`. The next Task 119 to be created is Epic C.5 (above).
+> ⚠️ **Incident note (2026-05-20, resolved):** a working-tree corruption truncated ~13 files (AuthSheet 347/600 lines, locales −85 keys, etc.) after Task 118. Recovered via `git restore` to HEAD (Task 118); all committed work was safe on `origin/main`. Task 119 was subsequently (re)done as Epic D.1 and is now committed/pushed (`40c0371c7`).
 
 ## Active product backlog (epics not yet started)
 
@@ -258,6 +269,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-20 | Epic D.3 — Email verification (VerifyEmail template, /auth/verified page, admin email status badge) | Task 120 | [sessions/2026-05-20-task-120-email-verification.md](sessions/2026-05-20-task-120-email-verification.md) |
 | 2026-05-20 | Epic D.1 — Email foundation (BaseEmail, send helper, preferred_locale, emailChange migration) | Task 119 | [sessions/2026-05-20-task-119-email-provider-setup.md](sessions/2026-05-20-task-119-email-provider-setup.md) |
 | 2026-05-20 | Epic C.3 — Admin reports dashboard (/admin/reports CRUD + audit log) | Task 118 | [sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md](sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md) |
 | 2026-05-20 | Epic C.2 — User report flow (ListingReportDialog, reportListingAction) | Task 117 | [sessions/2026-05-20-task-117-c2-user-report-flow.md](sessions/2026-05-20-task-117-c2-user-report-flow.md) |

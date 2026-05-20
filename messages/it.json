@@ -287,7 +287,10 @@
     "confirm_email_error_title": "Verifica fallita",
     "confirm_email_error_expired": "Questo link di verifica è scaduto. Richiedine uno nuovo.",
     "confirm_email_error_consumed": "Questo link di verifica è già stato utilizzato.",
-    "confirm_email_error_invalid": "Link di verifica non valido."
+    "confirm_email_error_invalid": "Link di verifica non valido.",
+    "verified_title": "Email confermata!",
+    "verified_body": "Il tuo indirizzo email è stato confermato con successo. Ora puoi sfogliare gli annunci e utilizzare tutte le funzionalità.",
+    "verified_browse": "Sfoglia annunci"
   },
   "common": {
     "search": "Cerca",
@@ -787,7 +790,9 @@
         "status": "Stato *",
         "block_reason": "Motivo blocco",
         "use_main_phone": "Usa il numero di telefono principale",
-        "last_name_optional": "Cognome"
+        "last_name_optional": "Cognome",
+        "email_confirmed": "Email confermato",
+        "email_not_confirmed": "Email non confermato"
       },
       "placeholders": {
         "first_name": "Nome",

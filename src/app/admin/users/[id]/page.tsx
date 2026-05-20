@@ -58,11 +58,13 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
     statusHistory = hist ?? []
   } catch {}
 
-  // Email from auth
+  // Email + confirmation status from auth
   let email = ''
+  let emailConfirmedAt: string | null = null
   try {
     const { data: authUser } = await db.auth.admin.getUserById(id)
     email = authUser?.user?.email ?? ''
+    emailConfirmedAt = authUser?.user?.email_confirmed_at ?? null
   } catch {}
 
   // Current viewer's role
@@ -76,6 +78,7 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
       <AdminUserProfile
         user={user}
         email={email}
+        emailConfirmedAt={emailConfirmedAt}
         cities={cities ?? []}
         regions={regions ?? []}
         changeLog={changeLog}

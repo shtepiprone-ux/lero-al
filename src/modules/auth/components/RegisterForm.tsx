@@ -43,7 +43,7 @@ export function RegisterForm() {
 
     try {
       const { error } = await signUp(email, password, {
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}`,
+        emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/auth/verified`,
         data: {
           name,
           phone,

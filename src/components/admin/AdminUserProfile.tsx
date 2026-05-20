@@ -41,6 +41,7 @@ type UserWithLocation = User & {
 interface Props {
   user: UserWithLocation | null   // null → create mode
   email: string                   // from auth; empty in create mode
+  emailConfirmedAt?: string | null
   cities: CityOption[]
   regions: RegionOption[]
   changeLog: UserChangeLog[]
@@ -318,7 +319,7 @@ function PasswordInfo() {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-export function AdminUserProfile({ user, email: authEmail, cities, regions, changeLog, statusHistory, isAdmin }: Props) {
+export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin }: Props) {
   const router = useRouter()
   const t = useTranslations('admin.user_profile')
   const locale = useLocale()
@@ -673,7 +674,14 @@ export function AdminUserProfile({ user, email: authEmail, cities, regions, chan
           <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
             <span className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email')}</span>
             <div className="min-w-0">
-              <span className="text-sm font-medium break-all">{authEmail}</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm font-medium break-all">{authEmail}</span>
+                {emailConfirmedAt !== undefined && (
+                  <Badge variant={emailConfirmedAt ? 'success' : 'warning'} className="text-[10px] shrink-0">
+                    {emailConfirmedAt ? t('fields.email_confirmed') : t('fields.email_not_confirmed')}
+                  </Badge>
+                )}
+              </div>
               <p className="text-xs text-muted-foreground mt-0.5">{t('fields.email_immutable')}</p>
             </div>
           </div>

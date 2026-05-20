@@ -287,7 +287,10 @@
     "confirm_email_error_title": "Підтвердження не вдалося",
     "confirm_email_error_expired": "Це посилання для підтвердження застаріло. Запросіть нове.",
     "confirm_email_error_consumed": "Це посилання вже було використано.",
-    "confirm_email_error_invalid": "Недійсне посилання для підтвердження."
+    "confirm_email_error_invalid": "Недійсне посилання для підтвердження.",
+    "verified_title": "Email підтверджено!",
+    "verified_body": "Вашу електронну адресу успішно підтверджено. Тепер ви можете переглядати оголошення та користуватися всіма функціями.",
+    "verified_browse": "Переглянути оголошення"
   },
   "common": {
     "search": "Пошук",
@@ -787,7 +790,9 @@
         "status": "Статус *",
         "block_reason": "Причина блокування",
         "use_main_phone": "Використовувати основний номер",
-        "last_name_optional": "Прізвище"
+        "last_name_optional": "Прізвище",
+        "email_confirmed": "Email підтверджено",
+        "email_not_confirmed": "Email не підтверджено"
       },
       "placeholders": {
         "first_name": "Ім'я",

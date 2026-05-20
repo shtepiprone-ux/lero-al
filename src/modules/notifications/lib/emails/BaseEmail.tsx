@@ -27,12 +27,13 @@ export const BRAND_AA = '#BD4339'
 
 interface BaseEmailProps {
   preview?: string
+  locale?: string
   children: React.ReactNode
 }
 
-export function BaseEmail({ preview, children }: BaseEmailProps) {
+export function BaseEmail({ preview, locale = 'sq', children }: BaseEmailProps) {
   return (
-    <Html lang="sq">
+    <Html lang={locale}>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>

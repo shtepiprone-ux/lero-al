@@ -287,7 +287,10 @@
     "confirm_email_error_title": "Verifikimi dështoi",
     "confirm_email_error_expired": "Ky lidhje verifikimi ka skaduar. Ju lutemi kërkoni një të re.",
     "confirm_email_error_consumed": "Kjo lidhje verifikimi është përdorur tashmë.",
-    "confirm_email_error_invalid": "Lidhje verifikimi e pavlefshme."
+    "confirm_email_error_invalid": "Lidhje verifikimi e pavlefshme.",
+    "verified_title": "Email u konfirmua!",
+    "verified_body": "Adresa juaj e emailit është konfirmuar me sukses. Tani mund të shfletoni listimet dhe të përdorni të gjitha funksionalitetet.",
+    "verified_browse": "Shfleto listimet"
   },
   "common": {
     "search": "Kërko",
@@ -787,7 +790,9 @@
         "status": "Statusi *",
         "block_reason": "Arsyeja e bllokimit",
         "use_main_phone": "Përdor numrin kryesor të telefonit",
-        "last_name_optional": "Mbiemri"
+        "last_name_optional": "Mbiemri",
+        "email_confirmed": "Email konfirmuar",
+        "email_not_confirmed": "Email i pakonfirmuar"
       },
       "placeholders": {
         "first_name": "Emri",

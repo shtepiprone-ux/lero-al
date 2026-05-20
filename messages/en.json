@@ -287,7 +287,10 @@
     "confirm_email_error_title": "Verification failed",
     "confirm_email_error_expired": "This verification link has expired. Please request a new one.",
     "confirm_email_error_consumed": "This verification link has already been used.",
-    "confirm_email_error_invalid": "Invalid verification link."
+    "confirm_email_error_invalid": "Invalid verification link.",
+    "verified_title": "Email confirmed!",
+    "verified_body": "Your email address has been successfully confirmed. You can now browse listings and use all features.",
+    "verified_browse": "Browse listings"
   },
   "common": {
     "search": "Search",
@@ -787,7 +790,9 @@
         "status": "Status *",
         "block_reason": "Block reason",
         "use_main_phone": "Use main phone number",
-        "last_name_optional": "Last name"
+        "last_name_optional": "Last name",
+        "email_confirmed": "Email confirmed",
+        "email_not_confirmed": "Email not confirmed"
       },
       "placeholders": {
         "first_name": "First name",

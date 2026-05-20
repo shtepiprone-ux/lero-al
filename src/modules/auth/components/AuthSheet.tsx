@@ -423,6 +423,7 @@ function RegisterView({
         user_type: isAgent ? 'agent' : 'private',
         location_id: isAgent && locationId ? parseInt(locationId, 10) : undefined,
         company_id: isAgent && companyId ? companyId : undefined,
+        preferred_locale: locale,
       },
     })
     setLoading(false)

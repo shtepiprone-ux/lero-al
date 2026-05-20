@@ -1,13 +1,19 @@
 /**
  * Email templates and sender for the email-change flow.
  *
- * Both emails are plain-text-fallback-friendly and mobile-responsive.
- * Requires RESEND_API_KEY env variable (server-only).
+ * Sends two emails: verification link to the new address + security notice
+ * to the old address. Both are plain-text-fallback-friendly and mobile-responsive.
+ *
+ * Locale strings are inline (sq/en/uk/it) — emails render server-side outside
+ * the next-intl context. This is the canonical pattern for all code-first
+ * transactional emails (see docs/integrations.md § Email Template Architecture).
+ *
+ * NOTE: HTML is hand-crafted here (not a React Email component) because the
+ * email-change flow predates the React Email foundation. Converting it to a
+ * BaseEmail-wrapped component is deferred to a future cleanup task — the
+ * required outcome is routing through the shared send helper, which is done.
  */
-
-import { Resend } from 'resend'
-
-const FROM_ADDRESS = 'Lero.al <noreply@lero.al>'
+import { sendEmail } from './send'
 
 // ── Locale strings ────────────────────────────────────────────────────────────
 
@@ -145,19 +151,9 @@ export async function sendEmailChangeEmails(opts: {
   ip?: string
   userAgent?: string
 }): Promise<void> {
-  const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) {
-    if (process.env.NODE_ENV === 'development') {
-      console.info('[email-change] RESEND_API_KEY not set — skipping send. Verification URL:', opts.verificationUrl)
-    }
-    return
-  }
-
-  const resend = new Resend(apiKey)
   const s = getStrings(opts.locale)
   const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Tirana' })
 
-  // Build device hint for security email
   let deviceHint = ''
   if (opts.ip) deviceHint += opts.ip
   if (opts.userAgent) {
@@ -167,25 +163,23 @@ export async function sendEmailChangeEmails(opts: {
     else deviceHint += (deviceHint ? ' · ' : '') + 'Desktop'
   }
 
-  const [verifyResult, securityResult] = await Promise.allSettled([
-    resend.emails.send({
-      from: FROM_ADDRESS,
+  const [verifyResult, securityResult] = await Promise.all([
+    sendEmail({
       to: opts.newEmail,
       subject: s.verifySubject,
       html: verificationHtml(s, opts.verificationUrl),
     }),
-    resend.emails.send({
-      from: FROM_ADDRESS,
+    sendEmail({
       to: opts.oldEmail,
       subject: s.securitySubject,
       html: securityHtml(s, opts.oldEmail, opts.newEmail, timestamp, deviceHint),
     }),
   ])
 
-  if (verifyResult.status === 'rejected') {
-    console.error('[email-change] Failed to send verification email', { error: verifyResult.reason, to: opts.newEmail })
+  if (verifyResult.error) {
+    console.error('[email-change] Failed to send verification email', { to: opts.newEmail })
   }
-  if (securityResult.status === 'rejected') {
-    console.error('[email-change] Failed to send security email', { error: securityResult.reason, to: opts.oldEmail })
+  if (securityResult.error) {
+    console.error('[email-change] Failed to send security email', { to: opts.oldEmail })
   }
 }

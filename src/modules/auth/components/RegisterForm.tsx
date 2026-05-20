@@ -49,6 +49,7 @@ export function RegisterForm() {
           phone,
           user_type: userType,
           company_name: userType === 'agent' ? companyName : null,
+          preferred_locale: locale,
         },
       })
 

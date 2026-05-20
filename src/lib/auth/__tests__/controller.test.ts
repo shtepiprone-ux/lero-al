@@ -70,6 +70,8 @@ const MOCK_USER: User = {
   preferred_currency: 'ALL',
   pending_email: null,
   last_seen_at: null,
+  company_id: null,
+  preferred_locale: 'sq',
   created_at: '2026-01-01T00:00:00.000Z',
 }
 

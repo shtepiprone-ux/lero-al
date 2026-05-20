@@ -32,11 +32,13 @@
     "profile:lcp": "node scripts/profile-listing-lcp.mjs",
     "profile:lcp:lighthouse": "node scripts/compare-listing-lcp-lighthouse.mjs",
     "profile:lcp:production": "node scripts/validate-production-lcp.mjs",
-    "diagnose:lcp:network": "node scripts/diagnose-lcp-preload-network.mjs"
+    "diagnose:lcp:network": "node scripts/diagnose-lcp-preload-network.mjs",
+    "email": "email dev --dir src/modules/notifications/lib/emails"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",
     "@hookform/resolvers": "^5.2.2",
+    "@react-email/components": "^1.0.12",
     "@sentry/nextjs": "^10.49.0",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
@@ -79,6 +81,7 @@
     "jsdom": "^29.1.1",
     "lighthouse": "^13.3.0",
     "playwright": "^1.60.0",
+    "react-email": "^6.1.5",
     "shadcn": "^4.3.0",
     "storybook": "^8.6.18",
     "tailwindcss": "^4",

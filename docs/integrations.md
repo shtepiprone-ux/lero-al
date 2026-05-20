@@ -36,7 +36,7 @@ The following external service accounts are already registered and available for
 ### Resend Setup
 - Account is registered at https://resend.com .
 - Check the current Resend plan limits in the Resend dashboard before relying on quota assumptions.
-- Install: `npm install resend`.
+- Packages installed: `resend@^6.12.3` (prod), `@react-email/components@^1.0.12` (prod), `react-email@^6.1.5` (dev).
 - Environment variable needed: `RESEND_API_KEY` — from Resend dashboard (server-only).
 - Use Resend for:
   - Email confirmation on registration;
@@ -45,9 +45,83 @@ The following external service accounts are already registered and available for
   - Saved search match notifications;
   - Support ticket replies;
   - Listing expiry warnings;
-  - Email-change verification email (new address) — **pending Task 34 integration**;
-  - Email-change security notification (old address) — **pending Task 34 integration**.
-- Create email templates in `src/modules/notifications/lib/emails/`.
+  - Email-change verification email (new address);
+  - Email-change security notification (old address).
+- All templates live in `src/modules/notifications/lib/emails/`.
 - NEVER call Resend from client-side code — only from server actions or API routes.
+- NEVER instantiate `new Resend(...)` outside `src/modules/notifications/lib/emails/send.ts`.
 
-**Email-change flow**: `initiateEmailChange` and `resendEmailVerification` call `sendEmailChangeEmails()` from `src/modules/notifications/lib/emails/emailChange.ts`. This sends two emails via Resend: verification email to the new address and security notification to the old address. Requires `RESEND_API_KEY` env var and `noreply@lero.al` verified as a sender in the Resend dashboard. If `RESEND_API_KEY` is absent (e.g. local dev without key), the function logs the verification URL to console and returns silently.
+**Canonical send helper (Task 119)**: `src/modules/notifications/lib/emails/send.ts` — the only place that instantiates `new Resend(...)`. Call `sendEmail({ to, subject, react | html })` from any server action. Accepts a React Email component (rendered via `@react-email/render`) or a pre-built HTML string. Graceful no-key fallback: logs and returns silently if `RESEND_API_KEY` is absent.
+
+**BaseEmail layout (Task 119)**: `src/modules/notifications/lib/emails/BaseEmail.tsx` — shared React Email layout component matching the approved design reference (`Epic_D_email_design_reference.html`). Top 3px coral strip, logo tile + wordmark, content slot, faint-grey footer. Brand accent `BRAND_ACCENT = '#EC5447'` is exported as a constant — never hardcode it per-template.
+
+**Local email preview server**: `npm run email` — launches the React Email preview server at `http://localhost:3000` showing all templates in `src/modules/notifications/lib/emails/`. Templates added in future tasks (D.3, D.4, etc.) appear there automatically.
+
+**Email-change flow**: `initiateEmailChange` and `resendEmailVerification` call `sendEmailChangeEmails()` from `src/modules/notifications/lib/emails/emailChange.ts`. Routes through the canonical send helper. Inline STRINGS (sq/en/uk/it) are preserved. If `RESEND_API_KEY` is absent, `sendEmail` logs and returns silently (graceful no-key fallback).
+
+### Email Template Architecture (decided 2026-05-20)
+
+**Chosen model: HYBRID — code-first React Email for critical transactional emails + DB-driven admin template manager (Epic D.2) for editable/marketing emails.**
+
+Rationale: Resend is code-first (same team as React Email). Managing multilingual (sq/en/uk/it) transactional templates with dynamic data in the Resend dashboard is impractical (publish flow, 4 locales × N templates). Code-first templates version in git, are type-safe, and handle dynamic data + locale via props. The Resend dashboard is NOT the source of truth.
+
+**Two layers:**
+
+1. **Code-first React Email** (`@react-email/components`) — for critical transactional emails where correctness and version control matter. Source of truth = git.
+   - A single shared `BaseEmail` layout (header/footer/branding) wraps every template.
+   - Localization uses INLINE per-template strings (sq/en/uk/it), selected by a `locale` prop — emails render server-side outside the next-intl context. (Same pattern as the existing `emailChange.ts`.)
+   - Templates live in `src/modules/notifications/lib/emails/`.
+   - Sent through the single canonical send helper (Epic D.1) — only ONE place instantiates `new Resend(...)`.
+
+2. **DB-driven admin template manager** (Epic D.2) — for editable / marketing / non-critical emails an admin should change without a deploy. Source of truth = DB table, edited in `/admin`.
+
+**Template inventory (target ~9):**
+
+| Template | Layer | Epic / Task |
+|---|---|---|
+| Email-change verify + security (exists) | code-first | done (`emailChange.ts`) |
+| Email verification (registration) | code-first | D.3 |
+| Password / login recovery | code-first | D.4 |
+| Welcome email (post-registration) | code-first or admin | D.3 area |
+| Inactivity warning — 3 months | code-first | D.5 |
+| Inactivity final — 12 months | code-first | D.5 |
+| Reporter notification (complaint outcome) | code-first | C.4 (after D.1+D.4) |
+| Saved-search new-listing alert | admin-editable | E.4 |
+| Price-change alert (favorites) | admin-editable | F.3 |
+
+**Approved visual design reference:** `tasks/Epics/Epic_D_email_design_reference.html` — the approved look for all transactional emails (monochrome graphite + coral `#EC5447` accent, single CTA, 600px card, Vercel/ChatGPT/Appwrite style). The `BaseEmail` React Email layout (Task 119) re-implements this; every template wraps it.
+
+**Rules:**
+- NEVER call Resend from client-side code — server actions / API routes only.
+- ALL email-trigger failures surfaced to the client follow the Epic A error-code contract (server returns code, client resolves via `t()`).
+- The Resend dashboard is for sender/domain verification and broadcasts only — NOT the transactional template store.
+- Brand accent colour lives in ONE `BaseEmail` constant (`#EC5447` = `--brand-700`; darker `#BD4339` = `--brand-800` for AA-critical text). Never hardcode it per-template.
+
+### Locale-aware sending (decided 2026-05-20)
+
+**Every email is sent in the recipient's chosen language** (the locale they selected on the site / admin). A user who picked Ukrainian on the site receives Ukrainian emails — they are far more likely to understand them. Fallback chain: recipient locale → `sq` (default).
+
+**Source of truth: `preferred_locale` column on the user profile.** Added in Task 119.
+
+**Migration location confirmed (Task 119):** There is NO `supabase/` migrations folder in the repo. DB migrations are applied manually via the Supabase dashboard SQL editor. The `preferred_locale` migration SQL is in the Task 119 session log (`docs/sessions/2026-05-20-task-119-email-provider-setup.md`) and must be run by the owner in Supabase Dashboard → SQL Editor before deploying.
+
+- `preferred_locale` is written whenever the user changes locale: `setAdminLocale` server action (`src/modules/admin/actions/locale.ts`) now also updates the user's profile row — covers both the public site LocaleSwitcher (via Header.tsx) and the admin panel LocaleSwitcher.
+- On registration, `preferred_locale: locale` is passed in the `signUp` metadata by `AuthSheet.tsx` and `RegisterForm.tsx`, then written in `auth/callback/route.ts` `ensureUserProfile()`.
+- `resolveUserLocale(userId, requestLocale?)` helper: `src/modules/notifications/lib/emails/resolveUserLocale.ts`. Fallback chain: profile `preferred_locale` → requestLocale → `sq`. Uses service-role client (no session available in email dispatch context).
+- Background jobs (inactivity warnings D.5, saved-search E.4, price-change F.3) have NO request context → they MUST call `resolveUserLocale(userId)` to get the correct locale.
+- `preferred_locale` type in `src/types/database.ts`: `string` (non-null, DB default `'sq'`).
+
+### Supabase Auth emails — delegation (decided 2026-05-20)
+
+Supabase Auth currently sends its own built-in "Confirm signup" email automatically on `signUp` and `auth.admin.createUser`. Target end state: **delegate ALL Supabase auth emails to our system via the Supabase Send Email Hook** (Edge Function → Resend + React Email), so regular users only ever receive our branded emails — not Supabase's defaults.
+
+- Implemented in **Epic D.6** (Task 124) — depends on D.1 (send helper) + D.3 (verification template) + D.4 (recovery template).
+- ⚠️ Do NOT simply disable "Confirm email" in the dashboard before D.3 exists — that makes new users auto-confirmed with no verification (security hole). Confirmation must stay required, just delivered by our system.
+- Hook registration (Dashboard → Authentication → Hooks) is a manual owner action — the agent cannot toggle it.
+
+**Two distinct email levels (do not conflate):**
+
+1. **User-facing auth emails** (confirm signup, magic link, password reset, email change, reauthentication) — sent to app end-users. PROJECT level (Auth config). These are the ones we delegate to our Resend system in D.6 / make disappear from Supabase's defaults.
+2. **Supabase service / security / project emails** (project changes, security alerts, billing) — sent to the Supabase ACCOUNT / organization OWNER only. ACCOUNT level — never sent to app users, not controlled by app code. These are already "super-admin only" by design; D.6 does NOT touch them.
+
+Owner clarification (2026-05-20): "emails only for super admin" = keep the account-level service/security emails going to the owner (level 2, already the case), and make the user-facing ones (level 1) disappear from Supabase and be served by our system. → No extra code needed for level 2; owner should just confirm the notification email + security alerts are enabled in Supabase Dashboard → Account/Organization settings.

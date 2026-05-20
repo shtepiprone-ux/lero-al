@@ -81,6 +81,7 @@ export interface User {
   preferred_currency: PreferredCurrency
   pending_email: string | null
   last_seen_at: string | null
+  preferred_locale: string
   created_at: string
 }
 

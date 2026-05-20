@@ -38,6 +38,10 @@ async function ensureUserProfile(): Promise<void> {
     const meta = authUser.user_metadata ?? {}
     const supabase = await createClient()
 
+    const SUPPORTED_LOCALES = ['sq', 'en', 'uk', 'it']
+    const metaLocale = meta.preferred_locale as string | undefined
+    const preferredLocale = metaLocale && SUPPORTED_LOCALES.includes(metaLocale) ? metaLocale : 'sq'
+
     await supabase.from('users').upsert(
       {
         id: authUser.id,
@@ -48,6 +52,7 @@ async function ensureUserProfile(): Promise<void> {
         user_type: 'private',
         role: 'user',
         is_verified: false,
+        preferred_locale: preferredLocale,
       },
       { onConflict: 'id', ignoreDuplicates: true }
     )

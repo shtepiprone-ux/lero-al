@@ -1,6 +1,13 @@
 # Epic C — Trust, Safety & Moderation
 
-**Status:** OPEN
+**Status:** IN PROGRESS — C.1–C.3 done (Tasks 116–118); C.4 BLOCKED by Epic D; C.5 next available
+
+> Progress (global numbering):
+> - ✅ Task 116 — C.1 Anti-scam messaging research & decision (commit `f6c2a69d6`)
+> - ✅ Task 117 — C.2 User report flow (commit `f6c2a69d6`)
+> - ✅ Task 118 — C.3 Admin / moderator complaint dashboard (commit `b4b9e6f21`)
+> - ⛔ C.4 Reporter notification flow — BLOCKED: needs Epic D.1 (transactional email) + D.4 first. Do NOT start until Epic D email infra exists.
+> - ⏭ C.5 Account blocking / suspension tools — next available task (no email dependency). Would be **Task 119**.
 **Opened:** 2026-05-19
 
 ## Goal

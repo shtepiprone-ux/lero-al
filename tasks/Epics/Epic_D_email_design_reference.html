@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+  EMAIL DESIGN REFERENCE — Lero.al (approved 2026-05-20)
+  =====================================================
+  This is a STATIC design reference, NOT production code.
+  Purpose: the approved visual starting point for all Lero.al transactional emails.
+  Sonnet (Claude Code) re-implements this as a React Email component (@react-email/components)
+  in Task 119 (BaseEmail layout) + Task 121 (D.3 verification template), email-client-safe,
+  localized into sq/en/uk/it.
+
+  Design language (refs: Vercel, ChatGPT, Appwrite, Trello):
+  - Monochrome graphite base + ONE brand accent (coral #EC5447, --brand-700 from globals.css; hover #BD4339 / --brand-800).
+  - Single clear call-to-action (solid coral button).
+  - System font stack, large H1 with negative letter-spacing, muted body (#52525b), line-height ~1.65.
+  - 600px centred card, generous padding (48px sides), thin 1px borders, no shadows/gradients.
+  - Accent applied ONLY to: top 3px strip, logo tile, ".al" in wordmark, CTA, fallback-link tint. Everything else graphite.
+  - Footer on faint grey, muted small text.
+
+  Accessibility note: #EC5447 + white text on the CTA is ~3:1 contrast (OK for large button text).
+  For strict WCAG AA on smaller coral text, use --brand-800 #BD4339. Keep the colour in ONE BaseEmail constant.
+
+  Localization: text below is English for reference only. Production renders in the RECIPIENT's
+  chosen locale (see "Email Template Architecture" + "Locale-aware sending" in docs/integrations.md).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lero.al — email design reference (verification)</title>
+</head>
+<body style="margin:0; padding:32px 16px; background:#f4f4f5; font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+  <div style="max-width:600px; margin:0 auto; background:#ffffff; border:1px solid #ececec; border-radius:14px; overflow:hidden; color:#18181b;">
+
+    <div style="height:3px; background:#EC5447;"></div>
+
+    <div style="padding:38px 48px 0;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <span style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#EC5447; border-radius:7px; color:#ffffff; font-size:15px; font-weight:600;">L</span>
+        <span style="font-size:17px; font-weight:500; letter-spacing:-0.2px; color:#18181b;">Lero<span style="color:#EC5447;">.al</span></span>
+      </div>
+    </div>
+
+    <div style="padding:32px 48px 8px;">
+      <div style="font-size:28px; font-weight:500; letter-spacing:-0.5px; line-height:1.25; color:#18181b;">Confirm your email</div>
+      <p style="font-size:16px; line-height:1.65; color:#52525b; margin:16px 0 0;">Thanks for signing up for Lero.al. Confirm your email address to activate your account and start exploring listings across Albania.</p>
+    </div>
+
+    <div style="padding:28px 48px 4px;">
+      <a href="https://lero.al/auth/confirm?token=demo" style="display:block; text-align:center; background:#EC5447; color:#ffffff; font-size:15px; font-weight:500; text-decoration:none; padding:14px 24px; border-radius:10px;">Confirm email address</a>
+    </div>
+
+    <div style="padding:20px 48px 0;">
+      <p style="font-size:13px; line-height:1.6; color:#71717a; margin:0 0 8px;">Or paste this link into your browser:</p>
+      <div style="font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:12px; color:#3f3f46; background:#fdf1f0; border:1px solid #f7d7d3; border-radius:8px; padding:10px 12px; word-break:break-all;">https://lero.al/auth/confirm?token=8f3a…d21c</div>
+    </div>
+
+    <div style="padding:22px 48px 36px;">
+      <p style="font-size:13px; line-height:1.6; color:#a1a1aa; margin:0;">This link expires in 24 hours. If you didn't create a Lero.al account, you can safely ignore this email.</p>
+    </div>
+
+    <div style="border-top:1px solid #f0f0f0; padding:24px 48px 36px; background:#fafafa;">
+      <p style="font-size:13px; font-weight:500; color:#3f3f46; margin:0;">Lero<span style="color:#EC5447;">.al</span></p>
+      <p style="font-size:12px; line-height:1.6; color:#a1a1aa; margin:4px 0 0;">Real estate marketplace for Albania</p>
+      <p style="font-size:12px; line-height:1.6; color:#a1a1aa; margin:14px 0 0;">
+        <a href="https://lero.al/help" style="color:#71717a; text-decoration:none;">Help center</a>
+        <span style="color:#d4d4d8;">&nbsp;·&nbsp;</span>
+        <a href="https://lero.al/privacy" style="color:#71717a; text-decoration:none;">Privacy</a>
+        <span style="color:#d4d4d8;">&nbsp;·&nbsp;</span>
+        <span>© 2026 Lero.al</span>
+      </p>
+    </div>
+
+  </div>
+
+</body>
+</html>

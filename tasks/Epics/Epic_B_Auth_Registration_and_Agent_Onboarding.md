@@ -1,6 +1,6 @@
 # Epic B — Auth, Registration & Agent Onboarding
 
-**Status:** OPEN
+**Status:** CLOSED ✅ (Tasks 108, 112–115) — see [`Epic_B_Summary_CLOSED.md`](./Epic_B_Summary_CLOSED.md)
 **Opened:** 2026-05-19
 **Numbering:** Global counter continues after Sprint 1.
 

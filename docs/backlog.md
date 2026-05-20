@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-20 — Task 118 — Epic C.3 — Admin Reports Dashboard ✅**
+**2026-05-20 — Task 119 — Epic D.1 — Email Provider Setup + React Email Foundation ✅**
+
+- `BaseEmail.tsx` — React Email layout matching approved design reference (coral strip, logo, content slot, footer).
+- `send.ts` — single canonical send helper; one `new Resend(...)` instance; renders React → HTML; graceful no-key fallback.
+- `resolveUserLocale(userId)` — fallback chain: `preferred_locale` → requestLocale → `sq`.
+- `preferred_locale` column: migration SQL provided (Supabase dashboard); `setAdminLocale` + registration flows now write it.
+- `emailChange.ts` migrated to use `sendEmail` helper; inline STRINGS unchanged.
+- `@react-email/components` + `react-email` installed; `npm run email` preview script added.
+- ⚠️ Requires DB migration: `ALTER TABLE users ADD COLUMN IF NOT EXISTS preferred_locale text NOT NULL DEFAULT 'sq' CONSTRAINT users_preferred_locale_check CHECK (preferred_locale IN ('sq', 'en', 'uk', 'it'));` — run in Supabase Dashboard → SQL Editor.
+
+→ [Task 119 session log](sessions/2026-05-20-task-119-email-provider-setup.md)
+
+**Previous: 2026-05-20 — Task 118 — Epic C.3 — Admin Reports Dashboard ✅**
 
 - `/admin/reports` page with status filter tabs + counts; `AdminReportsManager` table with `ReportDetailDialog`.
 - `ReportDetailDialog`: shows reason/listing/reporter/comment, action buttons (review/resolve/dismiss) + notes.
@@ -176,35 +188,35 @@
 
 ## Next Immediate Tasks
 
-**Now: Sprint 3 — UI Primitive & Drawer Cleanup (clears the governance gate before Epic B continues).**
+**Last completed: Task 119 (Epic D.1 — email foundation).** ⚠️ DB migration required before deploy (see session log).
 
-Plan: [`tasks/Sprints/Sprint_3_—_UI_Primitive_and_Drawer_Cleanup.md`](../tasks/Sprints/Sprint_3_—_UI_Primitive_and_Drawer_Cleanup.md)
+**Recently CLOSED:**
+- ✅ Sprint 2 — Task 107 (dead-code cleanup). [summary](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)
+- ✅ Sprint 3 — Tasks 109–111 (primitive + drawer + tailwind entropy; governance gates closed). [summary](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
+- ✅ **Epic B** — Tasks 108, 112–115 (auth side popup, agent city/company, logo upload, admin companies). **COMPLETE.** [summary](../tasks/Epics/Epic_B_Summary_CLOSED.md)
+- ✅ Epic C partial — Tasks 116 (C.1 research), 117 (C.2 report flow), 118 (C.3 reports dashboard).
+- ✅ **Epic D.1** — Task 119 (email foundation: BaseEmail, send helper, preferred_locale, emailChange migration).
 
-- ✅ **Task 109** — Primitive debt burn-down (close `governance:primitives` H:+30). CLOSED.
-- ✅ **Task 110** — Fix mobile drawer canonical padding. CLOSED.
-- ✅ **Task 111** — Tailwind entropy burn-down (py-10, bg-black, text-[11px]). CLOSED.
+**Epic D — Email Infrastructure & Account Lifecycle** (in progress)
 
-**Sprint 3 CLOSED.** See [`tasks/Sprints/Sprint_3_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
+Plan: [`tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md`](../tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md)
 
-**Now: Continue Epic B — Auth, Registration & Agent Onboarding.**
+Queue (global numbering continues from Task 119):
 
-Plan file: [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md)
+- **Task 120** — Epic D.2 — Admin email template manager.
+- **Task 121** — Epic D.3 — Email verification after registration.
+- **Task 122** — Epic D.4 — Password / login recovery email.
+- **Task 123** — Epic D.5 — Inactive account warning emails (3 → 12 month lifecycle).
+- **Task 124** — Epic D.6 — Delegate Supabase Auth emails to our system via Send Email Hook (stops Supabase auto-emails to regular users). Depends on D.1 + D.3 + D.4. ← this is the goal behind "Supabase should not email new users".
 
-Done so far:
-- ✅ **Task 107** — Sprint 2 cleanup (dead-code avatar actions removed). CLOSED.
-- ✅ **Task 108** — Epic B.1 — Side popup auth flow (`AuthSheet`). CLOSED.
-- ✅ **Task 112** — Epic B.2 — Agent city selection (`LocationCombobox` in AuthSheet). CLOSED.
+**Deferred until Epic D ready:**
+- ⛔ Epic C.4 (reporter notification) — needs D.1 + D.4. Unblocks after Task 122.
+- ⏭ Epic C.5 (account blocking) — no email dependency; can be slotted in any time.
+- ⚠️ Do NOT disable Supabase "Confirm email" in the dashboard before D.3 exists — auto-confirm security hole. Delegation happens in D.6 (Task 124).
 
-Queue (global numbering continues from Task 112):
+Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
-- ✅ **Task 112** — Epic B.2 — Agent city selection. CLOSED.
-- ✅ **Task 113** — Epic B.3 — Agent company selection. CLOSED. ⚠️ Needs SQL migration (done).
-- ✅ **Task 114** — Epic B.4 — Company logo upload. CLOSED.
-- ✅ **Task 115** — Epic B.5 — Admin company management page. CLOSED. **Epic B complete.**
-- **Task 114** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
-- **Task 115** — Epic B.5 — Admin company management page (Epic K table pattern).
-
-Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
+> ⚠️ **Incident note (2026-05-20):** a working-tree corruption truncated ~13 files (AuthSheet 347/600 lines, locales −85 keys, etc.). There was NO real "Task 119" — it never existed as a commit or session log. Recovered via `git restore` to HEAD (Task 118); all committed work was safe on `origin/main`. The next Task 119 to be created is Epic C.5 (above).
 
 ## Active product backlog (epics not yet started)
 
@@ -246,6 +258,11 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-20 | Epic D.1 — Email foundation (BaseEmail, send helper, preferred_locale, emailChange migration) | Task 119 | [sessions/2026-05-20-task-119-email-provider-setup.md](sessions/2026-05-20-task-119-email-provider-setup.md) |
+| 2026-05-20 | Epic C.3 — Admin reports dashboard (/admin/reports CRUD + audit log) | Task 118 | [sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md](sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md) |
+| 2026-05-20 | Epic C.2 — User report flow (ListingReportDialog, reportListingAction) | Task 117 | [sessions/2026-05-20-task-117-c2-user-report-flow.md](sessions/2026-05-20-task-117-c2-user-report-flow.md) |
+| 2026-05-20 | Epic C.1 — Trust & safety research (protection stack decision) | Task 116 | [sessions/2026-05-20-task-116-c1-trust-safety-research.md](sessions/2026-05-20-task-116-c1-trust-safety-research.md) |
+| 2026-05-20 | Epic B.5 — Admin company management (/admin/companies CRUD, sidebar nav, Dialog modals) | Task 115 | [sessions/2026-05-20-task-115-admin-company-management.md](sessions/2026-05-20-task-115-admin-company-management.md) |
 | 2026-05-19 | Epic B.1 — Side popup auth (AuthSheet + error-code contract) | Task 108 | [sessions/2026-05-19-task-108-side-popup-auth.md](sessions/2026-05-19-task-108-side-popup-auth.md) |
 | 2026-05-19 | Epic A.4 — Mobile locale switcher promoted to header as Combobox | Task 106 | [sessions/2026-05-19-task-106-mobile-locale-switcher-header.md](sessions/2026-05-19-task-106-mobile-locale-switcher-header.md) |
 | 2026-05-19 | Epic A.3 — Locale persistence site ↔ admin (middleware cookie sync) | Task 105 | [sessions/2026-05-19-task-105-locale-persistence-admin.md](sessions/2026-05-19-task-105-locale-persistence-admin.md) |

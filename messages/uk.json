@@ -246,6 +246,8 @@
     "company": "Назва компанії (опціонально)",
     "city": "Місто (необов'язково)",
     "city_placeholder": "Оберіть ваше місто",
+    "company_select_placeholder": "Оберіть компанію",
+    "company_add_new": "Додати нову компанію",
     "register_as": "Зареєструватись як",
     "register_agent": "Реєстрація як агент",
     "no_account": "Немає акаунту?",

@@ -49,6 +49,13 @@ export type ReportReason = 'spam' | 'fraud' | 'duplicate' | 'wrong_category' | '
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
 export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing'
 
+export interface Company {
+  id: string
+  name: string
+  logo_url: string | null
+  created_at: string
+}
+
 export interface User {
   id: string
   name: string | null
@@ -62,6 +69,7 @@ export interface User {
   block_reason: string | null
   company_name: string | null
   company_logo_url: string | null
+  company_id: string | null
   website: string | null
   is_verified: boolean
   social_provider: string | null

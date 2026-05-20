@@ -246,6 +246,8 @@
     "company": "Emri i kompanisë (opsional)",
     "city": "Qyteti (opsional)",
     "city_placeholder": "Zgjidhni qytetin tuaj",
+    "company_select_placeholder": "Zgjidhni kompaninë",
+    "company_add_new": "Shto kompani të re",
     "register_as": "Regjistrohu si",
     "register_agent": "Regjistrohu si agjent",
     "no_account": "Nuk keni llogari?",

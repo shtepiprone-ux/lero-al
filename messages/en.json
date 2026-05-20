@@ -246,6 +246,8 @@
     "company": "Company name (optional)",
     "city": "City (optional)",
     "city_placeholder": "Select your city",
+    "company_select_placeholder": "Select your company",
+    "company_add_new": "Add new company",
     "register_as": "Register as",
     "register_agent": "Register as agent",
     "no_account": "Don't have an account?",

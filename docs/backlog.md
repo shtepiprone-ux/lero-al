@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-20 — Task 112 — Epic B.2 — Agent City Selection ✅**
+**2026-05-20 — Task 113 — Epic B.3 — Agent Company Selection ✅ (DB migration required)**
+
+- New `companies` table + `company_id` FK on `users` (SQL in session log — must run before deploy).
+- New module `src/modules/companies/`: `getCompanies()`, `createCompanyAction()` (service-role), `useCompanies` hook.
+- `CompanyField` sub-component in AuthSheet: searchable `Combobox` + inline "Add new company" form.
+- `company_id` passed via signUp metadata → applied in `/auth/callback` `ensureUserProfile()`.
+- 2 new i18n keys (`auth.company_select_placeholder`, `auth.company_add_new`) × 4 locales.
+- governance:localization PASS · governance:primitives PASS · lint 0/0.
+
+→ [Task 113 session log](sessions/2026-05-20-task-113-agent-company-selection.md) ← contains the required SQL migration
+
+**Previous: 2026-05-20 — Task 112 — Epic B.2 — Agent City Selection ✅**
 
 - `AgentCityField` sub-component wraps `useLocations` + `LocationCombobox` (canonical, `portal={true}` to avoid Sheet clipping).
 - Added `locationId` state to `RegisterView`; city passed via `signUp` metadata as `location_id` integer.
@@ -135,7 +146,7 @@ Done so far:
 Queue (global numbering continues from Task 112):
 
 - ✅ **Task 112** — Epic B.2 — Agent city selection. CLOSED.
-- **Task 113** — Epic B.3 — Agent company selection with logo display (new `companies` table + RLS). Replaces the temporary plain-text `company` field added in Task 108.
+- ✅ **Task 113** — Epic B.3 — Agent company selection (Combobox + inline add + `companies` table). CLOSED. ⚠️ Needs SQL migration.
 - **Task 114** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
 - **Task 115** — Epic B.5 — Admin company management page (Epic K table pattern).
 
@@ -157,6 +168,7 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 | Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
 | Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
+| 2026-05-20 | Epic B.3 — Agent company selection (companies table, CompanyField, service-role action, callback update) | Task 113 | [sessions/2026-05-20-task-113-agent-company-selection.md](sessions/2026-05-20-task-113-agent-company-selection.md) |
 | 2026-05-20 | Epic B.2 — Agent city selection (LocationCombobox + portal in AuthSheet, 2 i18n keys × 4 locales) | Task 112 | [sessions/2026-05-20-task-112-agent-city-selection.md](sessions/2026-05-20-task-112-agent-city-selection.md) |
 | 2026-05-20 | Sprint 3 — Task 111 — Tailwind entropy burn-down (M:15→M:0, L:43→L:31, baseline updated) | Task 111 | [sessions/2026-05-20-task-111-tailwind-entropy-burndown.md](sessions/2026-05-20-task-111-tailwind-entropy-burndown.md) |
 | 2026-05-20 | Sprint 3 — Task 110 — Mobile drawer padding fix (px-4 added to Header.tsx drawer content wrapper) | Task 110 | [sessions/2026-05-20-task-110-mobile-drawer-padding.md](sessions/2026-05-20-task-110-mobile-drawer-padding.md) |

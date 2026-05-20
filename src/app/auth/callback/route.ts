@@ -35,13 +35,15 @@ async function ensureUserProfile(): Promise<void> {
     const authUser = await getUser()
     if (!authUser) return
 
+    const meta = authUser.user_metadata ?? {}
     const supabase = await createClient()
+
     await supabase.from('users').upsert(
       {
         id: authUser.id,
         name:
-          (authUser.user_metadata?.full_name as string | undefined) ??
-          (authUser.user_metadata?.name as string | undefined) ??
+          (meta.full_name as string | undefined) ??
+          (meta.name as string | undefined) ??
           null,
         user_type: 'private',
         role: 'user',
@@ -49,5 +51,17 @@ async function ensureUserProfile(): Promise<void> {
       },
       { onConflict: 'id', ignoreDuplicates: true }
     )
+
+    // Persist company_id from agent registration metadata (only if not yet set).
+    // The companies table row is created before signUp() via createCompanyAction,
+    // so the UUID is guaranteed to exist by the time this callback runs.
+    const companyId = meta.company_id as string | undefined
+    if (companyId) {
+      await supabase
+        .from('users')
+        .update({ company_id: companyId })
+        .eq('id', authUser.id)
+        .is('company_id', null)
+    }
   } catch {}
 }

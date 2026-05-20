@@ -246,6 +246,8 @@
     "company": "Nome azienda (opzionale)",
     "city": "Città (opzionale)",
     "city_placeholder": "Seleziona la tua città",
+    "company_select_placeholder": "Seleziona la tua azienda",
+    "company_add_new": "Aggiungi nuova azienda",
     "register_as": "Registrati come",
     "register_agent": "Registrati come agente",
     "no_account": "Non hai un account?",

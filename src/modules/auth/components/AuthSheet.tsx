@@ -18,6 +18,9 @@ import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
+import { useCompanies } from '@/modules/companies/hooks/useCompanies'
+import { createCompanyAction } from '@/modules/companies/actions'
+import { Combobox } from '@/components/shared/Combobox'
 
 export type AuthView = 'login' | 'register' | 'register-agent'
 
@@ -166,6 +169,98 @@ function AgentCityField({
   )
 }
 
+// ── Agent company field — isolated so useCompanies only mounts when isAgent=true ─
+
+function CompanyField({
+  companyId,
+  onCompanyId,
+  label,
+  selectPlaceholder,
+  addNewLabel,
+}: {
+  companyId: string
+  onCompanyId: (id: string) => void
+  label: string
+  selectPlaceholder: string
+  addNewLabel: string
+}) {
+  const tc = useTranslations('common')
+  const { companies } = useCompanies()
+  const [showAdd, setShowAdd] = useState(false)
+  const [newName, setNewName] = useState('')
+  const [creating, setCreating] = useState(false)
+
+  const options = companies.map(c => ({ value: c.id, label: c.name }))
+
+  async function handleCreate() {
+    if (!newName.trim() || creating) return
+    setCreating(true)
+    const result = await createCompanyAction(newName.trim())
+    setCreating(false)
+    if (result.id) {
+      onCompanyId(result.id)
+      setShowAdd(false)
+      setNewName('')
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label>{label}</Label>
+      <Combobox
+        options={options}
+        value={companyId}
+        onChange={onCompanyId}
+        placeholder={selectPlaceholder}
+        variant="input"
+        portal
+      />
+      {!showAdd ? (
+        <Button
+          type="button"
+          variant="link"
+          onClick={() => setShowAdd(true)}
+          className="text-xs h-auto p-0 justify-start"
+        >
+          + {addNewLabel}
+        </Button>
+      ) : (
+        <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30">
+          <Input
+            value={newName}
+            onChange={e => setNewName(e.target.value)}
+            placeholder={label}
+            className="h-9 rounded-xl text-sm"
+            maxLength={120}
+            autoFocus
+            onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreate() } }}
+          />
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              size="sm"
+              onClick={handleCreate}
+              disabled={!newName.trim() || creating}
+              className="gap-1.5"
+            >
+              {creating && <Loader2 className="h-3 w-3 animate-spin" />}
+              {tc('add')}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => { setShowAdd(false); setNewName('') }}
+            >
+              {tc('cancel')}
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Register view ─────────────────────────────────────────────────────────────
 
 function RegisterView({
@@ -185,8 +280,8 @@ function RegisterView({
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [locationId, setLocationId] = useState<string>('')
+  const [companyId, setCompanyId] = useState<string>('')
   const [password, setPassword] = useState('')
-  const [companyName, setCompanyName] = useState('')
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -201,8 +296,8 @@ function RegisterView({
         name,
         phone: phone || undefined,
         user_type: isAgent ? 'agent' : 'private',
-        company_name: isAgent && companyName ? companyName : undefined,
         location_id: isAgent && locationId ? parseInt(locationId, 10) : undefined,
+        company_id: isAgent && companyId ? companyId : undefined,
       },
     })
     setLoading(false)
@@ -275,15 +370,13 @@ function RegisterView({
       )}
 
       {isAgent && (
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="reg-company">{t('company')}</Label>
-          <Input
-            id="reg-company"
-            value={companyName}
-            onChange={e => setCompanyName(e.target.value)}
-            autoComplete="organization"
-          />
-        </div>
+        <CompanyField
+          companyId={companyId}
+          onCompanyId={setCompanyId}
+          label={t('company')}
+          selectPlaceholder={t('company_select_placeholder')}
+          addNewLabel={t('company_add_new')}
+        />
       )}
 
       <div className="flex flex-col gap-1.5">

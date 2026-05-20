@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { Loader2, CheckCircle2 } from 'lucide-react'
+import { useRef } from 'react'
+import { Loader2, CheckCircle2, ImagePlus } from 'lucide-react'
 import { signIn, signUp, signInWithOAuth } from '@/lib/auth/browser'
 import {
   Sheet,
@@ -184,24 +185,88 @@ function CompanyField({
   selectPlaceholder: string
   addNewLabel: string
 }) {
+  const t = useTranslations('auth')
   const tc = useTranslations('common')
   const { companies } = useCompanies()
+  const logoInputRef = useRef<HTMLInputElement>(null)
+
   const [showAdd, setShowAdd] = useState(false)
   const [newName, setNewName] = useState('')
   const [creating, setCreating] = useState(false)
+  const [logoFile, setLogoFile] = useState<File | null>(null)
+  const [logoPreview, setLogoPreview] = useState<string | null>(null)
+  const [logoError, setLogoError] = useState<string | null>(null)
 
-  const options = companies.map(c => ({ value: c.id, label: c.name }))
+  const options = companies.map(c => ({
+    value: c.id,
+    label: c.name,
+    description: c.logo_url ? '📷' : undefined,
+  }))
+
+  function handleLogoSelect(file: File) {
+    setLogoError(null)
+    const validTypes = ['image/jpeg', 'image/png', 'image/webp']
+    if (!validTypes.includes(file.type)) {
+      setLogoError(t('company_logo_invalid_type'))
+      return
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setLogoError(t('company_logo_too_large'))
+      return
+    }
+    // Check dimensions via Image
+    const url = URL.createObjectURL(file)
+    const img = new Image()
+    img.onload = () => {
+      if (img.naturalWidth > 256 || img.naturalHeight > 256) {
+        setLogoError(t('company_logo_too_big'))
+        URL.revokeObjectURL(url)
+        return
+      }
+      setLogoFile(file)
+      setLogoPreview(url)
+    }
+    img.onerror = () => {
+      setLogoError(t('company_logo_invalid_type'))
+      URL.revokeObjectURL(url)
+    }
+    img.src = url
+  }
 
   async function handleCreate() {
     if (!newName.trim() || creating) return
     setCreating(true)
     const result = await createCompanyAction(newName.trim())
-    setCreating(false)
-    if (result.id) {
-      onCompanyId(result.id)
-      setShowAdd(false)
-      setNewName('')
+    if (!result.id) {
+      setCreating(false)
+      return
     }
+    // Upload logo if selected
+    if (logoFile) {
+      try {
+        const fd = new FormData()
+        fd.append('logo', logoFile)
+        fd.append('companyId', result.id)
+        await fetch('/api/upload-company-logo', { method: 'POST', body: fd })
+      } catch {
+        // Logo upload failure is non-fatal — company is created successfully
+      }
+    }
+    setCreating(false)
+    onCompanyId(result.id)
+    setShowAdd(false)
+    setNewName('')
+    setLogoFile(null)
+    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
+    setLogoError(null)
+  }
+
+  function handleCancel() {
+    setShowAdd(false)
+    setNewName('')
+    setLogoFile(null)
+    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
+    setLogoError(null)
   }
 
   return (
@@ -235,7 +300,67 @@ function CompanyField({
             autoFocus
             onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreate() } }}
           />
-          <div className="flex gap-2">
+
+          {/* Logo upload */}
+          <div className="flex flex-col gap-1">
+            <Label className="text-xs text-muted-foreground">{t('company_logo')}</Label>
+            <div className="flex items-center gap-2">
+              {logoPreview ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={logoPreview}
+                  alt="logo preview"
+                  className="h-9 w-9 rounded-lg object-contain border bg-card shrink-0"
+                />
+              ) : (
+                <div className="h-9 w-9 rounded-lg border bg-card flex items-center justify-center shrink-0">
+                  <ImagePlus className="h-4 w-4 text-muted-foreground" />
+                </div>
+              )}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="text-xs h-8 rounded-lg"
+                onClick={() => logoInputRef.current?.click()}
+              >
+                {logoFile ? tc('replace') : tc('choose_file')}
+              </Button>
+              {logoFile && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="text-xs h-8 rounded-lg text-muted-foreground"
+                  onClick={() => {
+                    setLogoFile(null)
+                    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
+                    setLogoError(null)
+                  }}
+                >
+                  ×
+                </Button>
+              )}
+              <input
+                ref={logoInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="hidden"
+                onChange={e => {
+                  const f = e.target.files?.[0]
+                  if (f) handleLogoSelect(f)
+                  e.target.value = ''
+                }}
+              />
+            </div>
+            {logoError ? (
+              <p className="text-xs text-destructive">{logoError}</p>
+            ) : (
+              <p className="text-[10px] text-muted-foreground">{t('company_logo_hint')}</p>
+            )}
+          </div>
+
+          <div className="flex gap-2 pt-1">
             <Button
               type="button"
               size="sm"
@@ -243,14 +368,14 @@ function CompanyField({
               disabled={!newName.trim() || creating}
               className="gap-1.5"
             >
-              {creating && <Loader2 className="h-3 w-3 animate-spin" />}
+              {creating && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
               {tc('add')}
             </Button>
             <Button
               type="button"
               variant="ghost"
               size="sm"
-              onClick={() => { setShowAdd(false); setNewName('') }}
+              onClick={handleCancel}
             >
               {tc('cancel')}
             </Button>

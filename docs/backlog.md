@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-20 — Task 113 — Epic B.3 — Agent Company Selection ✅ (DB migration required)**
+**2026-05-20 — Task 114 — Epic B.4 — Company Logo Upload ✅**
+
+- `/api/upload-company-logo` route: service-role, MIME/size/dimension validation, Cloudinary `companies/` folder, updates `companies.logo_url`.
+- `CompanyField` extended: file picker, blob preview (`new Image()` for dimension check), non-fatal upload after company creation.
+- 7 new i18n keys (5 in `auth`, 2 `choose_file`/`replace` in `common`) × 4 locales.
+- lint 0/0 · governance:localization PASS.
+
+→ [Task 114 session log](sessions/2026-05-20-task-114-company-logo-upload.md)
+
+**Previous: 2026-05-20 — Task 113 — Epic B.3 — Agent Company Selection ✅ (DB migration required)**
 
 - New `companies` table + `company_id` FK on `users` (SQL in session log — must run before deploy).
 - New module `src/modules/companies/`: `getCompanies()`, `createCompanyAction()` (service-role), `useCompanies` hook.
@@ -146,7 +155,8 @@ Done so far:
 Queue (global numbering continues from Task 112):
 
 - ✅ **Task 112** — Epic B.2 — Agent city selection. CLOSED.
-- ✅ **Task 113** — Epic B.3 — Agent company selection (Combobox + inline add + `companies` table). CLOSED. ⚠️ Needs SQL migration.
+- ✅ **Task 113** — Epic B.3 — Agent company selection. CLOSED. ⚠️ Needs SQL migration (done).
+- ✅ **Task 114** — Epic B.4 — Company logo upload (API route + client validation + preview). CLOSED.
 - **Task 114** — Epic B.4 — Company logo upload rules (256×256, Cloudinary path per Epic H.7).
 - **Task 115** — Epic B.5 — Admin company management page (Epic K table pattern).
 
@@ -168,6 +178,7 @@ Every task above MUST follow the Canonical Task Template in `docs/ai-behavior.md
 | Epic K — Admin Tables Standardization | [`tasks/Epics/Epic_K_Admin_Tables_Standardization.md`](../tasks/Epics/Epic_K_Admin_Tables_Standardization.md) |
 | Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
 
+| 2026-05-20 | Epic B.4 — Company logo upload (API route, client validation, blob preview, non-fatal upload) | Task 114 | [sessions/2026-05-20-task-114-company-logo-upload.md](sessions/2026-05-20-task-114-company-logo-upload.md) |
 | 2026-05-20 | Epic B.3 — Agent company selection (companies table, CompanyField, service-role action, callback update) | Task 113 | [sessions/2026-05-20-task-113-agent-company-selection.md](sessions/2026-05-20-task-113-agent-company-selection.md) |
 | 2026-05-20 | Epic B.2 — Agent city selection (LocationCombobox + portal in AuthSheet, 2 i18n keys × 4 locales) | Task 112 | [sessions/2026-05-20-task-112-agent-city-selection.md](sessions/2026-05-20-task-112-agent-city-selection.md) |
 | 2026-05-20 | Sprint 3 — Task 111 — Tailwind entropy burn-down (M:15→M:0, L:43→L:31, baseline updated) | Task 111 | [sessions/2026-05-20-task-111-tailwind-entropy-burndown.md](sessions/2026-05-20-task-111-tailwind-entropy-burndown.md) |

@@ -4,7 +4,28 @@
 
 ## Last Session
 
-**2026-05-20 — Task 115 — Epic B.5 — Admin Company Management ✅**
+**2026-05-20 — Task 117 — Epic C.2 — User Report Flow ✅**
+
+- `ListingReportDialog` — Dialog with 6-reason selector + optional 500-char comment; toast for success/already-reported/error.
+- `reportListingAction` server action — auth guard, one-report-per-user-per-listing guard, INSERT into `listing_reports`.
+- `ListingContact` — `canReport` prop added; report button rendered for authenticated non-owners.
+- Listing page passes `canReport={!!authUser && authUser.id !== owner.id}`.
+- Bonus: removed dead `CLOSED_LABEL` / `isFavoriteClosed` unused vars from listing page.
+- 14 new `listing.report_*` i18n keys × 4 locales · lint 0/0 · governance PASS.
+- ⚠️ Requires `listing_reports` table — SQL in Task 116 session log.
+
+→ [Task 117 session log](sessions/2026-05-20-task-117-c2-user-report-flow.md)
+
+**Previous: 2026-05-20 — Task 116 — Epic C.1 — Trust & Safety Research ✅**
+
+- Protection stack decided: listing reports (C.2/C.3) + account blocking (C.5). User-to-user blocking, automated filtering, and LLM moderation all deferred.
+- `ReportReason`, `ReportStatus`, `ListingReport`, `Conversation`, `Message` types confirm schema is pre-designed.
+- `User.status = 'blocked'` + `block_reason` already scaffolded.
+- Decision document and `docs/domain-rules.md` updated.
+
+→ [Task 116 session log](sessions/2026-05-20-task-116-c1-trust-safety-research.md)
+
+**Previous: 2026-05-20 — Task 115 — Epic B.5 — Admin Company Management ✅**
 
 - `/admin/companies` page: list with logo/name/agent count/date, create/edit Dialog, delete confirmation Dialog.
 - `AdminCompaniesManager`: optimistic local state, `AdminSearchInput` filter, `AppImage variant="avatar"` for Cloudinary logos.

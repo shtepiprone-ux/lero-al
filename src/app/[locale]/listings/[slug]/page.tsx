@@ -22,7 +22,7 @@ import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings
 import { ListingDescriptionTranslator } from '@/modules/listings/components/ListingDescriptionTranslator'
 import { formatPrice } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
-import { isListingArchived, isListingVisible, isListingClosed } from '@/modules/listings/domain'
+import { isListingArchived, isListingVisible } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
@@ -257,13 +257,6 @@ export default async function ListingPage({ params }: Props) {
   const features    = getDetailFeatures(listing)
   const detailAttrs = getDetailAttributes(listing)
 
-  // Display map is exempt from the no-restricted-syntax domain rule.
-  const CLOSED_LABEL: Partial<Record<string, string>> = {
-    sold:   t('action_disabled_sold'),
-    rented: t('action_disabled_rented'),
-  }
-  const isFavoriteClosed = isListingClosed(listing.status as ListingStatus)
-
   // Currency conversion — use user's preferred_currency when authenticated and exchange rates are available
   const needsConversion = !!exchangeRates && !!authUser && preferredCurrency !== listing.currency
   const displayPrice = needsConversion ? convertPrice(listing.price, listing.currency, preferredCurrency, exchangeRates) : listing.price
@@ -496,6 +489,7 @@ export default async function ListingPage({ params }: Props) {
             listingStatus={listing.status as ListingStatus}
             listingId={authUser ? listing.id : undefined}
             isFavorited={isInitiallyFavorited}
+            canReport={!!authUser && authUser.id !== owner.id}
           />
         </div>
       </div>

@@ -55,6 +55,42 @@ A user with `deleted_at IS NOT NULL` is considered deleted. Their archived listi
 - Listing expires after 60 days (extendable by moderator/admin).
 - Slug-based URLs for SEO.
 
+## Trust, Safety & Moderation (Epic C — decided 2026-05-20 Task 116)
+
+### Chosen protection stack
+
+**Layer 1 — Listing reports (Tasks C.2/C.3):**
+- Any authenticated user can report a listing from its detail page.
+- Categories: `spam | fraud | duplicate | wrong_category | offensive | other` (from `ReportReason` enum).
+- Optional free-text comment, max 500 chars.
+- One report per user per listing (enforce at DB level with unique constraint or server-side guard).
+- Status lifecycle: `pending → reviewed → resolved | dismissed`.
+- Each status transition logged in `report_actions` with `actor_id`, `actor_role`, `old/new_status`, `notes`.
+
+**Layer 2 — Account blocking (Task C.5):**
+- `User.status = 'blocked'` + `block_reason` already in schema.
+- `block_reason` is required when status is set to `blocked`.
+- Blocked users: cannot create/edit listings; cannot initiate messages.
+- All transitions written to `user_status_history` (service-role only INSERT).
+- UI: admin user profile page — block/unblock button with reason field (C.5).
+
+**Deferred (not in Epic C):**
+- User-to-user blocking — no messaging system yet; implement after messaging ships.
+- Automated text/content filtering — deferred until message volume justifies cost.
+- Anonymous reports — rejected; auth required to prevent spam reporting.
+- LLM moderation — out of scope for current scale.
+
+### RLS boundary summary
+
+| Actor | listing_reports | report_actions | user.status (block) |
+|---|---|---|---|
+| Anonymous | ❌ | ❌ | ❌ |
+| Authenticated user | INSERT own + SELECT own | ❌ | ❌ |
+| Moderator | SELECT all + UPDATE status | SELECT + INSERT | UPDATE status |
+| Admin | Full | Full | Full |
+
+---
+
 ## Underground Floor Rules (canonical)
 
 The single source of truth is `UNDERGROUND_FLOOR_TYPES` in `src/modules/listings/constants/index.ts`.

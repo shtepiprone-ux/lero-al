@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
+import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
 import type { ListingStatus } from '@/types/database'
 
 interface Owner {
@@ -40,9 +41,11 @@ interface ListingContactProps {
   listingId?: string
   /** SSR-hydrated initial favorite state. */
   isFavorited?: boolean
+  /** True when the viewer is authenticated and is NOT the listing owner. */
+  canReport?: boolean
 }
 
-export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false }: ListingContactProps) {
+export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false, canReport = false }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const [copied, setCopied] = useState(false)
@@ -209,6 +212,13 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                 <span className="hidden sm:inline">{copied ? t('link_copied') : t('share')}</span>
               </Button>
             </div>
+
+            {/* Report listing — authenticated non-owner only */}
+            {canReport && listingId && (
+              <div className="flex justify-end">
+                <ListingReportDialog listingId={listingId} />
+              </div>
+            )}
           </div>
         </div>
       </div>

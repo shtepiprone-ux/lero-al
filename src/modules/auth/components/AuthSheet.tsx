@@ -72,7 +72,14 @@ function LoginView({
     setLoading(false)
     if (error) { setErrorKey(mapAuthError(error.message)); return }
     onClose()
-    router.refresh()
+    // Redirect to the originally-requested route (set by AuthRedirect when gated routes redirect here).
+    const next = sessionStorage.getItem('auth_redirect_next')
+    if (next) {
+      sessionStorage.removeItem('auth_redirect_next')
+      router.push(next)
+    } else {
+      router.refresh()
+    }
   }
 
   async function handleGoogle() {

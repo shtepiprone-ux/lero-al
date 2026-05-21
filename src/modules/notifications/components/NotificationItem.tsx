@@ -15,6 +15,7 @@ const TYPE_ICON: Record<NotificationType, string> = {
   listing_expires_soon:   '⏰',
   agent_verified:         '✅',
   marketing:              '📢',
+  report_outcome:         '🛡️',
 }
 
 interface Props {

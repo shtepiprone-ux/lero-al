@@ -47,7 +47,7 @@ export type TicketStatus = 'open' | 'in_progress' | 'resolved' | 'closed'
 export type VerificationStatus = 'pending' | 'approved' | 'rejected'
 export type ReportReason = 'spam' | 'fraud' | 'duplicate' | 'wrong_category' | 'offensive' | 'other'
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
-export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing'
+export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing' | 'report_outcome'
 
 export interface Company {
   id: string

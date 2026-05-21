@@ -4,18 +4,24 @@
 
 ## Last Session
 
-**2026-05-21 — Task 122 — Epic D.6 — Delegate Supabase Auth Emails via Send Email Hook ✅ (code done; owner must register hook)**
+**2026-05-21 — Sprint 4 CLOSED — Tasks 158–159 — Auth Phone Validation + Flow Consolidation ✅**
 
-- Architecture: Option B — Next.js API route at `POST /api/auth-email-hook` (Vercel, not Edge Function — no supabase/functions infra exists).
-- `MagicLinkEmail.tsx` — React Email template for passwordless sign-in; inline STRINGS sq/en/uk/it; same BaseEmail pattern.
-- `ReauthEmail.tsx` — React Email template for reauthentication OTP; shows code prominently (no CTA link); inline STRINGS sq/en/uk/it.
-- `src/app/api/auth-email-hook/route.ts` — HMAC-SHA256 signature verification; action-type → template map (signup/invite→VerifyEmail, recovery→RecoveryEmail, magiclink→MagicLinkEmail, email_change→inline HTML, reauthentication→ReauthEmail); locale via `resolveUserLocale`; sends via canonical `sendEmail()`.
-- `docs/env.md` — `SUPABASE_EMAIL_HOOK_SECRET` documented.
-- `docs/integrations.md` — delegation section updated with architecture, endpoint, security model, action-type map, and owner registration steps.
-- ⚠️ **Owner action required:** register hook URL + secret in Supabase Dashboard → Auth → Hooks → Send Email Hook (steps in session log + integrations.md).
-- lint 0/0 · governance:localization ✅ PASS C0/H0/M17
+- **Task 158** — Country-aware phone validation: `src/lib/phone/index.ts` (COUNTRY_CODES with iso2, `validateNationalPhone()` via libphonenumber-js/min), `src/components/shared/PhoneField.tsx` (shared), 25 vitest tests. All 4 consumer files updated (AuthSheet, RegisterForm, AdminUserCreate, AdminUserProfile, ProfileTab), dead Albania-only schema removed. +355 + 693 now rejected.
+- **Task 159** — Auth flow consolidation: `AuthRedirect.tsx` bridges server redirect()s to AuthSheet drawer. `/auth/login` and `/auth/register` rewritten as thin pages. `LoginForm`, `RegisterForm`, `LoginFormClient`, `RegisterFormClient` deleted. AuthSheet LoginView reads `sessionStorage['auth_redirect_next']` after login to restore originally-requested route.
 
-→ [Task 122 session log](sessions/2026-05-21-task-122-supabase-email-hook.md)
+→ [Task 158 session log](sessions/2026-05-21-task-158-country-aware-phone-validation.md) ← not yet written (see commit)
+→ [Task 159 session log](sessions/2026-05-21-task-159-auth-flow-consolidation.md)
+
+**2026-05-21 — Epic D CLOSED — Tasks 119–124 ✅**
+
+- D.1 (119): BaseEmail, send helper, preferred_locale, emailChange migration.
+- D.3 (120): VerifyEmail, /auth/verified, admin badge.
+- D.4 (121): RecoveryEmail, ForgotPasswordView, /auth/reset-password, security logging.
+- D.6 (122): Supabase Send Email Hook (standardwebhooks, /api/auth-email-hook). ⚠️ Hook must be registered in Supabase Dashboard → Auth → Hooks.
+- D.2 (123): Admin email template manager (/admin/email-templates, sendTemplatedEmail()). ⚠️ Requires DB migration (see session log).
+- D.5 (124): Inactivity lifecycle (InactivityWarningEmail, InactivityFinalEmail, cron, soft-delete, reactivation). ⚠️ Requires DB migration + CRON_SECRET in Vercel.
+
+→ [Epic D closure](../tasks/Epics/Epic_D_Summary_CLOSED.md)
 
 **2026-05-21 — Task 121 — Epic D.4 — Password / Login Recovery ✅**
 
@@ -232,29 +238,31 @@
 
 ## Next Immediate Tasks
 
-**Last completed: Task 122 (Epic D.6 — Supabase Send Email Hook).** Note: `preferred_locale` DB migration from Task 119 must be applied in Supabase before deploy (owner confirmed done). Owner must also register the Send Email Hook in Supabase Dashboard (see integrations.md).
+**Last completed: Task 159 (Sprint 4 — auth flow consolidation). Epic D CLOSED. Sprint 4 CLOSED.**
+
+**Next:** Task 125 (Epic C.4 — reporter notification flow) ← IN PROGRESS
 
 **Recently CLOSED:**
-- ✅ Sprint 2 — Task 107 (dead-code cleanup). [summary](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)
-- ✅ Sprint 3 — Tasks 109–111 (primitive + drawer + tailwind entropy; governance gates closed). [summary](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
-- ✅ **Epic B** — Tasks 108, 112–115 (auth side popup, agent city/company, logo upload, admin companies). **COMPLETE.** [summary](../tasks/Epics/Epic_B_Summary_CLOSED.md)
-- ✅ Epic C partial — Tasks 116 (C.1 research), 117 (C.2 report flow), 118 (C.3 reports dashboard).
-- ✅ **Epic D.1** — Task 119 (email foundation: BaseEmail, send helper, preferred_locale, emailChange migration).
-- ✅ **Epic D.3** — Task 120 (VerifyEmail template + BaseEmail locale fix + /auth/verified page + admin email status).
-- ✅ **Epic D.4** — Task 121 (RecoveryEmail, ForgotPasswordView, /auth/reset-password, security logging).
-- ✅ **Epic D.6** — Task 122 (Send Email Hook: /api/auth-email-hook, MagicLinkEmail, ReauthEmail — **owner action required to register in Supabase Dashboard**).
+- ✅ **Epic D** — Tasks 119–124 (email infra + cron lifecycle). [closure](../tasks/Epics/Epic_D_Summary_CLOSED.md)
+- ✅ **Sprint 4** — Tasks 158–159 (phone validation + auth consolidation).
+- ✅ **Epic B** — Tasks 108, 112–115. [summary](../tasks/Epics/Epic_B_Summary_CLOSED.md)
+- ✅ Epic C partial — Tasks 116–118 (research, report flow, admin dashboard).
 
-**Epic D — Email Infrastructure & Account Lifecycle** (in progress)
+**Epic C — Trust & Safety (finish)**
 
-Plan: [`tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md`](../tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md)
+- **Task 125** — C.4 Reporter notification (email + in-app when report resolved/dismissed). ← NEXT
+- **Task 126** — C.5 Account blocking / suspension tools.
 
-Queue:
+**Epic K — Admin Tables Standardization**
+- Tasks 127–130 (K.1–K.4): canonical AdminTableRow pattern + migrations.
 
-- ✅ **Task 120** — Epic D.3 — Email verification — DONE.
-- ✅ **Task 121** — Epic D.4 — Password / login recovery — DONE.
-- ✅ **Task 122** — Epic D.6 — Supabase Send Email Hook — DONE (code). ⚠️ Owner: register hook in Supabase Dashboard → Auth → Hooks.
-- **Task 123** — Epic D.2 — Admin email template manager. Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_123.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_123.md) ← NEXT
-- **Task 124** — Epic D.5 — Inactive account warning emails (3mo warning → 12mo SOFT DELETE, owner-decided). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_124.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_124.md). Closes Epic D.
+**Epic E — Search, Filters & Saved Search**
+- Task 131 (E.1), 132 (E.4 needs D.2 ✅), 133 (E.5 doc).
+
+**Epic F — Favorites**
+- Tasks 134–137 (F.1, F.4, F.2, F.3 needs D.2 ✅).
+
+**Epics G–L** — see task roadmap below.
 
 ## Task roadmap — numbered (epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L)
 

@@ -4,6 +4,14 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import type { ReportReason, ReportStatus } from '@/types/database'
+import * as React from 'react'
+import { sendEmail } from '@/modules/notifications/lib/emails/send'
+import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
+import {
+  ReporterNotificationEmail,
+  getReporterNotificationEmailStrings,
+} from '@/modules/notifications/lib/emails/ReporterNotificationEmail'
+import { createNotification } from '@/modules/notifications/lib/mutations'
 
 const VALID_STATUSES: ReportStatus[] = ['pending', 'reviewed', 'resolved', 'dismissed']
 
@@ -103,5 +111,66 @@ export async function updateReportStatusAction(
     notes: trimmedNotes,
   })
 
+  // Send reporter notification when transitioning to a terminal status (resolved / dismissed)
+  // and the status actually changed (idempotency guard).
+  const TERMINAL: ReportStatus[] = ['resolved', 'dismissed']
+  if (
+    TERMINAL.includes(newStatus as ReportStatus) &&
+    newStatus !== report.status
+  ) {
+    // Fire-and-forget — notification failure must NOT block the moderation action
+    notifyReporter(db, reportId, newStatus as 'resolved' | 'dismissed').catch(e =>
+      console.error('[reporter-notification] failed', { reportId, newStatus, error: e }),
+    )
+  }
+
   return {}
+}
+
+// ── Reporter notification helper ──────────────────────────────────────────────
+
+async function notifyReporter(
+  db: ReturnType<typeof createAdminClient>,
+  reportId: string,
+  status: 'resolved' | 'dismissed',
+): Promise<void> {
+  // Fetch reporter + listing title in one query
+  const { data } = await db
+    .from('listing_reports')
+    .select('user_id, listings(title)')
+    .eq('id', reportId)
+    .single()
+
+  if (!data?.user_id) return
+
+  const reporterUserId: string = data.user_id
+  const listingTitle: string =
+    (data as unknown as { listings: { title: string } | null }).listings?.title ?? ''
+
+  // Resolve locale
+  const locale = await resolveUserLocale(reporterUserId)
+  const s = getReporterNotificationEmailStrings(locale, status)
+
+  // In-app notification
+  await createNotification({
+    userId: reporterUserId,
+    type: 'report_outcome',
+    title: s.heading,
+    body: s.body.slice(0, 120) + (s.body.length > 120 ? '…' : ''),
+  })
+
+  // Email — requires reporter's email from auth
+  const { data: authData } = await db.auth.admin.getUserById(reporterUserId)
+  const reporterEmail = authData?.user?.email
+  if (!reporterEmail) return
+
+  await sendEmail({
+    to: reporterEmail,
+    subject: s.subject,
+    react: React.createElement(ReporterNotificationEmail, {
+      status,
+      listingTitle,
+      locale,
+    }),
+  })
 }

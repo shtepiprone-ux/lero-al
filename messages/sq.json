@@ -312,7 +312,8 @@
     "reset_password_error_weak": "Fjalëkalimi duhet të ketë të paktën 8 karaktere.",
     "reset_password_error_generic": "Ndodhi një gabim. Provoni sërish.",
     "error_name_required": "Emri është i detyrueshëm.",
-    "error_phone_invalid": "Formati i numrit të telefonit është i pasaktë."
+    "error_phone_invalid": "Formati i numrit të telefonit është i pasaktë.",
+    "error_email_invalid": "Adresa e emailit është e pavlefshme."
   },
   "common": {
     "search": "Kërko",

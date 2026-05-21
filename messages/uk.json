@@ -312,7 +312,8 @@
     "reset_password_error_weak": "Пароль повинен містити не менше 8 символів.",
     "reset_password_error_generic": "Виникла помилка. Спробуйте ще раз.",
     "error_name_required": "Ім'я обов'язкове.",
-    "error_phone_invalid": "Неправильний формат номера телефону."
+    "error_phone_invalid": "Неправильний формат номера телефону.",
+    "error_email_invalid": "Введіть коректну електронну адресу."
   },
   "common": {
     "search": "Пошук",

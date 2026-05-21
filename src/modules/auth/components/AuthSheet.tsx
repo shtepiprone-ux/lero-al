@@ -476,6 +476,7 @@ function CompanyField({
 // ── Phone field — Combobox country code + local number input ──────────────────
 // Same pattern as AdminUserCreate / AdminUserProfile / ProfileTab.
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 const PHONE_RE = /^\+[1-9]\d{5,14}$/
 
 const COUNTRY_CODES = [
@@ -562,6 +563,7 @@ function RegisterView({
     setErrorKey(null)
 
     if (!name.trim()) { setErrorKey('error_name_required'); return }
+    if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
     if (password.length < 6) { setErrorKey('error_weak_password'); return }
     if (phone && !PHONE_RE.test(phone)) { setErrorKey('error_phone_invalid'); return }
 

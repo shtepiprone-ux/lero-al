@@ -259,8 +259,9 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
 **Epic K — Admin Tables Standardization** ← CURRENT EPIC
 
 - ✅ **Task 127** — K.1 Pattern defined in docs/component-governance.md §11. [log](sessions/2026-05-21-task-127-k1-admin-table-pattern.md)
-- **Task 128** — K.2 Migrate AdminListingsTable: title→Dialog, remove actions col, replace window.confirm(). ← NEXT
-- **Task 129** — K.3 Migrate AdminUsersTable: remove verify-toggle actions col.
+- ✅ **Task 128** — K.2 AdminListingsTable migrated. [log](sessions/2026-05-21-task-128-k2-listings-table-canonical.md)
+- ✅ **Task 129** — K.3 AdminUsersTable migrated. [log](sessions/2026-05-21-task-129-k3-users-table-canonical.md)
+- **Task 130** — K.4 Audit + migrate remaining tables (Companies, Locations, PropertyTypes, Currencies). ← NEXT
 - **Task 130** — K.4 Audit + migrate remaining admin tables (Companies, Locations, PropertyTypes, Currencies).
 
 **Epic E — Search, Filters & Saved Search**

@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
-import { ShieldCheck, ShieldOff, Loader2, ExternalLink, MapPin } from 'lucide-react'
+import { ShieldCheck, ShieldOff, Loader2, MapPin } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -107,32 +107,37 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_agent')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_company')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_date')}</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {verifiedAgents.length === 0 ? (
-                <tr><td colSpan={4} className="px-5 py-8 text-center text-muted-foreground">{t('empty_verified')}</td></tr>
+                <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground">{t('empty_verified')}</td></tr>
               ) : verifiedAgents.map(u => (
                 <tr key={u.id} className={`hover:bg-muted/20 ${loadingId === u.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3.5">
-                    <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
-                      {u.name ?? '—'}
-                    </Link>
+                    <div className="flex items-center gap-2">
+                      <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
+                        {u.name ?? '—'}
+                      </Link>
+                      {/* Revoke verification — inline action (no separate Actions column) */}
+                      {loadingId === u.id
+                        ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground shrink-0" />
+                        : (
+                          <button
+                            type="button"
+                            onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false) })}
+                            title={t('revoke_verify')}
+                            className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                          >
+                            <ShieldOff className="h-3.5 w-3.5" />
+                          </button>
+                        )
+                      }
+                    </div>
                   </td>
                   <td className="px-5 py-3.5 hidden md:table-cell text-muted-foreground">{u.company_name ?? '—'}</td>
                   <td className="px-5 py-3.5 hidden lg:table-cell text-muted-foreground text-xs">
                     {formatDate(u.created_at, locale)}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {loadingId === u.id ? <Loader2 className="h-4 w-4 animate-spin" /> : (
-                      <button
-                        onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false) })}
-                        className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors"
-                      >
-                        <ShieldOff className="h-4 w-4" /> {t('revoke_verify')}
-                      </button>
-                    )}
                   </td>
                 </tr>
               ))}
@@ -182,12 +187,11 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">{t('col_status')}</th>
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_phone')}</th>
                 <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_date')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {items.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-12 text-center text-muted-foreground">{t('empty')}</td></tr>
+                <tr><td colSpan={5} className="px-4 py-12 text-center text-muted-foreground">{t('empty')}</td></tr>
               ) : items.map(u => {
                 const isLoading = loadingId === u.id
                 const initials = u.name
@@ -196,6 +200,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
 
                 return (
                   <tr key={u.id} className={`transition-colors ${isLoading ? 'opacity-50' : 'hover:bg-muted/20'}`}>
+                    {/* Name — primary click affordance → profile page (K.1 canonical) */}
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <Avatar className="h-8 w-8 shrink-0">
@@ -218,7 +223,26 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                             </p>
                           )}
                         </div>
-                        {u.is_verified && <ShieldCheck className="h-4 w-4 text-status-success shrink-0" />}
+                        {/* Verify toggle — inline, icon-only (no separate Actions column) */}
+                        {isLoading
+                          ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground shrink-0" />
+                          : (
+                            <button
+                              type="button"
+                              onClick={() => withLoading(u.id, () => toggleUserVerified(u.id, !u.is_verified))}
+                              title={u.is_verified ? t('revoke_verify') : t('verify')}
+                              className={`h-6 w-6 rounded flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
+                                u.is_verified
+                                  ? 'text-status-success hover:text-destructive'
+                                  : 'text-muted-foreground/40 hover:text-status-success'
+                              }`}
+                            >
+                              {u.is_verified
+                                ? <ShieldCheck className="h-4 w-4" />
+                                : <ShieldOff className="h-3.5 w-3.5" />}
+                            </button>
+                          )
+                        }
                       </div>
                     </td>
                     <td className="px-4 py-3">
@@ -239,30 +263,6 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                           <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
                         )}
                       </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : (
-                        <div className="flex items-center gap-1">
-                          <Link
-                            href={`/admin/users/${u.id}`}
-                            className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-primary/40 hover:text-primary transition-colors text-muted-foreground"
-                            title={t('open_profile')}
-                          >
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </Link>
-                          <button
-                            onClick={() => withLoading(u.id, () => toggleUserVerified(u.id, !u.is_verified))}
-                            title={u.is_verified ? t('revoke_verify') : t('verify')}
-                            className={`h-7 w-7 rounded-lg border flex items-center justify-center transition-colors ${
-                              u.is_verified
-                                ? 'border-status-success/30 text-status-success hover:bg-status-success/5'
-                                : 'border-border text-muted-foreground hover:border-status-success/30 hover:text-status-success'
-                            }`}
-                          >
-                            {u.is_verified ? <ShieldCheck className="h-3.5 w-3.5" /> : <ShieldOff className="h-3.5 w-3.5" />}
-                          </button>
-                        </div>
-                      )}
                     </td>
                   </tr>
                 )

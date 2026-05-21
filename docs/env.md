@@ -9,6 +9,7 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 RESEND_API_KEY=re_xxx                  # Resend dashboard → API Keys (server-only, never expose to client)
 NEXT_PUBLIC_SITE_URL=https://lero.al
+SUPABASE_EMAIL_HOOK_SECRET=your_hook_secret  # Supabase Dashboard → Auth → Hooks → Send Email Hook → Secret (server-only, never expose to client; used to verify HMAC-SHA256 signature on incoming hook requests at /api/auth-email-hook)
 # Email-change token expiry: 24 hours (hardcoded in src/modules/cabinet/actions/index.ts EMAIL_CHANGE_EXPIRY_HOURS)
 # Email preview server: npm run email — launches react-email preview at localhost:3000 (dev only)
 

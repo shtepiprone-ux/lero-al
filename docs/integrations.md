@@ -111,12 +111,50 @@ Rationale: Resend is code-first (same team as React Email). Managing multilingua
 - Background jobs (inactivity warnings D.5, saved-search E.4, price-change F.3) have NO request context → they MUST call `resolveUserLocale(userId)` to get the correct locale.
 - `preferred_locale` type in `src/types/database.ts`: `string` (non-null, DB default `'sq'`).
 
-### Supabase Auth emails — delegation (decided 2026-05-20)
+### Supabase Auth emails — delegation (implemented Task 122 / Epic D.6)
 
-Supabase Auth currently sends its own built-in "Confirm signup" email automatically on `signUp` and `auth.admin.createUser`. Target end state: **delegate ALL Supabase auth emails to our system via the Supabase Send Email Hook** (Edge Function → Resend + React Email), so regular users only ever receive our branded emails — not Supabase's defaults.
+**Status: IMPLEMENTED.** All Supabase auth emails are delegated to our system via the Supabase Send Email Hook. Regular users only receive our branded Resend + React Email templates.
 
-- Implemented in **Epic D.6** (Task 124) — depends on D.1 (send helper) + D.3 (verification template) + D.4 (recovery template).
-- ⚠️ Do NOT simply disable "Confirm email" in the dashboard before D.3 exists — that makes new users auto-confirmed with no verification (security hole). Confirmation must stay required, just delivered by our system.
+**Architecture: Option B — Next.js API route** (not a Supabase Edge Function).
+Rationale: app deploys to Vercel; project has no supabase/functions infrastructure; 9 existing API routes make this the natural fit; simpler deploy model.
+
+**Hook endpoint:** `POST /api/auth-email-hook` (`src/app/api/auth-email-hook/route.ts`)
+
+**Security:** HMAC-SHA256 signature verification. Supabase signs every hook request with the shared secret (`SUPABASE_EMAIL_HOOK_SECRET` env var) and sends the signature in the `x-supabase-signature` header. The handler verifies this before processing.
+
+**Action-type → template map:**
+
+| `email_action_type` | Template | Recipient |
+|---|---|---|
+| `signup` | `VerifyEmail` | `user.email` |
+| `invite` | `VerifyEmail` | `user.email` |
+| `recovery` | `RecoveryEmail` | `user.email` |
+| `magiclink` | `MagicLinkEmail` | `user.email` |
+| `email_change` | inline HTML (emailChange.ts pattern) | `user.new_email` |
+| `reauthentication` | `ReauthEmail` (OTP display) | `user.email` |
+
+**Action URL format (for link-based emails):**
+`{SUPABASE_URL}/auth/v1/verify?token={token_hash}&type={email_action_type}&redirect_to={redirect_to}`
+
+**Locale:** every email is sent in the recipient's language via `resolveUserLocale(user.id)` → `preferred_locale` → `sq` fallback.
+
+**Owner registration steps (manual — cannot be done by code):**
+1. Supabase Dashboard → Authentication → Hooks → "Send Email Hook"
+2. Set **Hook URL**: `https://lero.al/api/auth-email-hook`
+3. Set **Hook Secret**: copy the value from `SUPABASE_EMAIL_HOOK_SECRET` (generate a random 32+ char string)
+4. Save. The hook is now active — Supabase will call our endpoint for every auth email instead of sending its own.
+5. **Do NOT disable "Confirm email"** — Supabase still owns token validation and `email_confirmed_at`. The hook only replaces delivery.
+
+**Verification after going live:**
+- Sign up a test user → only one email arrives (our VerifyEmail template, not Supabase's default).
+- Request password reset → only one email arrives (our RecoveryEmail template).
+- No duplicate / double emails means the hook is working correctly.
+
+**Note on email_change and our cabinet flow:**
+Our `sendEmailChangeEmails()` (called from the cabinet) operates independently via its own token system — it is not affected by the Supabase hook. The hook handles Supabase-initiated `email_change` events (e.g. from `auth.updateUser({ email })`). Both flows can coexist without duplication.
+
+- Implemented in **Epic D.6** (Task 122) — depends on D.1 (send helper) + D.3 (verification template) + D.4 (recovery template).
+- ⚠️ Do NOT simply disable "Confirm email" in the dashboard — confirmation must stay required; the hook replaces delivery only.
 - Hook registration (Dashboard → Authentication → Hooks) is a manual owner action — the agent cannot toggle it.
 
 **Two distinct email levels (do not conflate):**

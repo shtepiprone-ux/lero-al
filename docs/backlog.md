@@ -4,7 +4,41 @@
 
 ## Last Session
 
-**2026-05-20 — Task 120 — Epic D.3 — Email Verification ✅**
+**2026-05-21 — Task 122 — Epic D.6 — Delegate Supabase Auth Emails via Send Email Hook ✅ (code done; owner must register hook)**
+
+- Architecture: Option B — Next.js API route at `POST /api/auth-email-hook` (Vercel, not Edge Function — no supabase/functions infra exists).
+- `MagicLinkEmail.tsx` — React Email template for passwordless sign-in; inline STRINGS sq/en/uk/it; same BaseEmail pattern.
+- `ReauthEmail.tsx` — React Email template for reauthentication OTP; shows code prominently (no CTA link); inline STRINGS sq/en/uk/it.
+- `src/app/api/auth-email-hook/route.ts` — HMAC-SHA256 signature verification; action-type → template map (signup/invite→VerifyEmail, recovery→RecoveryEmail, magiclink→MagicLinkEmail, email_change→inline HTML, reauthentication→ReauthEmail); locale via `resolveUserLocale`; sends via canonical `sendEmail()`.
+- `docs/env.md` — `SUPABASE_EMAIL_HOOK_SECRET` documented.
+- `docs/integrations.md` — delegation section updated with architecture, endpoint, security model, action-type map, and owner registration steps.
+- ⚠️ **Owner action required:** register hook URL + secret in Supabase Dashboard → Auth → Hooks → Send Email Hook (steps in session log + integrations.md).
+- lint 0/0 · governance:localization ✅ PASS C0/H0/M17
+
+→ [Task 122 session log](sessions/2026-05-21-task-122-supabase-email-hook.md)
+
+**2026-05-21 — Task 121 — Epic D.4 — Password / Login Recovery ✅**
+
+- `RecoveryEmail.tsx` — React Email template on BaseEmail; inline STRINGS sq/en/uk/it; `getRecoveryEmailStrings()` exported for D.6 Hook.
+- `requestPasswordReset` + `updatePassword` added to `src/lib/auth/browser.ts`.
+- `ForgotPasswordView` added to `AuthSheet` (new view type `'forgot-password'`); "Forgot password?" link in LoginView password row.
+- `ResetPasswordClient.tsx` — 4 states: loading / form / success / expired; client-side `getSession()` + `updatePassword()` + `signOut()`.
+- `/[locale]/auth/reset-password` page added (server wrapper → `ResetPasswordClient`).
+- Security logging via server actions: `logPasswordRecoveryRequest()` / `logPasswordRecoveryCompletion()` → Vercel console.
+- **Neutral forgot-password response**: always same message regardless of email existence (no enumeration).
+- 20 new auth i18n keys × 4 locales (976 × 4 balanced).
+- ⚠️ NO double emails: Supabase still sends built-in recovery email until D.6 (Task 122). `RecoveryEmail` template is dormant until then.
+
+→ [Task 121 session log](sessions/2026-05-21-task-121-password-recovery.md)
+
+**2026-05-21 — Post-review hardening (Task 121 review) ✅**
+
+- Governance gap fixed: `scan-tailwind.mjs` never checked raw Tailwind palette colors (e.g. `text-green-500`), so hardcoded colors silently passed `governance:tailwind`. Added **Rule T6** (raw palette colors) + promoted T3/T4 (hex / `bg-white`/`bg-black`) to **HIGH** — all hardcoded colors now BLOCK the gate. Storybook `*.stories` exempt from T6.
+- `RegisterForm.tsx` `text-green-500` → `text-status-success` (last live violation). tailwind C0/H0/M0; full governance PASS.
+- Queued **Task 157** (recovery security logging — forensic IP/UA); kickoff written.
+- Docs: `docs/ui-rules.md` §13 (hardcoded-color enforcement table) + `scripts/governance/baseline.json` comment.
+
+**Previous: 2026-05-20 — Task 120 — Epic D.3 — Email Verification ✅**
 
 - `VerifyEmail.tsx` — React Email template on BaseEmail; inline STRINGS sq/en/uk/it; ready for D.6 Send Email Hook delivery.
 - `BaseEmail.tsx` — fixed `lang` attr: now accepts `locale` prop instead of hardcoded `"sq"`.
@@ -198,7 +232,7 @@
 
 ## Next Immediate Tasks
 
-**Last completed: Task 119 (Epic D.1 — email foundation).** ⚠️ DB migration required before deploy (see session log).
+**Last completed: Task 122 (Epic D.6 — Supabase Send Email Hook).** Note: `preferred_locale` DB migration from Task 119 must be applied in Supabase before deploy (owner confirmed done). Owner must also register the Send Email Hook in Supabase Dashboard (see integrations.md).
 
 **Recently CLOSED:**
 - ✅ Sprint 2 — Task 107 (dead-code cleanup). [summary](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)
@@ -207,23 +241,80 @@
 - ✅ Epic C partial — Tasks 116 (C.1 research), 117 (C.2 report flow), 118 (C.3 reports dashboard).
 - ✅ **Epic D.1** — Task 119 (email foundation: BaseEmail, send helper, preferred_locale, emailChange migration).
 - ✅ **Epic D.3** — Task 120 (VerifyEmail template + BaseEmail locale fix + /auth/verified page + admin email status).
+- ✅ **Epic D.4** — Task 121 (RecoveryEmail, ForgotPasswordView, /auth/reset-password, security logging).
+- ✅ **Epic D.6** — Task 122 (Send Email Hook: /api/auth-email-hook, MagicLinkEmail, ReauthEmail — **owner action required to register in Supabase Dashboard**).
 
 **Epic D — Email Infrastructure & Account Lifecycle** (in progress)
 
 Plan: [`tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md`](../tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md)
 
-Queue (global numbering continues from Task 119; order chosen 2026-05-20 — D.3→D.4→D.6 first to reach the "disable Supabase auto-emails" goal fastest):
+Queue:
 
-- ✅ **Task 120** — Epic D.3 — Email verification — DONE (VerifyEmail, /auth/verified, admin badge).
-- **Task 121** — Epic D.4 — Password / login recovery email. ← NEXT
-- **Task 122** — Epic D.6 — Delegate Supabase Auth emails via Send Email Hook (needs D.3 + D.4). ← disables Supabase auto-emails to regular users (the main goal).
-- **Task 123** — Epic D.2 — Admin email template manager.
-- **Task 124** — Epic D.5 — Inactive account warning emails (3 → 12 month lifecycle).
+- ✅ **Task 120** — Epic D.3 — Email verification — DONE.
+- ✅ **Task 121** — Epic D.4 — Password / login recovery — DONE.
+- ✅ **Task 122** — Epic D.6 — Supabase Send Email Hook — DONE (code). ⚠️ Owner: register hook in Supabase Dashboard → Auth → Hooks.
+- **Task 123** — Epic D.2 — Admin email template manager. Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_123.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_123.md) ← NEXT
+- **Task 124** — Epic D.5 — Inactive account warning emails (3mo warning → 12mo SOFT DELETE, owner-decided). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_124.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_124.md). Closes Epic D.
 
-**Deferred until Epic D ready:**
-- ⛔ Epic C.4 (reporter notification) — needs D.4. Unblocks after Task 121.
-- ⏭ Epic C.5 (account blocking) — no email dependency; can be slotted in any time.
-- ⚠️ Do NOT disable Supabase "Confirm email" in the dashboard before the Send Email Hook (D.6 / Task 122) is live — auto-confirm security hole. D.3 (Task 120) only builds the template + flow; it does NOT fire a parallel email.
+## Task roadmap — numbered (epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L)
+
+Global numbering is now assigned to all remaining tasks. Dependencies noted. Kickoffs: Epic D has per-task files; E/F have `Epic_E_kickoff_prompts.md` / `Epic_F_kickoff_prompts.md`; other epics use their plan file in `tasks/Epics/` (write a kickoff when its turn comes).
+
+**Epic C — Trust & Safety (finish)**
+- **Task 125** — C.4 Reporter notification flow (email + in-app on report resolution). Needs D.4 (recovery template path) + D.2.
+- **Task 126** — C.5 Account blocking / suspension tools (no email dep).
+
+**Epic K — Admin Tables Standardization**
+- **Task 127** — K.1 Define canonical AdminTableRow pattern (clickable title → preview dialog, remove duplicate actions).
+- **Task 128** — K.2 Migrate Listings admin table to the pattern.
+- **Task 129** — K.3 Migrate Users admin table (remove actions duplication).
+- **Task 130** — K.4 Audit + migrate all other admin tables (companies, reports, locations…).
+
+**Epic E — Search, Filters & Saved Search** (E.2/E.3 already done)
+- **Task 131** — E.1 Horizontal filter bar redesign.
+- **Task 132** — E.4 Saved-search match notifications (needs D.2).
+- **Task 133** — E.5 URL-state vs server-state decision (doc only).
+
+**Epic F — Favorites**
+- **Task 134** — F.1 Favorites pagination (25/page).
+- **Task 135** — F.4 API refactor (addFavorite/removeFavorite) — before F.2/F.3.
+- **Task 136** — F.2 Folders / collections.
+- **Task 137** — F.3 Price-change notifications (needs D.2).
+
+**Epic G — Recently Viewed Listings**
+- **Task 138** — G.1 Track recently viewed (server for auth, cookie/local for guests).
+- **Task 139** — G.2 Recently-viewed UI block.
+- **Task 140** — G.3 Clear history.
+
+**Epic H — Cloudinary Storage Hygiene** (H.6 safety audit before any cleanup)
+- **Task 141** — H.1 User-based folder structure.
+- **Task 142** — H.2 Avatar folder structure.
+- **Task 143** — H.4 Listing image folder structure.
+- **Task 144** — H.6 Safety audit / dry-run (blocks cleanup tasks).
+- **Task 145** — H.3 Avatar replacement cleanup.
+- **Task 146** — H.5 Listing image replacement cleanup.
+- **Task 147** — H.7 Other photos (company logos, marketing) folder structure.
+
+**Epic I — Listing Lifecycle & Status Rules**
+- **Task 148** — I.1 Fix "New" badge logic (created_at only).
+- **Task 149** — I.2 Centralize status helpers (prepare for ListingStateMachine).
+- **Task 150** — I.3 Helper API evolution — deferred trigger; doc the condition.
+
+**Epic J — Popular Locations Management** (needs H.7 for photos + K for admin CRUD)
+- **Task 151** — J.1 Schema + admin CRUD for popular locations.
+- **Task 152** — J.2 Render public "Popular Locations" section.
+- **Task 153** — J.3 Auto-generated link-filter per location.
+
+**Epic L — Admin Dashboard 2026** (needs C, D, K)
+- **Task 154** — L.1 Discovery: pick KPIs + panels (sign-off).
+- **Task 155** — L.2 Build the dashboard.
+- **Task 156** — L.3 Interim: make legacy dashboard listings clickable (fold into L.2 if done together).
+
+**Follow-ups / hardening (post-review)**
+- **Task 157** — Recovery security logging: forensic IP / user-agent + correlation id (D.4 follow-up from the 2026-05-21 Task 121 review). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_157.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_157.md). Builds on `src/modules/auth/actions/recovery.ts`.
+
+> ⚠️ Do NOT disable Supabase "Confirm email" before the Send Email Hook (Task 122) is live — auto-confirm security hole.
+> Numbers reflect the agreed order; if priorities change, renumber from the point of change forward (don't reuse numbers).
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
@@ -236,8 +327,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 | Epic B — Auth, Registration & Agent Onboarding | [`tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md`](../tasks/Epics/Epic_B_Auth_Registration_and_Agent_Onboarding.md) |
 | Epic C — Trust, Safety & Moderation | [`tasks/Epics/Epic_C_Trust_Safety_and_Moderation.md`](../tasks/Epics/Epic_C_Trust_Safety_and_Moderation.md) |
 | Epic D — Email Infrastructure & Account Lifecycle | [`tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md`](../tasks/Epics/Epic_D_Email_Infrastructure_and_Account_Lifecycle.md) |
-| Epic E — Search, Filters & Saved Search UX | [`tasks/Epics/Epic_E_Search_Filters_and_Saved_Search.md`](../tasks/Epics/Epic_E_Search_Filters_and_Saved_Search.md) |
-| Epic F — Favorites Improvements | [`tasks/Epics/Epic_F_Favorites_Improvements.md`](../tasks/Epics/Epic_F_Favorites_Improvements.md) |
+| Epic E — Search, Filters & Saved Search UX — PARTIAL (E.2/E.3 done; E.1/E.4/E.5 remain) | plan: [`Epic_E…md`](../tasks/Epics/Epic_E_Search_Filters_and_Saved_Search.md) · kickoffs: [`Epic_E_kickoff_prompts.md`](../tasks/Epics/Epic_E_kickoff_prompts.md) |
+| Epic F — Favorites Improvements — all 4 sub-tasks remain (baseline favorites exist) | plan: [`Epic_F…md`](../tasks/Epics/Epic_F_Favorites_Improvements.md) · kickoffs: [`Epic_F_kickoff_prompts.md`](../tasks/Epics/Epic_F_kickoff_prompts.md) |
 | Epic G — Recently Viewed Listings | [`tasks/Epics/Epic_G_Recently_Viewed_Listings.md`](../tasks/Epics/Epic_G_Recently_Viewed_Listings.md) |
 | Epic H — Cloudinary Storage Hygiene | [`tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md`](../tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md) |
 | Epic I — Listing Lifecycle & Status Rules | [`tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md`](../tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md) |
@@ -269,6 +360,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-21 | Epic D.6 — Supabase Send Email Hook (/api/auth-email-hook, MagicLinkEmail, ReauthEmail, HMAC-SHA256 sig verification) | Task 122 | [sessions/2026-05-21-task-122-supabase-email-hook.md](sessions/2026-05-21-task-122-supabase-email-hook.md) |
+| 2026-05-21 | Epic D.4 — Password recovery (RecoveryEmail template, ForgotPasswordView, /auth/reset-password, security logging) | Task 121 | [sessions/2026-05-21-task-121-password-recovery.md](sessions/2026-05-21-task-121-password-recovery.md) |
 | 2026-05-20 | Epic D.3 — Email verification (VerifyEmail template, /auth/verified page, admin email status badge) | Task 120 | [sessions/2026-05-20-task-120-email-verification.md](sessions/2026-05-20-task-120-email-verification.md) |
 | 2026-05-20 | Epic D.1 — Email foundation (BaseEmail, send helper, preferred_locale, emailChange migration) | Task 119 | [sessions/2026-05-20-task-119-email-provider-setup.md](sessions/2026-05-20-task-119-email-provider-setup.md) |
 | 2026-05-20 | Epic C.3 — Admin reports dashboard (/admin/reports CRUD + audit log) | Task 118 | [sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md](sessions/2026-05-20-task-118-c3-admin-reports-dashboard.md) |

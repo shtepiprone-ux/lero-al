@@ -276,7 +276,7 @@
     "error_email_exists": "This email is already registered.",
     "error_weak_password": "Password must be at least 6 characters.",
     "error_email_not_confirmed": "Please confirm your email before logging in.",
-    "error_rate_limit": "Too many requests. Please try again later.",
+    "error_rate_limit": "Too many attempts. Please wait about 60 minutes and try again.",
     "error_generic": "An error occurred. Please try again.",
     "register_success_title": "Registration Successful",
     "register_success_body": "Your account has been created. Please check your email and verify your address before logging in.",

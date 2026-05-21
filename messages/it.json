@@ -276,7 +276,7 @@
     "error_email_exists": "Questa email è già registrata.",
     "error_weak_password": "La password deve avere almeno 6 caratteri.",
     "error_email_not_confirmed": "Conferma la tua email prima di accedere.",
-    "error_rate_limit": "Troppe richieste. Riprova più tardi.",
+    "error_rate_limit": "Troppi tentativi. Attendi circa 60 minuti e riprova.",
     "error_generic": "Si è verificato un errore. Riprova.",
     "register_success_title": "Registrazione completata",
     "register_success_body": "Il tuo account è stato creato. Controlla la tua email e verifica il tuo indirizzo prima di accedere.",

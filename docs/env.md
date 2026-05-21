@@ -10,6 +10,7 @@ CLOUDINARY_API_SECRET=your_api_secret
 RESEND_API_KEY=re_xxx                  # Resend dashboard → API Keys (server-only, never expose to client)
 NEXT_PUBLIC_SITE_URL=https://lero.al
 SUPABASE_EMAIL_HOOK_SECRET=your_hook_secret  # Supabase Dashboard → Auth → Hooks → Send Email Hook → Secret (server-only, never expose to client; used to verify HMAC-SHA256 signature on incoming hook requests at /api/auth-email-hook)
+CRON_SECRET=your_cron_secret               # Random secret (e.g. openssl rand -hex 32). Set in Vercel → Settings → Environment Variables. Vercel automatically passes it as Authorization: Bearer <CRON_SECRET> to cron routes defined in vercel.json. Used by /api/cron/inactivity.
 # Email-change token expiry: 24 hours (hardcoded in src/modules/cabinet/actions/index.ts EMAIL_CHANGE_EXPIRY_HOURS)
 # Email preview server: npm run email — launches react-email preview at localhost:3000 (dev only)
 

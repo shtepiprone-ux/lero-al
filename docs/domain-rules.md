@@ -1,6 +1,23 @@
+## Inactive Account Lifecycle (Epic D.5 / Task 124 — decided 2026-05-20)
+
+Inactivity is measured by `COALESCE(last_seen_at, created_at)` (users who never signed in after registration use `created_at` as the activity timestamp). The daily cron (`/api/cron/inactivity`, via `vercel.json`) runs at 08:00 UTC.
+
+| Threshold | Action |
+|-----------|--------|
+| 3 months (~91 days) | Send `InactivityWarningEmail` once (tracked by `inactivity_warning_sent_at`). Warning resets when user becomes active again. |
+| 12 months (~365 days) | **SOFT DELETE**: set `deleted_at = now()`, `status = 'inactive'`, archive all active listings, write to `user_status_history` (reason: `inactivity_12_months_auto_deactivation`), send `InactivityFinalEmail`. |
+
+**Grace period:** 90 days after soft-delete. If the user signs in within 90 days, the presence route (`/api/presence`) automatically restores the account: clears `deleted_at`, sets `status = 'active'`, resets `inactivity_warning_sent_at`, writes `user_status_history` (reason: `reactivated_within_grace_period`). Archived listings are NOT automatically restored (require manual admin action).
+
+**After grace period:** Account remains soft-deleted. Data is retained indefinitely until a future cleanup task (not yet implemented) hard-deletes it. Hard-delete is explicitly out of scope for this task.
+
+**GDPR note:** Retained data after soft-delete includes email and profile fields. A future cleanup or explicit user-initiated deletion flow (Task TBD) should hard-delete this data to comply with right-to-erasure requests. Platform legal counsel should review the 90-day retention window against applicable law.
+
+**Tracking column:** `users.inactivity_warning_sent_at TIMESTAMPTZ` — set when warning email is sent; reset to NULL on presence update (user active again) and on account restore. Prevents duplicate warning emails within a single inactivity cycle.
+
 ## User Profile Data Model
 
-Core fields (all users): `id`, `name`, `last_name`, `phone`, `whatsapp`, `avatar_url`, `role`, `user_type`, `status`, `block_reason`, `location_id`, `deleted_at`, `preferred_currency`, `pending_email`, `created_at`.
+Core fields (all users): `id`, `name`, `last_name`, `phone`, `whatsapp`, `avatar_url`, `role`, `user_type`, `status`, `block_reason`, `location_id`, `deleted_at`, `preferred_currency`, `pending_email`, `created_at`, `inactivity_warning_sent_at`.
 
 Agent/developer additional fields: `company_name`, `company_logo_url`, `website`, `position`, `year_started`.
 

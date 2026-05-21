@@ -476,6 +476,8 @@ function CompanyField({
 // ── Phone field — Combobox country code + local number input ──────────────────
 // Same pattern as AdminUserCreate / AdminUserProfile / ProfileTab.
 
+const PHONE_RE = /^\+[1-9]\d{5,14}$/
+
 const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
   { code: '+39',  flag: '🇮🇹' }, { code: '+44',  flag: '🇬🇧' },
@@ -500,7 +502,8 @@ function PhoneField({ value, onChange, label }: { value: string; onChange: (v: s
   function update(newCode: string, newLocal: string) {
     setCode(newCode)
     setLocal(newLocal)
-    onChange(`${newCode}${newLocal.replace(/\s/g, '')}`)
+    const cleaned = newLocal.replace(/\s/g, '')
+    onChange(cleaned ? `${newCode}${cleaned}` : '')
   }
 
   return (
@@ -556,8 +559,13 @@ function RegisterView({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
     setErrorKey(null)
+
+    if (!name.trim()) { setErrorKey('error_name_required'); return }
+    if (password.length < 6) { setErrorKey('error_weak_password'); return }
+    if (phone && !PHONE_RE.test(phone)) { setErrorKey('error_phone_invalid'); return }
+
+    setLoading(true)
     const { error } = await signUp(email, password, {
       emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/auth/verified`,
       data: {

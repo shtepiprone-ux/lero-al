@@ -310,7 +310,9 @@
     "reset_password_request_new": "Kërko link të ri",
     "reset_password_error_mismatch": "Fjalëkalimet nuk përputhen.",
     "reset_password_error_weak": "Fjalëkalimi duhet të ketë të paktën 8 karaktere.",
-    "reset_password_error_generic": "Ndodhi një gabim. Provoni sërish."
+    "reset_password_error_generic": "Ndodhi një gabim. Provoni sërish.",
+    "error_name_required": "Emri është i detyrueshëm.",
+    "error_phone_invalid": "Formati i numrit të telefonit është i pasaktë."
   },
   "common": {
     "search": "Kërko",

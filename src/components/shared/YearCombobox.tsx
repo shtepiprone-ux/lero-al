@@ -25,6 +25,7 @@ interface Props {
 
 export function YearCombobox({ value, onChange, placeholder, className, portal = false }: Props) {
   const listboxId = useId()
+  const inputId = `${listboxId}-input`
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
@@ -105,19 +106,20 @@ export function YearCombobox({ value, onChange, placeholder, className, portal =
     <div ref={containerRef} className={cn('year-combobox relative', className)}>
       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
       <input
+        id={inputId}
         type="text"
         inputMode="numeric"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-expanded={open}
+        aria-haspopup="listbox"
+        aria-controls={listboxId}
         value={value != null ? String(value) : search}
         onChange={handleChange}
         onFocus={() => { setOpen(true); updateDropdownPosition() }}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         placeholder={placeholder}
         className="w-full h-11 pl-9 pr-3 text-sm text-foreground bg-muted border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-        aria-autocomplete="list"
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        aria-controls={listboxId}
-        role="combobox"
       />
       {portal
         ? (typeof document !== 'undefined' && dropdownContent ? createPortal(dropdownContent, document.body) : null)

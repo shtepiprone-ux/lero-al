@@ -99,6 +99,7 @@ export function LocationCombobox({
 
   const canAdd = !!(regions && regions.length > 0 && onAddLocation)
   const listboxId = useId()
+  const inputId = `${listboxId}-input`
 
   const dropdownContent = open ? (
     <div
@@ -144,7 +145,13 @@ export function LocationCombobox({
       <div className="relative">
         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
         <input
+          id={inputId}
           type="text"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          aria-controls={listboxId}
           value={selected ? selected.name_al : search}
           onChange={e => {
             setSearch(e.target.value)
@@ -156,11 +163,6 @@ export function LocationCombobox({
           onKeyDown={onKeyDown}
           placeholder={placeholder ?? tc('all_locations')}
           className="w-full h-11 pl-9 pr-3 text-sm text-foreground bg-muted border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-          role="combobox"
-          aria-autocomplete="list"
-          aria-expanded={open}
-          aria-controls={listboxId}
-          aria-haspopup="listbox"
         />
         {portal
           ? (typeof document !== 'undefined' && dropdownContent ? createPortal(dropdownContent, document.body) : null)

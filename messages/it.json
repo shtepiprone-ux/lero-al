@@ -310,7 +310,9 @@
     "reset_password_request_new": "Richiedi nuovo link",
     "reset_password_error_mismatch": "Le password non corrispondono.",
     "reset_password_error_weak": "La password deve avere almeno 8 caratteri.",
-    "reset_password_error_generic": "Si è verificato un errore. Riprova."
+    "reset_password_error_generic": "Si è verificato un errore. Riprova.",
+    "error_name_required": "Il nome è obbligatorio.",
+    "error_phone_invalid": "Formato numero di telefono non valido."
   },
   "common": {
     "search": "Cerca",

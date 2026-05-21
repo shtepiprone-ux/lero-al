@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, Loader2, Building2, ImagePlus, Search } from 'lucide-react'
+import { Plus, Trash2, Loader2, Building2, ImagePlus, Search } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -301,7 +301,6 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
                 <th className="px-5 py-3 text-left font-medium text-muted-foreground">{t('table_name')}</th>
                 <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden sm:table-cell">{t('table_agents')}</th>
                 <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden md:table-cell">{t('table_created')}</th>
-                <th className="px-5 py-3 text-right font-medium text-muted-foreground">{t('table_actions')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -316,7 +315,27 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
                       )}
                     </div>
                   </td>
-                  <td className="px-5 py-3 font-medium">{company.name}</td>
+                  {/* Name — primary click affordance → edit dialog (K.1 canonical) */}
+                  <td className="px-5 py-3">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setEditing(company)}
+                        className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                      >
+                        {company.name}
+                      </button>
+                      <Button
+                        variant="ghost"
+                        size="icon-sm"
+                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/5 shrink-0"
+                        onClick={() => setDeletingId(company.id)}
+                        aria-label={tc('delete')}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
+                  </td>
                   <td className="px-5 py-3 text-muted-foreground hidden sm:table-cell">
                     {company.agentCount > 0 ? (
                       company.agentCount === 1
@@ -326,27 +345,6 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
                   </td>
                   <td className="px-5 py-3 text-muted-foreground hidden md:table-cell">
                     <RelativeTime date={company.created_at} />
-                  </td>
-                  <td className="px-5 py-3">
-                    <div className="flex items-center gap-1 justify-end">
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        onClick={() => setEditing(company)}
-                        aria-label={tc('edit')}
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        className="text-destructive hover:text-destructive hover:bg-destructive/5"
-                        onClick={() => setDeletingId(company.id)}
-                        aria-label={tc('delete')}
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
                   </td>
                 </tr>
               ))}

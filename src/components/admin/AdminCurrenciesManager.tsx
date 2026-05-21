@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Star, ToggleLeft, ToggleRight, Loader2, Search } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
@@ -241,7 +242,9 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
   const t = useTranslations('admin.currency.currencies')
   const [currencies, setCurrencies] = useState<DBCurrency[]>(initialCurrencies)
   const [query, setQuery] = useState('')
+  const tc = useTranslations('common')
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState<DBCurrency | null>(null)
   const [editing, setEditing] = useState<DBCurrency | null>(null)
   const [isPending, startTransition] = useTransition()
 
@@ -267,17 +270,18 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
     setDialogOpen(false)
   }
 
-  function handleDelete(c: DBCurrency) {
-    if (!confirm(t('delete_confirm'))) return
+  function handleDelete() {
+    if (!deleteTarget) return
     startTransition(async () => {
-      const result = await deleteCurrency(c.id)
+      const result = await deleteCurrency(deleteTarget.id)
       if (result.error) {
         if (result.code === 'default_currency') toast.error(t('delete_blocked'))
         else toast.error(result.error)
         return
       }
       toast.success(t('success_deleted'))
-      setCurrencies(prev => prev.filter(x => x.id !== c.id))
+      setCurrencies(prev => prev.filter(x => x.id !== deleteTarget!.id))
+      setDeleteTarget(null)
     })
   }
 
@@ -304,6 +308,25 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
   }
 
   return (
+    <>
+    {/* Delete confirmation dialog — replaces window.confirm() */}
+    {deleteTarget && (
+      <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>{t('delete_confirm')}</DialogTitle>
+            <DialogDescription>{deleteTarget.code} — {deleteTarget.name_en || deleteTarget.name_sq}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isPending}>{tc('cancel')}</Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={isPending} className="gap-1.5">
+              {isPending && <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />}
+              {tc('delete')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )}
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex items-center gap-3">
@@ -346,7 +369,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
                   key={c.id}
                   currency={c}
                   onEdit={openEdit}
-                  onDelete={handleDelete}
+                  onDelete={setDeleteTarget}
                   onToggleActive={handleToggleActive}
                   onSetDefault={handleSetDefault}
                 />
@@ -364,5 +387,6 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
         />
       )}
     </div>
+    </>
   )
 }

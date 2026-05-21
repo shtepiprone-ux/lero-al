@@ -3,11 +3,12 @@
 import { useState, useTransition, useMemo, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { Plus, Pencil, Trash2, Loader2, Star } from 'lucide-react'
+import { Plus, Trash2, Loader2, Star } from 'lucide-react'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Combobox } from '@/components/shared/Combobox'
 import { createLocation, updateLocation, deleteLocation, toggleLocationFeatured } from '@/modules/admin/actions'
 import { AppImage } from '@/components/ui/AppImage'
@@ -181,7 +182,9 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
   const t = useTranslations('admin.locations')
   const router = useRouter()
   const [, startTransition] = useTransition()
+  const tc = useTranslations('common')
   const [modal, setModal] = useState<'create' | Location | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<Location | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [togglingId, setTogglingId] = useState<number | null>(null)
   const [items, setItems] = useState(init)
@@ -212,15 +215,16 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
     router.refresh()
   }
 
-  async function handleDelete(id: number) {
-    if (!confirm(t('delete_confirm'))) return
-    setDeletingId(id)
+  async function handleDelete() {
+    if (!deleteTarget) return
+    setDeletingId(deleteTarget.id)
     startTransition(async () => {
-      const result = await deleteLocation(id)
+      const result = await deleteLocation(deleteTarget.id)
       setDeletingId(null)
       if (result.error) { toast.error(result.error); return }
       toast.success(t('success_deleted'))
-      setItems(prev => prev.filter(l => l.id !== id))
+      setItems(prev => prev.filter(l => l.id !== deleteTarget!.id))
+      setDeleteTarget(null)
     })
   }
 
@@ -242,6 +246,27 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
           onClose={() => setModal(null)}
           onDone={handleDone}
         />
+      )}
+
+      {/* Delete confirmation dialog — replaces window.confirm() */}
+      {deleteTarget && (
+        <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
+          <DialogContent className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle>{t('delete_confirm')}</DialogTitle>
+              <DialogDescription>{deleteTarget.name_al}</DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-2">
+              <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={!!deletingId}>
+                {tc('cancel')}
+              </Button>
+              <Button variant="destructive" onClick={handleDelete} disabled={!!deletingId} className="gap-1.5">
+                {!!deletingId && <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />}
+                {tc('delete')}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       )}
 
       <div className="flex flex-col gap-4">
@@ -276,16 +301,36 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('name_en_label')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('type_label')}</th>
                 <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden sm:table-cell">{t('featured_col')}</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('actions_col')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {items.length === 0 ? (
-                <tr><td colSpan={6} className="px-5 py-8 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
+                <tr><td colSpan={5} className="px-5 py-8 text-center text-muted-foreground">{t('nothing_found')}</td></tr>
               ) : items.map((l) => (
                 <tr key={l.id} className={`hover:bg-muted/20 transition-colors ${deletingId === l.id ? 'opacity-50' : ''}`}>
                   <td className="px-5 py-3 text-muted-foreground text-xs">{l.id}</td>
-                  <td className="px-5 py-3 font-medium">{l.name_al}</td>
+                  {/* Name — primary click affordance → opens edit (K.1 canonical) */}
+                  <td className="px-5 py-3">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => openEdit(l)}
+                        className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                        disabled={deletingId === l.id}
+                      >
+                        {l.name_al}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDeleteTarget(l)}
+                        className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                        title={tc('delete')}
+                        disabled={deletingId === l.id}
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </td>
                   <td className="px-5 py-3 text-muted-foreground hidden md:table-cell">{l.name_en ?? '—'}</td>
                   <td className="px-5 py-3">
                     <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground font-medium">
@@ -309,24 +354,6 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                             <Star className={`h-3.5 w-3.5 ${l.is_featured ? 'fill-current' : ''}`} />
                           </button>
                         )
-                    )}
-                  </td>
-                  <td className="px-5 py-3">
-                    {deletingId === l.id ? <Loader2 className="h-4 w-4 animate-spin" /> : (
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => openEdit(l)}
-                          className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-primary/40 transition-colors"
-                        >
-                          <Pencil className="h-3.5 w-3.5 text-muted-foreground" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(l.id)}
-                          className="h-7 w-7 rounded-lg border border-border flex items-center justify-center hover:border-destructive/40 hover:text-destructive transition-colors"
-                        >
-                          <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />
-                        </button>
-                      </div>
                     )}
                   </td>
                 </tr>

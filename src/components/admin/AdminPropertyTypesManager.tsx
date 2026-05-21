@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react'
+import { Plus, Trash2, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -309,7 +309,6 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
                   <th className="px-5 py-3 text-left">{t('sort_order')}</th>
                   <th className="px-5 py-3 text-left">{t('is_active')}</th>
                   <th className="px-5 py-3 text-left">Created</th>
-                  <th className="px-5 py-3 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -319,7 +318,26 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
                     <td className="px-5 py-3">
                       <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{pt.slug}</code>
                     </td>
-                    <td className="px-5 py-3 font-medium truncate max-w-[140px]">{pt.name_sq}</td>
+                    {/* SQ name — primary click affordance → opens edit (K.1 canonical) */}
+                    <td className="px-5 py-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setEditTarget(pt)}
+                          className="font-medium truncate max-w-[140px] hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                        >
+                          {pt.name_sq}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDeleteTarget(pt)}
+                          className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                          disabled={isPending}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </td>
                     <td className="px-5 py-3 text-xs text-muted-foreground">
                       <div className="flex flex-col gap-0.5">
                         {pt.name_en && <span>{pt.name_en}</span>}
@@ -328,41 +346,22 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
                       </div>
                     </td>
                     <td className="px-5 py-3 text-muted-foreground text-xs">{pt.sort_order}</td>
+                    {/* is_active — inline toggle (clickable badge, no separate Actions column) */}
                     <td className="px-5 py-3">
-                      <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs">
-                        {pt.is_active ? t('is_active') : t('deactivate')}
-                      </Badge>
+                      <button
+                        type="button"
+                        onClick={() => handleToggleActive(pt)}
+                        disabled={isPending}
+                        title={pt.is_active ? t('deactivate') : t('activate')}
+                        className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                      >
+                        <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs cursor-pointer hover:opacity-80 transition-opacity">
+                          {pt.is_active ? t('is_active') : t('deactivate')}
+                        </Badge>
+                      </button>
                     </td>
                     <td className="px-5 py-3 text-xs text-muted-foreground">
                       <RelativeTime date={pt.created_at} />
-                    </td>
-                    <td className="px-5 py-3">
-                      <div className="flex items-center justify-end gap-1">
-                        <button
-                          onClick={() => handleToggleActive(pt)}
-                          disabled={isPending}
-                          className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-                          title={pt.is_active ? t('deactivate') : t('activate')}
-                        >
-                          {pt.is_active
-                            ? <ToggleRight className="h-4 w-4 text-status-success" />
-                            : <ToggleLeft className="h-4 w-4" />}
-                        </button>
-                        <button
-                          onClick={() => setEditTarget(pt)}
-                          className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-                          title={t('edit')}
-                        >
-                          <Pencil className="h-4 w-4" />
-                        </button>
-                        <button
-                          onClick={() => setDeleteTarget(pt)}
-                          className="p-1.5 rounded-lg hover:bg-destructive/10 transition-colors text-muted-foreground hover:text-destructive"
-                          title={t('delete')}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </div>
                     </td>
                   </tr>
                 ))}

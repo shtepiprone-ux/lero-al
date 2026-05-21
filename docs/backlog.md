@@ -261,10 +261,11 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
 - ✅ **Task 127** — K.1 Pattern defined in docs/component-governance.md §11. [log](sessions/2026-05-21-task-127-k1-admin-table-pattern.md)
 - ✅ **Task 128** — K.2 AdminListingsTable migrated. [log](sessions/2026-05-21-task-128-k2-listings-table-canonical.md)
 - ✅ **Task 129** — K.3 AdminUsersTable migrated. [log](sessions/2026-05-21-task-129-k3-users-table-canonical.md)
-- **Task 130** — K.4 Audit + migrate remaining tables (Companies, Locations, PropertyTypes, Currencies). ← NEXT
-- **Task 130** — K.4 Audit + migrate remaining admin tables (Companies, Locations, PropertyTypes, Currencies).
+- ✅ **Task 130** — K.4 All remaining tables migrated. [log](sessions/2026-05-21-task-130-k4-remaining-tables-canonical.md)
 
-**Epic E — Search, Filters & Saved Search**
+**Epic K — CLOSED.** All admin tables follow K.1 canonical pattern (docs/component-governance.md §11).
+
+**Epic E — Search, Filters & Saved Search** ← NEXT EPIC
 - Task 131 (E.1), 132 (E.4 — needs D.2 ✅), 133 (E.5 doc only).
 
 **Epic F — Favorites**

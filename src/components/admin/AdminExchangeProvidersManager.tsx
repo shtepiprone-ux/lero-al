@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
@@ -152,7 +153,9 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
   const t = useTranslations('admin.currency.providers')
   const [providers, setProviders] = useState<DBExchangeProvider[]>(initialProviders)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const tc = useTranslations('common')
   const [editing, setEditing] = useState<DBExchangeProvider | null>(null)
+  const [deleteTarget, setDeleteTarget] = useState<DBExchangeProvider | null>(null)
   const [isPending, startTransition] = useTransition()
 
   function openNew() { setEditing(null); setDialogOpen(true) }
@@ -167,13 +170,14 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
     setDialogOpen(false)
   }
 
-  function handleDelete(p: DBExchangeProvider) {
-    if (!confirm(t('delete_confirm'))) return
+  function handleDelete() {
+    if (!deleteTarget) return
     startTransition(async () => {
-      const result = await deleteExchangeProvider(p.id)
+      const result = await deleteExchangeProvider(deleteTarget.id)
       if (result.error) { toast.error(result.error); return }
       toast.success(t('success_deleted'))
-      setProviders(prev => prev.filter(x => x.id !== p.id))
+      setProviders(prev => prev.filter(x => x.id !== deleteTarget!.id))
+      setDeleteTarget(null)
     })
   }
 
@@ -187,6 +191,24 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
   }
 
   return (
+    <>
+    {deleteTarget && (
+      <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
+        <DialogContent className="max-w-sm">
+          <DialogHeader>
+            <DialogTitle>{t('delete_confirm')}</DialogTitle>
+            <DialogDescription>{deleteTarget.name}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setDeleteTarget(null)} disabled={isPending}>{tc('cancel')}</Button>
+            <Button variant="destructive" onClick={handleDelete} disabled={isPending} className="gap-1.5">
+              {isPending && <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />}
+              {tc('delete')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )}
     <div className="flex flex-col gap-4">
       <div className="flex justify-end">
         <Button onClick={openNew} size="sm" className="rounded-xl gap-2" disabled={isPending}>
@@ -259,7 +281,7 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
                         size="icon"
                         className="h-7 w-7 rounded-lg text-destructive hover:text-destructive hover:bg-destructive/10"
                         title={t('delete')}
-                        onClick={() => handleDelete(p)}
+                        onClick={() => setDeleteTarget(p)}
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </Button>
@@ -280,5 +302,6 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
         />
       )}
     </div>
+    </>
   )
 }

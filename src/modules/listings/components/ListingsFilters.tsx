@@ -347,7 +347,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         <AccordionSection title={tc('period')} open={sections.period} onToggle={() => toggle('period')}>
           <div className="flex flex-col gap-2">
             <div>
-              <label className="text-xs text-muted-foreground mb-1.5 block">{tc('date_from')}</label>
+              <span className="text-xs text-muted-foreground mb-1.5 block">{tc('date_from')}</span>
               <DatePicker
                 value={get('date_from') || undefined}
                 onChange={v => updateParams({ date_from: v ?? null })}
@@ -356,7 +356,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               />
             </div>
             <div>
-              <label className="text-xs text-muted-foreground mb-1.5 block">{tc('date_to')}</label>
+              <span className="text-xs text-muted-foreground mb-1.5 block">{tc('date_to')}</span>
               <DatePicker
                 value={get('date_to') || undefined}
                 onChange={v => updateParams({ date_to: v ?? null })}

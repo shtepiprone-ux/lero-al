@@ -418,7 +418,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
               <SectionHeader>{t('period')}</SectionHeader>
               <div className="flex flex-col gap-2">
                 <div>
-                  <label className="text-xs text-muted-foreground mb-1.5 block">{t('date_from')}</label>
+                  <span className="text-xs text-muted-foreground mb-1.5 block">{t('date_from')}</span>
                   <DatePicker
                     value={local.date_from}
                     onChange={v => update({ date_from: v })}
@@ -427,7 +427,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-muted-foreground mb-1.5 block">{t('date_to')}</label>
+                  <span className="text-xs text-muted-foreground mb-1.5 block">{t('date_to')}</span>
                   <DatePicker
                     value={local.date_to}
                     onChange={v => update({ date_to: v })}

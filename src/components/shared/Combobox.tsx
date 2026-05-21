@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback, useId } from 'react'
 import { createPortal } from 'react-dom'
 import { ChevronDown, Check } from 'lucide-react'
 import { useTranslations } from 'next-intl'
@@ -56,6 +56,9 @@ export function Combobox({
   portal = false,
   onKeyDown,
 }: ComboboxProps) {
+  const uid = useId()
+  const inputId = `combobox-${uid}`
+  const listboxId = `listbox-${uid}`
   const [search, setSearch] = useState('')
   const [open, setOpen] = useState(false)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
@@ -141,13 +144,15 @@ export function Combobox({
       )}
       style={portal ? dropdownStyle : undefined}
     >
-      <div className="overflow-y-auto max-h-56">
+      <div id={listboxId} role="listbox" className="overflow-y-auto max-h-56">
         {filtered.length === 0 ? (
           <p className="px-3 py-2 text-sm text-muted-foreground">{t('no_results')}</p>
         ) : filtered.map(opt => (
           <button
             key={opt.value}
             type="button"
+            role="option"
+            aria-selected={value === opt.value}
             className={cn(
               'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
               value === opt.value && 'bg-primary/10 text-primary'
@@ -175,7 +180,13 @@ export function Combobox({
 
       {variant === 'input' ? (
         <input
+          id={inputId}
           type="text"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          aria-controls={open ? listboxId : undefined}
           value={selected ? selected.label : search}
           onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true) }}
           onFocus={() => { setOpen(true); updateDropdownPosition() }}

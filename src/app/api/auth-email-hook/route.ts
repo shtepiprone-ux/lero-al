@@ -9,10 +9,10 @@
  * Rationale: app deploys to Vercel; no supabase/functions infrastructure exists;
  * project already has 9 API routes; Next route is simpler to deploy and debug.
  *
- * Security: Supabase signs hook requests with an HS256 JWT sent in the
- * Authorization: Bearer <jwt> header. The JWT is verified using the hook secret
- * (SUPABASE_EMAIL_HOOK_SECRET). If the env var is not set the check is skipped
- * (allows local dev without the secret configured).
+ * Security: Supabase uses Svix webhook signing (v1,whsec_<base64> secret format).
+ * The signature covers "{svix-id}.{svix-ts}.{body}" and is sent in svix-signature
+ * header as "v1,<base64_hmac>". Secret env var: SUPABASE_EMAIL_HOOK_SECRET.
+ * If not set, verification is skipped (local dev only).
  *
  * Action-type → template map:
  *   signup          → VerifyEmail   (to user.email)
@@ -160,29 +160,53 @@ function emailChangeHtml(s: ReturnType<typeof getEmailChangeStrings>, verifyUrl:
 </html>`
 }
 
-// ── JWT verification (HS256) ──────────────────────────────────────────────────
-// Supabase sends a JWT signed with the hook secret in Authorization: Bearer <jwt>.
+// ── Svix webhook verification ─────────────────────────────────────────────────
+// Supabase uses Svix (v1,whsec_<base64> format). Svix signs:
+//   HMAC-SHA256(base64decode(key), "{svix-id}.{svix-ts}.{body}")
+// and sends the result as:
+//   svix-signature: v1,<base64_hmac>
 
-function verifyHookJWT(authHeader: string | null, secret: string): boolean {
-  if (!authHeader?.startsWith('Bearer ')) return false
-  const token = authHeader.slice(7)
-  const parts = token.split('.')
-  if (parts.length !== 3) return false
-
-  const signingInput = `${parts[0]}.${parts[1]}`
+function verifySvixWebhook(
+  body: string,
+  headers: { get: (name: string) => string | null },
+  secret: string,
+): boolean {
+  // Decode the raw key from v1,whsec_<base64> or whsec_<base64>
+  const keyB64 = secret.replace(/^v1,/, '').replace(/^whsec_/, '')
+  let keyBytes: Buffer
   try {
-    const expectedSig = createHmac('sha256', secret)
-      .update(signingInput)
-      .digest('base64url')
-
-    const bufExpected = Buffer.from(expectedSig, 'base64url')
-    const bufReceived = Buffer.from(parts[2], 'base64url')
-
-    if (bufExpected.length !== bufReceived.length) return false
-    return timingSafeEqual(bufExpected, bufReceived)
+    keyBytes = Buffer.from(keyB64, 'base64')
   } catch {
     return false
   }
+
+  // Svix headers (Supabase may also use webhook-* equivalents)
+  const msgId  = headers.get('svix-id')        ?? headers.get('webhook-id')        ?? ''
+  const msgTs  = headers.get('svix-ts')         ?? headers.get('webhook-timestamp') ?? ''
+  const msgSig = headers.get('svix-signature')  ?? headers.get('webhook-signature') ?? ''
+
+  if (!msgId || !msgTs || !msgSig) return false
+
+  // Reject requests older than 5 minutes (replay protection)
+  const tsMs = Number(msgTs) * 1000
+  if (isNaN(tsMs) || Math.abs(Date.now() - tsMs) > 5 * 60 * 1000) return false
+
+  // Signed payload: id.timestamp.body
+  const toSign = `${msgId}.${msgTs}.${body}`
+  const expected = createHmac('sha256', keyBytes).update(toSign).digest('base64')
+
+  // Signature header may have multiple values: "v1,<sig1> v1,<sig2>"
+  return msgSig.split(' ').some(sig => {
+    const sigVal = sig.startsWith('v1,') ? sig.slice(3) : sig
+    try {
+      const bufExpected = Buffer.from(expected, 'base64')
+      const bufReceived = Buffer.from(sigVal, 'base64')
+      return bufExpected.length === bufReceived.length &&
+        timingSafeEqual(bufExpected, bufReceived)
+    } catch {
+      return false
+    }
+  })
 }
 
 // ── Action URL builder ─────────────────────────────────────────────────────────
@@ -198,16 +222,22 @@ export async function POST(request: NextRequest) {
   try {
     const rawBody = await request.text()
 
-    // Verify HS256 JWT from Authorization: Bearer header if secret is configured.
-    // Supabase signs every hook request with the hook secret (not x-supabase-signature).
+    // Diagnostic: log which auth headers Supabase actually sends (prefix only).
+    console.info('[auth-email-hook] incoming headers', {
+      svixId:       request.headers.get('svix-id'),
+      svixTs:       request.headers.get('svix-ts'),
+      svixSig:      request.headers.get('svix-signature')?.slice(0, 20),
+      webhookId:    request.headers.get('webhook-id'),
+      webhookTs:    request.headers.get('webhook-timestamp'),
+      webhookSig:   request.headers.get('webhook-signature')?.slice(0, 20),
+      authorization: request.headers.get('authorization')?.slice(0, 20),
+    })
+
+    // Verify Svix webhook signature (v1,whsec_<base64> format).
     const secret = process.env.SUPABASE_EMAIL_HOOK_SECRET
     if (secret) {
-      const authHeader = request.headers.get('authorization')
-      if (!verifyHookJWT(authHeader, secret)) {
-        console.error('[auth-email-hook] JWT verification failed', {
-          hasAuth: !!authHeader,
-          prefix: authHeader?.slice(0, 15) ?? 'none',
-        })
+      if (!verifySvixWebhook(rawBody, request.headers, secret)) {
+        console.error('[auth-email-hook] Svix signature verification failed')
         return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
       }
     }

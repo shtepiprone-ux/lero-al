@@ -120,7 +120,7 @@ Rationale: app deploys to Vercel; project has no supabase/functions infrastructu
 
 **Hook endpoint:** `POST /api/auth-email-hook` (`src/app/api/auth-email-hook/route.ts`)
 
-**Security:** HS256 JWT verification. Supabase signs every hook request as a JWT using the hook secret (`SUPABASE_EMAIL_HOOK_SECRET` env var) and sends it in the `Authorization: Bearer <jwt>` header. The handler verifies the JWT signature using HMAC-SHA256 before processing. (Not `x-supabase-signature` — that is used by Postgres hooks, not the HTTP Send Email Hook.)
+**Security:** Standard Webhooks signature verification (https://www.standardwebhooks.com) via the official `standardwebhooks` library. Supabase signs each request over `{webhook-id}.{webhook-timestamp}.{body}` with HMAC-SHA256 and sends the `webhook-id`, `webhook-timestamp`, and `webhook-signature` (`v1,<base64>`) headers. The hook secret (`SUPABASE_EMAIL_HOOK_SECRET`) is the dashboard-issued value in `v1,whsec_<base64>` format; the handler strips the `v1,` prefix and calls `Webhook.verify()`, which also enforces a timestamp tolerance (replay protection). It is NOT a JWT in `Authorization`, and NOT the `x-supabase-signature` header (that belongs to Postgres webhooks, not the HTTP Send Email Hook).
 
 **Action-type → template map:**
 
@@ -141,7 +141,7 @@ Rationale: app deploys to Vercel; project has no supabase/functions infrastructu
 **Owner registration steps (manual — cannot be done by code):**
 1. Supabase Dashboard → Authentication → Hooks → "Send Email Hook"
 2. Set **Hook URL**: `https://lero.al/api/auth-email-hook`
-3. Set **Hook Secret**: copy the value from `SUPABASE_EMAIL_HOOK_SECRET` (generate a random 32+ char string)
+3. Set **Hook Secret**: use the secret Supabase generates in this dialog (format `v1,whsec_<base64>`) and store that exact value as `SUPABASE_EMAIL_HOOK_SECRET`. Do NOT invent your own random string — verification only passes against the dashboard-issued `v1,whsec_` secret.
 4. Save. The hook is now active — Supabase will call our endpoint for every auth email instead of sending its own.
 5. **Do NOT disable "Confirm email"** — Supabase still owns token validation and `email_confirmed_at`. The hook only replaces delivery.
 

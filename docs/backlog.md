@@ -313,6 +313,10 @@ Global numbering is now assigned to all remaining tasks. Dependencies noted. Kic
 **Follow-ups / hardening (post-review)**
 - **Task 157** — Recovery security logging: forensic IP / user-agent + correlation id (D.4 follow-up from the 2026-05-21 Task 121 review). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_157.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_157.md). Builds on `src/modules/auth/actions/recovery.ts`.
 
+**Sprint 4 — Auth phone validation & flow consolidation** (from the 2026-05-21 phone-validation audit; run 158 → 159)
+- **Task 158** — Country-aware phone validation as a single shared source of truth for ALL phone/whatsapp inputs (AuthSheet, RegisterForm, AdminUserCreate, AdminUserProfile, ProfileTab). Adds `libphonenumber-js`; removes 4× duplicated `COUNTRY_CODES`/`parsePhone` + the dead Albania-only `registerSchema` regex. Kickoff: [`tasks/Sprints/Sprint_4_kickoff_prompt_Task_158.md`](../tasks/Sprints/Sprint_4_kickoff_prompt_Task_158.md).
+- **Task 159** — Consolidate the two parallel auth flows into one (AuthSheet = canonical); convert `/auth/login` + `/auth/register` to drawer triggers, delete legacy `LoginForm`/`RegisterForm`, fix homepage agent CTA. Kickoff: [`tasks/Sprints/Sprint_4_kickoff_prompt_Task_159.md`](../tasks/Sprints/Sprint_4_kickoff_prompt_Task_159.md). Sprint record: [`tasks/Sprints/Sprint_4_—_Auth_Phone_Validation_and_Flow_Consolidation.md`](../tasks/Sprints/Sprint_4_—_Auth_Phone_Validation_and_Flow_Consolidation.md).
+
 > ⚠️ Do NOT disable Supabase "Confirm email" before the Send Email Hook (Task 122) is live — auto-confirm security hole.
 > Numbers reflect the agreed order; if priorities change, renumber from the point of change forward (don't reuse numbers).
 

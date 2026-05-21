@@ -128,3 +128,27 @@ Email templates render outside next-intl context (server-side hook handler) → 
 - ESLint: 0 errors in new files.
 - governance:localization: ✅ PASS C0/H0/M17 (baseline M18 — no regression).
 - npm run build: user's manual step per project policy.
+
+---
+
+## Correction (2026-05-21 review) — webhook signature verification
+
+The notes above (and `docs/integrations.md`) described the hook verification two
+inaccurate ways: as plain HMAC-SHA256 of the raw body via an `x-supabase-signature`
+header, and as an HS256 JWT in `Authorization: Bearer`. Neither is how the Supabase
+Send Email Hook works.
+
+Supabase's Send Email Hook uses the **Standard Webhooks** spec
+(https://www.standardwebhooks.com):
+- Headers: `webhook-id`, `webhook-timestamp`, `webhook-signature` (`v1,<base64>`).
+- Signed content: `{id}.{timestamp}.{body}`, HMAC-SHA256.
+- Secret: dashboard-issued `v1,whsec_<base64>` — NOT a self-generated random hex
+  string. (The earlier "openssl rand -hex 32 / random 32-char string" instruction
+  would have caused verification to fail in production.)
+
+The handler now verifies via the official `standardwebhooks` library
+(`Webhook.verify()`), which also enforces a timestamp tolerance (replay
+protection). The previous hand-rolled implementation also had a `svix-ts` header
+typo (the real header is `svix-timestamp` / `webhook-timestamp`), now removed.
+`docs/integrations.md`, `docs/env.md`, and `docs/dependencies.md` corrected.
+See `src/app/api/auth-email-hook/route.ts`.

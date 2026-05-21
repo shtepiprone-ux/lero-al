@@ -312,8 +312,9 @@
     "reset_password_error_weak": "Пароль повинен містити не менше 8 символів.",
     "reset_password_error_generic": "Виникла помилка. Спробуйте ще раз.",
     "error_name_required": "Ім'я обов'язкове.",
-    "error_phone_invalid": "Неправильний формат номера телефону.",
-    "error_email_invalid": "Введіть коректну електронну адресу."
+    "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
+    "error_email_invalid": "Введіть коректну електронну адресу.",
+    "error_phone_no_country_code": "Введіть номер телефону без коду країни."
   },
   "common": {
     "search": "Пошук",
@@ -768,13 +769,14 @@
       "validation": {
         "firstName_required": "Ім'я обов'язкове",
         "lastName_required": "Прізвище обов'язкове",
-        "phone_format": "Формат: +35569123456",
+        "phone_format": "Введіть коректний номер телефону для вибраної країни.",
         "location_required": "Місто обов'язкове",
         "block_reason_required": "Причина блокування обов'язкова",
         "company_name_required": "Назва компанії обов'язкова",
         "website_required": "Сайт компанії обов'язковий",
         "email_required": "Email обов'язковий",
-        "email_invalid": "Некоректний email"
+        "email_invalid": "Некоректний email",
+        "phone_no_country_code": "Введіть номер телефону без коду країни."
       },
       "profile_types": {
         "admin": "Адміністратор",

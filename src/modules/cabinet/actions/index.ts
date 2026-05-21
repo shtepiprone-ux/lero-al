@@ -21,8 +21,8 @@ async function resolveAuthUser(): Promise<string | null> {
 
 export async function updateCabinetProfile(data: {
   name: string
-  phone: string
-  whatsapp: string
+  phone?: string
+  whatsapp?: string
   companyName: string | null
   userType: 'private' | 'agent'
   locationId: number | null
@@ -36,8 +36,8 @@ export async function updateCabinetProfile(data: {
     .from('users')
     .update({
       name: data.name.trim() || null,
-      phone: data.phone.trim() || null,
-      whatsapp: data.whatsapp.trim() || null,
+      phone: data.phone?.trim() || null,
+      whatsapp: data.whatsapp?.trim() || null,
       company_name: data.userType === 'agent' ? (data.companyName?.trim() || null) : null,
       user_type: data.userType,
       location_id: data.locationId,

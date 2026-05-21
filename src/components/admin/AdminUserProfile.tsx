@@ -17,6 +17,9 @@ import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { Combobox } from '@/components/shared/Combobox'
+import { PhoneField } from '@/components/shared/PhoneField'
+import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+import { validateNationalPhone, parsePhoneValue } from '@/lib/phone'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
@@ -51,20 +54,15 @@ interface Props {
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-const PHONE_RE = /^\+[1-9]\d{7,14}$/
 const PROFILE_TYPES = ['admin', 'moderator', 'private', 'agent', 'developer'] as const
 const STATUS_VALUES = ['active', 'blocked', 'inactive'] as const
 const STATUS_VARIANT = { active: 'success', blocked: 'destructive', inactive: 'warning' } as const
 
-const COUNTRY_CODES = [
-  { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
-  { code: '+39', flag: '🇮🇹' }, { code: '+44', flag: '🇬🇧' },
-  { code: '+1', flag: '🇺🇸' }, { code: '+49', flag: '🇩🇪' },
-  { code: '+33', flag: '🇫🇷' }, { code: '+90', flag: '🇹🇷' },
-  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
-  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
-  { code: '+389', flag: '🇲🇰' },
-]
+function initPhoneState(e164: string | null | undefined): PhoneFieldValue {
+  const v = e164 ?? ''
+  const { dialCode, iso2, national } = parsePhoneValue(v)
+  return { e164: v, dialCode, iso2, national }
+}
 
 // ── Schema builder ────────────────────────────────────────────────────────────
 
@@ -73,7 +71,7 @@ function buildProfileSchema(t: ReturnType<typeof useTranslations<'admin.user_pro
     firstName:      z.string().min(1, t('validation.firstName_required')),
     lastName:       z.string().min(1, t('validation.lastName_required')),
     profileType:    z.enum(PROFILE_TYPES),
-    phone:          z.string().regex(PHONE_RE, t('validation.phone_format')),
+    phone:          z.string(),
     useMainPhone:   z.boolean(),
     whatsapp:       z.string().optional(),
     locationId:     z.number().int().min(1, t('validation.location_required')),
@@ -91,11 +89,7 @@ function buildProfileSchema(t: ReturnType<typeof useTranslations<'admin.user_pro
     { message: t('validation.company_name_required'), path: ['companyName'] })
   .refine(d => !['agent', 'developer'].includes(d.profileType) || !!d.website?.trim(),
     { message: t('validation.website_required'), path: ['website'] })
-  .refine(d => {
-    if (d.useMainPhone) return true
-    if (!d.whatsapp) return true
-    return PHONE_RE.test(d.whatsapp)
-  }, { message: t('validation.phone_format'), path: ['whatsapp'] })
+  // Phone/whatsapp validated country-aware in handleCreate/handleSave via validateNationalPhone()
 }
 
 type FormValues = {
@@ -116,11 +110,6 @@ type FormValues = {
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-function parsePhone(val: string) {
-  const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
-  return match ? { code: match.code, local: val.slice(match.code.length) } : { code: '+355', local: val.replace(/^\+/, '') }
-}
 
 function profileTypeFromUser(user: Pick<User, 'role' | 'user_type'>): ProfileType {
   if (user.role === 'admin') return 'admin'
@@ -160,39 +149,6 @@ function FieldRow({ label, viewValue, editContent, mode, error }: {
           : <div>{editContent}{error && <p className="text-xs text-destructive mt-1">{error}</p>}</div>
         }
       </div>
-    </div>
-  )
-}
-
-function PhoneInputField({ value, onChange, error }: { value: string; onChange: (v: string) => void; error?: string }) {
-  const [code, setCode] = useState(() => parsePhone(value).code)
-  const [local, setLocal] = useState(() => parsePhone(value).local)
-
-  useEffect(() => {
-    const p = parsePhone(value)
-    setCode(p.code); setLocal(p.local)
-  }, [value])
-
-  function update(c: string, l: string) {
-    setCode(c); setLocal(l)
-    onChange(`${c}${l.replace(/\s/g, '')}`)
-  }
-
-  return (
-    <div>
-      <div className="flex gap-2">
-        <Combobox
-          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
-          value={code}
-          onChange={c => update(c || code, local)}
-          variant="button"
-          size="sm"
-          triggerClassName="w-20 h-10 shrink-0"
-          className="w-20 shrink-0"
-        />
-        <Input value={local} onChange={e => update(code, e.target.value)} placeholder="69 123 456" className="h-10 rounded-xl" />
-      </div>
-      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
     </div>
   )
 }
@@ -357,6 +313,10 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url ?? null)
   const [pendingAvatarBlob, setPendingAvatarBlob] = useState<Blob | null>(null)
 
+  // Phone state — tracks iso2/dialCode/national for country-aware validation
+  const [phoneState, setPhoneState] = useState<PhoneFieldValue>(() => initPhoneState(user?.phone))
+  const [whatsappState, setWhatsappState] = useState<PhoneFieldValue>(() => initPhoneState(user?.whatsapp))
+
   // Email state — editable in create mode only
   const [createEmail, setCreateEmail] = useState('')
   const [createEmailError, setCreateEmailError] = useState<string | null>(null)
@@ -410,7 +370,9 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   }, [])
   const { interceptHref, confirmLeave } = useUnsavedChangesGuard(needsGuard, handleShowGuardDialog)
 
-  useEffect(() => { if (useMainPhone) setValue('whatsapp', phoneValue) }, [useMainPhone, phoneValue, setValue])
+  useEffect(() => {
+    if (useMainPhone) { setValue('whatsapp', phoneValue); setWhatsappState(phoneState) }
+  }, [useMainPhone, phoneValue, phoneState, setValue])
   useEffect(() => { if (statusValue !== 'blocked') setValue('blockReason', '') }, [statusValue, setValue])
   useEffect(() => {
     if (!isBusiness) { setValue('companyName', ''); setValue('website', ''); setValue('position', ''); setValue('yearStarted', undefined) }
@@ -430,14 +392,25 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
 
   async function handleCreate(data: FormValues) {
     if (!validateCreateEmail()) return
+    // Country-aware phone validation before DB write
+    if (!phoneState.national) { setSaveError(t('validation.phone_format')); return }
+    const pr = validateNationalPhone({ iso2: phoneState.iso2, dialCode: phoneState.dialCode, rawNational: phoneState.national })
+    if (!pr.ok) { setSaveError(t(`validation.${pr.errorKey}` as Parameters<typeof t>[0])); return }
+    const phoneE164 = pr.e164
+    let whatsappE164: string | undefined
+    if (!data.useMainPhone && whatsappState.national) {
+      const wr = validateNationalPhone({ iso2: whatsappState.iso2, dialCode: whatsappState.dialCode, rawNational: whatsappState.national })
+      if (!wr.ok) { setSaveError(t(`validation.${wr.errorKey}` as Parameters<typeof t>[0])); return }
+      whatsappE164 = wr.e164
+    }
     setSaving(true); setSaveError(null)
     const result = await createAdminUser({
       firstName: data.firstName,
       lastName: data.lastName,
       email: createEmail.trim(),
       profileType: data.profileType,
-      phone: data.phone,
-      whatsapp: data.useMainPhone ? data.phone : (data.whatsapp || undefined),
+      phone: phoneE164,
+      whatsapp: data.useMainPhone ? phoneE164 : (whatsappE164 || undefined),
       locationId: data.locationId,
       ...(isBusiness && {
         companyName: data.companyName,
@@ -473,12 +446,23 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
 
   async function handleSave(data: FormValues) {
     if (!user) return
+    // Country-aware phone validation before DB write
+    if (!phoneState.national) { setSaveError(t('validation.phone_format')); return }
+    const pr = validateNationalPhone({ iso2: phoneState.iso2, dialCode: phoneState.dialCode, rawNational: phoneState.national })
+    if (!pr.ok) { setSaveError(t(`validation.${pr.errorKey}` as Parameters<typeof t>[0])); return }
+    const phoneE164 = pr.e164
+    let whatsappE164: string | undefined
+    if (!data.useMainPhone && whatsappState.national) {
+      const wr = validateNationalPhone({ iso2: whatsappState.iso2, dialCode: whatsappState.dialCode, rawNational: whatsappState.national })
+      if (!wr.ok) { setSaveError(t(`validation.${wr.errorKey}` as Parameters<typeof t>[0])); return }
+      whatsappE164 = wr.e164
+    }
     setSaving(true); setSaveError(null)
     const result = await updateUserProfileFull(user.id, {
       firstName: data.firstName, lastName: data.lastName,
       profileType: data.profileType,
-      phone: data.phone,
-      whatsapp: data.useMainPhone ? data.phone : (data.whatsapp || undefined),
+      phone: phoneE164,
+      whatsapp: data.useMainPhone ? phoneE164 : (whatsappE164 || undefined),
       locationId: data.locationId,
       companyName: data.companyName, companyLogoUrl: data.companyLogoUrl,
       website: data.website, position: data.position, yearStarted: data.yearStarted ?? null,
@@ -720,10 +704,11 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         <FieldRow label={t('fields.phone')} mode={currentMode}
           viewValue={user?.phone}
           editContent={
-            <PhoneInputField
-              value={watch('phone')}
-              onChange={v => setValue('phone', v, { shouldValidate: true })}
+            <PhoneField
+              value={phoneState.e164}
+              onChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
               error={errors.phone?.message}
+              size="sm"
             />
           }
           error={undefined}
@@ -737,10 +722,11 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                 {t('fields.use_main_phone')}
               </label>
               {!useMainPhone && (
-                <PhoneInputField
-                  value={watch('whatsapp') ?? ''}
-                  onChange={v => setValue('whatsapp', v, { shouldValidate: true })}
+                <PhoneField
+                  value={whatsappState.e164}
+                  onChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
                   error={errors.whatsapp?.message}
+                  size="sm"
                 />
               )}
             </div>

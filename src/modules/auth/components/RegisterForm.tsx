@@ -5,6 +5,11 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { signUp } from '@/lib/auth/browser'
+import { PhoneField } from '@/components/shared/PhoneField'
+import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+import { validateNationalPhone } from '@/lib/phone'
+
+const DEFAULT_PHONE: PhoneFieldValue = { national: '', dialCode: '+355', iso2: 'AL', e164: '' }
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -29,7 +34,7 @@ export function RegisterForm() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState<PhoneFieldValue>(DEFAULT_PHONE)
   const [userType, setUserType] = useState<'private' | 'agent'>('private')
   const [companyName, setCompanyName] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -38,15 +43,28 @@ export function RegisterForm() {
 
   async function handleRegister(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
+    // Country-aware phone validation before signUp()
+    let phoneE164: string | undefined
+    if (phone.national) {
+      const result = validateNationalPhone({ iso2: phone.iso2, dialCode: phone.dialCode, rawNational: phone.national })
+      if (!result.ok) {
+        setError(result.errorKey === 'error_phone_no_country_code'
+          ? t('error_phone_no_country_code' as Parameters<typeof t>[0])
+          : t('error_phone_invalid' as Parameters<typeof t>[0]))
+        return
+      }
+      phoneE164 = result.e164
+    }
+
+    setLoading(true)
     try {
       const { error } = await signUp(email, password, {
         emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/auth/verified`,
         data: {
           name,
-          phone,
+          phone: phoneE164,
           user_type: userType,
           company_name: userType === 'agent' ? companyName : null,
           preferred_locale: locale,
@@ -126,16 +144,11 @@ export function RegisterForm() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="phone">{t('phone')}</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  className="h-11 rounded-xl"
-                />
-              </div>
+              <PhoneField
+                value={phone.e164}
+                onChange={setPhone}
+                label={t('phone')}
+              />
 
               {userType === 'agent' && (
                 <div className="space-y-2">

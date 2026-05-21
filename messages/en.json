@@ -312,8 +312,9 @@
     "reset_password_error_weak": "Password must be at least 8 characters.",
     "reset_password_error_generic": "An error occurred. Please try again.",
     "error_name_required": "Name is required.",
-    "error_phone_invalid": "Phone number format is invalid.",
-    "error_email_invalid": "Please enter a valid email address."
+    "error_phone_invalid": "Please enter a valid phone number for the selected country.",
+    "error_email_invalid": "Please enter a valid email address.",
+    "error_phone_no_country_code": "Enter the phone number without the country code."
   },
   "common": {
     "search": "Search",
@@ -768,13 +769,14 @@
       "validation": {
         "firstName_required": "First name is required",
         "lastName_required": "Last name is required",
-        "phone_format": "Format: +35569123456",
+        "phone_format": "Please enter a valid phone number for the selected country.",
         "location_required": "City is required",
         "block_reason_required": "Block reason is required",
         "company_name_required": "Company name is required",
         "website_required": "Company website is required",
         "email_required": "Email is required",
-        "email_invalid": "Invalid email address"
+        "email_invalid": "Invalid email address",
+        "phone_no_country_code": "Enter the phone number without the country code."
       },
       "profile_types": {
         "admin": "Administrator",

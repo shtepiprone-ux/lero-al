@@ -23,6 +23,9 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { useCompanies } from '@/modules/companies/hooks/useCompanies'
 import { createCompanyAction } from '@/modules/companies/actions'
 import { Combobox } from '@/components/shared/Combobox'
+import { PhoneField } from '@/components/shared/PhoneField'
+import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+import { validateNationalPhone } from '@/lib/phone'
 
 export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
 
@@ -473,65 +476,10 @@ function CompanyField({
   )
 }
 
-// ── Phone field — Combobox country code + local number input ──────────────────
-// Same pattern as AdminUserCreate / AdminUserProfile / ProfileTab.
-
+// Email validation regex (client-side guard before signUp())
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const PHONE_RE = /^\+[1-9]\d{7,14}$/
 
-const COUNTRY_CODES = [
-  { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
-  { code: '+39',  flag: '🇮🇹' }, { code: '+44',  flag: '🇬🇧' },
-  { code: '+1',   flag: '🇺🇸' }, { code: '+49',  flag: '🇩🇪' },
-  { code: '+33',  flag: '🇫🇷' }, { code: '+90',  flag: '🇹🇷' },
-  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
-  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
-  { code: '+389', flag: '🇲🇰' },
-]
-
-function parsePhone(val: string) {
-  const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
-  return match
-    ? { code: match.code, local: val.slice(match.code.length) }
-    : { code: '+355', local: val.replace(/^\+/, '') }
-}
-
-function PhoneField({ value, onChange, label }: { value: string; onChange: (v: string) => void; label: string }) {
-  const [code, setCode] = useState(() => parsePhone(value).code)
-  const [local, setLocal] = useState(() => parsePhone(value).local)
-
-  function update(newCode: string, newLocal: string) {
-    setCode(newCode)
-    setLocal(newLocal)
-    const cleaned = newLocal.replace(/\s/g, '')
-    onChange(cleaned ? `${newCode}${cleaned}` : '')
-  }
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Label>{label}</Label>
-      <div className="flex gap-2">
-        <Combobox
-          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
-          value={code}
-          onChange={c => update(c || code, local)}
-          variant="button"
-          size="sm"
-          triggerClassName="w-[90px] shrink-0"
-          className="w-[90px] shrink-0"
-          portal
-        />
-        <Input
-          type="tel"
-          value={local}
-          onChange={e => update(code, e.target.value)}
-          placeholder="69 123 456"
-          autoComplete="tel"
-        />
-      </div>
-    </div>
-  )
-}
+const DEFAULT_PHONE_VALUE: PhoneFieldValue = { national: '', dialCode: '+355', iso2: 'AL', e164: '' }
 
 // ── Register view ─────────────────────────────────────────────────────────────
 
@@ -550,7 +498,7 @@ function RegisterView({
   const locale = useLocale()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
+  const [phone, setPhone] = useState<PhoneFieldValue>(DEFAULT_PHONE_VALUE)
   const [locationId, setLocationId] = useState<string>('')
   const [companyId, setCompanyId] = useState<string>('')
   const [password, setPassword] = useState('')
@@ -565,14 +513,21 @@ function RegisterView({
     if (!name.trim()) { setErrorKey('error_name_required'); return }
     if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
     if (password.length < 6) { setErrorKey('error_weak_password'); return }
-    if (phone && !PHONE_RE.test(phone)) { setErrorKey('error_phone_invalid'); return }
+
+    // Country-aware phone validation (only if a national number was entered)
+    let phoneE164: string | undefined
+    if (phone.national) {
+      const result = validateNationalPhone({ iso2: phone.iso2, dialCode: phone.dialCode, rawNational: phone.national })
+      if (!result.ok) { setErrorKey(result.errorKey); return }
+      phoneE164 = result.e164
+    }
 
     setLoading(true)
     const { error } = await signUp(email, password, {
       emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/auth/verified`,
       data: {
         name,
-        phone: phone || undefined,
+        phone: phoneE164,
         user_type: isAgent ? 'agent' : 'private',
         location_id: isAgent && locationId ? parseInt(locationId, 10) : undefined,
         company_id: isAgent && companyId ? companyId : undefined,
@@ -629,7 +584,7 @@ function RegisterView({
       </div>
 
       <PhoneField
-        value={phone}
+        value={phone.e164}
         onChange={setPhone}
         label={t('phone')}
       />

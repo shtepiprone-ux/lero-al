@@ -7,7 +7,9 @@ import { CheckCircle2, AlertCircle, Loader2, Trash2, AlertTriangle } from 'lucid
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Combobox } from '@/components/shared/Combobox'
+import { PhoneField } from '@/components/shared/PhoneField'
+import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+import { validateNationalPhone, parsePhoneValue } from '@/lib/phone'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
@@ -22,16 +24,6 @@ import {
 import type { User, PreferredCurrency } from '@/types/database'
 import { useRouter } from 'next/navigation'
 
-const COUNTRY_CODES = [
-  { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
-  { code: '+39', flag: '🇮🇹' }, { code: '+44', flag: '🇬🇧' },
-  { code: '+1', flag: '🇺🇸' }, { code: '+49', flag: '🇩🇪' },
-  { code: '+33', flag: '🇫🇷' }, { code: '+90', flag: '🇹🇷' },
-  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
-  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
-  { code: '+389', flag: '🇲🇰' },
-]
-
 interface CityOption { id: number; name_al: string; region_id: number | null }
 interface RegionOption { id: number; name_al: string }
 
@@ -43,53 +35,6 @@ interface Props {
   email?: string | null
   onAvatarChange?: (url: string | null) => void
 }
-
-// ── Phone input sub-component ─────────────────────────────────────────────────
-
-function parsePhone(val: string) {
-  const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
-  return match
-    ? { code: match.code, local: val.slice(match.code.length) }
-    : { code: '+355', local: val.replace(/^\+/, '') }
-}
-
-function PhoneField({ label, value, onChange }: {
-  label: string; value: string; onChange: (v: string) => void
-}) {
-  const [code, setCode] = useState(() => parsePhone(value).code)
-  const [local, setLocal] = useState(() => parsePhone(value).local)
-
-  function update(c: string, l: string) {
-    setCode(c); setLocal(l)
-    onChange(`${c}${l.replace(/\s/g, '')}`)
-  }
-
-  return (
-    <div className="flex flex-col gap-1.5">
-      <Label className="text-sm">{label}</Label>
-      <div className="flex gap-2">
-        <Combobox
-          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
-          value={code}
-          onChange={c => { if (c) update(c, local) }}
-          variant="button"
-          size="default"
-          className="w-24 shrink-0"
-          triggerClassName="w-24 shrink-0"
-        />
-        <Input
-          value={local}
-          onChange={e => update(code, e.target.value)}
-          placeholder="69 123 456"
-          className="h-11 rounded-xl"
-        />
-      </div>
-    </div>
-  )
-}
-
-// ── Settlement combobox sub-component ────────────────────────────────────────
-
 
 // ── Currency combobox sub-component ──────────────────────────────────────────
 
@@ -142,8 +87,14 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
 
   // Form state
   const [name, setName] = useState(profile?.name ?? '')
-  const [phone, setPhone] = useState(profile?.phone ?? '')
-  const [whatsapp, setWhatsapp] = useState(profile?.whatsapp ?? '')
+  const [phone, setPhone] = useState<PhoneFieldValue>(() => {
+    const p = parsePhoneValue(profile?.phone ?? '')
+    return { e164: profile?.phone ?? '', dialCode: p.dialCode, iso2: p.iso2, national: p.national }
+  })
+  const [whatsapp, setWhatsapp] = useState<PhoneFieldValue>(() => {
+    const p = parsePhoneValue(profile?.whatsapp ?? '')
+    return { e164: profile?.whatsapp ?? '', dialCode: p.dialCode, iso2: p.iso2, national: p.national }
+  })
   const [companyName, setCompanyName] = useState(profile?.company_name ?? '')
   const [userType, setUserType] = useState<'private' | 'agent'>(
     profile?.user_type === 'agent' ? 'agent' : 'private',
@@ -176,14 +127,14 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     if (!profile) return false
     return (
       name !== (profile.name ?? '') ||
-      phone !== (profile.phone ?? '') ||
-      whatsapp !== (profile.whatsapp ?? '') ||
+      phone.e164 !== (profile.phone ?? '') ||
+      whatsapp.e164 !== (profile.whatsapp ?? '') ||
       companyName !== (profile.company_name ?? '') ||
       userType !== (profile.user_type === 'agent' ? 'agent' : 'private') ||
       locationId !== (profile.location_id ?? null) ||
       currency !== (profile.preferred_currency ?? 'ALL')
     )
-  }, [name, phone, whatsapp, companyName, userType, locationId, currency, profile])
+  }, [name, phone.e164, whatsapp.e164, companyName, userType, locationId, currency, profile])
 
   const handleShowGuardDialog = useCallback((href: string | null) => {
     setPendingGuardHref(href)
@@ -192,11 +143,31 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
   const { confirmLeave } = useUnsavedChangesGuard(isDirty, handleShowGuardDialog)
 
   async function handleSave() {
+    // Country-aware phone validation before any DB write
+    let phoneE164: string | null = phone.e164 || null
+    if (phone.national) {
+      const r = validateNationalPhone({ iso2: phone.iso2, dialCode: phone.dialCode, rawNational: phone.national })
+      if (!r.ok) {
+        toast.error(t(r.errorKey as Parameters<typeof t>[0]))
+        return
+      }
+      phoneE164 = r.e164
+    }
+    let whatsappE164: string | null = whatsapp.e164 || null
+    if (whatsapp.national) {
+      const r = validateNationalPhone({ iso2: whatsapp.iso2, dialCode: whatsapp.dialCode, rawNational: whatsapp.national })
+      if (!r.ok) {
+        toast.error(t(r.errorKey as Parameters<typeof t>[0]))
+        return
+      }
+      whatsappE164 = r.e164
+    }
+
     setSaveStatus('saving')
     const result = await updateCabinetProfile({
       name,
-      phone,
-      whatsapp,
+      phone: phoneE164 ?? undefined,
+      whatsapp: whatsappE164 ?? undefined,
       companyName: userType === 'agent' ? companyName : null,
       userType,
       locationId,
@@ -315,12 +286,12 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       <div className="bg-card rounded-2xl border shadow-sm p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
         <PhoneField
           label={t('phone')}
-          value={phone}
+          value={phone.e164}
           onChange={setPhone}
         />
         <PhoneField
           label={t('whatsapp')}
-          value={whatsapp}
+          value={whatsapp.e164}
           onChange={setWhatsapp}
         />
         <div className="sm:col-span-2 flex flex-col gap-1.5">

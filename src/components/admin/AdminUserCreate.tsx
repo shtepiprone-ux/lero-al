@@ -13,6 +13,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
+import { PhoneField } from '@/components/shared/PhoneField'
+import type { PhoneFieldValue } from '@/components/shared/PhoneField'
+import { validateNationalPhone } from '@/lib/phone'
 import { Checkbox } from '@/components/ui/checkbox'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
@@ -30,18 +33,9 @@ interface Props {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const PHONE_RE = /^\+[1-9]\d{7,14}$/
 const PROFILE_TYPES = ['admin', 'moderator', 'private', 'agent', 'developer'] as const
 
-const COUNTRY_CODES = [
-  { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
-  { code: '+39', flag: '🇮🇹' }, { code: '+44', flag: '🇬🇧' },
-  { code: '+1', flag: '🇺🇸' }, { code: '+49', flag: '🇩🇪' },
-  { code: '+33', flag: '🇫🇷' }, { code: '+90', flag: '🇹🇷' },
-  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
-  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
-  { code: '+389', flag: '🇲🇰' },
-]
+const DEFAULT_PHONE: PhoneFieldValue = { national: '', dialCode: '+355', iso2: 'AL', e164: '' }
 
 // ── Schema builder ─────────────────────────────────────────────────────────────
 
@@ -51,16 +45,12 @@ function buildCreateSchema(t: ReturnType<typeof useTranslations<'admin.user_prof
     lastName:     z.string().optional(),
     email:        z.string().email(t('validation.email_invalid')),
     profileType:  z.enum(PROFILE_TYPES),
-    phone:        z.string().regex(PHONE_RE, t('validation.phone_format')),
+    phone:        z.string(),
     useMainPhone: z.boolean(),
     whatsapp:     z.string().optional(),
     locationId:   z.number().min(1, t('validation.location_required')),
   })
-  .refine(d => {
-    if (d.useMainPhone) return true
-    if (!d.whatsapp) return true
-    return PHONE_RE.test(d.whatsapp)
-  }, { message: t('validation.phone_format'), path: ['whatsapp'] })
+  // Phone and whatsapp are validated country-aware in onSubmit via validateNationalPhone()
 }
 
 type FormValues = {
@@ -74,42 +64,7 @@ type FormValues = {
   locationId: number
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-function parsePhone(val: string) {
-  const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
-  return match ? { code: match.code, local: val.slice(match.code.length) } : { code: '+355', local: val.replace(/^\+/, '') }
-}
-
 // ── Sub-components ────────────────────────────────────────────────────────────
-
-function PhoneInputField({ value, onChange, error }: { value: string; onChange: (v: string) => void; error?: string }) {
-  const [code, setCode] = useState(() => parsePhone(value).code)
-  const [local, setLocal] = useState(() => parsePhone(value).local)
-
-  function update(newCode: string, newLocal: string) {
-    setCode(newCode); setLocal(newLocal)
-    onChange(`${newCode}${newLocal.replace(/\s/g, '')}`)
-  }
-
-  return (
-    <div>
-      <div className="flex gap-2">
-        <Combobox
-          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
-          value={code}
-          onChange={c => update(c || code, local)}
-          variant="button"
-          size="sm"
-          triggerClassName="w-20 h-10 shrink-0"
-          className="w-20 shrink-0"
-        />
-        <Input value={local} onChange={e => update(code, e.target.value)} placeholder="69 123 456" className="h-10 rounded-xl" />
-      </div>
-      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
-    </div>
-  )
-}
 
 function PasswordRequirements({ t }: { t: ReturnType<typeof useTranslations<'admin.user_profile'>> }) {
   const requirements = [
@@ -147,6 +102,8 @@ export function AdminUserCreate({ cities, regions }: Props) {
   const t = useTranslations('admin.user_profile')
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [phoneState, setPhoneState] = useState<PhoneFieldValue>(DEFAULT_PHONE)
+  const [whatsappState, setWhatsappState] = useState<PhoneFieldValue>(DEFAULT_PHONE)
 
   const schema = useMemo(() => buildCreateSchema(t), [t])
 
@@ -174,19 +131,36 @@ export function AdminUserCreate({ cities, regions }: Props) {
   const locationIdValue = watch('locationId')
 
   useEffect(() => {
-    if (useMainPhone) setValue('whatsapp', phoneValue)
-  }, [useMainPhone, phoneValue, setValue])
+    if (useMainPhone) {
+      setValue('whatsapp', phoneValue)
+      setWhatsappState(phoneState)
+    }
+  }, [useMainPhone, phoneValue, phoneState, setValue])
 
   async function onSubmit(data: FormValues) {
-    setSubmitting(true)
     setError(null)
+
+    // Country-aware phone validation before DB write
+    if (!phoneState.national) { setError(t('validation.phone_format')); return }
+    const phoneResult = validateNationalPhone({ iso2: phoneState.iso2, dialCode: phoneState.dialCode, rawNational: phoneState.national })
+    if (!phoneResult.ok) { setError(t(`validation.${phoneResult.errorKey}` as Parameters<typeof t>[0])); return }
+    const phoneE164 = phoneResult.e164
+
+    let whatsappE164: string | undefined
+    if (!data.useMainPhone && whatsappState.national) {
+      const waResult = validateNationalPhone({ iso2: whatsappState.iso2, dialCode: whatsappState.dialCode, rawNational: whatsappState.national })
+      if (!waResult.ok) { setError(t(`validation.${waResult.errorKey}` as Parameters<typeof t>[0])); return }
+      whatsappE164 = waResult.e164
+    }
+
+    setSubmitting(true)
     const result = await createAdminUser({
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       profileType: data.profileType,
-      phone: data.phone,
-      whatsapp: data.useMainPhone ? data.phone : (data.whatsapp || undefined),
+      phone: phoneE164,
+      whatsapp: data.useMainPhone ? phoneE164 : (whatsappE164 || undefined),
       locationId: data.locationId,
     })
     setSubmitting(false)
@@ -262,10 +236,11 @@ export function AdminUserCreate({ cities, regions }: Props) {
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <Label className="text-sm">{t('fields.phone')}</Label>
-              <PhoneInputField
-                value={watch('phone')}
-                onChange={v => setValue('phone', v, { shouldValidate: true })}
+              <PhoneField
+                value={phoneState.e164}
+                onChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
                 error={errors.phone?.message}
+                size="sm"
               />
             </div>
 
@@ -279,10 +254,11 @@ export function AdminUserCreate({ cities, regions }: Props) {
                 {t('fields.use_main_phone')}
               </label>
               {!useMainPhone && (
-                <PhoneInputField
-                  value={watch('whatsapp') ?? ''}
-                  onChange={v => setValue('whatsapp', v, { shouldValidate: true })}
+                <PhoneField
+                  value={whatsappState.e164}
+                  onChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
                   error={errors.whatsapp?.message}
+                  size="sm"
                 />
               )}
             </div>

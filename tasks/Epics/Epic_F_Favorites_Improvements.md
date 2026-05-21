@@ -1,6 +1,15 @@
 # Epic F — Favorites Improvements
 
-**Status:** OPEN
+**Status:** OPEN — baseline favorites exist; all 4 sub-tasks still to do (audit 2026-05-20)
+
+> Audit (2026-05-20): baseline favorites infra exists (`toggleFavorite`, `FavoriteButton`, `FavoritesShell`, `useFavoritesRealtime`, `favoritesQueries`, `/favorites` page) but none of this epic's 4 features are built yet:
+> - ⬜ **F.1 (pagination 25/page)** — NOT done (no pagination in favorites page/shell).
+> - ⬜ **F.2 (folders/collections)** — NOT done.
+> - ⬜ **F.3 (price-change notifications)** — NOT done; needs email infra (Epic D.2).
+> - ⬜ **F.4 (API refactor `toggleFavorite` → `addFavorite`/`removeFavorite`)** — NOT done; `toggleFavorite` still in use.
+>
+> Kickoffs: `Epic_F_kickoff_prompts.md`.
+
 **Opened:** 2026-05-19
 
 ## Goal

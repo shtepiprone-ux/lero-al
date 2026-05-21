@@ -180,7 +180,7 @@ export function RegisterForm() {
       <Dialog open={success} onOpenChange={(open) => { if (!open) handleDismiss() }}>
         <DialogContent showCloseButton className="sm:max-w-sm text-center">
           <DialogHeader className="items-center gap-3 pt-2">
-            <CheckCircle2 className="h-12 w-12 text-green-500 shrink-0" />
+            <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" />
             <DialogTitle className="text-lg font-semibold">
               {t('register_success_title')}
             </DialogTitle>

@@ -363,6 +363,19 @@ Layout → Position → Sizing → Spacing → Typography → Colors → Borders
 - DO NOT add fixed px widths to elements containing translated text
 - DO NOT use arbitrary `2xl:` values — use only `2xl:grid-cols-4`, `2xl:py-20`, `2xl:text-3xl`
 - DO NOT bypass canonical fragments when one exists in `docs/tailwind-canonical-fragments.md`
+- DO NOT use raw Tailwind palette colors (`text-green-500`, `bg-blue-600`, `border-red-400`, ...). Only semantic design tokens from `globals.css` are allowed (`text-foreground`, `text-muted-foreground`, `text-status-success`, `bg-card`, `border-destructive`, ...).
+
+### Hardcoded color enforcement (governance:tailwind)
+
+All hardcoded colors are **HIGH** severity and BLOCK the governance gate (MEDIUM/LOW never fail it):
+
+| Rule | Catches | Example |
+|---|---|---|
+| T3 | arbitrary hex in text | `text-[#22c55e]` |
+| T4 | arbitrary hex / `bg-white` / `bg-black` | `bg-[#fff]`, `bg-white` |
+| T6 | raw Tailwind palette colors | `text-green-500`, `bg-blue-600` |
+
+Use the semantic tokens defined in `globals.css` instead. Storybook (`*.stories.tsx`) files are exempt from T6 only (literal swatches are their purpose). Added 2026-05-21 (Task 121 review follow-up) after a raw-palette color slipped past governance.
 
 ---
 

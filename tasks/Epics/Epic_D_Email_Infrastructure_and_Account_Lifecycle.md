@@ -66,10 +66,13 @@ Build a centralized email system the admin can manage without code changes: pick
 **Localization coverage:** sq, en, uk, it
 **Responsive coverage:** Email render (narrow widths) + verification page
 
-**Goal:** On registration, send a verification email; user clicks → email marked verified. Unverified status visible in admin.
+**Goal:** On registration, send a verification email; user clicks → email marked verified. Unverified status visible in admin. This is the FIRST real template built on `BaseEmail` (Task 119) — follow the approved design reference + the inline-STRINGS (sq/en/uk/it) pattern; pick locale via `resolveUserLocale`.
+
+**Carry-over from Task 119 review:** `BaseEmail` currently hardcodes `<Html lang="sq">`. Make `BaseEmail` accept a `locale` prop and set `lang={locale}` so each email's root lang matches its actual language (email-client + a11y correctness). Update the existing `emailChange.ts` send path to pass locale too.
 
 **Acceptance criteria:**
-- Email sent on registration in recipient's locale.
+- Email sent on registration in recipient's locale (via `resolveUserLocale`).
+- `BaseEmail` `lang` attribute reflects the email's locale (no hardcoded `sq`).
 - Token expiration + reuse protection.
 - UI states for unverified users defined.
 
@@ -94,12 +97,12 @@ Build a centralized email system the admin can manage without code changes: pick
 **Localization coverage:** sq, en, uk, it
 **Responsive coverage:** Email render
 
-**Goal:** After 3 months of inactivity (no login, no activity), send a warning email. At 12 months, deactivate or delete (final policy to be decided as part of this task).
+**Goal:** After 3 months of inactivity (`last_seen_at`), send a warning email. At 12 months → **SOFT DELETE** (owner-decided 2026-05-20): `softDeleteUser` + retain data for a documented grace period, reversible within that window. Sent directly via `sendEmail` (NOT via Supabase hook). Locale via `preferred_locale`. Cron via Vercel (`vercel.json` + `CRON_SECRET`).
 
 **Acceptance criteria:**
-- Background job runs deterministically; deduplicated.
-- Warning email at 3 months, final email at 12 months.
-- Deletion / deactivation policy documented in `docs/domain-rules.md`.
+- Background cron runs deterministically + idempotently; deduplicated via tracking column.
+- Warning email at 3 months, final email at 12 months (both code-first on BaseEmail, 4 locales).
+- 12-month action = soft delete with documented grace period + reactivation rule in `docs/domain-rules.md`.
 
 ### Task D.6 — Delegate Supabase Auth emails to our system (Send Email Hook)
 

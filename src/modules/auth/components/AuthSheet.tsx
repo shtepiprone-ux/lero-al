@@ -5,7 +5,8 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { Loader2, CheckCircle2, ImagePlus } from 'lucide-react'
-import { signIn, signUp, signInWithOAuth } from '@/lib/auth/browser'
+import { signIn, signUp, signInWithOAuth, requestPasswordReset } from '@/lib/auth/browser'
+import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import {
   Sheet,
   SheetContent,
@@ -23,7 +24,7 @@ import { useCompanies } from '@/modules/companies/hooks/useCompanies'
 import { createCompanyAction } from '@/modules/companies/actions'
 import { Combobox } from '@/components/shared/Combobox'
 
-export type AuthView = 'login' | 'register' | 'register-agent'
+export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
 
 interface AuthSheetProps {
   open: boolean
@@ -46,9 +47,11 @@ function mapAuthError(message: string): string {
 
 function LoginView({
   onRegister,
+  onForgotPassword,
   onClose,
 }: {
   onRegister: () => void
+  onForgotPassword: () => void
   onClose: () => void
 }) {
   const t = useTranslations('auth')
@@ -94,7 +97,16 @@ function LoginView({
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="login-password">{t('password')}</Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="login-password">{t('password')}</Label>
+          <button
+            type="button"
+            onClick={onForgotPassword}
+            className="text-xs text-muted-foreground hover:text-primary transition-colors"
+          >
+            {t('forgot_password')}
+          </button>
+        </div>
         <Input
           id="login-password"
           type="password"
@@ -138,6 +150,81 @@ function LoginView({
           {t('register')}
         </button>
       </p>
+    </form>
+  )
+}
+
+// ── Forgot-password view ──────────────────────────────────────────────────────
+
+function ForgotPasswordView({
+  onBack,
+}: {
+  onBack: () => void
+}) {
+  const t = useTranslations('auth')
+  const locale = useLocale()
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setLoading(true)
+    const redirectTo = `${window.location.origin}/auth/callback?next=/${locale}/auth/reset-password`
+    await Promise.all([
+      requestPasswordReset(email, redirectTo),
+      logPasswordRecoveryRequest(),
+    ])
+    setLoading(false)
+    // Always show neutral success — never reveal whether email is registered
+    setSubmitted(true)
+  }
+
+  if (submitted) {
+    return (
+      <div className="flex flex-col items-center gap-4 px-4 pb-6 pt-2 text-center">
+        <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
+        <h3 className="font-semibold text-lg">{t('forgot_password_success_title')}</h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{t('forgot_password_success_body')}</p>
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-sm text-primary underline font-medium hover:text-primary/80 transition-colors"
+        >
+          {t('forgot_password_back')}
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4 pb-6">
+      <p className="text-sm text-muted-foreground">{t('forgot_password_body')}</p>
+
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="forgot-email">{t('email')}</Label>
+        <Input
+          id="forgot-email"
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+          autoComplete="email"
+          autoFocus
+        />
+      </div>
+
+      <Button type="submit" size="xl" className="w-full" disabled={loading}>
+        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('forgot_password_submit')}
+      </Button>
+
+      <button
+        type="button"
+        onClick={onBack}
+        className="text-sm text-muted-foreground hover:text-primary transition-colors text-center"
+      >
+        ← {t('forgot_password_back')}
+      </button>
     </form>
   )
 }
@@ -434,7 +521,7 @@ function RegisterView({
   if (success) {
     return (
       <div className="flex flex-col items-center gap-4 px-4 pb-6 pt-2 text-center">
-        <CheckCircle2 className="h-12 w-12 text-green-500 shrink-0" aria-hidden="true" />
+        <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
         <h3 className="font-semibold text-lg">{t('register_success_title')}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{t('register_success_body')}</p>
         <Button size="xl" className="w-full mt-2" onClick={onClose}>
@@ -558,6 +645,7 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthShe
     login: t('login'),
     register: t('register'),
     'register-agent': t('register_agent'),
+    'forgot-password': t('forgot_password_title'),
   }
 
   return (
@@ -576,7 +664,13 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthShe
           {view === 'login' && (
             <LoginView
               onRegister={() => setView('register')}
+              onForgotPassword={() => setView('forgot-password')}
               onClose={() => onOpenChange(false)}
+            />
+          )}
+          {view === 'forgot-password' && (
+            <ForgotPasswordView
+              onBack={() => setView('login')}
             />
           )}
           {view === 'register' && (

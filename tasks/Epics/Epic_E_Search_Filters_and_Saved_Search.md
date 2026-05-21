@@ -1,6 +1,16 @@
 # Epic E — Search, Filters & Saved Search UX
 
-**Status:** OPEN
+**Status:** PARTIALLY DONE — re-scoped after audit 2026-05-20
+
+> Audit (2026-05-20): much of this epic already exists from earlier work (Tasks 17–50, 95).
+> - ✅ **E.2 (filter chips)** — DONE (Task 95, `ActiveFilterChips`).
+> - ✅ **E.3 (saved searches)** — ALREADY EXISTS: `SavedSearch` table (name, filters, filters_hash, notify_email, last_checked_at, new_count), `SavedSearchesTab` (list/delete/deleteAll/open/toggle-notify), `SaveSearchButton`, `savedSearchCanonicalize`. CRUD + notify-toggle work. Only the actual match-detection + email delivery is missing → that is E.4.
+> - ⬜ **E.1 (horizontal filter bar)** — NOT done; current `ListingsFilters` is sidebar/grid, not a dom.ria-style horizontal bar.
+> - ⬜ **E.4 (saved-search match notifications)** — NOT done; needs the email infra (Epic D.2) — the notify_email flag + new_count exist but nothing sends the emails yet.
+> - ⬜ **E.5 (URL-state vs server-state decision)** — NOT done; documentation task.
+>
+> Kickoffs for the remaining items: `Epic_E_kickoff_prompts.md`.
+
 **Opened:** 2026-05-19
 
 ## Goal

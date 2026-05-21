@@ -41,6 +41,16 @@ export function signUp(
   return createClient().auth.signUp({ email, password, options })
 }
 
+// ── Password recovery ────────────────────────────────────────────────────────
+
+export function requestPasswordReset(email: string, redirectTo: string) {
+  return createClient().auth.resetPasswordForEmail(email, { redirectTo })
+}
+
+export function updatePassword(password: string) {
+  return createClient().auth.updateUser({ password })
+}
+
 // ── Sign-out ─────────────────────────────────────────────────────────────────
 
 export function signOut(scope?: 'global' | 'local') {

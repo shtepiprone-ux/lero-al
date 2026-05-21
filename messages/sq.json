@@ -1066,6 +1066,11 @@
     "open_search": "Hap kërkimin",
     "filter_summary": "Kërkim i ruajtur",
     "save": "Ruaj",
-    "cancel": "Anulo"
+    "cancel": "Anulo",
+    "notify_frequency": "Shpeshtësia e njoftimeve",
+    "frequency_instant": "Çdo herë",
+    "frequency_daily": "Çdo ditë",
+    "frequency_weekly": "Çdo javë",
+    "frequency_updated": "Shpeshtësia u përditësua"
   }
 }

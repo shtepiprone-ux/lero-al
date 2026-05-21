@@ -1066,6 +1066,11 @@
     "open_search": "Open search",
     "filter_summary": "Saved search",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "notify_frequency": "Email frequency",
+    "frequency_instant": "Instant",
+    "frequency_daily": "Daily",
+    "frequency_weekly": "Weekly",
+    "frequency_updated": "Email frequency updated"
   }
 }

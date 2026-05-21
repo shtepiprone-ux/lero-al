@@ -1066,6 +1066,11 @@
     "open_search": "Відкрити пошук",
     "filter_summary": "Збережений пошук",
     "save": "Зберегти",
-    "cancel": "Скасувати"
+    "cancel": "Скасувати",
+    "notify_frequency": "Частота сповіщень",
+    "frequency_instant": "Одразу",
+    "frequency_daily": "Щодня",
+    "frequency_weekly": "Щотижня",
+    "frequency_updated": "Частоту оновлено"
   }
 }

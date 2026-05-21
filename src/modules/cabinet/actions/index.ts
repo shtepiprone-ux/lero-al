@@ -164,6 +164,29 @@ export async function deleteSavedSearch(id: string): Promise<{ error?: string }>
   return {}
 }
 
+export async function updateSavedSearchFrequency(
+  id: string,
+  frequency: 'instant' | 'daily' | 'weekly',
+): Promise<{ error?: string }> {
+  const userId = await resolveAuthUser()
+  if (!userId) return { error: 'Unauthorized' }
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('saved_searches')
+    .update({ notify_frequency: frequency })
+    .eq('id', id)
+    .eq('user_id', userId)
+
+  if (error) {
+    console.error('updateSavedSearchFrequency failed', { error, id, userId })
+    return { error: error.message }
+  }
+
+  revalidatePath('/cabinet')
+  return {}
+}
+
 export async function updateSavedSearchNotify(
   id: string,
   notifyEmail: boolean,

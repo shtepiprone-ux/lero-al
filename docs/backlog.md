@@ -267,8 +267,8 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
 
 **Epic E — Search, Filters & Saved Search** ← CURRENT EPIC
 - ✅ **Task 131** (E.1) — Horizontal filter bar: `ListingsFilterBar` on md+, sidebar removed. [log](sessions/2026-05-21-task-131-e1-horizontal-filter-bar.md)
-- **Task 132** (E.4) — Saved-search match notifications (D.2 ✅). ← NEXT
-- **Task 133** (E.5) — URL-state vs server-state ADR (doc only).
+- ✅ **Task 132** (E.4) — Saved-search notifications: cron + frequency UI + email template. [log](sessions/2026-05-21-task-132-e4-saved-search-notifications.md)
+- **Task 133** (E.5) — URL-state vs server-state ADR (doc only). ← NEXT
 
 **Epic F — Favorites**
 - Tasks 134–137 (F.1, F.4, F.2, F.3 — F.3 needs D.2 ✅).

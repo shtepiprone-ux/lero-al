@@ -1066,6 +1066,11 @@
     "open_search": "Apri ricerca",
     "filter_summary": "Ricerca salvata",
     "save": "Salva",
-    "cancel": "Annulla"
+    "cancel": "Annulla",
+    "notify_frequency": "Frequenza notifiche",
+    "frequency_instant": "Immediato",
+    "frequency_daily": "Giornaliero",
+    "frequency_weekly": "Settimanale",
+    "frequency_updated": "Frequenza aggiornata"
   }
 }

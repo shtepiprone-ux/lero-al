@@ -9,9 +9,11 @@ import type { SavedSearch } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { RelativeTime } from '@/components/shared/RelativeTime'
+import { Combobox } from '@/components/shared/Combobox'
 import {
   deleteSavedSearch,
   updateSavedSearchNotify,
+  updateSavedSearchFrequency,
   updateLastViewed,
   deleteAllSavedSearches,
 } from '@/modules/cabinet/actions'
@@ -88,6 +90,15 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
     const result = await updateSavedSearchNotify(id, !current)
     if (!result.error) {
       setItems(prev => prev.map(s => s.id === id ? { ...s, notify_email: !current } : s))
+    }
+  }
+
+  async function handleFrequency(id: string, freq: string) {
+    const frequency = freq as 'instant' | 'daily' | 'weekly'
+    const result = await updateSavedSearchFrequency(id, frequency)
+    if (!result.error) {
+      setItems(prev => prev.map(s => s.id === id ? { ...s, notify_frequency: frequency } : s))
+      toast.success(t('frequency_updated'))
     }
   }
 
@@ -176,7 +187,7 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0 flex-wrap justify-end">
                 {/* Email notify toggle */}
                 <Button
                   type="button"
@@ -193,6 +204,21 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                 >
                   <Mail className="h-3.5 w-3.5" />
                 </Button>
+                {/* Frequency selector — only shown when email notify is on */}
+                {search.notify_email && (
+                  <Combobox
+                    options={[
+                      { value: 'instant', label: t('frequency_instant') },
+                      { value: 'daily',   label: t('frequency_daily') },
+                      { value: 'weekly',  label: t('frequency_weekly') },
+                    ]}
+                    value={search.notify_frequency ?? 'daily'}
+                    onChange={v => { if (v) handleFrequency(search.id, v) }}
+                    variant="button"
+                    size="xs"
+                    className="w-[90px] shrink-0"
+                  />
+                )}
 
                 {/* Open search */}
                 <Button

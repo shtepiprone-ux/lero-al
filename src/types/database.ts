@@ -216,6 +216,7 @@ export interface SavedSearch {
   filters: Record<string, unknown>
   filters_hash: string | null
   notify_email: boolean
+  notify_frequency: 'instant' | 'daily' | 'weekly'
   last_checked_at: string | null
   last_viewed_at: string | null
   new_count: number

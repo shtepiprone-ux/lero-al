@@ -551,7 +551,8 @@
       "language": "Мова",
       "item_property_types": "Типи нерухомості",
       "item_currency": "Валюта",
-      "item_companies": "Компанії"
+      "item_companies": "Компанії",
+      "item_email_templates": "Email шаблони"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -636,7 +637,9 @@
       "companies_title": "Компанії",
       "companies_subtitle": "{count} компаній",
       "reports_title": "Скарги",
-      "reports_subtitle": "{count} скарг"
+      "reports_subtitle": "{count} скарг",
+      "email_templates_title": "Email шаблони",
+      "email_templates_subtitle": "{count} шаблонів"
     },
     "reports": {
       "filter_all": "Всі",
@@ -983,6 +986,44 @@
         "success_disabled": "Постачальника вимкнено",
         "delete_confirm": "Видалити цього постачальника?"
       }
+    },
+    "email_templates": {
+      "title": "Email шаблони",
+      "subtitle": "{count} шаблонів",
+      "create_btn": "Новий шаблон",
+      "empty": "Немає email шаблонів",
+      "no_results": "Нічого не знайдено",
+      "search_placeholder": "Пошук шаблонів...",
+      "create_title": "Новий email шаблон",
+      "edit_title": "Редагувати шаблон",
+      "delete_title": "Видалити шаблон",
+      "delete_body": "Це видалить усі локальні варіанти \"{key}\". Цю дію не можна скасувати.",
+      "field_key": "Ключ шаблону",
+      "field_key_hint": "Унікальний ідентифікатор, напр. saved_search_alert",
+      "key_placeholder": "напр. saved_search_alert",
+      "field_subject": "Тема",
+      "field_html_body": "HTML тіло (лише внутрішній вміст)",
+      "field_variables": "Підтримувані змінні",
+      "field_active": "Активний",
+      "variables_hint": "Використовуйте {{назваЗмінної}} у темі та тілі",
+      "preview_btn": "Перегляд",
+      "preview_title": "Перегляд",
+      "save_success": "Шаблон збережено",
+      "delete_success": "Шаблон видалено",
+      "error_save": "Помилка збереження шаблону",
+      "error_delete": "Помилка видалення шаблону",
+      "error_key_required": "Ключ шаблону обовязковий",
+      "error_sq_required": "Тема та тіло албанською обовязкові",
+      "status_active": "Активний",
+      "status_inactive": "Неактивний",
+      "tab_sq": "Албанська",
+      "tab_en": "Англійська",
+      "tab_uk": "Українська",
+      "tab_it": "Італійська",
+      "edit_label": "Редагувати",
+      "delete_label": "Видалити",
+      "cancel": "Скасувати",
+      "save": "Зберегти"
     }
   },
   "notifications": {

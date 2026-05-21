@@ -551,7 +551,8 @@
       "language": "Language",
       "item_property_types": "Property Types",
       "item_currency": "Currency",
-      "item_companies": "Companies"
+      "item_companies": "Companies",
+      "item_email_templates": "Email templates"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -636,7 +637,9 @@
       "companies_title": "Companies",
       "companies_subtitle": "{count} companies",
       "reports_title": "Reports",
-      "reports_subtitle": "{count} reports"
+      "reports_subtitle": "{count} reports",
+      "email_templates_title": "Email templates",
+      "email_templates_subtitle": "{count} templates"
     },
     "reports": {
       "filter_all": "All",
@@ -983,6 +986,44 @@
         "success_disabled": "Provider disabled",
         "delete_confirm": "Delete this provider?"
       }
+    },
+    "email_templates": {
+      "title": "Email templates",
+      "subtitle": "{count} templates",
+      "create_btn": "New template",
+      "empty": "No email templates yet",
+      "no_results": "No results found",
+      "search_placeholder": "Search templates...",
+      "create_title": "New email template",
+      "edit_title": "Edit email template",
+      "delete_title": "Delete template",
+      "delete_body": "This will delete all locale variants of \"{key}\". This action cannot be undone.",
+      "field_key": "Template key",
+      "field_key_hint": "Unique identifier, e.g. saved_search_alert",
+      "key_placeholder": "e.g. saved_search_alert",
+      "field_subject": "Subject",
+      "field_html_body": "HTML body (inner content only)",
+      "field_variables": "Supported variables",
+      "field_active": "Active",
+      "variables_hint": "Use {{variableName}} in subject and body",
+      "preview_btn": "Preview",
+      "preview_title": "Preview",
+      "save_success": "Template saved",
+      "delete_success": "Template deleted",
+      "error_save": "Failed to save template",
+      "error_delete": "Failed to delete template",
+      "error_key_required": "Template key is required",
+      "error_sq_required": "Albanian subject and body are required",
+      "status_active": "Active",
+      "status_inactive": "Inactive",
+      "tab_sq": "Albanian",
+      "tab_en": "English",
+      "tab_uk": "Ukrainian",
+      "tab_it": "Italian",
+      "edit_label": "Edit",
+      "delete_label": "Delete",
+      "cancel": "Cancel",
+      "save": "Save"
     }
   },
   "notifications": {

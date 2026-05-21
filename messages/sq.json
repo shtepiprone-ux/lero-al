@@ -551,7 +551,8 @@
       "language": "Gjuhë",
       "item_property_types": "Llojet e pronës",
       "item_currency": "Valuta",
-      "item_companies": "Kompanitë"
+      "item_companies": "Kompanitë",
+      "item_email_templates": "Shablonet e emailit"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -636,7 +637,9 @@
       "companies_title": "Kompanitë",
       "companies_subtitle": "{count} kompani",
       "reports_title": "Raportet",
-      "reports_subtitle": "{count} raporte"
+      "reports_subtitle": "{count} raporte",
+      "email_templates_title": "Shablonet e emailit",
+      "email_templates_subtitle": "{count} shablone"
     },
     "reports": {
       "filter_all": "Të gjitha",
@@ -983,6 +986,44 @@
         "success_disabled": "Ofruesi u çaktivizua",
         "delete_confirm": "Fshij këtë ofrues?"
       }
+    },
+    "email_templates": {
+      "title": "Shablonet e emailit",
+      "subtitle": "{count} shablone",
+      "create_btn": "Shabloni i ri",
+      "empty": "Nuk ka shablone emaili",
+      "no_results": "Nuk u gjetën rezultate",
+      "search_placeholder": "Kërko shablonin...",
+      "create_title": "Shabloni i ri i emailit",
+      "edit_title": "Redakto shablonin",
+      "delete_title": "Fshi shablonin",
+      "delete_body": "Kjo do te fshije te gjitha variacionet e lokalizimit per \"{key}\". Ky veprim nuk mund te kthehet.",
+      "field_key": "Celesi i shabllonit",
+      "field_key_hint": "Identifikues unik, p.sh. saved_search_alert",
+      "key_placeholder": "p.sh. saved_search_alert",
+      "field_subject": "Subjekti",
+      "field_html_body": "Trupi HTML (vetem permbajtja e brendshme)",
+      "field_variables": "Variablat e mbeshtetura",
+      "field_active": "Aktiv",
+      "variables_hint": "Perdorni {{emriVariables}} ne subjekt dhe trup",
+      "preview_btn": "Parapamje",
+      "preview_title": "Parapamje",
+      "save_success": "Shabloni u ruajt",
+      "delete_success": "Shabloni u fshi",
+      "error_save": "Gabim gjate ruajtjes",
+      "error_delete": "Gabim gjate fshirjes",
+      "error_key_required": "Celesi eshte i detyrueshëm",
+      "error_sq_required": "Subjekti dhe trupi shqip jane te detyrueshme",
+      "status_active": "Aktiv",
+      "status_inactive": "Joaktiv",
+      "tab_sq": "Shqip",
+      "tab_en": "Anglisht",
+      "tab_uk": "Ukrainisht",
+      "tab_it": "Italisht",
+      "edit_label": "Redakto",
+      "delete_label": "Fshi",
+      "cancel": "Anulo",
+      "save": "Ruaj"
     }
   },
   "notifications": {

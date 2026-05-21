@@ -551,7 +551,8 @@
       "language": "Lingua",
       "item_property_types": "Tipi di proprietà",
       "item_currency": "Valuta",
-      "item_companies": "Aziende"
+      "item_companies": "Aziende",
+      "item_email_templates": "Template email"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -636,7 +637,9 @@
       "companies_title": "Aziende",
       "companies_subtitle": "{count} aziende",
       "reports_title": "Segnalazioni",
-      "reports_subtitle": "{count} segnalazioni"
+      "reports_subtitle": "{count} segnalazioni",
+      "email_templates_title": "Template email",
+      "email_templates_subtitle": "{count} template"
     },
     "reports": {
       "filter_all": "Tutte",
@@ -983,6 +986,44 @@
         "success_disabled": "Fornitore disabilitato",
         "delete_confirm": "Eliminare questo fornitore?"
       }
+    },
+    "email_templates": {
+      "title": "Template email",
+      "subtitle": "{count} template",
+      "create_btn": "Nuovo template",
+      "empty": "Nessun template email",
+      "no_results": "Nessun risultato",
+      "search_placeholder": "Cerca template...",
+      "create_title": "Nuovo template email",
+      "edit_title": "Modifica template",
+      "delete_title": "Elimina template",
+      "delete_body": "Questo eliminerà tutte le varianti locali di \"{key}\". Questa azione non può essere annullata.",
+      "field_key": "Chiave template",
+      "field_key_hint": "Identificatore unico, es. saved_search_alert",
+      "key_placeholder": "es. saved_search_alert",
+      "field_subject": "Oggetto",
+      "field_html_body": "Corpo HTML (solo contenuto interno)",
+      "field_variables": "Variabili supportate",
+      "field_active": "Attivo",
+      "variables_hint": "Usa {{nomeVariabile}} in oggetto e corpo",
+      "preview_btn": "Anteprima",
+      "preview_title": "Anteprima",
+      "save_success": "Template salvato",
+      "delete_success": "Template eliminato",
+      "error_save": "Errore nel salvataggio",
+      "error_delete": "Errore nell eliminazione",
+      "error_key_required": "La chiave template è obbligatoria",
+      "error_sq_required": "Oggetto e corpo in albanese sono obbligatori",
+      "status_active": "Attivo",
+      "status_inactive": "Inattivo",
+      "tab_sq": "Albanese",
+      "tab_en": "Inglese",
+      "tab_uk": "Ucraino",
+      "tab_it": "Italiano",
+      "edit_label": "Modifica",
+      "delete_label": "Elimina",
+      "cancel": "Annulla",
+      "save": "Salva"
     }
   },
   "notifications": {

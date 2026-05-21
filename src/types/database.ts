@@ -105,6 +105,19 @@ export interface EmailChangeToken {
   created_at: string
 }
 
+export interface EmailTemplate {
+  id: string
+  key: string
+  locale: string
+  subject: string
+  html_body: string
+  variables: string[]
+  is_active: boolean
+  created_at: string
+  updated_at: string
+  updated_by: string | null
+}
+
 export interface Location {
   id: number
   name_al: string

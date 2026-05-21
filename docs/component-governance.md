@@ -288,7 +288,69 @@ See `ui-audit.md §3`. Key items:
 
 ## §5 — COMPONENT CATALOGING SYSTEM (Phase 6)
 
-**Established:** 2026-05-18
+---
+
+## §11 — Admin Table Row Interaction Pattern (Epic K / Task 127)
+
+**Established:** 2026-05-21
+
+### Problem
+
+Multiple admin tables use inconsistent row-interaction patterns:
+- Some have a dedicated "Actions" column with Pencil + Trash2 icon buttons (duplication)
+- Some use `window.confirm()` for destructive actions (blocks main thread, no i18n)
+- Row primary text is rarely clickable, hiding the affordance
+
+### Canonical pattern
+
+**Rule 1 — Single click affordance.** The row's primary text field (listing title, user name, report reason) is the **only** clickable element in the row. All other row cells are read-only.
+
+**Rule 2 — No Actions column.** The dedicated "Actions" / icon-button column is removed. Actions live inside the dialog or detail page opened by Rule 1.
+
+**Rule 3 — Click target outcome:**
+- If the table has a **full-page detail view** (e.g., `/admin/users/[id]`): primary text is a `<Link>` navigating there.
+- If the table has **no detail page**: primary text is a `<button>` that opens a preview `Dialog` containing key details + action buttons (Edit, Delete, Close).
+
+**Rule 4 — Destructive confirmation via Dialog.** Delete actions show a shadcn `Dialog` confirmation dialog. `window.confirm()` is forbidden.
+
+**Rule 5 — Canonical primitives only.**
+- Buttons: `Button` from `@/components/ui/button` (never raw `<button>`)
+- Dialog: `Dialog/DialogContent/DialogHeader/DialogTitle/DialogFooter` from `@/components/ui/dialog`
+- Toast: `toast` from `sonner` for success/error feedback
+
+### Reference implementation
+
+`src/components/admin/AdminReportsManager.tsx` — **already canonical.**
+- Report row primary field opens `ReportDetailDialog` (Dialog)
+- Dialog contains all actions (review, resolve, dismiss)
+- No Actions column
+- Uses `Dialog` for confirmation via status transitions
+
+### Audit results (as of Task 127)
+
+| Component | Clickable title | Actions col | Delete method | Status |
+|---|---|---|---|---|
+| `AdminReportsManager` | ✅ → Dialog | ❌ | Dialog | **CANONICAL** |
+| `AdminUsersTable` | ✅ → profile page | ⚠️ verify toggle only | — | Mostly OK — K.3 removes verify column |
+| `AdminListingsTable` | ❌ | ✅ Pencil+Trash+Star | `window.confirm()` | **K.2 migration needed** |
+| `AdminCompaniesManager` | ❌ | ✅ Pencil+Trash in card | Dialog | **K.4 migration needed** |
+| `AdminLocationsManager` | ❌ | ✅ Pencil+Trash | `window.confirm()` | **K.4 migration needed** |
+| `AdminPropertyTypesManager` | ❌ | ✅ Pencil+Trash | Dialog | **K.4 migration needed** |
+| `AdminEmailTemplatesManager` | ✅ Edit button | Pencil+Trash | Dialog | Minor — K.4 review |
+| `AdminCurrenciesManager` | — | ✅ buttons | — | K.4 audit |
+
+### Migration checklist (for K.2 / K.3 / K.4)
+
+For each non-canonical table:
+- [ ] Make primary text field a `<button>` (or `<Link>` if detail page exists)
+- [ ] Add preview Dialog (or use existing detail page)
+- [ ] Move Edit/Delete actions into the Dialog
+- [ ] Remove the Actions column header + cell
+- [ ] Replace `window.confirm()` with Dialog confirmation
+- [ ] Replace raw `<button>` with `Button` component
+- [ ] Verify all 4 locales and 7 breakpoints still render correctly
+
+**Established:** 2026-05-21
 
 The project maintains a machine-readable + human-readable component catalog.
 

@@ -246,9 +246,9 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
 
 ## Next Immediate Tasks
 
-**Last completed: Task 126 (Epic C.5 — account blocking). Epic C CLOSED. Epic D CLOSED. Sprint 4 CLOSED.**
+**Last completed: Task 127 (Epic K.1 — canonical AdminTableRow pattern defined in docs/component-governance.md §11).**
 
-**Next:** Task 127 (Epic K.1 — canonical AdminTableRow pattern)
+**Next:** Task 128 (Epic K.2 — migrate AdminListingsTable)
 
 **Recently CLOSED:**
 - ✅ **Epic C** — Tasks 116–118, 125–126. [closure](../tasks/Epics/Epic_C_Summary_CLOSED.md)
@@ -256,12 +256,12 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
 - ✅ **Sprint 4** — Tasks 158–159. [closure](../tasks/Sprints/Sprint_4_—_Summary_CLOSED.md)
 - ✅ **Epic B** — Tasks 108, 112–115. [summary](../tasks/Epics/Epic_B_Summary_CLOSED.md)
 
-**Epic K — Admin Tables Standardization** ← NEXT EPIC
+**Epic K — Admin Tables Standardization** ← CURRENT EPIC
 
-- **Task 127** — K.1 Define canonical AdminTableRow pattern (clickable title → preview dialog).
-- **Task 128** — K.2 Migrate Listings admin table.
-- **Task 129** — K.3 Migrate Users admin table.
-- **Task 130** — K.4 Audit + migrate remaining admin tables (companies, reports, locations).
+- ✅ **Task 127** — K.1 Pattern defined in docs/component-governance.md §11. [log](sessions/2026-05-21-task-127-k1-admin-table-pattern.md)
+- **Task 128** — K.2 Migrate AdminListingsTable: title→Dialog, remove actions col, replace window.confirm(). ← NEXT
+- **Task 129** — K.3 Migrate AdminUsersTable: remove verify-toggle actions col.
+- **Task 130** — K.4 Audit + migrate remaining admin tables (Companies, Locations, PropertyTypes, Currencies).
 
 **Epic E — Search, Filters & Saved Search**
 - Task 131 (E.1), 132 (E.4 — needs D.2 ✅), 133 (E.5 doc only).

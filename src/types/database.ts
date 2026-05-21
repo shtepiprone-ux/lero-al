@@ -67,6 +67,7 @@ export interface User {
   user_type: UserType
   status: UserStatus
   block_reason: string | null
+  suspended_until: string | null
   company_name: string | null
   company_logo_url: string | null
   company_id: string | null

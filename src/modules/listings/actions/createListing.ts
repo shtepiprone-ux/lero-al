@@ -30,6 +30,15 @@ export async function createListing(
 
   const supabase = await createClient()
 
+  // Guard: blocked accounts cannot create new listings.
+  // Suspended accounts (status='blocked' with suspended_until in future) are also blocked.
+  const { data: profile } = await supabase
+    .from('users')
+    .select('status')
+    .eq('id', user.id)
+    .single()
+  if (profile?.status === 'blocked') return { error: 'account_blocked' }
+
   const parsed = listingSchema.safeParse(payload)
   if (!parsed.success) return { error: 'validation_failed' }
 

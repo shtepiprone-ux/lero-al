@@ -246,7 +246,8 @@
     "translating": "Перекладаю...",
     "show_original": "Показати оригінал",
     "translated_automatically": "Перекладено автоматично",
-    "translation_error": "Помилка перекладу. Спробуйте знову."
+    "translation_error": "Помилка перекладу. Спробуйте знову.",
+    "error_account_blocked": "Ваш обліковий запис заблоковано. Ви не можете створювати нові оголошення."
   },
   "auth": {
     "email": "Email",
@@ -820,7 +821,12 @@
         "use_main_phone": "Використовувати основний номер",
         "last_name_optional": "Прізвище",
         "email_confirmed": "Email підтверджено",
-        "email_not_confirmed": "Email не підтверджено"
+        "email_not_confirmed": "Email не підтверджено",
+        "suspended_until": "Заблоковано до",
+        "block_type": "Тип блокування",
+        "block_permanent": "Постійне блокування",
+        "block_temporary": "Тимчасове призупинення",
+        "suspended_badge": "Призупинено до {date}"
       },
       "placeholders": {
         "first_name": "Ім'я",

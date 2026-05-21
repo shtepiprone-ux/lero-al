@@ -246,7 +246,8 @@
     "translating": "Translating...",
     "show_original": "Show original",
     "translated_automatically": "Translated automatically",
-    "translation_error": "Translation failed. Please try again."
+    "translation_error": "Translation failed. Please try again.",
+    "error_account_blocked": "Your account is blocked. You cannot create new listings."
   },
   "auth": {
     "email": "Email",
@@ -820,7 +821,12 @@
         "use_main_phone": "Use main phone number",
         "last_name_optional": "Last name",
         "email_confirmed": "Email confirmed",
-        "email_not_confirmed": "Email not confirmed"
+        "email_not_confirmed": "Email not confirmed",
+        "suspended_until": "Suspended until",
+        "block_type": "Block type",
+        "block_permanent": "Permanent block",
+        "block_temporary": "Temporary suspension",
+        "suspended_badge": "Suspended until {date}"
       },
       "placeholders": {
         "first_name": "First name",

@@ -246,7 +246,8 @@
     "translating": "Duke përkthyer...",
     "show_original": "Trego origjinalin",
     "translated_automatically": "Përkthyer automatikisht",
-    "translation_error": "Përkthimi dështoi. Provoni përsëri."
+    "translation_error": "Përkthimi dështoi. Provoni përsëri.",
+    "error_account_blocked": "Llogaria juaj është bllokuar. Ju nuk mund të shtoni lista të reja."
   },
   "auth": {
     "email": "Email",
@@ -820,7 +821,12 @@
         "use_main_phone": "Përdor numrin kryesor të telefonit",
         "last_name_optional": "Mbiemri",
         "email_confirmed": "Email konfirmuar",
-        "email_not_confirmed": "Email i pakonfirmuar"
+        "email_not_confirmed": "Email i pakonfirmuar",
+        "suspended_until": "Bllokuar deri më",
+        "block_type": "Lloji i bllokimit",
+        "block_permanent": "Bllok i përhershëm",
+        "block_temporary": "Pezullim i përkohshëm",
+        "suspended_badge": "Pezulluar deri më {date}"
       },
       "placeholders": {
         "first_name": "Emri",

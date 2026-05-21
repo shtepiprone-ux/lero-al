@@ -24,6 +24,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { AdminUserAvatar } from '@/components/admin/AdminUserAvatar'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
+import { DatePicker } from '@/components/shared/DatePicker'
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
   updateUserProfileFull, softDeleteUser, hardDeleteUser, addLocation,
@@ -82,6 +83,7 @@ function buildProfileSchema(t: ReturnType<typeof useTranslations<'admin.user_pro
     yearStarted:    z.number().int().min(1900).max(new Date().getFullYear()).nullable().optional(),
     status:         z.enum(STATUS_VALUES),
     blockReason:    z.string().optional(),
+    suspendedUntil: z.string().nullish(),
   })
   .refine(d => d.status !== 'blocked' || !!d.blockReason?.trim(),
     { message: t('validation.block_reason_required'), path: ['blockReason'] })
@@ -107,6 +109,7 @@ type FormValues = {
   yearStarted?: number | null
   status: typeof STATUS_VALUES[number]
   blockReason?: string
+  suspendedUntil?: string | null
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -331,7 +334,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   const form = useForm<FormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: isCreate
-      ? { firstName: '', lastName: '', profileType: 'private', phone: '', useMainPhone: false, whatsapp: '', locationId: undefined as unknown as number, companyName: '', website: '', position: '', yearStarted: undefined, status: 'active' as const, blockReason: '' }
+      ? { firstName: '', lastName: '', profileType: 'private', phone: '', useMainPhone: false, whatsapp: '', locationId: undefined as unknown as number, companyName: '', website: '', position: '', yearStarted: undefined, status: 'active' as const, blockReason: '', suspendedUntil: null }
       : {
           firstName: user.name ?? '',
           lastName: user.last_name ?? '',
@@ -347,6 +350,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
           yearStarted: user.year_started ?? undefined,
           status: user.status ?? 'active',
           blockReason: user.block_reason ?? '',
+          suspendedUntil: user.suspended_until ?? null,
         },
   })
 
@@ -467,6 +471,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
       companyName: data.companyName, companyLogoUrl: data.companyLogoUrl,
       website: data.website, position: data.position, yearStarted: data.yearStarted ?? null,
       status: data.status, blockReason: data.blockReason,
+      suspendedUntil: data.suspendedUntil ?? null,
     })
     setSaving(false)
     if (result.error) { setSaveError(result.error); toast.error(t('feedback.save_error')); return }
@@ -795,9 +800,17 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         <SectionCard title={t('sections.account_status')} allowOverflow>
           <FieldRow label={t('fields.status')} mode={currentMode}
             viewValue={
-              <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
-                {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
-              </Badge>
+              <div className="flex items-center gap-2 flex-wrap">
+                <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
+                  {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
+                </Badge>
+                {user!.status === 'blocked' && user!.suspended_until && (
+                  <span className="text-xs text-muted-foreground">
+                    {t('fields.suspended_until').toLowerCase()}{' '}
+                    {new Date(user!.suspended_until).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                  </span>
+                )}
+              </div>
             }
             editContent={
               <Combobox
@@ -822,6 +835,22 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                 <Input {...register('blockReason')} className="h-10 rounded-xl" placeholder={t('placeholders.block_reason')} />
               }
               error={errors.blockReason?.message}
+            />
+          )}
+          {statusValue === 'blocked' && (
+            <FieldRow
+              label={t('fields.suspended_until')}
+              mode={currentMode}
+              viewValue={user?.suspended_until
+                ? new Date(user.suspended_until).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
+                : t('fields.block_permanent')}
+              editContent={
+                <DatePicker
+                  value={watch('suspendedUntil') ?? undefined}
+                  onChange={v => setValue('suspendedUntil', v ?? null, { shouldDirty: true })}
+                  placeholder={t('fields.block_permanent')}
+                />
+              }
             />
           )}
         </SectionCard>

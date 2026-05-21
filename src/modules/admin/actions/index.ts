@@ -288,6 +288,8 @@ export async function updateUserProfileFull(
     yearStarted?: number | null
     status: 'active' | 'blocked' | 'inactive'
     blockReason?: string
+    /** ISO date string for temporary suspension expiry; null = permanent block. Only relevant when status = 'blocked'. */
+    suspendedUntil?: string | null
   }
 ): Promise<{ error?: string }> {
   const me = await getUser()
@@ -310,6 +312,7 @@ export async function updateUserProfileFull(
     location_id: data.locationId,
     status: data.status,
     block_reason: data.status === 'blocked' ? (data.blockReason ?? null) : null,
+    suspended_until: data.status === 'blocked' ? (data.suspendedUntil ?? null) : null,
     company_name: isBusiness ? (data.companyName ?? null) : null,
     company_logo_url: isBusiness ? (data.companyLogoUrl ?? null) : null,
     website: isBusiness ? (data.website ?? null) : null,

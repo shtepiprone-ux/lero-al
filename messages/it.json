@@ -246,7 +246,8 @@
     "translating": "Traduzione...",
     "show_original": "Mostra originale",
     "translated_automatically": "Tradotto automaticamente",
-    "translation_error": "Traduzione fallita. Riprova."
+    "translation_error": "Traduzione fallita. Riprova.",
+    "error_account_blocked": "Il tuo account è bloccato. Non puoi creare nuovi annunci."
   },
   "auth": {
     "email": "Email",
@@ -820,7 +821,12 @@
         "use_main_phone": "Usa il numero di telefono principale",
         "last_name_optional": "Cognome",
         "email_confirmed": "Email confermato",
-        "email_not_confirmed": "Email non confermato"
+        "email_not_confirmed": "Email non confermato",
+        "suspended_until": "Sospeso fino al",
+        "block_type": "Tipo di blocco",
+        "block_permanent": "Blocco permanente",
+        "block_temporary": "Sospensione temporanea",
+        "suspended_badge": "Sospeso fino al {date}"
       },
       "placeholders": {
         "first_name": "Nome",

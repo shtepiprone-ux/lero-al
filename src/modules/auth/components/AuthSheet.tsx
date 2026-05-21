@@ -473,6 +473,62 @@ function CompanyField({
   )
 }
 
+// ── Phone field — Combobox country code + local number input ──────────────────
+// Same pattern as AdminUserCreate / AdminUserProfile / ProfileTab.
+
+const COUNTRY_CODES = [
+  { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },
+  { code: '+39',  flag: '🇮🇹' }, { code: '+44',  flag: '🇬🇧' },
+  { code: '+1',   flag: '🇺🇸' }, { code: '+49',  flag: '🇩🇪' },
+  { code: '+33',  flag: '🇫🇷' }, { code: '+90',  flag: '🇹🇷' },
+  { code: '+383', flag: '🇽🇰' }, { code: '+382', flag: '🇲🇪' },
+  { code: '+387', flag: '🇧🇦' }, { code: '+381', flag: '🇷🇸' },
+  { code: '+389', flag: '🇲🇰' },
+]
+
+function parsePhone(val: string) {
+  const match = COUNTRY_CODES.find(c => val.startsWith(c.code))
+  return match
+    ? { code: match.code, local: val.slice(match.code.length) }
+    : { code: '+355', local: val.replace(/^\+/, '') }
+}
+
+function PhoneField({ value, onChange, label }: { value: string; onChange: (v: string) => void; label: string }) {
+  const [code, setCode] = useState(() => parsePhone(value).code)
+  const [local, setLocal] = useState(() => parsePhone(value).local)
+
+  function update(newCode: string, newLocal: string) {
+    setCode(newCode)
+    setLocal(newLocal)
+    onChange(`${newCode}${newLocal.replace(/\s/g, '')}`)
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <Label>{label}</Label>
+      <div className="flex gap-2">
+        <Combobox
+          options={COUNTRY_CODES.map(c => ({ value: c.code, label: `${c.flag} ${c.code}` }))}
+          value={code}
+          onChange={c => update(c || code, local)}
+          variant="button"
+          size="sm"
+          triggerClassName="w-[90px] shrink-0"
+          className="w-[90px] shrink-0"
+          portal
+        />
+        <Input
+          type="tel"
+          value={local}
+          onChange={e => update(code, e.target.value)}
+          placeholder="69 123 456"
+          autoComplete="tel"
+        />
+      </div>
+    </div>
+  )
+}
+
 // ── Register view ─────────────────────────────────────────────────────────────
 
 function RegisterView({
@@ -562,16 +618,11 @@ function RegisterView({
         />
       </div>
 
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="reg-phone">{t('phone')}</Label>
-        <Input
-          id="reg-phone"
-          type="tel"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
-          autoComplete="tel"
-        />
-      </div>
+      <PhoneField
+        value={phone}
+        onChange={setPhone}
+        label={t('phone')}
+      />
 
       {isAgent && (
         <AgentCityField

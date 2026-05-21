@@ -25,6 +25,7 @@ import { ListingsPagination } from '@/modules/listings/components/ListingsPagina
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { ActiveFilterChips } from '@/modules/listings/components/ActiveFilterChips'
 import { ListingsStatusTabs } from '@/modules/listings/components/ListingsStatusTabs'
+import { ListingsFilterBar } from '@/modules/listings/components/ListingsFilterBar'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
@@ -169,15 +170,14 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
   const showLoadMore = allListings.length < total
 
   return (
-    <div className="listings-shell flex gap-8">
-      {/* ── Desktop sidebar ── */}
-      <aside className="hidden lg:block w-72 shrink-0">
-        <div className="sticky top-20 rounded-2xl border bg-card shadow-sm p-5 max-h-[calc(100vh-6rem)] overflow-y-auto">
-          <ListingsFilters locations={locations} />
-        </div>
-      </aside>
+    <div className="listings-shell flex flex-col gap-0">
+      {/* ── Horizontal filter bar (md+); hidden on mobile ── */}
+      <ListingsFilterBar
+        locations={locations}
+        onFiltersOpen={() => setFiltersOpen(true)}
+      />
 
-      {/* ── Mobile filters sheet ── */}
+      {/* ── Filters Sheet (full panel — mobile + "More filters" on desktop) ── */}
       <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
         <SheetContent side="left" showCloseButton={false} className="w-80 max-w-[90vw] overflow-y-auto p-5">
           <ListingsFilters

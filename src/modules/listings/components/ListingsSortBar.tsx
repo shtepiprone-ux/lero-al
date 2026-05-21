@@ -61,7 +61,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
         <Button
           variant="outline"
           size="sm"
-          className="lg:hidden h-9 px-3 rounded-xl relative gap-1.5"
+          className="md:hidden h-9 px-3 rounded-xl relative gap-1.5"
           onClick={onFiltersOpen}
         >
           <SlidersHorizontal className="h-4 w-4" />

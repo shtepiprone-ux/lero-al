@@ -265,8 +265,10 @@ ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
 
 **Epic K — CLOSED.** All admin tables follow K.1 canonical pattern (docs/component-governance.md §11).
 
-**Epic E — Search, Filters & Saved Search** ← NEXT EPIC
-- Task 131 (E.1), 132 (E.4 — needs D.2 ✅), 133 (E.5 doc only).
+**Epic E — Search, Filters & Saved Search** ← CURRENT EPIC
+- ✅ **Task 131** (E.1) — Horizontal filter bar: `ListingsFilterBar` on md+, sidebar removed. [log](sessions/2026-05-21-task-131-e1-horizontal-filter-bar.md)
+- **Task 132** (E.4) — Saved-search match notifications (D.2 ✅). ← NEXT
+- **Task 133** (E.5) — URL-state vs server-state ADR (doc only).
 
 **Epic F — Favorites**
 - Tasks 134–137 (F.1, F.4, F.2, F.3 — F.3 needs D.2 ✅).

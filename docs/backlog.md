@@ -4,22 +4,30 @@
 
 ## Last Session
 
-**2026-05-21 — Sprint 4 CLOSED — Tasks 158–159 — Auth Phone Validation + Flow Consolidation ✅**
+**2026-05-21 — Epic C CLOSED — Tasks 125–126 ✅**
 
-- **Task 158** — Country-aware phone validation: `src/lib/phone/index.ts` (COUNTRY_CODES with iso2, `validateNationalPhone()` via libphonenumber-js/min), `src/components/shared/PhoneField.tsx` (shared), 25 vitest tests. All 4 consumer files updated (AuthSheet, RegisterForm, AdminUserCreate, AdminUserProfile, ProfileTab), dead Albania-only schema removed. +355 + 693 now rejected.
-- **Task 159** — Auth flow consolidation: `AuthRedirect.tsx` bridges server redirect()s to AuthSheet drawer. `/auth/login` and `/auth/register` rewritten as thin pages. `LoginForm`, `RegisterForm`, `LoginFormClient`, `RegisterFormClient` deleted. AuthSheet LoginView reads `sessionStorage['auth_redirect_next']` after login to restore originally-requested route.
+- **Task 125** (C.4) — Reporter notification: `ReporterNotificationEmail.tsx` (4 locales, resolved/dismissed), `notifyReporter()` in reportListing.ts fires email + in-app on status change, `'report_outcome'` NotificationType + 🛡️ icon.
+- **Task 126** (C.5) — Account blocking/suspension: `suspended_until` column (DB migration SQL below), `createListing` guard for blocked users, DatePicker in AdminUserProfile for temporary suspension expiry, status badge shows suspension date. `suspended_until` passed through `updateUserProfileFull`.
 
-→ [Task 158 session log](sessions/2026-05-21-task-158-country-aware-phone-validation.md) ← not yet written (see commit)
+→ [Task 125 session log](sessions/2026-05-21-task-125-reporter-notification.md)
+→ [Task 126 session log](sessions/2026-05-21-task-126-account-blocking.md)
+→ [Epic C closure](../tasks/Epics/Epic_C_Summary_CLOSED.md)
+
+⚠️ **Pending DB migration for Task 126:**
+```sql
+ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
+```
+
+**2026-05-21 — Sprint 4 CLOSED — Tasks 158–159 ✅**
+
+- **Task 158** — Country-aware phone validation: `src/lib/phone/index.ts` (COUNTRY_CODES+iso2, `validateNationalPhone()` via libphonenumber-js/min), `PhoneField.tsx` shared, 25 vitest tests. 4 consumers updated, dead Albania-only schema removed.
+- **Task 159** — Auth flow consolidation: `AuthRedirect.tsx`, `/auth/login`+`/auth/register` as thin pages, `LoginForm`/`RegisterForm`/clients deleted, AuthSheet reads `sessionStorage['auth_redirect_next']` after login.
+
+→ [Task 158 session log](sessions/2026-05-21-task-158-country-aware-phone-validation.md)
 → [Task 159 session log](sessions/2026-05-21-task-159-auth-flow-consolidation.md)
+→ [Sprint 4 closure](../tasks/Sprints/Sprint_4_—_Summary_CLOSED.md)
 
 **2026-05-21 — Epic D CLOSED — Tasks 119–124 ✅**
-
-- D.1 (119): BaseEmail, send helper, preferred_locale, emailChange migration.
-- D.3 (120): VerifyEmail, /auth/verified, admin badge.
-- D.4 (121): RecoveryEmail, ForgotPasswordView, /auth/reset-password, security logging.
-- D.6 (122): Supabase Send Email Hook (standardwebhooks, /api/auth-email-hook). ⚠️ Hook must be registered in Supabase Dashboard → Auth → Hooks.
-- D.2 (123): Admin email template manager (/admin/email-templates, sendTemplatedEmail()). ⚠️ Requires DB migration (see session log).
-- D.5 (124): Inactivity lifecycle (InactivityWarningEmail, InactivityFinalEmail, cron, soft-delete, reactivation). ⚠️ Requires DB migration + CRON_SECRET in Vercel.
 
 → [Epic D closure](../tasks/Epics/Epic_D_Summary_CLOSED.md)
 
@@ -238,29 +246,28 @@
 
 ## Next Immediate Tasks
 
-**Last completed: Task 159 (Sprint 4 — auth flow consolidation). Epic D CLOSED. Sprint 4 CLOSED.**
+**Last completed: Task 126 (Epic C.5 — account blocking). Epic C CLOSED. Epic D CLOSED. Sprint 4 CLOSED.**
 
-**Next:** Task 125 (Epic C.4 — reporter notification flow) ← IN PROGRESS
+**Next:** Task 127 (Epic K.1 — canonical AdminTableRow pattern)
 
 **Recently CLOSED:**
-- ✅ **Epic D** — Tasks 119–124 (email infra + cron lifecycle). [closure](../tasks/Epics/Epic_D_Summary_CLOSED.md)
-- ✅ **Sprint 4** — Tasks 158–159 (phone validation + auth consolidation).
+- ✅ **Epic C** — Tasks 116–118, 125–126. [closure](../tasks/Epics/Epic_C_Summary_CLOSED.md)
+- ✅ **Epic D** — Tasks 119–124. [closure](../tasks/Epics/Epic_D_Summary_CLOSED.md)
+- ✅ **Sprint 4** — Tasks 158–159. [closure](../tasks/Sprints/Sprint_4_—_Summary_CLOSED.md)
 - ✅ **Epic B** — Tasks 108, 112–115. [summary](../tasks/Epics/Epic_B_Summary_CLOSED.md)
-- ✅ Epic C partial — Tasks 116–118 (research, report flow, admin dashboard).
 
-**Epic C — Trust & Safety (finish)**
+**Epic K — Admin Tables Standardization** ← NEXT EPIC
 
-- **Task 125** — C.4 Reporter notification (email + in-app when report resolved/dismissed). ← NEXT
-- **Task 126** — C.5 Account blocking / suspension tools.
-
-**Epic K — Admin Tables Standardization**
-- Tasks 127–130 (K.1–K.4): canonical AdminTableRow pattern + migrations.
+- **Task 127** — K.1 Define canonical AdminTableRow pattern (clickable title → preview dialog).
+- **Task 128** — K.2 Migrate Listings admin table.
+- **Task 129** — K.3 Migrate Users admin table.
+- **Task 130** — K.4 Audit + migrate remaining admin tables (companies, reports, locations).
 
 **Epic E — Search, Filters & Saved Search**
-- Task 131 (E.1), 132 (E.4 needs D.2 ✅), 133 (E.5 doc).
+- Task 131 (E.1), 132 (E.4 — needs D.2 ✅), 133 (E.5 doc only).
 
 **Epic F — Favorites**
-- Tasks 134–137 (F.1, F.4, F.2, F.3 needs D.2 ✅).
+- Tasks 134–137 (F.1, F.4, F.2, F.3 — F.3 needs D.2 ✅).
 
 **Epics G–L** — see task roadmap below.
 

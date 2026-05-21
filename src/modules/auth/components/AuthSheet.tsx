@@ -477,7 +477,7 @@ function CompanyField({
 // Same pattern as AdminUserCreate / AdminUserProfile / ProfileTab.
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const PHONE_RE = /^\+[1-9]\d{5,14}$/
+const PHONE_RE = /^\+[1-9]\d{7,14}$/
 
 const COUNTRY_CODES = [
   { code: '+355', flag: '🇦🇱' }, { code: '+380', flag: '🇺🇦' },

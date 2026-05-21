@@ -30,7 +30,7 @@ interface Props {
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
-const PHONE_RE = /^\+[1-9]\d{5,14}$/
+const PHONE_RE = /^\+[1-9]\d{7,14}$/
 const PROFILE_TYPES = ['admin', 'moderator', 'private', 'agent', 'developer'] as const
 
 const COUNTRY_CODES = [

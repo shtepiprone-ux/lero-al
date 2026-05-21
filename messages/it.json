@@ -583,7 +583,10 @@
       "preset_1y": "1 anno",
       "delete_confirm": "Eliminare l'annuncio?",
       "prev_page": "Indietro",
-      "next_page": "Avanti"
+      "next_page": "Avanti",
+      "btn_view": "Visualizza annuncio",
+      "delete_dialog_body": "Questa azione non può essere annullata.",
+      "preview_title": "Dettagli annuncio"
     },
     "users": {
       "tab_all": "Tutti gli utenti",

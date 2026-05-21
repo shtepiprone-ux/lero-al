@@ -583,7 +583,10 @@
       "preset_1y": "1 рік",
       "delete_confirm": "Видалити оголошення?",
       "prev_page": "Назад",
-      "next_page": "Далі"
+      "next_page": "Далі",
+      "btn_view": "Переглянути оголошення",
+      "delete_dialog_body": "Цю дію не можна скасувати.",
+      "preview_title": "Деталі оголошення"
     },
     "users": {
       "tab_all": "Всі користувачі",

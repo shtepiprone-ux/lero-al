@@ -583,7 +583,10 @@
       "preset_1y": "1 vit",
       "delete_confirm": "Fshi njoftimin?",
       "prev_page": "Mbrapa",
-      "next_page": "Tjetër"
+      "next_page": "Tjetër",
+      "btn_view": "Shiko listimin",
+      "delete_dialog_body": "Ky veprim nuk mund te kthehet.",
+      "preview_title": "Detajet e listimit"
     },
     "users": {
       "tab_all": "Të gjithë përdoruesit",

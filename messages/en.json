@@ -583,7 +583,10 @@
       "preset_1y": "1 year",
       "delete_confirm": "Delete listing?",
       "prev_page": "Back",
-      "next_page": "Next"
+      "next_page": "Next",
+      "btn_view": "View listing",
+      "delete_dialog_body": "This action cannot be undone.",
+      "preview_title": "Listing details"
     },
     "users": {
       "tab_all": "All users",

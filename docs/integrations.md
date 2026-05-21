@@ -120,7 +120,7 @@ Rationale: app deploys to Vercel; project has no supabase/functions infrastructu
 
 **Hook endpoint:** `POST /api/auth-email-hook` (`src/app/api/auth-email-hook/route.ts`)
 
-**Security:** HMAC-SHA256 signature verification. Supabase signs every hook request with the shared secret (`SUPABASE_EMAIL_HOOK_SECRET` env var) and sends the signature in the `x-supabase-signature` header. The handler verifies this before processing.
+**Security:** HS256 JWT verification. Supabase signs every hook request as a JWT using the hook secret (`SUPABASE_EMAIL_HOOK_SECRET` env var) and sends it in the `Authorization: Bearer <jwt>` header. The handler verifies the JWT signature using HMAC-SHA256 before processing. (Not `x-supabase-signature` — that is used by Postgres hooks, not the HTTP Send Email Hook.)
 
 **Action-type → template map:**
 

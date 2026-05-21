@@ -9,9 +9,10 @@
  * Rationale: app deploys to Vercel; no supabase/functions infrastructure exists;
  * project already has 9 API routes; Next route is simpler to deploy and debug.
  *
- * Security: requests are signed with HMAC-SHA256 using SUPABASE_EMAIL_HOOK_SECRET.
- * The signature is in the x-supabase-signature header. If the env var is not set
- * the check is skipped (allows local dev without the secret configured).
+ * Security: Supabase signs hook requests with an HS256 JWT sent in the
+ * Authorization: Bearer <jwt> header. The JWT is verified using the hook secret
+ * (SUPABASE_EMAIL_HOOK_SECRET). If the env var is not set the check is skipped
+ * (allows local dev without the secret configured).
  *
  * Action-type → template map:
  *   signup          → VerifyEmail   (to user.email)
@@ -159,16 +160,26 @@ function emailChangeHtml(s: ReturnType<typeof getEmailChangeStrings>, verifyUrl:
 </html>`
 }
 
-// ── Signature verification ─────────────────────────────────────────────────────
+// ── JWT verification (HS256) ──────────────────────────────────────────────────
+// Supabase sends a JWT signed with the hook secret in Authorization: Bearer <jwt>.
 
-function verifySignature(rawBody: string, signature: string, secret: string): boolean {
-  const sig = signature.startsWith('sha256=') ? signature.slice(7) : signature
+function verifyHookJWT(authHeader: string | null, secret: string): boolean {
+  if (!authHeader?.startsWith('Bearer ')) return false
+  const token = authHeader.slice(7)
+  const parts = token.split('.')
+  if (parts.length !== 3) return false
+
+  const signingInput = `${parts[0]}.${parts[1]}`
   try {
-    const expected = createHmac('sha256', secret).update(rawBody).digest('hex')
-    const bufSig = Buffer.from(sig, 'hex')
-    const bufExp = Buffer.from(expected, 'hex')
-    if (bufSig.length !== bufExp.length) return false
-    return timingSafeEqual(bufSig, bufExp)
+    const expectedSig = createHmac('sha256', secret)
+      .update(signingInput)
+      .digest('base64url')
+
+    const bufExpected = Buffer.from(expectedSig, 'base64url')
+    const bufReceived = Buffer.from(parts[2], 'base64url')
+
+    if (bufExpected.length !== bufReceived.length) return false
+    return timingSafeEqual(bufExpected, bufReceived)
   } catch {
     return false
   }
@@ -184,99 +195,108 @@ function buildActionUrl(supabaseUrl: string, tokenHash: string, type: string, re
 // ── Handler ───────────────────────────────────────────────────────────────────
 
 export async function POST(request: NextRequest) {
-  const rawBody = await request.text()
-
-  // Verify HMAC-SHA256 signature if secret is configured
-  const secret = process.env.SUPABASE_EMAIL_HOOK_SECRET
-  if (secret) {
-    const signature = request.headers.get('x-supabase-signature') ?? ''
-    if (!signature || !verifySignature(rawBody, signature, secret)) {
-      console.error('[auth-email-hook] Invalid or missing signature')
-      return NextResponse.json({ error: 'invalid_signature' }, { status: 401 })
-    }
-  }
-
-  let payload: HookPayload
   try {
-    payload = JSON.parse(rawBody) as HookPayload
-  } catch {
-    console.error('[auth-email-hook] Failed to parse payload')
-    return NextResponse.json({ error: 'invalid_payload' }, { status: 400 })
+    const rawBody = await request.text()
+
+    // Verify HS256 JWT from Authorization: Bearer header if secret is configured.
+    // Supabase signs every hook request with the hook secret (not x-supabase-signature).
+    const secret = process.env.SUPABASE_EMAIL_HOOK_SECRET
+    if (secret) {
+      const authHeader = request.headers.get('authorization')
+      if (!verifyHookJWT(authHeader, secret)) {
+        console.error('[auth-email-hook] JWT verification failed', {
+          hasAuth: !!authHeader,
+          prefix: authHeader?.slice(0, 15) ?? 'none',
+        })
+        return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+      }
+    }
+
+    let payload: HookPayload
+    try {
+      payload = JSON.parse(rawBody) as HookPayload
+    } catch {
+      console.error('[auth-email-hook] Failed to parse payload')
+      return NextResponse.json({ error: 'invalid_payload' }, { status: 400 })
+    }
+
+    const { user, email_data } = payload
+    const { token_hash, token, redirect_to, email_action_type } = email_data
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
+
+    // Resolve recipient locale via preferred_locale on the user profile
+    const locale = await resolveUserLocale(user.id)
+
+    // Build action URL (used for all link-based emails; not used for reauthentication OTP)
+    const actionUrl = buildActionUrl(supabaseUrl, token_hash, email_action_type, redirect_to)
+
+    switch (email_action_type) {
+      case 'signup':
+      case 'invite': {
+        const s = getVerifyEmailStrings(locale)
+        await sendEmail({
+          to: user.email,
+          subject: s.subject,
+          react: React.createElement(VerifyEmail, { confirmUrl: actionUrl, locale }),
+        })
+        break
+      }
+
+      case 'recovery': {
+        const s = getRecoveryEmailStrings(locale)
+        await sendEmail({
+          to: user.email,
+          subject: s.subject,
+          react: React.createElement(RecoveryEmail, { resetUrl: actionUrl, locale }),
+        })
+        break
+      }
+
+      case 'magiclink': {
+        const s = getMagicLinkEmailStrings(locale)
+        await sendEmail({
+          to: user.email,
+          subject: s.subject,
+          react: React.createElement(MagicLinkEmail, { signInUrl: actionUrl, locale }),
+        })
+        break
+      }
+
+      case 'email_change': {
+        // Supabase sends this to verify the new address.
+        // user.new_email is the address being verified; fall back to user.email.
+        const recipientEmail = user.new_email ?? user.email
+        const s = getEmailChangeStrings(locale)
+        await sendEmail({
+          to: recipientEmail,
+          subject: s.subject,
+          html: emailChangeHtml(s, actionUrl),
+        })
+        break
+      }
+
+      case 'reauthentication': {
+        // OTP code — user enters it in the app; email_data.token is the code.
+        const s = getReauthEmailStrings(locale)
+        await sendEmail({
+          to: user.email,
+          subject: s.subject,
+          react: React.createElement(ReauthEmail, { otp: token, locale }),
+        })
+        break
+      }
+
+      default: {
+        console.warn('[auth-email-hook] Unhandled email_action_type:', email_action_type)
+        // Return success so Supabase does not retry indefinitely for unknown types.
+        break
+      }
+    }
+
+    // Supabase expects an empty JSON object on success.
+    return NextResponse.json({})
+  } catch (err) {
+    console.error('[auth-email-hook] Unhandled error:', err)
+    return NextResponse.json({ error: 'internal_error' }, { status: 500 })
   }
-
-  const { user, email_data } = payload
-  const { token_hash, token, redirect_to, email_action_type } = email_data
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
-
-  // Resolve recipient locale via preferred_locale on the user profile
-  const locale = await resolveUserLocale(user.id)
-
-  // Build action URL (used for all link-based emails; not used for reauthentication OTP)
-  const actionUrl = buildActionUrl(supabaseUrl, token_hash, email_action_type, redirect_to)
-
-  switch (email_action_type) {
-    case 'signup':
-    case 'invite': {
-      const s = getVerifyEmailStrings(locale)
-      await sendEmail({
-        to: user.email,
-        subject: s.subject,
-        react: React.createElement(VerifyEmail, { confirmUrl: actionUrl, locale }),
-      })
-      break
-    }
-
-    case 'recovery': {
-      const s = getRecoveryEmailStrings(locale)
-      await sendEmail({
-        to: user.email,
-        subject: s.subject,
-        react: React.createElement(RecoveryEmail, { resetUrl: actionUrl, locale }),
-      })
-      break
-    }
-
-    case 'magiclink': {
-      const s = getMagicLinkEmailStrings(locale)
-      await sendEmail({
-        to: user.email,
-        subject: s.subject,
-        react: React.createElement(MagicLinkEmail, { signInUrl: actionUrl, locale }),
-      })
-      break
-    }
-
-    case 'email_change': {
-      // Supabase sends this to verify the new address.
-      // user.new_email is the address being verified; fall back to user.email.
-      const recipientEmail = user.new_email ?? user.email
-      const s = getEmailChangeStrings(locale)
-      await sendEmail({
-        to: recipientEmail,
-        subject: s.subject,
-        html: emailChangeHtml(s, actionUrl),
-      })
-      break
-    }
-
-    case 'reauthentication': {
-      // OTP code — user enters it in the app; email_data.token is the code.
-      const s = getReauthEmailStrings(locale)
-      await sendEmail({
-        to: user.email,
-        subject: s.subject,
-        react: React.createElement(ReauthEmail, { otp: token, locale }),
-      })
-      break
-    }
-
-    default: {
-      console.warn('[auth-email-hook] Unhandled email_action_type:', email_action_type)
-      // Return success so Supabase does not retry indefinitely for unknown types.
-      break
-    }
-  }
-
-  // Supabase expects an empty JSON object on success.
-  return NextResponse.json({})
 }

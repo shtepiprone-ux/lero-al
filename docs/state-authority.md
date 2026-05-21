@@ -204,3 +204,102 @@ TypeScript enforces shape compatibility with `CardListingData` at build time.
 
 The cabinet compact select (`CABINET_LISTING_SELECT` in `cabinet/lib/queries.ts`) is
 intentionally a narrower projection (no feature fields) and is managed separately.
+
+---
+
+## ADR-001 — Filter/Search State Architecture: URL-state vs Server state via React Query / SWR
+
+**Date:** 2026-05-21 | **Task:** 133 (Epic E.5) | **Status:** ACCEPTED
+
+### Context
+
+Two architectural models are available for listings filter state:
+
+**(a) URL-state → Server → UI (current model)**
+Each filter change triggers `router.push` with updated search params. The Next.js RSC
+re-renders the page server-side; `parseSearchParams` (filterEngine) normalizes params;
+`applyListingFilters` applies them to the Supabase query inside the Server Component.
+
+**(b) Client-side cache via React Query / SWR**
+Filter changes update a client-side cache key. A client hook fetches `/api/listings`
+directly; the grid is rendered entirely client-side. RSC is not involved in filter
+transitions — only on initial page load.
+
+### Current implementation snapshot
+
+```
+useListingsUrlFilters   → URL-immediate (each change = router.push, no draft)
+useHomepageFilters      → draft batch UX (local state, Apply delegates URL nav to parent)
+filterEngine.ts         → canonical parseSearchParams / applyListingFilters / countActiveFilters
+                          used by BOTH the SSR page and /api/listings route (model b already exists)
+```
+
+The `/api/listings` route is already implemented (Task 50.x), so model (b) is technically
+available — it just isn't the primary path for the listings page.
+
+### Trade-off analysis
+
+| Criterion | (a) URL → SSR | (b) React Query / SWR |
+|---|---|---|
+| Deep-links / shareable URLs | ✅ Native — URL is the state | ✅ If params are also mirrored in URL |
+| Browser back/forward | ✅ Free via Next.js router | ⚠️ Requires manual `useSearchParams` sync |
+| Streaming / RSC benefits | ✅ Used today for page shell + grid | ❌ Grid must go fully client |
+| Filter transition latency | ⚠️ Full RSC round-trip (~50–150ms on edge) | ✅ Stale-while-revalidate; instant optimistic |
+| filterEngine reuse | ✅ Single canonical path | ⚠️ Must also run on client for count/visibility |
+| State duplication | ✅ None — URL is the only copy | ❌ URL params + client cache must stay in sync |
+| Server-component composition | ✅ Works naturally | ❌ Listings grid cannot be RSC |
+| Complexity delta | ✅ Zero — already built | ❌ Cache invalidation, hydration, stale logic |
+| SEO / crawl | ✅ Server-rendered on every URL | ✅ (if SSR fallback is kept for robots) |
+| Saved-search hash stability | ✅ URL → `filters_hash` → cron comparison is trivial | ⚠️ Hash must be derived from client state instead |
+
+### Recommendation
+
+**Continue with model (a) — URL-state → Server → UI. Do not adopt React Query / SWR
+for the listings filter path.**
+
+Rationale:
+
+1. **Architecture already works.** `filterEngine.ts`, `useListingsUrlFilters`, and the
+   RSC pipeline are in production and passing all governance gates. No known latency
+   complaint justifies the migration cost.
+
+2. **Next.js App Router is optimized for this pattern.** RSC streaming, partial prerender,
+   and the router cache all assume URL-driven navigation as the primary signal. Moving the
+   grid to a client-fetched component forfeits streaming and forces additional layout shifts.
+
+3. **URL is the single source of truth.** Saved-search canonicalization (`filters_hash`),
+   ActiveFilterChips, deep-links, and back-button behavior all derive from URL params for
+   free. Model (b) would require maintaining a parallel URL-mirror on every state change.
+
+4. **`/api/listings` already covers the valid use case.** The API route exists for
+   progressive loading (page 2+ via `extraListings`) — exactly the case where a full
+   RSC round-trip would be wasteful. Model (a) + progressive fetch is the correct split:
+   SSR handles the first page; the API route handles subsequent pages.
+
+5. **filterEngine duplication risk.** In model (b), `countActiveFilters` and
+   `getFilterVisibility` must run on the client for badge counts / section visibility.
+   They already do — but `applyListingFilters` is Supabase-query-specific and would need
+   a client-safe equivalent. The current design avoids this entirely.
+
+### When to revisit
+
+Consider model (b) only if **both** of the following are true:
+- Measured P75 filter-transition latency exceeds 400 ms on production (Vercel Edge).
+- The listings grid has been extracted to a standalone route segment that renders
+  independently of the page shell (enabling RSC Partial Prerender for the shell).
+
+Until then, any performance tuning should target RSC caching (Next.js `fetch` cache tags),
+not client-side state management.
+
+### Migration implications (if (b) is ever chosen)
+
+1. `ListingsFilterBar` and `ListingsFilters` would need a `useListings(filters)` hook
+   wrapping `useQuery('listings', fetchListings, { staleTime: 30_000 })`.
+2. URL synchronization: `useEffect` mirror from filter state → `router.replace` (not push,
+   to avoid history bloat).
+3. `filterEngine.applyListingFilters` cannot run on the client (Supabase builder). A
+   parallel `buildApiQuery(filters): URLSearchParams` helper would be needed.
+4. `filters_hash` for saved searches would derive from the client `FilterValues` object
+   (via `savedSearchCanonicalize`) rather than directly from URL params — already the
+   correct design since `savedSearchCanonicalize` normalizes both.
+5. Estimated effort: 3–5 days + full regression audit across all filter consumers.

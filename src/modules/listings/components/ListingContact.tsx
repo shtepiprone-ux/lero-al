@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
+import { openAuthSheet } from '@/lib/auth/authSheet'
 import type { ListingStatus } from '@/types/database'
 
 interface Owner {
@@ -131,12 +132,13 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                   <p className="text-sm font-semibold text-foreground/80">{t('contact_guest_title')}</p>
                   <p className="text-xs text-muted-foreground leading-relaxed">{t('contact_guest_desc')}</p>
                 </div>
-                <a
-                  href={`/${locale}/auth/login`}
+                <button
+                  type="button"
+                  onClick={() => openAuthSheet('login')}
                   className="flex items-center justify-center gap-2 h-10 w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-colors"
                 >
                   {t('contact_guest_cta')}
-                </a>
+                </button>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
@@ -267,13 +269,14 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
             </div>
           )}
           {showGuestCTA && (
-            <a
-              href={`/${locale}/auth/login`}
+            <button
+              type="button"
+              onClick={() => openAuthSheet('login')}
               className="shrink-0 h-11 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm flex items-center gap-1.5 transition-colors"
             >
               <LogIn className="h-4 w-4" />
               {t('contact_guest_cta')}
-            </a>
+            </button>
           )}
         </div>
       </div>

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Menu, ChevronDown, User, ListPlus, Heart, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -22,6 +22,7 @@ import dynamic from 'next/dynamic'
 import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
 import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
+import { AUTH_SHEET_EVENT } from '@/lib/auth/authSheet'
 
 const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
@@ -91,6 +92,17 @@ export function Header() {
     setAuthOpen(true)
   }
 
+  // Global listener: any component can call openAuthSheet() from @/lib/auth/authSheet
+  // to open this drawer without prop drilling or a context provider.
+  useEffect(() => {
+    function handleGlobalOpen(e: Event) {
+      const view = (e as CustomEvent<{ view: AuthView }>).detail?.view ?? 'login'
+      openAuthSheet(view)
+    }
+    window.addEventListener(AUTH_SHEET_EVENT, handleGlobalOpen)
+    return () => window.removeEventListener(AUTH_SHEET_EVENT, handleGlobalOpen)
+  }, [])
+
   function switchLocale(newLocale: string) {
     const currentPath = window.location.pathname
     const pathWithoutLocale = currentPath.replace(/^\/(sq|en|uk|it)/, '') || '/'
@@ -127,13 +139,25 @@ export function Header() {
           <LocaleSwitcher onSwitch={switchLocale} className="hidden sm:flex" />
 
           {/* Favorites — visible beside language selector on sm+ */}
-          <Link
-            href={user ? `/${locale}/favorites` : `/${locale}/auth/login`}
-            className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1 px-2 hidden sm:flex')}
-            aria-label={t('favorites')}
-          >
-            <Heart className="h-4 w-4" />
-          </Link>
+          {user ? (
+            <Link
+              href={`/${locale}/favorites`}
+              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1 px-2 hidden sm:flex')}
+              aria-label={t('favorites')}
+            >
+              <Heart className="h-4 w-4" />
+            </Link>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => openAuthSheet('login')}
+              className="gap-1 px-2 hidden sm:flex"
+              aria-label={t('favorites')}
+            >
+              <Heart className="h-4 w-4" />
+            </Button>
+          )}
 
           {/* Mobile locale switcher — canonical Combobox visible at 320–639px */}
           <Combobox

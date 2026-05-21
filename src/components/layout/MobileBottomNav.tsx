@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { Home, Search, Plus, Heart, User } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { cn } from '@/lib/utils'
+import { openAuthSheet } from '@/lib/auth/authSheet'
 
 export function MobileBottomNav() {
   const locale = useLocale()
@@ -43,38 +44,43 @@ export function MobileBottomNav() {
         <span className="text-[10px] font-medium text-muted-foreground leading-none">{t('add_listing')}</span>
       </Link>
 
-      <BottomNavItem
-        href={user ? `/${locale}/favorites` : `/${locale}/auth/login`}
-        icon={Heart}
-        label={t('favorites')}
-        active={isFavorites}
-      />
-      <BottomNavItem
-        href={user ? `/${locale}/cabinet` : `/${locale}/auth/login`}
-        icon={User}
-        label={user ? t('profile') : t('login')}
-        active={isProfile}
-      />
+      {user ? (
+        <BottomNavItem href={`/${locale}/favorites`} icon={Heart} label={t('favorites')} active={isFavorites} />
+      ) : (
+        <BottomNavItem onClick={() => openAuthSheet('login')} icon={Heart} label={t('favorites')} active={isFavorites} />
+      )}
+      {user ? (
+        <BottomNavItem href={`/${locale}/cabinet`} icon={User} label={t('profile')} active={isProfile} />
+      ) : (
+        <BottomNavItem onClick={() => openAuthSheet('login')} icon={User} label={t('login')} active={isProfile} />
+      )}
     </nav>
   )
 }
 
 function BottomNavItem({
-  href, icon: Icon, label, active,
+  href, onClick, icon: Icon, label, active,
 }: {
-  href: string
+  href?: string
+  onClick?: () => void
   icon: React.ElementType
   label: string
   active: boolean
 }) {
+  const className = cn(
+    'flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors min-h-full',
+    active ? 'text-primary' : 'text-muted-foreground',
+  )
+  if (onClick) {
+    return (
+      <button type="button" onClick={onClick} className={className}>
+        <Icon className="h-5 w-5" />
+        <span className="text-[10px] font-medium leading-none">{label}</span>
+      </button>
+    )
+  }
   return (
-    <Link
-      href={href}
-      className={cn(
-        'flex-1 flex flex-col items-center justify-center gap-0.5 transition-colors min-h-full',
-        active ? 'text-primary' : 'text-muted-foreground',
-      )}
-    >
+    <Link href={href!} className={className}>
       <Icon className="h-5 w-5" />
       <span className="text-[10px] font-medium leading-none">{label}</span>
     </Link>

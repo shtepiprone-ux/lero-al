@@ -247,7 +247,15 @@
     "show_original": "Trego origjinalin",
     "translated_automatically": "Përkthyer automatikisht",
     "translation_error": "Përkthimi dështoi. Provoni përsëri.",
-    "error_account_blocked": "Llogaria juaj është bllokuar. Ju nuk mund të shtoni lista të reja."
+    "error_account_blocked": "Llogaria juaj është bllokuar. Ju nuk mund të shtoni lista të reja.",
+    "recently_viewed_title": "Parë kohët e fundit",
+    "recently_viewed_empty": "Nuk keni parë ende asnjë listim.",
+    "recently_viewed_clear": "Pastro historikun",
+    "recently_viewed_clear_title": "Pastro historikun e vizitave",
+    "recently_viewed_clear_body": "A jeni i sigurt që dëshironi të pastroni historikun e vizitave? Ky veprim nuk mund të kthehet.",
+    "recently_viewed_clear_confirm": "Pastro",
+    "recently_viewed_cleared": "Historiku u pastrua",
+    "recently_viewed_clear_error": "Gabim gjatë pastrimit. Provoni përsëri."
   },
   "auth": {
     "email": "Email",

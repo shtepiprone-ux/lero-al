@@ -247,7 +247,15 @@
     "show_original": "Show original",
     "translated_automatically": "Translated automatically",
     "translation_error": "Translation failed. Please try again.",
-    "error_account_blocked": "Your account is blocked. You cannot create new listings."
+    "error_account_blocked": "Your account is blocked. You cannot create new listings.",
+    "recently_viewed_title": "Recently viewed",
+    "recently_viewed_empty": "You haven't viewed any listings yet.",
+    "recently_viewed_clear": "Clear history",
+    "recently_viewed_clear_title": "Clear viewing history",
+    "recently_viewed_clear_body": "This will permanently remove your viewing history. This action cannot be undone.",
+    "recently_viewed_clear_confirm": "Clear",
+    "recently_viewed_cleared": "History cleared",
+    "recently_viewed_clear_error": "Failed to clear history. Please try again."
   },
   "auth": {
     "email": "Email",

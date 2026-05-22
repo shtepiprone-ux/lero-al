@@ -4,25 +4,23 @@
 
 ## Last Session
 
-**2026-05-22 — Task 138 (G.1) — Track recently viewed listings ✅**
+**2026-05-22 — Task 140 (G.3) — Clear recently viewed history ✅ — Epic G CLOSED**
 
-- `recently_viewed` table + RLS + `record_recently_viewed` RPC — migration SQL in session log (⚠️ run in Supabase before G.2).
-- `recordListingView(listingId)` server action: auth → RPC upsert+prune (cap 25); guest → `rv_listings` cookie (JSON UUID array, 25-cap, dedupe-to-front).
-- `RecentlyViewedTracker` client component: 1 500 ms delay, StrictMode + Speculation Rules safe — matches ViewTracker pattern.
-- `RecentlyViewed` type added to `database.ts`; guest cookie contract documented in `docs/analytics-rules.md`.
+- `clearRecentlyViewed()` server action: auth → DELETE all user rows + `revalidatePath`; guest → reset cookie to `[]`.
+- `ClearRecentlyViewedButton` client component: canonical `Dialog` confirmation + `sonner` toast + `router.refresh()`.
+- `RecentlyViewedSection`: `showEmptyState` prop added; clear button in header; profile shows empty state after clearing.
+- 6 i18n keys per locale (sq/en/uk/it). **Epic G — CLOSED.**
 
-→ [Task 138 session log](sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md)
+→ [Task 140 session log](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md)
 
 ## Last-but-one Session
 
-**2026-05-22 — Task 137 (F.3) — Price-change notifications ✅**
+**2026-05-22 — Task 139 (G.2) — Recently viewed UI block ✅**
 
-- DB migration documented: `favorite_price_alerts` + `'price_change'` notification type.
-- `/api/cron/price-alerts` — daily cron, 3-query algorithm, email + in-app, upsert dedup.
-- `NotificationItem.tsx` — `price_change: '💰'`; `vercel.json` — cron schedule.
-- **Epic F — CLOSED.**
+- `RecentlyViewedSection` Server Component: auth → DB query, guest → cookie — SSR-first, no hydration flicker.
+- Listing detail (Suspense) + cabinet profile (RSC prop); mobile scroll + sm/md/lg grid; 2 i18n keys × 4 locales.
 
-→ [Task 137 session log](sessions/2026-05-22-task-137-f3-price-change-notifications.md)
+→ [Task 139 session log](sessions/2026-05-22-task-139-g2-recently-viewed-ui.md)
 
 ## Pending Action Items
 
@@ -38,9 +36,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 138 (Epic G.1 — Track recently viewed listings). ⚠️ Run `recently_viewed` + RPC SQL in Supabase before G.2.
+**Last completed:** Task 140 (Epic G.3 — Clear history). **Epic G — CLOSED.**
 
-**Next:** Task 139 (G.2 — Recently-viewed UI block).
+**Next:** Task 141 (H.1 — Cloudinary user-based folder structure).
 
 Continue in order: Epic G → H → I → J → L. Numbered list below.
 
@@ -48,10 +46,7 @@ Continue in order: Epic G → H → I → J → L. Numbered list below.
 
 Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Closed sprints & epics**. Epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L. Numbers are global — never reused; if priorities change, renumber forward from the change point.
 
-**Epic G — Recently Viewed Listings**
-- **Task 138** — G.1 Track recently viewed (server for auth, cookie/local for guests).
-- **Task 139** — G.2 Recently-viewed UI block.
-- **Task 140** — G.3 Clear history.
+~~**Epic G — Recently Viewed Listings**~~ — **CLOSED** (Tasks 138–140)
 
 **Epic H — Cloudinary Storage Hygiene** (H.6 safety audit before any cleanup)
 - **Task 141** — H.1 User-based folder structure.
@@ -118,6 +113,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic G.3 — Clear recently viewed history (clearRecentlyViewed action, ClearRecentlyViewedButton, Dialog+toast, Epic G CLOSED) | Task 140 | [sessions/2026-05-22-task-140-g3-clear-recently-viewed.md](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md) |
+| 2026-05-22 | Epic G.2 — Recently viewed UI block (RecentlyViewedSection, listing detail + profile, 4 locales) | Task 139 | [sessions/2026-05-22-task-139-g2-recently-viewed-ui.md](sessions/2026-05-22-task-139-g2-recently-viewed-ui.md) |
 | 2026-05-22 | Epic G.1 — Track recently viewed listings (recently_viewed table+RLS+RPC, cookie for guests, RecentlyViewedTracker) | Task 138 | [sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md](sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md) |
 | 2026-05-22 | Epic F.3 — Price-change notifications (cron, favorite_price_alerts, email+in-app, dedup) | Task 137 | [sessions/2026-05-22-task-137-f3-price-change-notifications.md](sessions/2026-05-22-task-137-f3-price-change-notifications.md) |
 | 2026-05-22 | Epic F.2 — Favorites folders/collections (CollectionsSection, SaveToCollectionButton, DB schema, 20 i18n keys) | Task 136 | [sessions/2026-05-22-task-136-f2-favorites-collections.md](sessions/2026-05-22-task-136-f2-favorites-collections.md) |

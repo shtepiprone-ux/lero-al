@@ -247,7 +247,15 @@
     "show_original": "Показати оригінал",
     "translated_automatically": "Перекладено автоматично",
     "translation_error": "Помилка перекладу. Спробуйте знову.",
-    "error_account_blocked": "Ваш обліковий запис заблоковано. Ви не можете створювати нові оголошення."
+    "error_account_blocked": "Ваш обліковий запис заблоковано. Ви не можете створювати нові оголошення.",
+    "recently_viewed_title": "Нещодавно переглянуті",
+    "recently_viewed_empty": "Ви ще не переглядали жодного оголошення.",
+    "recently_viewed_clear": "Очистити історію",
+    "recently_viewed_clear_title": "Очистити історію переглядів",
+    "recently_viewed_clear_body": "Це назавжди видалить вашу історію переглядів. Цю дію неможливо скасувати.",
+    "recently_viewed_clear_confirm": "Очистити",
+    "recently_viewed_cleared": "Історію очищено",
+    "recently_viewed_clear_error": "Не вдалося очистити історію. Спробуйте знову."
   },
   "auth": {
     "email": "Email",

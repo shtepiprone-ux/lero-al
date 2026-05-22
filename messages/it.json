@@ -247,7 +247,15 @@
     "show_original": "Mostra originale",
     "translated_automatically": "Tradotto automaticamente",
     "translation_error": "Traduzione fallita. Riprova.",
-    "error_account_blocked": "Il tuo account è bloccato. Non puoi creare nuovi annunci."
+    "error_account_blocked": "Il tuo account è bloccato. Non puoi creare nuovi annunci.",
+    "recently_viewed_title": "Visti di recente",
+    "recently_viewed_empty": "Non hai ancora visualizzato annunci.",
+    "recently_viewed_clear": "Cancella cronologia",
+    "recently_viewed_clear_title": "Cancella la cronologia di visualizzazione",
+    "recently_viewed_clear_body": "Questo rimuoverà definitivamente la cronologia di visualizzazione. Questa azione non può essere annullata.",
+    "recently_viewed_clear_confirm": "Cancella",
+    "recently_viewed_cleared": "Cronologia cancellata",
+    "recently_viewed_clear_error": "Impossibile cancellare la cronologia. Riprova."
   },
   "auth": {
     "email": "Email",

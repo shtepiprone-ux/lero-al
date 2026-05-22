@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { CabinetShell } from '@/modules/cabinet/components/CabinetShell'
 import type { CardListingData } from '@/modules/listings/components/ListingCard'
+import { RecentlyViewedSection } from '@/modules/listings/components/RecentlyViewedSection'
 import {
   buildCabinetListingsQuery,
   CABINET_LISTING_SELECT,
@@ -72,6 +73,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       regions={regions ?? []}
       userId={authUser.id}
       email={authUser.email ?? null}
+      profileRecentlyViewed={<RecentlyViewedSection limit={25} showEmptyState />}
     />
   )
 }

@@ -1,8 +1,10 @@
 'use server'
 
 import { cookies } from 'next/headers'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { routing } from '@/i18n/routing'
 
 export const RECENTLY_VIEWED_CAP = 25
 export const RECENTLY_VIEWED_COOKIE = 'rv_listings'
@@ -49,6 +51,41 @@ export async function recordListingView(listingId: string): Promise<void> {
       path: '/',
       sameSite: 'lax',
       httpOnly: false, // server reads via request cookies; client may update directly in G.2
+    })
+  }
+}
+
+/**
+ * Clear the current visitor's entire recently-viewed history.
+ *
+ * Auth users  → DELETE all rows in `recently_viewed` (RLS scopes to calling user).
+ * Guest users → reset `rv_listings` cookie to an empty array.
+ *
+ * Revalidates the cabinet page so `RecentlyViewedSection` re-fetches on next render.
+ */
+export async function clearRecentlyViewed(): Promise<void> {
+  const user = await getUser()
+
+  if (user) {
+    const supabase = await createClient()
+    const { error } = await supabase
+      .from('recently_viewed')
+      .delete()
+      .eq('user_id', user.id)
+    if (error) {
+      console.error('[RecentlyViewed] clear failed', { userId: user.id })
+      throw new Error('clear_failed')
+    }
+    for (const locale of routing.locales) {
+      revalidatePath(`/${locale}/cabinet`, 'page')
+    }
+  } else {
+    const cookieStore = await cookies()
+    cookieStore.set(RECENTLY_VIEWED_COOKIE, '[]', {
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+      sameSite: 'lax',
+      httpOnly: false,
     })
   }
 }

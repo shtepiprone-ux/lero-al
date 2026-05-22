@@ -38,6 +38,10 @@ const ROOT = resolve(__dirname, '..')
 //   ListingStatus, ListingCurrency, LocationType, TicketStatus,
 //   VerificationStatus, ReportReason, ReportStatus, NotificationType,
 //   LocationRequest (JSONB shape), CollectionWithCount (computed view type)
+//
+// DB columns intentionally NOT in types (generated / DB-internal):
+//   listings.search_vector — tsvector generated column; queried via .textSearch(),
+//     never read as a JS value; excluded from User.
 const INTERFACE_TABLE_MAP = {
   User:               'users',
   UserChangeLog:      'user_change_log',

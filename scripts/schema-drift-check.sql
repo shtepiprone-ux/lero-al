@@ -1,9 +1,9 @@
 -- schema-drift-check.sql
--- Generated 2026-05-22T19:00:42.946Z by: npm run check:schema-drift
+-- Generated 2026-05-22T19:06:03.015Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
---   User                 → users                    (27 cols)
+--   User                 → users                    (28 cols)
 --   UserChangeLog        → user_change_log          (7 cols)
 --   UserStatusHistory    → user_status_history      (7 cols)
 --   EmailChangeToken     → email_change_tokens      (7 cols)
@@ -60,6 +60,7 @@ WITH expected(table_name, column_name) AS (
     ('users', 'preferred_currency'),
     ('users', 'pending_email'),
     ('users', 'last_seen_at'),
+    ('users', 'inactivity_warning_sent_at'),
     ('users', 'preferred_locale'),
     ('users', 'created_at'),
     ('user_change_log', 'id'),
@@ -285,6 +286,7 @@ WITH expected(table_name, column_name) AS (
     ('users', 'preferred_currency'),
     ('users', 'pending_email'),
     ('users', 'last_seen_at'),
+    ('users', 'inactivity_warning_sent_at'),
     ('users', 'preferred_locale'),
     ('users', 'created_at'),
     ('user_change_log', 'id'),

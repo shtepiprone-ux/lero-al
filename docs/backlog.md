@@ -4,13 +4,15 @@
 
 ## Last Session
 
-**2026-05-21 — Task 133 (E.5) — URL-state vs server-state ADR ✅**
+**2026-05-22 — Task 134 (F.1) — Favorites pagination (25/page) ✅**
 
-- ADR-001 written in `docs/state-authority.md`: trade-off analysis of URL→SSR (a) vs React Query/SWR (b), clear recommendation to stay with (a), migration implications for (b) documented.
-- Recommendation: continue URL-state model; revisit only if P75 latency >400ms on prod AND grid is a standalone segment.
-- **Epic E — CLOSED.** All E sub-tasks (E.1/E.4/E.5) completed.
+- Added `getFavoriteListingsPaginated()` (3-step query: ordered IDs → filter IDs → page details).
+- `FAVORITES_PER_PAGE = 25` constant; `page` parsed from URL search params.
+- `FavoritesShell` gains `page`/`perPage` props, renders `ListingsPagination`; pagination total derived from `liveCounts` (stays correct after realtime add/remove).
+- Error state (AlertCircle + retry link) + `loading.tsx` skeleton for the favorites route.
+- 3 new i18n keys (`error_title`, `error_desc`, `error_retry`) in all 4 locale files.
 
-→ [Task 133 session log](sessions/2026-05-21-task-133-e5-url-state-adr.md)
+→ [Task 134 session log](sessions/2026-05-22-task-134-f1-favorites-pagination.md)
 
 ## Pending Action Items
 
@@ -21,6 +23,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
   ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
   ```
 - ⚠️ **Supabase Auth config (Task 122 — Send Email Hook):** do **NOT** disable Supabase "Confirm email" until the Send Email Hook is verified live in production. Disabling earlier opens an auto-confirm security hole.
+- ⚠️ **Commit Task 133 (E.5 ADR):** the ADR + a stray `useListingsUrlFilters.ts` change were left uncommitted; commit on the Windows checkout (see Task 162). E.5 was scoped doc-only, so decide whether the hook change is intended.
+- ⚠️ **Repo line endings:** the working tree shows a repo-wide CRLF↔LF renormalization (≈380 files) and a malformed `.gitattributes` (`"* text=auto"` quoted). Fix `.gitattributes` and reconcile EOL on Windows; do **not** commit the EOL-only noise.
+- ⚠️ **Run `npm install`:** `standardwebhooks` (Task 122 hook fix) is in `package.json` but the lockfile wasn't synced in the sandbox.
 
 ## Carry-over from Sprint 1 / Epic A
 
@@ -29,9 +34,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 133 (Epic E.5 — URL-state vs server-state ADR in `docs/state-authority.md`).
+**Last completed:** Task 134 (Epic F.1 — Favorites pagination, 25/page).
 
-**Next:** Task 134 (F.1 — Favorites pagination, 25/page).
+**Next:** Task 135 (F.4 — API refactor `addFavorite`/`removeFavorite`).
 
 After F.1, continue in order: F.4 → F.2 → F.3, then Epic G → H → I → J → L. Numbered list below.
 
@@ -76,19 +81,22 @@ Active queue. Closed epics (B, C, D, E, K) and Sprints (0–4) live in **Closed 
 
 **Follow-ups / hardening**
 - **Task 157** — Recovery security logging: forensic IP / user-agent + correlation id (D.4 follow-up from the 2026-05-21 Task 121 review). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_157.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_157.md). Builds on `src/modules/auth/actions/recovery.ts`.
+- **Task 160** — C.5 follow-up: real block / suspension enforcement (server-side across all writes; enforce `suspended_until` time-based + auto-lift). From the 2026-05-21 review of Task 126 (blocking was enforced only in createListing; `suspended_until` was cosmetic). Kickoff: [`tasks/Epics/Epic_C_kickoff_prompt_Task_160.md`](../tasks/Epics/Epic_C_kickoff_prompt_Task_160.md).
+- **Task 161** — D.2 follow-up: email-template delete = admin-only + verify/apply the RLS matrix. From the review of Task 123 (delete action allowed moderator while policy is admin-only; service-role bypasses RLS). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_161.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_161.md).
+- **Task 162** — E.5 follow-up: commit the URL-state ADR + resolve the stray `useListingsUrlFilters.ts` change (Task 133 deliverables were left uncommitted). Kickoff: [`tasks/Epics/Epic_E_kickoff_prompt_Task_162.md`](../tasks/Epics/Epic_E_kickoff_prompt_Task_162.md).
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
 ## Active product backlog (epics not yet started)
 
-| Epic | Plan |
-|---|---|
-| Epic F — Favorites Improvements | [`tasks/Epics/Epic_F_Favorites_Improvements.md`](../tasks/Epics/Epic_F_Favorites_Improvements.md) · kickoffs: [`Epic_F_kickoff_prompts.md`](../tasks/Epics/Epic_F_kickoff_prompts.md) |
-| Epic G — Recently Viewed Listings | [`tasks/Epics/Epic_G_Recently_Viewed_Listings.md`](../tasks/Epics/Epic_G_Recently_Viewed_Listings.md) |
-| Epic H — Cloudinary Storage Hygiene | [`tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md`](../tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md) |
-| Epic I — Listing Lifecycle & Status Rules | [`tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md`](../tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md) |
-| Epic J — Popular Locations Management | [`tasks/Epics/Epic_J_Popular_Locations_Management.md`](../tasks/Epics/Epic_J_Popular_Locations_Management.md) |
-| Epic L — Admin Dashboard 2026 | [`tasks/Epics/Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) |
+| Epic | Plan | Kickoff prompts |
+|---|---|---|
+| Epic F — Favorites Improvements | [`Epic_F_Favorites_Improvements.md`](../tasks/Epics/Epic_F_Favorites_Improvements.md) | [`Epic_F_kickoff_prompts.md`](../tasks/Epics/Epic_F_kickoff_prompts.md) |
+| Epic G — Recently Viewed Listings | [`Epic_G_Recently_Viewed_Listings.md`](../tasks/Epics/Epic_G_Recently_Viewed_Listings.md) | [`Epic_G_kickoff_prompts.md`](../tasks/Epics/Epic_G_kickoff_prompts.md) |
+| Epic H — Cloudinary Storage Hygiene | [`Epic_H_Cloudinary_Storage_Hygiene.md`](../tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md) | [`Epic_H_kickoff_prompts.md`](../tasks/Epics/Epic_H_kickoff_prompts.md) |
+| Epic I — Listing Lifecycle & Status Rules | [`Epic_I_Listing_Lifecycle_and_Status_Rules.md`](../tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md) | [`Epic_I_kickoff_prompts.md`](../tasks/Epics/Epic_I_kickoff_prompts.md) |
+| Epic J — Popular Locations Management | [`Epic_J_Popular_Locations_Management.md`](../tasks/Epics/Epic_J_Popular_Locations_Management.md) | [`Epic_J_kickoff_prompts.md`](../tasks/Epics/Epic_J_kickoff_prompts.md) |
+| Epic L — Admin Dashboard 2026 | [`Epic_L_Admin_Dashboard_2026.md`](../tasks/Epics/Epic_L_Admin_Dashboard_2026.md) | [`Epic_L_kickoff_prompts.md`](../tasks/Epics/Epic_L_kickoff_prompts.md) |
 
 ## Closed sprints & epics (historical)
 
@@ -101,7 +109,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 - **Sprint 1 — Bugfix Continuation & Admin Polish** (Tasks 91–102) — CLOSED, see [`sessions/2026-05-19-sprint-1-bugfix-continuation.md`](sessions/2026-05-19-sprint-1-bugfix-continuation.md)
 - **Sprint 2 — Technical Debt Cleanup** (Task 107) — CLOSED, see [`tasks/Sprints/Sprint_2_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)
 - **Sprint 3 — Primitive & Tailwind Debt Burn-down** (Tasks 109–111) — CLOSED, see [`tasks/Sprints/Sprint_3_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_3_—_Summary_CLOSED.md)
-- **Sprint 4 — Auth Phone Validation & Flow Consolidation** (Tasks 158–159) — CLOSED, see [`tasks/Sprints/Sprint_4_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_4_—_Summary_CLOSED.md)
+- **Sprint 4 — Auth Phone Validation & Flow Consolidation** (Tasks 158–159) — CLOSED, see [`tasks/Sprints/Sprint_4_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_4_—_Summary_CLOSED.md). ⚠️ Self-initiated by Sonnet outside the roadmap; **retroactively sanctioned 2026-05-21** after review (process exception — future runs require an approved kickoff before opening sprints/tasks or adding dependencies).
 - **Listing Detail Performance / LCP Epic** (Tasks 72–83) — CLOSED, see Session Archive for per-task logs.
 - **Post-Governance Debt Burn-down Sprint** (Tasks 64–71) — CLOSED.
 - **Future Maintenance Direction Epic** (Tasks 58–63, Phases 1–6) — CLOSED.
@@ -112,6 +120,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic F.1 — Favorites pagination 25/page (paginated query, loading skeleton, error state, 4 locales) | Task 134 | [sessions/2026-05-22-task-134-f1-favorites-pagination.md](sessions/2026-05-22-task-134-f1-favorites-pagination.md) |
 | 2026-05-21 | Task 159 — Sprint 4 — Auth flow consolidation (AuthSheet canonical, legacy LoginForm/RegisterForm deleted) | Task 159 | [sessions/2026-05-21-task-159-auth-flow-consolidation.md](sessions/2026-05-21-task-159-auth-flow-consolidation.md) |
 | 2026-05-21 | Task 158 — Sprint 4 — Country-aware phone validation (libphonenumber-js, shared PhoneField, 25 tests) | Task 158 | [sessions/2026-05-21-task-158-country-aware-phone-validation.md](sessions/2026-05-21-task-158-country-aware-phone-validation.md) |
 | 2026-05-21 | Epic E.5 — URL-state vs server-state ADR (docs/state-authority.md) | Task 133 | [sessions/2026-05-21-task-133-e5-url-state-adr.md](sessions/2026-05-21-task-133-e5-url-state-adr.md) |

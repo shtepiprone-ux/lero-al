@@ -55,7 +55,11 @@ Put this in every executor prompt, and **verify each clause against the diff** o
 - Executes the acceptance criteria **literally**.
 - Updates `docs/backlog.md` and adds a session log under `docs/sessions/`.
 - 0 new lint errors / 0 new warnings; typecheck has no new errors; relevant governance gates PASS.
-- Commits + pushes.
+- Commits + pushes. **Stage with a single `git add -A`** — do NOT emit multi-line `git add` with
+  `^` or backtick continuations. In PowerShell `^` is not a continuation, so the command fails with
+  `fatal: pathspec '^' did not match any files`, stages nothing, and the "commit" silently no-ops
+  (this swallowed Tasks 164 and 165 until re-run). After committing, confirm with `git log -1`
+  (paste the real terminal output, not the command) — and the orchestrator verifies the SHA moved.
 
 ## Review checklist (run on every returned task)
 

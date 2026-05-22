@@ -4,6 +4,22 @@
 Real Estate Marketplace for the Albanian market.
 Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 
+## AI Operating Model (READ FIRST)
+
+There are two AI layers, with different jobs:
+
+- **Opus 4.7 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready
+  copy-paste prompt for the executor, then reviews the **actual diff** (not the executor's report),
+  and either approves or opens a follow-up task. **Does not write production code** — only reads it
+  to verify. Full rules: `docs/orchestrator-role.md`.
+- **Sonnet 4.6 = executor.** Writes the code per a literal, scoped prompt. Its rules live across
+  `/docs/` (entry: `docs/ai-behavior.md`).
+
+Every executor prompt carries a hard contract (no scope change, no self-invented architecture,
+literal AC, updates `docs/backlog.md` + `docs/sessions/`), which the orchestrator verifies against
+the diff — checking missing locales (`sq`/`en`/`uk`/`it`), breakpoints, and governance violations.
+See `docs/orchestrator-role.md`.
+
 ## Tasks Directory
 
 All task, epic, and sprint files MUST live inside `/tasks` (`/tasks/Epics/`, `/tasks/Sprints/`).
@@ -25,6 +41,7 @@ All project rules are split into focused files inside `/docs/`.
 - `docs/domain-rules.md` — business/domain-specific rules for listings, marketplace behavior, roles, and core platform logic.
 - `docs/env.md` — required environment variables, secret handling, and deployment configuration values.
 - `docs/integrations.md` — external services setup and integration rules (Supabase, Cloudinary, Resend, Sentry, etc.).
+- `docs/orchestrator-role.md` — **Opus 4.7 orchestrator/reviewer** operating model: plan→prompt→review-diff loop, Sonnet hard contract, review checklist (distinct from the Sonnet executor rules).
 - `docs/qa-rules.md` — QA process, validation, error handling, pre-commit checks, and manual testing checklist.
 - `docs/rls-rules.md` — Supabase RLS rules, permission boundaries, auth/session safety, and security constraints.
 - `docs/ui-rules.md` — UI Gate (no hardcode + component-first + Combobox-only) + dom.ria.com reference.

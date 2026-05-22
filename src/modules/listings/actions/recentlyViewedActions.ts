@@ -5,9 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { routing } from '@/i18n/routing'
-
-export const RECENTLY_VIEWED_CAP = 25
-export const RECENTLY_VIEWED_COOKIE = 'rv_listings'
+import { RECENTLY_VIEWED_CAP, RECENTLY_VIEWED_COOKIE } from '../lib/recentlyViewedConstants'
 
 /**
  * Record a listing view for the current visitor.

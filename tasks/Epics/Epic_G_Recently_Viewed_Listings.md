@@ -1,7 +1,14 @@
 # Epic G — Recently Viewed Listings
 
-**Status:** OPEN
+**Status:** REOPENED (2026-05-22 orchestrator review — delivery rejected)
 **Opened:** 2026-05-19
+**Closed:** 2026-05-22 → **reverted**
+
+> Orchestrator review (2026-05-22) rejected the "CLOSED" delivery: committed HEAD does not build
+> (G.2 query file never committed; `CabinetShell` receives an undeclared prop so the profile
+> section never renders) and the working tree was corrupted (≈18 files truncated).
+> Recovery + correct closure tracked in `Epic_G_kickoff_prompt_Task_163.md` (P0) and
+> `Epic_G_kickoff_prompt_Task_164.md` (P1). Re-close only after Task 164 passes its AC.
 
 ## Goal
 

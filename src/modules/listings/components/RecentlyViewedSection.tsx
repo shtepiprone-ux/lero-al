@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { getTranslations } from 'next-intl/server'
 import { getUser } from '@/lib/auth/server'
-import { RECENTLY_VIEWED_COOKIE } from '../actions/recentlyViewedActions'
+import { RECENTLY_VIEWED_COOKIE } from '../lib/recentlyViewedConstants'
 import { getRecentlyViewedForUser, getRecentlyViewedForGuest } from '../lib/recentlyViewedQueries'
 import { ListingCard } from './ListingCard'
 import { ClearRecentlyViewedButton } from './ClearRecentlyViewedButton'

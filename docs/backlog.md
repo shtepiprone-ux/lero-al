@@ -4,23 +4,25 @@
 
 ## Last Session
 
-**2026-05-22 — Task 140 (G.3) — Clear recently viewed history ✅ — Epic G CLOSED**
+**2026-05-22 — Task 163 (P0) — Epic G recovery — working tree + build restored ✅**
 
-- `clearRecentlyViewed()` server action: auth → DELETE all user rows + `revalidatePath`; guest → reset cookie to `[]`.
-- `ClearRecentlyViewedButton` client component: canonical `Dialog` confirmation + `sonner` toast + `router.refresh()`.
-- `RecentlyViewedSection`: `showEmptyState` prop added; clear button in header; profile shows empty state after clearing.
-- 6 i18n keys per locale (sq/en/uk/it). **Epic G — CLOSED.**
+- Working tree confirmed intact (all listed files match HEAD or have correct G.2 wiring).
+- G.2 wiring committed: `recentlyViewedQueries.ts` (untracked → staged), `CabinetShell` + `ProfileTab` + listing detail page wired.
+- typecheck 0 errors; governance:localization / ssr / components all PASS.
+- **Epic G — REOPENED** (delivery rejected by orchestrator review); closure pending Task 164.
 
-→ [Task 140 session log](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md)
+→ [Task 163 session log](sessions/2026-05-22-task-163-epic-g-recovery.md)
 
 ## Last-but-one Session
 
-**2026-05-22 — Task 139 (G.2) — Recently viewed UI block ✅**
+**2026-05-22 — Tasks 138–140 (Epic G.1/G.2/G.3) — delivery (under orchestrator review)**
 
-- `RecentlyViewedSection` Server Component: auth → DB query, guest → cookie — SSR-first, no hydration flicker.
-- Listing detail (Suspense) + cabinet profile (RSC prop); mobile scroll + sm/md/lg grid; 2 i18n keys × 4 locales.
+- G.1: `recently_viewed` table+RLS+RPC SQL, `recordListingView` action, `rv_listings` cookie for guests.
+- G.2: `RecentlyViewedSection` Server Component, listing detail + profile integration; 2 i18n keys × 4 locales.
+- G.3: `ClearRecentlyViewedButton`, `clearRecentlyViewed` action, 6 i18n keys × 4 locales.
+- Status: **REOPENED** — orchestrator rejected; recovery in Task 163, closure in Task 164.
 
-→ [Task 139 session log](sessions/2026-05-22-task-139-g2-recently-viewed-ui.md)
+→ [Task 140 session log](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md)
 
 ## Pending Action Items
 
@@ -36,17 +38,15 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 140 (Epic G.3 — Clear history). **Epic G — CLOSED.**
+**Last completed:** Task 163 (Epic G recovery — P0). **Epic G — REOPENED** (pending Task 164).
 
-**Next:** Task 141 (H.1 — Cloudinary user-based folder structure).
-
-Continue in order: Epic G → H → I → J → L. Numbered list below.
+**Next:** Task 164 (P1 — Epic G correctness + closure: clear-button scope fix, DB migration, breakpoint screenshots, re-close).
 
 ## Task roadmap — numbered
 
 Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Closed sprints & epics**. Epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L. Numbers are global — never reused; if priorities change, renumber forward from the change point.
 
-~~**Epic G — Recently Viewed Listings**~~ — **CLOSED** (Tasks 138–140)
+**Epic G — Recently Viewed Listings** — **REOPENED** (Tasks 138–140 delivered; Tasks 163–164 for recovery + closure)
 
 **Epic H — Cloudinary Storage Hygiene** (H.6 safety audit before any cleanup)
 - **Task 141** — H.1 User-based folder structure.

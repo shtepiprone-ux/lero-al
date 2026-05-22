@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useTransition, useCallback } from 'react'
+import { useState, useMemo, useTransition, useCallback, type ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
 import { CheckCircle2, AlertCircle, Loader2, Trash2, AlertTriangle } from 'lucide-react'
@@ -34,6 +34,7 @@ interface Props {
   regions: RegionOption[]
   email?: string | null
   onAvatarChange?: (url: string | null) => void
+  recentlyViewed?: ReactNode
 }
 
 // ── Currency combobox sub-component ──────────────────────────────────────────
@@ -79,7 +80,7 @@ function CurrencySelector({ value, onChange, labels, fieldLabel }: {
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function ProfileTab({ profile, locale, cities, regions, email, onAvatarChange }: Props) {
+export function ProfileTab({ profile, locale, cities, regions, email, onAvatarChange, recentlyViewed }: Props) {
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
   const router = useRouter()
@@ -403,6 +404,13 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
           </Button>
         </div>
       </div>
+
+      {/* ── Recently viewed ────────────────────────────────────────────────── */}
+      {recentlyViewed && (
+        <div className="flex flex-col gap-4">
+          {recentlyViewed}
+        </div>
+      )}
 
       {/* ── Danger zone ────────────────────────────────────────────────────── */}
       <div className="bg-destructive/5 border border-destructive/20 rounded-2xl p-6 flex flex-col gap-3">

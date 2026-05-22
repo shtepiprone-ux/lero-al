@@ -19,6 +19,7 @@ import { ListingStatusBanner } from '@/modules/listings/components/ListingStatus
 import { ListingMobileCTA } from '@/modules/listings/components/ListingMobileCTA'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
 import { RecentlyViewedTracker } from '@/modules/listings/components/RecentlyViewedTracker'
+import { RecentlyViewedSection, RecentlyViewedSkeleton } from '@/modules/listings/components/RecentlyViewedSection'
 import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
 import { ListingDescriptionTranslator } from '@/modules/listings/components/ListingDescriptionTranslator'
 import { formatPrice } from '@/lib/formatters'
@@ -460,6 +461,11 @@ export default async function ListingPage({ params }: Props) {
                 {t('report_listing')}
               </button>
             </div>
+
+            {/* Recently viewed — streamed below the fold, excluded the current listing */}
+            <Suspense fallback={<RecentlyViewedSkeleton />}>
+              <RecentlyViewedSection currentListingId={listing.id} />
+            </Suspense>
 
             {/* Similar listings — Server Component streamed below the fold.
                 Suspense boundary lets React flush the above-fold section (gallery,

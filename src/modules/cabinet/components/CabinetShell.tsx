@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { usePresence } from '@/hooks/usePresence'
@@ -34,9 +34,10 @@ interface Props {
   regions: RegionOption[]
   userId: string
   email?: string | null
+  profileRecentlyViewed?: ReactNode
 }
 
-export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId, email }: Props) {
+export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId, email, profileRecentlyViewed }: Props) {
   const t = useTranslations('cabinet')
   const router = useRouter()
   const pathname = usePathname()
@@ -131,7 +132,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         </div>
 
         {/* Tab content */}
-        {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} onAvatarChange={setAvatarUrl} />}
+        {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} onAvatarChange={setAvatarUrl} recentlyViewed={profileRecentlyViewed} />}
         {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} />}
         {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} />}
 

@@ -49,7 +49,9 @@ Cloudinary root
 **Implementation status:**
 - Avatars: `<user_id>/avatars/<file_id>` ✅ (H.2 / Task 142)
 - Listing images: create=`<user_id>/listings/<file_id>`, edit=`<user_id>/listings/<listing_id>/<file_id>` ✅ (H.4 / Task 143)
-- Company logos: `companies/<file_id>` — will move to `companies/<company_id>/logo` in H.7
+- Company logos: `companies/<company_id>/<file_id>` ✅ (H.7 / Task 147)
+- Marketing assets: `marketing/<slug>/...` — placeholder (no uploader yet)
+- Popular locations: `popular_locations/<id>/...` — placeholder (Epic J / Task 151)
 
 **DB reference policy:**
 

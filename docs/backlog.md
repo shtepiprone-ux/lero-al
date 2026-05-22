@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Task 147 (H.7) — Other photos folder structure ✅ — Epic H CLOSED**
+
+- `upload-company-logo`: `'companies'` → `` `companies/${companyId}` `` (one line).
+- `docs/integrations.md` folder tree complete: user/avatar/listing/company all ✅; marketing+popular_locations placeholders.
+- **Epic H — CLOSED** (Tasks 141–147 all done).
+
+→ [Task 147 session log](sessions/2026-05-22-task-147-h7-other-photos-folder.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 146 (H.5) — Listing image replacement cleanup ✅**
 
 - `updateListing`: fetch old URLs → bulk delete/insert → orphan diff → `deleteAsset` (parallel, non-fatal).
@@ -121,9 +131,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 146 (H.5 — Listing image replacement cleanup).
+**Last completed:** Task 147 (H.7 — Other photos folder). **Epic H — CLOSED.**
 
-**Next:** Task 147 (H.7 — Company logo + other photos folder structure).
+**Next:** Task 148 (I.1 — Fix "New" badge logic).
 
 ## Task roadmap — numbered
 
@@ -131,14 +141,7 @@ Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Clos
 
 ~~**Epic G — Recently Viewed Listings**~~ — **CLOSED** (Tasks 138–140, 163–164; ⚠️ responsive screenshots deferred)
 
-**Epic H — Cloudinary Storage Hygiene** (H.6 safety audit before any cleanup)
-- **Task 141** — H.1 User-based folder structure.
-- **Task 142** — H.2 Avatar folder structure.
-- **Task 143** — H.4 Listing image folder structure.
-- **Task 144** — H.6 Safety audit / dry-run (blocks cleanup tasks).
-- **Task 145** — H.3 Avatar replacement cleanup.
-- **Task 146** — H.5 Listing image replacement cleanup.
-- **Task 147** — H.7 Other photos (company logos, marketing) folder structure.
+~~**Epic H — Cloudinary Storage Hygiene**~~ — **CLOSED** (Tasks 141–147)
 
 **Epic I — Listing Lifecycle & Status Rules**
 - **Task 148** — I.1 Fix "New" badge logic (created_at only).
@@ -196,6 +199,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic H.7 — Company logo folder companies/<id>/; folder tree complete; Epic H CLOSED | Task 147 | [sessions/2026-05-22-task-147-h7-other-photos-folder.md](sessions/2026-05-22-task-147-h7-other-photos-folder.md) |
 | 2026-05-22 | Epic H.5 — Listing image cleanup: orphan diff in updateListing + bulk cleanup in deleteListing | Task 146 | [sessions/2026-05-22-task-146-h5-listing-image-cleanup.md](sessions/2026-05-22-task-146-h5-listing-image-cleanup.md) |
 | 2026-05-22 | Epic H.3 — Avatar cleanup: read old URL → upload → DB update → deleteAsset(old) | Task 145 | [sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md](sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md) |
 | 2026-05-22 | Epic H.6 — deleteAsset safety wrapper: reference check, dry-run, structured log, 5 tests | Task 144 | [sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md](sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md) |

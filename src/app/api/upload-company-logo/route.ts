@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
   // Upload to Cloudinary
   let cloudUrl: string
   try {
-    const result = await uploadToCloudinary(bytes, file.type, 'companies')
+    const result = await uploadToCloudinary(bytes, file.type, `companies/${companyId}`)
     // Dimension validation (≤ 256×256)
     if (result.width && result.height && (result.width > 256 || result.height > 256)) {
       return NextResponse.json({ error: 'invalid_dimensions' }, { status: 400 })

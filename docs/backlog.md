@@ -4,6 +4,17 @@
 
 ## Last Session
 
+**2026-05-22 — Task 166 — Seed DB-driven email templates ✅ (SQL pending Supabase apply)**
+
+- `reporter_notification` confirmed code-first (React Email, no `sendTemplatedEmail` call) — not seeded.
+- `saved_search_alert` × 4 locales + `price_change_alert` × 4 locales — idempotent seed SQL in session log.
+- No code changes; all governance gates unchanged.
+- Seed SQL applied ✅ (2026-05-22) — `/admin/email-templates` lists both groups; cron emails functional.
+
+→ [Task 166 session log](sessions/2026-05-22-task-166-seed-email-templates.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 165 — Responsive screenshot evidence for recently-viewed ✅**
 
 - `RecentlyViewedGrid` presentational component split out of `RecentlyViewedSection` (no auth/DB/server-action deps → Storybook-safe).
@@ -48,7 +59,7 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 165 (responsive screenshot story for recently-viewed). Screenshot capture pending (see session log).
+**Last completed:** Task 166 (seed email templates) ✅ — SQL applied, cron emails functional.
 
 **Next:** Task 141 (H.1 — Cloudinary user-based folder structure).
 
@@ -123,6 +134,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic D — Task 166 — Seed email_templates: saved_search_alert + price_change_alert × 4 locales (SQL only) | Task 166 | [sessions/2026-05-22-task-166-seed-email-templates.md](sessions/2026-05-22-task-166-seed-email-templates.md) |
 | 2026-05-22 | Epic G — Task 165 — RecentlyViewedGrid split + Storybook story + STORY_TARGETS for 7 breakpoints | Task 165 | [sessions/2026-05-22-task-165-recently-viewed-screenshots.md](sessions/2026-05-22-task-165-recently-viewed-screenshots.md) |
 | 2026-05-22 | Epic G — Task 164 — correctness closure: showClear scope fix, DB migration confirmed, locale parity verified | Task 164 | [sessions/2026-05-22-task-164-epic-g-closure.md](sessions/2026-05-22-task-164-epic-g-closure.md) |
 | 2026-05-22 | Epic G — Task 163 — P0 recovery: G.2 wiring committed, recentlyViewedQueries.ts staged, build restored | Task 163 | [sessions/2026-05-22-task-163-epic-g-recovery.md](sessions/2026-05-22-task-163-epic-g-recovery.md) |

@@ -585,7 +585,8 @@
       "item_property_types": "Llojet e pronës",
       "item_currency": "Valuta",
       "item_companies": "Kompanitë",
-      "item_email_templates": "Shablonet e emailit"
+      "item_email_templates": "Shablonet e emailit",
+      "item_popular_locations": "Vendndodhjet Populare"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -675,7 +676,34 @@
       "reports_title": "Raportet",
       "reports_subtitle": "{count} raporte",
       "email_templates_title": "Shablonet e emailit",
-      "email_templates_subtitle": "{count} shablone"
+      "email_templates_subtitle": "{count} shablone",
+      "popular_locations_title": "Vendndodhjet Populare",
+      "popular_locations_subtitle": "{count} vendndodhje të shfaqura"
+    },
+    "popular_locations": {
+      "add": "Shto Vendndodhje",
+      "edit_dialog_title": "Ndrysho Vendndodhjen",
+      "add_dialog_title": "Shto Vendndodhje Populare",
+      "pick_location": "Zgjidh një qytet",
+      "pick_location_required": "Ju lutem zgjidhni një qytet",
+      "display_order": "Rendi i Shfaqjes",
+      "photo": "Foto (opsionale)",
+      "upload_photo": "Ngarko foto",
+      "photo_invalid_type": "Lejohen vetëm JPG, PNG, WEBP",
+      "photo_too_large": "Foto duhet të jetë nën 5 MB",
+      "photo_upload_failed": "Ngarkimi i fotos dështoi — vendndodhja u ruajt pa foto",
+      "remove": "Hiq nga të preferuarat",
+      "remove_confirm_title": "Hiq vendndodhjen?",
+      "remove_confirm_body": "Kjo do të fshehë vendndodhjen nga seksioni Vendndodhjet Populare.",
+      "confirm_remove": "Hiq",
+      "saved": "Vendndodhja u ruajt",
+      "removed": "Vendndodhja u hoq",
+      "no_locations": "Ende nuk ka vendndodhje të shfaqura. Shto një qytet për të filluar.",
+      "col_name": "Qyteti",
+      "col_order": "Rendi",
+      "col_photo": "Foto",
+      "error_save_failed": "Ruajtja e vendndodhjes dështoi",
+      "error_remove_failed": "Heqja e vendndodhjes dështoi"
     },
     "reports": {
       "filter_all": "Të gjitha",

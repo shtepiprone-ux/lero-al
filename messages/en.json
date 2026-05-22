@@ -585,7 +585,8 @@
       "item_property_types": "Property Types",
       "item_currency": "Currency",
       "item_companies": "Companies",
-      "item_email_templates": "Email templates"
+      "item_email_templates": "Email templates",
+      "item_popular_locations": "Popular Locations"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -675,7 +676,34 @@
       "reports_title": "Reports",
       "reports_subtitle": "{count} reports",
       "email_templates_title": "Email templates",
-      "email_templates_subtitle": "{count} templates"
+      "email_templates_subtitle": "{count} templates",
+      "popular_locations_title": "Popular Locations",
+      "popular_locations_subtitle": "{count} featured locations"
+    },
+    "popular_locations": {
+      "add": "Add Location",
+      "edit_dialog_title": "Edit Popular Location",
+      "add_dialog_title": "Add Popular Location",
+      "pick_location": "Select a city",
+      "pick_location_required": "Please select a city",
+      "display_order": "Display Order",
+      "photo": "Photo (optional)",
+      "upload_photo": "Upload photo",
+      "photo_invalid_type": "Only JPG, PNG, WEBP allowed",
+      "photo_too_large": "Photo must be under 5 MB",
+      "photo_upload_failed": "Photo upload failed — location saved without photo",
+      "remove": "Remove from featured",
+      "remove_confirm_title": "Remove this location?",
+      "remove_confirm_body": "This will hide the location from the Popular Locations section.",
+      "confirm_remove": "Remove",
+      "saved": "Location saved",
+      "removed": "Location removed",
+      "no_locations": "No featured locations yet. Add a city to get started.",
+      "col_name": "City",
+      "col_order": "Order",
+      "col_photo": "Photo",
+      "error_save_failed": "Failed to save location",
+      "error_remove_failed": "Failed to remove location"
     },
     "reports": {
       "filter_all": "All",

@@ -585,7 +585,8 @@
       "item_property_types": "Tipi di proprietà",
       "item_currency": "Valuta",
       "item_companies": "Aziende",
-      "item_email_templates": "Template email"
+      "item_email_templates": "Template email",
+      "item_popular_locations": "Luoghi Popolari"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -675,7 +676,34 @@
       "reports_title": "Segnalazioni",
       "reports_subtitle": "{count} segnalazioni",
       "email_templates_title": "Template email",
-      "email_templates_subtitle": "{count} template"
+      "email_templates_subtitle": "{count} template",
+      "popular_locations_title": "Luoghi Popolari",
+      "popular_locations_subtitle": "{count} luoghi in evidenza"
+    },
+    "popular_locations": {
+      "add": "Aggiungi Luogo",
+      "edit_dialog_title": "Modifica Luogo Popolare",
+      "add_dialog_title": "Aggiungi Luogo Popolare",
+      "pick_location": "Seleziona una città",
+      "pick_location_required": "Seleziona una città",
+      "display_order": "Ordine di visualizzazione",
+      "photo": "Foto (opzionale)",
+      "upload_photo": "Carica foto",
+      "photo_invalid_type": "Sono ammessi solo JPG, PNG, WEBP",
+      "photo_too_large": "La foto deve essere inferiore a 5 MB",
+      "photo_upload_failed": "Caricamento foto fallito — luogo salvato senza foto",
+      "remove": "Rimuovi dai popolari",
+      "remove_confirm_title": "Rimuovere questo luogo?",
+      "remove_confirm_body": "Questo nasconderà il luogo dalla sezione Luoghi Popolari.",
+      "confirm_remove": "Rimuovi",
+      "saved": "Luogo salvato",
+      "removed": "Luogo rimosso",
+      "no_locations": "Nessun luogo in evidenza. Aggiungi una città per iniziare.",
+      "col_name": "Città",
+      "col_order": "Ordine",
+      "col_photo": "Foto",
+      "error_save_failed": "Salvataggio del luogo fallito",
+      "error_remove_failed": "Rimozione del luogo fallita"
     },
     "reports": {
       "filter_all": "Tutte",

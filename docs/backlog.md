@@ -4,9 +4,20 @@
 
 ## Last Session
 
+**2026-05-22 — Task 151 (J.1) — Popular locations schema + admin CRUD ✅**
+
+- No new DB table — uses existing `locations.is_featured` / `display_order` / `image_url`.
+- `AdminPopularLocationsManager`: §11 canonical (row click → Dialog, no Actions column).
+- Photo upload API → `popular_locations/<id>/...` (H.7); `deleteAsset` now checks `locations.image_url`.
+- 26 i18n keys × 4 locales; sidebar + mobile header entries added.
+
+→ [Task 151 session log](sessions/2026-05-22-task-151-j1-popular-locations-admin.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 150 (I.3) — Helper API evolution trigger ✅ — Epic I CLOSED**
 
-- Evolution trigger documented in `domain-rules.md`; placeholder in backlog §Follow-ups. No code changes.
+- Evolution trigger documented in `domain-rules.md`; placeholder in backlog §Follow-ups.
 - **Epic I — CLOSED** (Tasks 148–150 all done).
 
 → [Task 150 session log](sessions/2026-05-22-task-150-i3-helper-api-evolution.md)
@@ -159,9 +170,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 150 (I.3 — evolution trigger docs). **Epic I — CLOSED.**
+**Last completed:** Task 151 (J.1 — Popular locations admin CRUD).
 
-**Next:** Task 151 (J.1 — Schema + admin CRUD for popular locations).
+**Next:** Task 152 (J.2 — Render "Popular Locations" section on public site).
 
 ## Task roadmap — numbered
 
@@ -230,6 +241,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic J.1 — Popular locations admin CRUD (existing locations table, §11 pattern, photo upload, 4 locales) | Task 151 | [sessions/2026-05-22-task-151-j1-popular-locations-admin.md](sessions/2026-05-22-task-151-j1-popular-locations-admin.md) |
 | 2026-05-22 | Epic I.3 — Helper API evolution trigger documented; Epic I CLOSED | Task 150 | [sessions/2026-05-22-task-150-i3-helper-api-evolution.md](sessions/2026-05-22-task-150-i3-helper-api-evolution.md) |
 | 2026-05-22 | Epic I.2 — Status helpers: grep verified (domain complete); helpers table + evolution trigger in domain-rules.md | Task 149 | [sessions/2026-05-22-task-149-i2-status-helpers.md](sessions/2026-05-22-task-149-i2-status-helpers.md) |
 | 2026-05-22 | Epic I.1 — "New" badge: hardcoded 7 → LISTING_NEW_DAYS; domain-rules.md rule added | Task 148 | [sessions/2026-05-22-task-148-i1-new-badge-fix.md](sessions/2026-05-22-task-148-i1-new-badge-fix.md) |

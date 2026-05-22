@@ -585,7 +585,8 @@
       "item_property_types": "Типи нерухомості",
       "item_currency": "Валюта",
       "item_companies": "Компанії",
-      "item_email_templates": "Email шаблони"
+      "item_email_templates": "Email шаблони",
+      "item_popular_locations": "Популярні локації"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -675,7 +676,34 @@
       "reports_title": "Скарги",
       "reports_subtitle": "{count} скарг",
       "email_templates_title": "Email шаблони",
-      "email_templates_subtitle": "{count} шаблонів"
+      "email_templates_subtitle": "{count} шаблонів",
+      "popular_locations_title": "Популярні локації",
+      "popular_locations_subtitle": "{count} вибраних локацій"
+    },
+    "popular_locations": {
+      "add": "Додати локацію",
+      "edit_dialog_title": "Редагувати локацію",
+      "add_dialog_title": "Додати популярну локацію",
+      "pick_location": "Виберіть місто",
+      "pick_location_required": "Будь ласка, виберіть місто",
+      "display_order": "Порядок відображення",
+      "photo": "Фото (необов'язково)",
+      "upload_photo": "Завантажити фото",
+      "photo_invalid_type": "Дозволені лише JPG, PNG, WEBP",
+      "photo_too_large": "Фото має бути менше 5 МБ",
+      "photo_upload_failed": "Помилка завантаження фото — локацію збережено без фото",
+      "remove": "Видалити з вибраних",
+      "remove_confirm_title": "Видалити локацію?",
+      "remove_confirm_body": "Це приховає локацію з розділу Популярних локацій.",
+      "confirm_remove": "Видалити",
+      "saved": "Локацію збережено",
+      "removed": "Локацію видалено",
+      "no_locations": "Поки немає вибраних локацій. Додайте місто, щоб розпочати.",
+      "col_name": "Місто",
+      "col_order": "Порядок",
+      "col_photo": "Фото",
+      "error_save_failed": "Не вдалося зберегти локацію",
+      "error_remove_failed": "Не вдалося видалити локацію"
     },
     "reports": {
       "filter_all": "Всі",

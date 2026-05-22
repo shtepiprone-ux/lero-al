@@ -96,8 +96,13 @@ async function checkIsReferenced(publicId: string): Promise<{ referenced: boolea
     .limit(1)
   if (byLogoUrl?.length) tables.push('companies.logo_url')
 
-  // popular_locations.photo — placeholder for Epic J; table added in J.1
-  // TODO(Epic J): add check once popular_locations table exists
+  // popular location photos are stored in locations.image_url (J.1 uses existing locations table)
+  const { data: byLocationImg } = await db
+    .from('locations')
+    .select('id')
+    .ilike('image_url', urlPattern)
+    .limit(1)
+  if (byLocationImg?.length) tables.push('locations.image_url')
 
   return { referenced: tables.length > 0, tables }
 }

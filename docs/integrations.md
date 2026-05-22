@@ -48,7 +48,7 @@ Cloudinary root
 
 **Implementation status:**
 - Avatars: `<user_id>/avatars/<file_id>` ✅ (H.2 / Task 142)
-- Listing images: `listings/<file_id>` — will move to `<user_id>/listings/<listing_id>/<file_id>` in H.4
+- Listing images: create=`<user_id>/listings/<file_id>`, edit=`<user_id>/listings/<listing_id>/<file_id>` ✅ (H.4 / Task 143)
 - Company logos: `companies/<file_id>` — will move to `companies/<company_id>/logo` in H.7
 
 **DB reference policy:**
@@ -86,6 +86,41 @@ Step 3 — Verify:
 - Run H.6 reference-check: no DB row points to a non-existent asset.
 
 **Blocked on:** H.6 safety audit + dry-run framework must land first.
+
+### Cloudinary Deletion Rules (Epic H.6 / Task 144)
+
+**deleteAsset is the ONLY allowed way to delete Cloudinary assets.**
+Direct calls to the Cloudinary `/destroy` API are forbidden outside `src/lib/cloudinaryDelete.ts`.
+Enforce via grep: `git grep "image/destroy" src/` must return only `cloudinaryDelete.ts`.
+
+```typescript
+import { deleteAsset } from '@/lib/cloudinaryDelete'
+
+// H.3 avatar replacement cleanup:
+await deleteAsset(oldPublicId, { reason: 'avatar_replaced' })
+
+// H.5 listing image removal:
+await deleteAsset(publicId, { reason: 'listing_image_removed' })
+```
+
+**Safety guarantees:**
+1. **Reference check** — queries all DB tables (`listing_images.public_id`, `listing_images.url`,
+   `users.avatar_url`, `companies.logo_url`; `popular_locations.photo` added in Epic J).
+   If the asset is referenced anywhere, the delete is skipped and logged.
+2. **Dry-run mode** — default everywhere. Real deletes require `CLOUDINARY_DELETE_MODE=enabled` in env.
+3. **Structured log** — every call produces a `console.info('[deleteAsset]', {...})` entry with
+   fields: `{ publicId, reason, dryRun, outcome, referencedIn?, error? }`.
+   Outcomes: `SKIP_REFERENCED` | `DRY_RUN` | `DELETED` | `ERROR`.
+
+**DB reference check tables:**
+
+| Table | Column | Check type |
+|---|---|---|
+| `listing_images` | `public_id` | exact match (`.eq`) |
+| `listing_images` | `url` | ILIKE `%publicId%` |
+| `users` | `avatar_url` | ILIKE `%publicId%` |
+| `companies` | `logo_url` | ILIKE `%publicId%` |
+| `popular_locations` | `photo` | ILIKE — added in Epic J |
 
 ### Cloudinary Avatar Pipeline
 - Avatars uploaded via `uploadUserAvatar` (admin) or `uploadCabinetAvatar` (cabinet) Server Actions.

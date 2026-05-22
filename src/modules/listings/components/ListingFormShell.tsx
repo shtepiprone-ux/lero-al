@@ -37,6 +37,7 @@ const INITIAL: FormValues = {
 interface BaseProps {
   locale: string
   uploadPreset: string
+  uploadFolder: string
   locations: LocationOption[]
   mode: ListingFormMode
 }
@@ -72,7 +73,7 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export function ListingFormShell(props: Props) {
-  const { uploadPreset, locations, mode } = props
+  const { uploadPreset, uploadFolder, locations, mode } = props
   const listingId  = isEditMode(mode) ? (props as EditModeProps).listingId  : undefined
   const initialValues = isEditMode(mode) ? (props as EditModeProps).initialValues : undefined
 
@@ -415,7 +416,7 @@ export function ListingFormShell(props: Props) {
         {/* ── Section 3: Photos ── */}
         <SectionCard>
           <SectionTitle>{t('section_photos')}</SectionTitle>
-          <ImageUpload images={data.images} onChange={imgs => patch({ images: imgs })} uploadPreset={uploadPreset} />
+          <ImageUpload images={data.images} onChange={imgs => patch({ images: imgs })} uploadPreset={uploadPreset} uploadFolder={uploadFolder} />
           {errors.images && <p className="mt-3 text-sm text-destructive text-center">{errors.images}</p>}
         </SectionCard>
 

@@ -20,10 +20,13 @@ export default async function CreateListingPage({ params }: Props) {
   if (!user) redirect(`/${locale}/auth/login`)
 
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? ''
+  // No listing_id yet in create mode — images are uploaded before the listing is saved.
+  // Use `<userId>/listings` as an intermediate user-scoped path; listing_id level is added in edit mode.
+  const uploadFolder = `${user.id}/listings`
 
   return (
     <div className="min-h-screen bg-muted/30">
-      <ListingFormLoader locale={locale} uploadPreset={uploadPreset} mode="create" />
+      <ListingFormLoader locale={locale} uploadPreset={uploadPreset} uploadFolder={uploadFolder} mode="create" />
     </div>
   )
 }

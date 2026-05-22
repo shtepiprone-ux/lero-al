@@ -9,10 +9,11 @@ interface Props {
   data: FormValues
   onChange: (patch: Partial<FormValues>) => void
   uploadPreset: string
+  uploadFolder: string
   error?: string
 }
 
-export function StepPhotos({ data, onChange, uploadPreset, error }: Props) {
+export function StepPhotos({ data, onChange, uploadPreset, uploadFolder, error }: Props) {
   const t = useTranslations('listing')
 
   return (
@@ -21,6 +22,7 @@ export function StepPhotos({ data, onChange, uploadPreset, error }: Props) {
         images={data.images}
         onChange={(images: ListingImage[]) => onChange({ images })}
         uploadPreset={uploadPreset}
+        uploadFolder={uploadFolder}
       />
       {error && (
         <p className="text-sm text-destructive text-center">{t('photos_required')}</p>

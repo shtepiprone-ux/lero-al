@@ -24,11 +24,14 @@ interface Props {
   images: ListingImage[]
   onChange: (images: ListingImage[]) => void
   uploadPreset: string
+  /** Cloudinary folder path for new uploads. See docs/integrations.md §Cloudinary folder tree.
+   *  Create: `<userId>/listings`  |  Edit: `<userId>/listings/<listingId>` */
+  uploadFolder: string
   maxImages?: number
   disabled?: boolean
 }
 
-export function ImageUpload({ images, onChange, uploadPreset, maxImages = MAX_IMAGES, disabled }: Props) {
+export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxImages = MAX_IMAGES, disabled }: Props) {
   const t = useTranslations('listing')
 
   const canUploadMore = images.length < maxImages
@@ -180,7 +183,7 @@ export function ImageUpload({ images, onChange, uploadPreset, maxImages = MAX_IM
             clientAllowedFormats: ['jpg', 'jpeg', 'png', 'webp'],
             maxFileSize: 10_000_000, // 10 MB
             cropping: false,
-            folder: 'listings',
+            folder: uploadFolder,
           }}
           onSuccess={handleUpload}
         >

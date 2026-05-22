@@ -4,6 +4,27 @@
 
 ## Last Session
 
+**2026-05-22 — Task 144 (H.6) — Cloudinary safety audit / dry-run framework ✅**
+
+- `deleteAsset(publicId, { reason })` — single wrapper, reference check + dry-run gate + structured log.
+- Reference check: `listing_images.public_id` (exact) + 3 URL ILIKE checks; `popular_locations` TODO for Epic J.
+- `CLOUDINARY_DELETE_MODE=enabled` needed for real deletes; default is dry-run.
+- 5/5 tests pass (Supabase + fetch mocked via vi.mock). Unblocks H.3 + H.5.
+
+→ [Task 144 session log](sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md)
+
+## Last-but-one Session
+
+**2026-05-22 — Task 143 (H.4) — Listing image folder structure ✅**
+
+- `uploadFolder` prop threaded: create page → `ListingFormLoader` → `ListingFormShell` → `ImageUpload` → `CldUploadWidget`.
+- Create: `<user_id>/listings/` (no listing_id at upload time); edit: `<user_id>/listings/<listing_id>/`.
+- `StepPhotos.tsx` (dead code) updated for typecheck compliance.
+
+→ [Task 143 session log](sessions/2026-05-22-task-143-h4-listing-image-folder.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 142 (H.2) — Avatar folder structure ✅**
 
 - `upload-avatar` route: `'avatars'` → `` `${uploadForUserId}/avatars` `` — one line.
@@ -81,9 +102,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 142 (H.2 — Avatar path `<user_id>/avatars/`).
+**Last completed:** Task 144 (H.6 — deleteAsset safety wrapper; unblocks H.3 + H.5).
 
-**Next:** Task 143 (H.4 — Listing image folder structure `<user_id>/listings/<listing_id>/`).
+**Next:** Task 145 (H.3 — Avatar replacement cleanup via deleteAsset).
 
 ## Task roadmap — numbered
 
@@ -156,6 +177,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic H.6 — deleteAsset safety wrapper: reference check, dry-run, structured log, 5 tests | Task 144 | [sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md](sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md) |
+| 2026-05-22 | Epic H.4 — Listing image folder: uploadFolder prop chain; create=user/listings, edit=user/listings/id | Task 143 | [sessions/2026-05-22-task-143-h4-listing-image-folder.md](sessions/2026-05-22-task-143-h4-listing-image-folder.md) |
 | 2026-05-22 | Epic H.2 — Avatar folder: `<user_id>/avatars/` in upload-avatar route | Task 142 | [sessions/2026-05-22-task-142-h2-avatar-folder.md](sessions/2026-05-22-task-142-h2-avatar-folder.md) |
 | 2026-05-22 | Epic H.1 — Cloudinary folder infrastructure: shared uploadToCloudinary, publicIdFromUrl, folder tree docs | Task 141 | [sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md](sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md) |
 | 2026-05-22 | Epic D — Task 166 — Seed email_templates: saved_search_alert + price_change_alert × 4 locales (SQL only) | Task 166 | [sessions/2026-05-22-task-166-seed-email-templates.md](sessions/2026-05-22-task-166-seed-email-templates.md) |

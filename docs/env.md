@@ -8,6 +8,7 @@ NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_upload_preset  # Unsigned upload preset for listing images (CldUploadWidget in ImageUpload.tsx). Create in Cloudinary Dashboard → Settings → Upload → Upload presets. Set folder restriction to listings/ (updated to <userId>/listings/ in H.4).
+CLOUDINARY_DELETE_MODE=dry-run  # Controls deleteAsset() in src/lib/cloudinaryDelete.ts. Values: 'dry-run' (default — logs only, no real delete) | 'enabled' (real Cloudinary destroy after reference check). Never set to 'enabled' without running H.6 dry-run audit first.  # Unsigned upload preset for listing images (CldUploadWidget in ImageUpload.tsx). Create in Cloudinary Dashboard → Settings → Upload → Upload presets. Set folder restriction to listings/ (updated to <userId>/listings/ in H.4).
 RESEND_API_KEY=re_xxx                  # Resend dashboard → API Keys (server-only, never expose to client)
 NEXT_PUBLIC_SITE_URL=https://lero.al
 SUPABASE_EMAIL_HOOK_SECRET=v1,whsec_your_base64_secret  # Supabase Dashboard → Auth → Hooks → Send Email Hook → Secret. Dashboard-issued value in v1,whsec_<base64> format (do NOT invent your own). Server-only; verified via Standard Webhooks (standardwebhooks lib) on incoming hook requests at /api/auth-email-hook

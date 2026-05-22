@@ -14,6 +14,7 @@ const ListingFormShell = dynamic(
 interface BaseLoaderProps {
   locale: string
   uploadPreset: string
+  uploadFolder: string
   mode?: ListingFormMode
 }
 
@@ -32,7 +33,7 @@ interface EditLoaderProps extends BaseLoaderProps {
 type Props = CreateLoaderProps | EditLoaderProps
 
 export function ListingFormLoader(props: Props) {
-  const { locale, uploadPreset } = props
+  const { locale, uploadPreset, uploadFolder } = props
   const mode = props.mode ?? 'create'
 
   const { locations } = useLocations()
@@ -47,6 +48,7 @@ export function ListingFormLoader(props: Props) {
       <ListingFormShell
         locale={locale}
         uploadPreset={uploadPreset}
+        uploadFolder={uploadFolder}
         locations={cityRegions}
         mode="edit"
         listingId={listingId}
@@ -59,6 +61,7 @@ export function ListingFormLoader(props: Props) {
     <ListingFormShell
       locale={locale}
       uploadPreset={uploadPreset}
+      uploadFolder={uploadFolder}
       locations={cityRegions}
       mode="create"
     />

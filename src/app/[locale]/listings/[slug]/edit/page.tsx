@@ -61,6 +61,7 @@ export default async function EditListingPage({ params }: Props) {
   if (!check.ok) redirect(`/${locale}/listings/${listing.slug}`)
 
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? ''
+  const uploadFolder = `${listing.user_id}/listings/${listing.id}`
 
   // Map DB images to component format; use DB row id as stable public_id key
   const images: ListingImage[] = (listing.images ?? [])
@@ -108,6 +109,7 @@ export default async function EditListingPage({ params }: Props) {
       <ListingFormLoader
         locale={locale}
         uploadPreset={uploadPreset}
+        uploadFolder={uploadFolder}
         mode="edit"
         listingId={listing.id}
         initialValues={initialValues}

@@ -3,7 +3,8 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { revalidatePath } from 'next/cache'
-import { uploadToCloudinary } from '@/lib/cloudinaryUpload'
+import { uploadToCloudinary, publicIdFromUrl } from '@/lib/cloudinaryUpload'
+import { deleteAsset } from '@/lib/cloudinaryDelete'
 
 // ── Route handler ─────────────────────────────────────────────────────────────
 //
@@ -70,6 +71,7 @@ export async function POST(req: NextRequest) {
 
   // Upload to Cloudinary
   let cloudUrl: string
+  let newPublicId: string
   try {
     const result = await uploadToCloudinary(bytes, file.type, `${uploadForUserId}/avatars`)
     console.log('[upload-avatar] Cloudinary ok:', result.width, 'x', result.height, 'public_id:', result.publicId)
@@ -77,6 +79,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'invalid_dimensions' }, { status: 400 })
     }
     cloudUrl = result.url
+    newPublicId = result.publicId
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e)
     console.error('[upload-avatar] Cloudinary failed:', msg)
@@ -84,12 +87,32 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: `Cloudinary: ${msg}` }, { status: 500 })
   }
 
-  // Update DB
+  // Capture old avatar URL before overwriting — needed for H.3 cleanup below.
   const db = createAdminClient()
+  const { data: priorProfile } = await db
+    .from('users')
+    .select('avatar_url')
+    .eq('id', uploadForUserId)
+    .single()
+  const oldAvatarUrl = priorProfile?.avatar_url ?? null
+
+  // Update DB — MUST happen before any Cloudinary delete (never delete before DB commit).
   const { error: updateError } = await db.from('users').update({ avatar_url: cloudUrl }).eq('id', uploadForUserId)
   if (updateError) {
     console.error('[upload-avatar] DB update failed:', updateError)
     return NextResponse.json({ error: 'db_save_failed' }, { status: 500 })
+  }
+
+  // H.3: delete the old avatar now that DB points to the new one.
+  // Skip if there was no prior avatar, or the same asset was re-uploaded (idempotent).
+  const oldPublicId = publicIdFromUrl(oldAvatarUrl)
+  if (oldPublicId && oldPublicId !== newPublicId) {
+    try {
+      await deleteAsset(oldPublicId, { reason: 'avatar_replaced' })
+    } catch (err) {
+      // Non-fatal — DB is already updated; log and continue.
+      console.error('[upload-avatar] old avatar cleanup failed:', err)
+    }
   }
 
   // Cache invalidation

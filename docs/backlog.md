@@ -4,6 +4,15 @@
 
 ## Last Session
 
+**2026-05-22 — Task 145 (H.3) — Avatar replacement cleanup ✅**
+
+- `upload-avatar` route: read old `avatar_url` → upload new → update DB → `deleteAsset(oldPublicId, {reason:'avatar_replaced'})`.
+- DB-first order enforced; idempotent guard (same asset re-upload skipped); non-fatal.
+
+→ [Task 145 session log](sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 144 (H.6) — Cloudinary safety audit / dry-run framework ✅**
 
 - `deleteAsset(publicId, { reason })` — single wrapper, reference check + dry-run gate + structured log.
@@ -102,9 +111,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 144 (H.6 — deleteAsset safety wrapper; unblocks H.3 + H.5).
+**Last completed:** Task 145 (H.3 — Avatar replacement cleanup).
 
-**Next:** Task 145 (H.3 — Avatar replacement cleanup via deleteAsset).
+**Next:** Task 146 (H.5 — Listing image replacement cleanup).
 
 ## Task roadmap — numbered
 
@@ -177,6 +186,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic H.3 — Avatar cleanup: read old URL → upload → DB update → deleteAsset(old) | Task 145 | [sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md](sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md) |
 | 2026-05-22 | Epic H.6 — deleteAsset safety wrapper: reference check, dry-run, structured log, 5 tests | Task 144 | [sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md](sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md) |
 | 2026-05-22 | Epic H.4 — Listing image folder: uploadFolder prop chain; create=user/listings, edit=user/listings/id | Task 143 | [sessions/2026-05-22-task-143-h4-listing-image-folder.md](sessions/2026-05-22-task-143-h4-listing-image-folder.md) |
 | 2026-05-22 | Epic H.2 — Avatar folder: `<user_id>/avatars/` in upload-avatar route | Task 142 | [sessions/2026-05-22-task-142-h2-avatar-folder.md](sessions/2026-05-22-task-142-h2-avatar-folder.md) |

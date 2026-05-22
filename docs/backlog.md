@@ -4,13 +4,12 @@
 
 ## Last Session
 
-**2026-05-22 — Task 154 (L.1) — Admin Dashboard 2026: KPI discovery ⏳ sign-off pending**
+**2026-05-22 — Task 154 (L.1) — Admin Dashboard 2026: KPI discovery ✅ signed off**
 
-- P0: 10 metrics (active listings, new 7d, total/new users, tickets, pending reports, status breakdown, recent listings, location requests).
-- P1/P2: conversion funnel, top locations, email delivery (blocked on missing tracking tables).
-- Wireframes: mobile single-col / desktop 2-col below stats. Status breakdown as horizontal bar.
-- Index migration SQL drafted (5 indexes). L.3 folded into L.2.
-- **⚠️ Awaiting sign-off before L.2 begins.**
+- P0 approved: 6 KPI cards (active list., new 7d, total/new users, tickets, pending reports) + status breakdown bar + recent listings (Epic K) + pending reports list + location requests.
+- Status breakdown: horizontal bars + numbers; no Recharts.
+- Pending Reports: always visible (empty state when 0). L.3 folded into L.2.
+- **✅ SIGNED OFF 2026-05-22. L.2 (Task 155) unblocked.**
 
 → [Task 154 session log](sessions/2026-05-22-task-154-l1-dashboard-discovery.md)
 
@@ -196,9 +195,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 153 (J.3 — filter link canonical). **Epic J — CLOSED.**
+**Last completed:** Task 154 (L.1 — Dashboard discovery, signed off 2026-05-22).
 
-**Next:** Task 154 (L.1 — Admin Dashboard 2026 — KPI discovery + sign-off).
+**Next:** Task 155 (L.2 — Build the Dashboard).
 
 ## Task roadmap — numbered
 
@@ -264,7 +263,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
-| 2026-05-22 | Epic L.1 — Dashboard discovery: P0 metrics, wireframes, index plan; sign-off pending | Task 154 | [sessions/2026-05-22-task-154-l1-dashboard-discovery.md](sessions/2026-05-22-task-154-l1-dashboard-discovery.md) |
+| 2026-05-22 | Epic L.1 — Dashboard discovery: P0 metrics, wireframes, index plan; signed off 2026-05-22 | Task 154 | [sessions/2026-05-22-task-154-l1-dashboard-discovery.md](sessions/2026-05-22-task-154-l1-dashboard-discovery.md) |
 | 2026-05-22 | Epic J.3 — Filter link: `?location_id=<id>` confirmed canonical; slug strategy documented; Epic J CLOSED | Task 153 | [sessions/2026-05-22-task-153-j3-filter-link.md](sessions/2026-05-22-task-153-j3-filter-link.md) |
 | 2026-05-22 | Epic J.2 — Popular Locations SSR public section; Server Component; section hides when empty | Task 152 | [sessions/2026-05-22-task-152-j2-popular-locations-public.md](sessions/2026-05-22-task-152-j2-popular-locations-public.md) |
 | 2026-05-22 | Epic J.1 — Popular locations admin CRUD (existing locations table, §11 pattern, photo upload, 4 locales) | Task 151 | [sessions/2026-05-22-task-151-j1-popular-locations-admin.md](sessions/2026-05-22-task-151-j1-popular-locations-admin.md) |

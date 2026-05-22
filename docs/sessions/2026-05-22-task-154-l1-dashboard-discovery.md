@@ -220,11 +220,39 @@ CREATE INDEX IF NOT EXISTS idx_users_deleted_at   ON users(deleted_at);
 
 ---
 
-## Sign-off
+## Sign-off — ✅ SIGNED OFF 2026-05-22
 
-**⚠️ Awaiting user sign-off before L.2 begins.**
+**User decisions (verbatim):**
 
-Questions for user:
-1. Do you agree with the P0 metric list? Any additions or removals?
-2. Should the listing status breakdown be a visual bar chart or just a stat list?
-3. Should "Pending Reports" panel show only when count > 0 (like Location Requests), or always?
+### 1. P0 metrics — approved
+Active listings, new listings 7d, total users, new users 7d, open tickets, pending reports,
+listing status breakdown, recent listings clickable (Epic K), pending reports list,
+location requests. **Premium listings removed from P0 stat row** — keep 6 KPI cards maximum
+to stay action-oriented; premium isn't a "what needs attention" metric.
+
+### 2. Listing status breakdown — bar + numbers
+Horizontal relative bars **with** visible numeric counts for active / sold / inactive / archived.
+```
+Active     1,204   ████████████████
+Sold         312   ████
+Inactive      88   █
+Archived      45   ▌
+```
+No heavy chart library (no Recharts). Pure CSS bar via relative width.
+Label + count + percentage + horizontal bar — all inside the Card.
+
+### 3. Pending Reports panel — always visible
+Always render the panel:
+- `pendingReportsCount > 0` → list of 5 pending reports + "View all reports" link.
+- `pendingReportsCount === 0` → compact healthy empty state: "No pending reports. Moderation queue is clear."
+
+Rationale: Pending Reports is a Trust & Safety health indicator, not a decorative block.
+Empty state should communicate system health, not disappear and confuse admins.
+Location Requests stays conditional (only when > 0).
+
+### 4. L.3 folded into L.2
+Recent Listings must be rebuilt as Epic K clickable table/dialog during Task 155.
+No standalone L.3 task needed.
+
+---
+**L.2 (Task 155) may begin.** Sign-off recorded 2026-05-22.

@@ -156,6 +156,8 @@
     "error_creating": "Gabim gjatë publikimit. Provo përsëri.",
     "photos_required": "Shto të paktën një foto",
     "status_pending": "Nën shqyrtim",
+    "status_active": "Aktiv",
+    "status_inactive": "Joaktiv",
     "status_sold": "Shitur",
     "status_rented": "Dhënë me qira",
     "status_archived": "Arkivuar",

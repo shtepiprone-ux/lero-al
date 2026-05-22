@@ -156,6 +156,8 @@
     "error_creating": "Errore durante la pubblicazione. Riprova.",
     "photos_required": "Aggiungi almeno una foto",
     "status_pending": "In revisione",
+    "status_active": "Attivo",
+    "status_inactive": "Non attivo",
     "status_sold": "Venduto",
     "status_rented": "Affittato",
     "status_archived": "Archiviato",

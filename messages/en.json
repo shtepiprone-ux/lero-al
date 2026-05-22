@@ -156,6 +156,8 @@
     "error_creating": "Failed to publish. Please try again.",
     "photos_required": "Please add at least one photo",
     "status_pending": "Under review",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
     "status_sold": "Sold",
     "status_rented": "Rented",
     "status_archived": "Archived",

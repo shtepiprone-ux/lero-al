@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Task 167 + 168 — Sprint 5 post-deploy bugfixes ✅**
+
+- Task 167: `status_active` / `status_inactive` added to `listing` namespace in all 4 catalogs (sq/en/uk/it). Dashboard status bars + recent-listing badge now show translated labels.
+- Task 168: `setValue('profileType', v, { shouldDirty: true })` — Save button now enables when only account type is changed.
+
+→ [Task 167 session log](sessions/2026-05-22-task-167-dashboard-status-i18n.md)
+→ [Task 168 session log](sessions/2026-05-22-task-168-role-save-shoulddirty.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 162 — E.5 ADR verification ✅**
 
 - ADR confirmed committed (51abc1f96 — `docs/state-authority.md`); no stray code changes.

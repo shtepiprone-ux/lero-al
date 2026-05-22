@@ -156,6 +156,8 @@
     "error_creating": "Помилка публікації. Спробуйте ще раз.",
     "photos_required": "Додайте хоча б одне фото",
     "status_pending": "На модерації",
+    "status_active": "Активне",
+    "status_inactive": "Неактивне",
     "status_sold": "Продано",
     "status_rented": "Орендовано",
     "status_archived": "Архів",

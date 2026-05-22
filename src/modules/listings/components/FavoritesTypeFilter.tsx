@@ -28,7 +28,7 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
   }
 
   return (
-    <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide" role="group" aria-label={tf('filter_label')}>
+    <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar" role="group" aria-label={tf('filter_label')}>
       <Button
         type="button"
         variant={!currentType ? 'default' : 'secondary'}

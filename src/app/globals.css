@@ -342,6 +342,10 @@
    UTILITY CLASSES — Real Estate specific
    ───────────────────────────────────────────── */
 @layer utilities {
+  /* Hide scrollbar while keeping scroll functionality */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
   /* Truncate lines */
   .line-clamp-2 {
     display: -webkit-box;

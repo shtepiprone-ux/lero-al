@@ -64,9 +64,9 @@ export async function RecentlyViewedSection({ currentListingId, limit = 12, show
       {/*
         Mobile (base): horizontal scroll with fixed-width cards.
         sm+: grid layout with responsive column count.
-        scrollbar-hide removes the visible scrollbar on WebKit while keeping scroll functionality.
+        no-scrollbar removes the visible scrollbar on WebKit/Firefox while keeping scroll functionality.
       */}
-      <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
+      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
         {listings.map(listing => (
           <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
             <ListingCard listing={listing} layoutContext="4-col" />

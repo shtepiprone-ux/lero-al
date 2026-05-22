@@ -1,7 +1,8 @@
 # Epic H — Cloudinary Storage Hygiene
 
-**Status:** OPEN
+**Status:** CLOSED
 **Opened:** 2026-05-19
+**Closed:** 2026-05-22 (Tasks 141–147 — verified by orchestrator diff review; backlog already marked CLOSED)
 
 ## Goal
 

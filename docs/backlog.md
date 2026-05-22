@@ -4,6 +4,18 @@
 
 ## Last Session
 
+**2026-05-22 — Task 141 (H.1) — Cloudinary user-based folder structure ✅**
+
+- Extracted shared `uploadToCloudinary` + `publicIdFromUrl` into `src/lib/cloudinaryUpload.ts`.
+- Both upload routes (`upload-avatar`, `upload-company-logo`) now use shared utility.
+- Full folder tree, DB reference policy, and migration plan documented in `docs/integrations.md`.
+- `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` added to `docs/env.md` (was missing).
+- Folder strings unchanged — actual path changes in H.2/H.4/H.7.
+
+→ [Task 141 session log](sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 166 — Seed DB-driven email templates ✅ (SQL pending Supabase apply)**
 
 - `reporter_notification` confirmed code-first (React Email, no `sendTemplatedEmail` call) — not seeded.
@@ -59,9 +71,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 166 (seed email templates) ✅ — SQL applied, cron emails functional.
+**Last completed:** Task 141 (H.1 — Cloudinary folder infrastructure + docs).
 
-**Next:** Task 141 (H.1 — Cloudinary user-based folder structure).
+**Next:** Task 142 (H.2 — Avatar folder structure `<user_id>/avatars/`).
 
 ## Task roadmap — numbered
 
@@ -134,6 +146,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic H.1 — Cloudinary folder infrastructure: shared uploadToCloudinary, publicIdFromUrl, folder tree docs | Task 141 | [sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md](sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md) |
 | 2026-05-22 | Epic D — Task 166 — Seed email_templates: saved_search_alert + price_change_alert × 4 locales (SQL only) | Task 166 | [sessions/2026-05-22-task-166-seed-email-templates.md](sessions/2026-05-22-task-166-seed-email-templates.md) |
 | 2026-05-22 | Epic G — Task 165 — RecentlyViewedGrid split + Storybook story + STORY_TARGETS for 7 breakpoints | Task 165 | [sessions/2026-05-22-task-165-recently-viewed-screenshots.md](sessions/2026-05-22-task-165-recently-viewed-screenshots.md) |
 | 2026-05-22 | Epic G — Task 164 — correctness closure: showClear scope fix, DB migration confirmed, locale parity verified | Task 164 | [sessions/2026-05-22-task-164-epic-g-closure.md](sessions/2026-05-22-task-164-epic-g-closure.md) |

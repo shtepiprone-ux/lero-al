@@ -22,6 +22,71 @@ The following external service accounts are already registered and available for
   - `CLOUDINARY_API_KEY` — from Cloudinary dashboard (server-only);
   - `CLOUDINARY_API_SECRET` — from Cloudinary dashboard (server-only, never expose to client).
 
+### Cloudinary Canonical Folder Tree (Epic H — established Task 141 / H.1)
+
+All assets MUST live under a canonical folder path. Use `uploadToCloudinary` from
+`src/lib/cloudinaryUpload.ts` exclusively — never inline a custom upload.
+
+```
+Cloudinary root
+├── <user_id>/                        # all user-owned assets (H.1 root)
+│   ├── avatars/                      # user profile pictures (H.2)
+│   │   └── <file_id>                 # e.g. u-abc123/avatars/portrait
+│   └── listings/                     # listing photos (H.4)
+│       └── <listing_id>/
+│           └── <file_id>             # e.g. u-abc123/listings/l-xyz789/img01
+├── companies/                        # company logos — not user-owned (H.7)
+│   └── <company_id>/
+│       └── logo                      # e.g. companies/c-def456/logo
+├── marketing/                        # marketing / CMS media (H.7)
+│   └── <slug>/
+│       └── <file_id>
+└── popular_locations/                # location hero photos (H.7 / Epic J)
+    └── <location_id>/
+        └── <file_id>
+```
+
+**Current paths (pre-H.2/H.4/H.7 migration):**
+- Avatars: `avatars/<file_id>` — will move to `<user_id>/avatars/<file_id>` in H.2
+- Listing images: `listings/<file_id>` — will move to `<user_id>/listings/<listing_id>/<file_id>` in H.4
+- Company logos: `companies/<file_id>` — will move to `companies/<company_id>/logo` in H.7
+
+**DB reference policy:**
+
+| DB column | Format stored | How to get public_id |
+|---|---|---|
+| `users.avatar_url` | Full Cloudinary URL | `publicIdFromUrl(url)` from `src/lib/cloudinaryUpload.ts` |
+| `listing_images.url` | Full Cloudinary URL | use `listing_images.public_id` (already stored) |
+| `listing_images.public_id` | Cloudinary public_id | direct — used by H.5 cleanup |
+| `companies.logo_url` | Full Cloudinary URL | `publicIdFromUrl(url)` from `src/lib/cloudinaryUpload.ts` |
+
+Cleanup tasks (H.3, H.5) call `deleteAsset(publicId)` from the H.6 framework. For avatars (no
+separate public_id column), derive via `publicIdFromUrl(users.avatar_url)`.
+
+**Migration plan for existing assets (execution deferred to post-H.6):**
+
+Step 1 — Inventory (dry-run, no changes):
+```typescript
+// Pseudo-code — actual script in the H.6 migration tooling
+const avatars = await db.from('users').select('id, avatar_url').not('avatar_url', 'is', null)
+for (const u of avatars) {
+  const oldId = publicIdFromUrl(u.avatar_url)  // e.g. 'avatars/abc123'
+  const newId = `${u.id}/avatars/${oldId?.split('/').pop()}` // e.g. 'u-xxx/avatars/abc123'
+  console.log({ userId: u.id, oldId, newId })
+}
+```
+
+Step 2 — Rename via Cloudinary Admin API (after H.6 dry-run passes):
+- Call `POST /v1_1/<cloud>/image/rename` with `from_public_id` → `to_public_id`.
+- Update DB column atomically in same transaction (where possible).
+- Cloudinary rename preserves the asset; the old URL 301-redirects for 60 days.
+
+Step 3 — Verify:
+- DB references updated; old paths return 301→new path.
+- Run H.6 reference-check: no DB row points to a non-existent asset.
+
+**Blocked on:** H.6 safety audit + dry-run framework must land first.
+
 ### Cloudinary Avatar Pipeline
 - Avatars uploaded via `uploadUserAvatar` (admin) or `uploadCabinetAvatar` (cabinet) Server Actions.
 - Server-side signed upload: `POST https://api.cloudinary.com/v1_1/{cloud}/image/upload` with SHA-1 signature.

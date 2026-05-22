@@ -1,36 +1,61 @@
 import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
-import { formatPrice, formatCount } from '@/lib/formatters'
+import { formatCount } from '@/lib/formatters'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
-import { RelativeTime } from '@/components/shared/RelativeTime'
-import { ListChecks, Users, Eye, TrendingUp, Star, Clock, MapPin } from 'lucide-react'
+import { AdminDashboardRecentListings, type DashboardListing } from '@/components/admin/AdminDashboardRecentListings'
+import { ListChecks, Users, Eye, TrendingUp, Clock, MapPin, Flag } from 'lucide-react'
 import Link from 'next/link'
+
+// ── Data fetching ─────────────────────────────────────────────────────────────
 
 async function getStats() {
   const db = createAdminClient()
   const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
 
   const [
-    { count: totalListings },
     { count: activeListings },
-    { count: premiumListings },
+    { count: newListings7d },
     { count: totalUsers },
-    { count: newUsers },
+    { count: newUsers7d },
     { count: openTickets },
+    { count: pendingReports },
+    { count: soldListings },
+    { count: rentedListings },
+    { count: inactiveListings },
+    { count: archivedListings },
     { data: recentListings },
+    { data: pendingReportsList },
     { data: locationRequestUsers, count: locationRequestCount },
   ] = await Promise.all([
-    db.from('listings').select('*', { count: 'exact', head: true }),
+    // Stat cards (P0)
     db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'active'),
-    db.from('listings').select('*', { count: 'exact', head: true }).eq('is_premium', true),
+    db.from('listings').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo),
     db.from('users').select('*', { count: 'exact', head: true }).is('deleted_at', null),
     db.from('users').select('*', { count: 'exact', head: true }).gte('created_at', weekAgo).is('deleted_at', null),
     db.from('support_tickets').select('*', { count: 'exact', head: true }).eq('status', 'open'),
+    db.from('listing_reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
+
+    // Status breakdown (P0)
+    db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'sold'),
+    db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'rented'),
+    db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'inactive'),
+    db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'archived'),
+
+    // Recent listings (last 8, Epic K clickable)
     db.from('listings')
       .select('id, slug, title, status, is_premium, price, currency, created_at, owner:users!listings_user_id_fkey(name)')
       .order('created_at', { ascending: false })
       .limit(8),
+
+    // Pending reports list (5, always-visible panel)
+    db.from('listing_reports')
+      .select('id, reason, status, created_at, listing:listings!listing_reports_listing_id_fkey(title, slug)')
+      .eq('status', 'pending')
+      .order('created_at', { ascending: false })
+      .limit(5),
+
+    // Location requests (conditional panel)
     db.from('users')
       .select('id, name, last_name, location_request', { count: 'exact' })
       .not('location_request', 'is', null)
@@ -39,23 +64,23 @@ async function getStats() {
   ])
 
   return {
-    totalListings, activeListings, premiumListings, totalUsers, newUsers, openTickets,
-    recentListings: (recentListings ?? []) as unknown as RecentListing[],
-    locationRequestUsers: (locationRequestUsers ?? []) as unknown as LocationRequestUser[],
+    activeListings, newListings7d, totalUsers, newUsers7d, openTickets, pendingReports,
+    soldListings, rentedListings, inactiveListings, archivedListings,
+    recentListings: (recentListings ?? []) as unknown as DashboardListing[],
+    pendingReportsList: (pendingReportsList ?? []) as unknown as PendingReport[],
+    locationRequestUsers: (locationRequestUsers ?? []) as LocationRequestUser[],
     locationRequestCount: locationRequestCount ?? 0,
   }
 }
 
-interface RecentListing {
+// ── Types ─────────────────────────────────────────────────────────────────────
+
+interface PendingReport {
   id: string
-  slug: string
-  title: string
+  reason: string
   status: string
-  is_premium: boolean
-  price: number
-  currency: string
   created_at: string
-  owner: { name: string | null } | null
+  listing: { title: string; slug: string } | null
 }
 
 interface LocationRequestUser {
@@ -65,16 +90,18 @@ interface LocationRequestUser {
   location_request: { city: string; region?: string } | null
 }
 
-interface StatCardProps {
+// ── Sub-components (Server) ───────────────────────────────────────────────────
+
+function StatCard({
+  icon: Icon, label, value, sub, href, accent = 'bg-primary/10 text-primary',
+}: {
   icon: React.ElementType
   label: string
   value: number | null
   sub?: string
   href?: string
   accent?: string
-}
-
-function StatCard({ icon: Icon, label, value, sub, href, accent = 'bg-primary/10 text-primary' }: StatCardProps) {
+}) {
   const content = (
     <div className="bg-card rounded-2xl border shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition-shadow">
       <div className={`h-11 w-11 rounded-xl flex items-center justify-center shrink-0 ${accent}`}>
@@ -90,115 +117,192 @@ function StatCard({ icon: Icon, label, value, sub, href, accent = 'bg-primary/10
   return href ? <Link href={href}>{content}</Link> : content
 }
 
-const STATUS_STYLE: Record<string, string> = {
-  active:   'bg-status-success/10 text-status-success',
-  inactive: 'bg-status-warning/10 text-status-warning',
-  sold:     'bg-status-info/10 text-status-info',
-  rented:   'bg-status-rented/10 text-status-rented',
-  archived: 'bg-muted text-muted-foreground',
+function StatusBar({ label, count, total, colorClass }: {
+  label: string; count: number; total: number; colorClass: string
+}) {
+  const pct = total > 0 ? Math.round((count / total) * 100) : 0
+  return (
+    <div className="flex items-center gap-3">
+      <span className="text-sm text-muted-foreground w-20 shrink-0 truncate">{label}</span>
+      <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+        <div
+          className={`h-full rounded-full ${colorClass}`}
+          style={{ width: `${pct}%` }}
+          role="presentation"
+        />
+      </div>
+      <span className="text-sm font-semibold tabular-nums w-14 text-right shrink-0">
+        {formatCount(count, 'sq')}
+      </span>
+      <span className="text-xs text-muted-foreground w-9 text-right shrink-0">{pct}%</span>
+    </div>
+  )
 }
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default async function AdminDashboard() {
   const locale = await getAdminLocale()
-  const t = await getTranslations('admin.dashboard')
+  const [t, tl] = await Promise.all([
+    getTranslations('admin.dashboard'),
+    getTranslations('listing'),
+  ])
 
   const {
-    totalListings, activeListings, premiumListings, totalUsers, newUsers, openTickets,
-    recentListings, locationRequestUsers, locationRequestCount,
+    activeListings, newListings7d, totalUsers, newUsers7d, openTickets, pendingReports,
+    soldListings, rentedListings, inactiveListings, archivedListings,
+    recentListings, pendingReportsList, locationRequestUsers, locationRequestCount,
   } = await getStats()
+
+  const totalListings =
+    (activeListings ?? 0) + (soldListings ?? 0) + (rentedListings ?? 0) +
+    (inactiveListings ?? 0) + (archivedListings ?? 0)
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto">
-      <AdminPageHeader
-        title={t('title')}
-        subtitle={t('subtitle')}
-      />
+      <AdminPageHeader title={t('title')} subtitle={t('subtitle')} />
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
-        <div className="col-span-2 lg:col-span-1 xl:col-span-2">
-          <StatCard icon={ListChecks} label={t('stat_total_listings')} value={totalListings} href="/admin/listings" accent="bg-primary/10 text-primary" />
-        </div>
-        <StatCard icon={TrendingUp} label={t('stat_active')} value={activeListings} href="/admin/listings?status=active" accent="bg-status-success/10 text-status-success" />
-        <StatCard icon={Star} label={t('stat_premium')} value={premiumListings} href="/admin/listings" accent="bg-badge-premium/10 text-badge-premium" />
-        <StatCard icon={Users} label={t('stat_users')} value={totalUsers} href="/admin/users" accent="bg-info/10 text-info" />
-        <StatCard icon={Eye} label={t('stat_new_7d')} value={newUsers} sub={t('stat_new_7d_sub')} accent="bg-secondary text-secondary-foreground" />
-        <StatCard icon={Clock} label={t('stat_open_tickets')} value={openTickets} href="/admin/support" accent="bg-status-warning/10 text-status-warning" />
+      {/* ── 6 KPI stat cards ─────────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+        <StatCard
+          icon={TrendingUp} label={t('stat_active')} value={activeListings}
+          href="/admin/listings?status=active" accent="bg-status-success/10 text-status-success"
+        />
+        <StatCard
+          icon={ListChecks} label={t('stat_new_listings_7d')} value={newListings7d}
+          accent="bg-primary/10 text-primary"
+        />
+        <StatCard
+          icon={Users} label={t('stat_users')} value={totalUsers}
+          href="/admin/users" accent="bg-secondary text-secondary-foreground"
+        />
+        <StatCard
+          icon={Eye} label={t('stat_new_7d')} value={newUsers7d}
+          sub={t('stat_new_7d_sub')} accent="bg-secondary text-secondary-foreground"
+        />
+        <StatCard
+          icon={Clock} label={t('stat_open_tickets')} value={openTickets}
+          href="/admin/support" accent="bg-status-warning/10 text-status-warning"
+        />
+        <StatCard
+          icon={Flag} label={t('stat_pending_reports')} value={pendingReports}
+          href="/admin/reports" accent="bg-destructive/10 text-destructive"
+        />
       </div>
 
+      {/* ── Main content grid ─────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* ── Location requests ── */}
-        {locationRequestCount > 0 && (
-          <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b flex items-center justify-between bg-status-warning/5">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-status-warning" />
-                <h2 className="font-semibold text-sm">{t('location_requests_title')}</h2>
-                <span className="bg-status-warning text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                  {locationRequestCount}
-                </span>
-              </div>
-              <Link
-                href="/admin/users?location_request=1"
-                className="text-xs text-primary hover:underline"
-              >
-                {t('location_requests_view_all')}
-              </Link>
-            </div>
-            <div className="divide-y">
-              {locationRequestUsers.map((u) => (
-                <Link
-                  key={u.id}
-                  href={`/admin/users/${u.id}`}
-                  className="flex items-center gap-3 px-5 py-3 hover:bg-muted/30 transition-colors"
-                >
-                  <MapPin className="h-3.5 w-3.5 text-status-warning shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
-                      {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
-                    </p>
-                    {u.location_request && (
-                      <p className="text-xs text-muted-foreground truncate">
-                        {u.location_request.city}
-                        {u.location_request.region ? `, ${u.location_request.region}` : ''}
-                      </p>
-                    )}
-                  </div>
-                  <span className="text-xs text-primary shrink-0">{t('location_requests_review')}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
 
-        {/* ── Recent listings ── */}
-        <div className={`bg-card rounded-2xl border shadow-sm overflow-hidden ${locationRequestCount > 0 ? '' : 'lg:col-span-2'}`}>
+        {/* ── Recent listings — Epic K §11 canonical (clickable title) ──── */}
+        <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b flex items-center justify-between">
             <h2 className="font-semibold">{t('recent_listings_title')}</h2>
             <Link href="/admin/listings" className="text-xs text-primary hover:underline">
               {t('recent_listings_all')}
             </Link>
           </div>
-          <div className="divide-y">
-            {recentListings.map((l) => (
-              <div key={l.id} className="px-6 py-3.5 flex items-center gap-4 hover:bg-muted/30 transition-colors">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{l.title}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {l.owner?.name ?? '—'}
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium" />}
-                  <span className="text-sm font-medium">{formatPrice(l.price, l.currency, locale)}</span>
-                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${STATUS_STYLE[l.status] ?? ''}`}>
-                    {l.status}
+          <AdminDashboardRecentListings listings={recentListings} locale={locale} />
+        </div>
+
+        {/* ── Right column: reports + location requests ──────────────────── */}
+        <div className="flex flex-col gap-6">
+
+          {/* Pending Reports — always visible (Trust & Safety health indicator) */}
+          <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
+            <div className="px-5 py-4 border-b flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Flag className="h-4 w-4 text-destructive shrink-0" />
+                <h2 className="font-semibold text-sm">{t('pending_reports_title')}</h2>
+                {(pendingReports ?? 0) > 0 && (
+                  <span className="bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    {pendingReports}
                   </span>
-                  <RelativeTime date={l.created_at} className="text-xs text-muted-foreground hidden sm:block" />
-                </div>
+                )}
               </div>
-            ))}
+              <Link href="/admin/reports" className="text-xs text-primary hover:underline">
+                {t('pending_reports_view_all')}
+              </Link>
+            </div>
+            {(pendingReports ?? 0) === 0 ? (
+              <p className="text-sm text-status-success px-5 py-4 flex items-center gap-2">
+                <Flag className="h-3.5 w-3.5 shrink-0" />
+                {t('pending_reports_empty')}
+              </p>
+            ) : (
+              <div className="divide-y">
+                {pendingReportsList.map(r => (
+                  <Link
+                    key={r.id}
+                    href="/admin/reports"
+                    className="flex items-start gap-3 px-5 py-3 hover:bg-muted/30 transition-colors"
+                  >
+                    <Flag className="h-3.5 w-3.5 text-destructive shrink-0 mt-0.5" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">
+                        {tl(`report_reason_${r.reason}` as Parameters<typeof tl>[0])}
+                      </p>
+                      {r.listing && (
+                        <p className="text-xs text-muted-foreground truncate">{r.listing.title}</p>
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* Location Requests — conditional (only when > 0) */}
+          {locationRequestCount > 0 && (
+            <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
+              <div className="px-5 py-4 border-b flex items-center justify-between bg-status-warning/5">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-status-warning shrink-0" />
+                  <h2 className="font-semibold text-sm">{t('location_requests_title')}</h2>
+                  <span className="bg-status-warning text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    {locationRequestCount}
+                  </span>
+                </div>
+                <Link href="/admin/users?location_request=1" className="text-xs text-primary hover:underline">
+                  {t('location_requests_view_all')}
+                </Link>
+              </div>
+              <div className="divide-y">
+                {locationRequestUsers.map(u => (
+                  <Link
+                    key={u.id}
+                    href={`/admin/users/${u.id}`}
+                    className="flex items-center gap-3 px-5 py-3 hover:bg-muted/30 transition-colors"
+                  >
+                    <MapPin className="h-3.5 w-3.5 text-status-warning shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">
+                        {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
+                      </p>
+                      {u.location_request && (
+                        <p className="text-xs text-muted-foreground truncate">
+                          {u.location_request.city}
+                          {u.location_request.region ? `, ${u.location_request.region}` : ''}
+                        </p>
+                      )}
+                    </div>
+                    <span className="text-xs text-primary shrink-0">{t('location_requests_review')}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Listing status breakdown ─────────────────────────────────────── */}
+      <div className="bg-card rounded-2xl border shadow-sm p-5">
+        <h2 className="font-semibold mb-4">{t('status_breakdown_title')}</h2>
+        <div className="flex flex-col gap-3 max-w-lg">
+          <StatusBar label={tl('status_active')}   count={activeListings ?? 0}   total={totalListings} colorClass="bg-status-success" />
+          <StatusBar label={tl('status_sold')}     count={soldListings ?? 0}     total={totalListings} colorClass="bg-status-info" />
+          <StatusBar label={tl('status_rented')}   count={rentedListings ?? 0}   total={totalListings} colorClass="bg-status-rented" />
+          <StatusBar label={tl('status_inactive')} count={inactiveListings ?? 0} total={totalListings} colorClass="bg-status-warning" />
+          <StatusBar label={tl('status_archived')} count={archivedListings ?? 0} total={totalListings} colorClass="bg-muted-foreground/40" />
         </div>
       </div>
     </div>

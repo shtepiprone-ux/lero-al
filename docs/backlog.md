@@ -4,12 +4,20 @@
 
 ## Last Session
 
+**2026-05-22 — Task 155 (L.2) — Build the Admin Dashboard ✅ — L.3 folded in**
+
+- 6 KPI cards (P0); status breakdown bars (CSS only); Pending Reports always visible; Recent Listings Epic K clickable.
+- `AdminDashboardRecentListings` client component: clickable title → preview Dialog.
+- 12 i18n keys × 4 locales. ⚠️ Index migration SQL in session log (run before prod deploy).
+- **L.3 folded into L.2. Epic L — CLOSED.**
+
+→ [Task 155 session log](sessions/2026-05-22-task-155-l2-dashboard-build.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 154 (L.1) — Admin Dashboard 2026: KPI discovery ✅ signed off**
 
-- P0 approved: 6 KPI cards (active list., new 7d, total/new users, tickets, pending reports) + status breakdown bar + recent listings (Epic K) + pending reports list + location requests.
-- Status breakdown: horizontal bars + numbers; no Recharts.
-- Pending Reports: always visible (empty state when 0). L.3 folded into L.2.
-- **✅ SIGNED OFF 2026-05-22. L.2 (Task 155) unblocked.**
+- P0 signed off; wireframes + index plan. L.3 folded into L.2.
 
 → [Task 154 session log](sessions/2026-05-22-task-154-l1-dashboard-discovery.md)
 
@@ -195,9 +203,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 154 (L.1 — Dashboard discovery, signed off 2026-05-22).
+**Last completed:** Task 155 (L.2 — Dashboard built; L.3 folded in). **Epic L — CLOSED.**
 
-**Next:** Task 155 (L.2 — Build the Dashboard).
+**Next:** Task 157 (Recovery security logging) or Task 160 (Block/suspension enforcement) — both in §Follow-ups.
 
 ## Task roadmap — numbered
 
@@ -216,10 +224,7 @@ Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Clos
 
 ~~**Epic J — Popular Locations Management**~~ — **CLOSED** (Tasks 151–153)
 
-**Epic L — Admin Dashboard 2026** (needs C, D, K — all closed)
-- **Task 154** — L.1 Discovery: pick KPIs + panels (sign-off).
-- **Task 155** — L.2 Build the dashboard.
-- **Task 156** — L.3 Interim: make legacy dashboard listings clickable (fold into L.2 if done together).
+~~**Epic L — Admin Dashboard 2026**~~ — **CLOSED** (Tasks 154–155; L.3 folded into L.2)
 
 **Follow-ups / hardening**
 - **Task 157** — Recovery security logging: forensic IP / user-agent + correlation id (D.4 follow-up from the 2026-05-21 Task 121 review). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_157.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_157.md). Builds on `src/modules/auth/actions/recovery.ts`.
@@ -263,6 +268,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic L.2 — Dashboard built: 6 KPI cards, status bars, Epic K recent listings, pending reports panel | Task 155 | [sessions/2026-05-22-task-155-l2-dashboard-build.md](sessions/2026-05-22-task-155-l2-dashboard-build.md) |
 | 2026-05-22 | Epic L.1 — Dashboard discovery: P0 metrics, wireframes, index plan; signed off 2026-05-22 | Task 154 | [sessions/2026-05-22-task-154-l1-dashboard-discovery.md](sessions/2026-05-22-task-154-l1-dashboard-discovery.md) |
 | 2026-05-22 | Epic J.3 — Filter link: `?location_id=<id>` confirmed canonical; slug strategy documented; Epic J CLOSED | Task 153 | [sessions/2026-05-22-task-153-j3-filter-link.md](sessions/2026-05-22-task-153-j3-filter-link.md) |
 | 2026-05-22 | Epic J.2 — Popular Locations SSR public section; Server Component; section hides when empty | Task 152 | [sessions/2026-05-22-task-152-j2-popular-locations-public.md](sessions/2026-05-22-task-152-j2-popular-locations-public.md) |

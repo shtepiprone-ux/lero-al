@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Task 142 (H.2) — Avatar folder structure ✅**
+
+- `upload-avatar` route: `'avatars'` → `` `${uploadForUserId}/avatars` `` — one line.
+- DB reference stays valid (URL updated atomically); `AppImage variant="avatar"` unaffected.
+- All avatar paths (cabinet + admin) route through the same endpoint — no other changes needed.
+
+→ [Task 142 session log](sessions/2026-05-22-task-142-h2-avatar-folder.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 141 (H.1) — Cloudinary user-based folder structure ✅**
 
 - Extracted shared `uploadToCloudinary` + `publicIdFromUrl` into `src/lib/cloudinaryUpload.ts`.
@@ -71,9 +81,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 141 (H.1 — Cloudinary folder infrastructure + docs).
+**Last completed:** Task 142 (H.2 — Avatar path `<user_id>/avatars/`).
 
-**Next:** Task 142 (H.2 — Avatar folder structure `<user_id>/avatars/`).
+**Next:** Task 143 (H.4 — Listing image folder structure `<user_id>/listings/<listing_id>/`).
 
 ## Task roadmap — numbered
 
@@ -146,6 +156,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic H.2 — Avatar folder: `<user_id>/avatars/` in upload-avatar route | Task 142 | [sessions/2026-05-22-task-142-h2-avatar-folder.md](sessions/2026-05-22-task-142-h2-avatar-folder.md) |
 | 2026-05-22 | Epic H.1 — Cloudinary folder infrastructure: shared uploadToCloudinary, publicIdFromUrl, folder tree docs | Task 141 | [sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md](sessions/2026-05-22-task-141-h1-cloudinary-folder-structure.md) |
 | 2026-05-22 | Epic D — Task 166 — Seed email_templates: saved_search_alert + price_change_alert × 4 locales (SQL only) | Task 166 | [sessions/2026-05-22-task-166-seed-email-templates.md](sessions/2026-05-22-task-166-seed-email-templates.md) |
 | 2026-05-22 | Epic G — Task 165 — RecentlyViewedGrid split + Storybook story + STORY_TARGETS for 7 breakpoints | Task 165 | [sessions/2026-05-22-task-165-recently-viewed-screenshots.md](sessions/2026-05-22-task-165-recently-viewed-screenshots.md) |

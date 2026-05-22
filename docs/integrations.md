@@ -46,8 +46,8 @@ Cloudinary root
         └── <file_id>
 ```
 
-**Current paths (pre-H.2/H.4/H.7 migration):**
-- Avatars: `avatars/<file_id>` — will move to `<user_id>/avatars/<file_id>` in H.2
+**Implementation status:**
+- Avatars: `<user_id>/avatars/<file_id>` ✅ (H.2 / Task 142)
 - Listing images: `listings/<file_id>` — will move to `<user_id>/listings/<listing_id>/<file_id>` in H.4
 - Company logos: `companies/<file_id>` — will move to `companies/<company_id>/logo` in H.7
 
@@ -90,7 +90,7 @@ Step 3 — Verify:
 ### Cloudinary Avatar Pipeline
 - Avatars uploaded via `uploadUserAvatar` (admin) or `uploadCabinetAvatar` (cabinet) Server Actions.
 - Server-side signed upload: `POST https://api.cloudinary.com/v1_1/{cloud}/image/upload` with SHA-1 signature.
-- Upload folder: `avatars/`.
+- Upload folder: `<user_id>/avatars/` (H.2 / Task 142). Path is user-scoped for isolation.
 - Avatar input accepts any dimensions ≥ 256×256 and ≤ 10 MB across JPG/PNG/WEBP. The client crops to 256×256 via canvas; the server validates the cropped result (MIME, size ≤ 2 MB, dimensions = 256×256).
 - Client-side validation before crop modal: MIME ∈ {image/jpeg, image/png, image/webp}, source size ≤ 10 MB, source dimensions ≥ 256×256.
 - Client crop: user pans/zooms inside a square crop frame; `AvatarCropModal` (react-easy-crop, lazy `next/dynamic`) renders 256×256 JPEG at q=0.92 via canvas.

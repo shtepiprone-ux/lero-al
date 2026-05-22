@@ -82,5 +82,15 @@ Note: commit `f18d11df7`'s message says "217 cols" but the commit actually conta
 reconciled state (the message predates the reconcile) — content is correct; message is cosmetically
 stale, not worth a history rewrite.
 
-**Sprint 8 substantively COMPLETE** — pending only the owner's final re-run of the SQL confirming
-RESULT SET 2 shows just `listings.search_vector`.
+## Task 174 result + Sprint 8 closure — 2026-05-22 — ✅ CLOSED
+
+Owner re-ran `scripts/schema-drift-check.sql` after Task 173:
+- **RESULT SET 1 (types-expected-but-DB-missing): empty** → no PGRST204-risk drift across all 24 typed tables.
+- **RESULT SET 2 (DB-only): only `listings.search_vector`** → the single intentional exclusion (tsvector, queried via `.textSearch()`, never read as a JS value).
+
+The `.git/index` re-corrupted mid-work (concurrent git access; a phantom "truncation" diff on
+`database.ts`) was recovered with `Remove-Item .git\index` + `git reset` — confirming no data loss
+and re-validating the single-writer git rule. Reinforced lesson: the orchestrator must review with
+`git show <sha>:<path>` only — never index-touching `git status`/`git diff` from the sandbox.
+
+**Sprint 8 CLOSED.** Schema-drift guard is in place, all 24 typed tables reconciled.

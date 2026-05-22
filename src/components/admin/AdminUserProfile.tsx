@@ -694,7 +694,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             <Combobox
               options={PROFILE_TYPES.map(pt => ({ value: pt, label: PROFILE_TYPE_LABELS[pt] }))}
               value={profileType}
-              onChange={v => { if (v) setValue('profileType', v as ProfileType) }}
+              onChange={v => { if (v) setValue('profileType', v as ProfileType, { shouldDirty: true }) }}
               variant="button"
               size="sm"
               triggerClassName="h-10"

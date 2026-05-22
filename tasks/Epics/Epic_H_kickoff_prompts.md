@@ -16,6 +16,10 @@ You are Claude Code Sonnet 4.6 working in the `lero-al` project.
 
 Context: Epic H — sub-task H.1. Document as Task 141 (verify against docs/backlog.md).
 
+Hard contract (do NOT violate): do not change the scope below; do not introduce your own
+architectural decisions — if something is ambiguous or missing, STOP and ask, do not invent scope;
+execute the acceptance criteria literally; update docs/backlog.md + add a docs/sessions/ log.
+
 Goal: All NEW assets uploaded by a user must land under `<user_id>/...` in Cloudinary. Migration plan for existing assets documented.
 
 Required pre-read:
@@ -41,9 +45,9 @@ Acceptance criteria:
 - docs/integrations.md updated with full folder tree + DB-reference policy.
 - Existing-asset migration plan documented (not executed).
 - 0 new lint errors / 0 new warnings; typecheck no new errors; governance gates relevant to scope PASS.
-- Session log + backlog updated. Commit + push.
+- Session log + backlog updated. Commit hygiene: stage with a single `git add -A` (do NOT emit multi-line `git add` with `^`/backtick continuations — they fail in PowerShell and stage nothing); `git status` shows no untracked source files; commit + push; confirm with `git log -1` (paste real terminal output).
 
-Out of scope: avatar-specific path (H.2), listing-image path (H.4), other photos (H.7), any deletion (H.3/H.5/H.6). Follow docs/ai-behavior.md.
+Out of scope: avatar-specific path (H.2), listing-image path (H.4), other photos (H.7), any deletion (H.3/H.5/H.6). Follow docs/ai-behavior.md and docs/orchestrator-role.md.
 ```
 
 ---

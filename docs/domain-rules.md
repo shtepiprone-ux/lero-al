@@ -1,3 +1,18 @@
+## Popular Locations — Filter URL Contract (Epic J.3 / Task 153)
+
+**Canonical filter param:** `?location_id=<numeric_id>` (the `locations.id` integer).
+
+**Why id, not slug:**
+- `filterEngine.ts → parseSearchParams` reads `location_id` as a number.
+- Using the numeric id gives one canonical URL per location across all 4 locales —
+  no per-locale slug disambiguation, no redirect layer, no slug-to-id join in the filter engine.
+- The listing detail page breadcrumb already uses `?location_id=<id>` (consistent).
+
+**Navigation:** always use `<Link href="/${locale}/listings?location_id=${loc.id}">` or
+`router.push(...)`. Never `window.location.href` (Filter Architecture Anti-Patterns §Task 53).
+
+**Source of truth:** `src/modules/listings/domain/filterEngine.ts` → `parseSearchParams`.
+
 ## Inactive Account Lifecycle (Epic D.5 / Task 124 — decided 2026-05-20)
 
 Inactivity is measured by `COALESCE(last_seen_at, created_at)` (users who never signed in after registration use `created_at` as the activity timestamp). The daily cron (`/api/cron/inactivity`, via `vercel.json`) runs at 08:00 UTC.

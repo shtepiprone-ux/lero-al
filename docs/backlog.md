@@ -4,7 +4,21 @@
 
 ## Last Session
 
-**2026-05-22 — Task 151 (J.1) — Popular locations schema + admin CRUD ✅**
+**2026-05-22 — Task 153 (J.3) — Auto-generated filter link ✅ — Epic J CLOSED**
+
+- `?location_id=<id>` confirmed canonical (filterEngine.ts); no code changes. Slug strategy documented.
+- **Epic J — CLOSED** (Tasks 151–153).
+
+→ [Task 153 session log](sessions/2026-05-22-task-153-j3-filter-link.md)
+
+## Last-but-one Session
+
+**2026-05-22 — Task 152 (J.2) — Popular Locations public section ✅**
+
+- `PopularLocations` → Server Component (SSR, section self-contained, hides when empty).
+- Homepage: `<PopularLocations />` only (no wrapper/heading in page.tsx).
+
+→ [Task 152 session log](sessions/2026-05-22-task-152-j2-popular-locations-public.md)
 
 - No new DB table — uses existing `locations.is_featured` / `display_order` / `image_url`.
 - `AdminPopularLocationsManager`: §11 canonical (row click → Dialog, no Actions column).
@@ -170,9 +184,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 151 (J.1 — Popular locations admin CRUD).
+**Last completed:** Task 153 (J.3 — filter link canonical). **Epic J — CLOSED.**
 
-**Next:** Task 152 (J.2 — Render "Popular Locations" section on public site).
+**Next:** Task 154 (L.1 — Admin Dashboard 2026 — KPI discovery + sign-off).
 
 ## Task roadmap — numbered
 
@@ -189,10 +203,7 @@ Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Clos
 - **Task 149** — I.2 Centralize status helpers (prepare for `ListingStateMachine`).
 - **Task 150** — I.3 Helper API evolution — deferred trigger; document the condition.
 
-**Epic J — Popular Locations Management** (needs H.7 for photos + K for admin CRUD)
-- **Task 151** — J.1 Schema + admin CRUD for popular locations.
-- **Task 152** — J.2 Render public "Popular Locations" section.
-- **Task 153** — J.3 Auto-generated link-filter per location.
+~~**Epic J — Popular Locations Management**~~ — **CLOSED** (Tasks 151–153)
 
 **Epic L — Admin Dashboard 2026** (needs C, D, K — all closed)
 - **Task 154** — L.1 Discovery: pick KPIs + panels (sign-off).
@@ -241,6 +252,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic J.3 — Filter link: `?location_id=<id>` confirmed canonical; slug strategy documented; Epic J CLOSED | Task 153 | [sessions/2026-05-22-task-153-j3-filter-link.md](sessions/2026-05-22-task-153-j3-filter-link.md) |
+| 2026-05-22 | Epic J.2 — Popular Locations SSR public section; Server Component; section hides when empty | Task 152 | [sessions/2026-05-22-task-152-j2-popular-locations-public.md](sessions/2026-05-22-task-152-j2-popular-locations-public.md) |
 | 2026-05-22 | Epic J.1 — Popular locations admin CRUD (existing locations table, §11 pattern, photo upload, 4 locales) | Task 151 | [sessions/2026-05-22-task-151-j1-popular-locations-admin.md](sessions/2026-05-22-task-151-j1-popular-locations-admin.md) |
 | 2026-05-22 | Epic I.3 — Helper API evolution trigger documented; Epic I CLOSED | Task 150 | [sessions/2026-05-22-task-150-i3-helper-api-evolution.md](sessions/2026-05-22-task-150-i3-helper-api-evolution.md) |
 | 2026-05-22 | Epic I.2 — Status helpers: grep verified (domain complete); helpers table + evolution trigger in domain-rules.md | Task 149 | [sessions/2026-05-22-task-149-i2-status-helpers.md](sessions/2026-05-22-task-149-i2-status-helpers.md) |

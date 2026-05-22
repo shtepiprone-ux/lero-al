@@ -193,6 +193,32 @@ Rationale: Resend is code-first (same team as React Email). Managing multilingua
 
 **Approved visual design reference:** `tasks/Epics/Epic_D_email_design_reference.html` — the approved look for all transactional emails (monochrome graphite + coral `#EC5447` accent, single CTA, 600px card, Vercel/ChatGPT/Appwrite style). The `BaseEmail` React Email layout (Task 119) re-implements this; every template wraps it.
 
+**`email_templates` RLS matrix (Task 123 + Task 161):**
+
+| Operation | Admin | Moderator | Note |
+|---|---|---|---|
+| SELECT | ✅ | ✅ | Read for review |
+| INSERT | ✅ | ✅ | Create new templates |
+| UPDATE | ✅ | ✅ | Edit content/status |
+| DELETE | ✅ | ❌ | **Admin-only** (enforced in-code + RLS) |
+
+In-code gate: `assertAdmin()` in `deleteEmailTemplateGroupAction` + `deleteEmailTemplateLocaleAction` (`src/modules/notifications/actions/emailTemplates.ts`).
+Actions use `createAdminClient()` (service-role, bypasses RLS) → the in-code check is the primary gate. RLS provides defense-in-depth if a future code path uses a user-scoped client.
+
+RLS SQL for `email_templates` table (from Task 123 session log; DELETE policy is admin-only):
+```sql
+-- SELECT/INSERT/UPDATE: admin + moderator
+CREATE POLICY "email_templates_select" ON email_templates FOR SELECT TO authenticated
+  USING (EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('admin','moderator')));
+CREATE POLICY "email_templates_insert" ON email_templates FOR INSERT TO authenticated
+  WITH CHECK (EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('admin','moderator')));
+CREATE POLICY "email_templates_update" ON email_templates FOR UPDATE TO authenticated
+  USING (EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role IN ('admin','moderator')));
+-- DELETE: admin only
+CREATE POLICY "email_templates_delete" ON email_templates FOR DELETE TO authenticated
+  USING (EXISTS (SELECT 1 FROM users WHERE users.id = auth.uid() AND users.role = 'admin'));
+```
+
 **Rules:**
 - NEVER call Resend from client-side code — server actions / API routes only.
 - ALL email-trigger failures surfaced to the client follow the Epic A error-code contract (server returns code, client resolves via `t()`).

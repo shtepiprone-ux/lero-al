@@ -4,6 +4,15 @@
 
 ## Last Session
 
+**2026-05-22 — Task 161 — Email template delete = admin-only ✅**
+
+- `assertAdmin()` added; delete actions switched from `assertAdminOrModerator()`.
+- RLS matrix confirmed + documented in `docs/integrations.md`.
+
+→ [Task 161 session log](sessions/2026-05-22-task-161-email-template-delete-admin-only.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 160 — Block/suspension enforcement ✅**
 
 - `getBlockedError(userId)` canonical helper: permanent block + `suspended_until` + auto-lift.
@@ -221,9 +230,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 160 (Block/suspension enforcement).
+**Last completed:** Task 161 (Email template delete admin-only).
 
-**Next:** Task 161 (D.2 — email template delete = admin-only + RLS matrix).
+**Next:** Task 162 (E.5 — commit URL-state ADR + stray useListingsUrlFilters.ts).
 
 ## Task roadmap — numbered
 
@@ -286,6 +295,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Task 161 — Email template delete admin-only: assertAdmin() + RLS matrix documented | Task 161 | [sessions/2026-05-22-task-161-email-template-delete-admin-only.md](sessions/2026-05-22-task-161-email-template-delete-admin-only.md) |
 | 2026-05-22 | Task 160 — Block/suspension enforcement: getBlockedError helper, 7 actions, auto-lift, i18n | Task 160 | [sessions/2026-05-22-task-160-block-suspension-enforcement.md](sessions/2026-05-22-task-160-block-suspension-enforcement.md) |
 | 2026-05-22 | Task 157 — Recovery security logging: IP+UA+correlationId; email hash; LOG_CORRELATION_SALT | Task 157 | [sessions/2026-05-22-task-157-recovery-security-logging.md](sessions/2026-05-22-task-157-recovery-security-logging.md) |
 | 2026-05-22 | Epic L.2 — Dashboard built: 6 KPI cards, status bars, Epic K recent listings, pending reports panel | Task 155 | [sessions/2026-05-22-task-155-l2-dashboard-build.md](sessions/2026-05-22-task-155-l2-dashboard-build.md) |

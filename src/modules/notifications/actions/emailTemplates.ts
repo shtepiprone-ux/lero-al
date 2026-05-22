@@ -24,6 +24,24 @@ async function assertAdminOrModerator() {
   return { user, role: profile.role as 'admin' | 'moderator' }
 }
 
+/** DELETE is admin-only per the email_templates policy (Task 123 / Task 161). */
+async function assertAdmin() {
+  const user = await getUser()
+  if (!user) return { error: 'unauthorized' as const }
+
+  const supabase = await createClient()
+  const { data: profile } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  if (profile?.role !== 'admin') {
+    return { error: 'forbidden' as const }
+  }
+  return { user }
+}
+
 // Upsert one locale variant of a template (insert or update on key+locale conflict).
 export async function upsertEmailTemplateAction(data: {
   key: string
@@ -61,12 +79,12 @@ export async function upsertEmailTemplateAction(data: {
   return { template: row as EmailTemplate }
 }
 
-// Delete all locale variants for a given key.
+// Delete all locale variants for a given key — ADMIN ONLY (Task 161).
 export async function deleteEmailTemplateGroupAction(
   key: string,
 ): Promise<{ error?: string }> {
-  const auth = await assertAdminOrModerator()
-  if ('error' in auth && !auth.user) return { error: auth.error }
+  const auth = await assertAdmin()
+  if ('error' in auth) return { error: auth.error }
 
   const db = createAdminClient()
   const { error } = await db
@@ -81,12 +99,12 @@ export async function deleteEmailTemplateGroupAction(
   return {}
 }
 
-// Delete a single locale variant by id.
+// Delete a single locale variant by id — ADMIN ONLY (Task 161).
 export async function deleteEmailTemplateLocaleAction(
   id: string,
 ): Promise<{ error?: string }> {
-  const auth = await assertAdminOrModerator()
-  if ('error' in auth && !auth.user) return { error: auth.error }
+  const auth = await assertAdmin()
+  if ('error' in auth) return { error: auth.error }
 
   const db = createAdminClient()
   const { error } = await db

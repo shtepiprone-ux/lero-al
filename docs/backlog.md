@@ -4,30 +4,25 @@
 
 ## Last Session
 
-**2026-05-22 — Task 137 (F.3) — Price-change notifications ✅**
+**2026-05-22 — Task 138 (G.1) — Track recently viewed listings ✅**
 
-- DB migration documented: `favorite_price_alerts` (user_id, listing_id, last_notified_price, last_notified_at) + `'price_change'` notification type.
-- `/api/cron/price-alerts` — daily cron (10 AM UTC): 3-query algorithm (favorites → listing prices → alert rows), baseline inserts on first-time pairs, email + in-app on price change, upsert dedup.
-- `NotificationItem.tsx` — added `price_change: '💰'` to TYPE_ICON (required by exhaustive Record type).
-- `NotificationType` in `database.ts` — added `'price_change'`.
-- `vercel.json` — added cron schedule.
-- **Epic F — CLOSED.** All F sub-tasks (F.1/F.4/F.2/F.3) completed.
+- `recently_viewed` table + RLS + `record_recently_viewed` RPC — migration SQL in session log (⚠️ run in Supabase before G.2).
+- `recordListingView(listingId)` server action: auth → RPC upsert+prune (cap 25); guest → `rv_listings` cookie (JSON UUID array, 25-cap, dedupe-to-front).
+- `RecentlyViewedTracker` client component: 1 500 ms delay, StrictMode + Speculation Rules safe — matches ViewTracker pattern.
+- `RecentlyViewed` type added to `database.ts`; guest cookie contract documented in `docs/analytics-rules.md`.
 
-→ [Task 137 session log](sessions/2026-05-22-task-137-f3-price-change-notifications.md)
+→ [Task 138 session log](sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md)
 
 ## Last-but-one Session
 
-**2026-05-22 — Task 136 (F.2) — Favorites folders/collections ✅**
+**2026-05-22 — Task 137 (F.3) — Price-change notifications ✅**
 
-- DB schema documented (SQL below in session log): `collections` + `collection_items` with RLS.
-- `collectionActions.ts` — 6 server actions: `getCollectionsWithMembership`, `createCollection`, `renameCollection`, `deleteCollection`, `addToCollection`, `removeFromCollection`.
-- `CollectionsSection` — on favorites page: create/rename/delete collections via canonical Dialog/Button/Input.
-- `SaveToCollectionButton` — folder icon picker: fetches membership on Dialog open, toggles add/remove. Used in FavoritesShell (per-card hover overlay) and ListingContact (listing detail).
-- `getUserCollections` added to `favoritesQueries.ts`; page now pre-fetches collections.
-- `CollectionWithCount` type added to `database.ts`.
-- 20 new i18n keys in `collections` namespace (sq/en/uk/it).
+- DB migration documented: `favorite_price_alerts` + `'price_change'` notification type.
+- `/api/cron/price-alerts` — daily cron, 3-query algorithm, email + in-app, upsert dedup.
+- `NotificationItem.tsx` — `price_change: '💰'`; `vercel.json` — cron schedule.
+- **Epic F — CLOSED.**
 
-→ [Task 136 session log](sessions/2026-05-22-task-136-f2-favorites-collections.md)
+→ [Task 137 session log](sessions/2026-05-22-task-137-f3-price-change-notifications.md)
 
 ## Pending Action Items
 
@@ -43,9 +38,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 137 (Epic F.3 — Price-change notifications). **Epic F — CLOSED.**
+**Last completed:** Task 138 (Epic G.1 — Track recently viewed listings). ⚠️ Run `recently_viewed` + RPC SQL in Supabase before G.2.
 
-**Next:** Task 138 (G.1 — Track recently viewed listings).
+**Next:** Task 139 (G.2 — Recently-viewed UI block).
 
 Continue in order: Epic G → H → I → J → L. Numbered list below.
 
@@ -123,6 +118,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic G.1 — Track recently viewed listings (recently_viewed table+RLS+RPC, cookie for guests, RecentlyViewedTracker) | Task 138 | [sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md](sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md) |
 | 2026-05-22 | Epic F.3 — Price-change notifications (cron, favorite_price_alerts, email+in-app, dedup) | Task 137 | [sessions/2026-05-22-task-137-f3-price-change-notifications.md](sessions/2026-05-22-task-137-f3-price-change-notifications.md) |
 | 2026-05-22 | Epic F.2 — Favorites folders/collections (CollectionsSection, SaveToCollectionButton, DB schema, 20 i18n keys) | Task 136 | [sessions/2026-05-22-task-136-f2-favorites-collections.md](sessions/2026-05-22-task-136-f2-favorites-collections.md) |
 | 2026-05-22 | Epic F.4 — Favorites API refactor (addFavorite/removeFavorite; toggleFavorite deleted) | Task 135 | [sessions/2026-05-22-task-135-f4-favorites-api-refactor.md](sessions/2026-05-22-task-135-f4-favorites-api-refactor.md) |

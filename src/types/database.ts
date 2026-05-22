@@ -68,6 +68,13 @@ export interface CollectionWithCount extends Collection {
   item_count: number
 }
 
+export interface RecentlyViewed {
+  id: string
+  user_id: string
+  listing_id: string
+  viewed_at: string
+}
+
 export interface User {
   id: string
   name: string | null

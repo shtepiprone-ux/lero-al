@@ -18,6 +18,7 @@ import { ListingBackButton } from '@/modules/listings/components/ListingBackButt
 import { ListingStatusBanner } from '@/modules/listings/components/ListingStatusBanner'
 import { ListingMobileCTA } from '@/modules/listings/components/ListingMobileCTA'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
+import { RecentlyViewedTracker } from '@/modules/listings/components/RecentlyViewedTracker'
 import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
 import { ListingDescriptionTranslator } from '@/modules/listings/components/ListingDescriptionTranslator'
 import { formatPrice } from '@/lib/formatters'
@@ -289,6 +290,7 @@ export default async function ListingPage({ params }: Props) {
         />
       )}
       <ViewTracker slug={slug} />
+      <RecentlyViewedTracker listingId={listing.id} />
 
       {/* Sticky mobile contact bar — shown only on mobile, above the bottom nav */}
       {!isListingArchived(listing.status as ListingStatus) && owner && (

@@ -1,3 +1,23 @@
+## Recently Viewed Listings — Guest Storage Decision (Task 138 / Epic G.1)
+
+**Decision: cookie, NOT localStorage.**
+
+Rationale: a cookie is included in every HTTP request, so the server component for G.2
+("Recently viewed" section) can read it SSR-first without any client-side hydration step —
+eliminating the flicker that localStorage would cause.
+
+Implementation contract:
+- Cookie name: `rv_listings`
+- Format: JSON array of listing UUIDs (`string[]`), e.g. `["uuid1","uuid2",…]`
+- Cap: 25 entries (same as auth server-side cap). New entries go to the front; deduplication
+  moves an already-present listing to the front. Entries beyond position 25 are pruned.
+- Size bound: 25 × 36 chars (UUID) + JSON delimiters ≈ 950 bytes — well within 4 KB limit.
+- Attributes: `path=/; max-age=2592000; sameSite=lax; httpOnly=false`
+  (`httpOnly: false` so the G.2 client path can also update it without a round-trip.)
+- No PII: only listing UUIDs are stored. No user IDs, prices, or listing content.
+
+---
+
 ## Business Analytics Rules
 
 ### Event Tracking (prepare for future analytics)

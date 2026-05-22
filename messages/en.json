@@ -500,7 +500,30 @@
     "filter_all": "All",
     "filter_label": "Filter by property type",
     "empty_filtered_title": "No results for this filter",
-    "empty_filtered_desc": "Try selecting a different property type or view all favorites"
+    "empty_filtered_desc": "Try selecting a different property type or view all favorites",
+    "error_title": "Error loading favorites",
+    "error_desc": "Something went wrong. Please try again.",
+    "error_retry": "Try again"
+  },
+  "collections": {
+    "title": "Collections",
+    "new": "New collection",
+    "name_placeholder": "Collection name...",
+    "create": "Create",
+    "save_to": "Save to collection",
+    "no_collections": "No collections yet",
+    "no_collections_desc": "Create collections to organize your favorites",
+    "rename": "Rename",
+    "delete": "Delete collection",
+    "delete_confirm": "Delete this collection? Its saved listings will be removed from it.",
+    "new_name_placeholder": "New name...",
+    "created": "Collection created",
+    "renamed": "Collection renamed",
+    "deleted": "Collection deleted",
+    "added": "Added to collection",
+    "removed": "Removed from collection",
+    "name_required": "Name is required",
+    "error_generic": "Something went wrong. Please try again."
   },
   "admin": {
     "locations": {

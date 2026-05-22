@@ -3,9 +3,10 @@ import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { ChevronRight, Home } from 'lucide-react'
 import { getUser } from '@/lib/auth/server'
-import { getFavoriteListings, getFavoriteTypeCounts } from '@/modules/listings/lib/favoritesQueries'
+import { getFavoriteListingsPaginated, getFavoriteTypeCounts, getUserCollections } from '@/modules/listings/lib/favoritesQueries'
 import { FavoritesShell } from '@/modules/listings/components/FavoritesShell'
-import { PROPERTY_TYPES } from '@/modules/listings/constants'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
+import { PROPERTY_TYPES, FAVORITES_PER_PAGE } from '@/modules/listings/constants'
 import type { PropertyType } from '@/types/database'
 
 interface Props {
@@ -42,10 +43,25 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
 
   const typeFilter = parsePropertyType(sp.type)
 
-  const [listings, typeCounts] = await Promise.all([
-    getFavoriteListings(authUser.id, typeFilter),
+  const rawPage = sp.page
+  const page = typeof rawPage === 'string' && /^\d+$/.test(rawPage)
+    ? Math.max(1, parseInt(rawPage, 10))
+    : 1
+
+  let fetchError = false
+
+  const [favResult, typeCounts, collections] = await Promise.all([
+    getFavoriteListingsPaginated(authUser.id, typeFilter, page, FAVORITES_PER_PAGE)
+      .catch((err) => {
+        console.error('Failed to fetch favorite listings', err)
+        fetchError = true
+        return { listings: [] as CardListingData[], total: 0 }
+      }),
     getFavoriteTypeCounts(authUser.id),
+    getUserCollections(authUser.id).catch(() => []),
   ])
+
+  const { listings } = favResult
 
   return (
     <div className="min-h-screen bg-background">
@@ -72,6 +88,10 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
           userId={authUser.id}
           typeFilter={typeFilter}
           typeCounts={typeCounts}
+          page={page}
+          perPage={FAVORITES_PER_PAGE}
+          error={fetchError}
+          initialCollections={collections}
         />
       </div>
     </div>

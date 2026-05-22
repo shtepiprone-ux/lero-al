@@ -47,13 +47,25 @@ export type TicketStatus = 'open' | 'in_progress' | 'resolved' | 'closed'
 export type VerificationStatus = 'pending' | 'approved' | 'rejected'
 export type ReportReason = 'spam' | 'fraud' | 'duplicate' | 'wrong_category' | 'offensive' | 'other'
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
-export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing' | 'report_outcome'
+export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing' | 'report_outcome' | 'price_change'
 
 export interface Company {
   id: string
   name: string
   logo_url: string | null
   created_at: string
+}
+
+export interface Collection {
+  id: string
+  user_id: string
+  name: string
+  created_at: string
+  updated_at: string
+}
+
+export interface CollectionWithCount extends Collection {
+  item_count: number
 }
 
 export interface User {

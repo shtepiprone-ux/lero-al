@@ -3,23 +3,31 @@
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
-import { Heart } from 'lucide-react'
+import { Heart, AlertCircle } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { FavoritesTypeFilter } from '@/modules/listings/components/FavoritesTypeFilter'
+import { ListingsPagination } from '@/modules/listings/components/ListingsPagination'
+import { CollectionsSection } from '@/modules/listings/components/CollectionsSection'
+import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { useFavoritesRealtime } from '@/modules/listings/hooks/useFavoritesRealtime'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { cn } from '@/lib/utils'
+import type { CollectionWithCount } from '@/types/database'
 
 interface Props {
   listings: CardListingData[]
   userId: string
   typeFilter?: string
   typeCounts: Record<string, number>
+  page: number
+  perPage: number
+  error?: boolean
+  initialCollections: CollectionWithCount[]
 }
 
-export function FavoritesShell({ listings: initialListings, userId, typeFilter, typeCounts }: Props) {
+export function FavoritesShell({ listings: initialListings, userId, typeFilter, typeCounts, page, perPage, error, initialCollections }: Props) {
   const t = useTranslations('favorites')
   const locale = useLocale()
   const { rates } = useExchangeRate()
@@ -120,6 +128,30 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
   // branch is correct after in-session unfavorite actions.
   const totalFavorites = Object.values(liveCounts).reduce((a, b) => a + b, 0)
 
+  // Pagination total reflects the active type filter for correct page count.
+  const paginationTotal = typeFilter ? (liveCounts[typeFilter] ?? 0) : totalFavorites
+
+  // Error state: fetch failed on the server.
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-24 gap-5 text-center">
+        <div className="h-20 w-20 rounded-2xl bg-destructive/10 flex items-center justify-center">
+          <AlertCircle className="h-9 w-9 text-destructive" />
+        </div>
+        <div>
+          <h2 className="text-xl font-bold mb-2">{t('error_title')}</h2>
+          <p className="text-muted-foreground text-sm max-w-sm mx-auto">{t('error_desc')}</p>
+        </div>
+        <Link
+          href={`/${locale}/favorites`}
+          className={cn(buttonVariants({ variant: 'outline' }), 'rounded-xl')}
+        >
+          {t('error_retry')}
+        </Link>
+      </div>
+    )
+  }
+
   // Full empty state: user has no favorites at all.
   if (totalFavorites === 0) {
     return (
@@ -143,6 +175,8 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
 
   return (
     <div className="flex flex-col gap-6">
+      <CollectionsSection initialCollections={initialCollections} />
+
       {/* Pass liveCounts so chip counts stay synchronized with displayed listings */}
       <FavoritesTypeFilter typeCounts={liveCounts} currentType={typeFilter} />
 
@@ -164,19 +198,33 @@ export function FavoritesShell({ listings: initialListings, userId, typeFilter, 
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-          {displayedListings.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              isFavorited={true}
-              onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
-              layoutContext="3-col-xl"
-              displayCurrency={displayCurrency}
-              rates={rates}
-            />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+            {displayedListings.map((listing) => (
+              <div key={listing.id} className="relative group">
+                <ListingCard
+                  listing={listing}
+                  isFavorited={true}
+                  onFavoriteToggled={(newState) => handleFavoriteToggled(listing.id, newState)}
+                  layoutContext="3-col-xl"
+                  displayCurrency={displayCurrency}
+                  rates={rates}
+                />
+                <div className="absolute top-2 left-2 z-10 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
+                  <SaveToCollectionButton
+                    listingId={listing.id}
+                    className="bg-card/80 hover:bg-card shadow-sm rounded-lg"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <ListingsPagination
+            total={paginationTotal}
+            page={page}
+            perPage={perPage}
+          />
+        </>
       )}
     </div>
   )

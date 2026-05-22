@@ -500,7 +500,30 @@
     "filter_all": "Të gjitha",
     "filter_label": "Filtro sipas llojit të pronës",
     "empty_filtered_title": "Nuk ka rezultate për këtë filtër",
-    "empty_filtered_desc": "Provoni të zgjidhni një lloj tjetër prone ose shikoni të gjitha të preferuarat"
+    "empty_filtered_desc": "Provoni të zgjidhni një lloj tjetër prone ose shikoni të gjitha të preferuarat",
+    "error_title": "Gabim gjatë ngarkimit",
+    "error_desc": "Diçka shkoi keq. Ju lutemi provoni përsëri.",
+    "error_retry": "Provo përsëri"
+  },
+  "collections": {
+    "title": "Koleksione",
+    "new": "Koleksion i ri",
+    "name_placeholder": "Emri i koleksionit...",
+    "create": "Krijo",
+    "save_to": "Ruaj në koleksion",
+    "no_collections": "Asnjë koleksion",
+    "no_collections_desc": "Krijoni koleksione për të organizuar të preferuarat",
+    "rename": "Riemërtoj",
+    "delete": "Fshi koleksionin",
+    "delete_confirm": "Fshi këtë koleksion? Të gjitha prona e ruajtura do të hiqen nga ai.",
+    "new_name_placeholder": "Emri i ri...",
+    "created": "Koleksioni u krijua",
+    "renamed": "Koleksioni u riemërtua",
+    "deleted": "Koleksioni u fshi",
+    "added": "U shtua në koleksion",
+    "removed": "U hoq nga koleksioni",
+    "name_required": "Emri është i detyrueshëm",
+    "error_generic": "Diçka shkoi keq. Provoni përsëri."
   },
   "admin": {
     "locations": {

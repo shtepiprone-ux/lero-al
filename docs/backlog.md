@@ -4,28 +4,36 @@
 
 ## Last Session
 
-**2026-05-22 — Task 134 (F.1) — Favorites pagination (25/page) ✅**
+**2026-05-22 — Task 137 (F.3) — Price-change notifications ✅**
 
-- Added `getFavoriteListingsPaginated()` (3-step query: ordered IDs → filter IDs → page details).
-- `FAVORITES_PER_PAGE = 25` constant; `page` parsed from URL search params.
-- `FavoritesShell` gains `page`/`perPage` props, renders `ListingsPagination`; pagination total derived from `liveCounts` (stays correct after realtime add/remove).
-- Error state (AlertCircle + retry link) + `loading.tsx` skeleton for the favorites route.
-- 3 new i18n keys (`error_title`, `error_desc`, `error_retry`) in all 4 locale files.
+- DB migration documented: `favorite_price_alerts` (user_id, listing_id, last_notified_price, last_notified_at) + `'price_change'` notification type.
+- `/api/cron/price-alerts` — daily cron (10 AM UTC): 3-query algorithm (favorites → listing prices → alert rows), baseline inserts on first-time pairs, email + in-app on price change, upsert dedup.
+- `NotificationItem.tsx` — added `price_change: '💰'` to TYPE_ICON (required by exhaustive Record type).
+- `NotificationType` in `database.ts` — added `'price_change'`.
+- `vercel.json` — added cron schedule.
+- **Epic F — CLOSED.** All F sub-tasks (F.1/F.4/F.2/F.3) completed.
 
-→ [Task 134 session log](sessions/2026-05-22-task-134-f1-favorites-pagination.md)
+→ [Task 137 session log](sessions/2026-05-22-task-137-f3-price-change-notifications.md)
+
+## Last-but-one Session
+
+**2026-05-22 — Task 136 (F.2) — Favorites folders/collections ✅**
+
+- DB schema documented (SQL below in session log): `collections` + `collection_items` with RLS.
+- `collectionActions.ts` — 6 server actions: `getCollectionsWithMembership`, `createCollection`, `renameCollection`, `deleteCollection`, `addToCollection`, `removeFromCollection`.
+- `CollectionsSection` — on favorites page: create/rename/delete collections via canonical Dialog/Button/Input.
+- `SaveToCollectionButton` — folder icon picker: fetches membership on Dialog open, toggles add/remove. Used in FavoritesShell (per-card hover overlay) and ListingContact (listing detail).
+- `getUserCollections` added to `favoritesQueries.ts`; page now pre-fetches collections.
+- `CollectionWithCount` type added to `database.ts`.
+- 20 new i18n keys in `collections` namespace (sq/en/uk/it).
+
+→ [Task 136 session log](sessions/2026-05-22-task-136-f2-favorites-collections.md)
 
 ## Pending Action Items
 
 Manual/ops actions still required outside of code commits. Keep here until done, then move to the relevant session log.
 
-- ⚠️ **DB migration (Task 126 — account suspension):** run in Supabase before relying on temporary suspension UI.
-  ```sql
-  ALTER TABLE users ADD COLUMN IF NOT EXISTS suspended_until TIMESTAMPTZ;
-  ```
 - ⚠️ **Supabase Auth config (Task 122 — Send Email Hook):** do **NOT** disable Supabase "Confirm email" until the Send Email Hook is verified live in production. Disabling earlier opens an auto-confirm security hole.
-- ⚠️ **Commit Task 133 (E.5 ADR):** the ADR + a stray `useListingsUrlFilters.ts` change were left uncommitted; commit on the Windows checkout (see Task 162). E.5 was scoped doc-only, so decide whether the hook change is intended.
-- ⚠️ **Repo line endings:** the working tree shows a repo-wide CRLF↔LF renormalization (≈380 files) and a malformed `.gitattributes` (`"* text=auto"` quoted). Fix `.gitattributes` and reconcile EOL on Windows; do **not** commit the EOL-only noise.
-- ⚠️ **Run `npm install`:** `standardwebhooks` (Task 122 hook fix) is in `package.json` but the lockfile wasn't synced in the sandbox.
 
 ## Carry-over from Sprint 1 / Epic A
 
@@ -34,9 +42,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 134 (Epic F.1 — Favorites pagination, 25/page).
+**Last completed:** Task 137 (Epic F.3 — Price-change notifications). **Epic F — CLOSED.**
 
-**Next:** Task 135 (F.4 — API refactor `addFavorite`/`removeFavorite`).
+**Next:** Task 138 (G.1 — Track recently viewed listings).
 
 After F.1, continue in order: F.4 → F.2 → F.3, then Epic G → H → I → J → L. Numbered list below.
 
@@ -120,6 +128,9 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic F.3 — Price-change notifications (cron, favorite_price_alerts, email+in-app, dedup) | Task 137 | [sessions/2026-05-22-task-137-f3-price-change-notifications.md](sessions/2026-05-22-task-137-f3-price-change-notifications.md) |
+| 2026-05-22 | Epic F.2 — Favorites folders/collections (CollectionsSection, SaveToCollectionButton, DB schema, 20 i18n keys) | Task 136 | [sessions/2026-05-22-task-136-f2-favorites-collections.md](sessions/2026-05-22-task-136-f2-favorites-collections.md) |
+| 2026-05-22 | Epic F.4 — Favorites API refactor (addFavorite/removeFavorite; toggleFavorite deleted) | Task 135 | [sessions/2026-05-22-task-135-f4-favorites-api-refactor.md](sessions/2026-05-22-task-135-f4-favorites-api-refactor.md) |
 | 2026-05-22 | Epic F.1 — Favorites pagination 25/page (paginated query, loading skeleton, error state, 4 locales) | Task 134 | [sessions/2026-05-22-task-134-f1-favorites-pagination.md](sessions/2026-05-22-task-134-f1-favorites-pagination.md) |
 | 2026-05-21 | Task 159 — Sprint 4 — Auth flow consolidation (AuthSheet canonical, legacy LoginForm/RegisterForm deleted) | Task 159 | [sessions/2026-05-21-task-159-auth-flow-consolidation.md](sessions/2026-05-21-task-159-auth-flow-consolidation.md) |
 | 2026-05-21 | Task 158 — Sprint 4 — Country-aware phone validation (libphonenumber-js, shared PhoneField, 25 tests) | Task 158 | [sessions/2026-05-21-task-158-country-aware-phone-validation.md](sessions/2026-05-21-task-158-country-aware-phone-validation.md) |

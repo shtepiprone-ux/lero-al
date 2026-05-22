@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { toggleFavorite } from '@/modules/listings/actions/toggleFavorite'
+import { addFavorite, removeFavorite } from '@/modules/listings/actions/favoriteActions'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { openAuthSheet } from '@/lib/auth/authSheet'
 
@@ -65,9 +65,9 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     setFavorited(nextState)
 
     startTransition(async () => {
-      // Pass previousState so the server knows the user's intent (add vs. remove).
-      // This prevents incorrect DELETE on 23505 when two tabs favorite simultaneously.
-      const result = await toggleFavorite(listingId, previousState)
+      const result = previousState
+        ? await removeFavorite(listingId)
+        : await addFavorite(listingId)
 
       if ('error' in result) {
         setFavorited(previousState)

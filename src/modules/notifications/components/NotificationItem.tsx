@@ -16,6 +16,7 @@ const TYPE_ICON: Record<NotificationType, string> = {
   agent_verified:         '✅',
   marketing:              '📢',
   report_outcome:         '🛡️',
+  price_change:           '💰',
 }
 
 interface Props {

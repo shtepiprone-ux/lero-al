@@ -500,7 +500,30 @@
     "filter_all": "Tutti",
     "filter_label": "Filtra per tipo di proprietà",
     "empty_filtered_title": "Nessun risultato per questo filtro",
-    "empty_filtered_desc": "Prova a selezionare un tipo di proprietà diverso o visualizza tutti i preferiti"
+    "empty_filtered_desc": "Prova a selezionare un tipo di proprietà diverso o visualizza tutti i preferiti",
+    "error_title": "Errore nel caricamento",
+    "error_desc": "Qualcosa è andato storto. Si prega di riprovare.",
+    "error_retry": "Riprova"
+  },
+  "collections": {
+    "title": "Collezioni",
+    "new": "Nuova collezione",
+    "name_placeholder": "Nome collezione...",
+    "create": "Crea",
+    "save_to": "Salva nella collezione",
+    "no_collections": "Nessuna collezione",
+    "no_collections_desc": "Crea collezioni per organizzare i tuoi preferiti",
+    "rename": "Rinomina",
+    "delete": "Elimina collezione",
+    "delete_confirm": "Eliminare questa collezione? Tutti gli annunci salvati verranno rimossi.",
+    "new_name_placeholder": "Nuovo nome...",
+    "created": "Collezione creata",
+    "renamed": "Collezione rinominata",
+    "deleted": "Collezione eliminata",
+    "added": "Aggiunto alla collezione",
+    "removed": "Rimosso dalla collezione",
+    "name_required": "Il nome è obbligatorio",
+    "error_generic": "Qualcosa è andato storto. Si prega di riprovare."
   },
   "admin": {
     "locations": {

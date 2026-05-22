@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
+import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
 import { openAuthSheet } from '@/lib/auth/authSheet'
 import type { ListingStatus } from '@/types/database'
@@ -196,13 +197,20 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
             {/* Secondary actions */}
             <div className="flex gap-2">
               {listingId && (
-                <FavoriteButton
-                  listingId={listingId}
-                  isFavorited={isFavorited}
-                  disabled={listingClosed}
-                  disabledLabel={closedLabel}
-                  className="flex-1 h-9 w-auto rounded-xl border border-border"
-                />
+                <>
+                  <FavoriteButton
+                    listingId={listingId}
+                    isFavorited={isFavorited}
+                    disabled={listingClosed}
+                    disabledLabel={closedLabel}
+                    className="flex-1 h-9 w-auto rounded-xl border border-border"
+                  />
+                  <SaveToCollectionButton
+                    listingId={listingId}
+                    variant="default"
+                    className="flex-1 h-9 rounded-xl border border-border"
+                  />
+                </>
               )}
               <Button
                 variant="outline"

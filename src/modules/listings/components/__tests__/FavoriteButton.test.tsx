@@ -8,9 +8,11 @@ vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }))
 
-const mockToggleFavorite = vi.fn()
-vi.mock('@/modules/listings/actions/toggleFavorite', () => ({
-  toggleFavorite: (...args: unknown[]) => mockToggleFavorite(...args),
+const mockAddFavorite = vi.fn()
+const mockRemoveFavorite = vi.fn()
+vi.mock('@/modules/listings/actions/favoriteActions', () => ({
+  addFavorite: (...args: unknown[]) => mockAddFavorite(...args),
+  removeFavorite: (...args: unknown[]) => mockRemoveFavorite(...args),
 }))
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -27,7 +29,8 @@ function getButton() { return screen.getByRole('button') }
 describe('FavoriteButton', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    mockToggleFavorite.mockResolvedValue({ isFavorited: true })
+    mockAddFavorite.mockResolvedValue({ isFavorited: true })
+    mockRemoveFavorite.mockResolvedValue({ isFavorited: false })
   })
 
   it('renders with initial unfavorited state', () => {
@@ -64,8 +67,8 @@ describe('FavoriteButton', () => {
   })
 
   it('applies optimistic update on click before server responds', async () => {
-    let resolveToggle!: (val: { isFavorited: boolean }) => void
-    mockToggleFavorite.mockReturnValue(new Promise(r => { resolveToggle = r }))
+    let resolveAdd!: (val: { isFavorited: boolean }) => void
+    mockAddFavorite.mockReturnValue(new Promise(r => { resolveAdd = r }))
 
     renderButton({ isFavorited: false })
     fireEvent.click(getButton())
@@ -73,12 +76,12 @@ describe('FavoriteButton', () => {
     // Optimistic: flips immediately before server responds
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
 
-    await act(async () => { resolveToggle({ isFavorited: true }) })
+    await act(async () => { resolveAdd({ isFavorited: true }) })
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
   })
 
   it('rolls back to previous state on server error', async () => {
-    mockToggleFavorite.mockResolvedValue({ error: 'network error' })
+    mockAddFavorite.mockResolvedValue({ error: 'network error' })
 
     renderButton({ isFavorited: false })
     await act(async () => { fireEvent.click(getButton()) })
@@ -87,7 +90,6 @@ describe('FavoriteButton', () => {
   })
 
   it('calls onToggled with server-confirmed state', async () => {
-    mockToggleFavorite.mockResolvedValue({ isFavorited: true })
     const onToggled = vi.fn()
 
     renderButton({ isFavorited: false, onToggled })
@@ -99,8 +101,8 @@ describe('FavoriteButton', () => {
   it('external prop update during pending transition does NOT override optimistic state (isPendingRef guard)', async () => {
     // Sequence: click (optimistic=true) → external prop update (false) while pending
     // Expected: button stays optimistically true until server settles
-    let resolveToggle!: (val: { isFavorited: boolean }) => void
-    mockToggleFavorite.mockReturnValue(new Promise(r => { resolveToggle = r }))
+    let resolveAdd!: (val: { isFavorited: boolean }) => void
+    mockAddFavorite.mockReturnValue(new Promise(r => { resolveAdd = r }))
 
     const { rerender } = renderButton({ isFavorited: false })
 
@@ -117,13 +119,13 @@ describe('FavoriteButton', () => {
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
 
     // Settle transition
-    await act(async () => { resolveToggle({ isFavorited: true }) })
+    await act(async () => { resolveAdd({ isFavorited: true }) })
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
   })
 
   it('converges to server truth after transition settles', async () => {
-    let resolveToggle!: (val: { isFavorited: boolean }) => void
-    mockToggleFavorite.mockReturnValue(new Promise(r => { resolveToggle = r }))
+    let resolveAdd!: (val: { isFavorited: boolean }) => void
+    mockAddFavorite.mockReturnValue(new Promise(r => { resolveAdd = r }))
 
     const onToggled = vi.fn()
     const { rerender } = renderButton({ isFavorited: false, onToggled })
@@ -131,7 +133,7 @@ describe('FavoriteButton', () => {
     fireEvent.click(getButton())
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
 
-    await act(async () => { resolveToggle({ isFavorited: true }) })
+    await act(async () => { resolveAdd({ isFavorited: true }) })
     // Simulate parent acknowledging onToggled → prop updates to true
     await act(async () => {
       rerender(<FavoriteButton listingId="test-id" isFavorited={true} onToggled={onToggled} />)

@@ -97,6 +97,7 @@ export const LAND_DEVELOPMENT_POTENTIAL = [
 ] as const
 
 export const LISTINGS_PER_PAGE = 25
+export const FAVORITES_PER_PAGE = 25
 export const LISTING_NEW_DAYS = 7
 export const MIN_PROPERTY_YEAR = 1950
 // Days after which an archived listing gets noindex. Sourced from admin settings in the future.

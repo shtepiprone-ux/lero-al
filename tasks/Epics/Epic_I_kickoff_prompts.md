@@ -15,6 +15,10 @@ You are Claude Code Sonnet 4.6 working in the `lero-al` project.
 
 Context: Epic I — sub-task I.1. Document as Task 148 (verify against docs/backlog.md).
 
+Hard contract (do NOT violate): do not change the scope below; do not introduce your own
+architectural decisions — if ambiguous, STOP and ask, do not invent scope; execute the acceptance
+criteria literally; update docs/backlog.md + add a docs/sessions/ log.
+
 Bug: The "New" badge on listing cards currently extends its visibility when a listing is EDITED (likely keyed off updated_at or a derived field). It must depend ONLY on created_at.
 
 Required pre-read:
@@ -44,9 +48,9 @@ Acceptance criteria:
 - Threshold (7 days) documented in docs/domain-rules.md.
 - Badge label renders in all 4 locales (regression check, no new keys).
 - 0 new lint/warnings; typecheck no new errors; governance gates PASS.
-- Session log + backlog updated. Commit + push.
+- Session log + backlog updated. Commit hygiene: single `git add -A` (NO `^`/backtick multi-line continuations — they fail in PowerShell and stage nothing); `git status` clean of untracked source; commit + push; confirm with `git log -1` (paste real output).
 
-Out of scope: status helpers centralization (I.2), helper API evolution (I.3). Follow docs/ai-behavior.md.
+Out of scope: status helpers centralization (I.2), helper API evolution (I.3). Follow docs/ai-behavior.md and docs/orchestrator-role.md.
 ```
 
 ---

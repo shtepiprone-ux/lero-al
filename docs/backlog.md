@@ -4,6 +4,15 @@
 
 ## Last Session
 
+**2026-05-22 — Task 148 (I.1) — Fix "New" badge logic ✅**
+
+- Detail page: hardcoded `7` → `LISTING_NEW_DAYS` constant (no `updated_at` usage found anywhere).
+- `docs/domain-rules.md`: "Listing 'New' Badge Rule" section added.
+
+→ [Task 148 session log](sessions/2026-05-22-task-148-i1-new-badge-fix.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 147 (H.7) — Other photos folder structure ✅ — Epic H CLOSED**
 
 - `upload-company-logo`: `'companies'` → `` `companies/${companyId}` `` (one line).
@@ -131,9 +140,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 147 (H.7 — Other photos folder). **Epic H — CLOSED.**
+**Last completed:** Task 148 (I.1 — "New" badge fix).
 
-**Next:** Task 148 (I.1 — Fix "New" badge logic).
+**Next:** Task 149 (I.2 — Centralize status helpers).
 
 ## Task roadmap — numbered
 
@@ -199,6 +208,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic I.1 — "New" badge: hardcoded 7 → LISTING_NEW_DAYS; domain-rules.md rule added | Task 148 | [sessions/2026-05-22-task-148-i1-new-badge-fix.md](sessions/2026-05-22-task-148-i1-new-badge-fix.md) |
 | 2026-05-22 | Epic H.7 — Company logo folder companies/<id>/; folder tree complete; Epic H CLOSED | Task 147 | [sessions/2026-05-22-task-147-h7-other-photos-folder.md](sessions/2026-05-22-task-147-h7-other-photos-folder.md) |
 | 2026-05-22 | Epic H.5 — Listing image cleanup: orphan diff in updateListing + bulk cleanup in deleteListing | Task 146 | [sessions/2026-05-22-task-146-h5-listing-image-cleanup.md](sessions/2026-05-22-task-146-h5-listing-image-cleanup.md) |
 | 2026-05-22 | Epic H.3 — Avatar cleanup: read old URL → upload → DB update → deleteAsset(old) | Task 145 | [sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md](sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md) |

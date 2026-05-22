@@ -30,6 +30,7 @@ import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeature
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
+import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
 //
@@ -252,8 +253,7 @@ export default async function ListingPage({ params }: Props) {
   const pricePerSqm = listing.area_gross ? Math.round(listing.price / listing.area_gross) : null
   const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'}/${locale}/listings/${slug}`
 
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
-  const isNew = new Date(listing.created_at) > sevenDaysAgo
+  const isNew = new Date(listing.created_at) > new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
   const isPriceReduced = listing.price_old && listing.price < listing.price_old
 
   const features    = getDetailFeatures(listing)

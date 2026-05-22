@@ -55,6 +55,22 @@ A user with `deleted_at IS NOT NULL` is considered deleted. Their archived listi
 - **Admin users table (`/admin/users`)**: the "Role" column is a read-only `<Badge>` — no inline editor, no Select, no Combobox, no click-to-cycle. Any future code that re-introduces an editable control in that cell is a violation.
 - **Audit log**: role changes via profile edit are written to `user_change_log` (field `profile_type`). Status changes written to `user_status_history`.
 
+## Listing "New" Badge Rule (Epic I.1 / Task 148)
+
+The "New" badge on listing cards and the listing detail page is determined **solely by `created_at`**.
+Editing a listing MUST NOT extend its "New" badge — `updated_at` is never used.
+
+**Rule:** badge visible when `Date.now() - listing.created_at ≤ LISTING_NEW_DAYS × 86400000 ms`
+
+**Constant:** `LISTING_NEW_DAYS = 7` defined in `src/modules/listings/constants/index.ts`.
+
+**Single source of truth:** the constant must be imported from the canonical location.
+Never hardcode the threshold (e.g. `7`, `sevenDaysAgo`) inline in components or pages.
+
+**Consumers:**
+- `src/modules/listings/components/ListingCard.tsx` — `getBadges()` function
+- `src/app/[locale]/listings/[slug]/page.tsx` — `isNew` derived field
+
 ## Permissions
 
 - **Create listing**: any authenticated user (private person or agent).

@@ -58,7 +58,15 @@ Out of scope: avatar-specific path (H.2), listing-image path (H.4), other photos
 You are Claude Code Sonnet 4.6 working in the `lero-al` project.
 
 Context: Epic H — sub-task H.2. Document as Task 142 (verify against docs/backlog.md).
-DEPENDENCY: H.1 (Task 141) — root user folder layout must exist.
+DEPENDENCY: H.1 (Task 141) — DONE. H.1 shipped the shared `uploadToCloudinary(bytes, mime, folder)`
+utility (`src/lib/cloudinaryUpload.ts`) + `publicIdFromUrl()`; the avatar route
+(`src/app/api/upload-avatar/route.ts`) currently passes folder `'avatars'`. H.2 = change that folder
+argument to the user-scoped path (this is where the actual `<user_id>/` prefixing happens — H.1 did
+NOT prefix yet).
+
+Hard contract (do NOT violate): do not change the scope below; do not introduce your own
+architectural decisions — if ambiguous, STOP and ask, do not invent scope; execute the acceptance
+criteria literally; update docs/backlog.md + add a docs/sessions/ log.
 
 Goal: All new avatars land at `<user_id>/avatars/...`.
 
@@ -81,9 +89,9 @@ Scope:
 Acceptance criteria:
 - New avatar uploaded by a test user lands in `<user_id>/avatars/`; profile + AppImage variant=avatar render correctly.
 - 0 new lint/warnings; governance gates PASS.
-- Session log + backlog updated. Commit + push.
+- Session log + backlog updated. Commit hygiene: single `git add -A` (NO `^`/backtick multi-line continuations — they fail in PowerShell and stage nothing); `git status` clean of untracked source; commit + push; confirm with `git log -1` (paste real output).
 
-Out of scope: replacement cleanup (H.3 — needs H.6 first). Follow docs/ai-behavior.md.
+Out of scope: replacement cleanup (H.3 — needs H.6 first). Follow docs/ai-behavior.md and docs/orchestrator-role.md.
 ```
 
 ---
@@ -95,6 +103,13 @@ You are Claude Code Sonnet 4.6 working in the `lero-al` project.
 
 Context: Epic H — sub-task H.4. Document as Task 143 (verify against docs/backlog.md).
 DEPENDENCY: H.1 (Task 141).
+
+NOTE (intel from H.1 review): listing images are uploaded via a CLIENT-SIDE **unsigned** Cloudinary
+upload preset (`NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`) in `src/app/[locale]/listings/create/page.tsx`
+and `src/app/[locale]/listings/[slug]/edit/page.tsx` — NOT via the server-side `uploadToCloudinary`
+utility (which only the avatar + company-logo routes use). For unsigned preset uploads the folder is
+set via the upload params / preset config, so the path change must be done there (or by moving
+listing uploads server-side). Plan accordingly; do not assume `uploadToCloudinary(folder)` covers it.
 
 Goal: All new listing photos land at `<user_id>/listings/<listing_id>/...`.
 

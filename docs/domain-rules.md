@@ -71,6 +71,52 @@ Never hardcode the threshold (e.g. `7`, `sevenDaysAgo`) inline in components or 
 - `src/modules/listings/components/ListingCard.tsx` — `getBadges()` function
 - `src/app/[locale]/listings/[slug]/page.tsx` — `isNew` derived field
 
+## Listing Status Helpers — Canonical API (Epic I.2 / Task 149)
+
+**Single import path:** `import { … } from '@/modules/listings/domain'`
+
+Helpers live in `src/modules/listings/domain/listingSemanticHelpers.ts` and
+`src/modules/listings/domain/listingTransitionEngine.ts`, re-exported by `domain/index.ts`.
+**Never scatter `if (status === 'X')` checks outside the domain module.**
+
+### Boolean helpers (from `listingSemanticHelpers.ts`)
+
+| Helper | Meaning | Replaces |
+|---|---|---|
+| `isListingVisible(status)` | Publicly visible in search | `status === 'active'` |
+| `isListingHidden(status)` | Exists but not in public index | `status === 'pending' \|\| 'inactive'` |
+| `isListingArchived(status)` | Historical/admin archive | `status === 'archived'` |
+| `isListingClosed(status)` | Market transaction completed | `status === 'sold' \|\| 'rented'` |
+| `isListingEditableStatus(status)` | Status allows content editing | group === VISIBLE or HIDDEN |
+| `isListingReadonlyStatus(status)` | Status blocks content editing | inverse of above |
+
+### Transition helpers (from `listingTransitionEngine.ts`)
+
+| Helper | Meaning |
+|---|---|
+| `isTerminalListingStatus(status)` | No further transitions allowed |
+| `isMarketClosedStatus(status)` | Transaction closed (sold/rented) |
+| `isModeratableStatus(status)` | Admin can review / approve |
+
+### Permitted exceptions (do NOT route through helpers)
+
+- **Display maps** — `STATUS_BADGE[status]`, `STATUS_VARIANT[status]` (badge colors, admin table styles)
+- **DB query filters** — `.eq('status', 'active')` (Supabase needs literal strings)
+- **Individual sold/rented badge color** — `ListingCard.tsx` distinguishes sold vs rented colors; `isListingClosed()` merges both and loses the distinction. Guarded by `// eslint-disable-next-line no-restricted-syntax` + inline comment.
+
+### Future ListingStateMachine evolution trigger
+
+Keep the current `(status: ListingStatus) => boolean` signatures **until** one of these conditions is met:
+1. Publishing workflows arrive (e.g. scheduled publish, draft → review → published).
+2. Moderation automation arrives (auto-hide, auto-flag based on listing fields).
+3. Lifecycle transitions arrive that need listing context beyond `status` (e.g. `expires_at`, `featured_until`).
+4. Listing automation arrives (auto-expire, auto-renew, dynamic price rules).
+
+When any of the above land, **migrate helpers to `(listing: ListingSnapshot) => boolean`** — the
+function signatures evolve from `status`-only to full listing object, enabling richer rule evaluation
+without changing the call sites (callers pass the listing, helpers extract what they need).
+Track this as a follow-up task in `docs/backlog.md §Follow-ups`.
+
 ## Permissions
 
 - **Create listing**: any authenticated user (private person or agent).

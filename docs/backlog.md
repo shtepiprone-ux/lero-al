@@ -4,6 +4,25 @@
 
 ## Last Session
 
+**2026-05-22 — Task 150 (I.3) — Helper API evolution trigger ✅ — Epic I CLOSED**
+
+- Evolution trigger documented in `domain-rules.md`; placeholder in backlog §Follow-ups. No code changes.
+- **Epic I — CLOSED** (Tasks 148–150 all done).
+
+→ [Task 150 session log](sessions/2026-05-22-task-150-i3-helper-api-evolution.md)
+
+## Last-but-one Session
+
+**2026-05-22 — Task 149 (I.2) — Centralize status helpers ✅**
+
+- Grep verified: domain already complete — no unguarded `status === 'X'` outside `domain/`.
+- `docs/domain-rules.md`: full helpers table + permitted exceptions + ListingStateMachine evolution trigger.
+- No code changes needed (helpers existed; import path confirmed).
+
+→ [Task 149 session log](sessions/2026-05-22-task-149-i2-status-helpers.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 148 (I.1) — Fix "New" badge logic ✅**
 
 - Detail page: hardcoded `7` → `LISTING_NEW_DAYS` constant (no `updated_at` usage found anywhere).
@@ -140,17 +159,19 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 148 (I.1 — "New" badge fix).
+**Last completed:** Task 150 (I.3 — evolution trigger docs). **Epic I — CLOSED.**
 
-**Next:** Task 149 (I.2 — Centralize status helpers).
+**Next:** Task 151 (J.1 — Schema + admin CRUD for popular locations).
 
 ## Task roadmap — numbered
 
 Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Closed sprints & epics**. Epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L. Numbers are global — never reused; if priorities change, renumber forward from the change point.
 
-~~**Epic G — Recently Viewed Listings**~~ — **CLOSED** (Tasks 138–140, 163–164; ⚠️ responsive screenshots deferred)
+~~**Epic G — Recently Viewed Listings**~~ — **CLOSED** (Tasks 138–140, 163–165)
 
 ~~**Epic H — Cloudinary Storage Hygiene**~~ — **CLOSED** (Tasks 141–147)
+
+~~**Epic I — Listing Lifecycle & Status Rules**~~ — **CLOSED** (Tasks 148–150)
 
 **Epic I — Listing Lifecycle & Status Rules**
 - **Task 148** — I.1 Fix "New" badge logic (created_at only).
@@ -172,6 +193,7 @@ Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Clos
 - **Task 160** — C.5 follow-up: real block / suspension enforcement (server-side across all writes; enforce `suspended_until` time-based + auto-lift). From the 2026-05-21 review of Task 126 (blocking was enforced only in createListing; `suspended_until` was cosmetic). Kickoff: [`tasks/Epics/Epic_C_kickoff_prompt_Task_160.md`](../tasks/Epics/Epic_C_kickoff_prompt_Task_160.md).
 - **Task 161** — D.2 follow-up: email-template delete = admin-only + verify/apply the RLS matrix. From the review of Task 123 (delete action allowed moderator while policy is admin-only; service-role bypasses RLS). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_161.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_161.md).
 - **Task 162** — E.5 follow-up: commit the URL-state ADR + resolve the stray `useListingsUrlFilters.ts` change (Task 133 deliverables were left uncommitted). Kickoff: [`tasks/Epics/Epic_E_kickoff_prompt_Task_162.md`](../tasks/Epics/Epic_E_kickoff_prompt_Task_162.md).
+- **I.3 deferred** — Listing status helper API migration `(status) → (listing)`. Trigger: publishing workflows / moderation automation / lifecycle transitions / listing automation arrive. See `docs/domain-rules.md §Listing Status Helpers — evolution trigger`. No task number until trigger fires.
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
@@ -208,6 +230,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic I.3 — Helper API evolution trigger documented; Epic I CLOSED | Task 150 | [sessions/2026-05-22-task-150-i3-helper-api-evolution.md](sessions/2026-05-22-task-150-i3-helper-api-evolution.md) |
+| 2026-05-22 | Epic I.2 — Status helpers: grep verified (domain complete); helpers table + evolution trigger in domain-rules.md | Task 149 | [sessions/2026-05-22-task-149-i2-status-helpers.md](sessions/2026-05-22-task-149-i2-status-helpers.md) |
 | 2026-05-22 | Epic I.1 — "New" badge: hardcoded 7 → LISTING_NEW_DAYS; domain-rules.md rule added | Task 148 | [sessions/2026-05-22-task-148-i1-new-badge-fix.md](sessions/2026-05-22-task-148-i1-new-badge-fix.md) |
 | 2026-05-22 | Epic H.7 — Company logo folder companies/<id>/; folder tree complete; Epic H CLOSED | Task 147 | [sessions/2026-05-22-task-147-h7-other-photos-folder.md](sessions/2026-05-22-task-147-h7-other-photos-folder.md) |
 | 2026-05-22 | Epic H.5 — Listing image cleanup: orphan diff in updateListing + bulk cleanup in deleteListing | Task 146 | [sessions/2026-05-22-task-146-h5-listing-image-cleanup.md](sessions/2026-05-22-task-146-h5-listing-image-cleanup.md) |

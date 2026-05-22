@@ -21,8 +21,9 @@ All implementation is delegated to Sonnet 4.6 via a copy-paste prompt.
    `tasks/Epics/` + `tasks/Sprints/` files, and current repo state. Never plan from memory.
 2. **Plan top-down:** Epic → Sprint → Task. Keep all task/epic/sprint files inside `/tasks`
    (see "Task File Location Rules" in `ai-behavior.md`).
-3. **Hand off a ready copy-paste prompt for Sonnet 4.6** with *literal* acceptance criteria —
-   not a paraphrase. The executor should be able to run it without guessing scope.
+3. **Hand off a ready prompt for Sonnet 4.6 — written to a FILE, not pasted into chat** — with
+   *literal* acceptance criteria, not a paraphrase. The executor should be able to run it without
+   guessing scope. See "Prompt hand-off rule" below.
 4. **When Sonnet returns work, verify the actual `diff`, not its report.** The session log is a
    claim, not evidence. Read the real changes (`git show` / `git diff`) and look specifically for:
    - **Missing locales** — every user-facing string must exist in **all four**: `sq`, `en`, `uk`, `it`.
@@ -31,6 +32,18 @@ All implementation is delegated to Sonnet 4.6 via a copy-paste prompt.
      hardcoded strings/tokens, scope creep, undocumented architectural decisions.
 5. **Decide:** either **approve**, or **open a follow-up task** (file in `/tasks` + copy-paste prompt).
    Do not silently fix executor mistakes by writing code yourself — route them back as tasks.
+
+## Prompt hand-off rule (MANDATORY)
+
+**Every kickoff / copy-paste prompt for Sonnet 4.6 MUST be written to a file — never delivered
+only in chat.** Sonnet reads task files directly; a prompt that lives only in a chat message
+cannot be opened by the executor and drifts out of sync with the repo.
+
+- Location + naming: a kickoff file under `/tasks` following the existing convention,
+  e.g. `tasks/Epics/Epic_<X>_kickoff_prompt_Task_<NNN>.md` (or `tasks/Sprints/...` for sprints).
+- After writing the file, the orchestrator tells the user **the file path only** (and may give a
+  one-line summary). Do **not** paste the full prompt body into chat.
+- If the prompt changes, edit the file — keep the file as the single source of truth.
 
 ## Hard contract embedded in EVERY Sonnet prompt
 

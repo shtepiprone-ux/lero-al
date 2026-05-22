@@ -4,25 +4,24 @@
 
 ## Last Session
 
-**2026-05-22 — Task 163 (P0) — Epic G recovery — working tree + build restored ✅**
+**2026-05-22 — Task 164 (P1) — Epic G correctness + closure ✅ — Epic G CLOSED**
 
-- Working tree confirmed intact (all listed files match HEAD or have correct G.2 wiring).
-- G.2 wiring committed: `recentlyViewedQueries.ts` (untracked → staged), `CabinetShell` + `ProfileTab` + listing detail page wired.
-- typecheck 0 errors; governance:localization / ssr / components all PASS.
-- **Epic G — REOPENED** (delivery rejected by orchestrator review); closure pending Task 164.
+- Scope fix: `showClear` prop — clear button now profile-only (listing detail unaffected).
+- DB migration confirmed live in Supabase (table + RLS + RPC applied).
+- Locale parity: all 8 `recently_viewed_*` keys × 4 locales verified.
+- Screenshots deferred: auth/DB Server Component → Storybook story needed (follow-up task).
+- **Epic G — CLOSED** (⚠️ responsive screenshots pending Storybook story).
 
-→ [Task 163 session log](sessions/2026-05-22-task-163-epic-g-recovery.md)
+→ [Task 164 session log](sessions/2026-05-22-task-164-epic-g-closure.md)
 
 ## Last-but-one Session
 
-**2026-05-22 — Tasks 138–140 (Epic G.1/G.2/G.3) — delivery (under orchestrator review)**
+**2026-05-22 — Task 163 (P0) — Epic G recovery ✅**
 
-- G.1: `recently_viewed` table+RLS+RPC SQL, `recordListingView` action, `rv_listings` cookie for guests.
-- G.2: `RecentlyViewedSection` Server Component, listing detail + profile integration; 2 i18n keys × 4 locales.
-- G.3: `ClearRecentlyViewedButton`, `clearRecentlyViewed` action, 6 i18n keys × 4 locales.
-- Status: **REOPENED** — orchestrator rejected; recovery in Task 163, closure in Task 164.
+- Build restored: G.2 wiring + `recentlyViewedQueries.ts` committed; `'use server'` constants extracted.
+- typecheck 0 / governance all PASS / build green.
 
-→ [Task 140 session log](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md)
+→ [Task 163 session log](sessions/2026-05-22-task-163-epic-g-recovery.md)
 
 ## Pending Action Items
 
@@ -38,15 +37,15 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 163 (Epic G recovery — P0). **Epic G — REOPENED** (pending Task 164).
+**Last completed:** Task 164 (Epic G closure). **Epic G — CLOSED** (⚠️ screenshots pending Storybook story — follow-up before Epic H review).
 
-**Next:** Task 164 (P1 — Epic G correctness + closure: clear-button scope fix, DB migration, breakpoint screenshots, re-close).
+**Next:** Task 141 (H.1 — Cloudinary user-based folder structure).
 
 ## Task roadmap — numbered
 
 Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Closed sprints & epics**. Epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L. Numbers are global — never reused; if priorities change, renumber forward from the change point.
 
-**Epic G — Recently Viewed Listings** — **REOPENED** (Tasks 138–140 delivered; Tasks 163–164 for recovery + closure)
+~~**Epic G — Recently Viewed Listings**~~ — **CLOSED** (Tasks 138–140, 163–164; ⚠️ responsive screenshots deferred)
 
 **Epic H — Cloudinary Storage Hygiene** (H.6 safety audit before any cleanup)
 - **Task 141** — H.1 User-based folder structure.
@@ -113,7 +112,9 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
-| 2026-05-22 | Epic G.3 — Clear recently viewed history (clearRecentlyViewed action, ClearRecentlyViewedButton, Dialog+toast, Epic G CLOSED) | Task 140 | [sessions/2026-05-22-task-140-g3-clear-recently-viewed.md](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md) |
+| 2026-05-22 | Epic G — Task 164 — correctness closure: showClear scope fix, DB migration confirmed, locale parity verified | Task 164 | [sessions/2026-05-22-task-164-epic-g-closure.md](sessions/2026-05-22-task-164-epic-g-closure.md) |
+| 2026-05-22 | Epic G — Task 163 — P0 recovery: G.2 wiring committed, recentlyViewedQueries.ts staged, build restored | Task 163 | [sessions/2026-05-22-task-163-epic-g-recovery.md](sessions/2026-05-22-task-163-epic-g-recovery.md) |
+| 2026-05-22 | Epic G.3 — Clear recently viewed history (clearRecentlyViewed action, ClearRecentlyViewedButton, Dialog+toast) | Task 140 | [sessions/2026-05-22-task-140-g3-clear-recently-viewed.md](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md) |
 | 2026-05-22 | Epic G.2 — Recently viewed UI block (RecentlyViewedSection, listing detail + profile, 4 locales) | Task 139 | [sessions/2026-05-22-task-139-g2-recently-viewed-ui.md](sessions/2026-05-22-task-139-g2-recently-viewed-ui.md) |
 | 2026-05-22 | Epic G.1 — Track recently viewed listings (recently_viewed table+RLS+RPC, cookie for guests, RecentlyViewedTracker) | Task 138 | [sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md](sessions/2026-05-22-task-138-g1-recently-viewed-tracking.md) |
 | 2026-05-22 | Epic F.3 — Price-change notifications (cron, favorite_price_alerts, email+in-app, dedup) | Task 137 | [sessions/2026-05-22-task-137-f3-price-change-notifications.md](sessions/2026-05-22-task-137-f3-price-change-notifications.md) |

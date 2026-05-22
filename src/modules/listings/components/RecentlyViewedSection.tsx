@@ -12,6 +12,8 @@ interface Props {
   limit?: number
   /** Show the empty state message instead of returning null when no items. */
   showEmptyState?: boolean
+  /** Render the "Clear history" button — profile only, never on listing detail. */
+  showClear?: boolean
 }
 
 /**
@@ -23,7 +25,7 @@ interface Props {
  * Renders a horizontal scroll on mobile, responsive grid on sm+.
  * Returns null if there are no items to show.
  */
-export async function RecentlyViewedSection({ currentListingId, limit = 12, showEmptyState = false }: Props) {
+export async function RecentlyViewedSection({ currentListingId, limit = 12, showEmptyState = false, showClear = false }: Props) {
   const t = await getTranslations('listing')
   const user = await getUser()
 
@@ -58,7 +60,7 @@ export async function RecentlyViewedSection({ currentListingId, limit = 12, show
     <div className="recently-viewed">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
-        <ClearRecentlyViewedButton />
+        {showClear && <ClearRecentlyViewedButton />}
       </div>
 
       {/*

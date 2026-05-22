@@ -1,14 +1,14 @@
 # Epic G — Recently Viewed Listings
 
-**Status:** REOPENED (2026-05-22 orchestrator review — delivery rejected)
+**Status:** CLOSED
 **Opened:** 2026-05-19
-**Closed:** 2026-05-22 → **reverted**
+**Closed:** 2026-05-22 (Tasks 138–140 delivery + Tasks 163–164 recovery/closure)
 
-> Orchestrator review (2026-05-22) rejected the "CLOSED" delivery: committed HEAD does not build
-> (G.2 query file never committed; `CabinetShell` receives an undeclared prop so the profile
-> section never renders) and the working tree was corrupted (≈18 files truncated).
-> Recovery + correct closure tracked in `Epic_G_kickoff_prompt_Task_163.md` (P0) and
-> `Epic_G_kickoff_prompt_Task_164.md` (P1). Re-close only after Task 164 passes its AC.
+> Delivery required two recovery tasks: Task 163 (P0 — build restore + G.2 wiring) and
+> Task 164 (P1 — scope fix, DB migration confirmation, locale parity).
+> ⚠️ Responsive screenshots deferred: `RecentlyViewedSection` is auth/DB-dependent;
+> Storybook story with fixture data needed before `screenshots:responsive` can run.
+> Tracked as follow-up (register as Task 165 or fold into Epic H kickoff).
 
 ## Goal
 

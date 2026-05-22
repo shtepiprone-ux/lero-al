@@ -73,7 +73,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       regions={regions ?? []}
       userId={authUser.id}
       email={authUser.email ?? null}
-      profileRecentlyViewed={<RecentlyViewedSection limit={25} showEmptyState />}
+      profileRecentlyViewed={<RecentlyViewedSection limit={25} showEmptyState showClear />}
     />
   )
 }

@@ -8,10 +8,11 @@ Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 
 There are two AI layers, with different jobs:
 
-- **Opus 4.7 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready
-  copy-paste prompt for the executor, then reviews the **actual diff** (not the executor's report),
-  and either approves or opens a follow-up task. **Does not write production code** — only reads it
-  to verify. Full rules: `docs/orchestrator-role.md`.
+- **Opus 4.7 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready prompt
+  for the executor **written to a kickoff file in `/tasks` (never pasted into chat — Sonnet reads
+  the file directly)**, then reviews the **actual diff** (not the executor's report), and either
+  approves or opens a follow-up task. **Does not write production code** — only reads it to verify.
+  Full rules: `docs/orchestrator-role.md`.
 - **Sonnet 4.6 = executor.** Writes the code per a literal, scoped prompt. Its rules live across
   `/docs/` (entry: `docs/ai-behavior.md`).
 

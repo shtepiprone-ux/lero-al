@@ -10,6 +10,31 @@ The following external service accounts are already registered and available for
 | Sentry | https://sentry.io | Error monitoring |
 | GitHub | https://github.com | Code repository |
 
+### Exchange Rate Pipeline (Task 175 / Epic M.1)
+
+**Canonical source: iliria98.com** — the only authoritative source for ALL-denominated exchange rates on this platform.
+
+| Role | Service | What it provides |
+|---|---|---|
+| **Primary / canonical** | `iliria98.com` | EUR/ALL, USD/ALL, GBP/ALL scraped directly |
+| **Derivation helper** | `open.er-api.com` | EUR/USD and EUR/GBP cross-rates — used ONLY as a denominator when a rate is absent from iliria98 |
+
+**Pipeline (executed in `src/lib/getExchangeRate.ts`):**
+
+1. Single HTTP GET to `https://iliria98.com/` scrapes EUR/ALL, USD/ALL, GBP/ALL in one request.
+2. EUR/ALL is mandatory — if unavailable, the whole cache entry returns `null` (no rates served).
+3. For any currency not found on iliria98, a derivation fallback fires:
+   - `USD/ALL = EUR/ALL ÷ EUR/USD` (cross-rate from open.er-api.com)
+   - `GBP/ALL = EUR/ALL ÷ EUR/GBP` (cross-rate from open.er-api.com)
+   - The EUR/ALL pivot **always** comes from iliria98 — open.er-api.com never provides the ALL value directly.
+4. If derivation also fails (both sources unavailable), the function returns `null` for the batch.
+
+**Cache:** `unstable_cache` with `revalidate: 3600` (1 h) on the server; client-side singleton in `useExchangeRate` with a matching 1 h TTL.
+
+**API route:** `GET /api/exchange-rate` — ISR `revalidate: 3600`; returns `{ rates, rate, updated_at }`.
+
+**Adding a new currency:** extend `ALL_RATE_BOUNDS` in `getExchangeRate.ts`, pass the code to `scrapeIliria98Rates`, and add it to the `ExchangeRates` type. Do NOT add a new external rate source without orchestrator approval.
+
 ### Cloudinary Setup
 - Account is registered at https://cloudinary.com.
 - Use Cloudinary for ALL property photo uploads AND user avatar uploads — never Supabase Storage.

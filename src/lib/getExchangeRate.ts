@@ -1,50 +1,91 @@
 /**
  * Server-side cached multi-currency exchange rates.
  *
- * Returns ALL per 1 foreign currency for supported currencies:
- *   EUR — from iliria98.com (Albanian market rate)
- *   USD — derived: ECB EUR/USD cross-rate × EUR/ALL
- *   GBP — derived: ECB EUR/GBP cross-rate × EUR/ALL
+ * Pipeline — canonical source: iliria98.com (Albanian market rates).
+ *   EUR/ALL — scraped directly from iliria98.com
+ *   USD/ALL — scraped directly from iliria98.com; derivation fallback if not found
+ *   GBP/ALL — scraped directly from iliria98.com; derivation fallback if not found
  *
+ * Derivation fallback (when a currency is absent from iliria98):
+ *   USD/ALL = EUR/ALL ÷ EUR/USD  (cross-rate from open.er-api.com)
+ *   GBP/ALL = EUR/ALL ÷ EUR/GBP  (cross-rate from open.er-api.com)
+ *   The EUR/ALL pivot always comes from iliria98 — open.er-api.com supplies only
+ *   the cross-rate denominator, never the ALL value itself.
+ *
+ * If iliria98 returns no EUR/ALL rate, the whole fetch returns null (no rates).
  * Cache TTL: 1 hour.
  */
 import { unstable_cache } from 'next/cache'
 
 export type ExchangeRates = { EUR: number; USD: number; GBP: number }
 
-async function scrapeEurAllRate(): Promise<number | null> {
+// Plausible ALL/currency bounds used for sanity-filtering scraped numbers.
+const ALL_RATE_BOUNDS: Record<string, [number, number]> = {
+  EUR: [80, 160],
+  USD: [70, 140],
+  GBP: [90, 180],
+}
+
+/**
+ * Scrape multiple currency rates from iliria98.com in a single HTTP request.
+ * Returns ALL per 1 foreign currency for each requested currency, or null if
+ * the rate could not be parsed from the page.
+ */
+async function scrapeIliria98Rates(
+  currencies: string[],
+): Promise<Record<string, number | null>> {
+  const result: Record<string, number | null> = Object.fromEntries(
+    currencies.map(c => [c, null]),
+  )
   try {
     const res = await fetch('https://iliria98.com/', {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; lero.al/1.0)' },
+      signal: AbortSignal.timeout(5000),
     })
-    if (!res.ok) return null
+    if (!res.ok) return result
     const html = await res.text()
 
-    const eurBlock =
-      html.match(/EUR\.png[\s\S]{0,200}/i) ??
-      html.match(/>EUR<[\s\S]{0,200}/i) ??
-      html.match(/EUR[^A-Z]{0,200}/i)
+    for (const currency of currencies) {
+      const [min, max] = ALL_RATE_BOUNDS[currency] ?? [0, 9999]
 
-    if (eurBlock) {
-      const nums = [...eurBlock[0].matchAll(/(\d{2,3}[.,]\d{1,2})/g)]
-        .map(m => parseFloat(m[1].replace(',', '.')))
-        .filter(n => n >= 80 && n <= 160)
-      if (nums.length >= 2) return Math.round(((nums[0] + nums[1]) / 2) * 100) / 100
-      if (nums.length === 1) return nums[0]
-    }
+      const block =
+        html.match(new RegExp(`${currency}\\.png[\\s\\S]{0,200}`, 'i')) ??
+        html.match(new RegExp(`>${currency}<[\\s\\S]{0,200}`, 'i')) ??
+        html.match(new RegExp(`${currency}[^A-Z]{0,200}`, 'i'))
 
-    const generic = html.match(/EUR[^<\d]{0,80}(\d{2,3}[.,]\d{1,2})/i)
-    if (generic) {
-      const rate = parseFloat(generic[1].replace(',', '.'))
-      if (rate >= 80 && rate <= 160) return rate
+      if (block) {
+        const nums = [...block[0].matchAll(/(\d{2,3}[.,]\d{1,2})/g)]
+          .map(m => parseFloat(m[1].replace(',', '.')))
+          .filter(n => n >= min && n <= max)
+        if (nums.length >= 2) {
+          result[currency] = Math.round(((nums[0] + nums[1]) / 2) * 100) / 100
+          continue
+        }
+        if (nums.length === 1) {
+          result[currency] = nums[0]
+          continue
+        }
+      }
+
+      const generic = html.match(
+        new RegExp(`${currency}[^<\\d]{0,80}(\\d{2,3}[.,]\\d{1,2})`, 'i'),
+      )
+      if (generic) {
+        const rate = parseFloat(generic[1].replace(',', '.'))
+        if (rate >= min && rate <= max) result[currency] = rate
+      }
     }
-    return null
   } catch {
-    return null
+    // leave all currencies as null
   }
+  return result
 }
 
-/** Fetch EUR/USD and EUR/GBP cross-rates from open.er-api.com (free, no key). */
+/**
+ * Fetch EUR/USD and EUR/GBP cross-rates from open.er-api.com (free, no key).
+ * Used ONLY as a denominator in the derivation fallback — never as a direct
+ * source of ALL-denominated rates. See pipeline doc in docs/integrations.md.
+ */
 async function fetchCrossRates(): Promise<{ usd: number | null; gbp: number | null }> {
   try {
     const res = await fetch('https://open.er-api.com/v6/latest/EUR', {
@@ -53,30 +94,37 @@ async function fetchCrossRates(): Promise<{ usd: number | null; gbp: number | nu
     })
     if (!res.ok) return { usd: null, gbp: null }
     const data = await res.json() as { rates?: Record<string, number> }
-    const usd = data.rates?.USD ?? null
-    const gbp = data.rates?.GBP ?? null
-    return { usd, gbp }
+    return {
+      usd: data.rates?.USD ?? null,
+      gbp: data.rates?.GBP ?? null,
+    }
   } catch {
     return { usd: null, gbp: null }
   }
 }
 
 async function fetchAllRates(): Promise<ExchangeRates | null> {
-  const [eurAll, { usd: eurUsd, gbp: eurGbp }] = await Promise.all([
-    scrapeEurAllRate(),
-    fetchCrossRates(),
-  ])
+  // Primary: scrape EUR, USD, GBP from iliria98.com in one request
+  const iliria98 = await scrapeIliria98Rates(['EUR', 'USD', 'GBP'])
+  const eurAll = iliria98['EUR']
+  if (!eurAll) return null  // EUR/ALL is mandatory; abort if unavailable
 
-  if (!eurAll) return null
+  let usdAll = iliria98['USD']
+  let gbpAll = iliria98['GBP']
 
-  // Derive ALL per 1 USD/GBP via EUR as pivot:
-  //   1 EUR = eurAll ALL
-  //   1 EUR = eurUsd USD → 1 USD = (eurAll / eurUsd) ALL
-  //   1 EUR = eurGbp GBP → 1 GBP = (eurAll / eurGbp) ALL
-  const usdRate = eurUsd ? Math.round((eurAll / eurUsd) * 100) / 100 : Math.round(eurAll / 1.08 * 100) / 100
-  const gbpRate = eurGbp ? Math.round((eurAll / eurGbp) * 100) / 100 : Math.round(eurAll / 0.86 * 100) / 100
+  // Derivation fallback: pivot through EUR/ALL when USD/ALL or GBP/ALL are absent from iliria98
+  if (!usdAll || !gbpAll) {
+    const cross = await fetchCrossRates()
+    // 1 USD = (EUR/ALL) ÷ (EUR/USD cross-rate)
+    if (!usdAll && cross.usd) usdAll = Math.round((eurAll / cross.usd) * 100) / 100
+    // 1 GBP = (EUR/ALL) ÷ (EUR/GBP cross-rate)
+    if (!gbpAll && cross.gbp) gbpAll = Math.round((eurAll / cross.gbp) * 100) / 100
+  }
 
-  return { EUR: eurAll, USD: usdRate, GBP: gbpRate }
+  // If derivation also fails, omit those currencies rather than return stale hardcoded values
+  if (!usdAll || !gbpAll) return null
+
+  return { EUR: eurAll, USD: usdAll, GBP: gbpAll }
 }
 
 export const getExchangeRates = unstable_cache(

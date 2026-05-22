@@ -4,6 +4,17 @@
 
 ## Last Session
 
+**2026-05-22 — Sprint 9 (Task 175 — M.1) ✅**
+
+- `scrapeEurAllRate()` replaced by `scrapeIliria98Rates(['EUR','USD','GBP'])` — single HTTP request, all three currencies.
+- `open.er-api.com` demoted from co-equal source to documented derivation helper (cross-rate denominator only).
+- Hardcoded stale fallback constants (1.08/0.86) removed; if both sources fail, function returns `null`.
+- `docs/integrations.md`: new "Exchange Rate Pipeline" section documents canonical source, derivation rule, cache contract.
+
+→ [Task 175 session log](sessions/2026-05-22-task-175-iliria98-fx-source.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Sprint 8 (Task 173) ✅**
 
 - `CollectionItem`, `FavoritePriceAlert`, `ReportAction` interfaces added to `database.ts` (columns derived from code usage only).
@@ -281,9 +292,11 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 162 (E.5 ADR verification — all items already resolved).
+**Last completed:** Sprint 9 in progress — Task 175 (M.1 — iliria98 FX source) ✅.
 
-**Next:** All Follow-up tasks (157, 160, 161, 162) are now CLOSED. Roadmap complete.
+**Sprint 9 queue** (Tasks 175–183): 175 ✅ → **176** (price/m² display, parallel) → **177** (admin currency table) → **178** (currency selector Combobox); **179** / **180** (localization); **181** / **182** / **183** (favorites/contact/URL).
+**Baseline (orchestrator, 2026-05-22):** run **Task 210 first** — green `tsc --noEmit`: stale `MOCK_USER` fixtures in `controller.test.ts` + `AuthContext.test.tsx` miss `suspended_until`+`inactivity_warning_sent_at` (kickoff `Sprint_9_kickoff_prompt_Task_210.md`). A red baseline makes "0 new tsc errors" unverifiable for 176–183.
+Kickoffs: `tasks/Sprints/Sprint_9_kickoff_prompt_Task_176..183.md`. After Sprint 9: Epics N(184)→P(185)→O→Q→R→S→T→U. **Last task number: 210.**
 
 ## Task roadmap — numbered
 
@@ -314,7 +327,28 @@ Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Clos
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
-## Active product backlog (epics not yet started)
+## Active product backlog — Epics M–U (opened 2026-05-22 from issues.txt)
+
+Sequencing after Sprint 9: M (folded into Sprint 9) → N → P → O → Q → R → S → T → U. Tasks 175–209,
+global numbering. Notes column = source lines in `issues.txt`.
+
+| Epic | Tasks | Notes | Plan | Kickoffs |
+|---|---|---|---|---|
+| M — Currency & Exchange-Rate Integrity | 175–178 | 3, 32, 5, 21 | [`Epic_M_…`](../tasks/Epics/Epic_M_Currency_and_Exchange_Rate_Integrity.md) | Sprint 9 (175–178) |
+| N — Localization Consistency v2 | 179, 180, 184 | 15, 31, 4 | [`Epic_N_…`](../tasks/Epics/Epic_N_Localization_Consistency_v2.md) | Sprint 9 (179, 180) · [`Epic_N_kickoff_prompts.md`](../tasks/Epics/Epic_N_kickoff_prompts.md) (184) |
+| O — Auth, Registration & Phone Input | 186–189 | 8, 9, 13, 7 | [`Epic_O_…`](../tasks/Epics/Epic_O_Auth_Registration_and_Phone_Input.md) | [`Epic_O_kickoff_prompts.md`](../tasks/Epics/Epic_O_kickoff_prompts.md) |
+| P — Favorites, Guest-Auth & Account Lifecycle | 181, 182, 183, 185 | 17, 18, 16, 19 | [`Epic_P_…`](../tasks/Epics/Epic_P_Favorites_Guest_Auth_and_Account_Lifecycle.md) | Sprint 9 (181–183) · [`Epic_P_kickoff_prompts.md`](../tasks/Epics/Epic_P_kickoff_prompts.md) (185) |
+| Q — Combobox & UI Primitive Single-Source | 190–194 | 1, 12, 6, 22, 23 | [`Epic_Q_…`](../tasks/Epics/Epic_Q_Combobox_and_UI_Primitive_Single_Source.md) | [`Epic_Q_kickoff_prompts.md`](../tasks/Epics/Epic_Q_kickoff_prompts.md) |
+| R — Admin Panel 2026 | 195–202 | 20, 34, 33, 28, 29, 30, 26, 27 | [`Epic_R_…`](../tasks/Epics/Epic_R_Admin_Panel_2026.md) | [`Epic_R_kickoff_prompts.md`](../tasks/Epics/Epic_R_kickoff_prompts.md) |
+| S — Domain Numeric IDs | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
+| T — Global UX Polish & Forms | 205–207 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
+| U — Performance & RSC Diagnostics | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
+
+> Note 14 (verify-globally rule), 16 (canonical URL), 6 (button single-source), 1 (canonical Combobox)
+> were codified into `/docs` during the planning pass (see Next Immediate Tasks). Note 16 also has code
+> work in Task 183.
+
+### Earlier active product backlog (now CLOSED)
 
 | Epic | Plan | Kickoff prompts |
 |---|---|---|

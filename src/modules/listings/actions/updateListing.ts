@@ -9,6 +9,8 @@ import type { ListingInput } from '@/modules/listings/validations'
 import { checkEditPermission } from '@/modules/listings/domain/listingPermissions'
 import type { ListingStatus } from '@/types/database'
 import { routing } from '@/i18n/routing'
+import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
+import { deleteAsset } from '@/lib/cloudinaryDelete'
 
 interface UpdateListingPayload extends ListingInput {
   images: ListingImage[]
@@ -62,6 +64,13 @@ export async function updateListing(
     return { error: updateError.message ?? 'update_failed' }
   }
 
+  // Capture old image URLs before wiping — needed for H.5 Cloudinary cleanup below.
+  const { data: oldImages } = await supabase
+    .from('listing_images')
+    .select('url')
+    .eq('listing_id', listingId)
+  const oldUrls = oldImages?.map(i => i.url) ?? []
+
   await supabase.from('listing_images').delete().eq('listing_id', listingId)
 
   if (payload.images.length > 0) {
@@ -75,6 +84,25 @@ export async function updateListing(
     if (imgError) {
       console.error('Failed to update listing images', { error: imgError, listingId })
     }
+  }
+
+  // H.5: delete Cloudinary assets for images that are no longer in the listing.
+  // New images are now in DB — reference check in deleteAsset will skip any that are re-used.
+  // DB update is fully committed before any delete (order enforced by await above).
+  const newUrlSet = new Set(payload.images.map(i => i.url))
+  const orphanedPublicIds = oldUrls
+    .filter(url => !newUrlSet.has(url))
+    .map(publicIdFromUrl)
+    .filter((pid): pid is string => pid !== null)
+
+  if (orphanedPublicIds.length > 0) {
+    await Promise.allSettled(
+      orphanedPublicIds.map(pid =>
+        deleteAsset(pid, { reason: 'listing_image_removed' }).catch(err =>
+          console.error('[updateListing] image cleanup failed:', err),
+        ),
+      ),
+    )
   }
 
   // Invalidate the listing detail page AND the public listings index for every

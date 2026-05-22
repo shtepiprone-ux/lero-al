@@ -4,6 +4,8 @@ import { revalidateTag, revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { routing } from '@/i18n/routing'
+import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
+import { deleteAsset } from '@/lib/cloudinaryDelete'
 
 /**
  * Deletes a listing owned by the authenticated user.
@@ -21,6 +23,13 @@ export async function deleteListingAction(
   if (!user) return { error: 'unauthenticated' }
 
   const supabase = await createClient()
+
+  // Fetch images before cascade delete — listing_images are removed with the listing.
+  const { data: imagesToDelete } = await supabase
+    .from('listing_images')
+    .select('url')
+    .eq('listing_id', listingId)
+
   const { error } = await supabase
     .from('listings')
     .delete()
@@ -29,6 +38,20 @@ export async function deleteListingAction(
   if (error) {
     console.error('deleteListingAction failed', { error, listingId, userId: user.id })
     return { error: error.message }
+  }
+
+  // H.5: clean up Cloudinary assets for all images that belonged to this listing.
+  if (imagesToDelete?.length) {
+    const publicIds = imagesToDelete
+      .map(i => publicIdFromUrl(i.url))
+      .filter((pid): pid is string => pid !== null)
+    await Promise.allSettled(
+      publicIds.map(pid =>
+        deleteAsset(pid, { reason: 'listing_deleted' }).catch(err =>
+          console.error('[deleteListingAction] image cleanup failed:', err),
+        ),
+      ),
+    )
   }
 
   revalidateTag('site-stats')

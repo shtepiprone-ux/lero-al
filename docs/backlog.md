@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Task 146 (H.5) — Listing image replacement cleanup ✅**
+
+- `updateListing`: fetch old URLs → bulk delete/insert → orphan diff → `deleteAsset` (parallel, non-fatal).
+- `deleteListing`: fetch URLs before cascade → delete listing → bulk cleanup.
+- `publicIdFromUrl` used (no `public_id` column in `listing_images`); H.6 ref check runs after new images in DB.
+
+→ [Task 146 session log](sessions/2026-05-22-task-146-h5-listing-image-cleanup.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 145 (H.3) — Avatar replacement cleanup ✅**
 
 - `upload-avatar` route: read old `avatar_url` → upload new → update DB → `deleteAsset(oldPublicId, {reason:'avatar_replaced'})`.
@@ -111,9 +121,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 145 (H.3 — Avatar replacement cleanup).
+**Last completed:** Task 146 (H.5 — Listing image replacement cleanup).
 
-**Next:** Task 146 (H.5 — Listing image replacement cleanup).
+**Next:** Task 147 (H.7 — Company logo + other photos folder structure).
 
 ## Task roadmap — numbered
 
@@ -186,6 +196,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic H.5 — Listing image cleanup: orphan diff in updateListing + bulk cleanup in deleteListing | Task 146 | [sessions/2026-05-22-task-146-h5-listing-image-cleanup.md](sessions/2026-05-22-task-146-h5-listing-image-cleanup.md) |
 | 2026-05-22 | Epic H.3 — Avatar cleanup: read old URL → upload → DB update → deleteAsset(old) | Task 145 | [sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md](sessions/2026-05-22-task-145-h3-avatar-replacement-cleanup.md) |
 | 2026-05-22 | Epic H.6 — deleteAsset safety wrapper: reference check, dry-run, structured log, 5 tests | Task 144 | [sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md](sessions/2026-05-22-task-144-h6-cloudinary-safety-audit.md) |
 | 2026-05-22 | Epic H.4 — Listing image folder: uploadFolder prop chain; create=user/listings, edit=user/listings/id | Task 143 | [sessions/2026-05-22-task-143-h4-listing-image-folder.md](sessions/2026-05-22-task-143-h4-listing-image-folder.md) |

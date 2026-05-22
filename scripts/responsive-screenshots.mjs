@@ -106,6 +106,12 @@ const STORY_TARGETS = [
   { id: 'system-emptystate--mobile-empty-state', label: 'EmptyState/Mobile',  viewports: ['mobile-375'] },
   { id: 'system-emptystate--ukrainian-locale', label: 'EmptyState/Ukrainian', locales: ['uk'] },
   { id: 'system-adminlayout--admin-toolbar',   label: 'Admin/Toolbar',        viewports: ['desktop-1280'] },
+  // Recently-viewed section — Task 165 responsive evidence (7 required breakpoints)
+  // Note: mobile-390 is in FULL_MATRIX only; run `screenshots:responsive -- --full` to capture all 7.
+  { id: 'system-recentlyviewedsection--populated',   label: 'RecentlyViewedSection/Populated',   viewports: ['mobile-320', 'mobile-375', 'mobile-390', 'tablet-768', 'desktop-1280', 'desktop-1440', 'huge-2560'] },
+  { id: 'system-recentlyviewedsection--mobile-scroll', label: 'RecentlyViewedSection/MobileScroll', viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+  { id: 'system-recentlyviewedsection--empty-state', label: 'RecentlyViewedSection/EmptyState',  viewports: ['desktop-1280'] },
+  { id: 'system-recentlyviewedsection--ukrainian-locale', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
 ];
 
 // ── MIME types for static server ──────────────────────────────────────────────

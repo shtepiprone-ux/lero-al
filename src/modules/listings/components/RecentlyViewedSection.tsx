@@ -1,34 +1,36 @@
 import { cookies } from 'next/headers'
-import { getTranslations } from 'next-intl/server'
 import { getUser } from '@/lib/auth/server'
 import { RECENTLY_VIEWED_COOKIE } from '../lib/recentlyViewedConstants'
 import { getRecentlyViewedForUser, getRecentlyViewedForGuest } from '../lib/recentlyViewedQueries'
-import { ListingCard } from './ListingCard'
 import { ClearRecentlyViewedButton } from './ClearRecentlyViewedButton'
+import { RecentlyViewedGrid } from './RecentlyViewedGrid'
 
 interface Props {
-  /** Exclude this listing from the list (used on listing detail page). */
+  /** Exclude this listing (listing detail page — excludes current listing). */
   currentListingId?: string
   limit?: number
-  /** Show the empty state message instead of returning null when no items. */
+  /** Show empty-state message when no items (profile context). */
   showEmptyState?: boolean
   /** Render the "Clear history" button — profile only, never on listing detail. */
   showClear?: boolean
 }
 
 /**
- * Server Component — self-fetching recently-viewed section.
+ * Server Component — data-fetching shell for the recently-viewed section.
  *
  * Auth users: queries `recently_viewed` table (RLS-scoped).
- * Guests:     reads the `rv_listings` cookie set by `RecentlyViewedTracker`.
+ * Guests:     reads the `rv_listings` cookie set by RecentlyViewedTracker.
  *
- * Renders a horizontal scroll on mobile, responsive grid on sm+.
- * Returns null if there are no items to show.
+ * All rendering is delegated to RecentlyViewedGrid (client, no server-action deps)
+ * so the layout component can be covered by Storybook stories.
  */
-export async function RecentlyViewedSection({ currentListingId, limit = 12, showEmptyState = false, showClear = false }: Props) {
-  const t = await getTranslations('listing')
+export async function RecentlyViewedSection({
+  currentListingId,
+  limit = 12,
+  showEmptyState = false,
+  showClear = false,
+}: Props) {
   const user = await getUser()
-
   let listings: Awaited<ReturnType<typeof getRecentlyViewedForUser>> = []
 
   if (user) {
@@ -46,41 +48,17 @@ export async function RecentlyViewedSection({ currentListingId, limit = 12, show
     listings = await getRecentlyViewedForGuest(ids, { excludeId: currentListingId, limit })
   }
 
-  if (!listings.length) {
-    if (!showEmptyState) return null
-    return (
-      <div className="recently-viewed">
-        <h2 className="text-xl font-bold mb-4">{t('recently_viewed_title')}</h2>
-        <p className="text-sm text-muted-foreground">{t('recently_viewed_empty')}</p>
-      </div>
-    )
-  }
-
   return (
-    <div className="recently-viewed">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
-        {showClear && <ClearRecentlyViewedButton />}
-      </div>
-
-      {/*
-        Mobile (base): horizontal scroll with fixed-width cards.
-        sm+: grid layout with responsive column count.
-        no-scrollbar removes the visible scrollbar on WebKit/Firefox while keeping scroll functionality.
-      */}
-      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
-        {listings.map(listing => (
-          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
-            <ListingCard listing={listing} layoutContext="4-col" />
-          </div>
-        ))}
-      </div>
-    </div>
+    <RecentlyViewedGrid
+      listings={listings}
+      showEmptyState={showEmptyState}
+      clearSlot={showClear ? <ClearRecentlyViewedButton /> : undefined}
+    />
   )
 }
 
 /**
- * Skeleton fallback for <Suspense> on listing detail page.
+ * Skeleton fallback for <Suspense> on the listing detail page.
  */
 export function RecentlyViewedSkeleton() {
   return (

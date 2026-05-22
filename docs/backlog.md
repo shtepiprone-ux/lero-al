@@ -4,6 +4,17 @@
 
 ## Last Session
 
+**2026-05-22 — Task 165 — Responsive screenshot evidence for recently-viewed ✅**
+
+- `RecentlyViewedGrid` presentational component split out of `RecentlyViewedSection` (no auth/DB/server-action deps → Storybook-safe).
+- `System/RecentlyViewedSection` Storybook story: Populated, MobileScroll, HugeDesktop, EmptyState, UkrainianLocale.
+- `STORY_TARGETS` updated with all 7 breakpoints (mobile-390 covered via `--full`).
+- Screenshot capture **✅ complete** — all 7 breakpoints confirmed (2026-05-22).
+
+→ [Task 165 session log](sessions/2026-05-22-task-165-recently-viewed-screenshots.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 164 (P1) — Epic G correctness + closure ✅ — Epic G CLOSED**
 
 - Scope fix: `showClear` prop — clear button now profile-only (listing detail unaffected).
@@ -27,8 +38,8 @@
 
 Manual/ops actions still required outside of code commits. Keep here until done, then move to the relevant session log.
 
-- ⚠️ **Supabase Auth config (Task 122 — Send Email Hook):** do **NOT** disable Supabase "Confirm email" until the Send Email Hook is verified live in production. Disabling earlier opens an auto-confirm security hole.
-- ⚠️ **DB SQL (Epic F — Tasks 136/137):** run the `collections` and `favorite_price_alerts` table + RLS SQL in Supabase before relying on collections / price alerts (SQL is in the Task 136 & 137 session logs).
+- ~~⚠️ **Supabase Auth config (Task 122 — Send Email Hook):** do **NOT** disable Supabase "Confirm email" until the Send Email Hook is verified live in production.~~ → **DONE (2026-05-22).** "Confirm email" disabled; Send Email Hook live and verified in production — only Lero-service emails are sent, and the post-registration confirmation email arrives correctly. (Follow-up: the auth email templates routed through the hook are **not editable in the admin panel** but should be → Task 166.)
+- ~~⚠️ **DB SQL (Epic F — Tasks 136/137):** run the `collections` and `favorite_price_alerts` table + RLS SQL in Supabase.~~ → **DONE (2026-05-22).** Both tables + RLS applied in Supabase; collections and price alerts are now backed by live schema.
 
 ## Carry-over from Sprint 1 / Epic A
 
@@ -37,7 +48,7 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 164 (Epic G closure). **Epic G — CLOSED** (⚠️ screenshots pending Storybook story — follow-up before Epic H review).
+**Last completed:** Task 165 (responsive screenshot story for recently-viewed). Screenshot capture pending (see session log).
 
 **Next:** Task 141 (H.1 — Cloudinary user-based folder structure).
 
@@ -112,6 +123,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Epic G — Task 165 — RecentlyViewedGrid split + Storybook story + STORY_TARGETS for 7 breakpoints | Task 165 | [sessions/2026-05-22-task-165-recently-viewed-screenshots.md](sessions/2026-05-22-task-165-recently-viewed-screenshots.md) |
 | 2026-05-22 | Epic G — Task 164 — correctness closure: showClear scope fix, DB migration confirmed, locale parity verified | Task 164 | [sessions/2026-05-22-task-164-epic-g-closure.md](sessions/2026-05-22-task-164-epic-g-closure.md) |
 | 2026-05-22 | Epic G — Task 163 — P0 recovery: G.2 wiring committed, recentlyViewedQueries.ts staged, build restored | Task 163 | [sessions/2026-05-22-task-163-epic-g-recovery.md](sessions/2026-05-22-task-163-epic-g-recovery.md) |
 | 2026-05-22 | Epic G.3 — Clear recently viewed history (clearRecentlyViewed action, ClearRecentlyViewedButton, Dialog+toast) | Task 140 | [sessions/2026-05-22-task-140-g3-clear-recently-viewed.md](sessions/2026-05-22-task-140-g3-clear-recently-viewed.md) |

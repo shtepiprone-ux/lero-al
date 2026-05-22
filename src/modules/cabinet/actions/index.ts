@@ -5,6 +5,7 @@ import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { routing } from '@/i18n/routing'
 import type { PreferredCurrency } from '@/types/database'
@@ -30,6 +31,8 @@ export async function updateCabinetProfile(data: {
 }): Promise<{ error?: string }> {
   const userId = await resolveAuthUser()
   if (!userId) return { error: 'Unauthorized' }
+  const blockError = await getBlockedError(userId)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase

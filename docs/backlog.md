@@ -4,11 +4,19 @@
 
 ## Last Session
 
+**2026-05-22 — Task 160 — Block/suspension enforcement ✅**
+
+- `getBlockedError(userId)` canonical helper: permanent block + `suspended_until` + auto-lift.
+- 7 write actions guarded; `createListing` inline check replaced.
+- `error_account_suspended` i18n key × 4 locales.
+
+→ [Task 160 session log](sessions/2026-05-22-task-160-block-suspension-enforcement.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 157 — Recovery security logging ✅**
 
-- IP + UA + correlationId (SHA-256 email hash) in both recovery log events.
-- Email never in logs; stable correlation across request→completion via hash.
-- `LOG_CORRELATION_SALT` env documented. Supabase rate limit confirmed sufficient.
+- IP + UA + correlationId (SHA-256 email hash); email never in logs; `LOG_CORRELATION_SALT` env documented.
 
 → [Task 157 session log](sessions/2026-05-22-task-157-recovery-security-logging.md)
 
@@ -213,9 +221,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 157 (Recovery security logging).
+**Last completed:** Task 160 (Block/suspension enforcement).
 
-**Next:** Task 160 (C.5 — Block/suspension enforcement) or Task 161 (D.2 — email template RLS).
+**Next:** Task 161 (D.2 — email template delete = admin-only + RLS matrix).
 
 ## Task roadmap — numbered
 
@@ -278,6 +286,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Task 160 — Block/suspension enforcement: getBlockedError helper, 7 actions, auto-lift, i18n | Task 160 | [sessions/2026-05-22-task-160-block-suspension-enforcement.md](sessions/2026-05-22-task-160-block-suspension-enforcement.md) |
 | 2026-05-22 | Task 157 — Recovery security logging: IP+UA+correlationId; email hash; LOG_CORRELATION_SALT | Task 157 | [sessions/2026-05-22-task-157-recovery-security-logging.md](sessions/2026-05-22-task-157-recovery-security-logging.md) |
 | 2026-05-22 | Epic L.2 — Dashboard built: 6 KPI cards, status bars, Epic K recent listings, pending reports panel | Task 155 | [sessions/2026-05-22-task-155-l2-dashboard-build.md](sessions/2026-05-22-task-155-l2-dashboard-build.md) |
 | 2026-05-22 | Epic L.1 — Dashboard discovery: P0 metrics, wireframes, index plan; signed off 2026-05-22 | Task 154 | [sessions/2026-05-22-task-154-l1-dashboard-discovery.md](sessions/2026-05-22-task-154-l1-dashboard-discovery.md) |

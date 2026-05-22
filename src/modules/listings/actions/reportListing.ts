@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import type { ReportReason, ReportStatus } from '@/types/database'
 import * as React from 'react'
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
@@ -26,6 +27,8 @@ export async function reportListingAction(
 ): Promise<{ error?: string }> {
   const user = await getUser()
   if (!user) return { error: 'unauthorized' }
+  const blockError = await getBlockedError(user.id)
+  if (blockError) return { error: blockError }
 
   if (!VALID_REASONS.includes(reason as ReportReason)) return { error: 'invalid_reason' }
 

@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import { listingSchema } from '@/modules/listings/validations'
 import type { ListingInput } from '@/modules/listings/validations'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
@@ -28,16 +29,10 @@ export async function createListing(
   const user = await getUser()
   if (!user) return { error: 'unauthenticated' }
 
-  const supabase = await createClient()
+  const blockError = await getBlockedError(user.id)
+  if (blockError) return { error: blockError }
 
-  // Guard: blocked accounts cannot create new listings.
-  // Suspended accounts (status='blocked' with suspended_until in future) are also blocked.
-  const { data: profile } = await supabase
-    .from('users')
-    .select('status')
-    .eq('id', user.id)
-    .single()
-  if (profile?.status === 'blocked') return { error: 'account_blocked' }
+  const supabase = await createClient()
 
   const parsed = listingSchema.safeParse(payload)
   if (!parsed.success) return { error: 'validation_failed' }

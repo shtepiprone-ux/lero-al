@@ -3,6 +3,7 @@
 import { revalidateTag, revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import { routing } from '@/i18n/routing'
 import { publicIdFromUrl } from '@/lib/cloudinaryUpload'
 import { deleteAsset } from '@/lib/cloudinaryDelete'
@@ -21,6 +22,8 @@ export async function deleteListingAction(
 ): Promise<{ error?: string }> {
   const user = await getUser()
   if (!user) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(user.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
 

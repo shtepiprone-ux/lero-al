@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import { routing } from '@/i18n/routing'
 
 function revalidateFavorites() {
@@ -22,6 +23,8 @@ export async function addFavorite(
 ): Promise<{ isFavorited: true } | { error: string }> {
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase
@@ -48,6 +51,8 @@ export async function removeFavorite(
 ): Promise<{ isFavorited: false } | { error: string }> {
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase

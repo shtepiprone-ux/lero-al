@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import type { CollectionWithCount } from '@/types/database'
 
 // ── Reads (callable from client components as server actions) ─────────────────
@@ -63,6 +64,8 @@ export async function createCollection(
 
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { data, error } = await supabase
@@ -89,6 +92,8 @@ export async function renameCollection(
 
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase
@@ -110,6 +115,8 @@ export async function deleteCollection(
 ): Promise<{ ok: true } | { error: string }> {
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase
@@ -132,6 +139,8 @@ export async function addToCollection(
 ): Promise<{ ok: true } | { error: string }> {
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase
@@ -153,6 +162,8 @@ export async function removeFromCollection(
 ): Promise<{ ok: true } | { error: string }> {
   const authUser = await getUser()
   if (!authUser) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(authUser.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
   const { error } = await supabase

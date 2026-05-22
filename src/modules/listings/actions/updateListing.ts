@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
+import { getBlockedError } from '@/lib/auth/blockCheck'
 import { listingSchema } from '@/modules/listings/validations'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
 import type { ListingInput } from '@/modules/listings/validations'
@@ -22,6 +23,8 @@ export async function updateListing(
 ): Promise<{ slug: string } | { error: string }> {
   const user = await getUser()
   if (!user) return { error: 'unauthenticated' }
+  const blockError = await getBlockedError(user.id)
+  if (blockError) return { error: blockError }
 
   const supabase = await createClient()
 

@@ -15,6 +15,25 @@
 The orchestrator **does not write production code**. At most it *reads* code to verify work.
 All implementation is delegated to Sonnet 4.6 via a copy-paste prompt.
 
+## Environment & git safety (Cowork / network drive) — MANDATORY
+
+The repo lives on a Windows network drive (`D:`). The Opus orchestrator may be running in **Cowork**
+(a Linux sandbox that mounts the same folder), while the owner runs git in **PowerShell on Windows**.
+Two git processes touching the **same `.git`** at once corrupt `.git/index` (observed 2026-05-22:
+bogus `UU ./` / `X0` unmerged entries, phantom 50+ line "deletions" in `messages/*.json`).
+
+**Rule:**
+- **Only the owner runs git, and only from PowerShell.** The Cowork/Opus orchestrator must **never**
+  run mutating git (`add`, `commit`, `push`, `reset`, `restore`, `stash`, `checkout`, `merge`, …).
+- The orchestrator may **read** files and run **read-only** git for review (`git show`, `git diff`,
+  `git log`) — but prefer reading committed blobs via `git show <sha>:<path>` over touching the index,
+  and avoid even read-only git if the owner is actively running git at the same moment.
+- The orchestrator changes files **only through the filesystem** (Read/Write/Edit) — this never
+  touches `.git/index`, so it cannot race the owner's git.
+- **Index recovery** (if corruption recurs): owner runs in PowerShell, with no other git process
+  active — `Remove-Item .git\index` then `git reset` (rebuilds the index from HEAD; working files are
+  untouched), then `git status` to confirm a clean tree.
+
 ## Orchestrator loop
 
 1. **Read state first.** `docs/backlog.md`, the relevant `/docs/` rule files, the relevant

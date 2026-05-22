@@ -53,6 +53,19 @@ Skipping this checklist is a rule violation.
 - Never commit: `.env` files, `node_modules`, `.next` folder.
 - Tag releases: `v0.1.0`, `v0.2.0` etc.
 
+#### Single-writer git (Cowork + Windows network drive) — enforced 2026-05-22
+- The repo sits on a Windows network drive (`D:`). The Cowork/Opus assistant mounts the **same**
+  folder from a Linux sandbox. **Two git processes on the same `.git` corrupt `.git/index`**
+  (observed: `UU ./` / `X0` unmerged garbage, phantom 50+ line `messages/*.json` deletions).
+- **Only the owner runs git, and only from PowerShell.** The Cowork/Opus assistant must **never**
+  run mutating git (`add`/`commit`/`push`/`reset`/`restore`/`stash`/`checkout`/`merge`/…).
+- The Cowork/Opus assistant edits files **only via the filesystem** (Read/Write/Edit) — that never
+  touches `.git/index`, so it cannot race the owner's git. Read-only `git show`/`git diff`/`git log`
+  is allowed for review, preferring `git show <sha>:<path>` over index-touching commands.
+- Index recovery (owner, PowerShell, no other git running): `Remove-Item .git\index` → `git reset`
+  → `git status`. Rebuilds the index from HEAD without touching working files.
+- Full rationale lives in `docs/orchestrator-role.md` → "Environment & git safety".
+
 ### Scope Isolation Rules
 - Modify only files directly required for the task.
 - Do not perform unrelated refactors.

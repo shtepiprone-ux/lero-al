@@ -852,7 +852,9 @@
         "website_required": "Company website is required",
         "email_required": "Email is required",
         "email_invalid": "Invalid email address",
-        "phone_no_country_code": "Enter the phone number without the country code."
+        "phone_no_country_code": "Enter the phone number without the country code.",
+        "error_phone_invalid": "Please enter a valid phone number for the selected country.",
+        "error_phone_no_country_code": "Enter the phone number without the country code."
       },
       "profile_types": {
         "admin": "Administrator",

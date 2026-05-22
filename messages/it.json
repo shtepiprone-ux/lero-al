@@ -852,7 +852,9 @@
         "website_required": "Il sito dell'azienda è obbligatorio",
         "email_required": "L'email è obbligatoria",
         "email_invalid": "Indirizzo email non valido",
-        "phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale."
+        "phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
+        "error_phone_invalid": "Inserisci un numero di telefono valido per il paese selezionato.",
+        "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale."
       },
       "profile_types": {
         "admin": "Amministratore",

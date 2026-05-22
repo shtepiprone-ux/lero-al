@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Sprint 7 (Tasks 170 + 171) ✅**
+
+- Task 170: `error_phone_invalid` + `error_phone_no_country_code` added to `admin.user_profile.validation` in all 4 catalogs (sq/en/uk/it). Raw key no longer shown on invalid phone save.
+- Task 171: `isAdmin` prop added to `AdminEmailTemplatesManager`; Delete button now conditionally rendered (`{isAdmin && …}`). email-templates page.tsx resolves viewer role via `getUser()` → `users.role`. Server `assertAdmin()` boundary unchanged.
+
+→ [Task 170 session log](sessions/2026-05-22-task-170-phone-validation-i18n.md)
+→ [Task 171 session log](sessions/2026-05-22-task-171-email-delete-admin-only-ui.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Sprint 5 + PGRST204 schema cache fix ✅**
 
 - Task 167: `status_active` / `status_inactive` added to `listing` namespace in all 4 catalogs (sq/en/uk/it). Dashboard status bars + recent-listing badge now show translated labels.
@@ -316,6 +326,8 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Sprint 7 — Task 170 — `error_phone_invalid`+`error_phone_no_country_code` in `admin.user_profile.validation` × 4 locales | Task 170 | [sessions/2026-05-22-task-170-phone-validation-i18n.md](sessions/2026-05-22-task-170-phone-validation-i18n.md) |
+| 2026-05-22 | Sprint 7 — Task 171 — Delete button hidden for non-admins in AdminEmailTemplatesManager; isAdmin prop from page | Task 171 | [sessions/2026-05-22-task-171-email-delete-admin-only-ui.md](sessions/2026-05-22-task-171-email-delete-admin-only-ui.md) |
 | 2026-05-22 | Task 162 — E.5 ADR verification: ADR committed, clean working tree, no stray changes | Task 162 | [sessions/2026-05-22-task-162-e5-adr-verify.md](sessions/2026-05-22-task-162-e5-adr-verify.md) |
 | 2026-05-22 | Task 161 — Email template delete admin-only: assertAdmin() + RLS matrix documented | Task 161 | [sessions/2026-05-22-task-161-email-template-delete-admin-only.md](sessions/2026-05-22-task-161-email-template-delete-admin-only.md) |
 | 2026-05-22 | Task 160 — Block/suspension enforcement: getBlockedError helper, 7 actions, auto-lift, i18n | Task 160 | [sessions/2026-05-22-task-160-block-suspension-enforcement.md](sessions/2026-05-22-task-160-block-suspension-enforcement.md) |

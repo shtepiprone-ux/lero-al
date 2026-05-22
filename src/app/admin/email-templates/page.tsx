@@ -1,5 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { createClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/auth/server'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminEmailTemplatesManager } from '@/components/admin/AdminEmailTemplatesManager'
 import type { EmailTemplate } from '@/types/database'
@@ -18,13 +20,18 @@ export default async function AdminEmailTemplatesPage() {
 
   const templates = (data ?? []) as EmailTemplate[]
 
+  const me = await getUser()
+  const supabase = await createClient()
+  const { data: myProfile } = await supabase.from('users').select('role').eq('id', me!.id).single()
+  const isAdmin = myProfile?.role === 'admin'
+
   return (
     <div className="p-6 lg:p-8 max-w-5xl mx-auto">
       <AdminPageHeader
         title={t('email_templates_title')}
         subtitle={t('email_templates_subtitle', { count: count ?? 0 })}
       />
-      <AdminEmailTemplatesManager templates={templates} />
+      <AdminEmailTemplatesManager templates={templates} isAdmin={isAdmin} />
     </div>
   )
 }

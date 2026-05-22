@@ -322,7 +322,7 @@ function DeleteConfirmDialog({
 
 // ── Main manager ──────────────────────────────────────────────────────────────
 
-export function AdminEmailTemplatesManager({ templates: initial }: { templates: EmailTemplate[] }) {
+export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { templates: EmailTemplate[]; isAdmin: boolean }) {
   const t = useTranslations('admin.email_templates')
   const [templates, setTemplates] = useState(initial)
   const [search, setSearch] = useState('')
@@ -444,16 +444,18 @@ export function AdminEmailTemplatesManager({ templates: initial }: { templates: 
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setDeleteKey(key)}
-                    className="text-muted-foreground hover:text-destructive"
-                    aria-label={t('delete_label')}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  {isAdmin && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setDeleteKey(key)}
+                      className="text-muted-foreground hover:text-destructive"
+                      aria-label={t('delete_label')}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </div>
             )

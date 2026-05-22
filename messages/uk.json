@@ -852,7 +852,9 @@
         "website_required": "Сайт компанії обов'язковий",
         "email_required": "Email обов'язковий",
         "email_invalid": "Некоректний email",
-        "phone_no_country_code": "Введіть номер телефону без коду країни."
+        "phone_no_country_code": "Введіть номер телефону без коду країни.",
+        "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
+        "error_phone_no_country_code": "Введіть номер телефону без коду країни."
       },
       "profile_types": {
         "admin": "Адміністратор",

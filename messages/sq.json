@@ -852,7 +852,9 @@
         "website_required": "Faqja e kompanisë është e detyrueshme",
         "email_required": "Email-i është i detyrueshëm",
         "email_invalid": "Adresë email-i jo e vlefshme",
-        "phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit."
+        "phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
+        "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
+        "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit."
       },
       "profile_types": {
         "admin": "Administrator",

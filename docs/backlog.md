@@ -4,6 +4,17 @@
 
 ## Last Session
 
+**2026-05-22 — Sprint 8 (Task 172) ✅**
+
+- `scripts/check-schema-drift.mjs`: parses `src/types/database.ts`, emits `scripts/schema-drift-check.sql`. 21 tables / 204 columns tracked.
+- `npm run check:schema-drift` added to `package.json`.
+- `docs/qa-rules.md` §Schema drift check + `docs/integrations.md` reference added.
+- SQL generated and verified: two result sets (missing-in-DB + informational extras).
+
+→ [Task 172 session log](sessions/2026-05-22-task-172-schema-drift-guard.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Sprint 7 (Tasks 170 + 171) ✅**
 
 - Task 170: `error_phone_invalid` + `error_phone_no_country_code` added to `admin.user_profile.validation` in all 4 catalogs (sq/en/uk/it). Raw key no longer shown on invalid phone save.
@@ -326,6 +337,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Sprint 8 — Task 172 — schema-drift guard: check-schema-drift.mjs, schema-drift-check.sql (21 tables/204 cols), qa-rules doc | Task 172 | [sessions/2026-05-22-task-172-schema-drift-guard.md](sessions/2026-05-22-task-172-schema-drift-guard.md) |
 | 2026-05-22 | Sprint 7 — Task 170 — `error_phone_invalid`+`error_phone_no_country_code` in `admin.user_profile.validation` × 4 locales | Task 170 | [sessions/2026-05-22-task-170-phone-validation-i18n.md](sessions/2026-05-22-task-170-phone-validation-i18n.md) |
 | 2026-05-22 | Sprint 7 — Task 171 — Delete button hidden for non-admins in AdminEmailTemplatesManager; isAdmin prop from page | Task 171 | [sessions/2026-05-22-task-171-email-delete-admin-only-ui.md](sessions/2026-05-22-task-171-email-delete-admin-only-ui.md) |
 | 2026-05-22 | Task 162 — E.5 ADR verification: ADR committed, clean working tree, no stray changes | Task 162 | [sessions/2026-05-22-task-162-e5-adr-verify.md](sessions/2026-05-22-task-162-e5-adr-verify.md) |

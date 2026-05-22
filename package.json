@@ -18,6 +18,7 @@
     "governance:report": "node scripts/governance/governance.mjs all --report",
     "governance:update-baseline": "node scripts/governance/governance.mjs all --update-baseline",
     "typecheck": "tsc --noEmit",
+    "check:schema-drift": "node scripts/check-schema-drift.mjs",
     "prestorybook": "node scripts/prepare-storybook-next15.mjs",
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "node scripts/prepare-storybook-next15.mjs",

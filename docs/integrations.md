@@ -291,3 +291,13 @@ Our `sendEmailChangeEmails()` (called from the cabinet) operates independently v
 2. **Supabase service / security / project emails** (project changes, security alerts, billing) — sent to the Supabase ACCOUNT / organization OWNER only. ACCOUNT level — never sent to app users, not controlled by app code. These are already "super-admin only" by design; D.6 does NOT touch them.
 
 Owner clarification (2026-05-20): "emails only for super admin" = keep the account-level service/security emails going to the owner (level 2, already the case), and make the user-facing ones (level 1) disappear from Supabase and be served by our system. → No extra code needed for level 2; owner should just confirm the notification email + security alerts are enabled in Supabase Dashboard → Account/Organization settings.
+
+---
+
+### Schema drift guard (Sprint 8 / Task 172)
+
+`src/types/database.ts` is hand-maintained; DB migrations are applied manually in Supabase. A column missing in the live DB (but present in the types) causes a `PGRST204` runtime error on write.
+
+**Guard:** `scripts/check-schema-drift.mjs` parses `database.ts` and emits `scripts/schema-drift-check.sql`. Owner runs the SQL in Supabase before deploys.
+
+Full process and when to run: see **`docs/qa-rules.md §Schema drift check`**.

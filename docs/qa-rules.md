@@ -145,6 +145,30 @@ Critical paths to test:
 `node qa-import/validate-ui-navigation.mjs`
 ---
 
+### Schema drift check (types ↔ live DB)
+
+**Problem:** `src/types/database.ts` is hand-maintained. If a column exists in the types but not in the live DB, PostgREST returns a `PGRST204` error at runtime (e.g. the `suspended_until` outage, Sprint 7 / Issue A).
+
+**Guard:** A codegen script parses `database.ts` and emits owner-run SQL.
+
+```bash
+# Regenerate the SQL (re-run after any database.ts change):
+npm run check:schema-drift
+# → writes scripts/schema-drift-check.sql
+```
+
+Then paste `scripts/schema-drift-check.sql` into the **Supabase SQL Editor** and run it.
+- **Result set 1:** columns expected by types but missing in DB → apply `ALTER TABLE … ADD COLUMN IF NOT EXISTS …` for each.
+- **Result set 2 (informational):** DB columns absent from types → review; add to `database.ts` if needed.
+
+**Owner-run SQL rule:** The script itself never connects to the DB (no credentials, no `pg`). Only the owner runs the SQL in Supabase.
+
+**When to run:** before every production deploy that adds or modifies columns in `database.ts`, or any time a PGRST204 error surfaces.
+
+**Interface→table map:** 21 confirmed tables (see `scripts/check-schema-drift.mjs`). Unconfirmed interfaces (no `.from()` call in src/) are intentionally excluded to avoid false positives.
+
+---
+
 ### Responsive Screenshot QA (Phase 5)
 
 **Reference:** `docs/responsive-screenshot-governance.md`, `docs/responsive-screenshot-matrix.md`

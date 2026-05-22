@@ -54,3 +54,33 @@ drift guard: `collection_items`, `favorite_price_alerts`, `report_actions`. Reco
 **Open question for owner:** when you ran `schema-drift-check.sql`, did **RESULT SET 1**
 (types-expected-but-DB-missing) come back **empty**? If yes, all 21 typed tables are free of the
 PGRST204-risk drift. (Result set 2 already produced the `inactivity_warning_sent_at` fix.)
+
+## Follow-up tasks (opened 2026-05-22)
+
+| Task | Type | Summary | Kickoff |
+|---|---|---|---|
+| 173 | Sonnet | Add interfaces for the 3 untyped tables (`collection_items`, `favorite_price_alerts`, `report_actions`) + add to `INTERFACE_TABLE_MAP` + regenerate SQL | `Sprint_8_kickoff_prompt_Task_173.md` |
+| 174 | **Owner** (SQL) | Run the regenerated 24-table audit; confirm RESULT SET 1 empty; reconcile anything found | `Sprint_8_kickoff_prompt_Task_174.md` |
+
+Task 174 is **blocked by** Task 173 (so the audit covers all 24 tables). 174 is owner-executed —
+running SQL is not delegated to Sonnet (single-writer-SQL rule).
+
+## Orchestrator verdict — Task 173 — 2026-05-22 — ✅ APPROVED
+
+Verified against the **object store** (`git show f18d11df7:…`), not the working tree (the index was
+transiently re-corrupted during concurrent git access — phantom truncation diff; the file on disk is
+intact, confirmed via direct read).
+
+- `CollectionItem` = { collection_id, listing_id, created_at } (composite PK).
+- `FavoritePriceAlert` = { user_id, listing_id, last_notified_price, last_notified_at }.
+- `ReportAction` = { id, report_id, actor_id, actor_role, old_status, new_status, notes|null, created_at }.
+- `INTERFACE_TABLE_MAP` now 24 tables; `schema-drift-check.sql` = 220 columns. **RESULT SET 1 empty**
+  (no PGRST204-risk drift across all 24 typed tables). RESULT SET 2 reconciled down to only the
+  intentional `listings.search_vector` (tsvector).
+
+Note: commit `f18d11df7`'s message says "217 cols" but the commit actually contains the 220-col
+reconciled state (the message predates the reconcile) — content is correct; message is cosmetically
+stale, not worth a history rewrite.
+
+**Sprint 8 substantively COMPLETE** — pending only the owner's final re-run of the SQL confirming
+RESULT SET 2 shows just `listings.search_vector`.

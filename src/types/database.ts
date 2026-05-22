@@ -68,6 +68,12 @@ export interface CollectionWithCount extends Collection {
   item_count: number
 }
 
+export interface CollectionItem {
+  collection_id: string
+  listing_id: string
+  created_at: string
+}
+
 export interface RecentlyViewed {
   id: string
   user_id: string
@@ -229,6 +235,13 @@ export interface Favorite {
   created_at: string
 }
 
+export interface FavoritePriceAlert {
+  user_id: string
+  listing_id: string
+  last_notified_price: number
+  last_notified_at: string
+}
+
 export interface SavedSearch {
   id: string
   user_id: string
@@ -251,6 +264,17 @@ export interface ListingReport {
   reason: ReportReason
   comment: string | null
   status: ReportStatus
+  created_at: string
+}
+
+export interface ReportAction {
+  id: string
+  report_id: string
+  actor_id: string
+  actor_role: string
+  old_status: string
+  new_status: string
+  notes: string | null
   created_at: string
 }
 

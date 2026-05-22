@@ -41,7 +41,7 @@ const ROOT = resolve(__dirname, '..')
 //
 // DB columns intentionally NOT in types (generated / DB-internal):
 //   listings.search_vector — tsvector generated column; queried via .textSearch(),
-//     never read as a JS value; excluded from User.
+//     never read as a JS value.
 const INTERFACE_TABLE_MAP = {
   User:               'users',
   UserChangeLog:      'user_change_log',
@@ -52,8 +52,10 @@ const INTERFACE_TABLE_MAP = {
   Listing:            'listings',
   ListingImage:       'listing_images',
   Favorite:           'favorites',
+  FavoritePriceAlert: 'favorite_price_alerts',
   SavedSearch:        'saved_searches',
   ListingReport:      'listing_reports',
+  ReportAction:       'report_actions',
   SupportTicket:      'support_tickets',
   Notification:       'notifications',
   DBCurrency:         'currencies',
@@ -63,6 +65,7 @@ const INTERFACE_TABLE_MAP = {
   SiteSetting:        'site_settings',
   Company:            'companies',
   Collection:         'collections',
+  CollectionItem:     'collection_items',
   RecentlyViewed:     'recently_viewed',
 }
 

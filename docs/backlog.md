@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Sprint 8 (Task 173) ✅**
+
+- `CollectionItem`, `FavoritePriceAlert`, `ReportAction` interfaces added to `database.ts` (columns derived from code usage only).
+- `INTERFACE_TABLE_MAP` extended to 24 tables; SQL regenerated: 24 tables / 217 columns.
+- `listings.search_vector` remains the only informational "not in types" entry.
+
+→ [Task 173 session log](sessions/2026-05-22-task-173-untyped-tables.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Sprint 8 (Task 172) ✅**
 
 - `scripts/check-schema-drift.mjs`: parses `src/types/database.ts`, emits `scripts/schema-drift-check.sql`. 21 tables / 204 columns tracked.
@@ -337,6 +347,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Sprint 8 — Task 173 — 3 new interfaces (CollectionItem, FavoritePriceAlert, ReportAction); map 24 tables/217 cols | Task 173 | [sessions/2026-05-22-task-173-untyped-tables.md](sessions/2026-05-22-task-173-untyped-tables.md) |
 | 2026-05-22 | Sprint 8 — Task 172 — schema-drift guard: check-schema-drift.mjs, schema-drift-check.sql (21 tables/204 cols), qa-rules doc | Task 172 | [sessions/2026-05-22-task-172-schema-drift-guard.md](sessions/2026-05-22-task-172-schema-drift-guard.md) |
 | 2026-05-22 | Sprint 7 — Task 170 — `error_phone_invalid`+`error_phone_no_country_code` in `admin.user_profile.validation` × 4 locales | Task 170 | [sessions/2026-05-22-task-170-phone-validation-i18n.md](sessions/2026-05-22-task-170-phone-validation-i18n.md) |
 | 2026-05-22 | Sprint 7 — Task 171 — Delete button hidden for non-admins in AdminEmailTemplatesManager; isAdmin prop from page | Task 171 | [sessions/2026-05-22-task-171-email-delete-admin-only-ui.md](sessions/2026-05-22-task-171-email-delete-admin-only-ui.md) |

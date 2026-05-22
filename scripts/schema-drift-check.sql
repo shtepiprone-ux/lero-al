@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-22T19:06:03.015Z by: npm run check:schema-drift
+-- Generated 2026-05-22T19:19:45.875Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -12,8 +12,10 @@
 --   Listing              → listings                 (36 cols)
 --   ListingImage         → listing_images           (5 cols)
 --   Favorite             → favorites                (4 cols)
+--   FavoritePriceAlert   → favorite_price_alerts    (4 cols)
 --   SavedSearch          → saved_searches           (12 cols)
 --   ListingReport        → listing_reports          (7 cols)
+--   ReportAction         → report_actions           (8 cols)
 --   SupportTicket        → support_tickets          (6 cols)
 --   Notification         → notifications            (8 cols)
 --   DBCurrency           → currencies               (12 cols)
@@ -23,6 +25,7 @@
 --   SiteSetting          → site_settings            (3 cols)
 --   Company              → companies                (4 cols)
 --   Collection           → collections              (5 cols)
+--   CollectionItem       → collection_items         (3 cols)
 --   RecentlyViewed       → recently_viewed          (4 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
@@ -151,6 +154,10 @@ WITH expected(table_name, column_name) AS (
     ('favorites', 'user_id'),
     ('favorites', 'listing_id'),
     ('favorites', 'created_at'),
+    ('favorite_price_alerts', 'user_id'),
+    ('favorite_price_alerts', 'listing_id'),
+    ('favorite_price_alerts', 'last_notified_price'),
+    ('favorite_price_alerts', 'last_notified_at'),
     ('saved_searches', 'id'),
     ('saved_searches', 'user_id'),
     ('saved_searches', 'name'),
@@ -170,6 +177,14 @@ WITH expected(table_name, column_name) AS (
     ('listing_reports', 'comment'),
     ('listing_reports', 'status'),
     ('listing_reports', 'created_at'),
+    ('report_actions', 'id'),
+    ('report_actions', 'report_id'),
+    ('report_actions', 'actor_id'),
+    ('report_actions', 'actor_role'),
+    ('report_actions', 'old_status'),
+    ('report_actions', 'new_status'),
+    ('report_actions', 'notes'),
+    ('report_actions', 'created_at'),
     ('support_tickets', 'id'),
     ('support_tickets', 'user_id'),
     ('support_tickets', 'subject'),
@@ -236,6 +251,9 @@ WITH expected(table_name, column_name) AS (
     ('collections', 'name'),
     ('collections', 'created_at'),
     ('collections', 'updated_at'),
+    ('collection_items', 'collection_id'),
+    ('collection_items', 'listing_id'),
+    ('collection_items', 'created_at'),
     ('recently_viewed', 'id'),
     ('recently_viewed', 'user_id'),
     ('recently_viewed', 'listing_id'),
@@ -377,6 +395,10 @@ WITH expected(table_name, column_name) AS (
     ('favorites', 'user_id'),
     ('favorites', 'listing_id'),
     ('favorites', 'created_at'),
+    ('favorite_price_alerts', 'user_id'),
+    ('favorite_price_alerts', 'listing_id'),
+    ('favorite_price_alerts', 'last_notified_price'),
+    ('favorite_price_alerts', 'last_notified_at'),
     ('saved_searches', 'id'),
     ('saved_searches', 'user_id'),
     ('saved_searches', 'name'),
@@ -396,6 +418,14 @@ WITH expected(table_name, column_name) AS (
     ('listing_reports', 'comment'),
     ('listing_reports', 'status'),
     ('listing_reports', 'created_at'),
+    ('report_actions', 'id'),
+    ('report_actions', 'report_id'),
+    ('report_actions', 'actor_id'),
+    ('report_actions', 'actor_role'),
+    ('report_actions', 'old_status'),
+    ('report_actions', 'new_status'),
+    ('report_actions', 'notes'),
+    ('report_actions', 'created_at'),
     ('support_tickets', 'id'),
     ('support_tickets', 'user_id'),
     ('support_tickets', 'subject'),
@@ -462,6 +492,9 @@ WITH expected(table_name, column_name) AS (
     ('collections', 'name'),
     ('collections', 'created_at'),
     ('collections', 'updated_at'),
+    ('collection_items', 'collection_id'),
+    ('collection_items', 'listing_id'),
+    ('collection_items', 'created_at'),
     ('recently_viewed', 'id'),
     ('recently_viewed', 'user_id'),
     ('recently_viewed', 'listing_id'),
@@ -476,6 +509,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'saved_searches', 'listing_reports', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'recently_viewed')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

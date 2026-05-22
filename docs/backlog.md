@@ -34,6 +34,7 @@
 Manual/ops actions still required outside of code commits. Keep here until done, then move to the relevant session log.
 
 - ⚠️ **Supabase Auth config (Task 122 — Send Email Hook):** do **NOT** disable Supabase "Confirm email" until the Send Email Hook is verified live in production. Disabling earlier opens an auto-confirm security hole.
+- ⚠️ **DB SQL (Epic F — Tasks 136/137):** run the `collections` and `favorite_price_alerts` table + RLS SQL in Supabase before relying on collections / price alerts (SQL is in the Task 136 & 137 session logs).
 
 ## Carry-over from Sprint 1 / Epic A
 
@@ -46,17 +47,11 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 **Next:** Task 138 (G.1 — Track recently viewed listings).
 
-After F.1, continue in order: F.4 → F.2 → F.3, then Epic G → H → I → J → L. Numbered list below.
+Continue in order: Epic G → H → I → J → L. Numbered list below.
 
 ## Task roadmap — numbered
 
-Active queue. Closed epics (B, C, D, E, K) and Sprints (0–4) live in **Closed sprints & epics**. Epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L. Numbers are global — never reused; if priorities change, renumber forward from the change point.
-
-**Epic F — Favorites**
-- **Task 134** — F.1 Favorites pagination (25/page).
-- **Task 135** — F.4 API refactor (`addFavorite` / `removeFavorite`) — must land before F.2 / F.3.
-- **Task 136** — F.2 Folders / collections.
-- **Task 137** — F.3 Price-change notifications (needs D.2).
+Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Closed sprints & epics**. Epic order fixed 2026-05-20: D → C → K → E → F → G → H → I → J → L. Numbers are global — never reused; if priorities change, renumber forward from the change point.
 
 **Epic G — Recently Viewed Listings**
 - **Task 138** — G.1 Track recently viewed (server for auth, cookie/local for guests).
@@ -99,7 +94,6 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Epic | Plan | Kickoff prompts |
 |---|---|---|
-| Epic F — Favorites Improvements | [`Epic_F_Favorites_Improvements.md`](../tasks/Epics/Epic_F_Favorites_Improvements.md) | [`Epic_F_kickoff_prompts.md`](../tasks/Epics/Epic_F_kickoff_prompts.md) |
 | Epic G — Recently Viewed Listings | [`Epic_G_Recently_Viewed_Listings.md`](../tasks/Epics/Epic_G_Recently_Viewed_Listings.md) | [`Epic_G_kickoff_prompts.md`](../tasks/Epics/Epic_G_kickoff_prompts.md) |
 | Epic H — Cloudinary Storage Hygiene | [`Epic_H_Cloudinary_Storage_Hygiene.md`](../tasks/Epics/Epic_H_Cloudinary_Storage_Hygiene.md) | [`Epic_H_kickoff_prompts.md`](../tasks/Epics/Epic_H_kickoff_prompts.md) |
 | Epic I — Listing Lifecycle & Status Rules | [`Epic_I_Listing_Lifecycle_and_Status_Rules.md`](../tasks/Epics/Epic_I_Listing_Lifecycle_and_Status_Rules.md) | [`Epic_I_kickoff_prompts.md`](../tasks/Epics/Epic_I_kickoff_prompts.md) |
@@ -113,6 +107,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 - **Epic D — Email Infrastructure & Account Lifecycle** (Tasks 119–124) — CLOSED, see [`tasks/Epics/Epic_D_Summary_CLOSED.md`](../tasks/Epics/Epic_D_Summary_CLOSED.md)
 - **Epic E — Search, Filters & Saved Search UX** (Tasks 131–133, plus E.2/E.3 from earlier) — CLOSED.
 - **Epic K — Admin Tables Standardization** (Tasks 127–130) — CLOSED, canonical pattern in `docs/component-governance.md §11`.
+- **Epic F — Favorites Improvements** (Tasks 134–137) — CLOSED, see [`tasks/Epics/Epic_F_Favorites_Improvements.md`](../tasks/Epics/Epic_F_Favorites_Improvements.md)
 - **Sprint 0 — Critical Bugfix / Regression Stabilization** (Tasks 84–90) — CLOSED, see [`tasks/Sprints/Sprint_0_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_0_—_Summary_CLOSED.md)
 - **Sprint 1 — Bugfix Continuation & Admin Polish** (Tasks 91–102) — CLOSED, see [`sessions/2026-05-19-sprint-1-bugfix-continuation.md`](sessions/2026-05-19-sprint-1-bugfix-continuation.md)
 - **Sprint 2 — Technical Debt Cleanup** (Task 107) — CLOSED, see [`tasks/Sprints/Sprint_2_—_Summary_CLOSED.md`](../tasks/Sprints/Sprint_2_—_Summary_CLOSED.md)

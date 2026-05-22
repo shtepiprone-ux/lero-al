@@ -87,13 +87,9 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Popular locations ── */}
-      <section className="py-12 md:py-16 2xl:py-20 bg-muted/30 [content-visibility:auto] [contain-intrinsic-size:auto_380px]">
-        <div className="container-wide">
-          <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mb-6">{t('popular_locations')}</h2>
-          <PopularLocations />
-        </div>
-      </section>
+      {/* ── Popular locations — section wrapper + heading live inside PopularLocations (J.2);
+          component returns null when no featured locations, hiding the entire section. */}
+      <PopularLocations />
 
       {/* ── How it works ── */}
       <section className="py-12 md:py-16 2xl:py-20 [content-visibility:auto] [contain-intrinsic-size:auto_340px]">

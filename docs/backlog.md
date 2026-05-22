@@ -4,10 +4,18 @@
 
 ## Last Session
 
+**2026-05-22 — Task 162 — E.5 ADR verification ✅**
+
+- ADR confirmed committed (51abc1f96 — `docs/state-authority.md`); no stray code changes.
+- `useListingsUrlFilters.ts` clean; working tree clean. Task 133 entry accurate. No code changes.
+
+→ [Task 162 session log](sessions/2026-05-22-task-162-e5-adr-verify.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 161 — Email template delete = admin-only ✅**
 
 - `assertAdmin()` added; delete actions switched from `assertAdminOrModerator()`.
-- RLS matrix confirmed + documented in `docs/integrations.md`.
 
 → [Task 161 session log](sessions/2026-05-22-task-161-email-template-delete-admin-only.md)
 
@@ -230,9 +238,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 161 (Email template delete admin-only).
+**Last completed:** Task 162 (E.5 ADR verification — all items already resolved).
 
-**Next:** Task 162 (E.5 — commit URL-state ADR + stray useListingsUrlFilters.ts).
+**Next:** All Follow-up tasks (157, 160, 161, 162) are now CLOSED. Roadmap complete.
 
 ## Task roadmap — numbered
 
@@ -253,12 +261,13 @@ Active queue. Closed epics (B, C, D, E, F, K) and Sprints (0–4) live in **Clos
 
 ~~**Epic L — Admin Dashboard 2026**~~ — **CLOSED** (Tasks 154–155; L.3 folded into L.2)
 
-**Follow-ups / hardening**
-- **Task 157** — Recovery security logging: forensic IP / user-agent + correlation id (D.4 follow-up from the 2026-05-21 Task 121 review). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_157.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_157.md). Builds on `src/modules/auth/actions/recovery.ts`.
-- **Task 160** — C.5 follow-up: real block / suspension enforcement (server-side across all writes; enforce `suspended_until` time-based + auto-lift). From the 2026-05-21 review of Task 126 (blocking was enforced only in createListing; `suspended_until` was cosmetic). Kickoff: [`tasks/Epics/Epic_C_kickoff_prompt_Task_160.md`](../tasks/Epics/Epic_C_kickoff_prompt_Task_160.md).
-- **Task 161** — D.2 follow-up: email-template delete = admin-only + verify/apply the RLS matrix. From the review of Task 123 (delete action allowed moderator while policy is admin-only; service-role bypasses RLS). Kickoff: [`tasks/Epics/Epic_D_kickoff_prompt_Task_161.md`](../tasks/Epics/Epic_D_kickoff_prompt_Task_161.md).
-- **Task 162** — E.5 follow-up: commit the URL-state ADR + resolve the stray `useListingsUrlFilters.ts` change (Task 133 deliverables were left uncommitted). Kickoff: [`tasks/Epics/Epic_E_kickoff_prompt_Task_162.md`](../tasks/Epics/Epic_E_kickoff_prompt_Task_162.md).
-- **I.3 deferred** — Listing status helper API migration `(status) → (listing)`. Trigger: publishing workflows / moderation automation / lifecycle transitions / listing automation arrive. See `docs/domain-rules.md §Listing Status Helpers — evolution trigger`. No task number until trigger fires.
+**Follow-ups / hardening — all CLOSED**
+
+- ~~**Task 157**~~ — Recovery security logging ✅ (IP+UA+correlationId, email hash)
+- ~~**Task 160**~~ — Block/suspension enforcement ✅ (getBlockedError, 7 actions, auto-lift)
+- ~~**Task 161**~~ — Email template delete admin-only ✅ (assertAdmin, RLS documented)
+- ~~**Task 162**~~ — E.5 ADR verification ✅ (already committed; working tree clean)
+- **I.3 deferred** — Listing status helper API migration `(status) → (listing)`. Trigger: publishing workflows / moderation automation / lifecycle transitions / listing automation. See `docs/domain-rules.md §Listing Status Helpers — evolution trigger`.
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization coverage · Responsive coverage · Acceptance criteria).
 
@@ -295,6 +304,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Task 162 — E.5 ADR verification: ADR committed, clean working tree, no stray changes | Task 162 | [sessions/2026-05-22-task-162-e5-adr-verify.md](sessions/2026-05-22-task-162-e5-adr-verify.md) |
 | 2026-05-22 | Task 161 — Email template delete admin-only: assertAdmin() + RLS matrix documented | Task 161 | [sessions/2026-05-22-task-161-email-template-delete-admin-only.md](sessions/2026-05-22-task-161-email-template-delete-admin-only.md) |
 | 2026-05-22 | Task 160 — Block/suspension enforcement: getBlockedError helper, 7 actions, auto-lift, i18n | Task 160 | [sessions/2026-05-22-task-160-block-suspension-enforcement.md](sessions/2026-05-22-task-160-block-suspension-enforcement.md) |
 | 2026-05-22 | Task 157 — Recovery security logging: IP+UA+correlationId; email hash; LOG_CORRELATION_SALT | Task 157 | [sessions/2026-05-22-task-157-recovery-security-logging.md](sessions/2026-05-22-task-157-recovery-security-logging.md) |

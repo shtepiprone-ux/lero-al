@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-22 — Task 157 — Recovery security logging ✅**
+
+- IP + UA + correlationId (SHA-256 email hash) in both recovery log events.
+- Email never in logs; stable correlation across request→completion via hash.
+- `LOG_CORRELATION_SALT` env documented. Supabase rate limit confirmed sufficient.
+
+→ [Task 157 session log](sessions/2026-05-22-task-157-recovery-security-logging.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Task 155 (L.2) — Build the Admin Dashboard ✅ — L.3 folded in**
 
 - 6 KPI cards (P0); status breakdown bars (CSS only); Pending Reports always visible; Recent Listings Epic K clickable.
@@ -203,9 +213,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Task 155 (L.2 — Dashboard built; L.3 folded in). **Epic L — CLOSED.**
+**Last completed:** Task 157 (Recovery security logging).
 
-**Next:** Task 157 (Recovery security logging) or Task 160 (Block/suspension enforcement) — both in §Follow-ups.
+**Next:** Task 160 (C.5 — Block/suspension enforcement) or Task 161 (D.2 — email template RLS).
 
 ## Task roadmap — numbered
 
@@ -268,6 +278,7 @@ Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-22 | Task 157 — Recovery security logging: IP+UA+correlationId; email hash; LOG_CORRELATION_SALT | Task 157 | [sessions/2026-05-22-task-157-recovery-security-logging.md](sessions/2026-05-22-task-157-recovery-security-logging.md) |
 | 2026-05-22 | Epic L.2 — Dashboard built: 6 KPI cards, status bars, Epic K recent listings, pending reports panel | Task 155 | [sessions/2026-05-22-task-155-l2-dashboard-build.md](sessions/2026-05-22-task-155-l2-dashboard-build.md) |
 | 2026-05-22 | Epic L.1 — Dashboard discovery: P0 metrics, wireframes, index plan; signed off 2026-05-22 | Task 154 | [sessions/2026-05-22-task-154-l1-dashboard-discovery.md](sessions/2026-05-22-task-154-l1-dashboard-discovery.md) |
 | 2026-05-22 | Epic J.3 — Filter link: `?location_id=<id>` confirmed canonical; slug strategy documented; Epic J CLOSED | Task 153 | [sessions/2026-05-22-task-153-j3-filter-link.md](sessions/2026-05-22-task-153-j3-filter-link.md) |

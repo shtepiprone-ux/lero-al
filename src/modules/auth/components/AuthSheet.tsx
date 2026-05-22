@@ -183,7 +183,7 @@ function ForgotPasswordView({
     const redirectTo = `${window.location.origin}/auth/callback?next=/${locale}/auth/reset-password`
     await Promise.all([
       requestPasswordReset(email, redirectTo),
-      logPasswordRecoveryRequest(),
+      logPasswordRecoveryRequest(email),
     ])
     setLoading(false)
     // Always show neutral success — never reveal whether email is registered

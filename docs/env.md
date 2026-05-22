@@ -13,6 +13,7 @@ RESEND_API_KEY=re_xxx                  # Resend dashboard → API Keys (server-o
 NEXT_PUBLIC_SITE_URL=https://lero.al
 SUPABASE_EMAIL_HOOK_SECRET=v1,whsec_your_base64_secret  # Supabase Dashboard → Auth → Hooks → Send Email Hook → Secret. Dashboard-issued value in v1,whsec_<base64> format (do NOT invent your own). Server-only; verified via Standard Webhooks (standardwebhooks lib) on incoming hook requests at /api/auth-email-hook
 CRON_SECRET=your_cron_secret               # Random secret (e.g. openssl rand -hex 32). Set in Vercel → Settings → Environment Variables. Vercel automatically passes it as Authorization: Bearer <CRON_SECRET> to cron routes defined in vercel.json. Used by /api/cron/inactivity.
+LOG_CORRELATION_SALT=your_random_salt      # Server-only salt for hashing emails in security audit logs (Task 157). Used by src/modules/auth/actions/recovery.ts to produce a stable correlationId without exposing raw email. Generate: openssl rand -hex 24. If absent, falls back to 'lero-al' (weaker; set in production).
 # Email-change token expiry: 24 hours (hardcoded in src/modules/cabinet/actions/index.ts EMAIL_CHANGE_EXPIRY_HOURS)
 # Email preview server: npm run email — launches react-email preview at localhost:3000 (dev only)
 

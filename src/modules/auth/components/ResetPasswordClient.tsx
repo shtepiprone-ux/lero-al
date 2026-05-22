@@ -22,6 +22,7 @@ export function ResetPasswordClient({ locale }: ResetPasswordClientProps) {
   const router = useRouter()
   const [pageState, setPageState] = useState<PageState>('loading')
   const [userId, setUserId] = useState<string | null>(null)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [errorKey, setErrorKey] = useState<string | null>(null)
@@ -32,6 +33,7 @@ export function ResetPasswordClient({ locale }: ResetPasswordClientProps) {
       const { data } = await getSession()
       if (data.session?.user) {
         setUserId(data.session.user.id)
+        setUserEmail(data.session.user.email ?? null)
         setPageState('form')
       } else {
         setPageState('expired')
@@ -62,7 +64,7 @@ export function ResetPasswordClient({ locale }: ResetPasswordClientProps) {
     }
 
     if (userId) {
-      await logPasswordRecoveryCompletion(userId)
+      await logPasswordRecoveryCompletion(userId, userEmail ?? '')
     }
 
     setPageState('success')

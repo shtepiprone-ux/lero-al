@@ -4,6 +4,16 @@
 
 ## Last Session
 
+**2026-05-23 — Sprint 9 (Task 210 — chore: green tsc baseline) ✅**
+
+- `npx tsc --noEmit` was red (2 errors): both `MOCK_USER: User` fixtures missing `suspended_until` + `inactivity_warning_sent_at`.
+- Added both fields with `null` defaults to `src/lib/auth/__tests__/controller.test.ts:49` and `src/modules/auth/__tests__/AuthContext.test.tsx:44`.
+- `npx tsc --noEmit` → 0 errors; vitest (56 tests) → all pass.
+
+→ [Task 210 session log](sessions/2026-05-23-task-210-tsc-baseline-green.md)
+
+## Last-but-one Session
+
 **2026-05-22 — Sprint 9 (Task 175 — M.1) ✅**
 
 - `scrapeEurAllRate()` replaced by `scrapeIliria98Rates(['EUR','USD','GBP'])` — single HTTP request, all three currencies.
@@ -292,10 +302,10 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Sprint 9 in progress — Task 175 (M.1 — iliria98 FX source) ✅.
+**Last completed:** Sprint 9 — Task 210 (chore: green tsc baseline) ✅.
 
-**Sprint 9 queue** (Tasks 175–183): 175 ✅ → **176** (price/m² display, parallel) → **177** (admin currency table) → **178** (currency selector Combobox); **179** / **180** (localization); **181** / **182** / **183** (favorites/contact/URL).
-**Baseline (orchestrator, 2026-05-22):** run **Task 210 first** — green `tsc --noEmit`: stale `MOCK_USER` fixtures in `controller.test.ts` + `AuthContext.test.tsx` miss `suspended_until`+`inactivity_warning_sent_at` (kickoff `Sprint_9_kickoff_prompt_Task_210.md`). A red baseline makes "0 new tsc errors" unverifiable for 176–183.
+**Sprint 9 queue** (Tasks 175–183): 175 ✅, 210 ✅ → **176** (price/m² display, parallel) → **177** (admin currency table) → **178** (currency selector Combobox); **179** / **180** (localization); **181** / **182** / **183** (favorites/contact/URL).
+`tsc --noEmit` baseline is now GREEN (0 errors). Gate for 176–183: 0 total tsc errors.
 Kickoffs: `tasks/Sprints/Sprint_9_kickoff_prompt_Task_176..183.md`. After Sprint 9: Epics N(184)→P(185)→O→Q→R→S→T→U. **Last task number: 210.**
 
 ## Task roadmap — numbered
@@ -381,6 +391,7 @@ global numbering. Notes column = source lines in `issues.txt`.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Sprint 9 — Task 210 — green tsc baseline: added suspended_until + inactivity_warning_sent_at to both MOCK_USER fixtures; 0 tsc errors, 56 tests pass | Task 210 | [sessions/2026-05-23-task-210-tsc-baseline-green.md](sessions/2026-05-23-task-210-tsc-baseline-green.md) |
 | 2026-05-22 | Sprint 8 — Task 173 — 3 new interfaces (CollectionItem, FavoritePriceAlert, ReportAction); map 24 tables/217 cols | Task 173 | [sessions/2026-05-22-task-173-untyped-tables.md](sessions/2026-05-22-task-173-untyped-tables.md) |
 | 2026-05-22 | Sprint 8 — Task 172 — schema-drift guard: check-schema-drift.mjs, schema-drift-check.sql (21 tables/204 cols), qa-rules doc | Task 172 | [sessions/2026-05-22-task-172-schema-drift-guard.md](sessions/2026-05-22-task-172-schema-drift-guard.md) |
 | 2026-05-22 | Sprint 7 — Task 170 — `error_phone_invalid`+`error_phone_no_country_code` in `admin.user_profile.validation` × 4 locales | Task 170 | [sessions/2026-05-22-task-170-phone-validation-i18n.md](sessions/2026-05-22-task-170-phone-validation-i18n.md) |

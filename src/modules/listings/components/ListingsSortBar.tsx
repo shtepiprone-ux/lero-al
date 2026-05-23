@@ -84,24 +84,22 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
         />
 
         {/* Grid / List toggle */}
-        <div className="hidden sm:flex items-center border border-border rounded-xl overflow-hidden">
+        <div className="hidden sm:flex items-center bg-muted rounded-xl p-1">
           <Button
             variant={view === 'grid' ? 'default' : 'ghost'}
-            size="icon"
-            className="h-9 w-9 rounded-none"
+            size="icon-sm"
             onClick={() => onViewChange('grid')}
             aria-label={t('view_grid')}
           >
-            <LayoutGrid className="h-4 w-4" />
+            <LayoutGrid className="size-4" />
           </Button>
           <Button
             variant={view === 'list' ? 'default' : 'ghost'}
-            size="icon"
-            className="h-9 w-9 rounded-none"
+            size="icon-sm"
             onClick={() => onViewChange('list')}
             aria-label={t('view_list')}
           >
-            <List className="h-4 w-4" />
+            <List className="size-4" />
           </Button>
         </div>
       </div>

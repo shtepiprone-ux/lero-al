@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-23 — Task 193 — Q.4: Listings status tabs — canonical Tabs + remove stray border ✅**
+**2026-05-23 — Task 194 — Q.5: Card/list view toggle — smooth active-state rounding ✅**
+
+- `src/modules/listings/components/ListingsSortBar.tsx`: replaced `border border-border rounded-xl overflow-hidden` container + `rounded-none` buttons with segmented-control pattern: `bg-muted rounded-xl p-1` container + `size="icon-sm"` buttons (built-in `rounded-[min(var(--radius-md),12px)]` ≈ 9.6px). No `overflow-hidden` → active state has its own smooth token-consistent rounding.
+- Icons: `h-4 w-4` → `size-4` (prevents `icon-sm`'s SVG size override).
+- Outer height preserved: 28px button + 4px padding × 2 = 36px = h-9.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 194 session log](sessions/2026-05-23-task-194-view-toggle-rounding.md)
+
+**Previous: 2026-05-23 — Task 193 — Q.4: Listings status tabs — canonical Tabs + remove stray border ✅**
 
 - `src/modules/listings/components/ListingsStatusTabs.tsx`: replaced parallel implementation (custom `TabButton` + `Button` + `border-b` container + manual `border-b-2 -mb-px` active state) with canonical `Tabs/TabsList/TabsTrigger` (`variant="line"`). Removed `Button`, `cn` imports.
 - Controlled via `value={activeTab} onValueChange={switchTab}` — URL navigation logic unchanged.

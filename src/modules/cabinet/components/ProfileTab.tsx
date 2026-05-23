@@ -25,6 +25,7 @@ import type { User, PreferredCurrency } from '@/types/database'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { Combobox } from '@/components/shared/Combobox'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 
 interface CityOption { id: number; name_al: string; region_id: number | null }
 interface RegionOption { id: number; name_al: string }
@@ -73,6 +74,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
   const router = useRouter()
+  const { signOut } = useAuth()
   const [isPending, startTransition] = useTransition()
 
   // Form state
@@ -209,7 +211,10 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     }
     setShowDeleteDialog(false)
     toast.success(t('delete_account_success'))
-    router.push(`/${locale}`)
+    // Clear the client auth state before navigating so the header shows the
+    // signed-out state immediately on redirect (server-side signOut alone does
+    // not trigger a SIGNED_OUT event in the Supabase SDK synchronously).
+    signOut(() => router.push(`/${locale}`))
   }
 
   const deleteConfirmOk = deleteConfirm.trim().toUpperCase() === 'DELETE'

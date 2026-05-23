@@ -4,7 +4,15 @@
 
 ## Last Session
 
-**2026-05-23 — Task 213 — T.4: unify list/card price template; per-m² now in List view ✅**
+**2026-05-23 — Task 185 — P.3: clear stale profile name in header after self-delete ✅**
+
+- Root cause: `handleDeleteAccount` called `router.push()` directly after the server-side delete. The server did `db.auth.admin.signOut(userId)` but the Supabase JS SDK doesn't fire a synchronous `SIGNED_OUT` event from server-side token invalidation — the client auth state (`AuthController`) remained at `{ user: <stale> }` through the redirect.
+- Fix: added `useAuth` import + `const { signOut } = useAuth()` in `ProfileTab.tsx`. Replaced `router.push(...)` with `signOut(() => router.push(...))` — same pattern as `handleLogout` in `Header.tsx`. `AuthController.signOut()` commits `{ user: null }` synchronously (via `signing_out` → `unauthenticated` transition) and calls `coreSignOut()` to clear the local Supabase session before the router navigates.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 185 session log](sessions/2026-05-23-task-185-stale-header-after-delete.md)
+
+**Previous: 2026-05-23 — Task 213 — T.4: unify list/card price template; per-m² now in List view ✅**
 
 - Root cause: `ListingCard.tsx` had two duplicated price blocks — vertical had price + old + per-m²; horizontal had price + old only, per-m² missing.
 - Fix: extracted `PriceBlock` (interface + function) above `ListingCard`; it renders price row, old/strikethrough, original price string, and per-m² via one `flex items-start justify-between` layout. `priceSize: 'base' | 'lg'` controls font size (base = horizontal, lg = vertical).
@@ -94,7 +102,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** 185 (P.3 stale header) → 212 (P.5 create-collection) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
+**Next queue:** 212 (P.5 create-collection inline) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 
@@ -148,6 +156,7 @@ Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → 
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 185 — P.3 stale header after self-delete: signOut() called before router.push; AuthController commits user:null synchronously | Task 185 | [sessions/2026-05-23-task-185-stale-header-after-delete.md](sessions/2026-05-23-task-185-stale-header-after-delete.md) |
 | 2026-05-23 | Task 213 — T.4 PriceBlock unification: per-m² added to horizontal list view; shared PriceBlock(priceSize) replaces two diverged price blocks | Task 213 | [sessions/2026-05-23-task-213-price-block-unification.md](sessions/2026-05-23-task-213-price-block-unification.md) |
 | 2026-05-23 | Task 184 — N.2 html lang: RootLayout async + X-NEXT-INTL-LOCALE header; admin-locale cookie fallback; div lang removed from locale layout | Task 184 | [sessions/2026-05-23-task-184-html-lang.md](sessions/2026-05-23-task-184-html-lang.md) |
 | 2026-05-23 | Task 215 — M.6 multi-currency cards: useHomepageFilters/FiltersPanel rates, FeaturedListings/LatestListings/SimilarListings/RecentlyViewedGrid wired, 1.08/0.86 removed | Task 215 | [sessions/2026-05-23-task-215-multi-currency-cards.md](sessions/2026-05-23-task-215-multi-currency-cards.md) |

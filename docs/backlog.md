@@ -4,7 +4,17 @@
 
 ## Last Session
 
-**2026-05-23 — Task 190 — Q.1: Combobox consolidation — fold LocationCombobox + YearCombobox into canonical ✅**
+**2026-05-23 — Task 191 — Q.2: Suppress mobile keyboard on non-typeable comboboxes ✅**
+
+- `src/components/shared/PropertyTypeCombobox.tsx`: switched from default `variant="input"` to `variant="button"` — renders a `<button>` trigger instead of `<input>`, so mobile keyboard no longer pops on tap; removed dead `onKeyDown` prop (unused in button mode).
+- `src/components/shared/HeroSearch.tsx`: removed stale `onKeyDown={handleKeyDown}` from `<PropertyTypeCombobox>` (prop deleted from interface).
+- All other comboboxes already correct: `LocationCombobox` + `YearCombobox` are legitimately typeable (`variant="input"`); currency/locale/saved-search comboboxes already had `variant="button"`.
+- Fix is canonical — one change in the wrapper component, no per-page hacks.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 191 session log](sessions/2026-05-23-task-191-mobile-keyboard.md)
+
+**Previous: 2026-05-23 — Task 190 — Q.1: Combobox consolidation — fold LocationCombobox + YearCombobox into canonical ✅**
 
 - `src/components/shared/Combobox.tsx`: added 3 props — `clearLabel?: string` (always-visible deselect item at top of list), `inputMode?` (passed to `<input>`), `onInputChange?` (fires on each keystroke before onChange, for live-parse wrappers).
 - `src/components/shared/LocationCombobox.tsx`: removed ~130 lines of parallel internals (own state, createPortal, dropdown, raw `<input role="combobox">`). Now thin wrapper: maps `locations` → `ComboboxOption[]`, passes `clearLabel={tc('all_locations')}`, delegates all popover/filter/a11y to canonical Combobox. "Add location" admin sub-form kept intact below.

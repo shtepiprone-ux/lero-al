@@ -108,7 +108,6 @@ export function HeroSearch() {
             <PropertyTypeCombobox
               value={propertyType}
               onChange={setPropertyType}
-              onKeyDown={handleKeyDown}
             />
 
             <LocationCombobox

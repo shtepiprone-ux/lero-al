@@ -10,14 +10,13 @@ import { Combobox } from '@/components/shared/Combobox'
 interface Props {
   value: string
   onChange: (value: string) => void
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   placeholder?: string
   showAllOption?: boolean
   className?: string
 }
 
 export function PropertyTypeCombobox({
-  value, onChange, onKeyDown,
+  value, onChange,
   placeholder, showAllOption = true, className,
 }: Props) {
   const t = useTranslations('common')
@@ -38,7 +37,7 @@ export function PropertyTypeCombobox({
       options={options}
       value={value}
       onChange={onChange}
-      onKeyDown={onKeyDown}
+      variant="button"
       placeholder={placeholder ?? t('all_types')}
       icon={<Home className="h-4 w-4" />}
       className={cn('property-type-combobox', className ?? 'sm:w-48 shrink-0')}

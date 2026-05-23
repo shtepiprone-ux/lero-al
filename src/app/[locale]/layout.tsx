@@ -45,7 +45,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AuthProvider initialUser={initialUser}>
-        <div lang={locale}>
+        <>
           <Header />
           <main className="min-h-[calc(100vh-4rem)] pb-14 md:pb-0">
             {children}
@@ -56,7 +56,7 @@ export default async function LocaleLayout({
           <PerformanceStoreInit />
           <PerfDevOverlay />
           <Toaster />
-        </div>
+        </>
       </AuthProvider>
     </NextIntlClientProvider>
   )

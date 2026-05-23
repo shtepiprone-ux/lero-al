@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-23 — Task 215 — M.6: multi-currency conversion on every card surface ✅**
+**2026-05-23 — Task 184 — N.2: fix `<html lang>` so browser stops offering to translate ✅**
+
+- Root cause: `app/layout.tsx` rendered `<html>` with no `lang`; locale layout had `<div lang={locale}>` (wrong element — browser ignores it).
+- Fix: made `RootLayout` async; reads `X-NEXT-INTL-LOCALE` request header (set by next-intl middleware on every locale-prefixed route) with fallback to `admin-locale` cookie (admin routes excluded from middleware) and final fallback `'sq'`. Sets `lang={locale}` on `<html>`.
+- Removed now-redundant `<div lang={locale}>` wrapper in `[locale]/layout.tsx`; replaced with a React fragment.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 184 session log](sessions/2026-05-23-task-184-html-lang.md)
+
+**Previous: 2026-05-23 — Task 215 — M.6: multi-currency conversion on every card surface ✅**
 
 - `useHomepageFilters` + `FiltersPanel`: `rate` (EUR-only) → `rates` map; exchange-rate hint now shows `rates[currency]` for the selected currency.
 - `FeaturedListings`, `LatestListings`: added `useExchangeRate` + `useAuth`; pass `displayCurrency={user?.preferred_currency ?? 'ALL'}` + `rates` to every `ListingCard`.
@@ -75,7 +84,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** 184 (N.2 `<html lang>`) → 213 (T.4 per-m² template) → 185 (P.3 stale header) → 212 (P.5 create-collection) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
+**Next queue:** 213 (T.4 per-m² template) → 185 (P.3 stale header) → 212 (P.5 create-collection) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 
@@ -129,6 +138,7 @@ Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → 
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 184 — N.2 html lang: RootLayout async + X-NEXT-INTL-LOCALE header; admin-locale cookie fallback; div lang removed from locale layout | Task 184 | [sessions/2026-05-23-task-184-html-lang.md](sessions/2026-05-23-task-184-html-lang.md) |
 | 2026-05-23 | Task 215 — M.6 multi-currency cards: useHomepageFilters/FiltersPanel rates, FeaturedListings/LatestListings/SimilarListings/RecentlyViewedGrid wired, 1.08/0.86 removed | Task 215 | [sessions/2026-05-23-task-215-multi-currency-cards.md](sessions/2026-05-23-task-215-multi-currency-cards.md) |
 | 2026-05-23 | Task 214 — M.5 dynamic FX engine: catalog-driven scrape, Record<string,number> ExchangeRates, generalised fetchCrossRates | Task 214 | [sessions/2026-05-23-task-214-dynamic-fx-engine.md](sessions/2026-05-23-task-214-dynamic-fx-engine.md) |
 | 2026-05-23 | Sprint 9 — Task 211 — contact-card action row: flex-wrap overflow fix + FavoriteButton shape prop (icon/pill) | Task 211 | [sessions/2026-05-23-task-211-contact-card-action-row.md](sessions/2026-05-23-task-211-contact-card-action-row.md) |

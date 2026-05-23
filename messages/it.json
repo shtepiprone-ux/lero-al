@@ -885,7 +885,9 @@
         "company": "Dati azienda",
         "account_status": "Stato account",
         "change_log": "Storico modifiche tipo account",
-        "status_history": "Storico modifiche stato"
+        "status_history": "Storico modifiche stato",
+        "actions": "Azioni",
+        "role_status": "Ruolo e stato"
       },
       "fields": {
         "email": "Email",
@@ -932,7 +934,8 @@
         "save": "Salva",
         "create_user": "Crea utente",
         "reject_request": "Rifiuta",
-        "region_auto": "(auto)"
+        "region_auto": "(auto)",
+        "delete_permanently": "Elimina definitivamente"
       },
       "header": {
         "new_user_title": "Nuovo utente",

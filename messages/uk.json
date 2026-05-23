@@ -885,7 +885,9 @@
         "company": "Дані компанії",
         "account_status": "Статус акаунту",
         "change_log": "Історія змін типу акаунту",
-        "status_history": "Історія змін статусу"
+        "status_history": "Історія змін статусу",
+        "actions": "Дії",
+        "role_status": "Роль і статус"
       },
       "fields": {
         "email": "Email",
@@ -932,7 +934,8 @@
         "save": "Зберегти",
         "create_user": "Створити користувача",
         "reject_request": "Відхилити",
-        "region_auto": "(авто)"
+        "region_auto": "(авто)",
+        "delete_permanently": "Видалити назавжди"
       },
       "header": {
         "new_user_title": "Новий користувач",

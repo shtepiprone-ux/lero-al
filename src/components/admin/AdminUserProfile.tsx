@@ -11,6 +11,7 @@ import {
   Pencil, Trash2, Save, X, ChevronLeft, Loader2,
   ShieldCheck, MapPin, History, AlertTriangle, UserPlus,
 } from 'lucide-react'
+import { AdminEditLayout } from '@/components/admin/AdminEditLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -531,288 +532,94 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
 
   // ── Render ────────────────────────────────────────────────────────────────
 
-  return (
-    <div className="flex flex-col gap-6">
-
-      {/* ── Toolbar ─────────────────────────────────────────────────────────── */}
-      <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => {
-          if (!interceptHref('/admin/users')) return
-          router.push('/admin/users')
-        }}>
-          <ChevronLeft className="h-4 w-4" /> {t('actions.back_to_users')}
-        </Button>
-        <div className="ml-auto flex gap-2">
-          {currentMode === 'view' && (
-            <>
-              <Button variant="outline" size="sm" className="gap-1.5 rounded-xl" onClick={() => setEditActive(true)}>
-                <Pencil className="h-4 w-4" /> {t('actions.edit_profile')}
-              </Button>
-              {isAdmin && (
-                <Button variant="outline" size="sm" className="gap-1.5 rounded-xl border-status-warning/40 text-status-warning hover:bg-status-warning/10"
-                  onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
-                  <Trash2 className="h-4 w-4" /> {t('actions.deactivate_profile')}
-                </Button>
-              )}
-            </>
-          )}
-          {(currentMode === 'edit' || currentMode === 'create') && (
-            <>
-              <Button variant="outline" size="sm" className="gap-1.5 rounded-xl" onClick={handleCancelClick}>
-                <X className="h-4 w-4" /> {t('actions.cancel')}
-              </Button>
-              <Button size="sm" className="gap-1.5 rounded-xl" onClick={handleSubmit(onSubmit)} disabled={saving || (!isCreate && !isDirty)}>
-                {saving
-                  ? <Loader2 className="h-4 w-4 animate-spin" />
-                  : isCreate ? <UserPlus className="h-4 w-4" /> : <Save className="h-4 w-4" />
-                }
-                {isCreate ? t('actions.create_user') : t('actions.save')}
-              </Button>
-            </>
-          )}
-        </div>
-      </div>
-
-      {saveError && (
-        <div className="bg-destructive/10 border border-destructive/20 rounded-xl px-4 py-3 text-sm text-destructive">
-          {saveError}
-        </div>
-      )}
-
-      {/* ── Header card ─────────────────────────────────────────────────────── */}
-      <div className="bg-card rounded-2xl border shadow-sm p-5 flex items-start gap-5">
-        <AdminUserAvatar
-          userId={user?.id ?? null}
-          avatarUrl={avatarUrl}
-          mode={currentMode}
-          onAvatarChange={setAvatarUrl}
-          onBlobReady={isCreate ? handleBlobReady : undefined}
-        />
-        <div className="flex flex-col gap-2 min-w-0 pt-1">
-          {isCreate ? (
-            <>
-              <h1 className="text-xl font-bold">{t('header.new_user_title')}</h1>
-              <p className="text-sm text-muted-foreground">{t('header.new_user_subtitle')}</p>
-            </>
-          ) : (
-            <>
-              <h1 className="text-xl font-bold leading-tight">{displayName}</h1>
-              <div className="flex flex-wrap gap-1.5">
-                <Badge variant="neutral" className="text-xs capitalize">
-                  {PROFILE_TYPE_LABELS[profileTypeFromUser(user!)]}
-                </Badge>
-                <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
-                  {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
-                </Badge>
-                {user!.is_verified && (
-                  <Badge variant="success" className="text-xs gap-1">
-                    <ShieldCheck className="h-3 w-3" /> {t('header.verified_badge')}
-                  </Badge>
-                )}
-              </div>
-              <p className="text-sm text-muted-foreground">{authEmail}</p>
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* ── Location request card ─────────────────────────────────────────── */}
-      {user?.location_request && (
-        <div className="bg-status-warning/10 border border-status-warning/30 rounded-2xl p-4 flex flex-col gap-3">
-          <p className="text-sm font-semibold text-status-warning flex items-center gap-2">
-            <MapPin className="h-4 w-4" /> {t('location_request.title')}
-          </p>
-          <p className="text-sm">
-            <strong>{user.location_request.city}</strong>
-            {user.location_request.region ? `, ${user.location_request.region}` : ''}
-          </p>
-          <div className="flex gap-2 items-center flex-wrap">
-            <div className={cn('flex-1 min-w-0', reqLoading && 'pointer-events-none opacity-50')}>
-              <LocationCombobox
-                locations={cities}
-                value=""
-                onChange={id => { if (id) handleApproveRequest(Number(id)) }}
-                placeholder={t('placeholders.city_assign')}
-              />
-            </div>
-            <Button variant="ghost" size="sm" className="h-8 text-xs text-destructive hover:bg-destructive/5 shrink-0"
-              onClick={handleRejectRequest} disabled={reqLoading}>
-              {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : t('actions.reject_request')}
+  // Sidebar — view mode: actions + quick status overview
+  const sidebarView = !isCreate ? (
+    <>
+      <SectionCard title={t('sections.actions')}>
+        <div className="flex flex-col gap-2">
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-xl w-full justify-start"
+            onClick={() => setEditActive(true)}>
+            <Pencil className="h-4 w-4" /> {t('actions.edit_profile')}
+          </Button>
+          {isAdmin && (
+            <Button variant="outline" size="sm"
+              className="gap-1.5 rounded-xl w-full justify-start border-status-warning/40 text-status-warning hover:bg-status-warning/10"
+              onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
+              <Trash2 className="h-4 w-4" /> {t('actions.deactivate_profile')}
             </Button>
-          </div>
+          )}
+          {isAdmin && (
+            <Button variant="outline" size="sm"
+              className="gap-1.5 rounded-xl w-full justify-start border-destructive/40 text-destructive hover:bg-destructive/10"
+              onClick={() => { setDeleteMode('hard'); setShowDeleteDialog(true) }}>
+              <Trash2 className="h-4 w-4" /> {t('actions.delete_permanently')}
+            </Button>
+          )}
         </div>
-      )}
-
-      {/* ── Basic info ──────────────────────────────────────────────────────── */}
-      <SectionCard title={t('sections.basic_info')} allowOverflow>
-        {isCreate ? (
-          <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-            <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
-            <div className="min-w-0">
-              <Input
-                type="email"
-                value={createEmail}
-                onChange={e => { setCreateEmail(e.target.value); setCreateEmailError(null) }}
-                placeholder="user@example.com"
-                className="h-10 rounded-xl"
-              />
-              {createEmailError && <p className="text-xs text-destructive mt-1">{createEmailError}</p>}
-            </div>
+      </SectionCard>
+      <SectionCard title={t('sections.account_status')}>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs text-muted-foreground">{t('fields.profile_type').replace(' *', '')}</span>
+            <Badge variant="neutral" className="text-xs capitalize">
+              {PROFILE_TYPE_LABELS[profileTypeFromUser(user!)]}
+            </Badge>
           </div>
-        ) : (
-          <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
-            <span className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email')}</span>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm font-medium break-all">{authEmail}</span>
-                {emailConfirmedAt !== undefined && (
-                  <Badge variant={emailConfirmedAt ? 'success' : 'warning'} className="text-[10px] shrink-0">
-                    {emailConfirmedAt ? t('fields.email_confirmed') : t('fields.email_not_confirmed')}
-                  </Badge>
-                )}
-              </div>
-              <p className="text-xs text-muted-foreground mt-0.5">{t('fields.email_immutable')}</p>
-            </div>
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xs text-muted-foreground">{t('fields.status')}</span>
+            <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
+              {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
+            </Badge>
           </div>
-        )}
+          {user!.status === 'blocked' && user!.suspended_until && (
+            <p className="text-xs text-muted-foreground border-t pt-2">
+              {t('fields.suspended_until').toLowerCase()}{' '}
+              {new Date(user!.suspended_until).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })}
+            </p>
+          )}
+          {user!.block_reason && (
+            <p className="text-xs text-muted-foreground italic">{user!.block_reason}</p>
+          )}
+        </div>
+      </SectionCard>
+    </>
+  ) : null
 
-        <FieldRow label={t('fields.first_name')} mode={currentMode}
-          viewValue={user?.name}
-          editContent={<Input {...register('firstName')} className="h-10 rounded-xl" placeholder={t('placeholders.first_name')} />}
-          error={errors.firstName?.message}
-        />
-        <FieldRow label={t('fields.last_name')} mode={currentMode}
-          viewValue={user?.last_name}
-          editContent={<Input {...register('lastName')} className="h-10 rounded-xl" placeholder={t('placeholders.last_name')} />}
-          error={errors.lastName?.message}
-        />
-        <FieldRow
-          label={t('fields.profile_type')}
-          mode={isAdmin ? currentMode : 'view'}
-          viewValue={PROFILE_TYPE_LABELS[profileTypeFromUser(user ?? { role: 'user', user_type: 'private' })]}
-          editContent={
+  // Sidebar — edit / create mode: save actions + role & status controls
+  const sidebarEdit = (
+    <>
+      <SectionCard title={t('sections.actions')}>
+        <div className="flex flex-col gap-2">
+          <Button size="sm" className="gap-1.5 rounded-xl w-full"
+            onClick={handleSubmit(onSubmit)} disabled={saving || (!isCreate && !isDirty)}>
+            {saving
+              ? <Loader2 className="h-4 w-4 animate-spin" />
+              : isCreate ? <UserPlus className="h-4 w-4" /> : <Save className="h-4 w-4" />}
+            {isCreate ? t('actions.create_user') : t('actions.save')}
+          </Button>
+          <Button variant="outline" size="sm" className="gap-1.5 rounded-xl w-full"
+            onClick={handleCancelClick}>
+            <X className="h-4 w-4" /> {t('actions.cancel')}
+          </Button>
+        </div>
+      </SectionCard>
+      <SectionCard title={t('sections.role_status')} allowOverflow>
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs text-muted-foreground">{t('fields.profile_type').replace(' *', '')}</Label>
             <Combobox
               options={PROFILE_TYPES.map(pt => ({ value: pt, label: PROFILE_TYPE_LABELS[pt] }))}
               value={profileType}
               onChange={v => { if (v) setValue('profileType', v as ProfileType, { shouldDirty: true }) }}
               variant="button"
               size="sm"
-              triggerClassName="h-10"
+              disabled={!isAdmin}
             />
-          }
-          error={errors.profileType?.message}
-        />
-      </SectionCard>
-
-      {/* ── Contact ─────────────────────────────────────────────────────────── */}
-      <SectionCard title={t('sections.contact')}>
-        <FieldRow label={t('fields.phone')} mode={currentMode}
-          viewValue={user?.phone}
-          editContent={
-            <PhoneField
-              value={phoneState.e164}
-              onChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
-              error={errors.phone?.message}
-              size="sm"
-            />
-          }
-          error={undefined}
-        />
-        <FieldRow label={t('fields.whatsapp')} mode={currentMode}
-          viewValue={user?.whatsapp}
-          editContent={
-            <div className="flex flex-col gap-2">
-              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <Checkbox checked={useMainPhone} onCheckedChange={v => setValue('useMainPhone', v === true)} />
-                {t('fields.use_main_phone')}
-              </label>
-              {!useMainPhone && (
-                <PhoneField
-                  value={whatsappState.e164}
-                  onChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
-                  error={errors.whatsapp?.message}
-                  size="sm"
-                />
-              )}
-            </div>
-          }
-        />
-      </SectionCard>
-
-      {/* ── Location ────────────────────────────────────────────────────────── */}
-      <SectionCard title={isBusiness ? t('sections.location_work') : t('sections.location_home')} allowOverflow>
-        <FieldRow label={t('fields.city')} mode={currentMode}
-          editContent={
-            <LocationCombobox
-              locations={cities}
-              value={locationIdValue ? String(locationIdValue) : ''}
-              onChange={id => setValue('locationId', (id ? Number(id) : undefined) as unknown as number, { shouldValidate: true })}
-              error={errors.locationId?.message}
-              placeholder={t('placeholders.city_search')}
-              regions={isAdmin ? regions : undefined}
-              onAddLocation={isAdmin ? addLocation : undefined}
-            />
-          }
-          viewValue={
-            <div className="flex flex-col gap-0.5">
-              <span>{user?.location?.name_al ?? '—'}</span>
-              {user?.location?.parent?.name_al && (
-                <span className="text-xs text-muted-foreground">{user.location.parent.name_al}</span>
-              )}
-            </div>
-          }
-          error={undefined}
-        />
-        {currentMode !== 'view' && regionName && (
-          <FieldRow label={t('fields.region')} mode="view"
-            viewValue={<span className="text-muted-foreground text-sm">{regionName} {t('actions.region_auto')}</span>}
-          />
-        )}
-      </SectionCard>
-
-      {/* ── Business (Agent / Developer) ────────────────────────────────────── */}
-      {(isBusiness || (currentMode === 'view' && user && ['agent', 'developer'].includes(profileTypeFromUser(user)))) && (
-        <SectionCard title={t('sections.company')}>
-          <FieldRow label={t('fields.company_name')} mode={currentMode} viewValue={user?.company_name}
-            editContent={<Input {...register('companyName')} className="h-10 rounded-xl" placeholder={t('placeholders.company_name')} />}
-            error={errors.companyName?.message}
-          />
-          <FieldRow label={t('fields.website')} mode={currentMode}
-            viewValue={user?.website ? <a href={user.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{user.website}</a> : undefined}
-            editContent={<Input {...register('website')} className="h-10 rounded-xl" placeholder={t('placeholders.website')} />}
-            error={errors.website?.message}
-          />
-          <FieldRow label={t('fields.position')} mode={currentMode} viewValue={user?.position}
-            editContent={<Input {...register('position')} className="h-10 rounded-xl" placeholder={t('placeholders.position')} />}
-          />
-          <FieldRow label={t('fields.year_started')} mode={currentMode} viewValue={user?.year_started?.toString()}
-            editContent={
-              <Input {...register('yearStarted', { valueAsNumber: true })} type="number"
-                min={1900} max={new Date().getFullYear()} className="h-10 rounded-xl w-32" placeholder="2015" />
-            }
-            error={errors.yearStarted?.message}
-          />
-        </SectionCard>
-      )}
-
-      {/* ── Account Status (not shown in create mode) ───────────────────────── */}
-      {!isCreate && (
-        <SectionCard title={t('sections.account_status')} allowOverflow>
-          <FieldRow label={t('fields.status')} mode={currentMode}
-            viewValue={
-              <div className="flex items-center gap-2 flex-wrap">
-                <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
-                  {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
-                </Badge>
-                {user!.status === 'blocked' && user!.suspended_until && (
-                  <span className="text-xs text-muted-foreground">
-                    {t('fields.suspended_until').toLowerCase()}{' '}
-                    {new Date(user!.suspended_until).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })}
-                  </span>
-                )}
-              </div>
-            }
-            editContent={
+            {errors.profileType?.message && <p className="text-xs text-destructive">{errors.profileType.message}</p>}
+          </div>
+          {!isCreate && (
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">{t('sections.account_status')}</Label>
               <Combobox
                 options={[
                   { value: 'active', label: t('statuses.active') },
@@ -823,92 +630,321 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                 onChange={v => { if (v) setValue('status', v as 'active' | 'blocked' | 'inactive') }}
                 variant="button"
                 size="sm"
-                triggerClassName="h-10"
               />
-            }
-            error={errors.status?.message}
-          />
-          {(statusValue === 'blocked' || user?.block_reason) && (
-            <FieldRow label={t('fields.block_reason')} mode={statusValue === 'blocked' ? currentMode : 'view'}
-              viewValue={user?.block_reason}
-              editContent={
-                <Input {...register('blockReason')} className="h-10 rounded-xl" placeholder={t('placeholders.block_reason')} />
-              }
-              error={errors.blockReason?.message}
-            />
+              {errors.status?.message && <p className="text-xs text-destructive">{errors.status.message}</p>}
+            </div>
           )}
-          {statusValue === 'blocked' && (
-            <FieldRow
-              label={t('fields.suspended_until')}
-              mode={currentMode}
-              viewValue={user?.suspended_until
-                ? new Date(user.suspended_until).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-                : t('fields.block_permanent')}
-              editContent={
-                <DatePicker
-                  value={watch('suspendedUntil') ?? undefined}
-                  onChange={v => setValue('suspendedUntil', v ?? null, { shouldDirty: true })}
-                  placeholder={t('fields.block_permanent')}
-                />
-              }
-            />
+          {!isCreate && (statusValue === 'blocked' || user?.block_reason) && (
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">{t('fields.block_reason')}</Label>
+              <Input
+                {...register('blockReason')}
+                className="h-9 rounded-xl text-sm"
+                placeholder={t('placeholders.block_reason')}
+              />
+              {errors.blockReason?.message && <p className="text-xs text-destructive">{errors.blockReason.message}</p>}
+            </div>
           )}
-        </SectionCard>
+          {!isCreate && statusValue === 'blocked' && (
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs text-muted-foreground">{t('fields.suspended_until')}</Label>
+              <DatePicker
+                value={watch('suspendedUntil') ?? undefined}
+                onChange={v => setValue('suspendedUntil', v ?? null, { shouldDirty: true })}
+                placeholder={t('fields.block_permanent')}
+              />
+            </div>
+          )}
+        </div>
+      </SectionCard>
+    </>
+  )
+
+  return (
+    <div className="flex flex-col gap-4">
+
+      {/* ── Back button — full width above layout ───────────────────────────── */}
+      <div className="flex items-center">
+        <Button variant="ghost" size="sm" className="gap-1.5" onClick={() => {
+          if (!interceptHref('/admin/users')) return
+          router.push('/admin/users')
+        }}>
+          <ChevronLeft className="h-4 w-4" /> {t('actions.back_to_users')}
+        </Button>
+      </div>
+
+      {saveError && (
+        <div className="bg-destructive/10 border border-destructive/20 rounded-xl px-4 py-3 text-sm text-destructive">
+          {saveError}
+        </div>
       )}
 
-      {/* ── Password info (create mode only) ────────────────────────────────── */}
-      {isCreate && <PasswordInfo />}
+      <AdminEditLayout
+        main={
+          <div className="flex flex-col gap-6">
 
-      {/* ── Change history (not shown in create mode) ───────────────────────── */}
-      {!isCreate && changeLog.length > 0 && (
-        <SectionCard title={t('sections.change_log')}>
-          <div className="flex flex-col gap-2">
-            {changeLog.map(entry => (
-              <div key={entry.id} className="flex items-start gap-3 text-xs">
-                <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                <div className="min-w-0">
-                  <span className="text-muted-foreground">
-                    {new Date(entry.changed_at).toLocaleDateString(locale, {
-                      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
-                    })}
-                  </span>
-                  {' · '}
-                  <span className="font-medium capitalize">{entry.old_value}</span>{' → '}
-                  <span className="font-medium capitalize">{entry.new_value}</span>
-                </div>
+            {/* ── Header card ───────────────────────────────────────────────── */}
+            <div className="bg-card rounded-2xl border shadow-sm p-5 flex items-start gap-5">
+              <AdminUserAvatar
+                userId={user?.id ?? null}
+                avatarUrl={avatarUrl}
+                mode={currentMode}
+                onAvatarChange={setAvatarUrl}
+                onBlobReady={isCreate ? handleBlobReady : undefined}
+              />
+              <div className="flex flex-col gap-2 min-w-0 pt-1">
+                {isCreate ? (
+                  <>
+                    <h1 className="text-xl font-bold">{t('header.new_user_title')}</h1>
+                    <p className="text-sm text-muted-foreground">{t('header.new_user_subtitle')}</p>
+                  </>
+                ) : (
+                  <>
+                    <h1 className="text-xl font-bold leading-tight">{displayName}</h1>
+                    <div className="flex flex-wrap gap-1.5">
+                      <Badge variant="neutral" className="text-xs capitalize">
+                        {PROFILE_TYPE_LABELS[profileTypeFromUser(user!)]}
+                      </Badge>
+                      <Badge variant={STATUS_VARIANT[(user!.status ?? 'active') as keyof typeof STATUS_VARIANT]} className="text-xs">
+                        {STATUS_LABELS[(user!.status ?? 'active') as keyof typeof STATUS_LABELS]}
+                      </Badge>
+                      {user!.is_verified && (
+                        <Badge variant="success" className="text-xs gap-1">
+                          <ShieldCheck className="h-3 w-3" /> {t('header.verified_badge')}
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{authEmail}</p>
+                  </>
+                )}
               </div>
-            ))}
-          </div>
-        </SectionCard>
-      )}
+            </div>
 
-      {/* ── Status history (not shown in create mode) ───────────────────────── */}
-      {!isCreate && statusHistory.length > 0 && (
-        <SectionCard title={t('sections.status_history')}>
-          <div className="flex flex-col gap-2">
-            {statusHistory.slice(0, 10).map(entry => (
-              <div key={entry.id} className="flex items-start gap-3 text-xs">
-                <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                <div className="min-w-0 flex flex-col gap-0.5">
-                  <div>
-                    <span className="text-muted-foreground">
-                      {new Date(entry.changed_at).toLocaleDateString(locale, {
-                        day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
-                      })}
-                    </span>
-                    {' · '}
-                    <span className="font-medium capitalize">{entry.old_status ?? '—'}</span>{' → '}
-                    <span className="font-medium capitalize">{entry.new_status}</span>
+            {/* ── Location request card ──────────────────────────────────────── */}
+            {user?.location_request && (
+              <div className="bg-status-warning/10 border border-status-warning/30 rounded-2xl p-4 flex flex-col gap-3">
+                <p className="text-sm font-semibold text-status-warning flex items-center gap-2">
+                  <MapPin className="h-4 w-4" /> {t('location_request.title')}
+                </p>
+                <p className="text-sm">
+                  <strong>{user.location_request.city}</strong>
+                  {user.location_request.region ? `, ${user.location_request.region}` : ''}
+                </p>
+                <div className="flex gap-2 items-center flex-wrap">
+                  <div className={cn('flex-1 min-w-0', reqLoading && 'pointer-events-none opacity-50')}>
+                    <LocationCombobox
+                      locations={cities}
+                      value=""
+                      onChange={id => { if (id) handleApproveRequest(Number(id)) }}
+                      placeholder={t('placeholders.city_assign')}
+                    />
                   </div>
-                  {entry.reason && (
-                    <span className="text-muted-foreground">{t('feedback.reason_prefix', { reason: entry.reason })}</span>
-                  )}
+                  <Button variant="ghost" size="sm" className="h-8 text-xs text-destructive hover:bg-destructive/5 shrink-0"
+                    onClick={handleRejectRequest} disabled={reqLoading}>
+                    {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : t('actions.reject_request')}
+                  </Button>
                 </div>
               </div>
-            ))}
+            )}
+
+            {/* ── Basic info ────────────────────────────────────────────────── */}
+            <SectionCard title={t('sections.basic_info')} allowOverflow>
+              {isCreate ? (
+                <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
+                  <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
+                  <div className="min-w-0">
+                    <Input
+                      type="email"
+                      value={createEmail}
+                      onChange={e => { setCreateEmail(e.target.value); setCreateEmailError(null) }}
+                      placeholder="user@example.com"
+                      className="h-10 rounded-xl"
+                    />
+                    {createEmailError && <p className="text-xs text-destructive mt-1">{createEmailError}</p>}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
+                  <span className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email')}</span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-sm font-medium break-all">{authEmail}</span>
+                      {emailConfirmedAt !== undefined && (
+                        <Badge variant={emailConfirmedAt ? 'success' : 'warning'} className="text-[10px] shrink-0">
+                          {emailConfirmedAt ? t('fields.email_confirmed') : t('fields.email_not_confirmed')}
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5">{t('fields.email_immutable')}</p>
+                  </div>
+                </div>
+              )}
+              <FieldRow label={t('fields.first_name')} mode={currentMode}
+                viewValue={user?.name}
+                editContent={<Input {...register('firstName')} className="h-10 rounded-xl" placeholder={t('placeholders.first_name')} />}
+                error={errors.firstName?.message}
+              />
+              <FieldRow label={t('fields.last_name')} mode={currentMode}
+                viewValue={user?.last_name}
+                editContent={<Input {...register('lastName')} className="h-10 rounded-xl" placeholder={t('placeholders.last_name')} />}
+                error={errors.lastName?.message}
+              />
+              {/* Profile type shown as read-only; editable in the sidebar Role & Status card */}
+              <FieldRow
+                label={t('fields.profile_type').replace(' *', '')}
+                mode="view"
+                viewValue={PROFILE_TYPE_LABELS[profileType]}
+              />
+            </SectionCard>
+
+            {/* ── Contact ───────────────────────────────────────────────────── */}
+            <SectionCard title={t('sections.contact')}>
+              <FieldRow label={t('fields.phone')} mode={currentMode}
+                viewValue={user?.phone}
+                editContent={
+                  <PhoneField
+                    value={phoneState.e164}
+                    onChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
+                    error={errors.phone?.message}
+                    size="sm"
+                  />
+                }
+                error={undefined}
+              />
+              <FieldRow label={t('fields.whatsapp')} mode={currentMode}
+                viewValue={user?.whatsapp}
+                editContent={
+                  <div className="flex flex-col gap-2">
+                    <label className="flex items-center gap-2 text-sm cursor-pointer">
+                      <Checkbox checked={useMainPhone} onCheckedChange={v => setValue('useMainPhone', v === true)} />
+                      {t('fields.use_main_phone')}
+                    </label>
+                    {!useMainPhone && (
+                      <PhoneField
+                        value={whatsappState.e164}
+                        onChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
+                        error={errors.whatsapp?.message}
+                        size="sm"
+                      />
+                    )}
+                  </div>
+                }
+              />
+            </SectionCard>
+
+            {/* ── Location ──────────────────────────────────────────────────── */}
+            <SectionCard title={isBusiness ? t('sections.location_work') : t('sections.location_home')} allowOverflow>
+              <FieldRow label={t('fields.city')} mode={currentMode}
+                editContent={
+                  <LocationCombobox
+                    locations={cities}
+                    value={locationIdValue ? String(locationIdValue) : ''}
+                    onChange={id => setValue('locationId', (id ? Number(id) : undefined) as unknown as number, { shouldValidate: true })}
+                    error={errors.locationId?.message}
+                    placeholder={t('placeholders.city_search')}
+                    regions={isAdmin ? regions : undefined}
+                    onAddLocation={isAdmin ? addLocation : undefined}
+                  />
+                }
+                viewValue={
+                  <div className="flex flex-col gap-0.5">
+                    <span>{user?.location?.name_al ?? '—'}</span>
+                    {user?.location?.parent?.name_al && (
+                      <span className="text-xs text-muted-foreground">{user.location.parent.name_al}</span>
+                    )}
+                  </div>
+                }
+                error={undefined}
+              />
+              {currentMode !== 'view' && regionName && (
+                <FieldRow label={t('fields.region')} mode="view"
+                  viewValue={<span className="text-muted-foreground text-sm">{regionName} {t('actions.region_auto')}</span>}
+                />
+              )}
+            </SectionCard>
+
+            {/* ── Business (Agent / Developer) ──────────────────────────────── */}
+            {(isBusiness || (currentMode === 'view' && user && ['agent', 'developer'].includes(profileTypeFromUser(user)))) && (
+              <SectionCard title={t('sections.company')}>
+                <FieldRow label={t('fields.company_name')} mode={currentMode} viewValue={user?.company_name}
+                  editContent={<Input {...register('companyName')} className="h-10 rounded-xl" placeholder={t('placeholders.company_name')} />}
+                  error={errors.companyName?.message}
+                />
+                <FieldRow label={t('fields.website')} mode={currentMode}
+                  viewValue={user?.website ? <a href={user.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{user.website}</a> : undefined}
+                  editContent={<Input {...register('website')} className="h-10 rounded-xl" placeholder={t('placeholders.website')} />}
+                  error={errors.website?.message}
+                />
+                <FieldRow label={t('fields.position')} mode={currentMode} viewValue={user?.position}
+                  editContent={<Input {...register('position')} className="h-10 rounded-xl" placeholder={t('placeholders.position')} />}
+                />
+                <FieldRow label={t('fields.year_started')} mode={currentMode} viewValue={user?.year_started?.toString()}
+                  editContent={
+                    <Input {...register('yearStarted', { valueAsNumber: true })} type="number"
+                      min={1900} max={new Date().getFullYear()} className="h-10 rounded-xl w-32" placeholder="2015" />
+                  }
+                  error={errors.yearStarted?.message}
+                />
+              </SectionCard>
+            )}
+
+            {/* ── Password info (create mode only) ──────────────────────────── */}
+            {isCreate && <PasswordInfo />}
+
+            {/* ── Change history (not shown in create mode) ─────────────────── */}
+            {!isCreate && changeLog.length > 0 && (
+              <SectionCard title={t('sections.change_log')}>
+                <div className="flex flex-col gap-2">
+                  {changeLog.map(entry => (
+                    <div key={entry.id} className="flex items-start gap-3 text-xs">
+                      <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
+                      <div className="min-w-0">
+                        <span className="text-muted-foreground">
+                          {new Date(entry.changed_at).toLocaleDateString(locale, {
+                            day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+                          })}
+                        </span>
+                        {' · '}
+                        <span className="font-medium capitalize">{entry.old_value}</span>{' → '}
+                        <span className="font-medium capitalize">{entry.new_value}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </SectionCard>
+            )}
+
+            {/* ── Status history (not shown in create mode) ─────────────────── */}
+            {!isCreate && statusHistory.length > 0 && (
+              <SectionCard title={t('sections.status_history')}>
+                <div className="flex flex-col gap-2">
+                  {statusHistory.slice(0, 10).map(entry => (
+                    <div key={entry.id} className="flex items-start gap-3 text-xs">
+                      <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
+                      <div className="min-w-0 flex flex-col gap-0.5">
+                        <div>
+                          <span className="text-muted-foreground">
+                            {new Date(entry.changed_at).toLocaleDateString(locale, {
+                              day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+                            })}
+                          </span>
+                          {' · '}
+                          <span className="font-medium capitalize">{entry.old_status ?? '—'}</span>{' → '}
+                          <span className="font-medium capitalize">{entry.new_status}</span>
+                        </div>
+                        {entry.reason && (
+                          <span className="text-muted-foreground">{t('feedback.reason_prefix', { reason: entry.reason })}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </SectionCard>
+            )}
           </div>
-        </SectionCard>
-      )}
+        }
+        sidebar={currentMode === 'view' ? sidebarView : sidebarEdit}
+      />
 
       {/* ── Dialogs ─────────────────────────────────────────────────────────── */}
       {showCancelDialog && (

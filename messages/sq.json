@@ -885,7 +885,9 @@
         "company": "Të dhënat e kompanisë",
         "account_status": "Statusi i llogarisë",
         "change_log": "Historia e ndryshimeve të llojit të llogarisë",
-        "status_history": "Historia e ndryshimeve të statusit"
+        "status_history": "Historia e ndryshimeve të statusit",
+        "actions": "Veprimet",
+        "role_status": "Roli & Statusi"
       },
       "fields": {
         "email": "Email",
@@ -932,7 +934,8 @@
         "save": "Ruaj",
         "create_user": "Krijo përdorues",
         "reject_request": "Refuzo",
-        "region_auto": "(auto)"
+        "region_auto": "(auto)",
+        "delete_permanently": "Fshi përgjithmonë"
       },
       "header": {
         "new_user_title": "Përdorues i ri",

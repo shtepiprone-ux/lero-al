@@ -4,7 +4,21 @@
 
 ## Last Session
 
-**2026-05-23 — Task 195 — R.1: Fix /admin 404 — locale-prefixed auth redirect ✅**
+**2026-05-23 — Task 196 — R.2: Admin edit-screen side-panel actions pattern ✅**
+
+- Created `src/components/admin/AdminEditLayout.tsx` — reusable two-column wrapper (`flex-col lg:flex-row`; main = `flex-1 min-w-0`; sidebar = `w-72 xl:w-80 shrink-0 lg:sticky lg:top-20`). Single source for the admin edit-screen layout pattern.
+- `src/app/admin/users/[id]/page.tsx`: widened container `max-w-3xl` → `max-w-5xl`.
+- `src/components/admin/AdminUserProfile.tsx`: restructured entire render section:
+  - Back button + error banner above `AdminEditLayout`.
+  - `main` slot: header card, location request, BasicInfo (profile type always `mode="view"`), Contact, Location, Business, PasswordInfo, ChangeLog, StatusHistory.
+  - `sidebar` slot: **view mode** — Actions card (Edit, Deactivate, Delete permanently) + Account Status overview (profile type badge, status badge, block info). **Edit/create mode** — Actions card (Save, Cancel) + Role & Status card (profile type Combobox, status Combobox, block reason Input, DatePicker for suspended_until).
+  - AccountStatus section removed from main (moved to sidebar).
+- 4 locale files (`sq/en/uk/it`): added `admin.user_profile.sections.actions`, `admin.user_profile.sections.role_status`, `admin.user_profile.actions.delete_permanently`.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 196 session log](sessions/2026-05-23-task-196-admin-edit-layout.md)
+
+**Previous: 2026-05-23 — Task 195 — R.1: Fix /admin 404 — locale-prefixed auth redirect ✅**
 
 - Root cause: `AdminLayout` redirected unauthenticated users to `/auth/login?next=/admin` — a path that doesn't exist (login lives at `/{locale}/auth/login`). The `admin-locale` cookie was read after the redirect, too late to use.
 - Fix (`src/app/admin/layout.tsx`): moved `cookies()` + `resolveLocale()` to top of function, before `getUser()`. Changed redirects:

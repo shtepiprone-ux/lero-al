@@ -50,6 +50,45 @@ interface ListingCardProps {
   layoutContext?: ListingLayoutContext
 }
 
+interface PriceBlockProps {
+  displayPrice: number
+  activeCurrency: string
+  locale: string
+  displayPriceOld: number | null
+  originalPriceStr: string | null
+  pricePerSqm: number | null
+  perSqmLabel: string
+  /** 'lg' for vertical card, 'base' for horizontal list row */
+  priceSize: 'base' | 'lg'
+}
+
+function PriceBlock({ displayPrice, activeCurrency, locale, displayPriceOld, originalPriceStr, pricePerSqm, perSqmLabel, priceSize }: PriceBlockProps) {
+  return (
+    <div className="flex items-start justify-between">
+      <div className="flex flex-col">
+        <div className="flex items-baseline gap-2">
+          <span className={cn(priceSize === 'lg' ? 'text-lg' : 'text-base', 'font-bold text-primary')}>
+            {formatPrice(displayPrice, activeCurrency, locale)}
+          </span>
+          {displayPriceOld && (
+            <span className="text-xs text-muted-foreground line-through">
+              {formatPrice(displayPriceOld, activeCurrency, locale)}
+            </span>
+          )}
+        </div>
+        {originalPriceStr && (
+          <span className="text-[10px] text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
+        )}
+      </div>
+      {pricePerSqm && (
+        <span className="text-xs text-muted-foreground">
+          {formatPrice(pricePerSqm, activeCurrency, locale)} {perSqmLabel}
+        </span>
+      )}
+    </div>
+  )
+}
+
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
 const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
   sold:   'bg-status-info/80 border-status-info',
@@ -179,16 +218,17 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
             </h3>
           </div>
           <div>
-            <div className="flex flex-col mt-2">
-              <div className="flex items-baseline gap-2">
-                <span className="text-base font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
-                {displayPriceOld && (
-                  <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
-                )}
-              </div>
-              {originalPriceStr && (
-                <span className="text-[10px] text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
-              )}
+            <div className="mt-2">
+              <PriceBlock
+                displayPrice={displayPrice}
+                activeCurrency={activeCurrency}
+                locale={locale}
+                displayPriceOld={displayPriceOld}
+                originalPriceStr={originalPriceStr}
+                pricePerSqm={pricePerSqm}
+                perSqmLabel={t('per_sqm')}
+                priceSize="base"
+              />
             </div>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
               {getCardFeatures(listing).map(f => (
@@ -309,22 +349,16 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         </h3>
 
         {/* Price */}
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold text-primary">{formatPrice(displayPrice, activeCurrency, locale)}</span>
-              {displayPriceOld && (
-                <span className="text-xs text-muted-foreground line-through">{formatPrice(displayPriceOld, activeCurrency, locale)}</span>
-              )}
-            </div>
-            {originalPriceStr && (
-              <span className="text-[10px] text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
-            )}
-          </div>
-          {pricePerSqm && (
-            <span className="text-xs text-muted-foreground">{formatPrice(pricePerSqm, activeCurrency, locale)} {t('per_sqm')}</span>
-          )}
-        </div>
+        <PriceBlock
+          displayPrice={displayPrice}
+          activeCurrency={activeCurrency}
+          locale={locale}
+          displayPriceOld={displayPriceOld}
+          originalPriceStr={originalPriceStr}
+          pricePerSqm={pricePerSqm}
+          perSqmLabel={t('per_sqm')}
+          priceSize="lg"
+        />
 
         {/* Features row */}
         <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2">

@@ -4,7 +4,17 @@
 
 ## Last Session
 
-**2026-05-23 — Task 184 — N.2: fix `<html lang>` so browser stops offering to translate ✅**
+**2026-05-23 — Task 213 — T.4: unify list/card price template; per-m² now in List view ✅**
+
+- Root cause: `ListingCard.tsx` had two duplicated price blocks — vertical had price + old + per-m²; horizontal had price + old only, per-m² missing.
+- Fix: extracted `PriceBlock` (interface + function) above `ListingCard`; it renders price row, old/strikethrough, original price string, and per-m² via one `flex items-start justify-between` layout. `priceSize: 'base' | 'lg'` controls font size (base = horizontal, lg = vertical).
+- Horizontal: replaced inline price block with `<div className="mt-2"><PriceBlock ... priceSize="base" /></div>`.
+- Vertical: replaced `<div className="flex items-start justify-between">` block with `<PriceBlock ... priceSize="lg" />`.
+- No `formatPrice` calls remain outside `PriceBlock` for card price rendering. `tsc --noEmit` → 0 errors.
+
+→ [Task 213 session log](sessions/2026-05-23-task-213-price-block-unification.md)
+
+**Previous: 2026-05-23 — Task 184 — N.2: fix `<html lang>` so browser stops offering to translate ✅**
 
 - Root cause: `app/layout.tsx` rendered `<html>` with no `lang`; locale layout had `<div lang={locale}>` (wrong element — browser ignores it).
 - Fix: made `RootLayout` async; reads `X-NEXT-INTL-LOCALE` request header (set by next-intl middleware on every locale-prefixed route) with fallback to `admin-locale` cookie (admin routes excluded from middleware) and final fallback `'sq'`. Sets `lang={locale}` on `<html>`.
@@ -84,7 +94,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** 213 (T.4 per-m² template) → 185 (P.3 stale header) → 212 (P.5 create-collection) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
+**Next queue:** 185 (P.3 stale header) → 212 (P.5 create-collection) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 
@@ -138,6 +148,7 @@ Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → 
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 213 — T.4 PriceBlock unification: per-m² added to horizontal list view; shared PriceBlock(priceSize) replaces two diverged price blocks | Task 213 | [sessions/2026-05-23-task-213-price-block-unification.md](sessions/2026-05-23-task-213-price-block-unification.md) |
 | 2026-05-23 | Task 184 — N.2 html lang: RootLayout async + X-NEXT-INTL-LOCALE header; admin-locale cookie fallback; div lang removed from locale layout | Task 184 | [sessions/2026-05-23-task-184-html-lang.md](sessions/2026-05-23-task-184-html-lang.md) |
 | 2026-05-23 | Task 215 — M.6 multi-currency cards: useHomepageFilters/FiltersPanel rates, FeaturedListings/LatestListings/SimilarListings/RecentlyViewedGrid wired, 1.08/0.86 removed | Task 215 | [sessions/2026-05-23-task-215-multi-currency-cards.md](sessions/2026-05-23-task-215-multi-currency-cards.md) |
 | 2026-05-23 | Task 214 — M.5 dynamic FX engine: catalog-driven scrape, Record<string,number> ExchangeRates, generalised fetchCrossRates | Task 214 | [sessions/2026-05-23-task-214-dynamic-fx-engine.md](sessions/2026-05-23-task-214-dynamic-fx-engine.md) |

@@ -211,6 +211,7 @@ export default async function ListingPage({ params }: Props) {
   // Parallel: favorites check + user's preferred currency (both need authUser)
   let isInitiallyFavorited = false
   let preferredCurrency: PreferredCurrency = 'ALL'
+  let hasValidProfile = false
   if (authUser) {
     const [favResult, profileResult] = await Promise.all([
       supabase.from('favorites').select('id').eq('user_id', authUser.id).eq('listing_id', listing.id).maybeSingle(),
@@ -218,14 +219,18 @@ export default async function ListingPage({ params }: Props) {
     ])
     isInitiallyFavorited = !!favResult.data
     preferredCurrency = (profileResult.data?.preferred_currency as PreferredCurrency) ?? 'ALL'
+    hasValidProfile = !!profileResult.data
   }
 
   const ownerRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
-  const isGuest = !authUser
+  // A zombie session has a valid JWT (authUser truthy) but no profile row (deleted/orphaned account).
+  // Treat zombie sessions as guests so the contact card shows "Sign in" instead of "Account deleted".
+  const isGuest = !authUser || !hasValidProfile
 
   // Viewer auth state (isGuest) and owner account status (deleted_at) are independent concerns.
   // For guests, RLS blocks reads on the users table, so ownerRaw is null even for active owners.
   // For authenticated viewers, ownerRaw is null only when the owner row is genuinely gone.
+  // Never infer deletion from a null row — ownerRaw can be null for guests too.
   const owner = ownerRaw ?? {
     id: '' as string,
     name: null as string | null,
@@ -235,7 +240,7 @@ export default async function ListingPage({ params }: Props) {
     user_type: 'private' as string,
     is_verified: false,
     company_name: null as string | null,
-    deleted_at: isGuest ? null : ('deleted' as string),
+    deleted_at: null,
   }
   const images = listing.images ?? []
 
@@ -501,7 +506,7 @@ export default async function ListingPage({ params }: Props) {
             listingStatus={listing.status as ListingStatus}
             listingId={authUser ? listing.id : undefined}
             isFavorited={isInitiallyFavorited}
-            canReport={!!authUser && authUser.id !== owner.id}
+            canReport={!isGuest && !!authUser && authUser.id !== listing.user_id}
           />
         </div>
       </div>

@@ -491,27 +491,40 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 const DEFAULT_PHONE_VALUE: PhoneFieldValue = { national: '', dialCode: '+355', iso2: 'AL', e164: '' }
 
+interface SharedRegFields {
+  name: string
+  email: string
+  password: string
+  phone: PhoneFieldValue
+}
+
 // ── Register view ─────────────────────────────────────────────────────────────
 
 function RegisterView({
   isAgent,
   onLogin,
   onAgentRegister,
+  onBack,
   onClose,
+  initialShared,
+  onSharedChange,
 }: {
   isAgent: boolean
   onLogin: () => void
   onAgentRegister?: () => void
+  onBack?: () => void
   onClose: () => void
+  initialShared?: SharedRegFields
+  onSharedChange?: (v: SharedRegFields) => void
 }) {
   const t = useTranslations('auth')
   const locale = useLocale()
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState<PhoneFieldValue>(DEFAULT_PHONE_VALUE)
+  const [name, setName] = useState(initialShared?.name ?? '')
+  const [email, setEmail] = useState(initialShared?.email ?? '')
+  const [phone, setPhone] = useState<PhoneFieldValue>(initialShared?.phone ?? DEFAULT_PHONE_VALUE)
   const [locationId, setLocationId] = useState<string>('')
   const [companyId, setCompanyId] = useState<string>('')
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState(initialShared?.password ?? '')
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -570,12 +583,22 @@ function RegisterView({
         </Alert>
       )}
 
+      {isAgent && onBack && (
+        <button
+          type="button"
+          onClick={onBack}
+          className="text-sm text-muted-foreground hover:text-primary transition-colors -mt-1 text-left"
+        >
+          ← {t('register_back_to_standard')}
+        </button>
+      )}
+
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="reg-name">{t('name')}</Label>
         <Input
           id="reg-name"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={e => { const v = e.target.value; setName(v); onSharedChange?.({ name: v, email, password, phone }) }}
           required
           autoComplete="name"
         />
@@ -587,7 +610,7 @@ function RegisterView({
           id="reg-email"
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={e => { const v = e.target.value; setEmail(v); onSharedChange?.({ name, email: v, password, phone }) }}
           required
           autoComplete="email"
         />
@@ -595,7 +618,7 @@ function RegisterView({
 
       <PhoneField
         value={phone.e164}
-        onChange={setPhone}
+        onChange={v => { setPhone(v); onSharedChange?.({ name, email, password, phone: v }) }}
         label={t('phone')}
       />
 
@@ -624,7 +647,7 @@ function RegisterView({
           id="reg-password"
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={e => { const v = e.target.value; setPassword(v); onSharedChange?.({ name, email, password: v, phone }) }}
           required
           minLength={6}
           autoComplete="new-password"
@@ -662,9 +685,13 @@ function RegisterView({
 export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthSheetProps) {
   const t = useTranslations('auth')
   const [view, setView] = useState<AuthView>(initialView)
+  const [regShared, setRegShared] = useState<SharedRegFields>({ name: '', email: '', password: '', phone: DEFAULT_PHONE_VALUE })
 
   useEffect(() => {
-    if (open) setView(initialView)
+    if (open) {
+      setView(initialView)
+      setRegShared({ name: '', email: '', password: '', phone: DEFAULT_PHONE_VALUE })
+    }
   }, [open, initialView])
 
   const titles: Record<AuthView, string> = {
@@ -705,13 +732,18 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthShe
               onLogin={() => setView('login')}
               onAgentRegister={() => setView('register-agent')}
               onClose={() => onOpenChange(false)}
+              initialShared={regShared}
+              onSharedChange={setRegShared}
             />
           )}
           {view === 'register-agent' && (
             <RegisterView
               isAgent
               onLogin={() => setView('login')}
+              onBack={() => setView('register')}
               onClose={() => onOpenChange(false)}
+              initialShared={regShared}
+              onSharedChange={setRegShared}
             />
           )}
         </div>

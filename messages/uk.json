@@ -285,6 +285,7 @@
     "company_logo_too_big": "Зображення має бути не більше 256×256 px.",
     "register_as": "Зареєструватись як",
     "register_agent": "Реєстрація як агент",
+    "register_back_to_standard": "Повернутися до стандартної реєстрації",
     "no_account": "Немає акаунту?",
     "have_account": "Вже є акаунт?",
     "or": "або",

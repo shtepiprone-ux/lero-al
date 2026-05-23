@@ -4,7 +4,21 @@
 
 ## Last Session
 
-**2026-05-23 — Task 188 — O.3: client-side validation for email / password / phone / WhatsApp ✅**
+**2026-05-23 — Task 189 — O.4: reversible agent-registration step ✅**
+
+- `src/modules/auth/components/AuthSheet.tsx`:
+  - Added `SharedRegFields` interface (`name / email / password / phone`).
+  - `RegisterView` gained `onBack?`, `initialShared?`, `onSharedChange?` props.
+  - `useState` for name/email/password/phone now seeds from `initialShared` — preserves fields across view switch.
+  - Each field's `onChange` calls `onSharedChange?.()` to keep `AuthSheet.regShared` in sync.
+  - When `isAgent && onBack`: renders `← {t('register_back_to_standard')}` text link at top of form.
+  - `AuthSheet` lifts `regShared` state; resets it when sheet opens; passes to both RegisterViews + `onBack={() => setView('register')}` for agent view.
+- 4 locale files: added `auth.register_back_to_standard` (sq/en/uk/it).
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 189 session log](sessions/2026-05-23-task-189-agent-step-back.md)
+
+**Previous: 2026-05-23 — Task 188 — O.3: client-side validation for email / password / phone / WhatsApp ✅**
 
 - `src/modules/auth/components/AuthSheet.tsx` (LoginView): added `EMAIL_RE.test(email)` + `!password` guards before `signIn()` — fires `error_email_invalid` / `error_weak_password` without a server round-trip.
 - `src/modules/cabinet/components/ProfileTab.tsx`: added module-level `EMAIL_RE`; `handleEmailChange` now validates format before calling `initiateEmailChange` → fires `t('error_email_invalid')`.
@@ -132,7 +146,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** 189 (O.4 agent step back) → then Epics Q → R → S → T → U. **Last task number: 215.**
+**Next queue:** Epics Q → R → S → T → U. Epic O closed. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 

@@ -285,6 +285,7 @@
     "company_logo_too_big": "Image must be max 256×256 px.",
     "register_as": "Register as",
     "register_agent": "Register as agent",
+    "register_back_to_standard": "Back to standard registration",
     "no_account": "Don't have an account?",
     "have_account": "Already have an account?",
     "or": "or",

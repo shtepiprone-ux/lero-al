@@ -22,7 +22,8 @@
     "lang_en": "Англійська",
     "lang_uk": "Українська",
     "lang_it": "Італійська",
-    "register_agent": "Зареєструватись як агент"
+    "register_agent": "Зареєструватись як агент",
+    "admin_dashboard": "Адмін-панель"
   },
   "listing": {
     "sale": "Продаж",
@@ -148,6 +149,9 @@
     "field_price_old": "Попередня ціна (опціонально)",
     "field_address": "Адреса",
     "field_address_placeholder": "Вулиця, номер будинку...",
+    "field_gps_label": "GPS (необов'язково)",
+    "field_lat": "Широта",
+    "field_lng": "Довгота",
     "form_next": "Далі",
     "form_back": "Назад",
     "form_publish": "Опублікувати",
@@ -398,7 +402,8 @@
     "aria_next_page": "Наступна сторінка",
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Увімкнути email-сповіщення",
-    "aria_remove_favorite": "Видалити з обраних"
+    "aria_remove_favorite": "Видалити з обраних",
+    "aria_main_nav": "Головна навігація"
   },
   "cabinet": {
     "title": "Кабінет",

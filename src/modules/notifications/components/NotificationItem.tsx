@@ -1,9 +1,13 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useTransition } from 'react'
 import { formatDistanceToNow } from 'date-fns'
+import { enUS, it, uk, sq } from 'date-fns/locale'
+import type { Locale as DfLocale } from 'date-fns'
 import { cn } from '@/lib/utils'
+
+const DF_LOCALE_MAP: Record<string, DfLocale> = { sq, en: enUS, uk, it }
 import { markNotificationRead } from '@/modules/notifications/lib/mutations'
 import type { Notification, NotificationType } from '@/types/database'
 
@@ -26,6 +30,8 @@ interface Props {
 
 export function NotificationItem({ notification, onRead }: Props) {
   const t = useTranslations('notifications')
+  const locale = useLocale()
+  const dfLocale = DF_LOCALE_MAP[locale] ?? enUS
   const [isPending, startTransition] = useTransition()
 
   function handleClick() {
@@ -62,7 +68,7 @@ export function NotificationItem({ notification, onRead }: Props) {
             : notification.body}
         </p>
         <p className="text-[10px] text-muted-foreground/60 mt-1">
-          {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
+          {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}
         </p>
       </div>
       {!notification.is_read && (

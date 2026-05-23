@@ -22,7 +22,8 @@
     "lang_en": "Inglese",
     "lang_uk": "Ucraino",
     "lang_it": "Italiano",
-    "register_agent": "Registrati come agente"
+    "register_agent": "Registrati come agente",
+    "admin_dashboard": "Dashboard"
   },
   "listing": {
     "sale": "In vendita",
@@ -148,6 +149,9 @@
     "field_price_old": "Prezzo precedente (opzionale)",
     "field_address": "Indirizzo",
     "field_address_placeholder": "Via, numero civico...",
+    "field_gps_label": "GPS (opzionale)",
+    "field_lat": "Latitudine",
+    "field_lng": "Longitudine",
     "form_next": "Avanti",
     "form_back": "Indietro",
     "form_publish": "Pubblica annuncio",
@@ -398,7 +402,8 @@
     "aria_next_page": "Pagina successiva",
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Attiva notifiche email",
-    "aria_remove_favorite": "Rimuovi dai preferiti"
+    "aria_remove_favorite": "Rimuovi dai preferiti",
+    "aria_main_nav": "Navigazione principale"
   },
   "cabinet": {
     "title": "Il mio account",

@@ -49,11 +49,11 @@ export function StepLocation({ data, onChange }: Props) {
       {/* Coordinates */}
       <div className="flex flex-col gap-2">
         <Label className="text-sm font-medium text-muted-foreground text-xs uppercase tracking-wider">
-          GPS (optional)
+          {t('field_gps_label')}
         </Label>
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="lat" className="text-xs text-muted-foreground">Latitude</Label>
+            <Label htmlFor="lat" className="text-xs text-muted-foreground">{t('field_lat')}</Label>
             <Input
               id="lat"
               type="number"
@@ -65,7 +65,7 @@ export function StepLocation({ data, onChange }: Props) {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="lng" className="text-xs text-muted-foreground">Longitude</Label>
+            <Label htmlFor="lng" className="text-xs text-muted-foreground">{t('field_lng')}</Label>
             <Input
               id="lng"
               type="number"

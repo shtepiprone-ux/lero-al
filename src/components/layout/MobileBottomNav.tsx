@@ -11,6 +11,7 @@ import { openAuthSheet } from '@/lib/auth/authSheet'
 export function MobileBottomNav() {
   const locale = useLocale()
   const t = useTranslations('nav')
+  const tc = useTranslations('common')
   const pathname = usePathname()
   const { user } = useUser()
 
@@ -24,7 +25,7 @@ export function MobileBottomNav() {
     <nav
       className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-40 md:hidden bg-card border-t shadow-[0_-2px_16px_rgba(0,0,0,0.08)] flex items-stretch h-14"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-      aria-label="Main navigation"
+      aria-label={tc('aria_main_nav')}
     >
       <BottomNavItem href={`/${locale}`}             icon={Home}   label={t('home')}        active={isHome} />
       <BottomNavItem href={`/${locale}/listings`}    icon={Search} label={t('listings')}    active={isListings} />

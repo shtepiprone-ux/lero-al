@@ -22,7 +22,8 @@
     "lang_en": "Anglisht",
     "lang_uk": "Ukrainisht",
     "lang_it": "Italisht",
-    "register_agent": "Regjistrohu si agjent"
+    "register_agent": "Regjistrohu si agjent",
+    "admin_dashboard": "Paneli i adminit"
   },
   "listing": {
     "sale": "Shitje",
@@ -148,6 +149,9 @@
     "field_price_old": "Çmimi i mëparshëm (opsional)",
     "field_address": "Adresa",
     "field_address_placeholder": "Rruga, numri i ndërtesës...",
+    "field_gps_label": "GPS (opsionale)",
+    "field_lat": "Gjerësia gjeografike",
+    "field_lng": "Gjatësia gjeografike",
     "form_next": "Tjetër",
     "form_back": "Mbrapa",
     "form_publish": "Publiko njoftimin",
@@ -398,7 +402,8 @@
     "aria_next_page": "Faqja tjetër",
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Njoftim me email",
-    "aria_remove_favorite": "Hiq nga të preferuarat"
+    "aria_remove_favorite": "Hiq nga të preferuarat",
+    "aria_main_nav": "Navigimi kryesor"
   },
   "cabinet": {
     "title": "Kabineti",

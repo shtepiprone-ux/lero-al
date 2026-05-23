@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
@@ -51,6 +52,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   const jar = await cookies()
   const locale = resolveLocale(jar.get(ADMIN_LOCALE_COOKIE)?.value)
+  setRequestLocale(locale)
   const messages = MESSAGES[locale]
 
   return (

@@ -213,7 +213,7 @@ export function Header() {
                       <DropdownMenuItem>
                         <Link href="/admin" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 w-full text-primary font-medium">
                           <LayoutDashboard className="h-4 w-4" />
-                          Dashboard
+                          {t('admin_dashboard')}
                         </Link>
                       </DropdownMenuItem>
                     </>

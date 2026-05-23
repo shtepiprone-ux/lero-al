@@ -22,7 +22,8 @@
     "lang_en": "English",
     "lang_uk": "Ukrainian",
     "lang_it": "Italian",
-    "register_agent": "Register as agent"
+    "register_agent": "Register as agent",
+    "admin_dashboard": "Dashboard"
   },
   "listing": {
     "sale": "For sale",
@@ -148,6 +149,9 @@
     "field_price_old": "Previous price (optional)",
     "field_address": "Address",
     "field_address_placeholder": "Street, building number...",
+    "field_gps_label": "GPS (optional)",
+    "field_lat": "Latitude",
+    "field_lng": "Longitude",
     "form_next": "Next",
     "form_back": "Back",
     "form_publish": "Publish listing",
@@ -398,7 +402,8 @@
     "aria_next_page": "Next page",
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Toggle email notifications",
-    "aria_remove_favorite": "Remove from favorites"
+    "aria_remove_favorite": "Remove from favorites",
+    "aria_main_nav": "Main navigation"
   },
   "cabinet": {
     "title": "My Account",

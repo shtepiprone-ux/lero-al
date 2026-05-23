@@ -52,7 +52,7 @@ returned task.
 - Update `Claude.md` only if the project index, global context, or documentation map changed.
 
 ### Deploy Command
-- When the user says "deploy", prepare the current branch for deployment: commit the relevant changes, push the branch to GitHub, and merge to `main` only through the project's approved workflow.
+- When the user says "deploy", the executor only **prepares** the branch for deployment (final code/doc changes saved) and **provides ready-to-run git commands as plain text** — to commit the relevant changes, push the branch to GitHub, and merge to `main` through the project's approved workflow. The **owner runs these git commands manually in PowerShell**; the executor NEVER runs git itself (single-writer rule).
 
 ### Commit Rules
 - One logical change per commit.
@@ -514,6 +514,10 @@ Acceptance criteria:
 - Governance checks pass (run only those relevant to the changed scope)
 - All four locales render correctly at runtime
 - All seven breakpoints render correctly (if UI scope)
+- Ready-to-run git commit commands are provided as plain text at the end of the task
+  (`git add <files>` + `git commit -m "<type>(TaskN): ..."`) for the owner to run manually
+  in PowerShell. The executor MUST NOT run git itself (single-writer rule). A task with no
+  commit commands at the end is INCOMPLETE — see "Commit Rules" and CLAUDE.md "Commit hand-off".
 
 Out of scope:
 - <Explicit list of things the agent must NOT touch>
@@ -526,6 +530,7 @@ Out of scope:
 - DO NOT write `Responsive coverage: N/A` unless the task does not touch any rendered UI. Default is to include all seven breakpoints.
 - DO NOT restart task numbering per sprint — preserve the global counter (`docs/backlog.md` is the source of truth for the last used Task number).
 - DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
+- DO NOT mark a task complete without emitting ready-to-run git commit commands as plain text for the owner to run in PowerShell — the executor never runs git itself (single-writer rule). This acceptance criterion applies to EVERY task, including non-UI and docs-only tasks.
 
 #### Why this matters
 

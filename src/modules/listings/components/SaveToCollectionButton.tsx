@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { FolderOpen, Folder, Check, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Dialog,
   DialogContent,
@@ -13,6 +14,7 @@ import {
 } from '@/components/ui/dialog'
 import {
   getCollectionsWithMembership,
+  createCollection,
   addToCollection,
   removeFromCollection,
 } from '@/modules/listings/actions/collectionActions'
@@ -34,6 +36,8 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className 
   const [collections, setCollections] = useState<CollectionWithCount[]>([])
   const [memberIds, setMemberIds] = useState<Set<string>>(new Set())
   const [isPending, startTransition] = useTransition()
+  const [newName, setNewName] = useState('')
+  const [isCreating, setIsCreating] = useState(false)
 
   if (!user) return null
 
@@ -68,6 +72,25 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className 
     })
   }
 
+  async function handleCreate() {
+    const trimmed = newName.trim()
+    if (!trimmed || isCreating) return
+    setIsCreating(true)
+    const result = await createCollection(trimmed)
+    if ('error' in result) {
+      toast.error(t('error_generic'))
+      setIsCreating(false)
+      return
+    }
+    // Add the listing to the newly created collection in one flow
+    await addToCollection(result.collection.id, listingId)
+    setCollections(prev => [{ ...result.collection, item_count: 1 }, ...prev])
+    setMemberIds(prev => new Set([...prev, result.collection.id]))
+    setNewName('')
+    setIsCreating(false)
+    toast.success(t('created'))
+  }
+
   return (
     <>
       <Button
@@ -92,35 +115,63 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className 
             <div className="flex items-center justify-center py-8">
               <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
             </div>
-          ) : collections.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-8 gap-2 text-center">
-              <Folder className="h-8 w-8 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">{t('no_collections')}</p>
-              <p className="text-xs text-muted-foreground">{t('no_collections_desc')}</p>
-            </div>
           ) : (
-            <div className="flex flex-col gap-1 py-1">
-              {collections.map(col => {
-                const isMember = memberIds.has(col.id)
-                return (
-                  <button
-                    key={col.id}
-                    type="button"
-                    onClick={() => toggleCollection(col)}
-                    disabled={isPending}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors text-left w-full disabled:opacity-60"
-                  >
-                    <div className={`h-5 w-5 rounded border flex items-center justify-center shrink-0 ${isMember ? 'bg-primary border-primary' : 'border-border'}`}>
-                      {isMember && <Check className="h-3 w-3 text-primary-foreground" />}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{col.name}</p>
-                      <p className="text-xs text-muted-foreground">{col.item_count}</p>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
+            <>
+              {collections.length === 0 ? (
+                <div className="flex flex-col items-center justify-center pt-4 pb-2 gap-2 text-center">
+                  <Folder className="h-8 w-8 text-muted-foreground" />
+                  <p className="text-sm text-muted-foreground">{t('no_collections')}</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-1 py-1">
+                  {collections.map(col => {
+                    const isMember = memberIds.has(col.id)
+                    return (
+                      <button
+                        key={col.id}
+                        type="button"
+                        onClick={() => toggleCollection(col)}
+                        disabled={isPending}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors text-left w-full disabled:opacity-60"
+                      >
+                        <div className={`h-5 w-5 rounded border flex items-center justify-center shrink-0 ${isMember ? 'bg-primary border-primary' : 'border-border'}`}>
+                          {isMember && <Check className="h-3 w-3 text-primary-foreground" />}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{col.name}</p>
+                          <p className="text-xs text-muted-foreground">{col.item_count}</p>
+                        </div>
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+
+              {/* Inline create-and-add — always visible, no extra dialog */}
+              <div className="flex gap-2 pt-2 border-t">
+                <Input
+                  value={newName}
+                  onChange={e => setNewName(e.target.value)}
+                  placeholder={t('name_placeholder')}
+                  maxLength={100}
+                  onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
+                  disabled={isCreating}
+                  className="flex-1 h-8 text-sm"
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={handleCreate}
+                  disabled={!newName.trim() || isCreating}
+                  className="shrink-0"
+                >
+                  {isCreating
+                    ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    : t('create')
+                  }
+                </Button>
+              </div>
+            </>
           )}
         </DialogContent>
       </Dialog>

@@ -54,9 +54,10 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     if (disabled) return
 
     // Guest guard: open AuthSheet drawer instead of redirecting.
-    // Do nothing during in-flight auth transitions to avoid false triggers.
+    // Guard only against active sign-out; all other null-user states are guests
+    // ('unauthenticated', 'refreshing' on visibility sync, 'error', 'initializing').
     if (!user) {
-      if (status === 'unauthenticated') {
+      if (status !== 'signing_out') {
         openAuthSheet('login')
       }
       return

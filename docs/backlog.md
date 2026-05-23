@@ -4,7 +4,14 @@
 
 ## Last Session
 
-**2026-05-23 — Sprint 9 (Task 180 — N.3: admin↔site two-way locale persistence) ✅**
+**2026-05-23 — Sprint 9 (Task 181 — P.1: guest favorite click opens auth flow) ✅**
+
+- Root cause: guard checked `status === 'unauthenticated'` but status is transiently `'refreshing'` during visibility sync → click silently swallowed. Test suite also failed (no `useAuth` mock → default context `status: 'initializing'` blocked all click tests).
+- Fix: changed guard to `status !== 'signing_out'`; added `useAuth`/`openAuthSheet` mocks + 3 new guest tests. 12/12 tests green.
+
+→ [Task 181 session log](sessions/2026-05-23-task-181-guest-favorite-auth.md)
+
+**Previous: 2026-05-23 — Sprint 9 (Task 180 — N.3: admin↔site two-way locale persistence) ✅**
 
 - Root cause: middleware cookie sync (`admin-locale` ← URL locale on every public-site request) overwrites admin user's chosen locale from any background/concurrent public-site request; `Header.switchLocale()` already calls `setAdminLocale()` making the middleware sync redundant and harmful.
 - Fix: removed middleware sync block; added `setRequestLocale(locale)` to admin layout so child server components (incl. `email-templates`) inherit correct locale without individual `getAdminLocale()` calls.
@@ -27,7 +34,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 ## Next Immediate Tasks
 
-**Active sprint — Sprint 9 (Critical Data & Trust Integrity).** Done & orchestrator-APPROVED: 175 ✅ · 210 ✅ · 176 ✅ · 211 ✅ · 177 ✅ · 178 ✅ · 179 ✅ · 180 ✅. **Next:** 181 / 182 / 183 (favorites guest-auth / contact card / canonical URL). Task 181 also greens the `FavoriteButton` test suite (carry-over from the Task 211 review — missing `useAuth` mock).
+**Active sprint — Sprint 9 (Critical Data & Trust Integrity).** Done & orchestrator-APPROVED: 175 ✅ · 210 ✅ · 176 ✅ · 211 ✅ · 177 ✅ · 178 ✅ · 179 ✅ · 180 ✅ · 181 ✅. **Next:** 182 / 183 (contact card / canonical URL).
 
 After Sprint 9: Epics N (184 `<html lang>`) → P (185 stale header) → O → Q → R → S → T → U. **Last task number: 211.**
 

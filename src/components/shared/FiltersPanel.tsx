@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import { X, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -91,7 +93,12 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
   const contentReady = useIdleMount(tier === 'low', open)
   const priceLabel = `${t('price_range')} (${currency})`
 
-  return (
+  // Portal to document.body so the panel escapes any stacking-context ancestor
+  // (e.g. the hero section's `relative z-10` container on the homepage).
+  const [domReady, setDomReady] = useState(false)
+  useEffect(() => { setDomReady(true) }, [])
+
+  const panel = (
     <>
       {/* Backdrop */}
       <div
@@ -460,4 +467,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
       </div>
     </>
   )
+
+  if (!domReady) return null
+  return createPortal(panel, document.body)
 }

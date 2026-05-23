@@ -250,7 +250,6 @@ export default async function ListingPage({ params }: Props) {
 
   const galleryPreload = buildGalleryMainPreloadAttrs(coverImage?.url)
 
-  const pricePerSqm = listing.area_gross ? Math.round(listing.price / listing.area_gross) : null
   const listingUrl = `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'}/${locale}/listings/${slug}`
 
   const isNew = new Date(listing.created_at) > new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
@@ -263,8 +262,13 @@ export default async function ListingPage({ params }: Props) {
   const needsConversion = !!exchangeRates && !!authUser && preferredCurrency !== listing.currency
   const displayPrice = needsConversion ? convertPrice(listing.price, listing.currency, preferredCurrency, exchangeRates) : listing.price
   const displayCurrencyCode = needsConversion ? preferredCurrency : listing.currency
+  const displayPriceOld = listing.price_old
+    ? (needsConversion ? convertPrice(listing.price_old, listing.currency, preferredCurrency, exchangeRates) : listing.price_old)
+    : null
   // Original price line shown below converted price on detail page
   const originalPriceStr = needsConversion ? formatPrice(listing.price, listing.currency, locale) : null
+  // per-m² derived from the displayed price so value and label always share the same currency
+  const pricePerSqm = listing.area_gross ? Math.round(displayPrice / listing.area_gross) : null
 
   const formattedPrice = formatPrice(displayPrice, displayCurrencyCode, locale)
 
@@ -383,7 +387,7 @@ export default async function ListingPage({ params }: Props) {
               <div className="flex flex-col gap-0.5">
                 <div className="flex items-baseline gap-3 flex-wrap">
                   <span className="text-3xl font-bold text-primary">{formattedPrice}</span>
-                  {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(listing.price_old!, displayCurrencyCode, locale)}</span>}
+                  {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(displayPriceOld!, displayCurrencyCode, locale)}</span>}
                   {pricePerSqm && <span className="text-sm text-muted-foreground">{formatPrice(pricePerSqm, displayCurrencyCode, locale)}/{t('per_sqm').split('/')[1] ?? 'm²'}</span>}
                 </div>
                 {originalPriceStr && (

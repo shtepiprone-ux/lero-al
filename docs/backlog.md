@@ -4,6 +4,18 @@
 
 ## Last Session
 
+**2026-05-23 — Sprint 9 (Task 176 — M.2: price/m² currency fix) ✅**
+
+- Detail page: `pricePerSqm` moved after `displayPrice` derivation; now computed from `displayPrice` (not raw `listing.price`).
+- Detail page: `displayPriceOld` added — strikethrough old price also converted when `needsConversion`.
+- `ListingCard`: per-m² label changed from empty string `''` to `activeCurrency` so currency code always shows.
+- `ListingContact`: already receives `price={displayPrice}` + `currency={displayCurrencyCode}` — no change needed.
+- Grep confirms no remaining `listing.price / area_gross` or `formatPrice(pricePerSqm, ''` patterns.
+
+→ [Task 176 session log](sessions/2026-05-23-task-176-price-per-sqm-currency-fix.md)
+
+## Last-but-one Session
+
 **2026-05-23 — Sprint 9 (Task 210 — chore: green tsc baseline) ✅**
 
 - `npx tsc --noEmit` was red (2 errors): both `MOCK_USER: User` fixtures missing `suspended_until` + `inactivity_warning_sent_at`.
@@ -302,10 +314,9 @@ Manual/ops actions still required outside of code commits. Keep here until done,
 
 ## Next Immediate Tasks
 
-**Last completed:** Sprint 9 — Task 210 (chore: green tsc baseline) ✅.
+**Last completed:** Sprint 9 — Task 176 (M.2 — price/m² currency fix) ✅.
 
-**Sprint 9 queue** (Tasks 175–183): 175 ✅, 210 ✅ → **176** (price/m² display, parallel) → **177** (admin currency table) → **178** (currency selector Combobox); **179** / **180** (localization); **181** / **182** / **183** (favorites/contact/URL).
-`tsc --noEmit` baseline is now GREEN (0 errors). Gate for 176–183: 0 total tsc errors.
+**Sprint 9 queue** (Tasks 175–183): 175 ✅, 210 ✅, 176 ✅ → **177** (admin currency table) → **178** (currency selector Combobox); **179** / **180** (localization); **181** / **182** / **183** (favorites/contact/URL).
 Kickoffs: `tasks/Sprints/Sprint_9_kickoff_prompt_Task_176..183.md`. After Sprint 9: Epics N(184)→P(185)→O→Q→R→S→T→U. **Last task number: 210.**
 
 ## Task roadmap — numbered
@@ -391,6 +402,7 @@ global numbering. Notes column = source lines in `issues.txt`.
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Sprint 9 — Task 176 — price/m² currency fix: displayPrice for per-m², displayPriceOld for strikethrough, activeCurrency label on card | Task 176 | [sessions/2026-05-23-task-176-price-per-sqm-currency-fix.md](sessions/2026-05-23-task-176-price-per-sqm-currency-fix.md) |
 | 2026-05-23 | Sprint 9 — Task 210 — green tsc baseline: added suspended_until + inactivity_warning_sent_at to both MOCK_USER fixtures; 0 tsc errors, 56 tests pass | Task 210 | [sessions/2026-05-23-task-210-tsc-baseline-green.md](sessions/2026-05-23-task-210-tsc-baseline-green.md) |
 | 2026-05-22 | Sprint 8 — Task 173 — 3 new interfaces (CollectionItem, FavoritePriceAlert, ReportAction); map 24 tables/217 cols | Task 173 | [sessions/2026-05-22-task-173-untyped-tables.md](sessions/2026-05-22-task-173-untyped-tables.md) |
 | 2026-05-22 | Sprint 8 — Task 172 — schema-drift guard: check-schema-drift.mjs, schema-drift-check.sql (21 tables/204 cols), qa-rules doc | Task 172 | [sessions/2026-05-22-task-172-schema-drift-guard.md](sessions/2026-05-22-task-172-schema-drift-guard.md) |

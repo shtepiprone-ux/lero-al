@@ -327,7 +327,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
             )}
           </div>
           {pricePerSqm && (
-            <span className="text-xs text-muted-foreground">{formatPrice(pricePerSqm, '', locale)} {t('per_sqm')}</span>
+            <span className="text-xs text-muted-foreground">{formatPrice(pricePerSqm, activeCurrency, locale)} {t('per_sqm')}</span>
           )}
         </div>
 

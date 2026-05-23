@@ -41,6 +41,12 @@ interface ComboboxProps {
   /** Minimum pixel width for the dropdown (useful when the trigger is narrower than the options). */
   dropdownMinWidth?: number
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
+  /** Non-filtered "clear" item always shown at the top of the list (e.g. "All locations"). Clicking it calls onChange(''). */
+  clearLabel?: string
+  /** inputMode passed to the search input (e.g. "numeric" for year fields). */
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
+  /** Called on each keystroke in variant="input" mode before onChange fires. Useful for live-parse wrappers (e.g. YearCombobox). */
+  onInputChange?: (value: string) => void
 }
 
 export function Combobox({
@@ -58,6 +64,9 @@ export function Combobox({
   portal = false,
   dropdownMinWidth,
   onKeyDown,
+  clearLabel,
+  inputMode,
+  onInputChange,
 }: ComboboxProps) {
   const uid = useId()
   const inputId = `combobox-${uid}`
@@ -149,6 +158,21 @@ export function Combobox({
       style={portal ? dropdownStyle : (dropdownMinWidth ? { minWidth: dropdownMinWidth } : undefined)}
     >
       <div id={listboxId} role="listbox" className="overflow-y-auto max-h-56">
+        {clearLabel && (
+          <button
+            type="button"
+            role="option"
+            aria-selected={value === ''}
+            className={cn(
+              'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
+              value === '' && 'bg-primary/10 text-primary'
+            )}
+            onMouseDown={() => { onChange(''); setSearch(''); setOpen(false) }}
+          >
+            <span className="flex-1 truncate">{clearLabel}</span>
+            {value === '' && <Check className="h-3.5 w-3.5 shrink-0" />}
+          </button>
+        )}
         {filtered.length === 0 ? (
           <p className="px-3 py-2 text-sm text-muted-foreground">{t('no_results')}</p>
         ) : filtered.map(opt => (
@@ -192,10 +216,11 @@ export function Combobox({
           aria-haspopup="listbox"
           aria-controls={open ? listboxId : undefined}
           value={selected ? selected.label : search}
-          onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true) }}
+          onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true); onInputChange?.(e.target.value) }}
           onFocus={() => { setOpen(true); updateDropdownPosition() }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
           onKeyDown={onKeyDown}
+          inputMode={inputMode}
           placeholder={placeholder}
           disabled={disabled}
           className={cn(triggerBase, 'cursor-text')}

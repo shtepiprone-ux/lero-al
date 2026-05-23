@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useMemo, useId, useRef, useCallback, useEffect } from 'react'
-import { createPortal } from 'react-dom'
+import { useState, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { MapPin, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Combobox } from '@/components/shared/Combobox'
-import { cn, normalizeSearch } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 
 export interface LocationOption {
   id: number
@@ -43,46 +42,15 @@ export function LocationCombobox({
   regions, onAddLocation, portal = false,
 }: Props) {
   const tc = useTranslations('common')
-  const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
   const [showAdd, setShowAdd] = useState(false)
   const [addName, setAddName] = useState('')
   const [addRegionId, setAddRegionId] = useState<number | null>(null)
   const [adding, setAdding] = useState(false)
-  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-  const containerRef = useRef<HTMLDivElement>(null)
 
-  const selected = locations.find(l => String(l.id) === value)
-
-  const updateDropdownPosition = useCallback(() => {
-    if (!portal || !containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    const spaceBelow = window.innerHeight - rect.bottom
-    const spaceAbove = rect.top
-    const maxH = 224
-    if (spaceBelow >= Math.min(maxH, 150) || spaceBelow >= spaceAbove) {
-      setDropdownStyle({ position: 'fixed', top: rect.bottom + 4, left: rect.left, width: rect.width, maxHeight: Math.min(maxH, spaceBelow - 8), zIndex: 9999, overflowY: 'auto' })
-    } else {
-      setDropdownStyle({ position: 'fixed', bottom: window.innerHeight - rect.top + 4, left: rect.left, width: rect.width, maxHeight: Math.min(maxH, spaceAbove - 8), zIndex: 9999, overflowY: 'auto' })
-    }
-  }, [portal])
-
-  useEffect(() => {
-    if (!open || !portal) return
-    updateDropdownPosition()
-    window.addEventListener('scroll', updateDropdownPosition, true)
-    window.addEventListener('resize', updateDropdownPosition)
-    return () => {
-      window.removeEventListener('scroll', updateDropdownPosition, true)
-      window.removeEventListener('resize', updateDropdownPosition)
-    }
-  }, [open, portal, updateDropdownPosition])
-
-  const filtered = useMemo(() => {
-    if (!search) return locations.slice(0, 15)
-    const q = normalizeSearch(search)
-    return locations.filter(l => normalizeSearch(l.name_al).includes(q)).slice(0, 15)
-  }, [locations, search])
+  const options = useMemo(
+    () => locations.map(l => ({ value: String(l.id), label: l.name_al, description: l.type || undefined })),
+    [locations],
+  )
 
   async function handleAdd() {
     if (!addName.trim() || !addRegionId || !onAddLocation) return
@@ -98,78 +66,20 @@ export function LocationCombobox({
   }
 
   const canAdd = !!(regions && regions.length > 0 && onAddLocation)
-  const listboxId = useId()
-  const inputId = `${listboxId}-input`
-
-  const dropdownContent = open ? (
-    <div
-      id={listboxId}
-      className={cn(
-        'bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-hidden',
-        !portal && 'absolute top-full mt-1 left-0 right-0 z-50'
-      )}
-      style={portal ? dropdownStyle : undefined}
-    >
-      <div className="overflow-y-auto max-h-56">
-        <Button
-          variant="ghost"
-          className="w-full px-3 py-2 h-auto text-sm justify-start rounded-none"
-          onMouseDown={() => { onChange(null); setSearch(''); setOpen(false) }}
-        >
-          {tc('all_locations')}
-        </Button>
-        {filtered.length === 0 ? (
-          <p className="px-3 py-2 text-sm text-muted-foreground">{tc('no_results')}</p>
-        ) : filtered.map(loc => (
-          <Button
-            key={loc.id}
-            variant="ghost"
-            className={cn(
-              'w-full px-3 py-2 h-auto text-sm justify-between rounded-none',
-              value === String(loc.id) && 'bg-primary/10 text-primary'
-            )}
-            onMouseDown={() => { onChange(String(loc.id)); setSearch(''); setOpen(false) }}
-          >
-            <span>{loc.name_al}</span>
-            {loc.type && (
-              <span className="text-xs text-muted-foreground capitalize ml-2">{loc.type}</span>
-            )}
-          </Button>
-        ))}
-      </div>
-    </div>
-  ) : null
 
   return (
-    <div ref={containerRef} className={cn('location-combobox relative', className)}>
-      <div className="relative">
-        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none z-10" />
-        <input
-          id={inputId}
-          type="text"
-          role="combobox"
-          aria-autocomplete="list"
-          aria-expanded={open}
-          aria-haspopup="listbox"
-          aria-controls={listboxId}
-          value={selected ? selected.name_al : search}
-          onChange={e => {
-            setSearch(e.target.value)
-            onChange(null)
-            setOpen(true)
-          }}
-          onFocus={() => { setOpen(true); updateDropdownPosition() }}
-          onBlur={() => setTimeout(() => setOpen(false), 150)}
-          onKeyDown={onKeyDown}
-          placeholder={placeholder ?? tc('all_locations')}
-          className="w-full h-11 pl-9 pr-3 text-sm text-foreground bg-muted border-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring placeholder:text-muted-foreground"
-        />
-        {portal
-          ? (typeof document !== 'undefined' && dropdownContent ? createPortal(dropdownContent, document.body) : null)
-          : dropdownContent}
-      </div>
-
-      {error && <p className="text-xs text-destructive mt-1">{error}</p>}
+    <div className={cn('location-combobox', className)}>
+      <Combobox
+        options={options}
+        value={value}
+        onChange={v => onChange(v || null)}
+        clearLabel={tc('all_locations')}
+        icon={<MapPin className="h-4 w-4" />}
+        placeholder={placeholder ?? tc('all_locations')}
+        portal={portal}
+        error={error}
+        onKeyDown={onKeyDown as React.KeyboardEventHandler<HTMLInputElement> | undefined}
+      />
 
       {canAdd && (
         <>

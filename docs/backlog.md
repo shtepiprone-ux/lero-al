@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-23 — Task 189 — O.4: reversible agent-registration step ✅**
+**2026-05-23 — Task 190 — Q.1: Combobox consolidation — fold LocationCombobox + YearCombobox into canonical ✅**
+
+- `src/components/shared/Combobox.tsx`: added 3 props — `clearLabel?: string` (always-visible deselect item at top of list), `inputMode?` (passed to `<input>`), `onInputChange?` (fires on each keystroke before onChange, for live-parse wrappers).
+- `src/components/shared/LocationCombobox.tsx`: removed ~130 lines of parallel internals (own state, createPortal, dropdown, raw `<input role="combobox">`). Now thin wrapper: maps `locations` → `ComboboxOption[]`, passes `clearLabel={tc('all_locations')}`, delegates all popover/filter/a11y to canonical Combobox. "Add location" admin sub-form kept intact below.
+- `src/components/shared/YearCombobox.tsx`: removed ~90 lines of parallel internals. Now thin wrapper: maps `YEAR_OPTIONS` → `ComboboxOption[]`, passes `inputMode="numeric"` + `onInputChange` for live-while-typing year parse.
+- `PropertyTypeCombobox.tsx` already compliant (no change).
+- Grep proof: `createPortal|role="combobox"|updateDropdownPosition` in `src/components/shared/` → only `Combobox.tsx` (DatePicker has `[open, setOpen]` for calendar popup, not a combobox parallel).
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 190 session log](sessions/2026-05-23-task-190-combobox-consolidation.md)
+
+**Previous: 2026-05-23 — Task 189 — O.4: reversible agent-registration step ✅**
 
 - `src/modules/auth/components/AuthSheet.tsx`:
   - Added `SharedRegFields` interface (`name / email / password / phone`).
@@ -146,7 +157,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** Epics Q → R → S → T → U. Epic O closed. **Last task number: 215.**
+**Next queue:** 191 (Q.2 suppress mobile keyboard) → 192–194 → then Epics R → S → T → U. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 

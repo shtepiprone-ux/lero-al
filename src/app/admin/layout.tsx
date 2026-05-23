@@ -33,9 +33,12 @@ function resolveLocale(raw: string | undefined): Locale {
 export const metadata = { title: 'Admin — Lero.al' }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const user = await getUser()
+  // Resolve locale before any redirect so the login/forbidden URL is properly prefixed.
+  const jar = await cookies()
+  const locale = resolveLocale(jar.get(ADMIN_LOCALE_COOKIE)?.value)
 
-  if (!user) redirect('/auth/login?next=/admin')
+  const user = await getUser()
+  if (!user) redirect(`/${locale}/auth/login?next=/admin`)
 
   const supabase = await createClient()
   const { data: profile } = await supabase
@@ -45,13 +48,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     .single()
 
   const isAuthorized = profile?.role === 'admin' || profile?.role === 'moderator'
-  if (!isAuthorized) redirect('/')
+  if (!isAuthorized) redirect(`/${locale}`)
 
   const settings = await getAllSettings()
   const siteName = settings['site_name'] ?? 'Lero.al'
 
-  const jar = await cookies()
-  const locale = resolveLocale(jar.get(ADMIN_LOCALE_COOKIE)?.value)
   setRequestLocale(locale)
   const messages = MESSAGES[locale]
 

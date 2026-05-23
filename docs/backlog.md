@@ -4,7 +4,18 @@
 
 ## Last Session
 
-**2026-05-23 — Task 194 — Q.5: Card/list view toggle — smooth active-state rounding ✅**
+**2026-05-23 — Task 195 — R.1: Fix /admin 404 — locale-prefixed auth redirect ✅**
+
+- Root cause: `AdminLayout` redirected unauthenticated users to `/auth/login?next=/admin` — a path that doesn't exist (login lives at `/{locale}/auth/login`). The `admin-locale` cookie was read after the redirect, too late to use.
+- Fix (`src/app/admin/layout.tsx`): moved `cookies()` + `resolveLocale()` to top of function, before `getUser()`. Changed redirects:
+  - Unauthenticated: `/auth/login?next=/admin` → `/${locale}/auth/login?next=/admin`
+  - Non-admin: `/` → `/${locale}` (consistent locale prefix)
+- Auth flow now: unauthenticated → `/{locale}/auth/login?next=/admin` (AuthRedirect stores next in sessionStorage, opens AuthSheet) → after login → `/admin` → admin layout passes role check → dashboard.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 195 session log](sessions/2026-05-23-task-195-admin-auth-redirect.md)
+
+**Previous: 2026-05-23 — Task 194 — Q.5: Card/list view toggle — smooth active-state rounding ✅**
 
 - `src/modules/listings/components/ListingsSortBar.tsx`: replaced `border border-border rounded-xl overflow-hidden` container + `rounded-none` buttons with segmented-control pattern: `bg-muted rounded-xl p-1` container + `size="icon-sm"` buttons (built-in `rounded-[min(var(--radius-md),12px)]` ≈ 9.6px). No `overflow-hidden` → active state has its own smooth token-consistent rounding.
 - Icons: `h-4 w-4` → `size-4` (prevents `icon-sm`'s SVG size override).

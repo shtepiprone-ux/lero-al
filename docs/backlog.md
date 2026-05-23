@@ -4,7 +4,23 @@
 
 ## Last Session
 
-**2026-05-23 — Sprint 9 (Task 181 — P.1: guest favorite click opens auth flow) ✅**
+**2026-05-23 — Sprint 9 (Task 183 — P.4: canonical lero.al URL for all generated links) ✅**
+
+- Root cause: `AuthSheet.tsx` used `window.location.origin` for OAuth callback, password-reset, and sign-up confirmation URLs → emails linked to localhost/preview host.
+- Fix: added `src/lib/siteUrl.ts` (`SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'`); replaced 3 occurrences in AuthSheet. Navigation guard in `useUnsavedChangesGuard.ts` untouched.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 183 session log](sessions/2026-05-23-task-183-canonical-site-url.md)
+
+**Previous: 2026-05-23 — Sprint 9 (Task 182 — P.2: contact card "Account deleted" for guests/zombies) ✅**
+
+- Root cause: `isGuest = !authUser` too broad — zombie sessions (JWT valid, no `public.users` row) gave truthy `authUser` → `ownerRaw = null` → fallback set `deleted_at: 'deleted'` → "Account deleted" shown.
+- Fix: added `hasValidProfile = !!profileResult.data` inside `if (authUser)` block; changed `isGuest = !authUser || !hasValidProfile`; fallback `deleted_at` changed from conditional `'deleted'` to always `null`. `canReport` updated to guard via `!isGuest`.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 182 session log](sessions/2026-05-23-task-182-contact-card-deleted-fix.md)
+
+**Previous: 2026-05-23 — Sprint 9 (Task 181 — P.1: guest favorite click opens auth flow) ✅**
 
 - Root cause: guard checked `status === 'unauthenticated'` but status is transiently `'refreshing'` during visibility sync → click silently swallowed. Test suite also failed (no `useAuth` mock → default context `status: 'initializing'` blocked all click tests).
 - Fix: changed guard to `status !== 'signing_out'`; added `useAuth`/`openAuthSheet` mocks + 3 new guest tests. 12/12 tests green.
@@ -34,7 +50,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 ## Next Immediate Tasks
 
-**Active sprint — Sprint 9 (Critical Data & Trust Integrity).** Done & orchestrator-APPROVED: 175 ✅ · 210 ✅ · 176 ✅ · 211 ✅ · 177 ✅ · 178 ✅ · 179 ✅ · 180 ✅ · 181 ✅. **Next:** 182 / 183 (contact card / canonical URL).
+**Active sprint — Sprint 9 (Critical Data & Trust Integrity).** Done & orchestrator-APPROVED: 175 ✅ · 210 ✅ · 176 ✅ · 211 ✅ · 177 ✅ · 178 ✅ · 179 ✅ · 180 ✅ · 181 ✅ · 182 ✅ · 183 ✅. **Sprint 9 COMPLETE — awaiting orchestrator review.**
 
 After Sprint 9: Epics N (184 `<html lang>`) → P (185 stale header) → O → Q → R → S → T → U. **Last task number: 211.**
 

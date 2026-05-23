@@ -26,6 +26,7 @@ import { Combobox } from '@/components/shared/Combobox'
 import { PhoneField } from '@/components/shared/PhoneField'
 import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone } from '@/lib/phone'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export type AuthView = 'login' | 'register' | 'register-agent' | 'forgot-password'
 
@@ -83,7 +84,7 @@ function LoginView({
   }
 
   async function handleGoogle() {
-    await signInWithOAuth('google', `${window.location.origin}/auth/callback`)
+    await signInWithOAuth('google', `${SITE_URL}/auth/callback`)
   }
 
   return (
@@ -180,7 +181,7 @@ function ForgotPasswordView({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
-    const redirectTo = `${window.location.origin}/auth/callback?next=/${locale}/auth/reset-password`
+    const redirectTo = `${SITE_URL}/auth/callback?next=/${locale}/auth/reset-password`
     await Promise.all([
       requestPasswordReset(email, redirectTo),
       logPasswordRecoveryRequest(email),
@@ -531,7 +532,7 @@ function RegisterView({
 
     setLoading(true)
     const { error } = await signUp(email, password, {
-      emailRedirectTo: `${window.location.origin}/auth/callback?next=/${locale}/auth/verified`,
+      emailRedirectTo: `${SITE_URL}/auth/callback?next=/${locale}/auth/verified`,
       data: {
         name,
         phone: phoneE164,

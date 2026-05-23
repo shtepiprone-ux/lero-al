@@ -4,7 +4,26 @@
 
 ## Last Session
 
-**2026-05-23 — Task 196 — R.2: Admin edit-screen side-panel actions pattern ✅**
+**2026-05-23 — Task 224 — P0 HOTFIX: registration email-confirmation link 404 ✅**
+
+- Root cause: Send Email Hook (Task 122) sends token_hash `/auth/v1/verify` links; `/auth/callback` only handled PKCE `?code=` → miss redirected to non-localized `${origin}/auth/login` → 404.
+- Fix 1: `src/app/auth/confirm/route.ts` (NEW) — token-hash confirmation route; calls `verifyOtp({ token_hash, type })` → `ensureUserProfile()` → redirects to `next`. Cross-device (no PKCE code_verifier cookie needed).
+- Fix 2: `auth-email-hook/route.ts` `buildActionUrl` → `buildConfirmUrl`: now builds `${appOrigin}/auth/confirm?token_hash=...&type=...&next=...` for signup/invite/recovery/magiclink. `email_change` stays on Supabase verify (custom cabinet flow; not triggered by hook in production).
+- Fix 3: `src/lib/auth/server.ts`: added `verifyOtp()` + extracted shared `ensureUserProfile()` (was local in callback).
+- Fix 4: `/auth/callback` fallback fixed: `${origin}/auth/login` → `${origin}/${locale}/auth/login?error=auth_callback_failed` (locale from `next` param).
+- Global grep: 0 non-localized `/auth/login` redirects remaining.
+- Owner infra: add `https://lero.al/auth/confirm` to Supabase redirect-URL allowlist; set `NEXT_PUBLIC_SITE_URL` explicitly in Vercel.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 224 session log](sessions/2026-05-23-task-224-email-confirm-fix.md)
+
+**Previous: 2026-05-23 — Orchestration (Opus 4.7): 214/215 APPROVED, Sprint 10 + Epic V filed, UI gate hardened**
+
+- Reviewed Tasks 214/215 against the working tree (read-only) → **APPROVED; Epic M CLOSED** (175·176·177·178·214·215). Verdicts in `tasks/Epics/Epic_M_kickoff_prompts.md`.
+- Owner reported 6 new issues (2 production regressions + 2 drawer bugs + UI audit + Contacts feature) + a **P0: signup email-confirmation link 404** (`auth/callback` non-localized `/auth/login` fallback + token_hash flow + likely `NEXT_PUBLIC_SITE_URL` env). Grounded each in real code; filed **Sprint 10** (216–221, +**224 P0**) + **Epic V — Contacts** (222–223) with code-anchored kickoffs.
+- Hardened `docs/ui-rules.md` (§15 control-height alignment, §16 z-index scale, §17 mandatory UI pre-flight checklist) + the orchestrator review gate — response to the recurring responsive/UI failures.
+
+**Previous: 2026-05-23 — Task 196 — R.2: Admin edit-screen side-panel actions pattern ✅**
 
 - Created `src/components/admin/AdminEditLayout.tsx` — reusable two-column wrapper (`flex-col lg:flex-row`; main = `flex-1 min-w-0`; sidebar = `w-72 xl:w-80 shrink-0 lg:sticky lg:top-20`). Single source for the admin edit-screen layout pattern.
 - `src/app/admin/users/[id]/page.tsx`: widened container `max-w-3xl` → `max-w-5xl`.
@@ -220,17 +239,20 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 ## Next Immediate Tasks
 
-**Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
+**Sprint 9 — ✅ CLOSED.** **Epic M — ✅ CLOSED** (175·176·177·178·214·215). Tasks 184–196, 212, 213, 185 shipped 2026-05-23 (owner ran them in sequence; diffs spot-reviewable on request).
 
-**Next queue:** 191 (Q.2 suppress mobile keyboard) → 192–194 → then Epics R → S → T → U. **Last task number: 215.**
+**Sprint 10 — Critical Regressions + Drawer + UI Consistency (OPEN):**
+**224 ✅** (P0 HOTFIX — done) → **216** (profile save dead — catalog-driven `preferred_currency`, drop frozen CHECK) → **217** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
+Then resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
+Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
-> New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
+> **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
 
-Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization · Responsive · Acceptance criteria). Per-task orchestrator verdicts live in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`.
+Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md`. Per-task verdicts: Sprint 9 file (175–183, 210/211), `Epic_M_kickoff_prompts.md` (214/215), `Sprint_10_…` (216+).
 
 ## Active product backlog — Epics M–U (from `issues.txt`, opened 2026-05-22)
 
-Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → Q → R → S → T → U. Tasks 175–215, global numbering. Notes column = source lines in `issues.txt` (212–215 = owner notes 2026-05-23).
+Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint 10 (216–221)** next → then resume **R (195–196 ✅; 197–202 open) · S open · T (213 ✅; 205–207 open) · U open** → **Epic V — Contacts (222–223) LAST.** Tasks 175–223, global numbering.
 
 | Epic | Tasks | Notes | Plan | Kickoffs |
 |---|---|---|---|---|
@@ -243,10 +265,12 @@ Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → 
 | S — Domain Numeric IDs | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
 | T — Global UX Polish & Forms | 205–207, 213 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
 | U — Performance & RSC Diagnostics | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
+| Sprint 10 — Critical Regressions + UI Consistency | 216–221 | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
+| V — Contacts & Inquiries (LAST) | 222–223 | owner req 2026-05-23 | [`Epic_V_…`](../tasks/Epics/Epic_V_Contacts_and_Inquiries.md) | [`Epic_V_kickoff_prompts.md`](../tasks/Epics/Epic_V_kickoff_prompts.md) |
 
 > Rule-type notes codified into `/docs` during planning: 14 (verify-globally → `ai-behavior.md`), 16 (canonical URL → `env.md`; code in Task 183), 6 + 1 (button/Combobox single-source → `ui-rules.md §0`), plus composition + responsive rules added to `ui-rules.md §0` from the Task 211 review.
 >
-> **Now tasked (214/215):** the `ExchangeRates` fixed `{EUR,USD,GBP}` shape + homepage EUR-only conversion are addressed by Task 214 (extensible FX over the catalog, iliria98 per active currency) + Task 215 (multi-currency conversion on every card surface).
+> **214/215 ✅ done & APPROVED** (Epic M closed). New work 2026-05-23 → **Sprint 10 (216–221)**: profile-save regression (catalog-driven `preferred_currency`), listings 42703 (`offer_type`/`purchase_conditions` columns+form), drawer footer overflow + z-index scale, `/listings` toolbar consistency, project-wide UI audit; + **Epic V (222–223)** Contacts page + admin inquiries (Resend reply). UI gate hardened in `ui-rules.md §15–§17`.
 
 ## Closed sprints & epics (historical)
 
@@ -276,6 +300,16 @@ Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → 
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 224 — P0 HOTFIX: /auth/confirm route (verifyOtp token-hash); buildConfirmUrl in hook; ensureUserProfile extracted; callback fallback locale-aware | Task 224 | [sessions/2026-05-23-task-224-email-confirm-fix.md](sessions/2026-05-23-task-224-email-confirm-fix.md) |
+| 2026-05-23 | Task 196 — R.2 admin edit-screen layout: AdminEditLayout two-column wrapper; AdminUserProfile sidebar actions/role-status | Task 196 | [sessions/2026-05-23-task-196-admin-edit-layout.md](sessions/2026-05-23-task-196-admin-edit-layout.md) |
+| 2026-05-23 | Task 195 — R.1 /admin 404 fix: locale-prefixed auth redirect; cookies/resolveLocale before getUser | Task 195 | [sessions/2026-05-23-task-195-admin-auth-redirect.md](sessions/2026-05-23-task-195-admin-auth-redirect.md) |
+| 2026-05-23 | Task 194 — Q.5 view toggle rounding: segmented-control (bg-muted p-1) + icon-sm; h-9 preserved | Task 194 | [sessions/2026-05-23-task-194-view-toggle-rounding.md](sessions/2026-05-23-task-194-view-toggle-rounding.md) |
+| 2026-05-23 | Task 193 — Q.4 listings status tabs → canonical Tabs (variant=line); removed custom border-b | Task 193 | [sessions/2026-05-23-task-193-listings-tabs.md](sessions/2026-05-23-task-193-listings-tabs.md) |
+| 2026-05-23 | Task 192 — Q.3 header icon buttons single config (ICON_BTN rounded-xl; 40×40 size-5 across all 3) | Task 192 | [sessions/2026-05-23-task-192-header-icon-buttons.md](sessions/2026-05-23-task-192-header-icon-buttons.md) |
+| 2026-05-23 | Task 191 — Q.2 suppress mobile keyboard: PropertyTypeCombobox variant=button; removed dead onKeyDown | Task 191 | [sessions/2026-05-23-task-191-mobile-keyboard.md](sessions/2026-05-23-task-191-mobile-keyboard.md) |
+| 2026-05-23 | Task 190 — Q.1 combobox consolidation: LocationCombobox + YearCombobox folded into canonical Combobox | Task 190 | [sessions/2026-05-23-task-190-combobox-consolidation.md](sessions/2026-05-23-task-190-combobox-consolidation.md) |
+| 2026-05-23 | Task 189 — O.4 reversible agent-registration step (SharedRegFields, onBack, field preservation) | Task 189 | [sessions/2026-05-23-task-189-agent-step-back.md](sessions/2026-05-23-task-189-agent-step-back.md) |
+| 2026-05-23 | Task 188 — O.3 client-side validation (login email/password; ProfileTab email; phone toasts ×4) | Task 188 | [sessions/2026-05-23-task-188-validation.md](sessions/2026-05-23-task-188-validation.md) |
 | 2026-05-23 | Task 187 — O.2 European country codes: 13→45 entries, Russia excluded, Combobox dropdownMinWidth, PhoneField variant=input + description for name search | Tasks 186+187 | [sessions/2026-05-23-task-187-european-country-codes.md](sessions/2026-05-23-task-187-european-country-codes.md) |
 | 2026-05-23 | Task 212 — P.5 inline create-collection: createCollection+addToCollection in one flow; Input+Button always visible below collection list | Task 212 | [sessions/2026-05-23-task-212-inline-create-collection.md](sessions/2026-05-23-task-212-inline-create-collection.md) |
 | 2026-05-23 | Task 185 — P.3 stale header after self-delete: signOut() called before router.push; AuthController commits user:null synchronously | Task 185 | [sessions/2026-05-23-task-185-stale-header-after-delete.md](sessions/2026-05-23-task-185-stale-header-after-delete.md) |

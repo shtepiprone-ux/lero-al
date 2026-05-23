@@ -67,3 +67,55 @@ export async function exchangeCodeForSession(code: string) {
   const supabase = await createClient()
   return supabase.auth.exchangeCodeForSession(code)
 }
+
+// ── Token-hash OTP verification (used by /auth/confirm for link-based emails) ──
+
+type EmailOtpType = 'signup' | 'invite' | 'magiclink' | 'recovery' | 'email_change' | 'email'
+
+export async function verifyOtp(params: { token_hash: string; type: EmailOtpType }) {
+  const supabase = await createClient()
+  return supabase.auth.verifyOtp(params)
+}
+
+// ── Ensure application-level user profile exists after auth ───────────────────
+//
+// Called from /auth/callback (OAuth PKCE) and /auth/confirm (token-hash) after
+// the session is established. Idempotent — safe to call for returning users.
+
+export async function ensureUserProfile(): Promise<void> {
+  try {
+    const authUser = await getUser()
+    if (!authUser) return
+
+    const meta = authUser.user_metadata ?? {}
+    const supabase = await createClient()
+
+    const SUPPORTED_LOCALES = ['sq', 'en', 'uk', 'it']
+    const metaLocale = meta.preferred_locale as string | undefined
+    const preferredLocale = metaLocale && SUPPORTED_LOCALES.includes(metaLocale) ? metaLocale : 'sq'
+
+    await supabase.from('users').upsert(
+      {
+        id: authUser.id,
+        name:
+          (meta.full_name as string | undefined) ??
+          (meta.name as string | undefined) ??
+          null,
+        user_type: 'private',
+        role: 'user',
+        is_verified: false,
+        preferred_locale: preferredLocale,
+      },
+      { onConflict: 'id', ignoreDuplicates: true }
+    )
+
+    const companyId = meta.company_id as string | undefined
+    if (companyId) {
+      await supabase
+        .from('users')
+        .update({ company_id: companyId })
+        .eq('id', authUser.id)
+        .is('company_id', null)
+    }
+  } catch {}
+}

@@ -41,3 +41,38 @@ base `process.env.NEXT_PUBLIC_SITE_URL` (fallback `'https://lero.al'`), NEVER fr
   unsaved-changes navigation guard) — never for a URL that leaves the browser (email, share, OAuth
   callback target).
 - Reviewer red flag: any `window.location.origin` in an auth/email/share diff.
+
+> **Set it explicitly in production.** As of 2026-05-23 `NEXT_PUBLIC_SITE_URL` is NOT set on the
+> deployment; the code falls back to `'https://lero.al'`, which happens to be correct — but rely on the
+> fallback at your peril (any preview/staging build will then also point at prod). Set
+> `NEXT_PUBLIC_SITE_URL` per environment.
+
+## Supabase Auth — Redirect URLs allowlist (recorded 2026-05-23)
+
+Supabase Dashboard → Authentication → URL Configuration → **Redirect URLs** is an allowlist of the
+**redirect TARGET URLs** the app hands to Supabase (`emailRedirectTo`, OAuth `redirectTo`, password-reset
+`redirectTo`, and any `redirect_to` embedded in a Supabase `/auth/v1/verify` link). It is **not** a list
+of email types — you do **not** add an entry per email.
+
+Targets the app actually uses (everything else is internal and needs no entry):
+
+| Target URL | Used by |
+|---|---|
+| `https://lero.al/auth/callback` | Google OAuth (PKCE `?code=`); legacy signup/recovery `redirect_to` |
+| `https://lero.al/auth/confirm` | token_hash email links via `verifyOtp` (Task 224 — signup/recovery/magic-link) |
+
+Do **NOT** add these — they are internal, not Supabase redirect targets:
+- `next` destinations resolved by our own routes (`/<locale>/auth/verified`, `/<locale>/auth/reset-password`).
+- Locale variants (`/sq/…`, `/en/…`) — they are only `next` values, never the redirect target.
+- The cabinet email-change link (`/<locale>/auth/confirm-email?token=…`) — a custom in-app token flow
+  that links directly to the app, bypassing Supabase redirect validation.
+
+**Recommended (low-maintenance):** add a single wildcard for the canonical domain so new targets/locales
+never require an allowlist change:
+
+```
+https://lero.al/**
+```
+
+Keep `Site URL = https://lero.al`. If you ever test auth on preview/localhost, add that host too
+(e.g. `http://localhost:3000/**`) — otherwise auth emails from those envs are rejected.

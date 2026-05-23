@@ -185,10 +185,21 @@ function verifyHookSignature(
 }
 
 // ── Action URL builder ─────────────────────────────────────────────────────────
+// Routes the user through /auth/confirm (verifyOtp token-hash flow) so links
+// work cross-device (no PKCE code_verifier cookie needed).
+// Derives appOrigin + next from redirect_to (format: ${SITE_URL}/auth/callback?next=/${locale}/...).
 
-function buildActionUrl(supabaseUrl: string, tokenHash: string, type: string, redirectTo: string): string {
-  const params = new URLSearchParams({ token: tokenHash, type, redirect_to: redirectTo })
-  return `${supabaseUrl}/auth/v1/verify?${params.toString()}`
+function buildConfirmUrl(tokenHash: string, type: string, redirectTo: string): string {
+  let appOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
+  let next = '/sq/auth/verified'
+  try {
+    const url = new URL(redirectTo)
+    appOrigin = url.origin
+    const nextParam = url.searchParams.get('next')
+    if (nextParam) next = nextParam
+  } catch {}
+  const params = new URLSearchParams({ token_hash: tokenHash, type, next })
+  return `${appOrigin}/auth/confirm?${params.toString()}`
 }
 
 // ── Handler ───────────────────────────────────────────────────────────────────
@@ -225,8 +236,13 @@ export async function POST(request: NextRequest) {
     // Resolve recipient locale via preferred_locale on the user profile
     const locale = await resolveUserLocale(user.id)
 
-    // Build action URL (used for all link-based emails; not used for reauthentication OTP)
-    const actionUrl = buildActionUrl(supabaseUrl, token_hash, email_action_type, redirect_to)
+    // For link-based emails (signup/invite/recovery/magiclink), build a confirm URL
+    // that routes through our /auth/confirm route (verifyOtp token-hash flow).
+    // email_change: the cabinet uses a fully custom flow (email_change_tokens table +
+    // consumeEmailChangeToken + /[locale]/auth/confirm-email). Supabase-native email_change
+    // events are not triggered in production (admin.updateUserById bypasses the hook).
+    // The email_change case below is a safety net using the Supabase verify endpoint.
+    const actionUrl = buildConfirmUrl(token_hash, email_action_type, redirect_to)
 
     switch (email_action_type) {
       case 'signup':
@@ -261,14 +277,16 @@ export async function POST(request: NextRequest) {
       }
 
       case 'email_change': {
-        // Supabase sends this to verify the new address.
-        // user.new_email is the address being verified; fall back to user.email.
+        // Cabinet uses a custom email-change flow; this Supabase-native case should not
+        // fire in production. Keep pointing to Supabase verify as a safety net.
+        const emailChangeParams = new URLSearchParams({ token: token_hash, type: 'email_change', redirect_to })
+        const emailChangeUrl = `${supabaseUrl}/auth/v1/verify?${emailChangeParams.toString()}`
         const recipientEmail = user.new_email ?? user.email
         const s = getEmailChangeStrings(locale)
         await sendEmail({
           to: recipientEmail,
           subject: s.subject,
-          html: emailChangeHtml(s, actionUrl),
+          html: emailChangeHtml(s, emailChangeUrl),
         })
         break
       }

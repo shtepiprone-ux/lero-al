@@ -59,6 +59,11 @@ returned task.
 - Commit message format: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`.
 - Always include related file changes in the same commit.
 - Never commit broken code — run `npm run build` before pushing.
+- **After every completed task, provide ready-to-run git commit commands as plain text** — the owner runs them manually in PowerShell. Never run git commands yourself. Format:
+  ```
+  git add <file1> <file2> ...
+  git commit -m "fix(TaskN): <short description>"
+  ```
 
 ### Localization (i18n) Rules
 - ALWAYS check `messages/sq.json`, `messages/en.json`, `messages/uk.json`, `messages/it.json`.

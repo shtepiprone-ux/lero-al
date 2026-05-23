@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-23 — Task 192 — Q.3: Header icon buttons — single canonical config ✅**
+**2026-05-23 — Task 193 — Q.4: Listings status tabs — canonical Tabs + remove stray border ✅**
+
+- `src/modules/listings/components/ListingsStatusTabs.tsx`: replaced parallel implementation (custom `TabButton` + `Button` + `border-b` container + manual `border-b-2 -mb-px` active state) with canonical `Tabs/TabsList/TabsTrigger` (`variant="line"`). Removed `Button`, `cn` imports.
+- Controlled via `value={activeTab} onValueChange={switchTab}` — URL navigation logic unchanged.
+- `variant="line"` gives per-tab underline indicator (`::after` pseudo-element) with no full-width `border-b` across the container.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 193 session log](sessions/2026-05-23-task-193-listings-tabs.md)
+
+**Previous: 2026-05-23 — Task 192 — Q.3: Header icon buttons — single canonical config ✅**
 
 - `src/components/layout/Header.tsx`: defined module-level `const ICON_BTN = 'rounded-xl'` — single override applied to all header icon-action buttons.
 - Favorites (auth Link): changed from `size="sm" px-2 gap-1` to `size="icon" + ICON_BTN`; icon from `h-4 w-4` → `size-5` (matches NotificationBell).

@@ -60,8 +60,8 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
         {/* Mobile filters button */}
         <Button
           variant="outline"
-          size="sm"
-          className="md:hidden h-9 px-3 rounded-xl relative gap-1.5"
+          size="lg"
+          className="md:hidden px-3 rounded-xl relative gap-1.5"
           onClick={onFiltersOpen}
         >
           <SlidersHorizontal className="h-4 w-4" />

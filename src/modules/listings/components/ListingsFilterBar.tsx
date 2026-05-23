@@ -52,8 +52,8 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
             key={type}
             type="button"
             variant={listingType === type ? 'default' : 'outline'}
-            size="sm"
-            className="h-9 rounded-xl text-xs px-3 shrink-0"
+            size="lg"
+            className="rounded-xl text-xs px-3 shrink-0"
             onClick={() => updateParams({ type: type || null })}
           >
             {type === '' ? tc('all') : t(type)}
@@ -80,6 +80,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
         value={locationId}
         onChange={id => updateParams({ location_id: id ?? null })}
         placeholder={tc('all_locations')}
+        size="sm"
         className="w-52 shrink-0"
         portal
       />
@@ -92,8 +93,8 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
         <Button
           type="button"
           variant="ghost"
-          size="sm"
-          className="h-9 text-xs text-muted-foreground hover:text-destructive gap-1 shrink-0"
+          size="lg"
+          className="text-xs text-muted-foreground hover:text-destructive gap-1 shrink-0"
           onClick={() => updateParams({
             type: null, property_type: null, location_id: null,
             price_min: null, price_max: null, area_min: null, area_max: null,
@@ -109,8 +110,8 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
       <Button
         type="button"
         variant="outline"
-        size="sm"
-        className="h-9 rounded-xl text-xs gap-1.5 shrink-0 relative"
+        size="lg"
+        className="rounded-xl text-xs gap-1.5 shrink-0 relative"
         onClick={onFiltersOpen}
       >
         <SlidersHorizontal className="h-3.5 w-3.5 shrink-0" />

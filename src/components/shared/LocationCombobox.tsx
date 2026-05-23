@@ -35,11 +35,13 @@ interface Props {
   onAddLocation?: (data: { name_al: string; region_id: number }) => Promise<{ id?: number; error?: string }>
   /** Render dropdown via portal into document.body. Use inside overflow:hidden/auto containers. */
   portal?: boolean
+  /** Control height — passed through to Combobox. 'default' = h-11 | 'sm' = h-9 | 'xs' = h-8 */
+  size?: 'default' | 'sm' | 'xs'
 }
 
 export function LocationCombobox({
   locations, value, onChange, onKeyDown, placeholder, className, error,
-  regions, onAddLocation, portal = false,
+  regions, onAddLocation, portal = false, size,
 }: Props) {
   const tc = useTranslations('common')
   const [showAdd, setShowAdd] = useState(false)
@@ -78,6 +80,7 @@ export function LocationCombobox({
         placeholder={placeholder ?? tc('all_locations')}
         portal={portal}
         error={error}
+        size={size}
         onKeyDown={onKeyDown as React.KeyboardEventHandler<HTMLInputElement> | undefined}
       />
 

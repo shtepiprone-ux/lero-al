@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-23 — Task 219 — Drawer overlapped by sticky header: z-index scale ✅**
+**2026-05-23 — Task 220 — `/listings` toolbar height/spacing/combobox consistency ✅**
+
+- Root cause: `LocationCombobox` had no `size` prop → inner Combobox defaulted to h-11 (44px) while all other toolbar controls were h-9 (36px). All `Button` controls used non-canonical `size="sm" className="h-9"` override instead of canonical `size="lg"` (h-9 natively).
+- Fix 1: `src/components/shared/LocationCombobox.tsx` — added optional `size?: 'default' | 'sm' | 'xs'` prop; passes through to inner `Combobox`. All existing callers unaffected (no `size` = default h-11 as before).
+- Fix 2: `src/modules/listings/components/ListingsFilterBar.tsx` — added `size="sm"` to `LocationCombobox`; changed all `Button size="sm" h-9` → `size="lg"` (removes non-canonical h-9 overrides). Spacing (`py-3 border-b`) already canonical.
+- Fix 3: `src/modules/listings/components/ListingsSortBar.tsx` — mobile filters `Button size="sm" h-9` → `size="lg"`. Sort Combobox + view toggle unchanged (already correct).
+- All 7 controls in both bars now uniformly at h-9 via canonical sizes.
+- UI pre-flight §17: all 8 checks pass. No new i18n strings.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 220 session log](sessions/2026-05-23-task-220-toolbar-height-consistency.md)
+
+**Previous: 2026-05-23 — Task 219 — Drawer overlapped by sticky header: z-index scale ✅**
 
 - Root cause: Header `z-50` = same level as drawer panel `z-50` → header showed through drawer. MobileBottomNav `z-40` = same as scrim → showed through backdrop.
 - Fix: Header `z-50` → `z-30`; MobileBottomNav `z-40` → `z-30`. Scale: chrome=z-30, scrim=z-40, floating=z-50. FiltersPanel already on-scale (backdrop z-40, panel z-50).

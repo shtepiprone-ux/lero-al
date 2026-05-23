@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-23 — Sprint 9 (Task 183 — P.4: canonical lero.al URL for all generated links) ✅**
+**2026-05-23 — Task 214 — M.5: dynamic FX engine over the currency catalog ✅**
+
+- `ExchangeRates` type changed from `{ EUR; USD; GBP }` to `Record<string, number>` (extensible).
+- `fetchAllRates()` now reads active currency codes from DB (`currencies` table, admin client, dynamic import) with `['EUR','USD','GBP']` fallback when DB unavailable.
+- `scrapeIliria98Rates()` now operates on the catalog-driven list (no hardcoded currency list).
+- `fetchCrossRates()` generalised to accept arbitrary codes (one open.er-api.com request covers all missing codes).
+- Policy: iliria98 absent → derivation fallback; both absent → currency excluded (never faked). Documented in `docs/integrations.md`.
+- Remaining `1.08`/`0.86` hardcode is in `ListingCard.tsx:114` — Task 215 scope.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 214 session log](sessions/2026-05-23-task-214-dynamic-fx-engine.md)
+
+**Previous: 2026-05-23 — Sprint 9 (Task 183 — P.4: canonical lero.al URL for all generated links) ✅**
 
 - Root cause: `AuthSheet.tsx` used `window.location.origin` for OAuth callback, password-reset, and sign-up confirmation URLs → emails linked to localhost/preview host.
 - Fix: added `src/lib/siteUrl.ts` (`SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'`); replaced 3 occurrences in AuthSheet. Navigation guard in `useUnsavedChangesGuard.ts` untouched.
@@ -50,31 +62,33 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 ## Next Immediate Tasks
 
-**Active sprint — Sprint 9 (Critical Data & Trust Integrity).** Done & orchestrator-APPROVED: 175 ✅ · 210 ✅ · 176 ✅ · 211 ✅ · 177 ✅ · 178 ✅ · 179 ✅ · 180 ✅ · 181 ✅ · 182 ✅ · 183 ✅. **Sprint 9 COMPLETE — awaiting orchestrator review.**
+**Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-After Sprint 9: Epics N (184 `<html lang>`) → P (185 stale header) → O → Q → R → S → T → U. **Last task number: 211.**
+**Next queue:** **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → 184 (N.2 `<html lang>`) → 213 (T.4 per-m² template) → 185 (P.3 stale header) → 212 (P.5 create-collection) → then Epics O → Q → R → S → T → U. **Last task number: 215.**
+
+> New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md` (Pre-read · Localization · Responsive · Acceptance criteria). Per-task orchestrator verdicts live in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`.
 
 ## Active product backlog — Epics M–U (from `issues.txt`, opened 2026-05-22)
 
-Sequencing: **M ✅ (done in Sprint 9)** → **N (in progress)** → P → O → Q → R → S → T → U. Tasks 175–211, global numbering. Notes column = source lines in `issues.txt`.
+Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → Q → R → S → T → U. Tasks 175–215, global numbering. Notes column = source lines in `issues.txt` (212–215 = owner notes 2026-05-23).
 
 | Epic | Tasks | Notes | Plan | Kickoffs |
 |---|---|---|---|---|
-| M — Currency & Exchange-Rate Integrity ✅ | 175–178 | 3, 32, 5, 21 | [`Epic_M_…`](../tasks/Epics/Epic_M_Currency_and_Exchange_Rate_Integrity.md) | Sprint 9 (175–178) |
+| M — Currency & Exchange-Rate Integrity (reopened) | 175–178, 214–215 | 3, 32, 5, 21, +FX | [`Epic_M_…`](../tasks/Epics/Epic_M_Currency_and_Exchange_Rate_Integrity.md) | Sprint 9 (175–178) · [`Epic_M_kickoff_prompts.md`](../tasks/Epics/Epic_M_kickoff_prompts.md) (214–215) |
 | N — Localization Consistency v2 | 179, 180, 184 | 15, 31, 4 | [`Epic_N_…`](../tasks/Epics/Epic_N_Localization_Consistency_v2.md) | Sprint 9 (179, 180) · [`Epic_N_kickoff_prompts.md`](../tasks/Epics/Epic_N_kickoff_prompts.md) (184) |
 | O — Auth, Registration & Phone Input | 186–189 | 8, 9, 13, 7 | [`Epic_O_…`](../tasks/Epics/Epic_O_Auth_Registration_and_Phone_Input.md) | [`Epic_O_kickoff_prompts.md`](../tasks/Epics/Epic_O_kickoff_prompts.md) |
-| P — Favorites, Guest-Auth & Account Lifecycle | 181, 182, 183, 185 | 17, 18, 16, 19 | [`Epic_P_…`](../tasks/Epics/Epic_P_Favorites_Guest_Auth_and_Account_Lifecycle.md) | Sprint 9 (181–183) · [`Epic_P_kickoff_prompts.md`](../tasks/Epics/Epic_P_kickoff_prompts.md) (185) |
+| P — Favorites, Guest-Auth & Account Lifecycle | 181–183, 185, 212 | 17, 18, 16, 19, +UX | [`Epic_P_…`](../tasks/Epics/Epic_P_Favorites_Guest_Auth_and_Account_Lifecycle.md) | Sprint 9 (181–183) · [`Epic_P_kickoff_prompts.md`](../tasks/Epics/Epic_P_kickoff_prompts.md) (185) |
 | Q — Combobox & UI Primitive Single-Source | 190–194 | 1, 12, 6, 22, 23 | [`Epic_Q_…`](../tasks/Epics/Epic_Q_Combobox_and_UI_Primitive_Single_Source.md) | [`Epic_Q_kickoff_prompts.md`](../tasks/Epics/Epic_Q_kickoff_prompts.md) |
 | R — Admin Panel 2026 | 195–202 | 20, 34, 33, 28, 29, 30, 26, 27 | [`Epic_R_…`](../tasks/Epics/Epic_R_Admin_Panel_2026.md) | [`Epic_R_kickoff_prompts.md`](../tasks/Epics/Epic_R_kickoff_prompts.md) |
 | S — Domain Numeric IDs | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
-| T — Global UX Polish & Forms | 205–207 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
+| T — Global UX Polish & Forms | 205–207, 213 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
 | U — Performance & RSC Diagnostics | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
 
 > Rule-type notes codified into `/docs` during planning: 14 (verify-globally → `ai-behavior.md`), 16 (canonical URL → `env.md`; code in Task 183), 6 + 1 (button/Combobox single-source → `ui-rules.md §0`), plus composition + responsive rules added to `ui-rules.md §0` from the Task 211 review.
 >
-> **Open hardening (→ Task 177/M.3 follow-up):** `ExchangeRates` is still a fixed `{EUR,USD,GBP}` shape; if an admin adds a catalog currency with no FX rate, conversion silently no-ops. Make it a partial/extensible record so one missing currency doesn't null the batch.
+> **Now tasked (214/215):** the `ExchangeRates` fixed `{EUR,USD,GBP}` shape + homepage EUR-only conversion are addressed by Task 214 (extensible FX over the catalog, iliria98 per active currency) + Task 215 (multi-currency conversion on every card surface).
 
 ## Closed sprints & epics (historical)
 
@@ -104,6 +118,7 @@ Sequencing: **M ✅ (done in Sprint 9)** → **N (in progress)** → P → O →
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 214 — M.5 dynamic FX engine: catalog-driven scrape, Record<string,number> ExchangeRates, generalised fetchCrossRates | Task 214 | [sessions/2026-05-23-task-214-dynamic-fx-engine.md](sessions/2026-05-23-task-214-dynamic-fx-engine.md) |
 | 2026-05-23 | Sprint 9 — Task 211 — contact-card action row: flex-wrap overflow fix + FavoriteButton shape prop (icon/pill) | Task 211 | [sessions/2026-05-23-task-211-contact-card-action-row.md](sessions/2026-05-23-task-211-contact-card-action-row.md) |
 | 2026-05-23 | Sprint 9 — Task 210 — green tsc baseline: suspended_until + inactivity_warning_sent_at on both MOCK_USER fixtures; 0 tsc errors | Task 210 | [sessions/2026-05-23-task-210-tsc-baseline-green.md](sessions/2026-05-23-task-210-tsc-baseline-green.md) |
 | 2026-05-23 | Sprint 9 — Task 179 — N.1 locale-mixing audit: 4 fixes (NotificationItem/Header/StepLocation/MobileBottomNav) + 5 keys ×4 (1071) | Task 179 | [sessions/2026-05-23-task-179-locale-mixing-audit.md](sessions/2026-05-23-task-179-locale-mixing-audit.md) |

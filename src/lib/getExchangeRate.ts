@@ -2,35 +2,53 @@
  * Server-side cached multi-currency exchange rates.
  *
  * Pipeline — canonical source: iliria98.com (Albanian market rates).
- *   EUR/ALL — scraped directly from iliria98.com
- *   USD/ALL — scraped directly from iliria98.com; derivation fallback if not found
- *   GBP/ALL — scraped directly from iliria98.com; derivation fallback if not found
+ *   Currency list is driven by the active currency catalog (DB currencies table).
+ *   EUR/ALL is the mandatory pivot; if unavailable the whole fetch returns null.
  *
- * Derivation fallback (when a currency is absent from iliria98):
- *   USD/ALL = EUR/ALL ÷ EUR/USD  (cross-rate from open.er-api.com)
- *   GBP/ALL = EUR/ALL ÷ EUR/GBP  (cross-rate from open.er-api.com)
- *   The EUR/ALL pivot always comes from iliria98 — open.er-api.com supplies only
- *   the cross-rate denominator, never the ALL value itself.
+ * Per active catalog currency (excluding ALL, which is the implicit pivot):
+ *   1. Attempt direct scrape from iliria98.com.
+ *   2. If absent from iliria98: derive via EUR/ALL ÷ EUR/X (open.er-api.com cross-rate).
+ *   3. If derivation also fails: exclude that currency — never fake a rate.
  *
- * If iliria98 returns no EUR/ALL rate, the whole fetch returns null (no rates).
+ * See docs/integrations.md "Exchange Rate Pipeline" for the full policy.
  * Cache TTL: 1 hour.
  */
 import { unstable_cache } from 'next/cache'
 
-export type ExchangeRates = { EUR: number; USD: number; GBP: number }
+/** ALL per 1 unit of each active catalog currency code (keyed by currency code). */
+export type ExchangeRates = Record<string, number>
 
-// Plausible ALL/currency bounds used for sanity-filtering scraped numbers.
+// Plausible ALL/currency bounds for sanity-filtering scraped numbers.
+// Currencies absent from this map get wide permissive bounds.
 const ALL_RATE_BOUNDS: Record<string, [number, number]> = {
   EUR: [80, 160],
   USD: [70, 140],
   GBP: [90, 180],
 }
 
-/**
- * Scrape multiple currency rates from iliria98.com in a single HTTP request.
- * Returns ALL per 1 foreign currency for each requested currency, or null if
- * the rate could not be parsed from the page.
- */
+const DEFAULT_BOUNDS: [number, number] = [0, 9999]
+
+// Used when the DB is unavailable — mirrors the canonical seed rows (Task 177).
+const FALLBACK_CODES = ['EUR', 'USD', 'GBP']
+
+async function getActiveCurrencyCodes(): Promise<string[]> {
+  try {
+    // Dynamic import keeps createAdminClient out of the client bundle
+    // (convertPrice is imported by client components; getActiveCurrencyCodes is server-only)
+    const { createAdminClient } = await import('@/lib/supabase/admin')
+    const db = createAdminClient()
+    const { data } = await db
+      .from('currencies')
+      .select('code')
+      .eq('is_active', true)
+      .neq('code', 'ALL')
+    if (data && data.length > 0) return (data as { code: string }[]).map(r => r.code)
+  } catch {
+    // fall through to fallback
+  }
+  return FALLBACK_CODES
+}
+
 async function scrapeIliria98Rates(
   currencies: string[],
 ): Promise<Record<string, number | null>> {
@@ -46,7 +64,7 @@ async function scrapeIliria98Rates(
     const html = await res.text()
 
     for (const currency of currencies) {
-      const [min, max] = ALL_RATE_BOUNDS[currency] ?? [0, 9999]
+      const [min, max] = ALL_RATE_BOUNDS[currency] ?? DEFAULT_BOUNDS
 
       const block =
         html.match(new RegExp(`${currency}\\.png[\\s\\S]{0,200}`, 'i')) ??
@@ -82,49 +100,70 @@ async function scrapeIliria98Rates(
 }
 
 /**
- * Fetch EUR/USD and EUR/GBP cross-rates from open.er-api.com (free, no key).
- * Used ONLY as a denominator in the derivation fallback — never as a direct
- * source of ALL-denominated rates. See pipeline doc in docs/integrations.md.
+ * Fetch EUR/X cross-rates from open.er-api.com for currencies absent from iliria98.
+ * open.er-api.com supplies only the EUR/X denominator — never the ALL value directly.
+ * Used ONLY as a derivation fallback; see pipeline docs in docs/integrations.md.
  */
-async function fetchCrossRates(): Promise<{ usd: number | null; gbp: number | null }> {
+async function fetchCrossRates(
+  codes: string[],
+): Promise<Record<string, number | null>> {
+  const result: Record<string, number | null> = Object.fromEntries(
+    codes.map(c => [c, null]),
+  )
+  if (codes.length === 0) return result
   try {
     const res = await fetch('https://open.er-api.com/v6/latest/EUR', {
       headers: { 'User-Agent': 'Mozilla/5.0 (compatible; lero.al/1.0)' },
       signal: AbortSignal.timeout(3000),
     })
-    if (!res.ok) return { usd: null, gbp: null }
+    if (!res.ok) return result
     const data = await res.json() as { rates?: Record<string, number> }
-    return {
-      usd: data.rates?.USD ?? null,
-      gbp: data.rates?.GBP ?? null,
+    for (const code of codes) {
+      result[code] = data.rates?.[code] ?? null
     }
   } catch {
-    return { usd: null, gbp: null }
+    // leave all as null
   }
+  return result
 }
 
 async function fetchAllRates(): Promise<ExchangeRates | null> {
-  // Primary: scrape EUR, USD, GBP from iliria98.com in one request
-  const iliria98 = await scrapeIliria98Rates(['EUR', 'USD', 'GBP'])
+  // Read active catalog currencies (ALL excluded — it is the implicit pivot)
+  const activeCodes = await getActiveCurrencyCodes()
+
+  // Primary: scrape all active currencies from iliria98.com in one request
+  const iliria98 = await scrapeIliria98Rates(activeCodes)
   const eurAll = iliria98['EUR']
   if (!eurAll) return null  // EUR/ALL is mandatory; abort if unavailable
 
-  let usdAll = iliria98['USD']
-  let gbpAll = iliria98['GBP']
+  const rates: ExchangeRates = {}
+  const needsCrossRate: string[] = []
 
-  // Derivation fallback: pivot through EUR/ALL when USD/ALL or GBP/ALL are absent from iliria98
-  if (!usdAll || !gbpAll) {
-    const cross = await fetchCrossRates()
-    // 1 USD = (EUR/ALL) ÷ (EUR/USD cross-rate)
-    if (!usdAll && cross.usd) usdAll = Math.round((eurAll / cross.usd) * 100) / 100
-    // 1 GBP = (EUR/ALL) ÷ (EUR/GBP cross-rate)
-    if (!gbpAll && cross.gbp) gbpAll = Math.round((eurAll / cross.gbp) * 100) / 100
+  for (const code of activeCodes) {
+    const rate = iliria98[code]
+    if (rate !== null && rate !== undefined) {
+      rates[code] = rate
+    } else {
+      needsCrossRate.push(code)
+    }
   }
 
-  // If derivation also fails, omit those currencies rather than return stale hardcoded values
-  if (!usdAll || !gbpAll) return null
+  // Derivation fallback: for currencies absent from iliria98, derive via EUR/ALL ÷ EUR/X
+  if (needsCrossRate.length > 0) {
+    const crossRates = await fetchCrossRates(needsCrossRate)
+    for (const code of needsCrossRate) {
+      const eurX = crossRates[code]
+      if (eurX) {
+        // 1 X = (EUR/ALL) ÷ (EUR/X cross-rate)
+        rates[code] = Math.round((eurAll / eurX) * 100) / 100
+      }
+      // If derivation also fails, exclude this currency — never fake a rate
+    }
+  }
 
-  return { EUR: eurAll, USD: usdAll, GBP: gbpAll }
+  if (!rates['EUR']) return null
+
+  return rates
 }
 
 export const getExchangeRates = unstable_cache(
@@ -134,8 +173,8 @@ export const getExchangeRates = unstable_cache(
 )
 
 /**
- * Convert a price between any two supported currencies via ALL as pivot.
- * rates: ExchangeRates (ALL per 1 foreign currency).
+ * Convert a price between any two currencies via ALL as pivot.
+ * rates: ExchangeRates — ALL per 1 unit of each foreign currency code.
  * Returns original price if conversion is not possible.
  */
 export function convertPrice(
@@ -146,17 +185,16 @@ export function convertPrice(
 ): number {
   if (!rates || from === to) return price
 
-  // Convert to ALL first (normalize), then to target
   let allPrice = price
   if (from !== 'ALL') {
-    const rateFrom = rates[from as keyof ExchangeRates]
+    const rateFrom = rates[from]
     if (!rateFrom) return price
     allPrice = Math.round(price * rateFrom)
   }
 
   if (to === 'ALL') return allPrice
 
-  const rateTo = rates[to as keyof ExchangeRates]
+  const rateTo = rates[to]
   if (!rateTo) return allPrice
   return Math.round(allPrice / rateTo)
 }

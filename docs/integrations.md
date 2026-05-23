@@ -10,30 +10,37 @@ The following external service accounts are already registered and available for
 | Sentry | https://sentry.io | Error monitoring |
 | GitHub | https://github.com | Code repository |
 
-### Exchange Rate Pipeline (Task 175 / Epic M.1)
+### Exchange Rate Pipeline (Task 175 / Epic M.1; updated Task 214 / M.5)
 
 **Canonical source: iliria98.com** — the only authoritative source for ALL-denominated exchange rates on this platform.
 
 | Role | Service | What it provides |
 |---|---|---|
-| **Primary / canonical** | `iliria98.com` | EUR/ALL, USD/ALL, GBP/ALL scraped directly |
-| **Derivation helper** | `open.er-api.com` | EUR/USD and EUR/GBP cross-rates — used ONLY as a denominator when a rate is absent from iliria98 |
+| **Primary / canonical** | `iliria98.com` | ALL/X rates scraped directly for every active catalog currency |
+| **Derivation helper** | `open.er-api.com` | EUR/X cross-rates — used ONLY as a denominator when a rate is absent from iliria98 |
 
 **Pipeline (executed in `src/lib/getExchangeRate.ts`):**
 
-1. Single HTTP GET to `https://iliria98.com/` scrapes EUR/ALL, USD/ALL, GBP/ALL in one request.
-2. EUR/ALL is mandatory — if unavailable, the whole cache entry returns `null` (no rates served).
-3. For any currency not found on iliria98, a derivation fallback fires:
-   - `USD/ALL = EUR/ALL ÷ EUR/USD` (cross-rate from open.er-api.com)
-   - `GBP/ALL = EUR/ALL ÷ EUR/GBP` (cross-rate from open.er-api.com)
+1. Read active currency codes from the `currencies` DB table (admin client, excludes `ALL` — the implicit pivot).
+2. Single HTTP GET to `https://iliria98.com/` scrapes ALL/X rates for every active currency in one request.
+3. EUR/ALL is mandatory — if unavailable, the whole cache entry returns `null` (no rates served).
+4. For each active currency **absent** from iliria98:
+   - Derivation fallback fires: `X/ALL = EUR/ALL ÷ EUR/X` (cross-rate from open.er-api.com, single request covers all missing codes).
    - The EUR/ALL pivot **always** comes from iliria98 — open.er-api.com never provides the ALL value directly.
-4. If derivation also fails (both sources unavailable), the function returns `null` for the batch.
+   - If derivation also fails (both sources unavailable): that currency is **excluded** from `rates` — it is never faked or hardcoded.
+5. The returned `ExchangeRates` map (`Record<string, number>`) covers every active catalog currency for which a real rate was obtained.
+
+**"Not on iliria98" policy (Task 214):** If an admin enables a currency in the catalog that iliria98 does not publish:
+- The derivation fallback via open.er-api.com fires automatically (same as the existing USD/GBP fallback).
+- If open.er-api.com also doesn't carry it, the currency is silently excluded from `rates` (no error, no faked value).
+- The card layer (Task 215) handles `rates[code] === undefined` by falling back to the listing's original currency — no crash.
+- No code change is needed when enabling a new currency in admin; the next cache refresh (≤1 h) picks it up automatically.
 
 **Cache:** `unstable_cache` with `revalidate: 3600` (1 h) on the server; client-side singleton in `useExchangeRate` with a matching 1 h TTL.
 
 **API route:** `GET /api/exchange-rate` — ISR `revalidate: 3600`; returns `{ rates, rate, updated_at }`.
 
-**Adding a new currency:** extend `ALL_RATE_BOUNDS` in `getExchangeRate.ts`, pass the code to `scrapeIliria98Rates`, and add it to the `ExchangeRates` type. Do NOT add a new external rate source without orchestrator approval.
+**Adding a new currency:** enable it in the admin currency catalog. If iliria98 publishes it, its rate appears in the next cache refresh with no code change. If you need to add tighter sanity bounds for the scraped number, extend `ALL_RATE_BOUNDS` in `getExchangeRate.ts` (optional — the default `[0, 9999]` handles most cases). Do NOT add a new external rate source without orchestrator approval.
 
 ### Cloudinary Setup
 - Account is registered at https://cloudinary.com.

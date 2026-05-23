@@ -16,9 +16,11 @@ interface FavoriteButtonProps {
   onToggled?: (newState: boolean) => void
   disabled?: boolean
   disabledLabel?: string
+  /** Visual shape. 'icon' (default) = compact round button for card overlays; 'pill' = full-height pill for action rows. */
+  shape?: 'icon' | 'pill'
 }
 
-export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel }: FavoriteButtonProps) {
+export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon' }: FavoriteButtonProps) {
   const tc = useTranslations('common')
   const { user, status } = useAuth()
   const [favorited, setFavorited] = useState(isFavorited)
@@ -86,7 +88,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
       type="button"
       variant="ghost"
       className={cn(
-        'rounded-full w-8 h-8 p-0',
+        shape === 'icon' && 'rounded-full w-8 h-8 p-0',
         disabled
           ? 'bg-muted/60 text-muted-foreground cursor-not-allowed opacity-50'
           : favorited

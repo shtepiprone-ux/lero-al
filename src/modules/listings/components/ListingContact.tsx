@@ -195,7 +195,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
             )}
 
             {/* Secondary actions */}
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {listingId && (
                 <>
                   <FavoriteButton
@@ -203,7 +203,8 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                     isFavorited={isFavorited}
                     disabled={listingClosed}
                     disabledLabel={closedLabel}
-                    className="flex-1 h-9 w-auto rounded-xl border border-border"
+                    shape="pill"
+                    className="flex-1 h-9 rounded-xl border border-border"
                   />
                   <SaveToCollectionButton
                     listingId={listingId}

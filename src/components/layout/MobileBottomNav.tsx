@@ -23,7 +23,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-40 md:hidden bg-card border-t shadow-[0_-2px_16px_rgba(0,0,0,0.08)] flex items-stretch h-14"
+      className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-30 md:hidden bg-card border-t shadow-[0_-2px_16px_rgba(0,0,0,0.08)] flex items-stretch h-14"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label={tc('aria_main_nav')}
     >

@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-23 — Task 218 — Drawer footer buttons overflow ✅**
+**2026-05-23 — Task 219 — Drawer overlapped by sticky header: z-index scale ✅**
+
+- Root cause: Header `z-50` = same level as drawer panel `z-50` → header showed through drawer. MobileBottomNav `z-40` = same as scrim → showed through backdrop.
+- Fix: Header `z-50` → `z-30`; MobileBottomNav `z-40` → `z-30`. Scale: chrome=z-30, scrim=z-40, floating=z-50. FiltersPanel already on-scale (backdrop z-40, panel z-50).
+- UI primitives (`dialog/sheet/popover`) left at `z-50` — correct as floating surfaces; their internal `isolate z-50` backdrop model deferred per task CAVEAT.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 219 session log](sessions/2026-05-23-task-219-zindex-scale.md)
+
+**Previous: 2026-05-23 — Task 218 — Drawer footer buttons overflow ✅**
 
 - Root cause: `flex gap-3` + two `Button size="xl" flex-1` → on 320px viewport each button ≈ 134px, Ukrainian labels (~120px) overflow; no `min-w-0` to allow shrinking.
 - Fix: `FiltersPanel.tsx` footer → `flex flex-col gap-3`; Apply first (primary), Reset below (secondary); both `w-full size="xl"` (h-11 = 44px touch target). Stacking is the canonical drawer-footer pattern.
@@ -277,7 +286,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 **Sprint 9 — ✅ CLOSED.** **Epic M — ✅ CLOSED** (175·176·177·178·214·215). Tasks 184–196, 212, 213, 185 shipped 2026-05-23 (owner ran them in sequence; diffs spot-reviewable on request).
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (OPEN):**
-**224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** (drawer footer flex-col; Apply first; w-full) → **219** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
+**224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** (header z-50→z-30; bottom-nav z-40→z-30; scale: chrome=z-30, scrim=z-40, float=z-50) → **220** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
 Then resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
@@ -335,6 +344,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 219 — Z-index scale: Header z-50→z-30; MobileBottomNav z-40→z-30; chrome=z-30/scrim=z-40/float=z-50 | Task 219 | [sessions/2026-05-23-task-219-zindex-scale.md](sessions/2026-05-23-task-219-zindex-scale.md) |
 | 2026-05-23 | Task 218 — Drawer footer overflow: flex-col; Apply first (primary); w-full; 44px touch targets at all 7 breakpoints | Task 218 | [sessions/2026-05-23-task-218-drawer-footer-overflow.md](sessions/2026-05-23-task-218-drawer-footer-overflow.md) |
 | 2026-05-23 | Task 217 — Listings 42703: offer_type + purchase_conditions columns + form (MultiToggleField; schema visible; edit pre-fill; Zod enums; drift guard) | Task 217 | [sessions/2026-05-23-task-217-offer-type-purchase-conditions.md](sessions/2026-05-23-task-217-offer-type-purchase-conditions.md) |
 | 2026-05-23 | Task 216 — Profile save dead: PreferredCurrency string; catalog validation guard; DROP users_preferred_currency_check + FK (owner SQL) | Task 216 | [sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md](sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md) |

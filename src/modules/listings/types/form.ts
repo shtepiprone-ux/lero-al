@@ -27,6 +27,8 @@ export interface FormValues {
   land_legal_status?: LandLegalStatus
   land_zoning?: LandZoning
   land_development_potential?: LandDevelopmentPotential
+  offer_type?: string
+  purchase_conditions?: string[]
   year_built?: number
   location_id?: number
   address?: string

@@ -136,6 +136,8 @@ export function ListingFormShell(props: Props) {
       land_legal_status:          !newIsVis('land_legal_status')          ? undefined : prev.land_legal_status,
       land_zoning:                !newIsVis('land_zoning')                ? undefined : prev.land_zoning,
       land_development_potential: !newIsVis('land_development_potential') ? undefined : prev.land_development_potential,
+      offer_type:                 !newIsVis('offer_type')                 ? undefined : prev.offer_type,
+      purchase_conditions:        !newIsVis('purchase_conditions')        ? undefined : prev.purchase_conditions,
       // Preserve total_floors if the new type uses it in any form context.
       total_floors: (newIsVis('floors_total') || newIsVis('building_floors')) ? prev.total_floors : undefined,
     }))
@@ -210,6 +212,8 @@ export function ListingFormShell(props: Props) {
       land_legal_status:          data.land_legal_status,
       land_zoning:                data.land_zoning,
       land_development_potential: data.land_development_potential,
+      offer_type:          !isVisible('offer_type')          ? undefined : data.offer_type as 'owner' | 'agency' | 'developer' | undefined,
+      purchase_conditions: !isVisible('purchase_conditions') ? undefined : data.purchase_conditions as ('installment' | 'mortgage' | 'assignment' | 'negotiable' | 'no_commission')[] | undefined,
       year_built:       data.year_built,
       location_id:      data.location_id,
       address:          data.address,

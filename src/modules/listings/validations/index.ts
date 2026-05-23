@@ -32,6 +32,8 @@ const listingBaseSchema = z.object({
   land_legal_status:          z.enum(['agricultural', 'urban', 'forest', 'pasture']).optional(),
   land_zoning:                z.enum(['residential', 'commercial', 'tourism', 'industrial', 'mixed_use']).optional(),
   land_development_potential: z.enum(['buildable', 'change_of_use_required', 'non_buildable']).optional(),
+  offer_type:                 z.enum(['owner', 'agency', 'developer']).optional(),
+  purchase_conditions:        z.array(z.enum(['installment', 'mortgage', 'assignment', 'negotiable', 'no_commission'])).optional(),
 })
 
 export const listingSchema = listingBaseSchema.superRefine((data, ctx) => {

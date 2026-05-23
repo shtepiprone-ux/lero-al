@@ -27,6 +27,7 @@ import { BuildingFloorsField } from './BuildingFloorsField'
 import { YearComboboxField }   from './YearComboboxField'
 import { EnumSelectorField }   from './EnumSelectorField'
 import { ButtonGroupField }    from './ButtonGroupField'
+import { MultiToggleField }    from './MultiToggleField'
 
 const NullField: FieldRenderer = () => null
 
@@ -39,5 +40,6 @@ export const FIELD_COMPONENT_REGISTRY: Record<FieldComponentType, FieldRenderer>
   'year-combobox':   YearComboboxField,
   'enum-selector':   EnumSelectorField,
   'button-group':    ButtonGroupField,
+  'multi-toggle':    MultiToggleField,
   'filter-only':     NullField,
 }

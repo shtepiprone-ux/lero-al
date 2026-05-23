@@ -34,6 +34,7 @@ export default async function EditListingPage({ params }: Props) {
       rooms, bedrooms, bathrooms, toilets, area_gross, area_net,
       floor, total_floors, multi_storey_building,
       land_legal_status, land_zoning, land_development_potential,
+      offer_type, purchase_conditions,
       year_built, location_id, address, lat, lng, user_id,
       images:listing_images(id, url, is_cover, order)
     `)
@@ -96,6 +97,8 @@ export default async function EditListingPage({ params }: Props) {
     land_legal_status:          listing.land_legal_status ?? undefined,
     land_zoning:                listing.land_zoning ?? undefined,
     land_development_potential: listing.land_development_potential ?? undefined,
+    offer_type:                 listing.offer_type ?? undefined,
+    purchase_conditions:        (listing.purchase_conditions as string[] | null) ?? undefined,
     year_built:                 listing.year_built ?? undefined,
     location_id:                listing.location_id ?? undefined,
     address:                    listing.address ?? undefined,

@@ -41,6 +41,7 @@ export type FieldComponentType =
   | 'button-group'       // horizontal button chip row (heating, wall_type)
   | 'floor-group'        // floor + multi_storey_building checkbox + floors_total companion
   | 'building-floors'    // standalone building floors NumInput (house only)
+  | 'multi-toggle'       // multi-select chip row (purchase_conditions)
   | 'filter-only'        // not a form field; rendered exclusively by filter panel
 
 // ── Filter metadata ───────────────────────────────────────────────────────────

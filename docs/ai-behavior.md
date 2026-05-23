@@ -14,6 +14,30 @@ Before writing any code, the agent MUST confirm:
 
 Skipping this checklist is a rule violation.
 
+### Global Change Verification Rule (Note 14 — REMEMBER PERMANENTLY, enforced 2026-05-22)
+
+> ALL CHANGES MUST BE VERIFIED GLOBALLY ACROSS THE ENTIRE PROJECT. NO HARDCODE. NO UNEXPLAINED
+> COMPONENTS. Everything must be justified and deliberate. When you introduce a change you MUST check
+> which files that change touches and update every one of them in line with the new code.
+
+Concretely, before finishing ANY change:
+1. **Find every place the change touches.** When you change a behaviour, component, type, schema,
+   helper, or pattern, grep the whole repo for every consumer/sibling and update them all — do not
+   fix one call site (one favorite button, one price/m² line, one phone field) and leave the others
+   diverging. A "local" fix that leaves siblings inconsistent is a task failure (this is the recurring
+   complaint behind Notes 8, 9, 14, 17).
+2. **No hardcode.** No hardcoded user-visible strings (use i18n × sq/en/uk/it), no hardcoded
+   colors/spacing (use tokens), no hardcoded base URLs (use `NEXT_PUBLIC_SITE_URL` — see docs/env.md
+   "Canonical site URL rule"), no magic numbers where a constant already exists.
+3. **No unexplained / one-off components.** Reuse the canonical primitive (see docs/ui-rules.md §0).
+   If a new component is truly required, justify it in the session log and add it to the catalog —
+   never a silent local clone of something that already exists.
+4. **Same problem ⇒ one solution.** If several places implement the same pattern (e.g. country-code
+   `Combobox` + `Input`), there must be ONE shared implementation, not three.
+
+This rule is the executor's standing contract; the orchestrator verifies it against the diff on every
+returned task.
+
 ### Before modifying any shared component or module:
 - Verify the component is directly required for the current task.
 - Audit all dependent usages BEFORE making changes.

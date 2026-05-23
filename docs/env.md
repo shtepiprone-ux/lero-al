@@ -23,3 +23,21 @@ LOG_CORRELATION_SALT=your_random_salt      # Server-only salt for hashing emails
 For deployed environments, these variables must also be configured in Cloudflare Pages → Settings → Variables and Secrets.
 Use placeholder values in documentation only; real secrets must be stored in the root `.env.local` file for local development and in Cloudflare Pages environment variables / secrets for deployed environments, never committed to the repository.
 Note: Variables starting with `NEXT_PUBLIC_` are exposed to the client bundle and must only be used for values intended to be public. All other variables are server-only and must never be exposed to client code.
+
+## Canonical site URL rule (Note 16 — enforced 2026-05-22)
+
+Every absolute link the app generates — auth/confirmation/recovery emails, OAuth `redirectTo`,
+`emailRedirectTo`, share links, cron-email links, sitemap/SEO URLs — MUST be built from the canonical
+base `process.env.NEXT_PUBLIC_SITE_URL` (fallback `'https://lero.al'`), NEVER from
+`window.location.origin`.
+
+- `window.location.origin` resolves to `localhost:3000` in dev and to a preview host on Vercel
+  previews, so any email/link built from it ships a broken `localhost`/preview URL to real users.
+  This is the exact cause of the "confirmation email points to localhost" bug.
+- Server and client resolve the base the same way: `NEXT_PUBLIC_SITE_URL` (it is `NEXT_PUBLIC_`
+  precisely so client code can read it). Prefer a single shared helper/constant over re-reading the
+  env var ad hoc.
+- `window.location.origin` is acceptable ONLY for purely in-tab, same-origin logic (e.g. the
+  unsaved-changes navigation guard) — never for a URL that leaves the browser (email, share, OAuth
+  callback target).
+- Reviewer red flag: any `window.location.origin` in an auth/email/share diff.

@@ -88,5 +88,9 @@ Put this in every executor prompt, and **verify each clause against the diff** o
 - [ ] Responsive coverage present for all required breakpoints.
 - [ ] Canonical components only; no governance anti-patterns.
 - [ ] Scope respected; no unrequested architectural decisions.
+- [ ] Global-change rule (Note 14, `ai-behavior.md`): the fix updated **every** affected sibling/
+      consumer (no diverging call sites left); no hardcode; no one-off component clone; canonical
+      `Combobox`/`Button` single-source respected (`ui-rules.md §0`); generated links use
+      `NEXT_PUBLIC_SITE_URL`, never `window.location.origin` (`env.md`).
 - [ ] `docs/backlog.md` + `docs/sessions/` updated and consistent with the diff.
 - [ ] Verdict recorded: **approve** or **follow-up task opened**.

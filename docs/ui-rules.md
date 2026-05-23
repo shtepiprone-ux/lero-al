@@ -34,6 +34,43 @@
 | Mobile drawer | `Sheet side="left"` or `side="right"` | `@/components/ui/sheet` |
 | Confirmation popup | `Dialog` | `@/components/ui/dialog` |
 
+### §0 — Single-source-of-truth for shared controls (enforced 2026-05-22)
+
+**Combobox (Note 1 — canonical answer to "do we need separate comboboxes?").** No. There is exactly
+ONE canonical selection primitive: `Combobox` (`@/components/shared/Combobox`) with the
+`ComboboxOption` type. It already covers every case via the `variant` prop:
+`variant="input"` (searchable, long lists) and `variant="button"` (click-to-open, NO typing — for
+short static lists, so the mobile keyboard does NOT appear).
+- Domain selectors (`LocationCombobox`, `YearCombobox`, `PropertyTypeCombobox`, the currency selector,
+  the phone country-code selector) MUST be **thin wrappers** that only supply options/data and
+  delegate ALL popover / list / filtering / keyboard / a11y behaviour to the canonical `Combobox`.
+- NEVER create a parallel combobox implementation, a local `Select`-based domain dropdown, or a
+  second popover-list component. A wrapper that re-implements the dropdown internals is a violation —
+  fold it back into the canonical `Combobox`.
+- Non-typeable lists MUST use `variant="button"` (prevents the mobile keyboard popping up — Note 12).
+
+**Button (Note 6 — single source per type).** Every button of the same semantic type MUST render
+through the same canonical `Button` configuration — one shared `size`+`variant` (and, where the type
+recurs, a single shared wrapper component), never ad-hoc per-button styling.
+- Header icon-action buttons (e.g. Notifications, Favorites) are ONE type and MUST be visually
+  identical: same shape, size, radius, hover/active state. Hand-styling one and leaving the other
+  different is a governance violation — extract a single canonical icon-button and use it everywhere.
+
+**Composition (no conflicting baked-in styles).** A shared/canonical component MUST NOT hardcode
+structural styles (shape, width, height, radius, padding) into its base that fight the `className` a
+caller passes — that breaks composition and makes the component render inconsistently across surfaces.
+- Example defect (2026-05-22): `FavoriteButton` bakes `rounded-full w-8 h-8 p-0` into its base; when
+  `ListingContact` passes `flex-1 h-9 rounded-xl border`, the heart refuses to size/shape like its
+  sibling pills (Save-to-collection / Share). The fix is to express shape/size as a `variant`/`size`
+  prop (like canonical `Button`), not a fixed base + className tug-of-war.
+- Rule: structural variants belong in the component's API (props/variants); callers tune layout
+  (`flex-1`, margins) only. If a component must look different per surface, add a variant — never rely
+  on `className` overriding baked-in structural classes.
+
+**Responsive is non-negotiable.** Every interactive control must meet the touch-target (§8) and
+breakpoint rules (§7) at all seven widths (320/375/390/768/1280/1440/2560). "It looks fine on my
+desktop" is not verification — the canonical task template requires all seven.
+
 ---
 
 ## §1 — CANONICAL SPACING GOVERNANCE

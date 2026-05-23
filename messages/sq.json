@@ -486,7 +486,10 @@
     "unsaved_stay": "Qëndroni",
     "unsaved_leave": "Largohuni pa ruajtur",
     "currency_USD": "Dollar amerikan (USD)",
-    "currency_GBP": "Paund britanik (GBP)"
+    "currency_GBP": "Paund britanik (GBP)",
+    "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
+    "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
+    "error_email_invalid": "Adresa e emailit është e pavlefshme."
   },
   "home": {
     "hero_title": "Gjeni pronën tuaj të ëndrrave",

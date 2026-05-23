@@ -486,7 +486,10 @@
     "unsaved_stay": "Stay",
     "unsaved_leave": "Leave without saving",
     "currency_USD": "US Dollar (USD)",
-    "currency_GBP": "British Pound (GBP)"
+    "currency_GBP": "British Pound (GBP)",
+    "error_phone_invalid": "Please enter a valid phone number for the selected country.",
+    "error_phone_no_country_code": "Enter the phone number without the country code.",
+    "error_email_invalid": "Please enter a valid email address."
   },
   "home": {
     "hero_title": "Find your dream property",

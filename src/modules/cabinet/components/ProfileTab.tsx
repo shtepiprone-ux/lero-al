@@ -68,6 +68,8 @@ function CurrencySelector({ value, onChange, labels, fieldLabel }: {
   )
 }
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function ProfileTab({ profile, locale, cities, regions, email, onAvatarChange, recentlyViewed }: Props) {
@@ -176,6 +178,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
 
   async function handleEmailChange() {
     if (!newEmail.trim()) return
+    if (!EMAIL_RE.test(newEmail.trim())) { setEmailError(t('error_email_invalid')); return }
     setEmailChangeStatus('sending')
     setEmailError(null)
     const result = await initiateEmailChange({ newEmail: newEmail.trim(), locale })

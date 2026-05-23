@@ -4,7 +4,17 @@
 
 ## Last Session
 
-**2026-05-23 — Task 187 — O.2: full European country codes + searchable country dropdown ✅**
+**2026-05-23 — Task 188 — O.3: client-side validation for email / password / phone / WhatsApp ✅**
+
+- `src/modules/auth/components/AuthSheet.tsx` (LoginView): added `EMAIL_RE.test(email)` + `!password` guards before `signIn()` — fires `error_email_invalid` / `error_weak_password` without a server round-trip.
+- `src/modules/cabinet/components/ProfileTab.tsx`: added module-level `EMAIL_RE`; `handleEmailChange` now validates format before calling `initiateEmailChange` → fires `t('error_email_invalid')`.
+- All 4 locale files (`sq/en/uk/it`): added `cabinet.error_phone_invalid`, `cabinet.error_phone_no_country_code`, `cabinet.error_email_invalid` — ProfileTab phone-validation toasts now resolve to real strings.
+- Remaining surfaces: RegisterView (email + password + phone already validated since Task 158/186); ResetPasswordClient (min-8 + mismatch already validated); AdminUserCreate/Profile (Zod schema + country-aware in onSubmit already in place).
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 188 session log](sessions/2026-05-23-task-188-validation.md)
+
+**Previous: 2026-05-23 — Task 187 — O.2: full European country codes + searchable country dropdown ✅**
 
 - `src/lib/phone/index.ts`: `COUNTRY_CODES` expanded from 13 → 45 entries; all European/EU sovereign states included; Russia explicitly absent; Albania first (default); US kept for diaspora; sorted A-Z after Albania.
 - `src/components/shared/Combobox.tsx`: added `dropdownMinWidth?: number` prop; applied to portal `dropdownStyle.width = max(rect.width, dropdownMinWidth)` and non-portal `style={{ minWidth: dropdownMinWidth }}`. Backward-compatible (defaults to undefined).
@@ -122,7 +132,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** 188 (O.3 validation) → 189 (O.4 agent step back) → then Epics Q → R → S → T → U. **Last task number: 215.**
+**Next queue:** 189 (O.4 agent step back) → then Epics Q → R → S → T → U. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 

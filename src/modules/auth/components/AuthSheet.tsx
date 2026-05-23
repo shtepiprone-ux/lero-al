@@ -67,8 +67,10 @@ function LoginView({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
     setErrorKey(null)
+    if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
+    if (!password) { setErrorKey('error_weak_password'); return }
+    setLoading(true)
     const { error } = await signIn(email, password)
     setLoading(false)
     if (error) { setErrorKey(mapAuthError(error.message)); return }

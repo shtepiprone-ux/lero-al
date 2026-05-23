@@ -486,7 +486,10 @@
     "unsaved_stay": "Залишитися",
     "unsaved_leave": "Залишити без збереження",
     "currency_USD": "Долар США (USD)",
-    "currency_GBP": "Британський фунт (GBP)"
+    "currency_GBP": "Британський фунт (GBP)",
+    "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
+    "error_phone_no_country_code": "Введіть номер телефону без коду країни.",
+    "error_email_invalid": "Введіть коректну електронну адресу."
   },
   "home": {
     "hero_title": "Знайдіть нерухомість своєї мрії",

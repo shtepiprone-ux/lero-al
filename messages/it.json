@@ -486,7 +486,10 @@
     "unsaved_stay": "Rimani",
     "unsaved_leave": "Esci senza salvare",
     "currency_USD": "Dollaro USA (USD)",
-    "currency_GBP": "Sterlina britannica (GBP)"
+    "currency_GBP": "Sterlina britannica (GBP)",
+    "error_phone_invalid": "Inserisci un numero di telefono valido per il paese selezionato.",
+    "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
+    "error_email_invalid": "Inserisci un indirizzo email valido."
   },
   "home": {
     "hero_title": "Trova la proprietà dei tuoi sogni",

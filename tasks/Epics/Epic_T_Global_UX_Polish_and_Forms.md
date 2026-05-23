@@ -84,7 +84,27 @@ listing description. Remove the button and any now-dead translator code/route/st
 
 **Out of scope:** reintroducing any translation feature.
 
+### Task 213 — T.4 — Unify list/card price template: per-m² missing in List view (Note added 2026-05-23)
+
+**Type:** bug / refactor
+**Priority:** medium
+**Area:** `ListingCard` (vertical/horizontal variants); direct follow-up to Task 176 (M.2)
+
+**Pre-read:** `src/modules/listings/components/ListingCard.tsx` (two `variant` layout blocks; per-m² only in
+one), `src/lib/formatters.ts`, Task 176 session log; docs/ui-rules.md; docs/ai-behavior.md (Global Change
+Verification Rule).
+**Localization coverage:** sq, en, uk, it.
+**Responsive coverage:** all 7 breakpoints.
+
+**Goal:** The List ("horizontal") view omits the price-per-m² line shown in the Card ("vertical") view.
+Extract ONE shared price sub-block (price + old price + per-m²) used by both variants so it can't diverge
+again ("one correct template"). Preserve Task 176 currency correctness.
+
+**Acceptance criteria:** both views render an identical price block from one shared sub-block; per-m² from
+`displayPrice` + `activeCurrency` (no 176 regression); grep finds no duplicated price blocks in ListingCard;
+4 locales; 7 breakpoints. Kickoff in `Epic_T_kickoff_prompts.md`.
+
 ## Epic-level acceptance
 
 Consistent localized toasts on actions; required-field highlight + scroll on edit forms; the dead
-translate button and its code removed.
+translate button and its code removed; and one shared listing-card price template (no list/card divergence).

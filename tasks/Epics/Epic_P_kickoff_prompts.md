@@ -34,3 +34,34 @@ Acceptance criteria:
 
 Out of scope: favorite flow (181), contact card (182), canonical URL (183).
 ```
+
+## Task 212 — P.5 — Inline "Create collection" flow from "Add to collection" (found 2026-05-23)
+
+> New owner note (2026-05-23): on the listing detail page, after clicking "Add to collection"
+> (`SaveToCollectionButton`), the user should be able to CREATE a new collection inline (better UX),
+> not only pick from existing ones. Collections infra exists from Task 136 (F.2): `SaveToCollectionButton`,
+> `CollectionsSection`, the `collections`/`collection_items` tables + actions.
+
+```
+You are Claude Code Sonnet 4.6 working in `lero-al`.
+Hard contract: (see top of this file). Reuse the existing collections actions/queries (Task 136) and the
+canonical Dialog/Combobox/Input primitives (docs/ui-rules.md §0) — do NOT add a parallel collections
+implementation or a new modal pattern. If the create+assign should be one atomic action vs two calls is
+ambiguous, STOP and ask.
+
+Pre-read: src/modules/listings/components/SaveToCollectionButton.tsx; the collections server actions +
+queries and `CollectionsSection` from Task 136 (see sessions/2026-05-22-task-136-f2-favorites-collections.md);
+docs/ui-rules.md §0; docs/component-rules.md; docs/rls-rules.md (collection ownership).
+
+Scope: in the "Add to collection" picker opened from the listing detail page, add an inline "Create
+collection" affordance (name input → create → the listing is added to the new collection in one flow).
+Keep the existing pick-from-existing behavior. Localize all new strings × 4.
+
+Acceptance criteria:
+- From the detail-page "Add to collection" button a user can create a new collection inline and the
+  listing is added to it, without leaving the flow; existing-collection selection still works.
+- Reuses Task 136 actions/queries + canonical primitives; no parallel collections code; RLS respected.
+- 0 new lint/typecheck errors; npm run build passes; all four locales; all 7 breakpoints.
+
+Out of scope: redesigning the collections data model; the favorites page collections UI (unchanged).
+```

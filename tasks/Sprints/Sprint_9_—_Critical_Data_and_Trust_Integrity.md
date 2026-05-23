@@ -142,3 +142,31 @@ fixes documented in the session log (NotificationItem relative-time locale, Head
 StepLocation GPS labels, MobileBottomNav aria-label) + 5 keys × 4. `tsc` clean. Note: "100% of strings
 switch at runtime" is an in-browser check — recommend an owner spot-check per locale on the main flows;
 the static audit + parity are sound. **Epic M fully closed; N.1/N.3 next (180 remains).**
+
+### Tasks 180–183 — ✅ APPROVED — 2026-05-23 — SPRINT 9 CLOSED
+
+- **180 (N.3) ✅** — Removed the harmful middleware block that overwrote `admin-locale` from every
+  public-site request; admin `layout.tsx` now calls `setRequestLocale` (line 55) so filter-toggle
+  re-renders read the stable cookie, not a URL default. Two-way sync intact: site→admin via
+  `Header.switchLocale → setAdminLocale` (Header.tsx:110); admin→site via root `page.tsx` reading the
+  `admin-locale` cookie. Grep: middleware no longer references `admin-locale`. (Full two-way runtime
+  check — toggle a filter + switch locale both directions — is an owner in-browser confirmation.)
+- **181 (P.1) ✅** — Guard changed from `status === 'unauthenticated'` to `status !== 'signing_out'`
+  (FavoriteButton.tsx:60). Verified against the AuthStatus machine (`controller.ts`): `signing_out` is
+  the only null-user state where the sheet should NOT open, so this is the correct inverse (old guard
+  missed `initializing`/`refreshing`/`error` guests). SSR `initialUser` means an authed user isn't null
+  during init, so no false sheet for authed users. Test suite fixed (useAuth/openAuthSheet mocked + 3
+  guest tests) → 12/12 green. Resolves the Task 211 carry-over.
+- **182 (P.2) ✅** — `hasValidProfile` + `isGuest = !authUser || !hasValidProfile` (page.tsx:228) treats
+  zombie sessions (valid JWT, no profile row) as guests; fallback owner `deleted_at` is always `null`
+  (never infers deletion from a null row). Soft-deleted owners still show "deleted" via the real row.
+  Minor (non-blocking): the profile query uses `.single()` → emits a benign PostgREST error row for
+  zombie sessions; `.maybeSingle()` would be quieter.
+- **183 (P.4) ✅** — `src/lib/siteUrl.ts` (`SITE_URL = NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'`); the 3
+  `window.location.origin` usages in AuthSheet replaced. Grep: `window.location.origin` now only in the
+  legitimate same-origin nav guard (`useUnsavedChangesGuard.ts`). Matches env.md "Canonical site URL rule".
+
+**Sprint 9 — CLOSED (2026-05-23).** All 11 tasks (175, 210, 176, 211, 177, 178, 179, 180, 181, 182, 183)
+APPROVED. Epic M fully closed. Epic N: 179 + 180 done (184 `<html lang>` remains). Epic P: 181 + 182 + 183
+done (185 stale-header remains). Carry-over hardening still open: extensible `ExchangeRates` (M.3 follow-up).
+Next per roadmap: **184 (N.2) → 185 (P.3)** to close N and P, then Epic O.

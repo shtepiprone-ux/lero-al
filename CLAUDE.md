@@ -12,6 +12,17 @@ Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 > corrupt `.git/index`. Recovery: `Remove-Item .git\index` → `git reset`. Full rule:
 > `docs/orchestrator-role.md` → "Environment & git safety" and `docs/ai-behavior.md` → "Git Rules".
 
+> ⚠️ **Commit hand-off (single-writer, READ EVERY SESSION): after EVERY completed task, the Sonnet
+> executor MUST output ready-to-run git commit commands as plain text — the owner runs them manually
+> in PowerShell. The executor NEVER runs git itself.** This is a hard, non-negotiable acceptance
+> criterion on every task, not an optional nicety. Format:
+> ```
+> git add <file1> <file2> ...
+> git commit -m "feat(TaskN): <short description>"
+> ```
+> Use `feat:` / `fix:` / `chore:` / `docs:` / `refactor:`, one logical change per commit. Full rule:
+> `docs/ai-behavior.md` → "Commit Rules" + "Canonical Task Template" acceptance criteria.
+
 There are two AI layers, with different jobs:
 
 - **Opus 4.7 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready prompt

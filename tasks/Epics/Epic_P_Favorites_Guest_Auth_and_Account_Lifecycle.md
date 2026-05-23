@@ -143,7 +143,25 @@ reflects the signed-out state immediately after deletion.
 
 **Out of scope:** favorites (P.1), contact card (P.2), URL (P.4).
 
+### Task 212 — P.5 — Inline "Create collection" flow from "Add to collection" (Note added 2026-05-23)
+
+**Type:** UX / feature
+**Priority:** medium
+**Area:** `SaveToCollectionButton` on the listing detail page + collections actions (Task 136)
+
+**Pre-read:** `src/modules/listings/components/SaveToCollectionButton.tsx`; Task 136 collections actions/
+queries + `CollectionsSection`; docs/ui-rules.md §0; docs/rls-rules.md.
+**Localization coverage:** sq, en, uk, it.
+**Responsive coverage:** all 7 breakpoints.
+
+**Goal:** From the detail-page "Add to collection" picker, let the user create a new collection inline
+(name → create → listing added) without leaving the flow. Reuse Task 136 infra + canonical primitives.
+
+**Acceptance criteria:** Inline create works and adds the listing to the new collection; existing-collection
+selection unchanged; no parallel collections code; RLS respected; 4 locales; 7 breakpoints. Kickoff in
+`Epic_P_kickoff_prompts.md`.
+
 ## Epic-level acceptance
 
 Guests are reliably routed to auth; the contact card never falsely says "Account deleted"; self-delete
-clears the header identity; and every generated link points to lero.al.
+clears the header identity; every generated link points to lero.al; and collections can be created inline.

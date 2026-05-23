@@ -74,11 +74,15 @@ Put this in every executor prompt, and **verify each clause against the diff** o
 - Executes the acceptance criteria **literally**.
 - Updates `docs/backlog.md` and adds a session log under `docs/sessions/`.
 - 0 new lint errors / 0 new warnings; typecheck has no new errors; relevant governance gates PASS.
-- Commits + pushes. **Stage with a single `git add -A`** — do NOT emit multi-line `git add` with
-  `^` or backtick continuations. In PowerShell `^` is not a continuation, so the command fails with
-  `fatal: pathspec '^' did not match any files`, stages nothing, and the "commit" silently no-ops
-  (this swallowed Tasks 164 and 165 until re-run). After committing, confirm with `git log -1`
-  (paste the real terminal output, not the command) — and the orchestrator verifies the SHA moved.
+- **Provides ready-to-run git commit commands as plain text at the end — the OWNER runs them in
+  PowerShell; the executor NEVER runs git itself** (single-writer rule: `ai-behavior.md` →
+  "Single-writer git" + "Commit Rules", and CLAUDE.md "Commit hand-off"). The commands must cover
+  exactly the files in the diff. **Emit a single `git add` line with explicit paths (or `git add -A`)**
+  — do NOT emit multi-line `git add` with `^` or backtick continuations. In PowerShell `^` is not a
+  continuation, so the command fails with `fatal: pathspec '^' did not match any files`, stages
+  nothing, and the "commit" silently no-ops (this swallowed Tasks 164 and 165 until re-run). The
+  orchestrator verifies the emitted commands match the diff's file set before approving; a returned
+  task with no commit commands is INCOMPLETE and must be routed back, not approved.
 
 ## Review checklist (run on every returned task)
 
@@ -87,6 +91,9 @@ Put this in every executor prompt, and **verify each clause against the diff** o
 - [ ] Locale parity: `sq` / `en` / `uk` / `it` all contain the new keys (same key set).
 - [ ] Responsive coverage present for all required breakpoints.
 - [ ] Canonical components only; no governance anti-patterns.
+- [ ] **UI tasks only:** the §17 UI pre-flight checklist output (`ui-rules.md`) is in the session log —
+      non-canonical-dropdown grep, control-height alignment (§15), z-index scale (§16), overflow at 320px
+      in `uk`, all 7 breakpoints. **Do NOT approve a UI task whose session log lacks this.**
 - [ ] Scope respected; no unrequested architectural decisions.
 - [ ] Global-change rule (Note 14, `ai-behavior.md`): the fix updated **every** affected sibling/
       consumer (no diverging call sites left); no hardcode; no one-off component clone; canonical

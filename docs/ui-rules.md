@@ -443,6 +443,9 @@ Use the semantic tokens defined in `globals.css` instead. Storybook (`*.stories.
 | Icons | lucide-react only — no other library | §5 above |
 | Navigation | `router.push()` only — never `window.location.href` | ai-behavior.md |
 | Responsive | CSS-only breakpoints — no viewport JS | §7 above |
+| Control height | Same row → one height; reconcile at primitive level | §15 above |
+| Z-index | Chrome `z-30` · scrim `z-40` · floating `z-50` | §16 above |
+| UI pre-flight | Run the mechanical checklist; paste output in session log | §17 above |
 | Touch targets | 44px minimum — `size="xl"` or `min-h-[44px]` | §8 above |
 | Localization | sq/en/uk/it all work — no hardcoded widths | §11 above |
 | Huge desktop | All pages bounded — no whitespace wastelands | §10 above |
@@ -472,3 +475,87 @@ Use the semantic tokens defined in `globals.css` instead. Storybook (`*.stories.
 - New combobox implementation → use `Combobox` from `@/components/shared/Combobox`
 
 See `docs/component-catalog-governance.md` for the full classification model.
+
+---
+
+## §15 — CONTROL-HEIGHT ALIGNMENT (enforced 2026-05-23)
+
+> Added after the `/listings` toolbar review (Task 220): the canonical `Combobox` and canonical `Button`
+> do NOT use the same pixel height for the same `size` token. `Combobox` heights are
+> `default=h-11 | sm=h-9 | xs=h-8` (`Combobox.tsx`), while `Button` `sm`=28px / `default`=32px (§3). So a
+> `Combobox size="sm"` (36px) placed next to a `Button size="sm"` (28px) renders visibly taller — this is
+> the "the combobox looks bigger than the other buttons" defect.
+
+**Rule — one row, one height.** Any group of controls that sits on the same horizontal line (toolbars,
+filter bars, sort bars, inline action rows) MUST share ONE pixel height. Pick the row's canonical height
+and configure EVERY control to it:
+
+| Row context | Canonical row height | Button | Combobox | Input |
+|---|---|---|---|---|
+| Desktop toolbar / filter bar | **36px (`h-9`)** | `size="sm"` + `h-9` is NOT allowed ad-hoc — see note | `size="sm"` (already h-9) | `h-9` (default) |
+| Mobile-reachable row | **44px (`h-11`)** | `size="xl"` | `size="default"` (h-11) | mobile size variant |
+
+- The fix for the Button↔Combobox mismatch belongs at the **primitive level** (align the `Button` size
+  scale and the `Combobox` size scale so the same `size` token = the same px), NOT via per-call `h-9`
+  hacks sprinkled on each button. If you must reconcile at the call site temporarily, STOP and ask the
+  orchestrator before shipping a per-call height override — it violates §3 ("never use `h-11`/`h-9` as a
+  className on `Button`").
+- Never mix `size="sm"` Buttons with `size="sm"` Comboboxes on the same row expecting them to align —
+  they will not until the scales are reconciled.
+- The grid/list toggle, the sort Combobox, the type Combobox, and the sale/rent buttons on `/listings`
+  MUST all be the same height.
+
+---
+
+## §16 — Z-INDEX LAYERING SCALE (enforced 2026-05-23)
+
+> Added after the homepage-drawer review (Task 219): `z-50` was overloaded across the sticky header,
+> dialog, sheet, popover, combobox, admin modals AND the drawer panel, so the sticky site header showed
+> through the drawer and the backdrop never dimmed it.
+
+**Canonical scale — use ONLY these three tiers for app chrome and overlays:**
+
+| Tier | Token | What lives here |
+|---|---|---|
+| Chrome | `z-30` | Sticky site header, mobile bottom nav, sticky toolbars |
+| Scrim | `z-40` | Drawer / sheet / dialog **backdrops** (must dim the chrome) |
+| Floating | `z-50` | Drawer / sheet / dialog **panels**, popovers, comboboxes, dropdowns, toasts |
+
+**Rules:**
+- The site header + mobile bottom nav are **chrome → `z-30`** (not `z-50`). A drawer/sheet/dialog backdrop
+  (`z-40`) MUST therefore cover and dim them; the panel (`z-50`) sits on top.
+- Portaled popovers/comboboxes opened INSIDE a drawer share the floating tier (`z-50`) and stay above the
+  panel via DOM order (portal appended last). Verify visually — do not bump them to `z-[60]`.
+- **NEVER** introduce ad-hoc `z-[NN]` values or a new tier without orchestrator approval. Document any
+  unavoidable exception (e.g. dev overlay) in `docs/tailwind-governance.md` allowlist.
+- Two pieces of chrome must never both sit at `z-50`.
+
+---
+
+## §17 — UI PRE-FLIGHT CHECKLIST (MANDATORY, mechanical — enforced 2026-05-23)
+
+> Why this exists: the same UI/responsive defects (overflowing button rows, mismatched control heights,
+> non-canonical dropdowns, z-index collisions) keep recurring because "looks fine on desktop" was treated
+> as verification. Prose rules above were not enough. For ANY task that touches UI, run these mechanical
+> checks and **paste the command output / per-breakpoint notes into the session log**. A task that touches
+> UI is NOT complete until this checklist is in its session log.
+
+**Run and record (grep the touched files, ideally the whole `src/`):**
+
+1. **No non-canonical dropdowns:** `grep -rn "<select"` and shadcn `Select` imports in touched UI →
+   must be 0 (use `Combobox`). Record the result.
+2. **No ad-hoc control heights on Button:** `grep -rn "h-8\|h-9\|h-10\|h-11\|h-12" <touched Button usages>`
+   → each hit must be justified against §3/§15 or removed. Record.
+3. **Z-index on the scale:** `grep -rn "z-\[" <touched>` and any `z-30/40/50` → must match §16; chrome at
+   `z-30`. Record.
+4. **Overflow-risk rows:** every `flex` row with icon + translatable label must have `min-w-0` and/or
+   `flex-wrap`/`truncate`; verify the row does not clip at **320px** in **uk** (longest). Record the
+   widths checked.
+5. **Same-row height:** confirm every control on a shared row is one height (§15). Record.
+6. **All 7 breakpoints:** 320/375/390/768/1280/1440/2560 — state, per touched screen, that each was
+   checked (screenshots strongly preferred). "Desktop only" is a fail.
+7. **Touch targets:** mobile-reachable controls ≥44px (§8). Record.
+8. **4 locales:** sq/en/uk/it render without truncation breakage on the touched screens. Record.
+
+If any check fails and the fix is out of scope, STOP and ask the orchestrator (open a follow-up) rather
+than shipping the defect.

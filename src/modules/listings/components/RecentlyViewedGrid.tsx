@@ -3,6 +3,8 @@
 import type { ReactNode } from 'react'
 import { useTranslations } from 'next-intl'
 import { ListingCard, type CardListingData } from './ListingCard'
+import { useExchangeRate } from '@/hooks/useExchangeRate'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 
 interface Props {
   listings: CardListingData[]
@@ -27,6 +29,9 @@ interface Props {
  */
 export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot }: Props) {
   const t = useTranslations('listing')
+  const { rates } = useExchangeRate()
+  const { user } = useAuth()
+  const displayCurrency = user?.preferred_currency ?? 'ALL'
 
   if (!listings.length) {
     if (!showEmptyState) return null
@@ -52,7 +57,7 @@ export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot
       <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
         {listings.map(listing => (
           <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
-            <ListingCard listing={listing} layoutContext="4-col" />
+            <ListingCard listing={listing} layoutContext="4-col" displayCurrency={displayCurrency} rates={rates} />
           </div>
         ))}
       </div>

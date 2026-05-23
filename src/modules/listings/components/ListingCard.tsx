@@ -40,10 +40,8 @@ interface ListingCardProps {
   variant?: 'vertical' | 'horizontal'
   onBeforeNavigate?: (slug: string) => void
   displayCurrency?: string
-  /** Multi-currency rates map (ALL per 1 foreign currency). Preferred over exchangeRate. */
+  /** Multi-currency rates map (ALL per 1 foreign currency). */
   rates?: ExchangeRates | null
-  /** @deprecated use rates instead */
-  exchangeRate?: number | null
   isFavorited?: boolean
   onFavoriteToggled?: (newState: boolean) => void
   /** Mark the card image as LCP-priority. Use getImagePriority() from imageDelivery to decide. */
@@ -89,7 +87,7 @@ function getBadges(listing: CardListingData) {
   return badges
 }
 
-export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, exchangeRate, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
+export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, displayCurrency, rates, isFavorited = false, onFavoriteToggled, priority = false, layoutContext }: ListingCardProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
@@ -109,10 +107,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const imageCount = listing.images?.length ?? 0
   const locationName = listing.location?.name_al ?? ''
 
-  // Resolve active rates: prefer multi-currency rates map, fall back to legacy single rate
-  const effectiveRates: ExchangeRates | null = rates ?? (
-    exchangeRate ? { EUR: exchangeRate, USD: Math.round(exchangeRate / 1.08 * 100) / 100, GBP: Math.round(exchangeRate / 0.86 * 100) / 100 } : null
-  )
+  const effectiveRates: ExchangeRates | null = rates ?? null
   const showConversion = !!(displayCurrency && effectiveRates && displayCurrency !== listing.currency)
   const activeCurrency = showConversion ? displayCurrency! : listing.currency
   const displayPrice = showConversion

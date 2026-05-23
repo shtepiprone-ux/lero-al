@@ -1,6 +1,8 @@
 import { getTranslations, getLocale } from 'next-intl/server'
 import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/auth/server'
+import { getExchangeRates } from '@/lib/getExchangeRate'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 
 interface Props {
@@ -34,9 +36,23 @@ const SELECT = `
  * marketplace navigations. Progressive enhancement: ignored by non-Chrome browsers.
  */
 export async function SimilarListings({ currentId, propertyType, locationId }: Props) {
-  const t = await getTranslations('listing')
-  const locale = await getLocale()
-  const supabase = await createClient()
+  const [t, locale, supabase, exchangeRates, authUser] = await Promise.all([
+    getTranslations('listing'),
+    getLocale(),
+    createClient(),
+    getExchangeRates(),
+    getUser(),
+  ])
+
+  let displayCurrency = 'ALL'
+  if (authUser) {
+    const { data: profile } = await supabase
+      .from('users')
+      .select('preferred_currency')
+      .eq('id', authUser.id)
+      .maybeSingle()
+    displayCurrency = (profile as { preferred_currency?: string } | null)?.preferred_currency ?? 'ALL'
+  }
 
   const baseQuery = () =>
     supabase
@@ -72,7 +88,7 @@ export async function SimilarListings({ currentId, propertyType, locationId }: P
       <h2 className="text-xl font-bold mb-5">{t('similar_listings')}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {(listings as unknown as CardListingData[]).map(l => (
-          <ListingCard key={l.id} listing={l} layoutContext="4-col" />
+          <ListingCard key={l.id} listing={l} layoutContext="4-col" displayCurrency={displayCurrency} rates={exchangeRates} />
         ))}
       </div>
 

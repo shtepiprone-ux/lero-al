@@ -31,7 +31,7 @@ export function useHomepageFilters({
   values, onChange, onApply, onClose, locations,
 }: UseHomepageFiltersProps) {
   const [local, setLocal] = useState<FilterValues>(values)
-  const { rate } = useExchangeRate()
+  const { rates } = useExchangeRate()
   const { propertyTypes } = usePropertyTypes()
   const { currencies } = useCurrencies()
   const today = useMemo(() => new Date(), [])
@@ -102,6 +102,6 @@ export function useHomepageFilters({
     handlePropertyTypeChange, handleApply, handleReset,
     activeCount, cityRegionLocs,
     currency, visibleSections, shows, floorFilterMin,
-    today, rate, currencies, propertyTypes,
+    today, rates, currencies, propertyTypes,
   }
 }

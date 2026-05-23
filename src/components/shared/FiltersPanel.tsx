@@ -82,7 +82,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
     handlePropertyTypeChange, handleApply, handleReset,
     activeCount, cityRegionLocs,
     currency, shows, floorFilterMin,
-    today, rate, currencies, propertyTypes,
+    today, rates, currencies, propertyTypes,
   } = useHomepageFilters({ values, onChange, onApply, onClose, locations })
 
   // LOW-tier: defer mounting inner content to idle time — reduces main-thread work during
@@ -222,10 +222,10 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                 minPlaceholder={t('min')}
                 maxPlaceholder={t('max')}
               />
-              {currency !== 'ALL' && rate != null && (
+              {currency !== 'ALL' && rates?.[currency] != null && (
                 <p className="text-xs text-muted-foreground mt-2">
                   {t('exchange_rate')}:{' '}
-                  1 {currency} ≈ {rate.toFixed(2)} ALL
+                  1 {currency} ≈ {rates[currency].toFixed(2)} ALL
                 </p>
               )}
             </div>

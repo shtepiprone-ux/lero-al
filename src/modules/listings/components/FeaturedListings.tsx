@@ -8,6 +8,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { getImagePriority } from '@/lib/imageDelivery'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useExchangeRate } from '@/hooks/useExchangeRate'
+import { useAuth } from '@/modules/auth/context/AuthContext'
 
 function CardSkeleton() {
   return (
@@ -28,6 +30,9 @@ export function FeaturedListings() {
   const { listings, loading } = useFeaturedListings()
   const t = useTranslations('listing')
   const locale = useLocale()
+  const { rates } = useExchangeRate()
+  const { user } = useAuth()
+  const displayCurrency = user?.preferred_currency ?? 'ALL'
 
   const header = (
     <div className="flex items-center justify-between mb-6">
@@ -68,7 +73,7 @@ export function FeaturedListings() {
       {header}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {listings.map((listing, index) => (
-          <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} />
+          <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} displayCurrency={displayCurrency} rates={rates} />
         ))}
       </div>
     </>

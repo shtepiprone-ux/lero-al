@@ -4,7 +4,21 @@
 
 ## Last Session
 
-**2026-05-23 — Task 216 — Profile save dead: catalog-driven `preferred_currency` ✅**
+**2026-05-23 — Task 217 — Listings 500 (42703): `offer_type` + `purchase_conditions` columns + form ✅**
+
+- Root cause: `applyListingFilters` queries `offer_type` (`.eq`) and `purchase_conditions` (`.overlaps`) but neither column existed in `listings` → Postgres 42703 on every filtered request.
+- Fix 1: `src/types/database.ts` + `src/modules/listings/types/form.ts` — added both fields.
+- Fix 2: `propertyTypeSchema.ts` — changed both from `'filter-only'` to `'button-group'`/`'multi-toggle'`; added to `makeFields(visible)` for all property types that already have them in `filters`.
+- Fix 3: New canonical `MultiToggleField.tsx` (multi-select chip row); `ButtonGroupField` extended with `offer_type`; `fieldRegistry.ts` registered `'multi-toggle'`.
+- Fix 4: `ListingFormShell.tsx` — clearing on type change + submit payload; `validations/index.ts` — Zod enums added; edit page select + initialValues.
+- Fix 5: `scripts/schema-drift-check.sql` — 36 → 38 listing cols.
+- SQL for owner: `ADD COLUMN offer_type text NULL CHECK(...)` + `ADD COLUMN purchase_conditions text[] NOT NULL DEFAULT '{}'` + GIN index (see session log).
+- No new locale keys — `listing.offer_type` + `listing.purchase_conditions` already in all 4 files.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 217 session log](sessions/2026-05-23-task-217-offer-type-purchase-conditions.md)
+
+**Previous: 2026-05-23 — Task 216 — Profile save dead: catalog-driven `preferred_currency` ✅**
 
 - Root cause: `users_preferred_currency_check` was frozen to `('ALL','EUR','USD','GBP')`; selector is catalog-driven (Task 177/214/215) → admin-added currency rejected with Postgres 23514 on save.
 - Fix 1: `src/types/database.ts` — `PreferredCurrency = 'ALL'|'EUR'|'USD'|'GBP'` → `PreferredCurrency = string`.
@@ -254,7 +268,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 **Sprint 9 — ✅ CLOSED.** **Epic M — ✅ CLOSED** (175·176·177·178·214·215). Tasks 184–196, 212, 213, 185 shipped 2026-05-23 (owner ran them in sequence; diffs spot-reviewable on request).
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (OPEN):**
-**224 ✅** (P0 HOTFIX — done) → **216 ✅** (profile save dead — catalog-driven `preferred_currency`, drop frozen CHECK; owner SQL in session log) → **217** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
+**224 ✅** → **216 ✅** → **217 ✅** (listings 42703 — `offer_type`+`purchase_conditions` columns+form; owner SQL in session log) → **218** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
 Then resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
@@ -312,6 +326,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 217 — Listings 42703: offer_type + purchase_conditions columns + form (MultiToggleField; schema visible; edit pre-fill; Zod enums; drift guard) | Task 217 | [sessions/2026-05-23-task-217-offer-type-purchase-conditions.md](sessions/2026-05-23-task-217-offer-type-purchase-conditions.md) |
 | 2026-05-23 | Task 216 — Profile save dead: PreferredCurrency string; catalog validation guard; DROP users_preferred_currency_check + FK (owner SQL) | Task 216 | [sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md](sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md) |
 | 2026-05-23 | Task 224 — P0 HOTFIX: /auth/confirm route (verifyOtp token-hash); buildConfirmUrl in hook; ensureUserProfile extracted; callback fallback locale-aware | Task 224 | [sessions/2026-05-23-task-224-email-confirm-fix.md](sessions/2026-05-23-task-224-email-confirm-fix.md) |
 | 2026-05-23 | Task 196 — R.2 admin edit-screen layout: AdminEditLayout two-column wrapper; AdminUserProfile sidebar actions/role-status | Task 196 | [sessions/2026-05-23-task-196-admin-edit-layout.md](sessions/2026-05-23-task-196-admin-edit-layout.md) |

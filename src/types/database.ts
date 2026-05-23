@@ -187,6 +187,8 @@ export interface Listing {
   land_legal_status: LandLegalStatus | null
   land_zoning: LandZoning | null
   land_development_potential: LandDevelopmentPotential | null
+  offer_type: string | null
+  purchase_conditions: string[]
   year_built: number | null
   address: string | null
   lat: number | null

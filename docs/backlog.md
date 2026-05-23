@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-23 — Task 224 — P0 HOTFIX: registration email-confirmation link 404 ✅**
+**2026-05-23 — Task 216 — Profile save dead: catalog-driven `preferred_currency` ✅**
+
+- Root cause: `users_preferred_currency_check` was frozen to `('ALL','EUR','USD','GBP')`; selector is catalog-driven (Task 177/214/215) → admin-added currency rejected with Postgres 23514 on save.
+- Fix 1: `src/types/database.ts` — `PreferredCurrency = 'ALL'|'EUR'|'USD'|'GBP'` → `PreferredCurrency = string`.
+- Fix 2: `src/modules/cabinet/actions/index.ts` — added catalog validation guard before DB write; rejects unknown/inactive codes with `'save_failed'` (no raw 23514 ever reaches the user).
+- Fix 3: `src/modules/cabinet/components/ProfileTab.tsx` — removed redundant `as PreferredCurrency` cast + unused import.
+- SQL for owner: `DROP CONSTRAINT users_preferred_currency_check` + `ADD CONSTRAINT users_preferred_currency_fkey FOREIGN KEY (preferred_currency) REFERENCES currencies(code) ON UPDATE CASCADE` (see session log).
+- Global grep: no frozen `'ALL'|'EUR'|'USD'|'GBP'` union remaining for `preferred_currency`; `ListingCurrency` untouched.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 216 session log](sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md)
+
+**Previous: 2026-05-23 — Task 224 — P0 HOTFIX: registration email-confirmation link 404 ✅**
 
 - Root cause: Send Email Hook (Task 122) sends token_hash `/auth/v1/verify` links; `/auth/callback` only handled PKCE `?code=` → miss redirected to non-localized `${origin}/auth/login` → 404.
 - Fix 1: `src/app/auth/confirm/route.ts` (NEW) — token-hash confirmation route; calls `verifyOtp({ token_hash, type })` → `ensureUserProfile()` → redirects to `next`. Cross-device (no PKCE code_verifier cookie needed).
@@ -242,7 +254,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 **Sprint 9 — ✅ CLOSED.** **Epic M — ✅ CLOSED** (175·176·177·178·214·215). Tasks 184–196, 212, 213, 185 shipped 2026-05-23 (owner ran them in sequence; diffs spot-reviewable on request).
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (OPEN):**
-**224 ✅** (P0 HOTFIX — done) → **216** (profile save dead — catalog-driven `preferred_currency`, drop frozen CHECK) → **217** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
+**224 ✅** (P0 HOTFIX — done) → **216 ✅** (profile save dead — catalog-driven `preferred_currency`, drop frozen CHECK; owner SQL in session log) → **217** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
 Then resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
@@ -300,6 +312,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 216 — Profile save dead: PreferredCurrency string; catalog validation guard; DROP users_preferred_currency_check + FK (owner SQL) | Task 216 | [sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md](sessions/2026-05-23-task-216-preferred-currency-catalog-driven.md) |
 | 2026-05-23 | Task 224 — P0 HOTFIX: /auth/confirm route (verifyOtp token-hash); buildConfirmUrl in hook; ensureUserProfile extracted; callback fallback locale-aware | Task 224 | [sessions/2026-05-23-task-224-email-confirm-fix.md](sessions/2026-05-23-task-224-email-confirm-fix.md) |
 | 2026-05-23 | Task 196 — R.2 admin edit-screen layout: AdminEditLayout two-column wrapper; AdminUserProfile sidebar actions/role-status | Task 196 | [sessions/2026-05-23-task-196-admin-edit-layout.md](sessions/2026-05-23-task-196-admin-edit-layout.md) |
 | 2026-05-23 | Task 195 — R.1 /admin 404 fix: locale-prefixed auth redirect; cookies/resolveLocale before getUser | Task 195 | [sessions/2026-05-23-task-195-admin-auth-redirect.md](sessions/2026-05-23-task-195-admin-auth-redirect.md) |

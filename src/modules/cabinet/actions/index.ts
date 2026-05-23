@@ -35,6 +35,18 @@ export async function updateCabinetProfile(data: {
   if (blockError) return { error: blockError }
 
   const supabase = await createClient()
+
+  // Defense-in-depth: validate currency against active catalog before hitting the DB.
+  // Without this, an admin-added currency would fail with raw Postgres 23514.
+  const { data: catalogRows } = await supabase
+    .from('currencies')
+    .select('code')
+    .eq('is_active', true)
+  const validCodes = new Set((catalogRows ?? []).map(r => r.code as string))
+  if (validCodes.size > 0 && !validCodes.has(data.preferredCurrency)) {
+    return { error: 'save_failed' }
+  }
+
   const { error } = await supabase
     .from('users')
     .update({

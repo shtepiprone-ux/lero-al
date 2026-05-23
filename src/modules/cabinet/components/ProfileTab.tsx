@@ -21,7 +21,7 @@ import {
   initiateEmailChange,
   resendEmailVerification,
 } from '@/modules/cabinet/actions'
-import type { User, PreferredCurrency } from '@/types/database'
+import type { User } from '@/types/database'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { Combobox } from '@/components/shared/Combobox'
 import { useRouter } from 'next/navigation'
@@ -165,7 +165,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       companyName: userType === 'agent' ? companyName : null,
       userType,
       locationId,
-      preferredCurrency: currency as PreferredCurrency,
+      preferredCurrency: currency,
     })
     if (result.error) {
       setSaveStatus('error')

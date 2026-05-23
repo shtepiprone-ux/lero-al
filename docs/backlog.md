@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-23 — Task 191 — Q.2: Suppress mobile keyboard on non-typeable comboboxes ✅**
+**2026-05-23 — Task 192 — Q.3: Header icon buttons — single canonical config ✅**
+
+- `src/components/layout/Header.tsx`: defined module-level `const ICON_BTN = 'rounded-xl'` — single override applied to all header icon-action buttons.
+- Favorites (auth Link): changed from `size="sm" px-2 gap-1` to `size="icon" + ICON_BTN`; icon from `h-4 w-4` → `size-5` (matches NotificationBell).
+- Favorites (unauth Button): same — `size="icon" + ICON_BTN`; icon `h-4 w-4` → `size-5`.
+- Mobile hamburger SheetTrigger: added `ICON_BTN` (was `size="icon"` without `rounded-xl`).
+- NotificationBell: already correct (`size="icon" rounded-xl size-5`) — no change.
+- All 3 surfaces now: 40×40px square, `rounded-xl`, `variant="ghost"`, 20px icon.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 192 session log](sessions/2026-05-23-task-192-header-icon-buttons.md)
+
+**Previous: 2026-05-23 — Task 191 — Q.2: Suppress mobile keyboard on non-typeable comboboxes ✅**
 
 - `src/components/shared/PropertyTypeCombobox.tsx`: switched from default `variant="input"` to `variant="button"` — renders a `<button>` trigger instead of `<input>`, so mobile keyboard no longer pops on tap; removed dead `onKeyDown` prop (unused in button mode).
 - `src/components/shared/HeroSearch.tsx`: removed stale `onKeyDown={handleKeyDown}` from `<PropertyTypeCombobox>` (prop deleted from interface).

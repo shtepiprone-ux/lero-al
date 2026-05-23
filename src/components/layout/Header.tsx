@@ -29,6 +29,10 @@ const NotificationBell = dynamic(
   { ssr: false },
 )
 
+// Shared override applied to every header icon-action button (variant="ghost" size="icon").
+// Keeps Favorites, Notifications, and Hamburger visually identical.
+const ICON_BTN = 'rounded-xl'
+
 // ── NavLinks ──────────────────────────────────────────────────────────────────
 //
 // Defined at module level (NOT inside Header's render body) so that React sees
@@ -142,20 +146,20 @@ export function Header() {
           {user ? (
             <Link
               href={`/${locale}/favorites`}
-              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-1 px-2 hidden sm:flex')}
+              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), ICON_BTN, 'hidden sm:flex')}
               aria-label={t('favorites')}
             >
-              <Heart className="h-4 w-4" />
+              <Heart className="size-5" />
             </Link>
           ) : (
             <Button
               variant="ghost"
-              size="sm"
+              size="icon"
               onClick={() => openAuthSheet('login')}
-              className="gap-1 px-2 hidden sm:flex"
+              className={cn(ICON_BTN, 'hidden sm:flex')}
               aria-label={t('favorites')}
             >
-              <Heart className="h-4 w-4" />
+              <Heart className="size-5" />
             </Button>
           )}
 
@@ -240,7 +244,7 @@ export function Header() {
           {/* Mobile hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger
-              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'md:hidden')}
+              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), ICON_BTN, 'md:hidden')}
               aria-label={tc('aria_open_menu')}
             >
               <Menu className="h-5 w-5" />

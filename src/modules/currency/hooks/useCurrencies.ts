@@ -28,10 +28,12 @@ function fetchCurrenciesSingleton(): Promise<DBCurrency[]> {
   return inflight!
 }
 
-// Fallback when DB not yet migrated or unavailable
+// Fallback when DB not yet migrated or unavailable — mirrors the canonical seed rows
 const FALLBACK: DBCurrency[] = [
-  { id: 1, code: 'ALL', symbol: 'L',  name_sq: 'Lekë', name_en: 'Albanian Lek', name_uk: 'Лек', name_it: 'Lek', is_active: true, is_default: true,  decimals: 0, created_at: '', updated_at: '' },
-  { id: 2, code: 'EUR', symbol: '€',  name_sq: 'Euro', name_en: 'Euro',         name_uk: 'Євро', name_it: 'Euro', is_active: true, is_default: false, decimals: 2, created_at: '', updated_at: '' },
+  { id: 1, code: 'ALL', symbol: 'L',  name_sq: 'Lekë',           name_en: 'Albanian Lek',   name_uk: 'Лек',                name_it: 'Lek',                  is_active: true, is_default: true,  decimals: 0, created_at: '', updated_at: '' },
+  { id: 2, code: 'EUR', symbol: '€',  name_sq: 'Euro',           name_en: 'Euro',            name_uk: 'Євро',               name_it: 'Euro',                 is_active: true, is_default: false, decimals: 2, created_at: '', updated_at: '' },
+  { id: 3, code: 'USD', symbol: '$',  name_sq: 'Dollar amerikan',name_en: 'US Dollar',       name_uk: 'Долар США',          name_it: 'Dollaro USA',          is_active: true, is_default: false, decimals: 2, created_at: '', updated_at: '' },
+  { id: 4, code: 'GBP', symbol: '£',  name_sq: 'Paund britanik', name_en: 'British Pound',   name_uk: 'Британський фунт',   name_it: 'Sterlina britannica',  is_active: true, is_default: false, decimals: 2, created_at: '', updated_at: '' },
 ]
 
 export function useCurrencies() {

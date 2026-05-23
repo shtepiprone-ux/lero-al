@@ -337,7 +337,7 @@ Multiple admin tables use inconsistent row-interaction patterns:
 | `AdminLocationsManager` | ❌ | ✅ Pencil+Trash | `window.confirm()` | **K.4 migration needed** |
 | `AdminPropertyTypesManager` | ❌ | ✅ Pencil+Trash | Dialog | **K.4 migration needed** |
 | `AdminEmailTemplatesManager` | ✅ Edit button | Pencil+Trash | Dialog | Minor — K.4 review |
-| `AdminCurrenciesManager` | — | ✅ buttons | — | K.4 audit |
+| `AdminCurrenciesManager` | ✅ CODE → Dialog | ❌ | Dialog | **CANONICAL** (Task 177) |
 
 ### Migration checklist (for K.2 / K.3 / K.4)
 

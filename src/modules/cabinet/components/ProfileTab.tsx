@@ -22,6 +22,8 @@ import {
   resendEmailVerification,
 } from '@/modules/cabinet/actions'
 import type { User, PreferredCurrency } from '@/types/database'
+import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
+import { Combobox } from '@/components/shared/Combobox'
 import { useRouter } from 'next/navigation'
 
 interface CityOption { id: number; name_al: string; region_id: number | null }
@@ -37,43 +39,30 @@ interface Props {
   recentlyViewed?: ReactNode
 }
 
-// ── Currency combobox sub-component ──────────────────────────────────────────
-
-const CURRENCY_OPTIONS: { value: PreferredCurrency; symbol: string }[] = [
-  { value: 'ALL', symbol: 'L' },
-  { value: 'EUR', symbol: '€' },
-  { value: 'USD', symbol: '$' },
-  { value: 'GBP', symbol: '£' },
-]
+// ── Currency selector — canonical Combobox fed by DB catalog ─────────────────
 
 function CurrencySelector({ value, onChange, labels, fieldLabel }: {
-  value: PreferredCurrency
-  onChange: (v: PreferredCurrency) => void
-  labels: Record<PreferredCurrency, string>
+  value: string
+  onChange: (v: string) => void
+  labels: Record<string, string>
   fieldLabel: string
 }) {
+  const { currencies } = useCurrencies()
+  const options = useMemo(
+    () => currencies.filter(c => c.is_active).map(c => ({ value: c.code, label: c.code, description: c.symbol })),
+    [currencies],
+  )
   return (
     <div className="flex flex-col gap-1.5">
       <Label className="text-sm">{fieldLabel}</Label>
-      <div className="grid grid-cols-4 gap-2">
-        {CURRENCY_OPTIONS.map(({ value: cur, symbol }) => (
-          <button
-            key={cur}
-            type="button"
-            onClick={() => onChange(cur)}
-            className={cn(
-              'h-11 rounded-xl border text-sm font-medium transition-all duration-150 flex flex-col items-center justify-center gap-0',
-              value === cur
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'bg-background text-foreground border-border hover:border-primary/50',
-            )}
-          >
-            <span className="text-base leading-none">{symbol}</span>
-            <span className="text-[10px] leading-tight opacity-70">{cur}</span>
-          </button>
-        ))}
-      </div>
-      <p className="text-xs text-muted-foreground">{labels[value]}</p>
+      <Combobox
+        options={options}
+        value={value}
+        onChange={onChange}
+        variant="button"
+        size="sm"
+      />
+      <p className="text-xs text-muted-foreground">{labels[value] ?? ''}</p>
     </div>
   )
 }
@@ -101,7 +90,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     profile?.user_type === 'agent' ? 'agent' : 'private',
   )
   const [locationId, setLocationId] = useState<number | null>(profile?.location_id ?? null)
-  const [currency, setCurrency] = useState<PreferredCurrency>(profile?.preferred_currency ?? 'ALL')
+  const [currency, setCurrency] = useState<string>(profile?.preferred_currency ?? 'ALL')
   const [avatarUrl, setAvatarUrl] = useState<string | null>(profile?.avatar_url ?? null)
 
   // Email change state
@@ -172,7 +161,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       companyName: userType === 'agent' ? companyName : null,
       userType,
       locationId,
-      preferredCurrency: currency,
+      preferredCurrency: currency as PreferredCurrency,
     })
     if (result.error) {
       setSaveStatus('error')

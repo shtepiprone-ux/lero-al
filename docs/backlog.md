@@ -4,6 +4,30 @@
 
 ## Last Session
 
+**2026-05-23 — Sprint 9 (Task 178 — M.4: currency selector = canonical Combobox everywhere) ✅**
+
+- `FiltersPanel`: currency button-row in Price section replaced with `Combobox` (variant=button, size=sm, portal).
+- `ListingsFilters`: currency button-row inside Price accordion replaced with `Combobox`; preserves URL-null behavior for default currency.
+- `ProfileTab.CurrencySelector`: `grid-cols-4` button grid replaced with `Combobox` (description=symbol for dropdown context).
+- All surfaces: `variant="button"` (≤8 static items), options from `useCurrencies()` catalog. Codes rendered literally.
+- Active-filter exclusion for `currency` unchanged; grep confirms zero button-row currency selectors remain.
+
+→ [Task 178 session log](sessions/2026-05-22-task-178-currency-combobox.md)
+
+## Last-but-one Session
+
+**2026-05-23 — Sprint 9 (Task 177 — M.3: currency catalog; one source everywhere) ✅**
+
+- `useCurrencies` FALLBACK extended to ALL + EUR + USD + GBP (mirrors DB seed).
+- `ProfileTab.CurrencySelector`: removed `CURRENCY_OPTIONS` literal; now calls `useCurrencies()` and renders active DB currencies. State type broadened to `string`; cast to `PreferredCurrency` only at `updateCabinetProfile` boundary.
+- `AdminCurrenciesManager`: §11 migration — CODE cell is the sole click target (opens `CurrencyDetailDialog`); Actions column removed; dialog holds Edit, Toggle, Set Default, Delete.
+- SQL seed provided in session log (idempotent `INSERT … ON CONFLICT (code) DO NOTHING`).
+- Filter/homepage pickers already consumed `useCurrencies()` — no change needed.
+
+→ [Task 177 session log](sessions/2026-05-22-task-177-currency-catalog.md)
+
+## Last-but-one Session
+
 **2026-05-23 — Sprint 9 (Task 211 — ListingContact action row overflow + FavoriteButton composition) ✅**
 
 - `ListingContact` action row: `flex gap-2` → `flex flex-wrap gap-2` — row now wraps instead of overflowing when UK labels ("Зберегти в колекцію") exceed card width.

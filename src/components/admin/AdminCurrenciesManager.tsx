@@ -20,7 +20,7 @@ import {
 } from '@/modules/admin/actions/currencies'
 import type { DBCurrency } from '@/types/database'
 
-// ── Form dialog ───────────────────────────────────────────────────────────────
+// ── Form dialog (create / edit) ───────────────────────────────────────────────
 
 interface FormDialogProps {
   initial?: DBCurrency | null
@@ -146,89 +146,94 @@ function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
   )
 }
 
-// ── Row ───────────────────────────────────────────────────────────────────────
+// ── Detail dialog (§11 — row click → preview + actions) ───────────────────────
 
-interface RowProps {
+interface DetailDialogProps {
   currency: DBCurrency
-  onEdit: (c: DBCurrency) => void
-  onDelete: (c: DBCurrency) => void
-  onToggleActive: (c: DBCurrency) => void
-  onSetDefault: (c: DBCurrency) => void
+  onClose: () => void
+  onEdit: () => void
+  onToggleActive: () => void
+  onSetDefault: () => void
+  onDelete: () => void
 }
 
-function CurrencyRow({ currency, onEdit, onDelete, onToggleActive, onSetDefault }: RowProps) {
+function CurrencyDetailDialog({ currency, onClose, onEdit, onToggleActive, onSetDefault, onDelete }: DetailDialogProps) {
   const t = useTranslations('admin.currency.currencies')
+  const tc = useTranslations('common')
+
   return (
-    <tr className="border-b last:border-b-0 hover:bg-muted/30 transition-colors">
-      <td className="px-4 py-3 font-mono text-sm font-semibold">{currency.code}</td>
-      <td className="px-4 py-3 text-sm text-muted-foreground">{currency.symbol}</td>
-      <td className="px-4 py-3 text-sm">{currency.name_en || currency.name_sq}</td>
-      <td className="px-4 py-3">
-        <div className="flex items-center gap-2">
-          {currency.is_default && (
-            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-premium text-primary-foreground">
-              {t('default_badge')}
+    <Dialog open onOpenChange={v => !v && onClose()}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="font-mono text-lg">{currency.code}</DialogTitle>
+          <DialogDescription>{currency.name_en || currency.name_sq}</DialogDescription>
+        </DialogHeader>
+
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm py-2">
+          <div>
+            <span className="text-muted-foreground text-xs">{t('symbol')}</span>
+            <p className="font-medium">{currency.symbol}</p>
+          </div>
+          <div>
+            <span className="text-muted-foreground text-xs">{t('decimals')}</span>
+            <p className="font-medium">{currency.decimals}</p>
+          </div>
+          <div className="col-span-2">
+            <span className="text-muted-foreground text-xs">{t('name_sq')}</span>
+            <p>{currency.name_sq}</p>
+          </div>
+          <div className="col-span-2">
+            <span className="text-muted-foreground text-xs">{t('name_en')}</span>
+            <p>{currency.name_en}</p>
+          </div>
+          <div className="col-span-2">
+            <span className="text-muted-foreground text-xs">{t('name_uk')}</span>
+            <p>{currency.name_uk}</p>
+          </div>
+          <div className="col-span-2">
+            <span className="text-muted-foreground text-xs">{t('name_it')}</span>
+            <p>{currency.name_it}</p>
+          </div>
+          <div className="col-span-2 flex gap-2 pt-1">
+            {currency.is_default && (
+              <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-premium text-primary-foreground">
+                {t('default_badge')}
+              </Badge>
+            )}
+            <Badge variant={currency.is_active ? 'default' : 'secondary'} className="text-[10px] px-1.5 py-0">
+              {currency.is_active ? t('is_active') : t('deactivate')}
             </Badge>
-          )}
-          <Badge
-            variant={currency.is_active ? 'default' : 'secondary'}
-            className="text-[10px] px-1.5 py-0"
-          >
-            {currency.is_active ? t('is_active') : t('deactivate')}
-          </Badge>
+          </div>
         </div>
-      </td>
-      <td className="px-4 py-3 text-xs text-muted-foreground">
-        <RelativeTime date={currency.updated_at} />
-      </td>
-      <td className="px-4 py-3">
-        <div className="flex items-center gap-1 justify-end">
+
+        <DialogFooter className="flex-wrap gap-2 sm:gap-2 sm:flex-wrap">
           {!currency.is_default && currency.is_active && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7 rounded-lg"
-              title={t('set_default')}
-              onClick={() => onSetDefault(currency)}
-            >
+            <Button variant="outline" size="sm" onClick={onSetDefault} className="rounded-xl gap-1.5">
               <Star className="h-3.5 w-3.5" />
+              {t('set_default')}
             </Button>
           )}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 rounded-lg"
-            title={currency.is_active ? t('deactivate') : t('activate')}
-            onClick={() => onToggleActive(currency)}
-          >
+          <Button variant="outline" size="sm" onClick={onToggleActive} className="rounded-xl gap-1.5">
             {currency.is_active
-              ? <ToggleRight className="h-3.5 w-3.5 text-status-success" />
-              : <ToggleLeft className="h-3.5 w-3.5 text-muted-foreground" />
+              ? <ToggleLeft className="h-3.5 w-3.5" />
+              : <ToggleRight className="h-3.5 w-3.5" />
             }
+            {currency.is_active ? t('deactivate') : t('activate')}
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 rounded-lg"
-            title={t('edit')}
-            onClick={() => onEdit(currency)}
-          >
+          <Button size="sm" onClick={onEdit} className="rounded-xl gap-1.5">
             <Pencil className="h-3.5 w-3.5" />
+            {t('edit')}
           </Button>
           {!currency.is_default && (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7 rounded-lg text-destructive hover:text-destructive hover:bg-destructive/10"
-              title={t('delete')}
-              onClick={() => onDelete(currency)}
-            >
+            <Button variant="destructive" size="sm" onClick={onDelete} className="rounded-xl gap-1.5">
               <Trash2 className="h-3.5 w-3.5" />
+              {t('delete')}
             </Button>
           )}
-        </div>
-      </td>
-    </tr>
+          <Button variant="outline" size="sm" onClick={onClose} className="rounded-xl">{tc('close')}</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -245,6 +250,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
   const tc = useTranslations('common')
   const [dialogOpen, setDialogOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<DBCurrency | null>(null)
+  const [detailTarget, setDetailTarget] = useState<DBCurrency | null>(null)
   const [editing, setEditing] = useState<DBCurrency | null>(null)
   const [isPending, startTransition] = useTransition()
 
@@ -309,7 +315,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
 
   return (
     <>
-    {/* Delete confirmation dialog — replaces window.confirm() */}
+    {/* Delete confirmation dialog */}
     {deleteTarget && (
       <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
         <DialogContent className="max-w-sm">
@@ -327,6 +333,19 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
         </DialogContent>
       </Dialog>
     )}
+
+    {/* §11 detail dialog — opens on code cell click */}
+    {detailTarget && (
+      <CurrencyDetailDialog
+        currency={detailTarget}
+        onClose={() => setDetailTarget(null)}
+        onEdit={() => { setDetailTarget(null); openEdit(detailTarget!) }}
+        onToggleActive={() => { handleToggleActive(detailTarget!); setDetailTarget(null) }}
+        onSetDefault={() => { handleSetDefault(detailTarget!); setDetailTarget(null) }}
+        onDelete={() => { setDeleteTarget(detailTarget!); setDetailTarget(null) }}
+      />
+    )}
+
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex items-center gap-3">
@@ -345,7 +364,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
         </Button>
       </div>
 
-      {/* Table */}
+      {/* Table — §11: code is the only click target; no Actions column */}
       <div className="border rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
@@ -355,24 +374,46 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
               <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('name_en')}</th>
               <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('is_active')}</th>
               <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('last_updated')}</th>
-              <th className="px-4 py-3" />
             </tr>
           </thead>
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</td>
+                <td colSpan={5} className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</td>
               </tr>
             ) : (
               filtered.map(c => (
-                <CurrencyRow
-                  key={c.id}
-                  currency={c}
-                  onEdit={openEdit}
-                  onDelete={setDeleteTarget}
-                  onToggleActive={handleToggleActive}
-                  onSetDefault={handleSetDefault}
-                />
+                <tr key={c.id} className="border-b last:border-b-0 hover:bg-muted/30 transition-colors">
+                  <td className="px-4 py-3">
+                    <button
+                      type="button"
+                      onClick={() => setDetailTarget(c)}
+                      className="font-mono text-sm font-semibold hover:text-primary transition-colors"
+                    >
+                      {c.code}
+                    </button>
+                  </td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground">{c.symbol}</td>
+                  <td className="px-4 py-3 text-sm">{c.name_en || c.name_sq}</td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      {c.is_default && (
+                        <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-premium text-primary-foreground">
+                          {t('default_badge')}
+                        </Badge>
+                      )}
+                      <Badge
+                        variant={c.is_active ? 'default' : 'secondary'}
+                        className="text-[10px] px-1.5 py-0"
+                      >
+                        {c.is_active ? t('is_active') : t('deactivate')}
+                      </Badge>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground">
+                    <RelativeTime date={c.updated_at} />
+                  </td>
+                </tr>
               ))
             )}
           </tbody>

@@ -17,6 +17,7 @@ import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
+import { Combobox } from '@/components/shared/Combobox'
 
 interface Location { id: number; name_al: string; type: string }
 interface Props { locations: Location[]; className?: string; onClose?: () => void }
@@ -169,20 +170,18 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Price */}
         <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')}>
-          <div className="flex gap-1.5 mb-2">
-            {currencies.map(cur => (
-              <Button
-                key={cur.code}
-                type="button"
-                size="xs"
-                variant={currency === cur.code ? 'default' : 'outline'}
-                onClick={() => updateParams({ currency: cur.is_default ? null : cur.code })}
-                className="text-xs font-semibold"
-              >
-                {cur.code}
-              </Button>
-            ))}
-          </div>
+          <Combobox
+            options={currencies.filter(c => c.is_active).map(c => ({ value: c.code, label: c.code }))}
+            value={currency}
+            onChange={code => {
+              const cur = currencies.find(c => c.code === code)
+              updateParams({ currency: cur?.is_default ? null : code })
+            }}
+            variant="button"
+            size="sm"
+            className="mb-2"
+            portal
+          />
           <FilterRangeInputs
             minValue={get('price_min')}
             maxValue={get('price_max')}

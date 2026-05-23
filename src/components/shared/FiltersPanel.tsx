@@ -19,6 +19,7 @@ import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
 import { useHomepageFilters } from '@/components/shared/useHomepageFilters'
+import { Combobox } from '@/components/shared/Combobox'
 
 export type FilterCurrency = string
 
@@ -203,29 +204,16 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
 
             {/* Price */}
             <div className="px-5 py-5">
-              <SectionHeader
-                right={
-                  <div className="flex gap-1">
-                    {currencies.map(cur => (
-                      <button
-                        key={cur.code}
-                        type="button"
-                        onClick={() => update({ currency: cur.code })}
-                        className={cn(
-                          'text-xs font-semibold px-2 py-0.5 rounded-lg transition-colors duration-150',
-                          currency === cur.code
-                            ? 'bg-primary text-primary-foreground'
-                            : 'text-muted-foreground hover:text-foreground'
-                        )}
-                      >
-                        {cur.code}
-                      </button>
-                    ))}
-                  </div>
-                }
-              >
-                {priceLabel}
-              </SectionHeader>
+              <SectionHeader>{priceLabel}</SectionHeader>
+              <Combobox
+                options={currencies.filter(c => c.is_active).map(c => ({ value: c.code, label: c.code }))}
+                value={currency}
+                onChange={code => update({ currency: code })}
+                variant="button"
+                size="sm"
+                className="mb-3"
+                portal
+              />
               <FilterRangeInputs
                 minValue={local.price_min?.toString() ?? ''}
                 maxValue={local.price_max?.toString() ?? ''}

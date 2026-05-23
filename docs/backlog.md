@@ -4,7 +4,17 @@
 
 ## Last Session
 
-**2026-05-23 — Task 212 — P.5: inline "Create collection" from "Add to collection" ✅**
+**2026-05-23 — Task 187 — O.2: full European country codes + searchable country dropdown ✅**
+
+- `src/lib/phone/index.ts`: `COUNTRY_CODES` expanded from 13 → 45 entries; all European/EU sovereign states included; Russia explicitly absent; Albania first (default); US kept for diaspora; sorted A-Z after Albania.
+- `src/components/shared/Combobox.tsx`: added `dropdownMinWidth?: number` prop; applied to portal `dropdownStyle.width = max(rect.width, dropdownMinWidth)` and non-portal `style={{ minWidth: dropdownMinWidth }}`. Backward-compatible (defaults to undefined).
+- `src/components/shared/PhoneField.tsx`: `variant="button"` → `variant="input"` (enables live search); option mapping adds `description: c.label` so Combobox filters on both dial code AND country name; `dropdownMinWidth={200}` ensures country names are readable despite the 90px trigger width.
+- **Task 186 — O.1** (phone consolidation): already done by Task 158 (Sprint 4) — PhoneField docstring confirms "Replaces four local copies"; all editable phone/WhatsApp inputs use PhoneField; zero `type="tel"` outside PhoneField in production code.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 187 session log](sessions/2026-05-23-task-187-european-country-codes.md)
+
+**Previous: 2026-05-23 — Task 212 — P.5: inline "Create collection" from "Add to collection" ✅**
 
 - `SaveToCollectionButton.tsx`: added `createCollection` to existing action imports; added `Input` import; added `newName`/`isCreating` state + `handleCreate()`.
 - `handleCreate`: calls `createCollection(name)` then `addToCollection(newId, listingId)` in one flow; updates `collections` + `memberIds` optimistically; shows `created` toast.
@@ -112,7 +122,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 (Critical Data & Trust Integrity) — ✅ CLOSED (2026-05-23).** All 11 tasks orchestrator-APPROVED: 175 · 210 · 176 · 211 · 177 · 178 · 179 · 180 · 181 · 182 · 183. Verdicts in `tasks/Sprints/Sprint_9_—_Critical_Data_and_Trust_Integrity.md`. Epic M fully closed.
 
-**Next queue:** Epics O → Q → R → S → T → U. **Last task number: 215.**
+**Next queue:** 188 (O.3 validation) → 189 (O.4 agent step back) → then Epics Q → R → S → T → U. **Last task number: 215.**
 
 > New tasks added 2026-05-23 (owner notes): **212** (P.5 — inline "Create collection" from "Add to collection" on the detail page) · **213** (T.4 — unify ListingCard list/card price template; per-m² missing in List view; follow-up to Task 176). Kickoffs in `Epic_P_kickoff_prompts.md` / `Epic_T_kickoff_prompts.md`. Plus **214** (M.5 — dynamic FX over the currency catalog; iliria98 for admin-added currencies) · **215** (M.6 — multi-currency conversion on every card surface; fix homepage EUR-only) → **Epic M REOPENED**, kickoffs in `Epic_M_kickoff_prompts.md`.
 
@@ -166,6 +176,7 @@ Sequencing: **M (reopened: 214–215)** → **N (in progress)** → P → O → 
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-23 | Task 187 — O.2 European country codes: 13→45 entries, Russia excluded, Combobox dropdownMinWidth, PhoneField variant=input + description for name search | Tasks 186+187 | [sessions/2026-05-23-task-187-european-country-codes.md](sessions/2026-05-23-task-187-european-country-codes.md) |
 | 2026-05-23 | Task 212 — P.5 inline create-collection: createCollection+addToCollection in one flow; Input+Button always visible below collection list | Task 212 | [sessions/2026-05-23-task-212-inline-create-collection.md](sessions/2026-05-23-task-212-inline-create-collection.md) |
 | 2026-05-23 | Task 185 — P.3 stale header after self-delete: signOut() called before router.push; AuthController commits user:null synchronously | Task 185 | [sessions/2026-05-23-task-185-stale-header-after-delete.md](sessions/2026-05-23-task-185-stale-header-after-delete.md) |
 | 2026-05-23 | Task 213 — T.4 PriceBlock unification: per-m² added to horizontal list view; shared PriceBlock(priceSize) replaces two diverged price blocks | Task 213 | [sessions/2026-05-23-task-213-price-block-unification.md](sessions/2026-05-23-task-213-price-block-unification.md) |

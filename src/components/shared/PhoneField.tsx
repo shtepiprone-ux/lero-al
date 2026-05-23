@@ -85,14 +85,15 @@ export function PhoneField({
       {label && <Label>{label}</Label>}
       <div className="flex gap-2">
         <Combobox
-          options={COUNTRY_CODES.map(c => ({ value: c.dialCode, label: `${c.flag} ${c.dialCode}` }))}
+          options={COUNTRY_CODES.map(c => ({ value: c.dialCode, label: `${c.flag} ${c.dialCode}`, description: c.label }))}
           value={dialCode}
           onChange={handleCountryChange}
-          variant="button"
+          variant="input"
           size={comboboxSize}
           triggerClassName={comboboxWidth}
           className={comboboxWidth}
           portal={portal}
+          dropdownMinWidth={200}
         />
         <Input
           type="tel"

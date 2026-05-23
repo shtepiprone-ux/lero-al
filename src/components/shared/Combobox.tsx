@@ -38,6 +38,8 @@ interface ComboboxProps {
    * the dropdown. Portal uses fixed positioning calculated from the trigger rect.
    */
   portal?: boolean
+  /** Minimum pixel width for the dropdown (useful when the trigger is narrower than the options). */
+  dropdownMinWidth?: number
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>
 }
 
@@ -54,6 +56,7 @@ export function Combobox({
   size = 'default',
   triggerClassName,
   portal = false,
+  dropdownMinWidth,
   onKeyDown,
 }: ComboboxProps) {
   const uid = useId()
@@ -88,12 +91,13 @@ export function Combobox({
     const spaceAbove = rect.top
     const maxH = 224 // max-h-56 = 14rem = 224px
 
+    const dropdownWidth = Math.max(rect.width, dropdownMinWidth ?? 0)
     if (spaceBelow >= Math.min(maxH, 150) || spaceBelow >= spaceAbove) {
       setDropdownStyle({
         position: 'fixed',
         top: rect.bottom + 4,
         left: rect.left,
-        width: rect.width,
+        width: dropdownWidth,
         maxHeight: Math.min(maxH, spaceBelow - 8),
         zIndex: 9999,
       })
@@ -103,7 +107,7 @@ export function Combobox({
         position: 'fixed',
         bottom: window.innerHeight - rect.top + 4,
         left: rect.left,
-        width: rect.width,
+        width: dropdownWidth,
         maxHeight: Math.min(maxH, spaceAbove - 8),
         zIndex: 9999,
       })
@@ -142,7 +146,7 @@ export function Combobox({
         'bg-popover text-popover-foreground border rounded-xl shadow-lg overflow-hidden',
         !portal && 'absolute top-full mt-1 left-0 right-0 z-50'
       )}
-      style={portal ? dropdownStyle : undefined}
+      style={portal ? dropdownStyle : (dropdownMinWidth ? { minWidth: dropdownMinWidth } : undefined)}
     >
       <div id={listboxId} role="listbox" className="overflow-y-auto max-h-56">
         {filtered.length === 0 ? (

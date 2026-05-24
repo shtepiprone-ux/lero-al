@@ -48,6 +48,23 @@ export type VerificationStatus = 'pending' | 'approved' | 'rejected'
 export type ReportReason = 'spam' | 'fraud' | 'duplicate' | 'wrong_category' | 'offensive' | 'other'
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
 export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing' | 'report_outcome' | 'price_change'
+export type ContactStatus = 'new' | 'in_progress' | 'closed'
+
+export interface ContactInquiry {
+  id: string
+  created_at: string
+  topic: string
+  custom_subject: string | null
+  name: string
+  email: string
+  message: string
+  target_mailbox: string
+  requester_ip: string | null
+  status: ContactStatus
+  handled_by: string | null
+  handled_at: string | null
+  reply_count: number
+}
 
 export interface RolePermission {
   role: string

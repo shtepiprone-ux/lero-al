@@ -23,7 +23,8 @@
     "lang_uk": "Ukrainisht",
     "lang_it": "Italisht",
     "register_agent": "Regjistrohu si agjent",
-    "admin_dashboard": "Paneli i adminit"
+    "admin_dashboard": "Paneli i adminit",
+    "contacts": "Kontakt"
   },
   "listing": {
     "sale": "Shitje",
@@ -1248,5 +1249,39 @@
     "frequency_daily": "Çdo ditë",
     "frequency_weekly": "Çdo javë",
     "frequency_updated": "Shpeshtësia u përditësua"
+  },
+  "contact": {
+    "title": "Na Kontaktoni",
+    "subtitle": "Keni një pyetje ose doni të na kontaktoni? Plotësoni formularin dhe do t'ju përgjigjemi sa më shpejt.",
+    "topic_label": "Tema",
+    "topic_placeholder": "Zgjidhni temën...",
+    "custom_subject_label": "Subjekti",
+    "custom_subject_placeholder": "Çfarë është pyetja juaj?",
+    "name_label": "Emri juaj",
+    "name_placeholder": "Emri i plotë",
+    "email_label": "Adresa e emailit",
+    "email_placeholder": "emaili@juaj.com",
+    "message_label": "Mesazhi",
+    "message_placeholder": "Përshkruani pyetjen tuaj në detaje...",
+    "submit": "Dërgo mesazhin",
+    "submitting": "Duke dërguar...",
+    "success_toast": "Mesazhi u dërgua me sukses!",
+    "success_body": "Do t'ju përgjigjemi sa më shpejt të jetë e mundur.",
+    "send_another": "Dërgo një mesazh tjetër",
+    "error_toast": "Dërgimi dështoi. Ju lutem provoni sërish.",
+    "rate_limited_toast": "Shumë mesazhe. Ju lutem provoni sërish pas një ore.",
+    "validation_topic_required": "Ju lutem zgjidhni temën",
+    "validation_name_required": "Ju lutem shkruani emrin tuaj",
+    "validation_email_invalid": "Ju lutem shkruani një adresë emaili të vlefshme",
+    "validation_message_min": "Mesazhi duhet të ketë të paktën 20 karaktere",
+    "validation_custom_subject_required": "Ju lutem shkruani subjektin",
+    "topics": {
+      "general": "Pyetje e përgjithshme",
+      "sales": "Shitje",
+      "support": "Mbështetje teknike",
+      "partnership": "Partneritet",
+      "press": "Shtyp",
+      "other": "Tjetër"
+    }
   }
 }

@@ -23,7 +23,8 @@
     "lang_uk": "Ucraino",
     "lang_it": "Italiano",
     "register_agent": "Registrati come agente",
-    "admin_dashboard": "Dashboard"
+    "admin_dashboard": "Dashboard",
+    "contacts": "Contatti"
   },
   "listing": {
     "sale": "In vendita",
@@ -1248,5 +1249,39 @@
     "frequency_daily": "Giornaliero",
     "frequency_weekly": "Settimanale",
     "frequency_updated": "Frequenza aggiornata"
+  },
+  "contact": {
+    "title": "Contattaci",
+    "subtitle": "Hai una domanda o vuoi metterti in contatto? Compila il modulo e ti risponderemo il prima possibile.",
+    "topic_label": "Argomento",
+    "topic_placeholder": "Seleziona un argomento...",
+    "custom_subject_label": "Oggetto",
+    "custom_subject_placeholder": "Di cosa si tratta la tua richiesta?",
+    "name_label": "Il tuo nome",
+    "name_placeholder": "Nome completo",
+    "email_label": "Indirizzo email",
+    "email_placeholder": "tua@email.com",
+    "message_label": "Messaggio",
+    "message_placeholder": "Descrivi la tua richiesta in dettaglio...",
+    "submit": "Invia messaggio",
+    "submitting": "Invio in corso...",
+    "success_toast": "Messaggio inviato con successo!",
+    "success_body": "Ti risponderemo il prima possibile.",
+    "send_another": "Invia un altro messaggio",
+    "error_toast": "Invio fallito. Riprova.",
+    "rate_limited_toast": "Troppi messaggi. Riprova tra un'ora.",
+    "validation_topic_required": "Seleziona un argomento",
+    "validation_name_required": "Inserisci il tuo nome",
+    "validation_email_invalid": "Inserisci un indirizzo email valido",
+    "validation_message_min": "Il messaggio deve contenere almeno 20 caratteri",
+    "validation_custom_subject_required": "Inserisci l'oggetto",
+    "topics": {
+      "general": "Domanda generale",
+      "sales": "Vendite",
+      "support": "Supporto tecnico",
+      "partnership": "Partnership",
+      "press": "Stampa",
+      "other": "Altro"
+    }
   }
 }

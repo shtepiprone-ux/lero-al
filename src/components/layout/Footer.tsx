@@ -54,6 +54,9 @@ export async function Footer() {
               <Link href={`/${locale}/about`} className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit">
                 {t('about')}
               </Link>
+              <Link href={`/${locale}/contact`} className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit">
+                {t('contacts')}
+              </Link>
               <Link href={`/${locale}/privacy-policy`} className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit">
                 {t('privacy')}
               </Link>

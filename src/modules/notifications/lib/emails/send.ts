@@ -23,6 +23,8 @@ interface SendEmailParams {
   react?: React.ReactElement
   /** Pre-built HTML string — used when the template is hand-crafted (e.g. emailChange.ts). */
   html?: string
+  /** Reply-To address — set when the intended reply target differs from the sender. */
+  replyTo?: string
 }
 
 interface SendEmailResult {
@@ -57,6 +59,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
     to: params.to,
     subject: params.subject,
     html,
+    ...(params.replyTo ? { replyTo: params.replyTo } : {}),
   })
 
   if (error) {

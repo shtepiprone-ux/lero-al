@@ -23,7 +23,8 @@
     "lang_uk": "Українська",
     "lang_it": "Італійська",
     "register_agent": "Зареєструватись як агент",
-    "admin_dashboard": "Адмін-панель"
+    "admin_dashboard": "Адмін-панель",
+    "contacts": "Контакти"
   },
   "listing": {
     "sale": "Продаж",
@@ -1248,5 +1249,39 @@
     "frequency_daily": "Щодня",
     "frequency_weekly": "Щотижня",
     "frequency_updated": "Частоту оновлено"
+  },
+  "contact": {
+    "title": "Зв'яжіться з нами",
+    "subtitle": "Маєте запитання або хочете зв'язатися з нами? Заповніть форму і ми відповімо якнайшвидше.",
+    "topic_label": "Тема",
+    "topic_placeholder": "Оберіть тему...",
+    "custom_subject_label": "Тема листа",
+    "custom_subject_placeholder": "Про що ваше запитання?",
+    "name_label": "Ваше ім'я",
+    "name_placeholder": "Повне ім'я",
+    "email_label": "Електронна адреса",
+    "email_placeholder": "ваш@email.com",
+    "message_label": "Повідомлення",
+    "message_placeholder": "Опишіть ваше запитання детально...",
+    "submit": "Надіслати повідомлення",
+    "submitting": "Надсилання...",
+    "success_toast": "Повідомлення успішно надіслано!",
+    "success_body": "Ми відповімо вам якнайшвидше.",
+    "send_another": "Надіслати ще одне повідомлення",
+    "error_toast": "Не вдалось надіслати. Спробуйте ще раз.",
+    "rate_limited_toast": "Забагато повідомлень. Спробуйте через годину.",
+    "validation_topic_required": "Будь ласка, оберіть тему",
+    "validation_name_required": "Будь ласка, введіть ваше ім'я",
+    "validation_email_invalid": "Будь ласка, введіть дійсну електронну адресу",
+    "validation_message_min": "Повідомлення має містити щонайменше 20 символів",
+    "validation_custom_subject_required": "Будь ласка, введіть тему листа",
+    "topics": {
+      "general": "Загальне запитання",
+      "sales": "Продажі",
+      "support": "Технічна підтримка",
+      "partnership": "Партнерство",
+      "press": "Преса",
+      "other": "Інше"
+    }
   }
 }

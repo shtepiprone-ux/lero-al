@@ -4,7 +4,17 @@
 
 ## Last Session
 
-**2026-05-24 — Task 209 — U.2: `/uk/listings?_rsc=` prefetch failure ✅ (no code changes)**
+**2026-05-24 — Task 222 — V.1: Public Contacts page + inquiry form + routing ✅**
+
+- New `contact_inquiries` table (14 cols; see session log for SQL + RLS — owner must run). IP-based rate limit (5/hr), topic→mailbox routing via env `CONTACT_SUPPORT_EMAIL` / `CONTACT_SALES_EMAIL`.
+- New public `/[locale]/contact` page + `ContactForm` (RHF, Combobox topic picker, conditional custom subject for "Other"). Footer "Information" column updated with contacts link.
+- Staff notification email (To = routed mailbox, Reply-To = user's email) via extended `sendEmail` (added `replyTo?`). No confirmation email to submitter (per spec).
+- 29 new keys (+ 6 topic keys) × 4 locales in `contact.*` namespace; `nav.contacts` × 4.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 222 session log](sessions/2026-05-24-task-222-contact-page.md)
+
+**Previous: 2026-05-24 — Task 209 — U.2: `/uk/listings?_rsc=` prefetch failure ✅ (no code changes)**
 
 - Investigation confirmed benign transient. `/uk/listings` works identically across all 4 locales; `uk` is valid (`routing.ts`); `ListingsPage` handles all Supabase errors gracefully (renders `listings ?? []`, never throws).
 - Middleware RSC-safe: `isNavigation = request.headers.has('Next-Router-State-Tree')` → `match = null` → no preload header injected → no interference.
@@ -428,7 +438,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
 **224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
-**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). **Epic U ✅ CLOSED** (208 ✅ · 209 ✅). Next: **Epic V — Contacts (222–223) LAST.** Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
+**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). **Epic U ✅ CLOSED** (208 ✅ · 209 ✅). **Epic V**: 222 ✅ · 223 open. Next: **Task 223 — admin inquiries + Resend reply.** Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
@@ -485,6 +495,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 222 — V.1 public contacts page: contact_inquiries table + RLS, server action, ContactForm (Combobox topics), footer link, staff email notification, 35 keys × 4 locales | Task 222 | [sessions/2026-05-24-task-222-contact-page.md](sessions/2026-05-24-task-222-contact-page.md) |
 | 2026-05-24 | Task 209 — U.2 RSC prefetch failure: investigation only — benign transient (Next.js cancelled prefetch for dynamic page); no code changes; Epic U CLOSED | Task 209 | [sessions/2026-05-24-task-209-rsc-prefetch-failure.md](sessions/2026-05-24-task-209-rsc-prefetch-failure.md) |
 | 2026-05-24 | Task 208 — U.1 preload mismatch: corrected gallery-main sizes from `50vw` to `(max-width:767px) 100vw, (max-width:1023px) 50vw, 34vw`; resolves 768px off-by-one + sidebar accounting | Task 208 | [sessions/2026-05-24-task-208-preload-size-mismatch.md](sessions/2026-05-24-task-208-preload-size-mismatch.md) |
 | 2026-05-24 | Task 207 — T.3 remove Translate button: deleted ListingDescriptionTranslator + /api/translate + lib/translation; plain description card; 5 keys × 4 locales removed | Task 207 | [sessions/2026-05-24-task-207-remove-translate-button.md](sessions/2026-05-24-task-207-remove-translate-button.md) |

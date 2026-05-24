@@ -23,7 +23,8 @@
     "lang_uk": "Ukrainian",
     "lang_it": "Italian",
     "register_agent": "Register as agent",
-    "admin_dashboard": "Dashboard"
+    "admin_dashboard": "Dashboard",
+    "contacts": "Contact"
   },
   "listing": {
     "sale": "For sale",
@@ -1248,5 +1249,39 @@
     "frequency_daily": "Daily",
     "frequency_weekly": "Weekly",
     "frequency_updated": "Email frequency updated"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have a question or want to get in touch? Fill in the form and we'll respond as soon as possible.",
+    "topic_label": "Topic",
+    "topic_placeholder": "Select a topic...",
+    "custom_subject_label": "Subject",
+    "custom_subject_placeholder": "What is your inquiry about?",
+    "name_label": "Your name",
+    "name_placeholder": "Full name",
+    "email_label": "Email address",
+    "email_placeholder": "your@email.com",
+    "message_label": "Message",
+    "message_placeholder": "Describe your inquiry in detail...",
+    "submit": "Send message",
+    "submitting": "Sending...",
+    "success_toast": "Message sent successfully!",
+    "success_body": "We'll get back to you as soon as possible.",
+    "send_another": "Send another message",
+    "error_toast": "Failed to send. Please try again.",
+    "rate_limited_toast": "Too many messages. Please try again in an hour.",
+    "validation_topic_required": "Please select a topic",
+    "validation_name_required": "Please enter your name",
+    "validation_email_invalid": "Please enter a valid email address",
+    "validation_message_min": "Message must be at least 20 characters",
+    "validation_custom_subject_required": "Please enter a subject",
+    "topics": {
+      "general": "General question",
+      "sales": "Sales",
+      "support": "Technical support",
+      "partnership": "Partnership",
+      "press": "Press",
+      "other": "Other"
+    }
   }
 }

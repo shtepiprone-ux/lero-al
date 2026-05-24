@@ -29,6 +29,7 @@
 --   CollectionItem       → collection_items         (3 cols)
 --   RecentlyViewed       → recently_viewed          (4 cols)
 --   RolePermission       → role_permissions         (4 cols)
+--   ContactInquiry       → contact_inquiries        (14 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -281,7 +282,20 @@ WITH expected(table_name, column_name) AS (
     ('role_permissions', 'role'),
     ('role_permissions', 'permission_key'),
     ('role_permissions', 'allowed'),
-    ('role_permissions', 'updated_at')
+    ('role_permissions', 'updated_at'),
+    ('contact_inquiries', 'id'),
+    ('contact_inquiries', 'created_at'),
+    ('contact_inquiries', 'topic'),
+    ('contact_inquiries', 'custom_subject'),
+    ('contact_inquiries', 'name'),
+    ('contact_inquiries', 'email'),
+    ('contact_inquiries', 'message'),
+    ('contact_inquiries', 'target_mailbox'),
+    ('contact_inquiries', 'requester_ip'),
+    ('contact_inquiries', 'status'),
+    ('contact_inquiries', 'handled_by'),
+    ('contact_inquiries', 'handled_at'),
+    ('contact_inquiries', 'reply_count')
 )
 SELECT
   e.table_name,
@@ -544,7 +558,20 @@ WITH expected(table_name, column_name) AS (
     ('role_permissions', 'role'),
     ('role_permissions', 'permission_key'),
     ('role_permissions', 'allowed'),
-    ('role_permissions', 'updated_at')
+    ('role_permissions', 'updated_at'),
+    ('contact_inquiries', 'id'),
+    ('contact_inquiries', 'created_at'),
+    ('contact_inquiries', 'topic'),
+    ('contact_inquiries', 'custom_subject'),
+    ('contact_inquiries', 'name'),
+    ('contact_inquiries', 'email'),
+    ('contact_inquiries', 'message'),
+    ('contact_inquiries', 'target_mailbox'),
+    ('contact_inquiries', 'requester_ip'),
+    ('contact_inquiries', 'status'),
+    ('contact_inquiries', 'handled_by'),
+    ('contact_inquiries', 'handled_at'),
+    ('contact_inquiries', 'reply_count')
 )
 SELECT
   ic.table_name,

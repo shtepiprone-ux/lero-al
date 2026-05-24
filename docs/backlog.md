@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-24 — Task 204 — S.2: Listing IDs → numeric ✅**
+**2026-05-24 — Task 205 — T.1: Action toasts audit + implementation ✅**
+
+- Full audit: 18 components already had toasts; 2 deliberate non-toast patterns (ListingFormShell full-page success, FavoriteButton icon flip); 4 action sites were missing feedback.
+- Gaps filled: `AdminUsersTable` verify/revoke (×2); `AdminListingsTable.PremiumDialog` set/remove premium (×2); `AdminListingsTable.ListingPreviewDialog` delete (×1); `FavoriteButton` error revert (×1).
+- 6 new locale keys × 4 locales: `admin.listings.delete_success/premium_success/premium_removed_success`, `admin.users.verify_success/revoke_success`, `common.favorite_error`.
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 205 session log](sessions/2026-05-24-task-205-action-toasts-audit.md)
+
+**Previous: 2026-05-24 — Task 204 — S.2: Listing IDs → numeric ✅**
 
 - `public_id BIGINT NOT NULL DEFAULT nextval('listings_public_id_seq') UNIQUE` added to `listings` table (owner must run SQL — see session log). Idempotent.
 - `src/types/database.ts`: `public_id: number` added to `Listing` interface; stale `(36 cols)` comment in drift file corrected to `(39 cols)`.
@@ -440,6 +449,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 205 — T.1 action toasts audit: 4 gaps filled (verify/revoke, premium set/remove, listing delete, favorite error); 6 keys × 4 locales | Task 205 | [sessions/2026-05-24-task-205-action-toasts-audit.md](sessions/2026-05-24-task-205-action-toasts-audit.md) |
 | 2026-05-24 | Task 204 — S.2 numeric listing IDs: `public_id BIGINT` sequence; all SELECT projections updated; detail+card+admin show numeric id; slug/URL unchanged | Task 204 | [sessions/2026-05-24-task-204-numeric-listing-ids.md](sessions/2026-05-24-task-204-numeric-listing-ids.md) |
 | 2026-05-24 | Task 203 — S.1 numeric user IDs: `public_id BIGINT` sequence added; surfaced in AdminUsersTable, AdminUserProfile, ProfileTab cabinet | Task 203 | [sessions/2026-05-24-task-203-numeric-user-ids.md](sessions/2026-05-24-task-203-numeric-user-ids.md) |
 | 2026-05-24 | Task 202 — R.8 price_change_alert body: already covered by Task 166 (bodies seeded + confirmed 2026-05-22); variable parity verified ×4 locales | Task 202 | [sessions/2026-05-24-task-202-price-change-alert-body.md](sessions/2026-05-24-task-202-price-change-alert-body.md) |

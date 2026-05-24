@@ -404,7 +404,8 @@
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Attiva notifiche email",
     "aria_remove_favorite": "Rimuovi dai preferiti",
-    "aria_main_nav": "Navigazione principale"
+    "aria_main_nav": "Navigazione principale",
+    "favorite_error": "Impossibile aggiornare i preferiti. Riprova."
   },
   "cabinet": {
     "title": "Il mio account",
@@ -631,7 +632,10 @@
       "next_page": "Avanti",
       "btn_view": "Visualizza annuncio",
       "delete_dialog_body": "Questa azione non può essere annullata.",
-      "preview_title": "Dettagli annuncio"
+      "preview_title": "Dettagli annuncio",
+      "delete_success": "Annuncio eliminato",
+      "premium_success": "Stato premium impostato",
+      "premium_removed_success": "Stato premium rimosso"
     },
     "users": {
       "tab_all": "Tutti gli utenti",
@@ -661,7 +665,9 @@
       "filter_status_blocked": "Bloccato",
       "avatar_click_to_change": "Clicca per cambiare",
       "avatar_upload_photo": "Carica foto",
-      "avatar_optional_hint": "Opzionale — può essere aggiunto dopo la creazione"
+      "avatar_optional_hint": "Opzionale — può essere aggiunto dopo la creazione",
+      "verify_success": "Utente verificato",
+      "revoke_success": "Verifica revocata"
     },
     "pages": {
       "listings_title": "Annunci",

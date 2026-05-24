@@ -22,6 +22,7 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { setListingPremium, deleteListing } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
+import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
@@ -76,6 +77,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
       ? new Date(Date.now() + days * 86400000).toISOString()
       : customDate ? new Date(customDate).toISOString() : null
     await setListingPremium(listing.id, true, until)
+    toast.success(t('premium_success'))
     setSaving(false)
     onDone()
   }
@@ -83,6 +85,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
   async function remove() {
     setSaving(true)
     await setListingPremium(listing.id, false, null)
+    toast.success(t('premium_removed_success'))
     setSaving(false)
     onDone()
   }
@@ -184,6 +187,7 @@ function ListingPreviewDialog({
     setDeleting(true)
     await deleteListing(listing.id)
     setDeleting(false)
+    toast.success(t('delete_success'))
     onDeleted(listing.id)
   }
 

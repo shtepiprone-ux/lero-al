@@ -12,6 +12,7 @@ import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { formatDate } from '@/lib/formatters'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
+import { toast } from 'sonner'
 
 export interface VerifiedAgent {
   id: string
@@ -129,7 +130,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                         : (
                           <button
                             type="button"
-                            onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false) })}
+                            onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false); toast.success(t('revoke_success')) })}
                             title={t('revoke_verify')}
                             className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
                           >
@@ -253,7 +254,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                           : (
                             <button
                               type="button"
-                              onClick={() => withLoading(u.id, () => toggleUserVerified(u.id, !u.is_verified))}
+                              onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, !u.is_verified); toast.success(t(u.is_verified ? 'revoke_success' : 'verify_success')) })}
                               title={u.is_verified ? t('revoke_verify') : t('verify')}
                               className={`h-6 w-6 rounded flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
                                 u.is_verified

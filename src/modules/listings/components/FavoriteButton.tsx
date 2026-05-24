@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 import { addFavorite, removeFavorite } from '@/modules/listings/actions/favoriteActions'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { openAuthSheet } from '@/lib/auth/authSheet'
+import { toast } from 'sonner'
 
 interface FavoriteButtonProps {
   listingId: string
@@ -74,6 +75,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
 
       if ('error' in result) {
         setFavorited(previousState)
+        toast.error(tc('favorite_error'))
         return
       }
 

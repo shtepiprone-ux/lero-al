@@ -404,7 +404,8 @@
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Увімкнути email-сповіщення",
     "aria_remove_favorite": "Видалити з обраних",
-    "aria_main_nav": "Головна навігація"
+    "aria_main_nav": "Головна навігація",
+    "favorite_error": "Не вдалося оновити обрані. Спробуйте ще раз."
   },
   "cabinet": {
     "title": "Кабінет",
@@ -631,7 +632,10 @@
       "next_page": "Далі",
       "btn_view": "Переглянути оголошення",
       "delete_dialog_body": "Цю дію не можна скасувати.",
-      "preview_title": "Деталі оголошення"
+      "preview_title": "Деталі оголошення",
+      "delete_success": "Оголошення видалено",
+      "premium_success": "Premium статус встановлено",
+      "premium_removed_success": "Premium статус знято"
     },
     "users": {
       "tab_all": "Всі користувачі",
@@ -661,7 +665,9 @@
       "filter_status_blocked": "Заблокований",
       "avatar_click_to_change": "Клікніть щоб змінити",
       "avatar_upload_photo": "Завантажити фото",
-      "avatar_optional_hint": "Необов'язково — можна додати після створення"
+      "avatar_optional_hint": "Необов'язково — можна додати після створення",
+      "verify_success": "Користувача верифіковано",
+      "revoke_success": "Верифікацію знято"
     },
     "pages": {
       "listings_title": "Оголошення",

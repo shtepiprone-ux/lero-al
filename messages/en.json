@@ -404,7 +404,8 @@
     "phone_placeholder": "+355 XX XXX XXXX",
     "notify_email_toggle": "Toggle email notifications",
     "aria_remove_favorite": "Remove from favorites",
-    "aria_main_nav": "Main navigation"
+    "aria_main_nav": "Main navigation",
+    "favorite_error": "Couldn't update favorites. Please try again."
   },
   "cabinet": {
     "title": "My Account",
@@ -631,7 +632,10 @@
       "next_page": "Next",
       "btn_view": "View listing",
       "delete_dialog_body": "This action cannot be undone.",
-      "preview_title": "Listing details"
+      "preview_title": "Listing details",
+      "delete_success": "Listing deleted",
+      "premium_success": "Premium status set",
+      "premium_removed_success": "Premium status removed"
     },
     "users": {
       "tab_all": "All users",
@@ -661,7 +665,9 @@
       "filter_status_blocked": "Blocked",
       "avatar_click_to_change": "Click to change",
       "avatar_upload_photo": "Upload photo",
-      "avatar_optional_hint": "Optional — can be added after creation"
+      "avatar_optional_hint": "Optional — can be added after creation",
+      "verify_success": "User verified",
+      "revoke_success": "Verification revoked"
     },
     "pages": {
       "listings_title": "Listings",

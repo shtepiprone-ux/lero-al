@@ -3,7 +3,7 @@
 import { useState, useTransition, useMemo, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
-import { Plus, Trash2, Loader2, Star } from 'lucide-react'
+import { Plus, Loader2, Star } from 'lucide-react'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -23,11 +23,12 @@ export interface Location {
 }
 
 function LocationModal({
-  location, parents, onClose, onDone,
+  location, parents, onClose, onDone, onDelete,
 }: {
-  location?: Location; parents: Location[]; onClose: () => void; onDone: () => void
+  location?: Location; parents: Location[]; onClose: () => void; onDone: () => void; onDelete?: () => void
 }) {
   const t = useTranslations('admin.locations')
+  const tc = useTranslations('common')
   const [nameAl, setNameAl] = useState(location?.name_al ?? '')
   const [nameEn, setNameEn] = useState(location?.name_en ?? '')
   const [type, setType] = useState(location?.type ?? 'city')
@@ -166,6 +167,11 @@ function LocationModal({
         </div>
 
         <div className="flex gap-2 pt-2">
+          {location && onDelete && (
+            <Button variant="destructive" onClick={onDelete} size="lg" className="rounded-xl">
+              {tc('delete')}
+            </Button>
+          )}
           <Button variant="outline" onClick={onClose} size="lg" className="flex-1 rounded-xl">{t('cancel')}</Button>
           <Button onClick={handleSave} disabled={saving || !nameAl.trim()} size="lg" className="flex-1 rounded-xl">
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
@@ -245,6 +251,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
           parents={parents}
           onClose={() => setModal(null)}
           onDone={handleDone}
+          onDelete={modal !== 'create' ? () => { setModal(null); setDeleteTarget(modal as Location) } : undefined}
         />
       )}
 
@@ -311,25 +318,14 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
                   <td className="px-5 py-3 text-muted-foreground text-xs">{l.id}</td>
                   {/* Name — primary click affordance → opens edit (K.1 canonical) */}
                   <td className="px-5 py-3">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => openEdit(l)}
-                        className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                        disabled={deletingId === l.id}
-                      >
-                        {l.name_al}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setDeleteTarget(l)}
-                        className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                        title={tc('delete')}
-                        disabled={deletingId === l.id}
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => openEdit(l)}
+                      className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                      disabled={deletingId === l.id}
+                    >
+                      {l.name_al}
+                    </button>
                   </td>
                   <td className="px-5 py-3 text-muted-foreground hidden md:table-cell">{l.name_en ?? '—'}</td>
                   <td className="px-5 py-3">

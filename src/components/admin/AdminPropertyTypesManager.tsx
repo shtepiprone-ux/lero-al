@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Trash2, Loader2 } from 'lucide-react'
+import { Plus, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -35,9 +35,10 @@ interface FormDialogProps {
   initial?: DBPropertyType | null
   onClose: () => void
   onSaved: (pt: DBPropertyType) => void
+  onDelete?: () => void
 }
 
-function PropertyTypeFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
+function PropertyTypeFormDialog({ initial, onClose, onSaved, onDelete }: FormDialogProps) {
   const t = useTranslations('admin.property_types')
   const [isPending, startTransition] = useTransition()
 
@@ -145,6 +146,11 @@ function PropertyTypeFormDialog({ initial, onClose, onSaved }: FormDialogProps) 
           </div>
         </div>
         <div className="px-6 pb-5 flex gap-3 justify-end">
+          {initial && onDelete && (
+            <Button variant="destructive" size="sm" onClick={onDelete} disabled={isPending} className="mr-auto">
+              {t('delete')}
+            </Button>
+          )}
           <Button variant="outline" size="sm" onClick={onClose} disabled={isPending}>
             {t('cancel')}
           </Button>
@@ -268,6 +274,7 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
           initial={editTarget === 'new' ? null : editTarget as DBPropertyType}
           onClose={() => setEditTarget(undefined)}
           onSaved={handleSaved}
+          onDelete={editTarget !== 'new' && editTarget ? () => { setEditTarget(undefined); setDeleteTarget(editTarget as DBPropertyType) } : undefined}
         />
       )}
 
@@ -320,23 +327,13 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
                     </td>
                     {/* SQ name — primary click affordance → opens edit (K.1 canonical) */}
                     <td className="px-5 py-3">
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setEditTarget(pt)}
-                          className="font-medium truncate max-w-[140px] hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                        >
-                          {pt.name_sq}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setDeleteTarget(pt)}
-                          className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                          disabled={isPending}
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setEditTarget(pt)}
+                        className="font-medium truncate max-w-[140px] hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                      >
+                        {pt.name_sq}
+                      </button>
                     </td>
                     <td className="px-5 py-3 text-xs text-muted-foreground">
                       <div className="flex flex-col gap-0.5">

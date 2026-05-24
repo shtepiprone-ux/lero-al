@@ -9,7 +9,7 @@ import { z } from 'zod'
 import { toast } from 'sonner'
 import {
   Pencil, Trash2, Save, X, ChevronLeft, Loader2,
-  ShieldCheck, MapPin, History, AlertTriangle, UserPlus,
+  ShieldCheck, MapPin, History, AlertTriangle, UserPlus, RotateCcw,
 } from 'lucide-react'
 import { AdminEditLayout } from '@/components/admin/AdminEditLayout'
 import { Button } from '@/components/ui/button'
@@ -28,10 +28,11 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard'
 import {
-  updateUserProfileFull, softDeleteUser, hardDeleteUser, addLocation,
+  updateUserProfileFull, deactivateUser, reactivateUser, hardDeleteUser, addLocation,
   approveLocationRequest, rejectLocationRequest, createAdminUser,
   type ProfileType,
 } from '@/modules/admin/actions'
+import { Textarea } from '@/components/ui/textarea'
 import type { User, UserChangeLog, UserStatusHistory } from '@/types/database'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -201,50 +202,125 @@ function CancelConfirmDialog({ onConfirm, onReturn }: { onConfirm: () => void; o
   )
 }
 
-function DeleteConfirmDialog({ userName, email, mode, onConfirm, onReturn, deleting }: {
-  userName: string; email: string; mode: 'soft' | 'hard'
+function DeactivateReasonDialog({ userName, reason, onReasonChange, onConfirm, onReturn, loading }: {
+  userName: string; reason: string
+  onReasonChange: (v: string) => void
+  onConfirm: () => void; onReturn: () => void; loading: boolean
+}) {
+  const t = useTranslations('admin.user_profile')
+  return (
+    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
+      <DialogContent showCloseButton={false} className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-status-warning">
+            <Trash2 className="h-5 w-5" />
+            {t('dialogs.deactivate_title')}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-3 text-sm">
+          <p className="text-muted-foreground">{t('dialogs.deactivate_about')}</p>
+          <p className="font-semibold">{userName}</p>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs font-medium">{t('dialogs.deactivate_reason_label')}</Label>
+            <Textarea
+              value={reason}
+              onChange={e => onReasonChange(e.target.value)}
+              placeholder={t('dialogs.deactivate_reason_placeholder')}
+              className="resize-none h-20 text-sm"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={onReturn} disabled={loading}>{t('dialogs.deactivate_cancel')}</Button>
+          <Button
+            variant="default"
+            className="bg-status-warning text-white hover:bg-status-warning/90"
+            onClick={onConfirm}
+            disabled={loading || !reason.trim()}
+          >
+            {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+            {t('dialogs.deactivate_confirm')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function ReactivateReasonDialog({ userName, reason, onReasonChange, onConfirm, onReturn, loading }: {
+  userName: string; reason: string
+  onReasonChange: (v: string) => void
+  onConfirm: () => void; onReturn: () => void; loading: boolean
+}) {
+  const t = useTranslations('admin.user_profile')
+  return (
+    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
+      <DialogContent showCloseButton={false} className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-status-success">
+            <RotateCcw className="h-5 w-5" />
+            {t('dialogs.reactivate_title')}
+          </DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-3 text-sm">
+          <p className="text-muted-foreground">{t('dialogs.reactivate_about')}</p>
+          <p className="font-semibold">{userName}</p>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs font-medium">{t('dialogs.reactivate_reason_label')}</Label>
+            <Textarea
+              value={reason}
+              onChange={e => onReasonChange(e.target.value)}
+              placeholder={t('dialogs.reactivate_reason_placeholder')}
+              className="resize-none h-20 text-sm"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={onReturn} disabled={loading}>{t('dialogs.reactivate_cancel')}</Button>
+          <Button
+            variant="default"
+            onClick={onConfirm}
+            disabled={loading || !reason.trim()}
+          >
+            {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+            {t('dialogs.reactivate_confirm')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function DeleteConfirmDialog({ userName, email, onConfirm, onReturn, deleting }: {
+  userName: string; email: string
   onConfirm: () => void; onReturn: () => void; deleting: boolean
 }) {
   const t = useTranslations('admin.user_profile')
-  const isHard = mode === 'hard'
   return (
     <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
       <DialogContent showCloseButton={false} className="max-w-sm">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-destructive">
             <Trash2 className="h-5 w-5" />
-            {isHard ? t('dialogs.delete_hard_title') : t('dialogs.delete_soft_title')}
+            {t('dialogs.delete_hard_title')}
           </DialogTitle>
         </DialogHeader>
         <div className="text-sm space-y-2">
-          <p className="text-muted-foreground">
-            {isHard ? t('dialogs.delete_hard_about') : t('dialogs.delete_soft_about')}
-          </p>
+          <p className="text-muted-foreground">{t('dialogs.delete_hard_about')}</p>
           <p className="font-semibold">{userName}</p>
           <p className="text-muted-foreground text-xs">{email}</p>
-          <div className={`rounded-lg p-3 mt-1 text-xs space-y-1 ${isHard ? 'bg-destructive/10 border border-destructive/20' : 'bg-status-warning/10 border border-status-warning/30'}`}>
-            {isHard ? (
-              <>
-                <p className="font-semibold text-destructive">{t('dialogs.delete_hard_warning')}</p>
-                <p className="text-muted-foreground">{t('dialogs.delete_hard_point1')}</p>
-                <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
-                <p className="text-muted-foreground">{t('dialogs.delete_hard_point3')}</p>
-              </>
-            ) : (
-              <>
-                <p className="font-semibold text-status-warning">{t('dialogs.delete_soft_header')}</p>
-                <p className="text-muted-foreground">{t('dialogs.delete_soft_point1')}</p>
-                <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
-                <p className="text-muted-foreground">{t('dialogs.delete_soft_point3')}</p>
-              </>
-            )}
+          <div className="rounded-lg p-3 mt-1 text-xs space-y-1 bg-destructive/10 border border-destructive/20">
+            <p className="font-semibold text-destructive">{t('dialogs.delete_hard_warning')}</p>
+            <p className="text-muted-foreground">{t('dialogs.delete_hard_point1')}</p>
+            <p className="text-muted-foreground">{t('dialogs.delete_shared_point2')}</p>
+            <p className="text-muted-foreground">{t('dialogs.delete_hard_point3')}</p>
           </div>
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={onReturn} disabled={deleting}>{t('dialogs.delete_cancel')}</Button>
           <Button variant="destructive" onClick={onConfirm} disabled={deleting}>
             {deleting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {isHard ? t('dialogs.delete_hard_confirm') : t('dialogs.delete_soft_confirm')}
+            {t('dialogs.delete_hard_confirm')}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -306,13 +382,17 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   // Dialogs
   const [showCancelDialog, setShowCancelDialog] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
-  const [deleteMode, setDeleteMode] = useState<'soft' | 'hard'>('soft')
+  const [showDeactivateDialog, setShowDeactivateDialog] = useState(false)
+  const [showReactivateDialog, setShowReactivateDialog] = useState(false)
+  const [deactivateReason, setDeactivateReason] = useState('')
+  const [reactivateReason, setReactivateReason] = useState('')
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavHref, setPendingNavHref] = useState<string | null>(null)
 
   // Async state
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [deactivating, setDeactivating] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar_url ?? null)
   const [pendingAvatarBlob, setPendingAvatarBlob] = useState<Blob | null>(null)
@@ -484,12 +564,34 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   async function handleDelete() {
     if (!user) return
     setDeleting(true)
-    const result = deleteMode === 'hard'
-      ? await hardDeleteUser(user.id)
-      : await softDeleteUser(user.id)
+    const result = await hardDeleteUser(user.id)
     setDeleting(false)
     if (result.error) { setSaveError(t('feedback.save_error')); setShowDeleteDialog(false); return }
     router.push('/admin/users')
+  }
+
+  async function handleDeactivate() {
+    if (!user) return
+    setDeactivating(true)
+    const result = await deactivateUser(user.id, deactivateReason)
+    setDeactivating(false)
+    if (result.error) { toast.error(result.error === 'reason_required' ? t('feedback.reason_required') : t('feedback.save_error')); return }
+    toast.success(t('feedback.deactivate_success'))
+    setShowDeactivateDialog(false)
+    setDeactivateReason('')
+    router.refresh()
+  }
+
+  async function handleReactivate() {
+    if (!user) return
+    setDeactivating(true)
+    const result = await reactivateUser(user.id, reactivateReason)
+    setDeactivating(false)
+    if (result.error) { toast.error(result.error === 'reason_required' ? t('feedback.reason_required') : t('feedback.save_error')); return }
+    toast.success(t('feedback.reactivate_success'))
+    setShowReactivateDialog(false)
+    setReactivateReason('')
+    router.refresh()
   }
 
   function handleCancelClick() { setShowCancelDialog(true) }
@@ -541,17 +643,24 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             onClick={() => setEditActive(true)}>
             <Pencil className="h-4 w-4" /> {t('actions.edit_profile')}
           </Button>
-          {isAdmin && (
+          {isAdmin && user?.status !== 'inactive' && (
             <Button variant="outline" size="sm"
               className="gap-1.5 rounded-xl w-full justify-start border-status-warning/40 text-status-warning hover:bg-status-warning/10"
-              onClick={() => { setDeleteMode('soft'); setShowDeleteDialog(true) }}>
+              onClick={() => setShowDeactivateDialog(true)}>
               <Trash2 className="h-4 w-4" /> {t('actions.deactivate_profile')}
+            </Button>
+          )}
+          {isAdmin && user?.status === 'inactive' && (
+            <Button variant="outline" size="sm"
+              className="gap-1.5 rounded-xl w-full justify-start border-status-success/40 text-status-success hover:bg-status-success/10"
+              onClick={() => setShowReactivateDialog(true)}>
+              <RotateCcw className="h-4 w-4" /> {t('actions.reactivate_profile')}
             </Button>
           )}
           {isAdmin && (
             <Button variant="outline" size="sm"
               className="gap-1.5 rounded-xl w-full justify-start border-destructive/40 text-destructive hover:bg-destructive/10"
-              onClick={() => { setDeleteMode('hard'); setShowDeleteDialog(true) }}>
+              onClick={() => setShowDeleteDialog(true)}>
               <Trash2 className="h-4 w-4" /> {t('actions.delete_permanently')}
             </Button>
           )}
@@ -950,10 +1059,29 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
       {showCancelDialog && (
         <CancelConfirmDialog onConfirm={handleConfirmCancel} onReturn={() => setShowCancelDialog(false)} />
       )}
+      {showDeactivateDialog && user && (
+        <DeactivateReasonDialog
+          userName={displayName}
+          reason={deactivateReason}
+          onReasonChange={setDeactivateReason}
+          onConfirm={handleDeactivate}
+          onReturn={() => { setShowDeactivateDialog(false); setDeactivateReason('') }}
+          loading={deactivating}
+        />
+      )}
+      {showReactivateDialog && user && (
+        <ReactivateReasonDialog
+          userName={displayName}
+          reason={reactivateReason}
+          onReasonChange={setReactivateReason}
+          onConfirm={handleReactivate}
+          onReturn={() => { setShowReactivateDialog(false); setReactivateReason('') }}
+          loading={deactivating}
+        />
+      )}
       {showDeleteDialog && user && (
         <DeleteConfirmDialog
           userName={displayName} email={authEmail}
-          mode={deleteMode}
           onConfirm={handleDelete} onReturn={() => setShowDeleteDialog(false)} deleting={deleting}
         />
       )}

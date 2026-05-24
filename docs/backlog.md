@@ -4,7 +4,20 @@
 
 ## Last Session
 
-**2026-05-24 — Task 197 — R.3: RBAC / Moderator permission matrix ✅**
+**2026-05-24 — Task 198 — R.4: Profile deactivation correctness + history + hard delete ✅**
+
+- New `deactivateUser(userId, reason)` server action: sets `status='inactive'` (NOT `deleted_at`) + inserts row into `user_status_history`; requires non-empty reason; guarded by `hasPermission('users.soft_delete')`.
+- New `reactivateUser(userId, reason)` server action: same pattern, sets `status='active'`.
+- Hard delete (`hardDeleteUser`) unchanged but now guarded by `hasPermission('users.hard_delete')` from Task 197.
+- `AdminUserProfile.tsx`: replaced single `deleteMode` state with separate `showDeactivateDialog` / `showReactivateDialog` states; new `DeactivateReasonDialog` + `ReactivateReasonDialog` components (Dialog + Textarea, mandatory reason); sidebar shows Deactivate/Reactivate conditionally on `user.status`.
+- `AdminUsersTable.tsx` + `src/app/admin/users/page.tsx`: added `status` URL param filter; status filter button row (All / Active / Inactive / Blocked) below role filter.
+- 4 locale files: `admin.users.filter_status_*` (4 keys) + `admin.user_profile.actions.reactivate_profile` + `admin.user_profile.dialogs.deactivate_*/reactivate_*` (12 keys) + `admin.user_profile.feedback.deactivate_success/reactivate_success/reason_required`.
+- Note: `user_status_history` table must already exist (schema-bearing; owner-confirmed in prior session). No new SQL needed for this task — only new rows inserted via server action.
+- `tsc --noEmit` → 0 errors. All 4 locale JSON files valid.
+
+→ [Task 198 session log](sessions/2026-05-24-task-198-deactivation.md)
+
+**Previous: 2026-05-24 — Task 197 — R.3: RBAC / Moderator permission matrix ✅**
 
 - New `role_permissions` table (owner must run SQL — see session log): `(role, permission_key, allowed, updated_at)` PK `(role, permission_key)` CHECK `role='moderator'`; RLS: admin full, moderator read-only.
 - Seed: 10 permission keys seeded to match existing behaviour (moderators retain their current access; `users.soft_delete`, `users.hard_delete`, `users.change_role` default to `false` — already were admin-only).

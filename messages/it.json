@@ -655,6 +655,10 @@
       "prev_page": "Indietro",
       "next_page": "Avanti",
       "filter_all": "Tutti",
+      "filter_status_all": "Tutti gli stati",
+      "filter_status_active": "Attivo",
+      "filter_status_inactive": "Inattivo",
+      "filter_status_blocked": "Bloccato",
       "avatar_click_to_change": "Clicca per cambiare",
       "avatar_upload_photo": "Carica foto",
       "avatar_optional_hint": "Opzionale — può essere aggiunto dopo la creazione"
@@ -931,6 +935,7 @@
         "back_to_users": "Utenti",
         "edit_profile": "Modifica profilo",
         "deactivate_profile": "Disattiva profilo",
+        "reactivate_profile": "Riattiva profilo",
         "cancel": "Annulla",
         "save": "Salva",
         "create_user": "Crea utente",
@@ -951,7 +956,10 @@
         "avatar_upload_exception": "Avatar non caricato — può essere aggiunto in modalità modifica.",
         "reason_prefix": "Motivo: {reason}",
         "save_success": "Profilo salvato con successo.",
-        "save_error": "Errore durante il salvataggio. Riprova."
+        "save_error": "Errore durante il salvataggio. Riprova.",
+        "deactivate_success": "Profilo disattivato.",
+        "reactivate_success": "Profilo riattivato.",
+        "reason_required": "Il motivo è obbligatorio."
       },
       "dialogs": {
         "unsaved_title": "Modifiche non salvate",
@@ -975,7 +983,19 @@
         "delete_soft_point3": "• I dati del profilo verranno conservati nel sistema",
         "delete_cancel": "Annulla",
         "delete_hard_confirm": "Elimina definitivamente",
-        "delete_soft_confirm": "Disattiva"
+        "delete_soft_confirm": "Disattiva",
+        "deactivate_title": "Disattivare il profilo?",
+        "deactivate_about": "Il profilo verrà impostato come inattivo. L'utente non potrà accedere. Il profilo rimane visibile nel pannello e può essere riattivato.",
+        "deactivate_reason_label": "Motivo (obbligatorio)",
+        "deactivate_reason_placeholder": "Motivo della disattivazione...",
+        "deactivate_confirm": "Disattiva",
+        "deactivate_cancel": "Annulla",
+        "reactivate_title": "Riattivare il profilo?",
+        "reactivate_about": "Il profilo verrà ripristinato allo stato attivo. L'utente potrà accedere di nuovo.",
+        "reactivate_reason_label": "Motivo (obbligatorio)",
+        "reactivate_reason_placeholder": "Motivo della riattivazione...",
+        "reactivate_confirm": "Riattiva",
+        "reactivate_cancel": "Annulla"
       },
       "password_info": {
         "title": "Impostazione password",

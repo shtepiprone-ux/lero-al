@@ -655,6 +655,10 @@
       "prev_page": "Назад",
       "next_page": "Далі",
       "filter_all": "Всі",
+      "filter_status_all": "Всі статуси",
+      "filter_status_active": "Активний",
+      "filter_status_inactive": "Неактивний",
+      "filter_status_blocked": "Заблокований",
       "avatar_click_to_change": "Клікніть щоб змінити",
       "avatar_upload_photo": "Завантажити фото",
       "avatar_optional_hint": "Необов'язково — можна додати після створення"
@@ -931,6 +935,7 @@
         "back_to_users": "Користувачі",
         "edit_profile": "Редагувати профіль",
         "deactivate_profile": "Деактивувати профіль",
+        "reactivate_profile": "Реактивувати профіль",
         "cancel": "Скасувати",
         "save": "Зберегти",
         "create_user": "Створити користувача",
@@ -951,7 +956,10 @@
         "avatar_upload_exception": "Аватар не завантажено — можна додати у режимі редагування.",
         "reason_prefix": "Причина: {reason}",
         "save_success": "Профіль збережено успішно.",
-        "save_error": "Помилка збереження профілю. Спробуйте ще раз."
+        "save_error": "Помилка збереження профілю. Спробуйте ще раз.",
+        "deactivate_success": "Профіль деактивовано.",
+        "reactivate_success": "Профіль реактивовано.",
+        "reason_required": "Причина обов'язкова."
       },
       "dialogs": {
         "unsaved_title": "Незбережені зміни",
@@ -975,7 +983,19 @@
         "delete_soft_point3": "• Дані профілю збережуться в системі",
         "delete_cancel": "Скасувати",
         "delete_hard_confirm": "Видалити назавжди",
-        "delete_soft_confirm": "Деактивувати"
+        "delete_soft_confirm": "Деактивувати",
+        "deactivate_title": "Деактивувати профіль?",
+        "deactivate_about": "Профіль буде переведено у неактивний стан. Користувач не зможе входити. Профіль залишається видимим в адмінці та може бути реактивований.",
+        "deactivate_reason_label": "Причина (обов'язкова)",
+        "deactivate_reason_placeholder": "Причина деактивації...",
+        "deactivate_confirm": "Деактивувати",
+        "deactivate_cancel": "Скасувати",
+        "reactivate_title": "Реактивувати профіль?",
+        "reactivate_about": "Профіль буде відновлено до активного статусу. Користувач зможе входити знову.",
+        "reactivate_reason_label": "Причина (обов'язкова)",
+        "reactivate_reason_placeholder": "Причина реактивації...",
+        "reactivate_confirm": "Реактивувати",
+        "reactivate_cancel": "Скасувати"
       },
       "password_info": {
         "title": "Встановлення паролю",

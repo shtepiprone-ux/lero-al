@@ -48,19 +48,22 @@ export interface AdminUser {
   avatar_url?: string | null
 }
 
+const STATUS_FILTERS = ['', 'active', 'inactive', 'blocked'] as const
+
 interface Props {
   users: AdminUser[]
   total: number
   page: number
   perPage: number
   activeRole: string
+  activeStatus?: string
   locationRequestFilter?: boolean
   searchQuery?: string
   activeTab?: string
   verifiedAgents?: VerifiedAgent[]
 }
 
-export function AdminUsersTable({ users: init, total, page, perPage, activeRole, locationRequestFilter, searchQuery = '', activeTab = 'all', verifiedAgents = [] }: Props) {
+export function AdminUsersTable({ users: init, total, page, perPage, activeRole, activeStatus = '', locationRequestFilter, searchQuery = '', activeTab = 'all', verifiedAgents = [] }: Props) {
   const t = useTranslations('admin.users')
   const locale = useLocale()
   const router = useRouter()
@@ -175,6 +178,23 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
             <MapPin className="h-3 w-3" /> {t('location_request_badge')} ×
           </button>
         )}
+      </div>
+
+      {/* Status filter */}
+      <div className="flex gap-2 flex-wrap">
+        {STATUS_FILTERS.map(s => (
+          <button
+            key={s || 'all-status'}
+            onClick={() => navigate({ status: s || null, page: null })}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+              activeStatus === s
+                ? 'bg-primary text-primary-foreground border-primary'
+                : 'border-border text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            {s ? t(`filter_status_${s}` as Parameters<typeof t>[0]) : t('filter_status_all')}
+          </button>
+        ))}
       </div>
 
       <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">

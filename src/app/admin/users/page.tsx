@@ -17,6 +17,7 @@ export default async function AdminUsersPage({
   const sp = await searchParams
   const tab = sp.tab ?? 'all'
   const role = sp.role ?? ''
+  const status = sp.status ?? ''
   const q = sp.q ?? ''
   const qTrimmed = q.trim()
   const locationRequest = sp.location_request === '1'
@@ -39,6 +40,7 @@ export default async function AdminUsersPage({
       .range(from, to)
 
     if (role) query = query.eq('role', role)
+    if (status) query = query.eq('status', status)
     if (locationRequest) query = query.not('location_request', 'is', null)
     if (qTrimmed) {
       const words = qTrimmed.split(/\s+/).filter(Boolean)
@@ -99,6 +101,7 @@ export default async function AdminUsersPage({
         page={page}
         perPage={PER_PAGE}
         activeRole={role}
+        activeStatus={status}
         locationRequestFilter={locationRequest}
         searchQuery={q}
         activeTab={tab}

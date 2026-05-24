@@ -655,6 +655,10 @@
       "prev_page": "Back",
       "next_page": "Next",
       "filter_all": "All",
+      "filter_status_all": "All statuses",
+      "filter_status_active": "Active",
+      "filter_status_inactive": "Inactive",
+      "filter_status_blocked": "Blocked",
       "avatar_click_to_change": "Click to change",
       "avatar_upload_photo": "Upload photo",
       "avatar_optional_hint": "Optional — can be added after creation"
@@ -931,6 +935,7 @@
         "back_to_users": "Users",
         "edit_profile": "Edit profile",
         "deactivate_profile": "Deactivate profile",
+        "reactivate_profile": "Reactivate profile",
         "cancel": "Cancel",
         "save": "Save",
         "create_user": "Create user",
@@ -951,7 +956,10 @@
         "avatar_upload_exception": "Avatar not uploaded — can be added in edit mode.",
         "reason_prefix": "Reason: {reason}",
         "save_success": "Profile saved successfully.",
-        "save_error": "Error saving profile. Please try again."
+        "save_error": "Error saving profile. Please try again.",
+        "deactivate_success": "Profile deactivated.",
+        "reactivate_success": "Profile reactivated.",
+        "reason_required": "A reason is required."
       },
       "dialogs": {
         "unsaved_title": "Unsaved changes",
@@ -975,7 +983,19 @@
         "delete_soft_point3": "• Profile data will be preserved in the system",
         "delete_cancel": "Cancel",
         "delete_hard_confirm": "Delete permanently",
-        "delete_soft_confirm": "Deactivate"
+        "delete_soft_confirm": "Deactivate",
+        "deactivate_title": "Deactivate profile?",
+        "deactivate_about": "Profile will be set to inactive. The user will not be able to log in. The profile remains visible in the admin panel and can be reactivated.",
+        "deactivate_reason_label": "Reason (required)",
+        "deactivate_reason_placeholder": "Reason for deactivation...",
+        "deactivate_confirm": "Deactivate",
+        "deactivate_cancel": "Cancel",
+        "reactivate_title": "Reactivate profile?",
+        "reactivate_about": "Profile will be restored to active status. The user will be able to log in again.",
+        "reactivate_reason_label": "Reason (required)",
+        "reactivate_reason_placeholder": "Reason for reactivation...",
+        "reactivate_confirm": "Reactivate",
+        "reactivate_cancel": "Cancel"
       },
       "password_info": {
         "title": "Password setup",

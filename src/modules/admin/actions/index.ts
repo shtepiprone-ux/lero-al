@@ -462,6 +462,60 @@ export async function softDeleteUser(userId: string): Promise<{ error?: string }
   return {}
 }
 
+export async function deactivateUser(userId: string, reason: string): Promise<{ error?: string }> {
+  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+  if (!allowed) return { error: 'forbidden' }
+  if (!reason.trim()) return { error: 'reason_required' }
+  const me = await getUser()
+  if (!me) return { error: 'Unauthorized' }
+
+  const db = createAdminClient()
+  const { data: current } = await db.from('users').select('status').eq('id', userId).single()
+  const { error } = await db.from('users').update({ status: 'inactive' }).eq('id', userId)
+  if (error) { console.error('deactivateUser failed', { error, userId }); return { error: 'update_failed' } }
+
+  try {
+    await db.from('user_status_history').insert({
+      user_id: userId,
+      old_status: current?.status ?? null,
+      new_status: 'inactive',
+      reason: reason.trim(),
+      changed_by: me.id,
+    })
+  } catch {}
+
+  revalidatePath(`/admin/users/${userId}`)
+  revalidatePath('/admin/users')
+  return {}
+}
+
+export async function reactivateUser(userId: string, reason: string): Promise<{ error?: string }> {
+  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+  if (!allowed) return { error: 'forbidden' }
+  if (!reason.trim()) return { error: 'reason_required' }
+  const me = await getUser()
+  if (!me) return { error: 'Unauthorized' }
+
+  const db = createAdminClient()
+  const { data: current } = await db.from('users').select('status').eq('id', userId).single()
+  const { error } = await db.from('users').update({ status: 'active' }).eq('id', userId)
+  if (error) { console.error('reactivateUser failed', { error, userId }); return { error: 'update_failed' } }
+
+  try {
+    await db.from('user_status_history').insert({
+      user_id: userId,
+      old_status: current?.status ?? null,
+      new_status: 'active',
+      reason: reason.trim(),
+      changed_by: me.id,
+    })
+  } catch {}
+
+  revalidatePath(`/admin/users/${userId}`)
+  revalidatePath('/admin/users')
+  return {}
+}
+
 export async function hardDeleteUser(userId: string): Promise<{ error?: string }> {
   const allowed = await hasPermission('users.hard_delete').catch(() => false)
   if (!allowed) return { error: 'forbidden' }

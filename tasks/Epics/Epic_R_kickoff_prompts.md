@@ -57,7 +57,7 @@ Acceptance criteria:
 Out of scope: edit-screen pattern (196); support tickets (199).
 ```
 
-## Task 198 — R.4 — Profile deactivation correctness + history + hard delete (Note 28)
+## Task 198 — R.4 — Profile deactivation correctness + history + hard delete (Note 28) ✅ DONE 2026-05-24
 
 ```
 You are Claude Code Sonnet 4.6 working in `lero-al`.

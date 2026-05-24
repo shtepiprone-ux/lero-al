@@ -655,6 +655,10 @@
       "prev_page": "Mbrapa",
       "next_page": "Tjetër",
       "filter_all": "Të gjitha",
+      "filter_status_all": "Të gjitha statuset",
+      "filter_status_active": "Aktiv",
+      "filter_status_inactive": "Joaktiv",
+      "filter_status_blocked": "Bllokuar",
       "avatar_click_to_change": "Kliko për të ndryshuar",
       "avatar_upload_photo": "Ngarko foto",
       "avatar_optional_hint": "Opsional — mund të shtohet pas krijimit"
@@ -931,6 +935,7 @@
         "back_to_users": "Përdoruesit",
         "edit_profile": "Ndrysho profilin",
         "deactivate_profile": "Çaktivizo profilin",
+        "reactivate_profile": "Riaktivizo profilin",
         "cancel": "Anulo",
         "save": "Ruaj",
         "create_user": "Krijo përdorues",
@@ -951,7 +956,10 @@
         "avatar_upload_exception": "Avatari nuk u ngarkua — mund të shtohet në modalitetin e redaktimit.",
         "reason_prefix": "Arsyeja: {reason}",
         "save_success": "Profili u ruajt me sukses.",
-        "save_error": "Gabim gjatë ruajtjes. Ju lutemi provoni sërish."
+        "save_error": "Gabim gjatë ruajtjes. Ju lutemi provoni sërish.",
+        "deactivate_success": "Profili u çaktivizua.",
+        "reactivate_success": "Profili u riaktivizua.",
+        "reason_required": "Arsyeja është e detyrueshme."
       },
       "dialogs": {
         "unsaved_title": "Ndryshime të paruajtura",
@@ -975,7 +983,19 @@
         "delete_soft_point3": "• Të dhënat e profilit do të ruhen në sistem",
         "delete_cancel": "Anulo",
         "delete_hard_confirm": "Fshi përgjithmonë",
-        "delete_soft_confirm": "Çaktivizo"
+        "delete_soft_confirm": "Çaktivizo",
+        "deactivate_title": "Të çaktivizohet profili?",
+        "deactivate_about": "Profili do të vendoset në gjendje joaktive. Përdoruesi nuk do të mund të hyjë. Profili mbetet i dukshëm në panel dhe mund të riaktivizohet.",
+        "deactivate_reason_label": "Arsyeja (e detyrueshme)",
+        "deactivate_reason_placeholder": "Arsyeja e çaktivizimit...",
+        "deactivate_confirm": "Çaktivizo",
+        "deactivate_cancel": "Anulo",
+        "reactivate_title": "Të riaktivizohet profili?",
+        "reactivate_about": "Profili do të rikthehet në statusin aktiv. Përdoruesi do të mund të hyjë sërish.",
+        "reactivate_reason_label": "Arsyeja (e detyrueshme)",
+        "reactivate_reason_placeholder": "Arsyeja e riaktivizimit...",
+        "reactivate_confirm": "Riaktivizo",
+        "reactivate_cancel": "Anulo"
       },
       "password_info": {
         "title": "Konfigurimi i fjalëkalimit",

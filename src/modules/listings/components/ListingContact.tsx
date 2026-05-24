@@ -216,7 +216,8 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="flex-1 gap-1.5 h-9 rounded-xl border-border"
+                size="lg"
+                className="flex-1 gap-1.5 rounded-xl border-border"
                 aria-label={t('share_listing')}
               >
                 <Share2 className="h-4 w-4 shrink-0" />

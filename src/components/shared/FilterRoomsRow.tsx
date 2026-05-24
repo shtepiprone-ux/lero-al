@@ -19,8 +19,8 @@ export function FilterRoomsRow({ selected, onToggle }: FilterRoomsRowProps) {
             key={opt}
             type="button"
             variant={selected.includes(strVal) ? 'default' : 'outline'}
-            size="icon"
-            className="h-11 w-11 text-xs rounded-xl shrink-0"
+            size="icon-xl"
+            className="text-xs rounded-xl shrink-0"
             onClick={() => onToggle(strVal)}
           >
             {opt === 5 ? '5+' : opt}

@@ -20,8 +20,9 @@ export function RoomsSelectorField({ formValues, onChange }: FieldRendererProps)
             type="button"
             variant="outline"
             onClick={() => onChange({ rooms: formValues.rooms === r ? undefined : r })}
+            size="icon-lg"
             className={cn(
-              'h-9 w-9 rounded-xl p-0 text-sm font-medium',
+              'rounded-xl',
               formValues.rooms === r
                 ? 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:text-primary-foreground'
                 : 'border-border hover:border-primary/40',

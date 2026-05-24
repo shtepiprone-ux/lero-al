@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-23 — Task 220 — `/listings` toolbar height/spacing/combobox consistency ✅**
+**2026-05-24 — Task 221a — Project-wide canonical control-height + spacing + combobox audit ✅**
+
+- Audit scope: non-canonical dropdowns, ad-hoc Button heights, z-index scale, overflow-risk rows, same-row height parity.
+- Dropdowns: ✅ zero native `<select>`, zero shadcn `Select` in app UI — Combobox-only rule holds.
+- Button height violations: 23 fixed across 15 files. Pattern: replaced ad-hoc `h-*` classNames + conflicting `size=` props with the single canonical `size` prop matching the desired height. Mobile-reachable filter buttons upgraded to `size="xl"` (44px) for touch compliance.
+- Key fixes: ListingsFilters close btn (`size="icon-xl"`) + filter type/market chips (`size="xl"`); FiltersPanel market chips (`size="lg"`); RoomsSelectorField + StepDetails + FilterRoomsRow room selectors (`size="icon-lg"/"icon-xl"`); ButtonGroupField + MultiToggleField + SaveSearchButton + ListingReportDialog + AdminLocationsManager + AdminLegalManager + AuthSheet logo buttons + ListingContact share btn.
+- Deferred (logged as follow-ups T221b/T221c): raw `<Link>/<button>` in admin/users page + AdminExchangeProvidersManager; FavoriteButton/SaveToCollectionButton callers passing h-9; ListingContact+ListingMobileCTA raw link elements; admin form Input h-10 widespread pattern.
+- Z-index: all chrome/scrim/float on canonical scale; `PerfDevOverlay z-[9999]` + `ListingGallery z-[100]` noted for allowlist documentation.
+- `tsc --noEmit` → 0 errors. No new i18n strings. No structural/layout changes.
+
+→ [Task 221a session log](sessions/2026-05-24-task-221a-canonical-control-audit.md)
+
+**Previous: 2026-05-23 — Task 220 — `/listings` toolbar height/spacing/combobox consistency ✅**
 
 - Root cause: `LocationCombobox` had no `size` prop → inner Combobox defaulted to h-11 (44px) while all other toolbar controls were h-9 (36px). All `Button` controls used non-canonical `size="sm" className="h-9"` override instead of canonical `size="lg"` (h-9 natively).
 - Fix 1: `src/components/shared/LocationCombobox.tsx` — added optional `size?: 'default' | 'sm' | 'xs'` prop; passes through to inner `Combobox`. All existing callers unaffected (no `size` = default h-11 as before).
@@ -76,7 +88,7 @@
 **Previous: 2026-05-23 — Orchestration (Opus 4.7): 214/215 APPROVED, Sprint 10 + Epic V filed, UI gate hardened**
 
 - Reviewed Tasks 214/215 against the working tree (read-only) → **APPROVED; Epic M CLOSED** (175·176·177·178·214·215). Verdicts in `tasks/Epics/Epic_M_kickoff_prompts.md`.
-- Owner reported 6 new issues (2 production regressions + 2 drawer bugs + UI audit + Contacts feature) + a **P0: signup email-confirmation link 404** (`auth/callback` non-localized `/auth/login` fallback + token_hash flow + likely `NEXT_PUBLIC_SITE_URL` env). Grounded each in real code; filed **Sprint 10** (216–221, +**224 P0**) + **Epic V — Contacts** (222–223) with code-anchored kickoffs.
+- Owner reported 6 new issues (2 production regressions + 2 drawer bugs + UI audit + Contacts feature) + a **P0: signup email-confirmation link 404** (`auth/callback` non-localized `/auth/login` fallback + token_hash flow + likely `NEXT_PUBLIC_SITE_URL` env). Grounded each in real code; filed **Sprint 10** (216–221a, +**224 P0**) + **Epic V — Contacts** (222–223) with code-anchored kickoffs.
 - Hardened `docs/ui-rules.md` (§15 control-height alignment, §16 z-index scale, §17 mandatory UI pre-flight checklist) + the orchestrator review gate — response to the recurring responsive/UI failures.
 
 **Previous: 2026-05-23 — Task 196 — R.2: Admin edit-screen side-panel actions pattern ✅**
@@ -297,18 +309,18 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 9 — ✅ CLOSED.** **Epic M — ✅ CLOSED** (175·176·177·178·214·215). Tasks 184–196, 212, 213, 185 shipped 2026-05-23 (owner ran them in sequence; diffs spot-reviewable on request).
 
-**Sprint 10 — Critical Regressions + Drawer + UI Consistency (OPEN):**
-**224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** (header z-50→z-30; bottom-nav z-40→z-30; scale: chrome=z-30, scrim=z-40, float=z-50) → **220** (listings 500 / 42703 — add `offer_type`+`purchase_conditions` columns + form fields) → **218** (homepage drawer footer buttons overflow) → **219** (drawer z-index vs sticky header) → **220** (`/listings` toolbar height/spacing/combobox) → **221** (project-wide canonical control-height/spacing/combobox audit).
-Then resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
+**Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
+**224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
+Next: resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
-> **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
+> **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
 
 Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md`. Per-task verdicts: Sprint 9 file (175–183, 210/211), `Epic_M_kickoff_prompts.md` (214/215), `Sprint_10_…` (216+).
 
 ## Active product backlog — Epics M–U (from `issues.txt`, opened 2026-05-22)
 
-Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint 10 (216–221)** next → then resume **R (195–196 ✅; 197–202 open) · S open · T (213 ✅; 205–207 open) · U open** → **Epic V — Contacts (222–223) LAST.** Tasks 175–223, global numbering.
+Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint 10 (216–221a)** next → then resume **R (195–196 ✅; 197–202 open) · S open · T (213 ✅; 205–207 open) · U open** → **Epic V — Contacts (222–223) LAST.** Tasks 175–223, global numbering.
 
 | Epic | Tasks | Notes | Plan | Kickoffs |
 |---|---|---|---|---|
@@ -321,12 +333,12 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 | S — Domain Numeric IDs | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
 | T — Global UX Polish & Forms | 205–207, 213 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
 | U — Performance & RSC Diagnostics | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
-| Sprint 10 — Critical Regressions + UI Consistency | 216–221 | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
+| Sprint 10 — Critical Regressions + UI Consistency | 216–221a | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
 | V — Contacts & Inquiries (LAST) | 222–223 | owner req 2026-05-23 | [`Epic_V_…`](../tasks/Epics/Epic_V_Contacts_and_Inquiries.md) | [`Epic_V_kickoff_prompts.md`](../tasks/Epics/Epic_V_kickoff_prompts.md) |
 
 > Rule-type notes codified into `/docs` during planning: 14 (verify-globally → `ai-behavior.md`), 16 (canonical URL → `env.md`; code in Task 183), 6 + 1 (button/Combobox single-source → `ui-rules.md §0`), plus composition + responsive rules added to `ui-rules.md §0` from the Task 211 review.
 >
-> **214/215 ✅ done & APPROVED** (Epic M closed). New work 2026-05-23 → **Sprint 10 (216–221)**: profile-save regression (catalog-driven `preferred_currency`), listings 42703 (`offer_type`/`purchase_conditions` columns+form), drawer footer overflow + z-index scale, `/listings` toolbar consistency, project-wide UI audit; + **Epic V (222–223)** Contacts page + admin inquiries (Resend reply). UI gate hardened in `ui-rules.md §15–§17`.
+> **214/215 ✅ done & APPROVED** (Epic M closed). New work 2026-05-23 → **Sprint 10 (216–221a)**: profile-save regression (catalog-driven `preferred_currency`), listings 42703 (`offer_type`/`purchase_conditions` columns+form), drawer footer overflow + z-index scale, `/listings` toolbar consistency, project-wide UI audit; + **Epic V (222–223)** Contacts page + admin inquiries (Resend reply). UI gate hardened in `ui-rules.md §15–§17`.
 
 ## Closed sprints & epics (historical)
 
@@ -356,6 +368,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 221a — Canonical control audit: 23 Button h-* violations fixed; inventory of selects/z-index/overflow-risk; T221b+T221c deferred | Task 221a | [sessions/2026-05-24-task-221a-canonical-control-audit.md](sessions/2026-05-24-task-221a-canonical-control-audit.md) |
 | 2026-05-23 | Task 219 — Z-index scale: Header z-50→z-30; MobileBottomNav z-40→z-30; chrome=z-30/scrim=z-40/float=z-50 | Task 219 | [sessions/2026-05-23-task-219-zindex-scale.md](sessions/2026-05-23-task-219-zindex-scale.md) |
 | 2026-05-23 | Task 218 — Drawer footer overflow: flex-col; Apply first (primary); w-full; 44px touch targets at all 7 breakpoints | Task 218 | [sessions/2026-05-23-task-218-drawer-footer-overflow.md](sessions/2026-05-23-task-218-drawer-footer-overflow.md) |
 | 2026-05-23 | Task 217 — Listings 42703: offer_type + purchase_conditions columns + form (MultiToggleField; schema visible; edit pre-fill; Zod enums; drift guard) | Task 217 | [sessions/2026-05-23-task-217-offer-type-purchase-conditions.md](sessions/2026-05-23-task-217-offer-type-purchase-conditions.md) |

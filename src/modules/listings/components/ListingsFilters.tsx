@@ -73,7 +73,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
           </span>
         )}
         {onClose && (
-          <Button variant="ghost" size="icon" onClick={onClose} className="lg:hidden h-8 w-8 ml-auto" aria-label={tc('close')}>
+          <Button variant="ghost" size="icon-xl" onClick={onClose} className="ml-auto lg:hidden" aria-label={tc('close')}>
             <X className="h-5 w-5" />
           </Button>
         )}
@@ -88,8 +88,8 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               <Button
                 key={type}
                 variant={get('type') === type || (!get('type') && type === '') ? 'default' : 'outline'}
-                size="sm"
-                className="flex-1 h-10 rounded-xl text-xs"
+                size="xl"
+                className="flex-1 rounded-xl text-xs"
                 onClick={() => updateParams({ type: type || null })}
               >
                 {type === '' ? tc('all') : t(type)}
@@ -137,8 +137,8 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             <div className="flex gap-2">
               <Button
                 variant={!get('market_type') ? 'default' : 'outline'}
-                size="sm"
-                className="flex-1 h-10 rounded-xl text-xs"
+                size="xl"
+                className="flex-1 rounded-xl text-xs"
                 onClick={() => updateParams({ market_type: null })}
               >
                 {tc('all')}
@@ -147,8 +147,8 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
                 <Button
                   key={mt.value}
                   variant={get('market_type') === mt.value ? 'default' : 'outline'}
-                  size="sm"
-                  className="flex-1 h-10 rounded-xl text-xs whitespace-normal leading-snug"
+                  size="xl"
+                  className="flex-1 rounded-xl text-xs whitespace-normal leading-snug"
                   onClick={() => updateParams({ market_type: get('market_type') === mt.value ? null : mt.value })}
                 >
                   {t(mt.labelKey)}

@@ -71,9 +71,9 @@ export function ListingReportDialog({ listingId }: Props) {
       <Button
         type="button"
         variant="ghost"
-        size="sm"
+        size="default"
         onClick={handleOpen}
-        className="gap-1.5 text-muted-foreground hover:text-foreground text-xs h-8"
+        className="gap-1.5 text-muted-foreground hover:text-foreground text-xs"
       >
         <Flag className="h-3.5 w-3.5 shrink-0" />
         {t('report_listing')}
@@ -95,9 +95,10 @@ export function ListingReportDialog({ listingId }: Props) {
                     key={r}
                     type="button"
                     variant="outline"
+                    size="lg"
                     onClick={() => setReason(r)}
                     className={cn(
-                      'h-9 px-3 rounded-xl text-sm justify-start',
+                      'px-3 rounded-xl text-sm justify-start',
                       reason === r
                         ? 'bg-primary/10 text-primary border-primary/40 font-medium hover:bg-primary/10 hover:text-primary'
                         : 'border-border hover:border-primary/40',

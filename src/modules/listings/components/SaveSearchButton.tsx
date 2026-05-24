@@ -68,8 +68,8 @@ export function SaveSearchButton() {
     <>
       <Button
         variant="outline"
-        size="sm"
-        className="gap-1.5 h-9 rounded-xl"
+        size="lg"
+        className="gap-1.5 rounded-xl"
         onClick={() => setOpen(true)}
       >
         <Bookmark className="h-4 w-4 shrink-0" />

@@ -1,4 +1,4 @@
-# Sprint 10 — kickoff prompts (Tasks 216–221)
+# Sprint 10 — kickoff prompts (Tasks 216–221a)
 
 > Shared hard contract (top of every prompt): You are Claude Code Sonnet 4.6 working in `lero-al`.
 > No scope change; no invented architecture — if anything is ambiguous, STOP and ask the orchestrator.
@@ -325,12 +325,12 @@ Acceptance criteria:
 - Only the canonical Combobox is used for these dropdowns; 0 new lint/typecheck errors; build passes;
   4 locales; 7 breakpoints; session log notes before/after; backlog updated.
 
-Out of scope: the global audit (Task 221) — but record any out-of-scope offenders you spot for 221.
+Out of scope: the global audit (Task 221a) — but record any out-of-scope offenders you spot for 221a.
 ```
 
 ---
 
-## Task 221 — Project-wide canonical control-height + spacing + combobox audit
+## Task 221a — Project-wide canonical control-height + spacing + combobox audit ✅ DONE 2026-05-24
 
 ```
 Hard contract: see top. UI task → UI pre-flight checklist MANDATORY. This is an AUDIT + targeted

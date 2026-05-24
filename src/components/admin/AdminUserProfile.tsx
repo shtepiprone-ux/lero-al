@@ -739,7 +739,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                       placeholder={t('placeholders.city_assign')}
                     />
                   </div>
-                  <Button variant="ghost" size="sm" className="h-8 text-xs text-destructive hover:bg-destructive/5 shrink-0"
+                  <Button variant="ghost" size="sm" className="text-xs text-destructive hover:bg-destructive/5 shrink-0"
                     onClick={handleRejectRequest} disabled={reqLoading}>
                     {reqLoading ? <Loader2 className="h-3 w-3 animate-spin" /> : t('actions.reject_request')}
                   </Button>

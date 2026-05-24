@@ -39,8 +39,8 @@ export function ButtonGroupField({ fieldDef, formValues, onChange }: FieldRender
             key={o.value}
             type="button"
             variant={currentValue === o.value ? 'default' : 'outline'}
-            size="sm"
-            className="h-9 rounded-xl"
+            size="lg"
+            className="rounded-xl"
             onClick={() => onChange({ [fieldDef.key]: currentValue === o.value ? undefined : o.value })}
           >
             {t(o.labelKey)}

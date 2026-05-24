@@ -42,8 +42,8 @@ export function MultiToggleField({ fieldDef, formValues, onChange }: FieldRender
             key={o.value}
             type="button"
             variant={selected.includes(o.value) ? 'default' : 'outline'}
-            size="sm"
-            className="h-9 rounded-xl"
+            size="lg"
+            className="rounded-xl"
             onClick={() => toggle(o.value)}
           >
             {t(o.labelKey)}

@@ -1,6 +1,6 @@
 # Sprint 10 — Critical Regressions + Drawer + UI Consistency
 
-**Status:** OPEN — opened 2026-05-23 by the Opus 4.7 orchestrator.
+**Status:** ✅ CLOSED — all tasks 224/216/217/218/219/220/221a done 2026-05-23–24.
 **Source:** owner-reported bugs 2026-05-23 (after Tasks 184–196/212/213/185 shipped).
 
 Two of these are **production-breaking data regressions** (profile save dead; listings fetch 500s on a
@@ -8,7 +8,7 @@ common filter combo). They lead the sprint. The remaining three are recurring UI
 defects + a project-wide audit, because the same class of bug keeps re-appearing — see the hardened UI
 pre-flight gate added to `docs/ui-rules.md` (this sprint).
 
-Kickoffs: `Sprint_10_kickoff_prompts.md` (Tasks 216–221).
+Kickoffs: `Sprint_10_kickoff_prompts.md` (Tasks 216–221a).
 
 ## Shared hard contract (every task)
 
@@ -28,11 +28,11 @@ UI; commit + single `git add -A` then `git log -1` (owner runs git/SQL).
 | 218 | Homepage drawer footer buttons overflow / clip (responsive) | bug/UI | high | no |
 | 219 | Homepage drawer overlapped by sticky header — z-index layering scale | bug/UI | high | no |
 | 220 | `/listings` toolbar consistency — canonical control height + spacing + combobox | bug/UI | medium | no |
-| 221 | Project-wide canonical control-height + spacing + combobox audit | chore/UI | medium | no |
+| 221a | Project-wide canonical control-height + spacing + combobox audit | chore/UI | medium | no |
 
 ## Sequencing
 
-**224 (P0 hotfix — registration broken) → 216 → 217** (critical data) → 218 → 219 → 220 → 221. Then resume R → S → T → U; Epic V (Contacts) last.
+**224 (P0 hotfix — registration broken) → 216 → 217** (critical data) → 218 → 219 → 220 → 221a. Then resume R → S → T → U; Epic V (Contacts) last.
 
 ## Root-cause notes (verified against the working tree 2026-05-23)
 
@@ -54,7 +54,7 @@ UI; commit + single `git add -A` then `git log -1` (owner runs git/SQL).
 - **220:** `ListingsSortBar` + `ListingsFilterBar` already use canonical `Combobox`, but control heights
   (Combobox `sm`=h-9 vs sibling buttons / grid-list toggle) and bar spacing (`py-3 border-b`, tabs
   "pressed against the panel") are inconsistent.
-- **221:** Owner reports many more UI spots with height/spacing/combobox drift — full audit pass.
+- **221a:** Owner reports many more UI spots with height/spacing/combobox drift — full audit pass.
 
 ## Orchestrator review verdicts
 

@@ -420,8 +420,8 @@ function CompanyField({
               <Button
                 type="button"
                 variant="outline"
-                size="sm"
-                className="text-xs h-8 rounded-lg"
+                size="default"
+                className="text-xs rounded-lg"
                 onClick={() => logoInputRef.current?.click()}
               >
                 {logoFile ? tc('replace') : tc('choose_file')}
@@ -430,8 +430,8 @@ function CompanyField({
                 <Button
                   type="button"
                   variant="ghost"
-                  size="sm"
-                  className="text-xs h-8 rounded-lg text-muted-foreground"
+                  size="default"
+                  className="text-xs rounded-lg text-muted-foreground"
                   onClick={() => {
                     setLogoFile(null)
                     if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }

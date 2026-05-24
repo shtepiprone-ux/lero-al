@@ -218,7 +218,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
             </div>
             <p className="font-semibold text-base">{t('no_listings')}</p>
             <Link href={`/${locale}/listings/create`}>
-              <Button className="gap-2 rounded-xl h-10">
+              <Button size="xl" className="gap-2 rounded-xl">
                 <Plus className="h-4 w-4" />
                 {t('add_listing')}
               </Button>
@@ -272,7 +272,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
             {items.length === 1 ? tl('found_results_one') : tl('found_results', { count: items.length })}
           </span>
           <Link href={`/${locale}/listings/create`}>
-            <Button size="sm" className="gap-1.5 rounded-xl h-9">
+            <Button size="lg" className="gap-1.5 rounded-xl">
               <Plus className="h-3.5 w-3.5" />
               {t('add_listing')}
             </Button>

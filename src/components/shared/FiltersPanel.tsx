@@ -188,8 +188,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                 <div className="flex gap-2">
                   <Button
                     variant={!local.market_type ? 'default' : 'outline'}
-                    size="sm"
-                    className="flex-1 h-9 rounded-xl text-xs"
+                    size="lg"
+                    className="flex-1 rounded-xl text-xs"
                     onClick={() => update({ market_type: undefined })}
                   >
                     {t('all')}
@@ -198,8 +198,8 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                     <Button
                       key={mt.value}
                       variant={local.market_type === mt.value ? 'default' : 'outline'}
-                      size="sm"
-                      className="flex-1 h-9 rounded-xl text-xs whitespace-normal leading-snug"
+                      size="lg"
+                      className="flex-1 rounded-xl text-xs whitespace-normal leading-snug"
                       onClick={() => update({ market_type: local.market_type === mt.value ? undefined : mt.value })}
                     >
                       {tl(mt.labelKey)}

@@ -71,8 +71,9 @@ export function StepDetails({ data, onChange }: Props) {
                 type="button"
                 variant="outline"
                 onClick={() => onChange({ rooms: data.rooms === r ? undefined : r })}
+                size="icon-lg"
                 className={cn(
-                  'h-9 w-9 rounded-xl p-0 text-sm font-medium',
+                  'rounded-xl',
                   data.rooms === r
                     ? 'bg-primary text-primary-foreground border-primary hover:bg-primary/90 hover:text-primary-foreground'
                     : 'border-border hover:border-primary/40',
@@ -166,8 +167,8 @@ export function StepDetails({ data, onChange }: Props) {
                 key={h.value}
                 type="button"
                 variant={data.heating === h.value ? 'default' : 'outline'}
-                size="sm"
-                className="h-9 rounded-xl"
+                size="lg"
+                className="rounded-xl"
                 onClick={() => onChange({ heating: data.heating === h.value ? undefined : h.value })}
               >
                 {t(h.labelKey)}
@@ -187,8 +188,8 @@ export function StepDetails({ data, onChange }: Props) {
                 key={w.value}
                 type="button"
                 variant={data.wall_type === w.value ? 'default' : 'outline'}
-                size="sm"
-                className="h-9 rounded-xl"
+                size="lg"
+                className="rounded-xl"
                 onClick={() => onChange({ wall_type: data.wall_type === w.value ? undefined : w.value })}
               >
                 {t(w.labelKey)}

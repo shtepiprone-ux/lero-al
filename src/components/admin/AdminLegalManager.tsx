@@ -132,7 +132,7 @@ export function AdminLegalManager({ pages: init }: Props) {
 
       <div className="flex flex-col gap-4">
         <div className="flex justify-end">
-          <Button onClick={() => setModal('create')} className="gap-2 rounded-xl h-9">
+          <Button onClick={() => setModal('create')} size="lg" className="gap-2 rounded-xl">
             <Plus className="h-4 w-4" />
             {t('btn_new_doc')}
           </Button>

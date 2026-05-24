@@ -166,8 +166,8 @@ function LocationModal({
         </div>
 
         <div className="flex gap-2 pt-2">
-          <Button variant="outline" onClick={onClose} className="flex-1 h-10 rounded-xl">{t('cancel')}</Button>
-          <Button onClick={handleSave} disabled={saving || !nameAl.trim()} className="flex-1 h-10 rounded-xl">
+          <Button variant="outline" onClick={onClose} size="lg" className="flex-1 rounded-xl">{t('cancel')}</Button>
+          <Button onClick={handleSave} disabled={saving || !nameAl.trim()} size="lg" className="flex-1 rounded-xl">
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
           </Button>
         </div>
@@ -286,7 +286,7 @@ export function AdminLocationsManager({ locations: init, parents, activeType }: 
               </a>
             ))}
           </div>
-          <Button onClick={openCreate} className="gap-2 rounded-xl h-9">
+          <Button onClick={openCreate} size="lg" className="gap-2 rounded-xl">
             <Plus className="h-4 w-4" />
             {t('add_btn')}
           </Button>

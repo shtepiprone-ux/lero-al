@@ -25,6 +25,11 @@ interface SendEmailParams {
   html?: string
   /** Reply-To address — set when the intended reply target differs from the sender. */
   replyTo?: string
+  /**
+   * Override the From address. Must be a verified sender in Resend.
+   * Defaults to FROM_ADDRESS (noreply@lero.al).
+   */
+  from?: string
 }
 
 interface SendEmailResult {
@@ -55,7 +60,7 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
 
   const resend = new Resend(apiKey)
   const { data, error } = await resend.emails.send({
-    from: FROM_ADDRESS,
+    from: params.from ?? FROM_ADDRESS,
     to: params.to,
     subject: params.subject,
     html,

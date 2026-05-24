@@ -30,6 +30,7 @@
 --   RecentlyViewed       → recently_viewed          (4 cols)
 --   RolePermission       → role_permissions         (4 cols)
 --   ContactInquiry       → contact_inquiries        (14 cols)
+--   ContactInquiryReply  → contact_inquiry_replies  (5 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -295,7 +296,12 @@ WITH expected(table_name, column_name) AS (
     ('contact_inquiries', 'status'),
     ('contact_inquiries', 'handled_by'),
     ('contact_inquiries', 'handled_at'),
-    ('contact_inquiries', 'reply_count')
+    ('contact_inquiries', 'reply_count'),
+    ('contact_inquiry_replies', 'id'),
+    ('contact_inquiry_replies', 'inquiry_id'),
+    ('contact_inquiry_replies', 'replied_by'),
+    ('contact_inquiry_replies', 'body'),
+    ('contact_inquiry_replies', 'created_at')
 )
 SELECT
   e.table_name,
@@ -571,7 +577,12 @@ WITH expected(table_name, column_name) AS (
     ('contact_inquiries', 'status'),
     ('contact_inquiries', 'handled_by'),
     ('contact_inquiries', 'handled_at'),
-    ('contact_inquiries', 'reply_count')
+    ('contact_inquiries', 'reply_count'),
+    ('contact_inquiry_replies', 'id'),
+    ('contact_inquiry_replies', 'inquiry_id'),
+    ('contact_inquiry_replies', 'replied_by'),
+    ('contact_inquiry_replies', 'body'),
+    ('contact_inquiry_replies', 'created_at')
 )
 SELECT
   ic.table_name,

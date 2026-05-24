@@ -596,7 +596,8 @@
       "item_companies": "Компанії",
       "item_email_templates": "Email шаблони",
       "item_popular_locations": "Популярні локації",
-      "item_permissions": "Дозволи"
+      "item_permissions": "Дозволи",
+      "item_inquiries": "Запити"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -697,7 +698,40 @@
       "email_templates_title": "Email шаблони",
       "email_templates_subtitle": "{count} шаблонів",
       "popular_locations_title": "Популярні локації",
-      "popular_locations_subtitle": "{count} вибраних локацій"
+      "popular_locations_subtitle": "{count} вибраних локацій",
+      "inquiries_title": "Контактні запити",
+      "inquiries_subtitle": "{count} запитів"
+    },
+    "inquiries": {
+      "filter_all": "Всі",
+      "filter_new": "Нові",
+      "filter_in_progress": "В обробці",
+      "filter_closed": "Закриті",
+      "filter_mailbox_all": "Всі скриньки",
+      "filter_mailbox_support": "Підтримка",
+      "filter_mailbox_sales": "Продажі",
+      "status_new": "Новий",
+      "status_in_progress": "В обробці",
+      "status_closed": "Закритий",
+      "topic_label": "Тема",
+      "from_label": "Від",
+      "mailbox_label": "Скринька",
+      "received_label": "Отримано",
+      "replies_label": "Відповіді",
+      "no_inquiries": "Немає запитів",
+      "detail_title": "Деталі запиту",
+      "detail_message": "Повідомлення",
+      "detail_replies": "Історія відповідей",
+      "detail_no_replies": "Відповідей ще немає",
+      "reply_label": "Ваша відповідь",
+      "reply_placeholder": "Напишіть вашу відповідь...",
+      "send_reply": "Надіслати відповідь",
+      "sending_reply": "Надсилання...",
+      "change_status": "Статус",
+      "reply_success": "Відповідь надіслана",
+      "reply_error": "Не вдалось надіслати відповідь. Спробуйте ще раз.",
+      "status_updated": "Статус оновлено",
+      "status_error": "Не вдалось оновити статус. Спробуйте ще раз."
     },
     "support": {
       "new_complaint_btn": "Нова скарга",

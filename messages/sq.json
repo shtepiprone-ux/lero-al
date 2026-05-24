@@ -596,7 +596,8 @@
       "item_companies": "Kompanitë",
       "item_email_templates": "Shablonet e emailit",
       "item_popular_locations": "Vendndodhjet Populare",
-      "item_permissions": "Lejet"
+      "item_permissions": "Lejet",
+      "item_inquiries": "Kërkesat"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -697,7 +698,40 @@
       "email_templates_title": "Shablonet e emailit",
       "email_templates_subtitle": "{count} shablone",
       "popular_locations_title": "Vendndodhjet Populare",
-      "popular_locations_subtitle": "{count} vendndodhje të shfaqura"
+      "popular_locations_subtitle": "{count} vendndodhje të shfaqura",
+      "inquiries_title": "Kërkesat e Kontaktit",
+      "inquiries_subtitle": "{count} kërkesa"
+    },
+    "inquiries": {
+      "filter_all": "Të gjitha",
+      "filter_new": "Të reja",
+      "filter_in_progress": "Në procesim",
+      "filter_closed": "Të mbyllura",
+      "filter_mailbox_all": "Të gjitha kutitë",
+      "filter_mailbox_support": "Mbështetje",
+      "filter_mailbox_sales": "Shitje",
+      "status_new": "E re",
+      "status_in_progress": "Në procesim",
+      "status_closed": "E mbyllur",
+      "topic_label": "Tema",
+      "from_label": "Nga",
+      "mailbox_label": "Kutia postare",
+      "received_label": "Marrë",
+      "replies_label": "Përgjigje",
+      "no_inquiries": "Nuk ka kërkesa",
+      "detail_title": "Detajet e Kërkesës",
+      "detail_message": "Mesazhi",
+      "detail_replies": "Historia e përgjigjeve",
+      "detail_no_replies": "Nuk ka ende përgjigje",
+      "reply_label": "Përgjigja juaj",
+      "reply_placeholder": "Shkruani përgjigjen tuaj...",
+      "send_reply": "Dërgo përgjigjen",
+      "sending_reply": "Duke dërguar...",
+      "change_status": "Statusi",
+      "reply_success": "Përgjigja u dërgua",
+      "reply_error": "Dërgimi i përgjigjes dështoi. Provoni sërish.",
+      "status_updated": "Statusi u përditësua",
+      "status_error": "Ndryshimi i statusit dështoi. Provoni sërish."
     },
     "support": {
       "new_complaint_btn": "Ankesë e re",

@@ -596,7 +596,8 @@
       "item_companies": "Aziende",
       "item_email_templates": "Template email",
       "item_popular_locations": "Luoghi Popolari",
-      "item_permissions": "Permessi"
+      "item_permissions": "Permessi",
+      "item_inquiries": "Richieste"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -697,7 +698,40 @@
       "email_templates_title": "Template email",
       "email_templates_subtitle": "{count} template",
       "popular_locations_title": "Luoghi Popolari",
-      "popular_locations_subtitle": "{count} luoghi in evidenza"
+      "popular_locations_subtitle": "{count} luoghi in evidenza",
+      "inquiries_title": "Richieste di contatto",
+      "inquiries_subtitle": "{count} richieste"
+    },
+    "inquiries": {
+      "filter_all": "Tutti",
+      "filter_new": "Nuove",
+      "filter_in_progress": "In lavorazione",
+      "filter_closed": "Chiuse",
+      "filter_mailbox_all": "Tutte le caselle",
+      "filter_mailbox_support": "Supporto",
+      "filter_mailbox_sales": "Vendite",
+      "status_new": "Nuova",
+      "status_in_progress": "In lavorazione",
+      "status_closed": "Chiusa",
+      "topic_label": "Argomento",
+      "from_label": "Da",
+      "mailbox_label": "Casella",
+      "received_label": "Ricevuta",
+      "replies_label": "Risposte",
+      "no_inquiries": "Nessuna richiesta",
+      "detail_title": "Dettagli richiesta",
+      "detail_message": "Messaggio",
+      "detail_replies": "Cronologia risposte",
+      "detail_no_replies": "Nessuna risposta ancora",
+      "reply_label": "La tua risposta",
+      "reply_placeholder": "Scrivi la tua risposta...",
+      "send_reply": "Invia risposta",
+      "sending_reply": "Invio in corso...",
+      "change_status": "Stato",
+      "reply_success": "Risposta inviata",
+      "reply_error": "Invio risposta fallito. Riprova.",
+      "status_updated": "Stato aggiornato",
+      "status_error": "Aggiornamento stato fallito. Riprova."
     },
     "support": {
       "new_complaint_btn": "Nuovo reclamo",

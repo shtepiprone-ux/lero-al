@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
-  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck,
+  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, Inbox,
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
@@ -55,8 +55,9 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
       items: [
         { href: '/admin/listings',  label: t('item_listings'),  icon: ListChecks },
         { href: '/admin/users',     label: t('item_users'),     icon: Users },
-        { href: '/admin/support',   label: t('item_support'),   icon: MessageSquare },
-        { href: '/admin/reports',   label: t('item_reports'),   icon: Flag },
+        { href: '/admin/support',    label: t('item_support'),    icon: MessageSquare },
+        { href: '/admin/inquiries',  label: t('item_inquiries'),  icon: Inbox },
+        { href: '/admin/reports',    label: t('item_reports'),    icon: Flag },
       ],
     },
     {

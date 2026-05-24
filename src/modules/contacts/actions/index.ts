@@ -2,7 +2,12 @@
 
 import { headers } from 'next/headers'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { sendContactInquiryNotification } from '@/modules/notifications/lib/emails/contactInquiry'
+import { getUser } from '@/lib/auth/server'
+import {
+  sendContactInquiryNotification,
+  sendContactInquiryReply,
+} from '@/modules/notifications/lib/emails/contactInquiry'
+import type { ContactStatus } from '@/types/database'
 
 // ── Topic → mailbox routing ───────────────────────────────────────────────────
 //
@@ -118,6 +123,108 @@ export async function submitContactInquiry(
     message,
     locale: 'en',
   }).catch(e => console.error('[contact-inquiry] email notification failed', e))
+
+  return {}
+}
+
+// ── Admin actions ─────────────────────────────────────────────────────────────
+
+const VALID_STATUSES: ContactStatus[] = ['new', 'in_progress', 'closed']
+
+async function assertAdminOrModerator(): Promise<string | null> {
+  const user = await getUser()
+  if (!user) return null
+  const db = createAdminClient()
+  const { data } = await db.from('users').select('role').eq('id', user.id).single()
+  if (!data || !['admin', 'moderator'].includes(data.role)) return null
+  return user.id
+}
+
+export async function updateInquiryStatus(
+  inquiryId: string,
+  status: string,
+): Promise<{ error?: string }> {
+  const actorId = await assertAdminOrModerator()
+  if (!actorId) return { error: 'forbidden' }
+  if (!VALID_STATUSES.includes(status as ContactStatus)) return { error: 'invalid_status' }
+
+  const db = createAdminClient()
+  const { error } = await db
+    .from('contact_inquiries')
+    .update({
+      status,
+      handled_by: actorId,
+      handled_at: new Date().toISOString(),
+    })
+    .eq('id', inquiryId)
+
+  if (error) {
+    console.error('[contact-inquiry] status update failed', error)
+    return { error: 'save_failed' }
+  }
+  return {}
+}
+
+export async function sendInquiryReply(
+  inquiryId: string,
+  body: string,
+): Promise<{ error?: string }> {
+  const actorId = await assertAdminOrModerator()
+  if (!actorId) return { error: 'forbidden' }
+
+  const trimmedBody = body.trim()
+  if (!trimmedBody || trimmedBody.length < 5) return { error: 'validation' }
+
+  const db = createAdminClient()
+
+  // Load inquiry to get target_mailbox, email, topic, custom_subject
+  const { data: inquiry, error: fetchError } = await db
+    .from('contact_inquiries')
+    .select('id, email, topic, custom_subject, target_mailbox')
+    .eq('id', inquiryId)
+    .single()
+
+  if (fetchError || !inquiry) return { error: 'not_found' }
+
+  // Insert reply record
+  const { error: insertError } = await db.from('contact_inquiry_replies').insert({
+    inquiry_id: inquiryId,
+    replied_by: actorId,
+    body: trimmedBody,
+  })
+
+  if (insertError) {
+    console.error('[contact-inquiry] reply insert failed', insertError)
+    return { error: 'save_failed' }
+  }
+
+  // Update inquiry: increment reply_count, set handled_by/handled_at, move to in_progress if still new
+  const { data: current } = await db
+    .from('contact_inquiries')
+    .select('status, reply_count')
+    .eq('id', inquiryId)
+    .single()
+
+  await db.from('contact_inquiries').update({
+    reply_count: (current?.reply_count ?? 0) + 1,
+    handled_by: actorId,
+    handled_at: new Date().toISOString(),
+    ...(current?.status === 'new' ? { status: 'in_progress' } : {}),
+  }).eq('id', inquiryId)
+
+  // Send reply email — fire-and-forget
+  const displaySubject =
+    inquiry.topic === 'other' && inquiry.custom_subject
+      ? inquiry.custom_subject
+      : inquiry.topic
+
+  sendContactInquiryReply({
+    to: inquiry.email,
+    fromMailbox: inquiry.target_mailbox,
+    displaySubject,
+    replyBody: trimmedBody,
+    locale: 'en',
+  }).catch(e => console.error('[contact-inquiry] reply email failed', e))
 
   return {}
 }

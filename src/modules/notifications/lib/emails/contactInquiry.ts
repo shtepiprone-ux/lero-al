@@ -162,3 +162,116 @@ export async function sendContactInquiryNotification(opts: {
     })
   }
 }
+
+// ── Staff reply to user ───────────────────────────────────────────────────────
+
+const REPLY_STRINGS: Record<string, {
+  subject: (topic: string) => string
+  heading: string
+  body: string
+  replyHint: string
+}> = {
+  sq: {
+    subject: (topic) => `Përgjigje ndaj kërkesës suaj — ${topic}`,
+    heading: 'Kemi marrë mesazhin tuaj',
+    body: 'Ekipi ynë i mbështetjes ju dërgon këtë përgjigje ndaj kërkesës tuaj:',
+    replyHint: 'Nëse keni pyetje të mëtejshme, mund të përgjigjeni drejtpërdrejt ndaj këtij emaili.',
+  },
+  en: {
+    subject: (topic) => `Reply to your inquiry — ${topic}`,
+    heading: 'We\'ve received your message',
+    body: 'Our support team has sent you the following reply:',
+    replyHint: 'If you have further questions, you can reply directly to this email.',
+  },
+  uk: {
+    subject: (topic) => `Відповідь на ваш запит — ${topic}`,
+    heading: 'Ми отримали ваше повідомлення',
+    body: 'Наша команда підтримки надсилає вам таку відповідь:',
+    replyHint: 'Якщо у вас виникнуть додаткові запитання, ви можете відповісти безпосередньо на цей лист.',
+  },
+  it: {
+    subject: (topic) => `Risposta alla tua richiesta — ${topic}`,
+    heading: 'Abbiamo ricevuto il tuo messaggio',
+    body: 'Il nostro team di supporto ti ha inviato la seguente risposta:',
+    replyHint: 'Se hai ulteriori domande, puoi rispondere direttamente a questa email.',
+  },
+}
+
+function getReplyStrings(locale: string) {
+  return REPLY_STRINGS[locale] ?? REPLY_STRINGS.en
+}
+
+function buildReplyHtml(opts: {
+  replyBody: string
+  displaySubject: string
+  fromMailbox: string
+  locale: string
+}): string {
+  const s = getReplyStrings(opts.locale)
+  const year = new Date().getFullYear()
+  const safeBody = opts.replyBody
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\n/g, '<br />')
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lero.al</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:40px 32px;border:1px solid #e4e4e7;">
+        <tr><td>
+          <div style="font-size:22px;font-weight:700;color:#EC5447;margin-bottom:8px;">Lero.al</div>
+          <h2 style="font-size:18px;font-weight:600;color:#18181b;margin:0 0 12px;">${s.heading}</h2>
+          <p style="font-size:14px;color:#71717a;margin:0 0 20px;">${s.body}</p>
+          <div style="background:#f9f9fb;border-left:3px solid #EC5447;padding:16px;border-radius:0 6px 6px 0;font-size:14px;color:#27272a;line-height:1.7;margin-bottom:24px;">
+            ${safeBody}
+          </div>
+          <p style="font-size:13px;color:#71717a;border-top:1px solid #e4e4e7;padding-top:16px;margin:0;">${s.replyHint}</p>
+          <div style="margin-top:32px;border-top:1px solid #e4e4e7;padding-top:16px;font-size:12px;color:#a1a1aa;">
+            © ${year} Lero.al
+          </div>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+}
+
+export async function sendContactInquiryReply(opts: {
+  to: string
+  fromMailbox: string
+  displaySubject: string
+  replyBody: string
+  locale?: string
+}): Promise<void> {
+  const locale = opts.locale ?? 'sq'
+  const s = getReplyStrings(locale)
+
+  const result = await sendEmail({
+    from: `Lero.al <${opts.fromMailbox}>`,
+    to: opts.to,
+    replyTo: opts.fromMailbox,
+    subject: s.subject(opts.displaySubject),
+    html: buildReplyHtml({
+      replyBody: opts.replyBody,
+      displaySubject: opts.displaySubject,
+      fromMailbox: opts.fromMailbox,
+      locale,
+    }),
+  })
+
+  if (result.error) {
+    console.error('[contact-inquiry] Failed to send reply email', {
+      to: opts.to,
+      error: result.error,
+    })
+  }
+}

@@ -596,7 +596,8 @@
       "item_companies": "Companies",
       "item_email_templates": "Email templates",
       "item_popular_locations": "Popular Locations",
-      "item_permissions": "Permissions"
+      "item_permissions": "Permissions",
+      "item_inquiries": "Inquiries"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -697,7 +698,40 @@
       "email_templates_title": "Email templates",
       "email_templates_subtitle": "{count} templates",
       "popular_locations_title": "Popular Locations",
-      "popular_locations_subtitle": "{count} featured locations"
+      "popular_locations_subtitle": "{count} featured locations",
+      "inquiries_title": "Contact Inquiries",
+      "inquiries_subtitle": "{count} inquiries"
+    },
+    "inquiries": {
+      "filter_all": "All",
+      "filter_new": "New",
+      "filter_in_progress": "In progress",
+      "filter_closed": "Closed",
+      "filter_mailbox_all": "All mailboxes",
+      "filter_mailbox_support": "Support",
+      "filter_mailbox_sales": "Sales",
+      "status_new": "New",
+      "status_in_progress": "In progress",
+      "status_closed": "Closed",
+      "topic_label": "Topic",
+      "from_label": "From",
+      "mailbox_label": "Mailbox",
+      "received_label": "Received",
+      "replies_label": "Replies",
+      "no_inquiries": "No inquiries",
+      "detail_title": "Inquiry Details",
+      "detail_message": "Message",
+      "detail_replies": "Reply history",
+      "detail_no_replies": "No replies yet",
+      "reply_label": "Your reply",
+      "reply_placeholder": "Type your reply...",
+      "send_reply": "Send reply",
+      "sending_reply": "Sending...",
+      "change_status": "Status",
+      "reply_success": "Reply sent",
+      "reply_error": "Failed to send reply. Please try again.",
+      "status_updated": "Status updated",
+      "status_error": "Failed to update status. Please try again."
     },
     "support": {
       "new_complaint_btn": "New complaint",

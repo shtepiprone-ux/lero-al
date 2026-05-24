@@ -66,6 +66,14 @@ export interface ContactInquiry {
   reply_count: number
 }
 
+export interface ContactInquiryReply {
+  id: string
+  inquiry_id: string
+  replied_by: string
+  body: string
+  created_at: string
+}
+
 export interface RolePermission {
   role: string
   permission_key: string

@@ -6,13 +6,12 @@
 
 **2026-05-24 — Task 199 — R.5: Support — manual ticket creation + status notifications ✅**
 
-- Schema (owner must run SQL — see session log): `support_tickets` +5 cols (`reported_user_id`, `reason`, `created_by_admin_id`, `ticket_type`, `updated_at`); RLS added (was missing entirely — 5 policies: select_own, insert_own hardened, admin_select/insert/update, no DELETE); `updated_at` trigger reuses existing `update_updated_at_column()`. New `support_ticket_events` table (9 cols, CHECK on `event_type`, SELECT+INSERT-only RLS — append-only audit trail). 4 indexes.
-- New `createSupportTicket` action: validates both user IDs exist; creates `user_complaint` ticket; records `created` event; notifies `reported_user_id` (type `support_reply`, locale-resolved, sq/en/uk/it strings).
-- New `updateTicketStatus` action: records `status_changed` event; notifies `reported_user_id` on `resolved`/`closed` (type `report_outcome`).
-- New `AdminSupportManager` client component: stats row, type + status filter buttons, ticket table (reporter/reported/type/status/updated columns), `CreateComplaintDialog` (UUID inputs + subject + reason), `TicketDetailDialog` (metadata grid, reason, status change control with note, event timeline).
-- `support/page.tsx`: fetches tickets with 3 user joins + all events; passes to component.
-- 4 locale files: `admin.support.*` (44 keys × 4 locales).
-- `tsc --noEmit` → 0 errors.
+- Schema (owner must run SQL — see session log): `support_tickets` +5 cols; RLS added (5 policies, no DELETE); `support_ticket_events` (9 cols, append-only RLS). 4 indexes.
+- New `createSupportTicket` + `updateTicketStatus` + `searchUsersForPicker` server actions.
+- New `AdminSupportManager`: stats row, filters, ticket table, `CreateComplaintDialog` (searchable `UserPickerField` × 2 with `UserCard` preview, same-user guard), `TicketDetailDialog` (reporter/reported UUID shown as secondary under name, event timeline).
+- `UserPickerField`: debounced search (300ms), inline dropdown, click-outside-to-close, clear button.
+- 4 locale files: `admin.support.*` (47 keys × 4 locales — 3 new picker keys added vs. initial 44).
+- `tsc --noEmit` → 0 errors. `eslint --max-warnings=0` → PASS. `npm run build` → ✓.
 
 → [Task 199 session log](sessions/2026-05-24-task-199-support-tickets.md)
 

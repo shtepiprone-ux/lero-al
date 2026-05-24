@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
 import {
   Plus, Loader2, ChevronRight, Clock, User, ShieldAlert,
-  CheckCircle2, XCircle, AlertCircle, Circle,
+  CheckCircle2, XCircle, AlertCircle, Circle, Search, X,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
@@ -16,7 +16,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog'
 import { formatDate } from '@/lib/formatters'
-import { createSupportTicket, updateTicketStatus } from '@/modules/admin/actions'
+import { createSupportTicket, updateTicketStatus, searchUsersForPicker } from '@/modules/admin/actions'
 import type { TicketStatus } from '@/types/database'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -48,6 +48,16 @@ export interface SupportTicketEventRow {
   actor: { name: string | null } | null
 }
 
+interface PickerUser {
+  id: string
+  name: string | null
+  last_name: string | null
+  phone: string | null
+  role: string
+  status: string | null
+  company_name: string | null
+}
+
 type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info' | 'neutral'
 
 const STATUS_VARIANT: Record<string, BadgeVariant> = {
@@ -63,17 +73,164 @@ const STATUS_ICON: Record<string, React.ReactNode> = {
 
 const TICKET_STATUSES: TicketStatus[] = ['open', 'in_progress', 'resolved', 'closed']
 
+function pickerUserName(user: PickerUser): string | null {
+  return [user.name, user.last_name].filter(Boolean).join(' ') || null
+}
+
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function UserLink({ user, label }: { user: { id: string; name: string | null } | null; label: string }) {
+function UserLink({ user, label, showUuid }: { user: { id: string; name: string | null } | null; label: string; showUuid?: boolean }) {
   if (!user) return <span className="text-muted-foreground/60 text-xs">{label}</span>
+  const displayName = user.name
   return (
-    <Link
-      href={`/admin/users/${user.id}`}
-      className="text-xs font-medium hover:text-primary transition-colors truncate max-w-[120px] block"
-    >
-      {user.name ?? user.id.slice(0, 8) + '…'}
-    </Link>
+    <div>
+      <Link
+        href={`/admin/users/${user.id}`}
+        className="text-xs font-medium hover:text-primary transition-colors truncate max-w-[120px] block"
+      >
+        {displayName ?? user.id.slice(0, 8) + '…'}
+      </Link>
+      {showUuid && displayName && (
+        <span className="text-[10px] text-muted-foreground/50 font-mono block truncate max-w-[120px]">
+          {user.id.slice(0, 8)}…
+        </span>
+      )}
+    </div>
+  )
+}
+
+function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) {
+  const fullName = pickerUserName(user)
+  const USER_STATUS_VARIANT: Record<string, BadgeVariant> = { active: 'success', blocked: 'destructive' }
+  const statusVariant: BadgeVariant = USER_STATUS_VARIANT[user.status ?? ''] ?? 'neutral'
+  return (
+    <div className="flex items-start gap-2 p-2.5 rounded-lg border bg-muted/30">
+      <div className="flex-1 min-w-0 space-y-0.5">
+        <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <Badge variant="outline" className="text-[10px] h-4 px-1">{user.role}</Badge>
+          {user.status && (
+            <Badge variant={statusVariant} className="text-[10px] h-4 px-1">{user.status}</Badge>
+          )}
+          {user.phone && <span className="text-xs text-muted-foreground">{user.phone}</span>}
+        </div>
+        {user.company_name && (
+          <p className="text-xs text-muted-foreground truncate">{user.company_name}</p>
+        )}
+        <p className="text-[10px] text-muted-foreground/50 font-mono">{user.id.slice(0, 8)}…</p>
+      </div>
+      <button
+        type="button"
+        onClick={onClear}
+        className="shrink-0 p-0.5 rounded text-muted-foreground hover:text-foreground transition-colors"
+        aria-label="Clear selection"
+      >
+        <X className="h-3.5 w-3.5" />
+      </button>
+    </div>
+  )
+}
+
+function UserPickerField({
+  label, icon, value, onChange, error, placeholder,
+}: {
+  label: string
+  icon: React.ReactNode
+  value: PickerUser | null
+  onChange: (user: PickerUser | null) => void
+  error?: string
+  placeholder?: string
+}) {
+  const t = useTranslations('admin.support')
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState<PickerUser[]>([])
+  const [isSearching, setIsSearching] = useState(false)
+  const [open, setOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (query.length < 2) {
+      setResults([])
+      setOpen(false)
+      return
+    }
+    setIsSearching(true)
+    const timer = setTimeout(async () => {
+      const res = await searchUsersForPicker(query)
+      setResults(res)
+      setIsSearching(false)
+      setOpen(true)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [query])
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  function handleSelect(user: PickerUser) {
+    onChange(user)
+    setQuery('')
+    setResults([])
+    setOpen(false)
+  }
+
+  return (
+    <div className="space-y-1.5">
+      <label className="text-sm font-medium flex items-center gap-1.5">
+        {icon}
+        {label}
+      </label>
+      {value ? (
+        <UserCard user={value} onClear={() => onChange(null)} />
+      ) : (
+        <div ref={containerRef} className="relative">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+            <Input
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              placeholder={placeholder}
+              className="pl-8 text-sm"
+            />
+            {isSearching && (
+              <Loader2 className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 animate-spin text-muted-foreground" />
+            )}
+          </div>
+          {open && (
+            <div className="absolute z-50 top-full mt-1 left-0 right-0 bg-popover border rounded-lg shadow-lg overflow-hidden">
+              {results.length === 0 ? (
+                <p className="px-3 py-2 text-sm text-muted-foreground">{t('no_results')}</p>
+              ) : results.map(u => {
+                const fullName = pickerUserName(u)
+                return (
+                  <button
+                    key={u.id}
+                    type="button"
+                    onMouseDown={() => handleSelect(u)}
+                    className="w-full text-left px-3 py-2 hover:bg-muted/50 transition-colors border-t first:border-t-0"
+                  >
+                    <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
+                    <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
+                      <Badge variant="outline" className="text-[10px] h-4 px-1">{u.role}</Badge>
+                      {u.phone && <span className="text-xs text-muted-foreground">{u.phone}</span>}
+                    </div>
+                    <p className="text-[10px] text-muted-foreground/50 font-mono mt-0.5">{u.id.slice(0, 8)}…</p>
+                  </button>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
+      {error && <p className="text-xs text-destructive">{error}</p>}
+    </div>
   )
 }
 
@@ -129,11 +286,11 @@ function TicketDetailDialog({
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div className="space-y-0.5">
               <p className="text-xs text-muted-foreground">{t('col_reporter')}</p>
-              <UserLink user={ticket.reporter} label="—" />
+              <UserLink user={ticket.reporter} label="—" showUuid />
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-muted-foreground">{t('col_reported')}</p>
-              <UserLink user={ticket.reported} label="—" />
+              <UserLink user={ticket.reported} label="—" showUuid />
             </div>
             <div className="space-y-0.5">
               <p className="text-xs text-muted-foreground">{t('col_created_by')}</p>
@@ -248,21 +405,23 @@ function CreateComplaintDialog({
 }) {
   const t = useTranslations('admin.support')
   const [, startTransition] = useTransition()
-  const [reporterUserId, setReporterUserId] = useState('')
-  const [reportedUserId, setReportedUserId] = useState('')
+  const [reporter, setReporter] = useState<PickerUser | null>(null)
+  const [reported, setReported] = useState<PickerUser | null>(null)
   const [subject, setSubject] = useState('')
   const [reason, setReason] = useState('')
   const [creating, setCreating] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
+  const sameUser = reporter !== null && reported !== null && reporter.id === reported.id
+
   function validate() {
     const e: Record<string, string> = {}
-    if (!reporterUserId.trim()) e.reporter = t('reporter_required')
-    if (!reportedUserId.trim()) e.reported = t('reported_required')
+    if (!reporter) e.reporter = t('reporter_required')
+    if (!reported) e.reported = t('reported_required')
     if (!subject.trim()) e.subject = t('subject_required')
     if (!reason.trim()) e.reason = t('reason_required')
     setErrors(e)
-    return Object.keys(e).length === 0
+    return Object.keys(e).length === 0 && !sameUser
   }
 
   function handleCreate() {
@@ -270,19 +429,16 @@ function CreateComplaintDialog({
     setCreating(true)
     startTransition(async () => {
       const res = await createSupportTicket({
-        reportedUserId: reportedUserId.trim(),
-        reporterUserId: reporterUserId.trim(),
+        reportedUserId: reported!.id,
+        reporterUserId: reporter!.id,
         subject: subject.trim(),
         reason: reason.trim(),
       })
       setCreating(false)
       if (res.error) {
-        if (res.error === 'reported_not_found') setErrors(e => ({ ...e, reported: t('user_not_found') }))
-        else if (res.error === 'reporter_not_found') setErrors(e => ({ ...e, reporter: t('user_not_found') }))
-        else toast.error(t('create_error'))
+        toast.error(t('create_error'))
       } else {
         toast.success(t('create_success'))
-        // Build a minimal optimistic ticket row so the list updates immediately
         onCreated({
           id: res.id!,
           subject: subject.trim(),
@@ -292,8 +448,8 @@ function CreateComplaintDialog({
           assigned_to: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-          reporter: { id: reporterUserId.trim(), name: null },
-          reported: { id: reportedUserId.trim(), name: null },
+          reporter: { id: reporter!.id, name: pickerUserName(reporter!) },
+          reported: { id: reported!.id, name: pickerUserName(reported!) },
           created_by_admin: null,
         })
         onClose()
@@ -309,37 +465,26 @@ function CreateComplaintDialog({
         </DialogHeader>
 
         <div className="space-y-4 py-1">
-          {/* Reporter */}
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium flex items-center gap-1.5">
-              <User className="h-3.5 w-3.5 text-muted-foreground" />
-              {t('reporter_label')}
-            </label>
-            <Input
-              value={reporterUserId}
-              onChange={e => setReporterUserId(e.target.value)}
-              placeholder={t('reporter_placeholder')}
-              className="font-mono text-xs"
-            />
-            {errors.reporter && <p className="text-xs text-destructive">{errors.reporter}</p>}
-          </div>
+          <UserPickerField
+            label={t('reporter_label')}
+            icon={<User className="h-3.5 w-3.5 text-muted-foreground" />}
+            value={reporter}
+            onChange={u => { setReporter(u); setErrors(e => ({ ...e, reporter: '' })) }}
+            error={errors.reporter}
+            placeholder={t('reporter_placeholder')}
+          />
+          <UserPickerField
+            label={t('reported_label')}
+            icon={<ShieldAlert className="h-3.5 w-3.5 text-muted-foreground" />}
+            value={reported}
+            onChange={u => { setReported(u); setErrors(e => ({ ...e, reported: '' })) }}
+            error={errors.reported}
+            placeholder={t('reported_placeholder')}
+          />
+          {sameUser && (
+            <p className="text-xs text-destructive">{t('same_user_warning')}</p>
+          )}
 
-          {/* Reported */}
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium flex items-center gap-1.5">
-              <ShieldAlert className="h-3.5 w-3.5 text-muted-foreground" />
-              {t('reported_label')}
-            </label>
-            <Input
-              value={reportedUserId}
-              onChange={e => setReportedUserId(e.target.value)}
-              placeholder={t('reported_placeholder')}
-              className="font-mono text-xs"
-            />
-            {errors.reported && <p className="text-xs text-destructive">{errors.reported}</p>}
-          </div>
-
-          {/* Subject */}
           <div className="space-y-1.5">
             <label className="text-sm font-medium">{t('subject_label')}</label>
             <Input
@@ -350,7 +495,6 @@ function CreateComplaintDialog({
             {errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}
           </div>
 
-          {/* Reason */}
           <div className="space-y-1.5">
             <label className="text-sm font-medium">{t('reason_label')}</label>
             <Textarea
@@ -367,7 +511,7 @@ function CreateComplaintDialog({
           <Button variant="outline" size="sm" onClick={onClose} disabled={creating}>
             {t('cancel_btn')}
           </Button>
-          <Button size="sm" onClick={handleCreate} disabled={creating}>
+          <Button size="sm" onClick={handleCreate} disabled={creating || sameUser}>
             {creating && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" />}
             {t('create_btn')}
           </Button>
@@ -414,7 +558,6 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
   function handleStatusUpdated(ticketId: string, newStatus: TicketStatus) {
     setItems(prev => prev.map(tk => tk.id === ticketId ? { ...tk, status: newStatus, updated_at: new Date().toISOString() } : tk))
     if (selected?.id === ticketId) setSelected(prev => prev ? { ...prev, status: newStatus } : null)
-    // Add optimistic event
     setAllEvents(prev => [...prev, {
       id: Math.random().toString(),
       ticket_id: ticketId,

@@ -270,10 +270,6 @@ function generateTempPassword(): string {
   return arr.join('')
 }
 
-async function getCallerId(): Promise<string | null> {
-  const user = await getUser()
-  return user?.id ?? null
-}
 
 export async function updateUserProfileFull(
   userId: string,
@@ -473,6 +469,7 @@ export async function deactivateUser(userId: string, reason: string): Promise<{ 
 
   const db = createAdminClient()
   const { data: current } = await db.from('users').select('status').eq('id', userId).single()
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
   const { error } = await db.from('users').update({ status: 'inactive' }).eq('id', userId)
   if (error) { console.error('deactivateUser failed', { error, userId }); return { error: 'update_failed' } }
 
@@ -500,6 +497,7 @@ export async function reactivateUser(userId: string, reason: string): Promise<{ 
 
   const db = createAdminClient()
   const { data: current } = await db.from('users').select('status').eq('id', userId).single()
+  // eslint-disable-next-line no-restricted-syntax -- user status, not listing status
   const { error } = await db.from('users').update({ status: 'active' }).eq('id', userId)
   if (error) { console.error('reactivateUser failed', { error, userId }); return { error: 'update_failed' } }
 
@@ -632,6 +630,37 @@ export async function rejectLocationRequest(userId: string): Promise<{ error?: s
 
 // ── Support tickets ───────────────────────────────────────────────────────────
 
+const FULL_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+export async function searchUsersForPicker(query: string): Promise<{
+  id: string; name: string | null; last_name: string | null; phone: string | null;
+  role: string; status: string | null; company_name: string | null;
+}[]> {
+  await assertAdminAccess()
+  const q = query.trim()
+  if (q.length < 2) return []
+  const db = createAdminClient()
+
+  if (FULL_UUID.test(q)) {
+    const { data } = await db
+      .from('users')
+      .select('id, name, last_name, phone, role, status, company_name')
+      .eq('id', q)
+      .is('deleted_at', null)
+      .limit(1)
+    return data ?? []
+  }
+
+  const { data } = await db
+    .from('users')
+    .select('id, name, last_name, phone, role, status, company_name')
+    .is('deleted_at', null)
+    .or(`name.ilike.%${q}%,last_name.ilike.%${q}%,phone.ilike.%${q}%,company_name.ilike.%${q}%`)
+    .order('name', { ascending: true })
+    .limit(8)
+  return data ?? []
+}
+
 const SUPPORT_NOTIFY_STRINGS: Record<string, { created_title: string; created_body: string; resolved_title: string; resolved_body: string; closed_title: string; closed_body: string }> = {
   sq: {
     created_title: 'Ankesë për llogarinë tuaj',
@@ -747,8 +776,6 @@ export async function createSupportTicket({
 }
 
 const VALID_TICKET_STATUSES = ['open', 'in_progress', 'resolved', 'closed'] as const
-type ValidTicketStatus = typeof VALID_TICKET_STATUSES[number]
-
 export async function updateTicketStatus(
   ticketId: string,
   newStatus: string,
@@ -769,10 +796,12 @@ export async function updateTicketStatus(
   if (fetchError || !ticket) return { error: 'not_found' }
   if (ticket.status === newStatus) return {}
 
+  /* eslint-disable no-restricted-syntax */ // support_tickets status, not listing status
   const { error } = await db
     .from('support_tickets')
     .update({ status: newStatus })
     .eq('id', ticketId)
+  /* eslint-enable no-restricted-syntax */
 
   if (error) {
     console.error('updateTicketStatus failed', { error, ticketId })

@@ -164,7 +164,10 @@ If any of these already exist with weaker definitions, `DROP POLICY IF EXISTS "<
 - `updateTicketStatus(ticketId, newStatus, note?)`: admin/mod; records `status_changed` event; sends in-app notification to `reported_user_id` when `resolved` or `closed` (type `report_outcome`).
 
 ### `src/components/admin/AdminSupportManager.tsx` (new)
-- Client component with: stats row, type + status filter buttons, ticket table, `CreateComplaintDialog` (reporter/reported UUID inputs + subject + reason), `TicketDetailDialog` (metadata grid, reason block, status change control, event timeline).
+- Client component with: stats row, type + status filter buttons, ticket table, `CreateComplaintDialog` (searchable user picker × 2, subject, reason), `TicketDetailDialog` (metadata grid with reporter/reported UUID shown as secondary, reason block, status change control, event timeline).
+- `PickerUser` interface; `UserCard` component (name, role badge, status badge, phone, company, truncated UUID); `UserPickerField` (debounced 300ms search via `searchUsersForPicker`, inline dropdown, click-outside-to-close, selected-user card + clear button).
+- Same-user guard: warning shown + Create button disabled when reporter.id === reported.id.
+- `UserLink` updated with `showUuid` prop: when `showUuid` and name exists, renders truncated UUID below name (used in TicketDetailDialog metadata grid for reporter/reported cells).
 
 ### `src/app/admin/support/page.tsx`
 - Refactored: fetches tickets with three user joins + all events in one query; passes to `AdminSupportManager`.
@@ -172,5 +175,16 @@ If any of these already exist with weaker definitions, `DROP POLICY IF EXISTS "<
 ### `messages/en.json`, `messages/sq.json`, `messages/uk.json`, `messages/it.json`
 - Added `admin.support.*` section (44 keys × 4 locales).
 
-## TypeScript
-`tsc --noEmit` → 0 errors.
+### `src/modules/admin/actions/index.ts` (UX fix additions)
+- Added `searchUsersForPicker(query)`: admin-only; UUID-exact-match branch + ILIKE text search on `name`/`last_name`/`phone`/`company_name`; excludes `deleted_at IS NOT NULL`; limit 8.
+- Added `eslint-disable-next-line` comments for pre-existing `no-restricted-syntax` false-positives on non-listing `.update({ status })` calls (`users` in deactivate/reactivate, `support_tickets` in updateTicketStatus).
+- Removed unused `getCallerId` function and `ValidTicketStatus` type alias.
+
+### `messages/*.json` (UX fix: 3 keys updated, 3 keys added per locale)
+- Updated: `reporter_label`, `reporter_placeholder`, `reported_label`, `reported_placeholder`, `reporter_required`, `reported_required` — removed UUID language; added search-by-name copy.
+- Added: `same_user_warning`, `no_results`, `searching` in all 4 locales (sq/en/uk/it).
+
+## TypeScript + Lint + Build
+`tsc --noEmit` → 0 errors.  
+`eslint` (changed files, --max-warnings=0) → 0 errors, 0 warnings.  
+`npm run build` → ✓ compiled successfully.

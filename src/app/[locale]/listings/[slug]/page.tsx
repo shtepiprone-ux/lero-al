@@ -21,7 +21,6 @@ import { ViewTracker } from '@/modules/listings/components/ViewTracker'
 import { RecentlyViewedTracker } from '@/modules/listings/components/RecentlyViewedTracker'
 import { RecentlyViewedSection, RecentlyViewedSkeleton } from '@/modules/listings/components/RecentlyViewedSection'
 import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
-import { ListingDescriptionTranslator } from '@/modules/listings/components/ListingDescriptionTranslator'
 import { formatPrice } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
 import { isListingArchived, isListingVisible } from '@/modules/listings/domain'
@@ -432,12 +431,12 @@ export default async function ListingPage({ params }: Props) {
               </div>
             )}
 
-            {/* Description with on-demand translation */}
+            {/* Description */}
             {listing.description && (
-              <ListingDescriptionTranslator
-                description={listing.description}
-                label={t('description_label')}
-              />
+              <div className="rounded-2xl border bg-card shadow-sm p-5">
+                <h2 className="font-bold text-lg mb-3">{t('description_label')}</h2>
+                <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{listing.description}</p>
+              </div>
             )}
 
             {/* Additional details */}

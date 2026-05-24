@@ -17,7 +17,7 @@ const GALLERY_MAIN_ENTRIES = [
   { w: 1600, h: 900 },
 ] as const
 /** sizes must match gallery-main variant in appImageConfig.ts */
-export const GALLERY_MAIN_SIZES = '(max-width: 768px) 100vw, 50vw'
+export const GALLERY_MAIN_SIZES = '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 34vw'
 
 function insertCloudinaryTransform(src: string, transform: string): string {
   if (!src.includes('res.cloudinary.com')) return src
@@ -55,9 +55,9 @@ export function buildGalleryMainPreloadAttrs(src: string | null | undefined): {
 /**
  * Returns the 640w Cloudinary variant URL for use as an HTTP Link preload href.
  *
- * Why 640w: at desktop 1280px DPR=1 with sizes="(max-width: 768px) 100vw, 50vw",
- * 50vw = 640px → browser selects the 640w srcset entry. This must match the href
- * exactly for the preload to be reused by the <img> request.
+ * Why 640w: at desktop 1280px DPR=1 with sizes="... 34vw", 34vw = 435px →
+ * browser selects the 640w srcset entry (smallest ≥ 435px). This must match the
+ * href exactly for the preload to be reused by the <img> request.
  *
  * href-only (no imagesrcset): avoids commas inside the srcset value corrupting
  * combined HTTP Link headers when mixed with hreflang alternate entries.

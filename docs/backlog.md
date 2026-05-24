@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-24 — Task 207 — T.3: Remove dead "Translate" button ✅**
+**2026-05-24 — Task 208 — U.1: Preload w_640 vs rendered width mismatch ✅**
+
+- Root cause: `sizes="(max-width: 768px) 100vw, 50vw"` had two bugs: (1) at exactly 768px `md:col-span-2` activates (image → ~50%) but `max-width: 768px` still returned `100vw=768px` → browser picked `960w` while HTTP Link preloaded `w_640` → mismatch warning; (2) at `lg+`, `320px` sidebar reduces gallery-main to ~`34vw`, not `50vw`.
+- Fix: `(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 34vw` — aligns with Tailwind `md`/`lg` breakpoints and sidebar layout.
+- Changed in 2 files: `src/lib/imageDelivery.ts` (`GALLERY_MAIN_SIZES`) + `src/components/ui/appImageConfig.ts` (`gallery-main.sizes`). `buildGalleryLcpPreloadHref` (HTTP Link) unchanged — w_640 still correct at 1280px DPR=1.
+- `tsc --noEmit` → 0 errors. LCP preload chain intact.
+
+→ [Task 208 session log](sessions/2026-05-24-task-208-preload-size-mismatch.md)
+
+**Previous: 2026-05-24 — Task 207 — T.3: Remove dead "Translate" button ✅**
 
 - Deleted `ListingDescriptionTranslator.tsx`, `/api/translate/route.ts`, `src/lib/translation/providers.ts` (entire dead translation stack from Task 102).
 - Detail page: removed import; replaced `<ListingDescriptionTranslator>` with a plain `rounded-2xl border bg-card` description card (same visual wrapper, no translator state).
@@ -410,7 +419,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
 **224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
-**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). Next: **U (208–209)**, then **Epic V — Contacts LAST** (222–223). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
+**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). **U**: 208 ✅ · 209 open. Next: **209**, then **Epic V — Contacts LAST** (222–223). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
@@ -467,6 +476,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 208 — U.1 preload mismatch: corrected gallery-main sizes from `50vw` to `(max-width:767px) 100vw, (max-width:1023px) 50vw, 34vw`; resolves 768px off-by-one + sidebar accounting | Task 208 | [sessions/2026-05-24-task-208-preload-size-mismatch.md](sessions/2026-05-24-task-208-preload-size-mismatch.md) |
 | 2026-05-24 | Task 207 — T.3 remove Translate button: deleted ListingDescriptionTranslator + /api/translate + lib/translation; plain description card; 5 keys × 4 locales removed | Task 207 | [sessions/2026-05-24-task-207-remove-translate-button.md](sessions/2026-05-24-task-207-remove-translate-button.md) |
 | 2026-05-24 | Task 206 — T.2 validation UX: ListingFormShell scrollToFirstError helper + field IDs; AdminUserProfile onInvalid + section IDs | Task 206 | [sessions/2026-05-24-task-206-validation-ux.md](sessions/2026-05-24-task-206-validation-ux.md) |
 | 2026-05-24 | Task 205 — T.1 action toasts audit: 4 gaps filled (verify/revoke, premium set/remove, listing delete, favorite error); 6 keys × 4 locales | Task 205 | [sessions/2026-05-24-task-205-action-toasts-audit.md](sessions/2026-05-24-task-205-action-toasts-audit.md) |

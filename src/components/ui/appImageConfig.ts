@@ -127,7 +127,7 @@ export const VARIANTS: Record<ImageVariant, VariantConfig> = {
     containerClass: 'relative w-full h-full overflow-hidden',
     imageClass: 'object-cover',
     hoverClass: 'group-hover:brightness-95',
-    sizes: '(max-width: 768px) 100vw, 50vw',
+    sizes: '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 34vw',
     cloudinaryTransform: 'w_1200,h_675,c_fill,g_auto,f_auto,q_auto,dpr_auto',
     srcsetBase: 'c_fill,g_auto,f_auto,q_auto',
     // Heights cap the download size to the gallery container's visible area

@@ -8,6 +8,8 @@ import type { ListingStatus, UserRole, UserType } from '@/types/database'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 import { routing } from '@/i18n/routing'
 import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
+import { createNotification } from '@/modules/notifications/lib/mutations'
+import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
 
 // ── Actor resolution ──────────────────────────────────────────────────────────
 //
@@ -625,5 +627,185 @@ export async function rejectLocationRequest(userId: string): Promise<{ error?: s
   revalidatePath(`/admin/users/${userId}`)
   revalidatePath('/admin/users')
   revalidatePath('/admin')
+  return {}
+}
+
+// ── Support tickets ───────────────────────────────────────────────────────────
+
+const SUPPORT_NOTIFY_STRINGS: Record<string, { created_title: string; created_body: string; resolved_title: string; resolved_body: string; closed_title: string; closed_body: string }> = {
+  sq: {
+    created_title: 'Ankesë për llogarinë tuaj',
+    created_body: 'Administratori ka hapur një ankesë lidhur me llogarinë tuaj. Ekipi ynë do ta shqyrtojë.',
+    resolved_title: 'Çështja juaj u zgjidh',
+    resolved_body: 'Ankesa lidhur me llogarinë tuaj u shqyrtua dhe u zgjidh nga ekipi ynë.',
+    closed_title: 'Çështja juaj u mbyll',
+    closed_body: 'Ankesa lidhur me llogarinë tuaj u mbyll nga ekipi ynë.',
+  },
+  en: {
+    created_title: 'A complaint about your account',
+    created_body: 'An administrator has opened a complaint about your account. Our team will review it.',
+    resolved_title: 'Your case has been resolved',
+    resolved_body: 'The complaint about your account has been reviewed and resolved by our team.',
+    closed_title: 'Your case has been closed',
+    closed_body: 'The complaint about your account has been closed by our team.',
+  },
+  uk: {
+    created_title: 'Скарга на ваш акаунт',
+    created_body: 'Адміністратор відкрив скаргу щодо вашого акаунту. Наша команда її розгляне.',
+    resolved_title: 'Вашу справу вирішено',
+    resolved_body: 'Скаргу щодо вашого акаунту розглянуто і вирішено нашою командою.',
+    closed_title: 'Вашу справу закрито',
+    closed_body: 'Скаргу щодо вашого акаунту закрито нашою командою.',
+  },
+  it: {
+    created_title: 'Un reclamo sul tuo account',
+    created_body: 'Un amministratore ha aperto un reclamo riguardante il tuo account. Il nostro team lo esaminerà.',
+    resolved_title: 'Il tuo caso è stato risolto',
+    resolved_body: 'Il reclamo riguardante il tuo account è stato esaminato e risolto dal nostro team.',
+    closed_title: 'Il tuo caso è stato chiuso',
+    closed_body: 'Il reclamo riguardante il tuo account è stato chiuso dal nostro team.',
+  },
+}
+
+function getSupportNotifyStrings(locale: string) {
+  return SUPPORT_NOTIFY_STRINGS[locale] ?? SUPPORT_NOTIFY_STRINGS.en
+}
+
+export async function createSupportTicket({
+  reportedUserId,
+  reporterUserId,
+  subject,
+  reason,
+}: {
+  reportedUserId: string
+  reporterUserId: string
+  subject: string
+  reason: string
+}): Promise<{ id?: string; error?: string }> {
+  const actor = await resolveAdminActor()
+  if (!reportedUserId.trim()) return { error: 'reported_required' }
+  if (!reporterUserId.trim()) return { error: 'reporter_required' }
+  if (!subject.trim()) return { error: 'subject_required' }
+  if (!reason.trim()) return { error: 'reason_required' }
+
+  const db = createAdminClient()
+
+  // Verify both users exist
+  const { data: users } = await db
+    .from('users')
+    .select('id')
+    .in('id', [reportedUserId, reporterUserId])
+  const foundIds = (users ?? []).map(u => u.id)
+  if (!foundIds.includes(reportedUserId)) return { error: 'reported_not_found' }
+  if (!foundIds.includes(reporterUserId)) return { error: 'reporter_not_found' }
+
+  const { data: ticket, error } = await db
+    .from('support_tickets')
+    .insert({
+      user_id: reporterUserId,
+      reported_user_id: reportedUserId,
+      subject: subject.trim(),
+      reason: reason.trim(),
+      created_by_admin_id: actor.userId,
+      ticket_type: 'user_complaint',
+      status: 'open',
+    })
+    .select('id')
+    .single()
+
+  if (error || !ticket) {
+    console.error('createSupportTicket failed', { error })
+    return { error: 'create_failed' }
+  }
+
+  // Record creation event
+  try {
+    await db.from('support_ticket_events').insert({
+      ticket_id: ticket.id,
+      actor_user_id: actor.userId,
+      actor_role: actor.role,
+      event_type: 'created',
+      new_status: 'open',
+      note: reason.trim(),
+    })
+  } catch {}
+
+  // Notify the reported user
+  try {
+    const locale = await resolveUserLocale(reportedUserId)
+    const s = getSupportNotifyStrings(locale)
+    await createNotification({
+      userId: reportedUserId,
+      type: 'support_reply',
+      title: s.created_title,
+      body: s.created_body,
+    })
+  } catch {}
+
+  revalidatePath('/admin/support')
+  return { id: ticket.id }
+}
+
+const VALID_TICKET_STATUSES = ['open', 'in_progress', 'resolved', 'closed'] as const
+type ValidTicketStatus = typeof VALID_TICKET_STATUSES[number]
+
+export async function updateTicketStatus(
+  ticketId: string,
+  newStatus: string,
+  note?: string,
+): Promise<{ error?: string }> {
+  if (!(VALID_TICKET_STATUSES as readonly string[]).includes(newStatus)) {
+    return { error: 'invalid_status' }
+  }
+  const actor = await resolveAdminActor()
+  const db = createAdminClient()
+
+  const { data: ticket, error: fetchError } = await db
+    .from('support_tickets')
+    .select('status, reported_user_id')
+    .eq('id', ticketId)
+    .single()
+
+  if (fetchError || !ticket) return { error: 'not_found' }
+  if (ticket.status === newStatus) return {}
+
+  const { error } = await db
+    .from('support_tickets')
+    .update({ status: newStatus })
+    .eq('id', ticketId)
+
+  if (error) {
+    console.error('updateTicketStatus failed', { error, ticketId })
+    return { error: 'update_failed' }
+  }
+
+  // Record status change event
+  try {
+    await db.from('support_ticket_events').insert({
+      ticket_id: ticketId,
+      actor_user_id: actor.userId,
+      actor_role: actor.role,
+      event_type: 'status_changed',
+      old_status: ticket.status,
+      new_status: newStatus,
+      note: note?.trim() || null,
+    })
+  } catch {}
+
+  // Notify reported user when ticket is resolved or closed
+  if (ticket.reported_user_id && (newStatus === 'resolved' || newStatus === 'closed')) {
+    try {
+      const locale = await resolveUserLocale(ticket.reported_user_id)
+      const s = getSupportNotifyStrings(locale)
+      await createNotification({
+        userId: ticket.reported_user_id,
+        type: 'report_outcome',
+        title: newStatus === 'resolved' ? s.resolved_title : s.closed_title,
+        body: newStatus === 'resolved' ? s.resolved_body : s.closed_body,
+      })
+    } catch {}
+  }
+
+  revalidatePath('/admin/support')
   return {}
 }

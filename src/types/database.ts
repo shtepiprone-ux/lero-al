@@ -311,6 +311,24 @@ export interface SupportTicket {
   status: TicketStatus
   assigned_to: string | null
   created_at: string
+  // added Task 199 — R.5
+  reported_user_id: string | null
+  reason: string | null
+  created_by_admin_id: string | null
+  ticket_type: 'support' | 'user_complaint'
+  updated_at: string
+}
+
+export interface SupportTicketEvent {
+  id: string
+  ticket_id: string
+  actor_user_id: string | null
+  actor_role: string | null
+  event_type: 'created' | 'status_changed' | 'note_added' | 'assigned' | 'updated'
+  old_status: string | null
+  new_status: string | null
+  note: string | null
+  created_at: string
 }
 
 export interface SupportMessage {

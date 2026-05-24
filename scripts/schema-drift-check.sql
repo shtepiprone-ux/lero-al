@@ -16,7 +16,8 @@
 --   SavedSearch          → saved_searches           (12 cols)
 --   ListingReport        → listing_reports          (7 cols)
 --   ReportAction         → report_actions           (8 cols)
---   SupportTicket        → support_tickets          (6 cols)
+--   SupportTicket        → support_tickets          (11 cols)
+--   SupportTicketEvent   → support_ticket_events    (9 cols)
 --   Notification         → notifications            (8 cols)
 --   DBCurrency           → currencies               (12 cols)
 --   DBExchangeProvider   → exchange_providers       (11 cols)
@@ -194,6 +195,20 @@ WITH expected(table_name, column_name) AS (
     ('support_tickets', 'status'),
     ('support_tickets', 'assigned_to'),
     ('support_tickets', 'created_at'),
+    ('support_tickets', 'reported_user_id'),
+    ('support_tickets', 'reason'),
+    ('support_tickets', 'created_by_admin_id'),
+    ('support_tickets', 'ticket_type'),
+    ('support_tickets', 'updated_at'),
+    ('support_ticket_events', 'id'),
+    ('support_ticket_events', 'ticket_id'),
+    ('support_ticket_events', 'actor_user_id'),
+    ('support_ticket_events', 'actor_role'),
+    ('support_ticket_events', 'event_type'),
+    ('support_ticket_events', 'old_status'),
+    ('support_ticket_events', 'new_status'),
+    ('support_ticket_events', 'note'),
+    ('support_ticket_events', 'created_at'),
     ('notifications', 'id'),
     ('notifications', 'user_id'),
     ('notifications', 'type'),
@@ -441,6 +456,20 @@ WITH expected(table_name, column_name) AS (
     ('support_tickets', 'status'),
     ('support_tickets', 'assigned_to'),
     ('support_tickets', 'created_at'),
+    ('support_tickets', 'reported_user_id'),
+    ('support_tickets', 'reason'),
+    ('support_tickets', 'created_by_admin_id'),
+    ('support_tickets', 'ticket_type'),
+    ('support_tickets', 'updated_at'),
+    ('support_ticket_events', 'id'),
+    ('support_ticket_events', 'ticket_id'),
+    ('support_ticket_events', 'actor_user_id'),
+    ('support_ticket_events', 'actor_role'),
+    ('support_ticket_events', 'event_type'),
+    ('support_ticket_events', 'old_status'),
+    ('support_ticket_events', 'new_status'),
+    ('support_ticket_events', 'note'),
+    ('support_ticket_events', 'created_at'),
     ('notifications', 'id'),
     ('notifications', 'user_id'),
     ('notifications', 'type'),
@@ -522,6 +551,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'support_ticket_events', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

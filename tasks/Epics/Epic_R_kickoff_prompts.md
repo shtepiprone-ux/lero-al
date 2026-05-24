@@ -77,7 +77,7 @@ Acceptance criteria:
 Out of scope: support tickets (199); RBAC (197) beyond who may hard-delete.
 ```
 
-## Task 199 — R.5 — Support: manual ticket creation + status notifications (Note 29)
+## Task 199 — R.5 — Support: manual ticket creation + status notifications (Note 29) ✅ DONE 2026-05-24
 
 ```
 You are Claude Code Sonnet 4.6 working in `lero-al`.

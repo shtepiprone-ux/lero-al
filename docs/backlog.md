@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-24 — Task 208 — U.1: Preload w_640 vs rendered width mismatch ✅**
+**2026-05-24 — Task 209 — U.2: `/uk/listings?_rsc=` prefetch failure ✅ (no code changes)**
+
+- Investigation confirmed benign transient. `/uk/listings` works identically across all 4 locales; `uk` is valid (`routing.ts`); `ListingsPage` handles all Supabase errors gracefully (renders `listings ?? []`, never throws).
+- Middleware RSC-safe: `isNavigation = request.headers.has('Next-Router-State-Tree')` → `match = null` → no preload header injected → no interference.
+- Root cause: Next.js App Router sends speculative `_rsc=` prefetch requests for dynamic pages and frequently cancels them (user never navigated). Server sees a dropped connection — logged as failure, but no actual user impact.
+- No code changes. `tsc --noEmit` → 0 errors (unchanged). Epic U CLOSED.
+
+→ [Task 209 session log](sessions/2026-05-24-task-209-rsc-prefetch-failure.md)
+
+**Previous: 2026-05-24 — Task 208 — U.1: Preload w_640 vs rendered width mismatch ✅**
 
 - Root cause: `sizes="(max-width: 768px) 100vw, 50vw"` had two bugs: (1) at exactly 768px `md:col-span-2` activates (image → ~50%) but `max-width: 768px` still returned `100vw=768px` → browser picked `960w` while HTTP Link preloaded `w_640` → mismatch warning; (2) at `lg+`, `320px` sidebar reduces gallery-main to ~`34vw`, not `50vw`.
 - Fix: `(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 34vw` — aligns with Tailwind `md`/`lg` breakpoints and sidebar layout.
@@ -419,7 +428,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
 **224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
-**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). **U**: 208 ✅ · 209 open. Next: **209**, then **Epic V — Contacts LAST** (222–223). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
+**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). **Epic U ✅ CLOSED** (208 ✅ · 209 ✅). Next: **Epic V — Contacts (222–223) LAST.** Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
@@ -440,7 +449,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 | R — Admin Panel 2026 | 195–202 | 20, 34, 33, 28, 29, 30, 26, 27 | [`Epic_R_…`](../tasks/Epics/Epic_R_Admin_Panel_2026.md) | [`Epic_R_kickoff_prompts.md`](../tasks/Epics/Epic_R_kickoff_prompts.md) |
 | S — Domain Numeric IDs | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
 | T — Global UX Polish & Forms | 205–207, 213 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
-| U — Performance & RSC Diagnostics | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
+| U — Performance & RSC Diagnostics ✅ | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
 | Sprint 10 — Critical Regressions + UI Consistency | 216–221a | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
 | V — Contacts & Inquiries (LAST) | 222–223 | owner req 2026-05-23 | [`Epic_V_…`](../tasks/Epics/Epic_V_Contacts_and_Inquiries.md) | [`Epic_V_kickoff_prompts.md`](../tasks/Epics/Epic_V_kickoff_prompts.md) |
 
@@ -476,6 +485,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 209 — U.2 RSC prefetch failure: investigation only — benign transient (Next.js cancelled prefetch for dynamic page); no code changes; Epic U CLOSED | Task 209 | [sessions/2026-05-24-task-209-rsc-prefetch-failure.md](sessions/2026-05-24-task-209-rsc-prefetch-failure.md) |
 | 2026-05-24 | Task 208 — U.1 preload mismatch: corrected gallery-main sizes from `50vw` to `(max-width:767px) 100vw, (max-width:1023px) 50vw, 34vw`; resolves 768px off-by-one + sidebar accounting | Task 208 | [sessions/2026-05-24-task-208-preload-size-mismatch.md](sessions/2026-05-24-task-208-preload-size-mismatch.md) |
 | 2026-05-24 | Task 207 — T.3 remove Translate button: deleted ListingDescriptionTranslator + /api/translate + lib/translation; plain description card; 5 keys × 4 locales removed | Task 207 | [sessions/2026-05-24-task-207-remove-translate-button.md](sessions/2026-05-24-task-207-remove-translate-button.md) |
 | 2026-05-24 | Task 206 — T.2 validation UX: ListingFormShell scrollToFirstError helper + field IDs; AdminUserProfile onInvalid + section IDs | Task 206 | [sessions/2026-05-24-task-206-validation-ux.md](sessions/2026-05-24-task-206-validation-ux.md) |

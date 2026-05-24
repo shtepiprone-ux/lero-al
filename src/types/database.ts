@@ -90,6 +90,7 @@ export interface RecentlyViewed {
 
 export interface User {
   id: string
+  public_id: number
   name: string | null
   last_name: string | null
   phone: string | null

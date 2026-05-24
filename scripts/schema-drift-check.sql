@@ -3,7 +3,7 @@
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
---   User                 → users                    (28 cols)
+--   User                 → users                    (29 cols)
 --   UserChangeLog        → user_change_log          (7 cols)
 --   UserStatusHistory    → user_status_history      (7 cols)
 --   EmailChangeToken     → email_change_tokens      (7 cols)
@@ -41,6 +41,7 @@
 WITH expected(table_name, column_name) AS (
   VALUES
     ('users', 'id'),
+    ('users', 'public_id'),
     ('users', 'name'),
     ('users', 'last_name'),
     ('users', 'phone'),
@@ -302,6 +303,7 @@ ORDER BY e.table_name, e.column_name;
 WITH expected(table_name, column_name) AS (
   VALUES
     ('users', 'id'),
+    ('users', 'public_id'),
     ('users', 'name'),
     ('users', 'last_name'),
     ('users', 'phone'),

@@ -824,6 +824,9 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                       )}
                     </div>
                     <p className="text-sm text-muted-foreground">{authEmail}</p>
+                    {user!.public_id != null && (
+                      <p className="text-xs text-muted-foreground/50 font-mono">#{user!.public_id}</p>
+                    )}
                   </>
                 )}
               </div>

@@ -34,6 +34,7 @@ const STATUS_VARIANT: Record<string, BadgeVariant> = {
 
 export interface AdminUser {
   id: string
+  public_id?: number | null
   name: string | null
   last_name: string | null
   phone: string | null
@@ -241,6 +242,9 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                             <p className="text-xs text-status-warning flex items-center gap-1 mt-0.5">
                               <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
                             </p>
+                          )}
+                          {u.public_id != null && (
+                            <p className="text-[11px] text-muted-foreground/50 font-mono leading-none mt-0.5">#{u.public_id}</p>
                           )}
                         </div>
                         {/* Verify toggle — inline, icon-only (no separate Actions column) */}

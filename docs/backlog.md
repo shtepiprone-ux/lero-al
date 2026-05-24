@@ -4,7 +4,19 @@
 
 ## Last Session
 
-**2026-05-24 — Task 200 — R.6: Move Delete into the modal for locations & property types ✅**
+**2026-05-24 — Task 203 — S.1: Numeric user IDs (visible in cabinet & admin) ✅**
+
+- `public_id BIGINT NOT NULL DEFAULT nextval('users_public_id_seq') UNIQUE` added to `users` table (owner must run SQL — see session log). Sequence owned by column; idempotent.
+- `src/types/database.ts`: `public_id: number` added to `User` interface (28 → 29 cols).
+- `scripts/schema-drift-check.sql`: col count updated; `('users', 'public_id')` added to both RESULT SETs.
+- `AdminUsersTable`: `public_id` in SELECT + `AdminUser` interface; `#{u.public_id}` rendered below name in user cell (mono 11px, muted/50).
+- `AdminUserProfile`: `#{user!.public_id}` rendered below authEmail in header card.
+- `ProfileTab` (cabinet): `AdminUserAvatar` wrapped in flex-col; `#{profile.public_id}` caption below avatar.
+- No locale changes (numeric ID needs no translation). `tsc --noEmit` → 0 errors.
+
+→ [Task 203 session log](sessions/2026-05-24-task-203-numeric-user-ids.md)
+
+**Previous: 2026-05-24 — Task 200 — R.6: Move Delete into the modal for locations & property types ✅**
 
 - `AdminLocationsManager`: removed Trash2 from row; added `onDelete?` prop to `LocationModal`; Delete button (destructive, edit mode only) in modal footer calls `onDelete → { setModal(null); setDeleteTarget(loc) }`; confirmation Dialog unchanged.
 - `AdminPropertyTypesManager`: same pattern — `onDelete?` prop added to `PropertyTypeFormDialog`; Delete button (`mr-auto`, edit mode only) in form footer closes form and opens the existing `DeleteDialog`.
@@ -12,23 +24,6 @@
 - `tsc --noEmit` → 0 errors.
 
 → [Task 200 session log](sessions/2026-05-24-task-200-delete-into-modal.md)
-
-**Previous: 2026-05-24 — Task 202 — R.8: price_change_alert email template body ✅**
-
-- Scope already covered by Task 166 (2026-05-22): full HTML bodies seeded for all 4 locales, SQL confirmed applied.
-- Variable parity verified: all 5 cron variables (`listingTitle`, `oldPrice`, `newPrice`, `currency`, `listingUrl`) appear in every locale's body; no orphans; `currency` correctly appended to price strings.
-- No code changes; no new SQL needed. Build and typecheck unaffected.
-
-→ [Task 202 session log](sessions/2026-05-24-task-202-price-change-alert-body.md)
-
-**Previous: 2026-05-24 — Task 201 — R.7: Email-template editor modal width fix ✅**
-
-- Root cause: `sm:max-w-sm` in base `DialogContent`; caller had `max-w-2xl` (no `sm:` prefix) → tailwind-merge kept both → `sm:max-w-sm` won (media-query order) → dialog capped at 384px on desktop, clipping content.
-- Fix: `max-w-2xl max-h-[90vh] overflow-y-auto` → `sm:max-w-2xl`. tailwind-merge now removes `sm:max-w-sm` and replaces with `sm:max-w-2xl` (672px). `max-h-[90vh]` + `overflow-y-auto` were redundant (already in base).
-- Stable 672px width on desktop; `max-w-[calc(100%-2rem)]` base still covers narrow screens.
-- 1-line change. `tsc --noEmit` → 0 errors.
-
-→ [Task 201 session log](sessions/2026-05-24-task-201-email-template-modal-width.md)
 
 **Previous: 2026-05-24 — Task 199 — R.5: Support — manual ticket creation + status notifications ✅**
 
@@ -431,6 +426,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 203 — S.1 numeric user IDs: `public_id BIGINT` sequence added; surfaced in AdminUsersTable, AdminUserProfile, ProfileTab cabinet | Task 203 | [sessions/2026-05-24-task-203-numeric-user-ids.md](sessions/2026-05-24-task-203-numeric-user-ids.md) |
 | 2026-05-24 | Task 202 — R.8 price_change_alert body: already covered by Task 166 (bodies seeded + confirmed 2026-05-22); variable parity verified ×4 locales | Task 202 | [sessions/2026-05-24-task-202-price-change-alert-body.md](sessions/2026-05-24-task-202-price-change-alert-body.md) |
 | 2026-05-24 | Task 201 — R.7 email-template modal width: `max-w-2xl` → `sm:max-w-2xl`; tailwind-merge now removes base `sm:max-w-sm`; stable 672px on desktop | Task 201 | [sessions/2026-05-24-task-201-email-template-modal-width.md](sessions/2026-05-24-task-201-email-template-modal-width.md) |
 | 2026-05-24 | Task 200 — R.6 Delete into modal: Trash2 removed from rows; onDelete? prop added to LocationModal + PropertyTypeFormDialog; Delete button in footer (edit mode only) | Task 200 | [sessions/2026-05-24-task-200-delete-into-modal.md](sessions/2026-05-24-task-200-delete-into-modal.md) |

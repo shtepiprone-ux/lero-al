@@ -227,13 +227,18 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
 
       {/* ── Identity card ─────────────────────────────────────────────────── */}
       <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col sm:flex-row gap-6 items-start">
-        <AdminUserAvatar
-          userId={profile?.id ?? null}
-          avatarUrl={avatarUrl}
-          mode="edit"
-          showRemove={false}
-          onAvatarChange={url => { setAvatarUrl(url); onAvatarChange?.(url) }}
-        />
+        <div className="flex flex-col items-center gap-1">
+          <AdminUserAvatar
+            userId={profile?.id ?? null}
+            avatarUrl={avatarUrl}
+            mode="edit"
+            showRemove={false}
+            onAvatarChange={url => { setAvatarUrl(url); onAvatarChange?.(url) }}
+          />
+          {profile?.public_id != null && (
+            <span className="text-[11px] text-muted-foreground/50 font-mono">#{profile.public_id}</span>
+          )}
+        </div>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="name" className="text-sm">{t('name')}</Label>

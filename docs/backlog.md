@@ -13,6 +13,15 @@
 
 → [Task 200 session log](sessions/2026-05-24-task-200-delete-into-modal.md)
 
+**Previous: 2026-05-24 — Task 201 — R.7: Email-template editor modal width fix ✅**
+
+- Root cause: `sm:max-w-sm` in base `DialogContent`; caller had `max-w-2xl` (no `sm:` prefix) → tailwind-merge kept both → `sm:max-w-sm` won (media-query order) → dialog capped at 384px on desktop, clipping content.
+- Fix: `max-w-2xl max-h-[90vh] overflow-y-auto` → `sm:max-w-2xl`. tailwind-merge now removes `sm:max-w-sm` and replaces with `sm:max-w-2xl` (672px). `max-h-[90vh]` + `overflow-y-auto` were redundant (already in base).
+- Stable 672px width on desktop; `max-w-[calc(100%-2rem)]` base still covers narrow screens.
+- 1-line change. `tsc --noEmit` → 0 errors.
+
+→ [Task 201 session log](sessions/2026-05-24-task-201-email-template-modal-width.md)
+
 **Previous: 2026-05-24 — Task 199 — R.5: Support — manual ticket creation + status notifications ✅**
 
 - Schema (owner must run SQL — see session log): `support_tickets` +5 cols; RLS added (5 policies, no DELETE); `support_ticket_events` (9 cols, append-only RLS). 4 indexes.
@@ -357,7 +366,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
 **224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
-Next: **197 ✅** → **198 ✅** → **199 ✅** → **200 ✅** → resume **R (201–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
+Next: **197 ✅** → **198 ✅** → **199 ✅** → **200 ✅** → **201 ✅** → resume **R (202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
@@ -414,6 +423,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 201 — R.7 email-template modal width: `max-w-2xl` → `sm:max-w-2xl`; tailwind-merge now removes base `sm:max-w-sm`; stable 672px on desktop | Task 201 | [sessions/2026-05-24-task-201-email-template-modal-width.md](sessions/2026-05-24-task-201-email-template-modal-width.md) |
 | 2026-05-24 | Task 200 — R.6 Delete into modal: Trash2 removed from rows; onDelete? prop added to LocationModal + PropertyTypeFormDialog; Delete button in footer (edit mode only) | Task 200 | [sessions/2026-05-24-task-200-delete-into-modal.md](sessions/2026-05-24-task-200-delete-into-modal.md) |
 | 2026-05-24 | Task 221a — Canonical control audit: 23 Button h-* violations fixed; inventory of selects/z-index/overflow-risk; T221b+T221c deferred | Task 221a | [sessions/2026-05-24-task-221a-canonical-control-audit.md](sessions/2026-05-24-task-221a-canonical-control-audit.md) |
 | 2026-05-23 | Task 219 — Z-index scale: Header z-50→z-30; MobileBottomNav z-40→z-30; chrome=z-30/scrim=z-40/float=z-50 | Task 219 | [sessions/2026-05-23-task-219-zindex-scale.md](sessions/2026-05-23-task-219-zindex-scale.md) |

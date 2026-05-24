@@ -162,7 +162,7 @@ function TemplateEditorDialog({
 
   return (
     <Dialog open onOpenChange={v => !v && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{isEdit ? t('edit_title') : t('create_title')}</DialogTitle>
           <DialogDescription>{t('variables_hint')}</DialogDescription>

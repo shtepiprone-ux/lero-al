@@ -126,9 +126,9 @@ function profileTypeFromUser(user: Pick<User, 'role' | 'user_type'>): ProfileTyp
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function SectionCard({ title, children, allowOverflow }: { title: string; children: React.ReactNode; allowOverflow?: boolean }) {
+function SectionCard({ title, children, allowOverflow, id }: { title: string; children: React.ReactNode; allowOverflow?: boolean; id?: string }) {
   return (
-    <div className={cn("bg-card rounded-2xl border shadow-sm", allowOverflow ? "overflow-visible" : "overflow-hidden")}>
+    <div id={id} className={cn("bg-card rounded-2xl border shadow-sm", allowOverflow ? "overflow-visible" : "overflow-hidden")}>
       <p className="px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-muted/40">
         {title}
       </p>
@@ -700,7 +700,12 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
       <SectionCard title={t('sections.actions')}>
         <div className="flex flex-col gap-2">
           <Button size="sm" className="gap-1.5 rounded-xl w-full"
-            onClick={handleSubmit(onSubmit)} disabled={saving || (!isCreate && !isDirty)}>
+            onClick={handleSubmit(onSubmit, errs => {
+              if (!errs.firstName && !errs.lastName) {
+                if (errs.locationId) document.getElementById('section-location')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                else if (errs.companyName || errs.website) document.getElementById('section-business')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              }
+            })} disabled={saving || (!isCreate && !isDirty)}>
             {saving
               ? <Loader2 className="h-4 w-4 animate-spin" />
               : isCreate ? <UserPlus className="h-4 w-4" /> : <Save className="h-4 w-4" />}
@@ -860,7 +865,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             )}
 
             {/* ── Basic info ────────────────────────────────────────────────── */}
-            <SectionCard title={t('sections.basic_info')} allowOverflow>
+            <SectionCard id="section-identity" title={t('sections.basic_info')} allowOverflow>
               {isCreate ? (
                 <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
                   <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
@@ -945,7 +950,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             </SectionCard>
 
             {/* ── Location ──────────────────────────────────────────────────── */}
-            <SectionCard title={isBusiness ? t('sections.location_work') : t('sections.location_home')} allowOverflow>
+            <SectionCard id="section-location" title={isBusiness ? t('sections.location_work') : t('sections.location_home')} allowOverflow>
               <FieldRow label={t('fields.city')} mode={currentMode}
                 editContent={
                   <LocationCombobox
@@ -977,7 +982,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
 
             {/* ── Business (Agent / Developer) ──────────────────────────────── */}
             {(isBusiness || (currentMode === 'view' && user && ['agent', 'developer'].includes(profileTypeFromUser(user)))) && (
-              <SectionCard title={t('sections.company')}>
+              <SectionCard id="section-business" title={t('sections.company')}>
                 <FieldRow label={t('fields.company_name')} mode={currentMode} viewValue={user?.company_name}
                   editContent={<Input {...register('companyName')} className="h-10 rounded-xl" placeholder={t('placeholders.company_name')} />}
                   error={errors.companyName?.message}

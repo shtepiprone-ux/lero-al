@@ -4,7 +4,16 @@
 
 ## Last Session
 
-**2026-05-24 — Task 205 — T.1: Action toasts audit + implementation ✅**
+**2026-05-24 — Task 206 — T.2: Required-field validation UX ✅**
+
+- `ListingFormShell`: replaced `window.scrollTo({ top: 0 })` bug with `scrollToFirstError(errs)` — scrolls to the first invalid field's DOM element in priority order (title → property_type → price → images → details). Added `id` prop to local `SectionCard`; added `id="field-property_type/price/images/details"` to relevant wrappers.
+- `AdminUserProfile`: added `id` prop to local `SectionCard`; `id="section-identity/location/business"` on the three content sections. Added `onInvalid` callback to `handleSubmit` — scrolls location/business section into view when only non-registered fields (locationId, companyName, website) fail. `firstName`/`lastName` handled by RHF's default `shouldFocusError: true`.
+- No new locale keys (all error messages already existed).
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 206 session log](sessions/2026-05-24-task-206-validation-ux.md)
+
+**Previous: 2026-05-24 — Task 205 — T.1: Action toasts audit + implementation ✅**
 
 - Full audit: 18 components already had toasts; 2 deliberate non-toast patterns (ListingFormShell full-page success, FavoriteButton icon flip); 4 action sites were missing feedback.
 - Gaps filled: `AdminUsersTable` verify/revoke (×2); `AdminListingsTable.PremiumDialog` set/remove premium (×2); `AdminListingsTable.ListingPreviewDialog` delete (×1); `FavoriteButton` error revert (×1).
@@ -392,7 +401,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
 **224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
-**Epic R ✅ CLOSED** (195–202 all done). Next: **S (203–204) → T (205–207) → U (208–209)**, then **Epic V — Contacts LAST** (222–223)., and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
+**Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **T**: 205 ✅ · 206 ✅ · 207 open. Next: **207 → U (208–209)**, then **Epic V — Contacts LAST** (222–223). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
@@ -449,6 +458,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 206 — T.2 validation UX: ListingFormShell scrollToFirstError helper + field IDs; AdminUserProfile onInvalid + section IDs | Task 206 | [sessions/2026-05-24-task-206-validation-ux.md](sessions/2026-05-24-task-206-validation-ux.md) |
 | 2026-05-24 | Task 205 — T.1 action toasts audit: 4 gaps filled (verify/revoke, premium set/remove, listing delete, favorite error); 6 keys × 4 locales | Task 205 | [sessions/2026-05-24-task-205-action-toasts-audit.md](sessions/2026-05-24-task-205-action-toasts-audit.md) |
 | 2026-05-24 | Task 204 — S.2 numeric listing IDs: `public_id BIGINT` sequence; all SELECT projections updated; detail+card+admin show numeric id; slug/URL unchanged | Task 204 | [sessions/2026-05-24-task-204-numeric-listing-ids.md](sessions/2026-05-24-task-204-numeric-listing-ids.md) |
 | 2026-05-24 | Task 203 — S.1 numeric user IDs: `public_id BIGINT` sequence added; surfaced in AdminUsersTable, AdminUserProfile, ProfileTab cabinet | Task 203 | [sessions/2026-05-24-task-203-numeric-user-ids.md](sessions/2026-05-24-task-203-numeric-user-ids.md) |

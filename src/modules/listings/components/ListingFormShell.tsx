@@ -56,9 +56,9 @@ interface EditModeProps extends BaseProps {
 
 type Props = CreateModeProps | EditModeProps
 
-function SectionCard({ children, className }: { children: React.ReactNode; className?: string }) {
+function SectionCard({ children, className, id }: { children: React.ReactNode; className?: string; id?: string }) {
   return (
-    <section className={cn('bg-card rounded-2xl border shadow-sm p-6', className)}>
+    <section id={id} className={cn('bg-card rounded-2xl border shadow-sm p-6', className)}>
       {children}
     </section>
   )
@@ -148,6 +148,23 @@ export function ListingFormShell(props: Props) {
     }))
   }
 
+  function scrollToFirstError(errs: Partial<Record<keyof FormValues, string>>) {
+    const order: Array<[keyof FormValues, string]> = [
+      ['title',         'title'],
+      ['property_type', 'field-property_type'],
+      ['price',         'field-price'],
+      ['images',        'field-images'],
+      ['floor',         'field-details'],
+    ]
+    for (const [key, id] of order) {
+      if (errs[key]) {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        return
+      }
+    }
+    document.getElementById('field-details')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   async function handleSubmit() {
     const newErrors: Partial<Record<keyof FormValues, string>> = {}
 
@@ -183,7 +200,7 @@ export function ListingFormShell(props: Props) {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      scrollToFirstError(newErrors)
       return
     }
 
@@ -316,7 +333,7 @@ export function ListingFormShell(props: Props) {
             </div>
 
             {/* Property type */}
-            <div className="flex flex-col gap-2">
+            <div id="field-property_type" className="flex flex-col gap-2">
               <Label className="text-sm font-medium">
                 {tc('property_type')}<span className="text-destructive ml-1">*</span>
               </Label>
@@ -367,7 +384,7 @@ export function ListingFormShell(props: Props) {
             </div>
 
             {/* Price + currency */}
-            <div className="flex flex-col gap-2">
+            <div id="field-price" className="flex flex-col gap-2">
               <Label className="text-sm font-medium">
                 {t('field_price')}<span className="text-destructive ml-1">*</span>
               </Label>
@@ -405,7 +422,7 @@ export function ListingFormShell(props: Props) {
         </SectionCard>
 
         {/* ── Section 2: Property Details — rendered by DynamicFieldSection ── */}
-        <SectionCard>
+        <SectionCard id="field-details">
           <SectionTitle>{t('section_details')}</SectionTitle>
           <div className="flex flex-col gap-6">
             <DynamicFieldSection
@@ -418,7 +435,7 @@ export function ListingFormShell(props: Props) {
         </SectionCard>
 
         {/* ── Section 3: Photos ── */}
-        <SectionCard>
+        <SectionCard id="field-images">
           <SectionTitle>{t('section_photos')}</SectionTitle>
           <ImageUpload images={data.images} onChange={imgs => patch({ images: imgs })} uploadPreset={uploadPreset} uploadFolder={uploadFolder} />
           {errors.images && <p className="mt-3 text-sm text-destructive text-center">{errors.images}</p>}

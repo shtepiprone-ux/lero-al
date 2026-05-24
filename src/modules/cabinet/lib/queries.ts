@@ -27,7 +27,7 @@ import {
 // ── Select columns ────────────────────────────────────────────────────────────
 
 export const CABINET_LISTING_SELECT =
-  'id, slug, title, price, currency, listing_type, property_type, status, is_premium, views_count, created_at, images:listing_images(url, is_cover, "order")' as const
+  'id, public_id, slug, title, price, currency, listing_type, property_type, status, is_premium, views_count, created_at, images:listing_images(url, is_cover, "order")' as const
 
 // ── Query builder ─────────────────────────────────────────────────────────────
 

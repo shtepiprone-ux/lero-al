@@ -9,7 +9,7 @@
 --   EmailChangeToken     → email_change_tokens      (7 cols)
 --   EmailTemplate        → email_templates          (10 cols)
 --   Location             → locations                (12 cols)
---   Listing              → listings                 (36 cols)
+--   Listing              → listings                 (39 cols)
 --   ListingImage         → listing_images           (5 cols)
 --   Favorite             → favorites                (4 cols)
 --   FavoritePriceAlert   → favorite_price_alerts    (4 cols)
@@ -113,6 +113,7 @@ WITH expected(table_name, column_name) AS (
     ('locations', 'is_featured'),
     ('locations', 'display_order'),
     ('listings', 'id'),
+    ('listings', 'public_id'),
     ('listings', 'user_id'),
     ('listings', 'location_id'),
     ('listings', 'slug'),
@@ -375,6 +376,7 @@ WITH expected(table_name, column_name) AS (
     ('locations', 'is_featured'),
     ('locations', 'display_order'),
     ('listings', 'id'),
+    ('listings', 'public_id'),
     ('listings', 'user_id'),
     ('listings', 'location_id'),
     ('listings', 'slug'),

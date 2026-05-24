@@ -21,6 +21,7 @@ import type { ExchangeRates } from '@/lib/getExchangeRate'
 
 export interface CardListingData extends ListingSnapshot {
   id:           string
+  public_id?:   number | null
   slug:         string
   title:        string
   price:        number
@@ -253,7 +254,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                   aria-label={idCopied ? t('id_copied') : t('copy_id')}
                   className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
                 >
-                  #{listing.id.slice(0, 8)}
+                  #{listing.public_id ?? listing.id.slice(0, 8)}
                   {idCopied
                     ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
                     : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
@@ -386,7 +387,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
               aria-label={idCopied ? t('id_copied') : t('copy_id')}
               className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
             >
-              #{listing.id.slice(0, 8)}
+              #{listing.public_id ?? listing.id.slice(0, 8)}
               {idCopied
                 ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
                 : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />

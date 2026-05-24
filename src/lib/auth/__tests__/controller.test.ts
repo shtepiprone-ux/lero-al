@@ -48,6 +48,7 @@ vi.mock('@/lib/auth/browser', () => ({
 
 const MOCK_USER: User = {
   id: 'test-user-1',
+  public_id: 1,
   name: 'Arbër Kelmendi',
   last_name: null,
   phone: null,

@@ -4,7 +4,21 @@
 
 ## Last Session
 
-**2026-05-24 — Task 203 — S.1: Numeric user IDs (visible in cabinet & admin) ✅**
+**2026-05-24 — Task 204 — S.2: Listing IDs → numeric ✅**
+
+- `public_id BIGINT NOT NULL DEFAULT nextval('listings_public_id_seq') UNIQUE` added to `listings` table (owner must run SQL — see session log). Idempotent.
+- `src/types/database.ts`: `public_id: number` added to `Listing` interface; stale `(36 cols)` comment in drift file corrected to `(39 cols)`.
+- `scripts/schema-drift-check.sql`: `('listings', 'public_id')` added to both RESULT SETs.
+- `LISTING_SELECT` (canonical — covers main listings, API, favorites, recently viewed), `SimilarListings` local SELECT, and `CABINET_LISTING_SELECT` all get `public_id`.
+- `AdminListingsTable`: `public_id?` in `AdminListing` interface; `#{l.public_id ?? l.id.slice(0,8)}`.
+- `ListingCard`: `public_id?` in `CardListingData`; both `#{listing.public_id ?? listing.id.slice(0,8)}` instances updated.
+- Detail page: `#{listing.public_id}` (query already uses `*`). URL/slug contract unchanged; no redirects.
+- Test mocks: `public_id: 1` added to 2 `MOCK_USER` fixtures (Task 203 User type cascade).
+- `tsc --noEmit` → 0 errors.
+
+→ [Task 204 session log](sessions/2026-05-24-task-204-numeric-listing-ids.md)
+
+**Previous: 2026-05-24 — Task 203 — S.1: Numeric user IDs (visible in cabinet & admin) ✅**
 
 - `public_id BIGINT NOT NULL DEFAULT nextval('users_public_id_seq') UNIQUE` added to `users` table (owner must run SQL — see session log). Sequence owned by column; idempotent.
 - `src/types/database.ts`: `public_id: number` added to `User` interface (28 → 29 cols).
@@ -426,6 +440,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-24 | Task 204 — S.2 numeric listing IDs: `public_id BIGINT` sequence; all SELECT projections updated; detail+card+admin show numeric id; slug/URL unchanged | Task 204 | [sessions/2026-05-24-task-204-numeric-listing-ids.md](sessions/2026-05-24-task-204-numeric-listing-ids.md) |
 | 2026-05-24 | Task 203 — S.1 numeric user IDs: `public_id BIGINT` sequence added; surfaced in AdminUsersTable, AdminUserProfile, ProfileTab cabinet | Task 203 | [sessions/2026-05-24-task-203-numeric-user-ids.md](sessions/2026-05-24-task-203-numeric-user-ids.md) |
 | 2026-05-24 | Task 202 — R.8 price_change_alert body: already covered by Task 166 (bodies seeded + confirmed 2026-05-22); variable parity verified ×4 locales | Task 202 | [sessions/2026-05-24-task-202-price-change-alert-body.md](sessions/2026-05-24-task-202-price-change-alert-body.md) |
 | 2026-05-24 | Task 201 — R.7 email-template modal width: `max-w-2xl` → `sm:max-w-2xl`; tailwind-merge now removes base `sm:max-w-sm`; stable 672px on desktop | Task 201 | [sessions/2026-05-24-task-201-email-template-modal-width.md](sessions/2026-05-24-task-201-email-template-modal-width.md) |

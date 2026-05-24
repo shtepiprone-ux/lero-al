@@ -37,6 +37,7 @@ const STATUS_BADGE: Record<ListingStatus, string> = {
 
 export interface AdminListing {
   id: string
+  public_id?: number | null
   title: string
   status: ListingStatus
   is_premium: boolean
@@ -431,7 +432,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                             ? <Check className="h-3 w-3 text-status-success" />
                             : <Copy className="h-3 w-3 opacity-50" />
                           }
-                          #{l.id.slice(0, 8)}
+                          #{l.public_id ?? l.id.slice(0, 8)}
                         </button>
                       </td>
 

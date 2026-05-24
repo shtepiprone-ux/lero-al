@@ -12,7 +12,7 @@ interface Props {
 }
 
 const SELECT = `
-  id, slug, title, price, price_old, currency, listing_type, property_type,
+  id, public_id, slug, title, price, price_old, currency, listing_type, property_type,
   rooms, bedrooms, bathrooms, area_gross, floor, total_floors, is_premium, status, created_at,
   location:locations(id, name_al, slug, type),
   images:listing_images(url, is_cover, order)

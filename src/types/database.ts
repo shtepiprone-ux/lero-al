@@ -170,6 +170,7 @@ export interface Location {
 
 export interface Listing {
   id: string
+  public_id: number
   user_id: string
   location_id: number | null
   slug: string

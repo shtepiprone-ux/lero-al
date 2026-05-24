@@ -52,7 +52,7 @@ export default async function AdminListingsPage({
   let query = supabase
     .from('listings')
     .select(`
-      id, slug, title, price, currency, listing_type, property_type,
+      id, public_id, slug, title, price, currency, listing_type, property_type,
       status, is_premium, views_count, created_at,
       owner:users!listings_user_id_fkey(id, name, user_type)
     `, { count: 'exact' })

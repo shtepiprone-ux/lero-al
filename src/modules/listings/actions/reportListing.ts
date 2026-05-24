@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { getBlockedError } from '@/lib/auth/blockCheck'
+import { hasPermission } from '@/lib/auth/permissions'
 import type { ReportReason, ReportStatus } from '@/types/database'
 import * as React from 'react'
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
@@ -77,9 +78,11 @@ export async function updateReportStatusAction(
 
   const db = createAdminClient()
 
-  // Role check
+  // Permission check
   const { data: profile } = await db.from('users').select('role').eq('id', user.id).single()
-  if (!profile || !['admin', 'moderator'].includes(profile.role as string)) return { error: 'forbidden' }
+  if (!profile) return { error: 'forbidden' }
+  const canManageReports = await hasPermission('reports.manage')
+  if (!canManageReports) return { error: 'forbidden' }
 
   // Get current status for the audit log
   const { data: report } = await db

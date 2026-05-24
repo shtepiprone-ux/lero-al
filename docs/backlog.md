@@ -4,7 +4,20 @@
 
 ## Last Session
 
-**2026-05-24 — Task 221a — Project-wide canonical control-height + spacing + combobox audit ✅**
+**2026-05-24 — Task 197 — R.3: RBAC / Moderator permission matrix ✅**
+
+- New `role_permissions` table (owner must run SQL — see session log): `(role, permission_key, allowed, updated_at)` PK `(role, permission_key)` CHECK `role='moderator'`; RLS: admin full, moderator read-only.
+- Seed: 10 permission keys seeded to match existing behaviour (moderators retain their current access; `users.soft_delete`, `users.hard_delete`, `users.change_role` default to `false` — already were admin-only).
+- New files: `src/lib/auth/permissionKeys.ts` (10 keys + type); `src/lib/auth/permissions.ts` (`roleHasPermission`, `hasPermission`, `assertPermission`); `src/modules/admin/actions/permissions.ts` (`getModeratorPermissions`, `setModeratorPermission`); `src/components/admin/AdminPermissionsManager.tsx` (Switch-based matrix UI); `src/app/admin/permissions/page.tsx`.
+- Updated guards: `deleteListing` → `listings.delete`; `setListingPremium` → `listings.set_premium`; `createAdminUser` → `users.create`; location/settings/legal/report actions → their respective keys; `softDeleteUser`/`hardDeleteUser` → `hasPermission()`; role-change in `updateUserProfileFull` → `roleHasPermission()`. Non-matrix ops (`updateUserProfile`, `toggleUserVerified`, etc.) remain `assertAdminAccess()`.
+- Sidebar: added "Permissions" nav item (ShieldCheck icon) in group_system.
+- 4 locale files: `admin.sidebar.item_permissions` + `admin.permissions.*` (11 keys × 4 locales).
+- `database.ts` + `schema-drift-check.sql` updated with `RolePermission → role_permissions` (4 cols).
+- `tsc --noEmit` → 0 errors. All 4 locale JSON files valid.
+
+→ [Task 197 session log](sessions/2026-05-24-task-197-rbac.md)
+
+**Previous: 2026-05-24 — Task 221a — Project-wide canonical control-height + spacing + combobox audit ✅**
 
 - Audit scope: non-canonical dropdowns, ad-hoc Button heights, z-index scale, overflow-risk rows, same-row height parity.
 - Dropdowns: ✅ zero native `<select>`, zero shadcn `Select` in app UI — Combobox-only rule holds.
@@ -311,7 +324,7 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 
 **Sprint 10 — Critical Regressions + Drawer + UI Consistency (✅ CLOSED):**
 **224 ✅** → **216 ✅** → **217 ✅** → **218 ✅** → **219 ✅** → **220 ✅** → **221a ✅** (23 Button violations fixed; full inventory in session log; T221b + T221c follow-ups deferred).
-Next: resume **R (197–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply).
+Next: **197 ✅** → resume **R (198–202) → S (203–204) → T (205–207) → U (208–209)**, and **Epic V — Contacts LAST** (222 public page+form+routing, 223 admin inquiries + Resend reply). Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.

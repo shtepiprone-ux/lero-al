@@ -598,7 +598,8 @@
       "item_currency": "Currency",
       "item_companies": "Companies",
       "item_email_templates": "Email templates",
-      "item_popular_locations": "Popular Locations"
+      "item_popular_locations": "Popular Locations",
+      "item_permissions": "Permissions"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -1121,6 +1122,28 @@
       "delete_label": "Delete",
       "cancel": "Cancel",
       "save": "Save"
+    },
+    "permissions": {
+      "title": "Moderator permissions",
+      "description": "Configure which actions moderators are allowed to perform. Admins always have full access and cannot be restricted here.",
+      "column_permission": "Permission",
+      "column_allowed": "Allowed",
+      "allowed_count": "{count} of {total} allowed",
+      "save_success": "Permission saved",
+      "save_error": "Failed to save permission",
+      "admin_note": "Admin accounts always have full access regardless of these settings.",
+      "keys": {
+        "listings_delete": "Delete listings",
+        "listings_set_premium": "Set listings as premium",
+        "users_create": "Create users",
+        "users_change_role": "Change user role",
+        "users_soft_delete": "Deactivate users (soft delete)",
+        "users_hard_delete": "Permanently delete users",
+        "locations_manage": "Manage locations",
+        "settings_manage": "Manage site settings",
+        "legal_manage": "Manage legal pages",
+        "reports_manage": "Manage reports"
+      }
     }
   },
   "notifications": {

@@ -27,6 +27,7 @@
 --   Collection           → collections              (5 cols)
 --   CollectionItem       → collection_items         (3 cols)
 --   RecentlyViewed       → recently_viewed          (4 cols)
+--   RolePermission       → role_permissions         (4 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -259,7 +260,11 @@ WITH expected(table_name, column_name) AS (
     ('recently_viewed', 'id'),
     ('recently_viewed', 'user_id'),
     ('recently_viewed', 'listing_id'),
-    ('recently_viewed', 'viewed_at')
+    ('recently_viewed', 'viewed_at'),
+    ('role_permissions', 'role'),
+    ('role_permissions', 'permission_key'),
+    ('role_permissions', 'allowed'),
+    ('role_permissions', 'updated_at')
 )
 SELECT
   e.table_name,
@@ -502,7 +507,11 @@ WITH expected(table_name, column_name) AS (
     ('recently_viewed', 'id'),
     ('recently_viewed', 'user_id'),
     ('recently_viewed', 'listing_id'),
-    ('recently_viewed', 'viewed_at')
+    ('recently_viewed', 'viewed_at'),
+    ('role_permissions', 'role'),
+    ('role_permissions', 'permission_key'),
+    ('role_permissions', 'allowed'),
+    ('role_permissions', 'updated_at')
 )
 SELECT
   ic.table_name,
@@ -513,6 +522,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

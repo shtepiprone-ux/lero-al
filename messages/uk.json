@@ -598,7 +598,8 @@
       "item_currency": "Валюта",
       "item_companies": "Компанії",
       "item_email_templates": "Email шаблони",
-      "item_popular_locations": "Популярні локації"
+      "item_popular_locations": "Популярні локації",
+      "item_permissions": "Дозволи"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -1121,6 +1122,28 @@
       "delete_label": "Видалити",
       "cancel": "Скасувати",
       "save": "Зберегти"
+    },
+    "permissions": {
+      "title": "Дозволи модераторів",
+      "description": "Налаштуйте, які дії дозволено виконувати модераторам. Адміністратори завжди мають повний доступ.",
+      "column_permission": "Дозвіл",
+      "column_allowed": "Дозволено",
+      "allowed_count": "{count} з {total} дозволено",
+      "save_success": "Дозвіл збережено",
+      "save_error": "Помилка збереження дозволу",
+      "admin_note": "Облікові записи адміністраторів завжди мають повний доступ незалежно від цих налаштувань.",
+      "keys": {
+        "listings_delete": "Видалення оголошень",
+        "listings_set_premium": "Встановлення оголошень як преміум",
+        "users_create": "Створення користувачів",
+        "users_change_role": "Зміна ролі користувача",
+        "users_soft_delete": "Деактивація користувачів (м'яке видалення)",
+        "users_hard_delete": "Остаточне видалення користувачів",
+        "locations_manage": "Керування локаціями",
+        "settings_manage": "Керування налаштуваннями сайту",
+        "legal_manage": "Керування юридичними сторінками",
+        "reports_manage": "Керування скаргами"
+      }
     }
   },
   "notifications": {

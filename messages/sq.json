@@ -598,7 +598,8 @@
       "item_currency": "Valuta",
       "item_companies": "Kompanitë",
       "item_email_templates": "Shablonet e emailit",
-      "item_popular_locations": "Vendndodhjet Populare"
+      "item_popular_locations": "Vendndodhjet Populare",
+      "item_permissions": "Lejet"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -1121,6 +1122,28 @@
       "delete_label": "Fshi",
       "cancel": "Anulo",
       "save": "Ruaj"
+    },
+    "permissions": {
+      "title": "Lejet e moderatorëve",
+      "description": "Konfiguro cilat veprime lejohen moderatorët të kryejnë. Administratorët kanë gjithmonë akses të plotë.",
+      "column_permission": "Leja",
+      "column_allowed": "E lejuar",
+      "allowed_count": "{count} nga {total} të lejuara",
+      "save_success": "Leja u ruajt",
+      "save_error": "Gabim gjatë ruajtjes së lejes",
+      "admin_note": "Llogaritë e administratorëve kanë gjithmonë akses të plotë pavarësisht nga këto cilësime.",
+      "keys": {
+        "listings_delete": "Fshi njoftimet",
+        "listings_set_premium": "Vendos njoftimet si premium",
+        "users_create": "Krijo përdorues",
+        "users_change_role": "Ndrysho rolin e përdoruesit",
+        "users_soft_delete": "Çaktivizo përdoruesit (fshirje e butë)",
+        "users_hard_delete": "Fshi përdoruesit përgjithmonë",
+        "locations_manage": "Menaxho vendndodhjet",
+        "settings_manage": "Menaxho cilësimet e faqes",
+        "legal_manage": "Menaxho faqet ligjore",
+        "reports_manage": "Menaxho raportet"
+      }
     }
   },
   "notifications": {

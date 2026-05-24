@@ -49,6 +49,13 @@ export type ReportReason = 'spam' | 'fraud' | 'duplicate' | 'wrong_category' | '
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
 export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing' | 'report_outcome' | 'price_change'
 
+export interface RolePermission {
+  role: string
+  permission_key: string
+  allowed: boolean
+  updated_at: string
+}
+
 export interface Company {
   id: string
   name: string

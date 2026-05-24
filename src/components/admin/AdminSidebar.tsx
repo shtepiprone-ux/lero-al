@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
-  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star,
+  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck,
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
@@ -74,7 +74,8 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
     {
       label: t('group_system'),
       items: [
-        { href: '/admin/settings',  label: t('item_settings'),  icon: Settings },
+        { href: '/admin/settings',     label: t('item_settings'),     icon: Settings },
+        { href: '/admin/permissions',  label: t('item_permissions'),  icon: ShieldCheck },
       ],
     },
   ]

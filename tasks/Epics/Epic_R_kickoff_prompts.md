@@ -39,7 +39,7 @@ Acceptance criteria:
 Out of scope: RBAC logic (197); deactivation logic (198).
 ```
 
-## Task 197 — R.3 — Role permission management / RBAC (Note 33)
+## Task 197 — R.3 — Role permission management / RBAC (Note 33) ✅ DONE 2026-05-24
 
 ```
 You are Claude Code Sonnet 4.6 working in `lero-al`.

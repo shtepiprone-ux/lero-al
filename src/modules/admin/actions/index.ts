@@ -7,6 +7,7 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import type { ListingStatus, UserRole, UserType } from '@/types/database'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 import { routing } from '@/i18n/routing'
+import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
 
 // ── Actor resolution ──────────────────────────────────────────────────────────
 //
@@ -54,7 +55,7 @@ export async function setListingPremium(
   isPremium: boolean,
   premiumUntil?: string | null,
 ) {
-  await assertAdminAccess()
+  await assertPermission('listings.set_premium')
   const db = createAdminClient()
 
   // Fetch slug BEFORE the write so we can revalidate the detail page.
@@ -88,7 +89,7 @@ export async function toggleListingPremium(id: string, isPremium: boolean) {
 }
 
 export async function deleteListing(listingId: string) {
-  await assertAdminAccess()
+  await assertPermission('listings.delete')
   const db = createAdminClient()
   const { error } = await db.from('listings').delete().eq('id', listingId)
   if (error) {
@@ -130,7 +131,7 @@ export async function createLocation(data: {
   name_al: string; name_en?: string; type: string; slug: string; parent_id?: number | null;
   image_url?: string | null; is_featured?: boolean; display_order?: number
 }): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertPermission('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('locations').insert(data)
   if (error) { console.error('createLocation failed', { error }); return { error: error.message } }
@@ -142,7 +143,7 @@ export async function updateLocation(
   id: number,
   data: { name_al?: string; name_en?: string; type?: string; slug?: string; image_url?: string | null; is_featured?: boolean; display_order?: number }
 ): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertPermission('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('locations').update(data).eq('id', id)
   if (error) { console.error('updateLocation failed', { error, id }); return { error: error.message } }
@@ -151,7 +152,7 @@ export async function updateLocation(
 }
 
 export async function toggleLocationFeatured(id: number, isFeatured: boolean): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertPermission('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('locations').update({ is_featured: isFeatured }).eq('id', id)
   if (error) { console.error('toggleLocationFeatured failed', { error, id }); return { error: error.message } }
@@ -160,7 +161,7 @@ export async function toggleLocationFeatured(id: number, isFeatured: boolean): P
 }
 
 export async function deleteLocation(id: number): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertPermission('locations.manage')
   const db = createAdminClient()
   const { error } = await db.from('locations').delete().eq('id', id)
   if (error) { console.error('deleteLocation failed', { error, id }); return { error: error.message } }
@@ -171,7 +172,7 @@ export async function deleteLocation(id: number): Promise<{ error?: string }> {
 // ── Site settings ────────────────────────────────────────────────────────────
 
 export async function saveSettings(entries: Record<string, string>): Promise<{ error?: string }> {
-  await assertAdminAccess()
+  await assertPermission('settings.manage')
   const db = createAdminClient()
   const rows = Object.entries(entries).map(([key, value]) => ({
     key,
@@ -199,7 +200,7 @@ export async function saveSettings(entries: Record<string, string>): Promise<{ e
 export async function createPage(data: {
   title: string; slug: string; content: Record<string, unknown>; is_published: boolean
 }) {
-  await assertAdminAccess()
+  await assertPermission('legal.manage')
   const db = createAdminClient()
   const { error } = await db.from('pages').insert(data)
   if (error) console.error('createPage failed', { error })
@@ -210,7 +211,7 @@ export async function updatePage(
   id: number,
   data: { title?: string; slug?: string; content?: Record<string, unknown>; is_published?: boolean }
 ) {
-  await assertAdminAccess()
+  await assertPermission('legal.manage')
   const db = createAdminClient()
   const { error } = await db.from('pages').update({ ...data, updated_at: new Date().toISOString() }).eq('id', id)
   if (error) console.error('updatePage failed', { error, id })
@@ -218,7 +219,7 @@ export async function updatePage(
 }
 
 export async function deletePage(id: number) {
-  await assertAdminAccess()
+  await assertPermission('legal.manage')
   const db = createAdminClient()
   const { error } = await db.from('pages').delete().eq('id', id)
   if (error) console.error('deletePage failed', { error, id })
@@ -320,7 +321,8 @@ export async function updateUserProfileFull(
     year_started: isBusiness ? (data.yearStarted ?? null) : null,
   }
 
-  if (myProfile.role === 'admin') {
+  const canChangeRole = await roleHasPermission(myProfile.role as string, 'users.change_role')
+  if (canChangeRole) {
     const { role, user_type } = profileTypeToDb(data.profileType)
     update.role = role
     update.user_type = user_type
@@ -378,7 +380,7 @@ export async function createAdminUser(data: {
   position?: string
   yearStarted?: number | null
 }): Promise<{ userId?: string; error?: string }> {
-  await assertAdminAccess()
+  await assertPermission('users.create')
   const db = createAdminClient()
   const { role, user_type } = profileTypeToDb(data.profileType)
   const isBusiness = ['agent', 'developer'].includes(data.profileType)
@@ -432,11 +434,10 @@ export async function createAdminUser(data: {
 }
 
 export async function softDeleteUser(userId: string): Promise<{ error?: string }> {
+  const allowed = await hasPermission('users.soft_delete').catch(() => false)
+  if (!allowed) return { error: 'forbidden' }
   const me = await getUser()
   if (!me) return { error: 'Unauthorized' }
-  const supabase = await createClient()
-  const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()
-  if (myProfile?.role !== 'admin') return { error: 'admin_only' }
 
   const db = createAdminClient()
   const { error } = await db.from('users').update({ deleted_at: new Date().toISOString() }).eq('id', userId)
@@ -462,11 +463,10 @@ export async function softDeleteUser(userId: string): Promise<{ error?: string }
 }
 
 export async function hardDeleteUser(userId: string): Promise<{ error?: string }> {
+  const allowed = await hasPermission('users.hard_delete').catch(() => false)
+  if (!allowed) return { error: 'forbidden' }
   const me = await getUser()
   if (!me) return { error: 'Unauthorized' }
-  const supabase = await createClient()
-  const { data: myProfile } = await supabase.from('users').select('role').eq('id', me.id).single()
-  if (myProfile?.role !== 'admin') return { error: 'admin_only' }
 
   const db = createAdminClient()
 

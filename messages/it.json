@@ -598,7 +598,8 @@
       "item_currency": "Valuta",
       "item_companies": "Aziende",
       "item_email_templates": "Template email",
-      "item_popular_locations": "Luoghi Popolari"
+      "item_popular_locations": "Luoghi Popolari",
+      "item_permissions": "Permessi"
     },
     "mobile_header": {
       "aria_open": "Apri menu"
@@ -1121,6 +1122,28 @@
       "delete_label": "Elimina",
       "cancel": "Annulla",
       "save": "Salva"
+    },
+    "permissions": {
+      "title": "Permessi moderatori",
+      "description": "Configura quali azioni i moderatori possono eseguire. Gli amministratori hanno sempre accesso completo.",
+      "column_permission": "Permesso",
+      "column_allowed": "Consentito",
+      "allowed_count": "{count} di {total} consentiti",
+      "save_success": "Permesso salvato",
+      "save_error": "Errore durante il salvataggio del permesso",
+      "admin_note": "Gli account amministratori hanno sempre accesso completo indipendentemente da queste impostazioni.",
+      "keys": {
+        "listings_delete": "Elimina annunci",
+        "listings_set_premium": "Imposta annunci come premium",
+        "users_create": "Crea utenti",
+        "users_change_role": "Cambia ruolo utente",
+        "users_soft_delete": "Disattiva utenti (eliminazione soft)",
+        "users_hard_delete": "Elimina utenti definitivamente",
+        "locations_manage": "Gestisci posizioni",
+        "settings_manage": "Gestisci impostazioni sito",
+        "legal_manage": "Gestisci pagine legali",
+        "reports_manage": "Gestisci segnalazioni"
+      }
     }
   },
   "notifications": {

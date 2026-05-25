@@ -4,7 +4,17 @@
 
 ## Last Session
 
-**2026-05-25 — Orchestration (Opus 4.7): Tasks 216–224 APPROVED; Sprint 11 filed (225–227)**
+**2026-05-25 — Tasks 225–227 — Sprint 11 UI Debt follow-ups ✅ — Sprint 11 CLOSED**
+
+- **Task 225 (T221b):** Replaced raw `<Link>/<a>/<button>` styled as buttons with canonical `buttonVariants()` across 4 sites. `admin/users/page.tsx` Link → `buttonVariants({ size: 'lg' })`. `AdminExchangeProvidersManager` raw `<button>` segmented control → `<Button size="lg" variant>`. `FavoriteButton`/`SaveToCollectionButton`: `size?` prop added + forwarded. `ListingContact`: h-9 overrides removed → `size="lg"`; all `<a>/<Link>` contact buttons → `buttonVariants({ size: 'xl' })`; icon-only phone → `size: 'icon-xl'`; `h-5 w-5` → `size-5` (CVA svg rule). `ListingMobileCTA`: `<a>` links → `buttonVariants({ size: 'xl' })`; `bg-[color:var(--whatsapp)]` → `bg-whatsapp`.
+- **Task 226 (T221c):** Created `src/components/admin/AdminInput.tsx` (thin wrapper baking in `h-10 rounded-xl`). Replaced all `<Input className="h-10 rounded-xl">` across 6 admin files: `AdminSettings` (13), `AdminLocationsManager` (5), `AdminLegalManager` (2), `AdminListingsTable` (1), `AdminUserCreate` (3), `AdminUserProfile` (7; blockReason kept as `<Input h-9>`). Added Admin-Input Canonical Pattern section to `docs/ui-rules.md §4`.
+- **Task 227:** Fixed pre-existing JSON syntax error in `tailwind-entropy.allowlist.json`. Added `arbitrary-z-index` entry for `ListingGallery.tsx z-[100]`. Updated `docs/tailwind-governance.md §11` z-index table (Toast row now covers Sonner + gallery overlay).
+
+→ [Task 225 session log](sessions/2026-05-25-task-225-t221b-buttonvariants.md)
+→ [Task 226 session log](sessions/2026-05-25-task-226-t221c-admin-input-height.md)
+→ [Task 227 session log](sessions/2026-05-25-task-227-zindex-allowlist.md)
+
+**Previous: 2026-05-25 — Orchestration (Opus 4.7): Tasks 216–224 APPROVED; Sprint 11 filed (225–227)**
 
 - Reviewed Tasks 216–224 against the working tree (read-only).
 - **All APPROVED.** tsc 0 errors (confirmed live). 1225 keys × 4 locales, full parity. Epic V (222–223) structure sound; no non-canonical selects; all guards correct. Task 224 P0 fix verified: `/auth/confirm` + `buildConfirmUrl` correct; zero non-localized `/auth/login` redirects remain.
@@ -465,9 +475,9 @@ None open. (Historical ops items — Task 122 Send Email Hook config; Epic F Tas
 **Epic R ✅ CLOSED** (195–202 all done). **S ✅** (203–204 done). **Epic T ✅ CLOSED** (205 ✅ · 206 ✅ · 207 ✅ · 213 ✅). **Epic U ✅ CLOSED** (208 ✅ · 209 ✅). **Epic V ✅ CLOSED** (222 ✅ · 223 ✅). **All Epics M–V APPROVED by orchestrator 2026-05-25.** Owner must run SQL from Task 197 session log (CREATE TABLE role_permissions + RLS + seed) before deploying.
 Plans: `Sprint_10_—_Critical_Regressions_and_UI_Consistency.md` + `Sprint_10_kickoff_prompts.md`; `Epic_V_Contacts_and_Inquiries.md` + `Epic_V_kickoff_prompts.md`. **Last task number: 224.**
 
-**Sprint 11 — UI Debt Follow-ups (OPEN):**
-**225** (T221b: buttonVariants for raw `<Link>/<a>/<button>/<div>` as buttons) → **226** (T221c: admin Input h-10 canonicalization) → **227** (z-index allowlist chore: ListingGallery z-[100]).
-Plans: `tasks/Sprints/Sprint_11_UI_Debt_followups.md` + `Sprint_11_kickoff_prompts.md`. **Last task number: 224. Next: 225.**
+**Sprint 11 — UI Debt Follow-ups (✅ CLOSED):**
+**225 ✅** (T221b: buttonVariants) → **226 ✅** (T221c: AdminInput wrapper) → **227 ✅** (z-index allowlist). **Last task number: 227.**
+Plans: `tasks/Sprints/Sprint_11_UI_Debt_followups.md` + `Sprint_11_kickoff_prompts.md`.
 
 > **224 is P0 — registration is broken right now (email-confirmation link 404); run it first.** Then 216 + 217 (production-breaking: profile save + listings filter), both needing owner SQL (exact SQL written into each task's session log). UI tasks (218–221a) MUST include the **§17 UI pre-flight** output in their session log, or the orchestrator will not approve them. Task 224: env ruled out (owner-confirmed). Root cause (git-verified — no app code regressed today): the Email Hook (Task 122, active ~2026-05-22) sends a token_hash `/auth/v1/verify` link, but the app only had a PKCE `/auth/callback` → confirmation can't complete → non-localized `/auth/login` 404. Fix: `/auth/confirm` route (`verifyOtp`) + repoint the hook + locale-safe fallbacks; keep `/auth/callback` for OAuth.
 
@@ -490,7 +500,7 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 | U — Performance & RSC Diagnostics ✅ | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
 | Sprint 10 — Critical Regressions + UI Consistency | 216–221a | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
 | V — Contacts & Inquiries (LAST) | 222–223 | owner req 2026-05-23 | [`Epic_V_…`](../tasks/Epics/Epic_V_Contacts_and_Inquiries.md) | [`Epic_V_kickoff_prompts.md`](../tasks/Epics/Epic_V_kickoff_prompts.md) |
-| Sprint 11 — UI Debt Follow-ups | 225–227 | T221b/T221c deferred + z-index chore | [`Sprint_11_…`](../tasks/Sprints/Sprint_11_UI_Debt_followups.md) | [`Sprint_11_kickoff_prompts.md`](../tasks/Sprints/Sprint_11_kickoff_prompts.md) |
+| Sprint 11 — UI Debt Follow-ups ✅ | 225–227 | T221b/T221c deferred + z-index chore | [`Sprint_11_…`](../tasks/Sprints/Sprint_11_UI_Debt_followups.md) | [`Sprint_11_kickoff_prompts.md`](../tasks/Sprints/Sprint_11_kickoff_prompts.md) |
 
 > Rule-type notes codified into `/docs` during planning: 14 (verify-globally → `ai-behavior.md`), 16 (canonical URL → `env.md`; code in Task 183), 6 + 1 (button/Combobox single-source → `ui-rules.md §0`), plus composition + responsive rules added to `ui-rules.md §0` from the Task 211 review.
 >

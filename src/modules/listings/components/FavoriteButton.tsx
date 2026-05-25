@@ -19,9 +19,11 @@ interface FavoriteButtonProps {
   disabledLabel?: string
   /** Visual shape. 'icon' (default) = compact round button for card overlays; 'pill' = full-height pill for action rows. */
   shape?: 'icon' | 'pill'
+  /** Canonical button size for pill shape. Has no effect on icon shape. */
+  size?: 'default' | 'lg' | 'xl'
 }
 
-export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon' }: FavoriteButtonProps) {
+export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon', size }: FavoriteButtonProps) {
   const tc = useTranslations('common')
   const { user, status } = useAuth()
   const [favorited, setFavorited] = useState(isFavorited)
@@ -90,6 +92,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     <Button
       type="button"
       variant="ghost"
+      size={shape === 'pill' ? size : undefined}
       className={cn(
         shape === 'icon' && 'rounded-full w-8 h-8 p-0',
         disabled

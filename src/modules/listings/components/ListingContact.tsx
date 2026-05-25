@@ -6,7 +6,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
 import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
@@ -148,20 +148,20 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                     href={`https://wa.me/${whatsappNumber}?text=${whatsappMsg}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-whatsapp hover:bg-whatsapp/90 text-primary-foreground font-semibold text-sm transition-colors"
+                    className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
                     data-track="whatsapp_click"
                   >
-                    <MessageCircle className="h-5 w-5" />
+                    <MessageCircle className="size-5" />
                     {t('whatsapp')}
                   </a>
                 )}
                 {owner.phone && (
                   <a
                     href={`tel:${owner.phone}`}
-                    className="flex items-center justify-center gap-2 h-11 rounded-xl border border-border hover:bg-muted font-semibold text-sm transition-colors"
+                    className={buttonVariants({ size: 'xl', variant: 'outline' })}
                     data-track="contact_owner"
                   >
-                    <Phone className="h-5 w-5" />
+                    <Phone className="size-5" />
                     {t('call')}
                   </a>
                 )}
@@ -181,10 +181,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                 ) : (
                   <Link
                     href={`/${locale}/messages/new?listing=${encodeURIComponent(listingTitle)}`}
-                    className="flex items-center justify-center gap-2 h-11 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm transition-colors"
+                    className={buttonVariants({ size: 'xl', variant: 'default' })}
                     data-track="contact_owner"
                   >
-                    <MessageCircle className="h-5 w-5" />
+                    <MessageCircle className="size-5" />
                     {t('send_message')}
                   </Link>
                 )}
@@ -204,12 +204,14 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                     disabled={listingClosed}
                     disabledLabel={closedLabel}
                     shape="pill"
-                    className="flex-1 h-9 rounded-xl border border-border"
+                    size="lg"
+                    className="flex-1 rounded-xl border border-border"
                   />
                   <SaveToCollectionButton
                     listingId={listingId}
                     variant="default"
-                    className="flex-1 h-9 rounded-xl border border-border"
+                    size="lg"
+                    className="flex-1 rounded-xl border border-border"
                   />
                 </>
               )}
@@ -254,7 +256,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                   href={`https://wa.me/${whatsappNumber}?text=${whatsappMsg}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-11 px-4 rounded-xl bg-whatsapp hover:bg-whatsapp/90 text-primary-foreground font-semibold text-sm flex items-center gap-1.5 transition-colors"
+                  className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
                   data-track="whatsapp_click"
                 >
                   <MessageCircle className="h-4 w-4" />
@@ -264,10 +266,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
               {owner.phone && (
                 <a
                   href={`tel:${owner.phone}`}
-                  className="h-11 w-11 rounded-xl border border-border hover:bg-muted flex items-center justify-center transition-colors"
+                  className={buttonVariants({ size: 'icon-xl', variant: 'outline' })}
                   data-track="contact_owner"
                 >
-                  <Phone className="h-5 w-5" />
+                  <Phone className="size-5" />
                 </a>
               )}
             </div>

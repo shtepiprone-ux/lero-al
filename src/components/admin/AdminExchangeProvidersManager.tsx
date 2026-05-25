@@ -115,14 +115,16 @@ function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
           <Label className="text-xs">{t('mode')}</Label>
           <div className="flex rounded-xl border overflow-hidden">
             {(['auto', 'manual', 'hybrid'] as const).map(m => (
-              <button
+              <Button
                 key={m}
                 type="button"
                 onClick={() => setMode(m)}
-                className={`flex-1 h-9 text-xs font-medium transition-colors ${mode === m ? 'bg-primary text-primary-foreground' : 'bg-background hover:bg-muted'}`}
+                size="lg"
+                variant={mode === m ? 'default' : 'ghost'}
+                className="flex-1 rounded-none text-xs"
               >
                 {t(`mode_${m}`)}
-              </button>
+              </Button>
             ))}
           </div>
         </div>

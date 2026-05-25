@@ -26,9 +26,11 @@ interface Props {
   /** Pass 'icon' to render only the folder icon (for overlay on listing cards). */
   variant?: 'icon' | 'default'
   className?: string
+  /** Canonical button size for default variant. Has no effect on icon variant. */
+  size?: 'default' | 'lg' | 'xl'
 }
 
-export function SaveToCollectionButton({ listingId, variant = 'icon', className }: Props) {
+export function SaveToCollectionButton({ listingId, variant = 'icon', className, size }: Props) {
   const t = useTranslations('collections')
   const { user } = useAuth()
   const [open, setOpen] = useState(false)
@@ -96,7 +98,7 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className 
       <Button
         type="button"
         variant="ghost"
-        size={variant === 'icon' ? 'icon-sm' : 'sm'}
+        size={variant === 'icon' ? 'icon-sm' : (size ?? 'sm')}
         onClick={e => { e.preventDefault(); e.stopPropagation(); handleOpen() }}
         aria-label={t('save_to')}
         className={className}

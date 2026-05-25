@@ -1,5 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { Phone, MessageCircle } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { buttonVariants } from '@/components/ui/button'
 
 interface Props {
   price: string
@@ -29,7 +31,7 @@ export function ListingMobileCTA({ price, phone, whatsapp, listingTitle }: Props
       {phone && (
         <a
           href={`tel:${cleanPhone}`}
-          className="h-11 px-4 inline-flex items-center gap-2 rounded-xl border border-border bg-card text-sm font-medium hover:bg-muted transition-colors shrink-0"
+          className={cn(buttonVariants({ size: 'xl', variant: 'outline' }), 'shrink-0')}
         >
           <Phone className="h-4 w-4" />
           <span className="hidden sm:inline">{t('call')}</span>
@@ -41,7 +43,7 @@ export function ListingMobileCTA({ price, phone, whatsapp, listingTitle }: Props
           href={`https://wa.me/${cleanWa}?text=${waText}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="h-11 px-4 inline-flex items-center gap-2 rounded-xl bg-[color:var(--whatsapp)] text-white text-sm font-medium hover:opacity-90 transition-opacity shrink-0"
+          className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0')}
         >
           <MessageCircle className="h-4 w-4" />
           WhatsApp

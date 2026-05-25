@@ -202,7 +202,7 @@
       "expires": "2026-12-01",
       "severity": "LOW",
       "why_safe": "Story file only, not production code. Mirrors ListingCard badge pattern."
-    }
+    },
     {
       "rule": "arbitrary-z-index",
       "file": "src/components/shared/PerfDevOverlay.tsx",
@@ -212,6 +212,16 @@
       "expires": "2026-12-01",
       "severity": "MEDIUM",
       "why_safe": "Component is dev-only, never ships to production. Does not interfere with user flows."
+    },
+    {
+      "rule": "arbitrary-z-index",
+      "file": "src/modules/listings/components/ListingGallery.tsx",
+      "pattern": "z-[100]",
+      "reason": "Full-screen gallery overlay must sit above all floating UI (dialogs z-50, sheets z-50). Fixed inset-0 — no conflict with positioned content.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "Full-screen inset-0 overlay. Cannot overlap other content because it covers the entire viewport. Layer value consistent with Sonner toast layer."
     },
     {
       "rule": "arbitrary-height",

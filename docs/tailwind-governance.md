@@ -220,7 +220,7 @@ Canonical z-index scale:
 | Sticky | `z-20` | Sticky headers, toolbar |
 | Modal overlay | `z-40` | Dialog/Sheet backdrop |
 | Modal content | `z-50` | Dialog/Sheet content |
-| Toast | `z-[100]` | Sonner toasts |
+| Toast / Gallery | `z-[100]` | Sonner toasts; ListingGallery full-screen overlay (allowlisted) |
 | Dev overlay | `z-[9999]` | PerfDevOverlay (dev-only, allowlisted) |
 
 **Forbidden:** Arbitrary z-index values not in this scale without allowlist entry.

@@ -46,6 +46,7 @@ returned task.
 
 ### After Every Change
 - After making code changes, run the relevant local verification step (`npm run dev` for interactive verification, `npm run build` before commit/push, and any targeted checks needed for the changed scope).
+- **Mandatory TypeScript gate**: After ANY file write or edit, run `npx tsc --noEmit` in the shell and confirm 0 errors before reporting the task complete. **Do NOT rely on the Write/Edit tool's success confirmation** — the tool can write corrupted files (null bytes, truncated content) that pass the file API but fail tsc. The shell `npx tsc --noEmit` output is the only authoritative check.
 - **After every feature, fix, or significant change — update the relevant project documentation**:
 - Update the appropriate file in `/docs/` if rules, architecture, workflow, or standards changed.
 - Update `docs/backlog.md` for progress, session summary, and next tasks when applicable.

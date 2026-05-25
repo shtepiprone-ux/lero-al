@@ -14,6 +14,7 @@ import {
 import { AdminEditLayout } from '@/components/admin/AdminEditLayout'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
@@ -870,12 +871,11 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                 <div className="flex flex-col gap-1.5 sm:grid sm:grid-cols-[140px_1fr] sm:gap-3 sm:items-start">
                   <Label className="text-sm text-muted-foreground sm:pt-2 leading-none">{t('fields.email_create')}</Label>
                   <div className="min-w-0">
-                    <Input
+                    <AdminInput
                       type="email"
                       value={createEmail}
                       onChange={e => { setCreateEmail(e.target.value); setCreateEmailError(null) }}
                       placeholder="user@example.com"
-                      className="h-10 rounded-xl"
                     />
                     {createEmailError && <p className="text-xs text-destructive mt-1">{createEmailError}</p>}
                   </div>
@@ -898,12 +898,12 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
               )}
               <FieldRow label={t('fields.first_name')} mode={currentMode}
                 viewValue={user?.name}
-                editContent={<Input {...register('firstName')} className="h-10 rounded-xl" placeholder={t('placeholders.first_name')} />}
+                editContent={<AdminInput {...register('firstName')} placeholder={t('placeholders.first_name')} />}
                 error={errors.firstName?.message}
               />
               <FieldRow label={t('fields.last_name')} mode={currentMode}
                 viewValue={user?.last_name}
-                editContent={<Input {...register('lastName')} className="h-10 rounded-xl" placeholder={t('placeholders.last_name')} />}
+                editContent={<AdminInput {...register('lastName')} placeholder={t('placeholders.last_name')} />}
                 error={errors.lastName?.message}
               />
               {/* Profile type shown as read-only; editable in the sidebar Role & Status card */}
@@ -984,21 +984,21 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             {(isBusiness || (currentMode === 'view' && user && ['agent', 'developer'].includes(profileTypeFromUser(user)))) && (
               <SectionCard id="section-business" title={t('sections.company')}>
                 <FieldRow label={t('fields.company_name')} mode={currentMode} viewValue={user?.company_name}
-                  editContent={<Input {...register('companyName')} className="h-10 rounded-xl" placeholder={t('placeholders.company_name')} />}
+                  editContent={<AdminInput {...register('companyName')} placeholder={t('placeholders.company_name')} />}
                   error={errors.companyName?.message}
                 />
                 <FieldRow label={t('fields.website')} mode={currentMode}
                   viewValue={user?.website ? <a href={user.website} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">{user.website}</a> : undefined}
-                  editContent={<Input {...register('website')} className="h-10 rounded-xl" placeholder={t('placeholders.website')} />}
+                  editContent={<AdminInput {...register('website')} placeholder={t('placeholders.website')} />}
                   error={errors.website?.message}
                 />
                 <FieldRow label={t('fields.position')} mode={currentMode} viewValue={user?.position}
-                  editContent={<Input {...register('position')} className="h-10 rounded-xl" placeholder={t('placeholders.position')} />}
+                  editContent={<AdminInput {...register('position')} placeholder={t('placeholders.position')} />}
                 />
                 <FieldRow label={t('fields.year_started')} mode={currentMode} viewValue={user?.year_started?.toString()}
                   editContent={
-                    <Input {...register('yearStarted', { valueAsNumber: true })} type="number"
-                      min={1900} max={new Date().getFullYear()} className="h-10 rounded-xl w-32" placeholder="2015" />
+                    <AdminInput {...register('yearStarted', { valueAsNumber: true })} type="number"
+                      min={1900} max={new Date().getFullYear()} className="w-32" placeholder="2015" />
                   }
                   error={errors.yearStarted?.message}
                 />

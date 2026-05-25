@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -55,11 +55,11 @@ function PageModal({ page, onClose, onDone }: {
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
             <Label className="text-xs">{t('field_title_label')}</Label>
-            <Input value={title} onChange={e => { setTitle(e.target.value); if (!page) setSlug(toSlug(e.target.value)) }} className="h-10 rounded-xl" />
+            <AdminInput value={title} onChange={e => { setTitle(e.target.value); if (!page) setSlug(toSlug(e.target.value)) }} />
           </div>
           <div className="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
             <Label className="text-xs">Slug</Label>
-            <Input value={slug} onChange={e => setSlug(e.target.value)} className="h-10 rounded-xl font-mono text-xs" />
+            <AdminInput value={slug} onChange={e => setSlug(e.target.value)} className="font-mono text-xs" />
           </div>
         </div>
 

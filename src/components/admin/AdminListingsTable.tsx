@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
 import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import {
   Dialog,
@@ -124,13 +124,13 @@ function PremiumDialog({ listing, onClose, onDone }: {
               {t('premium_custom_date')}
             </Label>
             <div className="flex gap-2">
-              <Input
+              <AdminInput
                 id="custom-date"
                 type="date"
                 value={customDate}
                 onChange={e => setCustomDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="h-10 rounded-xl flex-1"
+                className="flex-1"
               />
               <Button
                 onClick={() => apply()}

@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Input } from '@/components/ui/input'
+import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
@@ -141,16 +141,16 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title={t('section_general_info')}>
               <Field label={t('field_site_name')} id="site-name" hint={t('field_site_name_hint')}>
-                <Input id="site-name" value={settings.site_name} onChange={set('site_name')} className="h-10 rounded-xl" />
+                <AdminInput id="site-name" value={settings.site_name} onChange={set('site_name')} />
               </Field>
               <Field label={t('field_tagline')} id="tagline">
-                <Input id="tagline" value={settings.tagline} onChange={set('tagline')} className="h-10 rounded-xl" />
+                <AdminInput id="tagline" value={settings.tagline} onChange={set('tagline')} />
               </Field>
               <Field label={t('field_contact_email')} id="contact-email">
-                <Input id="contact-email" type="email" value={settings.contact_email} onChange={set('contact_email')} placeholder="info@lero.al" className="h-10 rounded-xl" />
+                <AdminInput id="contact-email" type="email" value={settings.contact_email} onChange={set('contact_email')} placeholder="info@lero.al" />
               </Field>
               <Field label={t('field_contact_phone')} id="contact-phone">
-                <Input id="contact-phone" value={settings.contact_phone} onChange={set('contact_phone')} placeholder="+355 XX XXX XXXX" className="h-10 rounded-xl" />
+                <AdminInput id="contact-phone" value={settings.contact_phone} onChange={set('contact_phone')} placeholder="+355 XX XXX XXXX" />
               </Field>
             </Section>
           </>
@@ -160,13 +160,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title={t('section_branding')}>
               <Field label={t('field_logo_url')} id="logo-url">
-                <Input id="logo-url" value={settings.logo_url} onChange={set('logo_url')} placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
+                <AdminInput id="logo-url" value={settings.logo_url} onChange={set('logo_url')} placeholder="https://res.cloudinary.com/..." />
               </Field>
               <Field label={t('field_logo_dark_url')} id="logo-dark-url">
-                <Input id="logo-dark-url" value={settings.logo_dark_url} onChange={set('logo_dark_url')} placeholder="https://res.cloudinary.com/..." className="h-10 rounded-xl" />
+                <AdminInput id="logo-dark-url" value={settings.logo_dark_url} onChange={set('logo_dark_url')} placeholder="https://res.cloudinary.com/..." />
               </Field>
               <Field label={t('field_favicon_url')} id="favicon">
-                <Input id="favicon" value={settings.favicon_url} onChange={set('favicon_url')} placeholder="https://..." className="h-10 rounded-xl" />
+                <AdminInput id="favicon" value={settings.favicon_url} onChange={set('favicon_url')} placeholder="https://..." />
               </Field>
             </Section>
             <Section title={t('section_brand_colors')}>
@@ -183,13 +183,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title={t('section_social')}>
               <Field label="Facebook" id="facebook">
-                <Input id="facebook" value={settings.social_facebook} onChange={set('social_facebook')} placeholder="https://facebook.com/lero.al" className="h-10 rounded-xl" />
+                <AdminInput id="facebook" value={settings.social_facebook} onChange={set('social_facebook')} placeholder="https://facebook.com/lero.al" />
               </Field>
               <Field label="Instagram" id="instagram">
-                <Input id="instagram" value={settings.social_instagram} onChange={set('social_instagram')} placeholder="https://instagram.com/lero.al" className="h-10 rounded-xl" />
+                <AdminInput id="instagram" value={settings.social_instagram} onChange={set('social_instagram')} placeholder="https://instagram.com/lero.al" />
               </Field>
               <Field label="LinkedIn" id="linkedin">
-                <Input id="linkedin" value={settings.social_linkedin} onChange={set('social_linkedin')} placeholder="https://linkedin.com/company/lero-al" className="h-10 rounded-xl" />
+                <AdminInput id="linkedin" value={settings.social_linkedin} onChange={set('social_linkedin')} placeholder="https://linkedin.com/company/lero-al" />
               </Field>
             </Section>
             <Section title={t('section_footer_text')}>
@@ -207,13 +207,13 @@ export function AdminSettings({ initialSettings }: Props) {
           <>
             <Section title={t('section_seo')}>
               <Field label="Meta title" id="meta-title">
-                <Input id="meta-title" value={settings.meta_title} onChange={set('meta_title')} className="h-10 rounded-xl" />
+                <AdminInput id="meta-title" value={settings.meta_title} onChange={set('meta_title')} />
               </Field>
               <Field label="Meta description" id="meta-desc">
                 <Textarea id="meta-desc" rows={3} value={settings.meta_desc} onChange={set('meta_desc')} className="rounded-xl resize-none" />
               </Field>
               <Field label="OG Image URL" id="og-image">
-                <Input id="og-image" value={settings.og_image} onChange={set('og_image')} placeholder="https://lero.al/og-image.jpg" className="h-10 rounded-xl" />
+                <AdminInput id="og-image" value={settings.og_image} onChange={set('og_image')} placeholder="https://lero.al/og-image.jpg" />
               </Field>
             </Section>
             <Section title={t('section_archived')}>
@@ -222,14 +222,14 @@ export function AdminSettings({ initialSettings }: Props) {
                 id="archived-noindex-days"
                 hint={t('field_noindex_days_hint')}
               >
-                <Input
+                <AdminInput
                   id="archived-noindex-days"
                   type="number"
                   min={1}
                   max={365}
                   value={settings.archived_noindex_days}
                   onChange={set('archived_noindex_days')}
-                  className="h-10 rounded-xl w-32"
+                  className="w-32"
                 />
               </Field>
             </Section>

@@ -10,7 +10,7 @@ import {
   Loader2, ChevronLeft, UserPlus, Mail, CheckCircle2,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
 import { PhoneField } from '@/components/shared/PhoneField'
@@ -198,18 +198,18 @@ export function AdminUserCreate({ cities, regions }: Props) {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="firstName" className="text-sm">{t('fields.first_name')}</Label>
-                <Input id="firstName" {...register('firstName')} className="h-10 rounded-xl" placeholder={t('placeholders.first_name')} />
+                <AdminInput id="firstName" {...register('firstName')} placeholder={t('placeholders.first_name')} />
                 {errors.firstName && <p className="text-xs text-destructive">{errors.firstName.message}</p>}
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label htmlFor="lastName" className="text-sm">{t('fields.last_name_optional')}</Label>
-                <Input id="lastName" {...register('lastName')} className="h-10 rounded-xl" placeholder={t('placeholders.last_name')} />
+                <AdminInput id="lastName" {...register('lastName')} placeholder={t('placeholders.last_name')} />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="email" className="text-sm">{t('fields.email_create')}</Label>
-              <Input id="email" type="email" {...register('email')} className="h-10 rounded-xl" placeholder="user@example.com" />
+              <AdminInput id="email" type="email" {...register('email')} placeholder="user@example.com" />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
 

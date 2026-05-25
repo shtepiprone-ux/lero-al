@@ -208,8 +208,23 @@ desktop" is not verification — the canonical task template requires all seven.
 - **NEVER** create local input wrappers with custom height/padding.
 - `AdminSearchInput` (Input + icon) is an acceptable composition — not a clone.
 - `FilterRangeInputs` (two Inputs) is an acceptable composition — not a clone.
-- **NEVER** override Input height via direct className unless using a future canonical size variant.
+- **NEVER** override Input height via direct className unless using a canonical size variant.
 - For mobile forms, consider adding `min-h-[44px]` wrapper or await Phase 3 size variants.
+
+### Admin-Input Canonical Pattern (added Task 226 — 2026-05-25)
+
+Admin forms use 40px inputs (intentional — wider touch targets in dense admin UI). The canonical
+implementation is `AdminInput` from `@/components/admin/AdminInput` — a thin wrapper that applies
+`h-10 rounded-xl` without exposing ad-hoc className overrides to callers.
+
+| Context | Component | Height |
+|---|---|---|
+| Public forms | `Input` | `h-9` (36px, default) |
+| Admin forms | `AdminInput` | `h-10` (40px, canonical) |
+
+- **ALWAYS** use `AdminInput` for form inputs in `src/components/admin/` and `src/app/admin/`.
+- **NEVER** use `<Input className="h-10 ..."` directly in admin files — use `AdminInput`.
+- Additional layout classes (e.g. `w-32`, `flex-1`, `font-mono`) may be passed via `className`.
 
 ---
 

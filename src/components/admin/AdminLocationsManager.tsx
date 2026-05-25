@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { Plus, Loader2, Star } from 'lucide-react'
 import { toast } from 'sonner'
-import { Input } from '@/components/ui/input'
+import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
@@ -97,15 +97,14 @@ function LocationModal({
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs">{t('name_al_label')} *</Label>
-            <Input
+            <AdminInput
               value={nameAl}
               onChange={e => { setNameAl(e.target.value); if (!location) setSlug(toSlug(e.target.value)) }}
-              className="h-10 rounded-xl"
             />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs">{t('name_en_label')}</Label>
-            <Input value={nameEn} onChange={e => setNameEn(e.target.value)} className="h-10 rounded-xl" />
+            <AdminInput value={nameEn} onChange={e => setNameEn(e.target.value)} />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs">{t('type_label')}</Label>
@@ -119,7 +118,7 @@ function LocationModal({
           </div>
           <div className="flex flex-col gap-1.5">
             <Label className="text-xs">{t('slug_label')}</Label>
-            <Input value={slug} onChange={e => setSlug(e.target.value)} className="h-10 rounded-xl font-mono text-xs" />
+            <AdminInput value={slug} onChange={e => setSlug(e.target.value)} className="font-mono text-xs" />
           </div>
           <div className="flex flex-col gap-1.5 col-span-2">
             <Label className="text-xs">{t('parent_label')}</Label>
@@ -136,11 +135,11 @@ function LocationModal({
             <>
               <div className="flex flex-col gap-1.5 col-span-2">
                 <Label className="text-xs">{t('image_url_label')}</Label>
-                <Input
+                <AdminInput
                   value={imageUrl}
                   onChange={e => setImageUrl(e.target.value)}
                   placeholder="https://res.cloudinary.com/..."
-                  className="h-10 rounded-xl font-mono text-xs"
+                  className="font-mono text-xs"
                 />
                 {imageUrl && (
                   <AppImage
@@ -153,13 +152,12 @@ function LocationModal({
               </div>
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs">{t('display_order_label')}</Label>
-                <Input
+                <AdminInput
                   type="number"
                   min={1}
                   max={999}
                   value={displayOrder}
                   onChange={e => setDisplayOrder(Number(e.target.value))}
-                  className="h-10 rounded-xl"
                 />
               </div>
             </>

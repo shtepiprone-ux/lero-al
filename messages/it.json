@@ -737,7 +737,8 @@
       "reply_success": "Risposta inviata",
       "reply_error": "Invio risposta fallito. Riprova.",
       "status_updated": "Stato aggiornato",
-      "status_error": "Aggiornamento stato fallito. Riprova."
+      "status_error": "Aggiornamento stato fallito. Riprova.",
+      "reply_email_failed": "Risposta salvata, ma la consegna dell'email non è riuscita. Puoi contattare l'utente manualmente."
     },
     "support": {
       "new_complaint_btn": "Nuovo reclamo",
@@ -1322,6 +1323,10 @@
       "partnership": "Partnership",
       "press": "Stampa",
       "other": "Altro"
+    },
+    "errors": {
+      "mailbox_unverified": "Il tuo messaggio è stato ricevuto, ma non siamo riusciti a notificare il nostro team. Ti ricontatteremo al più presto.",
+      "email_transient": "Il tuo messaggio è stato ricevuto, ma si è verificato un problema temporaneo con il nostro sistema email. Ti ricontatteremo al più presto."
     }
   }
 }

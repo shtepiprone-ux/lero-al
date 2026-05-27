@@ -62,6 +62,14 @@ export function ContactForm() {
       toast.error(t('rate_limited_toast'))
       return
     }
+    if (result.error === 'mailbox_unverified') {
+      toast.warning(t('errors.mailbox_unverified'))
+      return
+    }
+    if (result.error === 'email_transient') {
+      toast.warning(t('errors.email_transient'))
+      return
+    }
     if (result.error) {
       toast.error(t('error_toast'))
       return

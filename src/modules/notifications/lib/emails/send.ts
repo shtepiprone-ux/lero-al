@@ -32,9 +32,15 @@ interface SendEmailParams {
   from?: string
 }
 
-interface SendEmailResult {
+export type SendEmailErrorCode =
+  | 'missing_content'
+  | 'unverified_sender'
+  | 'transient'
+  | 'send_failed'
+
+export interface SendEmailResult {
   id?: string
-  error?: string
+  error?: SendEmailErrorCode
 }
 
 export async function sendEmail(params: SendEmailParams): Promise<SendEmailResult> {
@@ -68,8 +74,24 @@ export async function sendEmail(params: SendEmailParams): Promise<SendEmailResul
   })
 
   if (error) {
-    console.error('[email] Failed to send', { error, to: params.to, subject: params.subject })
-    return { error: 'send_failed' }
+    const statusCode = (error as { statusCode?: number }).statusCode ?? 0
+    const message = ((error as { message?: string }).message ?? '').toLowerCase()
+    let code: SendEmailErrorCode
+    if (
+      statusCode === 403 ||
+      message.includes('not verified') ||
+      message.includes('not allowed') ||
+      (message.includes('sender') && message.includes('verif')) ||
+      message.includes('domain is not verified')
+    ) {
+      code = 'unverified_sender'
+    } else if (statusCode >= 500 || statusCode === 429) {
+      code = 'transient'
+    } else {
+      code = 'send_failed'
+    }
+    console.error('[email] Failed to send', { error, to: params.to, subject: params.subject, statusCode })
+    return { error: code }
   }
 
   return { id: data?.id }

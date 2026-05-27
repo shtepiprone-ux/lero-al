@@ -130,6 +130,26 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: al
     if (!selected || !replyBody.trim()) return
     startTransition(async () => {
       const result = await sendInquiryReply(selected.id, replyBody)
+      if (result.error === 'reply_email_failed') {
+        // DB write succeeded but email delivery failed — update local state
+        setInquiries(prev =>
+          prev.map(i => i.id === selected.id
+            ? { ...i, reply_count: i.reply_count + 1, status: i.status === 'new' ? 'in_progress' : i.status }
+            : i),
+        )
+        setSelected(prev =>
+          prev
+            ? {
+                ...prev,
+                reply_count: prev.reply_count + 1,
+                status: prev.status === 'new' ? 'in_progress' : prev.status,
+              }
+            : null,
+        )
+        setReplyBody('')
+        toast.warning(t('reply_email_failed'))
+        return
+      }
       if (result.error) {
         toast.error(t('reply_error'))
         return

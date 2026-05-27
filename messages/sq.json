@@ -737,7 +737,8 @@
       "reply_success": "Përgjigja u dërgua",
       "reply_error": "Dërgimi i përgjigjes dështoi. Provoni sërish.",
       "status_updated": "Statusi u përditësua",
-      "status_error": "Ndryshimi i statusit dështoi. Provoni sërish."
+      "status_error": "Ndryshimi i statusit dështoi. Provoni sërish.",
+      "reply_email_failed": "Përgjigja u ruajt, por dërgimi i emailit dështoi. Mund të kontaktoni përdoruesin manualisht."
     },
     "support": {
       "new_complaint_btn": "Ankesë e re",
@@ -1322,6 +1323,10 @@
       "partnership": "Partneritet",
       "press": "Shtyp",
       "other": "Tjetër"
+    },
+    "errors": {
+      "mailbox_unverified": "Mesazhi juaj u ruajt, por nuk mund të njoftonim ekipin tonë. Do t'ju kontaktojmë sa më shpejt.",
+      "email_transient": "Mesazhi juaj u ruajt, por ndodhi një gabim i përkohshëm me sistemin tonë të emailit. Do t'ju kontaktojmë sa më shpejt."
     }
   }
 }

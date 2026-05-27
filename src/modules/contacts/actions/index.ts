@@ -63,7 +63,7 @@ export interface SubmitContactInquiryInput {
 
 export async function submitContactInquiry(
   input: SubmitContactInquiryInput,
-): Promise<{ error?: 'rate_limited' | 'validation' | 'save_failed' | 'no_mailbox' }> {
+): Promise<{ error?: 'rate_limited' | 'validation' | 'save_failed' | 'no_mailbox' | 'mailbox_unverified' | 'email_transient' }> {
   // Validate
   const topic = input.topic.trim()
   if (!VALID_TOPICS.has(topic)) return { error: 'validation' }
@@ -111,9 +111,9 @@ export async function submitContactInquiry(
     return { error: 'save_failed' }
   }
 
-  // Staff notification — fire-and-forget; failure must not block the user
+  // Staff notification — DB inserted first; email second; failures surface to caller
   const displaySubject = topic === 'other' && customSubject ? customSubject : topic
-  sendContactInquiryNotification({
+  const emailResult = await sendContactInquiryNotification({
     to: targetMailbox,
     replyTo: email,
     name,
@@ -122,7 +122,16 @@ export async function submitContactInquiry(
     displaySubject,
     message,
     locale: 'en',
-  }).catch(e => console.error('[contact-inquiry] email notification failed', e))
+  })
+
+  if (!emailResult.ok) {
+    if (emailResult.reason === 'unverified_sender') {
+      console.error('[contact-inquiry] sender not verified in Resend', { targetMailbox })
+      return { error: 'mailbox_unverified' }
+    }
+    console.error('[contact-inquiry] email notification failed', { reason: emailResult.reason })
+    return { error: 'email_transient' }
+  }
 
   return {}
 }
@@ -168,7 +177,7 @@ export async function updateInquiryStatus(
 export async function sendInquiryReply(
   inquiryId: string,
   body: string,
-): Promise<{ error?: string }> {
+): Promise<{ error?: 'forbidden' | 'validation' | 'not_found' | 'save_failed' | 'reply_email_failed' }> {
   const actorId = await assertAdminOrModerator()
   if (!actorId) return { error: 'forbidden' }
 
@@ -212,19 +221,27 @@ export async function sendInquiryReply(
     ...(current?.status === 'new' ? { status: 'in_progress' } : {}),
   }).eq('id', inquiryId)
 
-  // Send reply email — fire-and-forget
+  // Send reply email — DB write succeeded; email failure surfaces to caller
   const displaySubject =
     inquiry.topic === 'other' && inquiry.custom_subject
       ? inquiry.custom_subject
       : inquiry.topic
 
-  sendContactInquiryReply({
+  const replyEmailResult = await sendContactInquiryReply({
     to: inquiry.email,
     fromMailbox: inquiry.target_mailbox,
     displaySubject,
     replyBody: trimmedBody,
     locale: 'en',
-  }).catch(e => console.error('[contact-inquiry] reply email failed', e))
+  })
+
+  if (!replyEmailResult.ok) {
+    console.error('[contact-inquiry] reply email failed after DB write', {
+      inquiryId,
+      reason: replyEmailResult.reason,
+    })
+    return { error: 'reply_email_failed' }
+  }
 
   return {}
 }

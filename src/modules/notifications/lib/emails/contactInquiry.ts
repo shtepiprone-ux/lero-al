@@ -136,7 +136,7 @@ export async function sendContactInquiryNotification(opts: {
   displaySubject: string
   message: string
   locale?: string
-}): Promise<void> {
+}): Promise<{ ok: true; id?: string } | { ok: false; reason: string }> {
   const locale = opts.locale ?? 'sq'
   const s = getStrings(locale)
 
@@ -160,7 +160,10 @@ export async function sendContactInquiryNotification(opts: {
       topic: opts.topic,
       error: result.error,
     })
+    return { ok: false, reason: result.error }
   }
+
+  return { ok: true, id: result.id }
 }
 
 // ── Staff reply to user ───────────────────────────────────────────────────────
@@ -251,7 +254,7 @@ export async function sendContactInquiryReply(opts: {
   displaySubject: string
   replyBody: string
   locale?: string
-}): Promise<void> {
+}): Promise<{ ok: true; id?: string } | { ok: false; reason: string }> {
   const locale = opts.locale ?? 'sq'
   const s = getReplyStrings(locale)
 
@@ -273,5 +276,8 @@ export async function sendContactInquiryReply(opts: {
       to: opts.to,
       error: result.error,
     })
+    return { ok: false, reason: result.error }
   }
+
+  return { ok: true, id: result.id }
 }

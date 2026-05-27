@@ -5,6 +5,11 @@
 > executor. This file defines the rules for the planning/review layer that sits above it.
 > Read this at the start of every orchestrator session.
 
+**Related sources of truth (read before writing a kickoff):**
+- `docs/agent-contract.md` — the short P0 Sonnet contract every kickoff must enforce.
+- `docs/rule-index.md` — task-type → required/optional pre-read docs (no more "read all docs").
+- `docs/ai-behavior.md` — long-form executor rules (Notes 14, 18, 19, 20, 21, 22, 23 are the behavior-preservation core) and the Canonical Task Template.
+
 ## Division of labor
 
 | Layer | Model | Job |
@@ -13,7 +18,19 @@
 | Executor | **Sonnet 4.6** | Write the actual code per a literal, scoped prompt |
 
 The orchestrator **does not write production code**. At most it *reads* code to verify work.
-All implementation is delegated to Sonnet 4.6 via a copy-paste prompt.
+All implementation is delegated to Sonnet 4.6 via a kickoff file written to `/tasks`.
+
+## Orchestrator standing rules (Task 253)
+
+These rules apply to every orchestrator session from 2026-05-27 onward:
+
+- **The orchestrator may create/update governance docs and task files** (`docs/`, `tasks/Epics/`, `tasks/Sprints/`) when the owner asks for orchestration / governance / planning work.
+- **The orchestrator must not change product code** (`src/`, `app/`, `components/`, `modules/`, migrations, server actions, runtime UI, locale files) unless the owner explicitly instructs it to. Implementation is Sonnet's job.
+- **Kickoffs must be concrete.** Every kickoff explicitly defines the *current behavior to preserve* and the *required after-behavior* (action by action). Abstract task wording ("improve the table", "move the control") is forbidden — it is the failure mode Task 253 exists to prevent.
+- **Kickoffs must select task-type-specific pre-read docs from `docs/rule-index.md`.** No kickoff may say "read all docs". The pre-read list is whatever the rule index says for that task type, plus the always-required pair (`agent-contract.md`, `backlog.md`).
+- **Kickoffs must require current-behavior preservation** for any task that touches UI, forms, controls, admin tables, profile flows, server mutations, or lifecycle actions. Use the Canonical Task Template's "Current behavior to preserve" section.
+- **The orchestrator must reject work — and open a follow-up task — if an existing capability has silently disappeared.** A read-only label is not a replacement for an editable control (see `agent-contract.md` clause 4 + `ai-behavior.md` Note 21).
+- **Approval is allowed only after actual `git diff` review.** The session log is the executor's *claim*; the diff is the *proof*. If the two disagree, the diff wins. A "complete" session log without diff verification is not approval.
 
 ## Environment & git safety (Cowork / network drive) — MANDATORY
 
@@ -72,6 +89,19 @@ Put this in every executor prompt, and **verify each clause against the diff** o
 - Does **not** introduce its own architectural decisions — if something is ambiguous or missing,
   it **stops and asks** instead of inventing scope.
 - Executes the acceptance criteria **literally**.
+- **Self-validates BEFORE claiming complete** (Note 18 in `ai-behavior.md`): runs `npx tsc --noEmit`
+  → 0 errors, pastes an AC-by-AC self-audit table into the session log (every kickoff AC bullet → file:line
+  OR runtime step → ✅/❌), reviews its own `git diff` against this hard contract, and walks the affected
+  UI flow in the running app at `uk` 320px end-to-end before writing the "complete" line in
+  `docs/backlog.md`. Missing or partial self-validation is a rule violation — route the task back.
+- **Preserves UX flow** (Note 19): when modifying existing functionality OR adding new functionality,
+  every existing entry point, sibling control, downstream step, empty/loading/error/success/cancel state
+  in the affected flow keeps working end-to-end. The session log includes a short "UX flow trace"
+  (entry → step 1 → … → outcome) with the runtime evidence.
+- **Preserves existing controls** (Note 20): does NOT silently remove any existing interactive control
+  (button, row action, sidebar entry, dropdown item, status switcher, filter chip, …). The session log
+  includes a before/after inventory of every control on the affected surface. Removing a control is only
+  allowed when the kickoff explicitly authorised it AND the diff documents the replacement entry point.
 - Updates `docs/backlog.md` and adds a session log under `docs/sessions/`.
 - 0 new lint errors / 0 new warnings; typecheck has no new errors; relevant governance gates PASS.
 - **Provides ready-to-run git commit commands as plain text at the end — the OWNER runs them in
@@ -88,12 +118,26 @@ Put this in every executor prompt, and **verify each clause against the diff** o
 
 - [ ] Diff actually matches the session-log "Files Changed" table (no undisclosed edits).
 - [ ] Every acceptance criterion verifiable in the diff (not just ticked in the report).
+- [ ] **Self-validation block present in the session log** (Note 18, `ai-behavior.md`): the AC-by-AC
+      audit table is complete, every row is ✅ with a verifiable file:line OR runtime step, and the
+      "Self-validation: tsc=0 errors · build=passes · AC table=all green · runtime locale=uk PASS ·
+      scope=clean" line is present. **A task without this block is INCOMPLETE — route back; do not
+      approve.**
 - [ ] Locale parity: `sq` / `en` / `uk` / `it` all contain the new keys (same key set).
 - [ ] Responsive coverage present for all required breakpoints.
 - [ ] Canonical components only; no governance anti-patterns.
 - [ ] **UI tasks only:** the §17 UI pre-flight checklist output (`ui-rules.md`) is in the session log —
       non-canonical-dropdown grep, control-height alignment (§15), z-index scale (§16), overflow at 320px
       in `uk`, all 7 breakpoints. **Do NOT approve a UI task whose session log lacks this.**
+- [ ] **UX flow preserved** (Note 19, `ai-behavior.md`): the session log includes a UX flow trace
+      (entry → step 1 → … → outcome) for the affected surface; every state (empty/loading/error/success/
+      cancel/dismiss) still works; cross-page reactivity (header/sidebar/breadcrumb/cards) for any
+      identity change (name, title, currency, locale) propagates without a manual reload.
+- [ ] **Existing controls preserved** (Note 20, `ai-behavior.md`): the session log shows a before/after
+      inventory of every interactive control on the affected surface; nothing was silently removed; any
+      moved control has a documented new entry point in the diff. **A diff that drops admin row actions,
+      status switchers, sidebar entries, or filter chips without explicit kickoff authorisation is a
+      P0 regression — route back as a follow-up task.**
 - [ ] Scope respected; no unrequested architectural decisions.
 - [ ] Global-change rule (Note 14, `ai-behavior.md`): the fix updated **every** affected sibling/
       consumer (no diverging call sites left); no hardcode; no one-off component clone; canonical
@@ -101,3 +145,9 @@ Put this in every executor prompt, and **verify each clause against the diff** o
       `NEXT_PUBLIC_SITE_URL`, never `window.location.origin` (`env.md`).
 - [ ] `docs/backlog.md` + `docs/sessions/` updated and consistent with the diff.
 - [ ] Verdict recorded: **approve** or **follow-up task opened**.
+
+## Approval rule (Task 253 — restated for emphasis)
+
+- **Sonnet's final report is not proof.** The actual changed files are the proof.
+- **Approval is allowed only after actual diff review.** Read `git show <sha>` / `git diff` for every commit in the task. Do not approve from the session log alone.
+- **If the diff shows a silently removed control, a missing locale, a missing breakpoint, or scope creep, do not silently fix it from the orchestrator session.** Open a follow-up task with a concrete kickoff that lists the regression and routes the fix back through Sonnet.

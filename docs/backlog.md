@@ -7,44 +7,51 @@
 
 ## Last Session
 
-**2026-05-25 — Orchestration (Opus 4.7): Sprint 11 (225–227) APPROVED after file-corruption repair.** Null-byte corruption in 9 files (8 `.tsx` + `allowlist.json`) repaired; `tsc → 0 errors` confirmed in shell. Rule added to `docs/ai-behavior.md`: executor must run `tsc --noEmit` in shell as final AC gate (not trust Write tool). See Session Archive for per-task rows.
+**2026-05-27 — Orchestration (Opus 4.7): Tasks 253 + 254. Task 253 — AI governance compression (new `docs/agent-contract.md` + `docs/rule-index.md`; Notes 21/22/23 added to `ai-behavior.md`; Canonical Task Template rewritten with "Current behavior to preserve" + "Required after behavior"; `orchestrator-role.md` reinforced "approval requires actual diff review"). Task 254 — Migrated the 4 pending kickoff files (Tasks 250 / 251 / 252 + Sprint 12's 8-task bundle 228/234/235/236/239/242/244/248) to the new concrete template; all preserved task numbers, scope, and AC; added rule-index bundles + behavior-preservation blocks + Notes 21/22/23 where relevant. Last task number: 254. No product code written.** See [`sessions/2026-05-27-task-253-governance-compression.md`](sessions/2026-05-27-task-253-governance-compression.md) + [`sessions/2026-05-27-task-254-task-migration.md`](sessions/2026-05-27-task-254-task-migration.md).
 
 ## Pending Action Items
 
 | Item | Owner | Notes |
 |------|-------|-------|
-| SQL: Task 197 `role_permissions` table + RLS + seed | Owner | Run before deploying RBAC |
-| SQL: Tasks 222/223 `contact_inquiries` + `contact_inquiry_replies` + RLS | Owner | Run before contacts page goes live |
-| Resend sender verification: `support@lero.al`, `sales@lero.al` | Owner | Required for Task 223 admin reply emails |
-| Supabase redirect allowlist: add `https://lero.al/auth/confirm` | Owner | Required for Task 224 email confirmation |
-| Vercel: set `NEXT_PUBLIC_SITE_URL=https://lero.al` | Owner | Required for Tasks 224 / 183 |
+| SQL: Task 250 `role_permissions` hardening + `role_permission_events` (SUPERSEDES Task 197 SQL) | Owner | Run after Sonnet emits the revised idempotent SQL into the Task 250 session log |
+| Resend sender verification: `support@lero.al`, `sales@lero.al` | Owner | Required for Task 223 admin reply emails + Task 252 sales inbox |
 
 ## Next Immediate Tasks
 
-All Epics M–V and Sprints 9–11 closed. **Last task number: 227. Next: 228.** Owner to provide next priorities; orchestrator will file Sprint 12. Every task MUST follow the Canonical Task Template in `docs/ai-behavior.md`.
+**Last task number: 254. Next: 255.** Sprint 12 active — run order: **250 (R.3a) → 234 (X.1) → 235 (X.2) → 228 (W.1) → 236 (Y.1) → 244 (CC.1) → 239 (Y.4) → 242 (BB.1) → 248 (FF.1)**. Plan: [`Sprint_12_…`](../tasks/Sprints/Sprint_12_—_Critical_Bug_Slice_from_issues_2026-05-25.md). Kickoffs: [`Sprint_12_kickoff_prompts.md`](../tasks/Sprints/Sprint_12_kickoff_prompts.md) + [`Epic_R_kickoff_prompt_Task_250.md`](../tasks/Epics/Epic_R_kickoff_prompt_Task_250.md). **Sprint 13 (next) absorbs: Task 251 (GG.1 Albanian-only email — trivial fix, urgent), Task 252 (V.3 Sales inbox split — depends on 251), plus deferred W.2–W.6 / Y.2-Y.3 / Z.1 / AA.1 / BB.2 / CC.2 / DD.1 / EE.1 / FF.2.** Every task follows the Canonical Task Template (`docs/ai-behavior.md`) **and the new Notes 18/19/20 self-validation + UX-flow + control-preservation gates**.
 
-## Active product backlog — Epics M–U (from `issues.txt`, opened 2026-05-22)
+## Active product backlog — Epics M–V (closed) + W–FF (open, from `issues.txt` 2026-05-25)
 
-Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint 10 (216–221a)** next → then resume **R (195–196 ✅; 197–202 open) · S open · T (213 ✅; 205–207 open) · U open** → **Epic V — Contacts (222–223) LAST.** Tasks 175–223, global numbering.
-
-| Epic | Tasks | Notes | Plan | Kickoffs |
+| Epic | Tasks | Source notes | Plan | Kickoffs |
 |---|---|---|---|---|
-| M — Currency & Exchange-Rate Integrity (reopened) | 175–178, 214–215 | 3, 32, 5, 21, +FX | [`Epic_M_…`](../tasks/Epics/Epic_M_Currency_and_Exchange_Rate_Integrity.md) | Sprint 9 (175–178) · [`Epic_M_kickoff_prompts.md`](../tasks/Epics/Epic_M_kickoff_prompts.md) (214–215) |
-| N — Localization Consistency v2 | 179, 180, 184 | 15, 31, 4 | [`Epic_N_…`](../tasks/Epics/Epic_N_Localization_Consistency_v2.md) | Sprint 9 (179, 180) · [`Epic_N_kickoff_prompts.md`](../tasks/Epics/Epic_N_kickoff_prompts.md) (184) |
-| O — Auth, Registration & Phone Input | 186–189 | 8, 9, 13, 7 | [`Epic_O_…`](../tasks/Epics/Epic_O_Auth_Registration_and_Phone_Input.md) | [`Epic_O_kickoff_prompts.md`](../tasks/Epics/Epic_O_kickoff_prompts.md) |
-| P — Favorites, Guest-Auth & Account Lifecycle | 181–183, 185, 212 | 17, 18, 16, 19, +UX | [`Epic_P_…`](../tasks/Epics/Epic_P_Favorites_Guest_Auth_and_Account_Lifecycle.md) | Sprint 9 (181–183) · [`Epic_P_kickoff_prompts.md`](../tasks/Epics/Epic_P_kickoff_prompts.md) (185) |
-| Q — Combobox & UI Primitive Single-Source | 190–194 | 1, 12, 6, 22, 23 | [`Epic_Q_…`](../tasks/Epics/Epic_Q_Combobox_and_UI_Primitive_Single_Source.md) | [`Epic_Q_kickoff_prompts.md`](../tasks/Epics/Epic_Q_kickoff_prompts.md) |
-| R — Admin Panel 2026 | 195–202 | 20, 34, 33, 28, 29, 30, 26, 27 | [`Epic_R_…`](../tasks/Epics/Epic_R_Admin_Panel_2026.md) | [`Epic_R_kickoff_prompts.md`](../tasks/Epics/Epic_R_kickoff_prompts.md) |
-| S — Domain Numeric IDs | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
-| T — Global UX Polish & Forms | 205–207, 213 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
+| M — Currency & Exchange-Rate Integrity ✅ | 175–178, 214–215 | 3, 32, 5, 21, +FX | [`Epic_M_…`](../tasks/Epics/Epic_M_Currency_and_Exchange_Rate_Integrity.md) | [`Epic_M_kickoff_prompts.md`](../tasks/Epics/Epic_M_kickoff_prompts.md) |
+| N — Localization Consistency v2 ✅ | 179, 180, 184 | 15, 31, 4 | [`Epic_N_…`](../tasks/Epics/Epic_N_Localization_Consistency_v2.md) | [`Epic_N_kickoff_prompts.md`](../tasks/Epics/Epic_N_kickoff_prompts.md) |
+| O — Auth & Phone Input ✅ | 186–189 | 8, 9, 13, 7 | [`Epic_O_…`](../tasks/Epics/Epic_O_Auth_Registration_and_Phone_Input.md) | [`Epic_O_kickoff_prompts.md`](../tasks/Epics/Epic_O_kickoff_prompts.md) |
+| P — Favorites, Guest-Auth & Account Lifecycle ✅ | 181–183, 185, 212 | 17, 18, 16, 19, +UX | [`Epic_P_…`](../tasks/Epics/Epic_P_Favorites_Guest_Auth_and_Account_Lifecycle.md) | [`Epic_P_kickoff_prompts.md`](../tasks/Epics/Epic_P_kickoff_prompts.md) |
+| Q — Combobox & UI Primitive Single-Source ✅ | 190–194 | 1, 12, 6, 22, 23 | [`Epic_Q_…`](../tasks/Epics/Epic_Q_Combobox_and_UI_Primitive_Single_Source.md) | [`Epic_Q_kickoff_prompts.md`](../tasks/Epics/Epic_Q_kickoff_prompts.md) |
+| R — Admin Panel 2026 (197 ✅ pending SQL; 198–202 open) | 195–202, **250** | 20, 34, 33, 28, 29, 30, 26, 27 + 2026-05-25 owner hardening (32-94) | [`Epic_R_…`](../tasks/Epics/Epic_R_Admin_Panel_2026.md) | [`Epic_R_kickoff_prompts.md`](../tasks/Epics/Epic_R_kickoff_prompts.md) + [`…_Task_250.md`](../tasks/Epics/Epic_R_kickoff_prompt_Task_250.md) |
+| S — Domain Numeric IDs ✅ | 203–204 | 24, 25 | [`Epic_S_…`](../tasks/Epics/Epic_S_Domain_Numeric_IDs.md) | [`Epic_S_kickoff_prompts.md`](../tasks/Epics/Epic_S_kickoff_prompts.md) |
+| T — Global UX Polish & Forms ✅ | 205–207, 213 | 35, 36, 2 | [`Epic_T_…`](../tasks/Epics/Epic_T_Global_UX_Polish_and_Forms.md) | [`Epic_T_kickoff_prompts.md`](../tasks/Epics/Epic_T_kickoff_prompts.md) |
 | U — Performance & RSC Diagnostics ✅ | 208–209 | 10, 11 | [`Epic_U_…`](../tasks/Epics/Epic_U_Performance_and_RSC_Diagnostics.md) | [`Epic_U_kickoff_prompts.md`](../tasks/Epics/Epic_U_kickoff_prompts.md) |
-| Sprint 10 — Critical Regressions + UI Consistency | 216–221a | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
-| V — Contacts & Inquiries (LAST) | 222–223 | owner req 2026-05-23 | [`Epic_V_…`](../tasks/Epics/Epic_V_Contacts_and_Inquiries.md) | [`Epic_V_kickoff_prompts.md`](../tasks/Epics/Epic_V_kickoff_prompts.md) |
-| Sprint 11 — UI Debt Follow-ups ✅ | 225–227 | T221b/T221c deferred + z-index chore | [`Sprint_11_…`](../tasks/Sprints/Sprint_11_UI_Debt_followups.md) | [`Sprint_11_kickoff_prompts.md`](../tasks/Sprints/Sprint_11_kickoff_prompts.md) |
+| V — Contacts & Inquiries (re-opened 2026-05-25 for V.3) | 222–223 ✅, **252** | owner req 2026-05-23 + 2026-05-25 sales-inbox directive | [`Epic_V_…`](../tasks/Epics/Epic_V_Contacts_and_Inquiries.md) | [`Epic_V_kickoff_prompts.md`](../tasks/Epics/Epic_V_kickoff_prompts.md) + [`…_Task_252.md`](../tasks/Epics/Epic_V_kickoff_prompt_Task_252.md) |
+| **W — Listings Filter Bar & Drawer Polish** | 228–233 | 4-5, 7, 8, 11, 12, 13 | [`Epic_W_…`](../tasks/Epics/Epic_W_Listings_Filter_Bar_and_Drawer_Polish.md) | Sprint 12 (228) · later sprints (229–233) |
+| **X — Domain Type Integrity & Admin Controls** | 234–235 | 14, 1 | [`Epic_X_…`](../tasks/Epics/Epic_X_Domain_Type_Integrity_and_Admin_Controls.md) | Sprint 12 (234, 235) |
+| **Y — Listing Form & Lifecycle UX** | 236–239 | 27, 28, 29, 99 | [`Epic_Y_…`](../tasks/Epics/Epic_Y_Listing_Form_and_Lifecycle_UX.md) | Sprint 12 (236, 239) · later (237, 238) |
+| **Z — Modal Canonical Pattern (global)** | 240 | 97 | [`Epic_Z_…`](../tasks/Epics/Epic_Z_Modal_Canonical_Pattern.md) | later sprint |
+| **AA — Currency in Profile (M.7)** | 241 | 98 | [`Epic_AA_…`](../tasks/Epics/Epic_AA_Currency_in_Profile.md) | later sprint |
+| **BB — Listing Inquiries: Report & Message** | 242–243 | 100, 101 | [`Epic_BB_…`](../tasks/Epics/Epic_BB_Listing_Inquiries_Report_and_Message.md) | Sprint 12 (242) · later (243) |
+| **CC — Combobox v2 (extends Q)** | 244–245 | 9, 10 | [`Epic_CC_…`](../tasks/Epics/Epic_CC_Combobox_v2.md) | Sprint 12 (244) · later (245) |
+| **DD — Admin Audit & History Hygiene** | 246 | 26 | [`Epic_DD_…`](../tasks/Epics/Epic_DD_Admin_Audit_and_History_Hygiene.md) | later sprint (depends on 250) |
+| **EE — Footer Admin Manager** | 247 | 103 | [`Epic_EE_…`](../tasks/Epics/Epic_EE_Footer_Admin_Manager.md) | later sprint |
+| **FF — UX Reactivity & Toasts v2** | 248–249 | 30, 102 | [`Epic_FF_…`](../tasks/Epics/Epic_FF_UX_Reactivity_and_Toasts_v2.md) | Sprint 12 (248) · later (249) |
+| **GG — Albanian-Only Outbound Email Policy** | 251 | 2026-05-25 owner directive | [`Epic_GG_…`](../tasks/Epics/Epic_GG_Albanian_Only_Outbound_Email.md) | [`…_Task_251.md`](../tasks/Epics/Epic_GG_kickoff_prompt_Task_251.md) (Sprint 13) |
+| Sprint 10 ✅ | 216–221a | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
+| Sprint 11 ✅ | 225–227 | T221b/T221c + z-index chore | [`Sprint_11_…`](../tasks/Sprints/Sprint_11_UI_Debt_followups.md) | [`Sprint_11_kickoff_prompts.md`](../tasks/Sprints/Sprint_11_kickoff_prompts.md) |
+| **Sprint 12 — Critical Bug Slice (2026-05-25)** | 228, 234–236, 239, 242, 244, 248, **250** | issues.txt 2026-05-25 first slice | [`Sprint_12_…`](../tasks/Sprints/Sprint_12_—_Critical_Bug_Slice_from_issues_2026-05-25.md) | [`Sprint_12_kickoff_prompts.md`](../tasks/Sprints/Sprint_12_kickoff_prompts.md) + [`…_Task_250.md`](../tasks/Epics/Epic_R_kickoff_prompt_Task_250.md) |
 
-> Rule-type notes codified into `/docs` during planning: 14 (verify-globally → `ai-behavior.md`), 16 (canonical URL → `env.md`; code in Task 183), 6 + 1 (button/Combobox single-source → `ui-rules.md §0`), plus composition + responsive rules added to `ui-rules.md §0` from the Task 211 review.
+> **2026-05-25 rule additions** codified into `/docs`: **Note 18** (Pre-Completion Self-Validation — `ai-behavior.md`), **Note 19** (UX Flow Preservation — `ai-behavior.md`), **Note 20** (Existing-Control Preservation — `ai-behavior.md`); orchestrator hard contract + review checklist updated in `orchestrator-role.md`. These are non-optional acceptance gates on every task from 228 onward.
 >
-> **214/215 ✅ done & APPROVED** (Epic M closed). New work 2026-05-23 → **Sprint 10 (216–221a)**: profile-save regression (catalog-driven `preferred_currency`), listings 42703 (`offer_type`/`purchase_conditions` columns+form), drawer footer overflow + z-index scale, `/listings` toolbar consistency, project-wide UI audit; + **Epic V (222–223)** Contacts page + admin inquiries (Resend reply). UI gate hardened in `ui-rules.md §15–§17`.
+> **2026-05-27 rule additions** (Task 253): new `docs/agent-contract.md` (P0 source of truth) + `docs/rule-index.md` (task-type → required pre-read docs, replaces "read all docs"). **Note 21** (Control Relocation Rule), **Note 22** (Admin Table Preservation Rule), **Note 23** (Edit-Flow Preservation Rule) added to `ai-behavior.md`. Canonical Task Template rewritten with mandatory "Current behavior to preserve" + "Required after behavior" sections. Every future kickoff must use the new template.
 
 ## Closed sprints & epics (historical)
 
@@ -74,6 +81,8 @@ Sequencing: **M ✅ · N ✅ · O ✅ · P ✅ · Q ✅** done → OPEN **Sprint
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-27 | Task 254 — Migrated pending kickoffs (Tasks 250 / 251 / 252 + Sprint 12 prompts for 228/234/235/236/239/242/244/248) to the new concrete Sonnet template; preserved scope, AC, intent; added rule-index bundles + behavior-preservation blocks + Notes 21/22/23 where relevant | Task 254 | [sessions/2026-05-27-task-254-task-migration.md](sessions/2026-05-27-task-254-task-migration.md) |
+| 2026-05-27 | Task 253 — AI governance compression: agent-contract.md + rule-index.md added; Notes 21/22/23 (Control Relocation, Admin Table, Edit-Flow); Canonical Task Template rewritten | Task 253 | [sessions/2026-05-27-task-253-governance-compression.md](sessions/2026-05-27-task-253-governance-compression.md) |
 | 2026-05-25 | Orchestration review: Sprint 11 APPROVED after null-byte corruption repair (9 files); tsc→0 errors; executor shell tsc gate rule added to ai-behavior.md | Review | [sessions/2026-05-25-task-227-zindex-allowlist.md](sessions/2026-05-25-task-227-zindex-allowlist.md) |
 | 2026-05-25 | Task 227 — z-index allowlist: ListingGallery z-[100] added; JSON syntax error fixed in allowlist.json; tailwind-governance.md §11 updated | Task 227 | [sessions/2026-05-25-task-227-zindex-allowlist.md](sessions/2026-05-25-task-227-zindex-allowlist.md) |
 | 2026-05-25 | Task 226 — AdminInput wrapper (h-10 rounded-xl); 31 Input conversions across 6 admin files; ui-rules.md §4 Admin-Input Canonical Pattern added | Task 226 | [sessions/2026-05-25-task-226-t221c-admin-input-height.md](sessions/2026-05-25-task-226-t221c-admin-input-height.md) |

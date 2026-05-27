@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 255 (V.4): admin reply history invisible. Root cause: `allReplies` was raw prop (not state), new replies never appended after send. Fix: `allReplies` → `useState(initialReplies)`; `sendInquiryReply` now returns `{ reply }` (inserted row + replier name); `handleSendReply` appends it; `reply_history_load_failed` banner when `reply_count > 0` but list empty; 1 new key × 4 locales. 0 tsc errors.** Sprint 13 next: 257 → 259 → 261.
+**2026-05-27 — Task 257 (V.6): admin inquiry topic showed raw enum. Fix: add `tc = useTranslations('contact.topics')` + `displaySubject` now returns `tc(topic)` for known topics, `custom_subject ?? tc('other')` for other, raw+warn for unknown. Reuses existing `contact.topics.*` keys (0 new locale entries). 0 tsc errors.** Sprint 13 next: 259 → 261.
 
 ## Pending Action Items
 

@@ -59,6 +59,9 @@ const STATUS_ICON: Record<ContactStatus, React.ReactNode> = {
 
 const CONTACT_STATUSES: ContactStatus[] = ['new', 'in_progress', 'closed']
 
+const KNOWN_TOPICS = ['general', 'sales', 'support', 'partnership', 'press', 'other'] as const
+type KnownTopic = typeof KNOWN_TOPICS[number]
+
 // ── Main component ────────────────────────────────────────────────────────────
 
 interface Props {
@@ -69,6 +72,7 @@ interface Props {
 export function AdminInquiriesManager({ inquiries: initialInquiries, replies: initialReplies }: Props) {
   const t = useTranslations('admin.inquiries')
   const tp = useTranslations('admin.pages')
+  const tc = useTranslations('contact.topics')
   const locale = useLocale()
 
   const [inquiries, setInquiries] = useState(initialInquiries)
@@ -107,7 +111,15 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
   }
 
   function displaySubject(inq: InquiryRow): string {
-    return inq.topic === 'other' && inq.custom_subject ? inq.custom_subject : inq.topic
+    if (inq.topic === 'other') {
+      return inq.custom_subject ?? tc('other')
+    }
+    if ((KNOWN_TOPICS as readonly string[]).includes(inq.topic)) {
+      return tc(inq.topic as KnownTopic)
+    }
+    // Unknown topic value — render raw but warn ops
+    console.warn('[admin] unknown contact topic:', inq.topic)
+    return inq.topic
   }
 
   function handleStatusChange(newStatus: string) {

@@ -262,10 +262,12 @@ must be referenced from A's entry point so the user can still reach editing with
 - Commit message format: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`.
 - Always include related file changes in the same commit.
 - Never commit broken code — run `npm run build` before pushing.
-- **After every completed task, provide ready-to-run git commit commands as plain text** — the owner runs them manually in PowerShell. Never run git commands yourself. Format:
+- **After every completed task, list every file you touched in the session log's "Files Changed" table** — one row per path + a 1-line rationale per file. Never emit `git add` / `git commit` commands yourself — the **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). Never run git commands yourself (single-writer rule). Format of the "Files Changed" table:
   ```
-  git add <file1> <file2> ...
-  git commit -m "fix(TaskN): <short description>"
+  | File | Rationale |
+  |------|-----------|
+  | path/to/file1 | <1-line why this file changed> |
+  | path/to/file2 | <1-line why this file changed> |
   ```
 
 ### Localization (i18n) Rules
@@ -751,10 +753,11 @@ Acceptance criteria:
 - All seven breakpoints (320/375/390/768/1280/1440/2560) render correctly if UI/layout changed.
 - `docs/backlog.md` is updated.
 - A session log under `docs/sessions/` is added, with the Note 18 self-validation block.
-- Ready-to-run git commit commands are provided as plain text at the end of the task
-  (`git add <files>` + `git commit -m "<type>(TaskN): ..."`) for the owner to run manually
-  in PowerShell. The executor MUST NOT run git itself (single-writer rule). A task with no
-  commit commands at the end is INCOMPLETE — see "Commit Rules" and CLAUDE.md "Commit hand-off".
+- A **"Files Changed" table** is present in the session log (one row per touched path + 1-line
+  rationale per file). The executor MUST NOT emit `git add` / `git commit` commands — the
+  **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). The executor
+  MUST NOT run git itself (single-writer rule). A task with no "Files Changed" table is
+  INCOMPLETE — see "Commit Rules" and CLAUDE.md "Commit hand-off".
 
 Out of scope:
 - <Explicit list of things the agent must NOT touch — unrelated files, parallel refactors, …>
@@ -821,7 +824,7 @@ If editing moves from one component to another, the new component must include:
 - DO NOT write `Responsive coverage: N/A` unless the task does not touch any rendered UI.
 - DO NOT restart task numbering per sprint — preserve the global counter (`docs/backlog.md`).
 - DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
-- DO NOT mark a task complete without emitting ready-to-run git commit commands as plain text for the owner to run in PowerShell — the executor never runs git itself (single-writer rule). This applies to EVERY task, including non-UI and docs-only tasks.
+- DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor NEVER emits `git add` / `git commit` commands and NEVER runs git itself (single-writer rule); the orchestrator (Opus) emits commit commands during review. This applies to EVERY task, including non-UI and docs-only tasks.
 
 #### Why this matters
 

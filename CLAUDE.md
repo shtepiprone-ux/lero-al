@@ -12,16 +12,24 @@ Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 > corrupt `.git/index`. Recovery: `Remove-Item .git\index` → `git reset`. Full rule:
 > `docs/orchestrator-role.md` → "Environment & git safety" and `docs/ai-behavior.md` → "Git Rules".
 
-> ⚠️ **Commit hand-off (single-writer, READ EVERY SESSION): after EVERY completed task, the Sonnet
-> executor MUST output ready-to-run git commit commands as plain text — the owner runs them manually
-> in PowerShell. The executor NEVER runs git itself.** This is a hard, non-negotiable acceptance
-> criterion on every task, not an optional nicety. Format:
+> ⚠️ **Commit hand-off (single-writer, READ EVERY SESSION — Task 264 rule, 2026-05-27): after
+> EVERY completed task, the Sonnet executor MUST include a "Files Changed" table in the session
+> log (one row per touched path + 1-line rationale). The Sonnet executor MUST NOT emit `git add`
+> / `git commit` commands. The ORCHESTRATOR (Opus) reads the real diff, validates the table
+> against it, and emits explicit-path commit commands during review. The owner runs ONLY the
+> orchestrator's commands in PowerShell. The Sonnet executor NEVER runs git itself.** Format
+> of the orchestrator's emitted commands:
 > ```
 > git add <file1> <file2> ...
 > git commit -m "feat(TaskN): <short description>"
 > ```
-> Use `feat:` / `fix:` / `chore:` / `docs:` / `refactor:`, one logical change per commit. Full rule:
-> `docs/ai-behavior.md` → "Commit Rules" + "Canonical Task Template" acceptance criteria.
+> Use `feat:` / `fix:` / `chore:` / `docs:` / `refactor:`, one logical change per commit, explicit
+> paths only (NEVER `git add -A` / `git add -u` / wildcards — phantom-corruption mode on the
+> Cowork sandbox sweeps unrelated files into the commit otherwise). If `git status` shows
+> phantom mods, run `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset` first.
+> Full rule: `docs/agent-contract.md` clause 10 + `docs/orchestrator-role.md` →
+> "Orchestrator-owned commit emission (Task 264)" + `docs/ai-behavior.md` → "Commit Rules" +
+> "Canonical Task Template" acceptance criteria.
 
 There are two AI layers, with different jobs:
 

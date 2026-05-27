@@ -29,7 +29,7 @@ These ten clauses apply to **every** task. The orchestrator verifies each one ag
 
 9. **Run required validation before claiming complete.** `npx tsc --noEmit` → 0 errors. `npm run build` if the change is non-trivial. AC-by-AC self-audit table in the session log. Final "Self-validation: …" verdict line. Full rule: `docs/ai-behavior.md` → "Pre-Completion Self-Validation (Note 18)".
 
-10. **Update `docs/backlog.md` and add a session log under `docs/sessions/`.** Then provide ready-to-run git commit commands as plain text — the OWNER runs them in PowerShell. **The executor NEVER runs git itself** (single-writer rule). Full rule: `docs/orchestrator-role.md` → "Environment & git safety" and `docs/ai-behavior.md` → "Commit Rules".
+10. **Update `docs/backlog.md` and add a session log under `docs/sessions/` — the session log MUST include a "Files Changed" table listing every touched path + a 1-line rationale per file.** Do NOT emit `git add` / `git commit` commands yourself — the **ORCHESTRATOR (Opus)** emits commit commands during review (post-Task 264, 2026-05-27). **The executor NEVER runs git itself** (single-writer rule). Full rule: `docs/orchestrator-role.md` → "Environment & git safety" + "Orchestrator-owned commit emission (Task 264)" and `docs/ai-behavior.md` → "Commit Rules".
 
 ## Where the full rules live
 

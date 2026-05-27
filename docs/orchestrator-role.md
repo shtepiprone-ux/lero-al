@@ -110,15 +110,29 @@ Put this in every executor prompt, and **verify each clause against the diff** o
   allowed when the kickoff explicitly authorised it AND the diff documents the replacement entry point.
 - Updates `docs/backlog.md` and adds a session log under `docs/sessions/`.
 - 0 new lint errors / 0 new warnings; typecheck has no new errors; relevant governance gates PASS.
-- **Provides ready-to-run git commit commands as plain text at the end — the OWNER runs them in
-  PowerShell; the executor NEVER runs git itself** (single-writer rule: `ai-behavior.md` →
-  "Single-writer git" + "Commit Rules", and CLAUDE.md "Commit hand-off"). The commands must cover
-  exactly the files in the diff. **Emit a single `git add` line with explicit paths (or `git add -A`)**
-  — do NOT emit multi-line `git add` with `^` or backtick continuations. In PowerShell `^` is not a
-  continuation, so the command fails with `fatal: pathspec '^' did not match any files`, stages
-  nothing, and the "commit" silently no-ops (this swallowed Tasks 164 and 165 until re-run). The
-  orchestrator verifies the emitted commands match the diff's file set before approving; a returned
-  task with no commit commands is INCOMPLETE and must be routed back, not approved.
+- **Includes a "Files Changed" table in the session log — one row per touched path + a 1-line
+  rationale per file.** Does NOT emit `git add` / `git commit` commands. The **orchestrator
+  (Opus) emits commit commands during review** (Task 264 rule, 2026-05-27 — see
+  "Orchestrator-owned commit emission" below). The executor NEVER runs git itself (single-writer
+  rule: `ai-behavior.md` → "Single-writer git" + "Commit Rules", and CLAUDE.md "Commit hand-off").
+  A task is INCOMPLETE — and must be routed back, not approved — if the "Files Changed" table
+  is missing OR if Sonnet emits its own `git add` / `git commit` lines (silently ignore Sonnet's
+  commands and note the contract violation in the review summary).
+
+## Orchestrator-owned commit emission (Task 264, 2026-05-27)
+
+The orchestrator is the SINGLE point of commit-command emission. After diff review:
+
+- **Read the real diff** (`git diff` on unstaged work; `git show <SHA>:<path>` for already-committed work).
+- **Cross-check** Sonnet's session-log "Files Changed" table against the real diff. Any mismatch (missing files; surprise files) = REJECT and route back. Do NOT silently fix.
+- **Emit commit commands at the end of the review response** using **explicit paths only** — never `git add -A`, never `git add -u`, never wildcards:
+  ```
+  git add <p1> <p2> <p3> ...
+  git commit -m "<type>(TaskN): <short description>"
+  ```
+- **One commit per logical change** (typically one commit per task). Multiple tasks may share a commit only when they form a single atomic change AND the message captures both (e.g. `fix(TaskX+TaskY): …`).
+- **Emit a single `git add` line with explicit paths** — do NOT emit multi-line `git add` with `^` or backtick continuations. In PowerShell `^` is not a continuation, so the command fails with `fatal: pathspec '^' did not match any files`, stages nothing, and the "commit" silently no-ops (this swallowed Tasks 164 and 165 until re-run).
+- **If `git status` shows phantom-corruption mods** (Cowork mode, see "Environment & git safety"): prefix the commit batch with a recovery line — `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset` — so the owner clears phantom mods before the orchestrator's explicit-path `git add` runs. Explicit-path `add` is safe even WITHOUT recovery, because it only stages the named files, but the recovery keeps `git status` clean for future sessions.
 
 ## Review checklist (run on every returned task)
 
@@ -151,6 +165,8 @@ Put this in every executor prompt, and **verify each clause against the diff** o
       `Combobox`/`Button` single-source respected (`ui-rules.md §0`); generated links use
       `NEXT_PUBLIC_SITE_URL`, never `window.location.origin` (`env.md`).
 - [ ] `docs/backlog.md` + `docs/sessions/` updated and consistent with the diff.
+- [ ] **"Files Changed" table present in session log** (Task 264 rule) — one row per touched path + 1-line rationale; matches the real diff. A missing or mismatched table = INCOMPLETE; route back.
+- [ ] **Commit commands emitted by the orchestrator** (Task 264 rule) using explicit paths matching every file in the real diff for the approved tasks; no `git add -A`, no `git add -u`, no wildcards; one commit per logical change. Sonnet-emitted commit commands are silently ignored and the contract violation noted.
 - [ ] Verdict recorded: **approve** or **follow-up task opened**.
 
 ## Approval rule (Task 253 — restated for emphasis)

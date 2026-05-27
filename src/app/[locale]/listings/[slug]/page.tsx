@@ -8,6 +8,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale } from 'date-fns'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { GalleryStaticFrame } from '@/modules/listings/components/GalleryStaticFrame'
 import { GalleryIsland } from '@/modules/listings/components/GalleryIsland'
@@ -207,29 +208,35 @@ export default async function ListingPage({ params }: Props) {
 
   if (!listing) notFound()
 
-  // Parallel: favorites check + user's preferred currency (both need authUser)
+  const ownerEmbedRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
+
+  // Parallel: favorites check + user's preferred currency + owner data (all need authUser)
   let isInitiallyFavorited = false
   let preferredCurrency: PreferredCurrency = 'ALL'
   let hasValidProfile = false
+  let ownerFromAdmin: typeof ownerEmbedRaw = null
   if (authUser) {
-    const [favResult, profileResult] = await Promise.all([
+    const adminDb = createAdminClient()
+    const [favResult, profileResult, ownerResult] = await Promise.all([
       supabase.from('favorites').select('id').eq('user_id', authUser.id).eq('listing_id', listing.id).maybeSingle(),
       supabase.from('users').select('preferred_currency').eq('id', authUser.id).single(),
+      adminDb.from('users').select('id, name, phone, whatsapp, avatar_url, user_type, is_verified, company_name, deleted_at').eq('id', listing.user_id).single(),
     ])
     isInitiallyFavorited = !!favResult.data
     preferredCurrency = (profileResult.data?.preferred_currency as PreferredCurrency) ?? 'ALL'
     hasValidProfile = !!profileResult.data
+    ownerFromAdmin = ownerResult.data as typeof ownerEmbedRaw
   }
 
-  const ownerRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
+  // For authenticated viewers, use the admin-client result to bypass RLS on the users table.
+  // The embed join via createClient() is blocked by RLS for viewers who don't own the listing.
+  const ownerRaw = ownerFromAdmin ?? ownerEmbedRaw
   // A zombie session has a valid JWT (authUser truthy) but no profile row (deleted/orphaned account).
   // Treat zombie sessions as guests so the contact card shows "Sign in" instead of "Account deleted".
   const isGuest = !authUser || !hasValidProfile
 
   // Viewer auth state (isGuest) and owner account status (deleted_at) are independent concerns.
-  // For guests, RLS blocks reads on the users table, so ownerRaw is null even for active owners.
-  // For authenticated viewers, ownerRaw is null only when the owner row is genuinely gone.
-  // Never infer deletion from a null row — ownerRaw can be null for guests too.
+  // ownerRaw is null for guests (RLS blocks the embed join) or when the owner row is genuinely gone.
   const owner = ownerRaw ?? {
     id: '' as string,
     name: null as string | null,

@@ -56,6 +56,8 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
   // owner.id is empty string in the fallback object — means no owner data was returned from DB.
   // For guests this is due to RLS, not because the owner deleted their account.
   const showGuestCTA = isGuest && !owner.id && !ownerDeleted
+  // Authenticated viewer but owner row was genuinely null (e.g. orphaned listing).
+  const ownerDataUnavailable = !isGuest && !owner.id && !ownerDeleted
   const listingClosed = listingStatus ? isListingClosed(listingStatus) : false
   const closedLabel = listingClosed && listingStatus ? t(`action_disabled_${listingStatus}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const initials = owner.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) ?? '?'
@@ -79,7 +81,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
         <div className="rounded-2xl border bg-card shadow-md p-5">
           <div className="flex flex-col gap-4">
             {/* Owner info */}
-            <div className={cn("flex items-center gap-3", (ownerDeleted || showGuestCTA) && "opacity-50")}>
+            <div className={cn("flex items-center gap-3", (ownerDeleted || showGuestCTA || ownerDataUnavailable) && "opacity-50")}>
               <Avatar className="h-12 w-12 border-2 border-border">
                 {!ownerDeleted && !showGuestCTA && <AvatarImage src={owner.avatar_url ?? undefined} />}
                 <AvatarFallback className="font-semibold">
@@ -89,14 +91,18 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
                   <p className="font-semibold text-sm truncate">
-                    {ownerDeleted ? t('owner_deleted_label') : (owner.name ?? 'N/A')}
+                    {ownerDeleted
+                      ? t('owner_deleted_label')
+                      : ownerDataUnavailable
+                        ? t('owner_name_unavailable')
+                        : (owner.name ?? (owner.user_type === 'agent' && owner.company_name ? owner.company_name : t('owner_name_unavailable')))}
                   </p>
                   {!ownerDeleted && !showGuestCTA && owner.is_verified && (
                     <CheckCircle className="h-4 w-4 text-verified shrink-0" aria-label={t('verified_agent')} />
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {ownerDeleted || showGuestCTA
+                  {ownerDeleted || showGuestCTA || ownerDataUnavailable
                     ? '—'
                     : owner.user_type === 'agent'
                       ? owner.company_name || t('agent_label')
@@ -122,6 +128,12 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                 <div className="flex flex-col gap-1">
                   <p className="text-sm font-semibold text-foreground/80">{t('owner_deleted')}</p>
                   <p className="text-xs text-muted-foreground leading-relaxed">{t('owner_deleted_desc')}</p>
+                </div>
+              </div>
+            ) : ownerDataUnavailable ? (
+              <div className="rounded-xl border border-status-warning/40 bg-status-warning/5 px-4 py-5 flex flex-col items-center gap-3 text-center">
+                <div className="flex flex-col gap-1">
+                  <p className="text-xs text-muted-foreground leading-relaxed">{t('owner_name_unavailable')}</p>
                 </div>
               </div>
             ) : showGuestCTA ? (
@@ -246,7 +258,11 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
           <div className="flex-1 min-w-0">
             <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency, locale)}</p>
             <p className="text-xs text-muted-foreground truncate">
-              {ownerDeleted ? t('owner_deleted') : owner.name}
+              {ownerDeleted
+                ? t('owner_deleted')
+                : ownerDataUnavailable
+                  ? t('owner_name_unavailable')
+                  : owner.name ?? t('owner_name_unavailable')}
             </p>
           </div>
           {!ownerDeleted && !showGuestCTA && (

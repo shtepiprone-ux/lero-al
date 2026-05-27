@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 256 (V.5): `sales@lero.al` delivery: root cause = both contact email helpers were fire-and-forget (failures swallowed); `sendContactInquiryReply` sends FROM `sales@lero.al` — requires Resend sender verification. Fix: `send.ts` now categorizes errors (`unverified_sender`/`transient`/`send_failed`); both helpers return `{ ok, id? } | { ok: false, reason }`; `submitContactInquiry` awaits notification + returns `mailbox_unverified`/`email_transient`; `sendInquiryReply` awaits reply email + returns `reply_email_failed` (DB write succeeded, email failed); ContactForm + AdminInquiriesManager wired to show distinct warning toasts; 3 new keys × 4 locales. Owner must verify `sales@lero.al` + `support@lero.al` + `noreply@lero.al` + lero.al domain SPF/DKIM in Resend dashboard (see session log). 0 tsc errors.** Sprint 13 run order next: 258 → 255 → 257 → 259 → 261.
+**2026-05-27 — Task 258 (T.5): contact card "N/A · Приватна особа" for authenticated viewers. Root cause: `createClient()` embed join blocked by RLS for non-owner viewers. Fix: add 3rd parallel query using `createAdminClient()` in listing page auth block; `ownerDataUnavailable` state added to `ListingContact.tsx`; `owner_name_unavailable` locale key × 4. 0 tsc errors.** Sprint 13 next: 255 → 257 → 259 → 261.
 
 ## Pending Action Items
 
@@ -19,7 +19,7 @@
 | Resend: verify `noreply@lero.al` + `support@lero.al` + `sales@lero.al` as senders; verify lero.al domain SPF + DKIM (Task 256) | Owner | **EMITTED** — see [session log](sessions/2026-05-27-task-256-v5-sales-mailbox.md). Without this, contact form notifications and admin reply emails will fail with `mailbox_unverified` |
 | Confirm `sales@lero.al` inbox + MX records resolve to a readable mailbox (Task 256) | Owner | DNS/hosting configuration — outside app code scope |
 | Possible RLS update on `contact_inquiry_replies` SELECT for admin/moderator (Task 255 / Bug 1) | Owner | Only if Sonnet's audit confirms RLS is the cause; idempotent SQL in session log |
-| Possible RLS update on `users` SELECT for authenticated listing-detail viewers (Task 258 / Bug 4) | Owner | Only if Sonnet's audit confirms RLS blocks the embed JOIN; idempotent SQL in session log |
+| RLS update on `users` SELECT for authenticated listing-detail viewers (Task 258 / Bug 4) | Owner | App now uses `createAdminClient()` — RLS policy change is OPTIONAL but recommended for consistency; idempotent SQL in [session log](sessions/2026-05-27-task-258-t5-contact-card-owner.md) |
 
 ## Next Immediate Tasks
 

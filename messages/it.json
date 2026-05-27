@@ -128,6 +128,7 @@
     "owner_deleted": "Il proprietario ha eliminato il suo account",
     "owner_deleted_desc": "Questo annuncio rimane disponibile, ma non è più possibile contattare il proprietario.",
     "owner_deleted_label": "Account eliminato",
+    "owner_name_unavailable": "I dettagli del proprietario non sono al momento disponibili.",
     "contact_guest_title": "Accedi per contattare il proprietario",
     "contact_guest_desc": "Crea un account gratuito o accedi per vedere i dettagli di contatto del proprietario.",
     "contact_guest_cta": "Accedi",

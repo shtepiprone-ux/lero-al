@@ -128,6 +128,7 @@
     "owner_deleted": "Pronari e fshiu llogarinë e tij",
     "owner_deleted_desc": "Ky njoftim mbetet aktiv, por kontakti me pronarin nuk është më i mundshëm.",
     "owner_deleted_label": "Llogaria u fshi",
+    "owner_name_unavailable": "Detajet e pronarit nuk janë aktualisht të disponueshme.",
     "contact_guest_title": "Hyni për të kontaktuar pronarin",
     "contact_guest_desc": "Krijoni një llogari falas ose hyni për të parë detajet e kontaktit të pronarit.",
     "contact_guest_cta": "Hyr",

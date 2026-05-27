@@ -128,6 +128,7 @@
     "owner_deleted": "Owner deleted their account",
     "owner_deleted_desc": "This listing remains available, but contacting the owner is no longer possible.",
     "owner_deleted_label": "Account deleted",
+    "owner_name_unavailable": "Owner details are currently unavailable.",
     "contact_guest_title": "Sign in to contact the owner",
     "contact_guest_desc": "Create a free account or sign in to see the owner's contact details.",
     "contact_guest_cta": "Sign in",

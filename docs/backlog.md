@@ -7,18 +7,21 @@
 
 ## Last Session
 
-**2026-05-27 — Orchestration (Opus 4.7): Tasks 253 + 254. Task 253 — AI governance compression (new `docs/agent-contract.md` + `docs/rule-index.md`; Notes 21/22/23 added to `ai-behavior.md`; Canonical Task Template rewritten with "Current behavior to preserve" + "Required after behavior"; `orchestrator-role.md` reinforced "approval requires actual diff review"). Task 254 — Migrated the 4 pending kickoff files (Tasks 250 / 251 / 252 + Sprint 12's 8-task bundle 228/234/235/236/239/242/244/248) to the new concrete template; all preserved task numbers, scope, and AC; added rule-index bundles + behavior-preservation blocks + Notes 21/22/23 where relevant. Last task number: 254. No product code written.** See [`sessions/2026-05-27-task-253-governance-compression.md`](sessions/2026-05-27-task-253-governance-compression.md) + [`sessions/2026-05-27-task-254-task-migration.md`](sessions/2026-05-27-task-254-task-migration.md).
+**2026-05-27 — Orchestration (Opus 4.7): Sprint 13 planned for 7 owner-reported production bugs (Tasks 255–261). Added the new MANDATORY rule to `docs/orchestrator-role.md` + `docs/agent-contract.md` clause 6a: every kickoff must describe BOTH a `Positive flow (happy path)` AND a `Negative flow (every off-happy-path branch)`; a diff that ships only the happy path is INCOMPLETE — orchestrator routes it back. Bugs: 1) admin inquiry reply history hidden; 2) sales@lero.al not delivered; 3) untranslated topic "general" in admin; 4) listing contact card N/A · Приватна особа for authed viewers; 5) Save-to-Collection not visible in Favorites; 6) admin Premium activation broken (premium_until column likely missing + fake-success toast); 7) cursor-pointer missing on Button / Combobox / Select. Last task number: 261. No product code written.** See [`Sprint_13_…`](../tasks/Sprints/Sprint_13_—_Critical_Bugs_from_owner_2026-05-27.md) + [`Sprint_13_kickoff_prompts.md`](../tasks/Sprints/Sprint_13_kickoff_prompts.md).
 
 ## Pending Action Items
 
 | Item | Owner | Notes |
 |------|-------|-------|
 | SQL: Task 250 `role_permissions` hardening + `role_permission_events` (SUPERSEDES Task 197 SQL) | Owner | Run after Sonnet emits the revised idempotent SQL into the Task 250 session log |
-| Resend sender verification: `support@lero.al`, `sales@lero.al` | Owner | Required for Task 223 admin reply emails + Task 252 sales inbox |
+| Resend sender verification: `support@lero.al`, `sales@lero.al` (Bug 2 / Task 256) | Owner | Verify sender + lero.al DKIM/SPF in Resend dashboard; confirm sales@lero.al inbox + MX records resolve |
+| SQL: `ALTER TABLE listings ADD COLUMN IF NOT EXISTS premium_until timestamptz` (Task 260 / Bug 6) | Owner | Block Task 260 verification until run; Sonnet will emit idempotent SQL in the session log |
+| Possible RLS update on `contact_inquiry_replies` SELECT for admin/moderator (Task 255 / Bug 1) | Owner | Only if Sonnet's audit confirms RLS is the cause; idempotent SQL in session log |
+| Possible RLS update on `users` SELECT for authenticated listing-detail viewers (Task 258 / Bug 4) | Owner | Only if Sonnet's audit confirms RLS blocks the embed JOIN; idempotent SQL in session log |
 
 ## Next Immediate Tasks
 
-**Last task number: 254. Next: 255.** Sprint 12 active — run order: **250 (R.3a) → 234 (X.1) → 235 (X.2) → 228 (W.1) → 236 (Y.1) → 244 (CC.1) → 239 (Y.4) → 242 (BB.1) → 248 (FF.1)**. Plan: [`Sprint_12_…`](../tasks/Sprints/Sprint_12_—_Critical_Bug_Slice_from_issues_2026-05-25.md). Kickoffs: [`Sprint_12_kickoff_prompts.md`](../tasks/Sprints/Sprint_12_kickoff_prompts.md) + [`Epic_R_kickoff_prompt_Task_250.md`](../tasks/Epics/Epic_R_kickoff_prompt_Task_250.md). **Sprint 13 (next) absorbs: Task 251 (GG.1 Albanian-only email — trivial fix, urgent), Task 252 (V.3 Sales inbox split — depends on 251), plus deferred W.2–W.6 / Y.2-Y.3 / Z.1 / AA.1 / BB.2 / CC.2 / DD.1 / EE.1 / FF.2.** Every task follows the Canonical Task Template (`docs/ai-behavior.md`) **and the new Notes 18/19/20 self-validation + UX-flow + control-preservation gates**.
+**Last task number: 261. Next: 262.** Sprint 12 active (228 / 234 / 235 / 236 / 239 / 242 / 244 / 248 / 250) — finish first. **Sprint 13 queued (owner directive 2026-05-27)** — run order: **260 (R.9/X.3 Premium) → 256 (V.5 sales mailbox) → 258 (T.5 contact-card owner) → 255 (V.4 reply history) → 257 (V.6 topic translation) → 259 (F.5 Save-to-Collection visibility) → 261 (T.6/CC.3 cursor-pointer)**. Plan: [`Sprint_13_…`](../tasks/Sprints/Sprint_13_—_Critical_Bugs_from_owner_2026-05-27.md). Kickoffs: [`Sprint_13_kickoff_prompts.md`](../tasks/Sprints/Sprint_13_kickoff_prompts.md). **Sprint 14 (next, after 13) absorbs Task 251 (GG.1 Albanian-only email), Task 252 (V.3 Sales inbox split — depends on 251 + 256), plus deferred W.2–W.6 / Y.2-Y.3 / Z.1 / AA.1 / BB.2 / CC.2 / DD.1 / EE.1 / FF.2.** Every task follows the Canonical Task Template (`docs/ai-behavior.md`) + Notes 18/19/20/21/22/23 + **the new Positive+Negative flow rule (Task 255 / orchestrator-role.md + agent-contract.md clause 6a)**.
 
 ## Active product backlog — Epics M–V (closed) + W–FF (open, from `issues.txt` 2026-05-25)
 
@@ -48,10 +51,13 @@
 | Sprint 10 ✅ | 216–221a | owner bugs 2026-05-23 | [`Sprint_10_…`](../tasks/Sprints/Sprint_10_—_Critical_Regressions_and_UI_Consistency.md) | [`Sprint_10_kickoff_prompts.md`](../tasks/Sprints/Sprint_10_kickoff_prompts.md) |
 | Sprint 11 ✅ | 225–227 | T221b/T221c + z-index chore | [`Sprint_11_…`](../tasks/Sprints/Sprint_11_UI_Debt_followups.md) | [`Sprint_11_kickoff_prompts.md`](../tasks/Sprints/Sprint_11_kickoff_prompts.md) |
 | **Sprint 12 — Critical Bug Slice (2026-05-25)** | 228, 234–236, 239, 242, 244, 248, **250** | issues.txt 2026-05-25 first slice | [`Sprint_12_…`](../tasks/Sprints/Sprint_12_—_Critical_Bug_Slice_from_issues_2026-05-25.md) | [`Sprint_12_kickoff_prompts.md`](../tasks/Sprints/Sprint_12_kickoff_prompts.md) + [`…_Task_250.md`](../tasks/Epics/Epic_R_kickoff_prompt_Task_250.md) |
+| **Sprint 13 — Critical Bugs (owner 2026-05-27)** | 255–261 | Owner verbal report 2026-05-27 (7 production bugs) | [`Sprint_13_…`](../tasks/Sprints/Sprint_13_—_Critical_Bugs_from_owner_2026-05-27.md) | [`Sprint_13_kickoff_prompts.md`](../tasks/Sprints/Sprint_13_kickoff_prompts.md) |
 
 > **2026-05-25 rule additions** codified into `/docs`: **Note 18** (Pre-Completion Self-Validation — `ai-behavior.md`), **Note 19** (UX Flow Preservation — `ai-behavior.md`), **Note 20** (Existing-Control Preservation — `ai-behavior.md`); orchestrator hard contract + review checklist updated in `orchestrator-role.md`. These are non-optional acceptance gates on every task from 228 onward.
 >
 > **2026-05-27 rule additions** (Task 253): new `docs/agent-contract.md` (P0 source of truth) + `docs/rule-index.md` (task-type → required pre-read docs, replaces "read all docs"). **Note 21** (Control Relocation Rule), **Note 22** (Admin Table Preservation Rule), **Note 23** (Edit-Flow Preservation Rule) added to `ai-behavior.md`. Canonical Task Template rewritten with mandatory "Current behavior to preserve" + "Required after behavior" sections. Every future kickoff must use the new template.
+>
+> **2026-05-27 rule additions** (Task 255, owner directive): **Positive + Negative flow rule** added to `docs/orchestrator-role.md` → "Orchestrator standing rules" + "Review checklist" AND `docs/agent-contract.md` clause 6a. Every kickoff from Task 255 onward must contain TWO explicit sections — `Positive flow (happy path)` and `Negative flow (every off-happy-path branch)`; Sonnet must implement BOTH; a diff that ships only the happy path is INCOMPLETE and is routed back without approval.
 
 ## Closed sprints & epics (historical)
 
@@ -81,6 +87,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-27 | Sprint 13 planned (queued) — 7 production bugs filed as Tasks 255-261; new Positive+Negative flow mandatory rule added to orchestrator-role.md + agent-contract.md (clause 6a); kickoffs written | Tasks 255-261 (queued) | [Sprint_13_kickoff_prompts.md](../tasks/Sprints/Sprint_13_kickoff_prompts.md) |
 | 2026-05-27 | Task 254 — Migrated pending kickoffs (Tasks 250 / 251 / 252 + Sprint 12 prompts for 228/234/235/236/239/242/244/248) to the new concrete Sonnet template; preserved scope, AC, intent; added rule-index bundles + behavior-preservation blocks + Notes 21/22/23 where relevant | Task 254 | [sessions/2026-05-27-task-254-task-migration.md](sessions/2026-05-27-task-254-task-migration.md) |
 | 2026-05-27 | Task 253 — AI governance compression: agent-contract.md + rule-index.md added; Notes 21/22/23 (Control Relocation, Admin Table, Edit-Flow); Canonical Task Template rewritten | Task 253 | [sessions/2026-05-27-task-253-governance-compression.md](sessions/2026-05-27-task-253-governance-compression.md) |
 | 2026-05-25 | Orchestration review: Sprint 11 APPROVED after null-byte corruption repair (9 files); tsc→0 errors; executor shell tsc gate rule added to ai-behavior.md | Review | [sessions/2026-05-25-task-227-zindex-allowlist.md](sessions/2026-05-25-task-227-zindex-allowlist.md) |

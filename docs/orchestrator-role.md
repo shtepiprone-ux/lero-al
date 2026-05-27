@@ -20,17 +20,23 @@
 The orchestrator **does not write production code**. At most it *reads* code to verify work.
 All implementation is delegated to Sonnet 4.6 via a kickoff file written to `/tasks`.
 
-## Orchestrator standing rules (Task 253)
+## Orchestrator standing rules (Task 253 + Task 255)
 
 These rules apply to every orchestrator session from 2026-05-27 onward:
 
 - **The orchestrator may create/update governance docs and task files** (`docs/`, `tasks/Epics/`, `tasks/Sprints/`) when the owner asks for orchestration / governance / planning work.
 - **The orchestrator must not change product code** (`src/`, `app/`, `components/`, `modules/`, migrations, server actions, runtime UI, locale files) unless the owner explicitly instructs it to. Implementation is Sonnet's job.
 - **Kickoffs must be concrete.** Every kickoff explicitly defines the *current behavior to preserve* and the *required after-behavior* (action by action). Abstract task wording ("improve the table", "move the control") is forbidden — it is the failure mode Task 253 exists to prevent.
+- **🆕 Kickoffs MUST describe BOTH the positive flow AND the negative flow, end-to-end, step by step (Owner directive 2026-05-27).** "Required after behavior" is not enough on its own — Sonnet has shipped code that works in the happy path but silently no-ops on cancel, error, permission-denied, empty-state, double-submit, offline, expired-session, wrong-locale, or admin-vs-user paths. **Every kickoff from Task 255 onward MUST contain two explicit sections:**
+  - **`Positive flow (happy path)`** — actor, preconditions, ordered user steps 1…N, system responses at each step, success state, post-conditions (DB row written, toast shown, email sent, navigation target, what other surfaces must update).
+  - **`Negative flow (every off-happy-path branch)`** — for each branch: trigger, expected system response, what is shown to the user (toast/message + locale key), what is NOT done (no DB write, no email, no nav), how the user recovers. Cover at minimum, where applicable: cancel/dismiss (Esc, backdrop, Cancel button), validation error, server error / 500, permission-denied (RLS / role / unauthenticated), not-found / soft-deleted target, empty list / no results, loading / pending, double-submit / re-entry, network offline, expired session / token, locale mismatch, admin-vs-owner-vs-guest divergence, conflict with another writer (optimistic concurrency).
+  - The "Acceptance criteria" section MUST cite both flows by name (e.g. "Positive flow step 4 verifiable in diff at file:line; Negative flow → cancel branch verifiable at file:line"). An AC that does not map to one of the two flows is incomplete.
+  - An abstract requirement like "and handle errors gracefully" is a rule violation. Spell it out: which error, which message, which locale key, which recovery.
 - **Kickoffs must select task-type-specific pre-read docs from `docs/rule-index.md`.** No kickoff may say "read all docs". The pre-read list is whatever the rule index says for that task type, plus the always-required pair (`agent-contract.md`, `backlog.md`).
 - **Kickoffs must require current-behavior preservation** for any task that touches UI, forms, controls, admin tables, profile flows, server mutations, or lifecycle actions. Use the Canonical Task Template's "Current behavior to preserve" section.
 - **The orchestrator must reject work — and open a follow-up task — if an existing capability has silently disappeared.** A read-only label is not a replacement for an editable control (see `agent-contract.md` clause 4 + `ai-behavior.md` Note 21).
 - **Approval is allowed only after actual `git diff` review.** The session log is the executor's *claim*; the diff is the *proof*. If the two disagree, the diff wins. A "complete" session log without diff verification is not approval.
+- **Approval is also blocked if the diff implements only the positive flow.** Every negative branch listed in the kickoff must have a verifiable line in the diff (handler, guard, toast call, early return, locale key). A diff that ships only the happy path is INCOMPLETE — route back as a follow-up, do not approve.
 
 ## Environment & git safety (Cowork / network drive) — MANDATORY
 
@@ -138,6 +144,7 @@ Put this in every executor prompt, and **verify each clause against the diff** o
       moved control has a documented new entry point in the diff. **A diff that drops admin row actions,
       status switchers, sidebar entries, or filter chips without explicit kickoff authorisation is a
       P0 regression — route back as a follow-up task.**
+- [ ] **Positive + Negative flow parity in the diff (Task 255 rule).** Every branch listed in the kickoff's `Positive flow` and `Negative flow` sections has a verifiable line in the diff: success path handler, cancel/dismiss handler, validation error path, server-error toast call with locale key, permission-denied / unauthenticated guard, empty/loading state, double-submit guard. If any negative branch listed in the kickoff has no corresponding code change, the task is INCOMPLETE — route back; do not approve.
 - [ ] Scope respected; no unrequested architectural decisions.
 - [ ] Global-change rule (Note 14, `ai-behavior.md`): the fix updated **every** affected sibling/
       consumer (no diverging call sites left); no hardcode; no one-off component clone; canonical

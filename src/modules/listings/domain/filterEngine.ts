@@ -13,7 +13,11 @@
  */
 
 import { getSchema, getUndergroundFloorTypes, getFloorFilterMin } from './propertyTypeSchema'
-import { ALL_FILTER_SECTIONS, type FilterSection } from '../constants'
+import {
+  ALL_FILTER_SECTIONS, type FilterSection,
+  PROPERTY_TYPES, CONDITIONS, HEATING_TYPES, WALL_TYPES,
+  MARKET_TYPES, OFFER_TYPES, PURCHASE_CONDITIONS, LAYOUT_FEATURES,
+} from '../constants'
 import type { ListingField } from './listingFields'
 
 // ── Sort ──────────────────────────────────────────────────────────────────────
@@ -21,6 +25,18 @@ import type { ListingField } from './listingFields'
 export type ListingSort = 'newest' | 'price_asc' | 'price_desc' | 'area_desc'
 
 const VALID_SORTS: readonly ListingSort[] = ['newest', 'price_asc', 'price_desc', 'area_desc']
+
+// ── Enum allowlists (coerce-or-drop — prevents 22P02 from URL manipulation) ──
+
+const VALID_LISTING_TYPES      = ['sale', 'rent'] as const
+const VALID_PROPERTY_TYPES     = PROPERTY_TYPES.map(pt => pt.value)
+const VALID_CONDITIONS         = CONDITIONS.map(c => c.value)
+const VALID_HEATING_TYPES      = HEATING_TYPES.map(h => h.value)
+const VALID_WALL_TYPES         = WALL_TYPES.map(w => w.value)
+const VALID_MARKET_TYPES       = MARKET_TYPES.map(m => m.value)
+const VALID_OFFER_TYPES        = OFFER_TYPES.map(o => o.value)
+const VALID_PURCHASE_CONDITIONS = PURCHASE_CONDITIONS.map(p => p.value)
+const VALID_LAYOUT_FEATURES    = LAYOUT_FEATURES.map(lf => lf.value)
 
 // ── Parsed filter state ───────────────────────────────────────────────────────
 
@@ -83,6 +99,19 @@ function rawMulti(sp: RawParams, key: string): string[] {
   return s ? s.split(',').filter(Boolean) : []
 }
 
+// Returns the raw value only if it is in the allowlist; otherwise ''.
+// Prevents unknown enum strings from reaching Postgres (avoids 22P02 errors).
+function validEnum(sp: RawParams, key: string, validValues: readonly string[]): string {
+  const val = raw(sp, key)
+  return validValues.includes(val) ? val : ''
+}
+
+// Filters a multi-value param so only known enum values reach the DB.
+function validEnumMulti(sp: RawParams, key: string, validValues: readonly string[]): string[] {
+  const vals = rawMulti(sp, key)
+  return vals.filter(v => validValues.includes(v))
+}
+
 // ── Date param sanitization ───────────────────────────────────────────────────
 
 /**
@@ -114,8 +143,8 @@ export function parseSearchParams(sp: RawParams): ParsedFilters {
 
   return {
     tab:                s('tab') === 'closed' ? 'closed' : 'active',
-    listingType:        s('type'),
-    propertyType:       s('property_type'),
+    listingType:        validEnum(sp, 'type',          VALID_LISTING_TYPES),
+    propertyType:       validEnum(sp, 'property_type', VALID_PROPERTY_TYPES),
     locationId:         n('location_id'),
     sort:               (VALID_SORTS.includes(sort as ListingSort) ? sort : 'newest') as ListingSort,
     page:               Math.max(1, n('page') ?? 1),
@@ -134,13 +163,13 @@ export function parseSearchParams(sp: RawParams): ParsedFilters {
     floorsTotalMax:     n('floors_total_max'),
     yearBuiltMin:       n('year_built_min'),
     yearBuiltMax:       n('year_built_max'),
-    condition:          s('condition'),
-    heating:            s('heating'),
-    wallType:           s('wall_type'),
-    marketType:         s('market_type'),
-    layoutFeatures:     m('layout_features'),
-    offerType:          s('offer_type'),
-    purchaseConditions: m('purchase_conditions'),
+    condition:          validEnum(sp, 'condition',    VALID_CONDITIONS),
+    heating:            validEnum(sp, 'heating',      VALID_HEATING_TYPES),
+    wallType:           validEnum(sp, 'wall_type',    VALID_WALL_TYPES),
+    marketType:         validEnum(sp, 'market_type',  VALID_MARKET_TYPES),
+    layoutFeatures:     validEnumMulti(sp, 'layout_features',    VALID_LAYOUT_FEATURES),
+    offerType:          validEnum(sp, 'offer_type',   VALID_OFFER_TYPES),
+    purchaseConditions: validEnumMulti(sp, 'purchase_conditions', VALID_PURCHASE_CONDITIONS),
   }
 }
 

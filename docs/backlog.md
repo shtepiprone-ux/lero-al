@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 228 (W.1): "Ринок нерухомості" filter section disappears on property-type change. Fix: add `market_type` to `SCHEMA_HOUSE`, `SCHEMA_COMMERCIAL`, `SCHEMA_OFFICE` filters in `propertyTypeSchema.ts`. Was only in `SCHEMA_APARTMENT`; now visible for all 4 types where new_building vs secondary is relevant. 0 new locale entries. 0 tsc errors. Sprint 12 resumed ✅.**
+**2026-05-27 — Task 234 (X.1): `property_type=room` 22P02 + global enum audit. Fix: add `validEnum`/`validEnumMulti` helpers + allowlists to `filterEngine.ts`; all domain enum URL params now coerce-or-drop. SQL migration: `ALTER TYPE property_type ADD VALUE IF NOT EXISTS 'room'`. 16 unit tests pass. 0 new locale entries. Owner must run SQL migration.**
 
 ## Pending Action Items
 
@@ -89,6 +89,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-27 | Task 234 — X.1 enum drift: `validEnum`/`validEnumMulti` coerce-or-drop in parseSearchParams; all domain enum URL params validated; 16 unit tests; SQL: `ALTER TYPE property_type ADD VALUE IF NOT EXISTS 'room'`; Task 262 (X.3) filed for market_type audit | Task 234 | [sessions/2026-05-27-task-234-x1-enum-drift-audit.md](sessions/2026-05-27-task-234-x1-enum-drift-audit.md) |
 | 2026-05-27 | Task 228 — W.1 filter section disappears: `market_type` added to SCHEMA_HOUSE, SCHEMA_COMMERCIAL, SCHEMA_OFFICE in propertyTypeSchema.ts; was only in SCHEMA_APARTMENT; 0 new locale entries | Task 228 | [sessions/2026-05-27-task-228-w1-filter-section-visibility.md](sessions/2026-05-27-task-228-w1-filter-section-visibility.md) |
 | 2026-05-27 | Task 256 — V.5 sales mailbox: send.ts error categorization (unverified_sender/transient); contactInquiry helpers return structured { ok, reason }; submitContactInquiry + sendInquiryReply await email + surface mailbox_unverified/email_transient/reply_email_failed; ContactForm + AdminInquiriesManager wired; 3 keys ×4 locales | Task 256 | [sessions/2026-05-27-task-256-v5-sales-mailbox.md](sessions/2026-05-27-task-256-v5-sales-mailbox.md) |
 | 2026-05-27 | Task 260 — R.9/X.3 Premium activation: SetListingPremiumResult union; action returns typed errors; PremiumDialog checks result; 6 error keys ×4 locales; premium_until added to Listing type (schema-drift guard); migration SQL emitted | Task 260 | [sessions/2026-05-27-task-260-r9-x3-premium-activation.md](sessions/2026-05-27-task-260-r9-x3-premium-activation.md) |

@@ -1,8 +1,10 @@
 # Epic V — Contacts & Inquiries
 
-**Status:** OPEN — opened 2026-05-23 by the Opus 4.7 orchestrator.
-**Source:** owner request 2026-05-23 (last in queue, after Sprint 10).
-**Kickoffs:** `Epic_V_kickoff_prompts.md` (Tasks 222–223).
+**Status:** RE-OPENED 2026-05-25 (V.1 + V.2 shipped 2026-05-24; V.3 added) by the Opus 4.7 orchestrator.
+**Source:** owner request 2026-05-23 (V.1/V.2) + owner directive 2026-05-25 (V.3 — separate admin
+"Sales" inbox so admin/moderator can read sales-routed inquiries and reply from `sales@lero.al`).
+**Kickoffs:** `Epic_V_kickoff_prompts.md` (Tasks 222–223 — closed) + `Epic_V_kickoff_prompt_Task_252.md`
+(Task 252 — V.3 Sales inbox split).
 
 ## Goal
 
@@ -47,11 +49,15 @@ across components.
 
 ## Tasks
 
-- **Task 222 — V.1** — Public Contacts page + inquiry form + persistence + routing.
-- **Task 223 — V.2** — Admin Inquiries page (list + view + reply via Resend) + status.
+- **Task 222 — V.1** ✅ — Public Contacts page + inquiry form + persistence + routing.
+- **Task 223 — V.2** ✅ — Admin Inquiries page (list + view + reply via Resend) + status.
+- **Task 252 — V.3** — Split admin Inquiries into two sidebar entries: "Підтримка"
+  (target_mailbox = support@) + "Продажі" (target_mailbox = sales@); reply From-address routed
+  by inbox; reuse `contact_inquiries` + `contact_inquiry_replies` (no schema change expected).
 
 ## Epic-level acceptance
 
-A working Contacts page that stores inquiries and routes by topic; an admin Inquiries screen where
-admin/moderator can read and reply by email (Resend, From = routed mailbox, Reply-To = user); all strings
-localized ×4; responsive on all 7 breakpoints; RLS-safe; 0 new lint/typecheck errors; build passes.
+A working Contacts page that stores inquiries and routes by topic; admin/moderator can read and
+reply by email (Resend, From = routed mailbox, Reply-To = user); **separate sidebar entries for
+Support vs Sales** so the routing is visible in the admin nav, not only as a filter dropdown;
+RLS-safe; canonical components only.

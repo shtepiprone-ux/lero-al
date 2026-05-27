@@ -1,8 +1,8 @@
 # Epic R — Admin Panel 2026
 
 **Status:** OPEN — opened 2026-05-22 by the Opus 4.7 orchestrator. Builds on closed Epics C, K, L.
-**Source notes:** issues.txt #20 (admin auth flow → /admin gives 404), #34 (admin edit screens need a side-panel actions pattern), #33 (per-role permission management / RBAC), #28 (profile deactivation correctness + history + hard delete), #29 (Support manual ticket creation + status notifications), #30 (move Delete from table to modal for locations & property types), #26 (email-template editor modal auto-changes width / clips content), #27 (price_change_alert email template body is empty).
-**Kickoffs:** `Epic_R_kickoff_prompts.md` (Tasks 195–202).
+**Source notes:** issues.txt #20 (admin auth flow → /admin gives 404), #34 (admin edit screens need a side-panel actions pattern), #33 (per-role permission management / RBAC), #28 (profile deactivation correctness + history + hard delete), #29 (Support manual ticket creation + status notifications), #30 (move Delete from table to modal for locations & property types), #26 (email-template editor modal auto-changes width / clips content), #27 (price_change_alert email template body is empty); **+ 2026-05-25 owner hardening directive on Task 197 → filed as Task 250 (R.3a) in `Epic_R_kickoff_prompt_Task_250.md`.**
+**Kickoffs:** `Epic_R_kickoff_prompts.md` (Tasks 195–202) + `Epic_R_kickoff_prompt_Task_250.md` (Task 250 — R.3a schema hardening).
 
 > Largest epic. Order it access → governance/RBAC → moderation data → patterns/polish. R.3 (RBAC) and
 > R.4 (deactivation history) are schema-bearing — they require new tables/columns; coordinate any SQL

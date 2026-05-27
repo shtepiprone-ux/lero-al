@@ -43,7 +43,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       className={cn(
         // Base — layout, typography, states
-        "flex w-fit items-center justify-between gap-1.5 rounded-xl px-3 py-2 text-sm text-foreground whitespace-nowrap transition-colors outline-none select-none",
+        "flex w-fit items-center justify-between gap-1.5 rounded-xl px-3 py-2 text-sm text-foreground whitespace-nowrap transition-colors outline-none select-none cursor-pointer",
         "focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:ring-2 aria-invalid:ring-destructive/20",

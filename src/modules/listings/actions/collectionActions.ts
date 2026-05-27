@@ -1,5 +1,6 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { getBlockedError } from '@/lib/auth/blockCheck'
@@ -79,6 +80,7 @@ export async function createCollection(
     return { error: error.code === '23505' ? 'name_duplicate' : error.message }
   }
 
+  revalidatePath('/[locale]/favorites', 'page')
   return { collection: { ...data, item_count: 0 } }
 }
 
@@ -153,6 +155,7 @@ export async function addToCollection(
     return { error: error.message }
   }
 
+  revalidatePath('/[locale]/favorites', 'page')
   return { ok: true }
 }
 

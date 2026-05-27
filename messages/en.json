@@ -541,7 +541,8 @@
     "added": "Added to collection",
     "removed": "Removed from collection",
     "name_required": "Name is required",
-    "error_generic": "Something went wrong. Please try again."
+    "error_generic": "Something went wrong. Please try again.",
+    "error_add_after_create": "Collection created, but the listing could not be added. Tap the collection to add it manually."
   },
   "admin": {
     "locations": {

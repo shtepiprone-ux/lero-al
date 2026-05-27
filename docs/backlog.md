@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 257 (V.6): admin inquiry topic showed raw enum. Fix: add `tc = useTranslations('contact.topics')` + `displaySubject` now returns `tc(topic)` for known topics, `custom_subject ?? tc('other')` for other, raw+warn for unknown. Reuses existing `contact.topics.*` keys (0 new locale entries). 0 tsc errors.** Sprint 13 next: 259 → 261.
+**2026-05-27 — Task 259 (F.5): new collection not visible in Favorites. Root cause: `createCollection`/`addToCollection` had no `revalidatePath`. Fix: add `revalidatePath('/[locale]/favorites', 'page')` to both; check `addToCollection` result in `handleCreate`; `error_add_after_create` toast key × 4 locales. 0 tsc errors.** Sprint 13 next: 261.
 
 ## Pending Action Items
 

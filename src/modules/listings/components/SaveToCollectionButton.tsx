@@ -85,7 +85,15 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
       return
     }
     // Add the listing to the newly created collection in one flow
-    await addToCollection(result.collection.id, listingId)
+    const addResult = await addToCollection(result.collection.id, listingId)
+    if ('error' in addResult) {
+      // Collection created but listing not added — show collection with item_count: 0
+      setCollections(prev => [{ ...result.collection, item_count: 0 }, ...prev])
+      setNewName('')
+      setIsCreating(false)
+      toast.warning(t('error_add_after_create'))
+      return
+    }
     setCollections(prev => [{ ...result.collection, item_count: 1 }, ...prev])
     setMemberIds(prev => new Set([...prev, result.collection.id]))
     setNewName('')

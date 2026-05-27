@@ -541,7 +541,8 @@
     "added": "U shtua në koleksion",
     "removed": "U hoq nga koleksioni",
     "name_required": "Emri është i detyrueshëm",
-    "error_generic": "Diçka shkoi keq. Provoni përsëri."
+    "error_generic": "Diçka shkoi keq. Provoni përsëri.",
+    "error_add_after_create": "Koleksioni u krijua, por njoftimi nuk mund të shtohej. Klikoni koleksionin për ta shtuar manualisht."
   },
   "admin": {
     "locations": {

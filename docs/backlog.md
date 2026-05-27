@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 259 (F.5): new collection not visible in Favorites. Root cause: `createCollection`/`addToCollection` had no `revalidatePath`. Fix: add `revalidatePath('/[locale]/favorites', 'page')` to both; check `addToCollection` result in `handleCreate`; `error_add_after_create` toast key × 4 locales. 0 tsc errors.** Sprint 13 next: 261.
+**2026-05-27 — Task 228 (W.1): "Ринок нерухомості" filter section disappears on property-type change. Fix: add `market_type` to `SCHEMA_HOUSE`, `SCHEMA_COMMERCIAL`, `SCHEMA_OFFICE` filters in `propertyTypeSchema.ts`. Was only in `SCHEMA_APARTMENT`; now visible for all 4 types where new_building vs secondary is relevant. 0 new locale entries. 0 tsc errors. Sprint 12 resumed ✅.**
 
 ## Pending Action Items
 
@@ -89,6 +89,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-27 | Task 228 — W.1 filter section disappears: `market_type` added to SCHEMA_HOUSE, SCHEMA_COMMERCIAL, SCHEMA_OFFICE in propertyTypeSchema.ts; was only in SCHEMA_APARTMENT; 0 new locale entries | Task 228 | [sessions/2026-05-27-task-228-w1-filter-section-visibility.md](sessions/2026-05-27-task-228-w1-filter-section-visibility.md) |
 | 2026-05-27 | Task 256 — V.5 sales mailbox: send.ts error categorization (unverified_sender/transient); contactInquiry helpers return structured { ok, reason }; submitContactInquiry + sendInquiryReply await email + surface mailbox_unverified/email_transient/reply_email_failed; ContactForm + AdminInquiriesManager wired; 3 keys ×4 locales | Task 256 | [sessions/2026-05-27-task-256-v5-sales-mailbox.md](sessions/2026-05-27-task-256-v5-sales-mailbox.md) |
 | 2026-05-27 | Task 260 — R.9/X.3 Premium activation: SetListingPremiumResult union; action returns typed errors; PremiumDialog checks result; 6 error keys ×4 locales; premium_until added to Listing type (schema-drift guard); migration SQL emitted | Task 260 | [sessions/2026-05-27-task-260-r9-x3-premium-activation.md](sessions/2026-05-27-task-260-r9-x3-premium-activation.md) |
 | 2026-05-27 | Sprint 13 planned (queued) — 7 production bugs filed as Tasks 255-261; new Positive+Negative flow mandatory rule added to orchestrator-role.md + agent-contract.md (clause 6a); kickoffs written | Tasks 255-261 (queued) | [Sprint_13_kickoff_prompts.md](../tasks/Sprints/Sprint_13_kickoff_prompts.md) |

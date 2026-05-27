@@ -209,7 +209,7 @@ const SCHEMA_HOUSE: PropertyTypeSchema = {
     filters: [
       'rooms', 'floors_total',                     // filter panel uses floors_total key
       'area', 'year_built', 'condition', 'heating', 'wall_type',
-      'offer_type', 'purchase_conditions',
+      'market_type', 'offer_type', 'purchase_conditions',
     ],
   },
   floor: { allowNegative: false, minFloor: 0, requiresCheckbox: false },
@@ -242,7 +242,7 @@ const SCHEMA_COMMERCIAL: PropertyTypeSchema = {
       'area', 'condition',
       'offer_type', 'purchase_conditions',
     ]),
-    filters: ['rooms', 'area', 'floor', 'floors_total', 'condition', 'offer_type', 'purchase_conditions'],
+    filters: ['rooms', 'area', 'floor', 'floors_total', 'condition', 'market_type', 'offer_type', 'purchase_conditions'],
   },
   floor: { allowNegative: false, minFloor: 0, requiresCheckbox: false },
 }
@@ -255,7 +255,7 @@ const SCHEMA_OFFICE: PropertyTypeSchema = {
       'area', 'condition', 'heating',
       'offer_type', 'purchase_conditions',
     ]),
-    filters: ['rooms', 'area', 'floor', 'floors_total', 'condition', 'heating', 'offer_type', 'purchase_conditions'],
+    filters: ['rooms', 'area', 'floor', 'floors_total', 'condition', 'heating', 'market_type', 'offer_type', 'purchase_conditions'],
   },
   floor: { allowNegative: false, minFloor: 0, requiresCheckbox: false },
 }

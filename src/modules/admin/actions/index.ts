@@ -52,12 +52,26 @@ export async function updateListingStatus(
   return {}
 }
 
+export type SetListingPremiumResult =
+  | { ok: true }
+  | { error: 'forbidden' | 'db_missing_column' | 'not_found' | 'transient' | 'date_in_past' }
+
 export async function setListingPremium(
   listingId: string,
   isPremium: boolean,
   premiumUntil?: string | null,
-) {
-  await assertPermission('listings.set_premium')
+): Promise<SetListingPremiumResult> {
+  try {
+    await assertPermission('listings.set_premium')
+  } catch {
+    return { error: 'forbidden' }
+  }
+
+  // Server-side guard: reject timestamps already in the past
+  if (premiumUntil && new Date(premiumUntil) < new Date()) {
+    return { error: 'date_in_past' }
+  }
+
   const db = createAdminClient()
 
   // Fetch slug BEFORE the write so we can revalidate the detail page.
@@ -67,26 +81,36 @@ export async function setListingPremium(
     .eq('id', listingId)
     .single()
 
+  if (!listing) {
+    return { error: 'not_found' }
+  }
+
   const update: Record<string, unknown> = { is_premium: isPremium }
-  // premium_until column requires DB migration: ALTER TABLE listings ADD COLUMN premium_until timestamptz;
   if (premiumUntil !== undefined) update['premium_until'] = premiumUntil
   const { error } = await db.from('listings').update(update).eq('id', listingId)
-  if (error) console.error('setListingPremium failed', { error, listingId })
+  if (error) {
+    console.error('setListingPremium failed', { error, listingId })
+    // PostgreSQL 42703 = column does not exist (premium_until migration not yet run)
+    if ((error as { code?: string }).code === '42703') {
+      return { error: 'db_missing_column' }
+    }
+    return { error: 'transient' }
+  }
 
   revalidatePath('/admin/listings')
   revalidatePath('/admin/badges')
 
   // is_premium affects the listing card (premium badge + sort order is_premium desc)
   // and the detail page badge — both must be invalidated across all locales.
-  if (listing?.slug) {
-    for (const locale of routing.locales) {
-      revalidatePath(`/${locale}/listings`, 'page')
-      revalidatePath(`/${locale}/listings/${listing.slug}`, 'page')
-    }
+  for (const locale of routing.locales) {
+    revalidatePath(`/${locale}/listings`, 'page')
+    revalidatePath(`/${locale}/listings/${listing.slug}`, 'page')
   }
+
+  return { ok: true }
 }
 
-export async function toggleListingPremium(id: string, isPremium: boolean) {
+export async function toggleListingPremium(id: string, isPremium: boolean): Promise<SetListingPremiumResult> {
   return setListingPremium(id, isPremium)
 }
 

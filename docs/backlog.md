@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Orchestration (Opus 4.7): Sprint 13 planned for 7 owner-reported production bugs (Tasks 255–261). Added the new MANDATORY rule to `docs/orchestrator-role.md` + `docs/agent-contract.md` clause 6a: every kickoff must describe BOTH a `Positive flow (happy path)` AND a `Negative flow (every off-happy-path branch)`; a diff that ships only the happy path is INCOMPLETE — orchestrator routes it back. Bugs: 1) admin inquiry reply history hidden; 2) sales@lero.al not delivered; 3) untranslated topic "general" in admin; 4) listing contact card N/A · Приватна особа for authed viewers; 5) Save-to-Collection not visible in Favorites; 6) admin Premium activation broken (premium_until column likely missing + fake-success toast); 7) cursor-pointer missing on Button / Combobox / Select. Last task number: 261. No product code written.** See [`Sprint_13_…`](../tasks/Sprints/Sprint_13_—_Critical_Bugs_from_owner_2026-05-27.md) + [`Sprint_13_kickoff_prompts.md`](../tasks/Sprints/Sprint_13_kickoff_prompts.md).
+**2026-05-27 — Task 260 (R.9/X.3): Admin Premium activation fixed. Root causes confirmed: (1) `premium_until` column missing from DB + from `Listing` type — causes PG 42703 on every update; (2) `setListingPremium` returned `void` → fake-success toast always fired. Fix: exported `SetListingPremiumResult` discriminated union; action now returns typed error for forbidden/db_missing_column/not_found/transient/date_in_past; PremiumDialog checks result before showing any toast; 6 new error keys × 4 locales added. `premium_until` added to `Listing` interface in `database.ts` so schema-drift guard catches the missing column. Migration SQL emitted into session log. Owner must run the ALTER TABLE before premium activation works end-to-end. 0 tsc errors.** Sprint 13 run order next: 256 → 258 → 255 → 257 → 259 → 261.
 
 ## Pending Action Items
 
@@ -15,7 +15,7 @@
 |------|-------|-------|
 | SQL: Task 250 `role_permissions` hardening + `role_permission_events` (SUPERSEDES Task 197 SQL) | Owner | Run after Sonnet emits the revised idempotent SQL into the Task 250 session log |
 | Resend sender verification: `support@lero.al`, `sales@lero.al` (Bug 2 / Task 256) | Owner | Verify sender + lero.al DKIM/SPF in Resend dashboard; confirm sales@lero.al inbox + MX records resolve |
-| SQL: `ALTER TABLE listings ADD COLUMN IF NOT EXISTS premium_until timestamptz` (Task 260 / Bug 6) | Owner | Block Task 260 verification until run; Sonnet will emit idempotent SQL in the session log |
+| SQL: Task 260 — `ALTER TABLE listings ADD COLUMN IF NOT EXISTS premium_until timestamptz` + index (see session log) | Owner | **EMITTED** — run from [session log](sessions/2026-05-27-task-260-r9-x3-premium-activation.md) → then `npm run check:schema-drift` |
 | Possible RLS update on `contact_inquiry_replies` SELECT for admin/moderator (Task 255 / Bug 1) | Owner | Only if Sonnet's audit confirms RLS is the cause; idempotent SQL in session log |
 | Possible RLS update on `users` SELECT for authenticated listing-detail viewers (Task 258 / Bug 4) | Owner | Only if Sonnet's audit confirms RLS blocks the embed JOIN; idempotent SQL in session log |
 
@@ -87,6 +87,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-27 | Task 260 — R.9/X.3 Premium activation: SetListingPremiumResult union; action returns typed errors; PremiumDialog checks result; 6 error keys ×4 locales; premium_until added to Listing type (schema-drift guard); migration SQL emitted | Task 260 | [sessions/2026-05-27-task-260-r9-x3-premium-activation.md](sessions/2026-05-27-task-260-r9-x3-premium-activation.md) |
 | 2026-05-27 | Sprint 13 planned (queued) — 7 production bugs filed as Tasks 255-261; new Positive+Negative flow mandatory rule added to orchestrator-role.md + agent-contract.md (clause 6a); kickoffs written | Tasks 255-261 (queued) | [Sprint_13_kickoff_prompts.md](../tasks/Sprints/Sprint_13_kickoff_prompts.md) |
 | 2026-05-27 | Task 254 — Migrated pending kickoffs (Tasks 250 / 251 / 252 + Sprint 12 prompts for 228/234/235/236/239/242/244/248) to the new concrete Sonnet template; preserved scope, AC, intent; added rule-index bundles + behavior-preservation blocks + Notes 21/22/23 where relevant | Task 254 | [sessions/2026-05-27-task-254-task-migration.md](sessions/2026-05-27-task-254-task-migration.md) |
 | 2026-05-27 | Task 253 — AI governance compression: agent-contract.md + rule-index.md added; Notes 21/22/23 (Control Relocation, Admin Table, Edit-Flow); Canonical Task Template rewritten | Task 253 | [sessions/2026-05-27-task-253-governance-compression.md](sessions/2026-05-27-task-253-governance-compression.md) |

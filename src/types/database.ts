@@ -229,6 +229,7 @@ export interface Listing {
   lng: number | null
   views_count: number
   is_premium: boolean
+  premium_until: string | null
   status: ListingStatus
   expires_at: string
   created_at: string

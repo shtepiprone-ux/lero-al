@@ -632,7 +632,13 @@
       "preview_title": "Dettagli annuncio",
       "delete_success": "Annuncio eliminato",
       "premium_success": "Stato premium impostato",
-      "premium_removed_success": "Stato premium rimosso"
+      "premium_removed_success": "Stato premium rimosso",
+      "premium_error_forbidden": "Non hai il permesso di impostare lo stato premium",
+      "premium_error_db_schema": "La funzione Premium non è pronta — è necessaria la migrazione del database",
+      "premium_error_date_past": "La data di scadenza Premium deve essere nel futuro",
+      "premium_error_date_invalid": "Formato data non valido — seleziona una data dal calendario",
+      "premium_error_not_found": "Annuncio non trovato — potrebbe essere stato eliminato",
+      "premium_error_transient": "Impossibile aggiornare lo stato premium — riprova"
     },
     "users": {
       "tab_all": "Tutti gli utenti",

@@ -71,22 +71,44 @@ function PremiumDialog({ listing, onClose, onDone }: {
     { label: t('preset_1y'), days: 365 },
   ]
 
+  function premiumErrToastKey(error: string) {
+    if (error === 'db_missing_column') return 'premium_error_db_schema'
+    return `premium_error_${error}`
+  }
+
   async function apply(days?: number) {
     setSaving(true)
-    const until = days
-      ? new Date(Date.now() + days * 86400000).toISOString()
-      : customDate ? new Date(customDate).toISOString() : null
-    await setListingPremium(listing.id, true, until)
-    toast.success(t('premium_success'))
+    let until: string | null = null
+    if (days) {
+      until = new Date(Date.now() + days * 86400000).toISOString()
+    } else if (customDate) {
+      try {
+        until = new Date(customDate).toISOString()
+      } catch {
+        toast.error(t('premium_error_date_invalid'))
+        setSaving(false)
+        return
+      }
+    }
+    const result = await setListingPremium(listing.id, true, until)
     setSaving(false)
+    if ('error' in result) {
+      toast.error(t(premiumErrToastKey(result.error) as Parameters<typeof t>[0]))
+      return
+    }
+    toast.success(t('premium_success'))
     onDone()
   }
 
   async function remove() {
     setSaving(true)
-    await setListingPremium(listing.id, false, null)
-    toast.success(t('premium_removed_success'))
+    const result = await setListingPremium(listing.id, false, null)
     setSaving(false)
+    if ('error' in result) {
+      toast.error(t(premiumErrToastKey(result.error) as Parameters<typeof t>[0]))
+      return
+    }
+    toast.success(t('premium_removed_success'))
     onDone()
   }
 

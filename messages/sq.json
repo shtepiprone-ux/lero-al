@@ -632,7 +632,13 @@
       "preview_title": "Detajet e listimit",
       "delete_success": "Njoftimi u fshi",
       "premium_success": "Statusi premium u vendos",
-      "premium_removed_success": "Premium u hoq"
+      "premium_removed_success": "Premium u hoq",
+      "premium_error_forbidden": "Nuk keni leje për të vendosur statusin premium",
+      "premium_error_db_schema": "Funksioni premium nuk është gati — kërkohet migrimi i bazës së të dhënave",
+      "premium_error_date_past": "Data e përfundimit të premium duhet të jetë në të ardhmen",
+      "premium_error_date_invalid": "Format i datës i pavlefshëm — zgjidhni një datë nga kalendari",
+      "premium_error_not_found": "Njoftimi nuk u gjet — mund të jetë fshirë",
+      "premium_error_transient": "Statusi premium nuk u përditësua — provoni sërish"
     },
     "users": {
       "tab_all": "Të gjithë përdoruesit",

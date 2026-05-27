@@ -632,7 +632,13 @@
       "preview_title": "Деталі оголошення",
       "delete_success": "Оголошення видалено",
       "premium_success": "Premium статус встановлено",
-      "premium_removed_success": "Premium статус знято"
+      "premium_removed_success": "Premium статус знято",
+      "premium_error_forbidden": "У вас немає дозволу на встановлення преміум-статусу",
+      "premium_error_db_schema": "Функція Premium не готова — потрібна міграція бази даних",
+      "premium_error_date_past": "Дата закінчення Premium повинна бути в майбутньому",
+      "premium_error_date_invalid": "Неправильний формат дати — виберіть дату з календаря",
+      "premium_error_not_found": "Оголошення не знайдено — можливо, воно було видалено",
+      "premium_error_transient": "Не вдалося оновити преміум-статус — спробуйте ще раз"
     },
     "users": {
       "tab_all": "Всі користувачі",

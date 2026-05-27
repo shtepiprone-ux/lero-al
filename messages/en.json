@@ -632,7 +632,13 @@
       "preview_title": "Listing details",
       "delete_success": "Listing deleted",
       "premium_success": "Premium status set",
-      "premium_removed_success": "Premium status removed"
+      "premium_removed_success": "Premium status removed",
+      "premium_error_forbidden": "You do not have permission to set premium status",
+      "premium_error_db_schema": "Premium feature is not ready — database migration required (contact admin)",
+      "premium_error_date_past": "The premium end date must be in the future",
+      "premium_error_date_invalid": "Invalid date format — please pick a date from the calendar",
+      "premium_error_not_found": "Listing not found — it may have been deleted",
+      "premium_error_transient": "Failed to update premium status — please try again"
     },
     "users": {
       "tab_all": "All users",

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import { Loader2, CheckCircle2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -80,7 +80,20 @@ export function ListingFormShell(props: Props) {
   const t = useTranslations('listing')
   const tc = useTranslations('common')
   const router = useRouter()
+  const params = useParams()
   const activeLocale = useLocale()
+
+  // In edit mode the URL contains [slug]; navigate there on cancel so the form works
+  // correctly even when opened in a new tab (e.g. from the admin panel) where router.back()
+  // has no history to return to.
+  function navigateAway() {
+    const slug = params?.slug as string | undefined
+    if (slug) {
+      router.push(`/${activeLocale}/listings/${slug}`)
+    } else {
+      router.back()
+    }
+  }
 
   const [data, setData] = useState<FormValues>(
     isEditMode(mode) ? { ...INITIAL, ...initialValues } as FormValues : INITIAL
@@ -296,7 +309,7 @@ export function ListingFormShell(props: Props) {
           type="button"
           variant="ghost"
           size="sm"
-          onClick={() => isDirty ? setShowCancel(true) : router.back()}
+          onClick={() => isDirty ? setShowCancel(true) : navigateAway()}
           className="text-muted-foreground mt-1"
         >
           {tc('cancel')}
@@ -469,7 +482,7 @@ export function ListingFormShell(props: Props) {
             type="button"
             variant="outline"
             size="xl"
-            onClick={() => isDirty ? setShowCancel(true) : router.back()}
+            onClick={() => isDirty ? setShowCancel(true) : navigateAway()}
             disabled={submitting}
             className="px-6 rounded-xl"
           >
@@ -495,7 +508,7 @@ export function ListingFormShell(props: Props) {
             <Button type="button" variant="outline" onClick={() => setShowCancel(false)}>
               {t('cancel_confirm_no')}
             </Button>
-            <Button type="button" variant="destructive" onClick={() => router.back()}>
+            <Button type="button" variant="destructive" onClick={() => navigateAway()}>
               {t('cancel_confirm_yes')}
             </Button>
           </DialogFooter>

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 236 (Y.1): Raw i18n keys on listing form. Fix: add `listing.offer_type` + `listing.purchase_conditions` to all 4 locale files. 2 keys × 4 locales. Parity: 235 listing keys ×4. 0 tsc errors.**
+**2026-05-27 — Task 239 (Y.4): Cancel confirm modal no-op in listing edit. Fix: add `navigateAway()` helper using `useParams().slug` so cancel navigates to listing detail instead of `router.back()` (no-op in new tab). All 3 call sites fixed. 0 new locale entries. 0 tsc errors.**
 
 ## Pending Action Items
 
@@ -89,6 +89,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-27 | Task 239 — Y.4 cancel modal no-op: `navigateAway()` via `useParams().slug` replaces `router.back()` in all 3 ListingFormShell cancel sites; works in new-tab admin edit; create-mode unchanged | Task 239 | [sessions/2026-05-27-task-239-y4-admin-cancel-modal.md](sessions/2026-05-27-task-239-y4-admin-cancel-modal.md) |
 | 2026-05-27 | Task 236 — Y.1 raw i18n keys: `listing.offer_type` + `listing.purchase_conditions` added to all 4 locale files; 235 keys ×4 (parity confirmed); 0 tsc errors | Task 236 | [sessions/2026-05-27-task-236-y1-raw-i18n-keys-listing-form.md](sessions/2026-05-27-task-236-y1-raw-i18n-keys-listing-form.md) |
 | 2026-05-27 | Task 235 — X.2 admin listing row actions restored: STATUS_ACTIONS constant + handleStatusChange + "Change status" section in ListingPreviewDialog; all 6 statuses covered; 12 keys × 4 locales; 0 tsc errors | Task 235 | [sessions/2026-05-27-task-235-x2-admin-listing-row-actions.md](sessions/2026-05-27-task-235-x2-admin-listing-row-actions.md) |
 | 2026-05-27 | Task 234 — X.1 enum drift: `validEnum`/`validEnumMulti` coerce-or-drop in parseSearchParams; all domain enum URL params validated; 16 unit tests; SQL: `ALTER TYPE property_type ADD VALUE IF NOT EXISTS 'room'`; Task 262 (X.3) filed for market_type audit | Task 234 | [sessions/2026-05-27-task-234-x1-enum-drift-audit.md](sessions/2026-05-27-task-234-x1-enum-drift-audit.md) |

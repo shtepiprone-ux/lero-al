@@ -177,7 +177,17 @@ export async function updateInquiryStatus(
 export async function sendInquiryReply(
   inquiryId: string,
   body: string,
-): Promise<{ error?: 'forbidden' | 'validation' | 'not_found' | 'save_failed' | 'reply_email_failed' }> {
+): Promise<{
+  error?: 'forbidden' | 'validation' | 'not_found' | 'save_failed' | 'reply_email_failed'
+  reply?: {
+    id: string
+    inquiry_id: string
+    body: string
+    created_at: string
+    replied_by: string
+    replier: { name: string | null } | null
+  }
+}> {
   const actorId = await assertAdminOrModerator()
   if (!actorId) return { error: 'forbidden' }
 
@@ -195,17 +205,22 @@ export async function sendInquiryReply(
 
   if (fetchError || !inquiry) return { error: 'not_found' }
 
-  // Insert reply record
-  const { error: insertError } = await db.from('contact_inquiry_replies').insert({
-    inquiry_id: inquiryId,
-    replied_by: actorId,
-    body: trimmedBody,
-  })
+  // Insert reply record and return the inserted row
+  const { data: insertedRows, error: insertError } = await db
+    .from('contact_inquiry_replies')
+    .insert({
+      inquiry_id: inquiryId,
+      replied_by: actorId,
+      body: trimmedBody,
+    })
+    .select('id, inquiry_id, body, created_at, replied_by')
 
-  if (insertError) {
+  if (insertError || !insertedRows?.[0]) {
     console.error('[contact-inquiry] reply insert failed', insertError)
     return { error: 'save_failed' }
   }
+
+  const insertedRow = insertedRows[0]
 
   // Update inquiry: increment reply_count, set handled_by/handled_at, move to in_progress if still new
   const { data: current } = await db
@@ -220,6 +235,18 @@ export async function sendInquiryReply(
     handled_at: new Date().toISOString(),
     ...(current?.status === 'new' ? { status: 'in_progress' } : {}),
   }).eq('id', inquiryId)
+
+  // Fetch replier name for the returned reply shape
+  const { data: actor } = await db.from('users').select('name').eq('id', actorId).single()
+
+  const newReply = {
+    id: insertedRow.id,
+    inquiry_id: insertedRow.inquiry_id,
+    body: insertedRow.body,
+    created_at: insertedRow.created_at,
+    replied_by: insertedRow.replied_by,
+    replier: { name: actor?.name ?? null },
+  }
 
   // Send reply email — DB write succeeded; email failure surfaces to caller
   const displaySubject =
@@ -240,8 +267,8 @@ export async function sendInquiryReply(
       inquiryId,
       reason: replyEmailResult.reason,
     })
-    return { error: 'reply_email_failed' }
+    return { error: 'reply_email_failed', reply: newReply }
   }
 
-  return {}
+  return { reply: newReply }
 }

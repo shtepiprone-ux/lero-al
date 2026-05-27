@@ -66,12 +66,13 @@ interface Props {
   replies: ReplyRow[]
 }
 
-export function AdminInquiriesManager({ inquiries: initialInquiries, replies: allReplies }: Props) {
+export function AdminInquiriesManager({ inquiries: initialInquiries, replies: initialReplies }: Props) {
   const t = useTranslations('admin.inquiries')
   const tp = useTranslations('admin.pages')
   const locale = useLocale()
 
   const [inquiries, setInquiries] = useState(initialInquiries)
+  const [allReplies, setAllReplies] = useState<ReplyRow[]>(initialReplies)
   const [selected, setSelected]   = useState<InquiryRow | null>(null)
   const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
   const [mailboxFilter, setMailboxFilter] = useState<'all' | 'support' | 'sales'>('all')
@@ -131,7 +132,8 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: al
     startTransition(async () => {
       const result = await sendInquiryReply(selected.id, replyBody)
       if (result.error === 'reply_email_failed') {
-        // DB write succeeded but email delivery failed — update local state
+        // DB write succeeded but email delivery failed — update local state and append reply
+        if (result.reply) setAllReplies(prev => [...prev, result.reply!])
         setInquiries(prev =>
           prev.map(i => i.id === selected.id
             ? { ...i, reply_count: i.reply_count + 1, status: i.status === 'new' ? 'in_progress' : i.status }
@@ -154,6 +156,7 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: al
         toast.error(t('reply_error'))
         return
       }
+      if (result.reply) setAllReplies(prev => [...prev, result.reply!])
       setInquiries(prev =>
         prev.map(i => i.id === selected.id
           ? { ...i, reply_count: i.reply_count + 1, status: i.status === 'new' ? 'in_progress' : i.status }
@@ -292,7 +295,11 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: al
               </div>
 
               {/* Reply history */}
-              {selectedReplies.length > 0 && (
+              {selectedReplies.length === 0 && selected.reply_count > 0 ? (
+                <div className="rounded-lg border border-status-warning/40 bg-status-warning/5 px-4 py-3 text-sm text-center text-muted-foreground">
+                  {t('reply_history_load_failed')}
+                </div>
+              ) : selectedReplies.length > 0 ? (
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
                     {t('detail_replies')}
@@ -311,7 +318,7 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: al
                     ))}
                   </div>
                 </div>
-              )}
+              ) : null}
 
               {/* Reply composer */}
               <div>

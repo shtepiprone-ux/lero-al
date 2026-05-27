@@ -739,7 +739,8 @@
       "reply_error": "Failed to send reply. Please try again.",
       "status_updated": "Status updated",
       "status_error": "Failed to update status. Please try again.",
-      "reply_email_failed": "Reply saved, but email delivery failed. You can contact the user manually."
+      "reply_email_failed": "Reply saved, but email delivery failed. You can contact the user manually.",
+      "reply_history_load_failed": "Reply history could not be loaded. The replies may still exist in the database."
     },
     "support": {
       "new_complaint_btn": "New complaint",

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-27 — Task 258 (T.5): contact card "N/A · Приватна особа" for authenticated viewers. Root cause: `createClient()` embed join blocked by RLS for non-owner viewers. Fix: add 3rd parallel query using `createAdminClient()` in listing page auth block; `ownerDataUnavailable` state added to `ListingContact.tsx`; `owner_name_unavailable` locale key × 4. 0 tsc errors.** Sprint 13 next: 255 → 257 → 259 → 261.
+**2026-05-27 — Task 255 (V.4): admin reply history invisible. Root cause: `allReplies` was raw prop (not state), new replies never appended after send. Fix: `allReplies` → `useState(initialReplies)`; `sendInquiryReply` now returns `{ reply }` (inserted row + replier name); `handleSendReply` appends it; `reply_history_load_failed` banner when `reply_count > 0` but list empty; 1 new key × 4 locales. 0 tsc errors.** Sprint 13 next: 257 → 259 → 261.
 
 ## Pending Action Items
 

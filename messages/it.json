@@ -640,7 +640,19 @@
       "premium_error_date_past": "La data di scadenza Premium deve essere nel futuro",
       "premium_error_date_invalid": "Formato data non valido — seleziona una data dal calendario",
       "premium_error_not_found": "Annuncio non trovato — potrebbe essere stato eliminato",
-      "premium_error_transient": "Impossibile aggiornare lo stato premium — riprova"
+      "premium_error_transient": "Impossibile aggiornare lo stato premium — riprova",
+      "status_section_label": "Cambia stato",
+      "btn_approve": "Approva",
+      "btn_reject": "Rifiuta",
+      "btn_activate": "Attiva",
+      "btn_deactivate": "Disattiva",
+      "btn_mark_sold": "Segna come venduto",
+      "btn_mark_rented": "Segna come affittato",
+      "btn_archive": "Archivia",
+      "btn_send_review": "Invia in revisione",
+      "btn_restore": "Ripristina",
+      "status_update_success": "Stato aggiornato",
+      "status_update_error": "Errore nell'aggiornamento dello stato"
     },
     "users": {
       "tab_all": "Tutti gli utenti",

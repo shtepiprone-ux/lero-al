@@ -20,12 +20,43 @@ import {
 import { Combobox } from '@/components/shared/Combobox'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
-import { setListingPremium, deleteListing } from '@/modules/admin/actions'
+import { setListingPremium, deleteListing, updateListingStatus } from '@/modules/admin/actions'
 import { formatPrice } from '@/lib/formatters'
 import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
+
+// Status transitions available to admin per current status.
+// Matches ALLOWED_LISTING_TRANSITIONS in listingTransitionEngine.ts.
+type StatusActionDef = { toStatus: ListingStatus; labelKey: string; className?: string }
+const STATUS_ACTIONS: Record<ListingStatus, StatusActionDef[]> = {
+  pending:  [
+    { toStatus: 'active',   labelKey: 'btn_approve',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+    { toStatus: 'inactive', labelKey: 'btn_reject',      className: 'text-status-warning border-status-warning/30 hover:bg-status-warning/10' },
+    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
+  ],
+  active:   [
+    { toStatus: 'inactive', labelKey: 'btn_deactivate' },
+    { toStatus: 'sold',     labelKey: 'btn_mark_sold',   className: 'text-status-info border-status-info/30 hover:bg-status-info/10' },
+    { toStatus: 'rented',   labelKey: 'btn_mark_rented', className: 'text-status-rented border-status-rented/30 hover:bg-status-rented/10' },
+    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
+  ],
+  inactive: [
+    { toStatus: 'active',   labelKey: 'btn_activate',    className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+    { toStatus: 'pending',  labelKey: 'btn_send_review' },
+    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
+  ],
+  sold:     [
+    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
+  ],
+  rented:   [
+    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
+  ],
+  archived: [
+    { toStatus: 'inactive', labelKey: 'btn_restore',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+  ],
+}
 
 const STATUS_BADGE: Record<ListingStatus, string> = {
   pending:  'bg-status-warning/15 text-status-warning border-status-warning/30',
@@ -190,6 +221,7 @@ function ListingPreviewDialog({
   onClose,
   onDeleted,
   onPremium,
+  onStatusChanged,
   locale,
 }: {
   listing: AdminListing
@@ -198,12 +230,14 @@ function ListingPreviewDialog({
   onClose: () => void
   onDeleted: (id: string) => void
   onPremium: () => void
+  onStatusChanged: (id: string, newStatus: ListingStatus) => void
   locale: string
 }) {
   const t = useTranslations('admin.listings')
   const tc = useTranslations('common')
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [changingStatus, setChangingStatus] = useState<ListingStatus | null>(null)
 
   async function handleDelete() {
     setDeleting(true)
@@ -211,6 +245,18 @@ function ListingPreviewDialog({
     setDeleting(false)
     toast.success(t('delete_success'))
     onDeleted(listing.id)
+  }
+
+  async function handleStatusChange(toStatus: ListingStatus) {
+    setChangingStatus(toStatus)
+    const result = await updateListingStatus(listing.id, toStatus)
+    setChangingStatus(null)
+    if (result.error) {
+      toast.error(t('status_update_error'))
+      return
+    }
+    toast.success(t('status_update_success'))
+    onStatusChanged(listing.id, toStatus)
   }
 
   return (
@@ -250,6 +296,30 @@ function ListingPreviewDialog({
             <p className="font-medium"><RelativeTime date={listing.created_at} /></p>
           </div>
         </div>
+
+        {/* Status actions */}
+        {!showDeleteConfirm && STATUS_ACTIONS[listing.status].length > 0 && (
+          <div className="flex flex-col gap-2 border-t pt-3">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              {t('status_section_label')}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {STATUS_ACTIONS[listing.status].map(({ toStatus, labelKey, className }) => (
+                <Button
+                  key={toStatus}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleStatusChange(toStatus)}
+                  disabled={changingStatus !== null}
+                  className={`gap-1.5 ${className ?? ''}`}
+                >
+                  {changingStatus === toStatus && <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />}
+                  {t(labelKey as Parameters<typeof t>[0])}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Delete confirmation (inline — replaces actions) */}
         {showDeleteConfirm ? (
@@ -380,6 +450,11 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
           onPremium={() => {
             setPremiumDialog(previewListing)
             setPreviewListing(null)
+          }}
+          onStatusChanged={(id, newStatus) => {
+            setItems(prev => prev.map(x => x.id === id ? { ...x, status: newStatus } : x))
+            setPreviewListing(prev => prev?.id === id ? { ...prev, status: newStatus } : prev)
+            router.refresh()
           }}
         />
       )}

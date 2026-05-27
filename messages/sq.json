@@ -640,7 +640,19 @@
       "premium_error_date_past": "Data e përfundimit të premium duhet të jetë në të ardhmen",
       "premium_error_date_invalid": "Format i datës i pavlefshëm — zgjidhni një datë nga kalendari",
       "premium_error_not_found": "Njoftimi nuk u gjet — mund të jetë fshirë",
-      "premium_error_transient": "Statusi premium nuk u përditësua — provoni sërish"
+      "premium_error_transient": "Statusi premium nuk u përditësua — provoni sërish",
+      "status_section_label": "Ndrysho statusin",
+      "btn_approve": "Aprovo",
+      "btn_reject": "Refuzo",
+      "btn_activate": "Aktivizo",
+      "btn_deactivate": "Çaktivizo",
+      "btn_mark_sold": "Shëno si shitur",
+      "btn_mark_rented": "Shëno si dhënë me qira",
+      "btn_archive": "Arkivo",
+      "btn_send_review": "Dërgo për rishikim",
+      "btn_restore": "Rivendos",
+      "status_update_success": "Statusi u përditësua",
+      "status_update_error": "Gabim gjatë ndryshimit të statusit"
     },
     "users": {
       "tab_all": "Të gjithë përdoruesit",

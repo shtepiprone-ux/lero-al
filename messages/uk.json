@@ -640,7 +640,19 @@
       "premium_error_date_past": "Дата закінчення Premium повинна бути в майбутньому",
       "premium_error_date_invalid": "Неправильний формат дати — виберіть дату з календаря",
       "premium_error_not_found": "Оголошення не знайдено — можливо, воно було видалено",
-      "premium_error_transient": "Не вдалося оновити преміум-статус — спробуйте ще раз"
+      "premium_error_transient": "Не вдалося оновити преміум-статус — спробуйте ще раз",
+      "status_section_label": "Змінити статус",
+      "btn_approve": "Схвалити",
+      "btn_reject": "Відхилити",
+      "btn_activate": "Активувати",
+      "btn_deactivate": "Деактивувати",
+      "btn_mark_sold": "Позначити як продане",
+      "btn_mark_rented": "Позначити як здане",
+      "btn_archive": "Архівувати",
+      "btn_send_review": "Надіслати на перевірку",
+      "btn_restore": "Відновити",
+      "status_update_success": "Статус оновлено",
+      "status_update_error": "Помилка при зміні статусу"
     },
     "users": {
       "tab_all": "Всі користувачі",

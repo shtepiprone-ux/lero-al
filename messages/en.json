@@ -640,7 +640,19 @@
       "premium_error_date_past": "The premium end date must be in the future",
       "premium_error_date_invalid": "Invalid date format — please pick a date from the calendar",
       "premium_error_not_found": "Listing not found — it may have been deleted",
-      "premium_error_transient": "Failed to update premium status — please try again"
+      "premium_error_transient": "Failed to update premium status — please try again",
+      "status_section_label": "Change status",
+      "btn_approve": "Approve",
+      "btn_reject": "Reject",
+      "btn_activate": "Activate",
+      "btn_deactivate": "Deactivate",
+      "btn_mark_sold": "Mark as sold",
+      "btn_mark_rented": "Mark as rented",
+      "btn_archive": "Archive",
+      "btn_send_review": "Send to review",
+      "btn_restore": "Restore",
+      "status_update_success": "Status updated",
+      "status_update_error": "Failed to update status — please try again"
     },
     "users": {
       "tab_all": "All users",

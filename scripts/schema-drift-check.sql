@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-28T08:03:01.583Z by: npm run check:schema-drift
+-- Generated 2026-05-28T17:11:26.121Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:

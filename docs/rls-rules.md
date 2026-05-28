@@ -175,6 +175,8 @@ Existing tables keep their current grants until 2026-10-30. A separate audit tas
 table that the app reads via `supabase-js` has the matching GRANTs. This audit is
 independent of the migration template above, which governs all new tables from now on.
 
+Audit run on 2026-05-28 as Task 275. See `tasks/Sprints/Sprint_16_task_275_grant_audit.md` for the per-table table and `scripts/grant-discipline-audit.sql` for the emitted SQL. Owner-applied on 2026-05-28.
+
 ---
 
 ## Function Security: `search_path` discipline

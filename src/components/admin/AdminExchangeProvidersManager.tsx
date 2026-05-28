@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PasswordInput } from '@/components/ui/PasswordInput'
 import { Badge } from '@/components/ui/badge'
 import {
   createExchangeProvider,
@@ -97,7 +98,7 @@ function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
 
         <div className="flex flex-col gap-1.5">
           <Label className="text-xs">{t('api_key')}</Label>
-          <Input value={apiKey} onChange={e => setApiKey(e.target.value)} type="password" placeholder="(optional)" className="h-9 rounded-xl" />
+          <PasswordInput value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="(optional)" className="h-9 rounded-xl" />
         </div>
 
         <div className="grid grid-cols-2 gap-4">

@@ -61,7 +61,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
 
       <div className="flex items-center gap-2">
         <Badge variant="outline" className="gap-1.5">
-          <ShieldCheck className="h-3.5 w-3.5 text-green-600" />
+          <ShieldCheck className="h-3.5 w-3.5 text-status-success" />
           {t('allowed_count', { count: allowedCount, total: PERMISSION_KEYS.length })}
         </Badge>
       </div>
@@ -74,7 +74,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
           </span>
         </div>
         <div className="flex items-center gap-3 px-4 py-3.5">
-          <ShieldCheck className="h-4 w-4 text-green-600 shrink-0" />
+          <ShieldCheck className="h-4 w-4 text-status-success shrink-0" />
           <span className="text-sm text-muted-foreground">{t('admin_full_access')}</span>
         </div>
       </div>
@@ -122,7 +122,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {allowed ? (
-                  <ShieldCheck className="h-4 w-4 text-green-600" />
+                  <ShieldCheck className="h-4 w-4 text-status-success" />
                 ) : (
                   <ShieldX className="h-4 w-4 text-muted-foreground/50" />
                 )}
@@ -148,7 +148,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
 
         {events === null ? (
           <div className="flex items-center gap-2 px-4 py-3.5 text-sm text-muted-foreground">
-            <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0" />
+            <AlertTriangle className="h-4 w-4 text-status-warning shrink-0" />
             {t('audit_unavailable')}
           </div>
         ) : events.length === 0 ? (
@@ -161,7 +161,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
                 <div key={ev.id} className="flex items-start gap-3 px-4 py-3 text-sm">
                   <div className="mt-0.5 shrink-0">
                     {ev.new_allowed ? (
-                      <ShieldCheck className="h-4 w-4 text-green-600" />
+                      <ShieldCheck className="h-4 w-4 text-status-success" />
                     ) : (
                       <ShieldX className="h-4 w-4 text-muted-foreground/50" />
                     )}
@@ -171,7 +171,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
                       {t(`keys.${keySlug}`)}{' '}
                       <span
                         className={
-                          ev.new_allowed ? 'text-green-600' : 'text-muted-foreground'
+                          ev.new_allowed ? 'text-status-success' : 'text-muted-foreground'
                         }
                       >
                         {t(ev.new_allowed ? 'audit_grant' : 'audit_revoke')}

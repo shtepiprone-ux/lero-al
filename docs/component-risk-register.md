@@ -1,127 +1,48 @@
 # Component Risk Register — Lero.al
-Last generated: 2026-05-18
-Last audit: 2026-05-20 (Task 109 — Primitive debt burn-down; H:+30 closed)
-
-## Task 109 Migration Log (2026-05-20)
-
-RAW_BUTTON → Button migrations completed (30 violations resolved, H:87→H:57):
-
-| Component | File | Change |
-|---|---|---|
-| `NotificationBell` | notifications/components/NotificationBell.tsx | `<button>` → `Button size="icon" variant="ghost"` |
-| `NotificationCenter` | notifications/components/NotificationCenter.tsx | `<button>` → `Button variant="ghost" size="sm"` |
-| `AdminMobileHeader` | components/admin/AdminMobileHeader.tsx | `<button>` → `Button size="icon" variant="ghost"` |
-| `ListingsStatusTabs` | listings/components/ListingsStatusTabs.tsx | `<button>` → `Button variant="ghost"` (tab-style) |
-| `ListingsFilters` | listings/components/ListingsFilters.tsx | AccordionSection `<button>` → `Button variant="ghost"` |
-| `EnumSelectorField` | listings/components/form/EnumSelectorField.tsx | `<button>` → `Button variant="outline"` |
-| `RoomsSelectorField` | listings/components/form/RoomsSelectorField.tsx | `<button>` → `Button variant="outline"` |
-| `StepBasicInfo` | listings/components/steps/StepBasicInfo.tsx | 3× `<button>` → `Button` (listing type, property type, currency) |
-| `StepDetails` | listings/components/steps/StepDetails.tsx | 2× `<button>` → `Button variant="outline"` (rooms, condition) |
-| `ListingGallery` | listings/components/ListingGallery.tsx | 6× `<button>` → `Button` (nav, thumbnails, all-photos link) |
-| `SaveSearchButton` | listings/components/SaveSearchButton.tsx | CUSTOM_OVERLAY → `Dialog` (custom backdrop+popover replaced) |
-| `ListingBackButton` | listings/components/ListingBackButton.tsx | `<button>` → `Button variant="ghost"` |
-| `FavoritesTypeFilter` | listings/components/FavoritesTypeFilter.tsx | 2× `<button>` → `Button` (default/secondary variants) |
-| `ActiveFilterChips` | listings/components/ActiveFilterChips.tsx | `<button>` → `Button variant="outline"` |
-| `SavedSearchesTab` | cabinet/components/SavedSearchesTab.tsx | `<button>` → `Button variant="outline" size="icon-sm"` |
-| `ListingContact` | listings/components/ListingContact.tsx | 2× `<button>` → `Button` (disabled state, share) |
-| `FavoriteButton` | listings/components/FavoriteButton.tsx | `<button>` → `Button variant="ghost"` |
-| `ListingDescriptionTranslator` | listings/components/ListingDescriptionTranslator.tsx | 3× `<button>` → `Button variant="outline" size="sm"` |
-
-**AuthSheet special case decision (2026-05-20):** `src/modules/auth/components/AuthSheet.tsx` lines ~127 and ~267 have inline `<button type="button">` as text links within prose `<p>` elements ("no account? Register" / "have account? Login"). These are NOT flagged by the scanner (multi-line `<button` tag format bypasses the single-line regex). Decision: **leave as-is** — they are genuine inline flow text links; the scanner does not flag them; no governance violation exists.
-
-**Remaining RAW_BUTTON debt (Epic K scope, NOT fixed in Task 109):**
-Admin table row patterns in AdminLegalManager, AdminListingsTable, AdminLocationsManager, AdminPropertyTypesManager, AdminUsersTable, AdminSettings, AdminSidebar, AdminUserAvatar, AdminExchangeProvidersManager → deferred to Epic K.
-Shared primitives: Combobox, DatePicker, FiltersPanel, LocationCombobox → complex shared-component migrations, deferred.
-Cabinet features: CabinetShell, ListingsTab, ProfileTab → deferred.
-Other listings: ImageUpload, ListingCard, ListingFormShell → deferred.
-
----
-
-## Dropdown / Popover Portal Strategy Audit (2026-05-19)
-
-## Dropdown / Popover Portal Strategy Audit (2026-05-19)
-
-### Portal classification
-
-| Component | File | Portal strategy | Clipping-safe? |
-|---|---|---|---|
-| `DropdownMenu` | `src/components/ui/dropdown-menu.tsx` | Base UI `MenuPrimitive.Portal` → body | ✅ Always safe |
-| `Popover` | `src/components/ui/popover.tsx` | Base UI `PopoverPrimitive.Portal` → body | ✅ Always safe |
-| `Select` | `src/components/ui/select.tsx` | Base UI `SelectPrimitive.Portal` → body | ✅ Always safe |
-| `Sheet` | `src/components/ui/sheet.tsx` | Base UI dialog portal | ✅ Always safe |
-| `DatePicker` | `src/components/shared/DatePicker.tsx` | Uses `Popover` → portal | ✅ Always safe |
-| `Combobox` | `src/components/shared/Combobox.tsx` | Dual-mode: `portal={false}` = absolute (risks clipping), `portal={true}` = createPortal/fixed | ⚠️ Depends on `portal` prop |
-| `LocationCombobox` | `src/components/shared/LocationCombobox.tsx` | Dual-mode as of Task 93: `portal={false}` = absolute, `portal={true}` = createPortal/fixed | ⚠️ Depends on `portal` prop |
-| `YearCombobox` | `src/components/shared/YearCombobox.tsx` | Dual-mode as of Task 93: `portal={false}` = absolute, `portal={true}` = createPortal/fixed | ⚠️ Depends on `portal` prop |
-| `SettlementCombobox` (in ProfileTab) | `src/modules/cabinet/components/ProfileTab.tsx` | Always `createPortal` → body | ✅ Always safe |
-| `NotificationBell` dropdown | `src/modules/notifications/components/NotificationBell.tsx` | Custom absolute positioning | ⚠️ Risk if inside overflow container |
-
-### Fixed by Task 93
-
-| Location | Issue | Fix |
-|---|---|---|
-| `FiltersPanel.tsx` line 138 | `LocationCombobox` inside `overflow-y-auto` scroll container | Added `portal` prop to `LocationCombobox`; pass `portal={true}` at call site |
-| `FiltersPanel.tsx` lines 314–323 | `YearCombobox` ×2 inside `overflow-y-auto` scroll container | Added `portal` prop to `YearCombobox`; pass `portal={true}` at call sites |
-| `ListingsFilters.tsx` line 124 | `LocationCombobox` inside sidebar `overflow-y-auto` (via `ListingsShell`) | Pass `portal={true}` |
-| `ListingsFilters.tsx` lines 276–285 | `YearCombobox` ×2 inside sidebar `overflow-y-auto` | Pass `portal={true}` at both call sites |
-
-### Fixed by Task 89 (prior sprint)
-
-| Location | Issue | Fix |
-|---|---|---|
-| `AdminUserCreate.tsx` basic_info card | `Combobox` inside `overflow-hidden` card | Changed to `overflow-visible` |
-| `AdminUserCreate.tsx` location card | `LocationCombobox` inside `overflow-hidden` card | Changed to `overflow-visible` |
-| `AdminUserProfile.tsx` basic_info SectionCard | `Combobox`/`LocationCombobox` inside `overflow-hidden` SectionCard | Added `allowOverflow` prop |
-| `AdminUserProfile.tsx` account_status SectionCard | `Combobox` inside `overflow-hidden` SectionCard | Added `allowOverflow` prop |
-
-### Safe by design (no action needed)
-
-| Location | Reason |
-|---|---|
-| `HeroSearch` / `HeroSearchClient` | No scroll/overflow parent |
-| `AdminLocationsManager` | Already uses `portal={true}` on `Combobox` |
-| `StepLocation` / `ListingFormShell` | Form flows without scroll clipping parent |
-| `AdminUserProfile` sections with `allowOverflow=true` | SectionCard override renders `overflow-visible` |
-| All `DropdownMenu`, `Popover`, `Select` usages | Base UI portal — always body-rendered |
-
-### Remaining known risk (deferred)
-
-| Location | Risk | Notes |
-|---|---|---|
-| `NotificationBell` dropdown | Absolute positioned panel | Only used in Header which has no overflow parent — low priority |
+Last generated: 2026-05-28
 
 ## Governance Violations (require fix)
 
 | Component | File | Flags |
 |---|---|---|
 | `page` | src/app/admin/page.tsx | ARBITRARY_TW |
-| `layout` | src/app/layout.tsx | SUPPRESS_HW |
 | `loading` | src/app/[locale]/listings/[slug]/loading.tsx | ARBITRARY_TW |
-| `page` | src/app/[locale]/listings/[slug]/page.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `AdminCurrenciesManager` | src/components/admin/AdminCurrenciesManager.tsx | ARBITRARY_TW |
-| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `page` | src/app/[locale]/listings/[slug]/page.tsx | ARBITRARY_TW |
+| `AdminCompaniesManager` | src/components/admin/AdminCompaniesManager.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminCurrenciesManager` | src/components/admin/AdminCurrenciesManager.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminDashboardRecentListings` | src/components/admin/AdminDashboardRecentListings.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminEmailTemplatesManager` | src/components/admin/AdminEmailTemplatesManager.tsx | ARBITRARY_TW |
+| `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | ARBITRARY_TW |
+| `AdminFooterManager` | src/components/admin/AdminFooterManager.tsx | RAW_BUTTON |
+| `AdminInquiriesManager` | src/components/admin/AdminInquiriesManager.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `AdminLegalManager` | src/components/admin/AdminLegalManager.tsx | RAW_BUTTON, CUSTOM_OVERLAY, ARBITRARY_TW |
 | `AdminListingsTable` | src/components/admin/AdminListingsTable.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `AdminLocaleSwitcher` | src/components/admin/AdminLocaleSwitcher.tsx | ARBITRARY_TW |
-| `AdminLocationsManager` | src/components/admin/AdminLocationsManager.tsx | RAW_BUTTON, CUSTOM_OVERLAY, ARBITRARY_TW |
-| `AdminMobileHeader` | src/components/admin/AdminMobileHeader.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminLocationsManager` | src/components/admin/AdminLocationsManager.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminMobileHeader` | src/components/admin/AdminMobileHeader.tsx | ARBITRARY_TW |
+| `AdminPermissionsManager` | src/components/admin/AdminPermissionsManager.tsx | ARBITRARY_TW |
+| `AdminPopularLocationsManager` | src/components/admin/AdminPopularLocationsManager.tsx | RAW_BUTTON |
 | `AdminPropertyTypesManager` | src/components/admin/AdminPropertyTypesManager.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminReportsManager` | src/components/admin/AdminReportsManager.tsx | RAW_BUTTON |
 | `AdminSettings` | src/components/admin/AdminSettings.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `AdminSidebar` | src/components/admin/AdminSidebar.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `AdminSupportManager` | src/components/admin/AdminSupportManager.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `AdminUserAvatar` | src/components/admin/AdminUserAvatar.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `AdminUserProfile` | src/components/admin/AdminUserProfile.tsx | ARBITRARY_TW |
 | `AdminUsersTable` | src/components/admin/AdminUsersTable.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `Header` | src/components/layout/Header.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `MobileBottomNav` | src/components/layout/MobileBottomNav.tsx | ARBITRARY_TW |
+| `Footer` | src/components/layout/Footer.tsx | ARBITRARY_TW |
+| `Header` | src/components/layout/Header.tsx | ARBITRARY_TW |
+| `MobileBottomNav` | src/components/layout/MobileBottomNav.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `Combobox` | src/components/shared/Combobox.tsx | RAW_BUTTON |
 | `DatePicker` | src/components/shared/DatePicker.tsx | RAW_BUTTON, ARBITRARY_TW |
 | `FilterMultiToggle` | src/components/shared/FilterMultiToggle.tsx | ARBITRARY_TW |
-| `FiltersPanel` | src/components/shared/FiltersPanel.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `FiltersPanel` | src/components/shared/FiltersPanel.tsx | ARBITRARY_TW |
 | `FilterToggleGroup` | src/components/shared/FilterToggleGroup.tsx | ARBITRARY_TW |
 | `HeroSearch` | src/components/shared/HeroSearch.tsx | ARBITRARY_TW |
 | `HeroSearchClient` | src/components/shared/HeroSearchClient.tsx | ARBITRARY_TW |
 | `LocationCombobox` | src/components/shared/LocationCombobox.tsx | RAW_BUTTON |
 | `PerfDevOverlay` | src/components/shared/PerfDevOverlay.tsx | ARBITRARY_TW |
+| `PhoneField` | src/components/shared/PhoneField.tsx | ARBITRARY_TW |
 | `appImageConfig.ts` | src/components/ui/appImageConfig.ts | ARBITRARY_TW |
 | `badge` | src/components/ui/badge.tsx | ARBITRARY_TW |
 | `button` | src/components/ui/button.tsx | ARBITRARY_TW |
@@ -132,34 +53,30 @@ Other listings: ImageUpload, ListingCard, ListingFormShell → deferred.
 | `sheet` | src/components/ui/sheet.tsx | ARBITRARY_TW |
 | `switch` | src/components/ui/switch.tsx | ARBITRARY_TW |
 | `tabs` | src/components/ui/tabs.tsx | ARBITRARY_TW |
+| `AuthRedirect` | src/modules/auth/components/AuthRedirect.tsx | ARBITRARY_TW |
+| `AuthSheet` | src/modules/auth/components/AuthSheet.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `ResetPasswordClient` | src/modules/auth/components/ResetPasswordClient.tsx | ARBITRARY_TW |
 | `CabinetShell` | src/modules/cabinet/components/CabinetShell.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `ListingsTab` | src/modules/cabinet/components/ListingsTab.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `ListingsTab` | src/modules/cabinet/components/ListingsTab.tsx | RAW_BUTTON |
 | `ProfileTab` | src/modules/cabinet/components/ProfileTab.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `SavedSearchesTab` | src/modules/cabinet/components/SavedSearchesTab.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `ActiveFilterChips` | src/modules/listings/components/ActiveFilterChips.tsx | RAW_BUTTON |
-| `FavoriteButton` | src/modules/listings/components/FavoriteButton.tsx | RAW_BUTTON |
-| `FavoritesTypeFilter` | src/modules/listings/components/FavoritesTypeFilter.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `EnumSelectorField` | src/modules/listings/components/form/EnumSelectorField.tsx | RAW_BUTTON |
+| `SavedSearchesTab` | src/modules/cabinet/components/SavedSearchesTab.tsx | ARBITRARY_TW |
+| `ActiveFilterChips` | src/modules/listings/components/ActiveFilterChips.tsx | ARBITRARY_TW |
+| `FavoritesTypeFilter` | src/modules/listings/components/FavoritesTypeFilter.tsx | ARBITRARY_TW |
 | `NumInputField` | src/modules/listings/components/form/NumInputField.tsx | ARBITRARY_TW |
-| `RoomsSelectorField` | src/modules/listings/components/form/RoomsSelectorField.tsx | RAW_BUTTON |
 | `GalleryStaticFrame` | src/modules/listings/components/GalleryStaticFrame.tsx | ARBITRARY_TW |
 | `ImageUpload` | src/modules/listings/components/ImageUpload.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `ListingBackButton` | src/modules/listings/components/ListingBackButton.tsx | RAW_BUTTON |
 | `ListingCard` | src/modules/listings/components/ListingCard.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `ListingContact` | src/modules/listings/components/ListingContact.tsx | RAW_BUTTON |
-| `ListingDescriptionTranslator` | src/modules/listings/components/ListingDescriptionTranslator.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `ListingContact` | src/modules/listings/components/ListingContact.tsx | RAW_BUTTON, WIN_LOCATION |
 | `ListingFormShell` | src/modules/listings/components/ListingFormShell.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `ListingGallery` | src/modules/listings/components/ListingGallery.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `ListingsFilters` | src/modules/listings/components/ListingsFilters.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `ListingGallery` | src/modules/listings/components/ListingGallery.tsx | ARBITRARY_TW |
+| `ListingMobileCTA` | src/modules/listings/components/ListingMobileCTA.tsx | RAW_BUTTON, WIN_LOCATION |
+| `ListingsFilterBar` | src/modules/listings/components/ListingsFilterBar.tsx | ARBITRARY_TW |
+| `ListingsFilters` | src/modules/listings/components/ListingsFilters.tsx | ARBITRARY_TW |
 | `ListingsShell` | src/modules/listings/components/ListingsShell.tsx | WIN_LOCATION, ARBITRARY_TW |
 | `ListingsSortBar` | src/modules/listings/components/ListingsSortBar.tsx | ARBITRARY_TW |
-| `ListingsStatusTabs` | src/modules/listings/components/ListingsStatusTabs.tsx | RAW_BUTTON |
-| `SaveSearchButton` | src/modules/listings/components/SaveSearchButton.tsx | CUSTOM_OVERLAY |
-| `StepBasicInfo` | src/modules/listings/components/steps/StepBasicInfo.tsx | RAW_BUTTON |
-| `StepDetails` | src/modules/listings/components/steps/StepDetails.tsx | RAW_BUTTON |
-| `PopularLocations` | src/modules/locations/components/PopularLocations.tsx | ARBITRARY_TW |
-| `NotificationBell` | src/modules/notifications/components/NotificationBell.tsx | RAW_BUTTON, ARBITRARY_TW |
-| `NotificationCenter` | src/modules/notifications/components/NotificationCenter.tsx | RAW_BUTTON, ARBITRARY_TW |
+| `SaveToCollectionButton` | src/modules/listings/components/SaveToCollectionButton.tsx | RAW_BUTTON |
+| `NotificationBell` | src/modules/notifications/components/NotificationBell.tsx | ARBITRARY_TW |
+| `NotificationCenter` | src/modules/notifications/components/NotificationCenter.tsx | ARBITRARY_TW |
 | `NotificationItem` | src/modules/notifications/components/NotificationItem.tsx | ARBITRARY_TW |
 
 ## Localization Risk (useTranslations)
@@ -169,26 +86,39 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | Component | Type | Ukrainian risk level |
 |---|---|---|
 | `ActiveFilterChips` | listings-feature | MEDIUM |
+| `AdminCompaniesManager` | admin-shared | HIGH |
 | `AdminCurrenciesManager` | admin-shared | HIGH |
 | `AdminCurrencyTabs` | admin-shared | HIGH |
+| `AdminDashboardRecentListings` | admin-shared | HIGH |
+| `AdminEmailTemplatesManager` | admin-shared | HIGH |
 | `AdminExchangeProvidersManager` | admin-shared | HIGH |
+| `AdminFooterManager` | admin-shared | HIGH |
+| `AdminInquiriesManager` | admin-shared | HIGH |
 | `AdminLegalManager` | admin-shared | HIGH |
 | `AdminListingsTable` | admin-shared | HIGH |
 | `AdminLocaleSwitcher` | admin-shared | HIGH |
 | `AdminLocationsManager` | admin-shared | HIGH |
 | `AdminMobileHeader` | admin-shared | HIGH |
+| `AdminPermissionsManager` | admin-shared | HIGH |
+| `AdminPopularLocationsManager` | admin-shared | HIGH |
 | `AdminPropertyTypesManager` | admin-shared | HIGH |
+| `AdminReportsManager` | admin-shared | HIGH |
 | `AdminSettings` | admin-shared | HIGH |
 | `AdminSidebar` | admin-shared | HIGH |
+| `AdminSupportManager` | admin-shared | HIGH |
 | `AdminUserAvatar` | admin-shared | HIGH |
 | `AdminUserCreate` | admin-shared | HIGH |
 | `AdminUserProfile` | admin-shared | HIGH |
 | `AdminUsersTable` | admin-shared | HIGH |
 | `AreaPairField` | listings-feature | MEDIUM |
+| `AuthSheet` | auth-feature | MEDIUM |
 | `BuildingFloorsField` | listings-feature | MEDIUM |
 | `ButtonGroupField` | listings-feature | MEDIUM |
 | `CabinetShell` | cabinet-feature | MEDIUM |
+| `ClearRecentlyViewedButton` | listings-feature | MEDIUM |
+| `CollectionsSection` | listings-feature | MEDIUM |
 | `Combobox` | shared-ui | HIGH |
+| `ContactForm` | unknown | MEDIUM |
 | `DatePicker` | shared-ui | HIGH |
 | `EnumSelectorField` | listings-feature | MEDIUM |
 | `FavoriteButton` | listings-feature | MEDIUM |
@@ -203,29 +133,35 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `LatestListings` | listings-feature | MEDIUM |
 | `ListingCard` | listings-feature | MEDIUM |
 | `ListingContact` | listings-feature | MEDIUM |
-| `ListingDescriptionTranslator` | listings-feature | MEDIUM |
 | `ListingFormShell` | listings-feature | MEDIUM |
 | `ListingGallery` | listings-feature | MEDIUM |
+| `ListingMobileCTA` | listings-feature | MEDIUM |
+| `ListingReportDialog` | listings-feature | MEDIUM |
+| `ListingsFilterBar` | listings-feature | MEDIUM |
 | `ListingsFilters` | listings-feature | MEDIUM |
 | `ListingsPagination` | listings-feature | MEDIUM |
 | `ListingsShell` | listings-feature | MEDIUM |
 | `ListingsSortBar` | listings-feature | MEDIUM |
 | `ListingsStatusTabs` | listings-feature | MEDIUM |
 | `ListingsTab` | cabinet-feature | MEDIUM |
+| `LocaleSwitcher` | shared-ui | HIGH |
 | `LocationCombobox` | shared-ui | HIGH |
-| `LoginForm` | auth-feature | MEDIUM |
 | `MobileBottomNav` | layout | HIGH |
+| `MultiToggleField` | listings-feature | MEDIUM |
 | `NotificationBell` | notifications-feature | MEDIUM |
 | `NotificationCenter` | notifications-feature | MEDIUM |
 | `NotificationItem` | notifications-feature | MEDIUM |
 | `NumInputField` | listings-feature | MEDIUM |
-| `PopularLocations` | locations-feature | MEDIUM |
+| `PasswordInput` | canonical-primitive | MEDIUM |
+| `PasswordRequirementsHint` | canonical-primitive | MEDIUM |
 | `ProfileTab` | cabinet-feature | MEDIUM |
 | `PropertyTypeCombobox` | shared-ui | HIGH |
-| `RegisterForm` | auth-feature | MEDIUM |
+| `RecentlyViewedGrid` | listings-feature | MEDIUM |
+| `ResetPasswordClient` | auth-feature | MEDIUM |
 | `RoomsSelectorField` | listings-feature | MEDIUM |
 | `SavedSearchesTab` | cabinet-feature | MEDIUM |
 | `SaveSearchButton` | listings-feature | MEDIUM |
+| `SaveToCollectionButton` | listings-feature | MEDIUM |
 | `SimilarListings` | listings-feature | MEDIUM |
 | `StepBasicInfo` | listings-feature | MEDIUM |
 | `StepDetails` | listings-feature | MEDIUM |
@@ -242,6 +178,8 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `AreaPairField` | listings-feature | Translatable text — check 320px wrapping |
 | `BuildingFloorsField` | listings-feature | Translatable text — check 320px wrapping |
 | `ButtonGroupField` | listings-feature | Translatable text — check 320px wrapping |
+| `ClearRecentlyViewedButton` | listings-feature | Translatable text — check 320px wrapping |
+| `CollectionsSection` | listings-feature | Translatable text — check 320px wrapping |
 | `Combobox` | shared-ui | Translatable text — check 320px wrapping |
 | `DatePicker` | shared-ui | Translatable text — check 320px wrapping |
 | `EnumSelectorField` | listings-feature | Translatable text — check 320px wrapping |
@@ -257,23 +195,29 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `LatestListings` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingCard` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingContact` | listings-feature | Translatable text — check 320px wrapping |
-| `ListingDescriptionTranslator` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingFormShell` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingGallery` | listings-feature | Translatable text — check 320px wrapping |
+| `ListingMobileCTA` | listings-feature | Translatable text — check 320px wrapping |
+| `ListingReportDialog` | listings-feature | Translatable text — check 320px wrapping |
+| `ListingsFilterBar` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingsFilters` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingsPagination` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingsShell` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingsSortBar` | listings-feature | Translatable text — check 320px wrapping |
 | `ListingsStatusTabs` | listings-feature | Translatable text — check 320px wrapping |
+| `LocaleSwitcher` | shared-ui | Translatable text — check 320px wrapping |
 | `LocationCombobox` | shared-ui | Translatable text — check 320px wrapping |
 | `MobileBottomNav` | layout | Translatable text — check 320px wrapping |
+| `MultiToggleField` | listings-feature | Translatable text — check 320px wrapping |
 | `NotificationBell` | notifications-feature | Translatable text — check 320px wrapping |
 | `NotificationCenter` | notifications-feature | Translatable text — check 320px wrapping |
 | `NotificationItem` | notifications-feature | Translatable text — check 320px wrapping |
 | `NumInputField` | listings-feature | Translatable text — check 320px wrapping |
 | `PropertyTypeCombobox` | shared-ui | Translatable text — check 320px wrapping |
+| `RecentlyViewedGrid` | listings-feature | Translatable text — check 320px wrapping |
 | `RoomsSelectorField` | listings-feature | Translatable text — check 320px wrapping |
 | `SaveSearchButton` | listings-feature | Translatable text — check 320px wrapping |
+| `SaveToCollectionButton` | listings-feature | Translatable text — check 320px wrapping |
 | `SimilarListings` | listings-feature | Translatable text — check 320px wrapping |
 | `StepBasicInfo` | listings-feature | Translatable text — check 320px wrapping |
 | `StepDetails` | listings-feature | Translatable text — check 320px wrapping |
@@ -287,16 +231,19 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | Component | File | Issue |
 |---|---|---|
 | `page` | src/app/admin/page.tsx | Grid without 2xl step — verify column count at 2560px |
-| `page` | src/app/admin/support/page.tsx | Grid without 2xl step — verify column count at 2560px |
 | `loading` | src/app/[locale]/listings/[slug]/loading.tsx | Grid without 2xl step — verify column count at 2560px |
 | `page` | src/app/[locale]/listings/[slug]/page.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminCurrenciesManager` | src/components/admin/AdminCurrenciesManager.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminExchangeProvidersManager` | src/components/admin/AdminExchangeProvidersManager.tsx | Grid without 2xl step — verify column count at 2560px |
+| `AdminInquiriesManager` | src/components/admin/AdminInquiriesManager.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminLegalManager` | src/components/admin/AdminLegalManager.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminListingsTable` | src/components/admin/AdminListingsTable.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminLocationsManager` | src/components/admin/AdminLocationsManager.tsx | Grid without 2xl step — verify column count at 2560px |
+| `AdminPermissionsManager` | src/components/admin/AdminPermissionsManager.tsx | Grid without 2xl step — verify column count at 2560px |
+| `AdminSupportManager` | src/components/admin/AdminSupportManager.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminUserCreate` | src/components/admin/AdminUserCreate.tsx | Grid without 2xl step — verify column count at 2560px |
 | `AdminUserProfile` | src/components/admin/AdminUserProfile.tsx | Grid without 2xl step — verify column count at 2560px |
+| `Footer` | src/components/layout/Footer.tsx | Grid without 2xl step — verify column count at 2560px |
 | `DatePicker` | src/components/shared/DatePicker.tsx | Grid without 2xl step — verify column count at 2560px |
 | `FiltersPanel` | src/components/shared/FiltersPanel.tsx | Grid without 2xl step — verify column count at 2560px |
 | `alert` | src/components/ui/alert.tsx | Grid without 2xl step — verify column count at 2560px |
@@ -309,11 +256,12 @@ Components using `useTranslations` — require review at all 4 locales (sq, en, 
 | `ImageUpload` | src/modules/listings/components/ImageUpload.tsx | Grid without 2xl step — verify column count at 2560px |
 | `ListingGallery` | src/modules/listings/components/ListingGallery.tsx | Grid without 2xl step — verify column count at 2560px |
 | `ListingsFilters` | src/modules/listings/components/ListingsFilters.tsx | Grid without 2xl step — verify column count at 2560px |
+| `RecentlyViewedGrid` | src/modules/listings/components/RecentlyViewedGrid.tsx | Grid without 2xl step — verify column count at 2560px |
+| `RecentlyViewedSection` | src/modules/listings/components/RecentlyViewedSection.tsx | Grid without 2xl step — verify column count at 2560px |
 | `SimilarListings` | src/modules/listings/components/SimilarListings.tsx | Grid without 2xl step — verify column count at 2560px |
 | `StepBasicInfo` | src/modules/listings/components/steps/StepBasicInfo.tsx | Grid without 2xl step — verify column count at 2560px |
 | `StepDetails` | src/modules/listings/components/steps/StepDetails.tsx | Grid without 2xl step — verify column count at 2560px |
 | `StepLocation` | src/modules/listings/components/steps/StepLocation.tsx | Grid without 2xl step — verify column count at 2560px |
-| `PopularLocations` | src/modules/locations/components/PopularLocations.tsx | Grid without 2xl step — verify column count at 2560px |
 
 ## Tailwind Entropy Risk
 
@@ -321,20 +269,29 @@ Components with arbitrary Tailwind values `[value]`:
 
 | Component | Type | Arbitrary values detected |
 |---|---|---|
+| `ActiveFilterChips` | listings-feature | Static analysis detected `[value]` in className |
+| `AdminCompaniesManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminCurrenciesManager` | admin-shared | Static analysis detected `[value]` in className |
+| `AdminDashboardRecentListings` | admin-shared | Static analysis detected `[value]` in className |
+| `AdminEmailTemplatesManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminExchangeProvidersManager` | admin-shared | Static analysis detected `[value]` in className |
+| `AdminInquiriesManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminLegalManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminListingsTable` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminLocaleSwitcher` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminLocationsManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminMobileHeader` | admin-shared | Static analysis detected `[value]` in className |
+| `AdminPermissionsManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminPropertyTypesManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminSettings` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminSidebar` | admin-shared | Static analysis detected `[value]` in className |
+| `AdminSupportManager` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminUserAvatar` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminUserProfile` | admin-shared | Static analysis detected `[value]` in className |
 | `AdminUsersTable` | admin-shared | Static analysis detected `[value]` in className |
 | `appImageConfig.ts` | canonical-primitive | Static analysis detected `[value]` in className |
+| `AuthRedirect` | auth-feature | Static analysis detected `[value]` in className |
+| `AuthSheet` | auth-feature | Static analysis detected `[value]` in className |
 | `badge` | canonical-primitive | Static analysis detected `[value]` in className |
 | `button` | canonical-primitive | Static analysis detected `[value]` in className |
 | `CabinetShell` | cabinet-feature | Static analysis detected `[value]` in className |
@@ -345,19 +302,19 @@ Components with arbitrary Tailwind values `[value]`:
 | `FilterMultiToggle` | shared-ui | Static analysis detected `[value]` in className |
 | `FiltersPanel` | shared-ui | Static analysis detected `[value]` in className |
 | `FilterToggleGroup` | shared-ui | Static analysis detected `[value]` in className |
+| `Footer` | layout | Static analysis detected `[value]` in className |
 | `GalleryStaticFrame` | listings-feature | Static analysis detected `[value]` in className |
 | `Header` | layout | Static analysis detected `[value]` in className |
 | `HeroSearch` | shared-ui | Static analysis detected `[value]` in className |
 | `HeroSearchClient` | shared-ui | Static analysis detected `[value]` in className |
 | `ImageUpload` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingCard` | listings-feature | Static analysis detected `[value]` in className |
-| `ListingDescriptionTranslator` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingFormShell` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingGallery` | listings-feature | Static analysis detected `[value]` in className |
+| `ListingsFilterBar` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingsFilters` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingsShell` | listings-feature | Static analysis detected `[value]` in className |
 | `ListingsSortBar` | listings-feature | Static analysis detected `[value]` in className |
-| `ListingsTab` | cabinet-feature | Static analysis detected `[value]` in className |
 | `loading` | page | Static analysis detected `[value]` in className |
 | `MobileBottomNav` | layout | Static analysis detected `[value]` in className |
 | `navigation-menu` | canonical-primitive | Static analysis detected `[value]` in className |
@@ -368,8 +325,9 @@ Components with arbitrary Tailwind values `[value]`:
 | `page` | page | Static analysis detected `[value]` in className |
 | `page` | page | Static analysis detected `[value]` in className |
 | `PerfDevOverlay` | shared-ui | Static analysis detected `[value]` in className |
-| `PopularLocations` | locations-feature | Static analysis detected `[value]` in className |
+| `PhoneField` | shared-ui | Static analysis detected `[value]` in className |
 | `ProfileTab` | cabinet-feature | Static analysis detected `[value]` in className |
+| `ResetPasswordClient` | auth-feature | Static analysis detected `[value]` in className |
 | `SavedSearchesTab` | cabinet-feature | Static analysis detected `[value]` in className |
 | `scroll-area` | canonical-primitive | Static analysis detected `[value]` in className |
 | `sheet` | canonical-primitive | Static analysis detected `[value]` in className |
@@ -382,17 +340,26 @@ Shared/layout/admin components without stories — highest visibility components
 
 | Component | Type | Priority |
 |---|---|---|
+| `AdminCompaniesManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminCurrenciesManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminCurrencyTabs` | admin-shared | HIGH — locale-aware, no story |
+| `AdminDashboardRecentListings` | admin-shared | HIGH — locale-aware, no story |
+| `AdminEmailTemplatesManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminExchangeProvidersManager` | admin-shared | HIGH — locale-aware, no story |
+| `AdminFooterManager` | admin-shared | HIGH — locale-aware, no story |
+| `AdminInquiriesManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminLegalManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminListingsTable` | admin-shared | HIGH — locale-aware, no story |
 | `AdminLocaleSwitcher` | admin-shared | HIGH — locale-aware, no story |
 | `AdminLocationsManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminMobileHeader` | admin-shared | HIGH — locale-aware, no story |
+| `AdminPermissionsManager` | admin-shared | HIGH — locale-aware, no story |
+| `AdminPopularLocationsManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminPropertyTypesManager` | admin-shared | HIGH — locale-aware, no story |
+| `AdminReportsManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminSettings` | admin-shared | HIGH — locale-aware, no story |
 | `AdminSidebar` | admin-shared | HIGH — locale-aware, no story |
+| `AdminSupportManager` | admin-shared | HIGH — locale-aware, no story |
 | `AdminUserAvatar` | admin-shared | HIGH — locale-aware, no story |
 | `AdminUserCreate` | admin-shared | HIGH — locale-aware, no story |
 | `AdminUserProfile` | admin-shared | HIGH — locale-aware, no story |
@@ -402,6 +369,7 @@ Shared/layout/admin components without stories — highest visibility components
 | `FiltersPanel` | shared-ui | HIGH — locale-aware, no story |
 | `Header` | layout | HIGH — locale-aware, no story |
 | `HeroSearch` | shared-ui | HIGH — locale-aware, no story |
+| `LocaleSwitcher` | shared-ui | HIGH — locale-aware, no story |
 | `LocationCombobox` | shared-ui | HIGH — locale-aware, no story |
 | `MobileBottomNav` | layout | HIGH — locale-aware, no story |
 | `PropertyTypeCombobox` | shared-ui | HIGH — locale-aware, no story |

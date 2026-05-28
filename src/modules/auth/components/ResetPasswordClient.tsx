@@ -6,9 +6,10 @@ import { useRouter } from 'next/navigation'
 import { Loader2, CheckCircle2, XCircle } from 'lucide-react'
 import { getSession, updatePassword, signOut } from '@/lib/auth/browser'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { PasswordInput, type PasswordInputState } from '@/components/ui/PasswordInput'
+import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
 import { logPasswordRecoveryCompletion } from '@/modules/auth/actions/recovery'
 
 type PageState = 'loading' | 'form' | 'success' | 'expired'
@@ -24,9 +25,12 @@ export function ResetPasswordClient({ locale }: ResetPasswordClientProps) {
   const [userId, setUserId] = useState<string | null>(null)
   const [userEmail, setUserEmail] = useState<string | null>(null)
   const [password, setPassword] = useState('')
-  const [confirm, setConfirm] = useState('')
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+
+  const hasInput = password.length > 0
+  const allMet = allPasswordRulesMet(password)
+  const passwordInputState: PasswordInputState = hasInput ? (allMet ? 'success' : 'error') : 'idle'
 
   useEffect(() => {
     void (async () => {
@@ -44,15 +48,6 @@ export function ResetPasswordClient({ locale }: ResetPasswordClientProps) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setErrorKey(null)
-
-    if (password.length < 8) {
-      setErrorKey('reset_password_error_weak')
-      return
-    }
-    if (password !== confirm) {
-      setErrorKey('reset_password_error_mismatch')
-      return
-    }
 
     setSubmitting(true)
     const { error } = await updatePassword(password)
@@ -138,32 +133,19 @@ export function ResetPasswordClient({ locale }: ResetPasswordClientProps) {
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="new-password">{t('reset_password_new_label')}</Label>
-            <Input
+            <PasswordInput
               id="new-password"
-              type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              minLength={8}
               autoComplete="new-password"
               autoFocus
+              inputState={passwordInputState}
             />
+            <PasswordRequirementsHint value={password} />
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="confirm-password">{t('reset_password_confirm_label')}</Label>
-            <Input
-              id="confirm-password"
-              type="password"
-              value={confirm}
-              onChange={e => setConfirm(e.target.value)}
-              required
-              minLength={8}
-              autoComplete="new-password"
-            />
-          </div>
-
-          <Button type="submit" size="xl" className="w-full mt-2" disabled={submitting}>
+          <Button type="submit" size="xl" className="w-full mt-2" disabled={submitting || !allMet}>
             {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : t('reset_password_submit')}
           </Button>
         </form>

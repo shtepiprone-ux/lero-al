@@ -1,5 +1,5 @@
 # Component Coverage Matrix — Lero.al
-Last generated: 2026-05-18
+Last generated: 2026-05-28
 
 ## Storybook Coverage
 
@@ -21,6 +21,8 @@ Last generated: 2026-05-18
 | `label` | ❌ | — |
 | `navigation-menu` | ❌ | — |
 | `pagination` | ❌ | — |
+| `PasswordInput` | ✅ | src/components/ui/PasswordInput.stories.tsx |
+| `PasswordRequirementsHint` | ✅ | src/components/ui/PasswordRequirementsHint.stories.tsx |
 | `popover` | ❌ | — |
 | `progress` | ❌ | — |
 | `radio-group` | ❌ | — |
@@ -94,20 +96,31 @@ Components without Storybook stories (future coverage targets):
 
 | Component | Type | Risk |
 |---|---|---|
+| `AdminCompaniesManager` | admin-shared | Locale-sensitive |
 | `AdminCurrenciesManager` | admin-shared | Locale-sensitive |
 | `AdminCurrencyTabs` | admin-shared | Locale-sensitive |
+| `AdminDashboardRecentListings` | admin-shared | Locale-sensitive |
+| `AdminEditLayout` | admin-shared | — |
+| `AdminEmailTemplatesManager` | admin-shared | Locale-sensitive |
 | `AdminExchangeProvidersManager` | admin-shared | Locale-sensitive |
+| `AdminFooterManager` | admin-shared | Locale-sensitive |
+| `AdminInput` | admin-shared | — |
+| `AdminInquiriesManager` | admin-shared | Locale-sensitive |
 | `AdminLegalManager` | admin-shared | Locale-sensitive |
 | `AdminListingsTable` | admin-shared | Locale-sensitive |
 | `AdminLocaleSwitcher` | admin-shared | Locale-sensitive |
 | `AdminLocationsManager` | admin-shared | Locale-sensitive |
 | `AdminMobileHeader` | admin-shared | Locale-sensitive |
 | `AdminPageHeader` | admin-shared | — |
+| `AdminPermissionsManager` | admin-shared | Locale-sensitive |
+| `AdminPopularLocationsManager` | admin-shared | Locale-sensitive |
 | `AdminPropertyTypesManager` | admin-shared | Locale-sensitive |
+| `AdminReportsManager` | admin-shared | Locale-sensitive |
 | `AdminSearchInput` | admin-shared | — |
 | `AdminSettings` | admin-shared | Locale-sensitive |
 | `AdminShell` | admin-shared | — |
 | `AdminSidebar` | admin-shared | Locale-sensitive |
+| `AdminSupportManager` | admin-shared | Locale-sensitive |
 | `AdminUserAvatar` | admin-shared | Locale-sensitive |
 | `AdminUserCreate` | admin-shared | Locale-sensitive |
 | `AdminUserProfile` | admin-shared | Locale-sensitive |
@@ -120,16 +133,18 @@ Components without Storybook stories (future coverage targets):
 | `FilterRoomsRow` | shared-ui | — |
 | `FiltersPanel` | shared-ui | Locale-sensitive |
 | `FilterToggleGroup` | shared-ui | — |
+| `Footer` | layout | Grid layout |
 | `Header` | layout | Locale-sensitive |
 | `HeroSearch` | shared-ui | Locale-sensitive |
 | `HeroSearchClient` | shared-ui | — |
-| `LocaleSwitcher` | shared-ui | — |
+| `LocaleSwitcher` | shared-ui | Locale-sensitive |
 | `LocationCombobox` | shared-ui | Locale-sensitive |
 | `Map` | shared-ui | — |
 | `MapWrapper` | shared-ui | — |
 | `MobileBottomNav` | layout | Locale-sensitive |
 | `PerfDevOverlay` | shared-ui | — |
 | `PerformanceStoreInit` | shared-ui | — |
+| `PhoneField` | shared-ui | — |
 | `PropertyTypeCombobox` | shared-ui | Locale-sensitive |
 | `RelativeTime` | shared-ui | — |
 | `WebVitalsReporter` | shared-ui | — |

@@ -17,6 +17,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PasswordInput, type PasswordInputState } from '@/components/ui/PasswordInput'
+import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
@@ -120,9 +122,8 @@ function LoginView({
             {t('forgot_password')}
           </button>
         </div>
-        <Input
+        <PasswordInput
           id="login-password"
-          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
           required
@@ -529,13 +530,17 @@ function RegisterView({
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
+  const hasPasswordInput = password.length > 0
+  const allPasswordMet = allPasswordRulesMet(password)
+  const passwordInputState: PasswordInputState = hasPasswordInput ? (allPasswordMet ? 'success' : 'error') : 'idle'
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setErrorKey(null)
 
     if (!name.trim()) { setErrorKey('error_name_required'); return }
     if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
-    if (password.length < 6) { setErrorKey('error_weak_password'); return }
+    if (!allPasswordRulesMet(password)) { setErrorKey('error_weak_password'); return }
 
     // Country-aware phone validation (only if a national number was entered)
     let phoneE164: string | undefined
@@ -643,18 +648,18 @@ function RegisterView({
 
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="reg-password">{t('password')}</Label>
-        <Input
+        <PasswordInput
           id="reg-password"
-          type="password"
           value={password}
           onChange={e => { const v = e.target.value; setPassword(v); onSharedChange?.({ name, email, password: v, phone }) }}
           required
-          minLength={6}
           autoComplete="new-password"
+          inputState={passwordInputState}
         />
+        <PasswordRequirementsHint value={password} />
       </div>
 
-      <Button type="submit" size="xl" className="w-full" disabled={loading}>
+      <Button type="submit" size="xl" className="w-full" disabled={loading || !allPasswordMet}>
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('register')}
       </Button>
 

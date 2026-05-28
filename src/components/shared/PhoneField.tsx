@@ -99,7 +99,7 @@ export function PhoneField({
           type="tel"
           value={national}
           onChange={handleNationalChange}
-          placeholder="69 123 456"
+          placeholder="691 234 567"
           autoComplete="tel"
           className={inputClass}
         />

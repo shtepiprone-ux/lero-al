@@ -18,6 +18,15 @@ Create Supabase views for complex joins:
 - `conversations_with_preview` — conversation + last message + listing
 - `users_with_stats` — user + listing count + average rating
 
+All new views in `public` schema MUST be created with `security_invoker = on` and an
+explicit column list (never `select *`). `SECURITY DEFINER` is forbidden by default —
+see `rls-rules.md` → "Security Definer Views (FORBIDDEN by default)" for the full rule,
+the public-facade exception, and the migration template.
+
+Every new table in `public` schema MUST include explicit Data API GRANTs in the same
+migration that creates it — see `rls-rules.md` → "Public Schema GRANT Discipline (Supabase
+Data API)" for the template and per-role rules.
+
 ---
 
 ## Naming Conventions in Database Queries

@@ -1,0 +1,119 @@
+# Sprint 17 — Critical UX Bugfixes + Auth Session Hardening
+
+> **Filed by:** Orchestrator (Opus 4.7) on 2026-05-28 — after owner-uploaded
+> issues batch (11 new tasks total; 5 Sonnet-ready Sprint 17 + 6 Opus
+> meta-tasks queued for subsequent sessions as Tasks 282-287).
+
+## Sprint goal
+
+Land the **5 highest-priority Sonnet-executable items** from the
+2026-05-28 owner issues batch:
+
+- restore the missing WhatsApp CTA on listing detail and lay the
+  click-event analytics foundation (no full analytics page yet);
+- fix the broken favorite heart state sync that ships the wrong
+  selected/unselected state across listing cards;
+- ship the premium-only filter so the Home "Premium → View all" CTA
+  stops duplicating the Latest CTA;
+- unify every phone country-code combobox in the project into one
+  global European selector — this is also the **precondition for
+  Task 282 (Design System Lockdown)** because phone selectors are the
+  most-violating local-copy surface;
+- harden the auth session persistence model so clearing only
+  `localStorage`/cache does not log the user out (only full Site Data +
+  Cookies deletion may — and even then with a clean re-auth UX).
+
+The remaining 6 meta-tasks from the 2026-05-28 batch (Design System
+Lockdown, Governance burn-down, Admin surfaces unification + Support
+page, Listing analytics spec, Favorites collections UX spec, Profile
+email promotion) are filed in `docs/backlog.md` as Tasks **282-287** and
+will be picked up in subsequent orchestrator sessions in that priority
+order.
+
+| # | Task | Theme | Priority |
+|---|---|---|---|
+| **277** | WhatsApp CTA restore + click-event foundation (`listing_contact_events`) | UX bugfix + analytics groundwork | high |
+| **278** | Premium home CTA → `/listings?premium=true` + Listings premium-only filter | feature | medium |
+| **279** | Fix favorite heart state sync across listing cards (collection-aware) | UX bugfix | high |
+| **280** | Unify phone country-code combobox into one global European selector | refactor (precondition for 282) | high |
+| **281** | Auth session persistence hardening (Site Data cleanup recovery) | security + UX | high |
+
+## Run order
+
+Independent tasks can run in parallel; the run order below maximizes
+review-friendliness and avoids surface conflicts:
+
+1. **Task 281 (Auth session persistence)** — largest scope and highest
+   security risk; start it first so the diff is reviewable in isolation
+   without other auth-adjacent edits.
+2. **Task 280 (Phone combobox)** — independent surface; clears the path
+   for Task 282 (Design System Lockdown).
+3. **Task 277 (WhatsApp CTA)** — listing-detail surface; pairs with the
+   analytics foundation table migration.
+4. **Task 279 (Favorite heart sync)** — listing-card surface; orthogonal
+   to 277.
+5. **Task 278 (Premium CTA)** — smallest scope; can run last or in
+   parallel with 277/279.
+
+## Owner actions (per task, after Sonnet ships)
+
+| Task | Owner action |
+|---|---|
+| 277 | Apply migration for `listing_contact_events` table + RLS (SQL emitted by Sonnet); verify via `npm run check:schema-drift`. |
+| 278 | None — pure code change. |
+| 279 | None unless RLS audit surfaces a problem (in which case Sonnet emits SQL). |
+| 280 | None — pure code change. |
+| 281 | Verify QA scenarios A-G on staging (covered in Task 281 kickoff). If `@supabase/ssr` is newly added, verify Vercel/Cloudflare env vars. |
+
+## Queued for subsequent orchestrator sessions (NOT Sprint 17)
+
+Filed as backlog entries with task numbers but **NOT yet kickoff-ed**.
+Each requires Opus orchestration work in a dedicated session before any
+Sonnet implementation can begin:
+
+| # | Task | Type | Priority | Source |
+|---|---|---|---|---|
+| **282** | **Design System Lockdown** — stop local one-off UI styles across site/admin (canonical control contract + scanner extension) | Opus → produces large Sonnet kickoff | **critical** | issues.txt 2026-05-28 §11 |
+| **283** | Governance debt burn-down — HIGH entropy (button-like styling) + MEDIUM (`py-10`) + LOW (47 arbitrary font-sizes) | Opus → produces Sonnet kickoff | high | issues.txt 2026-05-28 §9 |
+| **284** | Admin surfaces unification + Support page ambiguity resolution | Opus → produces Sonnet kickoff | high | issues.txt 2026-05-28 §4 |
+| **285** | Listing analytics page + admin metric controls — full product/architecture spec | Opus → produces ~5 follow-up Sonnet tasks | high | issues.txt 2026-05-28 §2 |
+| **286** | Favorites collections UX revamp — MVP + plan-aware roadmap (Free/Pro/Expert) | Opus → produces MVP Sonnet task + paid-plan epic | high | issues.txt 2026-05-28 §3 |
+| **287** | Promote user email into profile identity card | Opus → produces Sonnet kickoff | medium | issues.txt 2026-05-28 §10 |
+
+Recommended Sprint 18 thematic focus: **Design System** — pull Task 282
+(Design System Lockdown) + Task 283 (Governance burn-down) together;
+they reinforce each other and clear the design-system debt the owner
+explicitly flagged as critical.
+
+## Governance gates (apply to every kickoff in this sprint)
+
+Same standing contract as Sprint 16 — restated for emphasis:
+
+- **`docs/agent-contract.md` clause 6a** (Positive + Negative flow gate, Task 255 rule).
+- **`docs/agent-contract.md` clause 10** (Files Changed table in session log; orchestrator emits commit commands per Task 264).
+- **Note 14** (Global Change Verification — applies especially to Tasks 280 and 281 which touch shared primitives).
+- **Note 18** (Pre-Completion Self-Validation — `tsc=0`, AC-by-AC audit table, runtime walk at `uk` 320px, scope=clean).
+- **Note 19** (UX Flow Preservation).
+- **Note 20** (Existing-Control Preservation — particularly relevant for Task 277 which adds a control to a card with several existing controls).
+- **Note 23** (Edit-Flow Preservation — relevant for Task 281's auth flows + Task 280's profile/admin phone fields).
+
+## Sprint exit criteria
+
+- 5/5 tasks shipped + orchestrator-approved on diff.
+- `listing_contact_events` migration applied (Task 277) + drift check clean.
+- Premium filter URL-synced and clearable (Task 278).
+- Favorite heart state correct on all 4 surfaces (Task 279).
+- Zero local phone country-code combobox implementations remaining (Task 280).
+- `localStorage`-only auth dependency removed; valid-cookie refresh keeps user logged in; full Site Data deletion produces clean re-auth UX (Task 281).
+- `docs/backlog.md` updated with closure rows for 277-281 + Sprint 17 marked CLOSED ✅.
+- Sprint 18 candidates (282-287) re-prioritized based on Sprint 17 learnings.
+
+## File index
+
+- Kickoffs (one file per task):
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_277.md` — WhatsApp CTA
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_278.md` — Premium CTA
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_279.md` — Favorite heart sync
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_280.md` — Phone combobox
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_281.md` — Auth session persistence
+- Source issues file: `uploads/issues.txt` (owner-uploaded 2026-05-28, 4600 lines, 11 tasks; 5 sprint-bound + 6 queued).

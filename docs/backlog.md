@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-28 — Task 266 (T.8) orchestrator decision recorded: picked **Strategy A — database view + narrower RLS**, hardened (owner + Opus agreed). Task 266 kickoff updated in-place with full implementation spec — Sonnet executes without further STOP&ASK on strategy. Key design: (1) `public.public_user_profiles` view exposes ONLY safe columns + `has_phone`/`has_whatsapp` booleans (NEVER email/phone/whatsapp digits); (2) `USING (true)` on `public.users` DROPPED → `users_self_read` (`auth.uid() = id`); (3) RPC `get_listing_owner_contact(listing_id)` keyed by LISTING — can't be exploited as "give me arbitrary user's phone"; SECURITY DEFINER + explicit `search_path` + listing-status filter + REVOKE/GRANT; (4) UX trade-off: WhatsApp/Call buttons render on booleans, actual digits fetched on click via RPC roundtrip. Supabase `security_invoker` view-security caveat documented. Task scheduled for Sprint 15.**
+**2026-05-28 — Sprint 15 PLANNED (Opus 4.7): 8 tasks (247/267/233/232/229/230/241/249) — owner-action-first order so EE.1 (footer admin) emits SQL early for parallel owner work. Run order: **247 (EE.1 footer admin) → 267 (phone tests 9-digit) → 233 (W.6 vertical gap) → 232 (W.5 toolbar overflow) → 229 (W.2 single global reset) → 230 (W.3 area_asc sort) → 241 (AA.1 currency → profile) → 249 (FF.2 toast audit v2)**. All 8 kickoffs include Positive/Negative flow (clause 6a) + Files Changed table requirement (clause 10 / Task 264). New follow-up: **Task 267** (phone test coverage — 9-digit cases in `normalizeNational`; follow-up from owner's question after Task 244). Files: [Sprint_15_…](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md) + [Sprint_15_kickoff_prompts.md](../tasks/Sprints/Sprint_15_kickoff_prompts.md). **Task 266 APPROVED** on diff: Sonnet pre-flight audit caught `permissions.ts:67` regression (admin-client fix); `public_user_profiles` view + `users_self_read` RLS + `get_listing_owner_contact` RPC; click-to-fetch UX; 29 tables / 272 cols; 0 follow-ups.**
 
 **2026-05-28 — Task 265 (X.4) ✅ + Sprint 14 CLOSED (8/8). Task 265: `search_vector: unknown | null` added to `Listing`; drift SQL → 28 tables / 263 cols; tsc=0. Sprint 14 batch 1 (250/262/263 — RBAC + market_type + RLS) + batch 2 (251 Albanian email / 252 sales-inbox split / 244 phone 9-digit / 242 report-button wired / 248 header-reactivity via AuthController.refresh) — all 8 APPROVED on diff against Task 255 (Positive+Negative flow) + Task 264 (Files Changed table) gates. Followups filed: 265 (closed today) + 266 (decisioned today).**
 
@@ -15,7 +15,7 @@
 
 | Item | Owner | Notes |
 |------|-------|-------|
-| ✅ Schema-drift PASS confirmed 2026-05-28 — 0 rows in both result sets after Task 265 (`search_vector`) + hotfix `saved_searches.notify_frequency` column added (`text NOT NULL DEFAULT 'daily' CHECK IN instant/daily/weekly`). | Owner | Done |
+| ✅ Schema-drift PASS confirmed 2026-05-28 — 0 rows after Task 265 + 266 + hotfix `notify_frequency`. 29 tables / 272 cols tracked. Final state: 0 drift items. | Owner | Done |
 
 **✅ Done (recent owner actions):**
 - 2026-05-28 — Hotfix: `ALTER TABLE saved_searches ADD COLUMN IF NOT EXISTS notify_frequency text NOT NULL DEFAULT 'daily' CHECK (...)` applied; `npm run check:schema-drift` → 0 rows confirmed
@@ -28,7 +28,7 @@
 
 ## Next Immediate Tasks
 
-**Last task number: 266. Next: 267.** **Sprint 14 CLOSED ✅** — all 8 tasks shipped (250, 262, 263, 251, 252, 244, 242, 248). **Sprint 15 (next)** absorbs the 2 follow-ups filed today (**265** `listings.search_vector` drift; **266** narrow `users` RLS — privacy follow-up to Task 263) + deferred polish: W.2–W.6 / Y.2-Y.3 / Z.1 / AA.1 / BB.2 / CC.2 / DD.1 / EE.1 / FF.2. Every kickoff continues to follow Canonical Task Template + Notes 18/19/20/21/22/23 + **Positive+Negative flow (clause 6a) + Files Changed table (clause 10 / Task 264)**.
+**Last task number: 267. Next: 268.** **Sprint 14 + follow-ups CLOSED ✅** (250, 262, 263, 251, 252, 244, 242, 248, 265, 266 — all approved on diff). **Sprint 15 ACTIVE** — 8 tasks queued in owner-action-first order: **247 (EE.1 footer admin) → 267 (phone tests) → 233 (W.6) → 232 (W.5) → 229 (W.2) → 230 (W.3) → 241 (AA.1) → 249 (FF.2)**. Plan: [`Sprint_15_…`](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md). Kickoffs: [`Sprint_15_kickoff_prompts.md`](../tasks/Sprints/Sprint_15_kickoff_prompts.md). **Sprint 16 (next)** absorbs the large/deferred items: W.4 (canonical Combobox migration), Z.1 (modal global refactor), CC.2 (multi-lang search), BB.2 (listing inquiries message flow), Y.2-Y.3 (listing form lifecycle UX), DD.1 (admin audit hygiene). Every kickoff continues to follow Canonical Task Template + Notes 18/19/20/21/22/23 + **Positive+Negative flow (clause 6a) + Files Changed table (clause 10 / Task 264)**.
 
 ## Active product backlog — Epics M–V (closed) + W–FF (open, from `issues.txt` 2026-05-25)
 
@@ -60,6 +60,7 @@
 | **Sprint 12 — Critical Bug Slice (2026-05-25)** | 228, 234–236, 239, 242, 244, 248, **250** | issues.txt 2026-05-25 first slice | [`Sprint_12_…`](../tasks/Sprints/Sprint_12_—_Critical_Bug_Slice_from_issues_2026-05-25.md) | [`Sprint_12_kickoff_prompts.md`](../tasks/Sprints/Sprint_12_kickoff_prompts.md) + [`…_Task_250.md`](../tasks/Epics/Epic_R_kickoff_prompt_Task_250.md) |
 | **Sprint 13 — Critical Bugs (owner 2026-05-27)** | 255–261 | Owner verbal report 2026-05-27 (7 production bugs) | [`Sprint_13_…`](../tasks/Sprints/Sprint_13_—_Critical_Bugs_from_owner_2026-05-27.md) | [`Sprint_13_kickoff_prompts.md`](../tasks/Sprints/Sprint_13_kickoff_prompts.md) |
 | **Sprint 14 ✅ — Critical Follow-ups + Email Policy (owner 2026-05-27)** | 250, 251, 252, 262, 263, 244, 242, 248 | Sprint 12 leftovers (242/244/248/250) + GG.1 email policy (251) + V.3 sales inbox (252) + Task 234 follow-up (262) + Task 258 follow-up (263) | [`Sprint_14_…`](../tasks/Sprints/Sprint_14_—_Critical_Followups_and_Email_Policy.md) | [`Sprint_14_kickoff_prompts.md`](../tasks/Sprints/Sprint_14_kickoff_prompts.md) |
+| **Sprint 15 — Deferred Polish + Footer Admin (owner 2026-05-28)** | 247, 267, 233, 232, 229, 230, 241, 249 | Deferred polish from Sprints 12-14 (W.2/W.3/W.5/W.6 + AA.1 + EE.1 + FF.2) + new follow-up 267 (phone tests from Task 244) | [`Sprint_15_…`](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md) | [`Sprint_15_kickoff_prompts.md`](../tasks/Sprints/Sprint_15_kickoff_prompts.md) |
 
 > **2026-05-25 rule additions** codified into `/docs`: **Note 18** (Pre-Completion Self-Validation — `ai-behavior.md`), **Note 19** (UX Flow Preservation — `ai-behavior.md`), **Note 20** (Existing-Control Preservation — `ai-behavior.md`); orchestrator hard contract + review checklist updated in `orchestrator-role.md`. These are non-optional acceptance gates on every task from 228 onward.
 >
@@ -95,6 +96,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-28 | Task 266 — T.8 users RLS narrowing: view `public_user_profiles` + `users_self_read` policy + `get_listing_owner_contact` RPC; listing-detail click-to-fetch; permissions.ts actor names fix; PublicUserProfile type; 29 tables/272 cols; contact_load_failed ×4; tsc=0 | Task 266 | [sessions/2026-05-28-task-266-t8-users-rls-narrowing.md](sessions/2026-05-28-task-266-t8-users-rls-narrowing.md) |
 | 2026-05-28 | Task 265 — X.4 search_vector drift: `search_vector: unknown | null` added to Listing; mjs comment updated; SQL regenerated: 28 tables/263 cols; tsc=0; grep clean | Task 265 | [sessions/2026-05-28-task-265-x4-search-vector-drift.md](sessions/2026-05-28-task-265-x4-search-vector-drift.md) |
 | 2026-05-28 | Orchestration REVIEW (Opus 4.7): Sprint 14 batch 2 — 251/252/244/242/248 APPROVED. All 5 honored Task 264 contract (Files Changed tables present, no Sonnet-emitted commits). 0 follow-ups needed. Sprint 14 CLOSED ✅ (8/8 tasks shipped) | Review | [Sprint_14_kickoff_prompts.md](../tasks/Sprints/Sprint_14_kickoff_prompts.md) |
 | 2026-05-28 | Task 248 — FF.1 header reactivity: `AuthController.refresh()` added; `refreshUser` in AuthContext; ProfileTab calls it after save; tsc=0 | Task 248 | [sessions/2026-05-28-task-248-ff1-header-reactivity.md](sessions/2026-05-28-task-248-ff1-header-reactivity.md) |

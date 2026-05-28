@@ -4,6 +4,7 @@ import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff } from 'lucide-react'
+import { toast } from 'sonner'
 import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
@@ -37,13 +38,16 @@ function PageModal({ page, onClose, onDone }: {
       content: { body: body.trim() },
       is_published: published,
     }
-    if (page) {
-      await updatePage(page.id, data)
-    } else {
-      await createPage(data)
+    try {
+      if (page) await updatePage(page.id, data)
+      else await createPage(data)
+      toast.success(t('save_success'))
+      onDone()
+    } catch {
+      toast.error(t('save_error'))
+    } finally {
+      setSaving(false)
     }
-    setSaving(false)
-    onDone()
   }
 
   return (
@@ -114,9 +118,15 @@ export function AdminLegalManager({ pages: init }: Props) {
     if (!confirm(t('delete_confirm'))) return
     setDeletingId(id)
     startTransition(async () => {
-      await deletePage(id)
-      setItems(prev => prev.filter(p => p.id !== id))
-      setDeletingId(null)
+      try {
+        await deletePage(id)
+        setItems(prev => prev.filter(p => p.id !== id))
+        toast.success(t('delete_success'))
+      } catch {
+        toast.error(t('delete_error'))
+      } finally {
+        setDeletingId(null)
+      }
     })
   }
 

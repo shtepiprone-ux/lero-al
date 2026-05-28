@@ -83,15 +83,15 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
     local, update,
     handlePropertyTypeChange, handleApply, handleReset,
     activeCount, cityRegionLocs,
-    currency, shows, floorFilterMin,
-    today, rates, currencies, propertyTypes,
+    shows, floorFilterMin,
+    today, propertyTypes,
   } = useHomepageFilters({ values, onChange, onApply, onClose, locations })
 
   // LOW-tier: defer mounting inner content to idle time — reduces main-thread work during
   // initial page load. forceNow=open ensures content is ready the instant the user opens.
   const tier = usePerformanceTier()
   const contentReady = useIdleMount(tier === 'low', open)
-  const priceLabel = `${t('price_range')} (${currency})`
+  const priceLabel = t('price_range')
 
   // Portal to document.body so the panel escapes any stacking-context ancestor
   // (e.g. the hero section's `relative z-10` container on the homepage).
@@ -212,15 +212,6 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {/* Price */}
             <div className="px-5 py-5">
               <SectionHeader>{priceLabel}</SectionHeader>
-              <Combobox
-                options={currencies.filter(c => c.is_active).map(c => ({ value: c.code, label: c.code }))}
-                value={currency}
-                onChange={code => update({ currency: code })}
-                variant="button"
-                size="sm"
-                className="mb-3"
-                portal
-              />
               <FilterRangeInputs
                 minValue={local.price_min?.toString() ?? ''}
                 maxValue={local.price_max?.toString() ?? ''}
@@ -229,12 +220,6 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                 minPlaceholder={t('min')}
                 maxPlaceholder={t('max')}
               />
-              {currency !== 'ALL' && rates?.[currency] != null && (
-                <p className="text-xs text-muted-foreground mt-2">
-                  {t('exchange_rate')}:{' '}
-                  1 {currency} ≈ {rates[currency].toFixed(2)} ALL
-                </p>
-              )}
             </div>
 
             {/* Area — area_range already includes "(m²)" in translation */}

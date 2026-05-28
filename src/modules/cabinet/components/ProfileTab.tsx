@@ -320,7 +320,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
       </div>
 
       {/* ── Currency preference ────────────────────────────────────────────── */}
-      <div className="bg-card rounded-2xl border shadow-sm p-6">
+      <div className="bg-card rounded-2xl border shadow-sm p-6 flex flex-col gap-3">
         <CurrencySelector
           value={currency}
           onChange={setCurrency}
@@ -332,6 +332,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
           }}
           fieldLabel={t('preferred_currency_label')}
         />
+        <p className="text-xs text-muted-foreground">{t('currency_rate_disclaimer')}</p>
       </div>
 
       {/* ── Email change ───────────────────────────────────────────────────── */}

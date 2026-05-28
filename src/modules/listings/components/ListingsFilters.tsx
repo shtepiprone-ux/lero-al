@@ -56,7 +56,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
     shows, floorFilterMin,
     currency, activeCount,
     selectedRooms, selectedLayoutFeatures, selectedPurchaseConditions,
-    today, rate, currencies, propertyTypes,
+    today, rate, propertyTypes,
   } = useListingsUrlFilters()
 
   const priceLabel = `${tc('price_range')} (${currency})`
@@ -170,18 +170,6 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Price */}
         <AccordionSection title={priceLabel} open={sections.price} onToggle={() => toggle('price')}>
-          <Combobox
-            options={currencies.filter(c => c.is_active).map(c => ({ value: c.code, label: c.code }))}
-            value={currency}
-            onChange={code => {
-              const cur = currencies.find(c => c.code === code)
-              updateParams({ currency: cur?.is_default ? null : code })
-            }}
-            variant="button"
-            size="sm"
-            className="mb-2"
-            portal
-          />
           <FilterRangeInputs
             minValue={get('price_min')}
             maxValue={get('price_max')}

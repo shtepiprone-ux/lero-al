@@ -1,20 +1,26 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { useTranslations } from 'next-intl'
-import { Shield, ShieldCheck, ShieldX } from 'lucide-react'
+import { useTranslations, useFormatter } from 'next-intl'
+import { Shield, ShieldCheck, ShieldX, AlertTriangle } from 'lucide-react'
 import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
-import { setModeratorPermission } from '@/modules/admin/actions/permissions'
+import {
+  setModeratorPermission,
+  type PermissionData,
+  type PermissionEvent,
+} from '@/modules/admin/actions/permissions'
 import { PERMISSION_KEYS, type PermissionKey } from '@/lib/auth/permissionKeys'
 
 interface Props {
-  permissions: Record<PermissionKey, boolean>
+  permissions: Record<PermissionKey, PermissionData>
+  events: PermissionEvent[] | null
 }
 
-export function AdminPermissionsManager({ permissions: initial }: Props) {
+export function AdminPermissionsManager({ permissions: initial, events }: Props) {
   const t = useTranslations('admin.permissions')
+  const format = useFormatter()
   const [permissions, setPermissions] = useState(initial)
   const [pending, startTransition] = useTransition()
   const [saving, setSaving] = useState<PermissionKey | null>(null)
@@ -23,20 +29,28 @@ export function AdminPermissionsManager({ permissions: initial }: Props) {
     setSaving(key)
     startTransition(async () => {
       const result = await setModeratorPermission(key, value)
-      if (result.error) {
-        toast.error(t('save_error'))
+      if (result.noOp) {
+        toast.info(t(value ? 'already_granted' : 'not_granted'))
+      } else if (result.error === 'forbidden') {
+        toast.error(t('error_forbidden'))
+      } else if (result.error) {
+        toast.error(t('error_transient'))
       } else {
-        setPermissions(prev => ({ ...prev, [key]: value }))
+        setPermissions(prev => ({
+          ...prev,
+          [key]: { ...prev[key], allowed: value },
+        }))
         toast.success(t('save_success'))
       }
       setSaving(null)
     })
   }
 
-  const allowedCount = PERMISSION_KEYS.filter(k => permissions[k]).length
+  const allowedCount = PERMISSION_KEYS.filter(k => permissions[k].allowed).length
 
   return (
     <div className="flex flex-col gap-6 p-6 max-w-2xl">
+      {/* Header */}
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
           <Shield className="h-5 w-5 text-primary shrink-0" />
@@ -52,6 +66,20 @@ export function AdminPermissionsManager({ permissions: initial }: Props) {
         </Badge>
       </div>
 
+      {/* Admin section — display only, not in DB */}
+      <div className="rounded-xl border overflow-hidden">
+        <div className="px-4 py-2.5 bg-muted/40 border-b">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {t('admin_section_title')}
+          </span>
+        </div>
+        <div className="flex items-center gap-3 px-4 py-3.5">
+          <ShieldCheck className="h-4 w-4 text-green-600 shrink-0" />
+          <span className="text-sm text-muted-foreground">{t('admin_full_access')}</span>
+        </div>
+      </div>
+
+      {/* Moderator permission matrix */}
       <div className="rounded-xl border divide-y overflow-hidden">
         <div className="grid grid-cols-[1fr_auto] items-center px-4 py-2.5 bg-muted/40">
           <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -63,8 +91,9 @@ export function AdminPermissionsManager({ permissions: initial }: Props) {
         </div>
 
         {PERMISSION_KEYS.map(key => {
-          const allowed = permissions[key]
+          const { allowed, updated_at, updated_by_name } = permissions[key]
           const isSaving = saving === key && pending
+          const keySlug = key.replace('.', '_')
           return (
             <div
               key={key}
@@ -72,9 +101,24 @@ export function AdminPermissionsManager({ permissions: initial }: Props) {
             >
               <div className="flex flex-col gap-0.5 min-w-0">
                 <span className="text-sm font-medium leading-snug">
-                  {t(`keys.${key.replace('.', '_')}`)}
+                  {t(`keys.${keySlug}`)}
                 </span>
-                <span className="text-xs text-muted-foreground font-mono">{key}</span>
+                <span className="text-xs text-muted-foreground leading-snug">
+                  {t(`descriptions.${keySlug}`)}
+                </span>
+                <span className="text-xs text-muted-foreground/60 font-mono mt-0.5">{key}</span>
+                {updated_at && (
+                  <span className="text-xs text-muted-foreground/50 mt-0.5">
+                    {t('column_last_updated')}:{' '}
+                    {format.dateTime(new Date(updated_at), { dateStyle: 'medium' })}
+                    {updated_by_name && (
+                      <>
+                        {' '}
+                        {t('audit_by')} {updated_by_name}
+                      </>
+                    )}
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 {allowed ? (
@@ -86,12 +130,68 @@ export function AdminPermissionsManager({ permissions: initial }: Props) {
                   checked={allowed}
                   onCheckedChange={v => handleToggle(key, v)}
                   disabled={isSaving}
-                  aria-label={t(`keys.${key.replace('.', '_')}`)}
+                  aria-label={t(`keys.${keySlug}`)}
                 />
               </div>
             </div>
           )
         })}
+      </div>
+
+      {/* Audit events section */}
+      <div className="rounded-xl border overflow-hidden">
+        <div className="px-4 py-2.5 bg-muted/40 border-b">
+          <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            {t('audit_title')}
+          </span>
+        </div>
+
+        {events === null ? (
+          <div className="flex items-center gap-2 px-4 py-3.5 text-sm text-muted-foreground">
+            <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0" />
+            {t('audit_unavailable')}
+          </div>
+        ) : events.length === 0 ? (
+          <div className="px-4 py-3.5 text-sm text-muted-foreground">{t('audit_empty')}</div>
+        ) : (
+          <div className="divide-y">
+            {events.map(ev => {
+              const keySlug = ev.permission_key.replace('.', '_')
+              return (
+                <div key={ev.id} className="flex items-start gap-3 px-4 py-3 text-sm">
+                  <div className="mt-0.5 shrink-0">
+                    {ev.new_allowed ? (
+                      <ShieldCheck className="h-4 w-4 text-green-600" />
+                    ) : (
+                      <ShieldX className="h-4 w-4 text-muted-foreground/50" />
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-0.5 min-w-0">
+                    <span className="font-medium">
+                      {t(`keys.${keySlug}`)}{' '}
+                      <span
+                        className={
+                          ev.new_allowed ? 'text-green-600' : 'text-muted-foreground'
+                        }
+                      >
+                        {t(ev.new_allowed ? 'audit_grant' : 'audit_revoke')}
+                      </span>
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {t('audit_by')}{' '}
+                      {ev.actor_name ?? t('audit_unknown_actor')}{' '}
+                      ·{' '}
+                      {format.dateTime(new Date(ev.created_at), {
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                      })}
+                    </span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
       </div>
 
       <p className="text-xs text-muted-foreground">{t('admin_note')}</p>

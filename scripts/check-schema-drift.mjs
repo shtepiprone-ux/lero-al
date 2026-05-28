@@ -66,7 +66,11 @@ const INTERFACE_TABLE_MAP = {
   Company:            'companies',
   Collection:         'collections',
   CollectionItem:     'collection_items',
-  RecentlyViewed:     'recently_viewed',
+  RecentlyViewed:         'recently_viewed',
+  RolePermission:         'role_permissions',
+  RolePermissionEvent:    'role_permission_events',
+  ContactInquiry:         'contact_inquiries',
+  ContactInquiryReply:    'contact_inquiry_replies',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

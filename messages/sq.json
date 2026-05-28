@@ -1258,6 +1258,22 @@
       "save_success": "Leja u ruajt",
       "save_error": "Gabim gjatë ruajtjes së lejes",
       "admin_note": "Llogaritë e administratorëve kanë gjithmonë akses të plotë pavarësisht nga këto cilësime.",
+      "error_forbidden": "Nuk keni autoritet për të ndryshuar lejet",
+      "already_granted": "Leja është tashmë e dhënë",
+      "not_granted": "Leja nuk është aktualisht e dhënë",
+      "error_transient": "Gabim i përkohshëm. Provoni sërish.",
+      "admin_section_title": "Administrator",
+      "admin_full_access": "Akses i plotë (jo i konfigurueshëm)",
+      "column_description": "Përshkrimi",
+      "column_last_updated": "Ndryshuar më",
+      "column_updated_by": "Nga",
+      "audit_title": "Ndryshimet e fundit të lejeve",
+      "audit_empty": "Nuk ka ndryshime lejesh ende",
+      "audit_unavailable": "Regjistri i auditimit nuk disponohet",
+      "audit_grant": "Dhënë",
+      "audit_revoke": "Revokuar",
+      "audit_by": "nga",
+      "audit_unknown_actor": "Admin i panjohur",
       "keys": {
         "listings_delete": "Fshi njoftimet",
         "listings_set_premium": "Vendos njoftimet si premium",
@@ -1269,6 +1285,18 @@
         "settings_manage": "Menaxho cilësimet e faqes",
         "legal_manage": "Menaxho faqet ligjore",
         "reports_manage": "Menaxho raportet"
+      },
+      "descriptions": {
+        "listings_delete": "Mund të fshijë çdo njoftim nga platforma",
+        "listings_set_premium": "Mund të caktojë ose heqë statusin premium të njoftimeve",
+        "users_create": "Mund të krijojë llogari të reja admin ose moderator",
+        "users_change_role": "Mund të ndryshojë rolin e çdo përdoruesi",
+        "users_soft_delete": "Mund të çaktivizojë llogarinë e një përdoruesi (fshirje e butë)",
+        "users_hard_delete": "Mund të fshijë përgjithmonë llogarinë e një përdoruesi",
+        "locations_manage": "Mund të krijojë, ndryshojë ose fshijë vendndodhje",
+        "settings_manage": "Mund të ruajë cilësimet e faqes",
+        "legal_manage": "Mund të krijojë, ndryshojë ose fshijë faqet ligjore",
+        "reports_manage": "Mund të shqyrtojë, zgjidhë ose refuzojë raportet e njoftimeve"
       }
     }
   },

@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-22T19:19:45.875Z by: npm run check:schema-drift
+-- Generated 2026-05-28T05:30:59.332Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -9,7 +9,7 @@
 --   EmailChangeToken     → email_change_tokens      (7 cols)
 --   EmailTemplate        → email_templates          (10 cols)
 --   Location             → locations                (12 cols)
---   Listing              → listings                 (39 cols)
+--   Listing              → listings                 (41 cols)
 --   ListingImage         → listing_images           (5 cols)
 --   Favorite             → favorites                (4 cols)
 --   FavoritePriceAlert   → favorite_price_alerts    (4 cols)
@@ -17,7 +17,6 @@
 --   ListingReport        → listing_reports          (7 cols)
 --   ReportAction         → report_actions           (8 cols)
 --   SupportTicket        → support_tickets          (11 cols)
---   SupportTicketEvent   → support_ticket_events    (9 cols)
 --   Notification         → notifications            (8 cols)
 --   DBCurrency           → currencies               (12 cols)
 --   DBExchangeProvider   → exchange_providers       (11 cols)
@@ -28,8 +27,9 @@
 --   Collection           → collections              (5 cols)
 --   CollectionItem       → collection_items         (3 cols)
 --   RecentlyViewed       → recently_viewed          (4 cols)
---   RolePermission       → role_permissions         (4 cols)
---   ContactInquiry       → contact_inquiries        (14 cols)
+--   RolePermission       → role_permissions         (5 cols)
+--   RolePermissionEvent  → role_permission_events   (8 cols)
+--   ContactInquiry       → contact_inquiries        (13 cols)
 --   ContactInquiryReply  → contact_inquiry_replies  (5 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
@@ -126,6 +126,7 @@ WITH expected(table_name, column_name) AS (
     ('listings', 'currency'),
     ('listings', 'listing_type'),
     ('listings', 'property_type'),
+    ('listings', 'market_type'),
     ('listings', 'condition'),
     ('listings', 'wall_type'),
     ('listings', 'heating'),
@@ -149,6 +150,7 @@ WITH expected(table_name, column_name) AS (
     ('listings', 'lng'),
     ('listings', 'views_count'),
     ('listings', 'is_premium'),
+    ('listings', 'premium_until'),
     ('listings', 'status'),
     ('listings', 'expires_at'),
     ('listings', 'created_at'),
@@ -204,15 +206,6 @@ WITH expected(table_name, column_name) AS (
     ('support_tickets', 'created_by_admin_id'),
     ('support_tickets', 'ticket_type'),
     ('support_tickets', 'updated_at'),
-    ('support_ticket_events', 'id'),
-    ('support_ticket_events', 'ticket_id'),
-    ('support_ticket_events', 'actor_user_id'),
-    ('support_ticket_events', 'actor_role'),
-    ('support_ticket_events', 'event_type'),
-    ('support_ticket_events', 'old_status'),
-    ('support_ticket_events', 'new_status'),
-    ('support_ticket_events', 'note'),
-    ('support_ticket_events', 'created_at'),
     ('notifications', 'id'),
     ('notifications', 'user_id'),
     ('notifications', 'type'),
@@ -284,6 +277,15 @@ WITH expected(table_name, column_name) AS (
     ('role_permissions', 'permission_key'),
     ('role_permissions', 'allowed'),
     ('role_permissions', 'updated_at'),
+    ('role_permissions', 'updated_by_user_id'),
+    ('role_permission_events', 'id'),
+    ('role_permission_events', 'role'),
+    ('role_permission_events', 'permission_key'),
+    ('role_permission_events', 'old_allowed'),
+    ('role_permission_events', 'new_allowed'),
+    ('role_permission_events', 'actor_user_id'),
+    ('role_permission_events', 'created_at'),
+    ('role_permission_events', 'note'),
     ('contact_inquiries', 'id'),
     ('contact_inquiries', 'created_at'),
     ('contact_inquiries', 'topic'),
@@ -407,6 +409,7 @@ WITH expected(table_name, column_name) AS (
     ('listings', 'currency'),
     ('listings', 'listing_type'),
     ('listings', 'property_type'),
+    ('listings', 'market_type'),
     ('listings', 'condition'),
     ('listings', 'wall_type'),
     ('listings', 'heating'),
@@ -430,6 +433,7 @@ WITH expected(table_name, column_name) AS (
     ('listings', 'lng'),
     ('listings', 'views_count'),
     ('listings', 'is_premium'),
+    ('listings', 'premium_until'),
     ('listings', 'status'),
     ('listings', 'expires_at'),
     ('listings', 'created_at'),
@@ -485,15 +489,6 @@ WITH expected(table_name, column_name) AS (
     ('support_tickets', 'created_by_admin_id'),
     ('support_tickets', 'ticket_type'),
     ('support_tickets', 'updated_at'),
-    ('support_ticket_events', 'id'),
-    ('support_ticket_events', 'ticket_id'),
-    ('support_ticket_events', 'actor_user_id'),
-    ('support_ticket_events', 'actor_role'),
-    ('support_ticket_events', 'event_type'),
-    ('support_ticket_events', 'old_status'),
-    ('support_ticket_events', 'new_status'),
-    ('support_ticket_events', 'note'),
-    ('support_ticket_events', 'created_at'),
     ('notifications', 'id'),
     ('notifications', 'user_id'),
     ('notifications', 'type'),
@@ -565,6 +560,15 @@ WITH expected(table_name, column_name) AS (
     ('role_permissions', 'permission_key'),
     ('role_permissions', 'allowed'),
     ('role_permissions', 'updated_at'),
+    ('role_permissions', 'updated_by_user_id'),
+    ('role_permission_events', 'id'),
+    ('role_permission_events', 'role'),
+    ('role_permission_events', 'permission_key'),
+    ('role_permission_events', 'old_allowed'),
+    ('role_permission_events', 'new_allowed'),
+    ('role_permission_events', 'actor_user_id'),
+    ('role_permission_events', 'created_at'),
+    ('role_permission_events', 'note'),
     ('contact_inquiries', 'id'),
     ('contact_inquiries', 'created_at'),
     ('contact_inquiries', 'topic'),
@@ -593,6 +597,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'support_ticket_events', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

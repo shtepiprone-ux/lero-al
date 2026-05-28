@@ -79,6 +79,18 @@ export interface RolePermission {
   permission_key: string
   allowed: boolean
   updated_at: string
+  updated_by_user_id: string | null
+}
+
+export interface RolePermissionEvent {
+  id: string
+  role: string
+  permission_key: string
+  old_allowed: boolean | null
+  new_allowed: boolean
+  actor_user_id: string | null
+  created_at: string
+  note: string | null
 }
 
 export interface Company {
@@ -206,6 +218,7 @@ export interface Listing {
   currency: ListingCurrency
   listing_type: ListingType
   property_type: PropertyType
+  market_type: string | null
   condition: ListingCondition | null
   wall_type: WallType | null
   heating: HeatingType | null

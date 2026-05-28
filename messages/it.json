@@ -1258,6 +1258,22 @@
       "save_success": "Permesso salvato",
       "save_error": "Errore durante il salvataggio del permesso",
       "admin_note": "Gli account amministratori hanno sempre accesso completo indipendentemente da queste impostazioni.",
+      "error_forbidden": "Non autorizzato a modificare i permessi",
+      "already_granted": "Permesso già concesso",
+      "not_granted": "Permesso non attualmente concesso",
+      "error_transient": "Errore temporaneo. Riprovare.",
+      "admin_section_title": "Amministratore",
+      "admin_full_access": "Accesso completo (non configurabile)",
+      "column_description": "Descrizione",
+      "column_last_updated": "Ultimo aggiornamento",
+      "column_updated_by": "Da",
+      "audit_title": "Modifiche recenti ai permessi",
+      "audit_empty": "Nessuna modifica ai permessi ancora",
+      "audit_unavailable": "Log di audit non disponibile",
+      "audit_grant": "Concesso",
+      "audit_revoke": "Revocato",
+      "audit_by": "da",
+      "audit_unknown_actor": "Admin sconosciuto",
       "keys": {
         "listings_delete": "Elimina annunci",
         "listings_set_premium": "Imposta annunci come premium",
@@ -1269,6 +1285,18 @@
         "settings_manage": "Gestisci impostazioni sito",
         "legal_manage": "Gestisci pagine legali",
         "reports_manage": "Gestisci segnalazioni"
+      },
+      "descriptions": {
+        "listings_delete": "Può eliminare qualsiasi annuncio dalla piattaforma",
+        "listings_set_premium": "Può impostare o rimuovere lo stato premium degli annunci",
+        "users_create": "Può creare nuovi account admin o moderatore",
+        "users_change_role": "Può cambiare il ruolo di qualsiasi utente",
+        "users_soft_delete": "Può disattivare un account utente (eliminazione soft)",
+        "users_hard_delete": "Può eliminare definitivamente un account utente",
+        "locations_manage": "Può creare, modificare o eliminare le posizioni",
+        "settings_manage": "Può salvare le impostazioni del sito",
+        "legal_manage": "Può creare, modificare o eliminare le pagine legali",
+        "reports_manage": "Può esaminare, risolvere o ignorare le segnalazioni"
       }
     }
   },

@@ -5,7 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import {
   LayoutDashboard, ListChecks, Users, MessageSquare,
-  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, LifeBuoy, TrendingUp,
+  MapPin, FileText, Settings, LogOut, ExternalLink, X, ChevronRight, Building2, CircleDollarSign, Briefcase, Flag, Mail, Star, ShieldCheck, LifeBuoy, TrendingUp, PanelBottom,
 } from 'lucide-react'
 import { signOut } from '@/lib/auth/browser'
 import { cn } from '@/lib/utils'
@@ -71,6 +71,7 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
         { href: '/admin/property-types',    label: t('item_property_types'),    icon: Building2 },
         { href: '/admin/currency',          label: t('item_currency'),          icon: CircleDollarSign },
         { href: '/admin/email-templates',   label: t('item_email_templates'),   icon: Mail },
+        { href: '/admin/footer',            label: t('item_footer'),            icon: PanelBottom },
       ],
     },
     {

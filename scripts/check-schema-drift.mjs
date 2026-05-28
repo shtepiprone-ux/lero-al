@@ -73,6 +73,7 @@ const INTERFACE_TABLE_MAP = {
   ContactInquiry:         'contact_inquiries',
   ContactInquiryReply:    'contact_inquiry_replies',
   PublicUserProfile:      'public_user_profiles',
+  SiteFooter:             'site_footer',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

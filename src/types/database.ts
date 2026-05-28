@@ -475,6 +475,29 @@ export interface Language {
   is_default: boolean
 }
 
+export interface FooterLink {
+  id: string
+  label: string
+  url: string        // relative (/listings) or absolute (https://...)
+  enabled: boolean
+  order: number
+}
+
+export interface SiteFooter {
+  locale: string
+  brand_title: string
+  tagline: string
+  nav_section_title: string
+  nav_links: FooterLink[]
+  info_section_title: string
+  info_links: FooterLink[]
+  social_section_title: string
+  social_links: FooterLink[]
+  copyright_template: string  // use {year} as placeholder
+  updated_at: string
+  updated_by: string | null
+}
+
 export interface SiteSetting {
   key: string
   value: string

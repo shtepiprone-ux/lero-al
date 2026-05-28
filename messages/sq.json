@@ -186,6 +186,7 @@
     "sort_price_asc": "Çmimi: nga ulësia",
     "sort_price_desc": "Çmimi: nga lartësia",
     "sort_area_desc": "Sipërfaqja: nga madhësia",
+    "sort_area_asc": "Sipërfaqja: nga vogëlsia",
     "no_results_title": "Nuk u gjetën njoftime",
     "no_results_desc": "Provoni të ndryshoni filtrat ose të pastroni kërkimin",
     "view_grid": "Rrjet",
@@ -458,6 +459,7 @@
     "preferred_currency_label": "Monedha e parazgjedhur",
     "currency_ALL": "Lek Shqiptar (ALL)",
     "currency_EUR": "Euro (EUR)",
+    "currency_rate_disclaimer": "Kursi i këmbimit është i përafërt (≈), burimi: iliria98.com — mund të ndryshojë nga çmimi final.",
     "delete_account": "Fshi llogarinë",
     "delete_account_title": "Fshi llogarinë tuaj?",
     "delete_account_body": "Ky veprim është i pakthyeshëm. Të gjitha njoftimet tuaja do të arkivohen dhe do të dilni nga sistemi.",
@@ -993,7 +995,11 @@
       "col_updated": "Përditësuar",
       "col_actions": "Veprime",
       "status_published": "I publikuar",
-      "status_draft": "Projektim"
+      "status_draft": "Projektim",
+      "save_success": "Dokumenti u ruajt",
+      "save_error": "Ruajtja e dokumentit dështoi",
+      "delete_success": "Dokumenti u fshi",
+      "delete_error": "Fshirja e dokumentit dështoi"
     },
     "user_profile": {
       "validation": {

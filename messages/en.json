@@ -186,6 +186,7 @@
     "sort_price_asc": "Price: low to high",
     "sort_price_desc": "Price: high to low",
     "sort_area_desc": "Area: largest first",
+    "sort_area_asc": "Area: smallest first",
     "no_results_title": "No listings found",
     "no_results_desc": "Try changing your filters or clearing your search",
     "view_grid": "Grid",
@@ -458,6 +459,7 @@
     "preferred_currency_label": "Default currency",
     "currency_ALL": "Albanian Lek (ALL)",
     "currency_EUR": "Euro (EUR)",
+    "currency_rate_disclaimer": "Exchange rate is approximate (≈), source: iliria98.com — may differ from the final price.",
     "delete_account": "Delete account",
     "delete_account_title": "Delete your account?",
     "delete_account_body": "This action is irreversible. All your listings will be archived and you will be logged out.",
@@ -993,7 +995,11 @@
       "col_updated": "Updated",
       "col_actions": "Actions",
       "status_published": "Published",
-      "status_draft": "Draft"
+      "status_draft": "Draft",
+      "save_success": "Document saved",
+      "save_error": "Failed to save document",
+      "delete_success": "Document deleted",
+      "delete_error": "Failed to delete document"
     },
     "user_profile": {
       "validation": {

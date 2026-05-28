@@ -186,6 +186,7 @@
     "sort_price_asc": "Prezzo: dal più basso",
     "sort_price_desc": "Prezzo: dal più alto",
     "sort_area_desc": "Superficie: dalla più grande",
+    "sort_area_asc": "Superficie: dalla più piccola",
     "no_results_title": "Nessun annuncio trovato",
     "no_results_desc": "Prova a modificare i filtri o a cancellare la ricerca",
     "view_grid": "Griglia",
@@ -458,6 +459,7 @@
     "preferred_currency_label": "Valuta predefinita",
     "currency_ALL": "Lek albanese (ALL)",
     "currency_EUR": "Euro (EUR)",
+    "currency_rate_disclaimer": "Il tasso di cambio è approssimativo (≈), fonte: iliria98.com — può differire dal prezzo finale.",
     "delete_account": "Elimina account",
     "delete_account_title": "Eliminare il tuo account?",
     "delete_account_body": "Questa azione è irreversibile. Tutti i tuoi annunci saranno archiviati e verrai disconnesso.",
@@ -993,7 +995,11 @@
       "col_updated": "Aggiornato",
       "col_actions": "Azioni",
       "status_published": "Pubblicato",
-      "status_draft": "Bozza"
+      "status_draft": "Bozza",
+      "save_success": "Documento salvato",
+      "save_error": "Impossibile salvare il documento",
+      "delete_success": "Documento eliminato",
+      "delete_error": "Impossibile eliminare il documento"
     },
     "user_profile": {
       "validation": {

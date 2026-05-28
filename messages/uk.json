@@ -186,6 +186,7 @@
     "sort_price_asc": "Ціна: від нижчої",
     "sort_price_desc": "Ціна: від вищої",
     "sort_area_desc": "Площа: від більшої",
+    "sort_area_asc": "Площа: від меншої",
     "no_results_title": "Оголошень не знайдено",
     "no_results_desc": "Спробуйте змінити фільтри або очистити пошук",
     "view_grid": "Сітка",
@@ -458,6 +459,7 @@
     "preferred_currency_label": "Валюта за замовчуванням",
     "currency_ALL": "Албанський лек (ALL)",
     "currency_EUR": "Євро (EUR)",
+    "currency_rate_disclaimer": "Курс обміну приблизний (≈), джерело: iliria98.com — може відрізнятися від фінальної ціни.",
     "delete_account": "Видалити акаунт",
     "delete_account_title": "Видалити акаунт?",
     "delete_account_body": "Ця дія незворотна. Усі ваші оголошення буде заархівовано, і вас буде виведено з системи.",
@@ -993,7 +995,11 @@
       "col_updated": "Оновлено",
       "col_actions": "Дії",
       "status_published": "Опубліковано",
-      "status_draft": "Чернетка"
+      "status_draft": "Чернетка",
+      "save_success": "Документ збережено",
+      "save_error": "Не вдалося зберегти документ",
+      "delete_success": "Документ видалено",
+      "delete_error": "Не вдалося видалити документ"
     },
     "user_profile": {
       "validation": {

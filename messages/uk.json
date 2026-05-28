@@ -601,7 +601,9 @@
       "item_email_templates": "Email шаблони",
       "item_popular_locations": "Популярні локації",
       "item_permissions": "Дозволи",
-      "item_inquiries": "Запити"
+      "item_inquiries": "Запити",
+      "item_inquiries_support": "Підтримка",
+      "item_inquiries_sales": "Продажі"
     },
     "mobile_header": {
       "aria_open": "Відкрити меню"
@@ -722,6 +724,8 @@
       "popular_locations_title": "Популярні локації",
       "popular_locations_subtitle": "{count} вибраних локацій",
       "inquiries_title": "Контактні запити",
+      "inquiries_support_title": "Запити підтримки",
+      "inquiries_sales_title": "Запити продажів",
       "inquiries_subtitle": "{count} запитів"
     },
     "inquiries": {
@@ -1247,7 +1251,8 @@
       "edit_label": "Редагувати",
       "delete_label": "Видалити",
       "cancel": "Скасувати",
-      "save": "Зберегти"
+      "save": "Зберегти",
+      "albanian_only_notice": "Шаблони надсилаються виключно албанською мовою — Albanian Only Policy (2026-05-25)."
     },
     "permissions": {
       "title": "Дозволи модераторів",

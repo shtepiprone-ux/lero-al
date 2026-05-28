@@ -20,7 +20,6 @@
  */
 
 import { createAdminClient } from '@/lib/supabase/admin'
-import { resolveUserLocale } from './emails/resolveUserLocale'
 import { sendEmail } from './emails/send'
 import type { EmailTemplate } from '@/types/database'
 
@@ -93,25 +92,20 @@ export async function sendTemplatedEmail({
   variables = {},
 }: SendTemplatedEmailOptions): Promise<{ error?: string }> {
   const db = createAdminClient()
-  const locale = await resolveUserLocale(userId)
-
-  // Try resolved locale first, fall back to sq
-  const localesToTry = locale !== 'sq' ? [locale, 'sq'] : ['sq']
-
-  let template: EmailTemplate | null = null
-  for (const loc of localesToTry) {
-    const { data } = await db
-      .from('email_templates')
-      .select('*')
-      .eq('key', key)
-      .eq('locale', loc)
-      .eq('is_active', true)
-      .single()
-    if (data) { template = data as EmailTemplate; break }
-  }
+  // Albanian-only policy (Task 251, 2026-05-25): always send in sq regardless of user preference.
+  // If the sq row is missing the caller receives template_not_found — do NOT silently fall back
+  // to another locale, as that would defeat the policy.
+  const { data } = await db
+    .from('email_templates')
+    .select('*')
+    .eq('key', key)
+    .eq('locale', 'sq')
+    .eq('is_active', true)
+    .single()
+  const template = data as EmailTemplate | null
 
   if (!template) {
-    console.warn(`[sendTemplatedEmail] No active template found: key="${key}"`)
+    console.warn(`[sendTemplatedEmail] No active sq template found: key="${key}"`)
     return { error: 'template_not_found' }
   }
 

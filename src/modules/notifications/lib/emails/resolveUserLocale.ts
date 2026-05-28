@@ -1,11 +1,14 @@
 /**
- * resolveUserLocale — returns the locale to use when sending email to a user.
+ * @deprecated DEPRECATED 2026-05-25 (Task 251 — Albanian-only outbound email policy).
+ * Outbound emails are now always sent in Albanian ('sq') — do NOT call this function
+ * from any new email sender. Replace existing email-context calls with the constant 'sq'.
  *
- * Fallback chain:
- *   profile.preferred_locale → requestLocale (if provided) → 'sq'
+ * This file is intentionally NOT deleted so the policy can be reversed by un-deprecating
+ * it and restoring callers. Two consumers remain in admin/actions/index.ts for IN-APP
+ * notification locale (not email) — those are intentionally preserved.
  *
- * Uses the admin (service-role) client because this is called from server-side
- * email dispatch contexts where there is no user session cookie available.
+ * Original purpose: returns the locale to use when sending email to a user.
+ * Fallback chain: profile.preferred_locale → requestLocale (if provided) → 'sq'
  */
 import { createAdminClient } from '@/lib/supabase/admin'
 

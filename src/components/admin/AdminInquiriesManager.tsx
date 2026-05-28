@@ -67,9 +67,11 @@ type KnownTopic = typeof KNOWN_TOPICS[number]
 interface Props {
   inquiries: InquiryRow[]
   replies: ReplyRow[]
+  /** When set, the route IS the filter — hides the mailbox filter bar (Note 21 relocation). */
+  mailboxScope?: 'support' | 'sales'
 }
 
-export function AdminInquiriesManager({ inquiries: initialInquiries, replies: initialReplies }: Props) {
+export function AdminInquiriesManager({ inquiries: initialInquiries, replies: initialReplies, mailboxScope }: Props) {
   const t = useTranslations('admin.inquiries')
   const tp = useTranslations('admin.pages')
   const tc = useTranslations('contact.topics')
@@ -88,7 +90,8 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
 
   const filtered = inquiries.filter(i => {
     if (statusFilter !== 'all' && i.status !== statusFilter) return false
-    if (mailboxFilter !== 'all') {
+    // When mailboxScope is set, data is pre-filtered server-side — skip client-side mailbox check.
+    if (!mailboxScope && mailboxFilter !== 'all') {
       const isSales = i.target_mailbox.includes('sales')
       if (mailboxFilter === 'sales' && !isSales) return false
       if (mailboxFilter === 'support' && isSales) return false
@@ -207,18 +210,21 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
             {s === 'all' ? t('filter_all') : t(`filter_${s}` as 'filter_new' | 'filter_in_progress' | 'filter_closed')}
           </Button>
         ))}
-        <div className="ml-auto flex gap-2">
-          {(['all', 'support', 'sales'] as const).map(m => (
-            <Button
-              key={m}
-              size="lg"
-              variant={mailboxFilter === m ? 'secondary' : 'outline'}
-              onClick={() => setMailboxFilter(m)}
-            >
-              {m === 'all' ? t('filter_mailbox_all') : t(`filter_mailbox_${m}` as 'filter_mailbox_support' | 'filter_mailbox_sales')}
-            </Button>
-          ))}
-        </div>
+        {/* Mailbox filter hidden when route IS the filter (mailboxScope set — Note 21 relocation). */}
+        {!mailboxScope && (
+          <div className="ml-auto flex gap-2">
+            {(['all', 'support', 'sales'] as const).map(m => (
+              <Button
+                key={m}
+                size="lg"
+                variant={mailboxFilter === m ? 'secondary' : 'outline'}
+                onClick={() => setMailboxFilter(m)}
+              >
+                {m === 'all' ? t('filter_mailbox_all') : t(`filter_mailbox_${m}` as 'filter_mailbox_support' | 'filter_mailbox_sales')}
+              </Button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── List ── */}

@@ -37,7 +37,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import * as React from 'react'
 
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
-import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
 import { VerifyEmail, getVerifyEmailStrings } from '@/modules/notifications/lib/emails/VerifyEmail'
 import { RecoveryEmail, getRecoveryEmailStrings } from '@/modules/notifications/lib/emails/RecoveryEmail'
 import { MagicLinkEmail, getMagicLinkEmailStrings } from '@/modules/notifications/lib/emails/MagicLinkEmail'
@@ -233,8 +232,8 @@ export async function POST(request: NextRequest) {
     const { token_hash, token, redirect_to, email_action_type } = email_data
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ''
 
-    // Resolve recipient locale via preferred_locale on the user profile
-    const locale = await resolveUserLocale(user.id)
+    // Albanian-only policy (Task 251, 2026-05-25): auth emails always in sq.
+    const locale = 'sq'
 
     // For link-based emails (signup/invite/recovery/magiclink), build a confirm URL
     // that routes through our /auth/confirm route (verifyOtp token-hash flow).

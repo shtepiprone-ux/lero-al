@@ -147,11 +147,12 @@ export async function sendEmailChangeEmails(opts: {
   oldEmail: string
   newEmail: string
   verificationUrl: string
-  locale: string
+  locale: string  // ignored — Albanian-only policy (Task 251). Caller may pass any locale.
   ip?: string
   userAgent?: string
 }): Promise<void> {
-  const s = getStrings(opts.locale)
+  // Albanian-only policy (Task 251, 2026-05-25): always send in sq regardless of opts.locale.
+  const s = getStrings('sq')
   const timestamp = new Date().toLocaleString('en-GB', { timeZone: 'Europe/Tirana' })
 
   let deviceHint = ''

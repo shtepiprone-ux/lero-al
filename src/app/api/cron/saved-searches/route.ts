@@ -20,7 +20,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
 import { sendTemplatedEmail } from '@/modules/notifications/lib/sendTemplatedEmail'
 import { createNotification } from '@/modules/notifications/lib/mutations'
 import { applyListingFilters, parseSearchParams } from '@/modules/listings/domain/filterEngine'
@@ -123,13 +122,13 @@ export async function POST(request: NextRequest) {
 
       if (!newCount || newCount === 0) continue
 
-      // Resolve locale + get user email
-      const locale = await resolveUserLocale(search.user_id)
+      // Albanian-only policy (Task 251): saved-search alert emails always in sq.
+      const locale = 'sq'
       const { data: authData } = await db.auth.admin.getUserById(search.user_id)
       const userEmail = authData?.user?.email
 
       const s = getNotif(locale)
-      const searchUrl = `${SITE_URL}/${locale}/listings?${sp.toString()}`
+      const searchUrl = `${SITE_URL}/sq/listings?${sp.toString()}`
       const searchName = search.name || ''
 
       // In-app notification

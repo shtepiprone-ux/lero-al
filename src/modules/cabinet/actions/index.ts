@@ -391,7 +391,8 @@ export async function initiateEmailChange(data: {
   await db.from('users').update({ pending_email: newEmailLower }).eq('id', userId)
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
-  const verificationUrl = `${siteUrl}/${data.locale}/auth/confirm-email?token=${rawToken}`
+  // Albanian-only policy (Task 251): CTA link routes to /sq/ regardless of user's app locale.
+  const verificationUrl = `${siteUrl}/sq/auth/confirm-email?token=${rawToken}`
 
   const reqHeaders = await headers()
   const ip = reqHeaders.get('x-forwarded-for')?.split(',')[0]?.trim()
@@ -448,7 +449,8 @@ export async function resendEmailVerification(data: {
   const currentEmail = authUser?.user?.email ?? ''
   const newEmail: string = (token as { new_email: string }).new_email
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
-  const verificationUrl = `${siteUrl}/${data.locale}/auth/confirm-email?token=${rawToken}`
+  // Albanian-only policy (Task 251): CTA link routes to /sq/ regardless of user's app locale.
+  const verificationUrl = `${siteUrl}/sq/auth/confirm-email?token=${rawToken}`
 
   await sendEmailChangeEmails({
     userId,

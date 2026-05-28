@@ -601,7 +601,9 @@
       "item_email_templates": "Email templates",
       "item_popular_locations": "Popular Locations",
       "item_permissions": "Permissions",
-      "item_inquiries": "Inquiries"
+      "item_inquiries": "Inquiries",
+      "item_inquiries_support": "Support",
+      "item_inquiries_sales": "Sales"
     },
     "mobile_header": {
       "aria_open": "Open menu"
@@ -722,6 +724,8 @@
       "popular_locations_title": "Popular Locations",
       "popular_locations_subtitle": "{count} featured locations",
       "inquiries_title": "Contact Inquiries",
+      "inquiries_support_title": "Support Inquiries",
+      "inquiries_sales_title": "Sales Inquiries",
       "inquiries_subtitle": "{count} inquiries"
     },
     "inquiries": {
@@ -1247,7 +1251,8 @@
       "edit_label": "Edit",
       "delete_label": "Delete",
       "cancel": "Cancel",
-      "save": "Save"
+      "save": "Save",
+      "albanian_only_notice": "Templates are sent in Albanian only — Albanian Only Policy (2026-05-25)."
     },
     "permissions": {
       "title": "Moderator permissions",

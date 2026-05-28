@@ -8,7 +8,6 @@ import { hasPermission } from '@/lib/auth/permissions'
 import type { ReportReason, ReportStatus } from '@/types/database'
 import * as React from 'react'
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
-import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
 import {
   ReporterNotificationEmail,
   getReporterNotificationEmailStrings,
@@ -153,8 +152,8 @@ async function notifyReporter(
   const listingTitle: string =
     (data as unknown as { listings: { title: string } | null }).listings?.title ?? ''
 
-  // Resolve locale
-  const locale = await resolveUserLocale(reporterUserId)
+  // Albanian-only policy (Task 251): reporter notification email always in sq.
+  const locale = 'sq'
   const s = getReporterNotificationEmailStrings(locale, status)
 
   // In-app notification

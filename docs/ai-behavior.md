@@ -271,6 +271,7 @@ must be referenced from A's entry point so the user can still reach editing with
   ```
 
 ### Localization (i18n) Rules
+- **Scope:** site UI is 4-locale (sq/en/uk/it). Outbound email is `sq`-only — see `docs/integrations.md` → "Outbound email language policy (Albanian-only, 2026-05-25)".
 - ALWAYS check `messages/sq.json`, `messages/en.json`, `messages/uk.json`, `messages/it.json`.
 - Every new text string must be added to ALL four language files simultaneously.
 - Never hardcode text strings in components — always use `useTranslations()`.

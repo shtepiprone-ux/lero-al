@@ -21,7 +21,6 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
 import { sendTemplatedEmail } from '@/modules/notifications/lib/sendTemplatedEmail'
 import { createNotification } from '@/modules/notifications/lib/mutations'
 
@@ -144,14 +143,15 @@ export async function POST(request: NextRequest) {
 
     // Price changed — notify
     try {
-      const locale = await resolveUserLocale(fav.user_id)
+      // Albanian-only policy (Task 251): price-alert emails always in sq.
+      const locale = 'sq'
       const { data: authData } = await db.auth.admin.getUserById(fav.user_id)
       const userEmail = authData?.user?.email
 
       const s = getNotif(locale)
       const oldPriceStr = fmtPrice(lastPrice, listing.currency)
       const newPriceStr = fmtPrice(currentPrice, listing.currency)
-      const listingUrl = `${SITE_URL}/${locale}/listings/${listing.slug}`
+      const listingUrl = `${SITE_URL}/sq/listings/${listing.slug}`
 
       await createNotification({
         userId: fav.user_id,

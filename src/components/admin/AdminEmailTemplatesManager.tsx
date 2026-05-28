@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/dialog'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { normalizeSearch } from '@/lib/utils'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   upsertEmailTemplateAction,
   deleteEmailTemplateGroupAction,
@@ -185,10 +186,13 @@ function TemplateEditorDialog({
             )}
           </div>
 
-          {/* Locale tabs */}
+          {/* Locale tabs — only sq visible per Albanian-only policy (Task 251, 2026-05-25).
+              To restore multi-locale editing: remove the .filter() below. Form state and
+              DB rows for en/uk/it are preserved in localeData; the save action still upserts
+              non-empty locales. */}
           <Tabs value={activeTab} onValueChange={v => setActiveTab(v as Locale)}>
             <TabsList className="w-full">
-              {LOCALES.map(loc => (
+              {LOCALES.filter(loc => loc === 'sq').map(loc => (
                 <TabsTrigger key={loc} value={loc} className="flex-1">
                   {tabLabels[loc]}
                   {localeData[loc].subject.trim() && (
@@ -357,6 +361,11 @@ export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { te
 
   return (
     <div className="flex flex-col gap-4">
+      {/* Albanian-only policy notice */}
+      <Alert>
+        <AlertDescription>{t('albanian_only_notice')}</AlertDescription>
+      </Alert>
+
       {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
         <div className="relative flex-1 min-w-[180px]">

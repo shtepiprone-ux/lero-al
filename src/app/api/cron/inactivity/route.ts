@@ -20,7 +20,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import * as React from 'react'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { resolveUserLocale } from '@/modules/notifications/lib/emails/resolveUserLocale'
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
 import { InactivityWarningEmail, getInactivityWarningEmailStrings } from '@/modules/notifications/lib/emails/InactivityWarningEmail'
 import { InactivityFinalEmail, getInactivityFinalEmailStrings } from '@/modules/notifications/lib/emails/InactivityFinalEmail'
@@ -117,7 +116,8 @@ export async function POST(request: NextRequest) {
       })
 
       // 4. Send InactivityFinalEmail
-      const locale = await resolveUserLocale(user.id)
+      // Albanian-only policy (Task 251): inactivity emails always in sq.
+      const locale = 'sq'
       const s = getInactivityFinalEmailStrings(locale)
       await sendEmail({
         to: user.email as string,
@@ -148,7 +148,8 @@ export async function POST(request: NextRequest) {
 
   for (const user of warnUsers ?? []) {
     try {
-      const locale = await resolveUserLocale(user.id)
+      // Albanian-only policy (Task 251): inactivity warning emails always in sq.
+      const locale = 'sq'
       const s = getInactivityWarningEmailStrings(locale)
 
       const { error: emailErr } = await sendEmail({

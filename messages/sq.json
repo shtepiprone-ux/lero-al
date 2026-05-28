@@ -601,7 +601,9 @@
       "item_email_templates": "Shablonet e emailit",
       "item_popular_locations": "Vendndodhjet Populare",
       "item_permissions": "Lejet",
-      "item_inquiries": "Kërkesat"
+      "item_inquiries": "Kërkesat",
+      "item_inquiries_support": "Mbështetje",
+      "item_inquiries_sales": "Shitje"
     },
     "mobile_header": {
       "aria_open": "Hap menunë"
@@ -722,6 +724,8 @@
       "popular_locations_title": "Vendndodhjet Populare",
       "popular_locations_subtitle": "{count} vendndodhje të shfaqura",
       "inquiries_title": "Kërkesat e Kontaktit",
+      "inquiries_support_title": "Kërkesat e Mbështetjes",
+      "inquiries_sales_title": "Kërkesat e Shitjeve",
       "inquiries_subtitle": "{count} kërkesa"
     },
     "inquiries": {
@@ -1247,7 +1251,8 @@
       "edit_label": "Redakto",
       "delete_label": "Fshi",
       "cancel": "Anulo",
-      "save": "Ruaj"
+      "save": "Ruaj",
+      "albanian_only_notice": "Shabllonet dërgohen vetëm në gjuhën shqipe — Albanian Only Policy (2026-05-25)."
     },
     "permissions": {
       "title": "Lejet e moderatorëve",

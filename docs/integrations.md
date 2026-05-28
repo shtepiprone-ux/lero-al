@@ -237,6 +237,28 @@ Rationale: Resend is code-first (same team as React Email). Managing multilingua
 In-code gate: `assertAdmin()` in `deleteEmailTemplateGroupAction` + `deleteEmailTemplateLocaleAction` (`src/modules/notifications/actions/emailTemplates.ts`).
 Actions use `createAdminClient()` (service-role, bypasses RLS) → the in-code check is the primary gate. RLS provides defense-in-depth if a future code path uses a user-scoped client.
 
+### Outbound email language policy — Albanian-only (2026-05-25)
+
+**Owner directive 2026-05-25 (Task 251 / Epic GG.1):** every outbound email sent via Resend is in Albanian (`sq`) regardless of the recipient's `preferred_locale` or the site's active locale.
+
+**What changed:**
+- `src/modules/contacts/actions/index.ts` — trigger bug fixed: both `locale: 'en'` arguments replaced with `locale: 'sq'`.
+- `src/modules/notifications/lib/sendTemplatedEmail.ts` — removed `resolveUserLocale` call; always fetches the `sq` row from `email_templates`. Missing `sq` row → `template_not_found` error (no silent fallback to another locale).
+- `src/modules/notifications/lib/emails/emailChange.ts` — `sendEmailChangeEmails` forces `getStrings('sq')` at the helper layer regardless of `opts.locale`; verification URL CTA routes to `/sq/...`.
+- `src/modules/cabinet/actions/index.ts` — `verificationUrl` for email-change confirmation now uses `/sq/` locale path.
+- All `resolveUserLocale` email-context callers replaced with `const locale = 'sq'`: `reportListing.ts`, `auth-email-hook/route.ts`, `cron/inactivity/route.ts` (×2), `cron/saved-searches/route.ts`, `cron/price-alerts/route.ts`.
+- `src/components/admin/AdminEmailTemplatesManager.tsx` — non-sq editor tabs hidden (reversible: remove `.filter(loc => loc === 'sq')`); "Albanian Only" `Alert` notice added.
+
+**Why:** Albanian is the official language of Albania; all outbound email to users should be in the local language regardless of account settings.
+
+**Deprecated (not deleted):** `src/modules/notifications/lib/emails/resolveUserLocale.ts` — marked `@deprecated`. Two remaining consumers in `admin/actions/index.ts` are for IN-APP notification locale resolution (not email) and are intentionally preserved.
+
+**How to reverse the policy:**
+1. Remove `// Albanian-only policy` comments and restore `resolveUserLocale` calls (or `opts.locale` usage) at each caller.
+2. In `sendTemplatedEmail.ts` restore the `localesToTry` cascade.
+3. In `AdminEmailTemplatesManager.tsx` remove the `.filter(loc => loc === 'sq')` from the TabsList.
+4. DB rows for `en/uk/it` templates are intact — no data recovery needed.
+
 RLS SQL for `email_templates` table (from Task 123 session log; DELETE policy is admin-only):
 ```sql
 -- SELECT/INSERT/UPDATE: admin + moderator

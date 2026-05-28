@@ -121,7 +121,7 @@ export async function submitContactInquiry(
     topic,
     displaySubject,
     message,
-    locale: 'en',
+    locale: 'sq', // Albanian-only policy (Task 251)
   })
 
   if (!emailResult.ok) {
@@ -259,7 +259,7 @@ export async function sendInquiryReply(
     fromMailbox: inquiry.target_mailbox,
     displaySubject,
     replyBody: trimmedBody,
-    locale: 'en',
+    locale: 'sq', // Albanian-only policy (Task 251)
   })
 
   if (!replyEmailResult.ok) {

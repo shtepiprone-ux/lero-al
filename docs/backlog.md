@@ -7,15 +7,18 @@
 
 ## Last Session
 
-**2026-05-28 — Sprint 14 CLOSED (Opus 4.7 review): All 8 tasks APPROVED on diff. Batch 1 (250/262/263 — RBAC + market_type + RLS cleanup) shipped earlier today with follow-ups 265+266. Batch 2 (251/252/244/242/248): **251** Albanian email policy — 10 send-sites fixed, `resolveUserLocale` @deprecated, admin editor sq-only tab + Alert; **252** sales/support inbox split — 2 new SSR routes with server-side ILIKE scope, sidebar split (LifeBuoy/TrendingUp), old route → redirect, From-address routing preserved via Task 256 wiring; **244** phone placeholder 8→9 digits at PhoneField.tsx:102; **242** dead `<button>` (no onClick) replaced with wired `ListingReportDialog`; **248** server-authoritative state-authority fix — `AuthController.refresh()` exposed via context, `ProfileTab` calls it after save → header re-renders without manual reload. Task 264 contract honored on all 5 (Files Changed tables present; no Sonnet-emitted commits). 0 follow-ups needed.**
+**2026-05-28 — Task 266 (T.8) orchestrator decision recorded: picked **Strategy A — database view + narrower RLS**, hardened (owner + Opus agreed). Task 266 kickoff updated in-place with full implementation spec — Sonnet executes without further STOP&ASK on strategy. Key design: (1) `public.public_user_profiles` view exposes ONLY safe columns + `has_phone`/`has_whatsapp` booleans (NEVER email/phone/whatsapp digits); (2) `USING (true)` on `public.users` DROPPED → `users_self_read` (`auth.uid() = id`); (3) RPC `get_listing_owner_contact(listing_id)` keyed by LISTING — can't be exploited as "give me arbitrary user's phone"; SECURITY DEFINER + explicit `search_path` + listing-status filter + REVOKE/GRANT; (4) UX trade-off: WhatsApp/Call buttons render on booleans, actual digits fetched on click via RPC roundtrip. Supabase `security_invoker` view-security caveat documented. Task scheduled for Sprint 15.**
+
+**2026-05-28 — Task 265 (X.4) ✅ + Sprint 14 CLOSED (8/8). Task 265: `search_vector: unknown | null` added to `Listing`; drift SQL → 28 tables / 263 cols; tsc=0. Sprint 14 batch 1 (250/262/263 — RBAC + market_type + RLS) + batch 2 (251 Albanian email / 252 sales-inbox split / 244 phone 9-digit / 242 report-button wired / 248 header-reactivity via AuthController.refresh) — all 8 APPROVED on diff against Task 255 (Positive+Negative flow) + Task 264 (Files Changed table) gates. Followups filed: 265 (closed today) + 266 (decisioned today).**
 
 ## Pending Action Items
 
 | Item | Owner | Notes |
 |------|-------|-------|
-| Verify schema-drift PASSES (zero rows in Supabase SQL Editor) after Task 250 + 262 settled | Owner | After running `node scripts/check-schema-drift.mjs` and pasting `scripts/schema-drift-check.sql` into Supabase, expect 0 rows (or 1 row for `listings.search_vector` → Task 265 will close it) |
+| ✅ Schema-drift PASS confirmed 2026-05-28 — 0 rows in both result sets after Task 265 (`search_vector`) + hotfix `saved_searches.notify_frequency` column added (`text NOT NULL DEFAULT 'daily' CHECK IN instant/daily/weekly`). | Owner | Done |
 
 **✅ Done (recent owner actions):**
+- 2026-05-28 — Hotfix: `ALTER TABLE saved_searches ADD COLUMN IF NOT EXISTS notify_frequency text NOT NULL DEFAULT 'daily' CHECK (...)` applied; `npm run check:schema-drift` → 0 rows confirmed
 - 2026-05-28 — Task 250: `role_permissions` + `role_permission_events` SQL applied; schema-drift extended to 28 tables / 261 cols
 - 2026-05-28 — Task 262: `ALTER TABLE listings ADD COLUMN market_type text` applied (scenario B — column was missing)
 - 2026-05-28 — Task 263: RLS policy `USING (true)` on `users` applied; `createAdminClient()` bypass removed from listing-detail page
@@ -92,6 +95,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-28 | Task 265 — X.4 search_vector drift: `search_vector: unknown | null` added to Listing; mjs comment updated; SQL regenerated: 28 tables/263 cols; tsc=0; grep clean | Task 265 | [sessions/2026-05-28-task-265-x4-search-vector-drift.md](sessions/2026-05-28-task-265-x4-search-vector-drift.md) |
 | 2026-05-28 | Orchestration REVIEW (Opus 4.7): Sprint 14 batch 2 — 251/252/244/242/248 APPROVED. All 5 honored Task 264 contract (Files Changed tables present, no Sonnet-emitted commits). 0 follow-ups needed. Sprint 14 CLOSED ✅ (8/8 tasks shipped) | Review | [Sprint_14_kickoff_prompts.md](../tasks/Sprints/Sprint_14_kickoff_prompts.md) |
 | 2026-05-28 | Task 248 — FF.1 header reactivity: `AuthController.refresh()` added; `refreshUser` in AuthContext; ProfileTab calls it after save; tsc=0 | Task 248 | [sessions/2026-05-28-task-248-ff1-header-reactivity.md](sessions/2026-05-28-task-248-ff1-header-reactivity.md) |
 | 2026-05-28 | Task 242 — BB.1 report button: dead `<button>` (no onClick) replaced with wired `ListingReportDialog`; canReport extracted as variable; tsc=0; no new locale keys | Task 242 | [sessions/2026-05-28-task-242-bb1-listing-report-button.md](sessions/2026-05-28-task-242-bb1-listing-report-button.md) |

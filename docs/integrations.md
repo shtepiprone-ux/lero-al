@@ -293,6 +293,44 @@ CREATE POLICY "email_templates_delete" ON email_templates FOR DELETE TO authenti
 - Background jobs (inactivity warnings D.5, saved-search E.4, price-change F.3) have NO request context → they MUST call `resolveUserLocale(userId)` to get the correct locale.
 - `preferred_locale` type in `src/types/database.ts`: `string` (non-null, DB default `'sq'`).
 
+### Supabase Auth Configuration (Dashboard settings — owner-set, 2026-05-28)
+
+**Owner-set values in Supabase Dashboard → Authentication → Sign In / Providers.** These
+cannot be set via code/SQL — they live in the project's Auth config and persist independent
+of the codebase. The agent CANNOT modify these; the owner is the source of truth.
+
+| Setting | Current value | Rationale |
+|---|---|---|
+| Enable email provider | ON | Email/password is the primary auth method for the marketplace. |
+| Secure email change | ON | Confirmation required on both old and new addresses — blocks "session hijack → email change → account takeover" path. |
+| Secure password change | OFF (interim) | Frontend does NOT yet have a re-auth field on the cabinet password-change form. Risk: stolen session can change password without proof of identity. **Re-enable AFTER reauth-form task lands.** |
+| Require current password when updating | OFF (interim) | Same as above — frontend has no "current password" field. Enable together with "Secure password change". |
+| Prevent use of leaked passwords (HIBP) | OFF | Owner-flagged as Pro-only on current Free account. Re-verify in dashboard at next visit: if a Free-tier toggle is available, enable now; otherwise enable at Pro upgrade. |
+| Minimum password length | 8 | Bare minimum. NIST 800-63B recommends ≥12 as modern best practice; 8 is acceptable for mainstream-marketplace UX. |
+| Password requirements | **Lowercase + uppercase + digits + symbols (Supabase "recommended")** | Strongest character-class option. UX implication: signup / password-reset / cabinet password-change forms MUST show an inline hint listing the rules — otherwise users hit an opaque server-side reject. Implemented by Task 271 (see below). |
+| Email OTP expiration | 3600 s (1 h) | Upper edge of the safe range Supabase Security Advisor accepts. Combined with 8-digit OTP (10⁸ search space) brute force is impractical. Consider tightening to 600 s if UX allows. |
+| Email OTP length | 8 | Above default of 6 — brute-force surface ×100 (10⁸ vs 10⁶). Free hardening win. |
+| Captcha protection | OFF (interim) | Pending frontend Cloudflare Turnstile / hCaptcha integration. **Real attack surface for a public marketplace** — bot signups can fill the DB with junk accounts / spam listings. Re-enable AFTER captcha-integration task lands. |
+
+#### Dependent follow-up tasks
+
+| Task | Status | Blocks toggle |
+|---|---|---|
+| **Task 271 — Password requirements hint UI** (Sprint 16) | Filed | none — purely UI |
+| **Cabinet reauth form for password change** (Sprint 16 candidate, not yet filed) | Pending | "Secure password change" + "Require current password when updating" |
+| **Captcha protection on signup + password-reset endpoints** (Sprint 16 candidate, not yet filed) | Pending | "Captcha protection" |
+| **Re-verify HIBP availability on Free tier** | Owner action (Pending Action Items in backlog) | "Prevent use of leaked passwords" |
+
+#### Maintenance rules
+
+- **Updating this table is REQUIRED whenever the dashboard config changes.** Treat it as
+  part of the "deploy" of any task that depends on a toggle flip — the dashboard change
+  and the doc-table change must land together (owner does both during deploy).
+- **Re-check on plan upgrade.** When upgrading Free → Pro, re-walk the Authentication →
+  Providers dashboard and update this table for any newly-available toggle (e.g. HIBP).
+- **Never flip a "Secure …" / "Captcha …" toggle ON without the corresponding frontend
+  support in place.** Doing so locks users out of the relevant flow.
+
 ### Supabase Auth emails — delegation (implemented Task 122 / Epic D.6)
 
 **Status: IMPLEMENTED.** All Supabase auth emails are delegated to our system via the Supabase Send Email Hook. Regular users only receive our branded Resend + React Email templates.

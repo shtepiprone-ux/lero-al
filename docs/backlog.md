@@ -7,6 +7,24 @@
 
 ## Last Session
 
+**2026-05-28 — Task 272 ✅ doc-gap closure: `rls-rules.md` Option B sub-rationale appended to `public_user_profiles` row; Task 268 session log Emitted SQL section deferred→final language. 4 docs files only; no src/; tsc=0.**
+
+**2026-05-28 — Task 270 ✅ RLS INSERT tightening VERIFIED: notifications→service_role, listing_reports→auth+user_id (anchored), companies→service_role; listing_views COMMENT; AFTER-state confirmed by owner. Sprint 15 COMPLETE — all code+SQL tasks applied. 🎉**
+
+**2026-05-28 — Task 269 ✅ RPC EXECUTE hardening: SQL emitted — 5 REVOKEs (anon+auth), 1 REVOKE (anon only for get_listing_owner_contact), 2 COMMENTs (record_listing_view/record_recently_viewed), 3 ALTER FUNCTION search_path, 1 DROP POLICY avatars; all grepped call-sites clean; tsc=0. Sprint 15 remaining: Task 270.**
+
+**2026-05-28 — Task 268 ✅ COMPLETE (Option B): `public_user_profiles` view audit — 4/4 conditions met (condition 3: Option B sub-exception — `deleted_at` IS the public signal for deleted owners, intentional); rationale comment + explicit security_invoker applied by owner; tsc=0.**
+
+**2026-05-28 — Task 249 (FF.2) ✅ toast audit v2: audited all action surfaces; 1 gap found (AdminLegalManager — handleSave + handleDelete silent); 4 new locale keys ×4; tsc=0. Sprint 15 W-epic tasks + Security Advisor tasks remain.**
+
+**2026-05-28 — Task 241 (AA.1) ✅ currency→profile: iliria98 disclaimer added to ProfileTab; currency Combobox removed from ListingsFilters + FiltersPanel (Note 20); dead code cleaned; 4 new locale keys; tsc=0. Sprint 15 remaining: 249.**
+
+**2026-05-28 — Task 230 (W.3) ✅ area_asc sort: added to `ListingSort` type + `VALID_SORTS` + both query paths (page.tsx + route.ts) + `ListingsSortBar` option + 4 locale keys; tsc=0. Sprint 15 remaining: 241/249.**
+
+**2026-05-28 — Task 229 (W.2) ✅ single global reset: two reset buttons → one; `resetFilters` added to hook (`router.push(pathname)`); `ListingsFilterBar` uses it; second button removed from `ActiveFilterChips` (Note 20 explicit removal); tsc=0. Sprint 15 remaining: 230/241/249.**
+
+**2026-05-28 — Task 232 (W.5) ✅ toolbar clipping fix: removed `overflow-x-auto flex-nowrap` from `.listings-filter-bar`; added `flex-wrap`; controls now wrap to second row on narrow widths instead of clipping. Single-line change in ListingsFilterBar.tsx; tsc=0; §17 pre-flight passed. Sprint 15 remaining: 229/230/241/249.**
+
 **2026-05-28 — Orchestration review (Opus 4.7): Sprint 15 batch 1 (Tasks 247, 267, 233) APPROVED on diff. All 3 honored Task 264 contract (Files Changed tables; no Sonnet-emitted commits). 247 EE.1: Strategy A (site_footer table + JSONB links) + per-field fallback chain (DB → sq DB → i18n) + URL validation + admin RLS + 30 tables/284 cols; owner SQL applied 2026-05-28. 267 CC.3: 5 new 9-digit tests + Sonnet caught pre-existing regression (COUNTRY_CODES 13→45 from Task 187) and fixed it; 30/30 pass. 233 W.6: 1-line `mt-4` on ListingsShell (16px canonical gap; was 0). 0 follow-ups. Sprint 15 remaining: 232/229/230/241/249 — same run order.**
 
 **2026-05-28 — Task 265 (X.4) ✅ + Sprint 14 CLOSED (8/8). Task 265: `search_vector: unknown | null` added to `Listing`; drift SQL → 28 tables / 263 cols; tsc=0. Sprint 14 batch 1 (250/262/263 — RBAC + market_type + RLS) + batch 2 (251 Albanian email / 252 sales-inbox split / 244 phone 9-digit / 242 report-button wired / 248 header-reactivity via AuthController.refresh) — all 8 APPROVED on diff against Task 255 (Positive+Negative flow) + Task 264 (Files Changed table) gates. Followups filed: 265 (closed today) + 266 (decisioned today).**
@@ -16,6 +34,7 @@
 | Item | Owner | Notes |
 |------|-------|-------|
 | ⚠️ Git index corrupted (`fatal: unable to read 9135c9df00000000…`) — run `Remove-Item .git\index; git reset` in PowerShell before next commit batch | Owner | Same recovery as previous sessions |
+| 🔐 Re-verify HIBP "Prevent use of leaked passwords" availability on Free tier (Supabase Auth → Sign In/Providers → Password Security). Owner flagged 2026-05-28 as Pro-only on current account. If a Free-tier toggle is now available → enable now; if not → enable at Pro upgrade. | Owner | Supabase Security Advisor `auth_leaked_password_protection` WARN. Documented in `docs/integrations.md` → "Supabase Auth Configuration" table. |
 
 **✅ Done (recent owner actions):**
 - 2026-05-28 — Task 247: `site_footer` table + RLS + 4 seed rows applied; `npm run check:schema-drift` → 0 rows (30 tables / 284 cols)
@@ -25,7 +44,7 @@
 
 ## Next Immediate Tasks
 
-**Last task number: 267. Next: 268.** **Sprint 15 batch 1 CLOSED ✅** (247 + 267 + 233 approved on diff). **Sprint 15 remaining** — 5 tasks in run order: **232 (W.5 toolbar overflow) → 229 (W.2 single global reset) → 230 (W.3 area_asc sort) → 241 (AA.1 currency→profile) → 249 (FF.2 toast audit v2)**. W-epic tasks (232/229/230) touch same files (`ListingsFilterBar.tsx` / `ListingsFilters.tsx` / `FiltersPanel.tsx`) — run sequentially. Plan: [`Sprint_15_…`](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md). Kickoffs: [`Sprint_15_kickoff_prompts.md`](../tasks/Sprints/Sprint_15_kickoff_prompts.md). **Sprint 16 (next)** absorbs the large/deferred items: W.4 (canonical Combobox migration), Z.1 (modal global refactor), CC.2 (multi-lang search), BB.2 (listing inquiries message flow), Y.2-Y.3 (listing form lifecycle UX), DD.1 (admin audit hygiene).
+**Last task number: 272. Next: 273.** **Sprint 15 status (per external status update earlier today):** marked COMPLETE for tasks 232 / 229 / 230 / 241 / 249 / 267 / 233 / 247 / 268 / 269 / 270. **Open follow-ups before Sprint 15 fully closes:** Task 268 ⚠️ STOP&ASK (WHERE filter — condition 3 pending orchestrator decision); Task 269 ⚠️ SQL needs correction (use `REVOKE EXECUTE ... FROM PUBLIC`, not `FROM anon, authenticated` — Postgres grants default EXECUTE via the PUBLIC role, so the REVOKE must target PUBLIC to actually remove it; `service_role` still retains EXECUTE via its bypass). **Sprint 16 (filed so far):** **Task 271 — Password UX refactor** (canonical `<PasswordInput>` primitive with built-in show/hide eye toggle + `<PasswordRequirementsHint>` live indicator with ✓/✗ per-rule indicators + DROP confirm-password fields across the project). Kickoff: [`Sprint_16_kickoff_prompt_Task_271.md`](../tasks/Sprints/Sprint_16_kickoff_prompt_Task_271.md). Visual design reference: [`Sprint_16_task_271_password_design_reference.md`](../tasks/Sprints/Sprint_16_task_271_password_design_reference.md). Hint rules match `docs/integrations.md` → "Supabase Auth Configuration" exactly. **Sprint 16 candidates (not yet filed as kickoffs):** W.4 (canonical Combobox migration), Z.1 (modal global refactor), CC.2 (multi-lang search), BB.2 (listing inquiries message flow), Y.2-Y.3 (listing form lifecycle UX), DD.1 (admin audit hygiene), the broader **Public Schema GRANT Discipline existing-table audit** (per `rls-rules.md` rule; deadline 2026-10-30), **Cabinet reauth form for password change** (unblocks Supabase "Secure password change" + "Require current password" toggles — see `docs/integrations.md` → "Supabase Auth Configuration"), and **Captcha integration (Cloudflare Turnstile / hCaptcha)** on signup + password-reset endpoints (unblocks Supabase "Captcha protection" toggle). **Acknowledged advisor exceptions** (no task, intentional): `pg_net in public` (deferred), `email_change_tokens` RLS-enabled-no-policy (intentional locked-down pattern) — see `docs/rls-rules.md` → "Acknowledged Advisor Exceptions".
 
 ## Active product backlog — Epics M–V (closed) + W–FF (open, from `issues.txt` 2026-05-25)
 
@@ -93,6 +112,14 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-28 | Task 270 — RLS INSERT tightening: notifications→service_role; listing_reports→auth+user_id; companies→service_role (no FK col); listing_views COMMENT; SQL emitted; tsc=0 | Task 270 | [sessions/2026-05-28-task-270-rls-insert-tightening.md](sessions/2026-05-28-task-270-rls-insert-tightening.md) |
+| 2026-05-28 | Task 269 — RPC EXECUTE hardening: 5 REVOKEs + 1 anon-REVOKE + 2 COMMENTs + 3 search_path ALTER + 1 DROP POLICY avatars; SQL emitted; tsc=0 | Task 269 | [sessions/2026-05-28-task-269-rpc-execute-hardening.md](sessions/2026-05-28-task-269-rpc-execute-hardening.md) |
+| 2026-05-28 | Task 268 — Security Advisor `public_user_profiles`: STOP & ASK (condition 3 WHERE filter conflicts with ownerDeleted branch); 3/4 conditions met; partial SQL emitted; awaiting orchestrator | Task 268 | [sessions/2026-05-28-task-268-public-user-profiles-security-advisor.md](sessions/2026-05-28-task-268-public-user-profiles-security-advisor.md) |
+| 2026-05-28 | Task 249 — FF.2 toast audit v2: `AdminLegalManager` handleSave + handleDelete toasted; 4 keys ×4; all other surfaces audited and accounted for; tsc=0 | Task 249 | [sessions/2026-05-28-task-249-ff2-toast-audit-v2.md](sessions/2026-05-28-task-249-ff2-toast-audit-v2.md) |
+| 2026-05-28 | Task 241 — AA.1 currency→profile: iliria98 disclaimer in ProfileTab; currency Combobox removed from ListingsFilters + FiltersPanel (Note 20); 4 locale keys; tsc=0 | Task 241 | [sessions/2026-05-28-task-241-aa1-currency-in-profile.md](sessions/2026-05-28-task-241-aa1-currency-in-profile.md) |
+| 2026-05-28 | Task 230 — W.3 area_asc sort: `ListingSort` type + `VALID_SORTS` + page.tsx + route.ts + `ListingsSortBar` option + 4 locale keys; tsc=0 | Task 230 | [sessions/2026-05-28-task-230-w3-area-asc-sort.md](sessions/2026-05-28-task-230-w3-area-asc-sort.md) |
+| 2026-05-28 | Task 229 — W.2 single global reset: `resetFilters` added to hook; `ListingsFilterBar` uses it; second reset removed from `ActiveFilterChips` (Note 20); tsc=0 | Task 229 | [sessions/2026-05-28-task-229-w2-single-global-reset.md](sessions/2026-05-28-task-229-w2-single-global-reset.md) |
+| 2026-05-28 | Task 232 — W.5 toolbar clipping: `overflow-x-auto flex-nowrap` → `flex-wrap` on `.listings-filter-bar`; controls wrap instead of clipping; tsc=0 | Task 232 | [sessions/2026-05-28-task-232-w5-toolbar-overflow-canonical.md](sessions/2026-05-28-task-232-w5-toolbar-overflow-canonical.md) |
 | 2026-05-28 | Orchestration REVIEW (Opus 4.7): Sprint 15 batch 1 — 247/267/233 APPROVED. All 3 honored Task 264 contract. 247: Strategy A site_footer + JSONB links + fallback chain + 30 tables/284 cols. 267: 5 new 9-digit tests + bonus regression fix (COUNTRY_CODES 13→45 from Task 187). 233: 1-line mt-4 canonical gap. 0 follow-ups | Review | [Sprint_15_kickoff_prompts.md](../tasks/Sprints/Sprint_15_kickoff_prompts.md) |
 | 2026-05-28 | Task 233 — W.6 vertical gap: `mt-4` (16px canonical) added to ListingsShell main content div; was 0px; only `/listings` affected (Note 14 collateral grep clean); tsc=0 | Task 233 | [sessions/2026-05-28-task-233-w6-filter-bar-tabs-gap.md](sessions/2026-05-28-task-233-w6-filter-bar-tabs-gap.md) |
 | 2026-05-28 | Task 267 — CC.3 phone tests 9-digit: 5 new test cases (4 normalizeNational + 1 validateNationalPhone) for `691 234 567` Albanian mobile format; 8-digit tests preserved with clearer labels; pre-existing COUNTRY_CODES count regression fixed (13→45); 30/30 pass | Task 267 | [sessions/2026-05-28-task-267-cc3-phone-test-9digit.md](sessions/2026-05-28-task-267-cc3-phone-test-9digit.md) |

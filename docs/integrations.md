@@ -4,7 +4,7 @@ The following external service accounts are already registered and available for
 | Service | URL | Purpose |
 |---|---|---|
 | Supabase | https://supabase.com | Database + Auth |
-| Cloudflare | https://dash.cloudflare.com | Hosting + CDN + DNS |
+| Cloudflare | https://dash.cloudflare.com | Hosting + CDN + DNS + Turnstile captcha (Task 274) |
 | Cloudinary | https://cloudinary.com | Photo storage + transformations |
 | Resend | https://resend.com | Transactional emails |
 | Sentry | https://sentry.io | Error monitoring |
@@ -310,7 +310,7 @@ of the codebase. The agent CANNOT modify these; the owner is the source of truth
 | Password requirements | **Lowercase + uppercase + digits + symbols (Supabase "recommended")** | Strongest character-class option. UX implication: signup / password-reset / cabinet password-change forms MUST show an inline hint listing the rules — otherwise users hit an opaque server-side reject. Implemented by Task 271 (see below). |
 | Email OTP expiration | 3600 s (1 h) | Upper edge of the safe range Supabase Security Advisor accepts. Combined with 8-digit OTP (10⁸ search space) brute force is impractical. Consider tightening to 600 s if UX allows. |
 | Email OTP length | 8 | Above default of 6 — brute-force surface ×100 (10⁸ vs 10⁶). Free hardening win. |
-| Captcha protection | OFF (interim) | Pending frontend Cloudflare Turnstile / hCaptcha integration. **Real attack surface for a public marketplace** — bot signups can fill the DB with junk accounts / spam listings. Re-enable AFTER captcha-integration task lands. |
+| Captcha protection | **ON — Cloudflare Turnstile (configured 2026-05-29)** | Frontend integration shipped (Task 274). Provider in dashboard = **Turnstile** (NOT hCaptcha — must match the client widget or tokens are rejected). Secret key set in dashboard + `TURNSTILE_SECRET_KEY` env; site key in `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. Protects signup + password-reset against bot abuse. |
 
 #### Dependent follow-up tasks
 
@@ -318,7 +318,7 @@ of the codebase. The agent CANNOT modify these; the owner is the source of truth
 |---|---|---|
 | **Task 271 — Password requirements hint UI** (Sprint 16) | Filed | none — purely UI |
 | **Cabinet reauth form for password change** (Sprint 16 candidate, not yet filed) | Pending | "Secure password change" + "Require current password when updating" |
-| **Captcha protection on signup + password-reset endpoints** (Sprint 16 candidate, not yet filed) | Pending | "Captcha protection" |
+| **Task 274 — Captcha protection on signup + password-reset endpoints** (Sprint 16) | ✅ Shipped 2026-05-28; dashboard toggle flipped ON 2026-05-29 — `@marsidev/react-turnstile` widget + `verifyTurnstile` server-side + `signUpWithCaptcha` + `requestPasswordResetWithCaptcha`; env vars: `NEXT_PUBLIC_TURNSTILE_SITE_KEY` + `TURNSTILE_SECRET_KEY` (see `docs/env.md`) | ~~"Captcha protection"~~ — **resolved** |
 | **Re-verify HIBP availability on Free tier** | Owner action (Pending Action Items in backlog) | "Prevent use of leaked passwords" |
 
 #### Maintenance rules
@@ -330,6 +330,50 @@ of the codebase. The agent CANNOT modify these; the owner is the source of truth
   Providers dashboard and update this table for any newly-available toggle (e.g. HIBP).
 - **Never flip a "Secure …" / "Captcha …" toggle ON without the corresponding frontend
   support in place.** Doing so locks users out of the relevant flow.
+
+### Cloudflare Turnstile Captcha (Task 274 — configured 2026-05-29)
+
+**Provider: Cloudflare Turnstile** (NOT hCaptcha). Turnstile is used as a standalone captcha
+service — the project is NOT proxied through Cloudflare; only a free Cloudflare account is
+required to mint widget keys. Protects the **signup** and **password-reset** flows against bot
+abuse (junk accounts / spam listings on a public marketplace).
+
+**Account / key origin:** Cloudflare Dashboard → **Turnstile** → site `lero-al` → Add Site.
+Hostnames registered: production domain (`lero.al`) + `localhost` (for local testing).
+
+**Two keys — where each goes:**
+
+| Key | Type | Goes to |
+|---|---|---|
+| **Site Key** | Public (browser) | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` env (client + Vercel/CF env). Marked "safe to share" in Vercel — public by design. |
+| **Secret Key** | Private (server) | `TURNSTILE_SECRET_KEY` env (server-only) **AND** Supabase Dashboard → Authentication → **Attack Protection** → captcha provider = Turnstile. NEVER prefix with `NEXT_PUBLIC_`. |
+
+**Widget Mode: `Managed`** (Cloudflare-recommended). Chosen over `Invisible` because Invisible
+gives no challenge even to high-risk traffic (weaker protection on the abuse-prone signup flow)
+and legally requires referencing Cloudflare's Turnstile Privacy Addendum in our privacy policy.
+"Skip future security rule challenges for verified visitors" (pre-clearance) is left **OFF** — it
+only works when the site is proxied through Cloudflare, which we are not.
+
+**Critical matching rule:** the provider selected in Supabase (Attack Protection) MUST be
+**Turnstile**. If it is left on hCaptcha, Supabase rejects every Turnstile token as invalid
+(known migration pitfall). Secret key in the dashboard must equal `TURNSTILE_SECRET_KEY`.
+
+**Dashboard location note (2026-05-29):** Supabase moved this setting — there is no longer a
+"Bot and Abuse Protection" menu item. "Enable Captcha protection" now lives under
+**Authentication → Attack Protection** (same page as leaked-password protection). Available on
+the Free tier.
+
+**Code (Task 274):**
+- `src/lib/captcha/verifyTurnstile.ts` — server-only siteverify POST to
+  `challenges.cloudflare.com/turnstile/v0/siteverify`. Fails closed in production if the secret
+  is missing.
+- `src/components/auth/CaptchaWidget.tsx` — client widget (`@marsidev/react-turnstile`),
+  `size="flexible"`, imperative `reset()` after a failed attempt.
+- `src/modules/auth/actions/captcha.ts` — `signUpWithCaptcha`, `requestPasswordResetWithCaptcha`
+  (verify → Supabase call with `captchaToken`).
+- **Dev fallback:** when BOTH keys are absent AND `NODE_ENV !== 'production'`, the captcha is
+  bypassed via the `'dev-noop-token'` sentinel so local dev needs no Cloudflare credentials. See
+  `docs/env.md` for the full env-var contract.
 
 ### Supabase Auth emails — delegation (implemented Task 122 / Epic D.6)
 

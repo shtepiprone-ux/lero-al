@@ -16,6 +16,11 @@ NEXT_PUBLIC_SITE_URL=https://lero.al
 SUPABASE_EMAIL_HOOK_SECRET=v1,whsec_your_base64_secret  # Supabase Dashboard → Auth → Hooks → Send Email Hook → Secret. Dashboard-issued value in v1,whsec_<base64> format (do NOT invent your own). Server-only; verified via Standard Webhooks (standardwebhooks lib) on incoming hook requests at /api/auth-email-hook
 CRON_SECRET=your_cron_secret               # Random secret (e.g. openssl rand -hex 32). Set in Vercel → Settings → Environment Variables. Vercel automatically passes it as Authorization: Bearer <CRON_SECRET> to cron routes defined in vercel.json. Used by /api/cron/inactivity.
 LOG_CORRELATION_SALT=your_random_salt      # Server-only salt for hashing emails in security audit logs (Task 157). Used by src/modules/auth/actions/recovery.ts to produce a stable correlationId without exposing raw email. Generate: openssl rand -hex 24. If absent, falls back to 'lero-al' (weaker; set in production).
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAAA...  # Cloudflare Dashboard → Turnstile → your site → Site Key. NEXT_PUBLIC_ — exposed to the browser for the widget. Dev fallback: if absent, CaptchaWidget renders a dev-only notice and immediately calls onSuccess('dev-noop-token') (see below). Task 274.
+TURNSTILE_SECRET_KEY=0x4AAAAAAA...            # Cloudflare Dashboard → Turnstile → your site → Secret Key. Server-only — NEVER expose to the client. Used by src/lib/captcha/verifyTurnstile.ts. Dev fallback: if absent in non-production, verifyTurnstile('dev-noop-token') returns {success:true} (dual-key guard: both keys must be absent). Task 274.
+# Turnstile dev fallback (Task 274): when BOTH NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY
+# are absent AND NODE_ENV !== 'production', the captcha is bypassed automatically so local dev works
+# without Cloudflare credentials. In production, a missing secret key always fails closed.
 # Email-change token expiry: 24 hours (hardcoded in src/modules/cabinet/actions/index.ts EMAIL_CHANGE_EXPIRY_HOURS)
 # Email preview server: npm run email — launches react-email preview at localhost:3000 (dev only)
 

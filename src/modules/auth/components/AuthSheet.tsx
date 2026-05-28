@@ -5,8 +5,10 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { Loader2, CheckCircle2, ImagePlus } from 'lucide-react'
-import { signIn, signUp, signInWithOAuth, requestPasswordReset } from '@/lib/auth/browser'
+import { signIn, signInWithOAuth } from '@/lib/auth/browser'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
+import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
+import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
 import {
   Sheet,
   SheetContent,
@@ -180,16 +182,26 @@ function ForgotPasswordView({
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaFailed, setCaptchaFailed] = useState(false)
+  const widgetRef = useRef<CaptchaWidgetHandle>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (!captchaToken) return
+    setCaptchaFailed(false)
     setLoading(true)
     const redirectTo = `${SITE_URL}/auth/callback?next=/${locale}/auth/reset-password`
-    await Promise.all([
-      requestPasswordReset(email, redirectTo),
-      logPasswordRecoveryRequest(email),
-    ])
+    const result = await requestPasswordResetWithCaptcha({ email, captchaToken, redirectTo })
+    void logPasswordRecoveryRequest(email)
     setLoading(false)
+
+    if (!result.ok && result.reason === 'captcha_failed') {
+      widgetRef.current?.reset()
+      setCaptchaToken(null)
+      setCaptchaFailed(true)
+      return
+    }
     // Always show neutral success — never reveal whether email is registered
     setSubmitted(true)
   }
@@ -228,7 +240,22 @@ function ForgotPasswordView({
         />
       </div>
 
-      <Button type="submit" size="xl" className="w-full" disabled={loading}>
+      {captchaFailed && (
+        <Alert variant="destructive">
+          <AlertDescription>{t('captcha_error_failed')}</AlertDescription>
+        </Alert>
+      )}
+
+      <div className="my-3">
+        <CaptchaWidget
+          ref={widgetRef}
+          onSuccess={token => { setCaptchaToken(token); setCaptchaFailed(false) }}
+          onError={() => { setCaptchaToken(null); setCaptchaFailed(true) }}
+          onExpire={() => setCaptchaToken(null)}
+        />
+      </div>
+
+      <Button type="submit" size="xl" className="w-full" disabled={loading || !captchaToken}>
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('forgot_password_submit')}
       </Button>
 
@@ -533,6 +560,8 @@ function RegisterView({
   const hasPasswordInput = password.length > 0
   const allPasswordMet = allPasswordRulesMet(password)
   const passwordInputState: PasswordInputState = hasPasswordInput ? (allPasswordMet ? 'success' : 'error') : 'idle'
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const widgetRef = useRef<CaptchaWidgetHandle>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -541,6 +570,7 @@ function RegisterView({
     if (!name.trim()) { setErrorKey('error_name_required'); return }
     if (!email.trim() || !EMAIL_RE.test(email)) { setErrorKey('error_email_invalid'); return }
     if (!allPasswordRulesMet(password)) { setErrorKey('error_weak_password'); return }
+    if (!captchaToken) return
 
     // Country-aware phone validation (only if a national number was entered)
     let phoneE164: string | undefined
@@ -551,7 +581,10 @@ function RegisterView({
     }
 
     setLoading(true)
-    const { error } = await signUp(email, password, {
+    const result = await signUpWithCaptcha({
+      email,
+      password,
+      captchaToken,
       emailRedirectTo: `${SITE_URL}/auth/callback?next=/${locale}/auth/verified`,
       data: {
         name,
@@ -563,7 +596,18 @@ function RegisterView({
       },
     })
     setLoading(false)
-    if (error) { setErrorKey(mapAuthError(error.message)); return }
+    if (!result.ok) {
+      if (result.reason === 'captcha_failed') {
+        widgetRef.current?.reset()
+        setCaptchaToken(null)
+        setErrorKey('captcha_error_failed')
+      } else {
+        setErrorKey(result.supabaseErrorMessage ? mapAuthError(result.supabaseErrorMessage) : 'error_generic')
+        widgetRef.current?.reset()
+        setCaptchaToken(null)
+      }
+      return
+    }
     setSuccess(true)
   }
 
@@ -659,7 +703,16 @@ function RegisterView({
         <PasswordRequirementsHint value={password} />
       </div>
 
-      <Button type="submit" size="xl" className="w-full" disabled={loading || !allPasswordMet}>
+      <div className="my-3">
+        <CaptchaWidget
+          ref={widgetRef}
+          onSuccess={token => { setCaptchaToken(token); if (errorKey === 'captcha_error_failed') setErrorKey(null) }}
+          onError={() => { setCaptchaToken(null); setErrorKey('captcha_error_failed') }}
+          onExpire={() => setCaptchaToken(null)}
+        />
+      </div>
+
+      <Button type="submit" size="xl" className="w-full" disabled={loading || !allPasswordMet || !captchaToken}>
         {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('register')}
       </Button>
 

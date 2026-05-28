@@ -10,6 +10,8 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { routing } from '@/i18n/routing'
 import type { PreferredCurrency } from '@/types/database'
 import { sendEmailChangeEmails } from '@/modules/notifications/lib/emails/emailChange'
+import { allPasswordRulesMet } from '@/lib/passwordRules'
+import { sendPasswordChangedEmail } from '@/modules/notifications/lib/emails/passwordChanged'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -461,6 +463,59 @@ export async function resendEmailVerification(data: {
   })
 
   return {}
+}
+
+// ── Cabinet password change (requires current-password re-verify) ─────────────
+
+type ChangePasswordReason =
+  | 'invalid_current'
+  | 'weak_password'
+  | 'same_password'
+  | 'rate_limited'
+  | 'session_expired'
+  | 'server_error'
+
+export async function changeCabinetPassword(data: {
+  currentPassword: string
+  newPassword: string
+}): Promise<{ ok: true } | { ok: false; reason: ChangePasswordReason }> {
+  try {
+    const { currentPassword, newPassword } = data
+
+    if (!allPasswordRulesMet(newPassword)) return { ok: false, reason: 'weak_password' }
+    if (currentPassword === newPassword) return { ok: false, reason: 'same_password' }
+
+    const user = await getUser()
+    if (!user?.email) return { ok: false, reason: 'session_expired' }
+
+    const supabase = await createClient()
+
+    const { error: verifyError } = await supabase.auth.signInWithPassword({
+      email: user.email,
+      password: currentPassword,
+    })
+
+    if (verifyError) {
+      const msg = verifyError.message.toLowerCase()
+      if (msg.includes('rate limit') || msg.includes('too many')) return { ok: false, reason: 'rate_limited' }
+      return { ok: false, reason: 'invalid_current' }
+    }
+
+    const { error: updateError } = await supabase.auth.updateUser({ password: newPassword })
+    if (updateError) return { ok: false, reason: 'server_error' }
+
+    // Fire-and-forget: password-changed notification email (Task 276).
+    try {
+      const { data: profile } = await supabase.from('users').select('name').eq('id', user.id).single()
+      void sendPasswordChangedEmail({ to: user.email, name: profile?.name ?? null })
+    } catch {
+      // Best-effort — the password change has already completed.
+    }
+
+    return { ok: true }
+  } catch {
+    return { ok: false, reason: 'server_error' }
+  }
 }
 
 // ── Email verification (called from the public confirm-email page) ────────────

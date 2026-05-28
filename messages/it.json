@@ -335,7 +335,10 @@
     "error_name_required": "Il nome è obbligatorio.",
     "error_phone_invalid": "Inserisci un numero di telefono valido per il paese selezionato.",
     "error_email_invalid": "Inserisci un indirizzo email valido.",
-    "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale."
+    "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
+    "captcha_aria_label": "Verifica di sicurezza captcha",
+    "captcha_error_failed": "Verifica di sicurezza fallita. Riprova.",
+    "captcha_not_configured": "(Captcha disabilitato — ambiente di sviluppo)"
   },
   "common": {
     "search": "Cerca",
@@ -498,7 +501,18 @@
     "currency_GBP": "Sterlina britannica (GBP)",
     "error_phone_invalid": "Inserisci un numero di telefono valido per il paese selezionato.",
     "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
-    "error_email_invalid": "Inserisci un indirizzo email valido."
+    "error_email_invalid": "Inserisci un indirizzo email valido.",
+    "password_section_title": "Cambia password",
+    "password_current_label": "Password attuale",
+    "password_new_label": "Nuova password",
+    "password_submit": "Cambia password",
+    "password_changed_success": "Password modificata con successo. Effettua nuovamente l'accesso.",
+    "password_error_invalid_current": "La password attuale non è corretta.",
+    "password_error_weak": "La nuova password non soddisfa i requisiti di sicurezza.",
+    "password_error_same": "La nuova password deve essere diversa da quella attuale.",
+    "password_error_rate_limited": "Troppi tentativi. Attendi 30 secondi e riprova.",
+    "password_error_session_expired": "Sessione scaduta. Verrai reindirizzato alla pagina di accesso.",
+    "password_error_server": "Si è verificato un errore. Riprova."
   },
   "home": {
     "hero_title": "Trova la proprietà dei tuoi sogni",

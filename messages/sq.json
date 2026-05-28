@@ -335,7 +335,10 @@
     "error_name_required": "Emri është i detyrueshëm.",
     "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
     "error_email_invalid": "Adresa e emailit është e pavlefshme.",
-    "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit."
+    "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
+    "captcha_aria_label": "Verifikim sigurie captcha",
+    "captcha_error_failed": "Verifikimi i sigurisë dështoi. Ju lutemi provoni sërish.",
+    "captcha_not_configured": "(Captcha çaktivizuar — mjedis zhvillimi)"
   },
   "common": {
     "search": "Kërko",
@@ -498,7 +501,18 @@
     "currency_GBP": "Paund britanik (GBP)",
     "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
     "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
-    "error_email_invalid": "Adresa e emailit është e pavlefshme."
+    "error_email_invalid": "Adresa e emailit është e pavlefshme.",
+    "password_section_title": "Ndrysho fjalëkalimin",
+    "password_current_label": "Fjalëkalimi aktual",
+    "password_new_label": "Fjalëkalimi i ri",
+    "password_submit": "Ndrysho fjalëkalimin",
+    "password_changed_success": "Fjalëkalimi u ndryshua me sukses. Ju lutemi hyni sërish.",
+    "password_error_invalid_current": "Fjalëkalimi aktual është i gabuar.",
+    "password_error_weak": "Fjalëkalimi i ri nuk plotëson kërkesat e sigurisë.",
+    "password_error_same": "Fjalëkalimi i ri duhet të jetë i ndryshëm nga ai aktual.",
+    "password_error_rate_limited": "Shumë tentativa. Ju lutemi prisni 30 sekonda dhe provoni sërish.",
+    "password_error_session_expired": "Sesioni ka skaduar. Do të ridrejtoheni te faqja e hyrjes.",
+    "password_error_server": "Ndodhi një gabim. Ju lutemi provoni sërish."
   },
   "home": {
     "hero_title": "Gjeni pronën tuaj të ëndrrave",

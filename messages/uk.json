@@ -335,7 +335,10 @@
     "error_name_required": "Ім'я обов'язкове.",
     "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
     "error_email_invalid": "Введіть коректну електронну адресу.",
-    "error_phone_no_country_code": "Введіть номер телефону без коду країни."
+    "error_phone_no_country_code": "Введіть номер телефону без коду країни.",
+    "captcha_aria_label": "Перевірка безпеки captcha",
+    "captcha_error_failed": "Перевірку безпеки не вдалося пройти. Будь ласка, спробуйте ще раз.",
+    "captcha_not_configured": "(Captcha вимкнено — середовище розробки)"
   },
   "common": {
     "search": "Пошук",
@@ -498,7 +501,18 @@
     "currency_GBP": "Британський фунт (GBP)",
     "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
     "error_phone_no_country_code": "Введіть номер телефону без коду країни.",
-    "error_email_invalid": "Введіть коректну електронну адресу."
+    "error_email_invalid": "Введіть коректну електронну адресу.",
+    "password_section_title": "Змінити пароль",
+    "password_current_label": "Поточний пароль",
+    "password_new_label": "Новий пароль",
+    "password_submit": "Змінити пароль",
+    "password_changed_success": "Пароль успішно змінено. Будь ласка, увійдіть знову.",
+    "password_error_invalid_current": "Поточний пароль неправильний.",
+    "password_error_weak": "Новий пароль не відповідає вимогам безпеки.",
+    "password_error_same": "Новий пароль має відрізнятися від поточного.",
+    "password_error_rate_limited": "Забагато спроб. Зачекайте 30 секунд і повторіть.",
+    "password_error_session_expired": "Сесія закінчилася. Вас буде перенаправлено на сторінку входу.",
+    "password_error_server": "Виникла помилка. Будь ласка, повторіть спробу."
   },
   "home": {
     "hero_title": "Знайдіть нерухомість своєї мрії",

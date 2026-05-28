@@ -335,7 +335,10 @@
     "error_name_required": "Name is required.",
     "error_phone_invalid": "Please enter a valid phone number for the selected country.",
     "error_email_invalid": "Please enter a valid email address.",
-    "error_phone_no_country_code": "Enter the phone number without the country code."
+    "error_phone_no_country_code": "Enter the phone number without the country code.",
+    "captcha_aria_label": "Security captcha verification",
+    "captcha_error_failed": "Security verification failed. Please try again.",
+    "captcha_not_configured": "(Captcha disabled — development environment)"
   },
   "common": {
     "search": "Search",
@@ -498,7 +501,18 @@
     "currency_GBP": "British Pound (GBP)",
     "error_phone_invalid": "Please enter a valid phone number for the selected country.",
     "error_phone_no_country_code": "Enter the phone number without the country code.",
-    "error_email_invalid": "Please enter a valid email address."
+    "error_email_invalid": "Please enter a valid email address.",
+    "password_section_title": "Change password",
+    "password_current_label": "Current password",
+    "password_new_label": "New password",
+    "password_submit": "Change password",
+    "password_changed_success": "Password changed successfully. Please log in again.",
+    "password_error_invalid_current": "Current password is incorrect.",
+    "password_error_weak": "New password does not meet the security requirements.",
+    "password_error_same": "New password must be different from the current one.",
+    "password_error_rate_limited": "Too many attempts. Please wait 30 seconds and try again.",
+    "password_error_session_expired": "Session expired. You will be redirected to the login page.",
+    "password_error_server": "An error occurred. Please try again."
   },
   "home": {
     "hero_title": "Find your dream property",

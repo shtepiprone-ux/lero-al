@@ -26,6 +26,7 @@ import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { Combobox } from '@/components/shared/Combobox'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/modules/auth/context/AuthContext'
+import { CabinetPasswordSection } from '@/modules/cabinet/components/CabinetPasswordSection'
 
 interface CityOption { id: number; name_al: string; region_id: number | null }
 interface RegionOption { id: number; name_al: string }
@@ -417,6 +418,9 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
           {recentlyViewed}
         </div>
       )}
+
+      {/* ── Change password ────────────────────────────────────────────────── */}
+      <CabinetPasswordSection />
 
       {/* ── Danger zone ────────────────────────────────────────────────────── */}
       <div className="bg-destructive/5 border border-destructive/20 rounded-2xl p-6 flex flex-col gap-3">

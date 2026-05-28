@@ -247,6 +247,7 @@ export interface Listing {
   expires_at: string
   created_at: string
   updated_at: string
+  search_vector: unknown | null  // tsvector generated column — never SELECT-projected; filter-only via .textSearch()
 }
 
 export interface ListingImage {

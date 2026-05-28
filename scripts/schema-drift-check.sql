@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-28T05:30:59.332Z by: npm run check:schema-drift
+-- Generated 2026-05-28T06:50:50.264Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -9,7 +9,7 @@
 --   EmailChangeToken     → email_change_tokens      (7 cols)
 --   EmailTemplate        → email_templates          (10 cols)
 --   Location             → locations                (12 cols)
---   Listing              → listings                 (41 cols)
+--   Listing              → listings                 (42 cols)
 --   ListingImage         → listing_images           (5 cols)
 --   Favorite             → favorites                (4 cols)
 --   FavoritePriceAlert   → favorite_price_alerts    (4 cols)
@@ -155,6 +155,7 @@ WITH expected(table_name, column_name) AS (
     ('listings', 'expires_at'),
     ('listings', 'created_at'),
     ('listings', 'updated_at'),
+    ('listings', 'search_vector'),
     ('listing_images', 'id'),
     ('listing_images', 'listing_id'),
     ('listing_images', 'url'),
@@ -438,6 +439,7 @@ WITH expected(table_name, column_name) AS (
     ('listings', 'expires_at'),
     ('listings', 'created_at'),
     ('listings', 'updated_at'),
+    ('listings', 'search_vector'),
     ('listing_images', 'id'),
     ('listing_images', 'listing_id'),
     ('listing_images', 'url'),

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-05-28 — Sprint 15 PLANNED (Opus 4.7): 8 tasks (247/267/233/232/229/230/241/249) — owner-action-first order so EE.1 (footer admin) emits SQL early for parallel owner work. Run order: **247 (EE.1 footer admin) → 267 (phone tests 9-digit) → 233 (W.6 vertical gap) → 232 (W.5 toolbar overflow) → 229 (W.2 single global reset) → 230 (W.3 area_asc sort) → 241 (AA.1 currency → profile) → 249 (FF.2 toast audit v2)**. All 8 kickoffs include Positive/Negative flow (clause 6a) + Files Changed table requirement (clause 10 / Task 264). New follow-up: **Task 267** (phone test coverage — 9-digit cases in `normalizeNational`; follow-up from owner's question after Task 244). Files: [Sprint_15_…](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md) + [Sprint_15_kickoff_prompts.md](../tasks/Sprints/Sprint_15_kickoff_prompts.md). **Task 266 APPROVED** on diff: Sonnet pre-flight audit caught `permissions.ts:67` regression (admin-client fix); `public_user_profiles` view + `users_self_read` RLS + `get_listing_owner_contact` RPC; click-to-fetch UX; 29 tables / 272 cols; 0 follow-ups.**
+**2026-05-28 — Orchestration review (Opus 4.7): Sprint 15 batch 1 (Tasks 247, 267, 233) APPROVED on diff. All 3 honored Task 264 contract (Files Changed tables; no Sonnet-emitted commits). 247 EE.1: Strategy A (site_footer table + JSONB links) + per-field fallback chain (DB → sq DB → i18n) + URL validation + admin RLS + 30 tables/284 cols; owner SQL applied 2026-05-28. 267 CC.3: 5 new 9-digit tests + Sonnet caught pre-existing regression (COUNTRY_CODES 13→45 from Task 187) and fixed it; 30/30 pass. 233 W.6: 1-line `mt-4` on ListingsShell (16px canonical gap; was 0). 0 follow-ups. Sprint 15 remaining: 232/229/230/241/249 — same run order.**
 
 **2026-05-28 — Task 265 (X.4) ✅ + Sprint 14 CLOSED (8/8). Task 265: `search_vector: unknown | null` added to `Listing`; drift SQL → 28 tables / 263 cols; tsc=0. Sprint 14 batch 1 (250/262/263 — RBAC + market_type + RLS) + batch 2 (251 Albanian email / 252 sales-inbox split / 244 phone 9-digit / 242 report-button wired / 248 header-reactivity via AuthController.refresh) — all 8 APPROVED on diff against Task 255 (Positive+Negative flow) + Task 264 (Files Changed table) gates. Followups filed: 265 (closed today) + 266 (decisioned today).**
 
@@ -15,20 +15,17 @@
 
 | Item | Owner | Notes |
 |------|-------|-------|
-| ✅ Schema-drift PASS confirmed 2026-05-28 — 0 rows after Task 265 + 266 + hotfix `notify_frequency`. 29 tables / 272 cols tracked. Final state: 0 drift items. | Owner | Done |
+| ⚠️ Git index corrupted (`fatal: unable to read 9135c9df00000000…`) — run `Remove-Item .git\index; git reset` in PowerShell before next commit batch | Owner | Same recovery as previous sessions |
 
 **✅ Done (recent owner actions):**
-- 2026-05-28 — Hotfix: `ALTER TABLE saved_searches ADD COLUMN IF NOT EXISTS notify_frequency text NOT NULL DEFAULT 'daily' CHECK (...)` applied; `npm run check:schema-drift` → 0 rows confirmed
-- 2026-05-28 — Task 250: `role_permissions` + `role_permission_events` SQL applied; schema-drift extended to 28 tables / 261 cols
-- 2026-05-28 — Task 262: `ALTER TABLE listings ADD COLUMN market_type text` applied (scenario B — column was missing)
-- 2026-05-28 — Task 263: RLS policy `USING (true)` on `users` applied; `createAdminClient()` bypass removed from listing-detail page
-- 2026-05-27 — Task 260: `premium_until` column + index applied
-- 2026-05-27 — Task 234: `ALTER TYPE property_type ADD VALUE 'room'` applied
-- 2026-05-27 — Task 256: lero.al domain + `noreply@`/`support@`/`sales@` all verified in Resend; routing confirmed in prod
+- 2026-05-28 — Task 247: `site_footer` table + RLS + 4 seed rows applied; `npm run check:schema-drift` → 0 rows (30 tables / 284 cols)
+- 2026-05-28 — Hotfix: `notify_frequency` column on `saved_searches` (drift cleanup)
+- 2026-05-28 — Tasks 250 + 262 + 263 + 266: all SQL migrations applied (role_permissions / role_permission_events / market_type / users_self_read / public_user_profiles view / get_listing_owner_contact RPC)
+- 2026-05-27 — Tasks 234 + 260 + 256: enum extension + premium_until column + Resend domain & 3 sender verifications
 
 ## Next Immediate Tasks
 
-**Last task number: 267. Next: 268.** **Sprint 14 + follow-ups CLOSED ✅** (250, 262, 263, 251, 252, 244, 242, 248, 265, 266 — all approved on diff). **Sprint 15 ACTIVE** — 8 tasks queued in owner-action-first order: **247 (EE.1 footer admin) → 267 (phone tests) → 233 (W.6) → 232 (W.5) → 229 (W.2) → 230 (W.3) → 241 (AA.1) → 249 (FF.2)**. Plan: [`Sprint_15_…`](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md). Kickoffs: [`Sprint_15_kickoff_prompts.md`](../tasks/Sprints/Sprint_15_kickoff_prompts.md). **Sprint 16 (next)** absorbs the large/deferred items: W.4 (canonical Combobox migration), Z.1 (modal global refactor), CC.2 (multi-lang search), BB.2 (listing inquiries message flow), Y.2-Y.3 (listing form lifecycle UX), DD.1 (admin audit hygiene). Every kickoff continues to follow Canonical Task Template + Notes 18/19/20/21/22/23 + **Positive+Negative flow (clause 6a) + Files Changed table (clause 10 / Task 264)**.
+**Last task number: 267. Next: 268.** **Sprint 15 batch 1 CLOSED ✅** (247 + 267 + 233 approved on diff). **Sprint 15 remaining** — 5 tasks in run order: **232 (W.5 toolbar overflow) → 229 (W.2 single global reset) → 230 (W.3 area_asc sort) → 241 (AA.1 currency→profile) → 249 (FF.2 toast audit v2)**. W-epic tasks (232/229/230) touch same files (`ListingsFilterBar.tsx` / `ListingsFilters.tsx` / `FiltersPanel.tsx`) — run sequentially. Plan: [`Sprint_15_…`](../tasks/Sprints/Sprint_15_—_Deferred_Polish_and_Footer_Admin.md). Kickoffs: [`Sprint_15_kickoff_prompts.md`](../tasks/Sprints/Sprint_15_kickoff_prompts.md). **Sprint 16 (next)** absorbs the large/deferred items: W.4 (canonical Combobox migration), Z.1 (modal global refactor), CC.2 (multi-lang search), BB.2 (listing inquiries message flow), Y.2-Y.3 (listing form lifecycle UX), DD.1 (admin audit hygiene).
 
 ## Active product backlog — Epics M–V (closed) + W–FF (open, from `issues.txt` 2026-05-25)
 
@@ -96,6 +93,10 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-28 | Orchestration REVIEW (Opus 4.7): Sprint 15 batch 1 — 247/267/233 APPROVED. All 3 honored Task 264 contract. 247: Strategy A site_footer + JSONB links + fallback chain + 30 tables/284 cols. 267: 5 new 9-digit tests + bonus regression fix (COUNTRY_CODES 13→45 from Task 187). 233: 1-line mt-4 canonical gap. 0 follow-ups | Review | [Sprint_15_kickoff_prompts.md](../tasks/Sprints/Sprint_15_kickoff_prompts.md) |
+| 2026-05-28 | Task 233 — W.6 vertical gap: `mt-4` (16px canonical) added to ListingsShell main content div; was 0px; only `/listings` affected (Note 14 collateral grep clean); tsc=0 | Task 233 | [sessions/2026-05-28-task-233-w6-filter-bar-tabs-gap.md](sessions/2026-05-28-task-233-w6-filter-bar-tabs-gap.md) |
+| 2026-05-28 | Task 267 — CC.3 phone tests 9-digit: 5 new test cases (4 normalizeNational + 1 validateNationalPhone) for `691 234 567` Albanian mobile format; 8-digit tests preserved with clearer labels; pre-existing COUNTRY_CODES count regression fixed (13→45); 30/30 pass | Task 267 | [sessions/2026-05-28-task-267-cc3-phone-test-9digit.md](sessions/2026-05-28-task-267-cc3-phone-test-9digit.md) |
+| 2026-05-28 | Task 247 — EE.1 footer admin manager: Strategy A (single `site_footer` table + JSONB link arrays); /admin/footer route + AdminFooterManager (4 locale tabs, link CRUD); public Footer reads DB with per-field fallback chain (DB → sq DB → i18n/hardcoded); URL validation (rejects javascript:/data:); /contact link preserved; PanelBottom sidebar entry; 30 tables/284 cols; 20 keys ×4; tsc=0 | Task 247 | [sessions/2026-05-28-task-247-ee1-footer-admin-manager.md](sessions/2026-05-28-task-247-ee1-footer-admin-manager.md) |
 | 2026-05-28 | Task 266 — T.8 users RLS narrowing: view `public_user_profiles` + `users_self_read` policy + `get_listing_owner_contact` RPC; listing-detail click-to-fetch; permissions.ts actor names fix; PublicUserProfile type; 29 tables/272 cols; contact_load_failed ×4; tsc=0 | Task 266 | [sessions/2026-05-28-task-266-t8-users-rls-narrowing.md](sessions/2026-05-28-task-266-t8-users-rls-narrowing.md) |
 | 2026-05-28 | Task 265 — X.4 search_vector drift: `search_vector: unknown | null` added to Listing; mjs comment updated; SQL regenerated: 28 tables/263 cols; tsc=0; grep clean | Task 265 | [sessions/2026-05-28-task-265-x4-search-vector-drift.md](sessions/2026-05-28-task-265-x4-search-vector-drift.md) |
 | 2026-05-28 | Orchestration REVIEW (Opus 4.7): Sprint 14 batch 2 — 251/252/244/242/248 APPROVED. All 5 honored Task 264 contract (Files Changed tables present, no Sonnet-emitted commits). 0 follow-ups needed. Sprint 14 CLOSED ✅ (8/8 tasks shipped) | Review | [Sprint_14_kickoff_prompts.md](../tasks/Sprints/Sprint_14_kickoff_prompts.md) |

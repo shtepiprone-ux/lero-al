@@ -19,6 +19,8 @@
 
 import { createHash } from 'crypto'
 import { headers } from 'next/headers'
+import { createAdminClient } from '@/lib/supabase/admin'
+import { sendPasswordChangedEmail } from '@/modules/notifications/lib/emails/passwordChanged'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -79,4 +81,14 @@ export async function logPasswordRecoveryCompletion(
     ua,
     timestamp: new Date().toISOString(),
   })
+
+  // Fire-and-forget: password-changed notification email (Task 276).
+  // Resolves display name for personalised greeting; falls back to null.
+  try {
+    const db = createAdminClient()
+    const { data: profile } = await db.from('users').select('name').eq('id', userId).single()
+    void sendPasswordChangedEmail({ to: email, name: profile?.name ?? null })
+  } catch {
+    // Best-effort — the password change has already completed.
+  }
 }

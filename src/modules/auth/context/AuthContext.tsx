@@ -32,6 +32,9 @@ export interface AuthContextValue {
   /** @deprecated — prefer `status`. Kept for backward-compatibility. */
   loading: boolean
   signOut: (navigate?: () => void) => void
+  /** Re-syncs user state from the server. Call after profile updates so the header
+   *  reflects the new name/avatar immediately without a full page reload. */
+  refreshUser: () => void
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -39,6 +42,7 @@ const AuthContext = createContext<AuthContextValue>({
   status: 'initializing',
   loading: true,
   signOut: () => {},
+  refreshUser: () => {},
 })
 
 export function useAuth(): AuthContextValue {
@@ -105,6 +109,11 @@ export function AuthProvider({ children, initialUser }: Props) {
     [controller]
   )
 
+  const refreshUser = useCallback(
+    (): void => { controller.refresh() },
+    [controller]
+  )
+
   return (
     <AuthContext.Provider
       value={{
@@ -112,6 +121,7 @@ export function AuthProvider({ children, initialUser }: Props) {
         status: authState.status,
         loading: authState.status === 'initializing',
         signOut,
+        refreshUser,
       }}
     >
       {children}

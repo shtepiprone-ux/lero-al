@@ -76,7 +76,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
   const t = useTranslations('cabinet')
   const tc = useTranslations('common')
   const router = useRouter()
-  const { signOut } = useAuth()
+  const { signOut, refreshUser } = useAuth()
   const [isPending, startTransition] = useTransition()
 
   // Form state
@@ -172,6 +172,9 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     } else {
       setSaveStatus('saved')
       setTimeout(() => setSaveStatus('idle'), 3000)
+      // Re-sync auth context so the header chip shows the new name immediately
+      // without a full page reload (Task 248 / FF.1 fix).
+      refreshUser()
       startTransition(() => router.refresh())
     }
   }

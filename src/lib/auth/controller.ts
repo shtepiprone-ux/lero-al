@@ -199,6 +199,16 @@ export class AuthController {
     this.syncFromServer()
   }
 
+  // ── Public: manual refresh ────────────────────────────────────────────────
+  //
+  // Triggers a server sync without a Supabase auth event — used after profile
+  // updates (name, avatar, etc.) so client state reflects the new values
+  // immediately without a full page reload. (Task 248 / FF.1)
+
+  refresh(): void {
+    this.syncFromServer()
+  }
+
   // ── Public: sign-out ──────────────────────────────────────────────────────
 
   async signOut(): Promise<void> {

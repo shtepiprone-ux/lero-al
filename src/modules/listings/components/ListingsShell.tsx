@@ -188,7 +188,7 @@ export function ListingsShell({ listings, total, page, locations, activeFiltersC
       </Sheet>
 
       {/* ── Main content ── */}
-      <div className="flex-1 min-w-0 flex flex-col gap-0">
+      <div className="flex-1 min-w-0 flex flex-col gap-0 mt-4">
         <ListingsStatusTabs />
         <ActiveFilterChips locations={locations} />
         <div className="flex items-center gap-2">

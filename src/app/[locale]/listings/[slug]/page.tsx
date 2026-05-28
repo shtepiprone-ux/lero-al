@@ -3,7 +3,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import { MapPin, Eye, CalendarDays, Flag } from 'lucide-react'
+import { MapPin, Eye, CalendarDays } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale } from 'date-fns'
@@ -30,6 +30,7 @@ import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
+import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
 //
@@ -230,6 +231,7 @@ export default async function ListingPage({ params }: Props) {
   // A zombie session has a valid JWT (authUser truthy) but no profile row (deleted/orphaned account).
   // Treat zombie sessions as guests so the contact card shows "Sign in" instead of "Account deleted".
   const isGuest = !authUser || !hasValidProfile
+  const canReport = !isGuest && !!authUser && authUser.id !== listing.user_id
 
   // Viewer auth state (isGuest) and owner account status (deleted_at) are independent concerns.
   // ownerRaw is null for guests (RLS blocks the embed join) or when the owner row is genuinely gone.
@@ -465,13 +467,12 @@ export default async function ListingPage({ params }: Props) {
               </div>
             )}
 
-            {/* Report */}
-            <div className="flex justify-end">
-              <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-destructive transition-colors">
-                <Flag className="h-3.5 w-3.5" />
-                {t('report_listing')}
-              </button>
-            </div>
+            {/* Report — authenticated non-owner only */}
+            {canReport && (
+              <div className="flex justify-end">
+                <ListingReportDialog listingId={listing.id} />
+              </div>
+            )}
 
             {/* Recently viewed — streamed below the fold, excluded the current listing */}
             <Suspense fallback={<RecentlyViewedSkeleton />}>
@@ -508,7 +509,7 @@ export default async function ListingPage({ params }: Props) {
             listingStatus={listing.status as ListingStatus}
             listingId={authUser ? listing.id : undefined}
             isFavorited={isInitiallyFavorited}
-            canReport={!isGuest && !!authUser && authUser.id !== listing.user_id}
+            canReport={canReport}
           />
         </div>
       </div>

@@ -53,6 +53,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
   if (sort === 'price_asc')  query = query.order('price',     { ascending: true })
   else if (sort === 'price_desc') query = query.order('price', { ascending: false })
   else if (sort === 'area_desc')  query = query.order('area_gross', { ascending: false })
+  else if (sort === 'area_asc')   query = query.order('area_gross', { ascending: true, nullsFirst: false })
   else if (tab === 'closed')      query = query.order('updated_at', { ascending: false })
   else {
     query = query.order('is_premium',  { ascending: false })

@@ -21,6 +21,7 @@ const SORT_OPTIONS = [
   { value: 'price_asc', labelKey: 'sort_price_asc' },
   { value: 'price_desc', labelKey: 'sort_price_desc' },
   { value: 'area_desc', labelKey: 'sort_area_desc' },
+  { value: 'area_asc', labelKey: 'sort_area_asc' },
 ] as const
 
 export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFiltersOpen, activeFiltersCount }: Props) {

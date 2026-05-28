@@ -31,7 +31,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
 
   const {
     get, updateParams, handlePropertyTypeChange,
-    activeCount, propertyTypes,
+    activeCount, propertyTypes, resetFilters,
   } = useListingsUrlFilters()
 
   const listingType = get('type') || ''
@@ -44,7 +44,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
   ]
 
   return (
-    <div className="listings-filter-bar hidden md:flex items-center gap-2 py-3 border-b overflow-x-auto flex-nowrap">
+    <div className="listings-filter-bar hidden md:flex flex-wrap items-center gap-2 py-3 border-b">
       {/* Listing type — sale / rent */}
       <div className="flex items-center gap-1 shrink-0">
         {(['', 'sale', 'rent'] as const).map(type => (
@@ -88,18 +88,14 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
       {/* Spacer */}
       <div className="flex-1 min-w-0" />
 
-      {/* Reset all — shown only when filters are active */}
+      {/* Global reset — shown only when filters are active */}
       {activeCount > 0 && (
         <Button
           type="button"
           variant="ghost"
           size="lg"
           className="text-xs text-muted-foreground hover:text-destructive gap-1 shrink-0"
-          onClick={() => updateParams({
-            type: null, property_type: null, location_id: null,
-            price_min: null, price_max: null, area_min: null, area_max: null,
-            rooms: null, condition: null, market_type: null,
-          })}
+          onClick={resetFilters}
         >
           <X className="h-3.5 w-3.5 shrink-0" />
           {tc('reset_filters')}

@@ -180,15 +180,6 @@ export function ActiveFilterChips({ locations }: Props) {
           <X className="h-3 w-3 shrink-0" aria-hidden="true" />
         </Button>
       ))}
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => router.push(pathname)}
-        className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive gap-1"
-      >
-        <X className="h-3 w-3" />
-        {t('reset_filters')}
-      </Button>
     </div>
   )
 }

@@ -22,9 +22,9 @@ import type { ListingField } from './listingFields'
 
 // ── Sort ──────────────────────────────────────────────────────────────────────
 
-export type ListingSort = 'newest' | 'price_asc' | 'price_desc' | 'area_desc'
+export type ListingSort = 'newest' | 'price_asc' | 'price_desc' | 'area_desc' | 'area_asc'
 
-const VALID_SORTS: readonly ListingSort[] = ['newest', 'price_asc', 'price_desc', 'area_desc']
+const VALID_SORTS: readonly ListingSort[] = ['newest', 'price_asc', 'price_desc', 'area_desc', 'area_asc']
 
 // ── Enum allowlists (coerce-or-drop — prevents 22P02 from URL manipulation) ──
 

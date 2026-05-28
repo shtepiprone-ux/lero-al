@@ -71,6 +71,10 @@ export function useListingsUrlFilters() {
     updateParams({ [key]: next.join(',') || null })
   }, [getMulti, updateParams])
 
+  const resetFilters = useCallback(() => {
+    router.push(pathname)
+  }, [router, pathname])
+
   // ── Business handlers ────────────────────────────────────────────────────────
 
   function handlePropertyTypeChange(pt: string | null) {
@@ -112,7 +116,7 @@ export function useListingsUrlFilters() {
 
   return {
     // URL helpers
-    get, getMulti, updateParams, toggleMulti,
+    get, getMulti, updateParams, toggleMulti, resetFilters,
     // Business handlers
     handlePropertyTypeChange, handleFloorChange, handleFloorsChange,
     // Accordion state

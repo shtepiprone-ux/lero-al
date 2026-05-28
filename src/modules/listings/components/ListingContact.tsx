@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { getListingOwnerContact } from '@/modules/listings/actions/getListingOwnerContact'
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
-import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn } from 'lucide-react'
+import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn, Loader2 } from 'lucide-react'
+import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -18,8 +20,10 @@ import type { ListingStatus } from '@/types/database'
 interface Owner {
   id: string
   name: string | null
-  phone: string | null
-  whatsapp: string | null
+  /** True when the owner has a phone number — digits fetched on click via RPC (Task 266). */
+  has_phone: boolean
+  /** True when the owner has a whatsapp number — digits fetched on click via RPC (Task 266). */
+  has_whatsapp: boolean
   avatar_url: string | null
   user_type: string
   is_verified: boolean
@@ -51,6 +55,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
   const t = useTranslations('listing')
   const locale = useLocale()
   const [copied, setCopied] = useState(false)
+  const [contactLoading, setContactLoading] = useState(false)
 
   const ownerDeleted = !!(owner.deleted_at)
   // owner.id is empty string in the fallback object — means no owner data was returned from DB.
@@ -61,8 +66,28 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
   const listingClosed = listingStatus ? isListingClosed(listingStatus) : false
   const closedLabel = listingClosed && listingStatus ? t(`action_disabled_${listingStatus}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const initials = owner.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) ?? '?'
-  const whatsappMsg = encodeURIComponent(`Përshëndetje, jam i interesuar për: ${listingTitle} — ${listingUrl}`)
-  const whatsappNumber = (owner.whatsapp || owner.phone || '').replace(/\D/g, '')
+
+  async function handleContactClick(type: 'whatsapp' | 'call') {
+    if (!listingId || contactLoading) return
+    setContactLoading(true)
+    try {
+      const result = await getListingOwnerContact(listingId)
+      if (result.error || (!result.phone && !result.whatsapp)) {
+        toast.error(t('contact_load_failed'))
+        return
+      }
+      const digits = (type === 'whatsapp' ? result.whatsapp : result.phone)?.replace(/\D/g, '') ?? ''
+      if (!digits) { toast.error(t('contact_load_failed')); return }
+      if (type === 'whatsapp') {
+        const waText = encodeURIComponent(`Përshëndetje, jam i interesuar për: ${listingTitle} — ${listingUrl}`)
+        window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
+      } else {
+        window.location.href = `tel:${digits}`
+      }
+    } finally {
+      setContactLoading(false)
+    }
+  }
 
   async function handleShare() {
     if (navigator.share) {
@@ -155,27 +180,29 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                {whatsappNumber && (
-                  <a
-                    href={`https://wa.me/${whatsappNumber}?text=${whatsappMsg}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                {owner.has_whatsapp && (
+                  <button
+                    type="button"
+                    onClick={() => handleContactClick('whatsapp')}
+                    disabled={contactLoading}
                     className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
                     data-track="whatsapp_click"
                   >
-                    <MessageCircle className="size-5" />
+                    {contactLoading ? <Loader2 className="size-5 animate-spin" /> : <MessageCircle className="size-5" />}
                     {t('whatsapp')}
-                  </a>
+                  </button>
                 )}
-                {owner.phone && (
-                  <a
-                    href={`tel:${owner.phone}`}
+                {owner.has_phone && (
+                  <button
+                    type="button"
+                    onClick={() => handleContactClick('call')}
+                    disabled={contactLoading}
                     className={buttonVariants({ size: 'xl', variant: 'outline' })}
                     data-track="contact_owner"
                   >
-                    <Phone className="size-5" />
+                    {contactLoading ? <Loader2 className="size-5 animate-spin" /> : <Phone className="size-5" />}
                     {t('call')}
-                  </a>
+                  </button>
                 )}
                 {listingClosed ? (
                   <Button
@@ -267,26 +294,28 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
           </div>
           {!ownerDeleted && !showGuestCTA && (
             <div className="flex gap-2 shrink-0">
-              {whatsappNumber && (
-                <a
-                  href={`https://wa.me/${whatsappNumber}?text=${whatsappMsg}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              {owner.has_whatsapp && (
+                <button
+                  type="button"
+                  onClick={() => handleContactClick('whatsapp')}
+                  disabled={contactLoading}
                   className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
                   data-track="whatsapp_click"
                 >
-                  <MessageCircle className="h-4 w-4" />
+                  {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
                   WhatsApp
-                </a>
+                </button>
               )}
-              {owner.phone && (
-                <a
-                  href={`tel:${owner.phone}`}
+              {owner.has_phone && (
+                <button
+                  type="button"
+                  onClick={() => handleContactClick('call')}
+                  disabled={contactLoading}
                   className={buttonVariants({ size: 'icon-xl', variant: 'outline' })}
                   data-track="contact_owner"
                 >
-                  <Phone className="size-5" />
-                </a>
+                  {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Phone className="size-5" />}
+                </button>
               )}
             </div>
           )}

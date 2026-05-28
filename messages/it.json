@@ -109,6 +109,7 @@
     "report_success": "La tua segnalazione è stata inviata. Grazie.",
     "report_already_reported": "Hai già segnalato questo annuncio.",
     "report_error": "Invio fallito. Riprova.",
+    "contact_load_failed": "Impossibile caricare le informazioni di contatto. Riprova.",
     "verified_agent": "Agente verificato",
     "back_to_listings": "Torna agli annunci",
     "show_more": "Mostra altri",

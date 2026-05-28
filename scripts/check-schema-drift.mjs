@@ -72,6 +72,7 @@ const INTERFACE_TABLE_MAP = {
   RolePermissionEvent:    'role_permission_events',
   ContactInquiry:         'contact_inquiries',
   ContactInquiryReply:    'contact_inquiry_replies',
+  PublicUserProfile:      'public_user_profiles',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

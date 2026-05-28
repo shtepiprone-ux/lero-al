@@ -64,7 +64,9 @@ export async function getModeratorPermissions(): Promise<Record<PermissionKey, P
   ]
   const actorNames: Record<string, string> = {}
   if (actorIds.length > 0) {
-    const { data: actors } = await supabase.from('users').select('id, name').in('id', actorIds)
+    // Use admin client — session client can only self-read after Task 266 users_self_read policy.
+    const adminDb = createAdminClient()
+    const { data: actors } = await adminDb.from('users').select('id, name').in('id', actorIds)
     for (const a of actors ?? []) {
       actorNames[a.id] = a.name ?? ''
     }

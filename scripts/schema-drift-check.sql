@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-28T06:50:50.264Z by: npm run check:schema-drift
+-- Generated 2026-05-28T07:34:22.537Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -31,6 +31,7 @@
 --   RolePermissionEvent  → role_permission_events   (8 cols)
 --   ContactInquiry       → contact_inquiries        (13 cols)
 --   ContactInquiryReply  → contact_inquiry_replies  (5 cols)
+--   PublicUserProfile    → public_user_profiles     (9 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -304,7 +305,16 @@ WITH expected(table_name, column_name) AS (
     ('contact_inquiry_replies', 'inquiry_id'),
     ('contact_inquiry_replies', 'replied_by'),
     ('contact_inquiry_replies', 'body'),
-    ('contact_inquiry_replies', 'created_at')
+    ('contact_inquiry_replies', 'created_at'),
+    ('public_user_profiles', 'id'),
+    ('public_user_profiles', 'name'),
+    ('public_user_profiles', 'avatar_url'),
+    ('public_user_profiles', 'user_type'),
+    ('public_user_profiles', 'is_verified'),
+    ('public_user_profiles', 'company_name'),
+    ('public_user_profiles', 'deleted_at'),
+    ('public_user_profiles', 'has_phone'),
+    ('public_user_profiles', 'has_whatsapp')
 )
 SELECT
   e.table_name,
@@ -588,7 +598,16 @@ WITH expected(table_name, column_name) AS (
     ('contact_inquiry_replies', 'inquiry_id'),
     ('contact_inquiry_replies', 'replied_by'),
     ('contact_inquiry_replies', 'body'),
-    ('contact_inquiry_replies', 'created_at')
+    ('contact_inquiry_replies', 'created_at'),
+    ('public_user_profiles', 'id'),
+    ('public_user_profiles', 'name'),
+    ('public_user_profiles', 'avatar_url'),
+    ('public_user_profiles', 'user_type'),
+    ('public_user_profiles', 'is_verified'),
+    ('public_user_profiles', 'company_name'),
+    ('public_user_profiles', 'deleted_at'),
+    ('public_user_profiles', 'has_phone'),
+    ('public_user_profiles', 'has_whatsapp')
 )
 SELECT
   ic.table_name,
@@ -599,6 +618,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

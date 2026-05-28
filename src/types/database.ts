@@ -250,6 +250,19 @@ export interface Listing {
   search_vector: unknown | null  // tsvector generated column — never SELECT-projected; filter-only via .textSearch()
 }
 
+/** Rows returned by the `public_user_profiles` view (safe column subset — no email/phone/whatsapp digits). */
+export interface PublicUserProfile {
+  id: string
+  name: string | null
+  avatar_url: string | null
+  user_type: string
+  is_verified: boolean
+  company_name: string | null
+  deleted_at: string | null
+  has_phone: boolean
+  has_whatsapp: boolean
+}
+
 export interface ListingImage {
   id: string
   listing_id: string

@@ -109,6 +109,7 @@
     "report_success": "Raporti juaj u dërgua. Faleminderit.",
     "report_already_reported": "Keni raportuar tashmë këtë njoftim.",
     "report_error": "Dështoi dërgimi. Provoni sërish.",
+    "contact_load_failed": "Nuk mund të ngarkohej informacioni i kontaktit. Provoni sërish.",
     "verified_agent": "Agjent i verifikuar",
     "back_to_listings": "Kthehu te njoftimet",
     "show_more": "Shfaq më shumë",

@@ -31,6 +31,7 @@ import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
+import type { PublicUserProfile } from '@/types/database'
 
 // ── Lazy client island — ListingContact ──────────────────────────────────────
 //
@@ -199,7 +200,7 @@ export default async function ListingPage({ params }: Props) {
     getUser(),
     supabase
       .from('listings')
-      .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order"), owner:users!listings_user_id_fkey(id, name, phone, whatsapp, avatar_url, user_type, is_verified, company_name, deleted_at)`)
+      .select(`*, location:locations(id, name_al, slug, type), images:listing_images(url, is_cover, "order")`)
       .eq('slug', slug)
       .in('status', ['active', 'sold', 'rented', 'archived'])
       .single(),
@@ -208,26 +209,28 @@ export default async function ListingPage({ params }: Props) {
 
   if (!listing) notFound()
 
-  const ownerEmbedRaw = Array.isArray(listing.owner) ? listing.owner[0] : listing.owner
-
-  // Parallel: favorites check + user's preferred currency + owner data (all need authUser)
+  // Parallel: owner profile (via view) + favorites + preferred currency — all need authUser.
+  // Guests get ownerRaw = null → showGuestCTA branch fires in ListingContact (unchanged).
+  // public_user_profiles view is granted to authenticated only; anon returns null.
   let isInitiallyFavorited = false
   let preferredCurrency: PreferredCurrency = 'ALL'
   let hasValidProfile = false
+  let ownerRaw: PublicUserProfile | null = null
   if (authUser) {
-    const [favResult, profileResult] = await Promise.all([
+    const [favResult, profileResult, ownerResult] = await Promise.all([
       supabase.from('favorites').select('id').eq('user_id', authUser.id).eq('listing_id', listing.id).maybeSingle(),
       supabase.from('users').select('preferred_currency').eq('id', authUser.id).single(),
+      supabase
+        .from('public_user_profiles')
+        .select('id, name, avatar_url, user_type, is_verified, company_name, deleted_at, has_phone, has_whatsapp')
+        .eq('id', listing.user_id)
+        .maybeSingle(),
     ])
     isInitiallyFavorited = !!favResult.data
     preferredCurrency = (profileResult.data?.preferred_currency as PreferredCurrency) ?? 'ALL'
     hasValidProfile = !!profileResult.data
+    ownerRaw = ownerResult.data as PublicUserProfile | null
   }
-
-  // RLS policy "authenticated users can read active user profiles" (Task 263) allows the embed
-  // join to return the owner row for authenticated viewers. ownerDataUnavailable in
-  // ListingContact.tsx handles the defensive null case (orphaned listing / RLS regression).
-  const ownerRaw = ownerEmbedRaw
   // A zombie session has a valid JWT (authUser truthy) but no profile row (deleted/orphaned account).
   // Treat zombie sessions as guests so the contact card shows "Sign in" instead of "Account deleted".
   const isGuest = !authUser || !hasValidProfile
@@ -238,8 +241,8 @@ export default async function ListingPage({ params }: Props) {
   const owner = ownerRaw ?? {
     id: '' as string,
     name: null as string | null,
-    phone: null as string | null,
-    whatsapp: null as string | null,
+    has_phone: false,
+    has_whatsapp: false,
     avatar_url: null as string | null,
     user_type: 'private' as string,
     is_verified: false,
@@ -306,12 +309,13 @@ export default async function ListingPage({ params }: Props) {
       <ViewTracker slug={slug} />
       <RecentlyViewedTracker listingId={listing.id} />
 
-      {/* Sticky mobile contact bar — shown only on mobile, above the bottom nav */}
-      {!isListingArchived(listing.status as ListingStatus) && owner && (
+      {/* Sticky mobile contact bar — shown only on mobile when owner has contact info */}
+      {!isListingArchived(listing.status as ListingStatus) && (owner.has_phone || owner.has_whatsapp) && (
         <ListingMobileCTA
           price={formattedPrice}
-          phone={owner.phone ?? null}
-          whatsapp={owner.whatsapp ?? null}
+          hasPhone={owner.has_phone}
+          hasWhatsapp={owner.has_whatsapp}
+          listingId={listing.id}
           listingTitle={listing.title}
         />
       )}

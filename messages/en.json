@@ -109,6 +109,7 @@
     "report_success": "Your report has been submitted. Thank you.",
     "report_already_reported": "You have already reported this listing.",
     "report_error": "Failed to submit report. Please try again.",
+    "contact_load_failed": "Could not load contact info. Please try again.",
     "verified_agent": "Verified agent",
     "back_to_listings": "Back to listings",
     "show_more": "Show more",

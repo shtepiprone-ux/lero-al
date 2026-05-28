@@ -42,6 +42,12 @@ describe('validateNationalPhone — Albania (AL +355)', () => {
     if (result.ok) expect(result.e164).toBe('+355691234567')
   })
 
+  it('accepts placeholder format "691 234 567" — Albanian mobile (9-digit, Task 244/267)', () => {
+    const result = validateNationalPhone({ ...al, rawNational: '691 234 567' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toBe('+355691234567')
+  })
+
   it('rejects a too-long number that would exceed E.164 max', () => {
     // +355 + 15 digits = 18 chars → exceeds E.164 max of 15 digits total
     const result = validateNationalPhone({ ...al, rawNational: '691234567890123' })
@@ -120,10 +126,18 @@ describe('integration — phone validation blocks signUp()', () => {
 // ── Unit tests — helpers ──────────────────────────────────────────────────────
 
 describe('normalizeNational', () => {
-  it('strips spaces', () => expect(normalizeNational('69 123 456')).toBe('69123456'))
-  it('strips dashes', () => expect(normalizeNational('69-123-456')).toBe('69123456'))
-  it('strips parentheses', () => expect(normalizeNational('(69)123456')).toBe('69123456'))
-  it('strips dots', () => expect(normalizeNational('69.123.456')).toBe('69123456'))
+  // ── Albanian landline / generic 8-digit inputs ────────────────────────────
+  it('strips spaces (8-digit input)',       () => expect(normalizeNational('69 123 456')).toBe('69123456'))
+  it('strips dashes (8-digit input)',       () => expect(normalizeNational('69-123-456')).toBe('69123456'))
+  it('strips parentheses (8-digit input)', () => expect(normalizeNational('(69)123456')).toBe('69123456'))
+  it('strips dots (8-digit input)',         () => expect(normalizeNational('69.123.456')).toBe('69123456'))
+
+  // ── Albanian mobile 9-digit inputs (placeholder format: 691 234 567) ─────
+  // Task 267 / CC.3 — follow-up from Task 244 (placeholder changed to 9-digit)
+  it('strips spaces — Albanian mobile (9-digit)',       () => expect(normalizeNational('691 234 567')).toBe('691234567'))
+  it('strips dashes — Albanian mobile (9-digit)',       () => expect(normalizeNational('691-234-567')).toBe('691234567'))
+  it('strips dots — Albanian mobile (9-digit)',         () => expect(normalizeNational('691.234.567')).toBe('691234567'))
+  it('strips parentheses — Albanian mobile (9-digit)', () => expect(normalizeNational('(691)234567')).toBe('691234567'))
 })
 
 describe('parsePhoneValue', () => {
@@ -148,7 +162,7 @@ describe('parsePhoneValue', () => {
 })
 
 describe('COUNTRY_CODES', () => {
-  it('contains 13 countries', () => expect(COUNTRY_CODES).toHaveLength(13))
+  it('contains 45 countries (Task 187 expanded from 13; Russia excluded)', () => expect(COUNTRY_CODES).toHaveLength(45))
   it('every entry has iso2, dialCode, flag, label', () => {
     for (const c of COUNTRY_CODES) {
       expect(c.iso2).toBeTruthy()

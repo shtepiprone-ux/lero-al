@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 
 const DF_LOCALE_MAP: Record<string, DfLocale> = { sq, en: enUS, uk, it }
 import { markNotificationRead } from '@/modules/notifications/lib/mutations'
+import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import type { Notification, NotificationType } from '@/types/database'
 
 const TYPE_ICON: Record<NotificationType, string> = {
@@ -28,8 +29,41 @@ interface Props {
   onRead: () => void
 }
 
+/**
+ * Resolve the display body for a notification, localizing structured payloads.
+ *
+ * `listing_status_change` stores two formats:
+ *   NEW    — JSON `{"from":"pending","to":"active"}` (written by Task 288+)
+ *   LEGACY — plain string `"pending → active"` (written before Task 288)
+ * Both are resolved to localized labels at render time using the canonical
+ * getListingStatusLabel() helper from src/lib/i18n/listingStatusLabel.ts.
+ */
+function resolveStatusBody(body: string, tl: ReturnType<typeof useTranslations<'listing'>>): string {
+  const label = (code: string) => getListingStatusLabel(code, s => tl(s as Parameters<typeof tl>[0]))
+
+  // Try NEW JSON format: {"from":"X","to":"Y"}
+  try {
+    const parsed = JSON.parse(body) as { from?: string; to?: string }
+    if (parsed && typeof parsed.from === 'string' && typeof parsed.to === 'string') {
+      return `${label(parsed.from)} → ${label(parsed.to)}`
+    }
+  } catch {
+    // not JSON — fall through to legacy parser
+  }
+
+  // Legacy format: "pending → active" (rows written before Task 288)
+  const legacyMatch = body.match(/^(\w+)\s*→\s*(\w+)$/)
+  if (legacyMatch) {
+    return `${label(legacyMatch[1])} → ${label(legacyMatch[2])}`
+  }
+
+  // Unknown format — show as-is (safe fallback)
+  return body
+}
+
 export function NotificationItem({ notification, onRead }: Props) {
   const t = useTranslations('notifications')
+  const tl = useTranslations('listing')
   const locale = useLocale()
   const dfLocale = DF_LOCALE_MAP[locale] ?? enUS
   const [isPending, startTransition] = useTransition()
@@ -65,7 +99,9 @@ export function NotificationItem({ notification, onRead }: Props) {
         <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
           {notification.type === 'saved_search_match'
             ? t('saved_search_match_body', { count: parseInt(notification.body) || 1 })
-            : notification.body}
+            : notification.type === 'listing_status_change'
+              ? resolveStatusBody(notification.body, tl)
+              : notification.body}
         </p>
         <p className="text-[10px] text-muted-foreground/60 mt-1">
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}

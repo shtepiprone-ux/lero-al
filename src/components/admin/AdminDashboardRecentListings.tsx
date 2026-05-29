@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { Star } from 'lucide-react'
 import { formatPrice } from '@/lib/formatters'
+import { getListingStatusLabel } from '@/lib/i18n/listingStatusLabel'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import {
   Dialog,
@@ -51,10 +52,8 @@ export function AdminDashboardRecentListings({ listings, locale }: Props) {
   const tl = useTranslations('listing')
   const [selected, setSelected] = useState<DashboardListing | null>(null)
 
-  const statusLabel = (status: string) => {
-    const key = `status_${status}` as Parameters<typeof tl>[0]
-    try { return tl(key) } catch { return status }
-  }
+  const statusLabel = (status: string) =>
+    getListingStatusLabel(status, s => tl(s as Parameters<typeof tl>[0]))
 
   return (
     <>

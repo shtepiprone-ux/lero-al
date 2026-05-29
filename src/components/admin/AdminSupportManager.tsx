@@ -100,6 +100,7 @@ function UserLink({ user, label, showUuid }: { user: { id: string; name: string 
 }
 
 function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) {
+  const t = useTranslations('admin.support')
   const fullName = pickerUserName(user)
   const USER_STATUS_VARIANT: Record<string, BadgeVariant> = { active: 'success', blocked: 'destructive' }
   const statusVariant: BadgeVariant = USER_STATUS_VARIANT[user.status ?? ''] ?? 'neutral'
@@ -108,9 +109,9 @@ function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) 
       <div className="flex-1 min-w-0 space-y-0.5">
         <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
         <div className="flex items-center gap-1.5 flex-wrap">
-          <Badge variant="outline" className="text-[10px] h-4 px-1">{user.role}</Badge>
+          <Badge variant="outline" className="text-[10px] h-4 px-1">{t(`role_${user.role}` as `role_admin`)}</Badge>
           {user.status && (
-            <Badge variant={statusVariant} className="text-[10px] h-4 px-1">{user.status}</Badge>
+            <Badge variant={statusVariant} className="text-[10px] h-4 px-1">{t(`user_status_${user.status}` as `user_status_active`)}</Badge>
           )}
           {user.phone && <span className="text-xs text-muted-foreground">{user.phone}</span>}
         </div>
@@ -218,7 +219,7 @@ function UserPickerField({
                   >
                     <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
                     <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
-                      <Badge variant="outline" className="text-[10px] h-4 px-1">{u.role}</Badge>
+                      <Badge variant="outline" className="text-[10px] h-4 px-1">{t(`role_${u.role}` as `role_admin`)}</Badge>
                       {u.phone && <span className="text-xs text-muted-foreground">{u.phone}</span>}
                     </div>
                     <p className="text-[10px] text-muted-foreground/50 font-mono mt-0.5">{u.id.slice(0, 8)}…</p>
@@ -306,7 +307,7 @@ function TicketDetailDialog({
               <p className="text-xs text-muted-foreground">{t('col_status')}</p>
               <Badge variant={STATUS_VARIANT[ticket.status] ?? 'neutral'} className="text-xs h-5 gap-1">
                 {STATUS_ICON[ticket.status]}
-                {ticket.status}
+                {t(`support_status_${ticket.status}` as `support_status_open`)}
               </Badge>
             </div>
             <div className="space-y-0.5">
@@ -338,7 +339,7 @@ function TicketDetailDialog({
                   }`}
                 >
                   {STATUS_ICON[s]}
-                  {s}
+                  {t(`support_status_${s}` as `support_status_open`)}
                 </button>
               ))}
             </div>
@@ -679,7 +680,7 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
                   <td className="px-4 py-3">
                     <Badge variant={STATUS_VARIANT[tk.status] ?? 'neutral'} className="text-xs h-5 gap-1">
                       {STATUS_ICON[tk.status]}
-                      {tk.status}
+                      {t(`support_status_${tk.status}` as `support_status_open`)}
                     </Badge>
                   </td>
                   <td className="px-4 py-3 hidden lg:table-cell text-xs text-muted-foreground">

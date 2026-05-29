@@ -25,6 +25,7 @@ import { formatPrice } from '@/lib/formatters'
 import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
 import { isListingArchived } from '@/modules/listings/domain'
+import { getListingStatusLabel, LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
 // Status transitions available to admin per current status.
@@ -396,20 +397,15 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const totalPages = Math.ceil(total / perPage)
 
-  const STATUS_LABEL: Record<ListingStatus, string> = {
-    pending:  tc('status_pending'),
-    active:   tc('status_active'),
-    inactive: tc('status_inactive'),
-    sold:     tc('status_sold'),
-    rented:   tc('status_rented'),
-    archived: tc('status_archived'),
-  }
+  const statusLabel = (s: string) => getListingStatusLabel(s, k => tc(k as Parameters<typeof tc>[0]))
+
+  const STATUS_LABEL: Record<ListingStatus, string> = Object.fromEntries(
+    LISTING_STATUS_CODES.map(s => [s, statusLabel(s)])
+  ) as Record<ListingStatus, string>
 
   const FILTER_STATUS_OPTIONS = [
     { value: '', label: tc('filter_ALL') },
-    ...(['pending', 'active', 'inactive', 'sold', 'rented', 'archived'] as ListingStatus[]).map(
-      s => ({ value: s, label: STATUS_LABEL[s] })
-    ),
+    ...LISTING_STATUS_CODES.map(s => ({ value: s, label: STATUS_LABEL[s] })),
   ]
 
   useEffect(() => { setItems(init) }, [init])

@@ -271,13 +271,13 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5 capitalize">
-                        {u.role}
+                      <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5">
+                        {t(`role_${u.role}` as `role_admin`)}
                       </Badge>
                     </td>
                     <td className="px-4 py-3 hidden sm:table-cell">
                       <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
-                        {u.status ?? 'active'}
+                        {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
                       </Badge>
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">{u.phone ?? '—'}</td>

@@ -115,7 +115,9 @@ async function executeTransition(
       userId: ownerId,
       type: 'listing_status_change',
       title: listingTitle ?? listingId,
-      body: `${currentStatus} → ${transition.nextStatus}`,
+      // Store status codes as JSON so the renderer can localize them at display time
+      // in the viewer's active locale (not baked at write time). Format: {"from":"X","to":"Y"}.
+      body: JSON.stringify({ from: currentStatus, to: transition.nextStatus }),
       link: slug ? `/listings/${slug}` : undefined,
     }).catch(e => console.error('[notifications] listing_status_change notify failed', e))
   }

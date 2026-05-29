@@ -1022,8 +1022,8 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                           })}
                         </span>
                         {' · '}
-                        <span className="font-medium capitalize">{entry.old_value}</span>{' → '}
-                        <span className="font-medium capitalize">{entry.new_value}</span>
+                        <span className="font-medium">{PROFILE_TYPE_LABELS[entry.old_value as ProfileType] ?? entry.old_value}</span>{' → '}
+                        <span className="font-medium">{PROFILE_TYPE_LABELS[entry.new_value as ProfileType] ?? entry.new_value}</span>
                       </div>
                     </div>
                   ))}
@@ -1046,8 +1046,8 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                             })}
                           </span>
                           {' · '}
-                          <span className="font-medium capitalize">{entry.old_status ?? '—'}</span>{' → '}
-                          <span className="font-medium capitalize">{entry.new_status}</span>
+                          <span className="font-medium">{entry.old_status ? t(`statuses.${entry.old_status}` as Parameters<typeof t>[0]) : '—'}</span>{' → '}
+                          <span className="font-medium">{t(`statuses.${entry.new_status}` as Parameters<typeof t>[0])}</span>
                         </div>
                         {entry.reason && (
                           <span className="text-muted-foreground">{t('feedback.reason_prefix', { reason: entry.reason })}</span>

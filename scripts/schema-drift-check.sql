@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-28T17:11:26.121Z by: npm run check:schema-drift
+-- Generated 2026-05-29T07:52:17.572Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -33,6 +33,7 @@
 --   ContactInquiryReply  → contact_inquiry_replies  (5 cols)
 --   PublicUserProfile    → public_user_profiles     (9 cols)
 --   SiteFooter           → site_footer              (12 cols)
+--   ListingContactEvent  → listing_contact_events   (9 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -327,7 +328,16 @@ WITH expected(table_name, column_name) AS (
     ('site_footer', 'social_links'),
     ('site_footer', 'copyright_template'),
     ('site_footer', 'updated_at'),
-    ('site_footer', 'updated_by')
+    ('site_footer', 'updated_by'),
+    ('listing_contact_events', 'id'),
+    ('listing_contact_events', 'listing_id'),
+    ('listing_contact_events', 'listing_owner_id'),
+    ('listing_contact_events', 'actor_user_id'),
+    ('listing_contact_events', 'channel'),
+    ('listing_contact_events', 'source'),
+    ('listing_contact_events', 'locale'),
+    ('listing_contact_events', 'is_owner_click'),
+    ('listing_contact_events', 'created_at')
 )
 SELECT
   e.table_name,
@@ -632,7 +642,16 @@ WITH expected(table_name, column_name) AS (
     ('site_footer', 'social_links'),
     ('site_footer', 'copyright_template'),
     ('site_footer', 'updated_at'),
-    ('site_footer', 'updated_by')
+    ('site_footer', 'updated_by'),
+    ('listing_contact_events', 'id'),
+    ('listing_contact_events', 'listing_id'),
+    ('listing_contact_events', 'listing_owner_id'),
+    ('listing_contact_events', 'actor_user_id'),
+    ('listing_contact_events', 'channel'),
+    ('listing_contact_events', 'source'),
+    ('listing_contact_events', 'locale'),
+    ('listing_contact_events', 'is_owner_click'),
+    ('listing_contact_events', 'created_at')
 )
 SELECT
   ic.table_name,
@@ -643,6 +662,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles', 'site_footer')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles', 'site_footer', 'listing_contact_events')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

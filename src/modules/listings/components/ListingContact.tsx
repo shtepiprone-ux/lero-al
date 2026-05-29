@@ -14,6 +14,7 @@ import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
+import { trackListingContactEvent } from '@/modules/listings/actions/contactEvents'
 import { openAuthSheet } from '@/lib/auth/authSheet'
 import type { ListingStatus } from '@/types/database'
 
@@ -79,7 +80,8 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
       const digits = (type === 'whatsapp' ? result.whatsapp : result.phone)?.replace(/\D/g, '') ?? ''
       if (!digits) { toast.error(t('contact_load_failed')); return }
       if (type === 'whatsapp') {
-        const waText = encodeURIComponent(`Përshëndetje, jam i interesuar për: ${listingTitle} — ${listingUrl}`)
+        void trackListingContactEvent({ listingId, listingOwnerId: owner.id, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+        const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
         window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
       } else {
         window.location.href = `tel:${digits}`
@@ -115,7 +117,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
               </Avatar>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <p className="font-semibold text-sm truncate">
+                  <p className="font-semibold text-sm break-words">
                     {ownerDeleted
                       ? t('owner_deleted_label')
                       : ownerDataUnavailable
@@ -187,9 +189,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                     disabled={contactLoading}
                     className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
                     data-track="whatsapp_click"
+                    aria-label={t('whatsapp_aria_label')}
                   >
                     {contactLoading ? <Loader2 className="size-5 animate-spin" /> : <MessageCircle className="size-5" />}
-                    {t('whatsapp')}
+                    {t('whatsapp_button_label')}
                   </button>
                 )}
                 {owner.has_phone && (
@@ -284,7 +287,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
         <div className="flex items-center gap-3 max-w-lg mx-auto">
           <div className="flex-1 min-w-0">
             <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency, locale)}</p>
-            <p className="text-xs text-muted-foreground truncate">
+            <p className="text-xs text-muted-foreground break-words">
               {ownerDeleted
                 ? t('owner_deleted')
                 : ownerDataUnavailable
@@ -299,11 +302,12 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                   type="button"
                   onClick={() => handleContactClick('whatsapp')}
                   disabled={contactLoading}
-                  className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
+                  className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0')}
                   data-track="whatsapp_click"
+                  aria-label={t('whatsapp_aria_label')}
                 >
                   {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-                  WhatsApp
+                  {t('whatsapp_button_label')}
                 </button>
               )}
               {owner.has_phone && (

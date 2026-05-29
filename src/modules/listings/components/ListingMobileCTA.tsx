@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { getListingOwnerContact } from '@/modules/listings/actions/getListingOwnerContact'
+import { trackListingContactEvent } from '@/modules/listings/actions/contactEvents'
 
 interface Props {
   price: string
@@ -14,32 +15,48 @@ interface Props {
   hasWhatsapp: boolean
   listingId: string
   listingTitle: string
+  /** Owner's user ID for analytics self-click detection. */
+  listingOwnerId: string
+  locale: string
 }
 
-export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, listingTitle }: Props) {
+export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, listingTitle, listingOwnerId, locale }: Props) {
   const t = useTranslations('listing')
   const [loading, setLoading] = useState(false)
 
   if (!hasPhone && !hasWhatsapp) return null
 
-  const waText = encodeURIComponent(`Pershendetje! Jam i interesuar për: ${listingTitle}`)
-
-  async function handleContactClick(type: 'call' | 'whatsapp') {
+  async function handleCallClick() {
     if (loading) return
     setLoading(true)
     try {
       const result = await getListingOwnerContact(listingId)
-      if (result.error || (!result.phone && !result.whatsapp)) {
+      if (result.error || !result.phone) {
         toast.error(t('contact_load_failed'))
         return
       }
-      const digits = (type === 'whatsapp' ? result.whatsapp : result.phone)?.replace(/\D/g, '') ?? ''
+      const digits = result.phone.replace(/\D/g, '')
       if (!digits) { toast.error(t('contact_load_failed')); return }
-      if (type === 'whatsapp') {
-        window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
-      } else {
-        window.location.href = `tel:${digits}`
+      window.location.href = `tel:${digits}`
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function handleWhatsAppClick() {
+    if (loading) return
+    setLoading(true)
+    try {
+      const result = await getListingOwnerContact(listingId)
+      if (result.error || !result.whatsapp) {
+        toast.error(t('contact_load_failed'))
+        return
       }
+      const digits = result.whatsapp.replace(/\D/g, '')
+      if (!digits) { toast.error(t('contact_load_failed')); return }
+      void trackListingContactEvent({ listingId, listingOwnerId, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+      const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
+      window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
     } finally {
       setLoading(false)
     }
@@ -57,7 +74,7 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
       {hasPhone && (
         <button
           type="button"
-          onClick={() => handleContactClick('call')}
+          onClick={handleCallClick}
           disabled={loading}
           className={cn(buttonVariants({ size: 'xl', variant: 'outline' }), 'shrink-0')}
         >
@@ -69,12 +86,13 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
       {hasWhatsapp && (
         <button
           type="button"
-          onClick={() => handleContactClick('whatsapp')}
+          onClick={handleWhatsAppClick}
           disabled={loading}
           className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0')}
+          aria-label={t('whatsapp_aria_label')}
         >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-          WhatsApp
+          {t('whatsapp_button_label')}
         </button>
       )}
     </div>

@@ -263,6 +263,18 @@ export interface PublicUserProfile {
   has_whatsapp: boolean
 }
 
+export interface ListingContactEvent {
+  id: string
+  listing_id: string
+  listing_owner_id: string
+  actor_user_id: string | null
+  channel: 'whatsapp'
+  source: string
+  locale: string | null
+  is_owner_click: boolean
+  created_at: string
+}
+
 export interface ListingImage {
   id: string
   listing_id: string

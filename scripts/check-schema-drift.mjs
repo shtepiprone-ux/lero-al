@@ -74,6 +74,7 @@ const INTERFACE_TABLE_MAP = {
   ContactInquiryReply:    'contact_inquiry_replies',
   PublicUserProfile:      'public_user_profiles',
   SiteFooter:             'site_footer',
+  ListingContactEvent:    'listing_contact_events',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

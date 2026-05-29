@@ -27,7 +27,8 @@ import { isListingArchived, isListingVisible } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
-import { getExchangeRates, convertPrice } from '@/lib/getExchangeRate'
+import { getExchangeRates } from '@/lib/getExchangeRateServer'
+import { convertPrice } from '@/lib/getExchangeRate'
 import type { PreferredCurrency } from '@/types/database'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
@@ -317,6 +318,8 @@ export default async function ListingPage({ params }: Props) {
           hasWhatsapp={owner.has_whatsapp}
           listingId={listing.id}
           listingTitle={listing.title}
+          listingOwnerId={listing.user_id}
+          locale={locale}
         />
       )}
 

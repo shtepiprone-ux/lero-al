@@ -42,7 +42,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
   const attribute: ListingAttributeFilter | undefined = isPremium ? 'PREMIUM' : undefined
 
   const authUser = await getUser()
-  if (!authUser) redirect(`/${locale}/auth/login`)
+  if (!authUser) redirect(`/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/cabinet`)}&session=lost`)
 
   const supabase = await createClient()
 

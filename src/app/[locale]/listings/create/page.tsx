@@ -17,7 +17,7 @@ export default async function CreateListingPage({ params }: Props) {
   const { locale } = await params
 
   const user = await getUser()
-  if (!user) redirect(`/${locale}/auth/login`)
+  if (!user) redirect(`/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/listings/create`)}&session=lost`)
 
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? ''
   // No listing_id yet in create mode — images are uploaded before the listing is saved.

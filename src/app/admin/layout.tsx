@@ -38,7 +38,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const locale = resolveLocale(jar.get(ADMIN_LOCALE_COOKIE)?.value)
 
   const user = await getUser()
-  if (!user) redirect(`/${locale}/auth/login?next=/admin`)
+  if (!user) redirect(`/${locale}/auth/login?next=${encodeURIComponent('/admin')}&session=lost`)
 
   const supabase = await createClient()
   const { data: profile } = await supabase

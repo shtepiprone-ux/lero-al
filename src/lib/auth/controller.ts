@@ -166,12 +166,21 @@ export class AuthController {
     // to interfere mid-flight.
     if (this.state.status === 'signing_out') return
 
-    // SIGNED_OUT or missing session: truth is unambiguously null — no fetch needed.
+    // SIGNED_OUT or missing session: verify with the server before committing
+    // unauthenticated state.
+    //
+    // Rationale: clearing only localStorage (DevTools Application → Local Storage)
+    // causes the browser client to fire SIGNED_OUT even though valid auth cookies
+    // remain.  By delegating to syncFromServer() we let the server-side
+    // cookie session decide the truth:
+    //   • localStorage cleared, cookies valid → syncFromServer returns user → stays authenticated
+    //   • Full Site Data deletion (cookies + localStorage) → returns null → unauthenticated
+    //   • Expired refresh token → returns null → unauthenticated
+    //
+    // Explicit sign-out (controller.signOut()) is guarded by the `signing_out`
+    // status check above and never reaches this branch.
     if (!session || event === 'SIGNED_OUT') {
-      this.version++
-      this.inflight?.abort()
-      this.inflight = null
-      this.commit({ status: 'unauthenticated', user: null })
+      this.syncFromServer()
       return
     }
 

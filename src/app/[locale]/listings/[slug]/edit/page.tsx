@@ -22,7 +22,7 @@ export default async function EditListingPage({ params }: Props) {
   const { locale, slug } = await params
 
   const user = await getUser()
-  if (!user) redirect(`/${locale}/auth/login`)
+  if (!user) redirect(`/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/listings/${slug}/edit`)}&session=lost`)
 
   const supabase = await createClient()
 

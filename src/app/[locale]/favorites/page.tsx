@@ -36,7 +36,7 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
   const sp = await searchParams
 
   const authUser = await getUser()
-  if (!authUser) redirect(`/${locale}/auth/login`)
+  if (!authUser) redirect(`/${locale}/auth/login?next=${encodeURIComponent(`/${locale}/favorites`)}&session=lost`)
 
   const t = await getTranslations({ locale, namespace: 'favorites' })
   const tNav = await getTranslations({ locale, namespace: 'nav' })

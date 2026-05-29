@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
 import { Loader2, CheckCircle2, ImagePlus } from 'lucide-react'
 import { signIn, signInWithOAuth } from '@/lib/auth/browser'
+import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
+import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
@@ -68,6 +70,14 @@ function LoginView({
   const [password, setPassword] = useState('')
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [sessionLost, setSessionLost] = useState(false)
+
+  useEffect(() => {
+    if (sessionStorage.getItem(AUTH_SESSION_LOST_KEY) === 'true') {
+      setSessionLost(true)
+      sessionStorage.removeItem(AUTH_SESSION_LOST_KEY)
+    }
+  }, [])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -80,7 +90,8 @@ function LoginView({
     if (error) { setErrorKey(mapAuthError(error.message)); return }
     onClose()
     // Redirect to the originally-requested route (set by AuthRedirect when gated routes redirect here).
-    const next = sessionStorage.getItem('auth_redirect_next')
+    // sanitizeReturnTo ensures the path is a safe same-origin relative path.
+    const next = sanitizeReturnTo(sessionStorage.getItem('auth_redirect_next'))
     if (next) {
       sessionStorage.removeItem('auth_redirect_next')
       router.push(next)
@@ -95,6 +106,11 @@ function LoginView({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4 pb-6">
+      {sessionLost && (
+        <Alert>
+          <AlertDescription>{t('session_recovery_message')}</AlertDescription>
+        </Alert>
+      )}
       {errorKey && (
         <Alert variant="destructive">
           <AlertDescription>{t(errorKey as Parameters<typeof t>[0])}</AlertDescription>

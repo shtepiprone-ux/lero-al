@@ -33,7 +33,7 @@ Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 
 There are two AI layers, with different jobs:
 
-- **Opus 4.7 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready prompt
+- **Opus 4.8 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready prompt
   for the executor **written to a kickoff file in `/tasks` (never pasted into chat — Sonnet reads
   the file directly)**, then reviews the **actual diff** (not the executor's report), and either
   approves or opens a follow-up task. **Does not write production code** — only reads it to verify.

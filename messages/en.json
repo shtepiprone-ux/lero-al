@@ -616,7 +616,7 @@
       "item_dashboard": "Dashboard",
       "item_listings": "Listings",
       "item_users": "Users",
-      "item_support": "Support",
+      "item_support": "Internal Tickets",
       "item_reports": "Reports",
       "item_locations": "Locations",
       "item_legal": "Legal documents",
@@ -634,8 +634,8 @@
       "item_popular_locations": "Popular Locations",
       "item_permissions": "Permissions",
       "item_inquiries": "Inquiries",
-      "item_inquiries_support": "Support",
-      "item_inquiries_sales": "Sales"
+      "item_inquiries_support": "Support Inbox",
+      "item_inquiries_sales": "Sales Inbox"
     },
     "mobile_header": {
       "aria_open": "Open menu"

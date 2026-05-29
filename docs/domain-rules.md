@@ -1,3 +1,31 @@
+## Admin: Support Tickets vs Contact Inquiries (Task 284, 2026-05-29)
+
+Two admin surfaces manage user communications. They are **distinct domains** — do NOT merge.
+
+### `/admin/support` — Internal Tickets (`support_tickets` table)
+- Admin-managed internal ticket system — the universal internal-admin ticket workbench.
+- Admins create tickets to track platform issues or inter-user disputes.
+- Ticket types: `support` (general platform issue created internally) | `user_complaint` (one user reports another). UI currently defaults to `user_complaint` on create, but the surface is the universal internal-ticket workbench and may grow new subtypes.
+- Workflow: open → in_progress → resolved / closed; tracked in `support_ticket_events`.
+- **Component:** `AdminSupportManager.tsx`
+- **Sidebar label:** "Internal Tickets" (was ambiguously "Support"; broader name because ticket_type spans support + user_complaint and the surface is future-proofed for additional internal-admin ticket types).
+
+### `/admin/inquiries/support` — Support Mailbox (inbound contact form)
+### `/admin/inquiries/sales` — Sales Mailbox (inbound contact form)
+- Both read from `contact_inquiries` + `contact_inquiry_replies` tables.
+- These are messages submitted by PUBLIC VISITORS through the website's `/contact` page.
+- Split by `target_mailbox` field: `support` for help requests, `sales` for sales leads.
+- Workflow: new → in_progress → closed; reply thread in `contact_inquiry_replies`.
+- **Component:** `AdminInquiriesManager.tsx` (shared, differentiated by `mailboxScope` prop)
+- **Sidebar labels:** "Support Inbox" / "Sales Inbox"
+
+### Why kept separate
+The two surfaces serve different workflows: internal ticket management (CRM-like) vs inbound
+message triage. Merging would conflate admin-initiated tickets with visitor-submitted messages,
+breaking the audit trail for each domain.
+
+---
+
 ## Popular Locations — Filter URL Contract (Epic J.3 / Task 153)
 
 **Canonical filter param:** `?location_id=<numeric_id>` (the `locations.id` integer).

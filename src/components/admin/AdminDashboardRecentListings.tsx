@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { buttonVariants } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 export interface DashboardListing {
@@ -44,7 +44,7 @@ interface Props {
 
 /**
  * Recent Listings panel for the admin Dashboard.
- * Epic K §11 canonical pattern: primary text is a <button> that opens a preview Dialog.
+ * Epic K §11 canonical pattern: primary text is a Button that opens a preview Dialog.
  * No Actions column; all actions accessible from the Dialog.
  */
 export function AdminDashboardRecentListings({ listings, locale }: Props) {
@@ -61,14 +61,15 @@ export function AdminDashboardRecentListings({ listings, locale }: Props) {
         {listings.map(l => (
           <div key={l.id} className="px-6 py-3.5 flex items-center gap-4 hover:bg-muted/30 transition-colors">
             <div className="flex-1 min-w-0">
-              {/* §11: primary text as <button> opening the preview Dialog */}
-              <button
+              {/* §11: primary text as Button opening the preview Dialog */}
+              <Button
                 type="button"
-                className="text-sm font-medium truncate hover:text-primary transition-colors text-left w-full"
+                variant="ghost"
                 onClick={() => setSelected(l)}
+                className="text-sm font-medium truncate hover:text-primary transition-colors text-left w-full justify-start h-auto p-0"
               >
                 {l.title}
-              </button>
+              </Button>
               <p className="text-xs text-muted-foreground mt-0.5 truncate">
                 {l.owner?.name ?? '—'}
               </p>

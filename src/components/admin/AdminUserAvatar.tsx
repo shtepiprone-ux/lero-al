@@ -171,11 +171,15 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
           </div>
         )}
         {canEdit && !uploading && !removing && (
-          <button type="button" onClick={() => inputRef.current?.click()}
-            className="absolute bottom-0 right-0 h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors"
-            title={tu('avatar_upload_photo')}>
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => inputRef.current?.click()}
+            className="absolute bottom-0 right-0 h-7 w-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center shadow-md hover:bg-primary/90 transition-colors p-0"
+            title={tu('avatar_upload_photo')}
+          >
             <Camera className="h-3.5 w-3.5" />
-          </button>
+          </Button>
         )}
       </div>
 

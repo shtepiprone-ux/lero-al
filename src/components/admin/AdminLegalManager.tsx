@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { createPage, updatePage, deletePage } from '@/modules/admin/actions'
 
 function toSlug(str: string) {
@@ -51,10 +52,11 @@ function PageModal({ page, onClose, onDone }: {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
-        <h3 className="font-bold text-base">{page ? t('modal_title_edit') : t('modal_title_new')}</h3>
+    <Dialog open onOpenChange={(isOpen) => { if (!isOpen) onClose() }}>
+      <DialogContent className="max-w-2xl p-6 bg-card" showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>{page ? t('modal_title_edit') : t('modal_title_new')}</DialogTitle>
+        </DialogHeader>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
@@ -97,8 +99,8 @@ function PageModal({ page, onClose, onDone }: {
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('btn_save')}
           </Button>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

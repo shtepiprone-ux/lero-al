@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Plus, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
@@ -101,8 +102,8 @@ function PropertyTypeFormDialog({ initial, onClose, onSaved, onDelete }: FormDia
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay/50 backdrop-blur-sm p-4">
-      <div className="bg-card rounded-2xl border shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+    <Dialog open onOpenChange={(isOpen) => { if (!isOpen && !isPending) onClose() }}>
+      <DialogContent className="max-w-lg p-0 bg-card" showCloseButton={false}>
         <div className="px-6 py-5 border-b">
           <p className="font-semibold">{initial ? t('edit') : t('new')}</p>
         </div>
@@ -159,8 +160,8 @@ function PropertyTypeFormDialog({ initial, onClose, onSaved, onDelete }: FormDia
             {t('save')}
           </Button>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 
@@ -195,8 +196,8 @@ function DeleteDialog({ pt, onClose, onDeleted }: DeleteDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay/50 backdrop-blur-sm p-4">
-      <div className="bg-card rounded-2xl border shadow-xl w-full max-w-sm p-6">
+    <Dialog open onOpenChange={(isOpen) => { if (!isOpen && !isPending) onClose() }}>
+      <DialogContent className="max-w-sm p-6 bg-card" showCloseButton={false}>
         <p className="font-semibold mb-1">{t('delete_confirm')}</p>
         <p className="text-sm text-muted-foreground mb-5">{pt.name_sq} <span className="font-mono text-xs text-muted-foreground/60">({pt.slug})</span></p>
         <div className="flex gap-3 justify-end">
@@ -206,8 +207,8 @@ function DeleteDialog({ pt, onClose, onDeleted }: DeleteDialogProps) {
             {t('delete')}
           </Button>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

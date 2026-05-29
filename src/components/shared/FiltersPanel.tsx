@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { createPortal } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import { X, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
@@ -93,31 +92,12 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
   const contentReady = useIdleMount(tier === 'low', open)
   const priceLabel = t('price_range')
 
-  // Portal to document.body so the panel escapes any stacking-context ancestor
-  // (e.g. the hero section's `relative z-10` container on the homepage).
-  const [domReady, setDomReady] = useState(false)
-  useEffect(() => { setDomReady(true) }, [])
-
-  const panel = (
-    <>
-      {/* Backdrop */}
-      <div
-        className={cn(
-          'filters-panel-backdrop fixed inset-0 z-40 bg-overlay/40 transition-opacity duration-300',
-          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        )}
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Panel */}
-      <div
-        className={cn(
-          'filters-panel fixed top-0 right-0 z-50 h-full w-full max-w-sm bg-background shadow-xl flex flex-col transition-transform duration-300 ease-in-out',
-          open ? 'translate-x-0' : 'translate-x-full'
-        )}
-        role="dialog"
-        aria-modal="true"
+  return (
+    <Sheet open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose() }}>
+      <SheetContent
+        side="right"
+        showCloseButton={false}
+        className="data-[side=right]:w-full max-w-sm p-0 bg-background flex flex-col gap-0"
         aria-label={t('advanced_filters')}
       >
       {contentReady && <>
@@ -449,10 +429,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           </Button>
         </div>
       </>}
-      </div>
-    </>
+      </SheetContent>
+    </Sheet>
   )
-
-  if (!domReady) return null
-  return createPortal(panel, document.body)
 }

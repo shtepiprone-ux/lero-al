@@ -7,6 +7,7 @@ import { usePresence } from '@/hooks/usePresence'
 import { User, LayoutList, Bookmark } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
 import { ProfileTab } from '@/modules/cabinet/components/ProfileTab'
 import { ListingsTab } from '@/modules/cabinet/components/ListingsTab'
@@ -101,35 +102,34 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
         </div>
 
         {/* Tab navigation */}
-        <div role="tablist" className="flex gap-1 bg-card rounded-xl border shadow-sm p-1 mb-6">
-          {tabs.map(({ key, label, icon: Icon, count }) => (
-            <button
-              key={key}
-              role="tab"
-              aria-selected={activeTab === key}
-              onClick={() => setTab(key)}
-              className={cn(
-                'flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150',
-                activeTab === key
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
-              )}
-            >
-              <Icon className="h-4 w-4 shrink-0" />
-              <span className="hidden sm:inline">{label}</span>
-              {count !== undefined && count > 0 && (
-                <span className={cn(
-                  'text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[20px] text-center leading-none',
-                  activeTab === key
-                    ? 'bg-primary-foreground/20 text-primary-foreground'
-                    : 'bg-muted text-muted-foreground'
-                )}>
-                  {count}
-                </span>
-              )}
-            </button>
-          ))}
-        </div>
+        <Tabs value={activeTab} onValueChange={(v) => setTab(v as Tab)}>
+          <TabsList className="flex gap-1 bg-card rounded-xl border shadow-sm p-1 mb-6 w-full h-auto">
+            {tabs.map(({ key, label, icon: Icon, count }) => (
+              <TabsTrigger
+                key={key}
+                value={key}
+                className={cn(
+                  'flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 h-auto',
+                  'data-active:bg-primary data-active:text-primary-foreground data-active:shadow-sm',
+                  'text-muted-foreground hover:text-foreground hover:bg-muted/60'
+                )}
+              >
+                <Icon className="h-4 w-4 shrink-0" />
+                <span className="hidden sm:inline">{label}</span>
+                {count !== undefined && count > 0 && (
+                  <span className={cn(
+                    'text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[20px] text-center leading-none',
+                    activeTab === key
+                      ? 'bg-primary-foreground/20 text-primary-foreground'
+                      : 'bg-muted text-muted-foreground'
+                  )}>
+                    {count}
+                  </span>
+                )}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
 
         {/* Tab content */}
         {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} onAvatarChange={setAvatarUrl} recentlyViewed={profileRecentlyViewed} />}

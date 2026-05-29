@@ -2,7 +2,7 @@
  * Governance scan: Primitive violations
  * Detects raw button clones, custom overlays, local tab/dialog clones, icon library violations.
  */
-import { readFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -10,6 +10,21 @@ import { dirname } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..', '..');
 const SRC = join(ROOT, 'src');
+
+// Load allowlist
+const ALLOWLIST_PATH = join(__dirname, 'primitives.allowlist.json');
+const allowlistEntries = existsSync(ALLOWLIST_PATH)
+  ? JSON.parse(readFileSync(ALLOWLIST_PATH, 'utf-8')).entries ?? []
+  : [];
+
+/** Returns true if this file:line is in the allowlist */
+function isAllowlisted(relPath, lineNum) {
+  return allowlistEntries.some(e => {
+    const normalizedFile = e.file.replace(/\\/g, '/');
+    const normalizedRel = relPath.replace(/\\/g, '/');
+    return normalizedRel === normalizedFile && e.line === lineNum;
+  });
+}
 
 /** Walk a directory and yield .tsx / .ts files */
 function* walkTsx(dir) {
@@ -43,7 +58,7 @@ for (const file of walkTsx(SRC)) {
     const trimmed = line.trim();
 
     // ── Rule P1: Raw <button> elements (not shadcn internal) ─────────────────
-    if (/<button[\s>]/.test(line) && !/\/\/ eslint-disable/.test(line)) {
+    if (/<button[\s>]/.test(line) && !/\/\/ eslint-disable/.test(line) && !isAllowlisted(relPath, lineNum)) {
       finding(
         'HIGH',
         file, lineNum,

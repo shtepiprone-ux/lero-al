@@ -89,10 +89,11 @@ function LocationModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-card rounded-2xl border shadow-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto flex flex-col gap-4">
-        <h3 className="font-bold text-base">{location ? t('edit_title') : t('add_title')}</h3>
+    <Dialog open onOpenChange={(isOpen) => { if (!isOpen) onClose() }}>
+      <DialogContent className="max-w-md p-6 bg-card" showCloseButton={false}>
+        <DialogHeader>
+          <DialogTitle>{location ? t('edit_title') : t('add_title')}</DialogTitle>
+        </DialogHeader>
 
         <div className="grid grid-cols-2 gap-3">
           <div className="flex flex-col gap-1.5">
@@ -175,8 +176,8 @@ function LocationModal({
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
           </Button>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

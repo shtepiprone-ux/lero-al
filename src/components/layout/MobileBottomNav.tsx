@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { Home, Search, Plus, Heart, User } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { openAuthSheet } from '@/lib/auth/authSheet'
 
@@ -74,10 +75,10 @@ function BottomNavItem({
   )
   if (onClick) {
     return (
-      <button type="button" onClick={onClick} className={className}>
+      <Button type="button" variant="ghost" onClick={onClick} className={cn(className, 'h-full rounded-none p-0')}>
         <Icon className="h-5 w-5" />
         <span className="text-[10px] font-medium leading-none">{label}</span>
-      </button>
+      </Button>
     )
   }
   return (

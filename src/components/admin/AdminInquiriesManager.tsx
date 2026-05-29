@@ -246,7 +246,7 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
                   </Badge>
                   <span className="text-xs text-muted-foreground font-mono">{inq.target_mailbox}</span>
                 </div>
-                <p className="font-medium text-sm truncate">{displaySubject(inq)}</p>
+                <p className="font-medium text-sm break-words">{displaySubject(inq)}</p>
                 <p className="text-xs text-muted-foreground truncate">{inq.name} · {inq.email}</p>
               </div>
               <div className="flex flex-col items-end gap-1 shrink-0">

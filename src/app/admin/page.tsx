@@ -109,7 +109,7 @@ function StatCard({
       </div>
       <div className="flex-1 min-w-0">
         <p className="text-2xl font-bold">{formatCount(value ?? 0, 'sq')}</p>
-        <p className="text-sm text-muted-foreground truncate">{label}</p>
+        <p className="text-sm text-muted-foreground break-words min-w-0">{label}</p>
         {sub && <p className="text-xs text-primary mt-0.5 font-medium">{sub}</p>}
       </div>
     </div>
@@ -123,7 +123,7 @@ function StatusBar({ label, count, total, colorClass }: {
   const pct = total > 0 ? Math.round((count / total) * 100) : 0
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-muted-foreground w-20 shrink-0 truncate">{label}</span>
+      <span className="text-sm text-muted-foreground w-28 shrink-0 break-words">{label}</span>
       <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${colorClass}`}

@@ -1,6 +1,6 @@
 export const revalidate = 3600 // ISR: re-fetch at most once per hour
 
-import { getExchangeRates } from '@/lib/getExchangeRate'
+import { getExchangeRates } from '@/lib/getExchangeRateServer'
 
 export async function GET() {
   const rates = await getExchangeRates()

@@ -2,7 +2,7 @@ import { getTranslations, getLocale } from 'next-intl/server'
 import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
-import { getExchangeRates } from '@/lib/getExchangeRate'
+import { getExchangeRates } from '@/lib/getExchangeRateServer'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 
 interface Props {

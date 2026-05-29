@@ -288,10 +288,12 @@ must be referenced from A's entry point so the user can still reach editing with
 - Never commit: `.env` files, `node_modules`, `.next` folder.
 - Tag releases: `v0.1.0`, `v0.2.0` etc.
 
-#### Single-writer git (Cowork + Windows network drive) — enforced 2026-05-22
-- The repo sits on a Windows network drive (`D:`). The Cowork/Opus assistant mounts the **same**
-  folder from a Linux sandbox. **Two git processes on the same `.git` corrupt `.git/index`**
-  (observed: `UU ./` / `X0` unmerged garbage, phantom 50+ line `messages/*.json` deletions).
+#### Single-writer git (Cowork + Windows) — enforced 2026-05-22
+- The repo lives on a local Windows drive (`C:\Claude_Code_Projects\lero-al`). The Cowork/Opus
+  assistant mounts the **same** folder from a Linux sandbox. **Two git processes on the same `.git`
+  corrupt `.git/index`** (observed: `UU ./` / `X0` unmerged garbage, phantom 50+ line `messages/*.json`
+  deletions). The move off the old network drive removes one aggravator, but this rule still stands —
+  the corruption comes from two processes sharing one `.git`, not from the drive type.
 - **Only the owner runs git, and only from PowerShell.** The Cowork/Opus assistant must **never**
   run mutating git (`add`/`commit`/`push`/`reset`/`restore`/`stash`/`checkout`/`merge`/…).
 - The Cowork/Opus assistant edits files **only via the filesystem** (Read/Write/Edit) — that never

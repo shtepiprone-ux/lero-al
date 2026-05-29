@@ -38,12 +38,14 @@ These rules apply to every orchestrator session from 2026-05-27 onward:
 - **Approval is allowed only after actual `git diff` review.** The session log is the executor's *claim*; the diff is the *proof*. If the two disagree, the diff wins. A "complete" session log without diff verification is not approval.
 - **Approval is also blocked if the diff implements only the positive flow.** Every negative branch listed in the kickoff must have a verifiable line in the diff (handler, guard, toast call, early return, locale key). A diff that ships only the happy path is INCOMPLETE — route back as a follow-up, do not approve.
 
-## Environment & git safety (Cowork / network drive) — MANDATORY
+## Environment & git safety (Cowork / Windows) — MANDATORY
 
-The repo lives on a Windows network drive (`D:`). The Opus orchestrator may be running in **Cowork**
-(a Linux sandbox that mounts the same folder), while the owner runs git in **PowerShell on Windows**.
-Two git processes touching the **same `.git`** at once corrupt `.git/index` (observed 2026-05-22:
-bogus `UU ./` / `X0` unmerged entries, phantom 50+ line "deletions" in `messages/*.json`).
+The repo lives on a local Windows drive (`C:\Claude_Code_Projects\lero-al`). The Opus orchestrator
+may be running in **Cowork** (a Linux sandbox that mounts the same folder), while the owner runs git
+in **PowerShell on Windows**. Two git processes touching the **same `.git`** at once corrupt
+`.git/index` (observed 2026-05-22: bogus `UU ./` / `X0` unmerged entries, phantom 50+ line
+"deletions" in `messages/*.json`). Moving off the old network drive removed one aggravator, but the
+risk is inherent to two processes sharing one `.git`, so this rule remains MANDATORY.
 
 **Rule:**
 - **Only the owner runs git, and only from PowerShell.** The Cowork/Opus orchestrator must **never**

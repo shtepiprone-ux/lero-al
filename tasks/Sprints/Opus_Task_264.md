@@ -20,7 +20,7 @@ Today's Sprint 12 + Sprint 13 review surfaced two reliable failure modes in **So
 
 1. **"Filed list" ≠ "diff"** — Sonnet enumerates the files it touched by recollection at the end of a task, but after dozens of Edit-tool calls its claim diverges from the actual `git diff`. Today's commit `4541a2496` ("docs: add task 261-263 planning files") shipped only 3 docs files; the Task 261 code changes (`src/components/ui/button.tsx`, `src/components/ui/select.tsx`) were silently omitted from the staged set and never reached production HEAD.
 
-2. **`git add -A` / wildcard staging** — Sonnet occasionally proposes `git add -u` or `git add -A` to "make sure nothing is missed". On the Cowork sandbox + Windows network drive, the working tree often shows 20–60 phantom-modified files (the corruption mode `docs/orchestrator-role.md` already warns about). A wildcard `add` then sweeps the phantom files into the commit, polluting history.
+2. **`git add -A` / wildcard staging** — Sonnet occasionally proposes `git add -u` or `git add -A` to "make sure nothing is missed". On the Cowork sandbox + Windows (two git processes on the same `.git`), the working tree often shows 20–60 phantom-modified files (the corruption mode `docs/orchestrator-role.md` already warns about). A wildcard `add` then sweeps the phantom files into the commit, polluting history.
 
 The orchestrator (Opus 4.7) already reviews each task's real `git diff` post-hoc via `git show <SHA>:<path>`. By the time the orchestrator approves, it has the authoritative file list. Moving commit-command emission from Sonnet to the orchestrator eliminates both failure modes by design.
 

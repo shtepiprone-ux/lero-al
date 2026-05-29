@@ -8,7 +8,7 @@
 
 1. Regenerate the audit so it covers all 24 tables (after Task 173 is merged):
    ```powershell
-   cd D:\Work\Claude_Code_Projects\lero-al
+   cd C:\Claude_Code_Projects\lero-al
    npm run check:schema-drift      # rewrites scripts/schema-drift-check.sql
    ```
 

@@ -8,8 +8,8 @@ Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
 
 > ⚠️ **Git safety (single-writer): only the owner runs git, only from PowerShell.** The Cowork/Opus
 > assistant must NEVER run mutating git on this repo — it edits files via the filesystem only.
-> Two git processes on the same `.git` (Windows + Cowork's Linux sandbox on the `D:` network drive)
-> corrupt `.git/index`. Recovery: `Remove-Item .git\index` → `git reset`. Full rule:
+> Two git processes on the same `.git` (Windows git + Cowork's Linux sandbox mounting the same
+> repo) corrupt `.git/index`. Recovery: `Remove-Item .git\index` → `git reset`. Full rule:
 > `docs/orchestrator-role.md` → "Environment & git safety" and `docs/ai-behavior.md` → "Git Rules".
 
 > ⚠️ **Commit hand-off (single-writer, READ EVERY SESSION — Task 264 rule, 2026-05-27): after

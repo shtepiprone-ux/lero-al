@@ -14,7 +14,7 @@
  *   exact bypass that let text-green-500 ship. Storybook (.stories) files are
  *   exempt from T6 only: literal swatches are their legitimate purpose.
  */
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, relative } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -54,6 +54,20 @@ const PALETTE_SHADES = '50|100|200|300|400|500|600|700|800|900|950';
 const RAW_PALETTE_RE = new RegExp(
   `(?<![\\w-])(?:${PALETTE_PROPS})-(?:${PALETTE_NAMES})-(?:${PALETTE_SHADES})(?![\\w-])`
 );
+
+// Load font-size allowlist
+const FONT_SIZE_ALLOWLIST_PATH = join(__dirname, 'tailwind-entropy.allowlist.json');
+const fontSizeAllowlist = existsSync(FONT_SIZE_ALLOWLIST_PATH)
+  ? (JSON.parse(readFileSync(FONT_SIZE_ALLOWLIST_PATH, 'utf-8')).entries ?? [])
+      .filter(e => e.rule === 'arbitrary-font-size')
+  : [];
+
+function isFontSizeAllowlisted(relPath, pattern) {
+  const normalizedRel = relPath.replace(/\\/g, '/');
+  return fontSizeAllowlist.some(e =>
+    e.file.replace(/\\/g, '/') === normalizedRel && e.pattern === pattern
+  );
+}
 
 const findings = [];
 let arbitraryCount = 0;
@@ -135,13 +149,17 @@ for (const file of walkTsx(SRC)) {
 
     // -- Rule T5: Non-canonical font size -------------------------------------
     // text-[Npx] or text-[Nrem] - arbitrary font sizes
-    if (/text-\[\d+(px|rem)\]/.test(line)) {
-      finding(
-        'LOW',
-        file, lineNum,
-        'Arbitrary font size detected. Use canonical type scale: text-xs, text-sm, text-base, text-lg, text-xl, text-2xl.',
-        'arbitrary text size'
-      );
+    const fontSizeMatches = line.match(/text-\[\d+(?:\.\d+)?(?:px|rem)\]/g);
+    if (fontSizeMatches) {
+      const hasUnallowlisted = fontSizeMatches.some(pat => !isFontSizeAllowlisted(relPath, pat));
+      if (hasUnallowlisted) {
+        finding(
+          'LOW',
+          file, lineNum,
+          'Arbitrary font size detected. Use canonical type scale: text-xs, text-sm, text-base, text-lg, text-xl, text-2xl.',
+          'arbitrary text size'
+        );
+      }
     }
   });
 }

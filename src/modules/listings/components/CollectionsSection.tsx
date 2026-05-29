@@ -126,7 +126,7 @@ export function CollectionsSection({ initialCollections }: Props) {
       </div>
 
       {collections.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-10 gap-3 text-center border rounded-2xl bg-muted/30">
+        <div className="flex flex-col items-center justify-center py-8 gap-3 text-center border rounded-2xl bg-muted/30">
           <Folder className="h-8 w-8 text-muted-foreground" />
           <div>
             <p className="text-sm font-medium">{t('no_collections')}</p>

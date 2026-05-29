@@ -121,16 +121,18 @@ export function AdminSettings({ initialSettings }: Props) {
       {/* Tab bar */}
       <div className="flex gap-1 bg-muted rounded-xl p-1 flex-wrap">
         {TABS.map(tb => (
-          <button
+          <Button
             key={tb.key}
+            type="button"
+            variant="ghost"
             onClick={() => { setTab(tb.key); setSaveState('idle') }}
             className={cn(
-              'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-              tab === tb.key ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+              'px-4 py-2 h-auto transition-colors rounded-lg text-sm',
+              tab === tb.key ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'
             )}
           >
             {tb.label}
-          </button>
+          </Button>
         ))}
       </div>
 

@@ -92,15 +92,17 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
       {/* Tabs */}
       <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
         {([['all', t('tab_all')], ['verified', t('tab_verified')]] as const).map(([tab, label]) => (
-          <button
+          <Button
             key={tab}
+            type="button"
+            variant="ghost"
             onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, role: null, q: null })}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === tab ? 'bg-card shadow-sm text-foreground' : 'text-muted-foreground hover:text-foreground'
+            className={`px-4 py-2 h-auto transition-colors rounded-lg text-sm ${
+              activeTab === tab ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             {label}
-          </button>
+          </Button>
         ))}
       </div>
 

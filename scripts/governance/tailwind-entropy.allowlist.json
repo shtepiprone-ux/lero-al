@@ -95,6 +95,16 @@
     },
     {
       "rule": "arbitrary-font-size",
+      "file": "src/modules/cabinet/components/ProfileTab.tsx",
+      "pattern": "text-[11px]",
+      "reason": "Public ID sub-caption display (#{public_id}) in cabinet profile. 11px mono ID label — between text-xs (12px) and text-[10px], no canonical equivalent.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Mono ID sub-caption, not translated text. 1px below text-xs — intentional density for compact identity line."
+    },
+    {
+      "rule": "arbitrary-font-size",
       "file": "src/modules/cabinet/components/SavedSearchesTab.tsx",
       "pattern": "text-[10px]",
       "reason": "Saved search tab micro-label (filter count badge or compact label). Canonical size.",
@@ -252,6 +262,96 @@
       "expires": "2026-12-01",
       "severity": "MEDIUM",
       "why_safe": "LCP-critical image container. Changing this height would worsen CLS and Lighthouse scores."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/app/admin/page.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Admin dashboard count badges (Pending Reports, Location Requests). Canonical badge/micro-label size per docs/ai-behavior.md.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Numeric count badges only — not translated text. Canonical badge size context."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/components/admin/AdminCompaniesManager.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Company logo upload hint text. Micro-label below an image upload control.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Sub-caption hint text adjacent to upload control. Canonical micro-label context."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/components/admin/AdminEmailTemplatesManager.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Locale badge spans (sq/en/uk/it) in email template row. 2-letter code badges are canonical micro-label.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Short uppercase locale codes in a compact badge row. Canonical badge/micro-label size."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/components/admin/AdminSupportManager.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Admin support: role/status badges (text-[10px] h-4) and truncated user UUID mono display. Canonical badge/micro-label size.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Badge and mono ID display contexts. Not translated body text. Canonical allowed value."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/components/admin/AdminUsersTable.tsx",
+      "pattern": "text-[11px]",
+      "reason": "Public ID display (#12345) in admin users table row. 11px mono ID sub-caption — between text-xs (12px) and text-[10px], no canonical equivalent.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Mono sub-caption for numeric ID. Not translated text. 1px below text-xs — intentional density for admin table rows."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/components/admin/AdminUserProfile.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Email confirmed/not-confirmed Badge in admin user profile. Canonical badge/micro-label size.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Badge context with short translated label. Canonical allowed value."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/modules/auth/components/AuthSheet.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Company logo upload hint text in auth registration flow. Micro-label below upload control.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Sub-caption hint adjacent to image upload. Canonical micro-label context."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/modules/listings/components/ListingsFilterBar.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Active filter count badge on the filter button (-top-1.5 -right-1.5 h-4 w-4 rounded-full). Canonical badge/micro-label size.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Numeric count badge. Not translated text. Canonical badge size."
+    },
+    {
+      "rule": "arbitrary-font-size",
+      "file": "src/stories/RecentlyViewedSection.stories.tsx",
+      "pattern": "text-[10px]",
+      "reason": "Storybook story fixture: Premium badge in recently viewed listing card. Stories mirror production ListingCard badge pattern; text-[10px] is canonical for badges.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "LOW",
+      "why_safe": "Story file only. Mirrors ListingCard premium badge pattern (already allowlisted in ListingCard.tsx)."
     }
   ]
 }

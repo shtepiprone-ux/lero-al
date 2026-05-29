@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-29 — Task 283 (Sonnet): Tailwind entropy burn-down — 3 HIGH button-like clones → 0 (Button×3 in AdminListingsTable/AdminSettings/AdminUsersTable); py-10 MEDIUM → py-8; 47 LOW font-sizes → 0 (scan-tailwind.mjs respects allowlist; 10 new allowlist entries). After: governance:tailwind C0/H0/M0 baseline. tsc=0; 368/368; lint baseline. UNCOMMITTED.**
+
 **2026-05-29 — Task 282 (Sonnet): Design System Lockdown — 10/10 governance:primitives violations fixed. Button×3, Dialog×4, Sheet×1, Tabs×1. AuthContext test allowlisted. After: C0/H2/M0 (2 window.location out of scope). tsc=0; build=passes; 368/368; 0 new lint errors. UNCOMMITTED — orchestrator review + commit hand-off pending.**
 
 **2026-05-29 — Orchestration review (Opus): Tasks 291/292/293 APPROVED. 281+291+292+293 batch UNCOMMITTED — Sprint 17 closes after owner runs those commits.**
@@ -114,6 +116,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-29 | Task 283 — Tailwind entropy burn-down: 3 HIGH button-like clones → Button×3 (AdminListingsTable/Settings/UsersTable); py-10 → py-8; 47 LOW font-sizes → 0 via scan-tailwind.mjs allowlist support + 10 new entries. governance:tailwind C0/H0/M0. tsc=0; 368/368; lint baseline | Task 283 | [sessions/2026-05-29-task-283-governance-burn-down.md](sessions/2026-05-29-task-283-governance-burn-down.md) |
 | 2026-05-29 | Task 282 — Design System Lockdown: 10/10 governance:primitives violations → 0. Button×3 (AdminDashboardRecentListings ×2, AdminUserAvatar, MobileBottomNav), Dialog×4 (AdminLegalManager, AdminLocationsManager, AdminPropertyTypesManager ×2), Sheet×1 (FiltersPanel), Tabs×1 (CabinetShell URL-sync). AuthContext test allowlisted. After: C0/H2/M0. tsc=0; build=passes; 368/368; lint baseline unchanged | Task 282 | [sessions/2026-05-29-task-282-design-system-lockdown.md](sessions/2026-05-29-task-282-design-system-lockdown.md) |
 | 2026-05-29 | Task 293 — Auth closure correction: auth test files confirmed intact (56/56); sanitizeReturnTo hardened (traversal+backslash+control-char); 24 tests added; `next` canonical param + page-level SSR guards + middleware role + helper location documented in state-authority.md; tsc=0; build=passes; 368/368 vitest; service-role=0; 0 new lint errors | Task 293 | [sessions/2026-05-29-task-293-auth-closure-correction.md](sessions/2026-05-29-task-293-auth-closure-correction.md) |
 | 2026-05-29 | Task 292 — `next/cache` test-env stub: `src/tests/next-cache-stub.ts` (revalidateTag no-op, revalidatePath no-op, unstable_cache pass-through) + vitest.config.ts alias; PRIMARY global-alias approach; applyListingTransition 19→0 failures; whole-suite 344/344 green; tsc=0; 0 production files changed | Task 292 | [sessions/2026-05-29-task-292-next-cache-test-stub.md](sessions/2026-05-29-task-292-next-cache-test-stub.md) |

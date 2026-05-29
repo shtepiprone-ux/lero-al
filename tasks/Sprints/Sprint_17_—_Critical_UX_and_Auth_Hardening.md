@@ -46,7 +46,7 @@ order.
 | **280** | Unify phone country-code combobox into one global European selector | refactor (precondition for 282) | high | ✅ done |
 | **281** | Auth session persistence hardening (Site Data cleanup recovery) | security + UX | high | ✅ done |
 | **288** | Project-wide i18n hardcode audit + remediation (localized status/enum labels; fixes `sq` notification raw-English bug) — added 2026-05-29 | bugfix + refactor (i18n) | medium (non-critical; may slip to Sprint 18) | 📝 filed, not executed |
-| **289** | **CORRECTIVE** — re-scope Task 277 WhatsApp CTA to authenticated users only; remove the service-role anon leak; ship `scripts/task-289-listing-contact-events-anon-revoke.sql` (owner confirmed Task 277 SQL already live); flags possible `page.tsx` truncation in the working tree — added 2026-05-29 | security + UX bugfix | high | 📝 filed, not executed |
+| **289** | **CORRECTIVE** — re-scope Task 277 WhatsApp CTA to authenticated users only; remove the service-role anon leak; ship `scripts/task-289-listing-contact-events-anon-revoke.sql` (owner confirmed Task 277 SQL already live) — added 2026-05-29 | security + UX bugfix | high | 📝 filed, not executed |
 | **290** | Project-wide no-ellipsis UX audit — wrap localized UI text instead of truncating it (symptom: contact card `owner_name_unavailable` cut via `truncate`); classify + fix every unsafe truncation across site + admin — added 2026-05-29 | bugfix / UX / i18n / responsive | high | 📝 filed, not executed |
 
 ## Run order
@@ -69,11 +69,10 @@ review-friendliness and avoids surface conflicts:
 **Tasks added 2026-05-29 (run after the originals):**
 
 6. **Task 289 (CORRECTIVE — WhatsApp authenticated-only)** — must run before
-   any further work on the listing-detail contact surface. **Blocked by a
-   prerequisite:** verify `page.tsx` is not truncated in the working tree
-   (STOP & ASK / owner restores from a clean commit first). Touches the same
+   any further work on the listing-detail contact surface. Touches the same
    files as Task 277, so do not run it in parallel with other listing-detail
-   edits.
+   edits. (An earlier `page.tsx` truncation flag was a false positive — `git
+   diff` confirms the file is intact; standard `tsc`/build check still applies.)
 7. **Task 290 (no-ellipsis UX audit)** — project-wide; touches `ListingContact.tsx`
    among many surfaces. Sequence **after Task 289** to avoid conflicting edits on
    the contact card; otherwise independent.
@@ -89,7 +88,7 @@ review-friendliness and avoids surface conflicts:
 | 279 | None unless RLS audit surfaces a problem (in which case Sonnet emits SQL). |
 | 280 | None — pure code change. |
 | 281 | Verify QA scenarios A-G on staging (covered in Task 281 kickoff). If `@supabase/ssr` is newly added, verify Vercel/Cloudflare env vars. |
-| 289 | (1) Verify `page.tsx` integrity in the working tree (restore from a clean commit in PowerShell if truncated) **before** handing the task to Sonnet. (2) After Sonnet ships, run `scripts/task-289-listing-contact-events-anon-revoke.sql` in Supabase → SQL Editor (drops `events_insert_anon` + revokes anon SELECT), then re-run `node scripts/check-schema-drift.mjs` (no drift expected). Best applied together with the code deploy. |
+| 289 | After Sonnet ships, run `scripts/task-289-listing-contact-events-anon-revoke.sql` in Supabase → SQL Editor (drops `events_insert_anon` + revokes anon SELECT), then re-run `node scripts/check-schema-drift.mjs` (no drift expected). Best applied together with the code deploy. (Earlier `page.tsx` truncation concern was a false positive — `git diff` confirms the file is intact.) |
 | 290 | None — pure code change (audit + wrapping). |
 | 288 | None — pure code change (i18n) + optional `check:i18n` guard the task adds. |
 

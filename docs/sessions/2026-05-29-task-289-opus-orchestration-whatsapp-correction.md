@@ -52,25 +52,33 @@ forbidden-list, and anon-leak verification steps.
 1. **Renders WhatsApp for anonymous users?** Yes — mobile CTA renders the button + `wa.me` for anon (no guest gate). Desktop hides the visible button via `showGuestCTA` but still serializes the number into client props for guests.
 2. **Fetches owner WhatsApp with `createAdminClient()`?** Yes — `page.tsx` lines 217–225.
 3. **Embeds number / `wa.me` in HTML/props for anon?** Yes — props passed to both client components for all visitors; mobile builds the `wa.me` `href` into SSR HTML.
-4. **Preserves existing controls (Call, Send message, Favorite, Save, Share, Report)?** Per the Task 277 log, yes — but the **working-tree `page.tsx` is currently truncated** (see blocker below), so the desktop sidebar render is missing right now and must be restored/verified.
+4. **Preserves existing controls (Call, Send message, Favorite, Save, Share, Report)?** Yes — confirmed in code; `page.tsx` is intact (the earlier truncation flag was a false positive — see retraction below).
 5. **Is the Task 277 SQL still needed?** The table + authenticated insert + owner select: yes (analytics foundation stays). The anon GRANT + `events_insert_anon` policy: no — remove.
 6. **Anon insert policy — remain / remove / narrow?** **Remove.** Auth-only contact = no anon contact events from this surface.
 7. **Existing authenticated-only RPC to reuse?** **Yes — `get_listing_owner_contact`** (`src/modules/listings/actions/getListingOwnerContact.ts`), already anon-revoked (Task 269), still imported by both components. This is the basis for the chosen Option B.
 
 ---
 
-## ⚠️ Additional critical finding — `page.tsx` truncated in working tree
+## `page.tsx` truncation flag — RETRACTED (false positive)
 
-`src/app/[locale]/listings/[slug]/page.tsx` (25,545 bytes, 514 lines) ends mid-JSX at line 513
-(`<SimilarListings` + trailing whitespace) with no closing tags, and `LazyListingContact` is imported
-(lines 47–48) but **never rendered** — the `lg:grid-cols-[1fr_320px]` right column (desktop contact
-sidebar) is absent. A truncated file cannot compile, which contradicts the Task 277 log's `tsc=0` claim.
+An earlier read of `src/app/[locale]/listings/[slug]/page.tsx` via the Linux sandbox mount appeared to
+end mid-JSX at `<SimilarListings` with the `LazyListingContact` desktop sidebar absent, which I flagged
+as a possible truncation/corruption blocker. **This was a false positive** — a stale/partial
+sandbox-mount view of the file, not its real state.
 
-The working tree also has ~28 uncommitted modified files spanning Tasks 277/279/280/281, consistent with
-the dual-writer git hazard documented in `CLAUDE.md` ("two git processes on the same `.git` corrupt
-`.git/index`"). **This is likely working-tree corruption, not an intentional Task 277 change.** The
-corrective kickoff makes "verify `page.tsx` integrity, STOP & ASK if truncated" the first prerequisite,
-and the owner should verify/restore the file from a clean commit in PowerShell before Sonnet proceeds.
+**Authoritative correction (owner's Windows git, 2026-05-29):**
+`git diff --stat -- "src/app/[locale]/listings/[slug]/page.tsx"` →
+`1 file changed, 23 insertions(+), 1 deletion(-)`. A +23/−1 delta vs HEAD is exactly the Task 277
+admin-client addition; a truncated file would show large deletions. **The file is intact** — the
+desktop `ListingContact` sidebar render and closing JSX are present. No reconstruction is needed; the
+Task 289 kickoff PREREQUISITE has been downgraded to a standard `tsc`/build check.
+
+Separately (still true, informational): at the time of review the working tree had ~28 uncommitted
+files spanning Tasks 277/279/280/281 — i.e. the Sprint 17 *implementation* was not yet committed. That
+is a workflow note for the owner (commit per-task with explicit paths), not a corruption finding.
+
+**Lesson for the orchestrator:** treat the sandbox mount as non-authoritative for file completeness;
+confirm against the owner's real `git diff` before raising a truncation/corruption blocker.
 
 ---
 
@@ -117,7 +125,7 @@ expected — only grants/policies changed).
 
 | File | Change | Rationale |
 |---|---|---|
-| `tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md` | NEW | Full corrective Sonnet 4.6 kickoff (contract, AC, privacy invariants, validation + grep checks, SQL decision, control-preservation, page.tsx blocker). |
+| `tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md` | NEW | Full corrective Sonnet 4.6 kickoff (contract, AC, privacy invariants, validation + grep checks, SQL decision, control-preservation; page.tsx integrity downgraded to standard build check after truncation flag retracted). |
 | `docs/backlog.md` | Added Task 289 archive row; annotated Task 277 row as over-scoped/corrected | Task closure tracking + traceability. |
 | `docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md` | NEW | This session log. |
 | `scripts/task-289-listing-contact-events-anon-revoke.sql` | NEW | Corrective migration — drops `events_insert_anon` + revokes anon SELECT (owner confirmed Task 277 SQL already live). Created at owner's explicit request. |
@@ -134,7 +142,7 @@ migration explicitly requested by the owner.
 - Confirmed `get_listing_owner_contact` exists, is anon-revoked, and is still wired — basis for Option B.
 - Confirmed Task 277 SQL grants anon SELECT + `events_insert_anon`.
 - Confirmed next free task number = 289.
-- Flagged truncated `page.tsx` (blocker) and the dual-writer working-tree risk.
+- Initially flagged a possible `page.tsx` truncation — **retracted** after the owner's `git diff` showed +23/−1 vs HEAD (false positive; sandbox-mount artifact). Noted the uncommitted-implementation workflow point (commit per-task with explicit paths).
 
 ---
 
@@ -152,6 +160,7 @@ git commit -m "docs(Task289): corrective kickoff (WhatsApp CTA authenticated-onl
 **Run the SQL in Supabase** (owner confirmed Task 277 migration already live):
 `scripts/task-289-listing-contact-events-anon-revoke.sql` → Supabase Dashboard → SQL Editor.
 
-> Note: the working tree currently contains uncommitted Task 277/279/280/281 changes and a possibly
-> truncated `page.tsx`. Verify `page.tsx` integrity (and commit/triage the other tasks) separately
-> before handing Task 289 to Sonnet.
+> Note: at review time the working tree contained uncommitted Task 277/279/280/281 *implementation*
+> changes (the Sprint 17 code was not yet committed). `page.tsx` is intact (truncation flag retracted).
+> Recommend committing the implementation per-task with explicit paths before/alongside handing Task 289
+> to Sonnet.

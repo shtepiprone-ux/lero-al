@@ -29,25 +29,17 @@
 
 ---
 
-## ⚠️ PREREQUISITE — page.tsx integrity (BLOCKER, verify FIRST)
+## PREREQUISITE — page.tsx integrity (RESOLVED — standard build check only)
 
-The orchestrator found that in the current working tree, `src/app/[locale]/listings/[slug]/page.tsx`
-**appears truncated** — it ends mid-JSX around line 513 at `<SimilarListings` with no closing tags,
-and `LazyListingContact` is **imported (lines 47–48) but never rendered** (the desktop sidebar /
-right column of the `lg:grid-cols-[1fr_320px]` layout is missing). A truncated file cannot compile,
-which contradicts the Task 277 session log's `tsc=0` claim.
+> **Update (2026-05-29):** an earlier orchestrator note flagged `page.tsx` as possibly truncated.
+> This was a **false positive** caused by a stale/partial sandbox-mount view of the file. The owner's
+> real `git diff --stat` shows only **+23 / −1 line vs HEAD** (exactly the Task 277 admin-client
+> addition), so the file is **intact** — the desktop `ListingContact` sidebar render and closing JSX
+> are present. No reconstruction is needed.
 
-**Before any other work:**
-
-1. Run `npx tsc --noEmit` and `pnpm build`. If they fail on `page.tsx`, the file is genuinely broken
-   in the working tree.
-2. **STOP & ASK the orchestrator/owner** if the file is truncated — this may be working-tree
-   corruption from the dual-writer git issue (`CLAUDE.md` → "Git safety"), and the owner may need to
-   restore the file from a clean commit in PowerShell *before* you proceed. Do **not** silently
-   reconstruct large amounts of JSX you cannot verify.
-3. Only once `page.tsx` is confirmed complete and compiling (with the desktop `ListingContact`
-   sidebar render present) do you continue with the corrective work below. The desktop sidebar
-   contact card MUST exist in the final file.
+**Standard check (not a blocker):** run `npx tsc --noEmit` and `pnpm build` as usual (clause 9). The
+desktop sidebar contact card must remain present in the final file after your edits — verify it is
+still rendered once you are done.
 
 ---
 
@@ -211,7 +203,7 @@ sidebar and the mobile CTA bar.
 
 ## What Sonnet must do (work items)
 
-1. Verify `page.tsx` integrity per the PREREQUISITE section; STOP & ASK if truncated.
+1. Confirm `page.tsx` compiles (`tsc`/build) and the desktop `ListingContact` sidebar render is present after your edits (the earlier truncation flag was a false positive — see PREREQUISITE).
 2. Remove / gate the `createAdminClient()` WhatsApp fetch in `page.tsx`; stop passing the WhatsApp
    number props to the client components for any visitor.
 3. Ensure anonymous visitors never receive `ownerWhatsappNational`, `ownerWhatsappDialCode`,
@@ -325,7 +317,7 @@ session logs, not in active SQL.
 - Do NOT build the future listing analytics page; no charts, dashboards, KPIs, or admin analytics UI.
 - Do NOT expose WhatsApp to guests.
 - Do NOT change the listing details layout beyond what is necessary to correct WhatsApp visibility
-  (restoring a truncated `page.tsx` to its known-good state is allowed only after STOP & ASK).
+  (`page.tsx` is intact — no reconstruction needed; only the WhatsApp-gating edits belong here).
 - Do NOT rewrite unrelated contact-card controls.
 - Do NOT change unrelated RLS policies.
 - Do NOT make `public_user_profiles` expose WhatsApp data to anon.
@@ -337,7 +329,7 @@ session logs, not in active SQL.
 
 ## Acceptance criteria (orchestrator will verify against the diff, not the report)
 
-- [ ] `page.tsx` integrity confirmed (compiles; desktop `ListingContact` sidebar present); STOP & ASK was used if it was truncated.
+- [ ] `page.tsx` compiles and the desktop `ListingContact` sidebar render is present after edits (earlier truncation flag was a false positive).
 - [ ] `createAdminClient()` WhatsApp fetch removed from `page.tsx`; unused imports cleaned.
 - [ ] Anonymous visitors receive NO WhatsApp number / `wa.me` URL / WhatsApp props in HTML or props (verified via view-source / network).
 - [ ] `ListingContact.tsx` renders WhatsApp only for authenticated viewers with a valid-WhatsApp owner.

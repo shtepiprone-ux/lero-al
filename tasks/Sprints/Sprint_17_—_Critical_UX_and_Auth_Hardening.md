@@ -3,6 +3,14 @@
 > **Filed by:** Orchestrator (Opus 4.7) on 2026-05-28 — after owner-uploaded
 > issues batch (11 new tasks total; 5 Sonnet-ready Sprint 17 + 6 Opus
 > meta-tasks queued for subsequent sessions as Tasks 282-287).
+>
+> **⚠️ Status update (2026-05-29): Sprint 17 is OPEN, not complete.** Original
+> Tasks 277–281 shipped, but **Task 277 was over-scoped** (it exposed the seller
+> WhatsApp number + `wa.me` link to anonymous visitors via a service-role
+> `createAdminClient()` fetch) and now carries a **corrective Task 289**
+> (authenticated-only re-scope). Two more tasks were filed into Sprint 17 on
+> 2026-05-29: **Task 288** (i18n hardcode audit) and **Task 290** (project-wide
+> no-ellipsis UX audit). **Open and not yet executed: 288, 289, 290.**
 
 ## Sprint goal
 
@@ -30,14 +38,16 @@ email promotion) are filed in `docs/backlog.md` as Tasks **282-287** and
 will be picked up in subsequent orchestrator sessions in that priority
 order.
 
-| # | Task | Theme | Priority |
-|---|---|---|---|
-| **277** | WhatsApp CTA restore + click-event foundation (`listing_contact_events`) | UX bugfix + analytics groundwork | high |
-| **278** | Premium home CTA → `/listings?premium=true` + Listings premium-only filter | feature | medium |
-| **279** | Fix favorite heart state sync across listing cards (collection-aware) | UX bugfix | high |
-| **280** | Unify phone country-code combobox into one global European selector | refactor (precondition for 282) | high |
-| **281** | Auth session persistence hardening (Site Data cleanup recovery) | security + UX | high |
-| **288** | Project-wide i18n hardcode audit + remediation (localized status/enum labels; fixes `sq` notification raw-English bug) — added 2026-05-29 to the next free slot | bugfix + refactor (i18n) | medium (non-critical; may slip to Sprint 18) |
+| # | Task | Theme | Priority | Status |
+|---|---|---|---|---|
+| **277** | WhatsApp CTA restore + click-event foundation (`listing_contact_events`) | UX bugfix + analytics groundwork | high | ⚠️ shipped but OVER-SCOPED → corrected by 289 |
+| **278** | Premium home CTA → `/listings?premium=true` + Listings premium-only filter | feature | medium | ✅ done |
+| **279** | Fix favorite heart state sync across listing cards (collection-aware) | UX bugfix | high | ✅ done |
+| **280** | Unify phone country-code combobox into one global European selector | refactor (precondition for 282) | high | ✅ done |
+| **281** | Auth session persistence hardening (Site Data cleanup recovery) | security + UX | high | ✅ done |
+| **288** | Project-wide i18n hardcode audit + remediation (localized status/enum labels; fixes `sq` notification raw-English bug) — added 2026-05-29 | bugfix + refactor (i18n) | medium (non-critical; may slip to Sprint 18) | 📝 filed, not executed |
+| **289** | **CORRECTIVE** — re-scope Task 277 WhatsApp CTA to authenticated users only; remove the service-role anon leak; ship `scripts/task-289-listing-contact-events-anon-revoke.sql` (owner confirmed Task 277 SQL already live); flags possible `page.tsx` truncation in the working tree — added 2026-05-29 | security + UX bugfix | high | 📝 filed, not executed |
+| **290** | Project-wide no-ellipsis UX audit — wrap localized UI text instead of truncating it (symptom: contact card `owner_name_unavailable` cut via `truncate`); classify + fix every unsafe truncation across site + admin — added 2026-05-29 | bugfix / UX / i18n / responsive | high | 📝 filed, not executed |
 
 ## Run order
 
@@ -56,15 +66,32 @@ review-friendliness and avoids surface conflicts:
 5. **Task 278 (Premium CTA)** — smallest scope; can run last or in
    parallel with 277/279.
 
+**Tasks added 2026-05-29 (run after the originals):**
+
+6. **Task 289 (CORRECTIVE — WhatsApp authenticated-only)** — must run before
+   any further work on the listing-detail contact surface. **Blocked by a
+   prerequisite:** verify `page.tsx` is not truncated in the working tree
+   (STOP & ASK / owner restores from a clean commit first). Touches the same
+   files as Task 277, so do not run it in parallel with other listing-detail
+   edits.
+7. **Task 290 (no-ellipsis UX audit)** — project-wide; touches `ListingContact.tsx`
+   among many surfaces. Sequence **after Task 289** to avoid conflicting edits on
+   the contact card; otherwise independent.
+8. **Task 288 (i18n hardcode audit)** — non-critical; independent of 289/290;
+   may slip to Sprint 18.
+
 ## Owner actions (per task, after Sonnet ships)
 
 | Task | Owner action |
 |---|---|
-| 277 | Apply migration for `listing_contact_events` table + RLS (SQL emitted by Sonnet); verify via `npm run check:schema-drift`. |
+| 277 | Apply migration for `listing_contact_events` table + RLS (SQL emitted by Sonnet); verify via `npm run check:schema-drift`. **✅ done — owner confirmed the SQL is live in Supabase (2026-05-29).** |
 | 278 | None — pure code change. |
 | 279 | None unless RLS audit surfaces a problem (in which case Sonnet emits SQL). |
 | 280 | None — pure code change. |
 | 281 | Verify QA scenarios A-G on staging (covered in Task 281 kickoff). If `@supabase/ssr` is newly added, verify Vercel/Cloudflare env vars. |
+| 289 | (1) Verify `page.tsx` integrity in the working tree (restore from a clean commit in PowerShell if truncated) **before** handing the task to Sonnet. (2) After Sonnet ships, run `scripts/task-289-listing-contact-events-anon-revoke.sql` in Supabase → SQL Editor (drops `events_insert_anon` + revokes anon SELECT), then re-run `node scripts/check-schema-drift.mjs` (no drift expected). Best applied together with the code deploy. |
+| 290 | None — pure code change (audit + wrapping). |
+| 288 | None — pure code change (i18n) + optional `check:i18n` guard the task adds. |
 
 ## Queued for subsequent orchestrator sessions (NOT Sprint 17)
 
@@ -100,13 +127,23 @@ Same standing contract as Sprint 16 — restated for emphasis:
 
 ## Sprint exit criteria
 
-- 5/5 tasks shipped + orchestrator-approved on diff.
-- `listing_contact_events` migration applied (Task 277) + drift check clean.
-- Premium filter URL-synced and clearable (Task 278).
-- Favorite heart state correct on all 4 surfaces (Task 279).
-- Zero local phone country-code combobox implementations remaining (Task 280).
-- `localStorage`-only auth dependency removed; valid-cookie refresh keeps user logged in; full Site Data deletion produces clean re-auth UX (Task 281).
-- `docs/backlog.md` updated with closure rows for 277-281 + Sprint 17 marked CLOSED ✅.
+**Originals 277–281 (shipped, but 277 has an open correction):**
+
+- Premium filter URL-synced and clearable (Task 278). ✅
+- Favorite heart state correct on all 4 surfaces (Task 279). ✅
+- Zero local phone country-code combobox implementations remaining (Task 280). ✅
+- `localStorage`-only auth dependency removed; valid-cookie refresh keeps user logged in; full Site Data deletion produces clean re-auth UX (Task 281). ✅
+- `listing_contact_events` migration applied (Task 277) + drift check clean. ✅ (owner confirmed live)
+
+**Still OPEN — Sprint 17 is NOT closed until these land + are orchestrator-approved on diff:**
+
+- **Task 289 (corrective):** WhatsApp CTA is authenticated-only; anonymous visitors receive no WhatsApp number / `wa.me` / props; `createAdminClient()` removed from the listing-detail page; `scripts/task-289-listing-contact-events-anon-revoke.sql` applied (anon grant + `events_insert_anon` removed); `page.tsx` integrity confirmed.
+- **Task 290 (no-ellipsis audit):** project-wide audit matrix produced; every unsafe user-facing truncation wrapped; retained truncation documented with accessible full text; verified ×4 locales + 7 breakpoints, site + admin separately.
+- **Task 288 (i18n audit):** raw-English enum/status leakage root-fixed + `check:i18n` parity guard (may slip to Sprint 18).
+
+**Closure bookkeeping:**
+
+- `docs/backlog.md` updated with closure rows for 288, 289, 290; Sprint 17 marked CLOSED ✅ only after all three are approved (or 288 explicitly deferred to Sprint 18 and 289/290 closed).
 - Sprint 18 candidates (282-287) re-prioritized based on Sprint 17 learnings.
 
 ## File index
@@ -118,4 +155,8 @@ Same standing contract as Sprint 16 — restated for emphasis:
   - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_280.md` — Phone combobox
   - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_281.md` — Auth session persistence
   - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_288.md` — i18n hardcode audit + remediation (non-critical; added 2026-05-29)
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md` — CORRECTIVE: WhatsApp CTA authenticated-only (added 2026-05-29)
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_290.md` — project-wide no-ellipsis UX audit (added 2026-05-29)
+- Corrective SQL: `scripts/task-289-listing-contact-events-anon-revoke.sql` (drops `events_insert_anon` + revokes anon SELECT; owner confirmed Task 277 SQL already live).
+- Opus orchestration session logs: `docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md`, `docs/sessions/2026-05-29-task-290-opus-orchestration-no-ellipsis-audit.md`.
 - Source issues file: `uploads/issues.txt` (owner-uploaded 2026-05-28, 4600 lines, 11 tasks; 5 sprint-bound + 6 queued).

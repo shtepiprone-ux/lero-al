@@ -9,13 +9,19 @@ import { getSiteStats } from '@/modules/listings/lib/queries'
 import { formatCount } from '@/lib/formatters'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { createClient } from '@/lib/supabase/server'
+import { loadUserFavoriteListingIds } from '@/modules/listings/lib/loadUserFavoriteListingIds'
 
 export default async function HomePage() {
   const t = await getTranslations('home')
   const tl = await getTranslations('listing')
   const locale = await getLocale()
 
-  const stats = await getSiteStats().catch(() => ({ listings: 0, cities: 0 }))
+  const supabase = await createClient()
+  const [stats, favoriteIds] = await Promise.all([
+    getSiteStats().catch(() => ({ listings: 0, cities: 0 })),
+    loadUserFavoriteListingIds(supabase),
+  ])
 
   return (
     <div className="flex flex-col">
@@ -67,7 +73,7 @@ export default async function HomePage() {
       {/* ── Featured listings ── */}
       <section className="py-12 md:py-16 2xl:py-20 bg-muted/30 [content-visibility:auto] [contain-intrinsic-size:auto_600px]">
         <div className="container-wide">
-          <FeaturedListings />
+          <FeaturedListings favoriteIds={favoriteIds} />
         </div>
       </section>
 
@@ -83,7 +89,7 @@ export default async function HomePage() {
               {tl('view_all')}
             </Link>
           </div>
-          <LatestListings />
+          <LatestListings favoriteIds={favoriteIds} />
         </div>
       </section>
 

@@ -22,12 +22,18 @@ function RowSkeleton() {
   )
 }
 
-export function LatestListings() {
+interface LatestListingsProps {
+  /** SSR-resolved Set of listing IDs the current user has favorited. Empty Set for guests. */
+  favoriteIds?: ReadonlySet<string>
+}
+
+export function LatestListings({ favoriteIds }: LatestListingsProps = {}) {
   const { listings, loading } = useLatestListings()
   const t = useTranslations('listing')
   const { rates } = useExchangeRate()
   const { user } = useAuth()
   const displayCurrency = user?.preferred_currency ?? 'ALL'
+  const favSet = favoriteIds ?? new Set<string>()
 
   if (loading) {
     return (
@@ -46,7 +52,7 @@ export function LatestListings() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-3">
       {listings.map((listing, index) => (
-        <ListingCard key={listing.id} listing={listing} variant="horizontal" priority={getImagePriority(index, 'latest')} displayCurrency={displayCurrency} rates={rates} />
+        <ListingCard key={listing.id} listing={listing} variant="horizontal" priority={getImagePriority(index, 'latest')} displayCurrency={displayCurrency} rates={rates} isFavorited={favSet.has(listing.id)} />
       ))}
     </div>
   )

@@ -184,6 +184,58 @@ state layer without any server round-trip.
 
 ---
 
+## Auth Redirect Architecture (Task 281 / Task 293)
+
+### Canonical post-login redirect param: `next`
+
+`next` is the canonical query param for post-login redirect paths across the whole
+codebase — auth callbacks, every protected-page redirect, `AuthRedirect`, and
+`AuthSheet`. The name `returnTo` is NOT used anywhere. Do NOT rename to `returnTo`.
+
+### Protected-redirect pattern: page-level SSR guards (not middleware)
+
+Protected routes redirect unauthenticated users at the SSR layer, NOT in middleware.
+Each protected page calls `getUser()` (via `createServerClient`) and calls `redirect()`
+before any props or admin data reach the client.
+
+| Route | Guard | Redirect target |
+|---|---|---|
+| `[locale]/cabinet` | `cabinet/page.tsx` | `/{locale}/auth/login?next=…&session=lost` |
+| `[locale]/favorites` | `favorites/page.tsx` | same |
+| `[locale]/listings/create` | `listings/create/page.tsx` | same |
+| `[locale]/listings/[slug]/edit` | `listings/[slug]/edit/page.tsx` | same |
+| `admin/*` | `admin/layout.tsx` | `/{locale}/auth/login?next=/admin&session=lost` |
+
+### Middleware role: session refresh only (not authorization)
+
+`src/middleware.ts` calls `refreshSession(request)` (from `src/lib/auth/middleware.ts`)
+on every matched request. Its ONLY auth responsibility is to refresh expired tokens so
+all downstream Server Components receive a valid session. It does NOT authorize routes
+or redirect protected paths.
+
+The `matcher` explicitly EXCLUDES `admin/*` — admin pages rely on `admin/layout.tsx`
+SSR guard for authorization and on the Supabase session cookie being refreshed by
+traffic on other routes. This exclusion is intentional and acceptable.
+
+### Middleware helper location
+
+`src/lib/auth/middleware.ts` is the canonical location for `refreshSession`.
+`src/lib/supabase/middleware.ts` does NOT exist.
+`src/middleware.ts` imports via `@/lib/auth/middleware`.
+
+### `sanitizeReturnTo`: path-safety only (not an authorization check)
+
+`sanitizeReturnTo` (`src/modules/auth/lib/sanitizeReturnTo.ts`) validates that a
+`next` param is a safe same-origin relative path. It rejects: schemes, `//`,
+backslashes, control chars, and path-traversal (`..` in raw and percent-encoded
+forms). It does NOT check caller authorization for the destination.
+
+Admin-path authorization after login is enforced by the destination (`admin/layout.tsx`
+redirects non-admins before render) — not at redirect-time in the sanitizer. This
+layered guard is the canonical design.
+
+---
+
 ## LISTING_SELECT Single Authority
 
 All listing card data fetches import from one place:

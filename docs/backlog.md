@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-29 — Task 287 (Sonnet): Email in profile identity card. Added read-only email muted line to cabinet ProfileTab identity-card grid (`sm:col-span-2 break-all`). Conditional on email presence; no new locale key; email-change flow untouched. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 19 COMPLETE (284→287).**
+
 **2026-05-29 — Task 284 (Sonnet): Admin unification + Support/Inquiries decision. Two distinct domains: support_tickets (internal admin tickets) vs contact_inquiries (public contact form). Sidebar labels renamed for clarity (EN: "Internal Tickets"/"Support Inbox"/"Sales Inbox"; sq/uk/it analogues). 11 raw buttons → Button canonical (AdminSidebar logout + AdminSupportManager filter/dialog/picker + AdminInquiriesManager row). Documented in domain-rules.md. tsc=0; 390/390; lint 7/10. UNCOMMITTED.**
 
 **2026-05-29 — Task 294 (Sonnet): Global multi-select filters + correct active-filter counter. conditions/heatingTypes/wallTypes/offerTypes → arrays; marketType kept scalar (documented). countActiveFilters per-value (array.length not 1). FilterValues moved to filterEngine.ts; countActiveFilterValues added; HeroSearch+useHomepageFilters route through it. FilterMultiToggle replaces FilterToggleGroup for 4 sections. ActiveFilterChips per-value. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 18 COMPLETE (282→283→294).**
@@ -120,6 +122,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-29 | Task 287 — Email in profile identity card: read-only muted email line added to identity-card grid (sm:col-span-2, break-all, conditional on email). No new locale key. Email-change flow intact. tsc=0; 390/390; lint 7/10 | Task 287 | [sessions/2026-05-29-task-287-profile-email-identity.md](sessions/2026-05-29-task-287-profile-email-identity.md) |
 | 2026-05-29 | Task 284 — Admin unification: support_tickets vs contact_inquiries documented; sidebar labels renamed ×4 locales ("Internal Tickets"/"Support Inbox"/"Sales Inbox"); 11 raw buttons → Button canonical; micro-fix: "Complaint Tickets" → "Internal Tickets" post-review; tsc=0; 390/390; lint 7/10 | Task 284 | [sessions/2026-05-29-task-284-admin-unification.md](sessions/2026-05-29-task-284-admin-unification.md) |
 | 2026-05-29 | Task 294 — Global multi-select filters: conditions/heatingTypes/wallTypes/offerTypes→arrays; marketType scalar (documented); countActiveFilters per-value; FilterValues in engine; countActiveFilterValues; FilterMultiToggle×4 sections; per-value chips; tsc=0; 390/390; lint 7/10. Sprint 18 COMPLETE | Task 294 | [sessions/2026-05-29-task-294-multi-select-filters.md](sessions/2026-05-29-task-294-multi-select-filters.md) |
 | 2026-05-29 | Task 283 — Tailwind entropy burn-down: 3 HIGH button-like clones → Button×3 (AdminListingsTable/Settings/UsersTable); py-10 → py-8; 47 LOW font-sizes → 0 via scan-tailwind.mjs allowlist support + 10 new entries. governance:tailwind C0/H0/M0. tsc=0; 368/368; lint baseline | Task 283 | [sessions/2026-05-29-task-283-governance-burn-down.md](sessions/2026-05-29-task-283-governance-burn-down.md) |

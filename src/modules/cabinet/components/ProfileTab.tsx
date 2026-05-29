@@ -244,6 +244,10 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
           )}
         </div>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Read-only email identity line — editable email-change control stays below */}
+          {email && (
+            <p className="sm:col-span-2 text-sm text-muted-foreground break-all">{email}</p>
+          )}
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="name" className="text-sm">{t('name')}</Label>
             <Input

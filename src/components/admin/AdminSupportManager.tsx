@@ -120,14 +120,15 @@ function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) 
         )}
         <p className="text-[10px] text-muted-foreground/50 font-mono">{user.id.slice(0, 8)}…</p>
       </div>
-      <button
+      <Button
         type="button"
+        variant="ghost"
         onClick={onClear}
-        className="shrink-0 p-0.5 rounded text-muted-foreground hover:text-foreground transition-colors"
+        className="shrink-0 h-auto p-0.5 rounded text-muted-foreground hover:text-foreground transition-colors"
         aria-label="Clear selection"
       >
         <X className="h-3.5 w-3.5" />
-      </button>
+      </Button>
     </div>
   )
 }
@@ -211,11 +212,12 @@ function UserPickerField({
               ) : results.map(u => {
                 const fullName = pickerUserName(u)
                 return (
-                  <button
+                  <Button
                     key={u.id}
                     type="button"
+                    variant="ghost"
                     onMouseDown={() => handleSelect(u)}
-                    className="w-full text-left px-3 py-2 hover:bg-muted/50 transition-colors border-t first:border-t-0"
+                    className="w-full justify-start text-left px-3 py-2 h-auto hover:bg-muted/50 transition-colors rounded-none border-t first:border-t-0"
                   >
                     <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
                     <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
@@ -223,7 +225,7 @@ function UserPickerField({
                       {u.phone && <span className="text-xs text-muted-foreground">{u.phone}</span>}
                     </div>
                     <p className="text-[10px] text-muted-foreground/50 font-mono mt-0.5">{u.id.slice(0, 8)}…</p>
-                  </button>
+                  </Button>
                 )
               })}
             </div>
@@ -329,18 +331,20 @@ function TicketDetailDialog({
             <p className="text-sm font-medium">{t('status_change_label')}</p>
             <div className="flex flex-wrap gap-2">
               {TICKET_STATUSES.map(s => (
-                <button
+                <Button
                   key={s}
+                  type="button"
+                  variant="ghost"
                   onClick={() => setNewStatus(s)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 h-auto transition-colors rounded-lg text-xs gap-1.5 ${
                     newStatus === s
-                      ? 'bg-primary text-primary-foreground border-primary'
-                      : 'border-border text-muted-foreground hover:text-foreground'
+                      ? 'bg-primary text-primary-foreground hover:bg-primary'
+                      : 'border border-border text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {STATUS_ICON[s]}
                   {t(`support_status_${s}` as `support_status_open`)}
-                </button>
+                </Button>
               ))}
             </div>
             <Textarea
@@ -594,33 +598,37 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
         {/* Type filter */}
         <div className="flex gap-1.5 flex-wrap">
           {(['all', 'support', 'user_complaint'] as const).map(f => (
-            <button
+            <Button
               key={f}
+              type="button"
+              variant="ghost"
               onClick={() => setTypeFilter(f)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+              className={`px-3 py-1.5 h-auto transition-colors rounded-lg text-xs ${
                 typeFilter === f
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'border-border text-muted-foreground hover:text-foreground'
+                  ? 'bg-primary text-primary-foreground hover:bg-primary'
+                  : 'border border-border text-muted-foreground hover:text-foreground'
               }`}
             >
               {f === 'all' ? t('filter_all') : f === 'support' ? t('type_support') : t('type_user_complaint')}
-            </button>
+            </Button>
           ))}
         </div>
         {/* Status filter */}
         <div className="flex gap-1.5 flex-wrap">
           {(['', ...TICKET_STATUSES] as const).map(s => (
-            <button
+            <Button
               key={s || 'all-s'}
+              type="button"
+              variant="ghost"
               onClick={() => setStatusFilter(s)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+              className={`px-3 py-1.5 h-auto transition-colors rounded-lg text-xs ${
                 statusFilter === s
-                  ? 'bg-primary text-primary-foreground border-primary'
-                  : 'border-border text-muted-foreground hover:text-foreground'
+                  ? 'bg-primary text-primary-foreground hover:bg-primary'
+                  : 'border border-border text-muted-foreground hover:text-foreground'
               }`}
             >
               {s || t('filter_all_status')}
-            </button>
+            </Button>
           ))}
         </div>
         <Button size="sm" className="ml-auto gap-1.5" onClick={() => setShowNew(true)}>

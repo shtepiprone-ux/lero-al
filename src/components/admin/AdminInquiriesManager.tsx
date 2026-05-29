@@ -233,10 +233,12 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
       ) : (
         <div className="divide-y rounded-xl border overflow-hidden">
           {filtered.map(inq => (
-            <button
+            <Button
               key={inq.id}
+              type="button"
+              variant="ghost"
               onClick={() => openDetail(inq)}
-              className="w-full flex items-start gap-4 px-5 py-4 hover:bg-muted/40 transition-colors text-left"
+              className="w-full flex items-start gap-4 px-5 py-4 h-auto hover:bg-muted/40 transition-colors text-left justify-start rounded-none"
             >
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -259,7 +261,7 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
                 )}
               </div>
               <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0 mt-1" />
-            </button>
+            </Button>
           ))}
         </div>
       )}

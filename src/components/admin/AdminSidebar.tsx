@@ -153,13 +153,14 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
             <ExternalLink className="h-4 w-4 shrink-0" />
             {t('open_site')}
           </Link>
-          <button
+          <Button
+            variant="ghost"
             onClick={handleLogout}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/5 transition-colors w-full cursor-pointer"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-muted-foreground hover:text-destructive hover:bg-destructive/5 transition-colors w-full justify-start h-auto"
           >
             <LogOut className="h-4 w-4 shrink-0" />
             {t('logout')}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

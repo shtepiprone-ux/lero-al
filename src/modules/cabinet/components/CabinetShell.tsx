@@ -36,9 +36,10 @@ interface Props {
   userId: string
   email?: string | null
   profileRecentlyViewed?: ReactNode
+  contactCountMap?: Record<string, number>
 }
 
-export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId, email, profileRecentlyViewed }: Props) {
+export function CabinetShell({ profile, listings, savedSearches, initialTab, initialFilter, initialPremium, locale, cities, regions, userId, email, profileRecentlyViewed, contactCountMap }: Props) {
   const t = useTranslations('cabinet')
   const router = useRouter()
   const pathname = usePathname()
@@ -133,7 +134,7 @@ export function CabinetShell({ profile, listings, savedSearches, initialTab, ini
 
         {/* Tab content */}
         {activeTab === 'profile' && <ProfileTab profile={profile} locale={locale} cities={cities} regions={regions} email={email} onAvatarChange={setAvatarUrl} recentlyViewed={profileRecentlyViewed} />}
-        {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} />}
+        {activeTab === 'listings' && <ListingsTab listings={listings} locale={locale} initialFilter={initialFilter} initialPremium={initialPremium} userId={userId} contactCountMap={contactCountMap} />}
         {activeTab === 'searches' && <SavedSearchesTab savedSearches={savedSearches} />}
 
       </div>

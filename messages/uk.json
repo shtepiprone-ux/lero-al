@@ -460,6 +460,7 @@
     "status_archived": "В архіві",
     "edit_listing": "Редагувати",
     "views": "переглядів",
+    "contact_count": "{count, plural, one {# контакт} few {# контакти} many {# контактів} other {# контактів}}",
     "verified": "Верифікований",
     "filter_ALL": "Всі",
     "filter_VISIBLE": "Видимі оголошення",

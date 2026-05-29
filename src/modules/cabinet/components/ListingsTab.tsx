@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import { Plus, Pencil, Trash2, Eye, Maximize2, Loader2, Check, X, SlidersHorizontal } from 'lucide-react'
+import { Plus, Pencil, Trash2, Eye, Maximize2, Loader2, Check, X, SlidersHorizontal, Phone } from 'lucide-react'
 import { toast } from 'sonner'
 import { deleteListingAction } from '@/modules/listings/actions/deleteListing'
 import { formatPrice } from '@/lib/formatters'
@@ -36,6 +36,7 @@ interface Props {
   initialFilter:   ListingVisibilityGroup
   initialPremium:  boolean
   userId:          string
+  contactCountMap?: Record<string, number>
 }
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -54,7 +55,7 @@ const STATUS_VARIANT: Record<ListingStatus, BadgeVariant> = {
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
-export function ListingsTab({ listings: initial, locale, initialFilter, initialPremium, userId }: Props) {
+export function ListingsTab({ listings: initial, locale, initialFilter, initialPremium, userId, contactCountMap }: Props) {
   const t            = useTranslations('cabinet')
   const tl           = useTranslations('listing')
   const activeLocale  = useLocale()
@@ -331,6 +332,10 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
                 <span className="flex items-center gap-1">
                   <Eye className="h-3 w-3" />
                   {listing.views_count} {t('views')}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Phone className="h-3 w-3" />
+                  {t('contact_count', { count: contactCountMap?.[listing.id] ?? 0 })}
                 </span>
                 <RelativeTime date={listing.created_at} />
               </div>

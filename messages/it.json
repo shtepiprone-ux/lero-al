@@ -460,6 +460,7 @@
     "status_archived": "Archiviato",
     "edit_listing": "Modifica",
     "views": "visualizzazioni",
+    "contact_count": "{count, plural, one {# contatto} other {# contatti}}",
     "verified": "Verificato",
     "filter_ALL": "Tutti",
     "filter_VISIBLE": "Annunci visibili",

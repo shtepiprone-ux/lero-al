@@ -52,13 +52,32 @@ export default async function CabinetPage({ params, searchParams }: Props) {
     .eq('user_id', authUser.id)
     .order('created_at', { ascending: false })
 
-  const [{ data: profile }, { data: listings }, { data: savedSearches }, { data: cities }, { data: regions }] = await Promise.all([
+  const [
+    { data: profile },
+    { data: listings },
+    { data: savedSearches },
+    { data: cities },
+    { data: regions },
+    { data: contactEvents },
+  ] = await Promise.all([
     supabase.from('users').select('*').eq('id', authUser.id).single(),
     buildCabinetListingsQuery(baseListingsQuery, visibility, attribute),
     supabase.from('saved_searches').select('*').eq('user_id', authUser.id).order('created_at', { ascending: false }),
     supabase.from('locations').select('id, name_al, region_id').in('type', ['city', 'village']).order('name_al'),
     supabase.from('locations').select('id, name_al').eq('type', 'region').order('name_al'),
+    // MVP analytics: per-listing contact-event counts for this owner (RLS enforces owner-only)
+    supabase
+      .from('listing_contact_events')
+      .select('listing_id')
+      .eq('listing_owner_id', authUser.id)
+      .eq('is_owner_click', false),
   ])
+
+  // Aggregate contact counts by listing_id (server-side, no new DB objects needed for MVP)
+  const contactCountMap: Record<string, number> = {}
+  for (const e of contactEvents ?? []) {
+    contactCountMap[e.listing_id] = (contactCountMap[e.listing_id] ?? 0) + 1
+  }
 
   return (
     <CabinetShell
@@ -74,6 +93,7 @@ export default async function CabinetPage({ params, searchParams }: Props) {
       userId={authUser.id}
       email={authUser.email ?? null}
       profileRecentlyViewed={<RecentlyViewedSection limit={25} showEmptyState showClear />}
+      contactCountMap={contactCountMap}
     />
   )
 }

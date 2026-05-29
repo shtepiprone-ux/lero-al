@@ -460,6 +460,7 @@
     "status_archived": "Arkivuar",
     "edit_listing": "Ndrysho",
     "views": "shikime",
+    "contact_count": "{count, plural, one {# kontakt} other {# kontakte}}",
     "verified": "I verifikuar",
     "filter_ALL": "Të gjitha",
     "filter_VISIBLE": "Njoftime të Dukshme",

@@ -137,21 +137,22 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
                   {collections.map(col => {
                     const isMember = memberIds.has(col.id)
                     return (
-                      <button
+                      <Button
                         key={col.id}
                         type="button"
+                        variant="ghost"
                         onClick={() => toggleCollection(col)}
                         disabled={isPending}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors text-left w-full disabled:opacity-60"
+                        className="flex items-center gap-3 px-3 py-2.5 h-auto rounded-xl hover:bg-muted transition-colors text-left w-full justify-start disabled:opacity-60"
                       >
                         <div className={`h-5 w-5 rounded border flex items-center justify-center shrink-0 ${isMember ? 'bg-primary border-primary' : 'border-border'}`}>
                           {isMember && <Check className="h-3 w-3 text-primary-foreground" />}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">{col.name}</p>
-                          <p className="text-xs text-muted-foreground">{col.item_count}</p>
+                          <p className="text-sm font-medium break-words">{col.name}</p>
+                          <p className="text-xs text-muted-foreground">{t('item_count', { count: col.item_count })}</p>
                         </div>
-                      </button>
+                      </Button>
                     )
                   })}
                 </div>

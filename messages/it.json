@@ -576,7 +576,8 @@
     "removed": "Rimosso dalla collezione",
     "name_required": "Il nome è obbligatorio",
     "error_generic": "Qualcosa è andato storto. Si prega di riprovare.",
-    "error_add_after_create": "Collezione creata, ma non è stato possibile aggiungere l'annuncio. Tocca la collezione per aggiungerlo manualmente."
+    "error_add_after_create": "Collezione creata, ma non è stato possibile aggiungere l'annuncio. Tocca la collezione per aggiungerlo manualmente.",
+    "item_count": "{count, plural, one {# annuncio} other {# annunci}}"
   },
   "admin": {
     "locations": {

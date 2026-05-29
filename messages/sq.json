@@ -576,7 +576,8 @@
     "removed": "U hoq nga koleksioni",
     "name_required": "Emri është i detyrueshëm",
     "error_generic": "Diçka shkoi keq. Provoni përsëri.",
-    "error_add_after_create": "Koleksioni u krijua, por njoftimi nuk mund të shtohej. Klikoni koleksionin për ta shtuar manualisht."
+    "error_add_after_create": "Koleksioni u krijua, por njoftimi nuk mund të shtohej. Klikoni koleksionin për ta shtuar manualisht.",
+    "item_count": "{count, plural, one {# njoftim} other {# njoftime}}"
   },
   "admin": {
     "locations": {

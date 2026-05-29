@@ -65,7 +65,7 @@ export function CollectionsSection({ initialCollections }: Props) {
     startTransition(async () => {
       const result = await createCollection(name)
       if ('error' in result) {
-        setCreateError(t('name_required'))
+        setCreateError(t('error_generic'))
         return
       }
       setCollections(prev => [result.collection, ...prev])
@@ -84,7 +84,7 @@ export function CollectionsSection({ initialCollections }: Props) {
     startTransition(async () => {
       const result = await renameCollection(renameTarget.id, name)
       if ('error' in result) {
-        setRenameError(t('name_required'))
+        setRenameError(t('error_generic'))
         return
       }
       setCollections(prev =>
@@ -142,8 +142,8 @@ export function CollectionsSection({ initialCollections }: Props) {
             >
               <Folder className="h-5 w-5 text-muted-foreground shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{col.name}</p>
-                <p className="text-xs text-muted-foreground">{col.item_count}</p>
+                <p className="text-sm font-medium break-words">{col.name}</p>
+                <p className="text-xs text-muted-foreground">{t('item_count', { count: col.item_count })}</p>
               </div>
               <div className="flex gap-1 shrink-0">
                 <Button

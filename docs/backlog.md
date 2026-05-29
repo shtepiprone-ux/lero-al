@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-29 — Task 286 (Sonnet): Favorites collections MVP polish. `truncate` → `break-words` ×2 (CollectionsSection + SaveToCollectionButton names). Raw `<button>` → `<Button>` for toggle. Item count: bare number → ICU plural `item_count` ×4 locales. All collection actions preserved. RLS intact. 6 follow-ups deferred. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 20 COMPLETE (285→286).**
+
 **2026-05-29 — Task 285 (Sonnet): Listing analytics MVP — per-listing contact count in cabinet. Direct query on listing_contact_events (existing RLS events_select_owner). contactCountMap built server-side. Phone icon + `contacts` key ×4 locales in ListingsTab stats row. No SQL emitted. 7 follow-ups deferred to Task 295+. tsc=0; 390/390; lint 7/10. UNCOMMITTED.**
 
 **2026-05-29 — Task 287 (Sonnet): Email in profile identity card. Added read-only email muted line to cabinet ProfileTab identity-card grid (`sm:col-span-2 break-all`). Conditional on email presence; no new locale key; email-change flow untouched. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 19 COMPLETE (284→287).**
@@ -124,6 +126,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-29 | Task 286 — Favorites collections MVP: truncate→break-words ×2; <button>→Button; item_count ICU plural ×4 locales; all actions preserved; 6 follow-ups deferred; tsc=0; 390/390; lint 7/10. Sprint 20 COMPLETE | Task 286 | [sessions/2026-05-29-task-286-favorites-collections-mvp.md](sessions/2026-05-29-task-286-favorites-collections-mvp.md) |
 | 2026-05-29 | Task 285 — Listing analytics MVP: contact count from listing_contact_events (RLS owner-only) → contactCountMap → ListingsTab stats row. `contacts` key ×4 locales. No SQL script. 7 follow-ups deferred. tsc=0; 390/390 | Task 285 | [sessions/2026-05-29-task-285-listing-analytics-mvp.md](sessions/2026-05-29-task-285-listing-analytics-mvp.md) |
 | 2026-05-29 | Task 287 — Email in profile identity card: read-only muted email line added to identity-card grid (sm:col-span-2, break-all, conditional on email). No new locale key. Email-change flow intact. tsc=0; 390/390; lint 7/10 | Task 287 | [sessions/2026-05-29-task-287-profile-email-identity.md](sessions/2026-05-29-task-287-profile-email-identity.md) |
 | 2026-05-29 | Task 284 — Admin unification: support_tickets vs contact_inquiries documented; sidebar labels renamed ×4 locales ("Internal Tickets"/"Support Inbox"/"Sales Inbox"); 11 raw buttons → Button canonical; micro-fix: "Complaint Tickets" → "Internal Tickets" post-review; tsc=0; 390/390; lint 7/10 | Task 284 | [sessions/2026-05-29-task-284-admin-unification.md](sessions/2026-05-29-task-284-admin-unification.md) |

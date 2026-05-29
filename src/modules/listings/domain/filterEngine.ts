@@ -38,6 +38,40 @@ const VALID_OFFER_TYPES        = OFFER_TYPES.map(o => o.value)
 const VALID_PURCHASE_CONDITIONS = PURCHASE_CONDITIONS.map(p => p.value)
 const VALID_LAYOUT_FEATURES    = LAYOUT_FEATURES.map(lf => lf.value)
 
+// ── Local draft filter state (homepage panel + HeroSearch) ───────────────────
+
+/**
+ * Local draft state for the homepage FiltersPanel.
+ * Uses snake_case field names matching URL param conventions.
+ * Currency is excluded from the active-count (not a narrowing filter).
+ */
+export interface FilterValues {
+  property_type?:     string
+  location_id?:       string
+  currency?:          string
+  price_min?:         number
+  price_max?:         number
+  area_min?:          number
+  area_max?:          number
+  rooms?:             number[]
+  floor_min?:         number
+  floor_max?:         number
+  floors_total_min?:  number
+  floors_total_max?:  number
+  year_built_min?:    number
+  year_built_max?:    number
+  conditions?:        string[]   // multi-select (was: condition: string)
+  heating_types?:     string[]   // multi-select (was: heating: string)
+  wall_types?:        string[]   // multi-select (was: wall_type: string)
+  market_type?:       string     // scalar — primary/secondary are mutually exclusive
+  layout_features?:   string[]
+  offer_types?:       string[]   // multi-select (was: offer_type: string)
+  purchase_conditions?: string[]
+  date_from?:         string
+  date_to?:           string
+  listing_id?:        string
+}
+
 // ── Parsed filter state ───────────────────────────────────────────────────────
 
 /**
@@ -69,12 +103,12 @@ export interface ParsedFilters {
   floorsTotalMax:     number | undefined
   yearBuiltMin:       number | undefined
   yearBuiltMax:       number | undefined
-  condition:          string
-  heating:            string
-  wallType:           string
-  marketType:         string
+  conditions:         string[]   // multi-select OR within group (was: condition: string)
+  heatingTypes:       string[]   // multi-select OR within group (was: heating: string)
+  wallTypes:          string[]   // multi-select OR within group (was: wallType: string)
+  marketType:         string     // scalar — primary/secondary are mutually exclusive modes
   layoutFeatures:     string[]
-  offerType:          string
+  offerTypes:         string[]   // multi-select OR within group (was: offerType: string)
   purchaseConditions: string[]
 }
 
@@ -165,12 +199,14 @@ export function parseSearchParams(sp: RawParams): ParsedFilters {
     floorsTotalMax:     n('floors_total_max'),
     yearBuiltMin:       n('year_built_min'),
     yearBuiltMax:       n('year_built_max'),
-    condition:          validEnum(sp, 'condition',    VALID_CONDITIONS),
-    heating:            validEnum(sp, 'heating',      VALID_HEATING_TYPES),
-    wallType:           validEnum(sp, 'wall_type',    VALID_WALL_TYPES),
-    marketType:         validEnum(sp, 'market_type',  VALID_MARKET_TYPES),
+    // Multi-select: comma-separated. Back-compat: old single-value URLs auto-parse
+    // (e.g. ?condition=good → conditions: ['good']) because rawMulti splits on ','.
+    conditions:         validEnumMulti(sp, 'condition',    VALID_CONDITIONS),
+    heatingTypes:       validEnumMulti(sp, 'heating',      VALID_HEATING_TYPES),
+    wallTypes:          validEnumMulti(sp, 'wall_type',    VALID_WALL_TYPES),
+    marketType:         validEnum(sp,      'market_type',  VALID_MARKET_TYPES),
     layoutFeatures:     validEnumMulti(sp, 'layout_features',    VALID_LAYOUT_FEATURES),
-    offerType:          validEnum(sp, 'offer_type',   VALID_OFFER_TYPES),
+    offerTypes:         validEnumMulti(sp, 'offer_type',   VALID_OFFER_TYPES),
     purchaseConditions: validEnumMulti(sp, 'purchase_conditions', VALID_PURCHASE_CONDITIONS),
   }
 }
@@ -195,8 +231,8 @@ export function applyListingFilters<Q>(baseQuery: Q, filters: ParsedFilters): Q 
   const {
     listingType, propertyType, locationId,
     priceMin, priceMax, areaMin, areaMax,
-    rooms, condition, heating, wallType, marketType,
-    layoutFeatures, offerType, purchaseConditions,
+    rooms, conditions, heatingTypes, wallTypes, marketType,
+    layoutFeatures, offerTypes, purchaseConditions,
     floorMin, floorMax, floorsTotalMin, floorsTotalMax,
     yearBuiltMin, yearBuiltMax,
     dateFrom, dateTo, listingId, isPremium,
@@ -274,15 +310,16 @@ export function applyListingFilters<Q>(baseQuery: Q, filters: ParsedFilters): Q 
   if (yearBuiltMin) q = q.gte('year_built', yearBuiltMin)
   if (yearBuiltMax) q = q.lte('year_built', yearBuiltMax)
 
-  // ── Enum single-select filters ────────────────────────────────────────────
+  // ── Multi-select filters — OR within group, AND across groups ────────────
+  // Each group uses .in() so any selected value matches (OR semantics).
 
-  if (condition)   q = q.eq('condition',   condition)
-  if (heating)     q = q.eq('heating',     heating)
-  if (wallType)    q = q.eq('wall_type',   wallType)
-  if (marketType)  q = q.eq('market_type', marketType)
-  if (offerType)   q = q.eq('offer_type',  offerType)
+  if (conditions.length > 0)         q = q.in('condition',         conditions)
+  if (heatingTypes.length > 0)       q = q.in('heating',           heatingTypes)
+  if (wallTypes.length > 0)          q = q.in('wall_type',         wallTypes)
+  if (marketType)                    q = q.eq('market_type',       marketType)
+  if (offerTypes.length > 0)         q = q.in('offer_type',        offerTypes)
 
-  // ── Array filters ─────────────────────────────────────────────────────────
+  // ── Array column filters ──────────────────────────────────────────────────
 
   if (layoutFeatures.length > 0)     q = q.contains('layout_features',    layoutFeatures)
   if (purchaseConditions.length > 0) q = q.overlaps('purchase_conditions', purchaseConditions)
@@ -338,27 +375,74 @@ export function getFilterVisibility(propertyType: string | undefined): {
 // ── Active filter count ───────────────────────────────────────────────────────
 
 /**
- * Returns the number of active (non-default) filters.
- * Used to display a badge count on the filter toggle button.
+ * Returns the number of active (non-default) filter values.
+ *
+ * Canonical counting rule (applied here and in countActiveFilterValues):
+ *  - array  → + array.length   (each selected value = +1)
+ *  - scalar → + 1 iff non-empty / non-default
+ *  - range  → + 1 per filled bound (both filled = +2)
+ *  - boolean → + 1 iff true
+ *  - currency — excluded (not a narrowing filter)
  */
 export function countActiveFilters(filters: ParsedFilters): number {
-  return [
-    filters.listingType,
-    filters.propertyType,
-    filters.locationId,
-    filters.priceMin,           filters.priceMax,
-    filters.areaMin,            filters.areaMax,
-    filters.rooms.length > 0  ? 1 : undefined,
-    filters.floorMin,           filters.floorMax,
-    filters.floorsTotalMin,     filters.floorsTotalMax,
-    filters.yearBuiltMin,       filters.yearBuiltMax,
-    filters.condition,          filters.heating,
-    filters.wallType,           filters.marketType,
-    filters.layoutFeatures.length > 0    ? 1 : undefined,
-    filters.offerType,
-    filters.purchaseConditions.length > 0 ? 1 : undefined,
-    filters.dateFrom,           filters.dateTo,
-    filters.listingId,
-    filters.isPremium ? 1 : undefined,
-  ].filter(Boolean).length
+  return (
+    (filters.listingType ? 1 : 0) +
+    (filters.propertyType ? 1 : 0) +
+    (filters.locationId ? 1 : 0) +
+    (filters.priceMin    != null ? 1 : 0) +
+    (filters.priceMax    != null ? 1 : 0) +
+    (filters.areaMin     != null ? 1 : 0) +
+    (filters.areaMax     != null ? 1 : 0) +
+    filters.rooms.length +
+    (filters.floorMin        != null ? 1 : 0) +
+    (filters.floorMax        != null ? 1 : 0) +
+    (filters.floorsTotalMin  != null ? 1 : 0) +
+    (filters.floorsTotalMax  != null ? 1 : 0) +
+    (filters.yearBuiltMin    != null ? 1 : 0) +
+    (filters.yearBuiltMax    != null ? 1 : 0) +
+    filters.conditions.length +
+    filters.heatingTypes.length +
+    filters.wallTypes.length +
+    (filters.marketType ? 1 : 0) +
+    filters.layoutFeatures.length +
+    filters.offerTypes.length +
+    filters.purchaseConditions.length +
+    (filters.dateFrom  ? 1 : 0) +
+    (filters.dateTo    ? 1 : 0) +
+    (filters.listingId ? 1 : 0) +
+    (filters.isPremium ? 1 : 0)
+  )
+}
+
+/**
+ * Same counting rules as countActiveFilters but applied to the local draft
+ * FilterValues state (homepage FiltersPanel / HeroSearch).
+ * Keeps count logic in one canonical location.
+ */
+export function countActiveFilterValues(fv: FilterValues): number {
+  return (
+    (fv.property_type ? 1 : 0) +
+    (fv.location_id   ? 1 : 0) +
+    (fv.price_min     != null ? 1 : 0) +
+    (fv.price_max     != null ? 1 : 0) +
+    (fv.area_min      != null ? 1 : 0) +
+    (fv.area_max      != null ? 1 : 0) +
+    (fv.rooms?.length ?? 0) +
+    (fv.floor_min        != null ? 1 : 0) +
+    (fv.floor_max        != null ? 1 : 0) +
+    (fv.floors_total_min != null ? 1 : 0) +
+    (fv.floors_total_max != null ? 1 : 0) +
+    (fv.year_built_min   != null ? 1 : 0) +
+    (fv.year_built_max   != null ? 1 : 0) +
+    (fv.conditions?.length    ?? 0) +
+    (fv.heating_types?.length ?? 0) +
+    (fv.wall_types?.length    ?? 0) +
+    (fv.market_type ? 1 : 0) +
+    (fv.layout_features?.length ?? 0) +
+    (fv.offer_types?.length     ?? 0) +
+    (fv.purchase_conditions?.length ?? 0) +
+    (fv.date_from  ? 1 : 0) +
+    (fv.date_to    ? 1 : 0) +
+    (fv.listing_id ? 1 : 0)
+  )
 }

@@ -5,7 +5,7 @@ import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 import { useCurrencies } from '@/modules/currency/hooks/useCurrencies'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
-import { getFilterVisibility } from '@/modules/listings/domain/filterEngine'
+import { getFilterVisibility, countActiveFilterValues } from '@/modules/listings/domain/filterEngine'
 import { ALL_FILTER_SECTIONS, type FilterSection } from '@/modules/listings/constants'
 import type { LocationOption } from '@/components/shared/LocationCombobox'
 import type { FilterValues } from '@/components/shared/FiltersPanel'
@@ -57,12 +57,12 @@ export function useHomepageFilters({
       floors_total:       ['floors_total_min', 'floors_total_max'],
       area:               [],
       year_built:         ['year_built_min', 'year_built_max'],
-      condition:          ['condition'],
-      heating:            ['heating'],
-      wall_type:          ['wall_type'],
+      condition:          ['conditions'],
+      heating:            ['heating_types'],
+      wall_type:          ['wall_types'],
       market_type:        ['market_type'],
       layout_features:    ['layout_features'],
-      offer_type:         ['offer_type'],
+      offer_type:         ['offer_types'],
       purchase_conditions:['purchase_conditions'],
     }
     setLocal(prev => {
@@ -88,11 +88,7 @@ export function useHomepageFilters({
     onChange(empty)
   }
 
-  const activeCount = Object.entries(local).filter(([key, v]) => {
-    if (key === 'currency') return false
-    if (Array.isArray(v)) return v.length > 0
-    return v !== undefined && v !== ''
-  }).length
+  const activeCount = countActiveFilterValues(local)
 
   const currency = local.currency ?? 'ALL'
   const { visibleSections, shows, floorFilterMin } = getFilterVisibility(local.property_type)

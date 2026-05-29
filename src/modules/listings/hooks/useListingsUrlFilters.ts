@@ -111,6 +111,10 @@ export function useListingsUrlFilters() {
   const activeCount = countActiveFilters(parseSearchParams(searchParams))
 
   const selectedRooms = getMulti('rooms')
+  const selectedConditions = getMulti('condition')
+  const selectedHeatingTypes = getMulti('heating')
+  const selectedWallTypes = getMulti('wall_type')
+  const selectedOfferTypes = getMulti('offer_type')
   const selectedLayoutFeatures = getMulti('layout_features')
   const selectedPurchaseConditions = getMulti('purchase_conditions')
 
@@ -125,7 +129,9 @@ export function useListingsUrlFilters() {
     visibleSections, shows, floorFilterMin,
     // Derived URL values
     currency, activeCount, currentPropertyType,
-    selectedRooms, selectedLayoutFeatures, selectedPurchaseConditions,
+    selectedRooms, selectedConditions, selectedHeatingTypes,
+    selectedWallTypes, selectedOfferTypes,
+    selectedLayoutFeatures, selectedPurchaseConditions,
     // Data
     today, rate, currencies, propertyTypes,
   }

@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-29 — Task 294 (Sonnet): Global multi-select filters + correct active-filter counter. conditions/heatingTypes/wallTypes/offerTypes → arrays; marketType kept scalar (documented). countActiveFilters per-value (array.length not 1). FilterValues moved to filterEngine.ts; countActiveFilterValues added; HeroSearch+useHomepageFilters route through it. FilterMultiToggle replaces FilterToggleGroup for 4 sections. ActiveFilterChips per-value. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 18 COMPLETE (282→283→294).**
+
 **2026-05-29 — Task 283 (Sonnet): Tailwind entropy burn-down — 3 HIGH button-like clones → 0 (Button×3 in AdminListingsTable/AdminSettings/AdminUsersTable); py-10 MEDIUM → py-8; 47 LOW font-sizes → 0 (scan-tailwind.mjs respects allowlist; 10 new allowlist entries). After: governance:tailwind C0/H0/M0 baseline. tsc=0; 368/368; lint baseline. UNCOMMITTED.**
 
 **2026-05-29 — Task 282 (Sonnet): Design System Lockdown — 10/10 governance:primitives violations fixed. Button×3, Dialog×4, Sheet×1, Tabs×1. AuthContext test allowlisted. After: C0/H2/M0 (2 window.location out of scope). tsc=0; build=passes; 368/368; 0 new lint errors. UNCOMMITTED — orchestrator review + commit hand-off pending.**
@@ -116,6 +118,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-29 | Task 294 — Global multi-select filters: conditions/heatingTypes/wallTypes/offerTypes→arrays; marketType scalar (documented); countActiveFilters per-value; FilterValues in engine; countActiveFilterValues; FilterMultiToggle×4 sections; per-value chips; tsc=0; 390/390; lint 7/10. Sprint 18 COMPLETE | Task 294 | [sessions/2026-05-29-task-294-multi-select-filters.md](sessions/2026-05-29-task-294-multi-select-filters.md) |
 | 2026-05-29 | Task 283 — Tailwind entropy burn-down: 3 HIGH button-like clones → Button×3 (AdminListingsTable/Settings/UsersTable); py-10 → py-8; 47 LOW font-sizes → 0 via scan-tailwind.mjs allowlist support + 10 new entries. governance:tailwind C0/H0/M0. tsc=0; 368/368; lint baseline | Task 283 | [sessions/2026-05-29-task-283-governance-burn-down.md](sessions/2026-05-29-task-283-governance-burn-down.md) |
 | 2026-05-29 | Task 282 — Design System Lockdown: 10/10 governance:primitives violations → 0. Button×3 (AdminDashboardRecentListings ×2, AdminUserAvatar, MobileBottomNav), Dialog×4 (AdminLegalManager, AdminLocationsManager, AdminPropertyTypesManager ×2), Sheet×1 (FiltersPanel), Tabs×1 (CabinetShell URL-sync). AuthContext test allowlisted. After: C0/H2/M0. tsc=0; build=passes; 368/368; lint baseline unchanged | Task 282 | [sessions/2026-05-29-task-282-design-system-lockdown.md](sessions/2026-05-29-task-282-design-system-lockdown.md) |
 | 2026-05-29 | Task 293 — Auth closure correction: auth test files confirmed intact (56/56); sanitizeReturnTo hardened (traversal+backslash+control-char); 24 tests added; `next` canonical param + page-level SSR guards + middleware role + helper location documented in state-authority.md; tsc=0; build=passes; 368/368 vitest; service-role=0; 0 new lint errors | Task 293 | [sessions/2026-05-29-task-293-auth-closure-correction.md](sessions/2026-05-29-task-293-auth-closure-correction.md) |

@@ -13,7 +13,6 @@ import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
-import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
@@ -55,7 +54,9 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
     sections, toggle,
     shows, floorFilterMin,
     currency, activeCount,
-    selectedRooms, selectedLayoutFeatures, selectedPurchaseConditions,
+    selectedRooms, selectedConditions, selectedHeatingTypes,
+    selectedWallTypes, selectedOfferTypes,
+    selectedLayoutFeatures, selectedPurchaseConditions,
     today, rate, propertyTypes,
   } = useListingsUrlFilters()
 
@@ -231,15 +232,14 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
           </AccordionSection>
         )}
 
-        {/* Condition */}
+        {/* Condition — multi-select */}
         {shows('condition') && (
           <AccordionSection title={tc('condition')} open={sections.condition} onToggle={() => toggle('condition')}>
-            <FilterToggleGroup
+            <FilterMultiToggle
               options={CONDITIONS}
-              value={get('condition') || null}
-              onToggle={v => updateParams({ condition: v })}
+              selected={selectedConditions}
+              onToggle={v => toggleMulti('condition', v)}
               getLabel={k => t(k)}
-              allLabel={tc('any')}
               className="flex-col gap-1.5"
             />
           </AccordionSection>
@@ -277,41 +277,38 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
           </AccordionSection>
         )}
 
-        {/* Heating */}
+        {/* Heating — multi-select */}
         {shows('heating') && (
           <AccordionSection title={tc('heating')} open={sections.heating} onToggle={() => toggle('heating')}>
-            <FilterToggleGroup
+            <FilterMultiToggle
               options={HEATING_TYPES}
-              value={get('heating') || null}
-              onToggle={v => updateParams({ heating: v })}
+              selected={selectedHeatingTypes}
+              onToggle={v => toggleMulti('heating', v)}
               getLabel={k => t(k)}
-              allLabel={tc('any_n')}
             />
           </AccordionSection>
         )}
 
-        {/* Wall type */}
+        {/* Wall type — multi-select */}
         {shows('wall_type') && (
           <AccordionSection title={tc('wall_type')} open={sections.wall_type} onToggle={() => toggle('wall_type')}>
-            <FilterToggleGroup
+            <FilterMultiToggle
               options={WALL_TYPES}
-              value={get('wall_type') || null}
-              onToggle={v => updateParams({ wall_type: v })}
+              selected={selectedWallTypes}
+              onToggle={v => toggleMulti('wall_type', v)}
               getLabel={k => t(k)}
-              allLabel={tc('any')}
             />
           </AccordionSection>
         )}
 
-        {/* Offer type */}
+        {/* Offer type — multi-select */}
         {shows('offer_type') && (
           <AccordionSection title={tc('offer_type')} open={sections.offer_type} onToggle={() => toggle('offer_type')}>
-            <FilterToggleGroup
+            <FilterMultiToggle
               options={OFFER_TYPES}
-              value={get('offer_type') || null}
-              onToggle={v => updateParams({ offer_type: v })}
+              selected={selectedOfferTypes}
+              onToggle={v => toggleMulti('offer_type', v)}
               getLabel={k => t(k)}
-              allLabel={tc('any')}
               className="flex-col gap-1.5"
             />
           </AccordionSection>

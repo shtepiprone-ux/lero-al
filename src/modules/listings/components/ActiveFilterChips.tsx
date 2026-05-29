@@ -109,10 +109,13 @@ export function ActiveFilterChips({ locations }: Props) {
   const floorsTotalMax = searchParams.get('floors_total_max')
   if (floorsTotalMax) chips.push({ key: 'floors_total_max', label: `≤ ${floorsTotalMax} ${t('floors_total_range').toLowerCase()}`, paramKey: 'floors_total_max' })
 
-  const condition = searchParams.get('condition')
-  if (condition) {
-    const c = CONDITIONS.find(c => c.value === condition)
-    if (c) chips.push({ key: 'condition', label: tl(c.labelKey), paramKey: 'condition' })
+  // Condition — per-value chips (multi-select)
+  const conditionParam = searchParams.get('condition')
+  if (conditionParam) {
+    conditionParam.split(',').filter(Boolean).forEach(cv => {
+      const c = CONDITIONS.find(c => c.value === cv)
+      if (c) chips.push({ key: `condition_${cv}`, label: tl(c.labelKey), paramKey: 'condition', multiValue: cv })
+    })
   }
 
   // Layout features — individual chip per feature
@@ -124,16 +127,22 @@ export function ActiveFilterChips({ locations }: Props) {
     })
   }
 
-  const heating = searchParams.get('heating')
-  if (heating) {
-    const h = HEATING_TYPES.find(h => h.value === heating)
-    if (h) chips.push({ key: 'heating', label: tl(h.labelKey), paramKey: 'heating' })
+  // Heating — per-value chips (multi-select)
+  const heatingParam = searchParams.get('heating')
+  if (heatingParam) {
+    heatingParam.split(',').filter(Boolean).forEach(hv => {
+      const h = HEATING_TYPES.find(h => h.value === hv)
+      if (h) chips.push({ key: `heating_${hv}`, label: tl(h.labelKey), paramKey: 'heating', multiValue: hv })
+    })
   }
 
-  const wallType = searchParams.get('wall_type')
-  if (wallType) {
-    const w = WALL_TYPES.find(w => w.value === wallType)
-    if (w) chips.push({ key: 'wall_type', label: tl(w.labelKey), paramKey: 'wall_type' })
+  // Wall type — per-value chips (multi-select)
+  const wallTypeParam = searchParams.get('wall_type')
+  if (wallTypeParam) {
+    wallTypeParam.split(',').filter(Boolean).forEach(wv => {
+      const w = WALL_TYPES.find(w => w.value === wv)
+      if (w) chips.push({ key: `wall_type_${wv}`, label: tl(w.labelKey), paramKey: 'wall_type', multiValue: wv })
+    })
   }
 
   const yearBuiltMin = searchParams.get('year_built_min')
@@ -142,10 +151,13 @@ export function ActiveFilterChips({ locations }: Props) {
   const yearBuiltMax = searchParams.get('year_built_max')
   if (yearBuiltMax) chips.push({ key: 'year_built_max', label: `≤ ${yearBuiltMax}`, paramKey: 'year_built_max' })
 
-  const offerType = searchParams.get('offer_type')
-  if (offerType) {
-    const ot = OFFER_TYPES.find(o => o.value === offerType)
-    if (ot) chips.push({ key: 'offer_type', label: tl(ot.labelKey), paramKey: 'offer_type' })
+  // Offer type — per-value chips (multi-select)
+  const offerTypeParam = searchParams.get('offer_type')
+  if (offerTypeParam) {
+    offerTypeParam.split(',').filter(Boolean).forEach(ov => {
+      const ot = OFFER_TYPES.find(o => o.value === ov)
+      if (ot) chips.push({ key: `offer_type_${ov}`, label: tl(ot.labelKey), paramKey: 'offer_type', multiValue: ov })
+    })
   }
 
   // Purchase conditions — individual chip per condition

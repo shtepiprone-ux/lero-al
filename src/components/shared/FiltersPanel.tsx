@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
+import type { FilterValues } from '@/modules/listings/domain/filterEngine'
+export type { FilterValues }
 import {
   CONDITIONS, HEATING_TYPES, WALL_TYPES,
   MARKET_TYPES, LAYOUT_FEATURES, OFFER_TYPES, PURCHASE_CONDITIONS,
@@ -14,7 +16,6 @@ import { LocationCombobox, type LocationOption } from '@/components/shared/Locat
 import { YearCombobox } from '@/components/shared/YearCombobox'
 import { DatePicker } from '@/components/shared/DatePicker'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
-import { FilterToggleGroup } from '@/components/shared/FilterToggleGroup'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { usePerformanceTier } from '@/lib/performance/store'
@@ -23,33 +24,6 @@ import { useHomepageFilters } from '@/components/shared/useHomepageFilters'
 import { Combobox } from '@/components/shared/Combobox'
 
 export type FilterCurrency = string
-
-export interface FilterValues {
-  property_type?: string
-  location_id?: string
-  currency?: FilterCurrency
-  price_min?: number
-  price_max?: number
-  area_min?: number
-  area_max?: number
-  rooms?: number[]
-  floor_min?: number
-  floor_max?: number
-  floors_total_min?: number
-  floors_total_max?: number
-  condition?: string
-  heating?: string
-  wall_type?: string
-  year_built_min?: number
-  year_built_max?: number
-  market_type?: string
-  layout_features?: string[]
-  offer_type?: string
-  purchase_conditions?: string[]
-  date_from?: string
-  date_to?: string
-  listing_id?: string
-}
 
 interface FiltersPanelProps {
   open: boolean
@@ -287,14 +261,18 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
               </div>
             )}
 
-            {/* Condition */}
+            {/* Condition — multi-select */}
             {shows('condition') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('condition')}</SectionHeader>
-                <FilterToggleGroup
+                <FilterMultiToggle
                   options={CONDITIONS}
-                  value={local.condition ?? null}
-                  onToggle={v => update({ condition: v ?? undefined })}
+                  selected={local.conditions ?? []}
+                  onToggle={v => {
+                    const current = local.conditions ?? []
+                    const next = current.includes(v) ? current.filter(x => x !== v) : [...current, v]
+                    update({ conditions: next.length > 0 ? next : undefined })
+                  }}
                   getLabel={k => tl(k)}
                 />
               </div>
@@ -317,40 +295,52 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
               </div>
             )}
 
-            {/* Heating */}
+            {/* Heating — multi-select */}
             {shows('heating') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('heating')}</SectionHeader>
-                <FilterToggleGroup
+                <FilterMultiToggle
                   options={HEATING_TYPES}
-                  value={local.heating ?? null}
-                  onToggle={v => update({ heating: v ?? undefined })}
+                  selected={local.heating_types ?? []}
+                  onToggle={v => {
+                    const current = local.heating_types ?? []
+                    const next = current.includes(v) ? current.filter(x => x !== v) : [...current, v]
+                    update({ heating_types: next.length > 0 ? next : undefined })
+                  }}
                   getLabel={k => tl(k)}
                 />
               </div>
             )}
 
-            {/* Wall type */}
+            {/* Wall type — multi-select */}
             {shows('wall_type') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('wall_type')}</SectionHeader>
-                <FilterToggleGroup
+                <FilterMultiToggle
                   options={WALL_TYPES}
-                  value={local.wall_type ?? null}
-                  onToggle={v => update({ wall_type: v ?? undefined })}
+                  selected={local.wall_types ?? []}
+                  onToggle={v => {
+                    const current = local.wall_types ?? []
+                    const next = current.includes(v) ? current.filter(x => x !== v) : [...current, v]
+                    update({ wall_types: next.length > 0 ? next : undefined })
+                  }}
                   getLabel={k => tl(k)}
                 />
               </div>
             )}
 
-            {/* Offer type */}
+            {/* Offer type — multi-select */}
             {shows('offer_type') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('offer_type')}</SectionHeader>
-                <FilterToggleGroup
+                <FilterMultiToggle
                   options={OFFER_TYPES}
-                  value={local.offer_type ?? null}
-                  onToggle={v => update({ offer_type: v ?? undefined })}
+                  selected={local.offer_types ?? []}
+                  onToggle={v => {
+                    const current = local.offer_types ?? []
+                    const next = current.includes(v) ? current.filter(x => x !== v) : [...current, v]
+                    update({ offer_types: next.length > 0 ? next : undefined })
+                  }}
                   getLabel={k => tl(k)}
                 />
               </div>

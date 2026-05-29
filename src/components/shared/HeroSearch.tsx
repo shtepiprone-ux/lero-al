@@ -7,7 +7,9 @@ import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
-import { FiltersPanel, type FilterValues } from '@/components/shared/FiltersPanel'
+import { FiltersPanel } from '@/components/shared/FiltersPanel'
+import { countActiveFilterValues } from '@/modules/listings/domain/filterEngine'
+import type { FilterValues } from '@/modules/listings/domain/filterEngine'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import type { ListingType } from '@/types/database'
@@ -33,11 +35,7 @@ export function HeroSearch() {
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [filters, setFilters] = useState<FilterValues>({})
 
-  const activeFiltersCount = Object.entries(filters).filter(([key, v]) => {
-    if (key === 'currency') return false
-    if (Array.isArray(v)) return v.length > 0
-    return v !== undefined && v !== ''
-  }).length
+  const activeFiltersCount = countActiveFilterValues(filters)
 
   function handleSearch(filterOverride?: FilterValues) {
     const f = filterOverride ?? filters
@@ -59,14 +57,14 @@ export function HeroSearch() {
     if (f.floors_total_min) params.set('floors_total_min', String(f.floors_total_min))
     if (f.floors_total_max) params.set('floors_total_max', String(f.floors_total_max))
     if (f.currency && f.currency !== 'ALL') params.set('currency', f.currency)
-    if (f.condition) params.set('condition', f.condition)
-    if (f.heating) params.set('heating', f.heating)
-    if (f.wall_type) params.set('wall_type', f.wall_type)
+    if (f.conditions?.length) params.set('condition', f.conditions.join(','))
+    if (f.heating_types?.length) params.set('heating', f.heating_types.join(','))
+    if (f.wall_types?.length) params.set('wall_type', f.wall_types.join(','))
     if (f.year_built_min) params.set('year_built_min', String(f.year_built_min))
     if (f.year_built_max) params.set('year_built_max', String(f.year_built_max))
     if (f.market_type) params.set('market_type', f.market_type)
     if (f.layout_features?.length) params.set('layout_features', f.layout_features.join(','))
-    if (f.offer_type) params.set('offer_type', f.offer_type)
+    if (f.offer_types?.length) params.set('offer_type', f.offer_types.join(','))
     if (f.purchase_conditions?.length) params.set('purchase_conditions', f.purchase_conditions.join(','))
     if (f.date_from) params.set('date_from', f.date_from)
     if (f.date_to) params.set('date_to', f.date_to)

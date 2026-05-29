@@ -26,12 +26,11 @@ export interface CountryEntry {
 }
 
 // Albania first (default); remaining entries sorted A-Z by label.
-// Russia excluded per product policy. US included for Albanian diaspora.
+// Russia and Belarus excluded per product policy. US included for Albanian diaspora.
 export const COUNTRY_CODES: CountryEntry[] = [
   { iso2: 'AL', dialCode: '+355', flag: '🇦🇱', label: 'Albania' },
   { iso2: 'AD', dialCode: '+376', flag: '🇦🇩', label: 'Andorra' },
   { iso2: 'AT', dialCode: '+43',  flag: '🇦🇹', label: 'Austria' },
-  { iso2: 'BY', dialCode: '+375', flag: '🇧🇾', label: 'Belarus' },
   { iso2: 'BE', dialCode: '+32',  flag: '🇧🇪', label: 'Belgium' },
   { iso2: 'BA', dialCode: '+387', flag: '🇧🇦', label: 'Bosnia' },
   { iso2: 'BG', dialCode: '+359', flag: '🇧🇬', label: 'Bulgaria' },

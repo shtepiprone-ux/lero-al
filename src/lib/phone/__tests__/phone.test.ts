@@ -162,7 +162,7 @@ describe('parsePhoneValue', () => {
 })
 
 describe('COUNTRY_CODES', () => {
-  it('contains 45 countries (Task 187 expanded from 13; Russia excluded)', () => expect(COUNTRY_CODES).toHaveLength(45))
+  it('contains 44 countries (Task 280 removed excluded entry; Task 187 expanded from 13)', () => expect(COUNTRY_CODES).toHaveLength(44))
   it('every entry has iso2, dialCode, flag, label', () => {
     for (const c of COUNTRY_CODES) {
       expect(c.iso2).toBeTruthy()
@@ -174,5 +174,11 @@ describe('COUNTRY_CODES', () => {
   it('AL has iso2 AL and dialCode +355', () => {
     const al = COUNTRY_CODES.find(c => c.iso2 === 'AL')
     expect(al?.dialCode).toBe('+355')
+  })
+  it('excludes BY (excluded per product policy)', () => {
+    expect(COUNTRY_CODES.find(c => c.iso2 === 'BY')).toBeUndefined()
+  })
+  it('excludes RU (excluded per product policy)', () => {
+    expect(COUNTRY_CODES.find(c => c.iso2 === 'RU')).toBeUndefined()
   })
 })

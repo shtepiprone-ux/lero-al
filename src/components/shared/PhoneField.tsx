@@ -14,6 +14,7 @@
  */
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Combobox } from '@/components/shared/Combobox'
@@ -46,6 +47,7 @@ export function PhoneField({
   size = 'default',
   portal = false,
 }: PhoneFieldProps) {
+  const t = useTranslations('phone')
   const parsed = parsePhoneValue(value)
   const [dialCode, setDialCode] = useState(parsed.dialCode)
   const [iso2, setIso2] = useState(parsed.iso2)
@@ -85,9 +87,10 @@ export function PhoneField({
       {label && <Label>{label}</Label>}
       <div className="flex gap-2">
         <Combobox
-          options={COUNTRY_CODES.map(c => ({ value: c.dialCode, label: `${c.flag} ${c.dialCode}`, description: c.label }))}
+          options={COUNTRY_CODES.map(c => ({ value: c.dialCode, label: `${c.flag} ${c.dialCode}`, description: `${c.label} ${c.iso2}` }))}
           value={dialCode}
           onChange={handleCountryChange}
+          placeholder={t('search_placeholder')}
           variant="input"
           size={comboboxSize}
           triggerClassName={comboboxWidth}

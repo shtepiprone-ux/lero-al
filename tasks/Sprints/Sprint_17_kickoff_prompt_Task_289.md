@@ -165,18 +165,23 @@ surface and must go.
 - **Remove** `grant select ... to anon;` and the `events_insert_anon` policy.
 - Keep `service_role` grants as-is.
 
-**Whether the owner runs SQL — conditional (DO NOT tell the owner to run the original file):**
-- The Task 277 session log lists "Run `scripts/task-277-listing-contact-events.sql`" as a *pending*
-  owner action, which strongly implies the migration has **not been applied yet**. **First, ask the
-  owner to confirm** whether it has been run in Supabase.
-  - **If NOT yet run:** edit `scripts/task-277-listing-contact-events.sql` in place to remove the anon
-    grant + `events_insert_anon` policy (this becomes the single canonical migration the owner runs).
-    Do not leave a separate ALTER file.
-  - **If ALREADY run:** create a small corrective migration
-    `scripts/task-289-listing-contact-events-anon-revoke.sql` that runs
-    `drop policy if exists "events_insert_anon" on public.listing_contact_events;` +
-    `revoke select on public.listing_contact_events from anon;` + `notify pgrst, 'reload schema';`
-    and tell the owner to run that.
+**SQL run state — RESOLVED (owner confirmation, 2026-05-29):** the owner has confirmed that
+`scripts/task-277-listing-contact-events.sql` has **already been applied in Supabase**. Therefore the
+corrective migration path applies (NOT an in-place edit of the original file):
+
+- A corrective migration **`scripts/task-289-listing-contact-events-anon-revoke.sql` already exists**
+  (created by the orchestrator). It runs:
+  `drop policy if exists "events_insert_anon" on public.listing_contact_events;` +
+  `revoke select on public.listing_contact_events from anon;` + `notify pgrst, 'reload schema';`
+  and keeps the table, indexes, `events_insert_authenticated`, `events_select_owner`, the
+  `authenticated` GRANT, and the `service_role` GRANT intact.
+- **Do NOT edit `scripts/task-277-listing-contact-events.sql`** (it is already live; editing it would
+  be misleading). Verify the corrective file's DROP/REVOKE names exactly match what Task 277 created
+  (policy `events_insert_anon`, `grant select … to anon`). If they do not match the live schema,
+  STOP & ASK before changing the migration.
+- **Owner action after this task ships:** run `scripts/task-289-listing-contact-events-anon-revoke.sql`
+  in Supabase Dashboard → SQL Editor; then re-run `node scripts/check-schema-drift.mjs` (expect no
+  drift — only grants/policies changed, not table shape).
 - Update `src/types/database.ts` / `scripts/check-schema-drift.mjs` / `scripts/schema-drift-check.sql`
   **only** if the SQL decision changes the table shape (it does not — only grants/policies change, so
   the generated drift baseline likely stays the same; verify and leave untouched if unchanged).
@@ -225,8 +230,9 @@ sidebar and the mobile CTA bar.
 8. Preserve valid `wa.me` generation (no `+`, no spaces, country code not duplicated) for the
    authenticated path; preserve the localized preset message if it survives the chosen approach.
 9. Preserve every non-WhatsApp contact-card control (inventory table required).
-10. Apply the SQL/RLS decision above (remove anon grant + `events_insert_anon`); decide run-or-not per
-    owner confirmation.
+10. Apply the SQL/RLS decision above. Owner has confirmed the Task 277 migration is already live, so
+    the fix ships as `scripts/task-289-listing-contact-events-anon-revoke.sql` (already created):
+    verify its DROP POLICY / REVOKE names match the live schema; do NOT edit the original Task 277 SQL.
 11. Update `src/types/database.ts` / schema-drift artifacts only if the table shape changes (it should
     not).
 12. Update `docs/backlog.md` (Task 289 closure row + Task 277 corrected note).
@@ -339,7 +345,7 @@ session logs, not in active SQL.
 - [ ] Authenticated viewer sees a working WhatsApp button + correct `wa.me` link; root cause of the original disappearance documented.
 - [ ] Owner/self behavior unchanged and documented; self-click not counted as a real lead.
 - [ ] All non-WhatsApp contact-card controls preserved (Note 20 before/after table for desktop + mobile).
-- [ ] SQL/RLS: anon grant + `events_insert_anon` removed; correct run-or-not instruction given to owner based on whether the migration was already applied.
+- [ ] SQL/RLS: anon grant + `events_insert_anon` removed via `scripts/task-289-listing-contact-events-anon-revoke.sql` (owner confirmed Task 277 SQL already live); DROP/REVOKE names verified against live schema; original Task 277 SQL left unedited.
 - [ ] Positive + every negative flow implemented and cited by name in the AC self-audit table.
 - [ ] 4 locales intact; 7 breakpoints verified; `tsc=0`; `pnpm build` clean; drift check addressed.
 - [ ] `docs/backlog.md` updated; corrective session log added with Files Changed table.
@@ -354,7 +360,7 @@ session logs, not in active SQL.
 - `src/modules/listings/components/ListingMobileCTA.tsx` — auth-only WhatsApp gating (mobile; add guest gate).
 - `src/components/listing/WhatsAppContactButton.tsx` — keep only if fed without leaking; else remove wiring.
 - `src/modules/listings/actions/contactEvents.ts` — authenticated/self-click analytics; remove any anon-click assumption.
-- `scripts/task-277-listing-contact-events.sql` — remove anon grant + `events_insert_anon` (if not yet run) OR add `scripts/task-289-...-anon-revoke.sql` (if already run).
+- `scripts/task-289-listing-contact-events-anon-revoke.sql` — corrective migration (ALREADY CREATED; owner confirmed Task 277 SQL is live). Do NOT edit `scripts/task-277-listing-contact-events.sql`.
 - `src/types/database.ts`, `scripts/check-schema-drift.mjs`, `scripts/schema-drift-check.sql` — only if table shape changes (it should not).
 - `messages/sq.json` / `en.json` / `uk.json` / `it.json` — only if user-facing strings change.
 - `docs/backlog.md`, `docs/sessions/2026-05-29-task-289-whatsapp-cta-auth-only-correction.md`.

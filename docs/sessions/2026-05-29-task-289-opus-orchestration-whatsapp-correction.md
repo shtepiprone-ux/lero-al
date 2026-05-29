@@ -94,13 +94,22 @@ server-side first; for authenticated viewers only, fetch the number via the **au
 
 Keep the table, `events_insert_authenticated`, `events_select_owner`, both indexes, and the
 `authenticated` GRANT. **Remove** `grant select ... to anon` and the `events_insert_anon` policy.
-Run-or-not is **conditional on owner confirmation** of whether the Task 277 migration was already
-applied (the Task 277 log lists it as a *pending* owner action, implying NOT yet run):
-- Not run → edit `scripts/task-277-listing-contact-events.sql` in place (single canonical migration).
-- Already run → add `scripts/task-289-listing-contact-events-anon-revoke.sql` (DROP POLICY + REVOKE + reload).
 
-**Owner instruction (important):** do NOT run the original `scripts/task-277-listing-contact-events.sql`
-as-is — it grants anon SELECT and creates the anon-insert policy that this correction removes.
+**RESOLVED — owner confirmation (2026-05-29):** the owner confirmed that
+`scripts/task-277-listing-contact-events.sql` has **already been applied in Supabase**. So the fix
+ships as a follow-up corrective migration, **not** an edit to the original file. The orchestrator
+created `scripts/task-289-listing-contact-events-anon-revoke.sql`:
+```sql
+drop policy if exists "events_insert_anon" on public.listing_contact_events;
+revoke select on public.listing_contact_events from anon;
+notify pgrst, 'reload schema';
+```
+This keeps the table, indexes, `events_insert_authenticated`, `events_select_owner`, the
+`authenticated` GRANT and the `service_role` GRANT intact.
+
+**Owner action:** run `scripts/task-289-listing-contact-events-anon-revoke.sql` in Supabase →
+SQL Editor (after Task 289 ships), then re-run `node scripts/check-schema-drift.mjs` (no drift
+expected — only grants/policies changed).
 
 ---
 
@@ -111,8 +120,10 @@ as-is — it grants anon SELECT and creates the anon-insert policy that this cor
 | `tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md` | NEW | Full corrective Sonnet 4.6 kickoff (contract, AC, privacy invariants, validation + grep checks, SQL decision, control-preservation, page.tsx blocker). |
 | `docs/backlog.md` | Added Task 289 archive row; annotated Task 277 row as over-scoped/corrected | Task closure tracking + traceability. |
 | `docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md` | NEW | This session log. |
+| `scripts/task-289-listing-contact-events-anon-revoke.sql` | NEW | Corrective migration — drops `events_insert_anon` + revokes anon SELECT (owner confirmed Task 277 SQL already live). Created at owner's explicit request. |
 
-No production code modified by Opus (orchestrator role).
+No application/product code modified by Opus (orchestrator role). The only SQL is the corrective
+migration explicitly requested by the owner.
 
 ---
 
@@ -134,9 +145,12 @@ No production code modified by Opus (orchestrator role).
 > `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`
 
 ```
-git add tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md docs/backlog.md "docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md"
-git commit -m "docs(Task289): corrective kickoff to re-scope Task 277 WhatsApp CTA to authenticated-only + flag page.tsx truncation"
+git add tasks/Sprints/Sprint_17_kickoff_prompt_Task_289.md docs/backlog.md "docs/sessions/2026-05-29-task-289-opus-orchestration-whatsapp-correction.md" scripts/task-289-listing-contact-events-anon-revoke.sql
+git commit -m "docs(Task289): corrective kickoff (WhatsApp CTA authenticated-only) + anon-revoke migration for listing_contact_events"
 ```
+
+**Run the SQL in Supabase** (owner confirmed Task 277 migration already live):
+`scripts/task-289-listing-contact-events-anon-revoke.sql` → Supabase Dashboard → SQL Editor.
 
 > Note: the working tree currently contains uncommitted Task 277/279/280/281 changes and a possibly
 > truncated `page.tsx`. Verify `page.tsx` integrity (and commit/triage the other tasks) separately

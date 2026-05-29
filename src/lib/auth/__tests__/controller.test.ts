@@ -314,49 +314,82 @@ describe('Scenario 2 — Tab background / restore', () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe('Scenario 3 — Multi-tab auth synchronization', () => {
-  it('SIGNED_OUT event (from any tab) transitions immediately to unauthenticated without fetch', () => {
+  it('SIGNED_OUT (from any tab) re-verifies with server and settles unauthenticated when no session remains', async () => {
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
     ctrl = mountAuthenticated()
+
     authCallbackRef.current?.('SIGNED_OUT', null)
 
-    expect(ctrl.getState()).toEqual(unauthenticated())
-    expect(vi.mocked(global.fetch)).not.toHaveBeenCalled()
+    // Synchronously: controller enters refreshing and issues ONE server check.
+    expect(ctrl.getState().status).toBe('refreshing')
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+
+    // After server confirms no session → terminal unauthenticated.
+    await vi.waitFor(() => expect(ctrl.getState()).toEqual(unauthenticated()))
+    expect(mockCoreSignOut).toHaveBeenCalledWith('local')
   })
 
-  it('SIGNED_IN with null session (cross-tab token invalidation) transitions to unauthenticated', () => {
+  it('SIGNED_IN with null session (cross-tab token invalidation) re-verifies with server and settles unauthenticated', async () => {
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
     ctrl = mountAuthenticated()
+
     authCallbackRef.current?.('SIGNED_IN', null)
 
-    expect(ctrl.getState()).toEqual(unauthenticated())
-    expect(vi.mocked(global.fetch)).not.toHaveBeenCalled()
+    // null session treated identically to SIGNED_OUT → syncFromServer.
+    expect(ctrl.getState().status).toBe('refreshing')
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+
+    await vi.waitFor(() => expect(ctrl.getState()).toEqual(unauthenticated()))
   })
 
-  it('SIGNED_OUT aborts any in-flight sync so the stale result cannot re-authenticate', async () => {
+  it('SIGNED_OUT aborts in-flight SIGNED_IN sync — stale result cannot re-authenticate', async () => {
     let resolveFirst!: (r: Response) => void
-    const inFlight = new Promise<Response>(r => { resolveFirst = r })
-    vi.mocked(global.fetch).mockReturnValueOnce(inFlight)
+    let resolveSignedOut!: (r: Response) => void
+    const staleFetch = new Promise<Response>(r => { resolveFirst = r })
+    const signedOutFetch = new Promise<Response>(r => { resolveSignedOut = r })
+
+    vi.mocked(global.fetch)
+      .mockReturnValueOnce(staleFetch)      // fetch #1 — started by SIGNED_IN (stale)
+      .mockReturnValueOnce(signedOutFetch)  // fetch #2 — started by SIGNED_OUT verification
 
     ctrl = mountAuthenticated()
-    // Tab B signed in → starts server sync.
+
+    // Track every committed status to prove 'authenticated' is never reached.
+    const committed: string[] = []
+    ctrl.subscribe(() => committed.push(ctrl.getState().status))
+
+    // SIGNED_IN from another tab → starts fetch #1.
     authCallbackRef.current?.('SIGNED_IN', MOCK_SESSION)
     expect(ctrl.getState().status).toBe('refreshing')
 
-    // Tab A signs out → must cancel in-flight and go unauthenticated.
+    // SIGNED_OUT supersedes it: ++version, aborts fetch #1, starts fetch #2.
     authCallbackRef.current?.('SIGNED_OUT', null)
-    expect(ctrl.getState()).toEqual(unauthenticated())
+    // Still refreshing — now waiting for SIGNED_OUT's own server check.
+    expect(ctrl.getState().status).toBe('refreshing')
 
-    // Resolve the stale first fetch — must NOT change state back to authenticated.
+    // Resolve stale fetch #1 with MOCK_USER — version guard rejects it (v=1, version=2).
     resolveFirst(okResponse(MOCK_USER))
-    await Promise.resolve()
+    // Resolve SIGNED_OUT's server check with null — genuine sign-out.
+    resolveSignedOut(okResponse(null))
 
-    expect(ctrl.getState()).toEqual(unauthenticated())
+    // Final state must be unauthenticated.
+    await vi.waitFor(() => expect(ctrl.getState()).toEqual(unauthenticated()))
+
+    // Security guarantee: 'authenticated' was NEVER committed — stale result was rejected.
+    expect(committed).not.toContain('authenticated')
+    expect(mockCoreSignOut).toHaveBeenCalledWith('local')
   })
 
   it('SIGNED_IN after SIGNED_OUT re-authenticates correctly', async () => {
-    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(MOCK_USER))
+    vi.mocked(global.fetch)
+      .mockResolvedValueOnce(okResponse(null))       // SIGNED_OUT's server check → no session
+      .mockResolvedValueOnce(okResponse(MOCK_USER))  // SIGNED_IN's server check → user
+
     ctrl = mountAuthenticated()
 
     authCallbackRef.current?.('SIGNED_OUT', null)
-    expect(ctrl.getState().status).toBe('unauthenticated')
+    // Drive SIGNED_OUT's sync to resolution before firing SIGNED_IN.
+    await vi.waitFor(() => expect(ctrl.getState().status).toBe('unauthenticated'))
 
     authCallbackRef.current?.('SIGNED_IN', MOCK_SESSION)
     await vi.waitFor(() => expect(ctrl.getState().status).toBe('authenticated'))
@@ -381,15 +414,21 @@ describe('Scenario 4 — Refresh token expiration', () => {
     expect(mockCoreSignOut).toHaveBeenCalledWith('local')
   })
 
-  it('SIGNED_OUT event on token expiration does not loop or leave loading state', () => {
+  it('SIGNED_OUT event on token expiration does not loop or leave loading state', async () => {
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
     ctrl = mountAuthenticated()
+
     authCallbackRef.current?.('SIGNED_OUT', null)
 
-    const state = ctrl.getState()
-    expect(state.status).toBe('unauthenticated')
-    expect(state.user).toBeNull()
-    // No fetch → no retry loop.
-    expect(vi.mocked(global.fetch)).not.toHaveBeenCalled()
+    // Synchronously: exactly one server check started — no retry loop.
+    expect(ctrl.getState().status).toBe('refreshing')
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+
+    // After server confirms no session → terminal unauthenticated (never stuck in refreshing).
+    await vi.waitFor(() => expect(ctrl.getState().status).toBe('unauthenticated'))
+    expect(ctrl.getState().user).toBeNull()
+    // Still exactly one fetch — no loop triggered.
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -647,9 +686,14 @@ describe('Scenario 8 — UI state stability', () => {
     expect(user?.id).toBe(MOCK_USER.id)
   })
 
-  it('unauthenticated state always has user === null', () => {
+  it('unauthenticated state always has user === null', async () => {
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
     ctrl = mountAuthenticated()
+
     authCallbackRef.current?.('SIGNED_OUT', null)
+    // Drive to terminal unauthenticated — invariant applies to the resolved state.
+    await vi.waitFor(() => expect(ctrl.getState().status).toBe('unauthenticated'))
+    // Invariant: unauthenticated state never carries a user.
     expect(ctrl.getState().user).toBeNull()
   })
 

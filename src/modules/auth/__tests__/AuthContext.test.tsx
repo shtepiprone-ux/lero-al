@@ -188,6 +188,7 @@ describe('Auth event propagation', () => {
   })
 
   it('SIGNED_OUT event updates rendered UI to unauthenticated', async () => {
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(null))
     renderProvider(MOCK_USER)
 
     expect(screen.getByTestId('status')).toHaveTextContent('authenticated')
@@ -196,7 +197,9 @@ describe('Auth event propagation', () => {
       authCallbackRef.current?.('SIGNED_OUT', null)
     })
 
-    expect(screen.getByTestId('status')).toHaveTextContent('unauthenticated')
+    await waitFor(() =>
+      expect(screen.getByTestId('status')).toHaveTextContent('unauthenticated')
+    )
     expect(screen.getByTestId('user-name')).toHaveTextContent('none')
   })
 

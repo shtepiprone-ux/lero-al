@@ -37,6 +37,7 @@ order.
 | **279** | Fix favorite heart state sync across listing cards (collection-aware) | UX bugfix | high |
 | **280** | Unify phone country-code combobox into one global European selector | refactor (precondition for 282) | high |
 | **281** | Auth session persistence hardening (Site Data cleanup recovery) | security + UX | high |
+| **288** | Project-wide i18n hardcode audit + remediation (localized status/enum labels; fixes `sq` notification raw-English bug) — added 2026-05-29 to the next free slot | bugfix + refactor (i18n) | medium (non-critical; may slip to Sprint 18) |
 
 ## Run order
 
@@ -116,4 +117,5 @@ Same standing contract as Sprint 16 — restated for emphasis:
   - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_279.md` — Favorite heart sync
   - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_280.md` — Phone combobox
   - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_281.md` — Auth session persistence
+  - `tasks/Sprints/Sprint_17_kickoff_prompt_Task_288.md` — i18n hardcode audit + remediation (non-critical; added 2026-05-29)
 - Source issues file: `uploads/issues.txt` (owner-uploaded 2026-05-28, 4600 lines, 11 tasks; 5 sprint-bound + 6 queued).

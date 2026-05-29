@@ -16,6 +16,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       // server-only is a Next.js build-time guard — alias to a no-op in test env
       'server-only': path.resolve(__dirname, './src/tests/server-only-stub.ts'),
+      // next/cache functions require a Next.js request scope missing in jsdom — stub to no-ops
+      'next/cache': path.resolve(__dirname, './src/tests/next-cache-stub.ts'),
     },
   },
 })

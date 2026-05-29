@@ -37,6 +37,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
   const listingType = get('type') || ''
   const propertyType = get('property_type') || ''
   const locationId = get('location_id') || ''
+  const isPremium = get('premium') === 'true'
 
   const propertyTypeOptions = [
     { value: '', label: tc('all_types') },
@@ -84,6 +85,17 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
         className="w-52 shrink-0"
         portal
       />
+
+      {/* Premium-only toggle */}
+      <Button
+        type="button"
+        variant={isPremium ? 'default' : 'outline'}
+        size="lg"
+        className="rounded-xl text-xs px-3 shrink-0"
+        onClick={() => updateParams({ premium: isPremium ? null : 'true' })}
+      >
+        {t('filter_premium_toggle_label')}
+      </Button>
 
       {/* Spacer */}
       <div className="flex-1 min-w-0" />

@@ -26,20 +26,26 @@ function CardSkeleton() {
   )
 }
 
-export function FeaturedListings() {
+interface FeaturedListingsProps {
+  /** SSR-resolved Set of listing IDs the current user has favorited. Empty Set for guests. */
+  favoriteIds?: ReadonlySet<string>
+}
+
+export function FeaturedListings({ favoriteIds }: FeaturedListingsProps = {}) {
   const { listings, loading } = useFeaturedListings()
   const t = useTranslations('listing')
   const locale = useLocale()
   const { rates } = useExchangeRate()
   const { user } = useAuth()
   const displayCurrency = user?.preferred_currency ?? 'ALL'
+  const favSet = favoriteIds ?? new Set<string>()
 
   const header = (
     <div className="flex items-center justify-between mb-6">
       <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{t('featured')}</h2>
       {!loading && listings.length > 0 && (
         <Link
-          href={`/${locale}/listings?is_premium=true`}
+          href={`/${locale}/listings?premium=true`}
           className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
         >
           {t('view_all')}
@@ -73,7 +79,7 @@ export function FeaturedListings() {
       {header}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {listings.map((listing, index) => (
-          <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} displayCurrency={displayCurrency} rates={rates} />
+          <ListingCard key={listing.id} listing={listing} priority={getImagePriority(index, 'featured')} displayCurrency={displayCurrency} rates={rates} isFavorited={favSet.has(listing.id)} />
         ))}
       </div>
     </>

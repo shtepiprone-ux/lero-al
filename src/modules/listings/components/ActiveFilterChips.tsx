@@ -48,6 +48,9 @@ export function ActiveFilterChips({ locations }: Props) {
 
   const chips: Chip[] = []
 
+  const premium = searchParams.get('premium')
+  if (premium === 'true') chips.push({ key: 'premium', label: tl('filter_chip_premium_only'), paramKey: 'premium' })
+
   const type = searchParams.get('type')
   if (type) chips.push({ key: 'type', label: tl(type), paramKey: 'type' })
 

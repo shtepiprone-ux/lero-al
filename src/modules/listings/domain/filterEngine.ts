@@ -56,6 +56,7 @@ export interface ParsedFilters {
   dateFrom:           string
   dateTo:             string
   listingId:          string
+  isPremium:          boolean
   // ── Schema-driven field filters ───────────────────────────────────────────
   rooms:              number[]           // multi-select, 5 = "5 or more"
   priceMin:           number | undefined
@@ -152,6 +153,7 @@ export function parseSearchParams(sp: RawParams): ParsedFilters {
     dateFrom:           sanitizeDateParam(s('date_from')),
     dateTo:             sanitizeDateParam(s('date_to')),
     listingId:          s('listing_id'),
+    isPremium:          s('premium') === 'true',
     rooms:              m('rooms').map(Number).filter(v => !isNaN(v) && v > 0),
     priceMin:           n('price_min'),
     priceMax:           n('price_max'),
@@ -197,7 +199,7 @@ export function applyListingFilters<Q>(baseQuery: Q, filters: ParsedFilters): Q 
     layoutFeatures, offerType, purchaseConditions,
     floorMin, floorMax, floorsTotalMin, floorsTotalMax,
     yearBuiltMin, yearBuiltMax,
-    dateFrom, dateTo, listingId,
+    dateFrom, dateTo, listingId, isPremium,
   } = filters
 
   // ── Simple equality filters ───────────────────────────────────────────────
@@ -205,6 +207,15 @@ export function applyListingFilters<Q>(baseQuery: Q, filters: ParsedFilters): Q 
   if (listingType)  q = q.eq('listing_type', listingType)
   if (propertyType) q = q.eq('property_type', propertyType)
   if (locationId)   q = q.eq('location_id', locationId)
+
+  // ── Premium-only filter ───────────────────────────────────────────────────
+  // Requires is_premium=true AND a valid premium window:
+  //   premium_until IS NULL (permanent/no expiry) OR premium_until > now.
+  if (isPremium) {
+    const nowTs = new Date().toISOString()
+    q = q.eq('is_premium', true)
+    q = q.or(`premium_until.is.null,premium_until.gt.${nowTs}`)
+  }
 
   // ── Price range ───────────────────────────────────────────────────────────
 
@@ -348,5 +359,6 @@ export function countActiveFilters(filters: ParsedFilters): number {
     filters.purchaseConditions.length > 0 ? 1 : undefined,
     filters.dateFrom,           filters.dateTo,
     filters.listingId,
+    filters.isPremium ? 1 : undefined,
   ].filter(Boolean).length
 }

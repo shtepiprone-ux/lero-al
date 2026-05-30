@@ -1321,7 +1321,7 @@
       "field_html_body": "Trupi HTML (vetem permbajtja e brendshme)",
       "field_variables": "Variablat e mbeshtetura",
       "field_active": "Aktiv",
-      "variables_hint": "Perdorni {{emriVariables}} ne subjekt dhe trup",
+      "variables_hint": "Perdorni {variableSyntax} ne subjekt dhe trup",
       "preview_btn": "Parapamje",
       "preview_title": "Parapamje",
       "save_success": "Shabloni u ruajt",

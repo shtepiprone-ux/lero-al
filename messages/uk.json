@@ -1321,7 +1321,7 @@
       "field_html_body": "HTML тіло (лише внутрішній вміст)",
       "field_variables": "Підтримувані змінні",
       "field_active": "Активний",
-      "variables_hint": "Використовуйте {{назваЗмінної}} у темі та тілі",
+      "variables_hint": "Використовуйте {variableSyntax} у темі та тілі",
       "preview_btn": "Перегляд",
       "preview_title": "Перегляд",
       "save_success": "Шаблон збережено",

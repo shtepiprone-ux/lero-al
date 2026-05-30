@@ -166,7 +166,7 @@ function TemplateEditorDialog({
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <DialogTitle>{isEdit ? t('edit_title') : t('create_title')}</DialogTitle>
-          <DialogDescription>{t('variables_hint')}</DialogDescription>
+          <DialogDescription>{t('variables_hint', { variableSyntax: '{{variableName}}' })}</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-4 py-2">
@@ -244,7 +244,7 @@ function TemplateEditorDialog({
                       onChange={e => setField(loc, 'variables', e.target.value)}
                       placeholder="userName, listingTitle, price"
                     />
-                    <p className="text-xs text-muted-foreground">{t('variables_hint')}</p>
+                    <p className="text-xs text-muted-foreground">{t('variables_hint', { variableSyntax: '{{variableName}}' })}</p>
                   </div>
 
                   {/* Active toggle */}

@@ -1321,7 +1321,7 @@
       "field_html_body": "Corpo HTML (solo contenuto interno)",
       "field_variables": "Variabili supportate",
       "field_active": "Attivo",
-      "variables_hint": "Usa {{nomeVariabile}} in oggetto e corpo",
+      "variables_hint": "Usa {variableSyntax} in oggetto e corpo",
       "preview_btn": "Anteprima",
       "preview_title": "Anteprima",
       "save_success": "Template salvato",

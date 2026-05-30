@@ -1321,7 +1321,7 @@
       "field_html_body": "HTML body (inner content only)",
       "field_variables": "Supported variables",
       "field_active": "Active",
-      "variables_hint": "Use {{variableName}} in subject and body",
+      "variables_hint": "Use {variableSyntax} in subject and body",
       "preview_btn": "Preview",
       "preview_title": "Preview",
       "save_success": "Template saved",

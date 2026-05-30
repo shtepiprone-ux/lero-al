@@ -20,12 +20,12 @@ export interface CanonicalFilters {
   floorsTotalMax?:     number
   yearBuiltMin?:       number
   yearBuiltMax?:       number
-  condition?:          string
-  heating?:            string
-  wallType?:           string
+  condition?:          string[]
+  heating?:            string[]
+  wallType?:           string[]
   marketType?:         string
   layoutFeatures?:     string[]
-  offerType?:          string
+  offerType?:          string[]
   purchaseConditions?: string[]
 }
 
@@ -69,12 +69,15 @@ export function canonicalizeFilters(sp: URLSearchParams | Record<string, string 
   const floorsTotalMax = n('floors_total_max'); if (floorsTotalMax) canonical.floorsTotalMax = floorsTotalMax
   const yearBuiltMin = n('year_built_min'); if (yearBuiltMin) canonical.yearBuiltMin = yearBuiltMin
   const yearBuiltMax = n('year_built_max'); if (yearBuiltMax) canonical.yearBuiltMax = yearBuiltMax
-  const condition = s('condition'); if (condition) canonical.condition = condition
-  const heating = s('heating'); if (heating) canonical.heating = heating
-  const wallType = s('wall_type'); if (wallType) canonical.wallType = wallType
+  function ms(key: string): string[] {
+    return s(key).split(',').map(v => v.trim()).filter(Boolean).sort()
+  }
+  const condition = ms('condition'); if (condition.length) canonical.condition = condition
+  const heating = ms('heating'); if (heating.length) canonical.heating = heating
+  const wallType = ms('wall_type'); if (wallType.length) canonical.wallType = wallType
   const marketType = s('market_type'); if (marketType) canonical.marketType = marketType
   const layoutFeatures = m('layout_features').sort(); if (layoutFeatures.length) canonical.layoutFeatures = layoutFeatures
-  const offerType = s('offer_type'); if (offerType) canonical.offerType = offerType
+  const offerType = ms('offer_type'); if (offerType.length) canonical.offerType = offerType
   const purchaseConditions = m('purchase_conditions').sort(); if (purchaseConditions.length) canonical.purchaseConditions = purchaseConditions
 
   return canonical
@@ -92,7 +95,27 @@ export function computeFiltersHash(canonical: CanonicalFilters): string {
 }
 
 /**
+ * Normalize a multi-value field that may be either the new string[] shape (Task 298)
+ * or the legacy string shape from old DB rows (Option A: existing rows not backfilled).
+ * Returns a sorted, comma-joined string or undefined if the value is empty.
+ */
+function normalizeMultiValueForParams(value: unknown): string | undefined {
+  if (value == null) return undefined
+  if (typeof value === 'string') {
+    const vals = value.split(',').map(v => v.trim()).filter(Boolean).sort()
+    return vals.length ? vals.join(',') : undefined
+  }
+  if (Array.isArray(value)) {
+    const sorted = (value as string[]).filter(Boolean).sort()
+    return sorted.length ? sorted.join(',') : undefined
+  }
+  return undefined
+}
+
+/**
  * Convert canonical filters back to URLSearchParams for restoring the search URL.
+ * The 4 multi-value fields (condition/heating/wallType/offerType) accept both the
+ * new string[] shape and the legacy string shape from old DB rows (backward-compat).
  */
 export function canonicalToSearchParams(filters: CanonicalFilters): URLSearchParams {
   const p = new URLSearchParams()
@@ -105,11 +128,11 @@ export function canonicalToSearchParams(filters: CanonicalFilters): URLSearchPar
   if (filters.areaMax)      p.set('area_max', String(filters.areaMax))
   if (filters.floorMin)     p.set('floor_min', String(filters.floorMin))
   if (filters.floorMax)     p.set('floor_max', String(filters.floorMax))
-  if (filters.condition)    p.set('condition', filters.condition)
-  if (filters.heating)      p.set('heating', filters.heating)
-  if (filters.wallType)     p.set('wall_type', filters.wallType)
-  if (filters.marketType)   p.set('market_type', filters.marketType)
-  if (filters.offerType)    p.set('offer_type', filters.offerType)
+  const cond = normalizeMultiValueForParams(filters.condition); if (cond) p.set('condition', cond)
+  const heat = normalizeMultiValueForParams(filters.heating);   if (heat) p.set('heating', heat)
+  const wall = normalizeMultiValueForParams(filters.wallType);  if (wall) p.set('wall_type', wall)
+  if (filters.marketType) p.set('market_type', filters.marketType)
+  const offr = normalizeMultiValueForParams(filters.offerType); if (offr) p.set('offer_type', offr)
   filters.rooms?.forEach(r => p.append('rooms', String(r)))
   filters.layoutFeatures?.forEach(f => p.append('layout_features', f))
   filters.purchaseConditions?.forEach(c => p.append('purchase_conditions', c))

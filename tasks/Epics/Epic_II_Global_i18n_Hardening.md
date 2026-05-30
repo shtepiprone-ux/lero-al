@@ -98,8 +98,8 @@ Task **300** — Admin Support i18n missing keys (`admin.support.role_*`, `admin
 ## Dependencies / sequencing
 
 - **Phase 0 (Task 300) ships standalone** in Sprint 21 as a CRITICAL hotfix.
-- **Phase 1 (Tasks 316/317/318) audit/spec only** — no production code changes. Output is documentation + new scripts.
-- **Phase 2 (Tasks 319/320/321/322) blocked on Phase 1 output** — each remediation kickoff cites the specific Phase 1 audit row(s) it addresses.
+- **Phase 1 (Tasks 316/317/318) ships standalone (Sprint 24)** — audit/spec only. **NOT blocked** on Epic HH owner decisions or on any other Epic. Phase 1 produces documentation + new scripts; no production code changes. Owner-approved 2026-05-30.
+- **Phase 2 (Tasks 319/320/321/322) blocked on Phase 1 output** — each remediation kickoff cites the specific Phase 1 audit row(s) it addresses. Kickoffs for 319-322 are **NOT written yet** — they will be drafted only after 316/317/318 ship and the audit output is reviewed.
 - **Phase 3 (Task 323) ships last** — locks in the governance that makes Phase 1's audit a permanent CI guard.
 
 ## Status / progress tracking

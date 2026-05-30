@@ -135,8 +135,31 @@ After Phase 0 ships, the Epic transitions to Phase 1.
 - DB schema change required — needs explicit owner approval BEFORE implementation kickoff. Recommended schema: `user_verification_events` table (id, user_id, prior_state, new_state, reason, actor_id, created_at) + `users.verification_state` enum column. Public site shows "Verified" badge only if `verification_state = 'verified'`.
 - Phase 6 is product/workflow; Notes 21 (Control Relocation Rule) applies — moving the action is allowed but the new editable location must ship in the same task.
 
-(Optional Task 314 — Internal Tickets workflow refinements based on canonical action model.)
-(Optional Task 315 — Reports moderation workflow.)
+(Optional future task — Internal Tickets workflow refinements based on canonical action model, number TBD after Task 325.)
+(Optional future task — Reports moderation workflow, number TBD after Task 325.)
+
+## Owner evidence — 2026-05-30 browser QA (primary input for Task 303)
+
+Owner performed browser QA after Task 301's tab-container narrow-patch and captured screenshots showing admin mobile UX is unacceptable across the following surfaces at 320/375/390:
+
+| Surface | Observed failure |
+|---------|-----------------|
+| Admin Dashboard | Visually broken: narrow columns, broken labels, poor grid, unreadable KPI cards |
+| Admin Users | Squeezed table, records don't read as separate items |
+| Admin Support (Internal Tickets) | Poor row separation; rows need divider/spacing/card blocks |
+| Admin Support Inbox / Sales Inbox | Same row-separation issue; overflow clipping |
+| Admin Locations / Legal / Property Types | Inconsistent mobile patterns (some cards, some clipped tables) |
+| Admin Email Templates | Mixed/incorrect localization visible at narrow width; parity checks did not catch semantic locale errors |
+| Admin Footer / Settings | Squeezed controls |
+| All header/action rows | Button groups clip at 320px across all admin pages |
+
+**Task 303 must use these screenshots as owner evidence.** The audit must not be abstract — it must:
+1. Produce a per-route mobile failure matrix (routes as rows, failure modes as columns)
+2. Classify EACH route's current 320/375/390 state: usable / controlled-scroll / uncontrolled-clip / broken-layout / table-too-wide / header-clip / raw-i18n / etc.
+3. Propose a concrete canonical narrow-breakpoint model with before/after mockups or narrative
+4. The per-route matrix is the primary owner sign-off artifact — owner will not approve an abstract rule without seeing the route-by-route assessment
+
+**Note on Email Templates localization:** The mixed/incorrect localization observed at narrow widths suggests the Email Templates surface may have semantic locale errors that passed `check:i18n` parity (same keys, wrong values). This is an Epic II (Global i18n Hardening) cross-concern. Task 303 should flag this route for Epic II Task 316+ triage.
 
 ## Admin route inventory (for Phase 1 Task 303 audit)
 
@@ -186,15 +209,77 @@ See `docs/governance-reports/2026-05-30-admin-filter-triage-evaluation.md` (Task
 - No public-site changes — Epic HH is admin-only unless an item explicitly extends (and owner approves).
 - No "fix all admin UX in one task" — that is the explicit anti-pattern this Epic exists to avoid.
 
-## Open product decisions (owner input needed before kickoffs are drafted)
+## APPROVED owner decisions (2026-05-30) — kickoffs 303/304/305 MUST encode these literally
 
-1. **Narrow-breakpoint model** (Phase 1 Task 303) — Option A / B / C / D.
-2. **Filter combobox threshold** (Phase 1 Task 304) — at how many options does a button filter become a combobox? (Recommend: ≥4.)
-3. **Sort URL state policy** (Phase 1 Task 304) — should sort always live in URL? (Recommend: yes for shareable views.)
-4. **Modal width tiers** (Phase 1 Task 305) — recommend sm=400 / md=560 / lg=720 / xl=960 px. Confirm.
-5. **Mobile modal fallback** (Phase 1 Task 305) — Sheet (bottom drawer) vs full-screen dialog vs unchanged Dialog? Recommend: Sheet for action modals; Dialog for read-only detail.
-6. **Verified Agents DB schema** (Phase 6 Task 313) — confirm `users.verification_state` enum + `user_verification_events` audit table.
-7. **Verified Agents public badge** (Phase 6 Task 313) — should the Verified badge appear publicly on listings + agent profile pages?
+These decisions are now **fixed inputs** to Phase 1 kickoffs. Phase 1 (audit/spec) confirms or refines the per-route policy — Phase 1 may NOT re-litigate the high-level decision.
+
+### Decision 1 — Narrow-breakpoint model: **C (Hybrid)**
+
+Per-route policy split based on surface type. Workflow-heavy surfaces below `md:` get **mobile card-row fallback** because card layout improves usability when each row's primary value is "open / triage / act on this item":
+- `/admin/support` (Internal Tickets)
+- `/admin/inquiries/support` (Support Inbox)
+- `/admin/inquiries/sales` (Sales Inbox)
+- `/admin/reports`
+- Possibly Footer / Settings forms where the layout is form-driven, not table-driven (Task 303 confirms during inventory)
+
+Data-dense reference / admin tables below `md:` get **controlled horizontal scroll** with sticky first meaningful column + sticky header + visible scroll affordance:
+- `/admin/listings`
+- `/admin/users`
+- `/admin/locations`
+- `/admin/popular-locations`
+- `/admin/companies`
+- `/admin/property-types`
+- `/admin/currency`
+- `/admin/permissions`
+- `/admin/email-templates`
+- `/admin/legal` (pages)
+
+Task 303 is **audit/spec only** — confirms or corrects the per-route classification after actual inventory. **NO implementation code** in Task 303.
+
+### Decision 2 — Filter taxonomy
+
+- **≥4 options OR long-tail option list** → canonical `Combobox` / `Select` (Combobox preferred per `docs/ui-rules.md §0` Combobox-only rule).
+- **≤3 mutually exclusive high-level scopes** → segmented tabs allowed.
+- **Free-text** → separate `Search` input.
+- **Active filter count** = total active VALUES (e.g. multi-select Combobox with 2 picked values counts as 2 active, NOT 1). Aligns with Task 294 multi-select counter rule already in `filterEngine.ts`.
+- **Single global reset** button required whenever at least one filter is active. One reset only — no per-filter reset chips beyond the standard ActiveFilterChips pattern.
+
+### Decision 3 — Sort URL-state policy
+
+- Sort state **always lives in URL** for shareable / reload-safe admin views.
+- Canonical query shape (stable + identical across admin tables): `?sort=<column>&dir=asc|desc`
+- Task 304 describes canonical column-sort rules per surface — **no DB migrations** in Task 304.
+
+### Decision 4 — Modal width tiers (CONFIRMED)
+
+| Tier | Width | Typical use |
+|---|---|---|
+| `sm` | 400px | Confirmation dialogs, single-field prompts |
+| `md` | 560px | Standard create / edit forms (most admin modals) |
+| `lg` | 720px | Multi-section forms, detail panels with sidebar |
+| `xl` | 960px | Wide editors, content management modals |
+
+Task 305 audits every admin Dialog/Sheet/Popover and assigns each to a tier. **No implementation** in Task 305 — spec only.
+
+### Decision 5 — Mobile modal fallback
+
+- **Action-heavy** create / edit / destructive workflows on narrow breakpoints (< `md:`) → **Sheet (bottom drawer) OR full-height Sheet**. Mandatory when the modal contains form fields, pickers, or multi-step actions.
+- **Read-only detail surfaces** → may remain `Dialog` if usable at 320/375/390 (no overflow, no clipping).
+- If a Dialog reproduces overflow / clipping at 320, Task 305 recommends Sheet / full-screen fallback in the spec. **No implementation** in Task 305.
+
+### Decision 6 — Verified Agents DB schema (APPROVED DIRECTION, implementation later)
+
+Approved direction:
+- `users.verification_state` enum: `not_verified` / `pending_review` / `verified` / `rejected` / `revoked`
+- `user_verification_events` audit table: `id, user_id, prior_state, new_state, reason, actor_id, created_at`
+
+**Task 313 implementation kickoff is NOT yet written.** Reason: schema spec belongs to a dedicated Phase 1 / Phase 6 design document that owner must separately approve. This file records the approved DIRECTION only — the schema migration, RLS policies, and action-flow specifics are designed in a future Phase 6 spec task, then implemented in Task 313+.
+
+### Decision 7 — Verified Agents public badge
+
+- Verified badge **shows publicly** on listings cards / listing details / agent profile pages — **only if `users.verification_state = 'verified'`**.
+- Badge **hidden** for `pending_review` / `rejected` / `revoked` / `not_verified`.
+- This is part of Task 313 (or a Task 313 follow-up if owner splits public vs. admin work). **Not part of Phase 1.**
 
 ## Cross-Epic references
 

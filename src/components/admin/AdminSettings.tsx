@@ -126,10 +126,8 @@ export function AdminSettings({ initialSettings }: Props) {
             type="button"
             variant="ghost"
             onClick={() => { setTab(tb.key); setSaveState('idle') }}
-            className={cn(
-              'px-4 py-2 h-auto transition-colors rounded-lg text-sm',
-              tab === tb.key ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'
-            )}
+            size="tab"
+            className={cn(tab === tb.key ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground')}
           >
             {tb.label}
           </Button>

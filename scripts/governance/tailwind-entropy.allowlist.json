@@ -332,6 +332,26 @@
       "expires": "2026-12-01",
       "severity": "LOW",
       "why_safe": "Story file only. Mirrors ListingCard premium badge pattern (already allowlisted in ListingCard.tsx)."
+    },
+    {
+      "rule": "nowrap-unsafe",
+      "file": "src/components/admin/AdminReportsManager.tsx",
+      "pattern": "whitespace-nowrap",
+      "reason": "Underline-style report-status filter tab bar (pending/resolved/archived). Labels must stay on one line in a horizontal tab strip. Adding truncate would silently hide translated text; wrapping would break the single-row tab layout.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "Tab labels are short enum-like status names translated into 4 locales. Albanian/Ukrainian equivalents are short and tested in the horizontal tab strip context."
+    },
+    {
+      "rule": "nowrap-unsafe",
+      "file": "src/modules/listings/components/FavoritesTypeFilter.tsx",
+      "pattern": "whitespace-nowrap",
+      "reason": "Favorites type filter tab buttons in a horizontal tab bar. Labels must stay on one line. Adding truncate would silently cut translated label text. Two instances (lines 37 and 52) cover both filter-tab button sites in this component.",
+      "reviewer": "governance",
+      "expires": "2026-12-01",
+      "severity": "MEDIUM",
+      "why_safe": "Horizontal tab-bar filter buttons with short labels (all, listings, collections — ~5-15 chars in all 4 locales). Intentional nowrap in a fixed-height tab strip."
     }
   ]
 }

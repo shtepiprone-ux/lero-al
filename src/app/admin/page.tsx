@@ -163,7 +163,7 @@ export default async function AdminDashboard() {
       <AdminPageHeader title={t('title')} subtitle={t('subtitle')} />
 
       {/* ── 6 KPI stat cards ─────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 2xl:grid-cols-6 gap-4 mb-8">
         <StatCard
           icon={TrendingUp} label={t('stat_active')} value={activeListings}
           href="/admin/listings?status=active" accent="bg-status-success/10 text-status-success"

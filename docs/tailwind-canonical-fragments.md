@@ -297,3 +297,33 @@ grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4  — listing grid
 max-w-[1800px] mx-auto  — or: max-w-screen-2xl mx-auto
 ```
 - **Use:** Admin shell content area at 2560px
+
+---
+
+## §14 — ADMIN SEGMENTED TABS (Task 296, Path A)
+
+### AdminSegmentedTab — canonical usage
+
+The admin segmented-tab pattern (ghost button + active bg-card state in a muted pill container) uses the canonical `Button` component with `size="tab"`.
+
+**Container (muted pill):**
+```tsx
+<div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
+```
+
+**Tab button:**
+```tsx
+<Button
+  variant="ghost"
+  size="tab"
+  className={active ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'}
+>
+  {label}
+</Button>
+```
+
+- **`size="tab"`** = `h-auto px-4 py-2` (overrides default `h-8`; base already provides `rounded-lg`, `text-sm`, `transition-colors`)
+- **Active state** — `bg-card shadow-sm` creates the raised pill; `hover:bg-card` prevents ghost's `hover:bg-muted` from fighting it
+- **Inactive state** — `text-muted-foreground hover:text-foreground` dims label; no bg so ghost hover applies naturally
+- **Extraction path** — Path A chosen (2026-05-30): Button CVA size variant preferred over a new wrapper component; active/inactive conditional className stays at call sites (3 sites: AdminListingsTable, AdminSettings, AdminUsersTable)
+- **Do NOT** add the active/inactive logic to the `tab` size variant — it is state-dependent and must be composed at the call site

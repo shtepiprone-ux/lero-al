@@ -464,9 +464,8 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
               type="button"
               variant="ghost"
               onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, status: null })}
-              className={`px-4 py-2 h-auto transition-colors rounded-lg text-sm ${
-                activeTab === tab ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'
-              }`}
+              size="tab"
+              className={activeTab === tab ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'}
             >
               {label}
             </Button>

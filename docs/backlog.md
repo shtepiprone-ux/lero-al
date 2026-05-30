@@ -7,6 +7,14 @@
 
 ## Last Session
 
+**2026-05-30 — Task 299 (Sonnet): Admin filter triage evaluation — Phase 1 only. 8 filters assessed across AdminInquiriesManager/ReportsManager/SupportManager/ListingsTable/UsersTable. CONVERT ×2 (statusFilter + reports filter), KEEP ×2, DEFER ×4. Phase 2 deferred — owner identified broader Admin UX System gap (inconsistent widths, missing sort, narrow breakpoint failures). Report = input for future Admin UX Epic. No code changes. COMMITTED e267f4454.**
+
+**2026-05-30 — Task 298 (Sonnet): Saved-search canonical hash fix. condition/heating/wallType/offerType: string→string[]; ms() sort helper; normalizeMultiValueForParams (legacy scalar backward-compat for old DB rows); 36 pure-function tests + 2 dedup tests. Option A migration. vitest 428/428. tsc=0; lint=0/0; C0/H0/M0. COMMITTED 1313444e8.**
+
+**2026-05-30 — Task 297 (Sonnet): text-[11px] mono-ID reconciliation — Outcome A approved. text-[11px]→text-xs ×2 (AdminUsersTable + ProfileTab); 2 allowlist entries removed. Consistent with AdminUserProfile.tsx (already text-xs). LOW 220→218 (−2). tsc=0; 390/390; lint=0/0; governance:tailwind=C0/H0/M0. COMMITTED b23530939.**
+
+**2026-05-30 — Task 296 (Sonnet): Tailwind entropy MEDIUM audit + TabButton Path A extraction. 14 MEDIUM classified: 1 fixable (2xl:grid-cols-6), 3 allowlisted (nowrap-unsafe ×3), 6 deferred. LOW 30-sample: ~0% fixable. Button size="tab" added; 3 admin tab sites migrated. §14 canonical-fragments. tsc=0; 390/390; lint=0/0; governance:tailwind=C0/H0/M0. ❌ HOLD / UNCOMMITTED — browser verify FAILED at 320/375/390 (AdminListingsTable "Premium listings" + AdminUsersTable "Verified agents" clipped); PASS at 768/1280/1440/2560. Awaiting orchestrator decision.**
+
 **2026-05-30 — Task 295 (Sonnet): Lint baseline burn-down — 17 problems (7 errors + 10 warnings) → 0/0. Stories ×3 extracted to PascalCase components; unused imports/vars ×8 removed; Combobox dep added; tel: dialer → document.createElement('a').click() ×2; contacts/** LISTING_STATUS_IGNORES (approved); AppImage eslint-disable (approved); useFavoritesRealtime dep added; sendTemplatedEmail userId un-destructured. governance:primitives C0/H2/M0 → C0/H0/M0. tsc=0; 390/390; build=✅. UNCOMMITTED.**
 
 **2026-05-29 — Task 286 (Sonnet): Favorites collections MVP polish. `truncate` → `break-words` ×2 (CollectionsSection + SaveToCollectionButton names). Raw `<button>` → `<Button>` for toggle. Item count: bare number → ICU plural `item_count` ×4 locales. All collection actions preserved. RLS intact. 6 follow-ups deferred. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 20 COMPLETE (285→286).**
@@ -45,7 +53,7 @@
 
 ## Next Immediate Tasks
 
-**Last task number: 295. Next: 296.**
+**Last task number: 299. Next: 300.**
 
 **Sprint 16 COMPLETE 🎉** (6/6: 271–276). **Sprint 17 code-complete & APPROVED ✅** (277–281, 288–293) — but the **281+291+292+293 auth batch is UNCOMMITTED**; "FULLY CLOSED" only after the owner runs the orchestrator-emitted commits (in chat).
 
@@ -128,6 +136,10 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-30 | Task 299 — Admin filter triage evaluation: 8 filters assessed; CONVERT ×2 / KEEP ×2 / DEFER ×4; Phase 2 deferred to Admin UX System Epic; no code changes | Task 299 | [sessions/2026-05-30-task-299-admin-filter-triage-evaluation.md](sessions/2026-05-30-task-299-admin-filter-triage-evaluation.md) |
+| 2026-05-30 | Task 298 — Saved-search canonical hash fix: condition/heating/wallType/offerType → string[]; ms() sort helper; normalizeMultiValueForParams (legacy scalar backward-compat); 36 pure-function tests + 2 dedup tests; Option A migration; vitest 428/428; tsc=0; C0/H0/M0. COMMITTED 1313444e8 | Task 298 | [sessions/2026-05-30-task-298-saved-search-canonical-hash.md](sessions/2026-05-30-task-298-saved-search-canonical-hash.md) |
+| 2026-05-30 | Task 297 — text-[11px] mono-ID reconciliation: Outcome A (canonical wins). text-[11px]→text-xs ×2 (AdminUsersTable + ProfileTab); 2 allowlist entries removed. LOW 220→218 (−2). tsc=0; 390/390; C0/H0/M0 | Task 297 | [sessions/2026-05-30-task-297-text-11px-reconciliation.md](sessions/2026-05-30-task-297-text-11px-reconciliation.md) |
+| 2026-05-30 | Task 296 — Tailwind entropy MEDIUM audit: 1 fixable (2xl:grid-cols-6), 3 allowlisted (nowrap-unsafe), 6 deferred. LOW 30-sample: ~0% fixable. TabButton Path A: size="tab" in button.tsx; 3 admin tab sites migrated. §14 canonical-fragments. tsc=0; 390/390; C0/H0/M0. ❌ HOLD / UNCOMMITTED — browser FAILED at 320/375/390 | Task 296 | [sessions/2026-05-30-task-296-tailwind-entropy-audit.md](sessions/2026-05-30-task-296-tailwind-entropy-audit.md) |
 | 2026-05-30 | Task 295 — Lint baseline burn-down: 17 problems (7E+10W) → 0/0. Stories×3 PascalCase extract; unused imports/vars×8; Combobox dep; tel: dialer→createElement('a').click()×2; contacts/** LISTING_STATUS_IGNORES (approved); AppImage eslint-disable (approved); displayedIdsRef dep; sendTemplatedEmail userId un-destructured. governance:primitives C0/H2→H0. tsc=0; 390/390; build=✅ | Task 295 | [sessions/2026-05-30-task-295-lint-baseline-burn-down.md](sessions/2026-05-30-task-295-lint-baseline-burn-down.md) |
 | 2026-05-29 | Task 286 — Favorites collections MVP: truncate→break-words ×2; <button>→Button; item_count ICU plural ×4 locales; all actions preserved; 6 follow-ups deferred; tsc=0; 390/390; lint 7/10. Sprint 20 COMPLETE | Task 286 | [sessions/2026-05-29-task-286-favorites-collections-mvp.md](sessions/2026-05-29-task-286-favorites-collections-mvp.md) |
 | 2026-05-29 | Task 285 — Listing analytics MVP: contact count from listing_contact_events (RLS owner-only) → contactCountMap → ListingsTab stats row. `contacts` key ×4 locales. No SQL script. 7 follow-ups deferred. tsc=0; 390/390 | Task 285 | [sessions/2026-05-29-task-285-listing-analytics-mvp.md](sessions/2026-05-29-task-285-listing-analytics-mvp.md) |

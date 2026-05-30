@@ -247,7 +247,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                             </p>
                           )}
                           {u.public_id != null && (
-                            <p className="text-[11px] text-muted-foreground/50 font-mono leading-none mt-0.5">#{u.public_id}</p>
+                            <p className="text-xs text-muted-foreground/50 font-mono leading-none mt-0.5">#{u.public_id}</p>
                           )}
                         </div>
                         {/* Verify toggle — inline, icon-only (no separate Actions column) */}

@@ -95,16 +95,6 @@
     },
     {
       "rule": "arbitrary-font-size",
-      "file": "src/modules/cabinet/components/ProfileTab.tsx",
-      "pattern": "text-[11px]",
-      "reason": "Public ID sub-caption display (#{public_id}) in cabinet profile. 11px mono ID label — between text-xs (12px) and text-[10px], no canonical equivalent.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Mono ID sub-caption, not translated text. 1px below text-xs — intentional density for compact identity line."
-    },
-    {
-      "rule": "arbitrary-font-size",
       "file": "src/modules/cabinet/components/SavedSearchesTab.tsx",
       "pattern": "text-[10px]",
       "reason": "Saved search tab micro-label (filter count badge or compact label). Canonical size.",
@@ -302,16 +292,6 @@
       "expires": "2026-12-01",
       "severity": "LOW",
       "why_safe": "Badge and mono ID display contexts. Not translated body text. Canonical allowed value."
-    },
-    {
-      "rule": "arbitrary-font-size",
-      "file": "src/components/admin/AdminUsersTable.tsx",
-      "pattern": "text-[11px]",
-      "reason": "Public ID display (#12345) in admin users table row. 11px mono ID sub-caption — between text-xs (12px) and text-[10px], no canonical equivalent.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Mono sub-caption for numeric ID. Not translated text. 1px below text-xs — intentional density for admin table rows."
     },
     {
       "rule": "arbitrary-font-size",

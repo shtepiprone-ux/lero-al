@@ -240,7 +240,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
             onAvatarChange={url => { setAvatarUrl(url); onAvatarChange?.(url) }}
           />
           {profile?.public_id != null && (
-            <span className="text-[11px] text-muted-foreground/50 font-mono">#{profile.public_id}</span>
+            <span className="text-xs text-muted-foreground/50 font-mono">#{profile.public_id}</span>
           )}
         </div>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">

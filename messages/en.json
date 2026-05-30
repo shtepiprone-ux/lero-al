@@ -802,6 +802,9 @@
       "error_save": "Save failed. Please try again.",
       "error_forbidden": "Access denied.",
       "error_invalid_url": "Invalid URL (javascript: and data: are not allowed).",
+      "error_invalid_internal_link": "One or more internal links do not exist. Fix them before saving.",
+      "link_url_internal_help": "Use internal paths without locale prefix (e.g. /contact, not /sq/contact).",
+      "link_url_invalid_internal": "This internal page does not exist yet. Use an existing route or disable this link until page creation is available.",
       "not_initialized": "Footer table not initialized. Contact the system administrator."
     },
     "inquiries": {

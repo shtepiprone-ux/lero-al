@@ -5,6 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { revalidatePath } from 'next/cache'
 import type { SiteFooter, FooterLink } from '@/types/database'
+import { isValidFooterUrl } from '@/lib/footer-route-allowlist'
 
 const VALID_LOCALES = ['sq', 'en', 'uk', 'it'] as const
 
@@ -102,6 +103,10 @@ export async function upsertFooterContent(
   }
   if (!validateLinks(payload.nav_links) || !validateLinks(payload.info_links) || !validateLinks(payload.social_links)) {
     return { error: 'invalid_url' }
+  }
+  const allLinks = [...payload.nav_links, ...payload.info_links, ...payload.social_links]
+  if (allLinks.some(l => l.enabled && !isValidFooterUrl(l.url))) {
+    return { error: 'invalid_internal_link' }
   }
 
   const actorId = await assertAdminUser()

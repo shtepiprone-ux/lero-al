@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { upsertFooterContent } from '@/modules/admin/actions/footer'
 import type { SiteFooter, FooterLink } from '@/types/database'
+import { isValidFooterUrl } from '@/lib/footer-route-allowlist'
 
 type Locale = 'sq' | 'en' | 'uk' | 'it'
 const LOCALES: Locale[] = ['sq', 'en', 'uk', 'it']
@@ -49,47 +50,58 @@ function LinkGroupEditor({
 
   return (
     <div className="flex flex-col gap-2">
-      {links.map((link, idx) => (
-        <div key={link.id} className="flex items-center gap-2 p-2 rounded-lg border bg-muted/20">
-          <GripVertical className="h-4 w-4 text-muted-foreground/40 shrink-0" />
-          <span className="text-xs text-muted-foreground w-4 shrink-0 text-center">{idx + 1}</span>
-          <Input
-            value={link.label}
-            onChange={e => updateLink(link.id, 'label', e.target.value)}
-            placeholder={t('field_label')}
-            disabled={disabled}
-            className="h-8 text-sm flex-1"
-          />
-          <Input
-            value={link.url}
-            onChange={e => updateLink(link.id, 'url', e.target.value)}
-            placeholder={t('url_placeholder')}
-            disabled={disabled}
-            className="h-8 text-sm flex-1 font-mono text-xs"
-          />
-          <button
-            type="button"
-            onClick={() => updateLink(link.id, 'enabled', !link.enabled)}
-            disabled={disabled}
-            className="shrink-0 h-8 w-8 flex items-center justify-center rounded-md border border-border hover:bg-muted/60 transition-colors disabled:opacity-50"
-            title={link.enabled ? t('disable_link') : t('enable_link')}
-          >
-            {link.enabled
-              ? <Eye className="h-3.5 w-3.5 text-status-success" />
-              : <EyeOff className="h-3.5 w-3.5 text-muted-foreground" />}
-          </button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={() => removeLink(link.id)}
-            disabled={disabled}
-            className="shrink-0 h-8 w-8 hover:text-destructive"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-          </Button>
-        </div>
-      ))}
+      {links.map((link, idx) => {
+        const urlInvalid = !!link.url && !isValidFooterUrl(link.url)
+        return (
+          <div key={link.id} className="flex flex-col gap-1">
+            <div className={`flex items-center gap-2 p-2 rounded-lg border bg-muted/20${urlInvalid ? ' border-destructive/50' : ''}`}>
+              <GripVertical className="h-4 w-4 text-muted-foreground/40 shrink-0" />
+              <span className="text-xs text-muted-foreground w-4 shrink-0 text-center">{idx + 1}</span>
+              <Input
+                value={link.label}
+                onChange={e => updateLink(link.id, 'label', e.target.value)}
+                placeholder={t('field_label')}
+                disabled={disabled}
+                className="h-8 text-sm flex-1"
+              />
+              <Input
+                value={link.url}
+                onChange={e => updateLink(link.id, 'url', e.target.value)}
+                placeholder={t('url_placeholder')}
+                disabled={disabled}
+                className={`h-8 text-sm flex-1 font-mono text-xs${urlInvalid ? ' border-destructive focus-visible:ring-destructive/30' : ''}`}
+              />
+              <button
+                type="button"
+                onClick={() => updateLink(link.id, 'enabled', !link.enabled)}
+                disabled={disabled}
+                className="shrink-0 h-8 w-8 flex items-center justify-center rounded-md border border-border hover:bg-muted/60 transition-colors disabled:opacity-50"
+                title={link.enabled ? t('disable_link') : t('enable_link')}
+              >
+                {link.enabled
+                  ? <Eye className="h-3.5 w-3.5 text-status-success" />
+                  : <EyeOff className="h-3.5 w-3.5 text-muted-foreground" />}
+              </button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => removeLink(link.id)}
+                disabled={disabled}
+                className="shrink-0 h-8 w-8 hover:text-destructive"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+            {urlInvalid && (
+              <div className="flex flex-col gap-0.5 ml-2">
+                <p className="text-xs text-destructive">{t('link_url_invalid_internal')}</p>
+                <p className="text-xs text-muted-foreground">{t('link_url_internal_help')}</p>
+              </div>
+            )}
+          </div>
+        )
+      })}
       <Button
         type="button"
         variant="outline"
@@ -248,10 +260,17 @@ export function AdminFooterManager({ initialData, initialized, serverError }: Pr
   }
 
   function handleSave(locale: Locale) {
+    const form = forms[locale]
+    const allLinks = [...form.nav_links, ...form.info_links, ...form.social_links]
+    if (allLinks.some(l => l.enabled && !isValidFooterUrl(l.url))) {
+      toast.error(t('error_invalid_internal_link'))
+      return
+    }
     startTransition(async () => {
-      const result = await upsertFooterContent(locale, forms[locale])
+      const result = await upsertFooterContent(locale, form)
       if (result.error === 'forbidden') { toast.error(t('error_forbidden')); return }
       if (result.error === 'invalid_url') { toast.error(t('error_invalid_url')); return }
+      if (result.error === 'invalid_internal_link') { toast.error(t('error_invalid_internal_link')); return }
       if (result.error) { toast.error(t('error_save')); return }
       toast.success(t('save_success'))
     })

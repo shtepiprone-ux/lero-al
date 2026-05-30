@@ -802,6 +802,9 @@
       "error_save": "Salvataggio fallito. Riprova.",
       "error_forbidden": "Accesso negato.",
       "error_invalid_url": "URL non valido (javascript: e data: non sono consentiti).",
+      "error_invalid_internal_link": "Uno o più link interni non esistono. Correggili prima di salvare.",
+      "link_url_internal_help": "Usa percorsi interni senza prefisso locale (es. /contact, non /sq/contact).",
+      "link_url_invalid_internal": "Questa pagina interna non esiste ancora. Usa un percorso esistente o disattiva questo link finché la creazione delle pagine non sarà disponibile.",
       "not_initialized": "Tabella footer non inizializzata. Contatta l'amministratore."
     },
     "inquiries": {

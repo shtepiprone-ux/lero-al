@@ -802,6 +802,9 @@
       "error_save": "Gabim gjatë ruajtjes. Provoni sërish.",
       "error_forbidden": "Qasja është e ndaluar.",
       "error_invalid_url": "URL i pavlefshëm (javascript: dhe data: nuk lejohen).",
+      "error_invalid_internal_link": "Njëra ose më shumë lidhje të brendshme nuk ekzistojnë. Korrigjoni para ruajtjes.",
+      "link_url_internal_help": "Përdorni rrugë të brendshme pa prefiks lokaliteti (p.sh. /contact, jo /sq/contact).",
+      "link_url_invalid_internal": "Kjo faqe e brendshme nuk ekziston ende. Përdorni një rrugë ekzistuese ose çaktivizoni këtë lidhje derisa krijimi i faqeve të jetë i disponueshëm.",
       "not_initialized": "Tabela e footer-it nuk është inicializuar. Kontaktoni administratorin."
     },
     "inquiries": {

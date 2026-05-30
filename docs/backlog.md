@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-30 — Task 324 (Sonnet): Admin Footer internal-link validation — `footer-route-allowlist.ts` (confirmed 5 static routes; pages slugs excluded—no public renderer); `isValidFooterUrl()` client+server; inline warning + destructive border per-row; save-block for `enabled=true` invalid links; soft warning for `enabled=false`; server rejects `invalid_internal_link`; 3 keys ×4 locales (+12 strings → 1371); tsc=0; lint=0/0; build=✅; governance=C0/H0/M0. Follow-up: "Admin CMS pages + Footer create/select page flow". UNCOMMITTED.**
+
 **2026-05-30 — Task 315 (Sonnet): Admin Email Templates ICU hotfix — `variables_hint` `{{...}}` → `{variableSyntax}` ×4 locales; both call sites (L169 + L247) pass `{ variableSyntax: '{{variableName}}' }`; rendered hint preserves literal `{{variableName}}`; no MALFORMED_ARGUMENT; 0 other ICU landmines found. tsc=0; lint=0/0; build=✅; check:i18n=✅ (1368 keys). UNCOMMITTED.**
 
 **2026-05-30 — Task 301 (Sonnet): Admin tab narrow-breakpoint narrow-patch implemented (Strategy A1: `w-full md:w-fit flex-wrap md:flex-nowrap`). tsc=0; lint=0/0; C0/H0/M0. ❌ HOLD — owner broader mobile QA FAIL: Dashboard cards broken, header clips, Support/Tickets row separation, Email Templates locale issues, inconsistent patterns across 10+ admin routes. Narrow patch correct but insufficient. Epic HH Phase 1–3 must address. UNCOMMITTED.**
@@ -45,7 +47,7 @@
 
 **Last task number: 325. Reservations: 303–305 Sprint 23 (Epic HH Phase 1); 306–313 Epic HH Phase 2-6 (kickoffs not yet written; owner gate after Sprint 23); 316–318 Sprint 24 (Epic II Phase 1); 319–323 Epic II Phase 2-3 (kickoffs not yet written; owner gate after Sprint 24). Next free: 326.**
 
-**Sprints 16–20 CLOSED & committed on `main`.** Task 296 review APPROVED 2026-05-30 — commit commands at bottom of this update.
+**Sprints 16–20 CLOSED & committed on `main`.** Task 296 review APPROVED 2026-05-30 (orchestrator-emitted commits are issued per task at review time, not staged in backlog — see policy note below).
 
 **Sprints 22–26 FORMED + ready for Sonnet** (run order: complete Sprint 21 first → then 25 hotfixes → then 22 → then 23/24 audits in parallel → then 26 chore):
 
@@ -82,21 +84,7 @@
 5. Verified Agents DB schema (users.verification_state enum + user_verification_events audit table)
 6. Verified badge public visibility
 
-**Owner action — Task 296 commit batch** (run in PowerShell, single explicit-path commit):
-
-```
-git add src/components/ui/button.tsx src/components/admin/AdminListingsTable.tsx src/components/admin/AdminUsersTable.tsx src/components/admin/AdminSettings.tsx src/app/admin/page.tsx scripts/governance/tailwind-entropy.allowlist.json docs/tailwind-canonical-fragments.md docs/governance-reports/2026-05-30-tailwind-entropy-medium-audit.md docs/governance-reports/2026-05-30-tailwind-entropy-low-sample.md docs/governance-reports/monthly/monthly-2026-05-tailwind-entropy.md docs/sessions/2026-05-30-task-296-tailwind-entropy-audit.md
-git commit -m "refactor(Task296): canonical Button size='tab' + Tailwind entropy MEDIUM audit (1 fixed, 3 allowlisted, 6 deferred); 320/375/390 clipping deferred to Task 301"
-```
-
-If `git status` shows phantom-corruption mods first, prefix with: `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`.
-
-**Orchestrator commit batch** (all kickoffs + epics + sprint plans + Epic patches + backlog — orchestrator-only doc files; safe to commit after `git status` shows them):
-
-```
-git add tasks/Sprints/Sprint_21_kickoff_prompt_Task_300.md tasks/Sprints/Sprint_21_kickoff_prompt_Task_301.md tasks/Sprints/Sprint_21_kickoff_prompt_Task_302.md "tasks/Sprints/Sprint_21_—_Admin_Critical_Hotfixes_and_Footer_Fix.md" tasks/Sprints/Sprint_22_kickoff_prompt_Task_314.md "tasks/Sprints/Sprint_22_—_Admin_Support_Workflow_Refinements.md" tasks/Sprints/Sprint_23_kickoff_prompt_Task_303.md tasks/Sprints/Sprint_23_kickoff_prompt_Task_304.md tasks/Sprints/Sprint_23_kickoff_prompt_Task_305.md "tasks/Sprints/Sprint_23_—_Admin_UX_System_Phase_1_Audit_and_Spec.md" tasks/Sprints/Sprint_24_kickoff_prompt_Task_316.md tasks/Sprints/Sprint_24_kickoff_prompt_Task_317.md tasks/Sprints/Sprint_24_kickoff_prompt_Task_318.md "tasks/Sprints/Sprint_24_—_Global_i18n_Hardening_Phase_1_Audit.md" tasks/Sprints/Sprint_25_kickoff_prompt_Task_315.md tasks/Sprints/Sprint_25_kickoff_prompt_Task_324.md "tasks/Sprints/Sprint_25_—_Admin_Hotfixes_2_Email_Templates_and_Footer_Link_Guard.md" tasks/Sprints/Sprint_26_kickoff_prompt_Task_325.md "tasks/Sprints/Sprint_26_—_Dependency_Hygiene.md" tasks/Epics/Epic_HH_Admin_UX_System.md tasks/Epics/Epic_II_Global_i18n_Hardening.md docs/backlog.md
-git commit -m "chore(orchestrator): form Sprints 21-26 (Tasks 300/301/302/314/303/304/305/316/317/318/315/324/325) + Epic HH Admin UX System (6 owner decisions encoded) + Epic II Global i18n Hardening; approve Task 296 on diff; patch Task 301 (downgrade verdict) + Task 303 (strengthen to all-7-bp + severity)"
-```
+> **Commit emission policy:** the orchestrator emits explicit-path `git add` + `git commit` commands **per task on review**, not as pre-staged batches in the backlog. Stale batches were removed 2026-05-30 because Sonnet has been executing tasks in parallel and the file list drifts faster than the backlog block can be edited safely. Owner runs orchestrator-emitted commands in PowerShell at the moment of review. Old batches that lived here previously are reconstructable from each task's session-log "Files Changed" table.
 
 **Acknowledged advisor exceptions** (no task, intentional): `pg_net in public` (deferred), `email_change_tokens` RLS-enabled-no-policy — see `docs/rls-rules.md` → "Acknowledged Advisor Exceptions".
 
@@ -179,6 +167,7 @@ git commit -m "chore(orchestrator): form Sprints 21-26 (Tasks 300/301/302/314/30
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-30 | Task 324 — Admin Footer internal-link validation: `footer-route-allowlist.ts` (5 static routes; pages slugs excluded); `isValidFooterUrl` client+server; inline warning per-row; save-block for enabled=true invalid links; soft for disabled; 3 keys ×4 locales (1371); tsc=0; lint=0/0; build=✅; C0/H0/M0 | Task 324 | [sessions/2026-05-30-task-324-footer-internal-link-validation.md](sessions/2026-05-30-task-324-footer-internal-link-validation.md) |
 | 2026-05-30 | Task 315 — Admin Email Templates `variables_hint` ICU fix: `{{...}}` → `{variableSyntax}` ×4 locales; both call sites (L169+L247) pass `{ variableSyntax: '{{variableName}}' }`; literal hint preserved; no other ICU landmines; tsc=0; lint=0/0; build=✅; 1368 keys parity | Task 315 | [sessions/2026-05-30-task-315-email-template-variables-hint-icu.md](sessions/2026-05-30-task-315-email-template-variables-hint-icu.md) |
 | 2026-05-30 | Orchestration review (Opus 4.8): Task 296 APPROVED on diff — computed className byte-identical pre/post (Button base + `size="tab"` h-auto px-4 py-2 = old custom className; gap-1.5 / has-data-[icon] removals are no-ops for text-only tabs); clipping at 320/375/390 is pre-existing admin mobile debt, not regression; routed to follow-up Task 301. Sprint 21 FORMED (300/301/302) + Epic HH Admin UX System (303-313, 6 phases, owner gate after P1) + Epic II Global i18n Hardening (316-323) | Review · Sprint 21 · Epic HH · Epic II | [Sprint_21_…](../tasks/Sprints/Sprint_21_—_Admin_Critical_Hotfixes_and_Footer_Fix.md) · [Epic_HH](../tasks/Epics/Epic_HH_Admin_UX_System.md) · [Epic_II](../tasks/Epics/Epic_II_Global_i18n_Hardening.md) |
 | 2026-05-30 | Task 296 — Tailwind entropy MEDIUM audit + TabButton Path A extraction: 14 MEDIUM classified (1 fixable / 3 allowlisted / 6 deferred), LOW 30-sample ~0% fixable, Button size="tab" added, 3 admin tab sites migrated, §14 canonical-fragments. tsc=0; 390/390; lint=0/0; governance:tailwind=C0/H0/M0. Visual parity ✅ at 768+; clipping at 320/375/390 routed to Task 301 (pre-existing admin mobile debt confirmed via className diff analysis) | Task 296 (APPROVED-with-follow-up) | [sessions/2026-05-30-task-296-tailwind-entropy-audit.md](sessions/2026-05-30-task-296-tailwind-entropy-audit.md) |

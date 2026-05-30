@@ -161,7 +161,7 @@ function LocaleTab({
         <FormField label={t('field_tagline')}>
           <Input value={data.tagline} onChange={e => onChange('tagline', e.target.value)} disabled={isPending} className="h-10 rounded-xl" />
         </FormField>
-        <FormField label={t('field_copyright_template')} hint={t('copyright_hint')}>
+        <FormField label={t('field_copyright_template')} hint={t('copyright_hint', { year: '{year}' })}>
           <Input value={data.copyright_template} onChange={e => onChange('copyright_template', e.target.value)} disabled={isPending} className="h-10 rounded-xl font-mono text-sm" placeholder="© {year} Lero.al" />
         </FormField>
       </div>

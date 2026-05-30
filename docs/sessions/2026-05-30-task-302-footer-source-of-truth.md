@@ -123,11 +123,12 @@ Expected after backfill: brand_len > 0, tagline_len > 0, nav_count = 3, info_cou
 
 | Path | Change | Rationale |
 |------|--------|-----------|
-| `scripts/task-302-site-footer-backfill.sql` | NEW — idempotent 4-locale backfill SQL for `site_footer` table | Fix: admin shows empty fields / public uses i18n fallback |
+| `scripts/task-302-site-footer-backfill.sql` | NEW (v2, UPDATE-only) — idempotent backfill SQL for `site_footer` | Fix: admin shows empty fields / public uses i18n fallback |
+| `src/components/admin/AdminFooterManager.tsx` | `t('copyright_hint')` → `t('copyright_hint', { year: '{year}' })` | Fix: next-intl FORMATTING_ERROR — literal `{year}` passed as ICU variable |
 | `docs/sessions/2026-05-30-task-302-footer-source-of-truth.md` | This file | Session log |
 | `docs/backlog.md` | Updated Last Session + Session Archive | Clause 10 |
 
-**Source files changed:** 0. `git diff -- src/` empty. `git diff -- messages/` empty. ✅
+**Source files changed:** 1 (`AdminFooterManager.tsx` — copyright_hint ICU fix). `git diff -- messages/` empty. ✅
 
 ---
 
@@ -163,7 +164,9 @@ updated_at still 2026-05-28
 | No locale file changes | ✅ | 0 messages/ changes |
 | Owner-SQL-execution v1 | ❌ | FAILED — rows still empty (root cause above) |
 | Owner-SQL-execution v2 | ✅ | PASS 2026-05-30 — verification output below confirms all 4 rows populated |
-| Admin Footer prefilled after execution | ⏳ | DB rows confirmed non-empty; owner UI check on /admin/footer PENDING |
+| Admin Footer prefilled after execution | ✅ | Owner confirmed 2026-05-30 — /admin/footer opens with all fields prefilled across all locale tabs |
+| copyright_hint FORMATTING_ERROR fix | ✅ | `t('copyright_hint', { year: '{year}' })` — passes literal `{year}` as ICU variable; locale strings unchanged |
+| Admin Footer runtime QA (post-fix) | ✅ | Owner confirmed 2026-05-30 — no FORMATTING_ERROR; copyright_hint shows literal {year}; save flow works; public footer reflects DB |
 
 **Owner v2 verification output (2026-05-30):**
 ```
@@ -177,4 +180,4 @@ All 4 locales: brand_len=7 (Lero.al), nav_count=3, info_count=4, social_count=2,
 
 ## Self-validation verdict
 
-`Self-validation: tsc=0 · build=passes · lint=0/0 · SQL v2=UPDATE-only idempotent · seed=4 locales × text+links · src diff=empty · locale diff=empty · v1 FAILED (ON CONFLICT abort) · v2 DB-PASS · owner-UI-check PENDING`
+`Self-validation: SQL v2 PASS · Admin Footer runtime PASS sq/en/uk/it · literal {year} hint PASS · add/save/reload footer link PASS · public footer DB content PASS · tsc=0 · build=passes · lint=0/0 · check:i18n=passes · scope=clean · PASS (source-of-truth + save flow fixed)`

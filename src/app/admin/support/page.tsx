@@ -15,7 +15,7 @@ export default async function AdminSupportPage() {
   const { data: rawTickets } = await db
     .from('support_tickets')
     .select(`
-      id, subject, status, ticket_type, reason, assigned_to, created_at, updated_at,
+      id, subject, status, ticket_type, complaint_type, reason, assigned_to, created_at, updated_at,
       reporter:users!user_id(id, name),
       reported:users!reported_user_id(id, name),
       created_by_admin:users!created_by_admin_id(id, name)

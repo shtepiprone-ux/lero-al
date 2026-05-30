@@ -17,7 +17,8 @@ import {
 } from '@/components/ui/dialog'
 import { formatDate } from '@/lib/formatters'
 import { createSupportTicket, updateTicketStatus, searchUsersForPicker } from '@/modules/admin/actions'
-import type { TicketStatus } from '@/types/database'
+import type { TicketStatus, ComplaintType } from '@/types/database'
+import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -26,6 +27,7 @@ export interface SupportTicketRow {
   subject: string
   status: TicketStatus
   ticket_type: 'support' | 'user_complaint'
+  complaint_type: ComplaintType | null
   reason: string | null
   assigned_to: string | null
   created_at: string
@@ -34,6 +36,12 @@ export interface SupportTicketRow {
   reported: { id: string; name: string | null } | null
   created_by_admin: { id: string; name: string | null } | null
 }
+
+const COMPLAINT_TYPES: ComplaintType[] = [
+  'fraud_or_scam', 'fake_listing_or_profile', 'harassment_or_abuse',
+  'inappropriate_content', 'spam', 'payment_or_deposit_issue',
+  'duplicate_or_impersonation', 'other',
+]
 
 export interface SupportTicketEventRow {
   id: string
@@ -288,13 +296,17 @@ function TicketDetailDialog({
           {/* Metadata grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div className="space-y-0.5">
-              <p className="text-xs text-muted-foreground">{t('col_reporter')}</p>
+              <p className="text-xs text-muted-foreground">
+                {ticket.ticket_type === 'user_complaint' ? t('col_reporter') : t('col_requester')}
+              </p>
               <UserLink user={ticket.reporter} label="—" showUuid />
             </div>
-            <div className="space-y-0.5">
-              <p className="text-xs text-muted-foreground">{t('col_reported')}</p>
-              <UserLink user={ticket.reported} label="—" showUuid />
-            </div>
+            {ticket.ticket_type === 'user_complaint' && (
+              <div className="space-y-0.5">
+                <p className="text-xs text-muted-foreground">{t('col_reported')}</p>
+                <UserLink user={ticket.reported} label="—" showUuid />
+              </div>
+            )}
             <div className="space-y-0.5">
               <p className="text-xs text-muted-foreground">{t('col_created_by')}</p>
               <UserLink user={ticket.created_by_admin} label="—" />
@@ -305,6 +317,14 @@ function TicketDetailDialog({
                 {ticket.ticket_type === 'user_complaint' ? t('type_user_complaint') : t('type_support')}
               </Badge>
             </div>
+            {ticket.ticket_type === 'user_complaint' && ticket.complaint_type && (
+              <div className="space-y-0.5">
+                <p className="text-xs text-muted-foreground">{t('complaint_type_label')}</p>
+                <Badge variant="neutral" className="text-xs h-5">
+                  {t(`complaint_type_${ticket.complaint_type}` as 'complaint_type_other')}
+                </Badge>
+              </div>
+            )}
             <div className="space-y-0.5">
               <p className="text-xs text-muted-foreground">{t('col_status')}</p>
               <Badge variant={STATUS_VARIANT[ticket.status] ?? 'neutral'} className="text-xs h-5 gap-1">
@@ -399,9 +419,9 @@ function TicketDetailDialog({
   )
 }
 
-// ── Create complaint dialog ───────────────────────────────────────────────────
+// ── Create ticket dialog (support or user_complaint) ─────────────────────────
 
-function CreateComplaintDialog({
+function CreateTicketDialog({
   onClose,
   onCreated,
 }: {
@@ -410,19 +430,39 @@ function CreateComplaintDialog({
 }) {
   const t = useTranslations('admin.support')
   const [, startTransition] = useTransition()
-  const [reporter, setReporter] = useState<PickerUser | null>(null)
+  const [ticketType, setTicketType] = useState<'support' | 'user_complaint' | ''>('')
+  const [requester, setRequester] = useState<PickerUser | null>(null)
   const [reported, setReported] = useState<PickerUser | null>(null)
+  const [complaintType, setComplaintType] = useState<ComplaintType | ''>('')
   const [subject, setSubject] = useState('')
   const [reason, setReason] = useState('')
   const [creating, setCreating] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
-  const sameUser = reporter !== null && reported !== null && reporter.id === reported.id
+  const sameUser = ticketType === 'user_complaint' && requester !== null && reported !== null && requester.id === reported.id
+
+  const ticketTypeOptions: ComboboxOption[] = [
+    { value: 'support', label: t('type_support') },
+    { value: 'user_complaint', label: t('type_user_complaint') },
+  ]
+
+  const complaintTypeOptions: ComboboxOption[] = COMPLAINT_TYPES.map(ct => ({
+    value: ct,
+    label: t(`complaint_type_${ct}` as 'complaint_type_other'),
+  }))
 
   function validate() {
     const e: Record<string, string> = {}
-    if (!reporter) e.reporter = t('reporter_required')
-    if (!reported) e.reported = t('reported_required')
+    if (!ticketType) {
+      e.ticketType = t('ticket_type_required')
+      setErrors(e)
+      return false
+    }
+    if (!requester) e.requester = ticketType === 'user_complaint' ? t('reporter_required') : t('requester_required')
+    if (ticketType === 'user_complaint') {
+      if (!reported) e.reported = t('reported_required')
+      if (!complaintType) e.complaintType = t('complaint_type_required')
+    }
     if (!subject.trim()) e.subject = t('subject_required')
     if (!reason.trim()) e.reason = t('reason_required')
     setErrors(e)
@@ -434,13 +474,23 @@ function CreateComplaintDialog({
     setCreating(true)
     startTransition(async () => {
       const res = await createSupportTicket({
-        reportedUserId: reported!.id,
-        reporterUserId: reporter!.id,
+        ticketType,
+        requesterUserId: requester!.id,
+        reportedUserId: ticketType === 'user_complaint' ? reported!.id : undefined,
+        complaintType: ticketType === 'user_complaint' ? (complaintType as ComplaintType) : undefined,
         subject: subject.trim(),
         reason: reason.trim(),
       })
       setCreating(false)
-      if (res.error) {
+      if (res.error === 'ticket_type_required' || res.error === 'ticket_type_invalid') {
+        toast.error(t('ticket_type_required'))
+      } else if (res.error === 'requester_required' || res.error === 'requester_not_found') {
+        toast.error(t('requester_required'))
+      } else if (res.error === 'complaint_type_required') {
+        toast.error(t('complaint_type_required'))
+      } else if (res.error === 'complaint_type_invalid') {
+        toast.error(t('complaint_type_invalid'))
+      } else if (res.error) {
         toast.error(t('create_error'))
       } else {
         toast.success(t('create_success'))
@@ -448,13 +498,14 @@ function CreateComplaintDialog({
           id: res.id!,
           subject: subject.trim(),
           status: 'open',
-          ticket_type: 'user_complaint',
+          ticket_type: ticketType as 'support' | 'user_complaint',
+          complaint_type: ticketType === 'user_complaint' ? (complaintType as ComplaintType) : null,
           reason: reason.trim(),
           assigned_to: null,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-          reporter: { id: reporter!.id, name: pickerUserName(reporter!) },
-          reported: { id: reported!.id, name: pickerUserName(reported!) },
+          reporter: { id: requester!.id, name: pickerUserName(requester!) },
+          reported: ticketType === 'user_complaint' && reported ? { id: reported.id, name: pickerUserName(reported) } : null,
           created_by_admin: null,
         })
         onClose()
@@ -470,46 +521,116 @@ function CreateComplaintDialog({
         </DialogHeader>
 
         <div className="space-y-4 py-1">
-          <UserPickerField
-            label={t('reporter_label')}
-            icon={<User className="h-3.5 w-3.5 text-muted-foreground" />}
-            value={reporter}
-            onChange={u => { setReporter(u); setErrors(e => ({ ...e, reporter: '' })) }}
-            error={errors.reporter}
-            placeholder={t('reporter_placeholder')}
-          />
-          <UserPickerField
-            label={t('reported_label')}
-            icon={<ShieldAlert className="h-3.5 w-3.5 text-muted-foreground" />}
-            value={reported}
-            onChange={u => { setReported(u); setErrors(e => ({ ...e, reported: '' })) }}
-            error={errors.reported}
-            placeholder={t('reported_placeholder')}
-          />
-          {sameUser && (
-            <p className="text-xs text-destructive">{t('same_user_warning')}</p>
+          {/* Ticket type selector — always the first field */}
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">{t('ticket_type_label')}</label>
+            <Combobox
+              options={ticketTypeOptions}
+              value={ticketType}
+              onChange={v => {
+                setTicketType(v as 'support' | 'user_complaint')
+                setErrors(e => ({ ...e, ticketType: '' }))
+                setRequester(null); setReported(null); setComplaintType('')
+                setSubject(''); setReason('')
+              }}
+              placeholder={t('ticket_type_placeholder')}
+              variant="button"
+              error={errors.ticketType}
+              disabled={creating}
+            />
+            {!ticketType && !errors.ticketType && (
+              <p className="text-xs text-muted-foreground">{t('ticket_type_helper_empty')}</p>
+            )}
+          </div>
+
+          {/* Support ticket fields */}
+          {ticketType === 'support' && (
+            <>
+              <UserPickerField
+                label={t('requester_label')}
+                icon={<User className="h-3.5 w-3.5 text-muted-foreground" />}
+                value={requester}
+                onChange={u => { setRequester(u); setErrors(e => ({ ...e, requester: '' })) }}
+                error={errors.requester}
+                placeholder={t('requester_placeholder')}
+              />
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">{t('subject_label')}</label>
+                <Input
+                  value={subject}
+                  onChange={e => setSubject(e.target.value)}
+                  placeholder={t('support_subject_placeholder')}
+                />
+                {errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">{t('support_details_label')}</label>
+                <Textarea
+                  value={reason}
+                  onChange={e => setReason(e.target.value)}
+                  placeholder={t('support_details_placeholder')}
+                  className="min-h-[80px] resize-none"
+                />
+                {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
+              </div>
+            </>
           )}
 
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">{t('subject_label')}</label>
-            <Input
-              value={subject}
-              onChange={e => setSubject(e.target.value)}
-              placeholder={t('subject_placeholder')}
-            />
-            {errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-sm font-medium">{t('reason_label')}</label>
-            <Textarea
-              value={reason}
-              onChange={e => setReason(e.target.value)}
-              placeholder={t('reason_placeholder')}
-              className="min-h-[80px] resize-none"
-            />
-            {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
-          </div>
+          {/* User complaint fields */}
+          {ticketType === 'user_complaint' && (
+            <>
+              <UserPickerField
+                label={t('reporter_label')}
+                icon={<User className="h-3.5 w-3.5 text-muted-foreground" />}
+                value={requester}
+                onChange={u => { setRequester(u); setErrors(e => ({ ...e, requester: '' })) }}
+                error={errors.requester}
+                placeholder={t('reporter_placeholder')}
+              />
+              <UserPickerField
+                label={t('reported_label')}
+                icon={<ShieldAlert className="h-3.5 w-3.5 text-muted-foreground" />}
+                value={reported}
+                onChange={u => { setReported(u); setErrors(e => ({ ...e, reported: '' })) }}
+                error={errors.reported}
+                placeholder={t('reported_placeholder')}
+              />
+              {sameUser && (
+                <p className="text-xs text-destructive">{t('same_user_warning')}</p>
+              )}
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">{t('complaint_type_label')}</label>
+                <Combobox
+                  options={complaintTypeOptions}
+                  value={complaintType}
+                  onChange={v => { setComplaintType(v as ComplaintType); setErrors(e => ({ ...e, complaintType: '' })) }}
+                  placeholder={t('complaint_type_placeholder')}
+                  variant="button"
+                  error={errors.complaintType}
+                  disabled={creating}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">{t('subject_label')}</label>
+                <Input
+                  value={subject}
+                  onChange={e => setSubject(e.target.value)}
+                  placeholder={t('subject_placeholder')}
+                />
+                {errors.subject && <p className="text-xs text-destructive">{errors.subject}</p>}
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-medium">{t('reason_label')}</label>
+                <Textarea
+                  value={reason}
+                  onChange={e => setReason(e.target.value)}
+                  placeholder={t('reason_placeholder')}
+                  className="min-h-[80px] resize-none"
+                />
+                {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
+              </div>
+            </>
+          )}
         </div>
 
         <DialogFooter className="gap-2">
@@ -627,13 +748,13 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
                   : 'border border-border text-muted-foreground hover:text-foreground'
               }`}
             >
-              {s || t('filter_all_status')}
+              {s ? t(`support_status_${s}` as 'support_status_open') : t('filter_all_status')}
             </Button>
           ))}
         </div>
         <Button size="sm" className="ml-auto gap-1.5" onClick={() => setShowNew(true)}>
           <Plus className="h-3.5 w-3.5" />
-          {t('new_complaint_btn')}
+          {t('new_ticket_btn')}
         </Button>
       </div>
 
@@ -669,6 +790,11 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
                     <p className="font-medium truncate max-w-[200px]">{tk.subject}</p>
                     {tk.reason && (
                       <p className="text-xs text-muted-foreground truncate max-w-[200px] mt-0.5">{tk.reason}</p>
+                    )}
+                    {tk.ticket_type === 'user_complaint' && tk.complaint_type && (
+                      <Badge variant="neutral" className="text-xs h-5 mt-1 w-fit">
+                        {t(`complaint_type_${tk.complaint_type}` as 'complaint_type_other')}
+                      </Badge>
                     )}
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
@@ -706,7 +832,7 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
 
       {/* Dialogs */}
       {showNew && (
-        <CreateComplaintDialog
+        <CreateTicketDialog
           onClose={() => setShowNew(false)}
           onCreated={ticket => { handleCreated(ticket); setShowNew(false) }}
         />

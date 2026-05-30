@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-29T07:52:17.572Z by: npm run check:schema-drift
+-- Generated 2026-05-30T16:34:42.539Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -16,7 +16,7 @@
 --   SavedSearch          → saved_searches           (12 cols)
 --   ListingReport        → listing_reports          (7 cols)
 --   ReportAction         → report_actions           (8 cols)
---   SupportTicket        → support_tickets          (11 cols)
+--   SupportTicket        → support_tickets          (12 cols)
 --   Notification         → notifications            (8 cols)
 --   DBCurrency           → currencies               (12 cols)
 --   DBExchangeProvider   → exchange_providers       (11 cols)
@@ -210,6 +210,7 @@ WITH expected(table_name, column_name) AS (
     ('support_tickets', 'created_by_admin_id'),
     ('support_tickets', 'ticket_type'),
     ('support_tickets', 'updated_at'),
+    ('support_tickets', 'complaint_type'),
     ('notifications', 'id'),
     ('notifications', 'user_id'),
     ('notifications', 'type'),
@@ -524,6 +525,7 @@ WITH expected(table_name, column_name) AS (
     ('support_tickets', 'created_by_admin_id'),
     ('support_tickets', 'ticket_type'),
     ('support_tickets', 'updated_at'),
+    ('support_tickets', 'complaint_type'),
     ('notifications', 'id'),
     ('notifications', 'user_id'),
     ('notifications', 'type'),

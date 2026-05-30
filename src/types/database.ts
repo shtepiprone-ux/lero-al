@@ -371,6 +371,16 @@ export interface Message {
   read_at: string | null
 }
 
+export type ComplaintType =
+  | 'fraud_or_scam'
+  | 'fake_listing_or_profile'
+  | 'harassment_or_abuse'
+  | 'inappropriate_content'
+  | 'spam'
+  | 'payment_or_deposit_issue'
+  | 'duplicate_or_impersonation'
+  | 'other'
+
 export interface SupportTicket {
   id: string
   user_id: string
@@ -384,6 +394,8 @@ export interface SupportTicket {
   created_by_admin_id: string | null
   ticket_type: 'support' | 'user_complaint'
   updated_at: string
+  // added Task 314 — complaint classification
+  complaint_type: ComplaintType | null
 }
 
 export interface SupportTicketEvent {

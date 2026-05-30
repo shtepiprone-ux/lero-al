@@ -724,45 +724,68 @@ function getSupportNotifyStrings(locale: string) {
   return SUPPORT_NOTIFY_STRINGS[locale] ?? SUPPORT_NOTIFY_STRINGS.en
 }
 
+const VALID_TICKET_TYPES = ['support', 'user_complaint'] as const
+
+const VALID_COMPLAINT_TYPES = [
+  'fraud_or_scam', 'fake_listing_or_profile', 'harassment_or_abuse',
+  'inappropriate_content', 'spam', 'payment_or_deposit_issue',
+  'duplicate_or_impersonation', 'other',
+] as const
+
 export async function createSupportTicket({
+  ticketType,
+  requesterUserId,
   reportedUserId,
-  reporterUserId,
+  complaintType,
   subject,
   reason,
 }: {
-  reportedUserId: string
-  reporterUserId: string
+  ticketType: string
+  requesterUserId: string
+  reportedUserId?: string
+  complaintType?: string
   subject: string
   reason: string
 }): Promise<{ id?: string; error?: string }> {
   const actor = await resolveAdminActor()
-  if (!reportedUserId.trim()) return { error: 'reported_required' }
-  if (!reporterUserId.trim()) return { error: 'reporter_required' }
+  if (!(VALID_TICKET_TYPES as readonly string[]).includes(ticketType)) return { error: 'ticket_type_invalid' }
+  if (!requesterUserId.trim()) return { error: 'requester_required' }
+  if (ticketType === 'user_complaint') {
+    if (!reportedUserId?.trim()) return { error: 'reported_required' }
+    if (!complaintType?.trim()) return { error: 'complaint_type_required' }
+    if (!(VALID_COMPLAINT_TYPES as readonly string[]).includes(complaintType)) return { error: 'complaint_type_invalid' }
+  }
   if (!subject.trim()) return { error: 'subject_required' }
   if (!reason.trim()) return { error: 'reason_required' }
 
   const db = createAdminClient()
 
-  // Verify both users exist
-  const { data: users } = await db
-    .from('users')
-    .select('id')
-    .in('id', [reportedUserId, reporterUserId])
+  // Verify required users exist
+  const userIdsToCheck = [requesterUserId]
+  if (ticketType === 'user_complaint' && reportedUserId) userIdsToCheck.push(reportedUserId)
+  const { data: users } = await db.from('users').select('id').in('id', userIdsToCheck)
   const foundIds = (users ?? []).map(u => u.id)
-  if (!foundIds.includes(reportedUserId)) return { error: 'reported_not_found' }
-  if (!foundIds.includes(reporterUserId)) return { error: 'reporter_not_found' }
+  if (!foundIds.includes(requesterUserId)) return { error: 'requester_not_found' }
+  if (ticketType === 'user_complaint' && reportedUserId && !foundIds.includes(reportedUserId)) {
+    return { error: 'reported_not_found' }
+  }
+
+  const insertData: Record<string, unknown> = {
+    user_id: requesterUserId,
+    subject: subject.trim(),
+    reason: reason.trim(),
+    created_by_admin_id: actor.userId,
+    ticket_type: ticketType,
+    status: 'open',
+  }
+  if (ticketType === 'user_complaint') {
+    insertData.reported_user_id = reportedUserId
+    insertData.complaint_type = complaintType
+  }
 
   const { data: ticket, error } = await db
     .from('support_tickets')
-    .insert({
-      user_id: reporterUserId,
-      reported_user_id: reportedUserId,
-      subject: subject.trim(),
-      reason: reason.trim(),
-      created_by_admin_id: actor.userId,
-      ticket_type: 'user_complaint',
-      status: 'open',
-    })
+    .insert(insertData)
     .select('id')
     .single()
 
@@ -783,8 +806,8 @@ export async function createSupportTicket({
     })
   } catch {}
 
-  // Notify the reported user
-  try {
+  // Notify the reported user (user_complaint only)
+  if (ticketType === 'user_complaint' && reportedUserId) try {
     const locale = await resolveUserLocale(reportedUserId)
     const s = getSupportNotifyStrings(locale)
     await createNotification({

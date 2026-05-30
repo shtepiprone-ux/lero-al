@@ -7,33 +7,13 @@
 
 ## Last Session
 
-**2026-05-30 — Task 299 (Sonnet): Admin filter triage evaluation — Phase 1 only. 8 filters assessed across AdminInquiriesManager/ReportsManager/SupportManager/ListingsTable/UsersTable. CONVERT ×2 (statusFilter + reports filter), KEEP ×2, DEFER ×4. Phase 2 deferred — owner identified broader Admin UX System gap (inconsistent widths, missing sort, narrow breakpoint failures). Report = input for future Admin UX Epic. No code changes. COMMITTED e267f4454.**
+**2026-05-30 — Orchestration review (Opus): Task 296 APPROVED on diff (byte-identical computed className; clipping at 320/375/390 is pre-existing admin mobile debt, not Task 296 regression). Sprint 21 FORMED with 3 critical hotfixes: Task 300 (CRITICAL admin support i18n missing keys), Task 302 (HIGH footer source-of-truth backfill), Task 301 (MEDIUM admin segmented-tab narrow-bp fix — Task 296 follow-up). Two new Epics formed: HH (Admin UX System, 6 phases / tasks 303-313) + II (Global i18n Hardening, phases / tasks 316-323). Owner approval gate after Phase 1 audits before Sonnet implementation begins. Task 296 + Sprint 21 commit commands at bottom.**
 
-**2026-05-30 — Task 298 (Sonnet): Saved-search canonical hash fix. condition/heating/wallType/offerType: string→string[]; ms() sort helper; normalizeMultiValueForParams (legacy scalar backward-compat for old DB rows); 36 pure-function tests + 2 dedup tests. Option A migration. vitest 428/428. tsc=0; lint=0/0; C0/H0/M0. COMMITTED 1313444e8.**
+**2026-05-30 — Task 299 (Sonnet): Admin filter triage Phase 1 — 8 filters, CONVERT ×2 / KEEP ×2 / DEFER ×4. Phase 2 deferred to Epic HH. COMMITTED e267f4454.**
 
-**2026-05-30 — Task 297 (Sonnet): text-[11px] mono-ID reconciliation — Outcome A approved. text-[11px]→text-xs ×2 (AdminUsersTable + ProfileTab); 2 allowlist entries removed. Consistent with AdminUserProfile.tsx (already text-xs). LOW 220→218 (−2). tsc=0; 390/390; lint=0/0; governance:tailwind=C0/H0/M0. COMMITTED b23530939.**
+**2026-05-30 — Tasks 298/297/295 (Sonnet): saved-search hash fix · text-[11px]→text-xs reconciliation · lint baseline burn-down to 0/0. All COMMITTED (1313444e8 / b23530939 / 16bd36311).**
 
-**2026-05-30 — Task 296 (Sonnet): Tailwind entropy MEDIUM audit + TabButton Path A extraction. 14 MEDIUM classified: 1 fixable (2xl:grid-cols-6), 3 allowlisted (nowrap-unsafe ×3), 6 deferred. LOW 30-sample: ~0% fixable. Button size="tab" added; 3 admin tab sites migrated. §14 canonical-fragments. tsc=0; 390/390; lint=0/0; governance:tailwind=C0/H0/M0. ❌ HOLD / UNCOMMITTED — browser verify FAILED at 320/375/390 (AdminListingsTable "Premium listings" + AdminUsersTable "Verified agents" clipped); PASS at 768/1280/1440/2560. Awaiting orchestrator decision.**
-
-**2026-05-30 — Task 295 (Sonnet): Lint baseline burn-down — 17 problems (7 errors + 10 warnings) → 0/0. Stories ×3 extracted to PascalCase components; unused imports/vars ×8 removed; Combobox dep added; tel: dialer → document.createElement('a').click() ×2; contacts/** LISTING_STATUS_IGNORES (approved); AppImage eslint-disable (approved); useFavoritesRealtime dep added; sendTemplatedEmail userId un-destructured. governance:primitives C0/H2/M0 → C0/H0/M0. tsc=0; 390/390; build=✅. UNCOMMITTED.**
-
-**2026-05-29 — Task 286 (Sonnet): Favorites collections MVP polish. `truncate` → `break-words` ×2 (CollectionsSection + SaveToCollectionButton names). Raw `<button>` → `<Button>` for toggle. Item count: bare number → ICU plural `item_count` ×4 locales. All collection actions preserved. RLS intact. 6 follow-ups deferred. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 20 COMPLETE (285→286).**
-
-**2026-05-29 — Task 285 (Sonnet): Listing analytics MVP — per-listing contact count in cabinet. Direct query on listing_contact_events (existing RLS events_select_owner). contactCountMap built server-side. Phone icon + `contacts` key ×4 locales in ListingsTab stats row. No SQL emitted. 7 follow-ups deferred to Task 295+. tsc=0; 390/390; lint 7/10. UNCOMMITTED.**
-
-**2026-05-29 — Task 287 (Sonnet): Email in profile identity card. Added read-only email muted line to cabinet ProfileTab identity-card grid (`sm:col-span-2 break-all`). Conditional on email presence; no new locale key; email-change flow untouched. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 19 COMPLETE (284→287).**
-
-**2026-05-29 — Task 284 (Sonnet): Admin unification + Support/Inquiries decision. Two distinct domains: support_tickets (internal admin tickets) vs contact_inquiries (public contact form). Sidebar labels renamed for clarity (EN: "Internal Tickets"/"Support Inbox"/"Sales Inbox"; sq/uk/it analogues). 11 raw buttons → Button canonical (AdminSidebar logout + AdminSupportManager filter/dialog/picker + AdminInquiriesManager row). Documented in domain-rules.md. tsc=0; 390/390; lint 7/10. UNCOMMITTED.**
-
-**2026-05-29 — Task 294 (Sonnet): Global multi-select filters + correct active-filter counter. conditions/heatingTypes/wallTypes/offerTypes → arrays; marketType kept scalar (documented). countActiveFilters per-value (array.length not 1). FilterValues moved to filterEngine.ts; countActiveFilterValues added; HeroSearch+useHomepageFilters route through it. FilterMultiToggle replaces FilterToggleGroup for 4 sections. ActiveFilterChips per-value. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 18 COMPLETE (282→283→294).**
-
-**2026-05-29 — Task 283 (Sonnet): Tailwind entropy burn-down — 3 HIGH button-like clones → 0 (Button×3 in AdminListingsTable/AdminSettings/AdminUsersTable); py-10 MEDIUM → py-8; 47 LOW font-sizes → 0 (scan-tailwind.mjs respects allowlist; 10 new allowlist entries). After: governance:tailwind C0/H0/M0 baseline. tsc=0; 368/368; lint baseline. UNCOMMITTED.**
-
-**2026-05-29 — Task 282 (Sonnet): Design System Lockdown — 10/10 governance:primitives violations fixed. Button×3, Dialog×4, Sheet×1, Tabs×1. AuthContext test allowlisted. After: C0/H2/M0 (2 window.location out of scope). tsc=0; build=passes; 368/368; 0 new lint errors. UNCOMMITTED — orchestrator review + commit hand-off pending.**
-
-**2026-05-29 — Orchestration review (Opus): Tasks 291/292/293 APPROVED. 281+291+292+293 batch UNCOMMITTED — Sprint 17 closes after owner runs those commits.**
-
-**2026-05-29 — Sprints 18–20 FORMED (Opus). Sprint 18: 282→283→294. Sprint 19: 284→287. Sprint 20: 285→286. Run order 18→19→20.**
+**2026-05-29 — Sprints 17/18/19/20 closed-approved + committed (282/283/294 · 284/287 · 285/286 · 277-281 · 288-293). All on `main`.**
 
 
 ## Pending Action Items
@@ -53,15 +33,44 @@
 
 ## Next Immediate Tasks
 
-**Last task number: 299. Next: 300.**
+**Last task number: 302 (303–313 reserved by Epic HH plan; 316–323 reserved by Epic II plan). Next free: 303 (after owner approval gate on Epic HH Phase 1).**
 
-**Sprint 16 COMPLETE 🎉** (6/6: 271–276). **Sprint 17 code-complete & APPROVED ✅** (277–281, 288–293) — but the **281+291+292+293 auth batch is UNCOMMITTED**; "FULLY CLOSED" only after the owner runs the orchestrator-emitted commits (in chat).
+**Sprints 16–20 CLOSED & committed on `main`.** Task 296 review APPROVED 2026-05-30 — commit commands at bottom of this update.
 
-**Sprints 18–20 FORMED + ready for Sonnet (run in order):**
+**Sprint 21 FORMED + ready for Sonnet** ([sprint](../tasks/Sprints/Sprint_21_—_Admin_Critical_Hotfixes_and_Footer_Fix.md)) — run order 300 → 302 → 301:
 
-- **Sprint 18 — Design System** ([sprint](../tasks/Sprints/Sprint_18_—_Design_System_Lockdown_and_Governance_Burn_down.md)): **282** primitive lockdown ([kickoff](../tasks/Sprints/Sprint_18_kickoff_prompt_Task_282.md)) → **283** Tailwind entropy ([kickoff](../tasks/Sprints/Sprint_18_kickoff_prompt_Task_283.md)) → **294** global multi-select filters + correct counter ([kickoff](../tasks/Sprints/Sprint_18_kickoff_prompt_Task_294.md)).
-- **Sprint 19 — Admin/Profile** ([sprint](../tasks/Sprints/Sprint_19_—_Admin_Unification_and_Profile_Identity.md)): **284** admin unification + Support/Inquiries ([kickoff](../tasks/Sprints/Sprint_19_kickoff_prompt_Task_284.md)) · **287** email in profile identity card ([kickoff](../tasks/Sprints/Sprint_19_kickoff_prompt_Task_287.md)).
-- **Sprint 20 — Analytics/Favorites (spec-led MVPs)** ([sprint](../tasks/Sprints/Sprint_20_—_Listing_Analytics_and_Favorites_Collections.md)): **285** listing analytics read slice ([kickoff](../tasks/Sprints/Sprint_20_kickoff_prompt_Task_285.md)) · **286** favorites collections MVP ([kickoff](../tasks/Sprints/Sprint_20_kickoff_prompt_Task_286.md)). Both ship a bounded MVP then STOP & ASK the orchestrator to file follow-ups (295+).
+- **Task 300 — CRITICAL i18n hotfix** ([kickoff](../tasks/Sprints/Sprint_21_kickoff_prompt_Task_300.md)): admin.support.role_* + support_status_* missing in all 4 locales; 32 string additions; zero source files.
+- **Task 302 — HIGH footer source-of-truth backfill** ([kickoff](../tasks/Sprints/Sprint_21_kickoff_prompt_Task_302.md)): idempotent SQL backfill for site_footer rows; admin will open with prefilled content for all 4 locales; zero source files.
+- **Task 301 — MEDIUM admin segmented-tab narrow-bp fix** ([kickoff](../tasks/Sprints/Sprint_21_kickoff_prompt_Task_301.md)): Task 296 follow-up; AdminListingsTable + AdminUsersTable tab-bar wrap/scroll fix; STOP & ASK on strategy A/B/C; `Button size="tab"` unchanged.
+
+**Epics formed (Sonnet implementation BLOCKED on owner Phase 1 sign-off):**
+
+- **Epic HH — Admin UX System** ([epic](../tasks/Epics/Epic_HH_Admin_UX_System.md)): 6 phases / tasks 303-313 / canonical narrow-bp + filter + sort + row-action + modal specs + Verified Agents workflow. Phase 0 = Sprint 21. Phase 1 audit kickoffs (303/304/305) drafted AFTER owner signs off on scope.
+- **Epic II — Global i18n Hardening** ([epic](../tasks/Epics/Epic_II_Global_i18n_Hardening.md)): tasks 316-323 / dynamic-key + notification locale-binding + email + toast/modal i18n audit + CI scanner. Phase 0 = Task 300. Phase 1+ kickoffs drafted after Sprint 21 ships.
+
+**Owner decisions needed before Epic HH Phase 1 kickoffs are drafted** (see Epic HH → "Open product decisions"):
+1. Narrow-breakpoint admin model (A/B/C/D)
+2. Filter→combobox threshold (recommend ≥4 options)
+3. Sort URL-state policy (recommend yes)
+4. Modal width tiers + mobile fallback (Sheet vs Dialog)
+5. Verified Agents DB schema (users.verification_state enum + user_verification_events audit table)
+6. Verified badge public visibility
+
+**Owner action — Task 296 commit batch** (run in PowerShell, single explicit-path commit):
+
+```
+git add src/components/ui/button.tsx src/components/admin/AdminListingsTable.tsx src/components/admin/AdminUsersTable.tsx src/components/admin/AdminSettings.tsx src/app/admin/page.tsx scripts/governance/tailwind-entropy.allowlist.json docs/tailwind-canonical-fragments.md docs/governance-reports/2026-05-30-tailwind-entropy-medium-audit.md docs/governance-reports/2026-05-30-tailwind-entropy-low-sample.md docs/governance-reports/monthly/monthly-2026-05-tailwind-entropy.md docs/sessions/2026-05-30-task-296-tailwind-entropy-audit.md
+git commit -m "refactor(Task296): canonical Button size='tab' + Tailwind entropy MEDIUM audit (1 fixed, 3 allowlisted, 6 deferred); 320/375/390 clipping deferred to Task 301"
+```
+
+If `git status` shows phantom-corruption mods first, prefix with: `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`.
+
+**Orchestrator commit batch** (Sprint 21 plan + Epics — orchestrator-only doc files; safe to commit after `git status` shows them):
+
+```
+git add tasks/Sprints/Sprint_21_kickoff_prompt_Task_300.md tasks/Sprints/Sprint_21_kickoff_prompt_Task_301.md tasks/Sprints/Sprint_21_kickoff_prompt_Task_302.md "tasks/Sprints/Sprint_21_—_Admin_Critical_Hotfixes_and_Footer_Fix.md" tasks/Epics/Epic_HH_Admin_UX_System.md tasks/Epics/Epic_II_Global_i18n_Hardening.md docs/backlog.md
+git commit -m "chore(orchestrator): form Sprint 21 (Tasks 300/301/302) + Epic HH Admin UX System + Epic II Global i18n Hardening; approve Task 296 on diff"
+```
 
 **Acknowledged advisor exceptions** (no task, intentional): `pg_net in public` (deferred), `email_change_tokens` RLS-enabled-no-policy — see `docs/rls-rules.md` → "Acknowledged Advisor Exceptions".
 
@@ -101,6 +110,9 @@
 | **Sprint 18 ✅ FORMED — Design System** | 282, 283, 294 | Primitive lockdown (282) + Tailwind entropy burn-down (283) + global multi-select filters & correct counter (294) | [`Sprint_18_…`](../tasks/Sprints/Sprint_18_—_Design_System_Lockdown_and_Governance_Burn_down.md) | [`…_282`](../tasks/Sprints/Sprint_18_kickoff_prompt_Task_282.md) · [`…_283`](../tasks/Sprints/Sprint_18_kickoff_prompt_Task_283.md) · [`…_294`](../tasks/Sprints/Sprint_18_kickoff_prompt_Task_294.md) |
 | **Sprint 19 ✅ FORMED — Admin Unification + Profile Identity** | 284, 287 | Admin surfaces unification + Support/Inquiries ambiguity (284) + email in profile identity card (287) | [`Sprint_19_…`](../tasks/Sprints/Sprint_19_—_Admin_Unification_and_Profile_Identity.md) | [`…_284`](../tasks/Sprints/Sprint_19_kickoff_prompt_Task_284.md) · [`…_287`](../tasks/Sprints/Sprint_19_kickoff_prompt_Task_287.md) |
 | **Sprint 20 ✅ FORMED — Listing Analytics + Favorites Collections (spec-led MVPs)** | 285, 286 | Listing analytics read slice (285) + favorites collections MVP (286); each ships MVP then files follow-ups (295+) | [`Sprint_20_…`](../tasks/Sprints/Sprint_20_—_Listing_Analytics_and_Favorites_Collections.md) | [`…_285`](../tasks/Sprints/Sprint_20_kickoff_prompt_Task_285.md) · [`…_286`](../tasks/Sprints/Sprint_20_kickoff_prompt_Task_286.md) |
+| **Sprint 21 ✅ FORMED — Admin Critical Hotfixes + Footer Source-of-Truth** | 300, 301, 302 | CRITICAL admin.support i18n (300) + HIGH footer backfill (302) + MEDIUM admin segmented-tab narrow-bp (301, Task 296 follow-up); run order 300→302→301 | [`Sprint_21_…`](../tasks/Sprints/Sprint_21_—_Admin_Critical_Hotfixes_and_Footer_Fix.md) | [`…_300`](../tasks/Sprints/Sprint_21_kickoff_prompt_Task_300.md) · [`…_301`](../tasks/Sprints/Sprint_21_kickoff_prompt_Task_301.md) · [`…_302`](../tasks/Sprints/Sprint_21_kickoff_prompt_Task_302.md) |
+| **HH — Admin UX System (FORMED 2026-05-30, Phase 1+ blocked on owner sign-off)** | 303–313 (planned) | 6 phases: P0 hotfixes (Sprint 21) → P1 audit/spec → P2 primitives → P3-4 page migrations → P5 modal → P6 Verified Agents workflow | [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md) | Phase 1 kickoffs (303/304/305) drafted after owner sign-off |
+| **II — Global i18n Hardening (FORMED 2026-05-30)** | 316–323 (planned) | Phases: P0 admin support hotfix (Task 300) → P1 audit + missing-key scanner → P2 remediation (notif locale-binding, dynamic-key, email, toast) → P3 CI gate | [`Epic_II_…`](../tasks/Epics/Epic_II_Global_i18n_Hardening.md) | Phase 1+ kickoffs drafted after Sprint 21 ships |
 
 > **2026-05-25 rule additions** codified into `/docs`: **Note 18** (Pre-Completion Self-Validation — `ai-behavior.md`), **Note 19** (UX Flow Preservation — `ai-behavior.md`), **Note 20** (Existing-Control Preservation — `ai-behavior.md`); orchestrator hard contract + review checklist updated in `orchestrator-role.md`. These are non-optional acceptance gates on every task from 228 onward.
 >
@@ -136,6 +148,8 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-30 | Orchestration review (Opus 4.8): Task 296 APPROVED on diff — computed className byte-identical pre/post (Button base + `size="tab"` h-auto px-4 py-2 = old custom className; gap-1.5 / has-data-[icon] removals are no-ops for text-only tabs); clipping at 320/375/390 is pre-existing admin mobile debt, not regression; routed to follow-up Task 301. Sprint 21 FORMED (300/301/302) + Epic HH Admin UX System (303-313, 6 phases, owner gate after P1) + Epic II Global i18n Hardening (316-323) | Review · Sprint 21 · Epic HH · Epic II | [Sprint_21_…](../tasks/Sprints/Sprint_21_—_Admin_Critical_Hotfixes_and_Footer_Fix.md) · [Epic_HH](../tasks/Epics/Epic_HH_Admin_UX_System.md) · [Epic_II](../tasks/Epics/Epic_II_Global_i18n_Hardening.md) |
+| 2026-05-30 | Task 296 — Tailwind entropy MEDIUM audit + TabButton Path A extraction: 14 MEDIUM classified (1 fixable / 3 allowlisted / 6 deferred), LOW 30-sample ~0% fixable, Button size="tab" added, 3 admin tab sites migrated, §14 canonical-fragments. tsc=0; 390/390; lint=0/0; governance:tailwind=C0/H0/M0. Visual parity ✅ at 768+; clipping at 320/375/390 routed to Task 301 (pre-existing admin mobile debt confirmed via className diff analysis) | Task 296 (APPROVED-with-follow-up) | [sessions/2026-05-30-task-296-tailwind-entropy-audit.md](sessions/2026-05-30-task-296-tailwind-entropy-audit.md) |
 | 2026-05-30 | Task 299 — Admin filter triage evaluation: 8 filters assessed; CONVERT ×2 / KEEP ×2 / DEFER ×4; Phase 2 deferred to Admin UX System Epic; no code changes | Task 299 | [sessions/2026-05-30-task-299-admin-filter-triage-evaluation.md](sessions/2026-05-30-task-299-admin-filter-triage-evaluation.md) |
 | 2026-05-30 | Task 298 — Saved-search canonical hash fix: condition/heating/wallType/offerType → string[]; ms() sort helper; normalizeMultiValueForParams (legacy scalar backward-compat); 36 pure-function tests + 2 dedup tests; Option A migration; vitest 428/428; tsc=0; C0/H0/M0. COMMITTED 1313444e8 | Task 298 | [sessions/2026-05-30-task-298-saved-search-canonical-hash.md](sessions/2026-05-30-task-298-saved-search-canonical-hash.md) |
 | 2026-05-30 | Task 297 — text-[11px] mono-ID reconciliation: Outcome A (canonical wins). text-[11px]→text-xs ×2 (AdminUsersTable + ProfileTab); 2 allowlist entries removed. LOW 220→218 (−2). tsc=0; 390/390; C0/H0/M0 | Task 297 | [sessions/2026-05-30-task-297-text-11px-reconciliation.md](sessions/2026-05-30-task-297-text-11px-reconciliation.md) |

@@ -881,7 +881,15 @@
       "event_note_added": "Shënim u shtua",
       "same_user_warning": "Ankuesi dhe përdoruesi i ankimuar nuk mund të jenë i njëjti person.",
       "no_results": "Nuk u gjet asnjë përdorues.",
-      "searching": "Po kërkon…"
+      "searching": "Po kërkon…",
+      "role_user": "Përdorues",
+      "role_agent": "Agjent",
+      "role_moderator": "Moderator",
+      "role_admin": "Administrator",
+      "support_status_open": "I hapur",
+      "support_status_in_progress": "Në progres",
+      "support_status_resolved": "I zgjidhur",
+      "support_status_closed": "I mbyllur"
     },
     "popular_locations": {
       "add": "Shto Vendndodhje",

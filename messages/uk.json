@@ -881,7 +881,15 @@
       "event_note_added": "Примітку додано",
       "same_user_warning": "Скаржник та оскаржуваний користувач не можуть бути однією особою.",
       "no_results": "Користувачів не знайдено.",
-      "searching": "Пошук…"
+      "searching": "Пошук…",
+      "role_user": "Користувач",
+      "role_agent": "Агент",
+      "role_moderator": "Модератор",
+      "role_admin": "Адміністратор",
+      "support_status_open": "Відкритий",
+      "support_status_in_progress": "В роботі",
+      "support_status_resolved": "Вирішений",
+      "support_status_closed": "Закритий"
     },
     "popular_locations": {
       "add": "Додати локацію",

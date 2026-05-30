@@ -881,7 +881,15 @@
       "event_note_added": "Note added",
       "same_user_warning": "Reporter and reported user cannot be the same.",
       "no_results": "No users found.",
-      "searching": "Searching…"
+      "searching": "Searching…",
+      "role_user": "User",
+      "role_agent": "Agent",
+      "role_moderator": "Moderator",
+      "role_admin": "Admin",
+      "support_status_open": "Open",
+      "support_status_in_progress": "In progress",
+      "support_status_resolved": "Resolved",
+      "support_status_closed": "Closed"
     },
     "popular_locations": {
       "add": "Add Location",

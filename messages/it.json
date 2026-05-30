@@ -881,7 +881,15 @@
       "event_note_added": "Nota aggiunta",
       "same_user_warning": "Il segnalante e l'utente segnalato non possono essere la stessa persona.",
       "no_results": "Nessun utente trovato.",
-      "searching": "Ricerca in corso…"
+      "searching": "Ricerca in corso…",
+      "role_user": "Utente",
+      "role_agent": "Agente",
+      "role_moderator": "Moderatore",
+      "role_admin": "Amministratore",
+      "support_status_open": "Aperto",
+      "support_status_in_progress": "In corso",
+      "support_status_resolved": "Risolto",
+      "support_status_closed": "Chiuso"
     },
     "popular_locations": {
       "add": "Aggiungi Luogo",

@@ -1,4 +1,6 @@
-# Sprint 21 — Task 301 kickoff (Admin narrow-breakpoint label clipping — AdminListingsTable & AdminUsersTable segmented tabs)
+# Sprint 21 — Task 301 kickoff (TINY PATCH: AdminListingsTable + AdminUsersTable segmented-tab container className wrap/scroll — NOT a fix for broader admin responsive UX)
+
+> **⚠️ SCOPE CORRECTION 2026-05-30 (owner directive, `issues2.md`):** Task 301 is **NOT** an admin responsive-UX fix. Owner runtime QA confirms admin UI/UX problems exist across ALL 7 breakpoints (320/375/390/768/1280/1440/2560) — clipped header buttons, unreadable dashboard cards, table layouts not adapted to modern responsive patterns, merged records without dividers, inconsistent filter/button/tab patterns, broken dashboard grid. **All of that is Epic HH territory (Task 303 audit + Phase 2/3/4 implementation).** Task 301 is permitted ONLY as a localized container-className wrap/scroll patch for two specific segmented-tab bars. The task verdict MUST NOT claim "admin mobile UX fixed", "768+ no UX regression", "responsive system PASS", or "all breakpoints acceptable" — those are Epic HH outcomes, not Task 301 outcomes.
 
 > **Mandatory rules:** `docs/agent-contract.md` clauses 1, 2, 6a, 9, 10 (Task 264 commit hand-off). Sonnet writes "Files Changed" table; orchestrator emits commits.
 
@@ -129,7 +131,21 @@ Maximum SOURCE-FILE delta: **2** (`AdminListingsTable.tsx` + `AdminUsersTable.ts
 - `npm run governance:tailwind` → still C0/H0/M0 (no regression).
 - All four locales verified at runtime at 320px (`uk` longest, but check all four).
 - Note 18 self-validation block + AC self-audit table + "Files Changed" table in session log.
-- Verdict line: `Self-validation: tsc=0 · build=passes · governance:tailwind=C0/H0/M0 · 320/375/390 PASS uk+sq+en+it · 768+ no regression · scope=clean · PASS`.
+- Verdict line (post-correction 2026-05-30): `Self-validation: tsc=0 · build=passes · governance:tailwind=C0/H0/M0 · tab-container wrap/scroll patch applied · narrow tab labels no longer clipped at 320/375/390 in sq/en/uk/it · md+ className restored byte-identical · BROADER ADMIN RESPONSIVE UX FAIL ACROSS ALL 7 BREAKPOINTS — Epic HH Task 303 audit + Phase 2/3/4 implementation required · scope=clean (2 source files only) · Task 301 verdict = NARROW PATCH ONLY · PASS-of-scope NOT PASS-of-admin-UX`.
+
+### Owner QA observations (CONFIRMED, not theoretical — `issues2.md` 2026-05-30)
+
+These are NOT Task 301 work. They are documented here so Sonnet does NOT silently broaden scope. Each goes to Epic HH:
+
+1. Header / action buttons clipped or visually broken at multiple breakpoints (CONFIRMED, was previously only theoretical).
+2. Dashboard cards poorly adapted; data unreadable.
+3. Tables not adapted to modern responsive UI/UX patterns.
+4. Some records visually merge together — no clear dividers / spacing / separate card blocks.
+5. Admin pages use inconsistent responsive models (squeezed tables, uncontrolled clipping, weak card separation, inconsistent filter / button / tab patterns, broken dashboard grid).
+6. Issue spans the entire admin panel, not only AdminListingsTable / AdminUsersTable.
+7. Email Templates shows mixed localization → validation gates do not catch semantic locale / runtime issues (now Task 315 in Sprint 25).
+
+**Sonnet must paste this exact section into the session log under "Owner QA — out-of-scope evidence for Epic HH" so the diff cannot be confused with admin-UX claims.**
 
 ## STOP & ASK decision points
 

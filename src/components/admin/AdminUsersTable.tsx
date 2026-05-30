@@ -90,7 +90,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
   return (
     <div className="admin-users-table flex flex-col gap-4">
       {/* Tabs */}
-      <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
+      <div className="flex flex-wrap md:flex-nowrap gap-1 bg-muted rounded-xl p-1 w-full md:w-fit">
         {([['all', t('tab_all')], ['verified', t('tab_verified')]] as const).map(([tab, label]) => (
           <Button
             key={tab}

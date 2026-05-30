@@ -457,7 +457,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
 
       <div className="admin-listings-table flex flex-col gap-4">
         {/* Tabs */}
-        <div className="flex gap-1 bg-muted rounded-xl p-1 w-fit">
+        <div className="flex flex-wrap md:flex-nowrap gap-1 bg-muted rounded-xl p-1 w-full md:w-fit">
           {([['all', t('tab_all')], ['premium', t('tab_premium')]] as const).map(([tab, label]) => (
             <Button
               key={tab}

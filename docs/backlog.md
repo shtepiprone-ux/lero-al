@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-30 — Task 295 (Sonnet): Lint baseline burn-down — 17 problems (7 errors + 10 warnings) → 0/0. Stories ×3 extracted to PascalCase components; unused imports/vars ×8 removed; Combobox dep added; tel: dialer → document.createElement('a').click() ×2; contacts/** LISTING_STATUS_IGNORES (approved); AppImage eslint-disable (approved); useFavoritesRealtime dep added; sendTemplatedEmail userId un-destructured. governance:primitives C0/H2/M0 → C0/H0/M0. tsc=0; 390/390; build=✅. UNCOMMITTED.**
+
 **2026-05-29 — Task 286 (Sonnet): Favorites collections MVP polish. `truncate` → `break-words` ×2 (CollectionsSection + SaveToCollectionButton names). Raw `<button>` → `<Button>` for toggle. Item count: bare number → ICU plural `item_count` ×4 locales. All collection actions preserved. RLS intact. 6 follow-ups deferred. tsc=0; 390/390; lint 7/10. UNCOMMITTED. Sprint 20 COMPLETE (285→286).**
 
 **2026-05-29 — Task 285 (Sonnet): Listing analytics MVP — per-listing contact count in cabinet. Direct query on listing_contact_events (existing RLS events_select_owner). contactCountMap built server-side. Phone icon + `contacts` key ×4 locales in ListingsTab stats row. No SQL emitted. 7 follow-ups deferred to Task 295+. tsc=0; 390/390; lint 7/10. UNCOMMITTED.**
@@ -43,7 +45,7 @@
 
 ## Next Immediate Tasks
 
-**Last task number: 294. Next: 295.**
+**Last task number: 295. Next: 296.**
 
 **Sprint 16 COMPLETE 🎉** (6/6: 271–276). **Sprint 17 code-complete & APPROVED ✅** (277–281, 288–293) — but the **281+291+292+293 auth batch is UNCOMMITTED**; "FULLY CLOSED" only after the owner runs the orchestrator-emitted commits (in chat).
 
@@ -126,6 +128,7 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-05-30 | Task 295 — Lint baseline burn-down: 17 problems (7E+10W) → 0/0. Stories×3 PascalCase extract; unused imports/vars×8; Combobox dep; tel: dialer→createElement('a').click()×2; contacts/** LISTING_STATUS_IGNORES (approved); AppImage eslint-disable (approved); displayedIdsRef dep; sendTemplatedEmail userId un-destructured. governance:primitives C0/H2→H0. tsc=0; 390/390; build=✅ | Task 295 | [sessions/2026-05-30-task-295-lint-baseline-burn-down.md](sessions/2026-05-30-task-295-lint-baseline-burn-down.md) |
 | 2026-05-29 | Task 286 — Favorites collections MVP: truncate→break-words ×2; <button>→Button; item_count ICU plural ×4 locales; all actions preserved; 6 follow-ups deferred; tsc=0; 390/390; lint 7/10. Sprint 20 COMPLETE | Task 286 | [sessions/2026-05-29-task-286-favorites-collections-mvp.md](sessions/2026-05-29-task-286-favorites-collections-mvp.md) |
 | 2026-05-29 | Task 285 — Listing analytics MVP: contact count from listing_contact_events (RLS owner-only) → contactCountMap → ListingsTab stats row. `contacts` key ×4 locales. No SQL script. 7 follow-ups deferred. tsc=0; 390/390 | Task 285 | [sessions/2026-05-29-task-285-listing-analytics-mvp.md](sessions/2026-05-29-task-285-listing-analytics-mvp.md) |
 | 2026-05-29 | Task 287 — Email in profile identity card: read-only muted email line added to identity-card grid (sm:col-span-2, break-all, conditional on email). No new locale key. Email-change flow intact. tsc=0; 390/390; lint 7/10 | Task 287 | [sessions/2026-05-29-task-287-profile-email-identity.md](sessions/2026-05-29-task-287-profile-email-identity.md) |

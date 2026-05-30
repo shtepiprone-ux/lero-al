@@ -88,7 +88,6 @@ interface SendTemplatedEmailOptions {
 export async function sendTemplatedEmail({
   key,
   to,
-  userId,
   variables = {},
 }: SendTemplatedEmailOptions): Promise<{ error?: string }> {
   const db = createAdminClient()

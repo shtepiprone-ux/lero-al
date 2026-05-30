@@ -46,6 +46,8 @@ const LISTING_STATUS_IGNORES = [
   // Cron jobs + presence — write UserStatus (inactive/active), not ListingStatus
   "src/app/api/cron/**",
   "src/app/api/presence/**",
+  // Contacts module — writes ContactStatus, not ListingStatus
+  "src/modules/contacts/**",
 ];
 
 // ── Image governance — exception file set ────────────────────────────────────

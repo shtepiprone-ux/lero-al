@@ -10,7 +10,6 @@ import { Label } from '@/components/ui/label'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { upsertFooterContent } from '@/modules/admin/actions/footer'
 import type { SiteFooter, FooterLink } from '@/types/database'
-import { cn } from '@/lib/utils'
 
 type Locale = 'sq' | 'en' | 'uk' | 'it'
 const LOCALES: Locale[] = ['sq', 'en', 'uk', 'it']
@@ -138,7 +137,6 @@ function FormField({ label, hint, children }: { label: string; hint?: string; ch
 }
 
 function LocaleTab({
-  locale,
   data,
   onChange,
   onSave,

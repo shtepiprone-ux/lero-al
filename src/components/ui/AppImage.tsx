@@ -127,6 +127,9 @@ export function AppImage({
       }
     >
       {hasImage && (
+        // AppImage is the canonical <img> render site; next/image is project-wide banned
+        // (eslint.config.mjs IMAGE_RENDER_EXCEPTIONS). This disable is intentional and approved.
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           ref={imgRef}
           src={optimizedSrc}

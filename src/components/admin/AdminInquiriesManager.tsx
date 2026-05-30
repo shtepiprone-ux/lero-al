@@ -73,7 +73,6 @@ interface Props {
 
 export function AdminInquiriesManager({ inquiries: initialInquiries, replies: initialReplies, mailboxScope }: Props) {
   const t = useTranslations('admin.inquiries')
-  const tp = useTranslations('admin.pages')
   const tc = useTranslations('contact.topics')
   const locale = useLocale()
 
@@ -84,9 +83,6 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
   const [mailboxFilter, setMailboxFilter] = useState<'all' | 'support' | 'sales'>('all')
   const [replyBody, setReplyBody] = useState('')
   const [isPending, startTransition] = useTransition()
-
-  // Derive unique mailboxes from inquiries for filter
-  const mailboxes = Array.from(new Set(inquiries.map(i => i.target_mailbox))).sort()
 
   const filtered = inquiries.filter(i => {
     if (statusFilter !== 'all' && i.status !== statusFilter) return false

@@ -35,7 +35,9 @@
 
 ## Current Lint Status
 
-`npm run lint` reports **0 errors / 6 warnings** (Post-Governance Debt Burn-down Sprint complete).
+`npm run lint` reports **0 errors / 0 warnings** ✅ (Task 295, 2026-05-30).
+
+Task 295 eliminated the Sprint-17 re-accumulated 17-problem baseline (7 errors + 10 warnings) that had built up across Sprints 17–20. Every finding was fixed at source — no new baselines, no blanket disables, no rule severity downgrades. Two approved exceptions were added: a single `eslint-disable-next-line @next/next/no-img-element` in `AppImage.tsx` (permanent exception, canonical render site) and `src/modules/contacts/**` in `LISTING_STATUS_IGNORES` (ContactStatus ≠ ListingStatus oversight). Governance: `governance:primitives` improved to C0/H0/M0 (the two `window.location.href` HIGH violations are now gone via the `document.createElement('a').click()` fix).
 
 **History:**
 - Before Task 65: `npm run lint` failed due to 163 pre-existing errors / 11,004 warnings.
@@ -46,8 +48,10 @@
 - Task 69: migrated 3 pre-existing raw `<img>` elements to `<AppImage>`. Result: 0 errors, 8 warnings.
 - Task 70: fixed 2 `jsx-a11y` Combobox ARIA warnings. Result: 0 errors, **6 warnings**.
 - Task 71: sprint closure documentation. State confirmed and preserved.
+- Sprint 17–20 re-accumulation: `window.location.href` HIGHs + `react-hooks` + `no-unused-vars` + contacts B3. Result: 7 errors, 10 warnings.
+- Task 295: burned down all 17 findings. Result: **0 errors / 0 warnings**.
 
-No session in the sprint introduced new violations.
+No session in this task introduced new violations.
 
 ## no-restricted-syntax Override Bug (Fixed in Task 68)
 

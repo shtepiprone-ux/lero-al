@@ -21,7 +21,6 @@ import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { usePerformanceTier } from '@/lib/performance/store'
 import { useIdleMount } from '@/lib/performance/tier'
 import { useHomepageFilters } from '@/components/shared/useHomepageFilters'
-import { Combobox } from '@/components/shared/Combobox'
 
 export type FilterCurrency = string
 

@@ -130,5 +130,5 @@ export function useFavoritesRealtime({ userId, displayedIdsRef, onEvent }: Optio
       deletedDuringFetch.clear()
       supabase.removeChannel(channel)
     }
-  }, [userId]) // re-subscribe only if userId changes
+  }, [userId, displayedIdsRef]) // re-subscribe on userId change; displayedIdsRef is a stable ref
 }

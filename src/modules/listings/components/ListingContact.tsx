@@ -84,7 +84,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
         const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
         window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
       } else {
-        window.location.href = `tel:${digits}`
+        const a = document.createElement('a')
+        a.href = `tel:${digits}`
+        a.rel = 'noopener noreferrer'
+        a.click()
       }
     } finally {
       setContactLoading(false)

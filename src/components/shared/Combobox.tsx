@@ -121,7 +121,7 @@ export function Combobox({
         zIndex: 9999,
       })
     }
-  }, [portal])
+  }, [portal, dropdownMinWidth])
 
   useEffect(() => {
     if (!open || !portal) return

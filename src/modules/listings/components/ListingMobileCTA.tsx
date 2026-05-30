@@ -37,7 +37,10 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
       }
       const digits = result.phone.replace(/\D/g, '')
       if (!digits) { toast.error(t('contact_load_failed')); return }
-      window.location.href = `tel:${digits}`
+      const a = document.createElement('a')
+      a.href = `tel:${digits}`
+      a.rel = 'noopener noreferrer'
+      a.click()
     } finally {
       setLoading(false)
     }

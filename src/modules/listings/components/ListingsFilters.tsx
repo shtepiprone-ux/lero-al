@@ -16,7 +16,6 @@ import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
 import { useListingsUrlFilters } from '@/modules/listings/hooks/useListingsUrlFilters'
-import { Combobox } from '@/components/shared/Combobox'
 
 interface Location { id: number; name_al: string; type: string }
 interface Props { locations: Location[]; className?: string; onClose?: () => void }

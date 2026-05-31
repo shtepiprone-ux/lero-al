@@ -88,6 +88,40 @@ size variants must work at 320 and at 2560).
 **Out of scope:** sheet/drawer mobile filter UI (uses `Sheet`); replacing the popover/menu
 primitives; restructuring any one modal's content (only its frame).
 
+### Task 329 — Z.2 — Mobile + Tablet bottom-sheet modal pattern (canonical)
+
+**Type:** feature + refactor
+**Priority:** high
+**Area:** `src/components/ui/dialog.tsx` (primitive); 2 admin bespoke modals; responsive + UI docs
+**Status:** OPEN — opened 2026-05-31 by Opus 4.7 orchestrator. Owner request (2026-05-31, Ukrainian
+chat): "модальні вікна на всю ширину екрану, виїзджають знизу" on mobile + tablet. Owner decision
+captured in kickoff: apply universally (site + admin, including bespoke `div.fixed.inset-0`); active
+at `<lg` (<1024px); centered at `lg+`.
+
+**Kickoff:** `tasks/Epics/Epic_Z_kickoff_prompt_Task_329.md` (the literal, scoped Sonnet prompt —
+read it as the single source of truth for this task).
+
+**Sprint:** 29 — `tasks/Sprints/Sprint_29_—_Modal_Pattern_and_Sprint_27_Closure.md`. Runs after
+Sprint 28 closes. Parallel-safe with Task 326B inside Sprint 29.
+
+**One-line goal:** `DialogContent` renders as bottom-sheet at `<lg:` (full-width, slide-up,
+rounded-top, drag-handle, stacked footer) and as centered dialog at `lg:+`. Two bespoke
+`div.fixed.inset-0` admin form modals (CurrencyFormDialog + ProviderFormDialog) migrated to
+`Dialog` so they auto-inherit. Docs rewritten (`responsive-governance.md` §"Modal Behavior
+Philosophy", `ui-rules.md`, `admin-ux-rules.md` §11.2, `component-governance.md`,
+`component-catalog.md`).
+
+**Acceptance criteria:** see kickoff §"Acceptance criteria" — primitive change + 2 migrations + 5
+doc updates + 4 locales × 7 breakpoints × 4 representative modals + UI pre-flight + Files Changed
+table + zero `git add`/`git commit` from executor (orchestrator emits commit commands at review).
+
+**Reuses:** the 26-row inventory in `docs/governance-reports/2026-05-30-admin-modal-audit.md`
+produced by Task 305 — Sonnet does NOT re-audit admin modals.
+
+**Out of scope (explicit):** `Sheet` primitive (unchanged); `ListingGallery` lightbox (separate
+concern); `AlertDialog` introduction (Phase 5); drag-to-dismiss gesture (follow-up); per-modal
+content restructuring; adding new opt-in props on `DialogContent`.
+
 ## Epic-level acceptance
 
 One canonical Modal/Dialog primitive used by every modal surface; documented variants + sizes;

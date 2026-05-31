@@ -292,10 +292,39 @@ Approved direction:
 
 | Phase | Tasks | Status |
 |---|---|---|
-| Phase 0 — Sprint 21 critical hotfixes | 300, 301, 302 | FORMED 2026-05-30 — kickoffs ready, awaiting Sonnet |
-| Phase 1 — Audit + spec | 303, 304, 305 | PLANNED (owner approval gate before Sonnet kickoff written) |
-| Phase 2 — Primitives | 306, 307 | PLANNED (blocked on Phase 1 owner sign-off) |
-| Phase 3 — Core pages migration | 308, 309 | PLANNED (blocked on Phase 2) |
-| Phase 4 — Content/settings migration | 310 | PLANNED (blocked on Phase 2; may split into 310a/b/c) |
-| Phase 5 — Modal standardisation | 311 | PLANNED (blocked on Phase 1 Task 305) |
-| Phase 6 — Verified Agents workflow | 313 | PLANNED (blocked on owner schema approval) |
+| Phase 0 — Sprint 21 critical hotfixes | 300, 301, 302 | ✅ SHIPPED 2026-05-30 (300 + 302 in code; 301 narrow patch in code but owner broader QA FAIL → escalated to Sprint 28 Phase 2-3 emergency activation) |
+| Phase 1 — Audit + spec | 303, 304, 305 | ✅ SHIPPED 2026-05-30. **Task 303 severity SUPERSEDED 2026-05-30 by Sprint 28 Task 327** evidence-driven matrix scoped to owner-flagged 6 surfaces (`docs/governance-reports/2026-05-30-sprint-28-admin-mobile-evidence-matrix.md`). Task 303 inventory remains historical reference. |
+| Phase 2 — Primitives | 306, 307 | ACTIVATED 2026-05-30 under Sprint 28 (scope reduced to owner-flagged surfaces only). Kickoffs: `tasks/Sprints/Sprint_28_kickoff_prompt_Task_306.md` + `..._Task_307.md`. |
+| Phase 3 — Core pages migration | 308, 309 | ACTIVATED 2026-05-30 under Sprint 28 (scope = `/admin/listings` + `/admin/users` + `/admin/support` + `/admin/inquiries/{support,sales}` only; `/admin/reports` deferred). Kickoffs: `tasks/Sprints/Sprint_28_kickoff_prompt_Task_308.md` + `..._Task_309.md`. |
+| Phase 4 — Content/settings migration | 310 | DEFERRED — blocked until Sprint 28 ships. Covers remaining 12 admin routes (Locations / Popular Locations / Companies / Property Types / Currency / Email Templates / Footer / Settings / Permissions / Dashboard / Pages / Legal-redirect-or-final). May split into 310a/b/c at planning time. |
+| Phase 5 — Modal standardisation | 311 | DEFERRED — Sprint 28 Task 309 ships Sheet-bottom-drawer pattern for support + inquiries detail modals (canonical pattern proven on owner-flagged surfaces); Phase 5 generalizes to remaining admin modals after Sprint 28 ships. |
+| Phase 6 — Verified Agents workflow | 313 | PLANNED (blocked on owner schema approval; independent of Sprint 28). |
+
+## Sprint 28 emergency activation (2026-05-30)
+
+Owner manual QA at 375px on 2026-05-30 (post-Task-303 closure) observed CRITICAL admin mobile defects on 6 surfaces where Task 303 classified findings as HIGH/MEDIUM. Owner also flagged that admin status-change UX is inconsistent across 4 different components (workflow block / Combobox / inline action buttons / transition button cluster).
+
+Sprint 28 (`tasks/Sprints/Sprint_28_—_Admin_Mobile_Responsive_and_Status_Workflow_Foundation.md`) activates Epic HH Phase 2 (Tasks 306+307) + Phase 3 (Tasks 308+309) scoped to the 6 owner-flagged surfaces ONLY:
+
+1. `/admin/support` (complaints filter)
+2. `/admin/support` (tickets filter)
+3. `/admin/listings`
+4. `/admin/users`
+5. `/admin/inquiries/support`
+6. `/admin/inquiries/sales`
+
+Sprint 28 also introduces a canonical `StatusChangeControl` primitive (Decision 1 added to APPROVED owner decisions below) and supersedes Task 303 severity classification with a fresh evidence-driven matrix (Task 327). Remaining 12 admin routes stay on the current pattern until Epic HH Phase 4 (Task 310 or split) — those are NOT Sprint 28 scope.
+
+**Task 326B (Sprint 27) is BLOCKED until Sprint 28 ships** — building the Footer↔CMS integration on top of an unstable admin responsive foundation is the failure mode Sprint 28 exists to prevent.
+
+### Sprint 28 owner decisions (added to APPROVED list 2026-05-30)
+
+**Decision 1 (Sprint 28) — Canonical `StatusChangeControl` tier model:**
+- `variant="select"` — low-stakes admin status changes (e.g. `/admin/inquiries/{support,sales}`). Combobox-styled dropdown; immediate save; optional note (`enableNote` prop, default off); optional timeline (`historyEvents` prop, default empty).
+- `variant="workflow"` — moderation / destructive status changes (e.g. `/admin/support`, `/admin/listings` transition row-actions). Pill button group of allowed transitions; optional note `Textarea`; "Update status" submit button; required timeline below fed by `historyEvents` prop.
+- One shared component; surfaces declare `variant` + `transitions` whitelist; full prop spec in `docs/admin-ux-rules.md §13` (produced by Task 328).
+- `/admin/reports` (`AdminReportsManager`) NOT in Sprint 28 — its pattern (inline action buttons + notes) is documented in Task 328 spec as "deferred to Epic HH Phase 3 follow-up".
+
+**Decision 2 (Sprint 28) — Sprint 28 scope:** owner-flagged 6 surfaces only. Remaining 12 admin routes deferred to Epic HH Phase 4.
+
+**Decision 3 (Sprint 28) — Task 303 severity supersession:** Task 303 audit body remains valid as historical inventory; severity classification is SUPERSEDED for the 6 owner-flagged surfaces by `docs/governance-reports/2026-05-30-sprint-28-admin-mobile-evidence-matrix.md` (Task 327). Owner evidence baseline: CRITICAL = blocks reading / editing / status changes / modal use OR causes horizontal overflow / clipped content at 320/375/390.

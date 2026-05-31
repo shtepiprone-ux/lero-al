@@ -567,8 +567,8 @@ and configure EVERY control to it:
    `flex-wrap`/`truncate`; verify the row does not clip at **320px** in **uk** (longest). Record the
    widths checked.
 5. **Same-row height:** confirm every control on a shared row is one height (§15). Record.
-6. **All 7 breakpoints:** 320/375/390/768/1280/1440/2560 — state, per touched screen, that each was
-   checked (screenshots strongly preferred). "Desktop only" is a fail.
+6. **All 9 breakpoints (expanded 2026-05-31, Task 306-Fix):** 320/375/390/768/**1024**/1280/1440/**1920**/2560 — state, per touched screen, that each was
+   checked (screenshots strongly preferred). "Desktop only" is a fail. 1024 catches the admin sidebar/table↔card flip; 1920 catches widescreen waste. See `docs/responsive-governance.md §1 "Verification widths"`.
 7. **Touch targets:** mobile-reachable controls ≥44px (§8). Record.
 8. **4 locales:** sq/en/uk/it render without truncation breakage on the touched screens. Record.
 

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
-import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check } from 'lucide-react'
+import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check, ChevronRight } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
@@ -21,6 +21,8 @@ import { Combobox } from '@/components/shared/Combobox'
 import { RelativeTime } from '@/components/shared/RelativeTime'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { setListingPremium, deleteListing, updateListingStatus } from '@/modules/admin/actions'
+import { AdminPageShell } from '@/components/admin/AdminPageShell'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { formatPrice } from '@/lib/formatters'
 import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
@@ -84,7 +86,14 @@ export interface AdminListing {
 }
 
 interface Props {
-  listings: AdminListing[]; total: number; page: number; perPage: number; activeStatus: string; searchQuery?: string; activeTab?: string
+  listings: AdminListing[]
+  total: number
+  page: number
+  perPage: number
+  activeStatus: string
+  searchQuery?: string
+  activeTab?: string
+  pageTitle?: string
 }
 
 // ── Premium Dialog (canonical Dialog wrapper) ─────────────────────────────────
@@ -382,7 +391,7 @@ function ListingPreviewDialog({
 
 // ── Main table ────────────────────────────────────────────────────────────────
 
-export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all' }: Props) {
+export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all', pageTitle }: Props) {
   const t = useTranslations('admin.listings')
   const tc = useTranslations('cabinet')
   const tl = useTranslations('listing')
@@ -415,6 +424,121 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
     Object.entries(updates).forEach(([k, v]) => v === null ? params.delete(k) : params.set(k, v))
     router.push(`${pathname}?${params.toString()}`)
   }
+
+  const columns: AdminTableColumn<AdminListing>[] = [
+    {
+      key: 'id',
+      header: 'ID',
+      visibility: 'xl',
+      className: 'w-24',
+      cell: l => (
+        <button
+          type="button"
+          onClick={e => {
+            e.stopPropagation()
+            navigator.clipboard?.writeText(l.id).catch(() => {})
+            setCopiedId(l.id)
+            setTimeout(() => setCopiedId(prev => prev === l.id ? null : prev), 1500)
+          }}
+          title={l.id}
+          className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          {copiedId === l.id
+            ? <Check className="h-3 w-3 text-status-success" />
+            : <Copy className="h-3 w-3 opacity-50" />
+          }
+          #{l.public_id ?? l.id.slice(0, 8)}
+        </button>
+      ),
+    },
+    {
+      key: 'listing',
+      header: t('col_listing'),
+      cell: l => (
+        <button
+          type="button"
+          onClick={() => setPreviewListing(l)}
+          className="flex items-center gap-2 text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium shrink-0" />}
+          <span className="font-medium truncate max-w-[200px]">{l.title}</span>
+        </button>
+      ),
+    },
+    {
+      key: 'type',
+      header: t('col_type'),
+      visibility: 'md',
+      cell: l => (
+        <span className="text-muted-foreground text-xs">
+          {(tl as (k: string) => string)(l.listing_type)} · {propertyTypes.find(pt => pt.value === l.property_type)?.label ?? l.property_type}
+        </span>
+      ),
+    },
+    {
+      key: 'price',
+      header: t('col_price'),
+      cell: l => <span className="font-medium text-sm">{formatPrice(l.price, l.currency, locale)}</span>,
+    },
+    {
+      key: 'status',
+      header: t('col_status'),
+      cell: l => (
+        <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium ${STATUS_BADGE[l.status]}`}>
+          {STATUS_LABEL[l.status]}
+        </span>
+      ),
+    },
+    {
+      key: 'agent',
+      header: t('col_agent'),
+      visibility: 'lg',
+      cell: l => <span className="text-muted-foreground text-xs">{l.owner?.name ?? '—'}</span>,
+    },
+    {
+      key: 'date',
+      header: t('col_date'),
+      visibility: 'xl',
+      cell: l => <span className="text-muted-foreground text-xs"><RelativeTime date={l.created_at} /></span>,
+    },
+  ]
+
+  const filterBar = (
+    <>
+      {/* Tabs */}
+      <div className="flex flex-wrap md:flex-nowrap gap-1 bg-muted rounded-xl p-1 w-full md:w-fit">
+        {([['all', t('tab_all')], ['premium', t('tab_premium')]] as const).map(([tab, label]) => (
+          <Button
+            key={tab}
+            type="button"
+            variant="ghost"
+            onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, status: null })}
+            size="tab"
+            className={activeTab === tab ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'}
+          >
+            {label}
+          </Button>
+        ))}
+      </div>
+
+      {/* Search + Status filter */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <AdminSearchInput
+          value={searchQuery}
+          placeholder={t('search_placeholder')}
+          className="flex-1 max-w-sm"
+        />
+        <Combobox
+          options={FILTER_STATUS_OPTIONS}
+          value={activeStatus}
+          onChange={s => navigate({ status: s || null, page: null })}
+          variant="button"
+          size="sm"
+          className="w-40"
+        />
+      </div>
+    </>
+  )
 
   return (
     <>
@@ -455,119 +579,43 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
         />
       )}
 
-      <div className="admin-listings-table flex flex-col gap-4">
-        {/* Tabs */}
-        <div className="flex flex-wrap md:flex-nowrap gap-1 bg-muted rounded-xl p-1 w-full md:w-fit">
-          {([['all', t('tab_all')], ['premium', t('tab_premium')]] as const).map(([tab, label]) => (
-            <Button
-              key={tab}
-              type="button"
-              variant="ghost"
-              onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, status: null })}
-              size="tab"
-              className={activeTab === tab ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'}
-            >
-              {label}
-            </Button>
-          ))}
-        </div>
-
-        {/* Search + Status filter */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <AdminSearchInput
-            value={searchQuery}
-            placeholder={t('search_placeholder')}
-            className="flex-1 max-w-sm"
-          />
-          <Combobox
-            options={FILTER_STATUS_OPTIONS}
-            value={activeStatus}
-            onChange={s => navigate({ status: s || null, page: null })}
-            variant="button"
-            size="sm"
-            className="w-40"
-          />
-        </div>
-
-        <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-muted/40">
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell w-24">ID</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_listing')}</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_type')}</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_price')}</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_status')}</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_agent')}</th>
-                  <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden xl:table-cell">{t('col_date')}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {items.length === 0 ? (
-                  <tr><td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">{t('empty')}</td></tr>
-                ) : items.map(l => (
-                    <tr
-                      key={l.id}
-                      className={`hover:bg-muted/20 transition-colors ${
-                        isListingArchived(l.status as ListingStatus) ? 'grayscale opacity-70' : ''
-                      }`}
-                    >
-                      {/* ID — copy button */}
-                      <td className="px-4 py-3 hidden sm:table-cell">
-                        <button
-                          type="button"
-                          onClick={() => {
-                            navigator.clipboard?.writeText(l.id).catch(() => {})
-                            setCopiedId(l.id)
-                            setTimeout(() => setCopiedId(prev => prev === l.id ? null : prev), 1500)
-                          }}
-                          title={l.id}
-                          className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                        >
-                          {copiedId === l.id
-                            ? <Check className="h-3 w-3 text-status-success" />
-                            : <Copy className="h-3 w-3 opacity-50" />
-                          }
-                          #{l.public_id ?? l.id.slice(0, 8)}
-                        </button>
-                      </td>
-
-                      {/* Title — primary click affordance (K.1 canonical) */}
-                      <td className="px-4 py-3">
-                        <button
-                          type="button"
-                          onClick={() => setPreviewListing(l)}
-                          className="flex items-center gap-2 text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                        >
-                          {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium shrink-0" />}
-                          <span className="font-medium truncate max-w-[200px]">{l.title}</span>
-                        </button>
-                      </td>
-
-                      <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">
-                        {(tl as (k: string) => string)(l.listing_type)} · {propertyTypes.find(pt => pt.value === l.property_type)?.label ?? l.property_type}
-                      </td>
-                      <td className="px-4 py-3 font-medium text-sm">
-                        {formatPrice(l.price, l.currency, locale)}
-                      </td>
-                      <td className="px-4 py-3">
-                        <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium ${STATUS_BADGE[l.status]}`}>
-                          {STATUS_LABEL[l.status]}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
-                        {l.owner?.name ?? '—'}
-                      </td>
-                      <td className="px-4 py-3 hidden xl:table-cell text-muted-foreground text-xs">
-                        <RelativeTime date={l.created_at} />
-                      </td>
-                    </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      <AdminPageShell
+        title={pageTitle}
+        countBadge={pageTitle ? { value: total } : undefined}
+        filterBar={filterBar}
+      >
+        <AdminTable
+          rows={items}
+          columns={columns}
+          rowKey={l => l.id}
+          stickyColumnIndex={1}
+          rowClassName={l => isListingArchived(l.status as ListingStatus) ? 'grayscale opacity-70' : ''}
+          emptyState={t('empty')}
+          ariaLabel={pageTitle ?? t('col_listing')}
+          cardRow={l => ({
+            title: (
+              <div className="flex items-center gap-2 min-w-0">
+                {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium shrink-0" />}
+                <span className="font-medium truncate">{l.title}</span>
+              </div>
+            ),
+            subtitle: (
+              <div className="flex items-center gap-2 flex-wrap mt-1">
+                <span className="font-medium text-sm">{formatPrice(l.price, l.currency, locale)}</span>
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium ${STATUS_BADGE[l.status]}`}>
+                  {STATUS_LABEL[l.status]}
+                </span>
+              </div>
+            ),
+            meta: (
+              <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap mt-0.5">
+                <span>{(tl as (k: string) => string)(l.listing_type)} · {propertyTypes.find(pt => pt.value === l.property_type)?.label ?? l.property_type}</span>
+                {l.owner?.name && <span>· {l.owner.name}</span>}
+              </div>
+            ),
+            trailing: <ChevronRight className="h-4 w-4 text-muted-foreground/40" />,
+          })}
+        />
 
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-2">
@@ -580,7 +628,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
             </Button>
           </div>
         )}
-      </div>
+      </AdminPageShell>
     </>
   )
 }

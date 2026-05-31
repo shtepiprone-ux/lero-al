@@ -1,5 +1,7 @@
 # Session: Task 303 — Epic HH Phase 1 Admin Responsive + UX System Audit
 
+> ⚠️ **SUPERSEDED for severity 2026-05-31 by Sprint 28 Task 327.** This audit's inventory of components and breakpoints remains valid as historical reference, but its severity classification is no longer authoritative for the 6 owner-flagged surfaces (`/admin/support`, `/admin/listings`, `/admin/users`, `/admin/inquiries/support`, `/admin/inquiries/sales`, plus the shared TicketDetailDialog and InquiryDetailDialog). See `docs/governance-reports/2026-05-30-sprint-28-admin-mobile-evidence-matrix.md`.
+
 **Date:** 2026-05-30  
 **Task:** 303 (Epic HH Phase 1 — task #1)  
 **Type:** AUDIT + CANONICAL SPEC — no production code  
@@ -140,3 +142,14 @@
 | `docs/backlog.md` | Closure entry + archive row |
 
 **Self-validation: tsc=0 · build=passes · lint=0/0 · governance:tailwind=C0/H0/M0 · per-route × per-breakpoint × per-locale evidence matrix complete (18 routes × 7 bp × 4 loc cells) · severity classification applied (0 CRITICAL / 7 HIGH / 22 MEDIUM / 6 LOW) · dashboard + header + filter + record-separation sub-audits complete · spec doc shipped · src diff=empty (Task 303 produced zero src changes) · owner approval gate set for Phase 2 · PASS**
+
+---
+
+## Supersession Note (2026-05-31 — Sprint 28 Task 327)
+
+Task 303's severity classification has been **superseded** for the 6 owner-flagged surfaces by the Sprint 28 Task 327 evidence matrix. The full details and reclassification rationale are in:
+
+- `docs/governance-reports/2026-05-30-sprint-28-admin-mobile-evidence-matrix.md`
+- `docs/admin-ux-rules.md §4.1` — Severity Baseline Source-of-Truth
+
+Task 303's component inventory, per-route breakpoint matrix, and pattern assignments remain valid. The corrective extension to `docs/admin-ux-rules.md` (§7-§12 filter/sort/row-action + modal/dialog specs from Tasks 304/305) was also applied as Task 327 CORRECTIVE in the same session.

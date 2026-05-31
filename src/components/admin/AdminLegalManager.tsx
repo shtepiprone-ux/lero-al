@@ -36,7 +36,8 @@ function PageModal({ page, onClose, onDone }: {
     const data = {
       title: title.trim(),
       slug: slug.trim() || toSlug(title),
-      content: { body: body.trim() },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      content: { body: body.trim() } as any,
       is_published: published,
     }
     try {

@@ -776,7 +776,29 @@
       "inquiries_sales_title": "Sales Inquiries",
       "inquiries_subtitle": "{count} inquiries",
       "footer_title": "Footer",
-      "footer_subtitle": "Manage the public site footer"
+      "footer_subtitle": "Manage the public site footer",
+      "title": "CMS pages",
+      "subtitle": "Manage public site pages",
+      "btn_new": "+ New page",
+      "col_slug": "Slug",
+      "col_title": "Title",
+      "col_status": "Status",
+      "col_updated": "Updated",
+      "status_draft": "Draft",
+      "status_published": "Published",
+      "editor_locale_sq": "Albanian",
+      "editor_locale_en": "English",
+      "editor_locale_uk": "Ukrainian",
+      "editor_locale_it": "Italian",
+      "field_title_label": "Title",
+      "field_body_label": "Content",
+      "slug_reserved": "Reserved slug — cannot be used",
+      "slug_invalid_format": "Invalid slug format",
+      "slug_already_used": "Slug already used",
+      "empty_locale_warning": "This locale is empty — Albanian content will be used as fallback",
+      "migration_pending_banner": "Migration pending — contact admin",
+      "delete_confirm": "Are you sure you want to delete this page?",
+      "preview_open": "Open preview"
     },
     "footer": {
       "tab_sq": "Albanian",
@@ -1419,6 +1441,21 @@
         "settings_manage": "Can save site settings",
         "legal_manage": "Can create, edit or delete legal pages",
         "reports_manage": "Can review, resolve or dismiss listing reports"
+      }
+    },
+    "common": {
+      "status_control": {
+        "update_status_btn": "Update status",
+        "status_change_label": "Change status",
+        "status_change_note_placeholder": "Optional note...",
+        "status_change_note_required": "Note is required",
+        "status_change_note_optional": "Note is optional",
+        "status_change_success": "Status updated",
+        "status_change_error": "Failed to update status",
+        "status_change_no_change": "No change made",
+        "status_change_history_title": "Change history",
+        "status_change_history_empty": "No status changes yet",
+        "status_change_history_actor_unknown": "Unknown admin"
       }
     }
   },

@@ -4,7 +4,8 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
-import type { ListingStatus, UserRole, UserType } from '@/types/database'
+import type { ListingStatus, UserRole, UserType, PageContent } from '@/types/database'
+import { validateSlug } from '@/lib/slug-validator'
 import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 import { routing } from '@/i18n/routing'
 import { assertPermission, hasPermission, roleHasPermission } from '@/lib/auth/permissions'
@@ -221,35 +222,56 @@ export async function saveSettings(entries: Record<string, string>): Promise<{ e
   return {}
 }
 
-// ── Legal pages ──────────────────────────────────────────────────────────────
+// ── CMS pages ─────────────────────────────────────────────────────────────────
 
 export async function createPage(data: {
-  title: string; slug: string; content: Record<string, unknown>; is_published: boolean
-}) {
+  title: string; slug: string; content: PageContent; is_published: boolean
+}): Promise<{ error?: string }> {
   await assertPermission('legal.manage')
+  const slugResult = validateSlug(data.slug)
+  if (!slugResult.ok) return { error: slugResult.reason }
   const db = createAdminClient()
-  const { error } = await db.from('pages').insert(data)
-  if (error) console.error('createPage failed', { error })
-  revalidatePath('/admin/legal')
+  const { data: existing } = await db.from('pages').select('id').eq('slug', data.slug).maybeSingle()
+  if (existing) return { error: 'slug_already_used' }
+  const { error } = await db.from('pages').insert({
+    title: data.content.sq.title || data.title,
+    slug: data.slug,
+    content: data.content,
+    is_published: data.is_published,
+  })
+  if (error) { console.error('createPage failed', { error }); return { error: 'save_error' } }
+  revalidatePath('/admin/pages')
+  return {}
 }
 
 export async function updatePage(
   id: number,
-  data: { title?: string; slug?: string; content?: Record<string, unknown>; is_published?: boolean }
-) {
+  data: { title?: string; slug?: string; content?: PageContent; is_published?: boolean }
+): Promise<{ error?: string }> {
   await assertPermission('legal.manage')
+  if (data.slug !== undefined) {
+    const slugResult = validateSlug(data.slug)
+    if (!slugResult.ok) return { error: slugResult.reason }
+    const db = createAdminClient()
+    const { data: existing } = await db.from('pages').select('id').eq('slug', data.slug).neq('id', id).maybeSingle()
+    if (existing) return { error: 'slug_already_used' }
+  }
   const db = createAdminClient()
-  const { error } = await db.from('pages').update({ ...data, updated_at: new Date().toISOString() }).eq('id', id)
-  if (error) console.error('updatePage failed', { error, id })
-  revalidatePath('/admin/legal')
+  const patch: Record<string, unknown> = { ...data, updated_at: new Date().toISOString() }
+  if (data.content?.sq?.title) patch.title = data.content.sq.title
+  const { error } = await db.from('pages').update(patch).eq('id', id)
+  if (error) { console.error('updatePage failed', { error, id }); return { error: 'save_error' } }
+  revalidatePath('/admin/pages')
+  return {}
 }
 
-export async function deletePage(id: number) {
+export async function deletePage(id: number): Promise<{ error?: string }> {
   await assertPermission('legal.manage')
   const db = createAdminClient()
   const { error } = await db.from('pages').delete().eq('id', id)
-  if (error) console.error('deletePage failed', { error, id })
-  revalidatePath('/admin/legal')
+  if (error) { console.error('deletePage failed', { error, id }); return { error: 'delete_error' } }
+  revalidatePath('/admin/pages')
+  return {}
 }
 
 // ── User Profile Management ──────────────────────────────────────────────────

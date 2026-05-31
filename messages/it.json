@@ -776,7 +776,29 @@
       "inquiries_sales_title": "Richieste di vendita",
       "inquiries_subtitle": "{count} richieste",
       "footer_title": "Footer",
-      "footer_subtitle": "Gestisci il footer del sito pubblico"
+      "footer_subtitle": "Gestisci il footer del sito pubblico",
+      "title": "Pagine CMS",
+      "subtitle": "Gestisci le pagine pubbliche del sito",
+      "btn_new": "+ Nuova pagina",
+      "col_slug": "Slug",
+      "col_title": "Titolo",
+      "col_status": "Stato",
+      "col_updated": "Aggiornato",
+      "status_draft": "Bozza",
+      "status_published": "Pubblicato",
+      "editor_locale_sq": "Albanese",
+      "editor_locale_en": "Inglese",
+      "editor_locale_uk": "Ucraino",
+      "editor_locale_it": "Italiano",
+      "field_title_label": "Titolo",
+      "field_body_label": "Contenuto",
+      "slug_reserved": "Slug riservato — non utilizzabile",
+      "slug_invalid_format": "Formato slug non valido",
+      "slug_already_used": "Slug già utilizzato",
+      "empty_locale_warning": "Questa lingua è vuota — verrà usato il contenuto albanese come fallback",
+      "migration_pending_banner": "Migrazione in sospeso — contatta l'admin",
+      "delete_confirm": "Sei sicuro di voler eliminare questa pagina?",
+      "preview_open": "Apri anteprima"
     },
     "footer": {
       "tab_sq": "Albanese",
@@ -1419,6 +1441,21 @@
         "settings_manage": "Può salvare le impostazioni del sito",
         "legal_manage": "Può creare, modificare o eliminare le pagine legali",
         "reports_manage": "Può esaminare, risolvere o ignorare le segnalazioni"
+      }
+    },
+    "common": {
+      "status_control": {
+        "update_status_btn": "Aggiorna stato",
+        "status_change_label": "Cambia stato",
+        "status_change_note_placeholder": "Nota opzionale...",
+        "status_change_note_required": "La nota è obbligatoria",
+        "status_change_note_optional": "La nota è opzionale",
+        "status_change_success": "Stato aggiornato",
+        "status_change_error": "Errore durante l'aggiornamento dello stato",
+        "status_change_no_change": "Nessuna modifica effettuata",
+        "status_change_history_title": "Cronologia modifiche",
+        "status_change_history_empty": "Nessuna modifica di stato",
+        "status_change_history_actor_unknown": "Admin sconosciuto"
       }
     }
   },

@@ -84,20 +84,15 @@ export default async function AdminListingsPage({
   const { data: listings, count } = await query
 
   return (
-    <div className="p-6 max-w-10xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t('listings_title')}</h1>
-        <span className="text-sm text-muted-foreground">{t('listings_total', { count: count ?? 0 })}</span>
-      </div>
-      <AdminListingsTable
-        listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}
-        total={count ?? 0}
-        page={page}
-        perPage={PER_PAGE}
-        activeStatus={status}
-        searchQuery={q}
-        activeTab={tab}
-      />
-    </div>
+    <AdminListingsTable
+      pageTitle={t('listings_title')}
+      listings={(listings ?? []) as unknown as import('@/components/admin/AdminListingsTable').AdminListing[]}
+      total={count ?? 0}
+      page={page}
+      perPage={PER_PAGE}
+      activeStatus={status}
+      searchQuery={q}
+      activeTab={tab}
+    />
   )
 }

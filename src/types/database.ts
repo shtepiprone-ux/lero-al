@@ -480,11 +480,23 @@ export interface DBExchangeProvider {
   updated_at: string
 }
 
+export interface PageLocaleContent {
+  title: string
+  body: string
+}
+
+export interface PageContent {
+  sq: PageLocaleContent
+  en: PageLocaleContent
+  uk: PageLocaleContent
+  it: PageLocaleContent
+}
+
 export interface Page {
   id: number
   title: string
   slug: string
-  content: Record<string, unknown>
+  content: PageContent | Record<string, unknown>
   is_published: boolean
   updated_by: string | null
   updated_at: string

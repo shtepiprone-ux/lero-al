@@ -21,7 +21,7 @@
 --   DBCurrency           → currencies               (12 cols)
 --   DBExchangeProvider   → exchange_providers       (11 cols)
 --   DBPropertyType       → property_types           (10 cols)
---   Page                 → pages                    (7 cols)
+--   Page                 → pages                    (7 cols; content JSONB shape after Task 326A migration: {sq:{title,body},en:{...},uk:{...},it:{...}})
 --   SiteSetting          → site_settings            (3 cols)
 --   Company              → companies                (4 cols)
 --   Collection           → collections              (5 cols)

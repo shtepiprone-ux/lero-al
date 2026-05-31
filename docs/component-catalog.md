@@ -8,8 +8,8 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 202 |
-| Storybook stories | 10 |
+| Total cataloged components | 207 |
+| Storybook stories | 16 |
 | Locale-aware (useTranslations) | 84 |
 | Client components ('use client') | 131 |
 | With arbitrary Tailwind values | 64 |
@@ -88,10 +88,11 @@ See `docs/component-risk-register.md` for risk register.
 | `Header` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `MobileBottomNav` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 
-## Admin Shared Components (`src/components/admin/`) (29)
+## Admin Shared Components (`src/components/admin/`) (34)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
+| `AdminCardList` | CANONICAL | ✅ | — | Structured card shape (title/subtitle/meta/trailing) + legacy ReactNode |
 | `AdminCompaniesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminCurrenciesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminCurrencyTabs` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
@@ -107,12 +108,16 @@ See `docs/component-risk-register.md` for risk register.
 | `AdminLocaleSwitcher` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AdminLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminMobileHeader` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminPageHeader` | APPROVED | — | — | —  |
+| `AdminPageHeader` | APPROVED | — | — | Superseded by `AdminPageShell` — do not use in new pages |
+| `AdminPageShell` | CANONICAL | ✅ | — | — |
 | `AdminPermissionsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AdminPopularLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminPropertyTypesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminReportsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminSearchInput` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `AdminTable` | CANONICAL | ✅ | — | Internal lg: table↔card switch; cardRow prop with synthesis fallback |
+| `StatusChangeControl` | CANONICAL | ✅ | 🌐 | — |
+| `StatusChangeHistory` | CANONICAL | ✅ | 🌐 | — |
 | `AdminSettings` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminShell` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `AdminSidebar` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |

@@ -776,7 +776,29 @@
       "inquiries_sales_title": "Kërkesat e Shitjeve",
       "inquiries_subtitle": "{count} kërkesa",
       "footer_title": "Footer",
-      "footer_subtitle": "Menaxho footer-in e faqes publike"
+      "footer_subtitle": "Menaxho footer-in e faqes publike",
+      "title": "Faqe CMS",
+      "subtitle": "Menaxho faqet publike të faqes",
+      "btn_new": "+ Faqe e re",
+      "col_slug": "Slug",
+      "col_title": "Titulli",
+      "col_status": "Statusi",
+      "col_updated": "Përditësuar",
+      "status_draft": "Draft",
+      "status_published": "Publikuar",
+      "editor_locale_sq": "Shqip",
+      "editor_locale_en": "Anglisht",
+      "editor_locale_uk": "Ukrainisht",
+      "editor_locale_it": "Italisht",
+      "field_title_label": "Titulli",
+      "field_body_label": "Përmbajtja",
+      "slug_reserved": "Slug i rezervuar — nuk mund të përdoret",
+      "slug_invalid_format": "Format i pavlefshëm i slug-ut",
+      "slug_already_used": "Slug-u është i përdorur tashmë",
+      "empty_locale_warning": "Kjo lokale është bosh — do të përdoret përmbajtja Shqip si fallback",
+      "migration_pending_banner": "Migrim i pa-aplikuar — kontaktoni administratorin",
+      "delete_confirm": "A jeni i sigurt që doni ta fshini këtë faqe?",
+      "preview_open": "Hap pamjen"
     },
     "footer": {
       "tab_sq": "Shqip",
@@ -1419,6 +1441,21 @@
         "settings_manage": "Mund të ruajë cilësimet e faqes",
         "legal_manage": "Mund të krijojë, ndryshojë ose fshijë faqet ligjore",
         "reports_manage": "Mund të shqyrtojë, zgjidhë ose refuzojë raportet e njoftimeve"
+      }
+    },
+    "common": {
+      "status_control": {
+        "update_status_btn": "Përditëso statusin",
+        "status_change_label": "Ndrysho statusin",
+        "status_change_note_placeholder": "Shënim opsional...",
+        "status_change_note_required": "Shënimi është i detyrueshëm",
+        "status_change_note_optional": "Shënimi është opsional",
+        "status_change_success": "Statusi u përditësua",
+        "status_change_error": "Gabim gjatë përditësimit të statusit",
+        "status_change_no_change": "Nuk u bë asnjë ndryshim",
+        "status_change_history_title": "Historia e ndryshimeve",
+        "status_change_history_empty": "Nuk ka ndryshime të statusit",
+        "status_change_history_actor_unknown": "Admin i panjohur"
       }
     }
   },

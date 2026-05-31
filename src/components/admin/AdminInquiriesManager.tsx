@@ -13,7 +13,7 @@ import { Textarea } from '@/components/ui/textarea'
 import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
 } from '@/components/ui/dialog'
-import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
+import { StatusChangeControl, type StatusOption } from '@/components/admin/StatusChangeControl'
 import { formatDate } from '@/lib/formatters'
 import { updateInquiryStatus, sendInquiryReply } from '@/modules/contacts/actions'
 import type { ContactStatus } from '@/types/database'
@@ -121,21 +121,14 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
     return inq.topic
   }
 
-  function handleStatusChange(newStatus: string) {
+  async function handleStatusChange({ toStatus }: { toStatus: ContactStatus; note: string | null }) {
     if (!selected) return
-    startTransition(async () => {
-      const result = await updateInquiryStatus(selected.id, newStatus)
-      if (result.error) {
-        toast.error(t('status_error'))
-        return
-      }
-      const updatedStatus = newStatus as ContactStatus
-      setInquiries(prev =>
-        prev.map(i => i.id === selected.id ? { ...i, status: updatedStatus } : i),
-      )
-      setSelected(prev => prev ? { ...prev, status: updatedStatus } : null)
-      toast.success(t('status_updated'))
-    })
+    const result = await updateInquiryStatus(selected.id, toStatus)
+    if (result.error) throw new Error(result.error)
+    setInquiries(prev =>
+      prev.map(i => i.id === selected.id ? { ...i, status: toStatus } : i),
+    )
+    setSelected(prev => prev ? { ...prev, status: toStatus } : null)
   }
 
   function handleSendReply() {
@@ -187,9 +180,11 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
     })
   }
 
-  const statusOptions: ComboboxOption[] = CONTACT_STATUSES.map(s => ({
-    value: s,
-    label: t(`status_${s}` as 'status_new' | 'status_in_progress' | 'status_closed'),
+  const inquiryStatusOptions: StatusOption<ContactStatus>[] = CONTACT_STATUSES.map(s => ({
+    code: s,
+    labelKey: `status_${s}`,
+    badgeVariant: STATUS_VARIANT[s] as StatusOption<ContactStatus>['badgeVariant'],
+    icon: STATUS_ICON[s],
   }))
 
   return (
@@ -288,14 +283,13 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
                   <span>{formatDate(selected.created_at, locale)}</span>
                 </div>
                 <div>
-                  <span className="text-xs text-muted-foreground block mb-1">{t('change_status')}</span>
-                  <Combobox
-                    options={statusOptions}
-                    value={selected.status}
-                    onChange={handleStatusChange}
-                    variant="button"
-                    size="sm"
+                  <StatusChangeControl
+                    variant="select"
+                    currentStatus={selected.status}
+                    statuses={inquiryStatusOptions}
+                    onSubmit={handleStatusChange}
                     disabled={isPending}
+                    aria-label={t('change_status')}
                   />
                 </div>
               </div>

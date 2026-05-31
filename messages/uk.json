@@ -776,7 +776,29 @@
       "inquiries_sales_title": "Запити продажів",
       "inquiries_subtitle": "{count} запитів",
       "footer_title": "Footer",
-      "footer_subtitle": "Керуйте публічним footer-ом сайту"
+      "footer_subtitle": "Керуйте публічним footer-ом сайту",
+      "title": "CMS-сторінки",
+      "subtitle": "Керування публічними сторінками сайту",
+      "btn_new": "+ Нова сторінка",
+      "col_slug": "Slug",
+      "col_title": "Заголовок",
+      "col_status": "Статус",
+      "col_updated": "Оновлено",
+      "status_draft": "Чернетка",
+      "status_published": "Опубліковано",
+      "editor_locale_sq": "Албанська",
+      "editor_locale_en": "Англійська",
+      "editor_locale_uk": "Українська",
+      "editor_locale_it": "Італійська",
+      "field_title_label": "Заголовок",
+      "field_body_label": "Контент",
+      "slug_reserved": "Зарезервований slug — не можна використати",
+      "slug_invalid_format": "Невірний формат slug",
+      "slug_already_used": "Slug вже використовується",
+      "empty_locale_warning": "Ця локаль порожня — буде використано албанський контент як fallback",
+      "migration_pending_banner": "Міграція не застосована — зверніться до адміністратора",
+      "delete_confirm": "Ви впевнені, що хочете видалити цю сторінку?",
+      "preview_open": "Відкрити перегляд"
     },
     "footer": {
       "tab_sq": "Албанська",
@@ -1419,6 +1441,21 @@
         "settings_manage": "Може зберігати налаштування сайту",
         "legal_manage": "Може створювати, редагувати або видаляти правові сторінки",
         "reports_manage": "Може переглядати, вирішувати або відхиляти скарги на оголошення"
+      }
+    },
+    "common": {
+      "status_control": {
+        "update_status_btn": "Оновити статус",
+        "status_change_label": "Змінити статус",
+        "status_change_note_placeholder": "Необов'язкова нотатка...",
+        "status_change_note_required": "Нотатка обов'язкова",
+        "status_change_note_optional": "Нотатка необов'язкова",
+        "status_change_success": "Статус оновлено",
+        "status_change_error": "Помилка при оновленні статусу",
+        "status_change_no_change": "Змін не внесено",
+        "status_change_history_title": "Історія змін",
+        "status_change_history_empty": "Змін статусу ще немає",
+        "status_change_history_actor_unknown": "Невідомий адмін"
       }
     }
   },

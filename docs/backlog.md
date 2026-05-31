@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-05-31 — Task 335 (Sonnet): Password change root-cause fix — `changeCabinetPassword` replaced SSR `signInWithPassword` (overwrote session cookie) + `auth.updateUser` (session-dependent) with: verify-only client (no-op `setAll`) for verification + admin API `updateUserById` for the update. Root cause: SSR `signInWithPassword` wrote new session to cookie, then `updateUser` failed due to session state inconsistency in Server Action cookie model. `CabinetPasswordSection.tsx` + all error branches + `signOut('global')` + `deleteOwnAccount` unchanged. tsc=0; lint=0/0; build=✅. Sprint 30 Wave 1 COMPLETE (330 + 334 + 335). UNCOMMITTED.**
+
 **2026-05-31 — Task 334 (Sonnet): Owner post-edit redirect bugfix — `updateListing` now returns `status`; `getPostSaveRedirect(status,slug,locale)` domain helper added; `ListingFormShell` uses it so `pending`/`inactive` listings route to `/cabinet/listings` instead of public detail (which 404s); `not_found` error redirects to cabinet; done-screen shows `saved_pending_moderation` key for non-active saves; public route notFound gating unchanged. +1 key ×4 (1431 total). tsc=0; lint=0/0; build=✅; check:i18n=✅. UNCOMMITTED.**
 
 **2026-05-31 — Task 330 (Sonnet): Homepage agent CTA copy — early-launch positioning. 8 string values updated across 4 locale files (`agent_cta_desc` + `agent_cta_button` × sq/en/uk/it); 4 titles already matched spec (unchanged). `src/app/[locale]/page.tsx` zero structural change; route/icon/tracking preserved. tsc=0; lint=0/0; build=✅. Sprint 30 Wave 1. UNCOMMITTED.**

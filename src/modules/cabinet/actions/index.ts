@@ -1,7 +1,8 @@
 'use server'
 
 import { createHash, randomBytes } from 'crypto'
-import { headers } from 'next/headers'
+import { headers, cookies } from 'next/headers'
+import { createServerClient } from '@supabase/ssr'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getUser } from '@/lib/auth/server'
@@ -488,9 +489,25 @@ export async function changeCabinetPassword(data: {
     const user = await getUser()
     if (!user?.email) return { ok: false, reason: 'session_expired' }
 
-    const supabase = await createClient()
+    const cookieStore = await cookies()
 
-    const { error: verifyError } = await supabase.auth.signInWithPassword({
+    // Verify-only client: reads the current session from cookies for context but
+    // does NOT write a new session back (no-op setAll). This prevents overwriting
+    // the user's active auth cookie when signInWithPassword succeeds, which could
+    // cause the subsequent update call to fail due to session state inconsistency
+    // in the Server Action cookie-read/write model.
+    const verifyClient = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll: () => cookieStore.getAll(),
+          setAll: () => {},
+        },
+      }
+    )
+
+    const { error: verifyError } = await verifyClient.auth.signInWithPassword({
       email: user.email,
       password: currentPassword,
     })
@@ -501,12 +518,16 @@ export async function changeCabinetPassword(data: {
       return { ok: false, reason: 'invalid_current' }
     }
 
-    const { error: updateError } = await supabase.auth.updateUser({ password: newPassword })
+    // Use the admin client to apply the password update: no dependency on the SSR
+    // session state, so no race between verify-client cookie reads and Server Action
+    // response cookie writes. Current password already verified above.
+    const admin = createAdminClient()
+    const { error: updateError } = await admin.auth.admin.updateUserById(user.id, { password: newPassword })
     if (updateError) return { ok: false, reason: 'server_error' }
 
     // Fire-and-forget: password-changed notification email (Task 276).
     try {
-      const { data: profile } = await supabase.from('users').select('name').eq('id', user.id).single()
+      const { data: profile } = await admin.from('users').select('name').eq('id', user.id).single()
       void sendPasswordChangedEmail({ to: user.email, name: profile?.name ?? null })
     } catch {
       // Best-effort — the password change has already completed.

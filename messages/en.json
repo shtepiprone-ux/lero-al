@@ -259,6 +259,7 @@
     "error_updating": "Failed to save changes. Please try again.",
     "edit_success_title": "Changes saved",
     "edit_success_body": "Your listing has been updated successfully.",
+    "saved_pending_moderation": "Your listing has been updated and is awaiting moderation.",
     "error_account_blocked": "Your account is blocked. You cannot perform this action.",
     "error_account_suspended": "Your account is temporarily suspended. Please try again later.",
     "recently_viewed_title": "Recently viewed",

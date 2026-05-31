@@ -78,3 +78,17 @@ export function isListingEditableStatus(status: ListingStatus): boolean {
 export function isListingReadonlyStatus(status: ListingStatus): boolean {
   return !isListingEditableStatus(status)
 }
+
+// ── Post-save routing ─────────────────────────────────────────────────────────
+
+/**
+ * Returns the canonical post-save redirect path for an owner after editing.
+ *
+ * VISIBLE (active): public detail route — owner can see their live listing.
+ * All other statuses: owner cabinet — prevents 404 on public-only route for
+ * pending/inactive/archived/closed listings.
+ */
+export function getPostSaveRedirect(status: ListingStatus, slug: string, locale: string): string {
+  if (isListingVisible(status)) return `/${locale}/listings/${slug}`
+  return `/${locale}/cabinet/listings`
+}

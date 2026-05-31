@@ -19,7 +19,9 @@ import { LocationCombobox, type LocationOption } from '@/components/shared/Locat
 import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import { getSchema } from '@/modules/listings/domain/propertyTypeSchema'
 import { isEditMode } from '@/modules/listings/domain/listingFormMode'
+import { isListingVisible, getPostSaveRedirect } from '@/modules/listings/domain/listingSemanticHelpers'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
+import type { ListingStatus } from '@/types/database'
 import type { ListingField } from '@/modules/listings/domain/listingFields'
 import type { FormValues } from '@/modules/listings/types/form'
 import type { ListingType, PropertyType } from '@/types/database'
@@ -102,6 +104,7 @@ export function ListingFormShell(props: Props) {
   const [submitError, setSubmitError] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
+  const [savedStatus, setSavedStatus] = useState<ListingStatus | null>(null)
   const [showCancel, setShowCancel] = useState(false)
   const [isDirty, setIsDirty] = useState(false)
 
@@ -253,13 +256,18 @@ export function ListingFormShell(props: Props) {
     if (isEditMode(mode)) {
       const result = await updateListing(listingId!, submitPayload)
       if ('error' in result) {
+        if (result.error === 'not_found') {
+          router.push(`/${activeLocale}/cabinet/listings`)
+          return
+        }
         setSubmitError(t('error_updating'))
         setSubmitting(false)
         return
       }
+      setSavedStatus(result.status)
       setIsDirty(false)
       setDone(true)
-      setTimeout(() => { router.push(`/${activeLocale}/listings/${result.slug}`) }, 3000)
+      setTimeout(() => { router.push(getPostSaveRedirect(result.status, result.slug, activeLocale)) }, 3000)
     } else {
       const result = await createListing(submitPayload)
       if ('error' in result) {
@@ -282,7 +290,9 @@ export function ListingFormShell(props: Props) {
             {isEditMode(mode) ? (
               <>
                 <p className="font-bold text-xl">{t('edit_success_title')}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{t('edit_success_body')}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {savedStatus && !isListingVisible(savedStatus) ? t('saved_pending_moderation') : t('edit_success_body')}
+                </p>
               </>
             ) : (
               <>

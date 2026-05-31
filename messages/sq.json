@@ -259,6 +259,7 @@
     "error_updating": "Ndryshimet nuk u ruajtën. Provo përsëri.",
     "edit_success_title": "Ndryshimet u ruajtën",
     "edit_success_body": "Njoftimi juaj u përditësua me sukses.",
+    "saved_pending_moderation": "Njoftimi juaj është përditësuar dhe pret moderimin.",
     "error_account_blocked": "Llogaria juaj është bllokuar. Nuk mund të kryeni këtë veprim.",
     "error_account_suspended": "Llogaria juaj është pezulluar përkohësisht. Ju lutem provoni më vonë.",
     "recently_viewed_title": "Parë kohët e fundit",

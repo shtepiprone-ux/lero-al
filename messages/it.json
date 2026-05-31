@@ -259,6 +259,7 @@
     "error_updating": "Impossibile salvare le modifiche. Riprova.",
     "edit_success_title": "Modifiche salvate",
     "edit_success_body": "Il tuo annuncio è stato aggiornato con successo.",
+    "saved_pending_moderation": "Il tuo annuncio è stato aggiornato ed è in attesa di moderazione.",
     "error_account_blocked": "Il tuo account è bloccato. Non puoi eseguire questa azione.",
     "error_account_suspended": "Il tuo account è temporaneamente sospeso. Riprova più tardi.",
     "recently_viewed_title": "Visti di recente",

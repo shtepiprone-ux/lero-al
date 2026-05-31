@@ -20,7 +20,7 @@ interface UpdateListingPayload extends ListingInput {
 export async function updateListing(
   listingId: string,
   payload: UpdateListingPayload,
-): Promise<{ slug: string } | { error: string }> {
+): Promise<{ slug: string; status: ListingStatus } | { error: string }> {
   const user = await getUser()
   if (!user) return { error: 'unauthenticated' }
   const blockError = await getBlockedError(user.id)
@@ -118,5 +118,5 @@ export async function updateListing(
   }
   revalidatePath('/cabinet')
 
-  return { slug: existing.slug }
+  return { slug: existing.slug, status: existing.status as ListingStatus }
 }

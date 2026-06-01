@@ -1,10 +1,14 @@
 # Sprint 30 — Task 349 kickoff (Sonnet) — DS-4: FilterBar primitive (NO route migration) — HIGH RISK, ISOLATED
 
-> **Status: QUEUED — HIGH risk, isolated on purpose.** Runs only AFTER DS-3 (Task 348, ActionBar) has
-> shipped, been reviewed, and been **owner-approved + committed**. Do not start until the orchestrator
-> releases this slice. This is the hardest foundation primitive (client `Sheet` state + conditional Reset +
-> overflow collapse + i18n-safe labels) and is deliberately alone in its own slice.
-> **Dependency:** DS-1/DS-2/DS-3 (`PageShell`/`Section`/`PageHeader`/`ActionBar`) must exist on disk. If missing → STOP & ASK.
+> **Status: READY — RELEASED by orchestrator (2026-06-01). HIGH risk, isolated on purpose.**
+> DS-1/DS-2/DS-3 (Tasks 345/347/348) are **owner-approved, committed, pushed, and DS-3 is now owner-QA-verified
+> in Storybook** — HEAD/origin/main = `817f3a747` (`feat(Task348): add DS-3 ActionBar layout primitive`),
+> working tree clean. This is the hardest foundation primitive (client `Sheet` state + conditional Reset +
+> overflow collapse + i18n-safe labels) and is deliberately alone in its own slice. The two genuine design
+> ambiguities (collapse model + Reset placement) are **pre-decided by the orchestrator below (Decisions D1–D3)** —
+> do NOT re-open them.
+> **Dependency (verify first):** `PageShell.tsx`, `Section.tsx`, `PageHeader.tsx`, `ActionBar.tsx` + the
+> `index.ts` barrel must exist on disk. If any is missing → STOP & ASK.
 >
 > **You are Sonnet 4.6 executor.** Write code per the literal acceptance criteria below. Do NOT change
 > scope. Do NOT invent architecture. If anything is ambiguous or a required decision is missing, **STOP
@@ -33,7 +37,8 @@ Area (FORBIDDEN to touch):
           src/components/layout/PageShell.tsx · Section.tsx · PageHeader.tsx · ActionBar.tsx  (DS-1..3 — READ; do NOT edit)
           src/components/layout/Header.tsx · Footer.tsx · MobileBottomNav.tsx     (existing — do NOT edit)
           src/components/ui/sheet.tsx · input.tsx · badge.tsx · button.tsx (+ any ui primitive)  (CONSUMED AS-IS; do NOT restyle)
-          src/components/shared/FiltersPanel.tsx · ListingsFilters · Filter*      (these are MIGRATION TARGETS for a LATER phase — do NOT edit/adopt now)
+          src/components/shared/FiltersPanel.tsx · Filter*.tsx · useHomepageFilters.ts   (shared filter pieces — MIGRATION TARGETS, later phase — do NOT edit/adopt now)
+          src/modules/listings/** (ListingsFilters.tsx · ListingsShell.tsx · filterEngine.ts)   (legacy route filtering — already covered by src/modules/** below; do NOT edit/adopt)
           src/app/** (ANY route/page/layout)  ·  src/app/globals.css             (no token change this slice)
           src/components/admin/**  ·  listing/** · auth/**  ·  src/modules/**
           messages/*.json  ·  DB / Supabase / SQL / migrations / server actions / business logic
@@ -63,7 +68,7 @@ Outside-allowlist = scope violation = STOP & ASK. Opus reviews the real diff and
 - `src/components/ui/input.tsx` — the canonical search input (`min-w-0 flex-1`). Use as-is.
 - `src/components/ui/badge.tsx` — the active-filter count badge. Use as-is.
 - `src/components/ui/button.tsx` — Reset + Filters trigger buttons. Use as-is.
-- `src/components/shared/FiltersPanel.tsx` / `ListingsFilters` — **MIGRATION TARGETS for a later phase; READ for context only, do NOT edit or import.** FilterBar is a NEW generic primitive in `layout/`, not a refactor of these.
+- `src/components/shared/FiltersPanel.tsx` (+ `Filter*.tsx`, `useHomepageFilters.ts`) and `src/modules/listings/components/ListingsFilters.tsx` — **MIGRATION TARGETS for a later phase; READ for context only, do NOT edit or import.** FilterBar is a NEW generic primitive in `layout/`, not a refactor of these.
 
 ## Problem
 
@@ -95,8 +100,8 @@ i18n-safe `labels` prop (no `messages/*.json` change). Register it in the barrel
 search + reset inline (`flex flex-wrap items-center gap-2`); at `<lg:` overflow filters collapse behind a
 "Filters" Sheet trigger that opens a Sheet containing them; an active-filter **count Badge** appears when ≥1
 filter is active; a **single global Reset** renders only when ≥1 filter is active (conditional 3-way: hidden
-when 0 active, inline at `lg:+`, inside the Sheet at `<lg:` — confirm exact placement against §11.1, STOP &
-ASK if ambiguous); the search Input is `min-w-0 flex-1` so it shrinks and never pushes the row; all labels
+when 0 active, inline at `lg:+`, inside the Sheet `SheetFooter` at `<lg:` — placement is **FIXED per Decision D2
+below; do NOT STOP & ASK on it**); the search Input is `min-w-0 flex-1` so it shrinks and never pushes the row; all labels
 come from the `labels` prop; nothing overflows horizontally at any of the 14 widths × 4 locales.
 
 ### Primitive spec (literal)
@@ -104,19 +109,43 @@ come from the `labels` prop; nothing overflows horizontally at any of the 14 wid
 **`FilterBar`** — global filter/search/reset row (**client component — `'use client'`** because it owns
 Sheet open-state). Generic and route-agnostic: it lays out filter controls passed by the consumer; it does
 NOT own filter business logic or URL state (that stays with the consumer / a later migration).
-- Props (confirm exact shape against §11.1; if a required decision is genuinely missing, STOP & ASK):
-  - `filters: ReactNode` — the filter controls (chips/comboboxes/toggles) supplied by the consumer.
-  - `search?: ReactNode` — the search Input (consumer passes the Input primitive) OR a `searchSlot`; the search element must be `min-w-0 flex-1` so it shrinks (§11.2).
-  - `activeCount?: number` — number of active filters; when `> 0`, render the count Badge and the global Reset.
-  - `onReset?: () => void` — single global Reset handler; Reset control rendered only when `activeCount > 0`.
-  - `labels: { filters: string; reset: string; activeCount?: string; ... }` — **i18n-safe; ALL user-facing
-    text comes from here** (consumer supplies translated strings via `useTranslations` at the call site). FilterBar
-    contains NO literal user-facing strings. No `messages/*.json` change in this slice.
-  - `collapseAt?: 'lg'` (default `'lg'`) — the breakpoint at/below which overflow filters collapse into the Sheet (§11.1 default `<lg:`).
+- **Props (FINAL — decided by orchestrator; do NOT redesign and do NOT STOP & ASK on prop shape):**
+  - `filters: ReactNode` — the filter controls (chips/comboboxes/toggles) supplied by the consumer; **opaque to FilterBar**.
+  - `search?: ReactNode` — the search Input slot (consumer passes the Input primitive); FilterBar wraps it so it is `min-w-0 flex-1` and never pushes the row (§11.2).
+  - `activeCount?: number` (default `0`) — number of active filters; `> 0` ⇒ render the count Badge **and** the single global Reset; `0` ⇒ render NEITHER.
+  - `onReset?: () => void` — single global Reset handler; the Reset control renders only when `activeCount > 0`.
+  - `labels: { filters: string; reset: string; close?: string }` — **i18n-safe; the ONLY source of user-facing
+    text.** `filters` = the `<lg:` "Filters" trigger text; `reset` = the Reset button text; `close?` = optional
+    aria-label for the Sheet close. Consumer supplies translated strings via `useTranslations` at the call site.
+    FilterBar contains ZERO literal user-facing strings. The count Badge shows the **numeral** `activeCount`
+    (no localized string). No `messages/*.json` change. **This is the FULL label set — there is no open-ended `...`.**
   - `className?: string` (merged via `cn`).
-- Behaviour: `lg:+` inline row; `<lg:` "Filters" Button trigger opens a `Sheet` containing the overflow
-  filters + (conditionally) the Reset; active-filter count Badge shown when `activeCount > 0`; toolbars never
-  `overflow-x-auto` — they wrap or collapse to the Sheet. Touch targets ≥44px (§12).
+  - **NO `collapseAt` prop.** The collapse boundary is hardcoded to **`lg` (1024px** — default Tailwind; confirmed
+    no custom `screens` override) per §11.1. One less untested knob (same rationale as ActionBar dropping `size`).
+
+> **ORCHESTRATOR DECISIONS (2026-06-01 — already decided; do NOT re-litigate, do NOT STOP & ASK on these):**
+>
+> **D1 — Collapse model is ALL-OR-NOTHING (resolves "which filters are overflow").** FilterBar does NOT inspect
+> or split `filters` per-child. At **`lg:+`** the entire `filters` node renders **inline** in the row (a
+> `hidden lg:flex` cluster). At **`<lg:`** the entire `filters` node lives **inside the Sheet body**, behind a
+> single **"Filters" trigger Button** (`lg:hidden`) that carries the active-count Badge. The **search Input stays
+> in the row at every width** (`min-w-0 flex-1`). The same `filters` node is placed in both the inline branch and
+> the Sheet branch; switching is **CSS-responsive** (`hidden` / `lg:hidden`), not JS width-measurement. Filter
+> state lives in the consumer, so the duplicate placement is the consumer's concern, not FilterBar's (layout-only,
+> like the sibling primitives). There is NO per-child "overflow detection" — do not build one.
+>
+> **D2 — Reset + count-Badge placement is FIXED (resolves the conditional-Reset ambiguity):**
+> - `activeCount === 0` → NO Badge and NO Reset anywhere.
+> - `activeCount > 0` at **`lg:+`** → count Badge + single global Reset render **inline** in the row (aligned to the end).
+> - `activeCount > 0` at **`<lg:`** → the count Badge sits **on the "Filters" trigger**; the single global Reset
+>   renders **inside the Sheet** (`SheetFooter`), NOT in the collapsed row. Never duplicate Reset across branches.
+> This is the canonical §11.1 pattern.
+>
+> **D3 — Client boundary CONFIRMED.** `'use client'` is REQUIRED (Sheet open-state). Do NOT STOP & ASK on this.
+
+- Behaviour summary: `lg:+` inline row (filters + search + [Badge + Reset when active]); `<lg:` row = search +
+  "Filters" trigger (with Badge when active), and the Sheet holds the filters + (Reset when active). Toolbars
+  NEVER `overflow-x-auto` — they wrap or collapse to the Sheet. Touch targets ≥44px (§12).
 - Composes existing `Sheet`/`Input`/`Badge`/`Button` + tokens only — invents no new container, spacing,
   breakpoint, color, or overlay pattern.
 
@@ -163,8 +192,8 @@ Create `FilterBar.tsx` (client), ADD it to the barrel, create `FilterBar.stories
 ## Acceptance criteria (each maps to a flow + is diff-verifiable)
 
 - **AC-1** `FilterBar.tsx` created as a **client component (`'use client'` present)** — justified by Sheet open-state; `flex flex-wrap items-center gap-2`; `lg:+` inline / `<lg:` Sheet collapse; search slot `min-w-0 flex-1`; no `overflow-x-auto`; `className` merged via `cn`. → *Positive 2–3*, file:line.
-- **AC-2** Conditional Reset + count Badge: rendered only when `activeCount > 0`; `activeCount={0}` → neither rendered. → *Negative "zero active"*, file:line.
-- **AC-3** `<lg:` overflow collapse: a "Filters" trigger opens a `Sheet` containing overflow filters (+ Reset per §11.1). → *Positive 3*, file:line.
+- **AC-2** Conditional Reset + count Badge per **Decision D2**: rendered only when `activeCount > 0` (`activeCount={0}` → neither); at `lg:+` both inline (end-aligned); at `<lg:` Badge on the "Filters" trigger + Reset in `SheetFooter`; never duplicated. → *Negative "zero active"*, file:line.
+- **AC-3** `<lg:` collapse per **Decision D1 (all-or-nothing)**: a single "Filters" trigger (`lg:hidden`) opens a `Sheet` whose body holds the **entire** `filters` node; the inline cluster is `hidden lg:flex`; the search Input stays in the row at every width. No per-child overflow split. → *Positive 3*, file:line.
 - **AC-4** All user-facing text comes from the `labels` prop; **zero literal user-facing strings** in the file; **no `messages/*.json` change**. → grep proof in log.
 - **AC-5** Consumed ui primitives byte-identical — `git diff src/components/ui/{sheet,input,badge,button}.tsx` empty. → diff in log.
 - **AC-6** `shared/` filter pieces byte-identical — `git diff --stat src/components/shared` empty. → diff in log.
@@ -220,11 +249,11 @@ insufficient (§6). If — contrary to scope — a literal string is introduced,
 ## STOP & ASK triggers
 
 - DS-1/DS-2/DS-3 primitives not on disk → STOP.
-- The exact conditional-Reset placement (`<lg:` inside Sheet vs inline) is ambiguous vs §11.1 → STOP & ASK.
-- The overflow-collapse threshold or which filters are "overflow" vs "always inline" is undefined → STOP & ASK.
+- Conditional-Reset + count-Badge placement is **ALREADY DECIDED (Decision D2)** — do NOT STOP & ASK; follow D2 verbatim.
+- The collapse model is **ALREADY DECIDED as all-or-nothing at `lg` (Decision D1)** — there is NO per-child "overflow" split; do NOT STOP & ASK on "which filters overflow" and do NOT build width-measurement logic.
+- The client boundary is **ALREADY DECIDED (Decision D3)** — `'use client'` is REQUIRED; do NOT STOP & ASK and do NOT attempt a server-only version.
 - Proving FilterBar appears to require real filter business logic or URL state → STOP (out of scope; harness with story args/actions instead).
-- Building it appears to require editing a consumed ui primitive or a `shared/` filter piece → STOP.
-- You believe FilterBar can be server-only (no `'use client'`) → STOP & ASK (Sheet open-state needs client; confirm before deviating).
+- Building it appears to require editing a consumed ui primitive or a `shared/` / `modules/listings/` filter piece → STOP.
 - The Storybook tooling cannot render the 14×4 matrix (incl. Sheet states) → STOP and record `OWNER QA REQUIRED`.
 - Any required change would touch a FORBIDDEN path → STOP.
 

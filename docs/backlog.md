@@ -7,9 +7,9 @@
 
 ## Last Session
 
-**2026-06-01 — Task 348 (DS-3 ActionBar): created `ActionBar` Tier-2 layout primitive — server-safe; layout-only action cluster; size="xl" (44px) shared-height contract (ui-rules.md §15); stacks `flex-col` `<md:`, end/start-aligns `md:+`; no `overflow-x-auto`; barrel + catalog updated; 15 Storybook stories. No route adoption; `globals.css` byte-identical. UNCOMMITTED. Session: `docs/sessions/2026-06-01-task-348-ds3-actionbar.md`. OWNER QA REQUIRED (14×4 matrix). (Prior: Tasks 345/346/347 — also UNCOMMITTED.)**
+**2026-06-01 — Task 349 + 349-Fix (DS-4 FilterBar): created `FilterBar` Tier-2 CLIENT layout primitive — `'use client'` (Sheet state); stacks `flex-col` below `sm:` (search + Filters trigger each full-width row at 320–412px), row layout from `sm:` up, all-or-nothing inline at `lg:+` (D1); count Badge + single global Reset only when `activeCount>0` (D2); zero literal strings (labels prop); no `overflow-x-auto`; barrel + catalog updated; 21 stories. No route adoption; `globals.css` byte-identical. **OWNER-APPROVED 2026-06-01. READY TO COMMIT.** Session: `docs/sessions/2026-06-01-task-349-ds4-filterbar.md`. (Prior Tasks 345/346/347/348 also UNCOMMITTED.)**
 
-**DS queue:** DS-1 ✅ (345) → DS-2 ✅ (347) → DS-3 ✅ (348, done/uncommitted) → **DS-4 FilterBar (349, HIGH-risk client, READY)** → DS-5 Storybook proof-hardening (350) → **[foundation gate]** → DS-6 public route pilot (351, BLOCKED) → DS-7 cabinet/auth pilot (352, BLOCKED) → DS-8 admin compat review (353).
+**DS queue:** DS-1 ✅ (345) → DS-2 ✅ (347) → DS-3 ✅ (348) → **DS-4 ✅ (349, done/uncommitted)** → DS-5 Storybook proof-hardening (350) → **[foundation gate]** → DS-6 public route pilot (351, BLOCKED) → DS-7 cabinet/auth pilot (352, BLOCKED) → DS-8 admin compat review (353).
 
 ## Pending Action Items
 

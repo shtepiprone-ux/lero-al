@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-05-28
+Last generated: 2026-06-01
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -9,10 +9,10 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 211 |
-| Storybook stories | 20 |
+| Total cataloged components | 212 |
+| Storybook stories | 21 |
 | Locale-aware (useTranslations) | 84 |
-| Client components ('use client') | 131 |
+| Client components ('use client') | 132 |
 | With arbitrary Tailwind values | 64 |
 | Components with 2xl responsive step | 7 |
 | Components flagged for review | 73 |
@@ -81,13 +81,15 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | APPROVED | — | — | PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (7)
+## Layout Components (`src/components/layout/`) (8)
 
-> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347), `ActionBar` (DS-3 Task 348).
+> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347), `ActionBar` (DS-3 Task 348), `FilterBar` (DS-4 Task 349).
+> **Note:** `FilterBar` is the ONLY client-side Tier-2 layout primitive (`'use client'` — owns Sheet open-state). All others are server-safe.
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
 | `ActionBar` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; layout-only action cluster; size="xl" (44px) shared-height contract (ui-rules.md §15); stacks <md:, end/start-aligns md:+; no overflow-x-auto |
+| `FilterBar` | CANONICAL | ✅ | — | Tier-2 global layout primitive; **CLIENT** ('use client' — Sheet open-state); filter chips+search+reset row; <lg: collapses filters into Sheet (all-or-nothing D1); count Badge + single global Reset only when activeCount>0 (D2); search min-w-0 flex-1; labels prop i18n-safe (zero literal strings); no overflow-x-auto; no route adoption (Task 349 DS-4) |
 | `Footer` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `Header` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `MobileBottomNav` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |

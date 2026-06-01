@@ -7,7 +7,9 @@
 
 ## Last Session
 
-**2026-06-01 — Task 345 (DS-1 Sonnet): `PageShell` + `Section` Tier-2 layout primitives created in `src/components/layout/`; barrel `index.ts` exported; Storybook stories for both; `component-catalog.md` updated (+2 CANONICAL). No route adoption; `globals.css` byte-identical. Next: owner approves DS-1, then DS-2 PageHeader kickoff. Session: `docs/sessions/2026-06-01-task-345-ds1-pageshell-section.md`. UNCOMMITTED.**
+**2026-06-01 — Task 346 (Opus planning): formed the remaining DS execution queue — 7 Sonnet-ready kickoffs (Tasks 347–353 = DS-2..DS-8), preserving Task 344's canonical queue exactly. No `src/`/`messages`/`globals.css` change. Session: `docs/sessions/2026-06-01-task-346-ds-remaining-phases-planning.md`. UNCOMMITTED. (Prior: Task 345 DS-1 PageShell+Section — UNCOMMITTED, owner approval pending.)**
+
+**DS queue:** DS-1 ✅ (345, done/uncommitted) → **DS-2 PageHeader (347, READY** — gated on DS-1 approve+commit) → DS-3 ActionBar (348) → DS-4 FilterBar (349, HIGH-risk client) → DS-5 Storybook proof-hardening (350) → **[foundation gate]** → DS-6 public route pilot (351, BLOCKED + OWNER REVIEW route) → DS-7 cabinet/auth pilot (352, BLOCKED + OWNER REVIEW surface) → DS-8 admin compat review (353, audit-only). One slice at a time, owner-approved between each; no route migration until DS-1..DS-5 ship+approve.
 
 ## Pending Action Items
 
@@ -28,7 +30,7 @@
 
 **🚨 Sprint 28 FROZEN (2026-05-31 owner directive): Admin responsive migration (Tasks 306/306-Fix/308/309) is NOT acceptable as-is. All Task 306-Fix UI patches are uncommitted and must NOT be committed. Tasks 308 + 309 remain BLOCKED. Next step before any admin responsive work resumes: Opus 4.7 must produce a canonical Admin Responsive Design System Contract (shared primitives spec: page shell/header, mobile filter rows, responsive table/card lists, canonical bottom sheet, dialog/sheet switching, combobox wrapping, button stacking 320–390px, text wrapping). EXCEPTION: the isolated i18n fix (+7 `admin.common.status_control` keys, 1438×4) may ship as a standalone hotfix once owner confirms. Sprint 29 (329/326B/326C) and Sprints 30+ Wave 2 are unaffected. Sprint 30 Wave 1 (330/334/335) is complete — commits pending Opus review.**
 
-**Last task number: 345 (Task 343 is FROZEN / provenance only; Task 344 is the Opus design-system implementation-path session; Task 345 is the first executable DS-1 Sonnet task). Reservations: 310 Epic HH Phase 4 (deferred — 12 admin routes); 311 Epic HH Phase 5 (deferred); 313 Epic HH Phase 6 Verified Agents (blocked on owner DB schema approval); 319–323 Epic II Phase 2-3 (deferred). Next free: 346 unless a newer backlog/session reserves a different number.**
+**Last task number: 353 (Task 343 is FROZEN / provenance only; Task 344 = Opus DS implementation-path session; Task 345 = DS-1 Sonnet; Task 346 = Opus DS-remaining-phases planning session; Tasks 347–353 = DS-2..DS-8 Sonnet kickoffs). Reservations: 310 Epic HH Phase 4 (deferred — 12 admin routes); 311 Epic HH Phase 5 (deferred); 313 Epic HH Phase 6 Verified Agents (blocked on owner DB schema approval); 319–323 Epic II Phase 2-3 (deferred). Next free: 354 unless a newer backlog/session reserves a different number.**
 
 **🆕 Sprint 30 FORMED 2026-05-31 — owner-uploaded `issues.md` (~6100 lines, 13 issues). Sprint 30 file + 13 kickoff files written ([sprint](../tasks/Sprints/Sprint_30_—_Owner_Issues_2026-05-31.md)). Run order:**
 

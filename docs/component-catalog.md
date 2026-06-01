@@ -9,8 +9,8 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 209 |
-| Storybook stories | 18 |
+| Total cataloged components | 210 |
+| Storybook stories | 19 |
 | Locale-aware (useTranslations) | 84 |
 | Client components ('use client') | 131 |
 | With arbitrary Tailwind values | 64 |
@@ -81,15 +81,16 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | APPROVED | — | — | PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (5)
+## Layout Components (`src/components/layout/`) (6)
 
-> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section`. Created DS-1 Task 345.
+> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347).
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
 | `Footer` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `Header` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `MobileBottomNav` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `PageHeader` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; h1 title + optional description/countBadge/action; action stacks <md: / right-aligns md:+; no own container |
 | `PageShell` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; container=wide/narrow/form; §4 container-wide |
 | `Section` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; optional title (h2) + description; no own container |
 

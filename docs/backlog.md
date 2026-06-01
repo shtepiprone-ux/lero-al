@@ -7,9 +7,9 @@
 
 ## Last Session
 
-**2026-06-01 — Task 346 (Opus planning): formed the remaining DS execution queue — 7 Sonnet-ready kickoffs (Tasks 347–353 = DS-2..DS-8), preserving Task 344's canonical queue exactly. No `src/`/`messages`/`globals.css` change. Session: `docs/sessions/2026-06-01-task-346-ds-remaining-phases-planning.md`. UNCOMMITTED. (Prior: Task 345 DS-1 PageShell+Section — UNCOMMITTED, owner approval pending.)**
+**2026-06-01 — Task 347 (DS-2 PageHeader): created `PageHeader` Tier-2 layout primitive — server-safe; h1 title + optional description/countBadge/action; action stacks `<md:`, right-aligns `md:+`; barrel + catalog updated; 15 Storybook stories (canonical Button + Badge; 3-button cluster for action-stress stories). No route adoption; `globals.css` byte-identical. UNCOMMITTED. Session: `docs/sessions/2026-06-01-task-347-ds2-pageheader.md`. OWNER QA REQUIRED (14×4 matrix). (Prior: Task 345 DS-1 + Task 346 Opus planning — also UNCOMMITTED.)**
 
-**DS queue:** DS-1 ✅ (345, done/uncommitted) → **DS-2 PageHeader (347, READY** — gated on DS-1 approve+commit) → DS-3 ActionBar (348) → DS-4 FilterBar (349, HIGH-risk client) → DS-5 Storybook proof-hardening (350) → **[foundation gate]** → DS-6 public route pilot (351, BLOCKED + OWNER REVIEW route) → DS-7 cabinet/auth pilot (352, BLOCKED + OWNER REVIEW surface) → DS-8 admin compat review (353, audit-only). One slice at a time, owner-approved between each; no route migration until DS-1..DS-5 ship+approve.
+**DS queue:** DS-1 ✅ (345, done/uncommitted) → DS-2 ✅ (347, done/uncommitted) → **DS-3 ActionBar (348, READY** after DS-1+DS-2 approve+commit) → DS-4 FilterBar (349, HIGH-risk client) → DS-5 Storybook proof-hardening (350) → **[foundation gate]** → DS-6 public route pilot (351, BLOCKED) → DS-7 cabinet/auth pilot (352, BLOCKED) → DS-8 admin compat review (353, audit-only).
 
 ## Pending Action Items
 

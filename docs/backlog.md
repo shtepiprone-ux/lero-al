@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-01 — Task 344 (Opus): Task 340 rejected as an implementation path; `docs/design-system.md` kept only as the canonical rule layer. Task 343 frozen / not executable. New graduated DS-1..DS-8 implementation path created; first executable Sonnet task is `tasks/Sprints/Sprint_30_kickoff_prompt_Task_345.md` (DS-1 PageShell + Section only). No route migration; do not start Sonnet until owner approves Task 345. Session: `docs/sessions/2026-06-01-task-344-design-system-implementation-path.md`. UNCOMMITTED.**
+**2026-06-01 — Task 345 (DS-1 Sonnet): `PageShell` + `Section` Tier-2 layout primitives created in `src/components/layout/`; barrel `index.ts` exported; Storybook stories for both; `component-catalog.md` updated (+2 CANONICAL). No route adoption; `globals.css` byte-identical. Next: owner approves DS-1, then DS-2 PageHeader kickoff. Session: `docs/sessions/2026-06-01-task-345-ds1-pageshell-section.md`. UNCOMMITTED.**
 
 ## Pending Action Items
 
@@ -164,6 +164,8 @@
 
 | Date | Description | Tasks | File |
 |------|-------------|-------|------|
+| 2026-06-01 | Task 345 (DS-1 Sonnet) — PageShell + Section Tier-2 primitives; barrel index.ts; 2 Storybook story files; component-catalog +2 CANONICAL; no route adoption; globals.css unchanged; tsc=0; build=✅ | Task 345 | [sessions/2026-06-01-task-345-ds1-pageshell-section.md](sessions/2026-06-01-task-345-ds1-pageshell-section.md) |
+| 2026-06-01 | Task 344 (Opus) — Task 340 rejected as impl path; design-system.md = rule layer only; Task 343 frozen; DS-1..DS-8 graduated queue created; Task 345 first executable slice | Task 344 | [sessions/2026-06-01-task-344-design-system-implementation-path.md](sessions/2026-06-01-task-344-design-system-implementation-path.md) |
 | 2026-05-31 | Task 306-Fix — AdminTable internal lg: card↔table switch; min-w-[640px] removed; cardRow prop + synthesis; AdminCardList StructuredCard; AdminPageShell container-admin; .container-admin; AdminListingsTable id=xl + cardRow; 9-width canon docs; admin-ux-rules §14; tsc=0; build=✅ | Task 306-Fix | [sessions/2026-05-31-task-306-fix-admin-responsive-contract.md](sessions/2026-05-31-task-306-fix-admin-responsive-contract.md) |
 | 2026-05-31 | Task 306 — AdminPageShell + AdminTable (controlled-scroll+sticky+fade) + AdminCardList (card-row) primitives + 3 story files; AdminListingsTable pilot (page header + table → primitives); globals.css right-edge fade; component-catalog +3 CANONICAL; tsc=0; build=✅ | Task 306 | [sessions/2026-05-31-task-306-admin-shell-primitives.md](sessions/2026-05-31-task-306-admin-shell-primitives.md) |
 | 2026-05-31 | Task 307 — StatusChangeControl (select+workflow) + StatusChangeHistory primitives + 2 story files; +11 locale keys ×4 (1430 total); AdminInquiriesManager pilot (Combobox→StatusChangeControl; auto-bump preserved); component-catalog +2 CANONICAL; tsc=0; build=✅; check:i18n=✅ | Task 307 | [sessions/2026-05-31-task-307-status-change-control-primitive.md](sessions/2026-05-31-task-307-status-change-control-primitive.md) |

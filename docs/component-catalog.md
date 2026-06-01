@@ -9,8 +9,8 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 210 |
-| Storybook stories | 19 |
+| Total cataloged components | 211 |
+| Storybook stories | 20 |
 | Locale-aware (useTranslations) | 84 |
 | Client components ('use client') | 131 |
 | With arbitrary Tailwind values | 64 |
@@ -81,12 +81,13 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | APPROVED | — | — | PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (6)
+## Layout Components (`src/components/layout/`) (7)
 
-> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347).
+> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347), `ActionBar` (DS-3 Task 348).
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
+| `ActionBar` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; layout-only action cluster; size="xl" (44px) shared-height contract (ui-rules.md §15); stacks <md:, end/start-aligns md:+; no overflow-x-auto |
 | `Footer` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `Header` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `MobileBottomNav` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |

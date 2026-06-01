@@ -1,8 +1,11 @@
 # Sprint 30 — Task 348 kickoff (Sonnet) — DS-3: ActionBar primitive (NO route migration)
 
-> **Status: QUEUED.** Runs only AFTER DS-2 (Task 347, PageHeader) has shipped, been reviewed, and been
-> **owner-approved + committed**. Do not start until the orchestrator releases this slice.
-> **Dependency:** DS-1 (`PageShell`/`Section`) + DS-2 (`PageHeader`) must exist on disk. If missing → STOP & ASK.
+> **Status: READY — RELEASED by orchestrator (2026-06-01). Immediate next executable DS task.**
+> DS-1 (Task 345) and DS-2 (Task 347, PageHeader) are **owner-approved, committed, and pushed** —
+> HEAD/origin/main = `ebbbb79e6` (`feat(Task347): add DS-2 PageHeader Tier-2 layout primitive …`),
+> working tree clean.
+> **Dependency (verify first):** `src/components/layout/PageShell.tsx`, `Section.tsx`, `PageHeader.tsx`
+> and the `index.ts` barrel must exist on disk. If any is missing → STOP & ASK.
 >
 > **You are Sonnet 4.6 executor.** Write code per the literal acceptance criteria below. Do NOT change
 > scope. Do NOT invent architecture. If anything is ambiguous or a required decision is missing, **STOP
@@ -12,7 +15,7 @@
 > Changed" table only; the ORCHESTRATOR (Opus) emits commit commands during review.
 
 ```
-Type:     UI / layout / design-system foundation (1 primitive only — resolves Button-height governance in isolation)
+Type:     UI / layout / design-system foundation (1 primitive only — establishes the canonical action-row + Button-height CONTRACT in isolation)
 Priority: high
 Area:     design-system / responsive / layout
 Phase:    DS-3 of the design-system foundation queue
@@ -55,7 +58,7 @@ git. Outside-allowlist = scope violation = STOP & ASK. Opus reviews the real dif
 4. `docs/sessions/2026-06-01-task-345-ds1-pageshell-section.md` + the DS-2 session log (sibling style).
 
 **Reference implementations to MIRROR (read, do NOT edit):**
-- `src/components/ui/button.tsx` — the Button primitive (sizes/heights). ActionBar CONSUMES it; you must NOT change it. ActionBar enforces ONE shared height per row by composition (e.g. a single `size` applied to its children slot / documented contract), not by editing Button.
+- `src/components/ui/button.tsx` — the Button primitive (sizes/heights). ActionBar does NOT import, change, clone, or restyle it. The ONE shared height per row is a **documented contract** (stories pass children at `size="xl"`), never code that mutates children — see the ORCHESTRATOR DECISION in the primitive spec below.
 - `src/components/layout/PageShell.tsx` / `Section.tsx` / `PageHeader.tsx` — match file style, `cn` usage, story shape.
 
 ## Problem
@@ -97,11 +100,20 @@ targets stay ≥44px on touch widths (§12).
 - Props (final shape to confirm against §11.4; if a decision is genuinely missing, STOP & ASK):
   - `children: ReactNode` — the action controls (Button primitives passed by the consumer).
   - `align?: 'start' | 'end'` (default `'end'`) — horizontal alignment at `md:+`.
-  - `size?: <Button size union>` (default the canonical row height per §15) — the ONE shared height applied
-    to the row; document how it is enforced (a single source of truth per row, NOT per-child ad-hoc heights).
-    If §15 specifies the exact canonical height token, use it verbatim and cite it.
   - `as?: 'div' | 'nav'` (default `'div'`).
   - `className?: string` (merged via `cn`; defaults not blown away).
+  - **NO `size` prop. ORCHESTRATOR DECISION (2026-06-01 — already decided; do NOT re-litigate, do NOT
+    STOP & ASK on this):** ActionBar is a **layout-only** wrapper, consistent with the sibling DS primitives
+    (`PageHeader`/`Section` own no child styling). It does **NOT** mutate, clone, or inject props into its
+    children — **`React.cloneElement` is rejected**, and a `size` prop that cannot actually force child
+    heights would be misleading, so there is none. The "one shared height per row" rule of
+    `docs/design-system.md §11.4` / `docs/ui-rules.md §15` is satisfied as a **documented contract proven in
+    Storybook**, NOT by code that forces child heights: the consumer passes all Button children at one shared
+    `size`, and the **canonical page-level action-row height is `size="xl"` (`h-11` = 44px — §15 row floor +
+    §12 touch floor)**. Every ActionBar story MUST pass its Buttons at `size="xl"` (icon-only actions use
+    `size="icon-xl"`, also 44px). The `ActionBar.tsx` file header comment, the catalog row, and the story
+    docs MUST state this contract explicitly. Never write `h-11` as a className anywhere (§15 forbids it —
+    use `size="xl"`).
 - Layout: `flex flex-wrap items-center gap-2`; `<md:` → `flex-col` (stacked, items stretch for full-width-friendly buttons); `md:+` → row, aligned per `align`. **Never `overflow-x-auto` on the toolbar** (§11.4); wrap instead.
 - Composes existing Button primitive + tokens only — invents no new height, no new spacing scale, no new breakpoint, no new color.
 - **Zero hardcoded user-facing strings** — all labels live in the consumer's Button children. No `messages/*.json` change.
@@ -136,7 +148,7 @@ Create `ActionBar.tsx`, ADD it to the barrel `index.ts`, create `ActionBar.stori
 ## Out of scope (DO NOT)
 
 - Do NOT create FilterBar (DS-4 — separate later kickoff).
-- Do NOT edit the Button primitive (`src/components/ui/button.tsx`) or any `ui/**` primitive — ActionBar enforces one shared height by composition, not by restyling Button.
+- Do NOT edit the Button primitive (`src/components/ui/button.tsx`) or any `ui/**` primitive — the shared height is a documented contract (stories pass `size="xl"`), not a restyle of Button. Do NOT add a `size` prop or use `React.cloneElement` to force child heights.
 - Do NOT edit DS-1/DS-2 primitives beyond the single barrel-export addition.
 - Do NOT adopt `ActionBar` in any page/route (`src/app/**`) — zero route adoption.
 - Do NOT edit `globals.css`, admin primitives, `Header`/`Footer`/`MobileBottomNav`, `shared/**`, `listing/**`, `auth/**`, `src/modules/**`.
@@ -146,8 +158,8 @@ Create `ActionBar.tsx`, ADD it to the barrel `index.ts`, create `ActionBar.stori
 
 ## Acceptance criteria (each maps to a flow + is diff-verifiable)
 
-- **AC-1** `ActionBar.tsx` created: server component (NO `'use client'`); `flex flex-wrap items-center gap-2`; `<md:` stacked column, `md:+` row aligned per `align` (default `end`); one shared button height per row (cite §15); NO `overflow-x-auto`; `className` merged via `cn`. → *Positive 2–3*, file:line.
-- **AC-2** Button primitive **byte-identical** — `git diff src/components/ui/button.tsx` empty. ActionBar enforces shared height by composition only. → diff in log.
+- **AC-1** `ActionBar.tsx` created: server component (NO `'use client'`); **layout-only** — no `cloneElement`, no child mutation, no `size` prop; `flex flex-wrap items-center gap-2`; `<md:` stacked column, `md:+` row aligned per `align` (default `end`); NO `overflow-x-auto`; `className` merged via `cn`. The one-shared-height contract (`size="xl"` / 44px) is **documented** in the file-header comment + catalog + story docs, NOT enforced by mutating children. → *Positive 2–3*, file:line.
+- **AC-2** Button primitive **byte-identical** — `git diff src/components/ui/button.tsx` empty. ActionBar never imports or restyles Button; the shared height is a documented contract (stories pass `size="xl"`). → diff in log.
 - **AC-3** Barrel exports PageShell, Section, PageHeader, **AND ActionBar** (prior exports preserved). → file:line.
 - **AC-4** `globals.css` **byte-identical**. → `git diff src/app/globals.css` empty, in log.
 - **AC-5** Zero hardcoded user-facing strings (labels live in consumer Buttons). **No `messages/*.json` change.** → grep proof.
@@ -199,7 +211,7 @@ is OUT OF SCOPE — prefer STOP & ASK; if unavoidable, full sq/en/uk/it parity +
 ## STOP & ASK triggers
 
 - DS-1/DS-2 primitives not on disk → STOP.
-- The single shared Button height per `docs/ui-rules.md §15` is ambiguous or appears to require editing the Button primitive → STOP & ASK (do NOT restyle Button).
+- The Button-height contract is **already decided above** (layout-only; stories pass `size="xl"`; no `cloneElement`; no Button edit) — do NOT STOP & ASK on it and do NOT restyle Button. (Only stop if you believe a layout-only wrapper genuinely cannot satisfy §11.4 without mutating children — it can; the answer is "document the contract + prove in stories.")
 - You believe `ActionBar` needs `'use client'` → STOP (it does not).
 - A toolbar appears to need `overflow-x-auto` to fit → STOP (it must wrap; §11.4).
 - The primitive cannot be proven without adopting it in a route → STOP.

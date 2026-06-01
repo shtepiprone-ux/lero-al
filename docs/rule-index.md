@@ -24,6 +24,7 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 ## UI / layout / component task
 
 **Required:**
+- `docs/design-system.md` ← **canonical Global Responsive Design System Contract v1 (Task 340)** — read first for any layout/responsive/container/data-surface/overlay work
 - `docs/ui-rules.md`
 - `docs/component-rules.md`
 - `docs/qa-rules.md`
@@ -40,6 +41,7 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 ## Admin table / admin control task
 
 **Required:**
+- `docs/design-system.md` ← canonical contract (§9 admin layout, §10 `tableAt` decisions)
 - `docs/ui-rules.md`
 - `docs/component-rules.md`
 - `docs/component-governance.md` (canonical `AdminTableRow` pattern in §11)

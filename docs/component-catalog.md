@@ -3,6 +3,7 @@ Last generated: 2026-05-28
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
+See `docs/design-system.md §7` for the canonical **component-ownership taxonomy** (Tier 1 Primitive UI · Tier 2 Global layout primitive · Tier 3 Data-surface primitive · Tier 4 Domain component) — Task 340. Catalog categories map onto these four tiers.
 
 ## Summary
 

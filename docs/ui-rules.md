@@ -549,6 +549,12 @@ and configure EVERY control to it:
 
 ## §17 — UI PRE-FLIGHT CHECKLIST (MANDATORY, mechanical — enforced 2026-05-23)
 
+> ⚠️ **INHERITS `docs/design-system.md` (Global Responsive Design System Contract v1, Task 340).**
+> The container, spacing, primitive-ownership, data-surface, overlay, forbidden-pattern, and PASS/FAIL
+> rules now live canonically in `docs/design-system.md` (§4–§21). This checklist is the mechanical
+> pre-flight that proves them. **Item 6 below now uses the 14-width canon** from `design-system.md §3`
+> (the prior 9-width list is SUPERSEDED).
+
 > Why this exists: the same UI/responsive defects (overflowing button rows, mismatched control heights,
 > non-canonical dropdowns, z-index collisions) keep recurring because "looks fine on desktop" was treated
 > as verification. Prose rules above were not enough. For ANY task that touches UI, run these mechanical
@@ -567,8 +573,12 @@ and configure EVERY control to it:
    `flex-wrap`/`truncate`; verify the row does not clip at **320px** in **uk** (longest). Record the
    widths checked.
 5. **Same-row height:** confirm every control on a shared row is one height (§15). Record.
-6. **All 9 breakpoints (expanded 2026-05-31, Task 306-Fix):** 320/375/390/768/**1024**/1280/1440/**1920**/2560 — state, per touched screen, that each was
-   checked (screenshots strongly preferred). "Desktop only" is a fail. 1024 catches the admin sidebar/table↔card flip; 1920 catches widescreen waste. See `docs/responsive-governance.md §1 "Verification widths"`.
+6. **All 14 breakpoints (canon set by Task 340, 2026-05-31 — supersedes the 9-width list):**
+   320 / 375 / 390 / 480 / 560 / 680 / 768 / 810 / 960 / **1024** / 1200 / 1440 / **1920** / 2560 —
+   state, per touched screen, that each was checked × 4 locales (sq/en/uk/it = 56 cells)
+   (screenshots strongly preferred). "Desktop only" is a fail. 1024 catches the admin sidebar/table↔card
+   flip; 1920 catches widescreen waste; 2560 validates the container cap. See
+   `docs/design-system.md §3` + ADDENDUM (canonical) and `docs/responsive-governance.md §1`.
 7. **Touch targets:** mobile-reachable controls ≥44px (§8). Record.
 8. **4 locales:** sq/en/uk/it render without truncation breakage on the touched screens. Record.
 

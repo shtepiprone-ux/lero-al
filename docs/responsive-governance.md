@@ -3,6 +3,12 @@
 Audit date: 2026-05-18  
 Status: GOVERNANCE REFERENCE — defines rules for all future responsive work  
 
+> ⚠️ **INHERITS `docs/design-system.md` (Global Responsive Design System Contract v1, Task 340, 2026-05-31).**
+> The breakpoint philosophy and patterns below remain valid, but the **verification-width canon is now
+> the 14-width × 4-locale set** defined in `docs/design-system.md §3` + ADDENDUM. The **7-width and
+> 9-width lists in this file are SUPERSEDED** — see the marked block in §1. Where this doc disagrees
+> with `design-system.md`, the contract wins.
+
 ---
 
 ## §1 — CANONICAL RESPONSIVE STRATEGY
@@ -26,23 +32,18 @@ Status: GOVERNANCE REFERENCE — defines rules for all future responsive work
 
 **Non-standard breakpoints:** FORBIDDEN. Do not introduce arbitrary `min-width` or `max-width` inline styles for breakpoints. Use canonical Tailwind breakpoints only.
 
-**Verification widths (expanded 2026-05-31, Task 306-Fix):**
+**Verification widths — ⚠️ SUPERSEDED by the 14-width canon (Task 340, 2026-05-31).**
 
-Every UI task must verify at these **9 widths** × 4 locales (sq/en/uk/it):
+> The **9-width list below (and the older 7-width list) is SUPERSEDED**. The canonical verification
+> set is now the **14 widths × 4 locales** in `docs/design-system.md §3` + ADDENDUM:
+> **320 / 375 / 390 / 480 / 560 / 680 / 768 / 810 / 960 / 1024 / 1200 / 1440 / 1920 / 2560** ×
+> sq/en/uk/it (= 56 cells per touched screen). Use THAT set. The historical 9-width table is retained
+> below only for changelog context.
 
-| Width | Why required |
-|-------|-------------|
-| 320 | Narrow mobile minimum |
-| 375 | Common iPhone target |
-| 390 | Modern iPhone Pro |
-| 768 | Tablet (md: breakpoint) |
-| **1024** | Desktop narrow — `lg:` breakpoint: sidebar appears; AdminTable switches table↔card. Owner QA found defects here. |
-| 1280 | Wide desktop (xl:) |
-| 1440 | Standard laptop |
-| **1920** | Wide monitor — admin widescreen content spread. Owner QA found widescreen waste here. |
-| 2560 | 4K — huge-desktop container cap validation |
+_Historical (SUPERSEDED) 9-width set — do not use; see `design-system.md §3`:_
+320 / 375 / 390 / 768 / 1024 / 1280 / 1440 / 1920 / 2560.
 
-Tailwind breakpoint TOKENS remain `sm: md: lg: xl: 2xl:` (no change). Only the verification set expands. UI pre-flight (§17 of `docs/ui-rules.md`) uses the 9-width canon as of 2026-05-31.
+Tailwind breakpoint TOKENS remain `sm: md: lg: xl: 2xl:` (no change). Only the verification set changed. UI pre-flight (§17 of `docs/ui-rules.md`) now uses the **14-width canon** from `docs/design-system.md`.
 
 **Missing breakpoints:** The current project does not use `2xl:` anywhere. This is the primary gap for huge-desktop support. Future phases should add `2xl:` steps for grids, containers, and section padding.
 

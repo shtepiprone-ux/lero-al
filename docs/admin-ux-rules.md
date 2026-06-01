@@ -528,7 +528,15 @@ Task 307 MUST add these 11 keys to `messages/{sq,en,uk,it}.json` under the `admi
 
 ## 14. Admin canonical responsive contract (Task 306-Fix, 2026-05-31)
 
-> This contract applies to EVERY admin route. Task 310 migration sweep enforces it across the remaining ~12 admin pages.
+> ⚠️ **INHERITS `docs/design-system.md` (Global Responsive Design System Contract v1, Task 340).**
+> This §14 is the **admin specialisation** of the global contract: `.container-admin` is the admin
+> instance of the §4 container system; AdminPageShell/AdminTable/AdminCardList are the §7 admin layout
+> + data-surface primitives; the `lg:` table↔card switch is the §10 `tableAtLg` default; the
+> verification gate (§14.6) now uses the **14-width × 4-locale canon** from `design-system.md §3`
+> (not the SUPERSEDED 9-width list). Where §14 and `design-system.md` disagree, the global contract wins.
+>
+> This contract applies to EVERY admin route. The migration sweep enforces it across the remaining ~12
+> admin pages (Phases 4–5 of `design-system.md §18`).
 
 ### 14.1 Container
 
@@ -569,7 +577,10 @@ Sticky first column applies at `lg:+` only (cards have natural hierarchy via tit
 
 ### 14.6 Verification gate
 
-- Every admin task touching a route MUST verify at **9 widths × 4 locales** (sq/en/uk/it): 320, 375, 390, 768, **1024**, 1280, 1440, **1920**, 2560.
+- Every admin task touching a route MUST verify at the **14-width × 4-locale canon** (sq/en/uk/it):
+  320, 375, 390, 480, 560, 680, 768, 810, 960, **1024**, 1200, 1440, **1920**, 2560 (= 56 cells).
+  This **supersedes** the prior 9-width list.
 - Screenshots strongly preferred per width; per-width pass/fail notes mandatory in the session log.
 - Failure at any width × locale = task is NOT complete (STOP & ASK rather than ship defect).
-- `docs/ui-rules.md §17 item 6` and `docs/responsive-governance.md §1 "Verification widths"` both use the 9-width canon.
+- Canonical source: `docs/design-system.md §3` + ADDENDUM. `docs/ui-rules.md §17 item 6` and
+  `docs/responsive-governance.md §1` now point to the 14-width canon.

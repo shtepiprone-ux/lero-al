@@ -7,9 +7,9 @@
 
 ## Last Session
 
-**2026-06-01 — Task 349 + 349-Fix (DS-4 FilterBar): created `FilterBar` Tier-2 CLIENT layout primitive — `'use client'` (Sheet state); stacks `flex-col` below `sm:` (search + Filters trigger each full-width row at 320–412px), row layout from `sm:` up, all-or-nothing inline at `lg:+` (D1); count Badge + single global Reset only when `activeCount>0` (D2); zero literal strings (labels prop); no `overflow-x-auto`; barrel + catalog updated; 21 stories. No route adoption; `globals.css` byte-identical. **OWNER-APPROVED 2026-06-01. READY TO COMMIT.** Session: `docs/sessions/2026-06-01-task-349-ds4-filterbar.md`. (Prior Tasks 345/346/347/348 also UNCOMMITTED.)**
+**2026-06-01 — Task 350 + 350-Fix (DS-5 Storybook proof hardening + corrective): (1) all 14 canonical widths now preset-backed in Storybook (`canonical560/680/810/960/1200` added); +45 new stories across 5 layout primitive story files; (2) Storybook styling environment fixed: `--font-geist-sans`/`--font-geist-mono` injected, canvas backgrounds updated to project tokens; no primitive runtime code changed. **OWNER-APPROVED 2026-06-01. READY TO COMMIT.** OWNER QA REQUIRED (rendered 14×4×5 = 280 Storybook cells — to close foundation gate). Session: `docs/sessions/2026-06-01-task-350-ds5-storybook-proof-hardening.md`.**
 
-**DS queue:** DS-1 ✅ (345) → DS-2 ✅ (347) → DS-3 ✅ (348) → **DS-4 ✅ (349, done/uncommitted)** → DS-5 Storybook proof-hardening (350) → **[foundation gate]** → DS-6 public route pilot (351, BLOCKED) → DS-7 cabinet/auth pilot (352, BLOCKED) → DS-8 admin compat review (353).
+**DS queue:** DS-1 ✅ (345) → DS-2 ✅ (347) → DS-3 ✅ (348) → DS-4 ✅ (349, committed `7efc335`) → **DS-5 ✅ (350, approved/uncommitted)** → **[foundation gate — owner rendered QA needed before DS-6]** → DS-6 public route pilot (351, BLOCKED) → DS-7 cabinet/auth pilot (352, BLOCKED) → DS-8 admin compat review (353).
 
 ## Pending Action Items
 

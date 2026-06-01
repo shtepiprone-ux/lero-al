@@ -518,3 +518,122 @@ export const MobileIt375: Story = {
     </PageShell>
   ),
 }
+
+// ── 14-width canonical coverage — preset widths added Task 350 + Task 350-Fix ─
+// Task 350 added StackedAt480 (only remaining gap then).
+// Task 350-Fix added canonical presets for 560/680/810/960/1200 to preview.tsx
+// and the stories below. Band reference:
+//   560/680 → <sm: (stacked rows; search + trigger each full-width)
+//   810/960 → sm:–<lg: (shared row; Sheet trigger visible sm:w-auto)
+//   1200    → lg:+ (inline cluster; Sheet trigger hidden)
+
+export const StackedAt480: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile480' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <FilterBar
+          filters={<FilterChips count={4} />}
+          search={SEARCH_EN}
+          activeCount={2}
+          onReset={fn()}
+          labels={LABELS_EN}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const StackedAt560: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical560' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <FilterBar
+          filters={<FilterChips count={4} />}
+          search={SEARCH_EN}
+          activeCount={2}
+          onReset={fn()}
+          labels={LABELS_EN}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const StackedAt680: Story = {
+  parameters: {
+    viewport: { defaultViewport: 'canonical680' },
+    globals: { locale: 'uk' },
+  },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <FilterBar
+          filters={<FilterChips count={4} locale="uk" />}
+          search={SEARCH_UK}
+          activeCount={2}
+          onReset={fn()}
+          labels={LABELS_UK}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const SharedRowAt810: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical810' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <FilterBar
+          filters={<FilterChips count={5} />}
+          search={SEARCH_EN}
+          activeCount={3}
+          onReset={fn()}
+          labels={LABELS_EN}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const SharedRowAt960: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical960' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <FilterBar
+          filters={<FilterChips count={5} />}
+          search={SEARCH_EN}
+          activeCount={3}
+          onReset={fn()}
+          labels={LABELS_EN}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const InlineAt1200: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical1200' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <FilterBar
+          filters={<FilterChips count={5} />}
+          search={SEARCH_EN}
+          activeCount={2}
+          onReset={fn()}
+          labels={LABELS_EN}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}

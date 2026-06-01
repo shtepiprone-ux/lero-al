@@ -178,3 +178,63 @@ export const WideHugeDesktop: Story = {
     </PageShell>
   ),
 }
+
+// ── 14-width canonical coverage — preset widths not covered above ─────────────
+// Each story below targets one missing canonical viewport preset.
+// No-preset widths (560 / 680 / 810 / 960 / 1200): open any story in Storybook
+// Canvas, then use browser DevTools responsive mode (Chrome F12 → device toolbar)
+// or resize the browser window to each width. Toggle locale via the Storybook
+// toolbar (sq / en / uk / it) and verify: no horizontal overflow; container padding
+// scales; content wraps correctly.
+
+export const WideAt375: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile375' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt390: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile390' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt480: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile480' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt768: Story = {
+  parameters: { viewport: { defaultViewport: 'tablet768' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const DesktopAt1024: Story = {
+  parameters: { viewport: { defaultViewport: 'desktop1024' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+// ── Canonical preset widths (560/680/810/960/1200) — added Task 350-Fix ──────
+
+export const WideAt560: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical560' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt680: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical680' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt810: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical810' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt960: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical960' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}
+
+export const WideAt1200: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical1200' } },
+  render: () => <PageShell>{WIDE_CONTENT}</PageShell>,
+}

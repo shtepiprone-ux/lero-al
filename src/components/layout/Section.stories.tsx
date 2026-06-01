@@ -174,3 +174,154 @@ export const WithClassName: Story = {
     </PageShell>
   ),
 }
+
+// ── 14-width canonical coverage — preset widths not covered above ─────────────
+// No-preset widths (560 / 680 / 810 / 960 / 1200): open any story in Storybook,
+// use browser DevTools responsive mode to set the width manually, and toggle
+// locale via the Storybook toolbar. Verify: title wraps, no horizontal overflow.
+
+export const TitleAt375: Story = {
+  parameters: {
+    viewport: { defaultViewport: 'mobile375' },
+    globals: { locale: 'uk' },
+  },
+  render: () => (
+    <PageShell>
+      <Section
+        title="Оренда та продаж нерухомості в Тирані — 375px"
+        description="uk locale stress at mobile375; title must wrap, never overflow."
+      >
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt390: Story = {
+  parameters: {
+    viewport: { defaultViewport: 'mobile390' },
+    globals: { locale: 'it' },
+  },
+  render: () => (
+    <PageShell>
+      <Section
+        title="Affitto e vendita di immobili a Tirana — 390px"
+        description="it locale at mobile390."
+      >
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt480: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile480' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 480px" description="Phablet width; pre-sm: layout.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt768: Story = {
+  parameters: { viewport: { defaultViewport: 'tablet768' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 768px" description="Tablet md: breakpoint; heading rhythm unchanged.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt1024: Story = {
+  parameters: { viewport: { defaultViewport: 'desktop1024' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 1024px" description="Desktop lg: breakpoint.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt1920: Story = {
+  parameters: { viewport: { defaultViewport: 'desktop1920' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 1920px" description="Huge desktop; content bounded by container-wide.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt2560: Story = {
+  parameters: { viewport: { defaultViewport: 'desktop2560' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 2560px" description="4K; container capped at 1408px, centered.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+// ── Canonical preset widths (560/680/810/960/1200) — added Task 350-Fix ──────
+
+export const TitleAt560: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical560' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 560px" description="Below sm: (640px); pre-breakpoint band.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt680: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical680' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 680px" description="Above sm: (640px), below md: (768px).">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt810: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical810' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 810px" description="Above md: (768px), below lg: (1024px).">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt960: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical960' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 960px" description="Pre-lg: small desktop.">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}
+
+export const TitleAt1200: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical1200' } },
+  render: () => (
+    <PageShell>
+      <Section title="Available Listings — 1200px" description="Above lg: (1024px), below xl: (1280px).">
+        {SAMPLE_BLOCK}
+      </Section>
+    </PageShell>
+  ),
+}

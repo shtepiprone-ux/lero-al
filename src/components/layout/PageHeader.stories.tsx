@@ -319,3 +319,159 @@ export const InsidePageShellMobile375: Story = {
     </PageShell>
   ),
 }
+
+// ── 14-width canonical coverage — preset widths not covered above ─────────────
+// No-preset widths (560 / 680 / 810 / 960 / 1200): open any story above in
+// Storybook, use browser DevTools responsive mode to set the width manually.
+// Critical: verify action stacks below title at <md: and goes inline at md:+ (768px).
+
+export const ActionStackedAt390: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile390' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 390px"
+          description="Action stacks below title at <md: widths."
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const ActionStackedAt480: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile480' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 480px"
+          description="Action still stacks at 480px (below md: 768px boundary)."
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const ActionInlineAt768: Story = {
+  parameters: { viewport: { defaultViewport: 'tablet768' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 768px"
+          description="md: boundary — action switches from stacked to inline row."
+          countBadge={COUNT_BADGE}
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const DesktopAt1024: Story = {
+  parameters: { viewport: { defaultViewport: 'desktop1024' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 1024px"
+          description="lg: breakpoint; action fully inline, right-aligned."
+          countBadge={COUNT_BADGE}
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+// ── Canonical preset widths (560/680/810/960/1200) — added Task 350-Fix ──────
+
+export const ActionStackedAt560: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical560' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 560px"
+          description="Below sm: (640px); action stacks (<md: 768px boundary)."
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const ActionStackedAt680: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical680' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 680px"
+          description="Above sm: (640px), below md: (768px); action still stacks."
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const ActionInlineAt810: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical810' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 810px"
+          description="Above md: (768px); action is inline row."
+          countBadge={COUNT_BADGE}
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const ActionInlineAt960: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical960' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 960px"
+          description="Pre-lg: desktop; action inline, right-aligned."
+          countBadge={COUNT_BADGE}
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const DesktopAt1200: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical1200' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <PageHeader
+          title="Available Listings — 1200px"
+          description="Above lg: (1024px), below xl: (1280px); full desktop layout."
+          countBadge={COUNT_BADGE}
+          action={ACTION_CLUSTER}
+        />
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}

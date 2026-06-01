@@ -318,3 +318,135 @@ export const InsidePageHeaderMobile375: Story = {
     </PageShell>
   ),
 }
+
+// ── 14-width canonical coverage — preset widths not covered above ─────────────
+// No-preset widths (560 / 680 / 810 / 960 / 1200): open any story above in
+// Storybook, use browser DevTools responsive mode to set the width manually.
+// Critical: verify stacking at <md: and inline row at md:+ (768px boundary).
+
+export const StackedAt390: Story = {
+  parameters: { viewport: { defaultViewport: 'mobile390' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl">Save Changes</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const InlineAt768: Story = {
+  parameters: { viewport: { defaultViewport: 'tablet768' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl" variant="outline">Edit</Button>
+          <Button size="xl">Save Changes</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const InlineAt1024: Story = {
+  parameters: { viewport: { defaultViewport: 'desktop1024' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl" variant="outline">Edit</Button>
+          <Button size="xl">New Listing</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+// ── Canonical preset widths (560/680/810/960/1200) — added Task 350-Fix ──────
+
+export const StackedAt560: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical560' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl">Save Changes</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const StackedAt680: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical680' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl">Save Changes</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const InlineAt810: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical810' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl" variant="outline">Edit</Button>
+          <Button size="xl">Save Changes</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const InlineAt960: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical960' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl" variant="outline">Edit</Button>
+          <Button size="xl">New Listing</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}
+
+export const InlineAt1200: Story = {
+  parameters: { viewport: { defaultViewport: 'canonical1200' } },
+  render: () => (
+    <PageShell>
+      <div className="space-y-6">
+        <ActionBar>
+          <Button size="xl" variant="outline">Cancel</Button>
+          <Button size="xl" variant="outline">Edit</Button>
+          <Button size="xl">New Listing</Button>
+        </ActionBar>
+        {SAMPLE_CONTENT}
+      </div>
+    </PageShell>
+  ),
+}

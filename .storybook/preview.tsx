@@ -19,7 +19,10 @@ const LOCALE_MESSAGES: Record<string, Record<string, unknown>> = {
 };
 
 // ── Viewport presets ─────────────────────────────────────────────────────────
-// Covers all project breakpoints: 320px → ultrawide
+// Covers all project breakpoints: 320px → ultrawide.
+// canonical560/680/810/960/1200 are the 5 design-system.md §3 canonical widths
+// that have no Tailwind breakpoint of their own but are required for the 14-width
+// QA canon. Added in Task 350-Fix (DS-5 corrective).
 const VIEWPORTS = {
   mobile320: { name: 'Mobile 320px',    styles: { width: '320px',  height: '812px' } },
   mobile360: { name: 'Mobile 360px',    styles: { width: '360px',  height: '800px' } },
@@ -27,9 +30,14 @@ const VIEWPORTS = {
   mobile390: { name: 'Mobile 390px',    styles: { width: '390px',  height: '844px' } },
   mobile412: { name: 'Mobile 412px',    styles: { width: '412px',  height: '915px' } },
   mobile480: { name: 'Mobile 480px',    styles: { width: '480px',  height: '900px' } },
+  canonical560: { name: 'Canonical 560px',  styles: { width: '560px',  height: '812px' } },
   tablet640: { name: 'Tablet 640px',    styles: { width: '640px',  height: '960px' } },
+  canonical680: { name: 'Canonical 680px',  styles: { width: '680px',  height: '812px' } },
   tablet768: { name: 'Tablet 768px',    styles: { width: '768px',  height: '1024px' } },
+  canonical810: { name: 'Canonical 810px',  styles: { width: '810px',  height: '812px' } },
+  canonical960: { name: 'Canonical 960px',  styles: { width: '960px',  height: '812px' } },
   desktop1024:  { name: 'Desktop 1024px',     styles: { width: '1024px', height: '768px'  } },
+  canonical1200: { name: 'Canonical 1200px', styles: { width: '1200px', height: '812px' } },
   desktop1280:  { name: 'Desktop 1280px',     styles: { width: '1280px', height: '800px'  } },
   desktop1440:  { name: 'Desktop 1440px',     styles: { width: '1440px', height: '900px'  } },
   desktop1720:  { name: 'Huge Desktop 1720px',styles: { width: '1720px', height: '1080px' } },
@@ -54,14 +62,23 @@ const withLocale: Decorator = (Story, context) => {
 
 // ── Theme decorator ───────────────────────────────────────────────────────────
 // Applies dark/light class to the document root for stories that use semantic tokens.
+// Also injects --font-geist-sans so that font-sans / @apply font-sans resolves to the
+// CDN-loaded Geist font (preview-head.html). In the real app, this variable is set
+// implicitly by Next.js's font loader (geist.className in src/app/layout.tsx). Without
+// this injection, any element with an explicit font-family: var(--font-geist-sans) rule
+// falls back to the browser default sans-serif instead of Geist.
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme ?? 'light';
   if (typeof document !== 'undefined') {
     document.documentElement.classList.remove('light', 'dark');
     if (theme === 'dark') document.documentElement.classList.add('dark');
+    // Mirror what Next.js font loader (geist.className) sets in the real app.
+    // 'Geist' is loaded via Google Fonts CDN in .storybook/preview-head.html.
+    document.documentElement.style.setProperty('--font-geist-sans', '"Geist", sans-serif');
+    document.documentElement.style.setProperty('--font-geist-mono', '"Geist Mono", monospace');
   }
   return (
-    <div className={`min-h-screen bg-background text-foreground font-[Geist,sans-serif]`}>
+    <div className="min-h-screen bg-background text-foreground">
       <Story />
     </div>
   );
@@ -111,11 +128,16 @@ const preview: Preview = {
     },
     layout: 'padded',
     backgrounds: {
+      // Values mirror the lero-al project tokens so the Storybook canvas padding
+      // matches the component background (avoids a visible white border halo):
+      //   light → --background (--neutral-50 oklch(0.985 0 0) ≈ #FAFAFA)
+      //   dark  → --background in .dark (--neutral-0 oklch(0.145 0 0) ≈ #232323)
+      //   muted → --muted (--neutral-100 oklch(0.961 0 0) ≈ #F5F5F5)
       default: 'light',
       values: [
-        { name: 'light', value: '#ffffff' },
-        { name: 'dark',  value: '#0a0a0a' },
-        { name: 'muted', value: '#f4f4f5' },
+        { name: 'light', value: '#fafafa' },
+        { name: 'dark',  value: '#232323' },
+        { name: 'muted', value: '#f5f5f5' },
       ],
     },
     controls: {

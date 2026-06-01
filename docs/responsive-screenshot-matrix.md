@@ -11,28 +11,34 @@ in `docs/responsive-screenshot-governance.md`.
 
 ## §1 — CANONICAL VIEWPORT MATRIX
 
-All 15 project-supported viewports:
+All 20 project-supported viewports (15 original + 5 design-system.md §3 canonical additions from Task 350-Fix):
 
-| Name | Width | Height | Breakpoint family | Fast-check |
-|---|---|---|---|---|
-| `mobile-320`    | 320px  | 812px  | Mobile (base)  | ✅ |
-| `mobile-360`    | 360px  | 800px  | Mobile (base)  | — |
-| `mobile-375`    | 375px  | 812px  | Mobile (base)  | ✅ |
-| `mobile-390`    | 390px  | 844px  | Mobile (base)  | — |
-| `mobile-412`    | 412px  | 915px  | Mobile (base)  | — |
-| `mobile-480`    | 480px  | 900px  | Mobile (base)  | — |
-| `tablet-640`    | 640px  | 960px  | `sm:` 640px    | — |
-| `tablet-768`    | 768px  | 1024px | `md:` 768px    | ✅ |
-| `desktop-1024`  | 1024px | 768px  | `lg:` 1024px   | — |
-| `desktop-1280`  | 1280px | 800px  | `xl:` 1280px   | ✅ |
-| `desktop-1440`  | 1440px | 900px  | `xl:` 1280px+  | ✅ |
-| `huge-1720`     | 1720px | 1080px | `2xl:` 1536px  | — |
-| `huge-1920`     | 1920px | 1080px | `2xl:` 1536px  | — |
-| `huge-2560`     | 2560px | 1440px | `2xl:` 1536px  | ✅ |
-| `ultrawide-3440`| 3440px | 1440px | `2xl:` 1536px  | — |
+| Name | Width | Height | Breakpoint family | Fast-check | DS-5 canon |
+|---|---|---|---|---|---|
+| `mobile-320`    | 320px  | 812px  | Mobile (base)  | ✅ | ✅ |
+| `mobile-360`    | 360px  | 800px  | Mobile (base)  | — | — |
+| `mobile-375`    | 375px  | 812px  | Mobile (base)  | ✅ | ✅ |
+| `mobile-390`    | 390px  | 844px  | Mobile (base)  | — | ✅ |
+| `mobile-412`    | 412px  | 915px  | Mobile (base)  | — | — |
+| `mobile-480`    | 480px  | 900px  | Mobile (base)  | — | ✅ |
+| `canonical-560` | 560px  | 812px  | below `sm:` 640px | — | ✅ |
+| `tablet-640`    | 640px  | 960px  | `sm:` 640px    | — | — |
+| `canonical-680` | 680px  | 812px  | `sm:` to `md:` | — | ✅ |
+| `tablet-768`    | 768px  | 1024px | `md:` 768px    | ✅ | ✅ |
+| `canonical-810` | 810px  | 812px  | `md:` to `lg:` | — | ✅ |
+| `canonical-960` | 960px  | 812px  | `md:` to `lg:` | — | ✅ |
+| `desktop-1024`  | 1024px | 768px  | `lg:` 1024px   | — | ✅ |
+| `canonical-1200`| 1200px | 812px  | `lg:` to `xl:` | — | ✅ |
+| `desktop-1280`  | 1280px | 800px  | `xl:` 1280px   | ✅ | — |
+| `desktop-1440`  | 1440px | 900px  | `xl:` 1280px+  | ✅ | ✅ |
+| `huge-1720`     | 1720px | 1080px | `2xl:` 1536px  | — | — |
+| `huge-1920`     | 1920px | 1080px | `2xl:` 1536px  | — | ✅ |
+| `huge-2560`     | 2560px | 1440px | `2xl:` 1536px  | ✅ | ✅ |
+| `ultrawide-3440`| 3440px | 1440px | `2xl:` 1536px  | — | — |
 
 **Fast-check matrix (6 viewports):** used by `npm run screenshots:responsive` (default).
-**Full matrix (15 viewports):** used by `npm run screenshots:responsive -- --full`.
+**Full matrix (20 viewports):** used by `npm run screenshots:responsive -- --full`.
+**DS-5 canon (14 viewports):** the 14 widths from `docs/design-system.md §3` — all now have Storybook presets (Task 350-Fix).
 
 ---
 
@@ -77,6 +83,58 @@ Story IDs are Storybook-generated from `title` + export name (lowercase kebab-ca
 | `primitives-badge--default` | Badge/Default | — | all | MEDIUM |
 | `primitives-skeleton--listing-card` | Skeleton/ListingCard | — | all | LOW |
 
+### Layout Primitive Stories (DS-1..DS-4 — added Task 350; canonical presets added Task 350-Fix)
+
+> All 14 design-system.md §3 canonical widths now have Storybook presets (Task 350-Fix added
+> `canonical560`, `canonical680`, `canonical810`, `canonical960`, `canonical1200` to `preview.tsx`).
+> Manual browser-resize is no longer required for any of the 14 widths.
+
+| Story ID | Label | Key viewport(s) | Locale override | Priority |
+|---|---|---|---|---|
+| `layout-pageshell--wide-default` | PageShell/WideDefault | desktop-1440 (+ toolbar for all) | all | **CRITICAL** |
+| `layout-pageshell--wide-at375` | PageShell/WideAt375 | mobile-375 | all | HIGH |
+| `layout-pageshell--wide-at768` | PageShell/WideAt768 | tablet-768 | all | HIGH |
+| `layout-pageshell--desktop-at1024` | PageShell/DesktopAt1024 | desktop-1024 | all | HIGH |
+| `layout-pageshell--narrow-ultrawide` | PageShell/NarrowUltrawide | huge-2560 | all | **CRITICAL** |
+| `layout-pageshell--long-ukrainian-mobile320` | PageShell/UkMobile320 | mobile-320 | uk | HIGH |
+| `layout-section--with-title-and-description` | Section/Default | desktop-1440 | all | HIGH |
+| `layout-section--long-uk-title-mobile320` | Section/UkMobile320 | mobile-320 | uk | HIGH |
+| `layout-section--title-at375` | Section/TitleAt375 | mobile-375 | uk | HIGH |
+| `layout-section--title-at768` | Section/TitleAt768 | tablet-768 | all | MEDIUM |
+| `layout-section--title-at2560` | Section/TitleAt2560 | huge-2560 | all | **CRITICAL** |
+| `layout-pageheader--full-header` | PageHeader/FullHeader | desktop-1440 | all | HIGH |
+| `layout-pageheader--action-stacked320` | PageHeader/ActionStacked320 | mobile-320 | all | HIGH |
+| `layout-pageheader--action-inline-at768` | PageHeader/ActionInlineAt768 | tablet-768 | all | HIGH |
+| `layout-pageheader--desktop-at1024` | PageHeader/DesktopAt1024 | desktop-1024 | all | HIGH |
+| `layout-pageheader--long-uk-title-mobile320` | PageHeader/UkMobile320 | mobile-320 | uk | **CRITICAL** |
+| `layout-actionbar--default` | ActionBar/Default | desktop-1440 | all | HIGH |
+| `layout-actionbar--stacked-mobile320` | ActionBar/StackedMobile320 | mobile-320 | all | HIGH |
+| `layout-actionbar--inline-at768` | ActionBar/InlineAt768 | tablet-768 | all | HIGH |
+| `layout-actionbar--inline-at1024` | ActionBar/InlineAt1024 | desktop-1024 | all | HIGH |
+| `layout-actionbar--many-actions-wrapped-uk320` | ActionBar/UkWrapped320 | mobile-320 | uk | **CRITICAL** |
+| `layout-filterbar--default` | FilterBar/Default | desktop-1440 | all | HIGH |
+| `layout-filterbar--desktop-lg-boundary1024` | FilterBar/LgBoundary1024 | desktop-1024 | all | **CRITICAL** |
+| `layout-filterbar--many-filters10-plus-at768` | FilterBar/ManyAt768 | tablet-768 | all | HIGH |
+| `layout-filterbar--many-filters10-plus-at390` | FilterBar/ManyAt390 | mobile-390 | all | HIGH |
+| `layout-filterbar--uk-long-labels320` | FilterBar/UkLong320 | mobile-320 | uk | **CRITICAL** |
+| `layout-filterbar--stacked-at480` | FilterBar/StackedAt480 | mobile-480 | all | HIGH |
+| `layout-pageshell--wide-at560` | PageShell/WideAt560 | canonical-560 | all | HIGH |
+| `layout-pageshell--wide-at680` | PageShell/WideAt680 | canonical-680 | all | HIGH |
+| `layout-pageshell--wide-at810` | PageShell/WideAt810 | canonical-810 | all | HIGH |
+| `layout-pageshell--wide-at960` | PageShell/WideAt960 | canonical-960 | all | HIGH |
+| `layout-pageshell--wide-at1200` | PageShell/WideAt1200 | canonical-1200 | all | HIGH |
+| `layout-filterbar--stacked-at560` | FilterBar/StackedAt560 | canonical-560 | all | HIGH |
+| `layout-filterbar--stacked-at680` | FilterBar/StackedAt680 | canonical-680 | uk | HIGH |
+| `layout-filterbar--shared-row-at810` | FilterBar/SharedRowAt810 | canonical-810 | all | **CRITICAL** |
+| `layout-filterbar--shared-row-at960` | FilterBar/SharedRowAt960 | canonical-960 | all | HIGH |
+| `layout-filterbar--inline-at1200` | FilterBar/InlineAt1200 | canonical-1200 | all | **CRITICAL** |
+| `layout-pageheader--action-stacked-at560` | PageHeader/ActionStackedAt560 | canonical-560 | all | HIGH |
+| `layout-pageheader--action-inline-at810` | PageHeader/ActionInlineAt810 | canonical-810 | all | HIGH |
+| `layout-pageheader--desktop-at1200` | PageHeader/DesktopAt1200 | canonical-1200 | all | HIGH |
+| `layout-actionbar--stacked-at560` | ActionBar/StackedAt560 | canonical-560 | all | HIGH |
+| `layout-actionbar--inline-at810` | ActionBar/InlineAt810 | canonical-810 | all | HIGH |
+| `layout-actionbar--inline-at1200` | ActionBar/InlineAt1200 | canonical-1200 | all | HIGH |
+
 ### System Stories
 
 | Story ID | Label | Viewport override | Locale override | Priority |
@@ -92,8 +150,8 @@ Story IDs are Storybook-generated from `title` + export name (lowercase kebab-ca
 | `system-emptystate--ukrainian-locale` | EmptyState/Ukrainian | — | uk only | HIGH |
 | `system-adminlayout--admin-toolbar` | Admin/Toolbar | desktop-1280 | all | MEDIUM |
 
-**Total targets (fast-check matrix):** ~120 screenshots
-**Total targets (full matrix, all viewports):** ~400 screenshots
+**Total targets (fast-check matrix):** ~145 screenshots (inc. Layout primitives)
+**Total targets (full matrix, all viewports):** ~500 screenshots (inc. 5 new canonical presets × all stories)
 
 ---
 
@@ -116,8 +174,8 @@ Run: `npm run screenshots:responsive`
 For quarterly audits and before major responsive changes.
 Run: `npm run screenshots:responsive -- --full`
 
-All 15 viewports × 4 locales × all story targets.
-**Estimated time:** ~10–15 minutes (after Storybook build)
+All 20 viewports × 4 locales × all story targets (inc. 5 canonical presets added in Task 350-Fix).
+**Estimated time:** ~12–18 minutes (after Storybook build)
 
 ---
 

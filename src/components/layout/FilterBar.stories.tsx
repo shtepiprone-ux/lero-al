@@ -107,7 +107,7 @@ function FilterBarDemo({
       <div className="space-y-6">
         <FilterBar
           filters={
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-start gap-2">
               {chips.map(chip => (
                 <Button key={chip} size="xl"
                   variant={active.includes(chip) ? 'default' : 'outline'}
@@ -270,6 +270,28 @@ export const LocaleStress: Story = {
   render: () => (
     <FilterBarDemo locale="uk" chipCount={5} initialActive={['Продаж', 'Студія', 'Оренда']} labels={LABELS_UK} search={SEARCH_UK}>
       {SAMPLE_CONTENT_UK}
+    </FilterBarDemo>
+  ),
+}
+
+export const ManyFilters: Story = {
+  parameters: {
+    viewport: { defaultViewport: 'desktop1440' },
+    docs: {
+      description: {
+        story:
+          'Many filter chips (11): at desktop the cluster wraps into aligned rows ' +
+          '(`flex-wrap items-start gap-2`); search and badge stay top-aligned with the ' +
+          'first chip row (`sm:items-start` on outer container). ' +
+          'Odd number of chips (11): last row is left-aligned, no scattered stragglers. ' +
+          'At <lg: all chips collapse behind the Sheet trigger (Decision D1). ' +
+          'Use viewport toolbar to verify 320/375/768/1280.',
+      },
+    },
+  },
+  render: () => (
+    <FilterBarDemo locale="en" chipCount={11} initialActive={['Sale', 'Studio', 'Commercial']} labels={LABELS_EN} search={SEARCH_EN}>
+      {SAMPLE_CONTENT}
     </FilterBarDemo>
   ),
 }

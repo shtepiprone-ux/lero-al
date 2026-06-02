@@ -45,9 +45,11 @@ export function FilterBar({
   const isActive = activeCount > 0
 
   return (
-    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full', className)}>
-      {/* lg:+ inline filter cluster — all-or-nothing (Decision D1); hidden on mobile */}
-      <div className="hidden min-w-0 flex-wrap items-center gap-2 lg:flex">
+    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full', className)}>
+      {/* lg:+ inline filter cluster — all-or-nothing (Decision D1); hidden on mobile.
+          items-start: top-aligns cluster with search/badge/reset even when chips wrap to
+          multiple rows (prevents the vertical-centering scatter bug with many filters). */}
+      <div className="hidden min-w-0 flex-wrap items-start gap-2 lg:flex">
         {filters}
       </div>
 
@@ -102,8 +104,9 @@ export function FilterBar({
             <SheetTitle>{labels.filters}</SheetTitle>
           </SheetHeader>
 
-          {/* Filter controls — entire filters node placed here at <lg: (Decision D1) */}
-          <div className="flex-1 overflow-y-auto p-4">
+          {/* Filter controls — entire filters node placed here at <lg: (Decision D1).
+              No own padding — SheetContent provides p-6 (Task 361). */}
+          <div className="flex-1 overflow-y-auto">
             {filters}
           </div>
 

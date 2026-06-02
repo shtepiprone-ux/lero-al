@@ -73,7 +73,10 @@ export function PhoneField({
   }
 
   function handleNationalChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const raw = e.target.value
+    // Strip everything that is not a digit or a standard phone formatting char.
+    // normalizeNational() already removes [ \-().] before digit-checking, so those
+    // chars are allowed here too. "+" is rejected — it belongs in the dial-code slot.
+    const raw = e.target.value.replace(/[^\d\s\-().]/g, '')
     setNational(raw)
     emit(dialCode, iso2, raw)
   }

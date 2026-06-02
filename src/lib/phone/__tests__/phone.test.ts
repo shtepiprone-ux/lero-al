@@ -32,8 +32,22 @@ describe('validateNationalPhone — Albania (AL +355)', () => {
     expect(validateNationalPhone({ ...al, rawNational: '' }).ok).toBe(false)
   })
 
-  it('rejects national with letters', () => {
-    expect(validateNationalPhone({ ...al, rawNational: '69abc456' }).ok).toBe(false)
+  it('rejects national with letters → error_phone_digits_only', () => {
+    const result = validateNationalPhone({ ...al, rawNational: '69abc456' })
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_digits_only')
+  })
+
+  it('rejects national with symbols → error_phone_digits_only', () => {
+    const result = validateNationalPhone({ ...al, rawNational: '69@#456' })
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_digits_only')
+  })
+
+  it('rejects national with Cyrillic letters → error_phone_digits_only', () => {
+    const result = validateNationalPhone({ ...al, rawNational: '69аб456' })
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_digits_only')
   })
 
   it('accepts national with spaces (normalized) — 9 digits for Albania', () => {

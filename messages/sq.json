@@ -342,6 +342,7 @@
     "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
     "error_email_invalid": "Adresa e emailit është e pavlefshme.",
     "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
+    "error_phone_digits_only": "Vendosni vetëm shifra — pa shkronja ose simbole.",
     "captcha_aria_label": "Verifikim sigurie captcha",
     "captcha_error_failed": "Verifikimi i sigurisë dështoi. Ju lutemi provoni sërish.",
     "captcha_not_configured": "(Captcha çaktivizuar — mjedis zhvillimi)",
@@ -512,6 +513,7 @@
     "currency_GBP": "Paund britanik (GBP)",
     "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
     "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
+    "error_phone_digits_only": "Vendosni vetëm shifra — pa shkronja ose simbole.",
     "error_email_invalid": "Adresa e emailit është e pavlefshme.",
     "password_section_title": "Ndrysho fjalëkalimin",
     "password_current_label": "Fjalëkalimi aktual",
@@ -1118,7 +1120,8 @@
         "email_invalid": "Adresë email-i jo e vlefshme",
         "phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
         "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
-        "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit."
+        "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
+        "error_phone_digits_only": "Vendosni vetëm shifra — pa shkronja ose simbole."
       },
       "profile_types": {
         "admin": "Administrator",

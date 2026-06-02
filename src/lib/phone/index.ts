@@ -101,7 +101,7 @@ export function normalizeNational(raw: string): string {
 
 // ── Validation ────────────────────────────────────────────────────────────────
 
-export type PhoneErrorKey = 'error_phone_invalid' | 'error_phone_no_country_code'
+export type PhoneErrorKey = 'error_phone_invalid' | 'error_phone_no_country_code' | 'error_phone_digits_only'
 
 export type PhoneValidationResult =
   | { ok: true;  e164: string }
@@ -134,9 +134,9 @@ export function validateNationalPhone(params: {
   // b) Reject "+" in national input
   if (rawNational.includes('+')) return { ok: false, errorKey: 'error_phone_no_country_code' }
 
-  // c) Normalize; reject non-digit characters
+  // c) Normalize; reject non-digit characters with a specific "digits only" error
   const normalized = normalizeNational(rawNational)
-  if (!/^\d+$/.test(normalized)) return { ok: false, errorKey: 'error_phone_invalid' }
+  if (!/^\d+$/.test(normalized)) return { ok: false, errorKey: 'error_phone_digits_only' }
 
   // d) Reject if national starts with the dial-code digits (e.g. user typed "355691234567")
   const dialDigits = dialCode.replace('+', '')

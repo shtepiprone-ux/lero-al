@@ -342,6 +342,7 @@
     "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
     "error_email_invalid": "Введіть коректну електронну адресу.",
     "error_phone_no_country_code": "Введіть номер телефону без коду країни.",
+    "error_phone_digits_only": "Введіть лише цифри — без букв та символів.",
     "captcha_aria_label": "Перевірка безпеки captcha",
     "captcha_error_failed": "Перевірку безпеки не вдалося пройти. Будь ласка, спробуйте ще раз.",
     "captcha_not_configured": "(Captcha вимкнено — середовище розробки)",
@@ -512,6 +513,7 @@
     "currency_GBP": "Британський фунт (GBP)",
     "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
     "error_phone_no_country_code": "Введіть номер телефону без коду країни.",
+    "error_phone_digits_only": "Введіть лише цифри — без букв та символів.",
     "error_email_invalid": "Введіть коректну електронну адресу.",
     "password_section_title": "Змінити пароль",
     "password_current_label": "Поточний пароль",
@@ -1118,7 +1120,8 @@
         "email_invalid": "Некоректний email",
         "phone_no_country_code": "Введіть номер телефону без коду країни.",
         "error_phone_invalid": "Введіть коректний номер телефону для вибраної країни.",
-        "error_phone_no_country_code": "Введіть номер телефону без коду країни."
+        "error_phone_no_country_code": "Введіть номер телефону без коду країни.",
+        "error_phone_digits_only": "Введіть лише цифри — без букв та символів."
       },
       "profile_types": {
         "admin": "Адміністратор",

@@ -342,6 +342,7 @@
     "error_phone_invalid": "Please enter a valid phone number for the selected country.",
     "error_email_invalid": "Please enter a valid email address.",
     "error_phone_no_country_code": "Enter the phone number without the country code.",
+    "error_phone_digits_only": "Enter digits only — no letters or symbols.",
     "captcha_aria_label": "Security captcha verification",
     "captcha_error_failed": "Security verification failed. Please try again.",
     "captcha_not_configured": "(Captcha disabled — development environment)",
@@ -512,6 +513,7 @@
     "currency_GBP": "British Pound (GBP)",
     "error_phone_invalid": "Please enter a valid phone number for the selected country.",
     "error_phone_no_country_code": "Enter the phone number without the country code.",
+    "error_phone_digits_only": "Enter digits only — no letters or symbols.",
     "error_email_invalid": "Please enter a valid email address.",
     "password_section_title": "Change password",
     "password_current_label": "Current password",
@@ -1118,7 +1120,8 @@
         "email_invalid": "Invalid email address",
         "phone_no_country_code": "Enter the phone number without the country code.",
         "error_phone_invalid": "Please enter a valid phone number for the selected country.",
-        "error_phone_no_country_code": "Enter the phone number without the country code."
+        "error_phone_no_country_code": "Enter the phone number without the country code.",
+        "error_phone_digits_only": "Enter digits only — no letters or symbols."
       },
       "profile_types": {
         "admin": "Administrator",

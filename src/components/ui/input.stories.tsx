@@ -70,6 +70,44 @@ export const LocalePlaceholders: Story = {
   },
 };
 
+export const PhoneNumericValidation: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6 w-80">
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium">Phone (valid — digits only)</label>
+        <Input type="tel" value="691 234 567" readOnly />
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium">Phone (error state — letters blocked)</label>
+        <Input type="tel" value="691 234 567" aria-invalid readOnly />
+        <p className="text-xs text-destructive mt-0.5">
+          Enter digits only — no letters or symbols.
+        </p>
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium">Phone (uk locale error)</label>
+        <Input type="tel" value="" aria-invalid readOnly placeholder="691 234 567" />
+        <p className="text-xs text-destructive mt-0.5">
+          Введіть лише цифри — без букв та символів.
+        </p>
+      </div>
+    </div>
+  ),
+  parameters: {
+    viewport: { defaultViewport: 'mobile375' },
+    docs: {
+      description: {
+        story:
+          'PhoneField numeric-only validation states. ' +
+          'Input filtering (`/[^\\d\\s\\-().]​/g`) strips letters/symbols on every keystroke and paste. ' +
+          'Schema step (c) in `validateNationalPhone` returns `error_phone_digits_only` if non-digits pass filtering. ' +
+          'Error key is localized in all 4 locales (auth / cabinet / admin.user_profile.validation namespaces). ' +
+          'See `PhoneField.tsx` and `lib/phone/index.ts`. (Task 363)',
+      },
+    },
+  },
+}
+
 export const MobileForm: Story = {
   render: () => (
     <div className="flex flex-col gap-4 w-full max-w-sm p-4">

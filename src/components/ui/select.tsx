@@ -42,13 +42,15 @@ function SelectTrigger({
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        // Base — layout, typography, states
-        "flex w-fit items-center justify-between gap-1.5 rounded-xl px-3 py-2 text-sm text-foreground whitespace-nowrap transition-colors outline-none select-none cursor-pointer",
+        // Base — layout, typography, states.
+        // w-full max-w-full min-w-0: fills container and never causes horizontal overflow;
+        // whitespace-nowrap removed so long labels can be truncated by SelectValue's truncate.
+        "flex w-full max-w-full min-w-0 items-center justify-between gap-1.5 rounded-xl px-3 py-2 text-sm text-foreground transition-colors outline-none select-none cursor-pointer",
         "focus-visible:ring-2 focus-visible:ring-ring",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:ring-2 aria-invalid:ring-destructive/20",
         "data-placeholder:text-muted-foreground",
-        "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5",
+        "*:data-[slot=select-value]:truncate *:data-[slot=select-value]:flex *:data-[slot=select-value]:min-w-0 *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         // Size — plain classes, no data-attribute specificity issues
         size === "sm" ? "h-9" : "h-11",
@@ -152,7 +154,7 @@ function SelectItem({
       )}
       {...props}
     >
-      <SelectPrimitive.ItemText className="flex-1 whitespace-nowrap">
+      <SelectPrimitive.ItemText className="flex-1 break-words">
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator

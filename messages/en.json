@@ -1456,7 +1456,10 @@
         "status_change_no_change": "No change made",
         "status_change_history_title": "Change history",
         "status_change_history_empty": "No status changes yet",
-        "status_change_history_actor_unknown": "Unknown admin"
+        "status_change_history_actor_unknown": "Unknown admin",
+        "status_new": "New",
+        "status_in_progress": "In progress",
+        "status_closed": "Closed"
       }
     }
   },

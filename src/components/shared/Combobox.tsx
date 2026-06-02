@@ -100,12 +100,18 @@ export function Combobox({
     const spaceAbove = rect.top
     const maxH = 224 // max-h-56 = 14rem = 224px
 
-    const dropdownWidth = Math.max(rect.width, dropdownMinWidth ?? 0)
+    // Clamp dropdown width and left to stay within the viewport (prevents horizontal
+    // page overflow at 320px and other narrow widths, e.g. when dropdownMinWidth is set).
+    const rawWidth = Math.max(rect.width, dropdownMinWidth ?? 0)
+    const viewportW = window.innerWidth
+    const dropdownWidth = Math.min(rawWidth, viewportW - 8)
+    const safeLeft = Math.min(rect.left, Math.max(0, viewportW - dropdownWidth - 4))
+
     if (spaceBelow >= Math.min(maxH, 150) || spaceBelow >= spaceAbove) {
       setDropdownStyle({
         position: 'fixed',
         top: rect.bottom + 4,
-        left: rect.left,
+        left: safeLeft,
         width: dropdownWidth,
         maxHeight: Math.min(maxH, spaceBelow - 8),
         zIndex: 9999,
@@ -115,7 +121,7 @@ export function Combobox({
       setDropdownStyle({
         position: 'fixed',
         bottom: window.innerHeight - rect.top + 4,
-        left: rect.left,
+        left: safeLeft,
         width: dropdownWidth,
         maxHeight: Math.min(maxH, spaceAbove - 8),
         zIndex: 9999,
@@ -169,7 +175,7 @@ export function Combobox({
             )}
             onMouseDown={() => { onChange(''); setSearch(''); setOpen(false) }}
           >
-            <span className="flex-1 truncate">{clearLabel}</span>
+            <span className="flex-1 break-words">{clearLabel}</span>
             {value === '' && <Check className="h-3.5 w-3.5 shrink-0" />}
           </button>
         )}
@@ -187,7 +193,7 @@ export function Combobox({
             )}
             onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
           >
-            <span className="flex-1 truncate">{opt.label}</span>
+            <span className="flex-1 break-words">{opt.label}</span>
             {opt.description && (
               <span className="text-xs text-muted-foreground shrink-0">{opt.description}</span>
             )}
@@ -233,7 +239,7 @@ export function Combobox({
           disabled={disabled}
           className={cn(triggerBase, 'cursor-pointer')}
         >
-          <span className={cn('truncate', !selected && 'text-muted-foreground')}>
+          <span className={cn('flex-1 min-w-0 truncate', !selected && 'text-muted-foreground')}>
             {selected ? selected.label : placeholder}
           </span>
         </button>

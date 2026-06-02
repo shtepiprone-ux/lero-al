@@ -1456,7 +1456,10 @@
         "status_change_no_change": "Nuk u bë asnjë ndryshim",
         "status_change_history_title": "Historia e ndryshimeve",
         "status_change_history_empty": "Nuk ka ndryshime të statusit",
-        "status_change_history_actor_unknown": "Admin i panjohur"
+        "status_change_history_actor_unknown": "Admin i panjohur",
+        "status_new": "E re",
+        "status_in_progress": "Në procesim",
+        "status_closed": "E mbyllur"
       }
     }
   },

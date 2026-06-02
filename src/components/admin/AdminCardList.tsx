@@ -1,6 +1,7 @@
 'use client'
 
 import { type ReactNode } from 'react'
+import { ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export type StructuredCard = {
@@ -96,9 +97,12 @@ export function AdminCardList<Row>({
                     <div className="mt-0.5">{cardContent.meta}</div>
                   )}
                 </div>
-                {cardContent.trailing && (
-                  <div className="shrink-0 self-center">{cardContent.trailing}</div>
-                )}
+                {/* Trailing slot: explicit trailing takes precedence; auto-chevron for interactive rows */}
+                <div className="shrink-0 self-center">
+                  {cardContent.trailing ?? (onRowClick
+                    ? <ChevronRight className="h-4 w-4 text-muted-foreground/40" aria-hidden="true" />
+                    : null)}
+                </div>
               </div>
             ) : (
               cardContent

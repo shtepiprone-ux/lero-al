@@ -16,6 +16,9 @@ type BadgeVariant = 'neutral' | 'success' | 'warning' | 'destructive' | 'info'
 
 export type StatusOption<S extends string> = {
   code: S
+  /** Human-readable label. When provided, used directly — no t() call needed (preferred in stories). */
+  label?: string
+  /** i18n key in admin.common.status_control namespace. Used when `label` is not set. */
   labelKey: string
   badgeVariant: BadgeVariant
   icon?: ReactNode
@@ -25,6 +28,9 @@ export type StatusOption<S extends string> = {
 export type Transition<S extends string> = {
   from: S
   to: S
+  /** Human-readable label. When provided, used directly — no t() call needed (preferred in stories). */
+  label?: string
+  /** i18n key in admin.common.status_control namespace. Used when `label` is not set. */
   labelKey: string
   destructive?: boolean
   requireNote?: boolean
@@ -90,7 +96,7 @@ export function StatusChangeControl<S extends string>({
   if (variant === 'select') {
     const options: ComboboxOption[] = statuses.map(s => ({
       value: s.code,
-      label: t(s.labelKey as 'status_change_label'),
+      label: s.label ?? t(s.labelKey as 'status_change_label'),
     }))
 
     return (
@@ -167,13 +173,13 @@ export function StatusChangeControl<S extends string>({
                 onClick={() => setSelectedStatus(isSelected ? null : tr.to)}
                 disabled={disabled || pending}
                 className={cn(
-                  'min-h-[44px] transition-colors gap-1.5',
+                  'min-h-[44px] transition-colors gap-1.5 whitespace-normal break-words h-auto',
                   !isSelected && tr.destructive && 'text-destructive border-destructive/40 hover:bg-destructive/10',
                   isSelected && tr.destructive && 'bg-destructive text-destructive-foreground',
                 )}
               >
                 {statusOpt?.icon}
-                {t(tr.labelKey as 'update_status_btn')}
+                {tr.label ?? t(tr.labelKey as 'update_status_btn')}
               </Button>
             )
           })}

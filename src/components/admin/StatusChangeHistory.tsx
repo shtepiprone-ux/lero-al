@@ -37,7 +37,10 @@ export function StatusChangeHistory({ events, labelFormatter, emptyKey }: Props)
     )
   }
 
-  const label = (s: string) => labelFormatter ? labelFormatter(s) : s
+  // Safe fallback: humanize snake_case → Title Case when no formatter is supplied.
+  // Never leaks raw enum values (open, in_progress, …) as user-visible text.
+  const humanize = (s: string) => s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+  const label = (s: string) => labelFormatter ? labelFormatter(s) : humanize(s)
 
   return (
     <div className="rounded-lg border bg-muted/30 p-3">

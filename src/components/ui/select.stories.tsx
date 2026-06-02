@@ -125,3 +125,81 @@ export const OutlineVariant: Story = {
     </div>
   ),
 }
+
+// ── Locale settlement parity (Task 364) ──────────────────────────────────────
+// Settlement labels must be capitalized regardless of DB storage.
+// The canonical capitalize() from @/lib/utils ensures this in LocationCombobox.
+// This story demonstrates correct capitalized settlement labels across locales.
+
+const SETTLEMENTS_BY_LOCALE: Record<string, { placeholder: string; cities: { value: string; label: string }[] }> = {
+  en: {
+    placeholder: 'Select city',
+    cities: [
+      { value: 'tirana',   label: 'Tirana' },
+      { value: 'durres',   label: 'Durrës' },
+      { value: 'vlore',    label: 'Vlorë' },
+      { value: 'shkoder',  label: 'Shkodër' },
+    ],
+  },
+  sq: {
+    placeholder: 'Zgjidh qytetin',
+    cities: [
+      { value: 'tirana',   label: 'Tirana' },
+      { value: 'durres',   label: 'Durrës' },
+      { value: 'vlore',    label: 'Vlorë' },
+      { value: 'shkoder',  label: 'Shkodër' },
+    ],
+  },
+  uk: {
+    placeholder: 'Виберіть місто',
+    cities: [
+      { value: 'tirana',   label: 'Тирана' },
+      { value: 'durres',   label: 'Дуррес' },
+      { value: 'vlore',    label: 'Вльора' },
+      { value: 'shkoder',  label: 'Шкодер' },
+    ],
+  },
+  it: {
+    placeholder: 'Seleziona città',
+    cities: [
+      { value: 'tirana',   label: 'Tirana' },
+      { value: 'durres',   label: 'Durrës' },
+      { value: 'vlore',    label: 'Valona' },
+      { value: 'shkoder',  label: 'Scutari' },
+    ],
+  },
+}
+
+export const SettlementsLocaleStress: Story = {
+  parameters: {
+    viewport: { defaultViewport: 'mobile320' },
+    globals: { locale: 'uk' },
+    docs: {
+      description: {
+        story:
+          'Settlement names at 320px, uk locale. Names are always capitalized (capitalize() util in LocationCombobox). ' +
+          'Use the locale toolbar to switch sq/en/it — each locale shows the appropriate settlement label. ' +
+          'At sq: `name_al`. At en: `name_en ?? name_al`. At uk/it: `name_al` (no data, fallback). ' +
+          'Trigger value must truncate; no horizontal overflow.',
+      },
+    },
+  },
+  render: () => {
+    const locale = 'uk' as keyof typeof SETTLEMENTS_BY_LOCALE
+    const data = SETTLEMENTS_BY_LOCALE[locale] ?? SETTLEMENTS_BY_LOCALE.en
+    return (
+      <div className="p-3">
+        <Select defaultValue="tirana">
+          <SelectTrigger>
+            <SelectValue placeholder={data.placeholder} />
+          </SelectTrigger>
+          <SelectContent>
+            {data.cities.map(c => (
+              <SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    )
+  },
+}

@@ -1,16 +1,19 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { MapPin, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Combobox } from '@/components/shared/Combobox'
-import { cn } from '@/lib/utils'
+import { cn, capitalize, normalizeSearch } from '@/lib/utils'
 
 export interface LocationOption {
   id: number
   name_al: string
+  /** English name — present when the consumer fetches from `getSearchableLocations()`.
+   *  Falls back to `name_al` when null/undefined. */
+  name_en?: string | null
   type?: string
   region_id?: number | null
 }
@@ -18,6 +21,15 @@ export interface LocationOption {
 export interface RegionOption {
   id: number
   name_al: string
+  name_en?: string | null
+}
+
+/** Resolve the display label for a location based on the active locale.
+ *  - en → name_en (fallback name_al); sq → name_al; uk/it → name_al (no data).
+ *  Always capitalized via the canonical capitalize() util. */
+function resolveLocationLabel(loc: LocationOption, locale: string): string {
+  const raw = locale === 'en' ? (loc.name_en ?? loc.name_al) : loc.name_al
+  return capitalize(raw)
 }
 
 interface Props {
@@ -44,15 +56,28 @@ export function LocationCombobox({
   regions, onAddLocation, portal = false, size,
 }: Props) {
   const tc = useTranslations('common')
+  const locale = useLocale()
   const [showAdd, setShowAdd] = useState(false)
   const [addName, setAddName] = useState('')
   const [addRegionId, setAddRegionId] = useState<number | null>(null)
   const [adding, setAdding] = useState(false)
 
-  const options = useMemo(
-    () => locations.map(l => ({ value: String(l.id), label: l.name_al, description: l.type || undefined })),
-    [locations],
-  )
+  const options = useMemo(() => locations.map(l => {
+    const label = resolveLocationLabel(l, locale)
+
+    // Build description: type label + alternate-language name for bi-directional search.
+    // Combobox already filters against description — no changes to the Combobox primitive.
+    // - en locale: description includes name_al so typing Albanian finds the city too.
+    // - sq/uk/it locale: description includes name_en (if present/distinct) so English search works.
+    const altName = locale === 'en'
+      ? (normalizeSearch(l.name_al) !== normalizeSearch(label) ? l.name_al : undefined)
+      : (l.name_en && normalizeSearch(l.name_en) !== normalizeSearch(label) ? l.name_en : undefined)
+
+    const descParts = [l.type, altName].filter(Boolean) as string[]
+    const description = descParts.length ? descParts.join(' · ') : undefined
+
+    return { value: String(l.id), label, description }
+  }), [locations, locale])
 
   async function handleAdd() {
     if (!addName.trim() || !addRegionId || !onAddLocation) return
@@ -103,7 +128,7 @@ export function LocationCombobox({
                 className="h-9 rounded-xl text-sm"
               />
               <Combobox
-                options={regions!.map(r => ({ value: r.id.toString(), label: r.name_al }))}
+                options={regions!.map(r => ({ value: r.id.toString(), label: resolveLocationLabel(r, locale) }))}
                 value={addRegionId?.toString() ?? ''}
                 onChange={v => setAddRegionId(v ? Number(v) : null)}
                 variant="button"

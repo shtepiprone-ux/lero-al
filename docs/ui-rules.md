@@ -526,6 +526,15 @@ max-sm:w-full max-sm:h-auto max-sm:min-h-11 max-sm:whitespace-normal max-sm:brea
 - ❌ Action buttons that are `< 44px` tall at mobile
 - ❌ Horizontal page overflow from any tab list, chip row, or action cluster
 
+### FilterBar canonical alignment (Task 362, 2026-06-02)
+FilterBar outer container: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`
+
+Use `sm:items-start` (NOT `sm:items-center`). When the inline filter cluster has many chips wrapping to multiple rows, `items-center` causes the search input to appear vertically centered against the tall cluster — the "scatter" bug. `items-start` top-aligns all row children consistently.
+
+FilterBar filter cluster: `flex flex-wrap items-start gap-2` — chip rows top-align. Consumer's `filters` prop should use `items-start` too for consistency.
+
+FilterBar Sheet body: NO own `p-*` on the inner filter area div — SheetContent's `p-6` (Task 361) provides the indentation.
+
 ### Threshold
 The breakpoint is **`sm` (640px)**, NOT `md` (768px). All page-level action clusters and tab lists use `sm:` / `max-sm:`, not `md:` / `max-md:`.
 

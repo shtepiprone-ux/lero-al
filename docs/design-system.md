@@ -183,7 +183,9 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 
 ## §11 — Filters / search / tabs / actions — one global pattern
 
-1. **FilterBar** — one global layout primitive for filter chips + search + reset. `flex flex-wrap items-center gap-2`; on `<lg:` collapses overflow filters into a Sheet ("Filters" trigger). Active-filter count badge + a single global Reset. No per-route custom accordion/overlay filter (the `ListingsFilters` custom accordion is a migration target).
+1. **FilterBar** — one global layout primitive for filter chips + search + reset. Canonical outer fragment: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full`; on `<lg:` collapses overflow filters into a Sheet ("Filters" trigger). Active-filter count badge + a single global Reset. No per-route custom accordion/overlay filter (the `ListingsFilters` custom accordion is a migration target).
+
+   **Alignment rule (Task 362, 2026-06-02):** The outer container uses `sm:items-start` (not `items-center`). When the filter cluster wraps to multiple chip rows, the search/badge/reset top-align with the first chip row — preventing the "scatter" caused by `items-center` vertically centering shorter elements against a tall multi-row chip cluster. The filter cluster itself uses `flex-wrap items-start gap-2` so all chip rows align consistently from the top edge.
 2. **Search** — canonical search input (Input primitive) inside the FilterBar; `min-w-0 flex-1` so it shrinks, never pushes the row.
 3. **Tabs** — the shadcn **Tabs** primitive only. Local tab clones (`CabinetShell`, `AdminCurrencyTabs`) are migration targets.
 4. **Action clusters** — page-level action clusters use a plain `div` with `flex flex-wrap gap-2` in the component's action slot (PageHeader, AdminPageShell). The `ActionBar` primitive was removed (Task 358, 2026-06-02; zero product consumers). Buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).

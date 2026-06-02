@@ -118,7 +118,7 @@ function Mobile320UkrainianRender() {
   )
 }
 
-export const Mobile320Ukrainian: Story = {
+export const UkrainianLocaleStress: Story = {
   render: () => <Mobile320UkrainianRender />,
   parameters: {
     viewport: { defaultViewport: 'mobile320' },

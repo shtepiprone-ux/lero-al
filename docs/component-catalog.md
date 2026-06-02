@@ -81,14 +81,14 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | APPROVED | — | — | PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (8)
+## Layout Components (`src/components/layout/`) (7)
 
-> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347), `ActionBar` (DS-3 Task 348), `FilterBar` (DS-4 Task 349).
-> **Note:** `FilterBar` is the ONLY client-side Tier-2 layout primitive (`'use client'` — owns Sheet open-state). All others are server-safe.
+> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347), `FilterBar` (DS-4 Task 349).
+> **Note:** `FilterBar` is a client-side Tier-2 layout primitive (`'use client'`). All others are server-safe.
+> **Removed (Task 358, 2026-06-02):** `ActionBar` (DS-3, Task 348) and `ControlGroup` (Task 354-Fix) — zero product consumers in `src/app`/`src/modules`; owner-authorised deletion.
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `ActionBar` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; layout-only action cluster; size="xl" (44px) shared-height contract (ui-rules.md §15); stacks <md:, end/start-aligns md:+; no overflow-x-auto |
 | `FilterBar` | CANONICAL | ✅ | — | Tier-2 global layout primitive; **CLIENT** ('use client' — Sheet open-state); filter chips+search+reset row; <lg: collapses filters into Sheet (all-or-nothing D1); count Badge + single global Reset only when activeCount>0 (D2); search min-w-0 flex-1; labels prop i18n-safe (zero literal strings); no overflow-x-auto; no route adoption (Task 349 DS-4) |
 | `Footer` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `Header` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
@@ -101,7 +101,7 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `AdminCardList` | CANONICAL | ✅ | — | Structured card shape (title/subtitle/meta/trailing) + legacy ReactNode |
+| `AdminCardList` | CANONICAL | ✅ | — | Structured card shape (title/subtitle/meta/trailing) + legacy ReactNode. **Auto-chevron contract**: when `onRowClick` is set and `StructuredCard.trailing` is null/undefined, renders `ChevronRight` automatically in the trailing slot. Explicit `trailing` (e.g. a Badge) takes precedence. Static rows (no `onRowClick`) never show auto-chevron. |
 | `AdminCompaniesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminCurrenciesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminCurrencyTabs` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
@@ -124,7 +124,7 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `AdminPropertyTypesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminReportsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminSearchInput` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `AdminTable` | CANONICAL | ✅ | — | Internal lg: table↔card switch; cardRow prop with synthesis fallback |
+| `AdminTable` | CANONICAL | ✅ | — | Internal lg: table↔card switch; cardRow prop with synthesis fallback. **Trailing chevron column contract**: when `onRowClick` is set, a fixed `w-8` trailing column renders `ChevronRight` in every table-mode data row. No chevron column for static tables (no `onRowClick`). At <lg: (card mode), AdminCardList handles auto-chevron via its own contract. **Column-menu contract (2026-06-02)**: `sortable`+`sortType`+`onSort(dir)`+`hideable`+`onHideColumn`+`sortLabels` — when set, renders `ArrowUpDown` (h-3 w-3, 12px, strictly < text-sm 14px) as a `DropdownMenu` trigger with type-correct sort items (text: A→Z/Z→A; date: Newest/Oldest; numeric: low→high/high→low) + EyeOff "Hide column". Forbidden icons: Funnel, Sliders, Tune, Settings, ListFilter, Filter. NO row-filter chips — global search is the ONLY data-narrowing control. Columns visibility managed at the wrapper/page level via `initialHidden`/`onHideColumn`. See `docs/storybook-governance.md §12`. |
 | `StatusChangeControl` | CANONICAL | ✅ | 🌐 | — |
 | `StatusChangeHistory` | CANONICAL | ✅ | 🌐 | — |
 | `AdminSettings` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |

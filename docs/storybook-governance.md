@@ -166,6 +166,77 @@ Running `npm run governance:tailwind` will scan story files. Keep entropy within
 
 ---
 
+## §8b — CANONICAL STORY TAXONOMY (Task 358, 2026-06-02)
+
+**Every component section in Storybook MUST be a small, scenario-named canonical set. Per-width/proof/duplicate exports are forbidden.**
+
+### Scenario-named exports (required)
+Every `export const` name MUST describe a **scenario or mode**, not a viewport width.
+
+✅ `Default`, `WithActions`, `WithTabs`, `LocaleStress`, `Empty`, `Loading`, `Disabled`, `NoActiveFilters`, `SheetOpenMobile`, `RawKeyStress`
+❌ `Mobile320`, `Desktop1280`, `W375`, `Canonical960`, `StackedAt560`, `InlineAt768` as standalone export names or suffixes
+
+Width-number tokens (320, 375, 390, 480, 560, 680, 768, 810, 960, 1024, 1200, 1280, 1440, 1920, 2560) MUST NOT appear at the end of an export name.
+
+### Breakpoints via the viewport toolbar (required)
+Breakpoints are verified using the **Storybook viewport toolbar** — NOT as separate named exports.
+- One canonical story covers all widths via the toolbar.
+- A story pinned to a specific width (e.g. `parameters.viewport.defaultViewport: 'mobile320'`) is acceptable only when the story demonstrates a REAL mode difference that is inherently mobile (e.g. locale stress at the narrowest realistic width) — NOT to create a width sweep.
+
+### Locales via the locale toolbar (required)
+Locales (sq/en/uk/it) are exercised via the **locale toolbar** — NOT as separate locale-named exports.
+- One `LocaleStress` story per component (pinned to `mobile320` + `uk` locale) covers the worst-case overflow scenario.
+- The locale toolbar handles routine sq/it/en switching for all other stories.
+
+### One canonical set per component (required)
+Each component section has ONE canonical story per real mode. "Real mode" = a state the component genuinely reaches (e.g. filter with 0 active vs 2 active vs sheet open). There is NO per-width duplicate of the same mode.
+
+### Docs primary = canonical state
+The autodocs page (`tags: ['autodocs']`) uses the first exported story as the Docs primary. The first export MUST be `Default` (or the most representative canonical state).
+
+### Component removal governance
+When a component is removed from the codebase (zero product consumers, owner-authorised), its entry is removed from:
+- `docs/component-catalog.md`
+- `docs/design-system.md` references
+- `docs/responsive-screenshot-matrix.md`
+- All `*.stories.tsx` importers (migrated or deleted)
+
+---
+
+## §8a — RENDERED QA RULES (Task 354-Fix, 2026-06-01)
+
+**`build-storybook` is NOT visual approval. A passing build proves the story compiles; it does NOT prove the rendered layout is correct.**
+
+### Rendered PASS definition
+A story cell (story × viewport × locale) is marked **PASS** ONLY when:
+1. The story is rendered in a browser at the specified viewport.
+2. The developer visually inspects the output and confirms it matches the acceptance criteria.
+3. Optional: a screenshot is captured as evidence.
+
+### OWNER QA REQUIRED gate
+When a Sonnet executor cannot render Storybook (no browser access during the session), all story cells
+in the QA matrix MUST be marked **OWNER QA REQUIRED** — not PASS. The executor MUST NOT self-approve
+a rendered layout change without actual visual inspection.
+
+### Forbidden approval paths
+- ❌ Claiming PASS based on `build-storybook` exit 0 alone.
+- ❌ Claiming PASS based on code-level / structural analysis.
+- ❌ Claiming PASS without specifying the viewport and locale that were verified.
+- ❌ A locale-specific story (uk/sq/it) marked PASS if English scaffolding is still visible.
+
+### Status-label contract (see ui-rules.md §18)
+- ❌ Normal story showing raw enum values (`open`, `in_progress`, `resolved`, …) as user-visible labels.
+- ❌ Status transition arrow `open → in_progress` visible in a normal story.
+- ✅ Normal story provides `labelFormatter` per locale so both sides are human-readable.
+- ✅ `*_RawKeyStress` story explicitly tests the component's safe fallback.
+
+### Mixed-language story contract (see ui-rules.md §19)
+- ❌ Story with `globals: { locale: 'uk' }` showing English "New Listing", "Search results", "Page content area", "Available Listings".
+- ✅ Locale story uses locale-specific action labels, section titles, and sample content.
+- ✅ English-only content is acceptable only in stories with `globals: { locale: 'en' }` (or no locale set = en default).
+
+---
+
 ## §9 — FORBIDDEN STORY ANTI-PATTERNS
 
 ```
@@ -182,7 +253,30 @@ Running `npm run governance:tailwind` will scan story files. Keep entropy within
 ❌ Fixed px widths on localized text elements
 ❌ whitespace-nowrap without truncation safety
 ❌ English-only text for locale-sensitive components
+❌ size="sm" buttons/chips as tappable mobile controls (use size="xl" = 44px)
+❌ Claiming rendered PASS from build-storybook exit 0 alone (see §8a)
+❌ Raw enum values (open, in_progress, resolved …) as user-visible labels in normal stories (see §8a)
+❌ Mixed-language content in a locale-specific story (see §8a)
+❌ Parallel non-filtered and filtered story families for the same component (creates a confusing duplicate taxonomy — see §12)
+❌ A non-filtered table as Docs/autodocs primary example when the component's canonical state includes filtering
+❌ "Proof-only" story families (`ColFilter_*`, `Demo_*`, etc.) that duplicate an already-canonical story taxonomy
 ```
+
+---
+
+## §12 — ADMIN TABLE CANONICAL STORY CONTRACT (updated 2026-06-02)
+
+`AdminTable` canonical interaction is **sort + hide-column menus + Columns manager + global search**. No row-filter chips.
+
+- The **first export** (Docs primary) MUST be the canonical table with sort menus and global search.
+- Column ⇅ icon is `h-3 w-3` (12px) — **strictly smaller than the `text-sm` (14px) header font**.
+- Column ⇅ opens a **DropdownMenu** with type-correct sort items (text A→Z/Z→A, date Newest/Oldest, numeric low→high/high→low) + "Hide column" (EyeOff). **NO filter chips, NO funnel/sliders icons**.
+- A **Columns manager** (Button → Popover checklist) controls column visibility and restores hidden columns.
+- **Global search** (one Input) is the ONLY data-narrowing control — no Status/Role/City chip toolbar.
+- Stories are **scenario-named** (Default, ColumnMenu, ManageColumns, CardMode, Interactive, Responsive, LocaleStress, EmptyState, LoadingState). NO per-width exports (`W320`, `W375`, etc.). Breakpoints are checked via the **Storybook viewport toolbar**.
+- Story count target: **≤14** (one canonical family, no per-width or parallel families).
+- Mobile sort control (card mode): compact Sort dropdown — same sort model, same labels.
+- Forbidden icons everywhere: `Funnel`, `Sliders`, `SlidersHorizontal`, `Tune`, `Settings`, `Settings2`, `ListFilter`, `Filter`.
 
 ---
 

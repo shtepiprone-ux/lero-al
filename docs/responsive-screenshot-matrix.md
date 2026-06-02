@@ -102,16 +102,9 @@ Story IDs are Storybook-generated from `title` + export name (lowercase kebab-ca
 | `layout-section--title-at375` | Section/TitleAt375 | mobile-375 | uk | HIGH |
 | `layout-section--title-at768` | Section/TitleAt768 | tablet-768 | all | MEDIUM |
 | `layout-section--title-at2560` | Section/TitleAt2560 | huge-2560 | all | **CRITICAL** |
-| `layout-pageheader--full-header` | PageHeader/FullHeader | desktop-1440 | all | HIGH |
-| `layout-pageheader--action-stacked320` | PageHeader/ActionStacked320 | mobile-320 | all | HIGH |
-| `layout-pageheader--action-inline-at768` | PageHeader/ActionInlineAt768 | tablet-768 | all | HIGH |
-| `layout-pageheader--desktop-at1024` | PageHeader/DesktopAt1024 | desktop-1024 | all | HIGH |
-| `layout-pageheader--long-uk-title-mobile320` | PageHeader/UkMobile320 | mobile-320 | uk | **CRITICAL** |
-| `layout-actionbar--default` | ActionBar/Default | desktop-1440 | all | HIGH |
-| `layout-actionbar--stacked-mobile320` | ActionBar/StackedMobile320 | mobile-320 | all | HIGH |
-| `layout-actionbar--inline-at768` | ActionBar/InlineAt768 | tablet-768 | all | HIGH |
-| `layout-actionbar--inline-at1024` | ActionBar/InlineAt1024 | desktop-1024 | all | HIGH |
-| `layout-actionbar--many-actions-wrapped-uk320` | ActionBar/UkWrapped320 | mobile-320 | uk | **CRITICAL** |
+| `layout-pageheader--default` | PageHeader/Default | desktop-1440 | all | HIGH |
+| `layout-pageheader--with-actions` | PageHeader/WithActions | desktop-1440 | all | HIGH |
+| `layout-pageheader--locale-stress` | PageHeader/LocaleStress | mobile-320 | uk | **CRITICAL** |
 | `layout-filterbar--default` | FilterBar/Default | desktop-1440 | all | HIGH |
 | `layout-filterbar--desktop-lg-boundary1024` | FilterBar/LgBoundary1024 | desktop-1024 | all | **CRITICAL** |
 | `layout-filterbar--many-filters10-plus-at768` | FilterBar/ManyAt768 | tablet-768 | all | HIGH |
@@ -128,12 +121,54 @@ Story IDs are Storybook-generated from `title` + export name (lowercase kebab-ca
 | `layout-filterbar--shared-row-at810` | FilterBar/SharedRowAt810 | canonical-810 | all | **CRITICAL** |
 | `layout-filterbar--shared-row-at960` | FilterBar/SharedRowAt960 | canonical-960 | all | HIGH |
 | `layout-filterbar--inline-at1200` | FilterBar/InlineAt1200 | canonical-1200 | all | **CRITICAL** |
-| `layout-pageheader--action-stacked-at560` | PageHeader/ActionStackedAt560 | canonical-560 | all | HIGH |
-| `layout-pageheader--action-inline-at810` | PageHeader/ActionInlineAt810 | canonical-810 | all | HIGH |
-| `layout-pageheader--desktop-at1200` | PageHeader/DesktopAt1200 | canonical-1200 | all | HIGH |
-| `layout-actionbar--stacked-at560` | ActionBar/StackedAt560 | canonical-560 | all | HIGH |
-| `layout-actionbar--inline-at810` | ActionBar/InlineAt810 | canonical-810 | all | HIGH |
-| `layout-actionbar--inline-at1200` | ActionBar/InlineAt1200 | canonical-1200 | all | HIGH |
+| `layout-pageheader--with-count-badge` | PageHeader/WithCountBadge | desktop-1440 | all | HIGH |
+
+### DS Rendered QA Stories (Task 354-Fix — required direct stories, 2026-06-01)
+
+These stories were added to verify the DS mobile-control / localization / filter-state / no-raw-enum contract.
+Each cell requires actual rendered inspection (OWNER QA REQUIRED until visually verified).
+
+#### StatusChangeHistory — per-locale + mobile (admin)
+
+| Story ID | Label | Key viewport(s) | Locale | Priority |
+|---|---|---|---|---|
+| `admin-statuschangehistory--en-single` | StatusChangeHistory/En_Single | desktop1280 | en | HIGH |
+| `admin-statuschangehistory--en-multiple-mobile320` | StatusChangeHistory/En_Multiple_Mobile320 | mobile-320 | en | **CRITICAL** |
+| `admin-statuschangehistory--sq-mobile320` | StatusChangeHistory/Sq_Mobile320 | mobile-320 | sq | **CRITICAL** |
+| `admin-statuschangehistory--uk-normal` | StatusChangeHistory/Uk_Normal | desktop1280 | uk | HIGH |
+| `admin-statuschangehistory--uk-mobile320` | StatusChangeHistory/Uk_Mobile320 | mobile-320 | uk | **CRITICAL** |
+| `admin-statuschangehistory--uk-mobile375` | StatusChangeHistory/Uk_Mobile375 | mobile-375 | uk | HIGH |
+| `admin-statuschangehistory--uk-mobile390` | StatusChangeHistory/Uk_Mobile390 | mobile-390 | uk | HIGH |
+| `admin-statuschangehistory--it-mobile320` | StatusChangeHistory/It_Mobile320 | mobile-320 | it | HIGH |
+| `admin-statuschangehistory--raw-key-stress` | StatusChangeHistory/RawKeyStress | desktop1280 | en | **CRITICAL** |
+
+#### FilterBar — active vs available + mobile (filter-state contract)
+
+| Story ID | Label | Key viewport(s) | Locale | Priority |
+|---|---|---|---|---|
+| `layout-filterbar--zero-active-mobile390` | FilterBar/ZeroActive_Mobile390 | mobile-390 | en | **CRITICAL** |
+| `layout-filterbar--two-active-mobile390` | FilterBar/TwoActive_Mobile390 | mobile-390 | en | **CRITICAL** |
+| `layout-filterbar--many-available-two-active-mobile390` | FilterBar/ManyAvailableTwoActive_Mobile390 | mobile-390 | en | **CRITICAL** |
+| `layout-filterbar--uk-zero-active-mobile320` | FilterBar/Uk_ZeroActive_Mobile320 | mobile-320 | uk | **CRITICAL** |
+| `layout-filterbar--uk-two-active-mobile320` | FilterBar/Uk_TwoActive_Mobile320 | mobile-320 | uk | **CRITICAL** |
+| `layout-filterbar--uk-sheet-open-mobile390` | FilterBar/Uk_SheetOpen_Mobile390 | mobile-390 | uk | **CRITICAL** |
+
+#### PageHeader — locale action + mobile full-width
+
+| Story ID | Label | Key viewport(s) | Locale | Priority |
+|---|---|---|---|---|
+| `layout-pageheader--long-uk-title-mobile320` | PageHeader/LongUkTitleMobile320 | mobile-320 | uk | **CRITICAL** |
+| `layout-pageheader--long-sq-title-mobile320` | PageHeader/LongSqTitleMobile320 | mobile-320 | sq | HIGH |
+| `layout-pageheader--long-it-title-mobile320` | PageHeader/LongItTitleMobile320 | mobile-320 | it | HIGH |
+
+#### StatusChangeControl — sq/it locale stress (admin)
+
+| Story ID | Label | Key viewport(s) | Locale | Priority |
+|---|---|---|---|---|
+| `admin-statuschangecontrol--workflow-sq-mobile320` | StatusChangeControl/Workflow_Sq_Mobile320 | mobile-320 | sq | HIGH |
+| `admin-statuschangecontrol--select-sq-mobile320` | StatusChangeControl/Select_Sq_Mobile320 | mobile-320 | sq | HIGH |
+| `admin-statuschangecontrol--workflow-it-mobile320` | StatusChangeControl/Workflow_It_Mobile320 | mobile-320 | it | HIGH |
+| `admin-statuschangecontrol--select-it-mobile320` | StatusChangeControl/Select_It_Mobile320 | mobile-320 | it | HIGH |
 
 ### System Stories
 

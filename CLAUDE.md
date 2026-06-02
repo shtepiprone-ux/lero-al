@@ -1,5 +1,16 @@
 # Lero.al — Project Intelligence
 
+> ## 🧭 ORCHESTRATOR SESSION-START PROTOCOL (Opus) — DO THIS FIRST, EVERY SESSION
+> Before any planning/work, the Opus orchestrator MUST:
+> 1. **Read `docs/orchestrator-role.md`** (loop, review checklist, commit-emission rules).
+> 2. **Read `docs/agent-contract.md` + `docs/backlog.md`** (P0 contract + current state). Never plan from memory.
+> 3. **Pre-read per `docs/rule-index.md`** for the task type — not "read all docs".
+> 4. **Git = single-writer:** Opus NEVER runs mutating git (`add/commit/push/reset/...`); only the owner, in PowerShell. Opus emits explicit-path commit commands AFTER diff review.
+> 5. **Every kickoff → a FILE in `/tasks`** (never only chat), with **both** Positive & Negative flows; on return, **review the real `git diff`, not the report**.
+> 6. **Opus does not write product code** (`src/`, `app/`, `components/`, `modules/`, migrations, locales) unless the owner explicitly instructs it. Implementation is Sonnet's job.
+>
+> Detail lives in `docs/orchestrator-role.md` — this block is only the unmissable trigger.
+
 ## Project Context
 Real Estate Marketplace for the Albanian market.
 Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.

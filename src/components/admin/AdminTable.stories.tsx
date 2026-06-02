@@ -98,12 +98,20 @@ const ROWS: SampleRow[] = [
 ]
 
 // Long Ukrainian listing titles — locale/layout stress
-type UkRow = { id: string; name: string; status: string }
+// statusCode drives the badge variant (§18: never key variant off a localized label string).
+type UkRow = { id: string; name: string; status: string; statusCode: 'in_progress' | 'active' | 'pending' }
 const UK_ROWS: UkRow[] = [
-  { id: '1', name: 'Оголошення про продаж квартири в центрі міста — довга назва для перевірки обрізання тексту', status: 'В обробці' },
-  { id: '2', name: 'Оренда офісного приміщення поруч з метро — ще одна довга назва', status: 'Активне' },
-  { id: '3', name: 'Продаж будинку з ділянкою в передмісті', status: 'Очікує' },
+  { id: '1', name: 'Оголошення про продаж квартири в центрі міста — довга назва для перевірки обрізання тексту', status: 'В обробці', statusCode: 'in_progress' },
+  { id: '2', name: 'Оренда офісного приміщення поруч з метро — ще одна довга назва', status: 'Активне', statusCode: 'active' },
+  { id: '3', name: 'Продаж будинку з ділянкою в передмісті', status: 'Очікує', statusCode: 'pending' },
 ]
+
+// Variant is derived from the status CODE, not the localized label — identical across all locales (§18).
+function ukStatusVariant(code: UkRow['statusCode']): 'info' | 'success' | 'warning' {
+  if (code === 'active')      return 'success'
+  if (code === 'in_progress') return 'info'
+  return 'warning'
+}
 
 // ── Column definition metadata (used by demo wrapper) ────────────────────────
 type ColDef = {
@@ -626,7 +634,7 @@ export const LocaleStress: Story = {
         key: 'status', header: 'Статус', sortable: false, hideable: true,
         sortLabels: { asc: 'A→Z', desc: 'Z→A', hide: 'Приховати стовпець' },
         onHideColumn: () => {},
-        cell: r => <Badge variant="neutral">{r.status}</Badge>,
+        cell: r => <Badge variant={ukStatusVariant(r.statusCode)}>{r.status}</Badge>,
       },
     ]
     return (
@@ -637,7 +645,7 @@ export const LocaleStress: Story = {
           <div className="rounded-xl border bg-card p-4 space-y-1.5">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Вибраний запис</p>
             <p className="text-sm font-medium break-words">{selected.name}</p>
-            <Badge variant="neutral" className="text-xs">{selected.status}</Badge>
+            <Badge variant={ukStatusVariant(selected.statusCode)} className="text-xs">{selected.status}</Badge>
           </div>
         ) : (
           <p className="text-xs text-muted-foreground italic px-1">

@@ -11,14 +11,19 @@
  * Seven breakpoints are required: 320, 375, 390, 768, 1280, 1440, 2560.
  */
 
+'use client'
+
 import type { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { MapPin, Maximize2, Trash2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { LISTINGS_GRID_FIXTURE } from './fixtures/listing.fixture'
 
 // ── Simplified listing card (no server-action deps) ───────────────────────────
 
 function StoryCard({ listing }: { listing: (typeof LISTINGS_GRID_FIXTURE)[number] }) {
+  const t = useTranslations('listing')
   return (
     <div className="rounded-xl border bg-card overflow-hidden group">
       <div className="relative aspect-[4/3] bg-muted flex items-center justify-center">
@@ -31,7 +36,7 @@ function StoryCard({ listing }: { listing: (typeof LISTINGS_GRID_FIXTURE)[number
       </div>
       <div className="p-3 space-y-1.5">
         <p className="text-xs text-muted-foreground">
-          {listing.transaction_type === 'rent' ? 'Qira' : 'Shitje'} · Apartament
+          {t(listing.transaction_type as 'sale' | 'rent')} · {t('property_type_apartment')}
         </p>
         <h3 className="text-sm font-semibold line-clamp-2 group-hover:text-primary transition-colors">
           {listing.title}
@@ -51,18 +56,20 @@ function StoryCard({ listing }: { listing: (typeof LISTINGS_GRID_FIXTURE)[number
   )
 }
 
-// ── Stub clear button (no server-action call, visual only) ─────────────────────
+// ── Canonical clear button (canonical Button, cursor-pointer, action-wired) ────
 
-function StoryClrButton() {
+function StoryClrButton({ onClear }: { onClear?: () => void }) {
   const t = useTranslations('listing')
   return (
-    <button
-      type="button"
-      className="flex items-center gap-1.5 text-sm text-muted-foreground px-2 py-1 rounded hover:text-destructive transition-colors"
+    <Button
+      variant="ghost"
+      size="sm"
+      className="flex items-center gap-1.5 text-muted-foreground hover:text-destructive cursor-pointer"
+      onClick={onClear}
     >
       <Trash2 className="h-4 w-4 shrink-0" />
       {t('recently_viewed_clear')}
-    </button>
+    </Button>
   )
 }
 
@@ -72,10 +79,12 @@ function RecentlyViewedLayout({
   listings,
   showClear = false,
   showEmptyState = false,
+  onClear,
 }: {
   listings: (typeof LISTINGS_GRID_FIXTURE)
   showClear?: boolean
   showEmptyState?: boolean
+  onClear?: () => void
 }) {
   const t = useTranslations('listing')
 
@@ -93,10 +102,11 @@ function RecentlyViewedLayout({
     <div className="recently-viewed">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
-        {showClear && <StoryClrButton />}
+        {showClear && <StoryClrButton onClear={onClear} />}
       </div>
-      {/* Mobile: horizontal scroll. sm+: grid 2→3→4 cols. Matches RecentlyViewedGrid. */}
-      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
+      {/* Mobile: horizontal scroll (scrollbar visible in story for QA; production uses no-scrollbar).
+          sm+: grid 2→3→4 cols. Matches RecentlyViewedGrid markup. */}
+      <div className="flex gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
         {listings.map(listing => (
           <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
             <StoryCard listing={listing} />
@@ -135,15 +145,21 @@ const ITEMS = LISTINGS_GRID_FIXTURE
 // ── Stories ────────────────────────────────────────────────────────────────────
 
 /** Desktop grid — populated with 8 listings + clear button (profile context). */
-export const Populated: Story = {
-  render: () => (
+function PopulatedRender() {
+  const [cleared, setCleared] = useState(false)
+  return (
     <div className="container-wide mx-auto px-4 py-8">
-      <RecentlyViewedLayout listings={ITEMS} showClear />
+      <RecentlyViewedLayout listings={ITEMS} showClear onClear={() => setCleared(true)} />
+      {cleared && <p className="text-xs text-muted-foreground mt-3 px-1">Clear history clicked ✓</p>}
     </div>
-  ),
+  )
+}
+
+export const Populated: Story = {
+  render: () => <PopulatedRender />,
   parameters: {
     viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Desktop 1280px: 3-col grid (md:grid-cols-3 kicks in at md breakpoint).' } },
+    docs: { description: { story: 'Desktop 1280px: 3-col grid. Canonical Button for Clear — click logs action in canvas.' } },
   },
 }
 
@@ -151,12 +167,12 @@ export const Populated: Story = {
 export const MobileScroll: Story = {
   render: () => (
     <div className="py-4 px-4">
-      <RecentlyViewedLayout listings={ITEMS.slice(0, 6)} showClear />
+      <RecentlyViewedLayout listings={ITEMS.slice(0, 6)} showClear onClear={() => {}} />
     </div>
   ),
   parameters: {
     viewport: { defaultViewport: 'mobile375' },
-    docs: { description: { story: 'Mobile 375px: horizontal scroll, fixed w-48 cards, no-scrollbar.' } },
+    docs: { description: { story: 'Mobile 375px: horizontal scroll, w-48 shrink-0 cards. Scrollbar visible in story (production uses no-scrollbar). Swipe or drag horizontally to scroll.' } },
   },
 }
 
@@ -189,7 +205,7 @@ export const EmptyState: Story = {
 export const UkrainianLocale: Story = {
   render: () => (
     <div className="container-wide mx-auto px-4 py-8">
-      <RecentlyViewedLayout listings={ITEMS.slice(0, 4)} showClear />
+      <RecentlyViewedLayout listings={ITEMS.slice(0, 4)} showClear onClear={() => {}} />
     </div>
   ),
   parameters: {

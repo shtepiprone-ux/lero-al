@@ -1,6 +1,10 @@
+'use client'
+
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { Search, Plus, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -22,43 +26,62 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-export const AdminToolbar: Story = {
-  render: () => (
-    <div className="flex items-center justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl">
-      <div className="flex items-center gap-3">
-        <h2 className="text-lg font-semibold">Listings</h2>
-        <Badge variant="secondary">1,248</Badge>
-      </div>
-      <div className="flex items-center gap-2">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
-          <input
-            type="text"
-            placeholder="Search listings…"
-            className="pl-9 h-9 w-48 rounded-lg border bg-background text-sm px-3"
-          />
+function AdminToolbarRender() {
+  const [lastAction, setLastAction] = useState<string | null>(null)
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl">
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg font-semibold">Listings</h2>
+          <Badge variant="secondary">1,248</Badge>
         </div>
-        <Button variant="outline" size="default">
-          <Filter className="h-4 w-4" />
-          Filter
-        </Button>
-        <Button size="default">
-          <Plus />
-          Add listing
-        </Button>
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
+            <Input
+              type="search"
+              placeholder="Search listings…"
+              className="pl-9 h-9 w-48"
+            />
+          </div>
+          <Button variant="outline" size="default" onClick={() => setLastAction('Filter clicked')}>
+            <Filter className="h-4 w-4" />
+            Filter
+          </Button>
+          <Button size="default" onClick={() => setLastAction('Add listing clicked')}>
+            <Plus />
+            Add listing
+          </Button>
+        </div>
       </div>
+      {lastAction && (
+        <p className="text-xs text-muted-foreground px-1">{lastAction}</p>
+      )}
     </div>
-  ),
+  )
+}
+
+export const AdminToolbar: Story = {
+  render: () => <AdminToolbarRender />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'Admin toolbar: canonical Input (not raw input), canonical Button. Clicking Filter/Add logs an in-canvas action.',
+      },
+    },
+  },
 };
 
-export const AdminTableWrapper: Story = {
-  render: () => (
-    <div className="bg-card rounded-2xl border shadow-sm overflow-hidden max-w-6xl mx-auto">
-      {/* Toolbar */}
-      <div className="flex items-center justify-between p-4 md:p-6 border-b">
-        <h2 className="text-lg font-semibold">Users</h2>
-        <Button size="default"><Plus /> Add user</Button>
-      </div>
+function AdminTableWrapperRender() {
+  const [lastAction, setLastAction] = useState<string | null>(null)
+  return (
+    <div className="space-y-2">
+      <div className="bg-card rounded-2xl border shadow-sm overflow-hidden max-w-6xl mx-auto">
+        {/* Toolbar */}
+        <div className="flex items-center justify-between p-4 md:p-6 border-b">
+          <h2 className="text-lg font-semibold">Users</h2>
+          <Button size="default" onClick={() => setLastAction('Add user clicked')}><Plus /> Add user</Button>
+        </div>
       {/* Table (scroll wrapper for mobile) */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
@@ -91,11 +114,19 @@ export const AdminTableWrapper: Story = {
         </table>
       </div>
     </div>
-  ),
+      {lastAction && (
+        <p className="text-xs text-muted-foreground px-1">{lastAction}</p>
+      )}
+    </div>
+  )
+}
+
+export const AdminTableWrapper: Story = {
+  render: () => <AdminTableWrapperRender />,
   parameters: {
     docs: {
       description: {
-        story: 'Admin table wrapper: `bg-card rounded-2xl border shadow-sm overflow-hidden` + `overflow-x-auto` for mobile scroll.',
+        story: 'Admin table wrapper: `bg-card rounded-2xl border shadow-sm overflow-hidden` + `overflow-x-auto` for mobile scroll. "Add user" button logs action in canvas.',
       },
     },
   },

@@ -1,5 +1,8 @@
+'use client'
+
 import { useState } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
+import { useTranslations } from 'next-intl'
 import { PasswordInput } from './PasswordInput'
 import { PasswordRequirementsHint, allPasswordRulesMet } from './PasswordRequirementsHint'
 import { Button } from './button'
@@ -40,9 +43,10 @@ function WithHintIdleRender() {
   const hasInput = value.length > 0
   const allMet = allPasswordRulesMet(value)
   const inputState = hasInput ? (allMet ? 'success' : 'error') : 'idle'
+  const t = useTranslations('auth')
   return (
     <div className="flex flex-col gap-2 w-80">
-      <Label htmlFor="story-pass">New password</Label>
+      <Label htmlFor="story-pass">{t('reset_password_new_label')}</Label>
       <PasswordInput
         id="story-pass"
         value={value}
@@ -52,7 +56,7 @@ function WithHintIdleRender() {
       />
       <PasswordRequirementsHint value={value} />
       <Button size="xl" className="w-full mt-2" disabled={!allMet}>
-        Set password
+        {t('reset_password_submit')}
       </Button>
     </div>
   )
@@ -70,9 +74,10 @@ function WithHintAllRulesMetRender() {
   const hasInput = value.length > 0
   const allMet = allPasswordRulesMet(value)
   const inputState = hasInput ? (allMet ? 'success' : 'error') : 'idle'
+  const t = useTranslations('auth')
   return (
     <div className="flex flex-col gap-2 w-80">
-      <Label htmlFor="story-pass-ok">New password</Label>
+      <Label htmlFor="story-pass-ok">{t('reset_password_new_label')}</Label>
       <PasswordInput
         id="story-pass-ok"
         value={value}
@@ -82,7 +87,7 @@ function WithHintAllRulesMetRender() {
       />
       <PasswordRequirementsHint value={value} />
       <Button size="xl" className="w-full mt-2" disabled={!allMet}>
-        Set password
+        {t('reset_password_submit')}
       </Button>
     </div>
   )
@@ -100,9 +105,10 @@ function Mobile320UkrainianRender() {
   const hasInput = value.length > 0
   const allMet = allPasswordRulesMet(value)
   const inputState = hasInput ? (allMet ? 'success' : 'error') : 'idle'
+  const t = useTranslations('auth')
   return (
     <div className="flex flex-col gap-2 w-full p-4">
-      <Label htmlFor="story-uk">Новий пароль</Label>
+      <Label htmlFor="story-uk">{t('reset_password_new_label')}</Label>
       <PasswordInput
         id="story-uk"
         value={value}
@@ -112,7 +118,7 @@ function Mobile320UkrainianRender() {
       />
       <PasswordRequirementsHint value={value} />
       <Button size="xl" className="w-full mt-2" disabled={!allMet}>
-        Встановити пароль
+        {t('reset_password_submit')}
       </Button>
     </div>
   )

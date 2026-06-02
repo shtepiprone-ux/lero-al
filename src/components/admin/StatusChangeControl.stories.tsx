@@ -4,6 +4,18 @@ import type { StatusOption, Transition } from './StatusChangeControl'
 import type { HistoryEvent } from './StatusChangeHistory'
 import { Circle, AlertCircle, CheckCircle2, XCircle } from 'lucide-react'
 
+// ── Story purpose banner (Task 354-Fix pattern) ──────────────────────────────
+function StoryPurposeNote() {
+  return (
+    <div className="border border-dashed border-muted-foreground/30 rounded-lg px-3 py-2 bg-muted/10 text-[11px] text-muted-foreground mb-3 space-y-0.5">
+      <p className="font-semibold">StatusChangeControl — canonical tiered status primitive</p>
+      <p><strong>variant=&quot;select&quot;</strong>: low-stakes status changes (Sales/Support Inquiries). Renders a simple select + optional note. No workflow graph.</p>
+      <p><strong>variant=&quot;workflow&quot;</strong>: moderation flows (Support Tickets, Listing status). Renders allowed transition buttons derived from the current status + history log via historyEvents.</p>
+      <p><strong>Used in:</strong> /admin/inquiries (sales + support), /admin/support (tickets), /admin/listings (listing status). Defined by Epic HH Phase 2, Task 307.</p>
+    </div>
+  )
+}
+
 const meta: Meta = {
   title: 'Admin/StatusChangeControl',
   tags: ['autodocs'],
@@ -11,7 +23,17 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          'Canonical tiered status-change primitive. variant="select" for low-stakes (Inquiries). variant="workflow" for moderation (Support tickets, Listings). Breakpoints verified via the Storybook viewport toolbar; locales via the locale toolbar. See docs/admin-ux-rules.md §13 (Epic HH Phase 2, Task 307).',
+          '**Canonical tiered status-change primitive (Task 307, Epic HH Phase 2).**\n\n' +
+          '`variant="select"` — low-stakes status changes (Sales Inquiries, Support Inquiries). ' +
+          'Renders a dropdown select + optional note textarea. No workflow graph. Used when any status transition is valid.\n\n' +
+          '`variant="workflow"` — moderation flows (Support Tickets, Listing status). ' +
+          'Renders explicit transition buttons derived from the `transitions` prop for the current status. ' +
+          'Supports `requireNote`, `enableNote`, and `historyEvents` (change log). ' +
+          'Used when only certain transitions are permitted from the current state.\n\n' +
+          '**Product surfaces:** `/admin/inquiries/sales`, `/admin/inquiries/support` (select variant); ' +
+          '`/admin/support` tickets, `/admin/listings` status (workflow variant).\n\n' +
+          '**Story note:** each story shows a `StoryPurposeNote` banner explaining the variant and where it is used. ' +
+          'StatusChangeControl is NOT a defect — it is intentionally a control primitive, not a full page layout.',
       },
     },
   },
@@ -85,9 +107,17 @@ const TICKET_TRANSITIONS_UK: Transition<TStatus>[] = [
 // ════════════════════════════════════════════════════════════════════════════════
 
 export const Select: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
+  parameters: {
+    viewport: { defaultViewport: 'desktop1280' },
+    docs: {
+      description: {
+        story: '`variant="select"` — low-stakes inquiry status change. Any transition is valid. Used in `/admin/inquiries/sales` and `/admin/inquiries/support`.',
+      },
+    },
+  },
   render: () => (
     <div className="max-w-xs p-4">
+      <StoryPurposeNote />
       <StatusChangeControl
         variant="select"
         currentStatus={'new' as IStatus}

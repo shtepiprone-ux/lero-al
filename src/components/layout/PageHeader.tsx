@@ -21,7 +21,7 @@ export function PageHeader({
   return (
     <Comp
       className={cn(
-        'flex flex-col gap-4 md:flex-row md:items-center md:justify-between',
+        'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between',
         className,
       )}
     >
@@ -36,7 +36,7 @@ export function PageHeader({
           <p className="text-sm sm:text-base text-muted-foreground mt-1">{description}</p>
         )}
       </div>
-      {action != null && <div className="shrink-0">{action}</div>}
+      {action != null && <div className="shrink-0 max-sm:w-full [&>*]:max-sm:w-full">{action}</div>}
     </Comp>
   )
 }

@@ -135,7 +135,7 @@ Every visual element belongs to exactly one tier. This determines where it may b
 | Tier | Definition | Lives in | Responsive ownership |
 |---|---|---|---|
 | **1. Primitive UI** | Atomic, domain-agnostic (Button, Input, Combobox, Dialog, Sheet, DropdownMenu, Card, Badge, Tabs, Table primitive). | `src/components/ui/*` | The primitive. Consumers do NOT restyle its internals. Single-source (`ui-rules.md §0`): one Button, one Combobox. |
-| **2. Global layout primitive** | App-wide structural shells: **PageShell, PageHeader, Section, FilterBar, ActionBar**, plus admin specialisations **AdminPageShell, AdminTable, AdminCardList**. | `src/components/layout/*`, `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
+| **2. Global layout primitive** | App-wide structural shells: **PageShell, PageHeader, Section, FilterBar**, plus admin specialisations **AdminPageShell, AdminTable, AdminCardList**. | `src/components/layout/*`, `src/components/admin/*` | The primitive owns container + spacing + responsive switch. Consumers pass content + config, never override layout. |
 | **3. Data-surface primitive** | Tabular/list/grid surfaces: AdminTable, AdminCardList, listing grid, card list. | `src/components/admin/*`, `src/modules/*/components` | Owns the table↔card switch (§10) and column visibility. |
 | **4. Domain component** | Feature-specific composition (ListingCard, ListingsFilters, CabinetShell, AdminListingsTable). | `src/modules/*`, feature folders | Composes tiers 1–3. May choose a `tableAt` decision and pass a `cardRow`, but may NOT invent a new container/spacing/table style. |
 
@@ -156,7 +156,7 @@ Rule: **layout styling flows down from tiers 1–3; domain components (tier 4) c
 ## §9 — Admin layout rules
 
 1. Every admin route wraps content in **AdminPageShell** (data-container / `.container-admin`).
-2. AdminPageShell header = title + optional countBadge + optional subtitle + ActionBar (right-aligned at `md:+`, stacked `<md`), with a FilterBar slot below the header.
+2. AdminPageShell header = title + optional countBadge + optional subtitle + an optional actions slot (right-aligned at `md:+`, stacked `<md`), with a FilterBar slot below the header.
 3. Tabular data uses **AdminTable** (Sprint 28 primitive). Non-tabular row data uses **AdminCardList** directly. No raw `<table>` and no card-imitating `<div>` rows outside these primitives in admin routes.
 4. Admin content fills the main area up to `2xl:`, then caps at **1792px** (`.max-w-10xl`). Admin does NOT use `2xl:grid-cols-N` for tables — natural column widths consume available space.
 5. Admin inherits the same spacing, typography, overlay, and form rules as the rest of the app; only its container width and density differ.
@@ -186,7 +186,7 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 1. **FilterBar** — one global layout primitive for filter chips + search + reset. `flex flex-wrap items-center gap-2`; on `<lg:` collapses overflow filters into a Sheet ("Filters" trigger). Active-filter count badge + a single global Reset. No per-route custom accordion/overlay filter (the `ListingsFilters` custom accordion is a migration target).
 2. **Search** — canonical search input (Input primitive) inside the FilterBar; `min-w-0 flex-1` so it shrinks, never pushes the row.
 3. **Tabs** — the shadcn **Tabs** primitive only. Local tab clones (`CabinetShell`, `AdminCurrencyTabs`) are migration targets.
-4. **ActionBar** — one global primitive for the page-level action cluster (right-aligned `md:+`, stacked `<md`); buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).
+4. **Action clusters** — page-level action clusters use a plain `div` with `flex flex-wrap gap-2` in the component's action slot (PageHeader, AdminPageShell). The `ActionBar` primitive was removed (Task 358, 2026-06-02; zero product consumers). Buttons are the Button primitive at one shared height per row (§12 / `ui-rules.md §15`). Toolbars never overflow horizontally; they wrap or move overflow actions into a menu (`overflow-x-auto` is acceptable for tables, NOT for toolbars).
 
 ---
 
@@ -198,6 +198,79 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 4. One label-control vertical rhythm per form (`space-y-3`/`space-y-4`), consistent.
 5. Field rows that hold two controls collapse to stacked (`flex-col`) `<sm:` and side-by-side `sm:+`.
 6. Validation/error/empty/loading/success states are all styled with primitives and verified (this is a responsive AND a flow requirement; see §19).
+
+---
+
+## §12a — Mobile Control Touch Target and Stacking Contract (Task 354-Fix, 2026-06-01)
+
+**Established after owner rendered-QA failures. This section is CANONICAL and ENFORCED for all DS primitives.**
+
+### Touch target floor
+- Every **interactive mobile control** (button, chip, filter pill, combobox trigger, select trigger, any tappable element) has a **minimum practical touch target of 44px height** at 320 / 375 / 390px widths.
+- `size="xl"` (h-11 = 44px) is the canonical mobile-safe Button size. `size="icon-xl"` (44px) for icon-only buttons.
+- `size="sm"` (28px) and `size="default"` (32px) are **desktop-only** sizes. They MUST NOT appear as the primary size for tappable controls at mobile widths.
+
+### Mobile stacking / full-width
+- At 320 / 375 / 390 / 480 / 560px (i.e. `<sm:`), primary and secondary action buttons in DS primitives are **full-width or stacked in a column** unless a documented exception applies.
+- `PageHeader` action slot uses `max-sm:w-full [&>*]:max-sm:w-full`; the row goes inline at `sm:` (640px). The `ActionBar` primitive was removed (Task 358, 2026-06-02); page-level action clusters use a plain flex-wrap div with the canonical stacking fragment in the action slot.
+- `AdminPageShell` actions container: `flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:shrink-0 max-sm:w-full [&>*]:max-sm:w-full`.
+- `FilterBar` outer row: `flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full`.
+
+### Filter chips / filter pills
+- Filter chips used as tappable controls MUST use `size="xl"` (44px) — NOT `size="sm"` (28px).
+- Chip text must never appear larger than its chip container (chip must accommodate its label).
+- In Storybook fixtures, `FilterChips` or equivalent helpers must use `size="xl"`.
+
+### One-row-one-height (§15 / ui-rules.md §15)
+- Text inputs, Combobox triggers, Select triggers, Buttons, and filter chips that share a row or surface must have **consistent height / rhythm**.
+- `Combobox size="default"` (h-11), `SelectTrigger size="default"` (h-11), `Input` default (h-11 target), `Button size="xl"` (h-11) are the canonical mobile-safe shared height.
+- Mixing sizes within the same row (e.g., `size="sm"` button next to a `size="default"` Combobox) is a DS violation.
+
+### No horizontal overflow
+- At 320 / 375 / 390px, no component or chip row creates horizontal page overflow.
+- Controls that cannot fit one row must **wrap or stack predictably** — never horizontal-scroll a toolbar.
+- Dropdowns / sheets / popovers are viewport-bounded (clamped to viewport width) at all mobile widths.
+
+---
+
+## §12b — Mobile control & tab stacking contract (< sm = < 640px) — Task 359, 2026-06-02
+
+**Threshold: `sm` (640px).** Below 640px, buttons AND tab groups become full-width / stacked. This eliminates the ragged flex-wrap grid that appears between ~480–640px.
+
+### Canonical action-cluster fragment
+```
+flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full
+```
+Apply this to any container that holds a group of action buttons (page-level actions, form action rows, admin header clusters). Children (buttons) become full-width below `sm`; inline row from `sm` upward.
+
+### Button primitive mobile fragment (Task 360, 2026-06-02)
+`size="xl"` and `size="tab"` buttons in `button.tsx` now carry a canonical mobile fragment:
+- `max-sm:w-full` — full-width at < sm (640px)
+- `max-sm:h-auto max-sm:min-h-11` — height grows with content but stays ≥ 44px (xl only)
+- `max-sm:whitespace-normal max-sm:break-words` — long labels wrap / break rather than overflow
+
+Icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) and compact desktop-only sizes (`xs`, `sm`, `default`, `lg`) are **NOT** given `max-sm:w-full`. Full-width is **only** for mobile-reachable text buttons (`xl`, `tab`). The container fragment (`[&>*]:max-sm:w-full`) remains the preferred approach for action clusters; the primitive fragment covers standalone text buttons used outside such containers.
+
+### Tabs — `< sm` responsive behavior (canonical, enforced in `src/components/ui/tabs.tsx`)
+
+| Condition | `< sm` behavior | `sm:` + behavior |
+|---|---|---|
+| **≤ 3 tabs** | Full-width list (`max-sm:w-full`); triggers `flex-1` (equal fill); ≥ 44px tall (`max-sm:min-h-11`) | Content-width row; preserve existing tab styling |
+| **> 3 tabs** | Pass `mobileScroll` to `TabsList`; full-width + `overflow-x-auto flex-nowrap`; triggers natural width; ≥ 44px tall | Content-width row |
+
+`TabsList` always gets `max-sm:flex max-sm:w-full max-sm:h-auto` from the primitive. Consumers with ≤ 3 tabs inherit fill behavior automatically (triggers already have `flex-1`). Consumers with > 3 tabs that need horizontal scroll pass `<TabsList mobileScroll>`.
+
+### Tabs — underline variant (Task 360, 2026-06-02)
+`TabsList` accepts `variant="underline"` for a primary-color underline indicator style. Active tab shows a `bg-primary` underline below the trigger; inactive tabs show none. The `default` (pill/fill) style is unchanged for all existing consumers. The Task 359 mobile full-width + `mobileScroll` contract applies to the `underline` variant too.
+
+| `TabsList` variant | Active indicator | List background | Use |
+|---|---|---|---|
+| `default` | filled pill (`bg-background` + `shadow-sm`) | `bg-muted` | Default — all existing consumers |
+| `line` | `bg-foreground` (neutral) underline | transparent | Neutral underline style |
+| `underline` | `bg-primary` (branded) underline | transparent | **Canonical branded underline style** — opt-in only |
+
+### No horizontal page overflow (320–640px)
+No tab list, action cluster, filter chip row, or toolbar may produce horizontal page overflow at 320 / 360 / 375 / 390 / 412 / 480 / 560 / 640px. Controls that cannot fit one row MUST wrap or stack predictably — never produce a half-width pill grid.
 
 ---
 
@@ -218,6 +291,12 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 4. **One overlay implementation**: shadcn Dialog/Sheet/DropdownMenu only. Hand-rolled `fixed inset-0` overlays (AdminSidebar mobile drawer, ListingsShell filter overlay) are forbidden and are migration targets.
 5. Dropdowns/popovers respect the z-index scale (`ui-rules.md §16`); chrome at `z-30`; no `z-[999]`/`z-[9999]` emergency overrides.
 6. Scroll-lock and focus-trap come from the primitives — never custom `body { overflow:hidden }` JS.
+
+### Sheet canonical padding (Task 361, 2026-06-02)
+`SheetContent` carries `p-6` (24px, canonical modal padding per §5). `SheetHeader` and `SheetFooter` have **no own padding** — they inherit the `SheetContent` container padding. Consumers who need non-standard padding pass `p-0` / `p-5` etc. to `SheetContent` via `className` (tailwind-merge overrides). Body content placed directly as a child of `SheetContent` is automatically indented by `p-6`.
+
+### Dialog scroll-clip canonical pattern (Task 361, 2026-06-02)
+`DialogContent` uses `overflow-hidden` on the outer popup element (clips scrollbar to `rounded-2xl` boundary) and `overflow-y-auto flex-1 min-h-0` on an **inner scroll container** `<div>` that wraps `{children}`. This separates the rounded-clip boundary from the scroll context. The `p-4` lives on the outer element (overridable via `className`). `DialogFooter`'s `-mx-4 -mb-4` bleed is relative to the inner container and clips correctly to the outer `p-4` boundary. Stories must NOT use `defaultOpen` simultaneously — each dialog story uses a trigger so only one opens at a time (prevents stacked overlays in Docs view).
 
 ---
 

@@ -86,3 +86,60 @@ export const Disabled: Story = {
     </Tabs>
   ),
 };
+
+export const Underline: Story = {
+  render: () => (
+    <div className="flex flex-col gap-8 w-full max-w-lg">
+      <div>
+        <p className="text-xs text-muted-foreground mb-3">Underline variant — active tab: primary-color indicator</p>
+        <Tabs defaultValue="listings" className="w-full">
+          <TabsList variant="underline">
+            <TabsTrigger value="listings">My listings</TabsTrigger>
+            <TabsTrigger value="saved">Saved</TabsTrigger>
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+          </TabsList>
+          <TabsContent value="listings">
+            <p className="text-sm text-muted-foreground p-4">Listings content here.</p>
+          </TabsContent>
+          <TabsContent value="saved">
+            <p className="text-sm text-muted-foreground p-4">Saved searches here.</p>
+          </TabsContent>
+          <TabsContent value="profile">
+            <p className="text-sm text-muted-foreground p-4">Profile settings here.</p>
+          </TabsContent>
+        </Tabs>
+      </div>
+      <div>
+        <p className="text-xs text-muted-foreground mb-3">Ukrainian labels — overflow stress</p>
+        <Tabs defaultValue="a" className="w-full">
+          <TabsList variant="underline">
+            <TabsTrigger value="a">Мої оголошення</TabsTrigger>
+            <TabsTrigger value="b">Збережені пошуки</TabsTrigger>
+            <TabsTrigger value="c">Профіль</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
+      <div>
+        <p className="text-xs text-muted-foreground mb-3">Disabled trigger — underline variant</p>
+        <Tabs defaultValue="active" className="w-full">
+          <TabsList variant="underline">
+            <TabsTrigger value="active">Active</TabsTrigger>
+            <TabsTrigger value="disabled" disabled>Disabled</TabsTrigger>
+            <TabsTrigger value="other">Other</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Opt-in underline style via `variant="underline"` on `TabsList`. ' +
+          'Active tab shows a primary-color underline indicator; inactive tabs show none. ' +
+          'The Task 359 mobile full-width + `mobileScroll` contract applies to this variant. ' +
+          'Default (pill background) style is unchanged for all consumers that do not opt in.',
+      },
+    },
+  },
+};

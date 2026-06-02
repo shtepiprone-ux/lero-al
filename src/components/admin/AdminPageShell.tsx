@@ -27,7 +27,7 @@ export function AdminPageShell({
       <div className="p-3 md:p-6 flex flex-col gap-4">
         {(title || actions) && (
           <div
-            className={`flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4${stickyHeader ? ' sticky top-0 z-30 bg-background py-3 border-b' : ''}`}
+            className={`flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4${stickyHeader ? ' sticky top-0 z-30 bg-background py-3 border-b' : ''}`}
           >
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
@@ -49,7 +49,7 @@ export function AdminPageShell({
               )}
             </div>
             {actions && (
-              <div className="flex items-center gap-2 flex-wrap shrink-0">{actions}</div>
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:shrink-0 max-sm:w-full [&>*]:max-sm:w-full">{actions}</div>
             )}
           </div>
         )}

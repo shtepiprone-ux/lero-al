@@ -45,7 +45,7 @@ export function FilterBar({
   const isActive = activeCount > 0
 
   return (
-    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center', className)}>
+    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full', className)}>
       {/* lg:+ inline filter cluster — all-or-nothing (Decision D1); hidden on mobile */}
       <div className="hidden min-w-0 flex-wrap items-center gap-2 lg:flex">
         {filters}
@@ -59,13 +59,16 @@ export function FilterBar({
       )}
 
       {/* lg:+ only: count Badge + single global Reset — inline, end-aligned (Decision D2) */}
+      {/* Reset uses size="xl" (h-11 = 44px) to match the one-row-one-height contract
+          with inline filter chips (size="xl") and the search Input (h-11).
+          Ghost variant preserves the tertiary visual style; touch target is DS-compliant. */}
       {isActive && (
         <>
           <Badge variant="secondary" className="hidden shrink-0 lg:inline-flex">
             {activeCount}
           </Badge>
           <Button
-            size="sm"
+            size="xl"
             variant="ghost"
             onClick={onReset}
             className="hidden lg:inline-flex"

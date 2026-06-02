@@ -493,6 +493,44 @@ See `docs/component-catalog-governance.md` for the full classification model.
 
 ---
 
+## §15a — MOBILE CONTROL & TAB STACKING CONTRACT (< sm = < 640px) — Task 359, 2026-06-02
+
+### Canonical action-cluster fragment
+Any container holding a group of action buttons (page-level actions, admin header clusters, form action rows) MUST use:
+```
+flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full
+```
+Below `sm` (640px): children stack vertically, each **full-width** (`[&>*]:max-sm:w-full`), each ≥ 44px tall (`size="xl"`). At `sm:+`: normal inline row. Never a ragged flex-wrap grid of half-width pill buttons.
+
+### Tab list stacking rule (`src/components/ui/tabs.tsx`)
+`TabsList` gets `max-sm:flex max-sm:w-full max-sm:h-auto` from the primitive. `TabsTrigger` gets `max-sm:min-h-11` (≥ 44px).
+
+- **≤ 3 tabs (default fill mode):** Triggers have `flex-1` → equal-width fill of the full-width list. No extra props needed.
+- **> 3 tabs (scroll mode):** Pass `<TabsList mobileScroll>` → list gets `max-sm:overflow-x-auto max-sm:flex-nowrap`. Use when tab labels are long enough that equal-fill creates unacceptably narrow triggers.
+
+**Underline variant (Task 360, 2026-06-02):** Pass `variant="underline"` to `TabsList` for a branded underline style. Active trigger shows a `bg-primary` underline indicator; no fill background. Mobile behavior is identical to default (`max-sm:w-full`, `mobileScroll` support). Existing consumers that do NOT pass `variant="underline"` are visually unchanged.
+
+### Button — mobile full-width rule (Task 360, 2026-06-02)
+`size="xl"` and `size="tab"` in `button.tsx` carry canonical mobile classes:
+```
+max-sm:w-full max-sm:h-auto max-sm:min-h-11 max-sm:whitespace-normal max-sm:break-words
+```
+- Full-width (`max-sm:w-full`) at < 640px; content-width at ≥ 640px.
+- Height auto-grows for long labels that wrap (`max-sm:h-auto`); floor stays ≥ 44px (`max-sm:min-h-11`).
+- Long labels wrap (`max-sm:whitespace-normal`) and very long unbroken words break (`max-sm:break-words`).
+- **Does NOT apply to:** icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) and compact/desktop-only sizes (`xs`, `sm`, `default`, `lg`).
+
+### Forbidden below sm
+- ❌ `flex-wrap` grid that produces uneven half-width buttons (ragged pill grid)
+- ❌ Tab list that is not full-width (uses `inline-flex w-fit` without mobile override)
+- ❌ Action buttons that are `< 44px` tall at mobile
+- ❌ Horizontal page overflow from any tab list, chip row, or action cluster
+
+### Threshold
+The breakpoint is **`sm` (640px)**, NOT `md` (768px). All page-level action clusters and tab lists use `sm:` / `max-sm:`, not `md:` / `max-md:`.
+
+---
+
 ## §15 — CONTROL-HEIGHT ALIGNMENT (enforced 2026-05-23)
 
 > Added after the `/listings` toolbar review (Task 220): the canonical `Combobox` and canonical `Button`
@@ -545,6 +583,12 @@ and configure EVERY control to it:
   unavoidable exception (e.g. dev overlay) in `docs/tailwind-governance.md` allowlist.
 - Two pieces of chrome must never both sit at `z-50`.
 
+### Sheet canonical padding (Task 361, 2026-06-02)
+`SheetContent` base carries `p-6`. `SheetHeader` and `SheetFooter` have NO own `p-*` — they inherit from the parent `SheetContent`. Consumers override via `className` on `SheetContent` (e.g. `p-0` for custom layouts, `p-5` for compact panels). Existing consumers that already override their SheetContent or SheetHeader padding are unaffected (tailwind-merge resolves correctly).
+
+### Dialog scroll-clip (Task 361, 2026-06-02)
+`DialogContent` structure: outer popup = `overflow-hidden flex flex-col p-4` → inner scroll wrapper = `overflow-y-auto flex-1 min-h-0 grid gap-4`. The `overflow-hidden` on outer clips the scrollbar to the `rounded-2xl` boundary. The inner `flex-1 min-h-0` is needed for the flex scrollable-column pattern to work correctly (inner is height-bounded by the outer's `max-h-[90dvh]` once it's capped). Stories must use `<DialogTrigger>` (not `defaultOpen`) to prevent stacked overlays in Storybook Docs mode.
+
 ---
 
 ## §17 — UI PRE-FLIGHT CHECKLIST (MANDATORY, mechanical — enforced 2026-05-23)
@@ -584,3 +628,42 @@ and configure EVERY control to it:
 
 If any check fails and the fix is out of scope, STOP and ask the orchestrator (open a follow-up) rather
 than shipping the defect.
+
+---
+
+## §18 — No raw enum/status labels in UI (Task 354-Fix, 2026-06-01)
+
+**Never expose raw technical enum values as user-visible text.**
+
+Examples of FORBIDDEN raw enum exposure: `open`, `in_progress`, `resolved`, `closed`, `pending`,
+`active`, `inactive`, `sold`, `rented`, `archived`, `new` appearing literally as user-facing labels.
+
+Rules:
+- `StatusChangeHistory` and `StatusChangeControl` MUST NOT render raw snake_case status codes
+  as user-visible text. The component now provides a safe humanizing fallback (snake_case → Title Case)
+  when no `labelFormatter` is supplied, but callers MUST still supply per-locale `labelFormatter` for
+  correct localized labels in production consumers.
+- Status transition arrows (`open → in_progress`) MUST use localized labels on both sides.
+- **Unknown / unmapped status code** → documented, visibly-safe fallback (Title-Cased token via
+  `humanize(s)` in `StatusChangeHistory.tsx`). NOT a raw snake_case key leak.
+- Normal Storybook stories for status components MUST supply a `labelFormatter` fixture per locale.
+- Stress stories that deliberately test the raw-key fallback path MUST be named `*_RawKeyStress`
+  and must NOT be the default/normal QA story.
+
+---
+
+## §19 — No mixed-language normal Storybook stories (Task 354-Fix, 2026-06-01)
+
+**A locale-specific story (one with `globals: { locale: 'uk' }` or `'sq'` or `'it'`) must contain
+ALL visible copy in that locale.** There must be no English fallback scaffolding in a non-English story.
+
+Rules:
+- Section titles, button labels, placeholder text, description text, helper text, empty states, and
+  sheet/dialog content must all be in the story's locale.
+- The `Section` wrapper, sample content helpers, and action button fixtures must have locale-specific
+  variants when used inside a locale story.
+- English strings inside a `globals: { locale: 'uk' }` story = a governance failure.
+- Deliberately mixed or fallback stories must be explicitly named `*_MixedFallbackStress` or similar
+  and must NOT be the default/normal QA story.
+- Locale-specific content may be supplied as inline fixture strings in stories (not requiring i18n keys)
+  provided the strings are in the correct locale and are stable test data.

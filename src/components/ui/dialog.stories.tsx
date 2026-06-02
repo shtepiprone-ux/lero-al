@@ -50,13 +50,14 @@ export const Default: Story = {
 
 export const LongContent: Story = {
   render: () => (
-    <Dialog defaultOpen>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+    <Dialog>
+      <DialogTrigger render={<Button>Terms of service</Button>} />
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Terms of Service</DialogTitle>
           <DialogDescription>Please read before continuing.</DialogDescription>
         </DialogHeader>
-        <div className="py-4 space-y-3 text-sm">
+        <div className="space-y-3 text-sm">
           {Array.from({ length: 8 }).map((_, i) => (
             <p key={i} className="text-muted-foreground">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
@@ -73,7 +74,10 @@ export const LongContent: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Long content dialog uses `max-h-[90vh] overflow-y-auto` — canonical modal height cap.',
+        story:
+          'Long content: dialog scrolls internally — `overflow-y-auto` is on the inner scroll container, ' +
+          '`overflow-hidden` on the outer clips the scrollbar to the `rounded-2xl` boundary. ' +
+          'Click the trigger to open; one dialog at a time.',
       },
     },
   },
@@ -81,7 +85,8 @@ export const LongContent: Story = {
 
 export const MobileDialog: Story = {
   render: () => (
-    <Dialog defaultOpen>
+    <Dialog>
+      <DialogTrigger render={<Button size="xl">Delete listing</Button>} />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Delete listing</DialogTitle>
@@ -100,7 +105,9 @@ export const MobileDialog: Story = {
     viewport: { defaultViewport: 'mobile375' },
     docs: {
       description: {
-        story: 'Mobile dialog: footer buttons stack vertically and use `size="xl"` for touch targets.',
+        story:
+          'Mobile dialog: footer buttons stack vertically, `size="xl"` for 44px touch targets. ' +
+          'Click trigger to open — one dialog at a time (no `defaultOpen` stacking).',
       },
     },
   },
@@ -108,7 +115,8 @@ export const MobileDialog: Story = {
 
 export const LocaleVariant: Story = {
   render: () => (
-    <Dialog defaultOpen>
+    <Dialog>
+      <DialogTrigger render={<Button size="xl">Відкрити діалог</Button>} />
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Підтвердіть дію</DialogTitle>
@@ -124,9 +132,12 @@ export const LocaleVariant: Story = {
     </Dialog>
   ),
   parameters: {
+    globals: { locale: 'uk' },
     docs: {
       description: {
-        story: 'Ukrainian locale — dialog title and description with longer strings.',
+        story:
+          'Ukrainian locale — longer title/description strings. ' +
+          'Click trigger to open one dialog at a time.',
       },
     },
   },

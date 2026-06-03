@@ -24,6 +24,7 @@ All implementation is delegated to Sonnet 4.6 via a kickoff file written to `/ta
 
 These rules apply to every orchestrator session from 2026-05-27 onward:
 
+- **Every task gets a real Task number AT CREATION (owner directive 2026-06-03).** No `Task TBD` / unnumbered task files or sections — ever. The number goes in the section title (`### Task <N> — …`), the **file name** (`..._Task_<NNN>_<slug>.md`), the `docs/backlog.md` entry, and the session log. The next number comes from the `Last task number` line in `docs/backlog.md`, which the orchestrator updates in the SAME change. Full rule: `docs/ai-behavior.md` → "Task File Location Rules → Numbering rules".
 - **The orchestrator may create/update governance docs and task files** (`docs/`, `tasks/Epics/`, `tasks/Sprints/`) when the owner asks for orchestration / governance / planning work.
 - **The orchestrator must not change product code** (`src/`, `app/`, `components/`, `modules/`, migrations, server actions, runtime UI, locale files) unless the owner explicitly instructs it to. Implementation is Sonnet's job.
 - **Kickoffs must be concrete.** Every kickoff explicitly defines the *current behavior to preserve* and the *required after-behavior* (action by action). Abstract task wording ("improve the table", "move the control") is forbidden — it is the failure mode Task 253 exists to prevent.

@@ -671,6 +671,19 @@ All task, epic, and sprint files MUST be created inside the `/tasks` directory a
 - DO NOT use `.txt` for new files — `.md` only.
 - DO NOT rename or convert existing `.txt` task files unless the user explicitly asks.
 
+#### Numbering rules (MANDATORY — owner directive 2026-06-03)
+- **Every task MUST be assigned a global Task number AT CREATION.** Placeholder titles such as `Task TBD`, `Task ?`,
+  `Task N`, or any unnumbered task title are FORBIDDEN. A task file or task section must NEVER be written, saved, or
+  handed off to the executor without a real number.
+- **The number must appear EVERYWHERE the task is referenced:** the task section title (`### Task <N> — …`), the
+  kickoff / sprint **file name** (e.g. `Sprint_<N>_..._Task_<NNN>_<slug>.md`), the `docs/backlog.md` entry, and the
+  session log under `docs/sessions/`.
+- **Source of truth for the next number is the `Last task number: NNN` line in `docs/backlog.md`.** Read it before
+  creating any task, assign the next free number(s), and UPDATE that line in the SAME change. Numbering is global and
+  monotonic — never restart per sprint, never reuse a number.
+- **Batch creation:** if several tasks are created at once (e.g. a corrective batch A–F), reserve a contiguous block of
+  numbers and record every number in the `Last task number` line.
+
 The `/tasks` directory is tracked in git (it is NOT in `.gitignore`) so task history is versioned and shared.
 
 ---

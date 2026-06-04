@@ -137,6 +137,25 @@ The orchestrator is the SINGLE point of commit-command emission. After diff revi
 - **Emit a single `git add` line with explicit paths** — do NOT emit multi-line `git add` with `^` or backtick continuations. In PowerShell `^` is not a continuation, so the command fails with `fatal: pathspec '^' did not match any files`, stages nothing, and the "commit" silently no-ops (this swallowed Tasks 164 and 165 until re-run).
 - **If `git status` shows phantom-corruption mods** (Cowork mode, see "Environment & git safety"): prefix the commit batch with a recovery line — `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset` — so the owner clears phantom mods before the orchestrator's explicit-path `git add` runs. Explicit-path `add` is safe even WITHOUT recovery, because it only stages the named files, but the recovery keeps `git status` clean for future sessions.
 
+## Mobile <640 full-width gate (OWNER P0 — 2026-06-03) — MANDATORY in every kickoff AND every review
+
+The owner has repeatedly (≥5×) rejected work that leaves mobile surfaces content-width instead of full-width. This is now
+a hard gate on BOTH sides of the loop:
+
+- **Every kickoff I write** for any task touching UI MUST contain an explicit "Mobile <640 full-width gate" section that
+  names each surface in scope and states its required `max-sm` behavior (full-width container / `max-sm:w-full` control /
+  full-bleed popup), the ≥44px touch-target rule, the label-wrap rule (sq/en/uk/it), and the icon-only/exempted list.
+  Abstract wording ("make it responsive") is forbidden — spell out the exact `max-sm` classes / structural change expected.
+- **Dialog & Sheet specifically:** at <640 the popup CONTAINER must be full-width edge-to-edge (NOT `max-w-[calc(100%-2rem)]`
+  centered). If the exact pattern (full-screen vs full-width bottom-sheet) is not already decided in the docs, the kickoff
+  STOPS and ASKS the owner — it must not guess.
+- **Every review I run** is BLOCKED from approval unless the session log contains the rendered verification matrix
+  (breakpoints × sq/en/uk/it, per `agent-contract.md` clause 12) with real per-cell evidence, AND I have personally
+  confirmed in the diff that every in-scope surface carries the full-width `max-sm` treatment (or a documented exemption).
+  tsc=0 / build=✅ is NOT proof and never closes a UI task. A log without the matrix = INCOMPLETE → route back.
+- **No more soft tasks.** If I hand off a UI kickoff without this gate, that is MY failure, not the executor's. Self-check
+  every kickoff against this section before writing the file path to the owner.
+
 ## Review checklist (run on every returned task)
 
 - [ ] Diff actually matches the session-log "Files Changed" table (no undisclosed edits).
@@ -148,6 +167,8 @@ The orchestrator is the SINGLE point of commit-command emission. After diff revi
       approve.**
 - [ ] Locale parity: `sq` / `en` / `uk` / `it` all contain the new keys (same key set).
 - [ ] Responsive coverage present for all required breakpoints.
+- [ ] **🔴 Mobile <640 full-width gate (OWNER P0):** every in-scope text/container surface is full-width at `max-sm` in the diff (Buttons `max-sm:w-full`; Dialog/Sheet popup full-bleed; Tabs/FilterBar/Select/Combobox/Phone/CTA/toolbars too); icon-only exemptions each documented; ≥44px touch targets; labels wrap. **A non-full-width text/container surface at <640 without a documented exemption = REJECT.**
+- [ ] **🔴 Rendered verification matrix present (OWNER P0, clause 12):** breakpoints × sq/en/uk/it with real per-cell evidence; uk@320/375/390 stress cells present. **No matrix, or tsc/build-only "proof" = REJECT, route back.**
 - [ ] Canonical components only; no governance anti-patterns.
 - [ ] **UI tasks only:** the §17 UI pre-flight checklist output (`ui-rules.md`) is in the session log —
       non-canonical-dropdown grep, control-height alignment (§15), z-index scale (§16), overflow at 320px
@@ -177,3 +198,31 @@ The orchestrator is the SINGLE point of commit-command emission. After diff revi
 - **Sonnet's final report is not proof.** The actual changed files are the proof.
 - **Approval is allowed only after actual diff review.** Read `git show <sha>` / `git diff` for every commit in the task. Do not approve from the session log alone.
 - **If the diff shows a silently removed control, a missing locale, a missing breakpoint, or scope creep, do not silently fix it from the orchestrator session.** Open a follow-up task with a concrete kickoff that lists the regression and routes the fix back through Sonnet.
+
+## Rendered-evidence approval gate (Sprint 33 — 2026-06-04, after the Sprint 32 story rejection)
+
+> **What went wrong (self-audit).** I approved Sprint 32 Tasks 372–375/379 from the diff of the *primitives*,
+> which were class-correct on paper (`max-sm:w-full` present), and treated `tsc=0`/`build-storybook ✅` as
+> sufficient. I never required or inspected a **rendered** matrix. The owner then rendered every story and almost
+> all FAILED — because `layout:'centered'/'padded'` in the stories silently defeats `max-sm:w-full`, fixtures
+> hardcode English, and redundant `Ukrainian*` stories were never removed. Task 376 was never reviewed; Task 377
+> (the sweep that would have caught this) never ran. Diagnosis:
+> `docs/sessions/2026-06-04-orchestrator-sprint32-rendered-rejection-rootcause.md`.
+
+**New hard rule — for ANY Storybook/UI task, a diff review is necessary but NOT sufficient to approve.** Approval
+additionally requires ALL of:
+
+- [ ] **Machine-produced rendered artifacts attached** — the `responsive-screenshots --assert` PNG/JSON matrix for
+      every in-scope story, with **uk@320/375/390 mandatory**. A session-log table of self-reported PASS cells, or
+      any cell marked "OWNER QA REQUIRED / NOT CHECKED / no browser access", is an **auto-reject** — route back.
+- [ ] **Gates green in the transcript** — `npm run lint`, `npm run check:stories`, `npm run check:i18n`,
+      `responsive-screenshots --assert` all exit 0, AND a negative-flow transcript shows each gate FAILS on a
+      planted violation (proves the gate is real, not a no-op).
+- [ ] **The class is in the diff AND the pixel is in the screenshot.** For a mobile full-width claim, confirm both
+      the `max-sm:w-full` (or canvas) change in the diff and the control filling the <640 frame in the PNG. A
+      correct class without a rendered screenshot proving the result is NOT approvable (the `layout:'centered'`
+      trap). "It compiles" never approves a UI task (agent-contract clause 12 + 13).
+- [ ] **No hardcode / no `Ukrainian*` story** — confirmed by the green `check:stories` gate, not by eyeballing.
+
+If any item is missing, the task is INCOMPLETE: open a follow-up, do not approve. I will not approve Sprint 33
+(380–383) from diffs — only from the rendered artifacts the new gate produces.

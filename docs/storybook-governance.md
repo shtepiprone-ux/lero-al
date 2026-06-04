@@ -358,3 +358,108 @@ When adding a story, update the catalog:
 ```bash
 npm run catalog:components
 ```
+
+---
+
+## §13 — CANONICAL STORY STANDARD (Task 376/376-Fix, 2026-06-04) — global sweep baseline
+
+**This is the non-negotiable standard. All 29 story files in Admin/Layout/Shared/Primitives/System have been swept to this standard.**
+
+### Story creation/deletion/duplication rules
+- Do NOT create new story files for localization
+- Do NOT create locale-specific duplicate story exports (`DefaultUk`, `UkrainianDefault`, etc.)
+- Do NOT delete or hide broken stories — fix them in place
+- Do NOT rename story exports to bypass broken behavior
+- Do NOT increase or decrease the Storybook story count to solve i18n
+
+### Toolbar locale is the single source of truth
+Every normal story follows the active Storybook toolbar locale. The canonical pattern:
+```tsx
+export const MyStory: Story = {
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <MyComponent locale={locale} />
+  },
+}
+```
+
+Forbidden:
+- `globals: { locale: 'uk' }` story-level pins — ALL stories must be toolbar-reactive
+- `parameters.globals.locale` — silently ignored by the locale decorator
+- Nested `useGlobals()` inside story helper components — only the outermost render function may read globals
+- Hardcoded `locale="en"` props in render functions — use context instead
+
+### Locale Stress is toolbar-reactive
+- `LocaleStress` stories follow the toolbar locale (toolbar=sq → Albanian, toolbar=uk → Ukrainian, etc.)
+- Locale Stress NEVER locks to uk or any other locale
+- Each locale's stress content (long strings) is provided via per-locale fixture maps inside the story
+- No new per-locale stress stories are created
+
+### Fixture data i18n rule
+All user-facing story fixture fields must be locale-safe:
+- Titles, descriptions, labels, placeholders, empty states, button text, tab labels, table headers, badge text — all through per-locale record maps
+- Locale map pattern: `const MAP: Record<string, Record<string, string>> = { en: {...}, sq: {...}, uk: {...}, it: {...} }`
+- Every map MUST have complete sq/en/uk/it parity
+- No field may silently fall back to English in sq/uk/it
+- Developer-only documentation prose (CSS class names, technical identifiers, code examples) may remain English
+
+### Global category coverage
+All five Storybook categories are required sweep scope:
+- **Admin**: AdminCardList, AdminPageShell, AdminTable, StatusChangeControl, StatusChangeHistory
+- **Layout**: FilterBar, PageHeader, PageShell, Section
+- **Shared**: Combobox
+- **Primitives**: Badge, Button, Checkbox, Command, Dialog, DropdownMenu, Input, PasswordInput, PasswordRequirementsHint, Popover, Select, Sheet, Skeleton, Tabs
+- **System**: AdminLayout, Containers, EmptyState, ListingGrid, RecentlyViewedSection
+
+### Remaining rules (unchanged from §9)
+1. **No raw HTML controls.** No `<button>`, `<input>`, `<select>`, `<textarea>` — use canonical components only.
+2. **No mixed-language canvas.** sq canvas = Albanian only. uk canvas = Ukrainian only. it = Italian only.
+3. **No hardcoded relative time.** Use `useFormatter().dateTime()` or locale-safe tokens.
+4. **Actions panel wiring.** Interactive controls log via `fn()`/args from `@storybook/test`.
+5. **Scenario-named exports.** No width-number suffixes (`Mobile320`, `W375`).
+
+**Required QA proof format:** rendered matrix `locale (sq/en/uk/it) × viewport (320/375/390/480/560/680/768/810/960/1024/1200/1440/1920/2560)`. uk@320/375/390 are mandatory cells. `build-storybook` exit 0 is NOT proof (see §8a).
+
+---
+
+## §14 — Enforceable Storybook gates (Sprint 33, 2026-06-04) — SUPERSEDES the self-reported parts of §13
+
+> **Why this section exists.** §13 was already correct prose — yet the owner rendered every story and almost all
+> FAILED (hardcoded English content; buttons/tabs/select not full-width at <640; redundant `Ukrainian*` stories;
+> visible RVS scrollbar). Root cause: the rules were prose + self-reported greps, and the Storybook canvas itself
+> (`layout:'centered'/'padded'`) defeated the mobile full-width rule even when the primitive was correct.
+> Conclusion: **prose rules that are not machine-enforced, and proof that is not machine-produced, do not survive.**
+> This section makes the rules un-committable to violate and the proof automatic. Full diagnosis:
+> `docs/sessions/2026-06-04-orchestrator-sprint32-rendered-rejection-rootcause.md`. Delivered by Sprint 33
+> (Tasks 380–383, `tasks/Sprints/Sprint_33_CORRECTIVE_*`).
+
+### 14.1 Full-width mobile-accurate canvas (no more centred/padded masking)
+- A global `withCanvas` decorator in `.storybook/preview.tsx` renders EVERY story in a full-available-width,
+  mobile-accurate frame using the canonical page-gutter token from `design-system.md` — never Storybook's
+  `centered`/`padded` layout. A correct `max-sm:w-full` primitive MUST visibly fill the <640 viewport in the canvas.
+- Global default is `parameters.layout: 'fullscreen'`. **`layout: 'centered'` and `layout: 'padded'` are FORBIDDEN
+  in story files** (lint-enforced). If a story seems to need a centred preview, STOP&ASK — never add an exemption.
+
+### 14.2 Single locale-aware fixture/i18n layer (no raw literals, ever) — supersedes §13's per-file maps
+- All user-facing story/fixture strings come from the `storybook.*` message namespace (sq/en/uk/it parity) via the
+  `storyT`/`useStoryMessages` helper (`src/stories/_storyI18n.ts`). Fixtures expose **keys**, not literals. This
+  replaces §13's "per-locale record maps inside the story" with one single source.
+- The uk values ARE the "longest strings" stress content. There is no separate hardcoded uk fixture, and no
+  `globals:{locale:'uk'}` pin. `LocaleStress` is one toolbar-reactive export per component, **never named "Ukrainian".**
+
+### 14.3 Machine gates (a violation FAILS the build — not a checklist)
+- **ESLint** (scoped to `**/*.stories.tsx` + `src/stories/**`) errors on: `layout:'centered'|'padded'`; raw
+  `<button>/<input>/<select>/<textarea>` JSX; story export names matching `/Ukrainian/`; raw user-facing string
+  literals in JSX text / `aria-label` / `title`/`label`/`placeholder` / fixture fields (anything not from
+  `t()`/`storyT()`, minus a tight, documented dev-prose allowlist).
+- **`scripts/check-stories.mjs`** runs the same checks + `storybook.*` parity and exits non-zero on any violation;
+  wired into `prebuild-storybook`/`prestorybook` and CI, exposed as `npm run check:stories`. So `build-storybook`
+  and CI FAIL on reintroduced hardcode.
+- **`responsive-screenshots --assert`** captures each story × breakpoint × locale AND asserts no horizontal scroll
+  at 320 and full-width text controls at <640, emitting a machine-readable matrix (JSON + PNGs). **This is the only
+  accepted rendered proof.** "OWNER QA REQUIRED / NOT CHECKED / no browser access" no longer closes a UI cell.
+
+### 14.4 Proof rule (restated)
+`tsc=0` / `lint=0` / `build-storybook` exit 0 are baselines, never proof. A Storybook/UI task is INCOMPLETE unless
+its session log references the `--assert` PNG/JSON artifacts per rendered cell (uk@320/375/390 mandatory) and shows
+the gates green — plus a negative-flow transcript proving each gate FAILS on a planted violation, then reverts.

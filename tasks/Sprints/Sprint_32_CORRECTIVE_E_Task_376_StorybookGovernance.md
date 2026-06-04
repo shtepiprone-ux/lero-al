@@ -1,6 +1,19 @@
 ### Task 376 — CORRECTIVE E: Storybook governance/i18n STANDARD + deep fixes (StoryListingCard · PasswordInput i18n · Select label · Actions panel)
 
-> **Execution order (Sprint 32 correctives) — A → B → C → D → E → F, strictly sequential.** Sent to Sonnet one at a time; each starts only after the previous is implemented AND orchestrator diff-reviewed/approved. F is the FINAL certification sweep (run after A–E all land), never a parallel task. **E follows D and defines the canonical story STANDARD consumed by F.**
+> # 🔴 OWNER P0 — Mobile <640 full-width gate (2026-06-03, agent-contract clauses 11–12). The canonical story STANDARD this
+> task defines MUST encode: at <640 all text Buttons/controls full-width; ALL popups (Dialog/Sheet/Select/Combobox/Dropdown/
+> Popover/Command) = full-width bottom sheet; ≥44px; labels wrap (sq/en/uk/it); no h-scroll at 320. StoryListingCard and any
+> story-rendered control obey the same. The STANDARD MUST require the rendered matrix (breakpoints × 4 locales, uk@320/375/390
+> mandatory) as the proof format F (377) will enforce. tsc/build is NOT proof.
+
+> **Execution order (Sprint 32 correctives) — REVISED 2026-06-03 (owner): `372 (incl. folded 378) → 373 → 379 → 374 → 375 → 376 → 377`, strictly sequential.** Sent to Sonnet one at a time; each starts only after the previous is implemented AND orchestrator diff-reviewed/approved. **377 is the FINAL certification sweep** (runs only after 372–376 AND 379 all land), never a parallel task. **376 runs after 379** and defines the canonical story STANDARD consumed by 377. **376 is the LAST primitive/governance fix before the 377 sweep.**
+
+> ## 🔴 Coordination — `ui/select.tsx` + `select.stories.tsx` were ALREADY edited by Task 379 (which runs BEFORE 376)
+> Task 379 converted the Select popup to a full-width mobile bottom sheet (`max-sm` classes + the shared
+> `mobile-bottom-sheet.ts` helper) and touched `select.stories.tsx`. **Your `SelectValue` localized-label change here MUST
+> be purely ADDITIVE** — do NOT remove, revert, or refactor 379's `max-sm` bottom-sheet classes or the Positioner/Popup
+> mobile structure; only add the value→label mapping. Before editing, read 379's session log + the current `select.tsx`
+> so the two changes compose. If the label change appears to require touching 379's mobile classes, STOP & ASK.
 
 Type:      corrective bugfix — story governance + i18n infra (owner-rejected 365/370/371)
 Priority:  CRITICAL
@@ -29,7 +42,8 @@ This task establishes the CANONICAL story rules (consumed by Corrective F) AND f
 
 ## Required after behavior
 **Canonical story STANDARD (document in `docs/storybook-governance.md`) — used by Corrective F:**
-1. No raw `<button>`/`<input>`/`<select>` in stories or story helpers — canonical components only.
+1. No raw `<button>`/`<input>`/`<select>`/`<textarea>` in stories or story helpers — canonical components only. (Matches
+   Task 377 check 1 exactly — the STANDARD and the final sweep must list the same four raw controls.)
 2. No hardcoded user-facing English in any non-English-only context; aria-labels and visible text use `t()` or a
    locale-safe story label; no English leak in sq/uk/it canvases.
 3. No hardcoded relative-time/text like `"2h ago"` — use a localized relative-time label or a locale-safe story token.
@@ -96,6 +110,26 @@ everywhere); multilingual settlements (Task 368).
 Locales sq/en/uk/it. Breakpoints 320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560 (uk@320/375/390 mandatory).
 Verify: StoryListingCard buttons/labels localized; PasswordInput uk Ukrainian + toolbar switch; Select shows labels;
 Actions panel logs.
+
+## Required Sonnet evidence format (MANDATORY — applies to this and every Sprint 32 corrective)
+Sonnet must NOT mark any rendered/manual QA cell PASS unless Sonnet PERSONALLY rendered or inspected that cell.
+"OWNER QA REQUIRED" means the owner MAY ADDITIONALLY audit — it does NOT replace Sonnet's own evidence. A cell that was
+not checked = `NOT CHECKED`, and the task is then INCOMPLETE. `tsc`/`lint`/`build-storybook` are baseline checks only;
+they do NOT replace rendered/manual verification, and "it compiles" never counts as PASS.
+The final report MUST include:
+1. **AC self-audit table** — AC# · requirement · implementation evidence (file:line) · verification evidence (command
+   output / rendered matrix cell / grep output / test result) · status `PASS` / `FAIL` / `NOT CHECKED`.
+2. **Command transcript** — for each required command: exact command · exit code · short result. If a command was not
+   run, state the explicit reason. "Not run" NEVER counts as PASS.
+3. **Grep gates** — paste the exact grep command and its RAW output; write `(no output)` if empty; for any false
+   positives, provide a triage table separating real hits from documentation/comment/string mentions.
+4. **Rendered evidence matrix** (whenever UI is involved) — per surface/story: locale (sq/en/uk/it) · viewport
+   (320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560) · interaction performed · expected result · observed
+   result · evidence reference (screenshot path / story URL / exact written observation) · status `PASS`/`FAIL`/`NOT
+   CHECKED`. **uk@320/375/390 are mandatory cells.**
+5. **Tests** — test file · cases added/updated · command run · pass/fail · failure output if any.
+6. **STOP&ASK log** — every ambiguity found · whether work stopped · what was left unchanged because it was out of scope.
+A task is INCOMPLETE if any required AC or any required rendered cell is marked `NOT CHECKED`.
 
 ## Final report requirements
 Root-cause for PasswordInput i18n; AC table file:line; Select consumer inventory; grep outputs; the documented STANDARD;

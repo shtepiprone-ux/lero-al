@@ -1,6 +1,48 @@
 ### Task 373 — CORRECTIVE B: Dialog (and Sheet) visual model correction — no h-scroll, no overlap, no stray gray bg
 
-> **Execution order (Sprint 32 correctives) — A → B → C → D → E → F, strictly sequential.** Sent to Sonnet one at a time; each starts only after the previous is implemented AND orchestrator diff-reviewed/approved. F is the FINAL certification sweep (run after A–E all land), never a parallel task. **B follows A.**
+> # 🔴 OWNER-REJECTED v1 (2026-06-03) — HARD RE-DO v2 REQUIRED. The v1 spec below OMITTED the owner's P0 mobile
+> full-width requirement and v1 shipped a centered card (`dialog.tsx:56` `max-w-[calc(100%-2rem)] sm:max-w-sm`) — a
+> margined card on mobile, NOT full-width. This block SUPERSEDES/EXTENDS the v1 sections; v1's scroll/overlap/gray-bg
+> fixes still apply. Read `docs/agent-contract.md` clauses 11–12 (mobile full-width P0 + rendered-evidence P0) FIRST.
+>
+> ## 🔴 Mobile full-width BOTTOM SHEET gate (OWNER DECISION 2026-06-03 — the core of this re-do)
+> **Owner: "Full-width bottom sheet для діалогу… всі попапи мають бути Full-width bottom sheet. Всі! Без винятку!"**
+> 1. **Dialog popup = FULL-WIDTH BOTTOM SHEET at <640px.** Remove the centered-card model on mobile. At `max-sm` the
+>    popup is **anchored to the bottom edge**, spans the **FULL viewport width edge-to-edge** (no `max-w-[calc(100%-2rem)]`
+>    gap, no `sm:max-w-sm` leaking below 640), has **rounded TOP corners only** (`max-sm:rounded-t-2xl max-sm:rounded-b-none`),
+>    **slides up from the bottom**, has a **top-center drag-handle bar** (visual affordance; swipe-to-dismiss only if
+>    trivially supported, else visual-only + documented), **closes on backdrop tap AND Esc** (focus returns to trigger),
+>    height to content up to `max-sm:max-h-[90dvh]` with internal vertical body scroll;
+>    header/footer fixed; X never under the scrollbar; no horizontal scroll at 320. Concretely (executor confirms exact
+>    classes): drop the `top-1/2 -translate-y-1/2` vertical-centering at `max-sm` and replace with bottom-anchored
+>    (`max-sm:top-auto max-sm:bottom-0 max-sm:translate-y-0 max-sm:left-0 max-sm:translate-x-0 max-sm:w-full
+>    max-sm:max-w-none`). At ≥640 the current centered `sm:max-w-sm` card is RESTORED (desktop unchanged).
+>    **Sheet** already edge-anchored — verify it is full-width bottom-anchored at <640 (a bottom sheet), not a margined card.
+> 2. **The trigger Button is full-width at <640** (inherits the Task 372 Button rule — verify the `DialogTrigger`
+>    render-Button is full-width in the stories at 320/375/390, not a small centered pill).
+> 3. **Footer action buttons full-width at <640** (already partially done via `w-full sm:w-auto` in `MobileDialog`;
+>    apply consistently to ALL dialog/sheet footer buttons in the stories, every locale).
+> 4. ≥44px touch targets (`min-h-11`); uk/sq/en/it long title/description/footer labels wrap (`break-words`), never clip.
+> 5. **SCOPE NOTE — "all popups":** this task (373) covers ONLY Dialog + Sheet. The remaining popups (Select, Combobox,
+>    DropdownMenu, NavigationMenu, Popover, Command) are covered by dedicated **Task 379** — do NOT edit them here.
+> 6. **SINGLE-SOURCE HAND-OFF to 379:** write the `max-sm` bottom-sheet fragment (bottom-anchored, `w-full max-w-none`,
+>    `rounded-t-2xl rounded-b-none`, slide-up, `max-h-[90dvh]` + internal scroll, drag-handle bar) in a clean, reusable
+>    form. Task 379 will EXTRACT these exact classes into a shared single-source helper
+>    (`src/components/ui/mobile-bottom-sheet.ts`, pre-authorized in 379) and reuse them across all other popups — so keep
+>    Dialog/Sheet's mobile classes consistent and self-contained, not entangled with unrelated dialog styling.
+>
+> ## 🔴 Mandatory rendered verification matrix (agent-contract clause 12) — REQUIRED to close this task
+> Open `Default`, `Long Content`, `Mobile Dialog`, `Locale Variant` (and Sheet stories) and record a matrix:
+> rows = 320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560, columns = sq·en·uk·it. Per cell at <640 confirm:
+> popup is full-width edge-to-edge · trigger full-width · footer buttons full-width · no h-scroll · X not under scrollbar ·
+> no stray gray · labels wrap. uk@320/375/390 are MANDATORY stress cells with screenshots/notes. A subset or ≥640-only
+> evidence = INCOMPLETE. **Add a `MobileFullWidth` story pinned to 320 (and one at uk@320) that opens the dialog so the
+> full-width container is directly visible (use `defaultOpen` ONLY in this isolated story, or document the open step).**
+> ⛔ tsc=0 / build=✅ does NOT close this task — only the rendered matrix does.
+
+
+
+> **Execution order (Sprint 32 correctives) — REVISED 2026-06-03 (owner): `372 (incl. folded 378) → 373 → 379 → 374 → 375 → 376 → 377`, strictly sequential.** Sent to Sonnet one at a time; each starts only after the previous is implemented AND orchestrator diff-reviewed/approved. **377 is the FINAL certification sweep** (runs only after 372–376 AND 379 all land), never a parallel task. **373 runs after 372; it establishes the canonical bottom-sheet pattern that Task 379 then reuses for every other popup primitive.**
 
 Type:      corrective bugfix — overlay primitives (owner-rejected 361)
 Priority:  CRITICAL
@@ -78,6 +120,27 @@ Tabs/Button/FilterBar/Phone/Select; new dialog variants; animation redesign beyo
 Locales sq/en/uk/it. Breakpoints 320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560 (uk@320/375/390 mandatory).
 Verify: normal dialog no scrollbar; long-content vertical-only; no h-scroll; X never under scrollbar; footer never collides;
 no stray gray; Sheet same; Docs no stacking.
+
+## Required Sonnet evidence format (MANDATORY — applies to this and every Sprint 32 corrective)
+Sonnet must NOT mark any rendered/manual QA cell PASS unless Sonnet PERSONALLY rendered or inspected that cell.
+"OWNER QA REQUIRED" means the owner MAY ADDITIONALLY audit — it does NOT replace Sonnet's own evidence. A cell that was
+not checked = `NOT CHECKED`, and the task is then INCOMPLETE. `tsc`/`lint`/`build-storybook` are baseline checks only;
+they do NOT replace rendered/manual verification, and "it compiles" never counts as PASS. Per-defect "notes" are NOT
+acceptable unless they map to specific matrix cells (surface · locale · viewport).
+The final report MUST include:
+1. **AC self-audit table** — AC# · requirement · implementation evidence (file:line) · verification evidence (command
+   output / rendered matrix cell / grep output / test result) · status `PASS` / `FAIL` / `NOT CHECKED`.
+2. **Command transcript** — for each required command: exact command · exit code · short result. If a command was not
+   run, state the explicit reason. "Not run" NEVER counts as PASS.
+3. **Grep gates** — paste the exact grep command and its RAW output; write `(no output)` if empty; for any false
+   positives, provide a triage table separating real hits from documentation/comment/string mentions.
+4. **Rendered evidence matrix** (whenever UI is involved) — per surface/story: locale (sq/en/uk/it) · viewport
+   (320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560) · interaction performed · expected result · observed
+   result · evidence reference (screenshot path / story URL / exact written observation) · status `PASS`/`FAIL`/`NOT
+   CHECKED`. **uk@320/375/390 are mandatory cells.**
+5. **Tests** — test file · cases added/updated · command run · pass/fail · failure output if any.
+6. **STOP&ASK log** — every ambiguity found · whether work stopped · what was left unchanged because it was out of scope.
+A task is INCOMPLETE if any required AC or any required rendered cell is marked `NOT CHECKED`.
 
 ## Final report requirements
 Before/after screenshots-or-notes per defect; structural diff explanation (header/body/footer regions); grep outputs;

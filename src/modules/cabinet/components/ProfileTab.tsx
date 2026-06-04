@@ -375,7 +375,7 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
               type="button"
               variant="outline"
               size="xl"
-              className="rounded-xl shrink-0"
+              className="rounded-xl shrink-0 max-sm:w-auto"
               onClick={handleEmailChange}
               disabled={!newEmail.trim() || emailChangeStatus === 'sending'}
             >

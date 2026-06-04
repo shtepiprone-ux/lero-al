@@ -174,7 +174,7 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
                   size="sm"
                   onClick={handleCreate}
                   disabled={!newName.trim() || isCreating}
-                  className="shrink-0"
+                  className="shrink-0 max-sm:w-auto"
                 >
                   {isCreating
                     ? <Loader2 className="h-3.5 w-3.5 animate-spin" />

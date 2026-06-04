@@ -124,7 +124,7 @@ export function ListingReportDialog({ listingId }: Props) {
               <p className="text-xs text-muted-foreground text-right">{comment.length}/500</p>
             </div>
 
-            <div className="flex gap-2 justify-end">
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
               <Button
                 type="button"
                 variant="ghost"

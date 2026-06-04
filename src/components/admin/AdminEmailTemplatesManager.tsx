@@ -53,7 +53,7 @@ function HtmlPreview({ html, title }: { html: string; title: string }) {
   const t = useTranslations('admin.email_templates')
   return (
     <>
-      <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)} className="gap-1.5 shrink-0">
+      <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)} className="gap-1.5 shrink-0 max-sm:w-auto">
         <Eye className="h-3.5 w-3.5 shrink-0" />
         {t('preview_btn')}
       </Button>

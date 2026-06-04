@@ -83,7 +83,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
 
         {/* Listing type */}
         <AccordionSection title={tc('listing_type')} open={sections.type} onToggle={() => toggle('type')}>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             {(['', 'sale', 'rent'] as const).map(type => (
               <Button
                 key={type}
@@ -134,7 +134,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
         {/* Market type */}
         {shows('market_type') && (
           <AccordionSection title={tc('market_type')} open={sections.market_type} onToggle={() => toggle('market_type')}>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 variant={!get('market_type') ? 'default' : 'outline'}
                 size="xl"

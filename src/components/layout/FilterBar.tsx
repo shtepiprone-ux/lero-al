@@ -2,7 +2,6 @@
 
 // 'use client' required: FilterBar owns Sheet open-state (useState) and imports
 // sheet.tsx which is itself a client component. See docs/design-system.md §11.1
-// and Task 349 DS-4 kickoff Decision D3.
 
 import { useState } from 'react'
 import { type ReactNode } from 'react'
@@ -25,8 +24,29 @@ type FilterBarLabels = {
 }
 
 type FilterBarProps = {
-  filters: ReactNode
+  /**
+   * Slot A — search row (top, full content width at all breakpoints).
+   * Required by the canonical desktop hierarchy (AC1).
+   */
   search?: ReactNode
+  /**
+   * Slot B — currently-applied filter chips.
+   * Desktop (≥1024): row 2, grouped with count Badge + Reset (AC2/AC3).
+   * <1024: rendered inside the Sheet (section 1).
+   */
+  activeFilters?: ReactNode
+  /**
+   * Slot C — available / refinement filter controls.
+   * Desktop (≥1024): row 3 (AC2).
+   * <1024: rendered inside the Sheet (section 2).
+   */
+  availableFilters?: ReactNode
+  /**
+   * Legacy single-slot (used when activeFilters/availableFilters are not provided).
+   * Desktop (≥1024): rendered inline (old behavior).
+   * <1024: rendered inside the Sheet.
+   */
+  filters?: ReactNode
   activeCount?: number
   onReset?: () => void
   labels: FilterBarLabels
@@ -34,8 +54,10 @@ type FilterBarProps = {
 }
 
 export function FilterBar({
-  filters,
   search,
+  activeFilters,
+  availableFilters,
+  filters,
   activeCount = 0,
   onReset,
   labels,
@@ -43,91 +65,122 @@ export function FilterBar({
 }: FilterBarProps) {
   const [sheetOpen, setSheetOpen] = useState(false)
   const isActive = activeCount > 0
+  const hasNewSlots = activeFilters !== undefined || availableFilters !== undefined
+
+  // Sheet body: new slots get a column layout with gap so sections are visually separated
+  const sheetBody = hasNewSlots ? (
+    <div className="flex flex-col gap-4">
+      {activeFilters && <div>{activeFilters}</div>}
+      {availableFilters && <div>{availableFilters}</div>}
+    </div>
+  ) : filters
 
   return (
-    <div className={cn('flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-start [&>*]:max-sm:w-full', className)}>
-      {/* lg:+ inline filter cluster — all-or-nothing (Decision D1); hidden on mobile.
-          items-start: top-aligns cluster with search/badge/reset even when chips wrap to
-          multiple rows (prevents the vertical-centering scatter bug with many filters). */}
-      <div className="hidden min-w-0 flex-wrap items-start gap-2 lg:flex">
-        {filters}
+    <div className={cn('flex flex-col gap-3', className)}>
+
+      {/* ── Row 1: Sheet trigger (hidden ≥1024) + Search ─────────────────────── */}
+      {/* <640: stacked full-width. 640–1023: inline row.
+          ≥1024: only search visible (trigger hidden via lg:hidden). */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center [&>*]:max-sm:w-full">
+
+        {/* Sheet trigger — visible at <1024 */}
+        <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+          <SheetTrigger
+            render={
+              <Button
+                size="xl"
+                variant="outline"
+                className="gap-2 lg:hidden"
+              />
+            }
+          >
+            {labels.filters}
+            {isActive && (
+              <Badge variant="secondary" className="shrink-0">
+                {activeCount}
+              </Badge>
+            )}
+          </SheetTrigger>
+
+          <SheetContent side="left">
+            <SheetHeader>
+              <SheetTitle>{labels.filters}</SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 overflow-y-auto">
+              {sheetBody}
+            </div>
+            {isActive && (
+              <SheetFooter>
+                <Button
+                  size="xl"
+                  variant="ghost"
+                  className="w-full"
+                  onClick={() => { onReset?.(); setSheetOpen(false) }}
+                >
+                  {labels.reset}
+                </Button>
+              </SheetFooter>
+            )}
+          </SheetContent>
+        </Sheet>
+
+        {/* Search — full-width at <640; flex-1 at 640–1023; full row at ≥1024 */}
+        {search && (
+          <div className="min-w-0 w-full sm:flex-1 lg:flex-none lg:w-full">
+            {search}
+          </div>
+        )}
       </div>
 
-      {/* Search slot — full-width row below sm; flex-1 in row from sm upward (§11.2) */}
-      {search && (
-        <div className="min-w-0 w-full sm:flex-1">
-          {search}
-        </div>
-      )}
-
-      {/* lg:+ only: count Badge + single global Reset — inline, end-aligned (Decision D2) */}
-      {/* Reset uses size="xl" (h-11 = 44px) to match the one-row-one-height contract
-          with inline filter chips (size="xl") and the search Input (h-11).
-          Ghost variant preserves the tertiary visual style; touch target is DS-compliant. */}
-      {isActive && (
-        <>
-          <Badge variant="secondary" className="hidden shrink-0 lg:inline-flex">
-            {activeCount}
-          </Badge>
-          <Button
-            size="xl"
-            variant="ghost"
-            onClick={onReset}
-            className="hidden lg:inline-flex"
-          >
-            {labels.reset}
-          </Button>
-        </>
-      )}
-
-      {/* <lg: Sheet trigger — hidden at lg:+; carries count Badge when active (Decision D1 + D2) */}
-      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-        <SheetTrigger
-          render={
-            <Button
-              size="xl"
-              variant="outline"
-              className="w-full gap-2 sm:w-auto lg:hidden"
-            />
-          }
-        >
-          {labels.filters}
+      {/* ── Row 2 (≥1024): active filters + count Badge + Reset ──────────────── */}
+      {/* Hidden at <1024 — these controls live in the Sheet below 1024. */}
+      {hasNewSlots && (activeFilters || isActive) && (
+        <div className="hidden lg:flex lg:flex-wrap lg:items-center lg:gap-2">
+          {activeFilters}
           {isActive && (
-            <Badge variant="secondary" className="shrink-0">
-              {activeCount}
-            </Badge>
-          )}
-        </SheetTrigger>
-
-        <SheetContent side="left">
-          <SheetHeader>
-            <SheetTitle>{labels.filters}</SheetTitle>
-          </SheetHeader>
-
-          {/* Filter controls — entire filters node placed here at <lg: (Decision D1).
-              No own padding — SheetContent provides p-6 (Task 361). */}
-          <div className="flex-1 overflow-y-auto">
-            {filters}
-          </div>
-
-          {/* Reset in SheetFooter only when active (Decision D2) */}
-          {isActive && (
-            <SheetFooter>
+            <>
+              <Badge variant="secondary" className="shrink-0">{activeCount}</Badge>
               <Button
                 size="xl"
                 variant="ghost"
-                className="w-full"
-                onClick={() => {
-                  onReset?.()
-                  setSheetOpen(false)
-                }}
+                onClick={onReset}
+                className="shrink-0"
               >
                 {labels.reset}
               </Button>
-            </SheetFooter>
+            </>
           )}
-        </SheetContent>
-      </Sheet>
+        </div>
+      )}
+
+      {/* ── Row 3 (≥1024): available filters ─────────────────────────────────── */}
+      {hasNewSlots && availableFilters && (
+        <div className="hidden lg:block">
+          {availableFilters}
+        </div>
+      )}
+
+      {/* ── Legacy row (≥1024, no new slots): filters inline + count + Reset ─── */}
+      {!hasNewSlots && filters && (
+        <div className="hidden lg:flex lg:flex-wrap lg:items-start lg:gap-2">
+          {filters}
+          {isActive && (
+            <>
+              <Badge variant="secondary" className="shrink-0 lg:self-center">
+                {activeCount}
+              </Badge>
+              <Button
+                size="xl"
+                variant="ghost"
+                onClick={onReset}
+                className="shrink-0 lg:self-center"
+              >
+                {labels.reset}
+              </Button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   )
 }

@@ -134,7 +134,7 @@ export function LocationCombobox({
                 variant="button"
                 size="sm"
               />
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Button
                   type="button" size="sm" className="h-8 rounded-xl"
                   onClick={handleAdd} disabled={adding || !addName.trim() || !addRegionId}

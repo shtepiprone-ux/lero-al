@@ -198,7 +198,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
               <Button
                 onClick={() => apply()}
                 disabled={!customDate || saving}
-                className="h-10 rounded-xl px-4 shrink-0"
+                className="h-10 rounded-xl px-4 shrink-0 max-sm:w-auto"
               >
                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'OK'}
               </Button>
@@ -336,7 +336,7 @@ function ListingPreviewDialog({
           <div className="flex flex-col gap-3 pt-2 border-t">
             <p className="text-sm font-semibold">{t('delete_confirm')}</p>
             <p className="text-sm text-muted-foreground">{t('delete_dialog_body')}</p>
-            <div className="flex gap-2 justify-end">
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
               <Button variant="outline" size="sm" onClick={() => setShowDeleteConfirm(false)} disabled={deleting}>
                 {tc('cancel')}
               </Button>

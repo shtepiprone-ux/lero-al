@@ -46,7 +46,7 @@ export function FeaturedListings({ favoriteIds }: FeaturedListingsProps = {}) {
       {!loading && listings.length > 0 && (
         <Link
           href={`/${locale}/listings?premium=true`}
-          className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
+          className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'max-sm:w-auto')}
         >
           {t('view_all')}
         </Link>

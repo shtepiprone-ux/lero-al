@@ -94,7 +94,7 @@ function PageModal({ page, onClose, onDone }: {
           </button>
         </div>
 
-        <div className="flex gap-2 pt-2">
+        <div className="flex flex-col sm:flex-row gap-2 pt-2">
           <Button variant="outline" onClick={onClose} className="flex-1 h-10 rounded-xl">{t('btn_cancel')}</Button>
           <Button onClick={handleSave} disabled={saving || !title.trim()} className="flex-1 h-10 rounded-xl">
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : t('btn_save')}

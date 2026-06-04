@@ -16,7 +16,7 @@ export function AdminCurrencyTabs({ currencies, providers }: Props) {
 
   return (
     <Tabs defaultValue="currencies" className="flex flex-col gap-6">
-      <TabsList variant="line" className="w-fit">
+      <TabsList className="w-fit">
         <TabsTrigger value="currencies">{t('tab_currencies')}</TabsTrigger>
         <TabsTrigger value="providers">{t('tab_providers')}</TabsTrigger>
       </TabsList>

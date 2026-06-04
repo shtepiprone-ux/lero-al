@@ -45,7 +45,10 @@ export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot
 
   return (
     <div className="recently-viewed">
-      <div className="flex items-center justify-between mb-4">
+      {/* <640: stack title above action (max-sm:flex-col), each full-width — prevents
+          the "Pastro historikun" button from cramping the title to 4 lines (Task 382).
+          ≥640: horizontal justify-between layout unchanged. */}
+      <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
         <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
         {clearSlot}
       </div>

@@ -138,7 +138,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
             {shows('market_type') && (
               <div className="px-5 py-5">
                 <SectionHeader>{t('market_type')}</SectionHeader>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Button
                     variant={!local.market_type ? 'default' : 'outline'}
                     size="lg"

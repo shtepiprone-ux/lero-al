@@ -34,7 +34,7 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
         variant={!currentType ? 'default' : 'secondary'}
         onClick={() => navigate(undefined)}
         className={cn(
-          'shrink-0 px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
+          'shrink-0 max-sm:w-auto px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
           !currentType ? 'shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
         )}
         aria-pressed={!currentType}
@@ -49,7 +49,7 @@ export function FavoritesTypeFilter({ typeCounts, currentType }: Props) {
           variant={currentType === pt.value ? 'default' : 'secondary'}
           onClick={() => navigate(pt.value)}
           className={cn(
-            'shrink-0 px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
+            'shrink-0 max-sm:w-auto px-3 py-1.5 rounded-full text-sm font-medium h-auto whitespace-nowrap',
             currentType === pt.value ? 'shadow-sm' : 'bg-muted text-muted-foreground hover:bg-muted/70 hover:text-foreground',
           )}
           aria-pressed={currentType === pt.value}

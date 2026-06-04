@@ -213,7 +213,7 @@ function LocationDialog({
               {t('remove')}
             </Button>
           )}
-          <div className="flex gap-2 ml-auto">
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
             <Button variant="outline" onClick={onClose} disabled={isPending || uploading}>
               {tc('cancel')}
             </Button>

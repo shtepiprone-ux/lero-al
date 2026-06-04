@@ -132,7 +132,7 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
           <p className="font-semibold text-base">{t('delete_all_confirm')}</p>
           <p className="text-sm text-destructive">{t('delete_all_warning')}</p>
           <p className="text-xs text-muted-foreground">{items.length} {tc('searches_tab')}</p>
-          <div className="flex gap-3 justify-end pt-1">
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-3 pt-1">
             <Button variant="outline" size="sm" onClick={() => setShowDeleteAll(false)} disabled={isPendingDeleteAll}>
               {t('cancel')}
             </Button>

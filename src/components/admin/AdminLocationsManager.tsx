@@ -165,7 +165,7 @@ function LocationModal({
           )}
         </div>
 
-        <div className="flex gap-2 pt-2">
+        <div className="flex flex-col sm:flex-row gap-2 pt-2">
           {location && onDelete && (
             <Button variant="destructive" onClick={onDelete} size="lg" className="rounded-xl">
               {tc('delete')}

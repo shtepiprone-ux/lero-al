@@ -94,7 +94,7 @@ export function SaveSearchButton() {
                 autoFocus
               />
             </div>
-            <div className="flex gap-2 justify-end">
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-2">
               <Button variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={isPending}>
                 {t('cancel')}
               </Button>

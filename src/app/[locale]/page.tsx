@@ -84,7 +84,7 @@ export default async function HomePage() {
             <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{tl('latest')}</h2>
             <Link
               href={`/${locale}/listings`}
-              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
+              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'max-sm:w-auto')}
             >
               {tl('view_all')}
             </Link>

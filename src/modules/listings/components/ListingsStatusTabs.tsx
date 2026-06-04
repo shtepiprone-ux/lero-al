@@ -28,7 +28,7 @@ export function ListingsStatusTabs() {
       onValueChange={switchTab}
       className="listings-status-tabs"
     >
-      <TabsList variant="line">
+      <TabsList>
         <TabsTrigger value="active">{t('tab_active')}</TabsTrigger>
         <TabsTrigger value="closed">{t('tab_closed')}</TabsTrigger>
       </TabsList>

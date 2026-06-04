@@ -359,7 +359,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
                   <Button
                     variant="destructive"
                     size="sm"
-                    className="h-8 px-2 rounded-lg text-xs"
+                    className="h-8 px-2 rounded-lg text-xs max-sm:w-auto"
                     disabled={deletingId === listing.id}
                     onClick={() => handleDelete(listing.id)}
                   >
@@ -370,7 +370,7 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-8 px-2 rounded-lg text-xs"
+                    className="h-8 px-2 rounded-lg text-xs max-sm:w-auto"
                     onClick={() => setConfirmId(null)}
                   >
                     <X className="h-3.5 w-3.5" />

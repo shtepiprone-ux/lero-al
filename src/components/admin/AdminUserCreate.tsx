@@ -299,7 +299,7 @@ export function AdminUserCreate({ cities, regions }: Props) {
         <PasswordRequirements t={t} />
 
         {/* Submit */}
-        <div className="flex gap-3 justify-end">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-3">
           <Button type="button" variant="outline" className="rounded-xl" onClick={() => router.push('/admin/users')}>
             {t('actions.cancel')}
           </Button>

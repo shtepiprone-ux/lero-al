@@ -305,7 +305,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                   type="button"
                   onClick={() => handleContactClick('whatsapp')}
                   disabled={contactLoading}
-                  className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0')}
+                  className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0 max-sm:w-auto')}
                   data-track="whatsapp_click"
                   aria-label={t('whatsapp_aria_label')}
                 >

@@ -118,7 +118,7 @@ export function CollectionsSection({ initialCollections }: Props) {
           variant="outline"
           size="sm"
           onClick={() => { setCreateName(''); setCreateError(''); setCreateOpen(true) }}
-          className="gap-1.5 rounded-xl"
+          className="gap-1.5 rounded-xl max-sm:w-auto"
         >
           <FolderPlus className="h-4 w-4 shrink-0" />
           {t('new')}

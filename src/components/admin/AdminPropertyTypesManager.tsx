@@ -200,7 +200,7 @@ function DeleteDialog({ pt, onClose, onDeleted }: DeleteDialogProps) {
       <DialogContent className="max-w-sm p-6 bg-card" showCloseButton={false}>
         <p className="font-semibold mb-1">{t('delete_confirm')}</p>
         <p className="text-sm text-muted-foreground mb-5">{pt.name_sq} <span className="font-mono text-xs text-muted-foreground/60">({pt.slug})</span></p>
-        <div className="flex gap-3 justify-end">
+        <div className="flex flex-col sm:flex-row sm:justify-end gap-3">
           <Button variant="outline" size="sm" onClick={onClose} disabled={isPending}>{t('cancel')}</Button>
           <Button variant="destructive" size="sm" onClick={handleDelete} disabled={isPending}>
             {isPending && <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />}

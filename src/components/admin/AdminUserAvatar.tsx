@@ -184,7 +184,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       </div>
 
       {canEdit && (
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Button type="button" variant="outline" size="sm" className="h-7 text-xs px-2 rounded-lg"
             onClick={() => inputRef.current?.click()} disabled={uploading || removing}>
             {currentUrl ? tc('avatar_replace') : tc('avatar_upload')}

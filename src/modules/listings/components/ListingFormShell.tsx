@@ -487,7 +487,7 @@ export function ListingFormShell(props: Props) {
         )}
 
         {/* Actions */}
-        <div className="flex justify-between gap-3 pb-8">
+        <div className="flex flex-col sm:flex-row sm:justify-between gap-3 pb-8">
           <Button
             type="button"
             variant="outline"

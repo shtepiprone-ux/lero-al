@@ -79,7 +79,7 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
           type="button"
           onClick={handleCallClick}
           disabled={loading}
-          className={cn(buttonVariants({ size: 'xl', variant: 'outline' }), 'shrink-0')}
+          className={cn(buttonVariants({ size: 'xl', variant: 'outline' }), 'shrink-0 max-sm:w-auto')}
         >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Phone className="h-4 w-4" />}
           <span className="hidden sm:inline">{t('call')}</span>
@@ -91,7 +91,7 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
           type="button"
           onClick={handleWhatsAppClick}
           disabled={loading}
-          className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0')}
+          className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0 max-sm:w-auto')}
           aria-label={t('whatsapp_aria_label')}
         >
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}

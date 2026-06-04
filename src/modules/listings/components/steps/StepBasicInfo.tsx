@@ -26,7 +26,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
       {/* Listing type */}
       <div className="flex flex-col gap-2">
         <Label className="text-sm font-medium">{t('listing_type')}</Label>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           {(['sale', 'rent'] as ListingType[]).map(type => (
             <Button
               key={type}
@@ -122,7 +122,7 @@ export function StepBasicInfo({ data, onChange, errors }: Props) {
                 type="button"
                 variant={data.currency === cur ? 'default' : 'ghost'}
                 onClick={() => onChange({ currency: cur })}
-                className="px-4 h-11 text-sm font-semibold rounded-none"
+                className="px-4 h-11 text-sm font-semibold rounded-none max-sm:w-auto"
               >
                 {cur}
               </Button>

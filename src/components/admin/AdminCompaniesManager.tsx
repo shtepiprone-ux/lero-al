@@ -157,7 +157,7 @@ function CompanyFormDialog({
                 }
               </div>
               <div className="flex flex-col gap-1.5">
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <Button
                     type="button"
                     variant="outline"
@@ -202,7 +202,7 @@ function CompanyFormDialog({
             />
           </div>
 
-          <div className="flex gap-2 justify-end pt-1">
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-2 pt-1">
             <Button type="button" variant="ghost" size="sm" onClick={onClose} disabled={isPending || uploading}>
               {tc('cancel')}
             </Button>
@@ -378,7 +378,7 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
               <DialogTitle>{t('confirm_delete')}</DialogTitle>
             </DialogHeader>
             <p className="text-sm text-muted-foreground">{t('confirm_delete_body')}</p>
-            <div className="flex gap-2 justify-end pt-2">
+            <div className="flex flex-col sm:flex-row sm:justify-end gap-2 pt-2">
               <Button variant="ghost" size="sm" onClick={() => setDeletingId(null)} disabled={deleting}>
                 {tc('cancel')}
               </Button>

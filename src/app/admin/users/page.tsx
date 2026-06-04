@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { UserPlus } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
 import { AdminUsersTable, type AdminUser, type VerifiedAgent } from '@/components/admin/AdminUsersTable'
@@ -89,7 +90,7 @@ export default async function AdminUsersPage({
           {tab === 'all' && <span className="text-sm text-muted-foreground">{t('users_total', { count })}</span>}
           <Link
             href="/admin/users/new"
-            className={buttonVariants({ size: 'lg' })}
+            className={cn(buttonVariants({ size: 'lg' }), 'max-sm:w-auto')}
           >
             <UserPlus className="h-4 w-4" />
             {t('users_new_btn')}

@@ -343,6 +343,7 @@
     "error_email_invalid": "Adresa e emailit është e pavlefshme.",
     "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
     "error_phone_digits_only": "Vendosni vetëm shifra — pa shkronja ose simbole.",
+    "error_phone_country_mismatch": "Ky numër i takon një shteti tjetër. Ju lutemi zgjidhni shtetin e duhur.",
     "captcha_aria_label": "Verifikim sigurie captcha",
     "captcha_error_failed": "Verifikimi i sigurisë dështoi. Ju lutemi provoni sërish.",
     "captcha_not_configured": "(Captcha çaktivizuar — mjedis zhvillimi)",
@@ -419,7 +420,7 @@
     "aria_open_search": "Hap kërkimin",
     "aria_prev_page": "Faqja paraparë",
     "aria_next_page": "Faqja tjetër",
-    "phone_placeholder": "+355 XX XXX XXXX",
+    "phone_helper": "Vendosni vetëm numrin kombëtar — kodi i shtetit është zgjedhur.",
     "notify_email_toggle": "Njoftim me email",
     "aria_remove_favorite": "Hiq nga të preferuarat",
     "aria_main_nav": "Navigimi kryesor",
@@ -514,6 +515,7 @@
     "error_phone_invalid": "Ju lutemi vendosni një numër telefoni të vlefshëm për shtetin e zgjedhur.",
     "error_phone_no_country_code": "Vendosni numrin e telefonit pa kodin e shtetit.",
     "error_phone_digits_only": "Vendosni vetëm shifra — pa shkronja ose simbole.",
+    "error_phone_country_mismatch": "Ky numër i takon një shteti tjetër. Ju lutemi zgjidhni shtetin e duhur.",
     "error_email_invalid": "Adresa e emailit është e pavlefshme.",
     "password_section_title": "Ndrysho fjalëkalimin",
     "password_current_label": "Fjalëkalimi aktual",
@@ -1462,7 +1464,11 @@
         "status_change_history_actor_unknown": "Admin i panjohur",
         "status_new": "E re",
         "status_in_progress": "Në procesim",
-        "status_closed": "E mbyllur"
+        "status_closed": "E mbyllur",
+        "status_open": "Hapur",
+        "status_resolved": "Zgjidhur",
+        "action_close": "Mbyll",
+        "action_reopen": "Rihap"
       }
     }
   },
@@ -1540,6 +1546,37 @@
     "errors": {
       "mailbox_unverified": "Mesazhi juaj u ruajt, por nuk mund të njoftonim ekipin tonë. Do t'ju kontaktojmë sa më shpejt.",
       "email_transient": "Mesazhi juaj u ruajt, por ndodhi një gabim i përkohshëm me sistemin tonë të emailit. Do t'ju kontaktojmë sa më shpejt."
+    }
+  },
+  "storybook": {
+    "listing": {
+      "modern_apartment": "Apartament Modern në Qendër të Tiranës",
+      "apartment_long": "Apartament Modern në Qendër të Tiranës me Pamje të Bukura — Titull i Gjatë për Stres Lokali",
+      "cozy_studio": "Studio e Komodshme në Lagjen Sauk",
+      "grid_0": "Apartament Modern në Tiranë",
+      "grid_1": "Vilë me Kopsht në Durrës",
+      "grid_2": "Studio në Lagjen Sauk",
+      "grid_3": "Hapësirë Zyre në Kombinat",
+      "grid_4": "Penthouse në Blloku",
+      "grid_5": "Shtëpi Plazhi në Vlorë",
+      "grid_6": "Shtëpi Pushimi në Berat",
+      "grid_7": "Apartament i Rinovuar në Elbasan"
+    },
+    "button": {
+      "variant_primary": "Kryesor",
+      "variant_outline": "Skicë",
+      "variant_secondary": "Dytësor",
+      "variant_ghost": "Fantazmë",
+      "variant_destructive": "Shkatërrues",
+      "variant_link": "Lidhje",
+      "size_default": "Parazgjedhja"
+    },
+    "tickets": {
+      "subject_0": "Nuk mund ta modifikoj njoftimin pas publikimit",
+      "subject_1": "Përdorues i raportuar për foto false të pronës",
+      "subject_2": "Mosmarrëveshje pagese për depozitën e qirasë",
+      "stress_0": "Nuk mund ta modifikoj njoftimin pas publikimit — titull i gjatë tike për verifikim rreshtimi",
+      "stress_1": "Ankesë për foto false të pronës nga përdorues në Tiranë"
     }
   }
 }

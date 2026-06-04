@@ -60,6 +60,21 @@ const withLocale: Decorator = (Story, context) => {
   );
 };
 
+// ── Canvas decorator ──────────────────────────────────────────────────────────
+// Wraps every story in the canonical .container-wide page-gutter so that
+// max-sm:w-full controls fill the <640 viewport edge-to-edge (minus the real
+// app gutter) rather than being centred/shrink-wrapped by Storybook.
+//
+// Gutter token: .container-wide from globals.css —
+//   padding: 1rem (base) → 1.5rem (≥640) → 2rem (≥1024) → 3rem (≥1536).
+// This MUST match the canonical container-wide definition in design-system.md §4.
+// Do NOT substitute ad-hoc px values or Storybook's built-in padded layout.
+const withCanvas: Decorator = (Story) => (
+  <div className="container-wide">
+    <Story />
+  </div>
+);
+
 // ── Theme decorator ───────────────────────────────────────────────────────────
 // Applies dark/light class to the document root for stories that use semantic tokens.
 // Also injects --font-geist-sans so that font-sans / @apply font-sans resolves to the
@@ -117,7 +132,9 @@ export const globalTypes = {
 };
 
 // ── Global decorators ─────────────────────────────────────────────────────────
-export const decorators: Decorator[] = [withTheme, withLocale];
+// Order (outermost → innermost): withTheme → withLocale → withCanvas → Story
+// withCanvas is innermost so the canonical gutter is applied directly around the story.
+export const decorators: Decorator[] = [withTheme, withLocale, withCanvas];
 
 // ── Preview config ────────────────────────────────────────────────────────────
 const preview: Preview = {
@@ -126,7 +143,9 @@ const preview: Preview = {
       viewports: VIEWPORTS,
       defaultViewport: 'desktop1280',
     },
-    layout: 'padded',
+    // fullscreen: withCanvas decorator provides the canonical container-wide gutter.
+    // layout:'centered' and layout:'padded' are FORBIDDEN in story files (lint gate §14.1).
+    layout: 'fullscreen',
     backgrounds: {
       // Values mirror the lero-al project tokens so the Storybook canvas padding
       // matches the component background (avoids a visible white border halo):

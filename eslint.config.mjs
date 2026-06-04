@@ -22,6 +22,23 @@ const compat = new FlatCompat({ baseDirectory: __dirname });
 // See: docs/eslint-debt-taxonomy.md §no-restricted-syntax override bug (Task 68)
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ── Story governance — selectors added to story-specific block ────────────────
+//
+// IMPORTANT: no-restricted-syntax uses LAST-WINS merge in flat config.
+// Story files are in src/**/*.stories.tsx AND src/stories/**
+// These files also match the general src/**/*.tsx block. We MUST include
+// ALL general .tsx selectors in the story-specific block too, or the story
+// block will silently drop the general listing-status / image / SSR rules.
+//
+// Pattern: the story-specific block comes LAST and spreads in the general
+// selectors (GENERAL_TSX_SYNTAX) plus its own additional selectors.
+//
+// Selector groups added for stories (E–H):
+//   E. layout:'centered'|'padded' ban
+//   F. Raw HTML controls ban (<button>/<input>/<select>/<textarea>)
+//   G. /Ukrainian/ export name ban
+//   H. Raw user-facing title literals in fixture objects (≥8-char heuristic)
+
 // ── Listing status governance — exception file set ───────────────────────────
 //
 // Files that operate on non-listing status domains (AuthStatus, TicketStatus,
@@ -341,6 +358,173 @@ const eslintConfig = defineConfig([
           message:
             "window.location.replace/assign is forbidden. Use router.push() from next/navigation. " +
             "See docs/ai-behavior.md — AI Governance Enforcement Rules.",
+        },
+      ],
+    },
+  },
+
+  // ── no-restricted-syntax governance — STORY FILES ────────────────────────
+  //
+  // MUST come LAST so it takes precedence over the general src/**/*.tsx block
+  // for story files (flat-config LAST-WINS on same rule key). Includes ALL
+  // general .tsx selectors (A–D) PLUS story-specific selectors (E–H) so that
+  // story files are not accidentally exempt from the general rules.
+  //
+  // Scoped to: src/**/*.stories.tsx and src/stories/**
+  // (*.stories.tsx are not in scripts/ or storybook-static/, so no extra ignores needed.)
+  //
+  // Story-specific selector groups:
+  //   E. layout:'centered'|'padded' — forbidden (withCanvas + fullscreen is the canon)
+  //   F. Raw HTML controls — forbidden (<button>/<input>/<select>/<textarea>)
+  //   G. /Ukrainian/ story export names — forbidden (use LocaleStress instead)
+  //   H. Raw user-facing title literals (≥8-char English/Latin heuristic) in fixture fields
+  {
+    files: ["src/**/*.stories.tsx", "src/stories/**/*.ts", "src/stories/**/*.tsx"],
+    ignores: [
+      ...IMAGE_RENDER_EXCEPTIONS,
+      ...LISTING_STATUS_IGNORES,
+      "src/app/layout.tsx",
+    ],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+
+        // ── A. Image governance (same as general .tsx block) ─────────────
+        {
+          selector: "JSXOpeningElement[name.name='img']",
+          message:
+            "Raw <img> elements are not allowed. " +
+            "Use <AppImage variant=\"...\"> from '@/components/ui/AppImage'.",
+        },
+        {
+          selector: "JSXAttribute[name.name='srcSet']",
+          message: "Inline srcSet is not allowed. Use <AppImage variant=\"...\"> instead.",
+        },
+        {
+          selector: "JSXAttribute[name.name='fetchPriority']",
+          message: "Inline fetchPriority is not allowed outside AppImage.",
+        },
+
+        // ── B. Listing status governance (same as general .tsx block) ────
+        {
+          selector:
+            "BinaryExpression[right.type='Literal'][right.value=/^(active|inactive|sold|rented|archived|pending)$/]:matches([operator='==='],[operator='!==']) > MemberExpression.left[property.name='status']",
+          message:
+            "Direct .status comparison outside the semantic domain. " +
+            "Use helpers from '@/modules/listings/domain'.",
+        },
+        {
+          selector:
+            "Property[key.name='status'][value.type='Literal'][value.value=/^(active|inactive|sold|rented|archived|pending)$/]",
+          message:
+            "Raw status string literal outside the mutation gateway. " +
+            "Use resolveTransition(status, action).nextStatus.",
+        },
+        {
+          selector: "CallExpression[callee.property.name='update'] Property[key.name='status']",
+          message: "Direct status write in .update() outside the mutation gateway.",
+        },
+
+        // ── C. window.location governance (same as general .tsx block) ───
+        {
+          selector:
+            "AssignmentExpression[left.type='MemberExpression']" +
+            "[left.object.type='MemberExpression'][left.object.object.name='window']" +
+            "[left.object.property.name='location'][left.property.name='href']",
+          message: "window.location.href assignment is forbidden. Use router.push().",
+        },
+        {
+          selector:
+            "CallExpression[callee.type='MemberExpression'][callee.object.type='MemberExpression']" +
+            "[callee.object.object.name='window'][callee.object.property.name='location']" +
+            "[callee.property.name=/^(replace|assign)$/]",
+          message: "window.location.replace/assign is forbidden. Use router.push().",
+        },
+
+        // ── D. SSR / hydration governance (same as general .tsx block) ───
+        {
+          selector: "JSXAttribute[name.name='suppressHydrationWarning']",
+          message: "suppressHydrationWarning is forbidden. Fix the hydration mismatch at root cause.",
+        },
+
+        // ── E. Story layout governance ───────────────────────────────────
+        //
+        // The withCanvas global decorator + layout:'fullscreen' is the canon.
+        // layout:'centered' caused the Sprint 32 regression where correct
+        // max-sm:w-full primitives appeared non-full-width (root cause §14.1).
+        {
+          selector: "Property[key.name='layout'][value.value='centered']",
+          message:
+            "layout:'centered' is FORBIDDEN in stories (docs/storybook-governance.md §14.1). " +
+            "The withCanvas global decorator + layout:'fullscreen' is the canon. " +
+            "If a story seems to need centered preview, STOP&ASK — do not add an exemption.",
+        },
+        {
+          selector: "Property[key.name='layout'][value.value='padded']",
+          message:
+            "layout:'padded' is FORBIDDEN in stories (docs/storybook-governance.md §14.1). " +
+            "The withCanvas decorator provides the canonical container-wide gutter. " +
+            "Storybook's built-in padded layout is not used in this project.",
+        },
+
+        // ── F. Raw HTML controls ban ─────────────────────────────────────
+        //
+        // Stories must use canonical shadcn/ui components (Button, Input, Select, etc.)
+        // not raw HTML elements. Raw elements bypass the design system and hide
+        // mobile-safety / a11y concerns that the canonical components handle.
+        {
+          selector: "JSXOpeningElement[name.name='button']",
+          message:
+            "Raw <button> in stories is FORBIDDEN (docs/storybook-governance.md §9/§14). " +
+            "Use the canonical Button from '@/components/ui/button'.",
+        },
+        {
+          selector: "JSXOpeningElement[name.name='input']",
+          message:
+            "Raw <input> in stories is FORBIDDEN (docs/storybook-governance.md §9/§14). " +
+            "Use the canonical Input from '@/components/ui/input'.",
+        },
+        {
+          selector: "JSXOpeningElement[name.name='select']",
+          message:
+            "Raw <select> in stories is FORBIDDEN (docs/storybook-governance.md §9/§14). " +
+            "Use Select from '@/components/ui/select'.",
+        },
+        {
+          selector: "JSXOpeningElement[name.name='textarea']",
+          message:
+            "Raw <textarea> in stories is FORBIDDEN (docs/storybook-governance.md §9/§14). " +
+            "Use a canonical form component.",
+        },
+
+        // ── G. /Ukrainian/ export name ban ───────────────────────────────
+        //
+        // Story exports named 'Ukrainian*' duplicate locale concerns — the locale
+        // toolbar handles all locales. Rename to 'LocaleStress' (§13/§14).
+        {
+          selector:
+            "ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/Ukrainian/]",
+          message:
+            "Story exports named '*Ukrainian*' are FORBIDDEN (docs/storybook-governance.md §13/§14). " +
+            "Rename to 'LocaleStress' — the locale toolbar handles all locales including Ukrainian.",
+        },
+
+        // ── H. Raw user-facing title literals in fixture/story objects ───
+        //
+        // title: 'Modern Apartment in Tirana Center' → use storyT(locale, 'storybook.KEY')
+        // Heuristic: string literal with ≥8 chars that starts with a capital letter
+        // and contains only letters/spaces (looks like a real user-facing title).
+        // Allowlist: Storybook meta titles (contain '/'), slugs (contain '-'/'_'), short IDs.
+        // Developer prose in docs.description is exempt (key name 'description' not targeted).
+        {
+          selector:
+            "Property[key.name='title']" +
+            "[value.type='Literal']" +
+            "[value.value=/^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜ][A-Za-zÀ-ÖØ-öø-ÿ\\s]{7,}$/]",
+          message:
+            "Raw user-facing title literal in story/fixture (docs/storybook-governance.md §14.2). " +
+            "Use storyT(locale, 'storybook.KEY') from '@/stories/_storyI18n'. " +
+            "Dev-only prose (Storybook meta title 'Category/Name', slugs, short IDs) is exempt.",
         },
       ],
     },

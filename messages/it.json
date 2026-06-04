@@ -343,6 +343,7 @@
     "error_email_invalid": "Inserisci un indirizzo email valido.",
     "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
     "error_phone_digits_only": "Inserire solo cifre — nessuna lettera o simbolo.",
+    "error_phone_country_mismatch": "Questo numero appartiene a un altro paese. Seleziona prima il paese corretto.",
     "captcha_aria_label": "Verifica di sicurezza captcha",
     "captcha_error_failed": "Verifica di sicurezza fallita. Riprova.",
     "captcha_not_configured": "(Captcha disabilitato — ambiente di sviluppo)",
@@ -419,7 +420,7 @@
     "aria_open_search": "Apri ricerca",
     "aria_prev_page": "Pagina precedente",
     "aria_next_page": "Pagina successiva",
-    "phone_placeholder": "+355 XX XXX XXXX",
+    "phone_helper": "Inserisci solo il numero nazionale — il prefisso paese è già selezionato.",
     "notify_email_toggle": "Attiva notifiche email",
     "aria_remove_favorite": "Rimuovi dai preferiti",
     "aria_main_nav": "Navigazione principale",
@@ -514,6 +515,7 @@
     "error_phone_invalid": "Inserisci un numero di telefono valido per il paese selezionato.",
     "error_phone_no_country_code": "Inserisci il numero di telefono senza il prefisso internazionale.",
     "error_phone_digits_only": "Inserire solo cifre — nessuna lettera o simbolo.",
+    "error_phone_country_mismatch": "Questo numero appartiene a un altro paese. Seleziona prima il paese corretto.",
     "error_email_invalid": "Inserisci un indirizzo email valido.",
     "password_section_title": "Cambia password",
     "password_current_label": "Password attuale",
@@ -1462,7 +1464,11 @@
         "status_change_history_actor_unknown": "Admin sconosciuto",
         "status_new": "Nuova",
         "status_in_progress": "In lavorazione",
-        "status_closed": "Chiusa"
+        "status_closed": "Chiusa",
+        "status_open": "Aperto",
+        "status_resolved": "Risolto",
+        "action_close": "Chiudi",
+        "action_reopen": "Riapri"
       }
     }
   },
@@ -1540,6 +1546,37 @@
     "errors": {
       "mailbox_unverified": "Il tuo messaggio è stato ricevuto, ma non siamo riusciti a notificare il nostro team. Ti ricontatteremo al più presto.",
       "email_transient": "Il tuo messaggio è stato ricevuto, ma si è verificato un problema temporaneo con il nostro sistema email. Ti ricontatteremo al più presto."
+    }
+  },
+  "storybook": {
+    "listing": {
+      "modern_apartment": "Appartamento Moderno nel Centro di Tirana",
+      "apartment_long": "Appartamento Moderno nel Centro di Tirana con Belle Vedute — Titolo Lungo per Test dello Stress Locale",
+      "cozy_studio": "Accogliente Monolocale nel Quartiere Sauk",
+      "grid_0": "Appartamento Moderno a Tirana",
+      "grid_1": "Villa con Giardino a Durazzo",
+      "grid_2": "Monolocale nel Quartiere Sauk",
+      "grid_3": "Ufficio nel Kombinat",
+      "grid_4": "Attico nel Blloku",
+      "grid_5": "Casa al Mare a Valona",
+      "grid_6": "Rifugio Montano a Berat",
+      "grid_7": "Appartamento Ristrutturato a Elbasan"
+    },
+    "button": {
+      "variant_primary": "Principale",
+      "variant_outline": "Contorno",
+      "variant_secondary": "Secondario",
+      "variant_ghost": "Fantasma",
+      "variant_destructive": "Distruttivo",
+      "variant_link": "Link",
+      "size_default": "Predefinito"
+    },
+    "tickets": {
+      "subject_0": "Impossibile modificare il mio annuncio dopo la pubblicazione",
+      "subject_1": "Utente segnalato per foto false della proprietà",
+      "subject_2": "Disputa di pagamento per il deposito di affitto",
+      "stress_0": "Impossibile modificare l'annuncio dopo la pubblicazione — titolo lungo del ticket per verifica a capo riga",
+      "stress_1": "Reclamo per foto false della proprietà da un utente a Tirana"
     }
   }
 }

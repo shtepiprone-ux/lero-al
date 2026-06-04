@@ -1,62 +1,108 @@
 /**
  * Stable listing fixture for Storybook stories.
  * Uses deterministic data — no random IDs, no live API calls.
+ *
+ * i18n pattern (Task 380, Sprint 33):
+ *   - titleKey   — storybook.* message key (resolves via storyT)
+ *   - title      — English value for backward compat; Task 381 migrates consumers to titleKey
+ *   - makeListingFixtures(locale) — factory that returns fully locale-resolved fixtures
+ *
+ * Raw string literals are forbidden in this file (docs/storybook-governance.md §14.2).
+ * All user-facing title strings come from the storybook.listing.* message namespace.
  */
 
-export const LISTING_FIXTURE = {
-  id: 'story-listing-001',
-  title: 'Modern Apartment in Tirana Center',
+import { storyT } from '../_storyI18n';
+
+// ── Message keys (canonical reference) ───────────────────────────────────────
+
+const K = {
+  modernApartment: 'storybook.listing.modern_apartment',
+  apartmentLong:   'storybook.listing.apartment_long',
+  cozyStudio:      'storybook.listing.cozy_studio',
+  grid: [
+    'storybook.listing.grid_0',
+    'storybook.listing.grid_1',
+    'storybook.listing.grid_2',
+    'storybook.listing.grid_3',
+    'storybook.listing.grid_4',
+    'storybook.listing.grid_5',
+    'storybook.listing.grid_6',
+    'storybook.listing.grid_7',
+  ],
+} as const;
+
+// ── Base shape (non-title fields are locale-invariant) ────────────────────────
+
+const BASE = {
   slug: 'modern-apartment-tirana-center',
-  price: 95000,
-  currency: 'EUR' as string,
+  price:            95000,
+  currency:         'EUR' as string,
   transaction_type: 'sale' as string,
-  property_type: 'apartment' as string,
-  area_sqm: 75,
-  rooms: 3,
-  bedrooms: 2,
-  floor: 4,
-  city: 'Tirana',
-  neighborhood: 'Blloku',
-  is_premium: true,
-  is_new: false,
-  status: 'active' as const,
-  cover_image: 'https://res.cloudinary.com/demo/image/upload/w_800,h_500,c_fill/sample.jpg',
-  images: [],
-  created_at: '2026-01-15T10:00:00Z',
+  property_type:    'apartment' as string,
+  area_sqm:         75,
+  rooms:            3,
+  bedrooms:         2,
+  floor:            4,
+  city:             'Tirana',
+  neighborhood:     'Blloku',
+  is_premium:       true,
+  is_new:           false,
+  status:           'active' as const,
+  cover_image:      'https://res.cloudinary.com/demo/image/upload/w_800,h_500,c_fill/sample.jpg',
+  images:           [] as string[],
+  created_at:       '2026-01-15T10:00:00Z',
 };
 
-export const LISTING_FIXTURE_LONG_TITLE = {
-  ...LISTING_FIXTURE,
-  id: 'story-listing-002',
-  title: 'Апартаменти в центрі Тирани з чудовим видом на гори та зручним розташуванням поряд з усіма зручностями',
-  city: 'Тирана',
-  neighborhood: 'Блоку',
-};
+// ── Locale-resolved factory ───────────────────────────────────────────────────
 
-export const LISTING_FIXTURE_RENT = {
-  ...LISTING_FIXTURE,
-  id: 'story-listing-003',
-  transaction_type: 'rent' as const,
-  price: 600,
-  title: 'Cozy Studio in Sauk District',
-  is_premium: false,
-  is_new: true,
-};
+export function makeListingFixtures(locale: string) {
+  const t = (key: string) => storyT(locale, key);
 
-export const LISTINGS_GRID_FIXTURE = Array.from({ length: 8 }, (_, i) => ({
-  ...LISTING_FIXTURE,
-  id: `story-listing-${String(i + 1).padStart(3, '0')}`,
-  title: [
-    'Modern Apartment in Tirana',
-    'Villa with Garden in Durrës',
-    'Studio Flat in Sauk',
-    'Office Space in Kombinat',
-    'Penthouse in Blloku',
-    'Beach House in Vlorë',
-    'Mountain Retreat in Berat',
-    'Renovated Apartment in Elbasan',
-  ][i] ?? `Listing ${i + 1}`,
-  price: 50000 + i * 15000,
-  is_premium: i < 2,
-  is_new: i === 4,
-}));
+  const LISTING_FIXTURE = {
+    ...BASE,
+    id:       'story-listing-001',
+    titleKey: K.modernApartment,
+    title:    t(K.modernApartment),
+  };
+
+  const LISTING_FIXTURE_LONG_TITLE = {
+    ...BASE,
+    id:       'story-listing-002',
+    titleKey: K.apartmentLong,
+    title:    t(K.apartmentLong),
+  };
+
+  const LISTING_FIXTURE_RENT = {
+    ...BASE,
+    id:              'story-listing-003',
+    titleKey:        K.cozyStudio,
+    title:           t(K.cozyStudio),
+    transaction_type: 'rent' as const,
+    price:           600,
+    is_premium:      false,
+    is_new:          true,
+  };
+
+  const LISTINGS_GRID_FIXTURE = Array.from({ length: 8 }, (_, i) => ({
+    ...BASE,
+    id:       `story-listing-${String(i + 1).padStart(3, '0')}`,
+    titleKey: K.grid[i] as string,
+    title:    t(K.grid[i] as string),
+    price:    50000 + i * 15000,
+    is_premium: i < 2,
+    is_new:   i === 4,
+  }));
+
+  return { LISTING_FIXTURE, LISTING_FIXTURE_LONG_TITLE, LISTING_FIXTURE_RENT, LISTINGS_GRID_FIXTURE };
+}
+
+// ── Backward-compatible static exports (English default) ─────────────────────
+// Consumers that still use LISTING_FIXTURE.title get English.
+// Task 381 migrates each consumer to makeListingFixtures(locale) at render time.
+
+const _en = makeListingFixtures('en');
+
+export const LISTING_FIXTURE            = _en.LISTING_FIXTURE;
+export const LISTING_FIXTURE_LONG_TITLE = _en.LISTING_FIXTURE_LONG_TITLE;
+export const LISTING_FIXTURE_RENT       = _en.LISTING_FIXTURE_RENT;
+export const LISTINGS_GRID_FIXTURE      = _en.LISTINGS_GRID_FIXTURE;

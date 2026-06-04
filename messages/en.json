@@ -343,6 +343,7 @@
     "error_email_invalid": "Please enter a valid email address.",
     "error_phone_no_country_code": "Enter the phone number without the country code.",
     "error_phone_digits_only": "Enter digits only — no letters or symbols.",
+    "error_phone_country_mismatch": "This number belongs to a different country. Please select the correct country first.",
     "captcha_aria_label": "Security captcha verification",
     "captcha_error_failed": "Security verification failed. Please try again.",
     "captcha_not_configured": "(Captcha disabled — development environment)",
@@ -419,7 +420,7 @@
     "aria_open_search": "Open search",
     "aria_prev_page": "Previous page",
     "aria_next_page": "Next page",
-    "phone_placeholder": "+355 XX XXX XXXX",
+    "phone_helper": "Enter the national number only — the country code is already selected.",
     "notify_email_toggle": "Toggle email notifications",
     "aria_remove_favorite": "Remove from favorites",
     "aria_main_nav": "Main navigation",
@@ -514,6 +515,7 @@
     "error_phone_invalid": "Please enter a valid phone number for the selected country.",
     "error_phone_no_country_code": "Enter the phone number without the country code.",
     "error_phone_digits_only": "Enter digits only — no letters or symbols.",
+    "error_phone_country_mismatch": "This number belongs to a different country. Please select the correct country first.",
     "error_email_invalid": "Please enter a valid email address.",
     "password_section_title": "Change password",
     "password_current_label": "Current password",
@@ -1462,7 +1464,11 @@
         "status_change_history_actor_unknown": "Unknown admin",
         "status_new": "New",
         "status_in_progress": "In progress",
-        "status_closed": "Closed"
+        "status_closed": "Closed",
+        "status_open": "Open",
+        "status_resolved": "Resolved",
+        "action_close": "Close",
+        "action_reopen": "Re-open"
       }
     }
   },
@@ -1540,6 +1546,37 @@
     "errors": {
       "mailbox_unverified": "Your message was received, but we couldn't notify our team. We'll follow up as soon as possible.",
       "email_transient": "Your message was received, but there was a temporary issue with our email system. We'll follow up as soon as possible."
+    }
+  },
+  "storybook": {
+    "listing": {
+      "modern_apartment": "Modern Apartment in Tirana Center",
+      "apartment_long": "Modern Apartment in Tirana Center with Beautiful Views — Long Title Locale Stress Test",
+      "cozy_studio": "Cozy Studio in Sauk District",
+      "grid_0": "Modern Apartment in Tirana",
+      "grid_1": "Villa with Garden in Durrës",
+      "grid_2": "Studio Flat in Sauk",
+      "grid_3": "Office Space in Kombinat",
+      "grid_4": "Penthouse in Blloku",
+      "grid_5": "Beach House in Vlorë",
+      "grid_6": "Mountain Retreat in Berat",
+      "grid_7": "Renovated Apartment in Elbasan"
+    },
+    "button": {
+      "variant_primary": "Primary",
+      "variant_outline": "Outline",
+      "variant_secondary": "Secondary",
+      "variant_ghost": "Ghost",
+      "variant_destructive": "Destructive",
+      "variant_link": "Link",
+      "size_default": "Default"
+    },
+    "tickets": {
+      "subject_0": "Unable to edit my listing after publishing",
+      "subject_1": "User reported for fake property photos",
+      "subject_2": "Payment dispute for rental deposit",
+      "stress_0": "Unable to edit listing after publishing — long ticket title for word wrap verification",
+      "stress_1": "Complaint about fake property photos from user in Tirana"
     }
   }
 }

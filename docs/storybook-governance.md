@@ -463,3 +463,40 @@ All five Storybook categories are required sweep scope:
 `tsc=0` / `lint=0` / `build-storybook` exit 0 are baselines, never proof. A Storybook/UI task is INCOMPLETE unless
 its session log references the `--assert` PNG/JSON artifacts per rendered cell (uk@320/375/390 mandatory) and shows
 the gates green — plus a negative-flow transcript proving each gate FAILS on a planted violation, then reverts.
+
+### 14.5 Implementation notes (Task 380, 2026-06-04)
+
+**Canvas gutter token:** `.container-wide` from `src/app/globals.css` §4. Padding: `1rem` (base) → `1.5rem` (≥640px) → `2rem` (≥1024px) → `3rem` (≥1536px). This is the ONLY canonical gutter — do NOT use ad-hoc `px-N` or Storybook's `padded` layout.
+
+**`withCanvas` decorator** (`storybook/preview.tsx`): wraps every story in `<div class="container-wide">`. Decorator order (outermost→innermost): `withTheme → withLocale → withCanvas → Story`. The canvas gutter applies directly around the story content.
+
+**`storyT(locale, key)` helper** (`src/stories/_storyI18n.ts`): resolves `storybook.*` message keys per locale. Throws if the locale is unknown or the key is missing — NO English fallback in sq/uk/it (omissions are caught immediately in dev).
+
+**Fixture migration pattern** (`src/stories/fixtures/listing.fixture.ts`):
+- All user-facing title strings are in `storybook.listing.*` message keys (sq/en/uk/it parity).
+- `makeListingFixtures(locale)` factory returns locale-resolved fixtures.
+- Backward-compat static exports (e.g. `LISTING_FIXTURE`) default to English until Task 381 migrates consumers.
+
+**ESLint story block** (`eslint.config.mjs`): scoped to `src/**/*.stories.tsx` + `src/stories/**`. Must come LAST in the config (flat-config LAST-WINS for `no-restricted-syntax`). Includes all general `.tsx` selectors (A–D) PLUS story-specific selectors (E–H).
+
+**AST selectors documented (story-specific, group E–H):**
+```
+E1: Property[key.name='layout'][value.value='centered']
+E2: Property[key.name='layout'][value.value='padded']
+F1: JSXOpeningElement[name.name='button']
+F2: JSXOpeningElement[name.name='input']
+F3: JSXOpeningElement[name.name='select']
+F4: JSXOpeningElement[name.name='textarea']
+G:  ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/Ukrainian/]
+H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜ][A-Za-zÀ-ÖØ-öø-ÿ\s]{7,}$/]
+```
+
+**check-stories.mjs checks:**
+1. `layout:\s*['"](?:centered|padded)['"]` — grep all story files
+2. `<(?:button|input|select|textarea)[\s/>]` — JSX raw HTML controls (string-literal false-positives filtered)
+3. `export const .*Ukrainian` — banned export names
+4. `globals:\s*\{.*locale.*['"]uk['"]` — banned pinned locale
+5. Known English/Cyrillic title literals in `src/stories/fixtures/**`
+6. `storybook.*` namespace key parity across sq/en/uk/it
+
+**check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,640,768,1280} × {sq,en,uk,it}. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only buttons `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`.

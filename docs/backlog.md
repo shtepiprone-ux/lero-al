@@ -7,6 +7,24 @@
 
 ## Last Session
 
+**2026-06-04 — Task 383 (final 29×9 conformance sweep) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- Residual fix: `command.stories.tsx` `w-72` → `w-full max-w-xs`. Assertion expanded to all 29 stories. **348/348 rendered assertions PASS** (29 stories × 3 viewports × 4 locales, uk@320/375/390 all green). All 5 owner failure categories re-certified: Tabs left-clip PASS, Select label PASS, AdminToolbar stack PASS, RVS scrollbar/header PASS, English leaks PASS. 29×9 conformance matrix in `docs/sessions/2026-06-04-task383-rendered-conformance-sweep.md`. tsc=0 lint=0 check:i18n=0 check:stories=0 build-storybook ✅. **Sprint 33 complete. Awaiting orchestrator review + commit emission.**
+
+**2026-06-04 — Task 382 (component layout fixes) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- Tabs `max-sm:justify-start` (no left clip); Select `SelectValue min-w-0 overflow-hidden`; AdminToolbar `flex-col sm:flex-row` (story); RVS header `max-sm:flex-col` + `no-scrollbar` (story+production); Skeleton `w-full max-w-xs`. check-stories-rendered assertion refined: parent-relative checks, hidden input skip, expanded to 13 stories. tsc=0 lint=0 check:stories=0 build-storybook ✅ **156/156 rendered PASS** (all cells green including uk@320/375/390). Session: `docs/sessions/2026-06-04-task382-component-layout-fixes.md`.
+
+**2026-06-04 — Task 381 (de-hardcode stories + delete redundant Ukrainian exports) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- `makeStoryListings(locale)` factory in StoryListingCard; ListingGrid/RVS use it → listing titles now localize. AdminTable role rendering fixed. AdminCardList tickets via storyT. button.stories AllVariantsDemo migrated to storybook.button.*. Input `LocaleStress` duplicate deleted. PageHeader hardcoded strings fixed. storybook.* now 23 keys × 4 locales. tsc=0 lint=0 check:i18n=0 check:stories=0 build-storybook ✅ rendered 96/108 PASS (Tabs/Default still fails → Task 382).
+
+**2026-06-04 — Task 380 (Storybook canvas + i18n layer + gates) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- `withCanvas` global decorator in preview.tsx (`container-wide` gutter, `layout:'fullscreen'`); `storyT`/`useStoryMessages` helper in `_storyI18n.ts`; `storybook.listing.*` namespace × 4 locales (11 keys, parity ✅); `listing.fixture.ts` migrated to keys + `makeListingFixtures(locale)` factory; ESLint story block (E–H selectors); `scripts/check-stories.mjs` gate (6 checks, wired into prebuild-storybook + prestorybook); `scripts/check-stories-rendered.mjs` Playwright assertion; all `layout:'centered'|'padded'` removed from story files; `Ukrainian*` exports renamed to `LocaleStress`.
+- Rendered assertion: 96/108 PASS (Button/Badge/Checkbox/PasswordInput/Input/Combobox/EmptyState/ListingGrid all PASS uk@320/375/390 ✅). Tabs/Default 12 FAIL — TabsTrigger not full-width at <640 → Task 382 to fix.
+- All 6 negative-flow tests PASS (each planted violation → FAIL → reverted). tsc=0, lint=0, check:i18n=0, check:stories=0, build-storybook ✅. Session log: `docs/sessions/2026-06-04-task380-storybook-canvas-and-gates.md`.
+
 **2026-06-04 — Sprint 32 stories REJECTED on owner rendered QA; orchestrator opened Sprint 33 (Tasks 380–383).**
 
 - Owner rendered every story (sq/en/uk/it × all breakpoints) → almost all FAIL: hardcoded English content,
@@ -51,10 +69,7 @@
 
 **Now — Sprint 33 correctives (replaces the un-run Task 377).** Tasks 372–379 stay UNCOMMITTED and are NOT
 approved (rendered QA failed). Strictly sequential, each gated on orchestrator *rendered* review (not diff alone):
-**380 (canvas + i18n layer + enforceable gates) → 381 (de-hardcode + delete `Ukrainian*` stories) → 382
-(Tabs/Select/AdminLayout/RVS/Skeleton layout) → 383 (rendered 26×9 sweep, gates the batch commit).** Send to
-Sonnet one task at a time via its kickoff file in `tasks/Sprints/Sprint_33_CORRECTIVE_*`. The Sprint 32 fixes that
-are genuinely correct (e.g. button `max-sm:w-full`) are re-certified by 383, not redone.
+~~380~~ ✅ → ~~381~~ ✅ → ~~382~~ ✅ → ~~383~~ ✅ **Sprint 33 COMPLETE — awaiting orchestrator review + commit emission** (Tabs/Select/AdminLayout/RVS/Skeleton layout) → 383 (rendered 26×9 sweep, gates the batch commit).** Send to Sonnet one task at a time via its kickoff file in `tasks/Sprints/Sprint_33_CORRECTIVE_*`. The Sprint 32 fixes that are genuinely correct (e.g. button `max-sm:w-full`) are re-certified by 383, not redone.
 
 **🚨 Sprint 28 FROZEN (2026-05-31 owner directive).** Admin responsive migration (306 / 306-Fix / 308 / 309) is not acceptable as-is; 306-Fix patches stay uncommitted and 308/309 BLOCKED until a canonical Admin Responsive DS Contract lands. Largely overtaken by the global DS work (Tasks 340/350 + Sprint 32) — revisit before any admin migration resumes.
 

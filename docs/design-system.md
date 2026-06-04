@@ -195,7 +195,7 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 ## §12 — Forms — global rules
 
 1. Forms live in a **form-container** (bounded column), centered, never full-bleed on wide screens.
-2. **Touch targets ≥44px** for every mobile-reachable interactive control. The Input primitive's default height must meet this on touch widths (the `h-9`/36px input is a known sub-44 target — fix at the primitive, see `responsive-governance.md` P2).
+2. **Touch targets ≥44px** for every mobile-reachable interactive control. The Input primitive default height is **`h-11` (44px)** as of Task 375 (2026-06-03) — the prior `h-9`/36px sub-44 target is now fixed at the primitive. See the canonical form-control height ladder in §12a "One-row-one-height".
 3. Dropdown / combobox menus **must fit the viewport**: max-height with internal scroll, and must not overflow horizontally at 320 (uk). Use the canonical Combobox/DropdownMenu; never a `<select>` or a raw popover.
 4. One label-control vertical rhythm per form (`space-y-3`/`space-y-4`), consistent.
 5. Field rows that hold two controls collapse to stacked (`flex-col`) `<sm:` and side-by-side `sm:+`.
@@ -225,8 +225,17 @@ Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (stick
 
 ### One-row-one-height (§15 / ui-rules.md §15)
 - Text inputs, Combobox triggers, Select triggers, Buttons, and filter chips that share a row or surface must have **consistent height / rhythm**.
-- `Combobox size="default"` (h-11), `SelectTrigger size="default"` (h-11), `Input` default (h-11 target), `Button size="xl"` (h-11) are the canonical mobile-safe shared height.
-- Mixing sizes within the same row (e.g., `size="sm"` button next to a `size="default"` Combobox) is a DS violation.
+- **Canonical form-control height ladder (Task 375, 2026-06-03 — single source).** `Input`, `SelectTrigger`, and `Combobox` all expose a `size` prop with identical heights, so any two can sit on the same row at the same height:
+
+  | `size` | Height | Use |
+  |---|---|---|
+  | `default` | **`h-11` (44px)** | DEFAULT — mobile-safe, the canonical shared row height |
+  | `sm` | `h-9` (36px) | Desktop-dense rows only; never the primary tappable control at `<sm` |
+  | `xs` | `h-8` (32px) | Compact desktop/admin chrome only; never tappable-primary at `<sm` |
+
+- `Button size="xl"` (h-11) matches the `default` form-control height; pair it with `default` form controls on shared rows.
+- Mixing heights within the same row (e.g., a `size="sm"` button next to a `size="default"` Combobox) is a DS violation.
+- The `Input` `size` prop uses `Omit<…, "size">` so it never collides with the native HTML `size` attribute; `InputGroupInput` and `PasswordInput` inherit `InputProps`.
 
 ### No horizontal overflow
 - At 320 / 375 / 390px, no component or chip row creates horizontal page overflow.
@@ -245,34 +254,76 @@ flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full
 ```
 Apply this to any container that holds a group of action buttons (page-level actions, form action rows, admin header clusters). Children (buttons) become full-width below `sm`; inline row from `sm` upward.
 
-### Button primitive mobile fragment (Task 360, 2026-06-02)
-`size="xl"` and `size="tab"` buttons in `button.tsx` now carry a canonical mobile fragment:
+### Button primitive mobile fragment (Task 372, 2026-06-03 — corrects Task 360)
+ALL text button sizes (`xs`, `sm`, `default`, `lg`, `xl`, `tab`) in `button.tsx` carry the canonical mobile fragment:
 - `max-sm:w-full` — full-width at < sm (640px)
-- `max-sm:h-auto max-sm:min-h-11` — height grows with content but stays ≥ 44px (xl only)
+- `max-sm:h-auto max-sm:min-h-11` — height grows with content but stays ≥ 44px
 - `max-sm:whitespace-normal max-sm:break-words` — long labels wrap / break rather than overflow
 
-Icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) and compact desktop-only sizes (`xs`, `sm`, `default`, `lg`) are **NOT** given `max-sm:w-full`. Full-width is **only** for mobile-reachable text buttons (`xl`, `tab`). The container fragment (`[&>*]:max-sm:w-full`) remains the preferred approach for action clusters; the primitive fragment covers standalone text buttons used outside such containers.
+(`tab` carries the same fragment; `max-sm:h-auto` is implicit since `tab` is already `h-auto`.)
 
-### Tabs — `< sm` responsive behavior (canonical, enforced in `src/components/ui/tabs.tsx`)
+Icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) are **NOT** given `max-sm:w-full` and stay compact at all widths. The container fragment (`[&>*]:max-sm:w-full`) remains the preferred approach for action clusters; the primitive fragment covers standalone text buttons used outside such containers.
 
-| Condition | `< sm` behavior | `sm:` + behavior |
-|---|---|---|
-| **≤ 3 tabs** | Full-width list (`max-sm:w-full`); triggers `flex-1` (equal fill); ≥ 44px tall (`max-sm:min-h-11`) | Content-width row; preserve existing tab styling |
-| **> 3 tabs** | Pass `mobileScroll` to `TabsList`; full-width + `overflow-x-auto flex-nowrap`; triggers natural width; ≥ 44px tall | Content-width row |
+### Tabs — single canonical style, NO variants (Task 372 v2, 2026-06-03 — supersedes Task 360 + the earlier variant model)
+`src/components/ui/tabs.tsx` has **one** style. There is **no `variant` prop, no CVA, no `tabsListVariants` export, and no `mobileScroll` prop** — all were removed in Task 372 v2 (owner decision). Do NOT reintroduce a Tabs variant; if a consumer appears to need a different tab style, **STOP & ASK** the owner.
 
-`TabsList` always gets `max-sm:flex max-sm:w-full max-sm:h-auto` from the primitive. Consumers with ≤ 3 tabs inherit fill behavior automatically (triggers already have `flex-1`). Consumers with > 3 tabs that need horizontal scroll pass `<TabsList mobileScroll>`.
-
-### Tabs — underline variant (Task 360, 2026-06-02)
-`TabsList` accepts `variant="underline"` for a primary-color underline indicator style. Active tab shows a `bg-primary` underline below the trigger; inactive tabs show none. The `default` (pill/fill) style is unchanged for all existing consumers. The Task 359 mobile full-width + `mobileScroll` contract applies to the `underline` variant too.
-
-| `TabsList` variant | Active indicator | List background | Use |
-|---|---|---|---|
-| `default` | filled pill (`bg-background` + `shadow-sm`) | `bg-muted` | Default — all existing consumers |
-| `line` | `bg-foreground` (neutral) underline | transparent | Neutral underline style |
-| `underline` | `bg-primary` (branded) underline | transparent | **Canonical branded underline style** — opt-in only |
+- **Active indicator:** primary-color underline (`after:bg-primary`, `data-active:after:opacity-100`). No filled pill, no list background (`bg-transparent rounded-none`).
+- **Labels:** `capitalize` is applied at the primitive (`TabsTrigger`) — canonical casing, do not re-case in consumers.
+- **Horizontal scroll is unconditional** (all breakpoints, not just `<sm`): `overflow-x-auto flex-nowrap max-w-full` + `no-scrollbar`. Long tab rows scroll horizontally instead of wrapping; there is no separate scroll mode to opt into.
+- **Mobile (`<sm` = 640px):** `max-sm:flex max-sm:w-full max-sm:h-auto` on `TabsList`; triggers `flex-1` (equal fill) and `max-sm:min-h-11` (≥44px). Consumers inherit this automatically — no per-consumer props.
+- Consumer overrides are limited to layout `className` (e.g. `AdminCurrencyTabs` `w-fit`, `ListingsStatusTabs` `listings-status-tabs`); they must not attempt to change the indicator style.
 
 ### No horizontal page overflow (320–640px)
 No tab list, action cluster, filter chip row, or toolbar may produce horizontal page overflow at 320 / 360 / 375 / 390 / 412 / 480 / 560 / 640px. Controls that cannot fit one row MUST wrap or stack predictably — never produce a half-width pill grid.
+
+---
+
+## §12c — Select trigger label-resolution + Combobox/Select trigger left-align contract (Task 371, 2026-06-03)
+
+### Select value→label resolution (canonical Base-UI pattern)
+
+`SelectRoot` (`<Select>`) MUST receive an `items` prop of shape `Array<{ value: string; label: string }>` whenever the trigger must display a human label for a pre-selected value.
+
+**Why:** Base-UI's `SelectValue` resolves labels from `store.state.items`. Without `items`, the popup (and its `SelectItem` children) must have been opened at least once to register labels — so the trigger shows the raw `value` string on first render and after hard navigation. Passing `items` to `SelectRoot` pre-populates the store and resolves labels immediately, even on SSR / initial render.
+
+**Canonical pattern:**
+```tsx
+const OPTIONS = [
+  { value: 'tirana', label: 'Tirana' },
+  { value: 'durres', label: 'Durrës' },
+]
+
+<Select defaultValue="tirana" items={OPTIONS}>
+  <SelectTrigger>
+    <SelectValue placeholder="Select city" />
+  </SelectTrigger>
+  <SelectContent>
+    {OPTIONS.map(o => (
+      <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>
+    ))}
+  </SelectContent>
+</Select>
+```
+
+**Rules:**
+- Always pass `items` to `<Select>` when using `defaultValue` or a controlled `value`.
+- The `items` array MUST contain every value that can appear as the selected value (at minimum the currently selected item).
+- `items` and the rendered `SelectItem` children MUST be consistent (same value/label pairs).
+- Placeholder-only selects (no initial value, value=null) still benefit from `items` for immediate label resolution after selection — pass it anyway.
+- Do NOT rely on the popup having been opened once to register labels; that is not SSR-safe.
+
+### Combobox and Select trigger text alignment (canonical rule)
+
+Every `Select` trigger and `Combobox` button-variant trigger MUST display its selected label (or placeholder) **left-aligned**, with the chevron right-aligned. This matches the canonical `flex justify-between` layout.
+
+**Root cause of centering bug:** `<button>` elements carry `text-align: center` in browser user-agent stylesheets. Tailwind's preflight does NOT reset this. Without an explicit `text-left` on the trigger or its label span, text content inside a `<button>` flex container appears centered.
+
+**Canonical fix:**
+- `Combobox` (`src/components/shared/Combobox.tsx`): `triggerBase` contains `text-left` — ensures left-alignment for both `variant="input"` and `variant="button"`. Added Task 371.
+- `SelectValue` (`src/components/ui/select.tsx`): already carries `text-left` in its className — no change needed.
+- Consumers that pass `triggerClassName` MUST NOT override with `text-center`.
+
+**Verification:** every Select trigger and Combobox button-variant trigger across the app (StatusChangeControl, LocationCombobox, all story viewports) renders label left-aligned, chevron right.
 
 ---
 
@@ -294,11 +345,11 @@ No tab list, action cluster, filter chip row, or toolbar may produce horizontal 
 5. Dropdowns/popovers respect the z-index scale (`ui-rules.md §16`); chrome at `z-30`; no `z-[999]`/`z-[9999]` emergency overrides.
 6. Scroll-lock and focus-trap come from the primitives — never custom `body { overflow:hidden }` JS.
 
-### Sheet canonical padding (Task 361, 2026-06-02)
-`SheetContent` carries `p-6` (24px, canonical modal padding per §5). `SheetHeader` and `SheetFooter` have **no own padding** — they inherit the `SheetContent` container padding. Consumers who need non-standard padding pass `p-0` / `p-5` etc. to `SheetContent` via `className` (tailwind-merge overrides). Body content placed directly as a child of `SheetContent` is automatically indented by `p-6`.
+### Sheet canonical padding (Task 373 correction — Task 361 superseded)
+`SheetContent` outer popup carries NO own padding (only structural flex/sizing classes). A **non-scrolling close strip** (`shrink-0 flex justify-end px-3 pt-3`) holds the X button above the scroll region. An inner scroll container (`flex-1 min-h-0 overflow-y-auto overflow-x-hidden flex flex-col gap-4 px-6 pb-6`) carries the canonical **p-6** (24px) modal padding per §5 and scrolls only when content overflows. `SheetHeader` and `SheetFooter` have **no own padding** — they inherit from the inner container. Consumers who need non-standard padding pass `p-0` / `p-5` etc. to `SheetContent` via `className`.
 
-### Dialog scroll-clip canonical pattern (Task 361, 2026-06-02)
-`DialogContent` uses `overflow-hidden` on the outer popup element (clips scrollbar to `rounded-2xl` boundary) and `overflow-y-auto flex-1 min-h-0` on an **inner scroll container** `<div>` that wraps `{children}`. This separates the rounded-clip boundary from the scroll context. The `p-4` lives on the outer element (overridable via `className`). `DialogFooter`'s `-mx-4 -mb-4` bleed is relative to the inner container and clips correctly to the outer `p-4` boundary. Stories must NOT use `defaultOpen` simultaneously — each dialog story uses a trigger so only one opens at a time (prevents stacked overlays in Docs view).
+### Dialog scroll-clip canonical pattern (Task 373 correction — Task 361 rejected by owner)
+`DialogContent` outer popup: `flex flex-col overflow-hidden` with NO own padding. A **non-scrolling close strip** (`shrink-0 flex justify-end px-3 pt-3`) holds the X button ABOVE the scroll region — scrollbar track never overlaps the X. An **inner scroll container** (`flex-1 min-h-0 overflow-y-auto overflow-x-hidden grid gap-4 min-w-0 break-words px-6 pb-6`) scrolls only when content exceeds `max-h-[90dvh]` (no scrollbar on short content). Horizontal scroll cannot occur (`overflow-x-hidden` + `break-words` + `min-w-0`). `DialogFooter` uses `border-t pt-4` for clean separation — no `bg-muted/50` bleed, no negative margins. Stories use triggers, never `defaultOpen`, to prevent stacked overlays in Docs view.
 
 ---
 

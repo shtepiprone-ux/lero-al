@@ -502,23 +502,24 @@ flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center [&>*]:max-sm:w-full
 ```
 Below `sm` (640px): children stack vertically, each **full-width** (`[&>*]:max-sm:w-full`), each ≥ 44px tall (`size="xl"`). At `sm:+`: normal inline row. Never a ragged flex-wrap grid of half-width pill buttons.
 
-### Tab list stacking rule (`src/components/ui/tabs.tsx`)
-`TabsList` gets `max-sm:flex max-sm:w-full max-sm:h-auto` from the primitive. `TabsTrigger` gets `max-sm:min-h-11` (≥ 44px).
+### Tab list rule — single canonical style, NO variants (`src/components/ui/tabs.tsx`)
+Task 372 v2 (2026-06-03, owner decision) collapsed Tabs to **one** style. There is **no `variant` prop, no CVA/`tabsListVariants`, and no `mobileScroll` prop** — all removed. Do NOT reintroduce a Tabs variant; if a consumer seems to need a different tab style, **STOP & ASK** the owner. Canonical authority: `design-system.md §12b`.
 
-- **≤ 3 tabs (default fill mode):** Triggers have `flex-1` → equal-width fill of the full-width list. No extra props needed.
-- **> 3 tabs (scroll mode):** Pass `<TabsList mobileScroll>` → list gets `max-sm:overflow-x-auto max-sm:flex-nowrap`. Use when tab labels are long enough that equal-fill creates unacceptably narrow triggers.
+- **Active indicator:** primary-color underline (`after:bg-primary`, `data-active:after:opacity-100`); no fill, no list background. Labels are `capitalize`d at the primitive.
+- **Horizontal scroll is unconditional** (all breakpoints): `overflow-x-auto flex-nowrap max-w-full` + `no-scrollbar`. Long rows scroll; there is no opt-in scroll mode.
+- **Mobile (`<sm`):** `TabsList` gets `max-sm:flex max-sm:w-full max-sm:h-auto`; `TabsTrigger` gets `flex-1` + `max-sm:min-h-11` (≥44px). Inherited automatically — no per-consumer props.
+- Consumer `className` may adjust layout only (e.g. `w-fit`), never the indicator style.
 
-**Underline variant (Task 360, 2026-06-02):** Pass `variant="underline"` to `TabsList` for a branded underline style. Active trigger shows a `bg-primary` underline indicator; no fill background. Mobile behavior is identical to default (`max-sm:w-full`, `mobileScroll` support). Existing consumers that do NOT pass `variant="underline"` are visually unchanged.
-
-### Button — mobile full-width rule (Task 360, 2026-06-02)
-`size="xl"` and `size="tab"` in `button.tsx` carry canonical mobile classes:
+### Button — mobile full-width rule (Task 372, 2026-06-03 — corrects Task 360)
+ALL text sizes in `button.tsx` carry canonical mobile classes:
 ```
 max-sm:w-full max-sm:h-auto max-sm:min-h-11 max-sm:whitespace-normal max-sm:break-words
 ```
+Applies to: `xs`, `sm`, `default`, `lg`, `xl`, `tab`.
 - Full-width (`max-sm:w-full`) at < 640px; content-width at ≥ 640px.
 - Height auto-grows for long labels that wrap (`max-sm:h-auto`); floor stays ≥ 44px (`max-sm:min-h-11`).
 - Long labels wrap (`max-sm:whitespace-normal`) and very long unbroken words break (`max-sm:break-words`).
-- **Does NOT apply to:** icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) and compact/desktop-only sizes (`xs`, `sm`, `default`, `lg`).
+- **Does NOT apply to:** icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) — these stay compact at all widths.
 
 ### Forbidden below sm
 - ❌ `flex-wrap` grid that produces uneven half-width buttons (ragged pill grid)
@@ -537,6 +538,17 @@ FilterBar Sheet body: NO own `p-*` on the inner filter area div — SheetContent
 
 ### Threshold
 The breakpoint is **`sm` (640px)**, NOT `md` (768px). All page-level action clusters and tab lists use `sm:` / `max-sm:`, not `md:` / `max-md:`.
+
+### Select & Combobox trigger left-align rule (Task 371, 2026-06-03)
+Every `SelectTrigger` and `Combobox` button-variant trigger MUST display its label/placeholder **left-aligned**. The chevron sits right. This is the canonical `flex justify-between` layout contract.
+
+- `Combobox.tsx` `triggerBase` includes `text-left` (added Task 371) — overrides the browser's `text-align: center` default on `<button>` elements.
+- `SelectValue` already carries `text-left`.
+- ❌ Never let a trigger use browser-default `text-align: center` — check any new `<button>`-based trigger for this.
+- ❌ Never pass `triggerClassName` containing `text-center` to `Combobox` or `SelectTrigger`.
+
+### Select value→label resolution rule (Task 371, 2026-06-03)
+`<Select>` (`SelectRoot`) MUST receive `items={Array<{ value: string; label: string }>}` whenever a `value`/`defaultValue` is set, so the trigger displays the human label instead of the raw value string. Full canonical pattern in `docs/design-system.md §12c`.
 
 ---
 
@@ -676,3 +688,31 @@ Rules:
   and must NOT be the default/normal QA story.
 - Locale-specific content may be supplied as inline fixture strings in stories (not requiring i18n keys)
   provided the strings are in the correct locale and are stable test data.
+
+---
+
+## §20 — Story `globals` placement rule (Task 376, 2026-06-04)
+
+**`globals: { locale: 'uk' }` MUST be at the story root level, NOT inside `parameters`.**
+
+The Storybook locale decorator reads `context.globals.locale`. Story-level globals set at the root (outside `parameters`) are picked up by `context.globals`; globals nested inside `parameters` are NOT read by the decorator and silently have no effect — the story renders in the default locale (English) regardless of the override value.
+
+```tsx
+// ✅ CORRECT — root-level globals, picked up by withLocale decorator
+export const UkrainianLocaleStress: Story = {
+  globals: { locale: 'uk' },
+  parameters: { viewport: { defaultViewport: 'mobile320' } },
+}
+
+// ❌ WRONG — globals inside parameters, silently ignored by decorator
+export const UkrainianLocaleStress: Story = {
+  parameters: {
+    globals: { locale: 'uk' },  // NOT read by context.globals
+    viewport: { defaultViewport: 'mobile320' },
+  },
+}
+```
+
+This rule applies to ALL locale-pinned stories (sq/uk/it). Default locale (en) stories require no `globals` override.
+
+See `docs/storybook-governance.md §13` for the full canonical story standard.

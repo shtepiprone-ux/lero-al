@@ -617,13 +617,18 @@ After completing ANY UI task, Claude Code MUST:
 
 `docs/backlog.md` is a **lightweight index** — it must never grow into a log dump.
 
-#### Structure of `docs/backlog.md`
+#### Structure (TWO files, 2026-06-03)
 ```
-# Project Backlog
+docs/backlog.md          ← ACTIVE state ONLY (~80 lines):
+  # Project Backlog
+  ## Last Session         ← 2–4 line summary + link to session file
+  ## Pending Action Items ← only genuinely-open items
+  ## Next Immediate Tasks ← active task queue, as detailed as needed
+  ## Active product backlog — Epics ← open-epic index
+  ## Archive              ← one-line pointer to docs/backlog-archive.md
 
-## Last Session        ← short summary (5–10 lines) + link to session file
-## Next Immediate Tasks ← active task queue, as detailed as needed
-## Session Archive     ← table: date | description | tasks | link
+docs/backlog-archive.md  ← HISTORICAL ledger (split out 2026-06-03):
+  ## Ledger              ← table: date | description | tasks | link (newest first)
 ```
 
 #### When closing a session
@@ -632,16 +637,16 @@ After completing ANY UI task, Claude Code MUST:
    - Header: `# Session Archive: <Description> — YYYY-MM-DD`
    - Content: full task logs, validation checklists, audit tables — everything that was in the old backlog session block.
 2. Update `docs/backlog.md`:
-   - Replace the previous "Last Session" block with a 5–10 line summary of the new session + link to its file.
-   - Add a row to the Session Archive table pointing to the new file.
+   - Replace the previous "Last Session" block with a 2–4 line summary of the new session + link to its file.
    - Update Next Immediate Tasks (remove completed, add new).
-3. Never paste full session logs directly into `docs/backlog.md`.
+3. Add a row to the **`docs/backlog-archive.md`** ledger (TOP of the table) pointing to the new session file.
+4. Never paste full session logs directly into `docs/backlog.md` OR `docs/backlog-archive.md`.
 
 #### Forbidden
-- DO NOT write multi-hundred-line session logs into `docs/backlog.md`.
-- DO NOT accumulate session history in `docs/backlog.md` — move to `docs/sessions/`.
-- DO NOT create a session file without adding it to the Session Archive table in `docs/backlog.md`.
-- DO NOT leave `docs/backlog.md` larger than ~80 lines of active content (excluding the archive table).
+- DO NOT write multi-hundred-line session logs into `docs/backlog.md` or `docs/backlog-archive.md`.
+- DO NOT accumulate session history in `docs/backlog.md` — the ledger is `docs/backlog-archive.md`; full detail is `docs/sessions/`.
+- DO NOT create a session file without adding a row to the ledger in `docs/backlog-archive.md`.
+- DO NOT leave `docs/backlog.md` larger than ~80 lines of active content.
 
 ---
 

@@ -1,5 +1,19 @@
 # Lero.al — Project Intelligence
 
+> # 🔴🔴 OWNER P0 — MEMORIZE, NEVER DROP (2026-06-03) 🔴🔴
+> **MOBILE <640px = FULL WIDTH. ALWAYS. EVERYWHERE.** Every text Button, Tabs list, FilterBar control,
+> Select/Combobox trigger, PhoneField, CTA, toolbar and action row MUST span the full available width below 640px.
+> **AND: ALL POPUPS = FULL-WIDTH BOTTOM SHEET at <640, NO EXCEPTIONS** — Dialog, Sheet, Select, Combobox,
+> DropdownMenu, NavigationMenu, Popover, Command (every Base-UI Popup/Positioner): bottom-anchored, edge-to-edge full
+> width, rounded top corners only, slide-up, ≤90dvh internal scroll, top drag-handle bar, closes on backdrop tap + Esc.
+> NOT centered cards, NOT mini-dropdowns on mobile.
+> ≥44px touch targets, labels wrap (sq/en/uk/it), no clip, no horizontal scroll at 320. Only icon-only/compact
+> controls (and non-UI map-marker popups → STOP&ASK) are exempt. The owner demanded this repeatedly and rejects work
+> that ignores it.
+> **Every task MUST enforce it; every review MUST verify it with rendered evidence at ALL breakpoints × ALL 4
+> locales (uk@320/375/390 mandatory). tsc/build passing is NOT proof.** Full rule: `docs/agent-contract.md`
+> clauses 11–12 + `docs/orchestrator-role.md` → "Mobile <640 full-width gate".
+
 > ## 🧭 ORCHESTRATOR SESSION-START PROTOCOL (Opus) — DO THIS FIRST, EVERY SESSION
 > Before any planning/work, the Opus orchestrator MUST:
 > 1. **Read `docs/orchestrator-role.md`** (loop, review checklist, commit-emission rules).
@@ -71,7 +85,8 @@ All project rules are split into focused files inside `/docs/`.
 - `docs/ai-behavior.md` — AI workflow, session behavior, update discipline, commit/deploy behavior, and general working process.
 - `docs/analytics-rules.md` — analytics, event tracking, SEO rules, and conversion optimization requirements.
 - `docs/architecture.md` — modular monolith architecture, module boundaries, file organization, state management, and system structure.
-- `docs/backlog.md` — current progress, last session summary, and next immediate tasks.
+- `docs/backlog.md` — ACTIVE state only: current progress, last session summary, next immediate tasks (~80-line cap).
+- `docs/backlog-archive.md` — historical ledger of completed tasks/sprints/epics (split out of backlog.md 2026-06-03).
 - `docs/component-rules.md` — component-level coding rules, hardcode restrictions, design token usage, and reusable component standards.
 - `docs/data-access-rules.md` — database access patterns, API rules, query conventions, pagination, and Supabase data access rules.
 - `docs/dependencies.md` — dependency policy, package selection rules, and approved package ecosystem.

@@ -142,7 +142,7 @@ function makeCardRow(locale: string) {
         <Badge variant={r.state === 'on' ? 'success' : 'neutral'} className="text-xs">
           {r.state === 'on' ? L.active : L.inactive}
         </Badge>
-        <span className="text-xs text-muted-foreground">{r.role}</span>
+        <span className="text-xs text-muted-foreground">{L[r.role.toLowerCase() as keyof typeof LABELS.en] ?? r.role}</span>
       </div>
     ),
     meta: (
@@ -167,7 +167,7 @@ function ColumnsManager({
   return (
     <Popover>
       <PopoverTrigger
-        className="flex items-center gap-1.5 h-9 px-3 rounded-md border border-input bg-transparent text-sm font-medium hover:bg-muted transition-colors cursor-pointer"
+        className="flex items-center gap-1.5 h-9 px-3 rounded-md border border-input bg-transparent text-sm font-medium hover:bg-muted transition-colors cursor-pointer max-sm:w-full max-sm:justify-center"
       >
         {L.columns}
       </PopoverTrigger>
@@ -234,7 +234,7 @@ function MobileSortControl({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="flex items-center gap-1.5 h-9 px-3 rounded-md border border-input bg-transparent text-sm font-medium hover:bg-muted transition-colors cursor-pointer"
+        className="flex items-center gap-1.5 h-9 px-3 rounded-md border border-input bg-transparent text-sm font-medium hover:bg-muted transition-colors cursor-pointer max-sm:w-full max-sm:justify-center"
       >
         <ArrowUpDown className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         {activeLabel}
@@ -361,7 +361,9 @@ function AdminTableDemo({
   return (
     <div className="space-y-3">
       {/* ── Toolbar: global search + Columns manager ─────────────────────────── */}
-      <div className="flex items-center gap-2 flex-wrap">
+      {/* max-sm:flex-col [&>*]:max-sm:w-full: at <640px stacks vertically, each control
+          full-width (§12b mobile contract). Desktop: inline row, flex-1 search. */}
+      <div className="flex items-center gap-2 flex-wrap max-sm:flex-col [&>*]:max-sm:w-full">
         <Input
           type="search"
           className="h-9 flex-1 min-w-[180px]"
@@ -373,7 +375,8 @@ function AdminTableDemo({
       </div>
 
       {/* ── Mobile sort control — only below lg: (no column headers in card mode) */}
-      <div className="lg:hidden">
+      {/* max-sm:w-full: full-width at <640px per §12b mobile contract. */}
+      <div className="lg:hidden max-sm:w-full">
         <MobileSortControl colDefs={COL_DEFS} sort={sort} onSort={handleSort} locale={locale} />
       </div>
 
@@ -462,7 +465,10 @@ export const Default: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -486,7 +492,10 @@ export const ColumnMenu: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -508,7 +517,10 @@ export const ManageColumns: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" initialHidden={['email']} />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} initialHidden={['email']} />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -530,7 +542,10 @@ export const CardMode: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -552,7 +567,10 @@ export const Interactive: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" interactive />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} interactive />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -572,7 +590,10 @@ export const InteractiveCardMode: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" interactive />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} interactive />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -595,7 +616,10 @@ export const Responsive: Story = {
       },
     },
   },
-  render: () => <AdminTableDemo locale="en" />,
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <AdminTableDemo locale={locale} />
+  },
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -608,7 +632,6 @@ export const Responsive: Story = {
 export const LocaleStress: Story = {
   parameters: {
     viewport: { defaultViewport: 'desktop1280' },
-    globals: { locale: 'uk' },
     docs: {
       description: {
         story:
@@ -674,8 +697,9 @@ export const EmptyState: Story = {
       },
     },
   },
-  render: () => {
-    const L = LABELS.en
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const L = LABELS[locale] ?? LABELS.en
     const cols: AdminTableColumn<SampleRow>[] = [
       { key: 'name',    header: L.colName,    sortable: true,  sortType: 'text', hideable: false, cell: r => r.name },
       { key: 'state',   header: L.colStatus,  sortable: true,  sortType: 'text', hideable: true, cell: r => r.state },
@@ -700,8 +724,9 @@ export const LoadingState: Story = {
       },
     },
   },
-  render: () => {
-    const L = LABELS.en
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const L = LABELS[locale] ?? LABELS.en
     const cols: AdminTableColumn<SampleRow>[] = [
       { key: 'name',    header: L.colName,   sortable: true, sortType: 'text', hideable: false, cell: r => r.name },
       { key: 'state',   header: L.colStatus, sortable: true, sortType: 'text', hideable: true,  cell: r => r.state },

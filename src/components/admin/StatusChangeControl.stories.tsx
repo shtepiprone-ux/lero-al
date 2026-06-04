@@ -30,6 +30,8 @@ const meta: Meta = {
           'Renders explicit transition buttons derived from the `transitions` prop for the current status. ' +
           'Supports `requireNote`, `enableNote`, and `historyEvents` (change log). ' +
           'Used when only certain transitions are permitted from the current state.\n\n' +
+          '**Locale:** `label` is NOT set in story fixtures — the component resolves labels via `t(labelKey)` ' +
+          'using the active locale from the Storybook toolbar. Use the locale toolbar to verify all 4 locales.\n\n' +
           '**Product surfaces:** `/admin/inquiries/sales`, `/admin/inquiries/support` (select variant); ' +
           '`/admin/support` tickets, `/admin/listings` status (workflow variant).\n\n' +
           '**Story note:** each story shows a `StoryPurposeNote` banner explaining the variant and where it is used. ' +
@@ -42,64 +44,40 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
-// ── Inquiry status fixtures ───────────────────────────────────────────────────
+// ── Inquiry status fixtures — no hardcoded label; component uses t(labelKey) ──
 type IStatus = 'new' | 'in_progress' | 'closed'
 
 const INQUIRY_STATUSES: StatusOption<IStatus>[] = [
-  { code: 'new',         label: 'New',        labelKey: 'status_new',         badgeVariant: 'warning', icon: <Circle className="h-3 w-3" /> },
-  { code: 'in_progress', label: 'In progress', labelKey: 'status_in_progress', badgeVariant: 'info',    icon: <AlertCircle className="h-3 w-3" /> },
-  { code: 'closed',      label: 'Closed',      labelKey: 'status_closed',      badgeVariant: 'neutral', icon: <CheckCircle2 className="h-3 w-3" /> },
+  { code: 'new',         labelKey: 'status_new',         badgeVariant: 'warning', icon: <Circle className="h-3 w-3" /> },
+  { code: 'in_progress', labelKey: 'status_in_progress', badgeVariant: 'info',    icon: <AlertCircle className="h-3 w-3" /> },
+  { code: 'closed',      labelKey: 'status_closed',      badgeVariant: 'neutral', icon: <CheckCircle2 className="h-3 w-3" /> },
 ]
 
-// ── Ticket status fixtures ────────────────────────────────────────────────────
+// ── Ticket status fixtures — no hardcoded label; component uses t(labelKey) ───
 type TStatus = 'open' | 'in_progress' | 'resolved' | 'closed'
 
 const TICKET_STATUSES: StatusOption<TStatus>[] = [
-  { code: 'open',        label: 'Open',        labelKey: 'status_change_label', badgeVariant: 'warning', icon: <Circle className="h-3 w-3" /> },
-  { code: 'in_progress', label: 'In progress', labelKey: 'status_change_label', badgeVariant: 'info',    icon: <AlertCircle className="h-3 w-3" /> },
-  { code: 'resolved',    label: 'Resolved',    labelKey: 'status_change_label', badgeVariant: 'success', icon: <CheckCircle2 className="h-3 w-3" /> },
-  { code: 'closed',      label: 'Closed',      labelKey: 'status_change_label', badgeVariant: 'neutral', icon: <XCircle className="h-3 w-3" /> },
+  { code: 'open',        labelKey: 'status_open',        badgeVariant: 'warning', icon: <Circle className="h-3 w-3" /> },
+  { code: 'in_progress', labelKey: 'status_in_progress', badgeVariant: 'info',    icon: <AlertCircle className="h-3 w-3" /> },
+  { code: 'resolved',    labelKey: 'status_resolved',    badgeVariant: 'success', icon: <CheckCircle2 className="h-3 w-3" /> },
+  { code: 'closed',      labelKey: 'status_closed',      badgeVariant: 'neutral', icon: <XCircle className="h-3 w-3" /> },
 ]
 
+// ── Ticket transition fixtures — no hardcoded label; component uses t(labelKey) ──
 const TICKET_TRANSITIONS: Transition<TStatus>[] = [
-  { from: 'open',        to: 'in_progress', label: 'In progress', labelKey: 'status_change_label' },
-  { from: 'open',        to: 'resolved',    label: 'Resolved',    labelKey: 'status_change_label' },
-  { from: 'open',        to: 'closed',      label: 'Close',       labelKey: 'status_change_label', destructive: true },
-  { from: 'in_progress', to: 'resolved',    label: 'Resolved',    labelKey: 'status_change_label' },
-  { from: 'in_progress', to: 'closed',      label: 'Close',       labelKey: 'status_change_label', destructive: true },
-  { from: 'resolved',    to: 'open',        label: 'Re-open',     labelKey: 'status_change_label' },
-  { from: 'resolved',    to: 'closed',      label: 'Close',       labelKey: 'status_change_label', destructive: true },
-  { from: 'closed',      to: 'open',        label: 'Re-open',     labelKey: 'status_change_label' },
+  { from: 'open',        to: 'in_progress', labelKey: 'status_in_progress' },
+  { from: 'open',        to: 'resolved',    labelKey: 'status_resolved' },
+  { from: 'open',        to: 'closed',      labelKey: 'action_close', destructive: true },
+  { from: 'in_progress', to: 'resolved',    labelKey: 'status_resolved' },
+  { from: 'in_progress', to: 'closed',      labelKey: 'action_close', destructive: true },
+  { from: 'resolved',    to: 'open',        labelKey: 'action_reopen' },
+  { from: 'resolved',    to: 'closed',      labelKey: 'action_close', destructive: true },
+  { from: 'closed',      to: 'open',        labelKey: 'action_reopen' },
 ]
 
 const HISTORY_EVENTS: HistoryEvent[] = [
-  { id: '1', fromStatus: 'new', toStatus: 'in_progress', note: 'Assigned for review', actorName: 'Admin', createdAt: '2026-05-30T10:00:00Z' },
+  { id: '1', fromStatus: 'new', toStatus: 'in_progress', note: null, actorName: 'Admin', createdAt: '2026-05-30T10:00:00Z' },
   { id: '2', fromStatus: 'in_progress', toStatus: 'closed', note: null, actorName: 'Moderator', createdAt: '2026-05-31T09:00:00Z' },
-]
-
-// ── Ukrainian locale fixtures ─────────────────────────────────────────────────
-const INQUIRY_STATUSES_UK: StatusOption<IStatus>[] = [
-  { code: 'new',         label: 'Новий',     labelKey: 'status_new',         badgeVariant: 'warning', icon: <Circle className="h-3 w-3" /> },
-  { code: 'in_progress', label: 'В обробці', labelKey: 'status_in_progress', badgeVariant: 'info',    icon: <AlertCircle className="h-3 w-3" /> },
-  { code: 'closed',      label: 'Закритий',  labelKey: 'status_closed',      badgeVariant: 'neutral', icon: <CheckCircle2 className="h-3 w-3" /> },
-]
-
-const TICKET_STATUSES_UK: StatusOption<TStatus>[] = [
-  { code: 'open',        label: 'Відкритий',  labelKey: 'status_change_label', badgeVariant: 'warning', icon: <Circle className="h-3 w-3" /> },
-  { code: 'in_progress', label: 'В роботі',   labelKey: 'status_change_label', badgeVariant: 'info',    icon: <AlertCircle className="h-3 w-3" /> },
-  { code: 'resolved',    label: 'Вирішений',  labelKey: 'status_change_label', badgeVariant: 'success', icon: <CheckCircle2 className="h-3 w-3" /> },
-  { code: 'closed',      label: 'Закритий',   labelKey: 'status_change_label', badgeVariant: 'neutral', icon: <XCircle className="h-3 w-3" /> },
-]
-
-const TICKET_TRANSITIONS_UK: Transition<TStatus>[] = [
-  { from: 'open',        to: 'in_progress', label: 'В роботі',       labelKey: 'status_change_label' },
-  { from: 'open',        to: 'resolved',    label: 'Вирішений',      labelKey: 'status_change_label' },
-  { from: 'open',        to: 'closed',      label: 'Закрити',        labelKey: 'status_change_label', destructive: true },
-  { from: 'in_progress', to: 'resolved',    label: 'Вирішений',      labelKey: 'status_change_label' },
-  { from: 'in_progress', to: 'closed',      label: 'Закрити',        labelKey: 'status_change_label', destructive: true },
-  { from: 'resolved',    to: 'open',        label: 'Відкрити знову', labelKey: 'status_change_label' },
-  { from: 'resolved',    to: 'closed',      label: 'Закрити',        labelKey: 'status_change_label', destructive: true },
-  { from: 'closed',      to: 'open',        label: 'Відкрити знову', labelKey: 'status_change_label' },
 ]
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -111,7 +89,7 @@ export const Select: Story = {
     viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
-        story: '`variant="select"` — low-stakes inquiry status change. Any transition is valid. Used in `/admin/inquiries/sales` and `/admin/inquiries/support`.',
+        story: '`variant="select"` — low-stakes inquiry status change. Any transition is valid. Labels resolved via t(labelKey) — use locale toolbar to verify sq/en/uk/it.',
       },
     },
   },
@@ -122,7 +100,7 @@ export const Select: Story = {
         variant="select"
         currentStatus={'new' as IStatus}
         statuses={INQUIRY_STATUSES}
-        onSubmit={({ toStatus }) => { alert(`Changed to: ${toStatus}`) }}
+        onSubmit={() => {}}
       />
     </div>
   ),
@@ -137,7 +115,7 @@ export const SelectWithNote: Story = {
         currentStatus={'in_progress' as IStatus}
         statuses={INQUIRY_STATUSES}
         enableNote
-        onSubmit={({ toStatus, note }) => { alert(`Changed to: ${toStatus}, note: ${note}`) }}
+        onSubmit={() => {}}
       />
     </div>
   ),
@@ -152,7 +130,7 @@ export const Workflow: Story = {
         currentStatus={'open' as TStatus}
         statuses={TICKET_STATUSES}
         transitions={TICKET_TRANSITIONS}
-        onSubmit={({ toStatus, note }) => { alert(`Changed to: ${toStatus}, note: ${note}`) }}
+        onSubmit={() => {}}
       />
     </div>
   ),
@@ -193,22 +171,21 @@ export const WorkflowWithHistory: Story = {
 export const LocaleStress: Story = {
   parameters: {
     viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
-    docs: { description: { story: 'uk@320: Ukrainian workflow + select variants side-by-side. Long Ukrainian labels must not overflow. Use locale toolbar for other locales; viewport toolbar for other widths.' } },
+    docs: { description: { story: 'uk@320: Ukrainian labels via t(labelKey) — no hardcoded locale fixtures needed. Use locale toolbar for other locales; viewport toolbar for other widths.' } },
   },
   render: () => (
     <div className="p-3 space-y-4">
       <StatusChangeControl
         variant="workflow"
         currentStatus={'open' as TStatus}
-        statuses={TICKET_STATUSES_UK}
-        transitions={TICKET_TRANSITIONS_UK}
+        statuses={TICKET_STATUSES}
+        transitions={TICKET_TRANSITIONS}
         onSubmit={() => {}}
       />
       <StatusChangeControl
         variant="select"
         currentStatus={'new' as IStatus}
-        statuses={INQUIRY_STATUSES_UK}
+        statuses={INQUIRY_STATUSES}
         onSubmit={() => {}}
       />
     </div>

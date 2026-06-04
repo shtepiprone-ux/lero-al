@@ -1,8 +1,7 @@
 /**
  * Storybook story for the recently-viewed responsive layout.
  *
- * Uses a simplified StoryCard (no FavoriteButton / server-action deps) and a
- * StoryClrButton stub so the locale-aware layout renders cleanly in Storybook.
+ * Uses the shared StoryListingCard helper (Task 370 parity: mirrors live ListingCard).
  * The live feature uses RecentlyViewedGrid + ListingCard; the markup is identical.
  *
  * Governance note: docs/responsive-screenshot-governance.md §12 forbids
@@ -14,47 +13,12 @@
 'use client'
 
 import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { MapPin, Maximize2, Trash2 } from 'lucide-react'
+import { Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { LISTINGS_GRID_FIXTURE } from './fixtures/listing.fixture'
-
-// ── Simplified listing card (no server-action deps) ───────────────────────────
-
-function StoryCard({ listing }: { listing: (typeof LISTINGS_GRID_FIXTURE)[number] }) {
-  const t = useTranslations('listing')
-  return (
-    <div className="rounded-xl border bg-card overflow-hidden group">
-      <div className="relative aspect-[4/3] bg-muted flex items-center justify-center">
-        <Maximize2 className="h-8 w-8 text-muted-foreground" />
-        {listing.is_premium && (
-          <div className="absolute top-2 left-2 text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-badge-premium text-primary-foreground">
-            Premium
-          </div>
-        )}
-      </div>
-      <div className="p-3 space-y-1.5">
-        <p className="text-xs text-muted-foreground">
-          {t(listing.transaction_type as 'sale' | 'rent')} · {t('property_type_apartment')}
-        </p>
-        <h3 className="text-sm font-semibold line-clamp-2 group-hover:text-primary transition-colors">
-          {listing.title}
-        </h3>
-        <div className="text-lg font-bold text-primary">
-          €{listing.price.toLocaleString()}
-          {listing.transaction_type === 'rent' && (
-            <span className="text-xs font-normal text-muted-foreground">/mo</span>
-          )}
-        </div>
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-          <MapPin className="h-3.5 w-3.5 shrink-0" />
-          {listing.neighborhood}, {listing.city}
-        </div>
-      </div>
-    </div>
-  )
-}
+import { StoryListingCard, makeStoryListings, type StoryCardData } from './StoryListingCard'
 
 // ── Canonical clear button (canonical Button, cursor-pointer, action-wired) ────
 
@@ -81,7 +45,7 @@ function RecentlyViewedLayout({
   showEmptyState = false,
   onClear,
 }: {
-  listings: (typeof LISTINGS_GRID_FIXTURE)
+  listings: StoryCardData[]
   showClear?: boolean
   showEmptyState?: boolean
   onClear?: () => void
@@ -100,16 +64,16 @@ function RecentlyViewedLayout({
 
   return (
     <div className="recently-viewed">
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
         <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
         {showClear && <StoryClrButton onClear={onClear} />}
       </div>
       {/* Mobile: horizontal scroll (scrollbar visible in story for QA; production uses no-scrollbar).
           sm+: grid 2→3→4 cols. Matches RecentlyViewedGrid markup. */}
-      <div className="flex gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
+      <div className="flex gap-3 overflow-x-auto pb-3 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
         {listings.map(listing => (
           <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
-            <StoryCard listing={listing} />
+            <StoryListingCard data={listing} />
           </div>
         ))}
       </div>
@@ -119,11 +83,14 @@ function RecentlyViewedLayout({
 
 // ── Meta ───────────────────────────────────────────────────────────────────────
 
-const meta: Meta = {
+type RvsArgs = {
+  onClear?: () => void
+}
+
+const meta: Meta<RvsArgs> = {
   title: 'System/RecentlyViewedSection',
   tags: ['autodocs'],
   parameters: {
-    layout: 'padded',
     docs: {
       description: {
         component:
@@ -131,6 +98,7 @@ const meta: Meta = {
           'Mobile: horizontal scroll (w-48 cards, no-scrollbar). ' +
           'sm+: 2-col grid → md: 3-col → lg: 4-col. ' +
           'Clear button (profile only) via clearSlot prop. ' +
+          'Cards use shared StoryListingCard (Task 370 parity: image, status/premium, price + €/m², beds/area, location, photo count, favorite, days-ago). ' +
           'See docs/responsive-screenshot-governance.md for screenshot matrix.',
       },
     },
@@ -138,51 +106,62 @@ const meta: Meta = {
 }
 
 export default meta
-type Story = StoryObj
-
-const ITEMS = LISTINGS_GRID_FIXTURE
+type Story = StoryObj<RvsArgs>
 
 // ── Stories ────────────────────────────────────────────────────────────────────
 
 /** Desktop grid — populated with 8 listings + clear button (profile context). */
-function PopulatedRender() {
+function PopulatedRender({ onClear, locale }: { onClear?: () => void; locale: string }) {
   const [cleared, setCleared] = useState(false)
+  function handleClear() {
+    onClear?.()
+    setCleared(true)
+  }
   return (
     <div className="container-wide mx-auto px-4 py-8">
-      <RecentlyViewedLayout listings={ITEMS} showClear onClear={() => setCleared(true)} />
+      <RecentlyViewedLayout listings={makeStoryListings(locale)} showClear onClear={handleClear} />
       {cleared && <p className="text-xs text-muted-foreground mt-3 px-1">Clear history clicked ✓</p>}
     </div>
   )
 }
 
 export const Populated: Story = {
-  render: () => <PopulatedRender />,
+  args: { onClear: fn() },
+  render: (args, context) => <PopulatedRender onClear={args.onClear} locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Desktop 1280px: 3-col grid. Canonical Button for Clear — click logs action in canvas.' } },
+    docs: { description: { story: 'Desktop 1280px: 3-col grid. Full field-parity cards (premium stripe, status badges, price/m², features, photo count, favorite, date). Click Clear — logs to Actions panel via fn() AND shows in-canvas confirmation.' } },
   },
 }
 
 /** Mobile horizontal scroll — key breakpoint for the scroll→grid transition. */
 export const MobileScroll: Story = {
-  render: () => (
-    <div className="py-4 px-4">
-      <RecentlyViewedLayout listings={ITEMS.slice(0, 6)} showClear onClear={() => {}} />
-    </div>
-  ),
+  args: { onClear: fn() },
+  render: (args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="py-4 px-4">
+        <RecentlyViewedLayout listings={makeStoryListings(locale).slice(0, 6)} showClear onClear={args.onClear} />
+      </div>
+    )
+  },
   parameters: {
     viewport: { defaultViewport: 'mobile375' },
-    docs: { description: { story: 'Mobile 375px: horizontal scroll, w-48 shrink-0 cards. Scrollbar visible in story (production uses no-scrollbar). Swipe or drag horizontally to scroll.' } },
+    docs: { description: { story: 'Mobile 375px: horizontal scroll, w-48 shrink-0 cards with full field set. Scrollbar visible in story (production uses no-scrollbar). Swipe or drag horizontally to scroll.' } },
   },
 }
 
 /** Huge desktop — 4-col grid via lg:grid-cols-4 (2560px, container-wide bounds content). */
 export const HugeDesktop: Story = {
-  render: () => (
-    <div className="container-wide mx-auto px-4 py-8">
-      <RecentlyViewedLayout listings={ITEMS} showClear />
-    </div>
-  ),
+  args: { onClear: fn() },
+  render: (args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="container-wide mx-auto px-4 py-8">
+        <RecentlyViewedLayout listings={makeStoryListings(locale)} showClear onClear={args.onClear} />
+      </div>
+    )
+  },
   parameters: {
     viewport: { defaultViewport: 'desktop2560' },
     docs: { description: { story: '2560px: 4-col grid via lg:grid-cols-4. Content bounded by .container-wide.' } },
@@ -201,15 +180,23 @@ export const EmptyState: Story = {
   },
 }
 
-/** Ukrainian locale — longest strings, primary overflow stress test. */
-export const UkrainianLocale: Story = {
-  render: () => (
-    <div className="container-wide mx-auto px-4 py-8">
-      <RecentlyViewedLayout listings={ITEMS.slice(0, 4)} showClear onClear={() => {}} />
-    </div>
-  ),
+/** Locale stress — longest strings, primary overflow stress test. Use locale toolbar for sq/en/uk/it. */
+export const LocaleStress: Story = {
+  args: { onClear: fn() },
+  render: (args, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="container-wide mx-auto px-4 py-8">
+        <RecentlyViewedLayout
+          listings={makeStoryListings(locale).slice(0, 4)}
+          showClear
+          onClear={args.onClear}
+        />
+      </div>
+    )
+  },
   parameters: {
-    globals: { locale: 'uk' },
-    docs: { description: { story: 'Ukrainian (uk) locale — longest strings; checks title wrap and button label.' } },
+    viewport: { defaultViewport: 'mobile320' },
+    docs: { description: { story: '@320: longest locale titles — title line-clamp-2, badge labels localize, no horizontal overflow. Use locale toolbar for sq/en/uk/it; viewport toolbar for other widths.' } },
   },
 }

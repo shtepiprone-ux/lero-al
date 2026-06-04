@@ -1,56 +1,73 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from './input';
+import { PhoneField, type PhoneFieldValue } from '@/components/shared/PhoneField';
 
 const meta: Meta<typeof Input> = {
   title: 'Primitives/Input',
   component: Input,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: {},
   argTypes: {
     disabled: { control: 'boolean' },
     placeholder: { control: 'text' },
-    type: {
-      control: 'select',
-      options: ['text', 'email', 'password', 'number', 'search', 'tel'],
-    },
+    type: { control: 'select', options: ['text', 'email', 'password', 'number', 'search', 'tel'] },
   },
 };
-
 export default meta;
 type Story = StoryObj<typeof Input>;
 
+const INP: Record<string, Record<string, string>> = {
+  addr:     { en: 'Enter address or area…', sq: 'Shkruani adresen ose zonen…', uk: 'Vvedit adresu abo raion…', it: 'Inserisci indirizzo o zona…' },
+  price:    { en: 'Price (EUR)',           sq: 'Cmimi (EUR)',          uk: 'Tsina (EUR)',           it: 'Prezzo (EUR)' },
+  locked:   { en: 'Locked value',          sq: 'Vlere e bllokuar',     uk: 'Zablokavane znachennia', it: 'Valore bloccato' },
+  dis_ph:   { en: 'Input disabled',        sq: 'Input i çaktivizuar',  uk: 'Pole vymknutе',          it: 'Input disabilitato' },
+  search:   { en: 'Search listings…',      sq: 'Kerko njoftime…',      uk: 'Poshuk oholoshen…',      it: 'Cerca annunci…' },
+  fullname: { en: 'Full name',             sq: 'Emri i plote',         uk: 'Povne imia',             it: 'Nome completo' },
+  name_ph:  { en: 'Your name',             sq: 'Emri juaj',            uk: 'Vashe imia',             it: 'Il tuo nome' },
+  phone:    { en: 'Phone',                 sq: 'Telefon',              uk: 'Telefon',                it: 'Telefono' },
+}
+const inp = (k: string, l = 'en') => INP[k]?.[l] ?? INP[k]?.en ?? k
+
 export const Default: Story = {
-  args: { placeholder: 'Enter address or area…' },
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <Input placeholder={inp('addr', l)} />
+  },
 };
 
 export const WithLabel: Story = {
-  render: () => (
-    <div className="flex flex-col gap-2 w-72">
-      <label className="text-sm font-medium">Price (EUR)</label>
-      <Input type="number" placeholder="e.g. 150000" />
-    </div>
-  ),
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="flex flex-col gap-2 w-72">
+        <label className="text-sm font-medium">{inp('price', l)}</label>
+        <Input type="number" placeholder="e.g. 150000" />
+      </div>
+    )
+  },
 };
 
 export const Disabled: Story = {
-  args: { disabled: true, placeholder: 'Input disabled', value: 'Locked value' },
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <Input disabled placeholder={inp('dis_ph', l)} value={inp('locked', l)} />
+  },
 };
 
 export const SearchInput: Story = {
-  render: () => (
-    <div className="relative w-72">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
-      <Input className="pl-9" placeholder="Search listings…" />
-    </div>
-  ),
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="relative w-72">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
+        <Input className="pl-9" placeholder={inp('search', l)} />
+      </div>
+    )
+  },
   parameters: {
-    docs: {
-      description: {
-        story: '`AdminSearchInput` is the canonical composition of Input + search icon. ' +
-               'Never create a custom input wrapper with hardcoded height.',
-      },
-    },
+    docs: { description: { story: 'Search input composition: canonical Input + search icon. Use locale toolbar for sq/en/uk/it.' } },
   },
 };
 
@@ -64,9 +81,7 @@ export const LocalePlaceholders: Story = {
     </div>
   ),
   parameters: {
-    docs: {
-      description: { story: 'Input placeholder in en/sq/uk/it — verify text is not clipped.' },
-    },
+    docs: { description: { story: 'Input placeholder in en/sq/uk/it — verify text is not clipped. (Documentation story showing all 4 locales simultaneously.)' } },
   },
 };
 
@@ -80,58 +95,34 @@ export const PhoneNumericValidation: Story = {
       <div className="flex flex-col gap-1.5">
         <label className="text-sm font-medium">Phone (error state — letters blocked)</label>
         <Input type="tel" value="691 234 567" aria-invalid readOnly />
-        <p className="text-xs text-destructive mt-0.5">
-          Enter digits only — no letters or symbols.
-        </p>
-      </div>
-      <div className="flex flex-col gap-1.5">
-        <label className="text-sm font-medium">Phone (uk locale error)</label>
-        <Input type="tel" value="" aria-invalid readOnly placeholder="691 234 567" />
-        <p className="text-xs text-destructive mt-0.5">
-          Введіть лише цифри — без букв та символів.
-        </p>
+        <p className="text-xs text-destructive mt-0.5">Enter digits only — no letters or symbols.</p>
       </div>
     </div>
   ),
   parameters: {
     viewport: { defaultViewport: 'mobile375' },
-    docs: {
-      description: {
-        story:
-          'PhoneField numeric-only validation states. ' +
-          'Input filtering (`/[^\\d\\s\\-().]​/g`) strips letters/symbols on every keystroke and paste. ' +
-          'Schema step (c) in `validateNationalPhone` returns `error_phone_digits_only` if non-digits pass filtering. ' +
-          'Error key is localized in all 4 locales (auth / cabinet / admin.user_profile.validation namespaces). ' +
-          'See `PhoneField.tsx` and `lib/phone/index.ts`. (Task 363)',
-      },
-    },
+    docs: { description: { story: 'PhoneField numeric-only validation states. Error key is localized in all 4 locales. See PhoneField.tsx and lib/phone/index.ts. (Task 363)' } },
   },
 }
 
-export const MobileForm: Story = {
-  render: () => (
-    <div className="flex flex-col gap-4 w-full max-w-sm p-4">
+function MobileFormDemo({ locale }: { locale: string }) {
+  const [phone, setPhone] = useState<PhoneFieldValue>({ national: '', dialCode: '+355', iso2: 'AL', e164: '' })
+  return (
+    <div className="flex flex-col gap-4 p-4">
       <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium">Full name</label>
-        <div className="min-h-[44px] flex items-center">
-          <Input placeholder="Your name" className="w-full" />
-        </div>
+        <label className="text-sm font-medium">{inp('fullname', locale)}</label>
+        <Input placeholder={inp('name_ph', locale)} />
       </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium">Phone</label>
-        <div className="min-h-[44px] flex items-center">
-          <Input type="tel" placeholder="+355 69 000 0000" className="w-full" />
-        </div>
-      </div>
+      <PhoneField value={phone.e164} onChange={setPhone} label={inp('phone', locale)} />
     </div>
-  ),
+  )
+}
+
+export const MobileForm: Story = {
+  render: (_, context) => <MobileFormDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     viewport: { defaultViewport: 'mobile375' },
-    docs: {
-      description: {
-        story: 'Mobile form: wrap Input in `min-h-[44px]` container for touch-safe target area. ' +
-               'See docs/ui-rules.md §4 for input size governance.',
-      },
-    },
+    docs: { description: { story: 'Mobile form: canonical PhoneField — dial-code Combobox + national Input. Dropdown shows country names in the active locale (sq/en/uk/it via toolbar). CLDR-sourced names — no hardcode.' } },
   },
 };
+

@@ -1,6 +1,7 @@
 'use client'
 
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { useState } from 'react';
 import { Search, Plus, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,11 +9,43 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const meta: Meta = {
+type AdminLayoutArgs = {
+  onFilter?: () => void
+  onAddListing?: () => void
+  onAddUser?: () => void
+}
+
+
+const AL_TEXT: Record<string, Record<string, string>> = {
+  listings:   { en: 'Listings',            sq: 'Njoftimet',         uk: 'Oholoshennia',       it: 'Annunci' },
+  search_ph:  { en: 'Search listings...',  sq: 'Kerko njoftime...', uk: 'Poshuk oholoshen...', it: 'Cerca annunci...' },
+  filter:     { en: 'Filter',              sq: 'Filtro',            uk: 'Filtr',              it: 'Filtra' },
+  add_lst:    { en: 'Add listing',         sq: 'Shto njoftim',      uk: 'Dodaty oholoshennia', it: 'Aggiungi annuncio' },
+  users:      { en: 'Users',               sq: 'Perdoruesit',       uk: 'Korystuvachi',        it: 'Utenti' },
+  add_usr:    { en: 'Add user',            sq: 'Shto perdorues',    uk: 'Dodaty korystuvacha', it: 'Aggiungi utente' },
+  col_name:   { en: 'Name',                sq: 'Emri',              uk: 'Imia',                it: 'Nome' },
+  col_role:   { en: 'Role',                sq: 'Roli',              uk: 'Rol',                 it: 'Ruolo' },
+  col_status: { en: 'Status',              sq: 'Gjendja',           uk: 'Status',              it: 'Stato' },
+  col_actions:{ en: 'Actions',             sq: 'Veprimet',          uk: 'Dii',                 it: 'Azioni' },
+  active:     { en: 'Active',              sq: 'Aktiv',             uk: 'Aktyvnyi',            it: 'Attivo' },
+  edit:       { en: 'Edit',                sq: 'Ndrysho',           uk: 'Redahuvaty',          it: 'Modifica' },
+  role_agent: { en: 'Agent',               sq: 'Agjent',            uk: 'Ahent',               it: 'Agente' },
+  role_user:  { en: 'User',                sq: 'Perdorues',         uk: 'Korystuvach',         it: 'Utente' },
+  role_admin: { en: 'Admin',               sq: 'Administrator',     uk: 'Administratore',      it: 'Amministratore' },
+  total_lst:  { en: 'Total listings',      sq: 'Gjithsej njoftime', uk: 'Vsioho oholoshen',    it: 'Annunci totali' },
+  pending:    { en: 'Pending',             sq: 'Ne pritje',         uk: 'Ochikuie',            it: 'In attesa' },
+  agents:     { en: 'Agents',              sq: 'Agjente',           uk: 'Ahenty',              it: 'Agenti' },
+  revenue:    { en: 'Revenue',             sq: 'Te ardhurat',       uk: 'Dokhid',              it: 'Ricavi' },
+  live:       { en: 'Live',                sq: 'Aktiv',             uk: 'Aktyvni',             it: 'Attivi' },
+  review:     { en: 'Review',              sq: 'Shqyrtim',          uk: 'Perevirka',           it: 'Revisione' },
+  verified:   { en: 'Verified',            sq: 'Verifikuar',        uk: 'Perevireno',          it: 'Verificato' },
+}
+const al = (k: string, l = 'en') => AL_TEXT[k]?.[l] ?? AL_TEXT[k]?.en ?? k
+
+const meta: Meta<AdminLayoutArgs> = {
   title: 'System/AdminLayout',
   tags: ['autodocs'],
   parameters: {
-    layout: 'padded',
     docs: {
       description: {
         component:
@@ -24,33 +57,37 @@ const meta: Meta = {
 };
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<AdminLayoutArgs>;
 
-function AdminToolbarRender() {
+function AdminToolbarRender({ onFilter, onAddListing, locale = 'en' }: { onFilter?: () => void; onAddListing?: () => void; locale?: string }) {
   const [lastAction, setLastAction] = useState<string | null>(null)
   return (
     <div className="space-y-2">
-      <div className="flex items-center justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl">
+      {/* <640: flex-col — title row on top, control row below, no horizontal overflow.
+          ≥640 (sm:): flex-row — canonical desktop horizontal layout. */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl gap-3">
         <div className="flex items-center gap-3">
-          <h2 className="text-lg font-semibold">Listings</h2>
+          <h2 className="text-lg font-semibold">{al('listings', locale)}</h2>
           <Badge variant="secondary">1,248</Badge>
         </div>
-        <div className="flex items-center gap-2">
+        {/* Control row: flex-col on mobile (each control stacks full-width, no overflow).
+            sm: flex-row — canonical horizontal desktop layout. */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 max-sm:w-full">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
             <Input
               type="search"
-              placeholder="Search listings…"
-              className="pl-9 h-9 w-48"
+              placeholder={al('search_ph', locale)}
+              className="pl-9 h-9 w-full sm:w-48"
             />
           </div>
-          <Button variant="outline" size="default" onClick={() => setLastAction('Filter clicked')}>
-            <Filter className="h-4 w-4" />
-            Filter
+          <Button variant="outline" size="default" onClick={() => { onFilter?.(); setLastAction(al('filter', locale)) }}>
+            <Filter className="h-4 w-4 shrink-0" />
+            {al('filter', locale)}
           </Button>
-          <Button size="default" onClick={() => setLastAction('Add listing clicked')}>
-            <Plus />
-            Add listing
+          <Button size="default" onClick={() => { onAddListing?.(); setLastAction(al('add_lst', locale)) }}>
+            <Plus className="shrink-0" />
+            {al('add_lst', locale)}
           </Button>
         </div>
       </div>
@@ -62,51 +99,52 @@ function AdminToolbarRender() {
 }
 
 export const AdminToolbar: Story = {
-  render: () => <AdminToolbarRender />,
+  args: { onFilter: fn(), onAddListing: fn() },
+  render: (args, context) => <AdminToolbarRender onFilter={args.onFilter} onAddListing={args.onAddListing} locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     docs: {
       description: {
-        story: 'Admin toolbar: canonical Input (not raw input), canonical Button. Clicking Filter/Add logs an in-canvas action.',
+        story: 'Admin toolbar: canonical Input (not raw input), canonical Button. Clicking Filter/Add logs to Actions panel via fn() AND shows in-canvas label.',
       },
     },
   },
 };
 
-function AdminTableWrapperRender() {
+function AdminTableWrapperRender({ onAddUser, locale = 'en' }: { onAddUser?: () => void; locale?: string }) {
   const [lastAction, setLastAction] = useState<string | null>(null)
   return (
     <div className="space-y-2">
       <div className="bg-card rounded-2xl border shadow-sm overflow-hidden max-w-6xl mx-auto">
         {/* Toolbar */}
         <div className="flex items-center justify-between p-4 md:p-6 border-b">
-          <h2 className="text-lg font-semibold">Users</h2>
-          <Button size="default" onClick={() => setLastAction('Add user clicked')}><Plus /> Add user</Button>
+          <h2 className="text-lg font-semibold">{al('users', locale)}</h2>
+          <Button size="default" onClick={() => { onAddUser?.(); setLastAction(al('add_usr', locale)) }}><Plus /> {al('add_usr', locale)}</Button>
         </div>
       {/* Table (scroll wrapper for mobile) */}
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50">
             <tr>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground">Name</th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground">Role</th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground">Status</th>
-              <th className="text-left px-4 py-3 font-medium text-muted-foreground">Actions</th>
+              <th className="text-left px-4 py-3 font-medium text-muted-foreground">{al('col_name', locale)}</th>
+              <th className="text-left px-4 py-3 font-medium text-muted-foreground">{al('col_role', locale)}</th>
+              <th className="text-left px-4 py-3 font-medium text-muted-foreground">{al('col_status', locale)}</th>
+              <th className="text-left px-4 py-3 font-medium text-muted-foreground">{al('col_actions', locale)}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {[
-              { name: 'Ana Koci', role: 'Agent', status: 'Active' },
-              { name: 'Blerim Hoxha', role: 'User', status: 'Active' },
-              { name: 'Flutura Lleshi', role: 'Admin', status: 'Active' },
+              { name: 'Ana Koci',     role: al('role_agent', locale) },
+              { name: 'Blerim Hoxha', role: al('role_user', locale) },
+              { name: 'Flutura Lleshi', role: al('role_admin', locale) },
             ].map(row => (
               <tr key={row.name} className="hover:bg-muted/30">
                 <td className="px-4 py-3">{row.name}</td>
                 <td className="px-4 py-3 text-muted-foreground">{row.role}</td>
                 <td className="px-4 py-3">
-                  <Badge variant="success">{row.status}</Badge>
+                  <Badge variant="success">{al('active', locale)}</Badge>
                 </td>
                 <td className="px-4 py-3">
-                  <Button size="xs" variant="ghost">Edit</Button>
+                  <Button size="xs" variant="ghost">{al('edit', locale)}</Button>
                 </td>
               </tr>
             ))}
@@ -122,37 +160,40 @@ function AdminTableWrapperRender() {
 }
 
 export const AdminTableWrapper: Story = {
-  render: () => <AdminTableWrapperRender />,
+  args: { onAddUser: fn() },
+  render: (args, context) => <AdminTableWrapperRender onAddUser={args.onAddUser} locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     docs: {
       description: {
-        story: 'Admin table wrapper: `bg-card rounded-2xl border shadow-sm overflow-hidden` + `overflow-x-auto` for mobile scroll. "Add user" button logs action in canvas.',
+        story: 'Admin table wrapper: `bg-card rounded-2xl border shadow-sm overflow-hidden` + `overflow-x-auto` for mobile scroll. "Add user" button logs to Actions panel via fn() AND shows in-canvas label.',
       },
     },
   },
 };
 
 export const AdminCards: Story = {
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    const cards = [
+      { labelKey: 'total_lst', value: '1,248', badge: 'success' as const, badgeText: '+12%' },
+      { labelKey: 'active',    value: '934',   badge: 'success' as const, badgeText: al('live', l) },
+      { labelKey: 'pending',   value: '87',    badge: 'warning' as const, badgeText: al('review', l) },
+      { labelKey: 'users',     value: '3,421', badge: 'info' as const,    badgeText: '+8%' },
+      { labelKey: 'agents',    value: '156',   badge: 'info' as const,    badgeText: al('verified', l) },
+      { labelKey: 'revenue',   value: '\u20ac42k', badge: 'success' as const, badgeText: '+23%' },
+    ]
+    return (
     <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 max-w-6xl mx-auto">
-      {[
-        { label: 'Total listings', value: '1,248', badge: 'success', badgeText: '+12%' },
-        { label: 'Active', value: '934', badge: 'success', badgeText: 'Live' },
-        { label: 'Pending', value: '87', badge: 'warning', badgeText: 'Review' },
-        { label: 'Users', value: '3,421', badge: 'info', badgeText: '+8%' },
-        { label: 'Agents', value: '156', badge: 'info', badgeText: 'Verified' },
-        { label: 'Revenue', value: '€42k', badge: 'success', badgeText: '+23%' },
-      ].map(card => (
-        <div key={card.label} className="bg-card rounded-2xl border shadow-sm p-5">
-          <p className="text-xs text-muted-foreground">{card.label}</p>
+      {cards.map(card => (
+        <div key={card.labelKey} className="bg-card rounded-2xl border shadow-sm p-5">
+          <p className="text-xs text-muted-foreground">{al(card.labelKey, l)}</p>
           <p className="text-2xl font-bold mt-1">{card.value}</p>
-          <Badge variant={card.badge as 'success' | 'warning' | 'info'} className="mt-2">
-            {card.badgeText}
-          </Badge>
+          <Badge variant={card.badge} className="mt-2">{card.badgeText}</Badge>
         </div>
       ))}
     </div>
-  ),
+    )
+  },
   parameters: {
     viewport: { defaultViewport: 'desktop1280' },
     docs: {

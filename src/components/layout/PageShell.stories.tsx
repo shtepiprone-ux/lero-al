@@ -2,6 +2,21 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { PageShell } from './PageShell'
 import { Section } from './Section'
 
+
+const PS_TEXT: Record<string, Record<string, string>> = {
+  listings: { en: 'Listings',                   sq: 'Njoftimet',                  uk: 'Оголошення',                  it: 'Annunci' },
+  browse:   { en: 'Browse available properties', sq: 'Shfleto pronat e disponueshme', uk: 'Переглянути доступну нерухомість', it: 'Sfoglia le proprietà disponibili' },
+  reading:  { en: 'Reading column',             sq: 'Kolona e leximit',           uk: 'Колонка читання',             it: 'Colonna di lettura' },
+  reading_d:{ en: 'Bounded to max-w-3xl, centered inside container-wide.', sq: 'E kufizuar ne max-w-3xl.', uk: 'Obmezhennia do max-w-3xl.', it: 'Limitata a max-w-3xl.' },
+  form:     { en: 'Form column',                sq: 'Kolona e formularit',        uk: 'Колонка форми',               it: 'Colonna modulo' },
+  form_d:   { en: 'Bounded to max-w-xl, centered inside container-wide.', sq: 'E kufizuar ne max-w-xl.', uk: 'Obmezhennia do max-w-xl.', it: 'Limitata a max-w-xl.' },
+  avail:    { en: 'Available listings',         sq: 'Njoftimet e disponueshme',   uk: 'Доступні оголошення',         it: 'Annunci disponibili' },
+  search_r: { en: 'Search results',             sq: 'Rezultate te kerkimit',      uk: 'Результати пошуку',           it: 'Risultati ricerca' },
+  long_t:   { en: 'Available real estate for rent and sale across Albania', sq: 'Njoftime per qira dhe shitje ne Shqiperi', uk: 'Orenda ta prodazh nerukhomost v Albanii', it: 'Immobili disponibili per affitto e vendita in Albania' },
+  long_d:   { en: 'Browse available apartments, houses and commercial properties.', sq: 'Shfletoni pronat e disponueshme.', uk: 'Perehliadte dostupni kvartyrny budynky ta komertsiinu nerukhomist.', it: 'Sfoglia appartamenti case e proprieta commerciali.' },
+}
+const ps = (k: string, l = 'en') => PS_TEXT[k]?.[l] ?? PS_TEXT[k]?.en ?? k
+
 const meta: Meta<typeof PageShell> = {
   title: 'Layout/PageShell',
   component: PageShell,
@@ -46,63 +61,77 @@ const SAMPLE_BLOCK = (
 
 export const Default: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell>
-      <Section title="Listings" description="Browse available properties">{SAMPLE_BLOCK}</Section>
+      <Section title={ps('listings',l)} description={ps('browse',l)}>{SAMPLE_BLOCK}</Section>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const Narrow: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell container="narrow">
-      <Section title="Reading column" description="Bounded to max-w-3xl, centered inside container-wide.">{SAMPLE_BLOCK}</Section>
+      <Section title={ps('reading',l)} description={ps('reading_d',l)}>{SAMPLE_BLOCK}</Section>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const Form: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell container="form">
-      <Section title="Form column" description="Bounded to max-w-xl, centered inside container-wide.">{SAMPLE_BLOCK}</Section>
+      <Section title={ps('form',l)} description={ps('form_d',l)}>{SAMPLE_BLOCK}</Section>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const AsDiv: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell as="div">
-      <Section title="Available listings">{SAMPLE_BLOCK}</Section>
+      <Section title={ps('avail',l)}>{SAMPLE_BLOCK}</Section>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const ClassNameMerge: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell className="py-4">
-      <Section title="Search results">{SAMPLE_BLOCK}</Section>
+      <Section title={ps('search_r',l)}>{SAMPLE_BLOCK}</Section>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
     viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
-    docs: { description: { story: 'uk@320: long Ukrainian title must wrap without overflow. Container padding scales. Use locale toolbar for other locales; viewport toolbar for other widths (320→2560).' } },
+    docs: { description: { story: '@320: long title wraps without overflow. Use locale toolbar for sq/en/uk/it; viewport toolbar for all widths.' } },
   },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell>
-      <Section
-        title="Оренда та продаж нерухомості в Тирані та по всій Албанії"
-        description="Перегляньте доступні варіанти квартир, будинків та комерційної нерухомості."
-      >
+      <Section title={ps('long_t', l)} description={ps('long_d', l)}>
         {SAMPLE_BLOCK}
       </Section>
     </PageShell>
-  ),
+    )
+  },
 }

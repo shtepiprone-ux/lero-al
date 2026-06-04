@@ -10,132 +10,136 @@ const meta: Meta<typeof Combobox> = {
   component: Combobox,
   tags: ['autodocs'],
   parameters: {
-    docs: {
-      description: {
-        component:
-          'Canonical searchable/button combobox primitive. variant="input" for long lists (searchable); variant="button" for short static lists ≤8 items (click-to-open). ' +
-          'All stories are interactive: selecting an option updates the displayed value in the trigger. ' +
-          'Trigger selected value uses flex-1 min-w-0 truncate — no horizontal overflow at any canonical width. ' +
-          'Dropdown items use break-words — long Ukrainian labels wrap, never clip. ' +
-          'Portal mode clamps dropdown to viewport right edge. ' +
-          'Breakpoints verified via the Storybook viewport toolbar; locales via the locale toolbar.',
-      },
-    },
+    docs: { description: { component: 'Canonical searchable/button combobox. variant=input for long lists; variant=button for short lists. Breakpoints via viewport toolbar; locales via locale toolbar.' } },
   },
 }
 
 export default meta
 type Story = StoryObj<typeof Combobox>
 
-const SHORT_OPTIONS: ComboboxOption[] = [
-  { value: 'tirana', label: 'Tirana' },
-  { value: 'durres', label: 'Durrës' },
-  { value: 'vlore', label: 'Vlorë' },
-  { value: 'shkoder', label: 'Shkodër' },
+const CITY_OPTIONS: ComboboxOption[] = [
+  { value: 'tirana', label: 'Tirana' }, { value: 'durres', label: 'Durrës' },
+  { value: 'vlore', label: 'Vlorë' },   { value: 'shkoder', label: 'Shkodër' },
 ]
 
-const UK_OPTIONS: ComboboxOption[] = [
-  { value: 'new', label: 'Нова заявка на розгляд' },
-  { value: 'in_progress', label: 'В обробці адміністратором' },
-  { value: 'resolved', label: 'Вирішено успішно' },
-  { value: 'closed', label: 'Закрито без вирішення' },
-]
-
-const UK_LOCATION_OPTIONS: ComboboxOption[] = [
-  { value: 'c1', label: 'Тирана, центральний район міста' },
-  { value: 'c2', label: 'Дуррес, приморська зона відпочинку' },
-  { value: 'c3', label: 'Вльора, узбережжя Адріатичного моря' },
-  { value: 'c4', label: 'Шкодер, озерний район на півночі' },
-]
-
-function ComboboxInteractive({
-  options,
-  initialValue = '',
-  variant,
-  placeholder,
-  disabled,
-}: {
-  options: ComboboxOption[]
-  initialValue?: string
-  variant?: 'button' | 'input'
-  placeholder?: string
-  disabled?: boolean
-}) {
-  const [value, setValue] = useState(initialValue)
-  return (
-    <Combobox
-      options={options}
-      value={value}
-      onChange={setValue}
-      variant={variant}
-      placeholder={placeholder}
-      disabled={disabled}
-    />
-  )
+const STATUS_OPTIONS: Record<string, ComboboxOption[]> = {
+  en: [
+    { value: 'new',         label: 'New request awaiting administrator review' },
+    { value: 'in_progress', label: 'In progress — under administrator review' },
+    { value: 'resolved',    label: 'Successfully resolved' },
+    { value: 'closed',      label: 'Closed without resolution' },
+  ],
+  sq: [
+    { value: 'new',         label: 'Kërkesë e re në pritje të shqyrtimit nga administratori' },
+    { value: 'in_progress', label: 'Në procesim — duke u shqyrtuar nga ekipi i administrimit' },
+    { value: 'resolved',    label: 'Zgjidhur me sukses nga administratori' },
+    { value: 'closed',      label: 'Mbyllur pa zgjidhje nga administratori' },
+  ],
+  uk: [
+    { value: 'new',         label: 'Нова заявка на розгляд' },
+    { value: 'in_progress', label: 'В обробці адміністратором' },
+    { value: 'resolved',    label: 'Вирішено успішно' },
+    { value: 'closed',      label: 'Закрито без вирішення' },
+  ],
+  it: [
+    { value: 'new',         label: 'Nuova richiesta in attesa di revisione' },
+    { value: 'in_progress', label: 'In lavorazione — in revisione dall\'amministratore' },
+    { value: 'resolved',    label: 'Risolto con successo' },
+    { value: 'closed',      label: 'Chiuso senza risoluzione' },
+  ],
 }
 
-// ════════════════════════════════════════════════════════════════════════════════
-// ── Canonical scenario stories — breakpoints via viewport toolbar ─────────────
-// ════════════════════════════════════════════════════════════════════════════════
+const LOCATION_OPTIONS: Record<string, ComboboxOption[]> = {
+  en: [
+    { value: 'c1', label: 'Tirana, central city district' },
+    { value: 'c2', label: 'Durrës, seaside resort area' },
+    { value: 'c3', label: 'Vlorë, Adriatic Sea coastline' },
+    { value: 'c4', label: 'Shkodër, northern lake district' },
+  ],
+  sq: [
+    { value: 'c1', label: 'Tiranë, rrethi qendror i qytetit' },
+    { value: 'c2', label: 'Durrës, zona bregdetare e pushimit' },
+    { value: 'c3', label: 'Vlorë, bregdeti i Detit Adriatik' },
+    { value: 'c4', label: 'Shkodër, rajoni i liqenit në veri' },
+  ],
+  uk: [
+    { value: 'c1', label: 'Тирана, центральний район міста' },
+    { value: 'c2', label: 'Дуррес, приморська зона відпочинку' },
+    { value: 'c3', label: 'Вльора, узбережжя Адріатичного моря' },
+    { value: 'c4', label: 'Шкодер, озерний район на півночі' },
+  ],
+  it: [
+    { value: 'c1', label: 'Tirana, quartiere centrale della città' },
+    { value: 'c2', label: 'Durazzo, area balneare di villeggiatura' },
+    { value: 'c3', label: 'Valona, costa del Mare Adriatico' },
+    { value: 'c4', label: 'Scutari, distretto del lago nel nord' },
+  ],
+}
+
+const PLACEHOLDERS: Record<string, Record<string, string>> = {
+  city:   { en: 'Select city',     sq: 'Zgjidh qytetin',    uk: 'Виберіть місто',    it: 'Seleziona città' },
+  search: { en: 'Search city...',  sq: 'Kërko qytetin...',  uk: 'Пошук міста...',    it: 'Cerca città...' },
+  status: { en: 'Select status',   sq: 'Zgjidh statusin',   uk: 'Виберіть статус',   it: 'Seleziona stato' },
+  loc_s:  { en: 'Search...',       sq: 'Kërko...',          uk: 'Пошук...',          it: 'Cerca...' },
+  no_sel: { en: 'Select a city...', sq: 'Zgjidh një qytet...', uk: 'Виберіть місто...', it: 'Seleziona una città...' },
+}
+const ph = (k: string, l = 'en') => PLACEHOLDERS[k]?.[l] ?? PLACEHOLDERS[k]?.en ?? k
+
+function ComboboxInteractive({
+  options, initialValue = '', variant, placeholder, disabled,
+}: {
+  options: ComboboxOption[]; initialValue?: string; variant?: 'button' | 'input'; placeholder?: string; disabled?: boolean
+}) {
+  const [value, setValue] = useState(initialValue)
+  return <Combobox options={options} value={value} onChange={setValue} variant={variant} placeholder={placeholder} disabled={disabled} />
+}
 
 export const ButtonVariant: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
-  render: () => (
-    <div className="max-w-xs p-4">
-      <ComboboxInteractive options={SHORT_OPTIONS} initialValue="tirana" variant="button" placeholder="Select city" />
-    </div>
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (<div className="p-4 sm:max-w-xs"><ComboboxInteractive options={CITY_OPTIONS} initialValue="tirana" variant="button" placeholder={ph('city', locale)} /></div>)
+  },
 }
 
 export const InputVariant: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
-  render: () => (
-    <div className="max-w-xs p-4">
-      <ComboboxInteractive options={SHORT_OPTIONS} initialValue="" variant="input" placeholder="Search city..." />
-    </div>
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (<div className="p-4 sm:max-w-xs"><ComboboxInteractive options={CITY_OPTIONS} initialValue="" variant="input" placeholder={ph('search', locale)} /></div>)
+  },
 }
 
 export const LongLabelLocaleStress: Story = {
-  parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
-    docs: { description: { story: 'uk@320: long label truncated in trigger. Select an option — displayed value updates immediately. No horizontal overflow. Use locale toolbar for other locales; viewport toolbar for other widths.' } },
+  parameters: { viewport: { defaultViewport: 'mobile320' }, docs: { description: { story: '@320: long label truncated in trigger. Select an option — value updates immediately. No horizontal overflow. Use locale toolbar for sq/en/uk/it.' } } },
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const options = STATUS_OPTIONS[locale] ?? STATUS_OPTIONS.en
+    return (<div className="p-4"><ComboboxInteractive options={options} initialValue="in_progress" variant="button" placeholder={ph('status', locale)} /></div>)
   },
-  render: () => (
-    <div className="p-3">
-      <ComboboxInteractive options={UK_OPTIONS} initialValue="in_progress" variant="button" placeholder="Виберіть статус" />
-    </div>
-  ),
 }
 
 export const DropdownOpen: Story = {
-  parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
-    docs: { description: { story: 'uk@320: open the dropdown — long option labels must wrap within dropdown bounds; no overflow. Selecting closes the dropdown and updates the trigger.' } },
+  parameters: { viewport: { defaultViewport: 'mobile320' }, docs: { description: { story: '@320: open the dropdown — long option labels wrap within dropdown bounds. Use locale toolbar for sq/en/uk/it.' } } },
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    const options = LOCATION_OPTIONS[locale] ?? LOCATION_OPTIONS.en
+    return (<div className="p-4"><ComboboxInteractive options={options} initialValue="" variant="input" placeholder={ph('loc_s', locale)} /></div>)
   },
-  render: () => (
-    <div className="p-3">
-      <ComboboxInteractive options={UK_LOCATION_OPTIONS} initialValue="" variant="input" placeholder="Пошук..." />
-    </div>
-  ),
 }
 
 export const NoSelection: Story = {
   parameters: { viewport: { defaultViewport: 'mobile320' } },
-  render: () => (
-    <div className="p-3">
-      <ComboboxInteractive options={SHORT_OPTIONS} initialValue="" variant="button" placeholder="Select a city..." />
-    </div>
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (<div className="p-4"><ComboboxInteractive options={CITY_OPTIONS} initialValue="" variant="button" placeholder={ph('no_sel', locale)} /></div>)
+  },
 }
 
 export const Disabled: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
-  render: () => (
-    <div className="max-w-xs p-4">
-      <ComboboxInteractive options={SHORT_OPTIONS} initialValue="tirana" variant="button" disabled />
-    </div>
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (<div className="p-4 sm:max-w-xs"><ComboboxInteractive options={CITY_OPTIONS} initialValue="tirana" variant="button" placeholder={ph('city', locale)} disabled /></div>)
+  },
 }

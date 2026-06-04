@@ -186,33 +186,57 @@ function MultiActionShellDemo({
   )
 }
 
+// ── Locale maps for story fixture labels (Storybook-only, not production copy) ─
+const PAGE_TITLES: Record<string, Record<string, string>> = {
+  listings: { en: 'Listings',      sq: 'Njoftimet',       uk: 'Оголошення',       it: 'Annunci' },
+  users:    { en: 'Users',         sq: 'Përdoruesit',     uk: 'Користувачі',      it: 'Utenti' },
+}
+const PAGE_SUBTITLES: Record<string, Record<string, string>> = {
+  users: { en: 'Manage platform accounts', sq: 'Administroni llogaritë', uk: 'Керування акаунтами', it: 'Gestisci gli account' },
+}
+const ACTION_LABELS: Record<string, Record<string, string>> = {
+  new_listing: { en: 'New listing',  sq: 'Njoftim i ri',    uk: 'Нове оголошення',  it: 'Nuovo annuncio' },
+  new_user:    { en: 'New user',     sq: 'Përdorues i ri',  uk: 'Новий користувач', it: 'Nuovo utente' },
+  export:      { en: 'Export',       sq: 'Eksporto',        uk: 'Експорт',          it: 'Esporta' },
+  edit_sel:    { en: 'Edit selected',sq: 'Ndrysho zgjedhjen',uk: 'Редагувати вибране',it: 'Modifica selezione' },
+}
+
+const t = (map: Record<string, string>, locale: string) => map[locale] ?? map.en
+
 // ════════════════════════════════════════════════════════════════════════════════
-// ── Canonical scenario stories — breakpoints via viewport toolbar ─────────────
+// ── Canonical scenario stories — locale from render context ───────────────────
 // ════════════════════════════════════════════════════════════════════════════════
 
 export const Default: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
-    <AdminPageShell title="Listings" countBadge={{ value: 127 }}>
-      {CONTENT_MOCK}
-    </AdminPageShell>
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminPageShell title={t(PAGE_TITLES.listings, locale)} countBadge={{ value: 127 }}>
+        {CONTENT_MOCK}
+      </AdminPageShell>
+    )
+  },
 }
 
 export const WithTabs: Story = {
   parameters: {
     viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Canonical Tabs primitive in filterBar slot. Click tabs to switch active state. Tabs use TabsList/TabsTrigger from @/components/ui/tabs.' } },
+    docs: { description: { story: 'Canonical Tabs primitive in filterBar slot. Click tabs to switch active state.' } },
   },
-  render: () => (
-    <AdminShellDemo
-      title="Listings"
-      countBadge={{ value: 127 }}
-      actionLabel="New listing"
-      showFilterBar
-      showActions={false}
-    />
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminShellDemo
+        title={t(PAGE_TITLES.listings, locale)}
+        countBadge={{ value: 127 }}
+        actionLabel={t(ACTION_LABELS.new_listing, locale)}
+        locale={locale}
+        showFilterBar
+        showActions={false}
+      />
+    )
+  },
 }
 
 export const WithActions: Story = {
@@ -220,73 +244,89 @@ export const WithActions: Story = {
     viewport: { defaultViewport: 'desktop1440' },
     docs: { description: { story: 'Action slot: size="xl" (44px). Click button → in-canvas feedback.' } },
   },
-  render: () => (
-    <AdminShellDemo
-      title="Users"
-      subtitle="Manage platform accounts"
-      countBadge={{ value: 843 }}
-      actionLabel="New user"
-    />
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminShellDemo
+        title={t(PAGE_TITLES.users, locale)}
+        subtitle={t(PAGE_SUBTITLES.users, locale)}
+        countBadge={{ value: 843 }}
+        actionLabel={t(ACTION_LABELS.new_user, locale)}
+        locale={locale}
+      />
+    )
+  },
 }
 
 export const WithTabsAndActions: Story = {
   parameters: {
     viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Full pattern: title + count + actions + canonical tabs. Click action → feedback. Click tabs to switch.' } },
+    docs: { description: { story: 'Full pattern: title + count + actions + canonical tabs.' } },
   },
-  render: () => (
-    <AdminShellDemo
-      title="Users"
-      subtitle="Manage platform accounts"
-      countBadge={{ value: 843 }}
-      actionLabel="New user"
-      showFilterBar
-    />
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminShellDemo
+        title={t(PAGE_TITLES.users, locale)}
+        subtitle={t(PAGE_SUBTITLES.users, locale)}
+        countBadge={{ value: 843 }}
+        actionLabel={t(ACTION_LABELS.new_user, locale)}
+        locale={locale}
+        showFilterBar
+      />
+    )
+  },
 }
 
 export const MultipleActions: Story = {
   parameters: {
     viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Multiple page-level actions: all size="xl" (44px). Click any button → in-canvas feedback. At <md: actions stack full-width.' } },
+    docs: { description: { story: 'Multiple page-level actions: all size="xl" (44px). At <md: actions stack full-width.' } },
   },
-  render: () => (
-    <MultiActionShellDemo
-      title="Listings"
-      countBadge={{ value: 243 }}
-      actions={[
-        { label: 'Export', variant: 'ghost' },
-        { label: 'Edit selected', variant: 'outline' },
-        { label: 'New listing' },
-      ]}
-    />
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <MultiActionShellDemo
+        title={t(PAGE_TITLES.listings, locale)}
+        countBadge={{ value: 243 }}
+        actions={[
+          { label: t(ACTION_LABELS.export, locale), variant: 'ghost' },
+          { label: t(ACTION_LABELS.edit_sel, locale), variant: 'outline' },
+          { label: t(ACTION_LABELS.new_listing, locale) },
+        ]}
+      />
+    )
+  },
 }
 
 export const NoHeader: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
-    <AdminPageShell filterBar={<FilterTabsCanonical locale="en" />}>
-      {CONTENT_MOCK}
-    </AdminPageShell>
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminPageShell filterBar={<FilterTabsCanonical locale={locale} />}>
+        {CONTENT_MOCK}
+      </AdminPageShell>
+    )
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
     viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
-    docs: { description: { story: 'uk@320: full-width action + Ukrainian canonical tabs. Long Ukrainian labels must fit. Use locale toolbar to switch locale; viewport toolbar for widths.' } },
+    docs: { description: { story: 'uk@320: full-width action + Ukrainian canonical tabs. Use locale toolbar to switch; viewport toolbar for widths.' } },
   },
-  render: () => (
-    <AdminShellDemo
-      title="Оголошення"
-      subtitle="Керування оголошеннями платформи"
-      countBadge={{ value: 127 }}
-      actionLabel="Нове оголошення"
-      locale="uk"
-      showFilterBar
-    />
-  ),
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <AdminShellDemo
+        title={t(PAGE_TITLES.listings, locale)}
+        subtitle={t(PAGE_SUBTITLES.users, locale)}
+        countBadge={{ value: 127 }}
+        actionLabel={t(ACTION_LABELS.new_listing, locale)}
+        locale={locale}
+        showFilterBar
+      />
+    )
+  },
 }

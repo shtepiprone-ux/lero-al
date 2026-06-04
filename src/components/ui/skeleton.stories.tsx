@@ -4,7 +4,7 @@ import { Skeleton } from './skeleton';
 const meta: Meta = {
   title: 'Primitives/Skeleton',
   tags: ['autodocs'],
-  parameters: { layout: 'padded' },
+  parameters: {},
 };
 
 export default meta;
@@ -12,7 +12,7 @@ type Story = StoryObj;
 
 export const ListingCardSkeleton: Story = {
   render: () => (
-    <div className="w-72 rounded-xl border bg-card overflow-hidden">
+    <div className="w-full max-w-xs rounded-xl border bg-card overflow-hidden">
       <Skeleton className="h-44 w-full rounded-none" />
       <div className="p-3 space-y-2">
         <Skeleton className="h-4 w-3/4" />
@@ -53,7 +53,7 @@ export const ListingGridSkeleton: Story = {
 
 export const AdminCardSkeleton: Story = {
   render: () => (
-    <div className="bg-card rounded-2xl border shadow-sm p-5 space-y-3 w-64">
+    <div className="bg-card rounded-2xl border shadow-sm p-5 space-y-3 w-full max-w-xs">
       <Skeleton className="h-4 w-1/2" />
       <Skeleton className="h-8 w-full" />
       <Skeleton className="h-3 w-3/4" />

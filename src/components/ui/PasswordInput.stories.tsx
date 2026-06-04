@@ -12,7 +12,7 @@ const meta: Meta<typeof PasswordInput> = {
   title: 'Primitives/PasswordInput',
   component: PasswordInput,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: {},
   argTypes: {
     inputState: { control: 'select', options: ['idle', 'error', 'success'] },
     disabled: { control: 'boolean' },
@@ -124,11 +124,10 @@ function Mobile320UkrainianRender() {
   )
 }
 
-export const UkrainianLocaleStress: Story = {
+export const LocaleStress: Story = {
   render: () => <Mobile320UkrainianRender />,
   parameters: {
     viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
     docs: { description: { story: '320px Ukrainian — longest strings, rule rows wrap gracefully.' } },
   },
 }

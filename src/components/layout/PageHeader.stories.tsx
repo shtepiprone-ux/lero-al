@@ -8,6 +8,20 @@ import { PageHeader } from './PageHeader'
 import { PageShell } from './PageShell'
 import { Section } from './Section'
 
+
+const PH_TEXT: Record<string, Record<string, string>> = {
+  avail:   { en: 'Available Listings',  sq: 'Njoftime te Disponueshme', uk: 'Dostupni Oholoshennia',   it: 'Annunci Disponibili' },
+  browse:  { en: 'Browse properties for rent and sale across Albania.', sq: 'Kerkoni prona ne Shqiperi.', uk: 'Perehliadaite nerukhomist v Albanii.', it: 'Cerca proprieta in Albania.' },
+  new_lst: { en: 'New Listing',         sq: 'Njoftim i Ri',             uk: 'Nove Oholoshennia',       it: 'Nuovo Annuncio' },
+  export:  { en: 'Export',              sq: 'Eksporto',                 uk: 'Eksport',                 it: 'Esporta' },
+  edit:    { en: 'Edit',                sq: 'Ndrysho',                  uk: 'Redahuvannia',             it: 'Modifica' },
+  long_t:  { en: 'Real estate for rent and sale across Albania — full catalogue', sq: 'Njoftime per qira dhe shitje ne Shqiperi — katalog i plote', uk: 'Orenda ta prodazh nerukhomost — povnyi kataloh', it: 'Annunci immobiliari per affitto e vendita in Albania — catalogo' },
+  long_d:  { en: 'Browse available apartments, houses and commercial properties.', sq: 'Shfletoni pronat e disponueshme.', uk: 'Perehliadte dostupni budynky ta nerukhomist.', it: 'Sfoglia appartamenti case e proprieta.' },
+  listings:{ en: 'Listings',            sq: 'Njoftimet',                uk: 'Oholoshennia',            it: 'Annunci' },
+  browse_s:{ en: 'Browse available properties', sq: 'Shfleto pronat', uk: 'Perehliad nerukhomosti',  it: 'Sfoglia proprieta' },
+}
+const ph2 = (k: string, l = 'en') => PH_TEXT[k]?.[l] ?? PH_TEXT[k]?.en ?? k
+
 const meta: Meta<typeof PageHeader> = {
   title: 'Layout/PageHeader',
   component: PageHeader,
@@ -109,38 +123,47 @@ function PageHeaderStory({
 
 export const Default: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? "en"
+    return (
     <PageShell>
       <div className="space-y-6">
-        <PageHeader title="Available Listings" description="Browse properties for rent and sale across Albania." />
+        <PageHeader title={ph2("avail",l)} description={ph2("browse",l)} />
         {SAMPLE_CONTENT}
       </div>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const TitleOnly: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? "en"
+    return (
     <PageShell>
       <div className="space-y-6">
-        <PageHeader title="Available Listings" />
+        <PageHeader title={ph2("avail",l)} />
         {SAMPLE_CONTENT}
       </div>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const WithCountBadge: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? "en"
+    return (
     <PageShell>
       <div className="space-y-6">
-        <PageHeader title="Available Listings" description="Browse properties for rent and sale across Albania." countBadge={COUNT_BADGE} />
+        <PageHeader title={ph2("avail",l)} description={ph2("browse",l)} countBadge={COUNT_BADGE} />
         {SAMPLE_CONTENT}
       </div>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const WithAction: Story = {
@@ -148,15 +171,19 @@ export const WithAction: Story = {
     viewport: { defaultViewport: 'desktop1440' },
     docs: { description: { story: 'Single action button in the action slot. size="xl" (44px). Click → in-canvas feedback. Action stacks below header at <md:, right-aligns at md:+.' } },
   },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? "en"
+    return (
     <PageHeaderStory
-      title="Available Listings"
-      description="Browse properties for rent and sale across Albania."
+      title={ph2("avail",l)}
+      description={ph2("browse",l)}
+      locale={l}
       action={(on) => (
-        <Button size="xl" onClick={() => on('New Listing')}>New Listing</Button>
+        <Button size="xl" onClick={() => on(ph2("new_lst",l))}>{ph2("new_lst",l)}</Button>
       )}
     />
-  ),
+    )
+  },
 }
 
 export const WithActions: Story = {
@@ -164,39 +191,44 @@ export const WithActions: Story = {
     viewport: { defaultViewport: 'desktop1440' },
     docs: { description: { story: 'Three-button action cluster in the action slot — plain flex-wrap div container. Click any button → feedback. At <md: buttons stack full-width.' } },
   },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? "en"
+    return (
     <PageHeaderStory
-      title="Available Listings"
-      description="Browse properties for rent and sale across Albania."
+      title={ph2('avail', l)}
+      description={ph2('browse', l)}
       countBadge={COUNT_BADGE}
       action={(on) => (
         <div className="flex flex-wrap gap-2">
-          <Button size="xl" variant="outline" onClick={() => on('Export')}>Export</Button>
-          <Button size="xl" variant="outline" onClick={() => on('Edit')}>Edit</Button>
-          <Button size="xl" onClick={() => on('New Listing')}>New Listing</Button>
+          <Button size="xl" variant="outline" onClick={() => on(ph2('export',l))}>{ph2('export',l)}</Button>
+          <Button size="xl" variant="outline" onClick={() => on(ph2('edit',l))}>{ph2('edit',l)}</Button>
+          <Button size="xl" onClick={() => on(ph2('new_lst',l))}>{ph2('new_lst',l)}</Button>
         </div>
       )}
     />
-  ),
+    )
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
     viewport: { defaultViewport: 'mobile320' },
-    globals: { locale: 'uk' },
     docs: { description: { story: 'uk@320: long Ukrainian title + description + action. Title must wrap. Action must be full-width (max-md:w-full). Use viewport toolbar for other widths; locale toolbar for other locales.' } },
   },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? "en"
+    return (
     <PageHeaderStory
-      locale="uk"
-      title="Оренда та продаж нерухомості в Тирані та по всій Албанії — повний каталог"
-      description="Перегляньте доступні варіанти квартир, будинків та комерційної нерухомості з детальними описами."
+      locale={l}
+      title={ph2("long_t",l)}
+      description={ph2("long_d",l)}
       action={(on) => (
-        <Button size="xl" onClick={() => on('Нове оголошення')}>Нове оголошення</Button>
+        <Button size="xl" onClick={() => on(ph2("new_lst",l))}>{ph2("new_lst",l)}</Button>
       )}
       content={
-        <Section title="Оголошення" description="Перегляд доступної нерухомості">{CONTENT_MOCK}</Section>
+        <Section title={ph2("listings",l)} description={ph2("browse_s",l)}>{CONTENT_MOCK}</Section>
       }
     />
-  ),
+    )
+  },
 }

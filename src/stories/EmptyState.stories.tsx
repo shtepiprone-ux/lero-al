@@ -5,32 +5,34 @@ import { Button } from '@/components/ui/button';
 const meta: Meta = {
   title: 'System/EmptyState',
   tags: ['autodocs'],
-  parameters: {
-    layout: 'padded',
-    docs: {
-      description: {
-        component:
-          'Canonical empty state pattern. See docs/tailwind-canonical-fragments.md §10.',
-      },
-    },
-  },
+  parameters: { docs: { description: { component: 'Canonical empty state pattern. See docs/tailwind-canonical-fragments.md §10.' } } },
 };
-
 export default meta;
 type Story = StoryObj;
 
-// Reusable empty state component following canonical fragment
-function EmptyState({
-  icon: Icon,
-  title,
-  description,
-  action,
-}: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-  action?: React.ReactNode;
-}) {
+const ES: Record<string, Record<string, string>> = {
+  no_lst_t:   { en: 'No listings found',            sq: 'Nuk u gjet asnjë njoftim',                         uk: 'Оголошень не знайдено',                     it: 'Nessun annuncio trovato' },
+  no_lst_d:   { en: 'Try adjusting your search filters to find more properties.',
+                sq: 'Provoni të ndryshoni filtrat e kërkimit për të gjetur më shumë prona.',
+                uk: 'Спробуйте змінити параметри пошуку, щоб знайти більше нерухомості.',
+                it: 'Prova a modificare i filtri di ricerca per trovare più proprietà.' },
+  clear_fil:  { en: 'Clear filters',                sq: 'Pastro filtrat',                                   uk: 'Очистити фільтри',                          it: 'Cancella filtri' },
+  no_fav_t:   { en: 'No saved listings',             sq: 'Nuk ka njoftimet e ruajtura',                      uk: 'Немає збережених оголошень',                it: 'Nessun annuncio salvato' },
+  no_fav_d:   { en: 'Save listings you like to see them here.',
+                sq: "Ruani njoftimet që ju pëlqejnë për t'i parë këtu.",
+                uk: 'Збережіть оголошення, які вам подобаються, щоб бачити їх тут.',
+                it: 'Salva gli annunci che ti piacciono per vederli qui.' },
+  browse:     { en: 'Browse listings',               sq: 'Shfleto njoftimet',                                uk: 'Переглянути оголошення',                    it: 'Sfoglia annunci' },
+  no_res_t:   { en: 'No results',                    sq: 'Nuk ka rezultate',                                 uk: 'Немає результатів',                         it: 'Nessun risultato' },
+  no_res_d:   { en: "We couldn't find any properties matching your search.",
+                sq: 'Nuk gjetëm asnjë pronë që përputhet me kërkimin tuaj.',
+                uk: 'Ми не знайшли жодної нерухомості, що відповідає вашому пошуку.',
+                it: 'Non abbiamo trovato proprietà corrispondenti alla tua ricerca.' },
+  mod_search: { en: 'Modify search',                 sq: 'Ndrysho kërkimin',                                 uk: 'Змінити пошук',                             it: 'Modifica ricerca' },
+}
+const e = (k: string, l = 'en') => ES[k]?.[l] ?? ES[k]?.en ?? k
+
+function EmptyStateBlock({ icon: Icon, title, description, action }: { icon: React.ElementType; title: string; description: string; action?: React.ReactNode }) {
   return (
     <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
       <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center">
@@ -46,66 +48,38 @@ function EmptyState({
 }
 
 export const NoListings: Story = {
-  render: () => (
-    <EmptyState
-      icon={Home}
-      title="No listings found"
-      description="Try adjusting your search filters to find more properties."
-      action={<Button size="xl" variant="outline">Clear filters</Button>}
-    />
-  ),
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <EmptyStateBlock icon={Home} title={e('no_lst_t',l)} description={e('no_lst_d',l)} action={<Button size="xl" variant="outline">{e('clear_fil',l)}</Button>} />
+  },
 };
 
 export const NoFavorites: Story = {
-  render: () => (
-    <EmptyState
-      icon={Heart}
-      title="No saved listings"
-      description="Save listings you like to see them here."
-      action={<Button size="xl">Browse listings</Button>}
-    />
-  ),
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <EmptyStateBlock icon={Heart} title={e('no_fav_t',l)} description={e('no_fav_d',l)} action={<Button size="xl">{e('browse',l)}</Button>} />
+  },
 };
 
 export const NoSearchResults: Story = {
-  render: () => (
-    <EmptyState
-      icon={Search}
-      title="No results"
-      description="We couldn't find any properties matching your search."
-      action={<Button size="xl" variant="outline">Modify search</Button>}
-    />
-  ),
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <EmptyStateBlock icon={Search} title={e('no_res_t',l)} description={e('no_res_d',l)} action={<Button size="xl" variant="outline">{e('mod_search',l)}</Button>} />
+  },
 };
 
-export const UkrainianLocale: Story = {
-  render: () => (
-    <EmptyState
-      icon={Home}
-      title="Оголошень не знайдено"
-      description="Спробуйте змінити параметри пошуку, щоб знайти більше нерухомості."
-      action={<Button size="xl" variant="outline">Очистити фільтри</Button>}
-    />
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Ukrainian locale empty state — longer text, must fit within max-w-sm.',
-      },
-    },
+export const LocaleStress: Story = {
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <EmptyStateBlock icon={Home} title={e('no_lst_t',l)} description={e('no_lst_d',l)} action={<Button size="xl" variant="outline">{e('clear_fil',l)}</Button>} />
   },
+  parameters: { docs: { description: { story: 'Locale stress — longer text must fit within max-w-sm. Use locale toolbar for sq/en/uk/it.' } } },
 };
 
 export const MobileEmptyState: Story = {
-  render: () => (
-    <EmptyState
-      icon={Home}
-      title="No listings found"
-      description="Try adjusting your search filters."
-      action={<Button size="xl" className="w-full">Clear filters</Button>}
-    />
-  ),
-  parameters: {
-    viewport: { defaultViewport: 'mobile375' },
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return <EmptyStateBlock icon={Home} title={e('no_lst_t',l)} description={e('no_lst_d',l)} action={<Button size="xl" className="w-full">{e('clear_fil',l)}</Button>} />
   },
+  parameters: { viewport: { defaultViewport: 'mobile375' } },
 };

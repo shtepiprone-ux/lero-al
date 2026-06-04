@@ -5,7 +5,7 @@ const meta: Meta<typeof PasswordRequirementsHint> = {
   title: 'Primitives/PasswordRequirementsHint',
   component: PasswordRequirementsHint,
   tags: ['autodocs'],
-  parameters: { layout: 'centered' },
+  parameters: {},
   argTypes: {
     value: { control: 'text' },
   },
@@ -29,10 +29,9 @@ export const AllMet: Story = {
   parameters: { docs: { description: { story: 'All 5 rules met — all green check marks, no error text.' } } },
 }
 
-export const UkrainianLocale: Story = {
+export const LocaleStress: Story = {
   args: { value: 'Abc' },
   parameters: {
-    globals: { locale: 'uk' },
     viewport: { defaultViewport: 'mobile320' },
     docs: { description: { story: 'Ukrainian 320px — longest strings, verify wrap without truncation.' } },
   },

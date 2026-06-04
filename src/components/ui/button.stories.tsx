@@ -4,13 +4,13 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { Loader2, Plus, Trash2 } from 'lucide-react'
 import { Button } from './button'
+import { storyT } from '@/stories/_storyI18n'
 
 const meta: Meta<typeof Button> = {
   title: 'Primitives/Button',
   component: Button,
   tags: ['autodocs'],
   parameters: {
-    layout: 'centered',
     docs: {
       description: {
         component:
@@ -36,145 +36,169 @@ const meta: Meta<typeof Button> = {
 export default meta
 type Story = StoryObj<typeof Button>
 
-// ── Story-level demo feedback labels (Storybook-only, not production copy) ────
-const DL: Record<string, Record<string, string>> = {
-  clicked: { en: 'Clicked', sq: 'Klikuar', uk: 'Натиснуто', it: 'Cliccato' },
+// ── Per-locale button labels ───────────────────────────────────────────────────
+const BTN: Record<string, Record<string, string>> = {
+  save:        { en: 'Save listing',          sq: 'Ruaj njoftimin',             uk: 'Зберегти оголошення',           it: 'Salva annuncio' },
+  contact:     { en: 'Contact agent',         sq: 'Kontaktoni agentin',         uk: "Зв'яжіться з агентом",          it: "Contatta l'agente" },
+  add:         { en: 'Add listing',           sq: 'Shto njoftim',               uk: 'Додати оголошення',             it: 'Aggiungi annuncio' },
+  add_out:     { en: 'Add listing',           sq: 'Shto njoftim',               uk: 'Додати оголошення',             it: 'Aggiungi annuncio' },
+  delete:      { en: 'Delete',                sq: 'Fshi',                       uk: 'Видалити',                      it: 'Elimina' },
+  delete_lst:  { en: 'Delete listing',        sq: 'Fshi njoftimin',             uk: 'Видалити оголошення',           it: 'Elimina annuncio' },
+  del_forever: { en: 'Delete listing permanently', sq: 'Fshi njoftimin përgjithmonë', uk: 'Видалити оголошення назавжди', it: 'Elimina annuncio definitivamente' },
+  export:      { en: 'Export',                sq: 'Eksporto',                   uk: 'Експорт',                       it: 'Esporta' },
+  cancel:      { en: 'Cancel',               sq: 'Anulo',                      uk: 'Скасувати',                     it: 'Annulla' },
+  save_ch:     { en: 'Save changes',          sq: 'Ruaj ndryshimet',            uk: 'Зберегти зміни',                it: 'Salva modifiche' },
+  submit:      { en: 'Submit',               sq: 'Dërgo',                      uk: 'Надіслати',                     it: 'Invia' },
+  saving:      { en: 'Saving…',              sq: 'Po ruhet…',                  uk: 'Збереження…',                   it: 'Salvataggio…' },
+  // Long locale stress labels
+  contact_lg:  { en: 'Contact real estate agent',                          sq: 'Kontaktoni agentin e pasurive të paluajtshme',           uk: "Зв'яжіться з агентом нерухомості",              it: "Contatta l'agente immobiliare" },
+  browse_rent: { en: 'Browse all available rental listings',               sq: 'Shfletoni të gjitha njoftimet e qirasë të disponueshme', uk: 'Переглянути всі оголошення про оренду нерухомості', it: 'Sfoglia tutti gli annunci di affitto disponibili' },
+  save_search: { en: 'Save search and receive notifications',              sq: 'Ruani kërkimin dhe merrni njoftimet',                    uk: 'Зберегти пошук та отримувати сповіщення',         it: 'Salva la ricerca e ricevi notifiche' },
+  clicked:     { en: 'Clicked',              sq: 'Klikuar',                    uk: 'Натиснуто',                     it: 'Cliccato' },
 }
-function dl(key: string, locale = 'en'): string {
-  return DL[key]?.[locale] ?? DL[key]?.en ?? key
-}
+const L = (key: string, locale = 'en') => BTN[key]?.[locale] ?? BTN[key]?.en ?? key
 
 // ── Feedback line — shows last-clicked label in canvas (locale-aware) ─────────
 function ClickedLabel({ label, locale = 'en' }: { label: string | null; locale?: string }) {
   if (!label) return null
   return (
     <p className="text-xs text-muted-foreground mt-2 px-0.5">
-      {dl('clicked', locale)}: <strong>{label}</strong>
+      {L('clicked', locale)}: <strong>{label}</strong>
     </p>
   )
 }
 
 // ── Default ──────────────────────────────────────────────────────────────────
 export const Default: Story = {
-  args: {
-    children: 'Save listing',
-    onClick: () => {},
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <Button>{L('save', locale)}</Button>
   },
 }
 
 // ── Variants ─────────────────────────────────────────────────────────────────
-function AllVariantsDemo() {
+function AllVariantsDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const v = (key: string) => storyT(locale, `storybook.button.${key}`)
   return (
     <div>
       <div className="flex flex-wrap gap-3">
-        <Button variant="default"      onClick={() => setLast('Primary')}>Primary</Button>
-        <Button variant="outline"      onClick={() => setLast('Outline')}>Outline</Button>
-        <Button variant="secondary"    onClick={() => setLast('Secondary')}>Secondary</Button>
-        <Button variant="ghost"        onClick={() => setLast('Ghost')}>Ghost</Button>
-        <Button variant="destructive"  onClick={() => setLast('Destructive')}>Destructive</Button>
-        <Button variant="link"         onClick={() => setLast('Link')}>Link</Button>
+        <Button variant="default"     onClick={() => setLast(v('variant_primary'))}>{v('variant_primary')}</Button>
+        <Button variant="outline"     onClick={() => setLast(v('variant_outline'))}>{v('variant_outline')}</Button>
+        <Button variant="secondary"   onClick={() => setLast(v('variant_secondary'))}>{v('variant_secondary')}</Button>
+        <Button variant="ghost"       onClick={() => setLast(v('variant_ghost'))}>{v('variant_ghost')}</Button>
+        <Button variant="destructive" onClick={() => setLast(v('variant_destructive'))}>{v('variant_destructive')}</Button>
+        <Button variant="link"        onClick={() => setLast(v('variant_link'))}>{v('variant_link')}</Button>
       </div>
-      <ClickedLabel label={last} />
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const AllVariants: Story = {
-  render: () => <AllVariantsDemo />,
+  render: (_, context) => <AllVariantsDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
 }
 
 // ── Sizes ─────────────────────────────────────────────────────────────────────
-function AllSizesDemo() {
+function AllSizesDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const def = storyT(locale, 'storybook.button.size_default')
+  // XS/SM/LG/XL are universal size abbreviations — no locale variant needed
+  const labels = ['XS', 'SM', def, 'LG', 'XL']
   return (
     <div>
       <div className="flex flex-wrap items-end gap-3">
-        <Button size="xs"      onClick={() => setLast('XS')}>XS</Button>
-        <Button size="sm"      onClick={() => setLast('SM')}>SM</Button>
-        <Button size="default" onClick={() => setLast('Default')}>Default</Button>
-        <Button size="lg"      onClick={() => setLast('LG')}>LG</Button>
-        <Button size="xl"      onClick={() => setLast('XL — Mobile safe')}>XL — Mobile safe</Button>
+        <Button size="xs"      onClick={() => setLast(labels[0])}>{labels[0]}</Button>
+        <Button size="sm"      onClick={() => setLast(labels[1])}>{labels[1]}</Button>
+        <Button size="default" onClick={() => setLast(labels[2])}>{labels[2]}</Button>
+        <Button size="lg"      onClick={() => setLast(labels[3])}>{labels[3]}</Button>
+        <Button size="xl"      onClick={() => setLast(labels[4])}>{labels[4]}</Button>
       </div>
-      <ClickedLabel label={last} />
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const AllSizes: Story = {
-  render: () => <AllSizesDemo />,
+  render: (_, context) => <AllSizesDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     docs: {
       description: {
         story:
-          'Use `size="xl"` (44px) for all mobile-reachable buttons. ' +
-          'Sizes below xl are for desktop-only contexts.',
+          'All text sizes (`xs`, `sm`, `default`, `lg`, `xl`) are full-width at <640px and ≥44px tall. ' +
+          'Icon-only sizes (`icon`, `icon-xl`, `icon-sm`, `icon-xs`, `icon-lg`) stay compact at all widths.',
       },
     },
   },
 }
 
 // ── Mobile safe ───────────────────────────────────────────────────────────────
-function MobileSafeDemo() {
+function MobileSafeDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const label = L('contact', locale)
   return (
     <div>
-      <Button size="xl" onClick={() => setLast('Contact agent')}>Contact agent</Button>
-      <ClickedLabel label={last} />
+      <Button size="xl" onClick={() => setLast(label)}>{label}</Button>
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const MobileSafe: Story = {
-  render: () => <MobileSafeDemo />,
+  render: (_, context) => <MobileSafeDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     viewport: { defaultViewport: 'mobile375' },
     docs: {
       description: {
-        story: '`size="xl"` is 44px — the minimum touch target for mobile. ' +
-               'ALWAYS use for mobile-reachable primary actions.',
+        story: 'All text sizes are mobile-safe: `max-sm:w-full` (full-width at <640px), ' +
+               '`max-sm:min-h-11` (≥44px touch target). `size="xl"` shown here — same contract applies to sm/default/lg.',
       },
     },
   },
 }
 
 // ── With icons ────────────────────────────────────────────────────────────────
-function WithIconDemo() {
+function WithIconDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const lAdd = L('add', locale)
+  const lDel = L('delete', locale)
+  const lSav = L('saving', locale)
   return (
     <div>
       <div className="flex flex-wrap gap-3">
-        <Button onClick={() => setLast('Add listing')}><Plus /> Add listing</Button>
-        <Button variant="outline" onClick={() => setLast('Add listing (outline)')}><Plus /> Add listing</Button>
-        <Button variant="destructive" onClick={() => setLast('Delete')}><Trash2 /> Delete</Button>
-        <Button disabled><Loader2 className="animate-spin" /> Saving…</Button>
+        <Button onClick={() => setLast(lAdd)}><Plus /> {lAdd}</Button>
+        <Button variant="outline" onClick={() => setLast(lAdd)}><Plus /> {lAdd}</Button>
+        <Button variant="destructive" onClick={() => setLast(lDel)}><Trash2 /> {lDel}</Button>
+        <Button disabled><Loader2 className="animate-spin" /> {lSav}</Button>
       </div>
-      <ClickedLabel label={last} />
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const WithIcon: Story = {
-  render: () => <WithIconDemo />,
+  render: (_, context) => <WithIconDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
 }
 
 // ── Icon-only buttons ─────────────────────────────────────────────────────────
-function IconOnlyDemo() {
+function IconOnlyDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const lAdd = L('add', locale)
+  const lDel = L('delete', locale)
   return (
     <div>
       <div className="flex flex-wrap items-center gap-3">
-        <Button size="icon"    variant="outline" aria-label="Add"              onClick={() => setLast('Add')}><Plus /></Button>
-        <Button size="icon-xl" variant="outline" aria-label="Add (mobile safe)" onClick={() => setLast('Add (mobile safe)')}><Plus /></Button>
-        <Button size="icon-sm" variant="ghost"   aria-label="Delete"           onClick={() => setLast('Delete')}><Trash2 /></Button>
+        <Button size="icon"    variant="outline" aria-label={lAdd}  onClick={() => setLast(lAdd)}><Plus /></Button>
+        <Button size="icon-xl" variant="outline" aria-label={lAdd}  onClick={() => setLast(lAdd)}><Plus /></Button>
+        <Button size="icon-sm" variant="ghost"   aria-label={lDel}  onClick={() => setLast(lDel)}><Trash2 /></Button>
       </div>
-      <ClickedLabel label={last} />
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const IconOnly: Story = {
-  render: () => <IconOnlyDemo />,
+  render: (_, context) => <IconOnlyDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     docs: {
       description: {
@@ -186,27 +210,32 @@ export const IconOnly: Story = {
 
 // ── Disabled ──────────────────────────────────────────────────────────────────
 export const Disabled: Story = {
-  args: { disabled: true, children: 'Submit' },
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <Button disabled>{L('submit', locale)}</Button>
+  },
 }
 
 // ── Control-row rhythm — one-row-one-height contract ─────────────────────────
-function ControlRowDesktopDemo() {
+function ControlRowDesktopDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const lDel = L('delete', locale); const lExp = L('export', locale)
+  const lCan = L('cancel', locale); const lSav = L('save_ch', locale)
   return (
     <div>
       <div className="flex flex-wrap gap-2 items-center">
-        <Button size="xl" variant="destructive" onClick={() => setLast('Delete')}>Delete</Button>
-        <Button size="xl" variant="ghost"       onClick={() => setLast('Export')}>Export</Button>
-        <Button size="xl" variant="outline"     onClick={() => setLast('Cancel')}>Cancel</Button>
-        <Button size="xl"                       onClick={() => setLast('Save changes')}>Save changes</Button>
+        <Button size="xl" variant="destructive" onClick={() => setLast(lDel)}>{lDel}</Button>
+        <Button size="xl" variant="ghost"       onClick={() => setLast(lExp)}>{lExp}</Button>
+        <Button size="xl" variant="outline"     onClick={() => setLast(lCan)}>{lCan}</Button>
+        <Button size="xl"                       onClick={() => setLast(lSav)}>{lSav}</Button>
       </div>
-      <ClickedLabel label={last} />
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const ControlRowRhythm_Desktop: Story = {
-  render: () => <ControlRowDesktopDemo />,
+  render: (_, context) => <ControlRowDesktopDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     viewport: { defaultViewport: 'desktop1440' },
     docs: {
@@ -219,97 +248,107 @@ export const ControlRowRhythm_Desktop: Story = {
   },
 }
 
-function ControlRowMobile320Demo() {
+function ControlRowMobile320Demo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const lDel = L('delete_lst', locale); const lExp = L('export', locale)
+  const lCan = L('cancel', locale); const lSav = L('save_ch', locale)
   return (
     <div>
       <div className="flex flex-col gap-2 w-full px-3">
-        <Button size="xl" variant="destructive" className="w-full" onClick={() => setLast('Delete listing')}>Delete listing</Button>
-        <Button size="xl" variant="ghost"       className="w-full" onClick={() => setLast('Export')}>Export</Button>
-        <Button size="xl" variant="outline"     className="w-full" onClick={() => setLast('Cancel')}>Cancel</Button>
-        <Button size="xl"                       className="w-full" onClick={() => setLast('Save changes')}>Save changes</Button>
+        <Button size="xl" variant="destructive" onClick={() => setLast(lDel)}>{lDel}</Button>
+        <Button size="xl" variant="ghost"       onClick={() => setLast(lExp)}>{lExp}</Button>
+        <Button size="xl" variant="outline"     onClick={() => setLast(lCan)}>{lCan}</Button>
+        <Button size="xl"                       onClick={() => setLast(lSav)}>{lSav}</Button>
       </div>
-      <ClickedLabel label={last} />
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const ControlRowRhythm_Stacked: Story = {
-  render: () => <ControlRowMobile320Demo />,
+  render: (_, context) => <ControlRowMobile320Demo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
     viewport: { defaultViewport: 'mobile320' },
     docs: {
       description: {
         story:
           '320px: all four action types at size="xl" (44px). ' +
-          'On mobile inside a flex-col action container or a page-level action slot, they stack full-width. ' +
-          'Ghost/tertiary visual style is allowed; hit area must still be 44px.',
+          'Full-width is automatic via `max-sm:w-full` in the primitive — no manual `className="w-full"` needed.',
       },
     },
   },
 }
 
-// ── Long locale label (Ukrainian stress test) ─────────────────────────────────
-function LongLocaleLabelDemo() {
+// ── Long locale label stress ───────────────────────────────────────────────────
+function LongLocaleLabelDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const lCont = L('contact_lg', locale)
+  const lBrow = L('browse_rent', locale)
+  const lSave = L('save_search', locale)
   return (
     <div className="flex flex-col gap-3 max-w-xs">
-      <Button size="xl" onClick={() => setLast('Зв\'яжіться з агентом')}>
-        Зв&apos;яжіться з агентом нерухомості
-      </Button>
-      <Button size="xl" variant="outline" onClick={() => setLast('Переглянути оренду')}>
-        Переглянути всі оголошення про оренду нерухомості
-      </Button>
-      <ClickedLabel label={last} locale="uk" />
+      <p className="text-xs text-muted-foreground font-medium">size=xl</p>
+      <Button size="xl" onClick={() => setLast('xl')}>{lCont}</Button>
+      <p className="text-xs text-muted-foreground font-medium">size=lg</p>
+      <Button size="lg" variant="outline" onClick={() => setLast('lg')}>{lBrow}</Button>
+      <p className="text-xs text-muted-foreground font-medium">size=default</p>
+      <Button size="default" onClick={() => setLast('default')}>{lCont}</Button>
+      <p className="text-xs text-muted-foreground font-medium">size=sm</p>
+      <Button size="sm" variant="secondary" onClick={() => setLast('sm')}>{lSave}</Button>
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const LongLocaleLabel: Story = {
-  render: () => <LongLocaleLabelDemo />,
+  render: (_, context) => <LongLocaleLabelDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
-    globals: { locale: 'uk' },
+    viewport: { defaultViewport: 'mobile375' },
     docs: {
       description: {
-        story: 'Ukrainian labels — significantly longer than English. Buttons must wrap gracefully. "Натиснуто:" prefix is Ukrainian.',
+        story: 'Long locale labels at 375px — all text sizes must wrap gracefully, never clip. ' +
+               'Full-width is automatic at <640px for `xl`, `lg`, `default`, `sm`. Use locale toolbar to switch language.',
       },
     },
   },
 }
 
-// ── Locale stress — full-width at mobile + uk label fit ───────────────────────
-function LocaleStressDemo() {
+// ── Locale stress — full-width at mobile + long label fit ─────────────────────
+function LocaleStressDemo({ locale }: { locale: string }) {
   const [last, setLast] = useState<string | null>(null)
+  const lCont = L('contact_lg', locale)
+  const lBrow = L('browse_rent', locale)
+  const lSave = L('save_search', locale)
+  const lDel  = L('del_forever', locale)
   return (
     <div className="w-full px-4 flex flex-col gap-3">
-      <Button size="xl" onClick={() => setLast('primary')}>
-        Зв&apos;яжіться з агентом нерухомості
-      </Button>
-      <Button size="xl" variant="outline" onClick={() => setLast('outline')}>
-        Переглянути всі оголошення про оренду
-      </Button>
-      <Button size="xl" variant="secondary" onClick={() => setLast('secondary')}>
-        Зберегти пошук та отримувати сповіщення
-      </Button>
-      <Button size="xl" variant="destructive" onClick={() => setLast('destructive')}>
-        Видалити оголошення назавжди
-      </Button>
-      <ClickedLabel label={last} locale="uk" />
+      <p className="text-xs text-muted-foreground font-medium">size=xl</p>
+      <Button size="xl" onClick={() => setLast('xl-primary')}>{lCont}</Button>
+      <Button size="xl" variant="outline" onClick={() => setLast('xl-outline')}>{lBrow}</Button>
+      <p className="text-xs text-muted-foreground font-medium mt-1">size=lg</p>
+      <Button size="lg" onClick={() => setLast('lg-primary')}>{lCont}</Button>
+      <Button size="lg" variant="outline" onClick={() => setLast('lg-outline')}>{lBrow}</Button>
+      <p className="text-xs text-muted-foreground font-medium mt-1">size=default</p>
+      <Button size="default" onClick={() => setLast('default-primary')}>{lCont}</Button>
+      <Button size="default" variant="secondary" onClick={() => setLast('default-secondary')}>{lSave}</Button>
+      <p className="text-xs text-muted-foreground font-medium mt-1">size=sm</p>
+      <Button size="sm" onClick={() => setLast('sm-primary')}>{lCont}</Button>
+      <Button size="sm" variant="destructive" onClick={() => setLast('sm-destructive')}>{lDel}</Button>
+      <ClickedLabel label={last} locale={locale} />
     </div>
   )
 }
 
 export const LocaleStress: Story = {
-  render: () => <LocaleStressDemo />,
+  render: (_, context) => <LocaleStressDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
   parameters: {
-    globals: { locale: 'uk' },
     viewport: { defaultViewport: 'mobile320' },
     docs: {
       description: {
         story:
-          'Ukrainian labels at 320px: `size="xl"` buttons are full-width (`max-sm:w-full`) and ' +
-          'long labels fit without overflow (`max-sm:whitespace-normal max-sm:break-words`). ' +
-          'At ≥640px buttons revert to content-width. Натиснуто = "Clicked".',
+          '@320: ALL text sizes (`xl`, `lg`, `default`, `sm`) are full-width (`max-sm:w-full`) ' +
+          'and long labels wrap without overflow. Each size is ≥44px tall (`max-sm:min-h-11`). ' +
+          'Use locale toolbar — labels switch between sq/en/uk/it. At ≥640px buttons revert to content-width.',
       },
     },
   },

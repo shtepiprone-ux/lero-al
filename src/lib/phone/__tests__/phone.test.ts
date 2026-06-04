@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { validateNationalPhone, parsePhoneValue, normalizeNational, COUNTRY_CODES } from '../index'
+import { validateNationalPhone, parsePhoneValue, normalizeNational, normalizePastedNational, getPhonePlaceholder, COUNTRY_CODES } from '../index'
 
 // ── Unit tests — validateNationalPhone ────────────────────────────────────────
 
@@ -175,8 +175,160 @@ describe('parsePhoneValue', () => {
   })
 })
 
+// ── Multi-country validation — representative European countries ───────────────
+
+describe('validateNationalPhone — France (FR +33)', () => {
+  const fr = { iso2: 'FR', dialCode: '+33' }
+
+  it('accepts valid French mobile without trunk 0 (national format)', () => {
+    const result = validateNationalPhone({ ...fr, rawNational: '612345678' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+33/)
+  })
+
+  it('accepts French mobile with trunk prefix 0 (domestic format)', () => {
+    // France uses 0 as domestic trunk prefix; libphonenumber-js handles via iso2 context
+    const result = validateNationalPhone({ ...fr, rawNational: '0612345678' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+33/)
+  })
+
+  it('rejects too-short French number', () => {
+    expect(validateNationalPhone({ ...fr, rawNational: '61234' }).ok).toBe(false)
+  })
+})
+
+describe('validateNationalPhone — Germany (DE +49)', () => {
+  const de = { iso2: 'DE', dialCode: '+49' }
+
+  it('accepts valid German mobile without trunk 0', () => {
+    const result = validateNationalPhone({ ...de, rawNational: '15112345678' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+49/)
+  })
+
+  it('accepts German mobile with trunk prefix 0 (domestic format)', () => {
+    const result = validateNationalPhone({ ...de, rawNational: '015112345678' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+49/)
+  })
+
+  it('rejects German number duplicating dial code "4915112345678"', () => {
+    const result = validateNationalPhone({ ...de, rawNational: '4915112345678' })
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_no_country_code')
+  })
+})
+
+describe('validateNationalPhone — Ukraine (UA +380)', () => {
+  const ua = { iso2: 'UA', dialCode: '+380' }
+
+  it('accepts valid Ukrainian mobile number', () => {
+    const result = validateNationalPhone({ ...ua, rawNational: '501234567' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+380/)
+  })
+
+  it('rejects too-short Ukrainian number', () => {
+    expect(validateNationalPhone({ ...ua, rawNational: '50123' }).ok).toBe(false)
+  })
+})
+
+describe('validateNationalPhone — Poland (PL +48)', () => {
+  it('accepts valid Polish mobile number', () => {
+    const result = validateNationalPhone({ iso2: 'PL', dialCode: '+48', rawNational: '512345678' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+48/)
+  })
+})
+
+describe('validateNationalPhone — Spain (ES +34)', () => {
+  it('accepts valid Spanish mobile number', () => {
+    const result = validateNationalPhone({ iso2: 'ES', dialCode: '+34', rawNational: '612345678' })
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.e164).toMatch(/^\+34/)
+  })
+})
+
+// ── normalizePastedNational ────────────────────────────────────────────────────
+
+describe('normalizePastedNational — Albania (+355)', () => {
+  const dialCode = '+355'
+
+  it('normalizes full international paste "+355691234567" to national "691234567"', () => {
+    const result = normalizePastedNational('+355691234567', dialCode)
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.national).toBe('691234567')
+  })
+
+  it('normalizes "00355691234567" (00-prefix international) to national "691234567"', () => {
+    const result = normalizePastedNational('00355691234567', dialCode)
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.national).toBe('691234567')
+  })
+
+  it('returns mismatch error for a German number "+4915112345678" when AL selected', () => {
+    const result = normalizePastedNational('+4915112345678', dialCode)
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_country_mismatch')
+  })
+
+  it('rejects Russian number "+79161234567" as mismatch (RU excluded)', () => {
+    const result = normalizePastedNational('+79161234567', dialCode)
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_country_mismatch')
+  })
+
+  it('rejects Belarusian number "+375291234567" as mismatch (BY excluded)', () => {
+    const result = normalizePastedNational('+375291234567', dialCode)
+    expect(result.ok).toBe(false)
+    if (!result.ok) expect(result.errorKey).toBe('error_phone_country_mismatch')
+  })
+
+  it('returns national as-is for plain national paste "691234567"', () => {
+    const result = normalizePastedNational('691234567', dialCode)
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.national).toBe('691234567')
+  })
+
+  it('strips visual separators from international paste "+355 69 123 45 67"', () => {
+    const result = normalizePastedNational('+355 69 123 45 67', dialCode)
+    expect(result.ok).toBe(true)
+    if (result.ok) expect(result.national).toBe('691234567')
+  })
+})
+
+// ── getPhonePlaceholder ────────────────────────────────────────────────────────
+
+describe('getPhonePlaceholder', () => {
+  it('returns Albania-specific placeholder for AL', () => {
+    expect(getPhonePlaceholder('AL')).toBe('67 123 4567')
+  })
+
+  it('returns UK-specific placeholder for GB', () => {
+    expect(getPhonePlaceholder('GB')).toBe('7700 900123')
+  })
+
+  it('returns Ukraine-specific placeholder for UA', () => {
+    expect(getPhonePlaceholder('UA')).toBe('50 123 4567')
+  })
+
+  it('returns generic fallback for unknown iso2', () => {
+    expect(getPhonePlaceholder('ZZ')).toBe('XX XXX XXXX')
+  })
+
+  it('every COUNTRY_CODES entry has a non-empty placeholder', () => {
+    for (const c of COUNTRY_CODES) {
+      const p = getPhonePlaceholder(c.iso2)
+      expect(p.length).toBeGreaterThan(0)
+    }
+  })
+})
+
+// ── COUNTRY_CODES ─────────────────────────────────────────────────────────────
+
 describe('COUNTRY_CODES', () => {
-  it('contains 44 countries (Task 280 removed excluded entry; Task 187 expanded from 13)', () => expect(COUNTRY_CODES).toHaveLength(44))
+  it('contains 49 countries (Task 375 added AM/AZ/GE/SM/VA; Task 280 removed excluded entry; Task 187 expanded)', () => expect(COUNTRY_CODES).toHaveLength(49))
   it('every entry has iso2, dialCode, flag, label', () => {
     for (const c of COUNTRY_CODES) {
       expect(c.iso2).toBeTruthy()

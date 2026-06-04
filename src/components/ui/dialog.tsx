@@ -53,30 +53,41 @@ function DialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 flex flex-col w-full max-w-[calc(100%-2rem)] max-h-[90dvh] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          // Base: layout + surface
+          "fixed z-50 flex flex-col w-full overflow-hidden bg-popover text-sm text-popover-foreground ring-1 ring-foreground/10 outline-none duration-200",
+          // Desktop (≥640px): centered card
+          "sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:max-w-sm sm:max-h-[90dvh] sm:rounded-2xl",
+          "sm:data-open:animate-in sm:data-open:fade-in-0 sm:data-open:zoom-in-95",
+          "sm:data-closed:animate-out sm:data-closed:fade-out-0 sm:data-closed:zoom-out-95",
+          // Mobile (<640px): full-width bottom sheet
+          "max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:max-h-[90dvh] max-sm:rounded-t-2xl max-sm:rounded-b-none",
+          "max-sm:data-open:animate-in max-sm:data-open:fade-in-0 max-sm:data-open:slide-in-from-bottom",
+          "max-sm:data-closed:animate-out max-sm:data-closed:fade-out-0 max-sm:data-closed:slide-out-to-bottom",
           className
         )}
         {...props}
       >
-        <div className="overflow-y-auto flex-1 min-h-0 grid gap-4">
-          {children}
+        {/* Drag handle — mobile bottom sheet affordance only */}
+        <div className="max-sm:flex hidden shrink-0 justify-center py-2">
+          <div className="h-1 w-10 rounded-full bg-muted-foreground/30" />
         </div>
         {showCloseButton && (
-          <DialogPrimitive.Close
-            data-slot="dialog-close"
-            render={
-              <Button
-                variant="ghost"
-                className="absolute top-2 right-2"
-                size="icon-sm"
-              />
-            }
-          >
-            <XIcon
-            />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
+          <div className="shrink-0 flex justify-end px-3 max-sm:pt-0 sm:pt-3">
+            <DialogPrimitive.Close
+              data-slot="dialog-close"
+              render={<Button variant="ghost" size="icon-sm" />}
+            >
+              <XIcon />
+              <span className="sr-only">Close</span>
+            </DialogPrimitive.Close>
+          </div>
         )}
+        <div className={cn(
+          "flex-1 min-h-0 overflow-y-auto overflow-x-hidden grid gap-4 min-w-0 break-words px-6 pb-6",
+          showCloseButton ? "pt-3" : "pt-4 max-sm:pt-2"
+        )}>
+          {children}
+        </div>
       </DialogPrimitive.Popup>
     </DialogPortal>
   )
@@ -104,7 +115,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-2xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end",
+        "flex flex-col-reverse gap-2 border-t pt-4 sm:flex-row sm:justify-end",
         className
       )}
       {...props}

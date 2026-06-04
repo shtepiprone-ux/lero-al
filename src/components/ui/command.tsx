@@ -56,6 +56,8 @@ function CommandDialog({
       <DialogContent
         className={cn(
           "top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0",
+          // Mobile: revert top-1/3 override so Dialog's bottom-sheet positioning takes effect
+          "max-sm:!top-auto max-sm:!translate-y-0 max-sm:!rounded-b-none max-sm:!rounded-t-2xl",
           className
         )}
         showCloseButton={showCloseButton}

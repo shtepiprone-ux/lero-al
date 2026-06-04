@@ -4,6 +4,7 @@ import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
 
 import { cn } from "@/lib/utils"
+import { MOBILE_POSITIONER, MOBILE_POPUP, MOBILE_SLIDE_ANIMATION, DRAG_HANDLE_WRAPPER, DRAG_HANDLE_BAR } from "@/components/ui/mobile-bottom-sheet"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
 const Select = SelectPrimitive.Root
@@ -18,11 +19,23 @@ function SelectGroup({ className, ...props }: SelectPrimitive.Group.Props) {
   )
 }
 
+/**
+ * Renders the selected item's label (not raw value).
+ * Label resolution: Base UI reads the `items` prop passed to `<Select>` (Root) and
+ * maps the current value to its label automatically. Always pass
+ * `items={[{ value, label }]}` to `<Select>` so this trigger shows the
+ * localized/capitalized label without requiring the dropdown to be opened first.
+ * Alternatively, pass a render function as `children`:
+ *   `<SelectValue>{(val) => myLabelMap[val]}</SelectValue>`
+ */
 function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
   return (
     <SelectPrimitive.Value
       data-slot="select-value"
-      className={cn("flex flex-1 text-left", className)}
+      // min-w-0 + overflow-hidden: flex children don't shrink below content width by
+      // default — min-w-0 fixes that so long labels truncate instead of pushing the
+      // chevron off-screen. overflow-hidden ensures the text clips cleanly (Task 382).
+      className={cn("flex flex-1 min-w-0 overflow-hidden text-left", className)}
       {...props}
     />
   )
@@ -35,7 +48,7 @@ function SelectTrigger({
   children,
   ...props
 }: SelectPrimitive.Trigger.Props & {
-  size?: "sm" | "default"
+  size?: "xs" | "sm" | "default"
   variant?: "default" | "outline"
 }) {
   return (
@@ -53,7 +66,7 @@ function SelectTrigger({
         "*:data-[slot=select-value]:truncate *:data-[slot=select-value]:flex *:data-[slot=select-value]:min-w-0 *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         // Size — plain classes, no data-attribute specificity issues
-        size === "sm" ? "h-9" : "h-11",
+        size === "xs" ? "h-8 text-xs" : size === "sm" ? "h-9" : "h-11",
         // Variant
         variant === "outline"
           ? "border border-input bg-transparent hover:bg-muted/60"
@@ -94,26 +107,30 @@ function SelectContent({
         align={align}
         alignOffset={alignOffset}
         alignItemWithTrigger={alignItemWithTrigger}
-        className="isolate z-50"
+        className={cn("isolate z-50", MOBILE_POSITIONER)}
       >
         <SelectPrimitive.Popup
           data-slot="select-content"
           data-align-trigger={alignItemWithTrigger}
           className={cn(
-            // Match combobox dropdown: rounded-xl, border, shadow-lg
             "z-50 max-h-(--available-height) w-(--anchor-width) min-w-36 overflow-x-hidden overflow-y-auto",
             "rounded-xl border border-border bg-popover text-popover-foreground shadow-lg",
             "py-1 origin-(--transform-origin)",
-            // Animations
             "duration-100 data-[align-trigger=true]:animate-none",
-            "data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
-            "data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2",
-            "data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95",
-            "data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            "sm:data-[side=bottom]:slide-in-from-top-2 sm:data-[side=top]:slide-in-from-bottom-2",
+            "sm:data-[side=left]:slide-in-from-right-2 sm:data-[side=right]:slide-in-from-left-2",
+            "data-open:animate-in data-open:fade-in-0 sm:data-open:zoom-in-95",
+            "data-closed:animate-out data-closed:fade-out-0 sm:data-closed:zoom-out-95",
+            MOBILE_POPUP,
+            MOBILE_SLIDE_ANIMATION,
             className
           )}
           {...props}
         >
+          {/* Drag handle — mobile bottom sheet affordance */}
+          <div className={DRAG_HANDLE_WRAPPER}>
+            <div className={DRAG_HANDLE_BAR} />
+          </div>
           <SelectScrollUpButton />
           <SelectPrimitive.List>{children}</SelectPrimitive.List>
           <SelectScrollDownButton />
@@ -146,7 +163,7 @@ function SelectItem({
       data-slot="select-item"
       className={cn(
         // Match combobox item: ghost-button style
-        "flex w-full cursor-default select-none items-center gap-2 px-3 py-2 text-sm text-foreground rounded-none outline-none",
+        "flex w-full cursor-default select-none items-center gap-2 px-3 py-2 text-sm text-foreground rounded-none outline-none max-sm:min-h-11",
         "hover:bg-muted data-[highlighted]:bg-muted",
         "data-[selected]:font-medium",
         "data-disabled:pointer-events-none data-disabled:opacity-50",

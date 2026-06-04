@@ -2,6 +2,7 @@ import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/naviga
 import { cva } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { MOBILE_POSITIONER, MOBILE_POPUP, DRAG_HANDLE_WRAPPER, DRAG_HANDLE_BAR } from "@/components/ui/mobile-bottom-sheet"
 import { ChevronDownIcon } from "lucide-react"
 
 function NavigationMenu({
@@ -108,12 +109,22 @@ function NavigationMenuPositioner({
         align={align}
         alignOffset={alignOffset}
         className={cn(
-          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0",
+          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none sm:data-[side=bottom]:before:top-[-10px] sm:data-[side=bottom]:before:right-0 sm:data-[side=bottom]:before:left-0",
+          MOBILE_POSITIONER,
           className
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className="data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover text-popover-foreground shadow ring-1 ring-foreground/10 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0">
+        <NavigationMenuPrimitive.Popup className={cn(
+          "data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover text-popover-foreground shadow ring-1 ring-foreground/10 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none",
+          "sm:data-ending-style:scale-90 sm:data-ending-style:opacity-0 sm:data-ending-style:duration-150 sm:data-starting-style:scale-90 sm:data-starting-style:opacity-0",
+          "max-sm:data-starting-style:translate-y-full max-sm:data-ending-style:translate-y-full",
+          MOBILE_POPUP,
+        )}>
+          {/* Drag handle — mobile bottom sheet affordance */}
+          <div className={DRAG_HANDLE_WRAPPER}>
+            <div className={DRAG_HANDLE_BAR} />
+          </div>
           <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
         </NavigationMenuPrimitive.Popup>
       </NavigationMenuPrimitive.Positioner>

@@ -4,11 +4,11 @@ import * as React from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
-import { Input } from '@/components/ui/input'
+import { Input, type InputProps } from '@/components/ui/input'
 
 export type PasswordInputState = 'idle' | 'error' | 'success'
 
-interface PasswordInputProps extends Omit<React.ComponentProps<'input'>, 'type'> {
+interface PasswordInputProps extends Omit<InputProps, 'type'> {
   inputState?: PasswordInputState
 }
 

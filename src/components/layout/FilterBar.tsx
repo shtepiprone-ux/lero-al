@@ -70,8 +70,8 @@ export function FilterBar({
   // Sheet body: new slots get a column layout with gap so sections are visually separated
   const sheetBody = hasNewSlots ? (
     <div className="flex flex-col gap-4">
-      {activeFilters && <div>{activeFilters}</div>}
-      {availableFilters && <div>{availableFilters}</div>}
+      {activeFilters && <div className="flex flex-wrap gap-2">{activeFilters}</div>}
+      {availableFilters && <div className="flex flex-wrap gap-2">{availableFilters}</div>}
     </div>
   ) : filters
 
@@ -155,7 +155,7 @@ export function FilterBar({
 
       {/* ── Row 3 (≥1024): available filters ─────────────────────────────────── */}
       {hasNewSlots && availableFilters && (
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex lg:flex-wrap lg:gap-2">
           {availableFilters}
         </div>
       )}

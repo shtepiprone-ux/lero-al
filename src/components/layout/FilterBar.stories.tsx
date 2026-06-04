@@ -108,23 +108,23 @@ function FilterBarDemo({
           search={<SearchInput placeholder={searchPlaceholder} />}
           activeFilters={
             activeChips.length > 0 ? (
-              <div className="flex flex-wrap gap-3">
+              <>
                 {activeChips.map(chip => (
                   <Button key={chip} size="xl" variant="default" onClick={() => toggle(chip)}>
                     {chip}
                   </Button>
                 ))}
-              </div>
+              </>
             ) : undefined
           }
           availableFilters={
-            <div className="flex flex-wrap gap-3">
+            <>
               {availableChips.map(chip => (
                 <Button key={chip} size="xl" variant="outline" onClick={() => toggle(chip)}>
                   {chip}
                 </Button>
               ))}
-            </div>
+            </>
           }
           activeCount={activeChips.length}
           onReset={activeChips.length > 0 ? () => setActive([]) : undefined}

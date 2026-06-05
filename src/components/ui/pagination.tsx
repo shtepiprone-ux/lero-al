@@ -1,5 +1,7 @@
-import * as React from "react"
+'use client'
 
+import * as React from "react"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react"
@@ -64,9 +66,10 @@ function PaginationLink({
 
 function PaginationPrevious({
   className,
-  text = "Previous",
+  text,
   ...props
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+  const t = useTranslations('ui.pagination')
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -75,16 +78,17 @@ function PaginationPrevious({
       {...props}
     >
       <ChevronLeftIcon data-icon="inline-start" />
-      <span className="hidden sm:block">{text}</span>
+      <span className="hidden sm:block">{text ?? t('previous')}</span>
     </PaginationLink>
   )
 }
 
 function PaginationNext({
   className,
-  text = "Next",
+  text,
   ...props
 }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+  const t = useTranslations('ui.pagination')
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -92,7 +96,7 @@ function PaginationNext({
       className={cn("pr-1.5!", className)}
       {...props}
     >
-      <span className="hidden sm:block">{text}</span>
+      <span className="hidden sm:block">{text ?? t('next')}</span>
       <ChevronRightIcon data-icon="inline-end" />
     </PaginationLink>
   )

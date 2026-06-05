@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { FilterBar } from './FilterBar'
 import { PageShell } from './PageShell'
 import { Section } from './Section'
+import { storyT } from '@/stories/_storyI18n'
 
 const meta: Meta<typeof FilterBar> = {
   title: 'Layout/FilterBar',
@@ -32,51 +33,25 @@ const meta: Meta<typeof FilterBar> = {
 export default meta
 type Story = StoryObj<typeof FilterBar>
 
-// ── Label fixtures per locale ─────────────────────────────────────────────────
-const LABELS_EN = { filters: 'Filters', reset: 'Reset all', close: 'Close filters' }
-const LABELS_UK = { filters: 'Фільтри', reset: 'Скинути всі', close: 'Закрити фільтри' }
-const LABELS_SQ = { filters: 'Filtra', reset: 'Rivendos të gjitha', close: 'Mbyll filtrat' }
-const LABELS_IT = { filters: 'Filtri', reset: 'Azzera tutto', close: 'Chiudi filtri' }
+const fb = (k: string, l = 'en') => storyT(l, `storybook.filterbar.${k}`)
 
-// ── Chip sets per locale ──────────────────────────────────────────────────────
-const CHIP_SETS: Record<string, string[]> = {
-  en: ['Sale', 'Rent', 'Commercial', 'Studio', '2-br', '3-br', '4-br', '5-br', '6+', 'Office', 'Land'],
-  uk: ['Продаж', 'Оренда', 'Комерційна', 'Студія', '2 кімнати', '3 кімнати', '4 кімнати', '5 кімнат', '6+', 'Офіс', 'Земля'],
-  sq: ['Shitje', 'Qira', 'Komerciale', 'Studio', '2-dh', '3-dh', '4-dh', '5-dh', '6+', 'Zyrë', 'Tokë'],
-  it: ['Vendita', 'Affitto', 'Commerciale', 'Monolocale', '2 locali', '3 locali', '4 locali', '5 locali', '6+', 'Ufficio', 'Terreno'],
+// ── Chip keys ─────────────────────────────────────────────────────────────────
+const CHIP_KEYS = [
+  'chip_sale', 'chip_rent', 'chip_commercial', 'chip_studio',
+  'chip_2br', 'chip_3br', 'chip_4br', 'chip_5br', 'chip_6plus',
+  'chip_office', 'chip_land',
+]
+
+function getLabels(locale: string) {
+  return {
+    filters: fb('filters', locale),
+    reset: fb('reset', locale),
+    close: fb('close', locale),
+  }
 }
-
-// ── Content mock ──────────────────────────────────────────────────────────────
-const CONTENT_MOCK = (
-  <div className="rounded-2xl border bg-card overflow-hidden">
-    {[0, 1].map(i => (
-      <div key={i} className="flex items-center gap-3 px-4 py-3 border-b last:border-b-0">
-        <div className="h-9 w-9 rounded-full bg-muted shrink-0" />
-        <div className="flex-1 space-y-1.5 min-w-0">
-          <div className="h-3.5 bg-muted rounded-full w-2/3" />
-          <div className="h-2.5 bg-muted/60 rounded-full w-1/2" />
-        </div>
-        <div className="h-5 w-14 rounded-full bg-muted shrink-0" />
-      </div>
-    ))}
-  </div>
-)
 
 function SearchInput({ placeholder }: { placeholder: string }) {
   return <Input placeholder={placeholder} type="search" className="h-11" />
-}
-
-// ── Per-locale labels and section titles ──────────────────────────────────────
-const LABELS_BY_LOCALE: Record<string, { filters: string; reset: string; close: string }> = {
-  en: LABELS_EN, uk: LABELS_UK, sq: LABELS_SQ, it: LABELS_IT,
-}
-
-const SECTION_TITLES: Record<string, string> = {
-  en: 'Search results', uk: 'Результати пошуку', sq: 'Rezultate të kërkimit', it: 'Risultati di ricerca',
-}
-
-const SEARCH_PLACEHOLDERS: Record<string, string> = {
-  en: 'Search listings…', uk: 'Пошук оголошень…', sq: 'Kërko njoftimet…', it: 'Cerca annunci…',
 }
 
 // ── FilterBarDemo — locale passed as prop from story render context ───────────
@@ -89,17 +64,32 @@ function FilterBarDemo({
   totalChips?: number
   initialActiveCount?: number
 }) {
-  const chips = (CHIP_SETS[locale] ?? CHIP_SETS.en).slice(0, totalChips)
-  const [active, setActive] = useState<string[]>(() => chips.slice(0, initialActiveCount))
-  const activeChips = chips.filter(c => active.includes(c))
-  const availableChips = chips.filter(c => !active.includes(c))
-  const labels = LABELS_BY_LOCALE[locale] ?? LABELS_BY_LOCALE.en
-  const sectionTitle = SECTION_TITLES[locale] ?? SECTION_TITLES.en
-  const searchPlaceholder = SEARCH_PLACEHOLDERS[locale] ?? SEARCH_PLACEHOLDERS.en
+  const chips = CHIP_KEYS.slice(0, totalChips).map(k => ({ key: k, label: fb(k, locale) }))
+  const [activeKeys, setActiveKeys] = useState<string[]>(() => chips.slice(0, initialActiveCount).map(c => c.key))
+  const activeChips = chips.filter(c => activeKeys.includes(c.key))
+  const availableChips = chips.filter(c => !activeKeys.includes(c.key))
+  const labels = getLabels(locale)
+  const sectionTitle = fb('section_title', locale)
+  const searchPlaceholder = fb('search_ph', locale)
 
-  function toggle(chip: string) {
-    setActive(prev => prev.includes(chip) ? prev.filter(v => v !== chip) : [...prev, chip])
+  function toggle(key: string) {
+    setActiveKeys(prev => prev.includes(key) ? prev.filter(v => v !== key) : [...prev, key])
   }
+
+  const CONTENT_MOCK = (
+    <div className="rounded-2xl border bg-card overflow-hidden">
+      {[0, 1].map(i => (
+        <div key={i} className="flex items-center gap-3 px-4 py-3 border-b last:border-b-0">
+          <div className="h-9 w-9 rounded-full bg-muted shrink-0" />
+          <div className="flex-1 space-y-1.5 min-w-0">
+            <div className="h-3.5 bg-muted rounded-full w-2/3" />
+            <div className="h-2.5 bg-muted/60 rounded-full w-1/2" />
+          </div>
+          <div className="h-5 w-14 rounded-full bg-muted shrink-0" />
+        </div>
+      ))}
+    </div>
+  )
 
   return (
     <PageShell>
@@ -110,8 +100,8 @@ function FilterBarDemo({
             activeChips.length > 0 ? (
               <>
                 {activeChips.map(chip => (
-                  <Button key={chip} size="xl" variant="default" onClick={() => toggle(chip)}>
-                    {chip}
+                  <Button key={chip.key} size="xl" variant="default" onClick={() => toggle(chip.key)}>
+                    {chip.label}
                   </Button>
                 ))}
               </>
@@ -120,14 +110,14 @@ function FilterBarDemo({
           availableFilters={
             <>
               {availableChips.map(chip => (
-                <Button key={chip} size="xl" variant="outline" onClick={() => toggle(chip)}>
-                  {chip}
+                <Button key={chip.key} size="xl" variant="outline" onClick={() => toggle(chip.key)}>
+                  {chip.label}
                 </Button>
               ))}
             </>
           }
           activeCount={activeChips.length}
-          onReset={activeChips.length > 0 ? () => setActive([]) : undefined}
+          onReset={activeChips.length > 0 ? () => setActiveKeys([]) : undefined}
           labels={labels}
         />
         <Section title={sectionTitle}>{CONTENT_MOCK}</Section>

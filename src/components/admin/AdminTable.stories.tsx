@@ -3,6 +3,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { useState } from 'react'
 import { AdminTable, type AdminTableColumn } from './AdminTable'
+import { storyT } from '@/stories/_storyI18n'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
@@ -13,75 +14,25 @@ import {
 import { ArrowUpDown, ArrowUp, ArrowDown, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
-// ── Localized story-level labels (not in messages/*.json — Storybook-only) ────
-const LABELS: Record<string, Record<string, string>> = {
-  en: {
-    colName: 'Name', colStatus: 'Status', colRole: 'Role', colEmail: 'Email',
-    colPhone: 'Phone', colLocation: 'City', colCreated: 'Created',
-    sortAZ: 'Sort A→Z', sortZA: 'Sort Z→A',
-    newestFirst: 'Newest first', oldestFirst: 'Oldest first',
-    lowHigh: 'Sort low→high', highLow: 'Sort high→low',
-    hideColumn: 'Hide column', columns: 'Columns',
-    searchPlaceholder: 'Search…',
-    noResults: 'No records match the search.', noData: 'No records.',
-    active: 'Active', inactive: 'Inactive',
-    agent: 'Agent', user: 'User', moderator: 'Moderator',
-    selectedRecord: 'Selected record',
-    clickARow: 'Click a row — or focus it and press Enter / Space — to see the selected state.',
-    mobileSort: 'Sort',
-    sortBy: 'Sort by',
-    showColumn: 'Show',
-    hiddenSuffix: '(hidden)',
-    lockedSuffix: '(locked)',
-  },
-  sq: {
-    colName: 'Emri', colStatus: 'Gjendja', colRole: 'Roli', colEmail: 'Email',
-    colPhone: 'Telefon', colLocation: 'Qyteti', colCreated: 'Krijuar',
-    sortAZ: 'Rendit A→Z', sortZA: 'Rendit Z→A',
-    newestFirst: 'Nga më i riu', oldestFirst: 'Nga më i vjetri',
-    lowHigh: 'Nga i ulëti', highLow: 'Nga i larti',
-    hideColumn: 'Fshih kolonën', columns: 'Kolonat',
-    searchPlaceholder: 'Kërko…',
-    noResults: 'Nuk u gjet asnjë rekord.', noData: 'Nuk ka rekorde.',
-    active: 'Aktiv', inactive: 'Joaktiv',
-    agent: 'Agjent', user: 'Përdorues', moderator: 'Moderator',
-    selectedRecord: 'Rekordi i zgjedhur',
-    clickARow: 'Klikoni një rresht ose shtypni Enter / Space për të parë gjendjen.',
-    mobileSort: 'Rendito', sortBy: 'Rendito sipas',
-    showColumn: 'Shfaq', hiddenSuffix: '(fshehur)', lockedSuffix: '(i bllokuar)',
-  },
-  uk: {
-    colName: 'Ім\'я', colStatus: 'Статус', colRole: 'Роль', colEmail: 'Email',
-    colPhone: 'Телефон', colLocation: 'Місто', colCreated: 'Створено',
-    sortAZ: 'Сортувати A→Z', sortZA: 'Сортувати Z→A',
-    newestFirst: 'Від найновіших', oldestFirst: 'Від найстаріших',
-    lowHigh: 'Від найменшого', highLow: 'Від найбільшого',
-    hideColumn: 'Приховати стовпець', columns: 'Стовпці',
-    searchPlaceholder: 'Пошук…',
-    noResults: 'Записів не знайдено.', noData: 'Немає записів.',
-    active: 'Активний', inactive: 'Неактивний',
-    agent: 'Агент', user: 'Користувач', moderator: 'Модератор',
-    selectedRecord: 'Вибраний запис',
-    clickARow: 'Натисніть рядок або сфокусуйте його й натисніть Enter / Space, щоб побачити вибраний стан.',
-    mobileSort: 'Сортувати', sortBy: 'Сортувати за',
-    showColumn: 'Показати', hiddenSuffix: '(приховано)', lockedSuffix: '(зафіксовано)',
-  },
-  it: {
-    colName: 'Nome', colStatus: 'Stato', colRole: 'Ruolo', colEmail: 'Email',
-    colPhone: 'Telefono', colLocation: 'Città', colCreated: 'Creato',
-    sortAZ: 'Ordina A→Z', sortZA: 'Ordina Z→A',
-    newestFirst: 'Più recenti', oldestFirst: 'Più vecchi',
-    lowHigh: 'Da basso ad alto', highLow: 'Da alto a basso',
-    hideColumn: 'Nascondi colonna', columns: 'Colonne',
-    searchPlaceholder: 'Cerca…',
-    noResults: 'Nessun record trovato.', noData: 'Nessun record.',
-    active: 'Attivo', inactive: 'Inattivo',
-    agent: 'Agente', user: 'Utente', moderator: 'Moderatore',
-    selectedRecord: 'Record selezionato',
-    clickARow: 'Fai clic su una riga oppure mettila a fuoco e premi Enter / Space per vedere lo stato.',
-    mobileSort: 'Ordina', sortBy: 'Ordina per',
-    showColumn: 'Mostra', hiddenSuffix: '(nascosta)', lockedSuffix: '(bloccata)',
-  },
+const AT_KEY: Record<string, string> = {
+  colName: 'col_name', colStatus: 'col_status', colRole: 'col_role',
+  colEmail: 'col_email', colPhone: 'col_phone', colLocation: 'col_location',
+  colCreated: 'col_created', sortAZ: 'sort_az', sortZA: 'sort_za',
+  newestFirst: 'newest_first', oldestFirst: 'oldest_first',
+  lowHigh: 'low_high', highLow: 'high_low',
+  hideColumn: 'hide_col', columns: 'columns',
+  searchPlaceholder: 'search_ph', noResults: 'no_results', noData: 'no_data',
+  active: 'active', inactive: 'inactive', agent: 'agent', user: 'user',
+  moderator: 'moderator', selectedRecord: 'selected_record',
+  clickARow: 'click_row', mobileSort: 'mobile_sort', sortBy: 'sort_by',
+  showColumn: 'show_col', hiddenSuffix: 'hidden_suffix', lockedSuffix: 'locked_suffix',
+}
+function makeLabels(locale: string): Record<string, string> {
+  const result: Record<string, string> = {}
+  for (const [k, msgKey] of Object.entries(AT_KEY)) {
+    result[k] = storyT(locale, `storybook.admin_table.${msgKey}`)
+  }
+  return result
 }
 
 // ── Types + fixture data ──────────────────────────────────────────────────────
@@ -116,7 +67,7 @@ function ukStatusVariant(code: UkRow['statusCode']): 'info' | 'success' | 'warni
 // ── Column definition metadata (used by demo wrapper) ────────────────────────
 type ColDef = {
   key: string
-  labelKey: keyof typeof LABELS.en
+  labelKey: string
   sortType?: 'text' | 'numeric' | 'date'
   hideable: boolean
   visibility?: 'always' | 'sm' | 'md' | 'lg' | 'xl'
@@ -134,7 +85,7 @@ const COL_DEFS: ColDef[] = [
 
 // ── Card row factory for AdminCardList (card mode <1024px) ────────────────────
 function makeCardRow(locale: string) {
-  const L = LABELS[locale] ?? LABELS.en
+  const L = makeLabels(locale)
   return (r: SampleRow) => ({
     title: <span className="font-medium">{r.name}</span>,
     subtitle: (
@@ -142,7 +93,7 @@ function makeCardRow(locale: string) {
         <Badge variant={r.state === 'on' ? 'success' : 'neutral'} className="text-xs">
           {r.state === 'on' ? L.active : L.inactive}
         </Badge>
-        <span className="text-xs text-muted-foreground">{L[r.role.toLowerCase() as keyof typeof LABELS.en] ?? r.role}</span>
+        <span className="text-xs text-muted-foreground">{L[r.role.toLowerCase()] ?? r.role}</span>
       </div>
     ),
     meta: (
@@ -163,7 +114,7 @@ function ColumnsManager({
   onToggle: (key: string) => void
   locale: string
 }) {
-  const L = LABELS[locale] ?? LABELS.en
+  const L = makeLabels(locale)
   return (
     <Popover>
       <PopoverTrigger
@@ -224,7 +175,7 @@ function MobileSortControl({
   onSort: (key: string, dir: 'asc' | 'desc') => void
   locale: string
 }) {
-  const L = LABELS[locale] ?? LABELS.en
+  const L = makeLabels(locale)
   const sortable = colDefs.filter(c => c.sortType)
   const activeCol = sortable.find(c => c.key === sort.key)
   const activeLabel = activeCol
@@ -286,7 +237,7 @@ function AdminTableDemo({
   const [hidden, setHidden]   = useState<Set<string>>(new Set(initialHidden))
   const [selected, setSelected] = useState<SampleRow | null>(null)
 
-  const L = LABELS[locale] ?? LABELS.en
+  const L = makeLabels(locale)
 
   function handleSort(key: string, dir: 'asc' | 'desc') {
     setSort({ key, dir })
@@ -699,7 +650,7 @@ export const EmptyState: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const L = LABELS[locale] ?? LABELS.en
+    const L = makeLabels(locale)
     const cols: AdminTableColumn<SampleRow>[] = [
       { key: 'name',    header: L.colName,    sortable: true,  sortType: 'text', hideable: false, cell: r => r.name },
       { key: 'state',   header: L.colStatus,  sortable: true,  sortType: 'text', hideable: true, cell: r => r.state },
@@ -726,7 +677,7 @@ export const LoadingState: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const L = LABELS[locale] ?? LABELS.en
+    const L = makeLabels(locale)
     const cols: AdminTableColumn<SampleRow>[] = [
       { key: 'name',    header: L.colName,   sortable: true, sortType: 'text', hideable: false, cell: r => r.name },
       { key: 'state',   header: L.colStatus, sortable: true, sortType: 'text', hideable: true,  cell: r => r.state },

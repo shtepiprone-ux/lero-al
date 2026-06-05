@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from './select'
+import { storyT } from '@/stories/_storyI18n'
 
 const meta: Meta = {
   title: 'Primitives/Select',
@@ -28,6 +29,8 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
+const sel = (k: string, l = 'en') => storyT(l, `storybook.select.${k}`)
+
 // ── City options — proper nouns, locale-neutral ───────────────────────────────
 const CITY_ITEMS = [
   { value: 'tirana',  label: 'Tirana' },
@@ -36,71 +39,25 @@ const CITY_ITEMS = [
   { value: 'shkoder', label: 'Shkodër' },
 ]
 
-// ── Long-label status options per locale (for locale stress stories) ──────────
-const STATUS_ITEMS: Record<string, { value: string; label: string }[]> = {
-  en: [
-    { value: 'new',         label: 'New request awaiting administrator review' },
-    { value: 'in_progress', label: 'In progress — being reviewed by the administration team' },
-    { value: 'resolved',    label: 'Successfully resolved after review' },
-    { value: 'closed',      label: 'Closed without resolution' },
-  ],
-  sq: [
-    { value: 'new',         label: 'Kërkesë e re në pritje të shqyrtimit nga administratori' },
-    { value: 'in_progress', label: 'Në procesim — duke u shqyrtuar nga ekipi i administrimit' },
-    { value: 'resolved',    label: 'Zgjidhur me sukses pas shqyrtimit' },
-    { value: 'closed',      label: 'Mbyllur pa zgjidhje' },
-  ],
-  uk: [
-    { value: 'new',         label: 'Нова заявка на розгляд адміністратором' },
-    { value: 'in_progress', label: 'В обробці — перевіряється командою адміністраторів' },
-    { value: 'resolved',    label: 'Вирішено успішно після перевірки' },
-    { value: 'closed',      label: 'Закрито без вирішення' },
-  ],
-  it: [
-    { value: 'new',         label: 'Nuova richiesta in attesa di revisione' },
-    { value: 'in_progress', label: 'In lavorazione — in revisione dal team di amministrazione' },
-    { value: 'resolved',    label: 'Risolto con successo dopo la revisione' },
-    { value: 'closed',      label: 'Chiuso senza risoluzione' },
-  ],
+function getStatusItems(locale: string) {
+  return [
+    { value: 'new',         label: sel('status_0', locale) },
+    { value: 'in_progress', label: sel('status_1', locale) },
+    { value: 'resolved',    label: sel('status_2', locale) },
+    { value: 'closed',      label: sel('status_3', locale) },
+  ]
 }
 
-// ── Per-locale placeholders ───────────────────────────────────────────────────
-const PLACEHOLDERS: Record<string, Record<string, string>> = {
-  city:   { en: 'Select city',    sq: 'Zgjidh qytetin',    uk: 'Виберіть місто',    it: 'Seleziona città' },
-  status: { en: 'Select status',  sq: 'Zgjidh statusin',   uk: 'Виберіть статус',   it: 'Seleziona stato' },
-}
-const ph = (k: string, l = 'en') => PLACEHOLDERS[k]?.[l] ?? PLACEHOLDERS[k]?.en ?? k
-
-// ── Settlement labels per locale (for SettlementsLocaleStress) ────────────────
-const SETTLEMENTS_BY_LOCALE: Record<string, { placeholder: string; cities: { value: string; label: string }[] }> = {
-  en: {
-    placeholder: 'Select city',
+function getSettlements(locale: string) {
+  return {
+    placeholder: sel('city_ph', locale),
     cities: [
-      { value: 'tirana',  label: 'Tirana' }, { value: 'durres', label: 'Durrës' },
-      { value: 'vlore',   label: 'Vlorë'  }, { value: 'shkoder', label: 'Shkodër' },
+      { value: 'tirana',  label: sel('city_tirana', locale) },
+      { value: 'durres',  label: sel('city_durres', locale) },
+      { value: 'vlore',   label: sel('city_vlore', locale) },
+      { value: 'shkoder', label: sel('city_shkoder', locale) },
     ],
-  },
-  sq: {
-    placeholder: 'Zgjidh qytetin',
-    cities: [
-      { value: 'tirana',  label: 'Tirana' }, { value: 'durres', label: 'Durrës' },
-      { value: 'vlore',   label: 'Vlorë'  }, { value: 'shkoder', label: 'Shkodër' },
-    ],
-  },
-  uk: {
-    placeholder: 'Виберіть місто',
-    cities: [
-      { value: 'tirana',  label: 'Тирана' }, { value: 'durres', label: 'Дуррес' },
-      { value: 'vlore',   label: 'Вльора' }, { value: 'shkoder', label: 'Шкодер' },
-    ],
-  },
-  it: {
-    placeholder: 'Seleziona città',
-    cities: [
-      { value: 'tirana',  label: 'Tirana' }, { value: 'durres', label: 'Durrës' },
-      { value: 'vlore',   label: 'Valona' }, { value: 'shkoder', label: 'Scutari' },
-    ],
-  },
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -114,7 +71,7 @@ export const Default: Story = {
     return (
       <div className="p-4 sm:max-w-xs">
         <Select defaultValue="tirana" items={CITY_ITEMS}>
-          <SelectTrigger><SelectValue placeholder={ph('city', locale)} /></SelectTrigger>
+          <SelectTrigger><SelectValue placeholder={sel('city_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {CITY_ITEMS.map(c => (<SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>))}
           </SelectContent>
@@ -131,7 +88,7 @@ export const NoSelection: Story = {
     return (
       <div className="p-4 sm:max-w-xs">
         <Select items={CITY_ITEMS}>
-          <SelectTrigger><SelectValue placeholder={ph('city', locale)} /></SelectTrigger>
+          <SelectTrigger><SelectValue placeholder={sel('city_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {CITY_ITEMS.map(c => (<SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>))}
           </SelectContent>
@@ -148,11 +105,11 @@ export const LongLabelLocaleStress: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const items = STATUS_ITEMS[locale] ?? STATUS_ITEMS.en
+    const items = getStatusItems(locale)
     return (
       <div className="p-3">
         <Select defaultValue="in_progress" items={items}>
-          <SelectTrigger><SelectValue placeholder={ph('status', locale)} /></SelectTrigger>
+          <SelectTrigger><SelectValue placeholder={sel('status_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {items.map(i => (<SelectItem key={i.value} value={i.value}>{i.label}</SelectItem>))}
           </SelectContent>
@@ -169,7 +126,7 @@ export const Disabled: Story = {
     return (
       <div className="p-4 sm:max-w-xs">
         <Select defaultValue="tirana" items={CITY_ITEMS} disabled>
-          <SelectTrigger><SelectValue placeholder={ph('city', locale)} /></SelectTrigger>
+          <SelectTrigger><SelectValue placeholder={sel('city_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {CITY_ITEMS.map(c => (<SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>))}
           </SelectContent>
@@ -186,7 +143,7 @@ export const OutlineVariant: Story = {
     return (
       <div className="p-4 sm:max-w-xs">
         <Select defaultValue="tirana" items={CITY_ITEMS}>
-          <SelectTrigger variant="outline"><SelectValue placeholder={ph('city', locale)} /></SelectTrigger>
+          <SelectTrigger variant="outline"><SelectValue placeholder={sel('city_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {CITY_ITEMS.map(c => (<SelectItem key={c.value} value={c.value}>{c.label}</SelectItem>))}
           </SelectContent>
@@ -203,11 +160,11 @@ export const MobileBottomSheet: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const items = STATUS_ITEMS[locale] ?? STATUS_ITEMS.en
+    const items = getStatusItems(locale)
     return (
       <div className="p-3">
         <Select items={items}>
-          <SelectTrigger><SelectValue placeholder={ph('status', locale)} /></SelectTrigger>
+          <SelectTrigger><SelectValue placeholder={sel('status_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {items.map(i => (<SelectItem key={i.value} value={i.value}>{i.label}</SelectItem>))}
           </SelectContent>
@@ -231,7 +188,7 @@ export const SettlementsLocaleStress: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const data = SETTLEMENTS_BY_LOCALE[locale] ?? SETTLEMENTS_BY_LOCALE.en
+    const data = getSettlements(locale)
     return (
       <div className="p-3">
         <Select defaultValue="tirana" items={data.cities}>

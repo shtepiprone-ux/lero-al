@@ -1,7 +1,8 @@
-﻿import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Filter, Menu } from "lucide-react";
 import { Button } from "./button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./sheet";
+import { storyT } from '@/stories/_storyI18n';
 
 const meta: Meta = {
   title: "Primitives/Sheet",
@@ -11,30 +12,14 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-const SHT: Record<string, Record<string, string>> = {
-  filters:    { en: "Filters",            sq: "Filtra",                   uk: "Фільтри",                 it: "Filtri" },
-  narrow_q:   { en: "Narrow your search results.", sq: "Ngushtoni rezultatet e kërkimit.", uk: "Звузьте результати пошуку.", it: "Limita i risultati della ricerca." },
-  filter_here:{ en: "Filter controls here…",  sq: "Kontrollet e filtrit këtu…", uk: "Елементи фільтрів тут…",  it: "Controlli filtro qui…" },
-  open_fil:   { en: "Open filters",       sq: "Hap filtrat",              uk: "Відкрити фільтри",        it: "Apri filtri" },
-  menu:       { en: "Menu",               sq: "Menuja",                   uk: "Меню",                    it: "Menu" },
-  open_nav:   { en: "Open navigation",    sq: "Hap navigimin",            uk: "Відкрити навігацію",      it: "Apri navigazione" },
-  home:       { en: "Home",               sq: "Kreu",                     uk: "Головна",                 it: "Home" },
-  listings:   { en: "Listings",           sq: "Njoftimet",                uk: "Оголошення",              it: "Annunci" },
-  favorites:  { en: "Favorites",          sq: "Të preferuara",            uk: "Вибране",                 it: "Preferiti" },
-  about:      { en: "About",              sq: "Rreth nesh",               uk: "Про нас",                 it: "Chi siamo" },
-  search_fil: { en: "Search filters",     sq: "Filtra kërkimi",           uk: "Фільтри пошуку",          it: "Filtri di ricerca" },
-  refine:     { en: "Refine your property search parameters.", sq: "Precizoni parametrat e kërkimit të pronës.", uk: "Уточніть параметри пошуку нерухомості.", it: "Perfeziona i parametri di ricerca proprietà." },
-  params_here:{ en: "Filter parameters…", sq: "Parametrat e filtrit…",   uk: "Параметри фільтрів…",     it: "Parametri filtro…" },
-  open_sheet: { en: "Open filters",       sq: "Hap filtrat",              uk: "Відкрити фільтри",        it: "Apri filtri" },
-}
-const s = (key: string, locale = "en") => SHT[key]?.[locale] ?? SHT[key]?.en ?? key;
+const s = (key: string, locale = "en") => storyT(locale, `storybook.sheet.${key}`);
 
 export const FilterSheetRight: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
       <Sheet>
-        <SheetTrigger render={<Button size="icon-xl" variant="outline" aria-label={s("open_fil", locale)}><Filter /></Button>} />
+        <SheetTrigger render={<Button size="icon-xl" variant="outline" aria-label={s("open_filters", locale)}><Filter /></Button>} />
         <SheetContent side="right" className="w-72">
           <SheetHeader>
             <SheetTitle>{s("filters", locale)}</SheetTitle>
@@ -81,7 +66,7 @@ export const LocaleSheetContent: Story = {
         <SheetTrigger render={<Button size="xl">{s("open_sheet", locale)}</Button>} />
         <SheetContent side="right" className="w-72">
           <SheetHeader>
-            <SheetTitle>{s("search_fil", locale)}</SheetTitle>
+            <SheetTitle>{s("search_filters", locale)}</SheetTitle>
             <SheetDescription>{s("refine", locale)}</SheetDescription>
           </SheetHeader>
           <div className="py-4 text-sm text-muted-foreground">

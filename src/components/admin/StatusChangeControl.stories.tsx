@@ -8,10 +8,10 @@ import { Circle, AlertCircle, CheckCircle2, XCircle } from 'lucide-react'
 function StoryPurposeNote() {
   return (
     <div className="border border-dashed border-muted-foreground/30 rounded-lg px-3 py-2 bg-muted/10 text-[11px] text-muted-foreground mb-3 space-y-0.5">
-      <p className="font-semibold">StatusChangeControl — canonical tiered status primitive</p>
+      <p className="font-semibold">{'StatusChangeControl'} — canonical tiered status primitive</p>
       <p><strong>variant=&quot;select&quot;</strong>: low-stakes status changes (Sales/Support Inquiries). Renders a simple select + optional note. No workflow graph.</p>
       <p><strong>variant=&quot;workflow&quot;</strong>: moderation flows (Support Tickets, Listing status). Renders allowed transition buttons derived from the current status + history log via historyEvents.</p>
-      <p><strong>Used in:</strong> /admin/inquiries (sales + support), /admin/support (tickets), /admin/listings (listing status). Defined by Epic HH Phase 2, Task 307.</p>
+      <p><strong>{'Used in:'}</strong> /admin/inquiries (sales + support), /admin/support (tickets), /admin/listings (listing status). Defined by Epic HH Phase 2, Task 307.</p>
     </div>
   )
 }

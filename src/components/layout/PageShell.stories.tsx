@@ -1,21 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { PageShell } from './PageShell'
 import { Section } from './Section'
+import { storyT } from '@/stories/_storyI18n'
 
-
-const PS_TEXT: Record<string, Record<string, string>> = {
-  listings: { en: 'Listings',                   sq: 'Njoftimet',                  uk: 'Оголошення',                  it: 'Annunci' },
-  browse:   { en: 'Browse available properties', sq: 'Shfleto pronat e disponueshme', uk: 'Переглянути доступну нерухомість', it: 'Sfoglia le proprietà disponibili' },
-  reading:  { en: 'Reading column',             sq: 'Kolona e leximit',           uk: 'Колонка читання',             it: 'Colonna di lettura' },
-  reading_d:{ en: 'Bounded to max-w-3xl, centered inside container-wide.', sq: 'E kufizuar ne max-w-3xl.', uk: 'Obmezhennia do max-w-3xl.', it: 'Limitata a max-w-3xl.' },
-  form:     { en: 'Form column',                sq: 'Kolona e formularit',        uk: 'Колонка форми',               it: 'Colonna modulo' },
-  form_d:   { en: 'Bounded to max-w-xl, centered inside container-wide.', sq: 'E kufizuar ne max-w-xl.', uk: 'Obmezhennia do max-w-xl.', it: 'Limitata a max-w-xl.' },
-  avail:    { en: 'Available listings',         sq: 'Njoftimet e disponueshme',   uk: 'Доступні оголошення',         it: 'Annunci disponibili' },
-  search_r: { en: 'Search results',             sq: 'Rezultate te kerkimit',      uk: 'Результати пошуку',           it: 'Risultati ricerca' },
-  long_t:   { en: 'Available real estate for rent and sale across Albania', sq: 'Njoftime per qira dhe shitje ne Shqiperi', uk: 'Orenda ta prodazh nerukhomost v Albanii', it: 'Immobili disponibili per affitto e vendita in Albania' },
-  long_d:   { en: 'Browse available apartments, houses and commercial properties.', sq: 'Shfletoni pronat e disponueshme.', uk: 'Perehliadte dostupni kvartyrny budynky ta komertsiinu nerukhomist.', it: 'Sfoglia appartamenti case e proprieta commerciali.' },
-}
-const ps = (k: string, l = 'en') => PS_TEXT[k]?.[l] ?? PS_TEXT[k]?.en ?? k
+const ps = (k: string, l = 'en') => storyT(l, `storybook.pageshell.${k}`)
 
 const meta: Meta<typeof PageShell> = {
   title: 'Layout/PageShell',

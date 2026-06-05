@@ -1,6 +1,7 @@
 'use client'
 
 import { type ReactNode } from 'react'
+import { useTranslations } from 'next-intl'
 import {
   ArrowUpDown, ArrowUp, ArrowDown, EyeOff, ChevronRight, Check,
 } from 'lucide-react'
@@ -14,11 +15,13 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu'
 
-// ── Default English labels per sort type ──────────────────────────────────────
-function defaultSortLabels(sortType: 'text' | 'numeric' | 'date'): { asc: string; desc: string; hide: string } {
-  if (sortType === 'date')    return { asc: 'Newest first',    desc: 'Oldest first',    hide: 'Hide column' }
-  if (sortType === 'numeric') return { asc: 'Sort low→high',   desc: 'Sort high→low',   hide: 'Hide column' }
-  return                             { asc: 'Sort A→Z',        desc: 'Sort Z→A',        hide: 'Hide column' }
+function makeSortLabels(
+  tSort: ReturnType<typeof useTranslations<'admin.table_sort'>>,
+  sortType: 'text' | 'numeric' | 'date',
+): { asc: string; desc: string; hide: string } {
+  if (sortType === 'date')    return { asc: tSort('newest_first'), desc: tSort('oldest_first'), hide: tSort('hide_column') }
+  if (sortType === 'numeric') return { asc: tSort('sort_low_high'), desc: tSort('sort_high_low'), hide: tSort('hide_column') }
+  return                             { asc: tSort('sort_az'),       desc: tSort('sort_za'),       hide: tSort('hide_column') }
 }
 
 export type AdminTableColumn<Row> = {
@@ -95,6 +98,7 @@ export function AdminTable<Row>({
   errorState,
   ariaLabel,
 }: AdminTableProps<Row>) {
+  const tSort = useTranslations('admin.table_sort')
   const stickyIdx = stickyColumnIndex
 
   function synthesizeCard(row: Row): StructuredCard {
@@ -152,7 +156,7 @@ export function AdminTable<Row>({
                   const alignClass = col.align ? ALIGN_CLASS[col.align] : 'text-left'
                   const isSticky   = idx === stickyIdx
                   const hasMenu    = col.sortable || col.hideable
-                  const labels     = col.sortLabels ?? defaultSortLabels(col.sortType ?? 'text')
+                  const labels     = col.sortLabels ?? makeSortLabels(tSort, col.sortType ?? 'text')
 
                   return (
                     <th

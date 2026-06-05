@@ -7,20 +7,12 @@ import { Badge } from '@/components/ui/badge'
 import { PageHeader } from './PageHeader'
 import { PageShell } from './PageShell'
 import { Section } from './Section'
+import { storyT } from '@/stories/_storyI18n'
 
-
-const PH_TEXT: Record<string, Record<string, string>> = {
-  avail:   { en: 'Available Listings',  sq: 'Njoftime te Disponueshme', uk: 'Dostupni Oholoshennia',   it: 'Annunci Disponibili' },
-  browse:  { en: 'Browse properties for rent and sale across Albania.', sq: 'Kerkoni prona ne Shqiperi.', uk: 'Perehliadaite nerukhomist v Albanii.', it: 'Cerca proprieta in Albania.' },
-  new_lst: { en: 'New Listing',         sq: 'Njoftim i Ri',             uk: 'Nove Oholoshennia',       it: 'Nuovo Annuncio' },
-  export:  { en: 'Export',              sq: 'Eksporto',                 uk: 'Eksport',                 it: 'Esporta' },
-  edit:    { en: 'Edit',                sq: 'Ndrysho',                  uk: 'Redahuvannia',             it: 'Modifica' },
-  long_t:  { en: 'Real estate for rent and sale across Albania — full catalogue', sq: 'Njoftime per qira dhe shitje ne Shqiperi — katalog i plote', uk: 'Orenda ta prodazh nerukhomost — povnyi kataloh', it: 'Annunci immobiliari per affitto e vendita in Albania — catalogo' },
-  long_d:  { en: 'Browse available apartments, houses and commercial properties.', sq: 'Shfletoni pronat e disponueshme.', uk: 'Perehliadte dostupni budynky ta nerukhomist.', it: 'Sfoglia appartamenti case e proprieta.' },
-  listings:{ en: 'Listings',            sq: 'Njoftimet',                uk: 'Oholoshennia',            it: 'Annunci' },
-  browse_s:{ en: 'Browse available properties', sq: 'Shfleto pronat', uk: 'Perehliad nerukhomosti',  it: 'Sfoglia proprieta' },
+const PH_KEY: Record<string, string> = {
+  new_lst: 'new_listing', long_t: 'long_title', long_d: 'long_desc', browse_s: 'browse_short',
 }
-const ph2 = (k: string, l = 'en') => PH_TEXT[k]?.[l] ?? PH_TEXT[k]?.en ?? k
+const ph2 = (k: string, l = 'en') => storyT(l, `storybook.pageheader.${PH_KEY[k] ?? k}`)
 
 const meta: Meta<typeof PageHeader> = {
   title: 'Layout/PageHeader',
@@ -61,15 +53,13 @@ const CONTENT_MOCK = (
   </div>
 )
 
-const SAMPLE_CONTENT = <Section title="Listings" description="Browse available properties">{CONTENT_MOCK}</Section>
+const sampleContent = (l: string) => (
+  <Section title={ph2('listings', l)} description={ph2('browse_s', l)}>{CONTENT_MOCK}</Section>
+)
 const COUNT_BADGE = <Badge variant="secondary">142</Badge>
 
-// ── Story-level demo feedback labels (Storybook-only, not production copy) ────
-const DL: Record<string, Record<string, string>> = {
-  action: { en: 'Action', sq: 'Veprimi', uk: 'Дія', it: 'Azione' },
-}
 function dl(key: string, locale = 'en'): string {
-  return DL[key]?.[locale] ?? DL[key]?.en ?? key
+  return storyT(locale, `storybook.pageheader.${key}`)
 }
 
 // ── ActionFeedback — locale-aware in-canvas feedback when an action is clicked ─
@@ -111,7 +101,7 @@ function PageHeaderStory({
           action={action ? action(setLast) : undefined}
         />
         <ActionFeedback label={last} locale={locale} />
-        {content ?? SAMPLE_CONTENT}
+        {content ?? sampleContent(locale)}
       </div>
     </PageShell>
   )
@@ -129,7 +119,7 @@ export const Default: Story = {
     <PageShell>
       <div className="space-y-6">
         <PageHeader title={ph2("avail",l)} description={ph2("browse",l)} />
-        {SAMPLE_CONTENT}
+        {sampleContent(l)}
       </div>
     </PageShell>
     )
@@ -144,7 +134,7 @@ export const TitleOnly: Story = {
     <PageShell>
       <div className="space-y-6">
         <PageHeader title={ph2("avail",l)} />
-        {SAMPLE_CONTENT}
+        {sampleContent(l)}
       </div>
     </PageShell>
     )
@@ -159,7 +149,7 @@ export const WithCountBadge: Story = {
     <PageShell>
       <div className="space-y-6">
         <PageHeader title={ph2("avail",l)} description={ph2("browse",l)} countBadge={COUNT_BADGE} />
-        {SAMPLE_CONTENT}
+        {sampleContent(l)}
       </div>
     </PageShell>
     )
@@ -198,6 +188,7 @@ export const WithActions: Story = {
       title={ph2('avail', l)}
       description={ph2('browse', l)}
       countBadge={COUNT_BADGE}
+      locale={l}
       action={(on) => (
         <div className="flex flex-wrap gap-2">
           <Button size="xl" variant="outline" onClick={() => on(ph2('export',l))}>{ph2('export',l)}</Button>

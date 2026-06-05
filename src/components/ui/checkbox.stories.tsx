@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Checkbox } from './checkbox';
+import { storyT } from '@/stories/_storyI18n';
 
 const meta: Meta<typeof Checkbox> = {
   title: 'Primitives/Checkbox',
@@ -10,17 +11,7 @@ const meta: Meta<typeof Checkbox> = {
 export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
-const CK: Record<string, Record<string, string>> = {
-  agree:   { en: 'I agree to the terms',  sq: 'Pranoj kushtet',          uk: 'Pohodiuius z umovamy',     it: 'Accetto i termini' },
-  save_s:  { en: 'Save search',           sq: 'Ruaj kerkimin',           uk: 'Zberehty poshuk',          it: 'Salva ricerca' },
-  unavail: { en: 'Unavailable option',    sq: 'Opsion i padisponueshem', uk: 'Nedostupnyi parametr',     it: 'Opzione non disponibile' },
-  apt:     { en: 'Apartment',             sq: 'Apartament',              uk: 'Kvartyra',                 it: 'Appartamento' },
-  house:   { en: 'House',                 sq: 'Shtepi',                  uk: 'Budynok',                  it: 'Casa' },
-  studio:  { en: 'Studio',                sq: 'Studio',                  uk: 'Studio',                   it: 'Monolocale' },
-  villa:   { en: 'Villa',                 sq: 'Vile',                    uk: 'Vila',                     it: 'Villa' },
-  land:    { en: 'Land',                  sq: 'Toke',                    uk: 'Zemlia',                   it: 'Terreno' },
-}
-const ck = (k: string, l = 'en') => CK[k]?.[l] ?? CK[k]?.en ?? k
+const ck = (k: string, l = 'en') => storyT(l, `storybook.checkbox.${k}`)
 
 export const Default: Story = {
   render: (_, context) => {
@@ -40,7 +31,7 @@ export const Checked: Story = {
     return (
       <div className="flex items-center gap-2">
         <Checkbox id="checked" defaultChecked />
-        <label htmlFor="checked" className="text-sm">{ck('save_s', l)}</label>
+        <label htmlFor="checked" className="text-sm">{ck('save_search', l)}</label>
       </div>
     )
   },
@@ -61,7 +52,7 @@ export const Disabled: Story = {
 export const FilterCheckboxList: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
-    const types = [ck('apt', l), ck('house', l), ck('studio', l), ck('villa', l), ck('land', l)]
+    const types = [ck('apartment', l), ck('house', l), ck('studio', l), ck('villa', l), ck('land', l)]
     return (
       <div className="space-y-2 w-48">
         {types.map((type) => (

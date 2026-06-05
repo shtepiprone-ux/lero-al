@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Badge } from './badge';
+import { storyT } from '@/stories/_storyI18n';
 
 const meta: Meta<typeof Badge> = {
   title: 'Primitives/Badge',
@@ -16,17 +17,7 @@ const meta: Meta<typeof Badge> = {
 export default meta;
 type Story = StoryObj<typeof Badge>;
 
-const BG: Record<string, Record<string, string>> = {
-  premium:  { en: 'Premium',        sq: 'Premium',           uk: 'Premium',          it: 'Premium' },
-  new_b:    { en: 'New',            sq: 'E re',              uk: 'Nove',             it: 'Nuovo' },
-  for_rent: { en: 'For rent',       sq: 'Me qira',           uk: 'V orendu',         it: 'In affitto' },
-  active:   { en: 'Active',         sq: 'Aktiv',             uk: 'Aktyvne',          it: 'Attivo' },
-  pending:  { en: 'Pending review', sq: 'Ne shqyrtim',       uk: 'Na perevirotsi',   it: 'In revisione' },
-  inactive: { en: 'Inactive',       sq: 'Joaktiv',           uk: 'Neaktyvne',        it: 'Inattivo' },
-  archived: { en: 'Archived',       sq: 'Arkivuar',          uk: 'Arkhivovane',      it: 'Archiviato' },
-  rented:   { en: 'Rented / Sold',  sq: 'Qiradhene / Shitur', uk: 'Orendovano / Prodano', it: 'Affittato / Venduto' },
-}
-const bg = (k: string, l = 'en') => BG[k]?.[l] ?? BG[k]?.en ?? k
+const bg = (k: string, l = 'en') => storyT(l, `storybook.badge.${k}`)
 
 export const Default: Story = {
   render: (_, context) => {
@@ -40,15 +31,15 @@ export const AllVariants: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
       <div className="flex flex-wrap gap-2">
-        <Badge variant="default">{bg('new_b', l)}</Badge>
+        <Badge variant="default">{bg('new', l)}</Badge>
         <Badge variant="secondary">{bg('for_rent', l)}</Badge>
         <Badge variant="success">{bg('active', l)}</Badge>
         <Badge variant="warning">{bg('pending', l)}</Badge>
         <Badge variant="destructive">{bg('archived', l)}</Badge>
         <Badge variant="info">{bg('premium', l)}</Badge>
         <Badge variant="rented">{bg('rented', l)}</Badge>
-        <Badge variant="outline">Outline</Badge>
-        <Badge variant="neutral">Neutral</Badge>
+        <Badge variant="outline">{'Outline'}</Badge>
+        <Badge variant="neutral">{'Neutral'}</Badge>
       </div>
     )
   },
@@ -87,3 +78,4 @@ export const LocaleVariants: Story = {
     )
   },
 };
+

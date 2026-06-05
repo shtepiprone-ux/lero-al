@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { storyT } from './_storyI18n';
 
 type AdminLayoutArgs = {
   onFilter?: () => void
@@ -16,31 +17,13 @@ type AdminLayoutArgs = {
 }
 
 
-const AL_TEXT: Record<string, Record<string, string>> = {
-  listings:   { en: 'Listings',            sq: 'Njoftimet',         uk: 'Oholoshennia',       it: 'Annunci' },
-  search_ph:  { en: 'Search listings...',  sq: 'Kerko njoftime...', uk: 'Poshuk oholoshen...', it: 'Cerca annunci...' },
-  filter:     { en: 'Filter',              sq: 'Filtro',            uk: 'Filtr',              it: 'Filtra' },
-  add_lst:    { en: 'Add listing',         sq: 'Shto njoftim',      uk: 'Dodaty oholoshennia', it: 'Aggiungi annuncio' },
-  users:      { en: 'Users',               sq: 'Perdoruesit',       uk: 'Korystuvachi',        it: 'Utenti' },
-  add_usr:    { en: 'Add user',            sq: 'Shto perdorues',    uk: 'Dodaty korystuvacha', it: 'Aggiungi utente' },
-  col_name:   { en: 'Name',                sq: 'Emri',              uk: 'Imia',                it: 'Nome' },
-  col_role:   { en: 'Role',                sq: 'Roli',              uk: 'Rol',                 it: 'Ruolo' },
-  col_status: { en: 'Status',              sq: 'Gjendja',           uk: 'Status',              it: 'Stato' },
-  col_actions:{ en: 'Actions',             sq: 'Veprimet',          uk: 'Dii',                 it: 'Azioni' },
-  active:     { en: 'Active',              sq: 'Aktiv',             uk: 'Aktyvnyi',            it: 'Attivo' },
-  edit:       { en: 'Edit',                sq: 'Ndrysho',           uk: 'Redahuvaty',          it: 'Modifica' },
-  role_agent: { en: 'Agent',               sq: 'Agjent',            uk: 'Ahent',               it: 'Agente' },
-  role_user:  { en: 'User',                sq: 'Perdorues',         uk: 'Korystuvach',         it: 'Utente' },
-  role_admin: { en: 'Admin',               sq: 'Administrator',     uk: 'Administratore',      it: 'Amministratore' },
-  total_lst:  { en: 'Total listings',      sq: 'Gjithsej njoftime', uk: 'Vsioho oholoshen',    it: 'Annunci totali' },
-  pending:    { en: 'Pending',             sq: 'Ne pritje',         uk: 'Ochikuie',            it: 'In attesa' },
-  agents:     { en: 'Agents',              sq: 'Agjente',           uk: 'Ahenty',              it: 'Agenti' },
-  revenue:    { en: 'Revenue',             sq: 'Te ardhurat',       uk: 'Dokhid',              it: 'Ricavi' },
-  live:       { en: 'Live',                sq: 'Aktiv',             uk: 'Aktyvni',             it: 'Attivi' },
-  review:     { en: 'Review',              sq: 'Shqyrtim',          uk: 'Perevirka',           it: 'Revisione' },
-  verified:   { en: 'Verified',            sq: 'Verifikuar',        uk: 'Perevireno',          it: 'Verificato' },
+const AL_KEY: Record<string, string> = {
+  add_lst: 'add_listing', add_usr: 'add_user',
+  col_name: 'col_name', col_role: 'col_role', col_status: 'col_status', col_actions: 'col_actions',
+  role_agent: 'role_agent', role_user: 'role_user', role_admin: 'role_admin',
+  total_lst: 'total_listings', search_ph: 'search_ph',
 }
-const al = (k: string, l = 'en') => AL_TEXT[k]?.[l] ?? AL_TEXT[k]?.en ?? k
+const al = (k: string, l = 'en') => storyT(l, `storybook.adminlayout.${AL_KEY[k] ?? k}`)
 
 const meta: Meta<AdminLayoutArgs> = {
   title: 'System/AdminLayout',
@@ -72,7 +55,7 @@ function AdminToolbarRender({ onFilter, onAddListing, locale = 'en' }: { onFilte
         </div>
         {/* Control row: flex-col on mobile (each control stacks full-width, no overflow).
             sm: flex-row — canonical horizontal desktop layout. */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 max-sm:w-full">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 max-sm:w-full">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
             <Input

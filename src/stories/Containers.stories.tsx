@@ -21,7 +21,7 @@ function DemoBox({ label, className }: { label: string; className?: string }) {
   return (
     <div className={`bg-primary/10 border border-primary/20 rounded-lg p-4 ${className ?? ''}`}>
       <p className="text-xs font-mono text-primary">{label}</p>
-      <p className="text-xs text-muted-foreground mt-1">Content bounded within this container</p>
+      <p className="text-xs text-muted-foreground mt-1">{'Content bounded within this container'}</p>
     </div>
   );
 }

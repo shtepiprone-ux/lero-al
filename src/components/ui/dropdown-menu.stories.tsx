@@ -1,6 +1,7 @@
-﻿import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu";
+import { storyT } from '@/stories/_storyI18n';
 
 const meta: Meta = {
   title: "Primitives/DropdownMenu",
@@ -10,18 +11,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-const DD: Record<string, Record<string, string>> = {
-  open:   { en: "Open menu",                          sq: "Hap menunë",                         uk: "Відкрити меню",                          it: "Apri menu" },
-  edit:   { en: "Edit listing",                       sq: "Ndrysho njoftimin",                  uk: "Редагувати оголошення",                  it: "Modifica annuncio" },
-  dup:    { en: "Duplicate",                          sq: "Dupliko",                            uk: "Дублювати",                              it: "Duplica" },
-  del:    { en: "Delete",                             sq: "Fshi",                               uk: "Видалити",                               it: "Elimina" },
-  // long labels for mobile stress
-  actions:{ en: "Listing actions",                   sq: "Veprimet e njoftimit",               uk: "Дії з оголошенням",                      it: "Azioni annuncio" },
-  edit_lg:{ en: "Edit real estate listing details",  sq: "Ndrysho detajet e njoftimit të pronës", uk: "Редагувати оголошення про продаж нерухомості", it: "Modifica i dettagli dell annuncio immobiliare" },
-  dup_lg: { en: "Duplicate listing",                 sq: "Dupliko njoftimin",                  uk: "Дублювати оголошення",                   it: "Duplica annuncio" },
-  del_lg: { en: "Delete listing permanently",        sq: "Fshi njoftimin përgjithmonë",         uk: "Видалити оголошення назавжди",            it: "Elimina annuncio definitivamente" },
-}
-const d = (k: string, l = "en") => DD[k]?.[l] ?? DD[k]?.en ?? k;
+const d = (k: string, l = "en") => storyT(l, `storybook.dropdown.${k}`);
 
 export const Default: Story = {
   parameters: {},
@@ -50,10 +40,10 @@ export const MobileBottomSheet: Story = {
         <DropdownMenu>
           <DropdownMenuTrigger render={<Button>{d("actions", locale)}</Button>} />
           <DropdownMenuContent>
-            <DropdownMenuItem>{d("edit_lg", locale)}</DropdownMenuItem>
-            <DropdownMenuItem>{d("dup_lg", locale)}</DropdownMenuItem>
+            <DropdownMenuItem>{d("edit_long", locale)}</DropdownMenuItem>
+            <DropdownMenuItem>{d("dup_long", locale)}</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem variant="destructive">{d("del_lg", locale)}</DropdownMenuItem>
+            <DropdownMenuItem variant="destructive">{d("del_long", locale)}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

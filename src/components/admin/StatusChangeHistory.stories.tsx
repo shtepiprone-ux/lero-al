@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { StatusChangeHistory, type HistoryEvent } from './StatusChangeHistory'
+import { storyT } from '@/stories/_storyI18n'
 
 const meta: Meta<typeof StatusChangeHistory> = {
   title: 'Admin/StatusChangeHistory',
@@ -26,25 +27,17 @@ const EVENTS: HistoryEvent[] = [
   { id: '2', fromStatus: 'in_progress', toStatus: 'resolved', note: null, actorName: 'Moderator', createdAt: '2026-05-31T09:00:00Z' },
 ]
 
-const STATUS_LABELS: Record<string, Record<string, string>> = {
-  en: { open: 'Open', in_progress: 'In Progress', resolved: 'Resolved', closed: 'Closed', new: 'New', pending: 'Pending' },
-  sq: { open: 'Hapur', in_progress: 'Në procesim', resolved: 'Zgjidhur', closed: 'E mbyllur', new: 'E re', pending: 'Në pritje' },
-  uk: { open: 'Відкрито', in_progress: 'В обробці', resolved: 'Вирішено', closed: 'Закрито', new: 'Новий', pending: 'Очікує' },
-  it: { open: 'Aperto', in_progress: 'In lavorazione', resolved: 'Risolto', closed: 'Chiusa', new: 'Nuova', pending: 'In attesa' },
+const STATUS_KEY: Record<string, string> = {
+  open: 'state_open', in_progress: 'state_in_progress', resolved: 'state_resolved',
+  closed: 'state_closed', new: 'state_new', pending: 'state_pending',
 }
 
-// ── Locale Stress content — long actor names and notes per locale ─────────────
-const STRESS_CONTENT: Record<string, { actorName1: string; actorName2: string; note1: string }> = {
-  en: { actorName1: 'Administrator', actorName2: 'Moderator', note1: 'Under review by the administration team — detailed note for stress test' },
-  sq: { actorName1: 'Administratori', actorName2: 'Moderatori', note1: 'Nën shqyrtim nga ekipi i administrimit — shënim i detajuar për testin e stresit' },
-  uk: { actorName1: 'Адміністратор', actorName2: 'Модератор', note1: 'Перевіряється командою адміністраторів — детальна примітка для стрес-тесту' },
-  it: { actorName1: 'Amministratore', actorName2: 'Moderatore', note1: "Sotto esame del team di amministrazione — nota dettagliata per il test di stress" },
+const makeFmt = (locale: string) => (s: string) => {
+  const key = STATUS_KEY[s]
+  return key ? storyT(locale, `storybook.admin_history.${key}`) : s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
 }
 
-const makeFmt = (locale: string) => {
-  const map = STATUS_LABELS[locale] ?? STATUS_LABELS.en
-  return (s: string) => map[s] ?? s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
-}
+const ah = (k: string, l = 'en') => storyT(l, `storybook.admin_history.${k}`)
 
 export const Empty: Story = {
   render: () => <StatusChangeHistory events={[]} />,
@@ -85,12 +78,11 @@ export const LocaleStress: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const sc = STRESS_CONTENT[locale] ?? STRESS_CONTENT.en
     return (
       <StatusChangeHistory
         events={[
-          { id: '1', fromStatus: 'open', toStatus: 'in_progress', note: sc.note1, actorName: sc.actorName1, createdAt: '2026-05-31T08:00:00Z' },
-          { id: '2', fromStatus: 'in_progress', toStatus: 'resolved', note: null, actorName: sc.actorName2, createdAt: '2026-06-01T10:00:00Z' },
+          { id: '1', fromStatus: 'open', toStatus: 'in_progress', note: ah('note_1', locale), actorName: ah('actor_1', locale), createdAt: '2026-05-31T08:00:00Z' },
+          { id: '2', fromStatus: 'in_progress', toStatus: 'resolved', note: null, actorName: ah('actor_2', locale), createdAt: '2026-06-01T10:00:00Z' },
         ]}
         labelFormatter={makeFmt(locale)}
       />

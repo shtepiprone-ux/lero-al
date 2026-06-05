@@ -65,12 +65,15 @@ const withLocale: Decorator = (Story, context) => {
 // max-sm:w-full controls fill the <640 viewport edge-to-edge (minus the real
 // app gutter) rather than being centred/shrink-wrapped by Storybook.
 //
-// Gutter token: .container-wide from globals.css —
+// Horizontal gutter token: .container-wide from globals.css —
 //   padding: 1rem (base) → 1.5rem (≥640) → 2rem (≥1024) → 3rem (≥1536).
+// Vertical padding token: py-6 (1.5rem / 24px, design-system.md §5 4px scale) —
+//   provides canonical separation between the Storybook toolbar and story content.
 // This MUST match the canonical container-wide definition in design-system.md §4.
 // Do NOT substitute ad-hoc px values or Storybook's built-in padded layout.
+// Do NOT add per-story wrapper py-* — the canvas provides the canonical value.
 const withCanvas: Decorator = (Story) => (
-  <div className="container-wide">
+  <div className="container-wide py-6">
     <Story />
   </div>
 );

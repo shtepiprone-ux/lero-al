@@ -1,22 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Section } from './Section'
 import { PageShell } from './PageShell'
+import { storyT } from '@/stories/_storyI18n'
 
-
-const SECTION_TEXT: Record<string, Record<string, string>> = {
-  avail:    { en: 'Available listings',   sq: 'Njoftimet e disponueshme',  uk: 'Доступні оголошення',       it: 'Annunci disponibili' },
-  browse:   { en: 'Browse properties for rent and sale across Albania.', sq: 'Kerkoni prona me qira dhe shitje ne te gjitha Shqiperine.', uk: 'Perehliadaite nerukhomist v orendu ta na prodazh po vsii Albanii.', it: 'Cerca proprieta in affitto e in vendita in tutta l Albania.' },
-  first:    { en: 'First section',        sq: 'Seksioni i pare',           uk: 'Pershyi rozdil',            it: 'Prima sezione' },
-  second:   { en: 'Second section',       sq: 'Seksioni i dyte',           uk: 'Druhyi rozdil',             it: 'Seconda sezione' },
-  narrow:   { en: 'Narrow reading column', sq: 'Kolona e ngushtë e leximit', uk: 'Vuzka kolonka chytannia', it: 'Colonna di lettura stretta' },
-  narrow_d: { en: 'Section renders inside max-w-3xl at wide viewports.', sq: 'Seksioni brenda max-w-3xl.', uk: 'Rozdil u max-w-3xl.', it: 'La sezione dentro max-w-3xl.' },
-  form:     { en: 'Form column',          sq: 'Kolona e formularit',       uk: 'Kolonka formy',             it: 'Colonna modulo' },
-  form_d:   { en: 'Section renders inside max-w-xl centered column.', sq: 'Seksioni brenda max-w-xl.', uk: 'Rozdil u max-w-xl.', it: 'La sezione dentro max-w-xl.' },
-  long_t:   { en: 'Available real estate listings for rent and sale across Albania — full catalogue', sq: 'Njoftime te disponueshme per qira dhe shitje ne Shqiperi — katalog i plote', uk: 'Orenda ta prodazh nerukhomost v Tyrani ta po vsii Albanii — povnyi kataloh', it: 'Annunci immobiliari disponibili per affitto e vendita in tutta l Albania' },
-  long_d:   { en: 'Browse available apartments, houses and commercial properties with detailed descriptions.', sq: 'Shfletoni pronat e disponueshme me pershkrime te detajuara.', uk: 'Perehriaite dostupni kvartyrni budynky ta komertsiinu nerukhomist.', it: 'Sfoglia appartamenti case e proprieta commerciali con descrizioni dettagliate.' },
-  consumer: { en: 'Consumer controls stacking via space-y-* on the shell children.', sq: 'Kontrolli i radhitjes.', uk: 'Keruvannia hrarkhiieiu cherez space-y-*.', it: 'Controllo dello stacking tramite space-y-*.' },
-}
-const st = (k: string, l = 'en') => SECTION_TEXT[k]?.[l] ?? SECTION_TEXT[k]?.en ?? k
+const st = (k: string, l = 'en') => storyT(l, `storybook.section.${k}`)
 
 const meta: Meta<typeof Section> = {
   title: 'Layout/Section',

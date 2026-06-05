@@ -7,14 +7,12 @@ import { AdminPageShell } from './AdminPageShell'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-// ── Story-level demo feedback labels (Storybook-only, not production copy) ────
-const DL: Record<string, Record<string, string>> = {
-  action:  { en: 'Action',   sq: 'Veprimi',   uk: 'Дія',      it: 'Azione' },
-  viewing: { en: 'Viewing',  sq: 'Duke parë', uk: 'Перегляд', it: 'Visualizzazione' },
-}
+import { storyT } from '@/stories/_storyI18n'
+
 function dl(key: string, locale = 'en'): string {
-  return DL[key]?.[locale] ?? DL[key]?.en ?? key
+  return storyT(locale, `storybook.admin_pageshell.${key}`)
 }
+const aps = (k: string, l = 'en') => storyT(l, `storybook.admin_pageshell.${k}`)
 
 const meta: Meta<typeof AdminPageShell> = {
   title: 'Admin/AdminPageShell',
@@ -69,19 +67,19 @@ const CONTENT_MOCK = (
   </div>
 )
 
-// ── Tab options per locale (Storybook-only, not production copy) ──────────────
-const TAB_OPTIONS: Record<string, Array<{ value: string; label: string }>> = {
-  en: [{ value: 'all', label: 'All' }, { value: 'active', label: 'Active' }, { value: 'pending', label: 'Pending' }],
-  uk: [{ value: 'all', label: 'Усі' }, { value: 'active', label: 'Активні' }, { value: 'pending', label: 'Очікують' }],
-  sq: [{ value: 'all', label: 'Të gjitha' }, { value: 'active', label: 'Aktive' }, { value: 'pending', label: 'Në pritje' }],
-  it: [{ value: 'all', label: 'Tutti' }, { value: 'active', label: 'Attivi' }, { value: 'pending', label: 'In attesa' }],
+function makeTabOptions(locale: string) {
+  return [
+    { value: 'all', label: aps('tab_all', locale) },
+    { value: 'active', label: aps('tab_active', locale) },
+    { value: 'pending', label: aps('tab_pending', locale) },
+  ]
 }
 
 // ── FilterTabsCanonical — canonical Tabs primitive for the filterBar slot ─────
 // Uses Tabs/TabsList/TabsTrigger from @/components/ui/tabs (Base UI).
 // Stateful: clicking a tab updates the "Viewing:" panel below.
 function FilterTabsCanonical({ locale = 'en' }: { locale?: string }) {
-  const options = TAB_OPTIONS[locale] ?? TAB_OPTIONS.en
+  const options = makeTabOptions(locale)
   const [value, setValue] = useState(options[0]?.value ?? 'all')
   return (
     <Tabs value={value} onValueChange={(v) => v && setValue(v)}>
@@ -186,22 +184,6 @@ function MultiActionShellDemo({
   )
 }
 
-// ── Locale maps for story fixture labels (Storybook-only, not production copy) ─
-const PAGE_TITLES: Record<string, Record<string, string>> = {
-  listings: { en: 'Listings',      sq: 'Njoftimet',       uk: 'Оголошення',       it: 'Annunci' },
-  users:    { en: 'Users',         sq: 'Përdoruesit',     uk: 'Користувачі',      it: 'Utenti' },
-}
-const PAGE_SUBTITLES: Record<string, Record<string, string>> = {
-  users: { en: 'Manage platform accounts', sq: 'Administroni llogaritë', uk: 'Керування акаунтами', it: 'Gestisci gli account' },
-}
-const ACTION_LABELS: Record<string, Record<string, string>> = {
-  new_listing: { en: 'New listing',  sq: 'Njoftim i ri',    uk: 'Нове оголошення',  it: 'Nuovo annuncio' },
-  new_user:    { en: 'New user',     sq: 'Përdorues i ri',  uk: 'Новий користувач', it: 'Nuovo utente' },
-  export:      { en: 'Export',       sq: 'Eksporto',        uk: 'Експорт',          it: 'Esporta' },
-  edit_sel:    { en: 'Edit selected',sq: 'Ndrysho zgjedhjen',uk: 'Редагувати вибране',it: 'Modifica selezione' },
-}
-
-const t = (map: Record<string, string>, locale: string) => map[locale] ?? map.en
 
 // ════════════════════════════════════════════════════════════════════════════════
 // ── Canonical scenario stories — locale from render context ───────────────────
@@ -212,7 +194,7 @@ export const Default: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <AdminPageShell title={t(PAGE_TITLES.listings, locale)} countBadge={{ value: 127 }}>
+      <AdminPageShell title={aps('title_listings', locale)} countBadge={{ value: 127 }}>
         {CONTENT_MOCK}
       </AdminPageShell>
     )
@@ -228,9 +210,9 @@ export const WithTabs: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <AdminShellDemo
-        title={t(PAGE_TITLES.listings, locale)}
+        title={aps('title_listings', locale)}
         countBadge={{ value: 127 }}
-        actionLabel={t(ACTION_LABELS.new_listing, locale)}
+        actionLabel={aps('act_new_listing', locale)}
         locale={locale}
         showFilterBar
         showActions={false}
@@ -248,10 +230,10 @@ export const WithActions: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <AdminShellDemo
-        title={t(PAGE_TITLES.users, locale)}
-        subtitle={t(PAGE_SUBTITLES.users, locale)}
+        title={aps('title_users', locale)}
+        subtitle={aps('sub_users', locale)}
         countBadge={{ value: 843 }}
-        actionLabel={t(ACTION_LABELS.new_user, locale)}
+        actionLabel={aps('act_new_user', locale)}
         locale={locale}
       />
     )
@@ -267,10 +249,10 @@ export const WithTabsAndActions: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <AdminShellDemo
-        title={t(PAGE_TITLES.users, locale)}
-        subtitle={t(PAGE_SUBTITLES.users, locale)}
+        title={aps('title_users', locale)}
+        subtitle={aps('sub_users', locale)}
         countBadge={{ value: 843 }}
-        actionLabel={t(ACTION_LABELS.new_user, locale)}
+        actionLabel={aps('act_new_user', locale)}
         locale={locale}
         showFilterBar
       />
@@ -287,12 +269,12 @@ export const MultipleActions: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <MultiActionShellDemo
-        title={t(PAGE_TITLES.listings, locale)}
+        title={aps('title_listings', locale)}
         countBadge={{ value: 243 }}
         actions={[
-          { label: t(ACTION_LABELS.export, locale), variant: 'ghost' },
-          { label: t(ACTION_LABELS.edit_sel, locale), variant: 'outline' },
-          { label: t(ACTION_LABELS.new_listing, locale) },
+          { label: aps('act_export', locale), variant: 'ghost' },
+          { label: aps('act_edit_sel', locale), variant: 'outline' },
+          { label: aps('act_new_listing', locale) },
         ]}
       />
     )
@@ -320,10 +302,10 @@ export const LocaleStress: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <AdminShellDemo
-        title={t(PAGE_TITLES.listings, locale)}
-        subtitle={t(PAGE_SUBTITLES.users, locale)}
+        title={aps('title_listings', locale)}
+        subtitle={aps('sub_users', locale)}
         countBadge={{ value: 127 }}
-        actionLabel={t(ACTION_LABELS.new_listing, locale)}
+        actionLabel={aps('act_new_listing', locale)}
         locale={locale}
         showFilterBar
       />

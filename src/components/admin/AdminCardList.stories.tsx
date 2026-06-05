@@ -6,6 +6,8 @@ import { AdminCardList } from './AdminCardList'
 import { Badge } from '@/components/ui/badge'
 import { storyT } from '@/stories/_storyI18n'
 
+const acl = (k: string, l = 'en') => storyT(l, `storybook.admin_cardlist.${k}`)
+
 type TicketRow = {
   id: string
   subject: string
@@ -21,38 +23,8 @@ function stateVariant(state: string): 'warning' | 'info' | 'success' | 'neutral'
   return 'neutral'
 }
 
-const STATE_LABELS: Record<string, Record<string, string>> = {
-  en: { open: 'Open', in_progress: 'In progress', resolved: 'Resolved' },
-  uk: { open: 'Відкрито', in_progress: 'В обробці', resolved: 'Вирішено' },
-  sq: { open: 'Hapur', in_progress: 'Në procesim', resolved: 'Zgjidhur' },
-  it: { open: 'Aperto', in_progress: 'In lavorazione', resolved: 'Risolto' },
-}
-
-const TYPE_LABELS: Record<string, Record<string, string>> = {
-  en: { Support: 'Support', Complaint: 'Complaint' },
-  uk: { Support: 'Підтримка', Complaint: 'Скарга' },
-  sq: { Support: 'Mbështetje', Complaint: 'Ankesë' },
-  it: { Support: 'Supporto', Complaint: 'Reclamo' },
-}
-
-const HINT_TEXT: Record<string, string> = {
-  en: 'Click a row — or focus it and press Enter / Space — to see the selected state.',
-  uk: 'Натисніть рядок або сфокусуйте його й натисніть Enter / Space, щоб побачити вибраний стан.',
-  sq: 'Klikoni një rresht ose fokusojeni dhe shtypni Enter / Space për të parë gjendjen e zgjedhur.',
-  it: 'Fai clic su una riga oppure mettila a fuoco e premi Enter / Space per vedere lo stato selezionato.',
-}
-
-const SELECTED_HEADING: Record<string, string> = {
-  en: 'Selected ticket', uk: 'Вибраний тікет', sq: 'Rreshti i zgjedhur', it: 'Ticket selezionato',
-}
-
-const EMPTY_STATE_TEXT: Record<string, string> = {
-  en: 'No tickets found.', uk: 'Немає тікетів.', sq: 'Nuk ka tike.', it: 'Nessun ticket.',
-}
-
-const ARIA_LABELS: Record<string, string> = {
-  en: 'Support tickets', uk: 'Тікети підтримки', sq: 'Bileta mbështetëse', it: 'Ticket di supporto',
-}
+const STATE_KEY: Record<string, string> = { open: 'state_open', in_progress: 'state_in_progress', resolved: 'state_resolved' }
+const TYPE_KEY: Record<string, string> = { Support: 'type_support', Complaint: 'type_complaint' }
 
 // TicketListInteractive accepts locale as a plain prop (NO useGlobals — only render context may access globals)
 function TicketListInteractive({
@@ -65,12 +37,12 @@ function TicketListInteractive({
   compact?: boolean
 }) {
   const [selected, setSelected] = useState<TicketRow | null>(null)
-  const localStateLabel = (s: string) => STATE_LABELS[locale]?.[s] ?? s
-  const localTypeLabel = (t?: string) => t ? (TYPE_LABELS[locale]?.[t] ?? t) : undefined
-  const hint = HINT_TEXT[locale] ?? HINT_TEXT.en
-  const heading = SELECTED_HEADING[locale] ?? SELECTED_HEADING.en
-  const emptyState = EMPTY_STATE_TEXT[locale] ?? EMPTY_STATE_TEXT.en
-  const ariaLabel = ARIA_LABELS[locale] ?? ARIA_LABELS.en
+  const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
+  const localTypeLabel = (t?: string) => t ? acl(TYPE_KEY[t] ?? `type_${t.toLowerCase()}`, locale) : undefined
+  const hint = acl('hint', locale)
+  const heading = acl('selected', locale)
+  const emptyState = acl('empty', locale)
+  const ariaLabel = acl('aria_label', locale)
 
   return (
     <div className="space-y-4">
@@ -178,8 +150,8 @@ export const Static: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const localStateLabel = (s: string) => STATE_LABELS[locale]?.[s] ?? s
-    const localTypeLabel = (t?: string) => t ? (TYPE_LABELS[locale]?.[t] ?? t) : undefined
+    const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
+    const localTypeLabel = (t?: string) => t ? acl(TYPE_KEY[t] ?? `type_${t.toLowerCase()}`, locale) : undefined
     return (
       <AdminCardList
         rows={makeTickets(locale)}
@@ -194,7 +166,7 @@ export const Static: Story = {
           ),
           meta: row.updated ? <span className="text-xs text-muted-foreground mt-0.5">{row.updated}</span> : undefined,
         })}
-        emptyState={EMPTY_STATE_TEXT[locale] ?? EMPTY_STATE_TEXT.en}
+        emptyState={acl('empty', locale)}
       />
     )
   },
@@ -207,7 +179,7 @@ export const Compact: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const localStateLabel = (s: string) => STATE_LABELS[locale]?.[s] ?? s
+    const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
     return (
       <AdminCardList
         rows={makeTickets(locale)}
@@ -216,7 +188,7 @@ export const Compact: Story = {
           title: row.subject,
           trailing: <Badge variant={stateVariant(row.state)} className="text-xs shrink-0">{localStateLabel(row.state)}</Badge>,
         })}
-        emptyState={EMPTY_STATE_TEXT[locale] ?? EMPTY_STATE_TEXT.en}
+        emptyState={acl('empty', locale)}
         compact
       />
     )
@@ -230,7 +202,7 @@ export const LegacyReactNode: Story = {
   },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
-    const localStateLabel = (s: string) => STATE_LABELS[locale]?.[s] ?? s
+    const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
     return (
       <AdminCardList
         rows={makeTickets(locale)}
@@ -241,7 +213,7 @@ export const LegacyReactNode: Story = {
             <Badge variant={stateVariant(row.state)} className="text-xs shrink-0 ml-2">{localStateLabel(row.state)}</Badge>
           </div>
         )}
-        emptyState={EMPTY_STATE_TEXT[locale] ?? EMPTY_STATE_TEXT.en}
+        emptyState={acl('empty', locale)}
       />
     )
   },
@@ -252,7 +224,7 @@ export const Empty: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <AdminCardList rows={[]} rowKey={r => (r as TicketRow).id} card={() => null} emptyState={EMPTY_STATE_TEXT[locale] ?? EMPTY_STATE_TEXT.en} />
+      <AdminCardList rows={[]} rowKey={r => (r as TicketRow).id} card={() => null} emptyState={acl('empty', locale)} />
     )
   },
 }
@@ -262,7 +234,7 @@ export const Loading: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <AdminCardList rows={[]} rowKey={() => ''} card={() => null} emptyState={EMPTY_STATE_TEXT[locale] ?? EMPTY_STATE_TEXT.en} loading />
+      <AdminCardList rows={[]} rowKey={() => ''} card={() => null} emptyState={acl('empty', locale)} loading />
     )
   },
 }

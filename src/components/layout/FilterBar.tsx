@@ -138,7 +138,7 @@ export function FilterBar({
         <div className="hidden lg:flex lg:flex-wrap lg:items-center lg:gap-2">
           {activeFilters}
           {isActive && (
-            <>
+            <span className="inline-flex items-center gap-2 shrink-0">
               <Badge variant="secondary" className="shrink-0">{activeCount}</Badge>
               <Button
                 size="xl"
@@ -148,7 +148,7 @@ export function FilterBar({
               >
                 {labels.reset}
               </Button>
-            </>
+            </span>
           )}
         </div>
       )}
@@ -165,19 +165,17 @@ export function FilterBar({
         <div className="hidden lg:flex lg:flex-wrap lg:items-start lg:gap-2">
           {filters}
           {isActive && (
-            <>
-              <Badge variant="secondary" className="shrink-0 lg:self-center">
-                {activeCount}
-              </Badge>
+            <span className="inline-flex items-center gap-2 shrink-0 lg:self-center">
+              <Badge variant="secondary" className="shrink-0">{activeCount}</Badge>
               <Button
                 size="xl"
                 variant="ghost"
                 onClick={onReset}
-                className="shrink-0 lg:self-center"
+                className="shrink-0"
               >
                 {labels.reset}
               </Button>
-            </>
+            </span>
           )}
         </div>
       )}

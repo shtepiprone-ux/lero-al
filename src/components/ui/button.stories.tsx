@@ -6,6 +6,13 @@ import { Loader2, Plus, Trash2 } from 'lucide-react'
 import { Button } from './button'
 import { storyT } from '@/stories/_storyI18n'
 
+// key aliases: old story keys → storybook.button.* message keys
+const BTN_KEY: Record<string, string> = {
+  save_ch: 'save_changes', delete_lst: 'delete_listing',
+  del_forever: 'delete_forever', contact_lg: 'contact_long',
+  add_out: 'add',
+}
+
 const meta: Meta<typeof Button> = {
   title: 'Primitives/Button',
   component: Button,
@@ -36,27 +43,7 @@ const meta: Meta<typeof Button> = {
 export default meta
 type Story = StoryObj<typeof Button>
 
-// ── Per-locale button labels ───────────────────────────────────────────────────
-const BTN: Record<string, Record<string, string>> = {
-  save:        { en: 'Save listing',          sq: 'Ruaj njoftimin',             uk: 'Зберегти оголошення',           it: 'Salva annuncio' },
-  contact:     { en: 'Contact agent',         sq: 'Kontaktoni agentin',         uk: "Зв'яжіться з агентом",          it: "Contatta l'agente" },
-  add:         { en: 'Add listing',           sq: 'Shto njoftim',               uk: 'Додати оголошення',             it: 'Aggiungi annuncio' },
-  add_out:     { en: 'Add listing',           sq: 'Shto njoftim',               uk: 'Додати оголошення',             it: 'Aggiungi annuncio' },
-  delete:      { en: 'Delete',                sq: 'Fshi',                       uk: 'Видалити',                      it: 'Elimina' },
-  delete_lst:  { en: 'Delete listing',        sq: 'Fshi njoftimin',             uk: 'Видалити оголошення',           it: 'Elimina annuncio' },
-  del_forever: { en: 'Delete listing permanently', sq: 'Fshi njoftimin përgjithmonë', uk: 'Видалити оголошення назавжди', it: 'Elimina annuncio definitivamente' },
-  export:      { en: 'Export',                sq: 'Eksporto',                   uk: 'Експорт',                       it: 'Esporta' },
-  cancel:      { en: 'Cancel',               sq: 'Anulo',                      uk: 'Скасувати',                     it: 'Annulla' },
-  save_ch:     { en: 'Save changes',          sq: 'Ruaj ndryshimet',            uk: 'Зберегти зміни',                it: 'Salva modifiche' },
-  submit:      { en: 'Submit',               sq: 'Dërgo',                      uk: 'Надіслати',                     it: 'Invia' },
-  saving:      { en: 'Saving…',              sq: 'Po ruhet…',                  uk: 'Збереження…',                   it: 'Salvataggio…' },
-  // Long locale stress labels
-  contact_lg:  { en: 'Contact real estate agent',                          sq: 'Kontaktoni agentin e pasurive të paluajtshme',           uk: "Зв'яжіться з агентом нерухомості",              it: "Contatta l'agente immobiliare" },
-  browse_rent: { en: 'Browse all available rental listings',               sq: 'Shfletoni të gjitha njoftimet e qirasë të disponueshme', uk: 'Переглянути всі оголошення про оренду нерухомості', it: 'Sfoglia tutti gli annunci di affitto disponibili' },
-  save_search: { en: 'Save search and receive notifications',              sq: 'Ruani kërkimin dhe merrni njoftimet',                    uk: 'Зберегти пошук та отримувати сповіщення',         it: 'Salva la ricerca e ricevi notifiche' },
-  clicked:     { en: 'Clicked',              sq: 'Klikuar',                    uk: 'Натиснуто',                     it: 'Cliccato' },
-}
-const L = (key: string, locale = 'en') => BTN[key]?.[locale] ?? BTN[key]?.en ?? key
+const L = (key: string, locale = 'en') => storyT(locale, `storybook.button.${BTN_KEY[key] ?? key}`)
 
 // ── Feedback line — shows last-clicked label in canvas (locale-aware) ─────────
 function ClickedLabel({ label, locale = 'en' }: { label: string | null; locale?: string }) {

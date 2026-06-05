@@ -120,7 +120,7 @@ function PopulatedRender({ onClear, locale }: { onClear?: () => void; locale: st
   return (
     <div className="container-wide mx-auto px-4 py-8">
       <RecentlyViewedLayout listings={makeStoryListings(locale)} showClear onClear={handleClear} />
-      {cleared && <p className="text-xs text-muted-foreground mt-3 px-1">Clear history clicked ✓</p>}
+      {cleared && <p className="text-xs text-muted-foreground mt-3 px-1">{'Clear history clicked ✓'}</p>}
     </div>
   )
 }

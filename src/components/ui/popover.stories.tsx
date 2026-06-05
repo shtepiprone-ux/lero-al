@@ -1,6 +1,7 @@
-﻿import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "./button";
 import { Popover, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription, PopoverTrigger } from "./popover";
+import { storyT } from '@/stories/_storyI18n';
 
 const meta: Meta = {
   title: "Primitives/Popover",
@@ -10,18 +11,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-const POP: Record<string, Record<string, string>> = {
-  open:    { en: "Open popover",                                 sq: "Hap popoverin",                                    uk: "Відкрити підказку",                                it: "Apri popover" },
-  title:   { en: "Listing details",                              sq: "Detajet e njoftimit",                               uk: "Деталі оголошення",                                it: "Dettagli annuncio" },
-  desc:    { en: "Additional information about this listing.",   sq: "Informacione shtesë rreth këtij njoftimi.",         uk: "Додаткова інформація про це оголошення.",          it: "Informazioni aggiuntive su questo annuncio." },
-  body:    { en: "Content goes here.",                           sq: "Përmbajtja shkon këtu.",                            uk: "Вміст тут.",                                       it: "Il contenuto va qui." },
-  // mobile stress
-  open_lg: { en: "Detailed information",                         sq: "Informacion i detajuar",                            uk: "Детальна інформація",                              it: "Informazioni dettagliate" },
-  title_lg:{ en: "Listing information",                          sq: "Informacion i njoftimit",                           uk: "Інформація про оголошення",                        it: "Informazioni sull annuncio" },
-  desc_lg: { en: "Additional details about this property in Tirana.", sq: "Detaje shtesë rreth kësaj prone në Tiranë.", uk: "Додаткові відомості про цю нерухомість у Тирані.", it: "Dettagli aggiuntivi su questa proprietà a Tirana." },
-  body_lg: { en: "The apartment is located in the central district with well-developed infrastructure.", sq: "Apartamenti ndodhet në rrethin qendror me infrastrukturë të zhvilluar.", uk: "Квартира розташована в центральному районі міста з розвинутою інфраструктурою.", it: "L appartamento si trova nel quartiere centrale con infrastrutture ben sviluppate." },
-}
-const p = (k: string, l = "en") => POP[k]?.[l] ?? POP[k]?.en ?? k;
+const p = (k: string, l = "en") => storyT(l, `storybook.popover.${k}`);
 
 export const Default: Story = {
   parameters: {},
@@ -49,13 +39,13 @@ export const MobileBottomSheet: Story = {
     return (
       <div className="p-4">
         <Popover>
-          <PopoverTrigger render={<Button>{p("open_lg", locale)}</Button>} />
+          <PopoverTrigger render={<Button>{p("open_long", locale)}</Button>} />
           <PopoverContent>
             <PopoverHeader>
-              <PopoverTitle>{p("title_lg", locale)}</PopoverTitle>
-              <PopoverDescription>{p("desc_lg", locale)}</PopoverDescription>
+              <PopoverTitle>{p("title_long", locale)}</PopoverTitle>
+              <PopoverDescription>{p("desc_long", locale)}</PopoverDescription>
             </PopoverHeader>
-            <p className="text-sm text-muted-foreground">{p("body_lg", locale)}</p>
+            <p className="text-sm text-muted-foreground">{p("body_long", locale)}</p>
           </PopoverContent>
         </Popover>
       </div>

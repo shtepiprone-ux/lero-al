@@ -1,6 +1,13 @@
 # Sprint 30 — Task 351 kickoff (Sonnet) — DS-6: Public route pilot (FIRST route migration — ONE route only)
 
-> **Status: BLOCKED + OWNER REVIEW REQUIRED.**
+> # 🔴 CLOSED — SUPERSEDED (owner directive 2026-06-05). DO NOT EXECUTE.
+> The DS-6/7/8 route-pilot approach was superseded by the global Design System contract (Task 340) and the
+> Sprint 32→33 conformance work (Tasks 372–392), which proved + enforced the canonical primitives across every
+> story/route via machine gates (`check:stories`, `check:locale-leak`, `screenshots:assert`). This pilot never
+> ran and is no longer the migration path. Any future route migration consumes `docs/design-system.md` directly.
+> Kept as a historical reference only.
+
+> **Status (historical): BLOCKED + OWNER REVIEW REQUIRED.**
 > - **BLOCKED:** route migration must NOT begin until the entire primitive foundation (DS-1..DS-5,
 >   Tasks 345/347/348/349/350) is shipped, reviewed, and **owner-approved + committed**. This is the
 >   `docs/design-system.md §18` / Task 344 hard rule. Do not start until the orchestrator confirms DS-1..DS-5 are done.

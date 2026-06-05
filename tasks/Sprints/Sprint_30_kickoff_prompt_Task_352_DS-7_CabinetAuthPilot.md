@@ -1,6 +1,11 @@
 # Sprint 30 — Task 352 kickoff (Sonnet) — DS-7: Cabinet/auth pilot (ONE cabinet/auth surface only)
 
-> **Status: BLOCKED + OWNER REVIEW REQUIRED.**
+> # 🔴 CLOSED — SUPERSEDED (owner directive 2026-06-05). DO NOT EXECUTE.
+> The DS-6/7/8 route-pilot approach was superseded by the global Design System contract (Task 340) and the
+> Sprint 32→33 conformance work (Tasks 372–392). This pilot never ran and is no longer the migration path. Any
+> future cabinet/auth migration consumes `docs/design-system.md` directly. Kept as a historical reference only.
+
+> **Status (historical): BLOCKED + OWNER REVIEW REQUIRED.**
 > - **BLOCKED:** runs only AFTER DS-6 (Task 351, public route pilot) has shipped, been reviewed, and been
 >   **owner-approved + committed** — the public pilot must prove the primitives in a real route before the
 >   cabinet/auth surface (which carries edit flows) is migrated. Do not start until the orchestrator confirms DS-6 is done.

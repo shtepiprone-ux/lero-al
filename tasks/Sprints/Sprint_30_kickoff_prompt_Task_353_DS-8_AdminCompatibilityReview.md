@@ -1,6 +1,12 @@
 # Sprint 30 — Task 353 kickoff (Sonnet) — DS-8: Admin compatibility review + migration-planning closure (AUDIT ONLY — ZERO product code)
 
-> **Status: QUEUED — AUDIT/DOCS ONLY, ZERO product code.** Runs only AFTER DS-6 + DS-7 (Tasks 351/352) have
+> # 🔴 CLOSED — SUPERSEDED (owner directive 2026-06-05). DO NOT EXECUTE.
+> The DS-6/7/8 route-pilot approach was superseded by the global Design System contract (Task 340) and the
+> Sprint 32→33 conformance work (Tasks 372–392). This audit never ran. The admin migration plan it would have
+> produced is replaced by the Sprint 28 308/309 re-scope (re-scoped against the canonical DS primitives — see
+> `Sprint_28_…` + Epic HH Phase 3). Kept as a historical reference only.
+
+> **Status (historical): QUEUED — AUDIT/DOCS ONLY, ZERO product code.** Runs only AFTER DS-6 + DS-7 (Tasks 351/352) have
 > shipped, been reviewed, and been **owner-approved + committed** — DS-8 reconciles the public + cabinet/auth
 > migration learnings with the admin layer and produces the remaining migration plan. Do not start until the
 > orchestrator confirms DS-6 + DS-7 are done.

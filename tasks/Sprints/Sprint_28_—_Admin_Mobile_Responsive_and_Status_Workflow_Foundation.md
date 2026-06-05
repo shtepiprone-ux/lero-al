@@ -1,6 +1,12 @@
 # Sprint 28 — Admin Mobile Responsive + Canonical StatusChangeControl Foundation (owner-flagged 6 surfaces)
 
 > **Formed:** 2026-05-30 (Opus emergency planning after owner manual 375px QA + status-workflow inconsistency directive).
+> **🟠 RE-SCOPE REQUIRED (owner directive 2026-06-05):** Tasks 306/307/306-Fix shipped in code; the global Design
+> System (Task 340 contract + Sprint 32→33, Tasks 372–392) has since made Button/Tabs/Dialog/Sheet/all-popups +
+> AdminToolbar canonical. **Tasks 308 + 309 must NOT run as written** — they are to be re-scoped to consume
+> `docs/design-system.md` + the canonical primitives (AdminPageShell/AdminTable/AdminCardList/StatusChangeControl
+> already conform). A fresh kickoff per the current DS contract replaces the original 308/309 plan below before any
+> admin route migration resumes. The original 308/309 sections are kept as historical scope reference only.
 > **Status:** ⚠️ **HOLD on Task 306** as of 2026-05-31 — owner re-QA on AdminListingsTable pilot at 320/375/390/480/1024/2560 FAILED. Sprint 28 cannot ship until Task 306-Fix (added 2026-05-31) closes the responsive contract at the primitive level. Tasks 308 + 309 BLOCKED until Task 306-Fix PASSes owner re-QA. Task 307 already PASSED gate G4.
 > **Run order (REVISED 2026-05-31):** **Task 327 ‖ Task 328 → Task 306 → ⚠️ Task 306-Fix → owner re-QA gate G3' → Task 307 → Task 308 ‖ Task 309**.
 > **Task 306-Fix kickoff:** [`Sprint_28_kickoff_prompt_Task_306_Fix.md`](Sprint_28_kickoff_prompt_Task_306_Fix.md) — primitive-level responsive-contract fix (table↔card switch at `lg:`, wide-screen container `.container-admin`, 9-width verification canon expanded from 7, NEW `docs/admin-ux-rules.md §14` canonical responsive contract for ALL admin pages — Task 310 migration sweep consumes this contract).

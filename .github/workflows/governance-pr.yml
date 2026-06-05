@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - 'src/**'
-      - 'scripts/governance/**'
+      - 'scripts/**'
       - 'eslint.config.mjs'
       - 'package.json'
       - 'messages/**'
@@ -34,6 +34,12 @@ jobs:
 
       - name: ESLint (with governance rules)
         run: npm run lint
+
+      - name: Gate unit tests (check-stories gate correctness)
+        run: npm test
+
+      - name: Storybook governance gate
+        run: npm run check:stories
 
       - name: Primitive governance scan
         run: npm run governance:primitives

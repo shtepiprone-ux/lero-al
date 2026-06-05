@@ -41,7 +41,10 @@
     "diagnose:lcp:network": "node scripts/diagnose-lcp-preload-network.mjs",
     "email": "email dev --dir src/modules/notifications/lib/emails",
     "check:locale-leak": "node scripts/check-locale-leak.mjs",
-    "check:locale-leak:fast": "node scripts/check-locale-leak.mjs --fast"
+    "check:locale-leak:fast": "node scripts/check-locale-leak.mjs --fast",
+    "check:i18n-hardcode": "node scripts/check-hardcoded-i18n.mjs",
+    "check:i18n-hardcode:report": "node scripts/check-hardcoded-i18n.mjs --report",
+    "check:i18n-hardcode:update-baseline": "node scripts/check-hardcoded-i18n.mjs --update-baseline"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

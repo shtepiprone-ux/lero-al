@@ -1,0 +1,202 @@
+{
+  "src/app/api/auth-email-hook/route.ts:156": {
+    "kind": "jsx-text",
+    "value": "Real estate marketplace for Albania"
+  },
+  "src/app/[locale]/favorites/page.tsx:71": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Breadcrumb"
+  },
+  "src/app/[locale]/listings/page.tsx:84": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Breadcrumb"
+  },
+  "src/app/[locale]/listings/[slug]/page.tsx:329": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Breadcrumb"
+  },
+  "src/components/admin/AdminCurrenciesManager.tsx:357": {
+    "kind": "attr",
+    "attr": "placeholder",
+    "value": "EUR, ALL…"
+  },
+  "src/components/admin/AdminFooterManager.tsx:169": {
+    "kind": "jsx-text",
+    "value": "Brand"
+  },
+  "src/components/admin/AdminLegalManager.tsx:68": {
+    "kind": "jsx-text",
+    "value": "Slug"
+  },
+  "src/components/admin/AdminLegalManager.tsx:167": {
+    "kind": "jsx-text",
+    "value": "Slug"
+  },
+  "src/components/admin/AdminPagesManager.tsx:192": {
+    "kind": "jsx-text",
+    "value": "Slug"
+  },
+  "src/components/admin/AdminPagesManager.tsx:200": {
+    "kind": "jsx-text",
+    "value": "Changing the slug will change this page&apos;s URL."
+  },
+  "src/components/admin/AdminPropertyTypesManager.tsx:314": {
+    "kind": "jsx-text",
+    "value": "Slug"
+  },
+  "src/components/admin/AdminPropertyTypesManager.tsx:316": {
+    "kind": "jsx-text",
+    "value": "EN / UK / IT"
+  },
+  "src/components/admin/AdminPropertyTypesManager.tsx:319": {
+    "kind": "jsx-text",
+    "value": "Created"
+  },
+  "src/components/admin/AdminSettings.tsx:185": {
+    "kind": "attr",
+    "attr": "label",
+    "value": "Facebook"
+  },
+  "src/components/admin/AdminSettings.tsx:188": {
+    "kind": "attr",
+    "attr": "label",
+    "value": "Instagram"
+  },
+  "src/components/admin/AdminSettings.tsx:191": {
+    "kind": "attr",
+    "attr": "label",
+    "value": "LinkedIn"
+  },
+  "src/components/admin/AdminSettings.tsx:197": {
+    "kind": "attr",
+    "attr": "placeholder",
+    "value": "Tregu kryesor i pasurive..."
+  },
+  "src/components/admin/AdminSettings.tsx:209": {
+    "kind": "attr",
+    "attr": "label",
+    "value": "Meta title"
+  },
+  "src/components/admin/AdminSettings.tsx:212": {
+    "kind": "attr",
+    "attr": "label",
+    "value": "Meta description"
+  },
+  "src/components/admin/AdminSettings.tsx:215": {
+    "kind": "attr",
+    "attr": "label",
+    "value": "OG Image URL"
+  },
+  "src/components/admin/AdminSupportManager.tsx:136": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Clear selection"
+  },
+  "src/components/admin/AdminUserAvatar.tsx:162": {
+    "kind": "attr",
+    "attr": "alt",
+    "value": "Avatar preview"
+  },
+  "src/components/layout/Footer.tsx:138": {
+    "kind": "jsx-text",
+    "value": "Facebook"
+  },
+  "src/components/layout/Footer.tsx:139": {
+    "kind": "jsx-text",
+    "value": "Instagram"
+  },
+  "src/components/shared/AvatarCropModal.tsx:104": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Avatar crop area; drag to position"
+  },
+  "src/components/shared/LocationCombobox.tsx:127": {
+    "kind": "attr",
+    "attr": "placeholder",
+    "value": "Nazva (alb.)"
+  },
+  "src/components/ui/command.tsx:37": {
+    "kind": "attr",
+    "attr": "title",
+    "value": "Command Palette"
+  },
+  "src/components/ui/dialog.tsx:81": {
+    "kind": "jsx-text",
+    "value": "Close"
+  },
+  "src/components/ui/pagination.tsx:75": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Go to previous page"
+  },
+  "src/components/ui/pagination.tsx:94": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Go to next page"
+  },
+  "src/components/ui/pagination.tsx:121": {
+    "kind": "jsx-text",
+    "value": "More pages"
+  },
+  "src/components/ui/sheet.tsx:74": {
+    "kind": "jsx-text",
+    "value": "Close"
+  },
+  "src/modules/auth/components/AuthRedirect.tsx:53": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Loading…"
+  },
+  "src/modules/listings/components/ListingsPagination.tsx:44": {
+    "kind": "attr",
+    "attr": "aria-label",
+    "value": "Pagination"
+  },
+  "src/modules/notifications/lib/emails/BaseEmail.tsx:69": {
+    "kind": "jsx-text",
+    "value": "Real estate marketplace for Albania"
+  },
+  "src/modules/notifications/lib/emails/BaseEmail.tsx:71": {
+    "kind": "jsx-text",
+    "value": "Help center"
+  },
+  "src/modules/notifications/lib/emails/BaseEmail.tsx:73": {
+    "kind": "jsx-text",
+    "value": "Privacy"
+  },
+  "src/modules/notifications/lib/emails/emailChange.ts:134": {
+    "kind": "jsx-text",
+    "value": "Current email:"
+  },
+  "src/modules/notifications/lib/emails/emailChange.ts:135": {
+    "kind": "jsx-text",
+    "value": "New email:"
+  },
+  "src/modules/notifications/lib/emails/emailChange.ts:136": {
+    "kind": "jsx-text",
+    "value": "Time:"
+  },
+  "src/modules/notifications/lib/emails/emailChange.ts:137": {
+    "kind": "jsx-text",
+    "value": "Device:"
+  },
+  "src/modules/notifications/lib/emails/PasswordChangedEmail.tsx:66": {
+    "kind": "jsx-text",
+    "value": "Ekipi i Lero.al"
+  },
+  "src/modules/notifications/lib/sendTemplatedEmail.ts:61": {
+    "kind": "jsx-text",
+    "value": "Real estate marketplace for Albania"
+  },
+  "src/modules/notifications/lib/sendTemplatedEmail.ts:63": {
+    "kind": "jsx-text",
+    "value": "Help center"
+  },
+  "src/modules/notifications/lib/sendTemplatedEmail.ts:65": {
+    "kind": "jsx-text",
+    "value": "Privacy"
+  }
+}

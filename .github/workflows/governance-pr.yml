@@ -56,6 +56,9 @@ jobs:
       - name: Localization governance scan
         run: npm run governance:localization
 
+      - name: Static i18n hardcode gate (fail-on-new, baseline-diff)
+        run: npm run check:i18n-hardcode
+
       - name: Full governance report (summary)
         if: always()
         run: npm run governance

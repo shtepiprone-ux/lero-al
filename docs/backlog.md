@@ -7,9 +7,9 @@
 
 ## Last Session
 
-**2026-06-05 — Task 395 RE-DO COMPLETE (pending orchestrator diff review).** All 5 rejection items addressed: `node --check` passes (455 lines, complete tail); `git diff messages/en.json` = 0 bytes; `.gitignore` intact (`.claude/` ignored, `# Local Settings` present); Files Changed table corrected (phantom `src/app/[locale]/(admin)/layout.stories.tsx` → real `src/stories/AdminLayout.stories.tsx`); Task 396 filed for `dialog.tsx:81` sr-only hardcode remediation (PER_STORY_TOKENS entry is temporary). Fresh gate evidence: fast `19-03` = 0 leaks; full `19-27` = 0 leaks; negative flow `19-15` = exit 1 `[sq/uk/it] "Close"` in Dialog; `check:stories` = 0 violations. All gates GREEN.
+**2026-06-05 — Task 396 COMPLETE (pending orchestrator diff review).** Static i18n hardcode scanner built: `scripts/check-hardcoded-i18n.mjs` (327 lines, `node --check` passes, `run()` invoked at end); baseline `scripts/i18n-hardcode-baseline.json` (47 entries, 25 files); audit `docs/i18n-hardcode-audit.md` (all 3 sr-only + 11 aria-label known items confirmed, + 33 additional). Gate wired: `check:i18n-hardcode` in `package.json` + CI `governance-pr.yml`. Negative flows proven: planted `aria-label="Brand New Hardcode"` → exit 1; same word in new file → exit 1; reverted → exit 0. `tsc=0`. No `src/**` edits.
 
-**Next: orchestrator diff review of Tasks 394 + 395 → commit emission → Sprint 34 unblock (308→309→…).**
+**Next: orchestrator diff review of Tasks 394 + 395 + 396 → commit emission → Task 397 (batched remediation).**
 
 ## Pending Action Items
 
@@ -45,7 +45,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 >
 > **🆕 Standing principle (owner 2026-06-05):** every still-open task consumes the global Design System (`docs/design-system.md`, Task 340) wherever UI/responsive/overlay surfaces are touched. `docs/rule-index.md` already mandates `design-system.md` as the first pre-read for UI/layout/admin task types — re-scope any pre-DS plan to it before execution.
 
-**Task numbering.** Last used: **398** (story-coverage gate + scaffold template — PARKED, outside active focus; depends on 396). 397 = batched hardcode remediation (burns down 396 baseline; OPEN, deps 396+395). 396 = sr-only hardcode remediation — `dialog.tsx:81` + `sheet.tsx:74` + `pagination.tsx:121` (OPEN, deps 395). 395 (locale-leak gate re-scope) = RE-DO COMPLETE, pending review. 394 (Storybook 10 upgrade) = migration done, NOT APPROVED, held pending 395 review. **Active focus: 395 re-do review → 396 → 397.** Next free: **399**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Task numbering.** Last used: **398** (story-coverage gate + scaffold template — PARKED, outside active focus; depends on 396). 397 = batched hardcode remediation (burns down 396 baseline; OPEN, deps 396+395). 396 = static i18n hardcode scanner + baseline + CI gate (COMPLETE, pending review). 395 (locale-leak gate re-scope) = RE-DO COMPLETE, pending review. 394 (Storybook 10 upgrade) = migration done, NOT APPROVED, held pending 395 review. **Active focus: 394+395+396 review → commit emission → 397.** Next free: **399**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH — see `Epic_HH` "Open product decisions"):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. (351/352/353 close + 308/309 DS re-scope — DECIDED 2026-06-05.)
 

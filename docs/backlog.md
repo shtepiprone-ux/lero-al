@@ -7,6 +7,22 @@
 
 ## Last Session
 
+**2026-06-04 — Task 391 (gate robustness + test suite) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- Refactored `scripts/check-stories.mjs`: exported `isEnglishish`, `JSX_PROP_ALLOWLIST`, `runGate(root, {verbose})` (CLI guard via `process.argv[1]`). Broadened Check 10 to catch 5 prop forms (double-quote, single-quote, expr-double, expr-single, template-literal) + JSX text children (`>text<`). Fixed 6 story files with existing text-child violations (wrapped developer docs / placeholder text in `{' ... '}` expressions to preserve display while breaking the regex). Created `scripts/__tests__/check-stories.test.ts` (44 tests — all 10 checks × BAD+GOOD + all 6 Check-10 variants; `checksRan===10` assertion). Updated `.github/workflows/governance-pr.yml` (added `npm test` + `npm run check:stories` steps; `scripts/**` path trigger). Updated `docs/storybook-governance.md` §14.7. tsc=0 lint=0 check:stories=0 (10 checks, 32 files, 0 violations) npm test=496/496 ✅. Session: `docs/sessions/2026-06-04-task391-gate-robustness.md`.
+
+**2026-06-04 — Task 390 (final leak + gate gap + rendered proof) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- Fixed `PageHeader.stories.tsx:56` — replaced static `SAMPLE_CONTENT` (`title="Listings"` / `description="Browse available properties"`) with locale-aware `sampleContent(l)` function using `ph2('listings', l)` + `ph2('browse_s', l)`; added missing `locale={l}` to `WithActions`. Fixed collateral: `input.stories.tsx` `LocalePlaceholders` `placeholder="Search properties…"` → `storyT(l, 'storybook.input.search')`. Added **Check 10** to `check-stories.mjs` (English JSX string-prop literals in stories; `isEnglishish`: uppercase-start + ≥3 ASCII alpha + no diacritics/Cyrillic; documented allowlist: city/brand/EUR/URL/DELETE; documented in `docs/storybook-governance.md` §14.7). Wrapped `[Badge+Reset]` in `<span className="inline-flex items-center gap-2 shrink-0">` in both Row 2 and legacy row of `FilterBar.tsx`. tsc=0 lint=0 check:stories=0 (10 checks, 32 files) ✅ build-storybook ✅ screenshots:assert 812/812 PASS ✅ (run 2026-06-04T19-07). Session: `docs/sessions/2026-06-04-task390-final-leak-gate-gap.md`.
+
+**2026-06-04 — Task 389 (real translations + conformance) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- Deleted all 195 inline locale maps from all 21 story files; all story text now via `storyT(locale, 'storybook.*')` from `messages/*.json`. Added 271 new `storybook.*` keys across 21 namespaces to all 4 locale files (1746 total keys, parity ✅). uk = Cyrillic, sq = proper diacritics, it = real Italian — zero transliterated text. `check:stories` 9-check gate added: (7) inline-locale-map, (8) uk-latin-only, (9) runtime-hardcode. `AdminTable.tsx` `defaultSortLabels` → `makeSortLabels(tSort)` via `useTranslations('admin.table_sort')`. `pagination.tsx` Previous/Next → `useTranslations('ui.pagination')`. FilterBar chip slot already fragments (fix was done in prior tasks). tsc=0 lint=0 check:i18n=0 check:stories=0 (9 checks) ✅. All 4 negative-flow tests PASS. Session: `docs/sessions/2026-06-04-task389-real-translations.md`.
+
+**2026-06-04 — Task 386 (canonical vertical canvas padding) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- Added `py-6` (design-system.md §5 Tailwind 4px scale token, 1.5rem/24px) to `withCanvas` wrapper in `.storybook/preview.tsx`; updated `docs/storybook-governance.md §14.1 + §14.5`. STOP&ASK raised: `RecentlyViewedSection.stories.tsx` and `ListingGrid.stories.tsx` have pre-existing `container-wide mx-auto px-4 py-8` wrappers (double-container + compound horizontal/vertical issue) — cleanup deferred pending orchestrator decision. **tsc=0 lint=0 check:stories=0 check:i18n=0 screenshots:assert:fast=348/348 PASS ✅.** Session: `docs/sessions/2026-06-04-task386-canvas-vertical-padding.md`.
+
 **2026-06-04 — Task 383 (final 29×9 conformance sweep) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
 
 - Residual fix: `command.stories.tsx` `w-72` → `w-full max-w-xs`. Assertion expanded to all 29 stories. **348/348 rendered assertions PASS** (29 stories × 3 viewports × 4 locales, uk@320/375/390 all green). All 5 owner failure categories re-certified: Tabs left-clip PASS, Select label PASS, AdminToolbar stack PASS, RVS scrollbar/header PASS, English leaks PASS. 29×9 conformance matrix in `docs/sessions/2026-06-04-task383-rendered-conformance-sweep.md`. tsc=0 lint=0 check:i18n=0 check:stories=0 build-storybook ✅. **Sprint 33 complete. Awaiting orchestrator review + commit emission.**
@@ -67,9 +83,8 @@
 
 ## Next Immediate Tasks
 
-**Now — Sprint 33 correctives (replaces the un-run Task 377).** Tasks 372–379 stay UNCOMMITTED and are NOT
-approved (rendered QA failed). Strictly sequential, each gated on orchestrator *rendered* review (not diff alone):
-~~380~~ ✅ → ~~381~~ ✅ → ~~382~~ ✅ → ~~383~~ ✅ **Sprint 33 COMPLETE — awaiting orchestrator review + commit emission** (Tabs/Select/AdminLayout/RVS/Skeleton layout) → 383 (rendered 26×9 sweep, gates the batch commit).** Send to Sonnet one task at a time via its kickoff file in `tasks/Sprints/Sprint_33_CORRECTIVE_*`. The Sprint 32 fixes that are genuinely correct (e.g. button `max-sm:w-full`) are re-certified by 383, not redone.
+**Sprint 33 correctives (replaces the un-run Task 377) — ALL COMPLETE — awaiting orchestrator review + commit emission.**
+~~380~~ ✅ → ~~381~~ ✅ → ~~382~~ ✅ → ~~383~~ ✅ → ~~384~~ (deferred, CI wiring) → ~~385~~ (deferred, stress variants) → ~~386~~ ✅ → ~~387~~ ✅ → ~~388~~ ✅ → ~~389~~ ✅ → ~~390~~ ✅ → **~~391~~ ✅ FINAL** (gate robustness + test suite). Design System baseline CLOSED. Tasks 372–391 UNCOMMITTED, awaiting orchestrator diff review + commit emission.
 
 **🚨 Sprint 28 FROZEN (2026-05-31 owner directive).** Admin responsive migration (306 / 306-Fix / 308 / 309) is not acceptable as-is; 306-Fix patches stay uncommitted and 308/309 BLOCKED until a canonical Admin Responsive DS Contract lands. Largely overtaken by the global DS work (Tasks 340/350 + Sprint 32) — revisit before any admin migration resumes.
 

@@ -437,6 +437,10 @@ All five Storybook categories are required sweep scope:
 - A global `withCanvas` decorator in `.storybook/preview.tsx` renders EVERY story in a full-available-width,
   mobile-accurate frame using the canonical page-gutter token from `design-system.md` — never Storybook's
   `centered`/`padded` layout. A correct `max-sm:w-full` primitive MUST visibly fill the <640 viewport in the canvas.
+- **Canonical vertical padding:** `py-6` (1.5rem / 24px, design-system.md §5 Tailwind 4px scale) — applied once in
+  `withCanvas`. Provides consistent separation between the Storybook toolbar and story content across all 29 stories.
+  Do NOT add per-story wrapper `py-*` / `pt-*` to compensate — that creates double padding. The `withCanvas` `py-6`
+  is the single vertical-padding source; story render functions must not add canvas-level vertical padding.
 - Global default is `parameters.layout: 'fullscreen'`. **`layout: 'centered'` and `layout: 'padded'` are FORBIDDEN
   in story files** (lint-enforced). If a story seems to need a centred preview, STOP&ASK — never add an exemption.
 
@@ -466,7 +470,7 @@ the gates green — plus a negative-flow transcript proving each gate FAILS on a
 
 ### 14.5 Implementation notes (Task 380, 2026-06-04)
 
-**Canvas gutter token:** `.container-wide` from `src/app/globals.css` §4. Padding: `1rem` (base) → `1.5rem` (≥640px) → `2rem` (≥1024px) → `3rem` (≥1536px). This is the ONLY canonical gutter — do NOT use ad-hoc `px-N` or Storybook's `padded` layout.
+**Canvas gutter token:** `.container-wide py-6` — `container-wide` from `src/app/globals.css` §4 provides horizontal padding `1rem` (base) → `1.5rem` (≥640px) → `2rem` (≥1024px) → `3rem` (≥1536px); `py-6` (1.5rem / 24px, design-system.md §5 Tailwind 4px scale) provides canonical vertical separation from the Storybook toolbar. This is the ONLY canonical gutter — do NOT use ad-hoc `px-N`/`py-N` in story wrappers or Storybook's `padded` layout. Task 386 added the `py-6` vertical component.
 
 **`withCanvas` decorator** (`storybook/preview.tsx`): wraps every story in `<div class="container-wide">`. Decorator order (outermost→innermost): `withTheme → withLocale → withCanvas → Story`. The canvas gutter applies directly around the story content.
 
@@ -491,12 +495,77 @@ G:  ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/U
 H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜ][A-Za-zÀ-ÖØ-öø-ÿ\s]{7,}$/]
 ```
 
-**check-stories.mjs checks:**
+**check-stories.mjs checks (updated Task 390, 2026-06-04):**
 1. `layout:\s*['"](?:centered|padded)['"]` — grep all story files
 2. `<(?:button|input|select|textarea)[\s/>]` — JSX raw HTML controls (string-literal false-positives filtered)
 3. `export const .*Ukrainian` — banned export names
 4. `globals:\s*\{.*locale.*['"]uk['"]` — banned pinned locale
 5. Known English/Cyrillic title literals in `src/stories/fixtures/**`
 6. `storybook.*` namespace key parity across sq/en/uk/it
+7. `\buk\s*:\s*['"]` / `\bsq\s*:\s*['"]` inline locale-map literals in `*.stories.tsx` — ALL story text must come via `storyT()` from `messages/*.json`; NO `{ en:…, sq:…, uk:…, it:… }` maps in story files
+8. `messages/uk.json` storybook.* values containing Latin letters but NO Cyrillic — transliterated Ukrainian is forbidden (allowlist: place names, brand codes, arrow labels like `A→Z`)
+9. Known hardcoded user-facing English literals in runtime `src/components/**` and `src/modules/**` (e.g. `'Previous'`, `'Next'`, `'Hide column'`, `'Sort A→Z'`)
+10. English-literal JSX string props (`title|description|label|placeholder|heading|subject|cta|alt|aria-label|name="…"`) in `*.stories.tsx` not produced by `storyT()`/`t()` — see §14.7
 
 **check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,640,768,1280} × {sq,en,uk,it}. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only buttons `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`.
+
+### 14.6 Inline locale map prohibition (Task 389, 2026-06-04)
+
+**Rule:** Every `*.stories.tsx` MUST source ALL user-facing strings from `messages/*.json` via `storyT(locale, 'storybook.KEY')`. Inline per-locale object maps (`const T = { en: '…', sq: '…', uk: '…', it: '…' }`) are **FORBIDDEN** in story files — they produce fake translations (transliterated Latin "Ukrainian", Albanian without diacritics) that look correct but render wrong.
+
+**Correct pattern:**
+```ts
+import { storyT } from '@/stories/_storyI18n'
+const t = (k: string, l = 'en') => storyT(l, `storybook.NAMESPACE.${k}`)
+// Usage: t('my_key', locale)
+```
+
+**Forbidden pattern (gate check 7 will FAIL):**
+```ts
+// FORBIDDEN
+const T = { en: 'New Listing', sq: 'Njoftim i ri', uk: 'Orenda ta prodazh', it: '...' }
+```
+
+**Adding new storybook keys:** Add to `messages/{sq,en,uk,it}.json` under `storybook.NAMESPACE.*`. Ukrainian (uk) MUST use Cyrillic. Albanian (sq) MUST use diacritics (ë, ç, etc.). Italian must be real Italian. NEVER transliterate. `check:stories` will FAIL if uk values have Latin-only text (check 8).
+
+**Runtime components:** `src/components/**` and `src/modules/**` must use `useTranslations()` from next-intl. Hardcoded English labels in JSX output (e.g. `'Hide column'`, `'Previous'`, `'Next'`) are caught by check 9 and fail the build.
+
+### 14.7 English JSX string-prop and text-child prohibition (Task 390 + Task 391, 2026-06-04)
+
+**Rule:** All user-facing string literals in `*.stories.tsx` MUST come via `storyT(locale, 'storybook.KEY')`. Check 10 flags:
+
+**Prop attribute forms** (watched props: `title`, `description`, `label`, `placeholder`, `heading`, `subject`, `cta`, `alt`, `aria-label`, `name`):
+```tsx
+// ALL of these forms are caught:
+<Button title="Submit">…</Button>          // (a) double-quote
+<Button title='Submit'>…</Button>          // (b) single-quote  ← new Task 391
+<Button title={"Submit"}>…</Button>        // (c) expression double-quote  ← new
+<Button title={'Submit'}>…</Button>        // (d) expression single-quote  ← new
+<Button title={`Submit`}>…</Button>        // (e) template literal (no ${…})  ← new
+```
+
+**JSX text children** (Task 391):
+```tsx
+<Button>Submit</Button>                    // (f) text directly between > and <  ← new
+<Label>First name</Label>                  // caught — Englishish text child
+```
+
+**NOT caught** (template literal with interpolation — produces dynamic value):
+```tsx
+<Button title={`${storyT(locale, 'storybook.cta')}`}>…</Button>   // ✅ safe
+```
+
+**"Englishish" heuristic:** starts with ASCII uppercase A–Z, ≥3 ASCII alpha chars, no non-ASCII diacritics (ë/ç/…) or Cyrillic → flagged. Albanian/Italian/Ukrainian text with the correct characters passes automatically.
+
+**Documented allowlist (check 10 will NOT flag these):**
+- Albanian city/district names: `Tirana`, `Durrës`, `Vlorë`, `Shkodër`, `Berat`, `Kombinat`, `Sauk`, `Blloku`, `Elbasan`
+- Brand/technical tokens: `EUR`, `URL`, `DELETE`, `SMS`, `HTTP`, `HTTPS`, `WhatsApp`, `Email`
+- Role labels in table-row fixtures: `Administrator`, `Moderator`, `Agent`
+- Values that start with lowercase (CSS class names like "max-w-5xl…") — implicitly excluded by the uppercase-start rule
+- Values containing non-ASCII diacritics/Cyrillic (Albanian `ë/ç`, Italian `à/è`, Ukrainian Cyrillic) — automatically excluded
+
+**Developer-documentation text in stories** (e.g. StoryPurposeNote, DemoBox helpers, Lorem ipsum):
+wrap in a JSX expression `{'Developer note text'}` — breaks the `>text<` regex while preserving display.
+Do NOT use this pattern for real user-facing content; always localize that via storyT.
+
+**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 10 checks and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.

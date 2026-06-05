@@ -7,6 +7,14 @@
 
 ## Last Session
 
+**2026-06-05 — Task 392 (rendered DOM detector + hardcode/adaptation fixes) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
+
+- **Follow-up fix:** AdminToolbar `sm:flex-row sm:flex-wrap` → `md:flex-row md:flex-wrap` (768px breakpoint) — prevents uk/it long labels wrapping non-full-width at 640-767px. Added Check 11 (`toolbar-sm-flex-wrap` rule) + 3 gate tests. 505/505 tests ✅.
+- Created `scripts/check-locale-leak.mjs` (Part A): Playwright-based rendered DOM hardcode detector; renders every story × sq/en/uk/it; compares en baseline vs target locale; flags English tokens unchanged from baseline and not allowlisted; emits JSON leak report. Added `check:locale-leak` / `check:locale-leak:fast` to `package.json`.
+- Fixed confirmed hardcodes (Part C): `PasswordInput.stories.tsx` placeholder args → render functions with `storyT`; `Section.stories.tsx` SAMPLE_BLOCK → locale-aware `sampleBlock(locale)` function; `Containers.stories.tsx` DemoBox `{'Content bounded...'}` → `storyT`. Added `storybook.passwordinput`, `storybook.section.sample`, `storybook.containers` keys to all 4 locale message files (parity 297 keys).
+- Fixed adaptation (Part C): `Command/Inline` removed `max-w-xs`; `Skeleton/ListingCardSkeleton` removed `max-w-xs`; `StatusChangeControl` all story wrappers `max-w-xs` → `w-full sm:max-w-xs/sm`; `AdminLayout/AdminToolbar` Input wrapper → `max-sm:w-full`; `RecentlyViewedGrid.tsx` + story — clear button row `flex-col max-sm` → flat `flex-wrap gap-x-3`; `StoryListingCard` + grid wrappers — `h-full flex-1` for equal-height card rows.
+- Extended Check 10 (Part D): added forms (g) object-property placeholder, (h) standalone JSX text line, (i) expression string child. Added 6 new gate tests (3 BAD + 3 GOOD). tsc=0 check:stories=0 check:i18n=0 npm test=502/502 ✅. Session: `docs/sessions/2026-06-05-task392-rendered-dom-detector.md`.
+
 **2026-06-04 — Task 391 (gate robustness + test suite) COMPLETE by Sonnet 4.6 — UNCOMMITTED.**
 
 - Refactored `scripts/check-stories.mjs`: exported `isEnglishish`, `JSX_PROP_ALLOWLIST`, `runGate(root, {verbose})` (CLI guard via `process.argv[1]`). Broadened Check 10 to catch 5 prop forms (double-quote, single-quote, expr-double, expr-single, template-literal) + JSX text children (`>text<`). Fixed 6 story files with existing text-child violations (wrapped developer docs / placeholder text in `{' ... '}` expressions to preserve display while breaking the regex). Created `scripts/__tests__/check-stories.test.ts` (44 tests — all 10 checks × BAD+GOOD + all 6 Check-10 variants; `checksRan===10` assertion). Updated `.github/workflows/governance-pr.yml` (added `npm test` + `npm run check:stories` steps; `scripts/**` path trigger). Updated `docs/storybook-governance.md` §14.7. tsc=0 lint=0 check:stories=0 (10 checks, 32 files, 0 violations) npm test=496/496 ✅. Session: `docs/sessions/2026-06-04-task391-gate-robustness.md`.
@@ -83,8 +91,8 @@
 
 ## Next Immediate Tasks
 
-**Sprint 33 correctives (replaces the un-run Task 377) — ALL COMPLETE — awaiting orchestrator review + commit emission.**
-~~380~~ ✅ → ~~381~~ ✅ → ~~382~~ ✅ → ~~383~~ ✅ → ~~384~~ (deferred, CI wiring) → ~~385~~ (deferred, stress variants) → ~~386~~ ✅ → ~~387~~ ✅ → ~~388~~ ✅ → ~~389~~ ✅ → ~~390~~ ✅ → **~~391~~ ✅ FINAL** (gate robustness + test suite). Design System baseline CLOSED. Tasks 372–391 UNCOMMITTED, awaiting orchestrator diff review + commit emission.
+**Sprint 33 correctives — ALL COMPLETE — awaiting orchestrator review + commit emission.**
+~~380~~ ✅ → ~~381~~ ✅ → ~~382~~ ✅ → ~~383~~ ✅ → ~~384~~ (deferred) → ~~385~~ (deferred) → ~~386~~ ✅ → ~~387~~ ✅ → ~~388~~ ✅ → ~~389~~ ✅ → ~~390~~ ✅ → ~~391~~ ✅ → **~~392~~ ✅ FINAL** (rendered DOM detector + hardcode/adaptation fixes). Design System baseline CLOSED. Tasks 372–392 UNCOMMITTED, awaiting orchestrator diff review + commit emission.
 
 **🚨 Sprint 28 FROZEN (2026-05-31 owner directive).** Admin responsive migration (306 / 306-Fix / 308 / 309) is not acceptable as-is; 306-Fix patches stay uncommitted and 308/309 BLOCKED until a canonical Admin Responsive DS Contract lands. Largely overtaken by the global DS work (Tasks 340/350 + Sprint 32) — revisit before any admin migration resumes.
 

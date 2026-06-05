@@ -5,6 +5,14 @@ import { storyT } from '@/stories/_storyI18n'
 
 const st = (k: string, l = 'en') => storyT(l, `storybook.section.${k}`)
 
+function sampleBlock(locale: string) {
+  return (
+    <div className="rounded-xl border bg-muted/30 p-6 text-sm text-muted-foreground text-center">
+      {st('sample', locale)}
+    </div>
+  )
+}
+
 const meta: Meta<typeof Section> = {
   title: 'Layout/Section',
   component: Section,
@@ -22,12 +30,6 @@ const meta: Meta<typeof Section> = {
 export default meta
 type Story = StoryObj<typeof Section>
 
-const SAMPLE_BLOCK = (
-  <div className="rounded-xl border bg-muted/30 p-6 text-sm text-muted-foreground text-center">
-    Section body content
-  </div>
-)
-
 // ════════════════════════════════════════════════════════════════════════════════
 // ── Canonical scenario stories — breakpoints via viewport toolbar ─────────────
 // ════════════════════════════════════════════════════════════════════════════════
@@ -38,7 +40,7 @@ export const WithTitleAndDescription: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
     <PageShell>
-      <Section title={st('avail',l)} description={st('browse',l)}>{SAMPLE_BLOCK}</Section>
+      <Section title={st('avail',l)} description={st('browse',l)}>{sampleBlock(l)}</Section>
     </PageShell>
     )
   },
@@ -50,7 +52,7 @@ export const TitleOnly: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
     <PageShell>
-      <Section title={st('avail',l)}>{SAMPLE_BLOCK}</Section>
+      <Section title={st('avail',l)}>{sampleBlock(l)}</Section>
     </PageShell>
     )
   },
@@ -62,7 +64,7 @@ export const DescriptionOnly: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
     <PageShell>
-      <Section description={st('browse',l)}>{SAMPLE_BLOCK}</Section>
+      <Section description={st('browse',l)}>{sampleBlock(l)}</Section>
     </PageShell>
     )
   },
@@ -70,11 +72,14 @@ export const DescriptionOnly: Story = {
 
 export const EmptyHeading: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1440' } },
-  render: () => (
+  render: (_, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en'
+    return (
     <PageShell>
-      <Section>{SAMPLE_BLOCK}</Section>
+      <Section>{sampleBlock(l)}</Section>
     </PageShell>
-  ),
+    )
+  },
 }
 
 export const Stacked: Story = {
@@ -84,9 +89,9 @@ export const Stacked: Story = {
     return (
     <PageShell>
       <div className="space-y-8">
-        <Section title={st('first',l)} description={st('consumer',l)}>{SAMPLE_BLOCK}</Section>
-        <Section title={st('second',l)}>{SAMPLE_BLOCK}</Section>
-        <Section>{SAMPLE_BLOCK}</Section>
+        <Section title={st('first',l)} description={st('consumer',l)}>{sampleBlock(l)}</Section>
+        <Section title={st('second',l)}>{sampleBlock(l)}</Section>
+        <Section>{sampleBlock(l)}</Section>
       </div>
     </PageShell>
     )
@@ -99,7 +104,7 @@ export const InsideNarrow: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
     <PageShell container="narrow">
-      <Section title={st('narrow',l)} description={st('narrow_d',l)}>{SAMPLE_BLOCK}</Section>
+      <Section title={st('narrow',l)} description={st('narrow_d',l)}>{sampleBlock(l)}</Section>
     </PageShell>
     )
   },
@@ -111,7 +116,7 @@ export const InsideForm: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
     <PageShell container="form">
-      <Section title={st('form',l)} description={st('form_d',l)}>{SAMPLE_BLOCK}</Section>
+      <Section title={st('form',l)} description={st('form_d',l)}>{sampleBlock(l)}</Section>
     </PageShell>
     )
   },
@@ -127,7 +132,7 @@ export const LocaleStress: Story = {
     return (
     <PageShell>
       <Section title={st('long_t', l)} description={st('long_d', l)}>
-        {SAMPLE_BLOCK}
+        {sampleBlock(l)}
       </Section>
     </PageShell>
     )

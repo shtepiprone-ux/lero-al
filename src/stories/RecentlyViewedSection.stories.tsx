@@ -64,15 +64,16 @@ function RecentlyViewedLayout({
 
   return (
     <div className="recently-viewed">
-      <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+      {/* Flat flex-wrap: title + clear button on same row; only wrap left-aligned when title fills row */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
         <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
         {showClear && <StoryClrButton onClear={onClear} />}
       </div>
       {/* Mobile: horizontal scroll (scrollbar visible in story for QA; production uses no-scrollbar).
-          sm+: grid 2→3→4 cols. Matches RecentlyViewedGrid markup. */}
-      <div className="flex gap-3 overflow-x-auto pb-3 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
+          sm+: grid 2→3→4 cols. Equal-height rows via sm:[&>*]:h-full. */}
+      <div className="flex gap-3 overflow-x-auto pb-3 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4 sm:[&>*]:h-full">
         {listings.map(listing => (
-          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
+          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink flex flex-col">
             <StoryListingCard data={listing} />
           </div>
         ))}

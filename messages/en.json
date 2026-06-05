@@ -1847,7 +1847,8 @@
       "form_d": "Section renders inside max-w-xl centered column.",
       "consumer": "Consumer controls stacking via space-y-* on the shell children.",
       "long_t": "Available real estate listings for rent and sale across Albania — full catalogue",
-      "long_d": "Browse available apartments, houses and commercial properties with detailed descriptions."
+      "long_d": "Browse available apartments, houses and commercial properties with detailed descriptions.",
+      "sample": "Section body content"
     },
     "combobox": {
       "city_ph": "Select city",
@@ -1901,6 +1902,12 @@
     },
     "listinggrid": {
       "heading": "Featured listings"
+    },
+    "passwordinput": {
+      "placeholder": "Enter password"
+    },
+    "containers": {
+      "content": "Content bounded within this container"
     }
   },
   "ui": {

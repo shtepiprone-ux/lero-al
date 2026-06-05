@@ -39,7 +39,9 @@
     "profile:lcp:lighthouse": "node scripts/compare-listing-lcp-lighthouse.mjs",
     "profile:lcp:production": "node scripts/validate-production-lcp.mjs",
     "diagnose:lcp:network": "node scripts/diagnose-lcp-preload-network.mjs",
-    "email": "email dev --dir src/modules/notifications/lib/emails"
+    "email": "email dev --dir src/modules/notifications/lib/emails",
+    "check:locale-leak": "node scripts/check-locale-leak.mjs",
+    "check:locale-leak:fast": "node scripts/check-locale-leak.mjs --fast"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

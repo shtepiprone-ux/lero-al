@@ -1847,7 +1847,8 @@
       "form_d": "La sezione dentro max-w-xl.",
       "consumer": "Controllo dello stacking tramite space-y-*.",
       "long_t": "Annunci immobiliari disponibili per affitto e vendita in tutta l’Albania",
-      "long_d": "Sfoglia appartamenti, case e proprietà commerciali con descrizioni dettagliate."
+      "long_d": "Sfoglia appartamenti, case e proprietà commerciali con descrizioni dettagliate.",
+      "sample": "Contenuto della sezione"
     },
     "combobox": {
       "city_ph": "Seleziona città",
@@ -1901,6 +1902,12 @@
     },
     "listinggrid": {
       "heading": "Annunci in evidenza"
+    },
+    "passwordinput": {
+      "placeholder": "Inserisci la password"
+    },
+    "containers": {
+      "content": "Contenuto delimitato in questo contenitore"
     }
   },
   "ui": {

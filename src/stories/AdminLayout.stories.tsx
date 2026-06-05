@@ -46,29 +46,29 @@ function AdminToolbarRender({ onFilter, onAddListing, locale = 'en' }: { onFilte
   const [lastAction, setLastAction] = useState<string | null>(null)
   return (
     <div className="space-y-2">
-      {/* <640: flex-col — title row on top, control row below, no horizontal overflow.
-          ≥640 (sm:): flex-row — canonical desktop horizontal layout. */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl gap-3">
+      {/* <768: flex-col — title row on top, each control full-width (long translations like uk/it fit).
+          ≥768 (md:): flex-row — horizontal desktop layout with controls on the right. */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl gap-3">
         <div className="flex items-center gap-3">
           <h2 className="text-lg font-semibold">{al('listings', locale)}</h2>
           <Badge variant="secondary">1,248</Badge>
         </div>
-        {/* Control row: flex-col on mobile (each control stacks full-width, no overflow).
-            sm: flex-row — canonical horizontal desktop layout. */}
-        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 max-sm:w-full">
+        {/* Control row: always flex-col below md — each control full-width (no wrap at 640px).
+            ≥768 (md:): flex-row — horizontal layout, Input shrinks to w-48. */}
+        <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-2">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground shrink-0" />
             <Input
               type="search"
               placeholder={al('search_ph', locale)}
-              className="pl-9 h-9 w-full sm:w-48"
+              className="pl-9 h-9 w-full md:w-48"
             />
           </div>
-          <Button variant="outline" size="default" onClick={() => { onFilter?.(); setLastAction(al('filter', locale)) }}>
+          <Button variant="outline" size="default" className="max-md:w-full" onClick={() => { onFilter?.(); setLastAction(al('filter', locale)) }}>
             <Filter className="h-4 w-4 shrink-0" />
             {al('filter', locale)}
           </Button>
-          <Button size="default" onClick={() => { onAddListing?.(); setLastAction(al('add_lst', locale)) }}>
+          <Button size="default" className="max-md:w-full" onClick={() => { onAddListing?.(); setLastAction(al('add_lst', locale)) }}>
             <Plus className="shrink-0" />
             {al('add_lst', locale)}
           </Button>

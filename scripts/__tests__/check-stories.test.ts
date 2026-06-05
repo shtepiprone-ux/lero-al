@@ -382,23 +382,93 @@ describe('Check 10: English JSX string-prop literal — all variants', () => {
     expect(hasRule(gate(root).violations, 'jsx-prop-literal')).toBe(false)
   })
 
-  it('GOOD — JSX text child wrapped in {" ... "} expression is not caught', () => {
+  it('GOOD — JSX text child wrapped in {" ... "} expression is not caught (no space → not form-i)', () => {
     const root = tmpRoot()
     writeStory(root, 'Test.stories.tsx',
       `export const Default = { render: () => <Button>{'Submit'}</Button> }`)
     const { violations } = gate(root)
     expect(hasRule(violations, 'jsx-text-literal')).toBe(false)
-    // But the expression single-quote rule would catch title={'Submit'}, not text children in expressions
+    // Form (i) requires a space in the content — single-word 'Submit' is excluded.
+  })
+
+  // ── (g) Object-property placeholder literal ───────────────────────────────────
+  it("BAD (g) object-property placeholder:'Enter password' triggers jsx-prop-literal", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { args: { placeholder: 'Enter password', inputState: 'idle' } }`)
+    expect(hasRule(gate(root).violations, 'jsx-prop-literal')).toBe(true)
+  })
+
+  it("GOOD (g) object-property placeholder with non-English value passes", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { args: { placeholder: 'Kërko pronë', inputState: 'idle' } }`)
+    expect(hasRule(gate(root).violations, 'jsx-prop-literal')).toBe(false)
+  })
+
+  // ── (h) Standalone JSX text line (own line, pure alpha words) ────────────────
+  it('BAD (h) standalone text line "Section body content" triggers jsx-text-literal', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = {\n  render: () => (\n    <div>\n      Section body content\n    </div>\n  )\n}`)
+    expect(hasRule(gate(root).violations, 'jsx-text-literal')).toBe(true)
+  })
+
+  it('GOOD (h) standalone text line with JSX expression wrapper is not caught', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = {\n  render: (_, c) => (\n    <div>\n      {storyT(c.globals.locale, 'storybook.section.sample')}\n    </div>\n  )\n}`)
+    expect(hasRule(gate(root).violations, 'jsx-text-literal')).toBe(false)
+  })
+
+  // ── (i) Expression string child with pure alpha words ─────────────────────────
+  it("BAD (i) expression child {'Content bounded within this container'} triggers jsx-text-literal", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <div>{'Content bounded within this container'}</div> }`)
+    expect(hasRule(gate(root).violations, 'jsx-text-literal')).toBe(true)
+  })
+
+  it("GOOD (i) expression child with Albanian diacritics passes (not Englishish)", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <div>{'Kërko pronë'}</div> }`)
+    expect(hasRule(gate(root).violations, 'jsx-text-literal')).toBe(false)
+  })
+})
+
+// ── Check 11: sm:flex-row sm:flex-wrap — toolbar 640px overflow ───────────────
+
+describe('Check 11: sm:flex-row + sm:flex-wrap (toolbar overflow at 640px)', () => {
+  it('BAD — sm:flex-row sm:flex-wrap on same line triggers toolbar-sm-flex-wrap', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2" /> }`)
+    expect(hasRule(gate(root).violations, 'toolbar-sm-flex-wrap')).toBe(true)
+  })
+
+  it('GOOD — md:flex-row md:flex-wrap passes (correct 768px breakpoint)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <div className="flex flex-col md:flex-row md:flex-wrap md:items-center gap-2" /> }`)
+    expect(hasRule(gate(root).violations, 'toolbar-sm-flex-wrap')).toBe(false)
+  })
+
+  it('GOOD — sm:flex-row without sm:flex-wrap passes (single-control row)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <div className="flex sm:flex-row sm:items-center gap-2" /> }`)
+    expect(hasRule(gate(root).violations, 'toolbar-sm-flex-wrap')).toBe(false)
   })
 })
 
 // ── Gate completeness ─────────────────────────────────────────────────────────
 
 describe('gate completeness', () => {
-  it('checksRan === 10 on a clean root (all 10 checks executed)', () => {
+  it('checksRan === 11 on a clean root (all 11 checks executed)', () => {
     const root = tmpRoot()
     const { checksRan } = gate(root)
-    expect(checksRan).toBe(10)
+    expect(checksRan).toBe(11)
   })
 
   it('returns 0 violations on a clean root with valid messages', () => {

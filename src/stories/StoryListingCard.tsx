@@ -81,7 +81,7 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
   return (
     <div
       className={cn(
-        'listing-card listing-card--vertical flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5',
+        'listing-card listing-card--vertical flex flex-col h-full rounded-xl border bg-card overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5',
         data.is_premium
           ? 'border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)]'
           : '',
@@ -151,8 +151,8 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
         </Button>
       </div>
 
-      {/* Card body */}
-      <div className="flex flex-col gap-2 p-3">
+      {/* Card body — flex-1 so all cards in a grid row share the same height */}
+      <div className="flex flex-col gap-2 p-3 flex-1">
         {/* Listing type + property type */}
         <p className="text-xs text-muted-foreground">
           {t(data.transaction_type as 'sale' | 'rent')} · {t('property_type_apartment')}

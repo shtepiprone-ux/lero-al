@@ -94,7 +94,7 @@ export const Select: Story = {
     },
   },
   render: () => (
-    <div className="max-w-xs p-4">
+    <div className="w-full p-4 sm:max-w-xs">
       <StoryPurposeNote />
       <StatusChangeControl
         variant="select"
@@ -109,7 +109,7 @@ export const Select: Story = {
 export const SelectWithNote: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
-    <div className="max-w-xs p-4">
+    <div className="w-full p-4 sm:max-w-xs">
       <StatusChangeControl
         variant="select"
         currentStatus={'in_progress' as IStatus}
@@ -124,7 +124,7 @@ export const SelectWithNote: Story = {
 export const Workflow: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
-    <div className="max-w-sm p-4">
+    <div className="w-full p-4 sm:max-w-sm">
       <StatusChangeControl
         variant="workflow"
         currentStatus={'open' as TStatus}
@@ -139,7 +139,7 @@ export const Workflow: Story = {
 export const WorkflowRequiredNote: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
-    <div className="max-w-sm p-4">
+    <div className="w-full p-4 sm:max-w-sm">
       <StatusChangeControl
         variant="workflow"
         currentStatus={'in_progress' as TStatus}
@@ -155,7 +155,7 @@ export const WorkflowRequiredNote: Story = {
 export const WorkflowWithHistory: Story = {
   parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
-    <div className="max-w-sm p-4">
+    <div className="w-full p-4 sm:max-w-sm">
       <StatusChangeControl
         variant="workflow"
         currentStatus={'resolved' as TStatus}

@@ -45,10 +45,9 @@ export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot
 
   return (
     <div className="recently-viewed">
-      {/* <640: stack title above action (max-sm:flex-col), each full-width — prevents
-          the "Pastro historikun" button from cramping the title to 4 lines (Task 382).
-          ≥640: horizontal justify-between layout unchanged. */}
-      <div className="flex items-center justify-between mb-4 max-sm:flex-col max-sm:items-start max-sm:gap-2">
+      {/* Flat flex-wrap: title + clear button on same row; only wraps left-aligned when title fills the row.
+          Same fix family as FilterBar (Task 389 / Task 392). */}
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
         <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
         {clearSlot}
       </div>
@@ -57,9 +56,9 @@ export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot
         Mobile: horizontal flex scroll (w-48 fixed cards, no-scrollbar).
         sm+: grid overrides flex display; cards fill column width.
       */}
-      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4">
+      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4 sm:[&>*]:h-full">
         {listings.map(listing => (
-          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink">
+          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink flex flex-col">
             <ListingCard listing={listing} layoutContext="4-col" displayCurrency={displayCurrency} rates={rates} />
           </div>
         ))}

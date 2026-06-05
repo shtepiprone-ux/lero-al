@@ -1847,7 +1847,8 @@
       "form_d": "Seksioni brenda max-w-xl.",
       "consumer": "Kontrolli i radhitjes.",
       "long_t": "Njoftime të disponueshme për qira dhe shitje në Shqipëri — katalog i plotë",
-      "long_d": "Shfletoni pronat e disponueshme me përshkrime të detajuara."
+      "long_d": "Shfletoni pronat e disponueshme me përshkrime të detajuara.",
+      "sample": "Përmbajtja e seksionit"
     },
     "combobox": {
       "city_ph": "Zgjidh qytetin",
@@ -1901,6 +1902,12 @@
     },
     "listinggrid": {
       "heading": "Njoftimet e veçuara"
+    },
+    "passwordinput": {
+      "placeholder": "Vendos fjalëkalimin"
+    },
+    "containers": {
+      "content": "Përmbajtje brenda kufijve të kontejnerit"
     }
   },
   "ui": {

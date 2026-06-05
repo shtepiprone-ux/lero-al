@@ -7,6 +7,7 @@ import { PasswordInput } from './PasswordInput'
 import { PasswordRequirementsHint, allPasswordRulesMet } from './PasswordRequirementsHint'
 import { Button } from './button'
 import { Label } from './label'
+import { storyT } from '@/stories/_storyI18n'
 
 const meta: Meta<typeof PasswordInput> = {
   title: 'Primitives/PasswordInput',
@@ -23,15 +24,24 @@ export default meta
 type Story = StoryObj<typeof PasswordInput>
 
 export const Default: Story = {
-  args: { placeholder: 'Enter password', inputState: 'idle' },
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <PasswordInput placeholder={storyT(locale, 'storybook.passwordinput.placeholder')} inputState="idle" />
+  },
 }
 
 export const ErrorState: Story = {
-  args: { placeholder: 'Enter password', inputState: 'error' },
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <PasswordInput placeholder={storyT(locale, 'storybook.passwordinput.placeholder')} inputState="error" />
+  },
 }
 
 export const SuccessState: Story = {
-  args: { placeholder: 'Enter password', inputState: 'success', value: 'Sample123!' },
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return <PasswordInput placeholder={storyT(locale, 'storybook.passwordinput.placeholder')} inputState="success" value="Sample123!" />
+  },
 }
 
 export const Disabled: Story = {

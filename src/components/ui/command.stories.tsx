@@ -18,7 +18,7 @@ export const Inline: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
-      <Command className="rounded-xl border shadow-md w-full max-w-xs">
+      <Command className="rounded-xl border shadow-md w-full">
         <CommandInput placeholder={c("search", locale)} />
         <CommandList>
           <CommandEmpty>{c("no_results", locale)}</CommandEmpty>

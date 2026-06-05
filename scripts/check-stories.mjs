@@ -466,10 +466,16 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
   //   (f) Text directly between > and < on the same line (no braces/nested tags)
   //       e.g. <Button>Submit</Button>  →  "Submit" flagged
   //
+  // Object property / args forms caught (defense-in-depth, Task 392):
+  //   (g) Object property placeholder literal:  placeholder: 'Enter password'
+  //   (h) Standalone JSX text line (own line, pure alpha words):  Section body content
+  //   (i) Expression string child with pure words:  {'Content bounded within this container'}
+  //
   // Exceptions: storyT / t() on the same line, import lines, comment lines,
   //             allowlisted proper nouns/brands (JSX_PROP_ALLOWLIST).
   //
   // Gate wiring: Task 390 added (a) only. Task 391 added (b)–(f) + test suite.
+  //              Task 392 added (g)–(i) — form-agnostic multi-syntax coverage.
   // Docs: §14.7.
 
   log('── Check 10: English JSX string-prop literals in stories ───────────');
@@ -492,6 +498,16 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
 
   // (f) JSX text children: text between > and < not containing braces/nested tags/newlines
   const JSX_TEXT_CHILD_RE = />([^<>{}\n]+)</g;
+
+  // (g) Object-property placeholder literal: placeholder: 'Enter password'
+  //     Watches only `placeholder` (the most common args-object hardcode form).
+  //     Values containing '/' are storage-routing titles (e.g. 'Category/Name') — skipped.
+  const OBJ_PROP_PLACEHOLDER_RE = /\bplaceholder\s*:\s*['"]([^'"]+)['"]/g;
+
+  // (i) Expression string child whose content is ONLY alpha words separated by spaces:
+  //     {'Content bounded within this container'} — no punctuation, numbers, or special chars.
+  //     Single-word PascalCase component names ({'Submit'}) are excluded by the space requirement.
+  const EXPR_STRING_CHILD_RE = /\{['"]([A-Z][a-zA-Z]+(?:\s[a-zA-Z]+)+)['"]\}/g;
 
   for (const f of STORY_FILES.filter(f => f.endsWith('.stories.tsx'))) {
     let content;
@@ -531,10 +547,79 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
           `Hardcoded English text child "${text.slice(0, 60)}". ` +
           `Use storyT(locale, 'storybook.*') instead (§14.7).`);
       }
+
+      // (g): Object-property placeholder literal
+      OBJ_PROP_PLACEHOLDER_RE.lastIndex = 0;
+      let gMatch;
+      while ((gMatch = OBJ_PROP_PLACEHOLDER_RE.exec(line)) !== null) {
+        const value = gMatch[1];
+        if (value.includes('/')) continue; // routing title pattern (e.g. 'Category/Name')
+        if (!isEnglishish(value)) continue;
+        if (JSX_PROP_ALLOWLIST.some(p => p.test(value))) continue;
+        fail(f, i + 1, 'jsx-prop-literal',
+          `Hardcoded English literal in object-property placeholder="${value}". ` +
+          `Use storyT(locale, 'storybook.*') instead (§14.7, form g).`);
+      }
+
+      // (h): Standalone JSX text line (pure alpha-word line with spaces, no special chars)
+      //      Catches multi-line JSX text like:
+      //        <div>
+      //          Section body content   ← flagged by (h)
+      //        </div>
+      if (/^[A-Z][a-zA-Z]+(?:\s[a-zA-Z]+)+$/.test(trimmed)) {
+        fail(f, i + 1, 'jsx-text-literal',
+          `Hardcoded English standalone text line "${trimmed.slice(0, 60)}". ` +
+          `Use storyT(locale, 'storybook.*') instead (§14.7, form h).`);
+      }
+
+      // (i): Expression string child with pure alpha words
+      //      Catches: {'Content bounded within this container'}
+      //      Excludes: {'StatusChangeControl'} (no space), {'Phone (valid...)'}  (has parens)
+      EXPR_STRING_CHILD_RE.lastIndex = 0;
+      let iMatch;
+      while ((iMatch = EXPR_STRING_CHILD_RE.exec(line)) !== null) {
+        const value = iMatch[1];
+        if (!isEnglishish(value)) continue;
+        if (JSX_PROP_ALLOWLIST.some(p => p.test(value))) continue;
+        fail(f, i + 1, 'jsx-text-literal',
+          `Hardcoded English expression text child "${value.slice(0, 60)}". ` +
+          `Use storyT(locale, 'storybook.*') instead (§14.7, form i).`);
+      }
     }
   }
 
-  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 10 };
+  // ── Check 11: sm:flex-row sm:flex-wrap in stories (toolbar overflow at 640px) ─
+  // A multi-control toolbar row that uses sm:flex-row (640px breakpoint) wraps
+  // items in a non-full-width way for long translations (uk/it) at 640-767px.
+  // Toolbar control rows with flex-wrap MUST use md:flex-row (768px) so that
+  // at <768px all controls stack full-width — no awkward partial rows.
+  //
+  // Rule: any story line containing BOTH "sm:flex-row" AND "sm:flex-wrap" is banned.
+  //       Use "md:flex-row md:flex-wrap" instead (§14 P0 mobile gate).
+  //
+  // Added by Task 392 follow-up (2026-06-05).
+
+  log('── Check 11: sm:flex-row sm:flex-wrap (toolbar 640px overflow) ────────');
+
+  for (const f of STORY_FILES.filter(f => f.endsWith('.stories.tsx'))) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trimStart();
+      if (trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*')) continue;
+      // Flag lines that have BOTH sm:flex-row AND sm:flex-wrap
+      if (line.includes('sm:flex-row') && line.includes('sm:flex-wrap')) {
+        fail(f, i + 1, 'toolbar-sm-flex-wrap',
+          'sm:flex-row + sm:flex-wrap on a toolbar control row causes long translations (uk/it) ' +
+          'to wrap non-full-width at 640px. Use md:flex-row md:flex-wrap (768px breakpoint) + ' +
+          'max-md:w-full on each control (§14 P0 mobile gate, Task 392).');
+      }
+    }
+  }
+
+  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 11 };
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────

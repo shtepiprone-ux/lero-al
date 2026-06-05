@@ -12,7 +12,7 @@ type Story = StoryObj;
 
 export const ListingCardSkeleton: Story = {
   render: () => (
-    <div className="w-full max-w-xs rounded-xl border bg-card overflow-hidden">
+    <div className="w-full rounded-xl border bg-card overflow-hidden">
       <Skeleton className="h-44 w-full rounded-none" />
       <div className="p-3 space-y-2">
         <Skeleton className="h-4 w-3/4" />

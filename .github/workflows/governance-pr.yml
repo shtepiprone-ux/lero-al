@@ -59,3 +59,38 @@ jobs:
       - name: Full governance report (summary)
         if: always()
         run: npm run governance
+
+  locale-leak:
+    name: Locale Leak Detection (Rendered)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Build Storybook (runs check:stories pre-gate)
+        run: npm run build-storybook
+
+      - name: Locale leak detection
+        run: npm run check:locale-leak
+
+      - name: Upload leak report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: locale-leak-report
+          path: .screenshots/locale-leak/
+          retention-days: 7

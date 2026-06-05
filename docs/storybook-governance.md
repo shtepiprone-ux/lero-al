@@ -569,3 +569,43 @@ wrap in a JSX expression `{'Developer note text'}` — breaks the `>text<` regex
 Do NOT use this pattern for real user-facing content; always localize that via storyT.
 
 **Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 10 checks and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
+
+---
+
+## §14.8 — Rendered locale-leak CI gate (Task 393, 2026-06-05)
+
+**Why.** `check:stories` (§14.3) is a static-analysis gate — it catches hardcoded source literals in `*.stories.tsx`. The rendered locale-leak detector (`scripts/check-locale-leak.mjs`) is the complementary gate: it renders every story in a browser per locale and detects English text that leaked through to sq/uk/it at runtime (hardcoded props, dynamic defaults, component-internal English fallbacks that bypass the message layer). The two gates together close the gap between "no literal in source" and "no English literal in the rendered canvas".
+
+**CI wiring (`.github/workflows/governance-pr.yml` — `locale-leak` job, Task 393).**
+
+A dedicated `locale-leak` job runs on every PR touching `src/**`, `scripts/**`, `messages/**`, `package.json`, or `eslint.config.mjs`:
+
+```
+1. npm ci
+2. npx playwright install chromium --with-deps
+3. npm run build-storybook   ← also runs check:stories via prebuild-storybook hook
+4. npm run check:locale-leak ← full scan: 157 stories × sq/uk/it × 3 viewports
+```
+
+The job fails if `leakCount > 0`. On failure, the `locale-leak-report` artifact (`.screenshots/locale-leak/<timestamp>/report.json`) is uploaded and available in the GitHub Actions run for 7 days.
+
+**Note:** `check:locale-leak` cannot run as a `prebuild-storybook` hook (circular dependency — it requires `storybook-static/` which the build produces). It runs after `build-storybook` via the separate CI job.
+
+**Manual run (owner workflow):**
+```bash
+npm run build-storybook       # also runs check:stories pre-gate
+npm run check:locale-leak     # full — 157 stories × sq/uk/it × 3 viewports (~45 min)
+npm run check:locale-leak:fast # fast — 320 viewport only, single locale pair (~5 min)
+```
+
+**Proof standard (§14.4 restated for this gate):** `leakCount: 0` in the emitted `report.json` is the ONLY accepted proof. Console output alone is not sufficient — paste the full `report.json` (timestamp, mode, storiesScanned, leakCount, leaks array) into the session log.
+
+**Allowlist** (tokens that are intentionally language-neutral and never flagged):
+- Albanian city/district names, person names used in fixtures
+- Brand/technical tokens: `EUR`, `URL`, `DELETE`, `SMS`, `HTTP`, `HTTPS`, `WhatsApp`, `Email`, `API`, `ID`, `QA`
+- Role labels: `Administrator`, `Moderator`, `Agent`
+- Status codes: `ACTIVE`, `INACTIVE`, `PENDING`, `CLOSED`, `OPEN`, `SOLD`, `RENTED`, `ARCHIVED`
+- Pure numbers, currency symbols, units, short abbreviations (≤2 chars)
+- Arrow/separator patterns, Storybook UI chrome labels
+
+Full allowlist: `scripts/check-locale-leak.mjs` → `LEAK_ALLOWLIST` array.

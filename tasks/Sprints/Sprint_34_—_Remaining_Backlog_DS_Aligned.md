@@ -20,7 +20,11 @@ written; (c) keep the original behavioral inventories (which remain accurate) by
 
 | # | Task | Title | Kickoff file | Depends on | Owner decision needed first? |
 |---|------|-------|--------------|-----------|------------------------------|
-| **0** | **394** | **🔴 PREREQUISITE — Upgrade Storybook to latest stable + retire <640 workarounds + re-prove every gate** | `Sprint_34_kickoff_prompt_Task_394_StorybookUpgrade.md` | — | confirm target SB major (rec: latest stable) |
+| **0** | **394** | **🔴 PREREQUISITE — Upgrade Storybook to 10.4.2 + retire <640 workarounds + re-prove every gate** — SB10 migration ✅ done & sound; **NOT approved** (review 2026-06-05): locale-leak gate weakened by over-broad global allowlist, BOM in 29 stories, en.json residue, stray log. Superseded-for-approval by **395**. | `Sprint_34_kickoff_prompt_Task_394_StorybookUpgrade.md` | — | confirm target SB major (rec: latest stable) |
+| **0b** | **395** | **🔴 PREREQUISITE (corrective) — Fix Task 394 review rejections: re-scope locale-leak gate to language-neutral allowlist + exclude `LocaleStress`/`AllLocales` demo stories; strip BOM from 29 stories; restore en.json; remove debug log; prove gate bites again. REJECTED 2026-06-05 (truncated gate script + en.json/.gitignore not fixed) → RE-DO; see kickoff "REVIEW VERDICT" block** | `Sprint_34_kickoff_prompt_Task_395_LocaleLeakGate_Cleanup.md` | 394 (keeps its SB10 work) | no |
+| **0c** | **396** | **Systemic — static hardcoded-i18n scanner over ALL `src/**` (story-independent) + full inventory audit + 'fail-on-new' CI gate. Closes the render-gate blind spot (138 components / only 29 stories). NO component edits — scanner+audit+gate only** | `Sprint_34_kickoff_prompt_Task_396_SrOnlyHardcodeRemediation.md` | **395** | no |
+| **0d** | **397** | **Burn down the 396 hardcode baseline — batched remediation of ALL findings (sr-only ×3 + aria-label ×11 + everything the scanner surfaced) via 4-locale keys; remove the temporary `primitives-dialog:['Close']` crutch; flip gate to strict** | `Sprint_34_kickoff_prompt_Task_397_HardcodeRemediationBatches.md` | **396 (baseline) + 395** | no |
+| **PARKED** | **398** | **Story-coverage gate (`check:story-coverage`, tiered, documented exemption allowlist) + scaffold template — NOT hardcode coverage (that's 396); ensures render/i18n/responsive coverage without forcing low-value/auto-gen stories. Outside active focus** | `Sprint_34_kickoff_prompt_Task_398_StoryCoverageGate.md` | 396 (+ ideally 397) | no — parked |
 | 1 | **308** | Admin Listings + Users → canonical shell/table + sort URL-state | `Sprint_34_kickoff_prompt_Task_308_DS_Rescope.md` | DS committed ✅ | no |
 | 2 | **309** | Admin Support + Inquiries → shell/card-list + StatusChangeControl + Sheet detail | `Sprint_34_kickoff_prompt_Task_309_DS_Rescope.md` | DS committed ✅ | no |
 | 3 | **237** | Admin moderation preview (no more 404) | `Epic_Y_kickoff_prompt_Task_237.md` | — | no |
@@ -34,10 +38,17 @@ written; (c) keep the original behavioral inventories (which remain accurate) by
 | 11 | **311** | Residual admin modal standardisation (Epic HH P5) | `Epic_HH_kickoff_prompt_Task_311.md` | 309 Sheet pattern | no |
 | 12 | **313** | Verified Agents workflow (Epic HH P6) | `Epic_HH_kickoff_prompt_Task_313.md` | — | **YES — DB schema sign-off** |
 
-**🔴 Task 394 (Storybook upgrade) ships and is approved FIRST — it BLOCKS every task below**, because the rendered gates
-(`check:stories`, `check:locale-leak`, `screenshots:assert`) are the only accepted proof (clause 13) and they run on a
-built Storybook. The current SB 8.6 + hand-rolled <640 workarounds make that proof unreliable; no follow-on task is
-approvable until the gates are re-proven on the upgraded Storybook.
+**🔴 The Storybook-upgrade prerequisite (394 + corrective 395) ships and is approved FIRST — it BLOCKS every task below**,
+because the rendered gates (`check:stories`, `check:locale-leak`, `screenshots:assert`) are the only accepted proof
+(clause 13) and they run on a built Storybook. 394 migrated SB to 10.4.2 (sound) but was rejected on review: the
+`check:locale-leak` gate was made green only by globally allowlisting **translatable** UI words, which blinds it to the
+exact leak class it exists to catch — so the gate is NOT trustworthy until **395** re-scopes it. No follow-on task is
+approvable until 395 lands and all three gates are re-proven (including a negative-flow plant that the gate now fails on).
+
+> **⚠️ Disclosure (carried by 395):** the IIFE bug fixed in 394 means `check:locale-leak` was a permanent no-op from its
+> introduction (Task 393) until now — every prior "leak-free" claim that relied on it (392/393 + Sprint 32/33
+> rendered-evidence approvals) was a false-green. After 395 makes the gate correct, run it on the committed baseline; any
+> real leaks it surfaces become a separate remediation task.
 
 Recommended execution: **394 (prerequisite)** → **308 → 309** (admin mobile, highest owner-pain) → **237 → 238** (listing
 form) → **316 → 317 → 318** (i18n, independent) → **243 / 246** → **310 → 311** → **313** (after DB-schema sign-off).

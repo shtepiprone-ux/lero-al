@@ -19,7 +19,12 @@
 
 ## Next Immediate Tasks
 
-1. **Orchestrator diff review of Tasks 372–393** → emits explicit-path commit commands → owner runs in PowerShell. Design System baseline CLOSED-AND-COMMITTED.
+Design System baseline **CLOSED-AND-COMMITTED** (372–393 committed `923827b2d`/`47679ae52` + earlier DS commits).
+
+**Active queue = Sprint 34** (`tasks/Sprints/Sprint_34_—_Remaining_Backlog_DS_Aligned.md`) — fresh per-task kickoffs for every remaining open task, all on the current contract (clauses 1–13).
+
+1. **🔴 Task 394 — Storybook upgrade (PREREQUISITE, blocks all)** — upgrade SB 8.6 → latest stable, retire <640 workarounds, re-prove `check:stories`/`check:locale-leak`/`screenshots:assert` on the new build.
+2. Then: **308 → 309** (admin mobile) → **237 → 238** (listing form) → **316/317/318** (i18n) → **243 / 246** → **310 → 311** → **313** (after DB-schema sign-off). Kickoffs filed in `/tasks` per the Sprint 34 index.
 
 ## Frozen / deferred tasks — relevance after Design System (reviewed 2026-06-05)
 
@@ -40,7 +45,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 >
 > **🆕 Standing principle (owner 2026-06-05):** every still-open task consumes the global Design System (`docs/design-system.md`, Task 340) wherever UI/responsive/overlay surfaces are touched. `docs/rule-index.md` already mandates `design-system.md` as the first pre-read for UI/layout/admin task types — re-scope any pre-DS plan to it before execution.
 
-**Task numbering.** Last used: **393**. Next free: **394**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Task numbering.** Last used: **394** (Storybook upgrade prerequisite). Next free: **395**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH — see `Epic_HH` "Open product decisions"):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. (351/352/353 close + 308/309 DS re-scope — DECIDED 2026-06-05.)
 

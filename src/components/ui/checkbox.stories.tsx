@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Checkbox } from './checkbox';
 import { storyT } from '@/stories/_storyI18n';
 
@@ -64,8 +64,15 @@ export const FilterCheckboxList: Story = {
       </div>
     )
   },
+
   parameters: {
-    viewport: { defaultViewport: 'mobile375' },
-    docs: { description: { story: 'Filter checkboxes with min-h-[44px] touch targets. Use locale toolbar for sq/en/uk/it.' } },
+    docs: { description: { story: 'Filter checkboxes with min-h-[44px] touch targets. Use locale toolbar for sq/en/uk/it.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 };

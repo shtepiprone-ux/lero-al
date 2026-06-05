@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { StoryListingCard, makeStoryListings } from './StoryListingCard';
 import { storyT } from './_storyI18n';
 
@@ -30,7 +30,17 @@ export const Desktop: Story = {
       </div>
     )
   },
-  parameters: { viewport: { defaultViewport: 'desktop1280' }, docs: { description: { story: '1280px desktop. Cards match live ListingCard field set.' } } },
+
+  parameters: {
+    docs: { description: { story: '1280px desktop. Cards match live ListingCard field set.' } }
+  },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 };
 
 export const HugeDesktop: Story = {
@@ -45,7 +55,17 @@ export const HugeDesktop: Story = {
       </div>
     )
   },
-  parameters: { viewport: { defaultViewport: 'desktop2560' }, docs: { description: { story: 'At 2560px: 4 columns via 2xl:grid-cols-4.' } } },
+
+  parameters: {
+    docs: { description: { story: 'At 2560px: 4 columns via 2xl:grid-cols-4.' } }
+  },
+
+  globals: {
+    viewport: {
+      value: 'desktop2560',
+      isRotated: false
+    }
+  }
 };
 
 export const Mobile: Story = {
@@ -60,7 +80,17 @@ export const Mobile: Story = {
       </div>
     )
   },
-  parameters: { viewport: { defaultViewport: 'mobile375' }, docs: { description: { story: '375px: single-column grid.' } } },
+
+  parameters: {
+    docs: { description: { story: '375px: single-column grid.' } }
+  },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 };
 
 export const LocaleStress: Story = {
@@ -76,5 +106,15 @@ export const LocaleStress: Story = {
       </div>
     )
   },
-  parameters: { viewport: { defaultViewport: 'mobile320' }, docs: { description: { story: '@320: longest locale titles — verify line-clamp-2. Use locale toolbar for sq/en/uk/it.' } } },
+
+  parameters: {
+    docs: { description: { story: '@320: longest locale titles — verify line-clamp-2. Use locale toolbar for sq/en/uk/it.' } }
+  },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 };

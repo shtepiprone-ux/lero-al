@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { PasswordRequirementsHint } from './PasswordRequirementsHint'
 
 const meta: Meta<typeof PasswordRequirementsHint> = {
@@ -31,8 +31,15 @@ export const AllMet: Story = {
 
 export const LocaleStress: Story = {
   args: { value: 'Abc' },
+
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: 'Ukrainian 320px — longest strings, verify wrap without truncation.' } },
+    docs: { description: { story: 'Ukrainian 320px — longest strings, verify wrap without truncation.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

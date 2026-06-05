@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { Combobox } from './Combobox'
 import type { ComboboxOption } from './Combobox'
@@ -53,51 +53,91 @@ function ComboboxInteractive({
 }
 
 export const ButtonVariant: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (<div className="p-4 sm:max-w-xs"><ComboboxInteractive options={CITY_OPTIONS} initialValue="tirana" variant="button" placeholder={cb('city_ph', locale)} /></div>)
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const InputVariant: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (<div className="p-4 sm:max-w-xs"><ComboboxInteractive options={CITY_OPTIONS} initialValue="" variant="input" placeholder={cb('city_search', locale)} /></div>)
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const LongLabelLocaleStress: Story = {
-  parameters: { viewport: { defaultViewport: 'mobile320' }, docs: { description: { story: '@320: long label truncated in trigger. Select an option — value updates immediately. No horizontal overflow. Use locale toolbar for sq/en/uk/it.' } } },
+  parameters: {
+    docs: { description: { story: '@320: long label truncated in trigger. Select an option — value updates immediately. No horizontal overflow. Use locale toolbar for sq/en/uk/it.' } }
+  },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const options = getStatusOptions(locale)
     return (<div className="p-4"><ComboboxInteractive options={options} initialValue="in_progress" variant="button" placeholder={cb('status_ph', locale)} /></div>)
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 export const DropdownOpen: Story = {
-  parameters: { viewport: { defaultViewport: 'mobile320' }, docs: { description: { story: '@320: open the dropdown — long option labels wrap within dropdown bounds. Use locale toolbar for sq/en/uk/it.' } } },
+  parameters: {
+    docs: { description: { story: '@320: open the dropdown — long option labels wrap within dropdown bounds. Use locale toolbar for sq/en/uk/it.' } }
+  },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const options = getLocationOptions(locale)
     return (<div className="p-4"><ComboboxInteractive options={options} initialValue="" variant="input" placeholder={cb('search_short', locale)} /></div>)
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 export const NoSelection: Story = {
-  parameters: { viewport: { defaultViewport: 'mobile320' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (<div className="p-4"><ComboboxInteractive options={CITY_OPTIONS} initialValue="" variant="button" placeholder={cb('no_sel', locale)} /></div>)
   },
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  },
 }
 
 export const Disabled: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (<div className="p-4 sm:max-w-xs"><ComboboxInteractive options={CITY_OPTIONS} initialValue="tirana" variant="button" placeholder={cb('city_ph', locale)} disabled /></div>)
+  },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
   },
 }

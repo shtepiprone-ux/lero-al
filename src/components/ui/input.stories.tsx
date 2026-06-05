@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { useState } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from './input';
@@ -89,10 +89,17 @@ export const PhoneNumericValidation: Story = {
       </div>
     </div>
   ),
+
   parameters: {
-    viewport: { defaultViewport: 'mobile375' },
-    docs: { description: { story: 'PhoneField numeric-only validation states. Error key is localized in all 4 locales. See PhoneField.tsx and lib/phone/index.ts. (Task 363)' } },
+    docs: { description: { story: 'PhoneField numeric-only validation states. Error key is localized in all 4 locales. See PhoneField.tsx and lib/phone/index.ts. (Task 363)' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 }
 
 function MobileFormDemo({ locale }: { locale: string }) {
@@ -110,8 +117,15 @@ function MobileFormDemo({ locale }: { locale: string }) {
 
 export const MobileForm: Story = {
   render: (_, context) => <MobileFormDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'mobile375' },
-    docs: { description: { story: 'Mobile form: canonical PhoneField — dial-code Combobox + national Input. Dropdown shows country names in the active locale (sq/en/uk/it via toolbar). CLDR-sourced names — no hardcode.' } },
+    docs: { description: { story: 'Mobile form: canonical PhoneField — dial-code Combobox + national Input. Dropdown shows country names in the active locale (sq/en/uk/it via toolbar). CLDR-sourced names — no hardcode.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 };

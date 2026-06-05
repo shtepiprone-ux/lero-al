@@ -1,4 +1,4 @@
-import type { Preview, Decorator } from '@storybook/react';
+import type { Preview, Decorator } from '@storybook/nextjs-vite';
 import { NextIntlClientProvider } from 'next-intl';
 
 import '../src/app/globals.css';
@@ -143,24 +143,17 @@ export const decorators: Decorator[] = [withTheme, withLocale, withCanvas];
 const preview: Preview = {
   parameters: {
     viewport: {
-      viewports: VIEWPORTS,
-      defaultViewport: 'desktop1280',
+      options: VIEWPORTS
     },
     // fullscreen: withCanvas decorator provides the canonical container-wide gutter.
     // layout:'centered' and layout:'padded' are FORBIDDEN in story files (lint gate §14.1).
     layout: 'fullscreen',
     backgrounds: {
-      // Values mirror the lero-al project tokens so the Storybook canvas padding
-      // matches the component background (avoids a visible white border halo):
-      //   light → --background (--neutral-50 oklch(0.985 0 0) ≈ #FAFAFA)
-      //   dark  → --background in .dark (--neutral-0 oklch(0.145 0 0) ≈ #232323)
-      //   muted → --muted (--neutral-100 oklch(0.961 0 0) ≈ #F5F5F5)
-      default: 'light',
-      values: [
-        { name: 'light', value: '#fafafa' },
-        { name: 'dark',  value: '#232323' },
-        { name: 'muted', value: '#f5f5f5' },
-      ],
+      options: {
+        light: { name: 'light', value: '#fafafa' },
+        dark: { name: 'dark',  value: '#232323' },
+        muted: { name: 'muted', value: '#f5f5f5' }
+      }
     },
     controls: {
       matchers: {
@@ -171,6 +164,17 @@ const preview: Preview = {
     // Accessibility — will be used when @storybook/addon-a11y is added in Phase 5
     a11y: { disable: true },
   },
+
+  initialGlobals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    },
+
+    backgrounds: {
+      value: 'light'
+    }
+  }
 };
 
 export default preview;

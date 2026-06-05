@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Section } from './Section'
 import { PageShell } from './PageShell'
 import { storyT } from '@/stories/_storyI18n'
@@ -35,7 +35,6 @@ type Story = StoryObj<typeof Section>
 // ════════════════════════════════════════════════════════════════════════════════
 
 export const WithTitleAndDescription: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -44,10 +43,15 @@ export const WithTitleAndDescription: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const TitleOnly: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -56,10 +60,15 @@ export const TitleOnly: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const DescriptionOnly: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -68,10 +77,15 @@ export const DescriptionOnly: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const EmptyHeading: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -80,10 +94,15 @@ export const EmptyHeading: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const Stacked: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -96,10 +115,15 @@ export const Stacked: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const InsideNarrow: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -108,10 +132,15 @@ export const InsideNarrow: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const InsideForm: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -120,13 +149,19 @@ export const InsideForm: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: '@320: long title + description wrap without overflow. Use locale toolbar for sq/en/uk/it.' } },
+    docs: { description: { story: '@320: long title + description wrap without overflow. Use locale toolbar for sq/en/uk/it.' } }
   },
+
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -137,4 +172,11 @@ export const LocaleStress: Story = {
     </PageShell>
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

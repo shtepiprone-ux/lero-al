@@ -12,8 +12,8 @@
 
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { fn } from 'storybook/test'
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Trash2 } from 'lucide-react'
@@ -129,15 +129,23 @@ function PopulatedRender({ onClear, locale }: { onClear?: () => void; locale: st
 export const Populated: Story = {
   args: { onClear: fn() },
   render: (args, context) => <PopulatedRender onClear={args.onClear} locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Desktop 1280px: 3-col grid. Full field-parity cards (premium stripe, status badges, price/m², features, photo count, favorite, date). Click Clear — logs to Actions panel via fn() AND shows in-canvas confirmation.' } },
+    docs: { description: { story: 'Desktop 1280px: 3-col grid. Full field-parity cards (premium stripe, status badges, price/m², features, photo count, favorite, date). Click Clear — logs to Actions panel via fn() AND shows in-canvas confirmation.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 /** Mobile horizontal scroll — key breakpoint for the scroll→grid transition. */
 export const MobileScroll: Story = {
   args: { onClear: fn() },
+
   render: (args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -146,15 +154,23 @@ export const MobileScroll: Story = {
       </div>
     )
   },
+
   parameters: {
-    viewport: { defaultViewport: 'mobile375' },
-    docs: { description: { story: 'Mobile 375px: horizontal scroll, w-48 shrink-0 cards with full field set. Scrollbar visible in story (production uses no-scrollbar). Swipe or drag horizontally to scroll.' } },
+    docs: { description: { story: 'Mobile 375px: horizontal scroll, w-48 shrink-0 cards with full field set. Scrollbar visible in story (production uses no-scrollbar). Swipe or drag horizontally to scroll.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 }
 
 /** Huge desktop — 4-col grid via lg:grid-cols-4 (2560px, container-wide bounds content). */
 export const HugeDesktop: Story = {
   args: { onClear: fn() },
+
   render: (args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -163,10 +179,17 @@ export const HugeDesktop: Story = {
       </div>
     )
   },
+
   parameters: {
-    viewport: { defaultViewport: 'desktop2560' },
-    docs: { description: { story: '2560px: 4-col grid via lg:grid-cols-4. Content bounded by .container-wide.' } },
+    docs: { description: { story: '2560px: 4-col grid via lg:grid-cols-4. Content bounded by .container-wide.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop2560',
+      isRotated: false
+    }
+  }
 }
 
 /** Empty state — shown after clearing history or before any listing is visited. */
@@ -184,6 +207,7 @@ export const EmptyState: Story = {
 /** Locale stress — longest strings, primary overflow stress test. Use locale toolbar for sq/en/uk/it. */
 export const LocaleStress: Story = {
   args: { onClear: fn() },
+
   render: (args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -196,8 +220,15 @@ export const LocaleStress: Story = {
       </div>
     )
   },
+
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: '@320: longest locale titles — title line-clamp-2, badge labels localize, no horizontal overflow. Use locale toolbar for sq/en/uk/it; viewport toolbar for other widths.' } },
+    docs: { description: { story: '@320: longest locale titles — title line-clamp-2, badge labels localize, no horizontal overflow. Use locale toolbar for sq/en/uk/it; viewport toolbar for other widths.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -112,7 +112,6 @@ function PageHeaderStory({
 // ════════════════════════════════════════════════════════════════════════════════
 
 export const Default: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? "en"
     return (
@@ -124,10 +123,15 @@ export const Default: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const TitleOnly: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? "en"
     return (
@@ -139,10 +143,15 @@ export const TitleOnly: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const WithCountBadge: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? "en"
     return (
@@ -154,13 +163,19 @@ export const WithCountBadge: Story = {
     </PageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const WithAction: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Single action button in the action slot. size="xl" (44px). Click → in-canvas feedback. Action stacks below header at <md:, right-aligns at md:+.' } },
+    docs: { description: { story: 'Single action button in the action slot. size="xl" (44px). Click → in-canvas feedback. Action stacks below header at <md:, right-aligns at md:+.' } }
   },
+
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? "en"
     return (
@@ -174,13 +189,20 @@ export const WithAction: Story = {
     />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const WithActions: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Three-button action cluster in the action slot — plain flex-wrap div container. Click any button → feedback. At <md: buttons stack full-width.' } },
+    docs: { description: { story: 'Three-button action cluster in the action slot — plain flex-wrap div container. Click any button → feedback. At <md: buttons stack full-width.' } }
   },
+
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? "en"
     return (
@@ -199,13 +221,20 @@ export const WithActions: Story = {
     />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: 'uk@320: long Ukrainian title + description + action. Title must wrap. Action must be full-width (max-md:w-full). Use viewport toolbar for other widths; locale toolbar for other locales.' } },
+    docs: { description: { story: 'uk@320: long Ukrainian title + description + action. Title must wrap. Action must be full-width (max-md:w-full). Use viewport toolbar for other widths; locale toolbar for other locales.' } }
   },
+
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? "en"
     return (
@@ -222,4 +251,11 @@ export const LocaleStress: Story = {
     />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { AdminCardList } from './AdminCardList'
 import { Badge } from '@/components/ui/badge'
@@ -134,20 +134,27 @@ type Story = StoryObj
 
 export const Default: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Interactive card list. State labels, type labels, hint text — all locale-reactive via toolbar. Click or Enter/Space → "Selected ticket" panel.' } },
+    docs: { description: { story: 'Interactive card list. State labels, type labels, hint text — all locale-reactive via toolbar. Click or Enter/Space → "Selected ticket" panel.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <TicketListInteractive rows={makeTickets(locale)} locale={locale} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 export const Static: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Static card list — display-only. No onRowClick → no auto-chevron, no hover, no cursor.' } },
+    docs: { description: { story: 'Static card list — display-only. No onRowClick → no auto-chevron, no hover, no cursor.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
@@ -170,13 +177,20 @@ export const Static: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 export const Compact: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Static compact density with explicit Badge trailing.' } },
+    docs: { description: { story: 'Static compact density with explicit Badge trailing.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
@@ -193,13 +207,20 @@ export const Compact: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 export const LegacyReactNode: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Static legacy ReactNode card (not StructuredCard) — no auto-chevron.' } },
+    docs: { description: { story: 'Static legacy ReactNode card (not StructuredCard) — no auto-chevron.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const localStateLabel = (s: string) => acl(STATE_KEY[s] ?? `state_${s}`, locale)
@@ -217,35 +238,59 @@ export const LegacyReactNode: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 export const Empty: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <AdminCardList rows={[]} rowKey={r => (r as TicketRow).id} card={() => null} emptyState={acl('empty', locale)} />
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const Loading: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <AdminCardList rows={[]} rowKey={() => ''} card={() => null} emptyState={acl('empty', locale)} loading />
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: 'uk@320: long Ukrainian ticket subjects must wrap inside card bounds; auto-chevron remains visible.' } },
+    docs: { description: { story: 'uk@320: long Ukrainian ticket subjects must wrap inside card bounds; auto-chevron remains visible.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <TicketListInteractive rows={makeStressTickets(locale)} locale={locale} />
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

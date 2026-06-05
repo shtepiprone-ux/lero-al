@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { defineConfig, globalIgnores } from "eslint/config";
 import { FlatCompat } from "@eslint/eslintrc";
 import { fileURLToPath } from "url";
@@ -81,7 +84,6 @@ const IMAGE_RENDER_EXCEPTIONS = [
 
 const eslintConfig = defineConfig([
   ...compat.extends("next/core-web-vitals", "next/typescript"),
-
   // ── Downgrade no-explicit-any to warning ──────────────────────────────────
   // The codebase predates strict typing enforcement. Errors block CI; warnings
   // surface the debt without halting deployment.
@@ -91,7 +93,6 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/no-explicit-any": "warn",
     },
   },
-
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
@@ -103,7 +104,6 @@ const eslintConfig = defineConfig([
     // Storybook static build output — minified bundles trigger false-positive lint errors.
     "storybook-static/**",
   ]),
-
   // ── Import governance ─────────────────────────────────────────────────────
   //
   // Consolidated: next/image ban + non-lucide icon library ban in one block.
@@ -150,7 +150,6 @@ const eslintConfig = defineConfig([
       ],
     },
   },
-
   // ── no-restricted-syntax governance — .tsx files ─────────────────────────
   //
   // ALL no-restricted-syntax selectors for .tsx files are consolidated here.
@@ -296,7 +295,6 @@ const eslintConfig = defineConfig([
       ],
     },
   },
-
   // ── no-restricted-syntax governance — .ts files ──────────────────────────
   //
   // .ts files have no JSX — image governance (A) and SSR governance (D)
@@ -362,7 +360,6 @@ const eslintConfig = defineConfig([
       ],
     },
   },
-
   // ── no-restricted-syntax governance — STORY FILES ────────────────────────
   //
   // MUST come LAST so it takes precedence over the general src/**/*.tsx block
@@ -529,6 +526,7 @@ const eslintConfig = defineConfig([
       ],
     },
   },
+  ...storybook.configs["flat/recommended"]
 ]);
 
 export default eslintConfig;

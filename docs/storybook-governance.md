@@ -3,6 +3,11 @@
 Established: 2026-05-18
 Status: PERMANENT GOVERNANCE REFERENCE
 
+**Storybook version:** `10.4.2` (upgraded from 8.6.18 by Task 394, 2026-06-05)
+**Framework:** `@storybook/nextjs-vite@10.4.2` (was `@storybook/experimental-nextjs-vite@8.6.18`)
+**Addons:** `@storybook/addon-docs@10.4.2` (addon-essentials replaced; controls/actions/backgrounds/viewport are now SB10 core)
+**ESLint plugin:** `eslint-plugin-storybook@10.4.2` (added by upgrade; `flat/recommended` config appended)
+
 ---
 
 ## §1 — PURPOSE
@@ -419,6 +424,31 @@ All five Storybook categories are required sweep scope:
 5. **Scenario-named exports.** No width-number suffixes (`Mobile320`, `W375`).
 
 **Required QA proof format:** rendered matrix `locale (sq/en/uk/it) × viewport (320/375/390/480/560/680/768/810/960/1024/1200/1440/1920/2560)`. uk@320/375/390 are mandatory cells. `build-storybook` exit 0 is NOT proof (see §8a).
+
+---
+
+## §14a — SB10 Migration Notes (Task 394, 2026-06-05)
+
+### SB8→SB10 workaround disposition
+
+| Workaround | Classification | Action taken |
+|---|---|---|
+| Custom `VIEWPORTS` map (20 breakpoints) | **REPLACE** — migrated to SB10 `parameters.viewport.options` API | `viewports:` renamed to `options:` in preview.tsx `parameters.viewport`; `defaultViewport` moved to `initialGlobals.viewport.value` by `addon-globals-api` codemod |
+| `withCanvas` `.container-wide py-6` decorator | **KEEP-CANONICAL** — mirrors real app gutter; `max-sm:w-full` correctly fills <640 edge-to-edge | Unchanged; still wraps every story; verified producing correct edge-to-edge fill under SB10 layout engine |
+| `addon-essentials` meta-package | **REPLACE** — deprecated in SB10 (no v10 release) | Replaced with `@storybook/addon-docs@^10.4.2`; controls/actions/backgrounds/viewport now SB10 core |
+| `@storybook/experimental-nextjs-vite` | **REPLACE** — graduated to stable | Replaced with `@storybook/nextjs-vite@^10.4.2`; framework name updated in main.ts |
+| `parameters.layout: 'fullscreen'` | **KEEP-CANONICAL** — required for full-width <640 enforcement; gate §14.1 | Unchanged |
+| `@storybook/react` story imports | **REPLACE** — deprecated in SB10; `storybook/no-renderer-packages` rule | All 29 story files + preview.tsx updated from `'@storybook/react'` to `'@storybook/nextjs-vite'` |
+| `docs: { autodocs: 'tag' }` in main.ts | **REPLACE** — deprecated in SB10 | Removed by `remove-docs-autodocs` codemod; per-story `tags: ['autodocs']` still works |
+| Per-story `parameters.viewport.defaultViewport` | **REPLACE** — migrated to `globals.viewport` | Updated by `addon-globals-api` codemod to `globals: { viewport: { value: '...', isRotated: false } }` |
+
+### SB10 API changes summary (for future reference)
+
+- **Viewport:** `parameters.viewport.viewports` → `parameters.viewport.options`; `parameters.viewport.defaultViewport` → `initialGlobals.viewport.value`; per-story default → `globals.viewport.value`
+- **Backgrounds:** `parameters.backgrounds.default` + `parameters.backgrounds.values` → `parameters.backgrounds.options` + `initialGlobals.backgrounds.value`
+- **Story imports:** `from '@storybook/react'` → `from '@storybook/nextjs-vite'` (framework package re-exports all React types)
+- **ESM main.ts:** Added `const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename)` by `fix-faux-esm-require` codemod
+- **index.json:** SB10 uses `v: 5` (was `v: 4`); structure unchanged — `{ entries: { [id]: { id, type, ... } } }` — `check-locale-leak.mjs` and `check-stories-rendered.mjs` scripts compatible
 
 ---
 

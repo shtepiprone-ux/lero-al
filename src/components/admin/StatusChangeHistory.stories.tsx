@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { StatusChangeHistory, type HistoryEvent } from './StatusChangeHistory'
 import { storyT } from '@/stories/_storyI18n'
 
@@ -73,9 +73,9 @@ export const Multiple: Story = {
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: '@320: long actor names, notes, and status labels follow the toolbar locale. Use locale toolbar for sq/en/uk/it; viewport toolbar for widths.' } },
+    docs: { description: { story: '@320: long actor names, notes, and status labels follow the toolbar locale. Use locale toolbar for sq/en/uk/it; viewport toolbar for widths.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -88,6 +88,13 @@ export const LocaleStress: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 export const RawKeyStress: Story = {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useTranslations } from 'next-intl'
 import { PasswordInput } from './PasswordInput'
 import { PasswordRequirementsHint, allPasswordRulesMet } from './PasswordRequirementsHint'
@@ -136,8 +136,15 @@ function Mobile320UkrainianRender() {
 
 export const LocaleStress: Story = {
   render: () => <Mobile320UkrainianRender />,
+
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: '320px Ukrainian — longest strings, rule rows wrap gracefully.' } },
+    docs: { description: { story: '320px Ukrainian — longest strings, rule rows wrap gracefully.' } }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

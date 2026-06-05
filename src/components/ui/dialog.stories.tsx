@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Button } from "./button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./dialog";
 import { storyT } from '@/stories/_storyI18n';
@@ -78,7 +78,17 @@ export const MobileDialog: Story = {
       </Dialog>
     );
   },
-  parameters: { viewport: { defaultViewport: "mobile375" }, docs: { description: { story: "Mobile 375px: trigger full-width, dialog is a full-width bottom sheet. Use locale toolbar." } } },
+
+  parameters: {
+    docs: { description: { story: "Mobile 375px: trigger full-width, dialog is a full-width bottom sheet. Use locale toolbar." } }
+  },
+
+  globals: {
+    viewport: {
+      value: "mobile375",
+      isRotated: false
+    }
+  }
 };
 
 export const MobileFullWidth: Story = {
@@ -99,7 +109,17 @@ export const MobileFullWidth: Story = {
       </Dialog>
     );
   },
-  parameters: { viewport: { defaultViewport: "mobile320" }, docs: { description: { story: "@320: dialog pre-opened — full-width bottom sheet. Use locale toolbar." } } },
+
+  parameters: {
+    docs: { description: { story: "@320: dialog pre-opened — full-width bottom sheet. Use locale toolbar." } }
+  },
+
+  globals: {
+    viewport: {
+      value: "mobile320",
+      isRotated: false
+    }
+  }
 };
 
 export const LocaleVariant: Story = {

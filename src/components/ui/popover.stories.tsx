@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Button } from "./button";
 import { Popover, PopoverContent, PopoverHeader, PopoverTitle, PopoverDescription, PopoverTrigger } from "./popover";
 import { storyT } from '@/stories/_storyI18n';
@@ -14,7 +14,6 @@ type Story = StoryObj;
 const p = (k: string, l = "en") => storyT(l, `storybook.popover.${k}`);
 
 export const Default: Story = {
-  parameters: {},
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
@@ -29,11 +28,14 @@ export const Default: Story = {
         </PopoverContent>
       </Popover>
     );
-  },
+  }
 };
 
 export const MobileBottomSheet: Story = {
-  parameters: { viewport: { defaultViewport: "mobile320" }, docs: { description: { story: "@320: popover opens as a full-width bottom sheet — edge-to-edge, drag handle. Use locale toolbar." } } },
+  parameters: {
+    docs: { description: { story: "@320: popover opens as a full-width bottom sheet — edge-to-edge, drag handle. Use locale toolbar." } }
+  },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
@@ -51,4 +53,11 @@ export const MobileBottomSheet: Story = {
       </div>
     );
   },
+
+  globals: {
+    viewport: {
+      value: "mobile320",
+      isRotated: false
+    }
+  }
 };

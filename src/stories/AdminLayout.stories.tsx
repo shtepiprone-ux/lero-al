@@ -1,7 +1,7 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { fn } from 'storybook/test';
 import { useState } from 'react';
 import { Search, Plus, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -177,14 +177,21 @@ export const AdminCards: Story = {
     </div>
     )
   },
+
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story: 'Admin stat cards: `bg-card rounded-2xl border shadow-sm p-5` — canonical admin card pattern (26+ occurrences).',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 };
 
 export const AdminLoadingState: Story = {

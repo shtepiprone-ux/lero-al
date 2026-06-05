@@ -1,5 +1,10 @@
-import type { StorybookConfig } from '@storybook/experimental-nextjs-vite';
-import path from 'path';
+// This file has been automatically migrated to valid ESM format by Storybook.
+import { fileURLToPath } from "node:url";
+import type { StorybookConfig } from '@storybook/nextjs-vite';
+import path, { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
   // Story locations: colocated *.stories.tsx + src/stories/
@@ -8,14 +13,12 @@ const config: StorybookConfig = {
     '../src/stories/**/*.stories.@(ts|tsx)',
   ],
 
-  addons: [
-    '@storybook/addon-essentials',
-  ],
+  addons: ['@storybook/addon-docs'],
 
-  // Switched from @storybook/nextjs (webpack) to @storybook/experimental-nextjs-vite (Vite)
-  // because Next.js 15.5 changed its internal webpack hooks, breaking @storybook/builder-webpack5.
+  // Uses @storybook/nextjs-vite (stable, Vite-based).
+  // Migrated from @storybook/experimental-nextjs-vite (SB8) as part of Task 394 SB10 upgrade.
   framework: {
-    name: '@storybook/experimental-nextjs-vite',
+    name: '@storybook/nextjs-vite',
     options: {},
   },
 
@@ -32,13 +35,9 @@ const config: StorybookConfig = {
   // Static dir for public assets
   staticDirs: ['../public'],
 
-  docs: {
-    autodocs: 'tag',
-  },
-
   typescript: {
     check: false,
-  },
+  }
 };
 
 export default config;

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { StatusChangeControl } from './StatusChangeControl'
 import type { StatusOption, Transition } from './StatusChangeControl'
 import type { HistoryEvent } from './StatusChangeHistory'
@@ -86,13 +86,13 @@ const HISTORY_EVENTS: HistoryEvent[] = [
 
 export const Select: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story: '`variant="select"` — low-stakes inquiry status change. Any transition is valid. Labels resolved via t(labelKey) — use locale toolbar to verify sq/en/uk/it.',
       },
-    },
+    }
   },
+
   render: () => (
     <div className="w-full p-4 sm:max-w-xs">
       <StoryPurposeNote />
@@ -104,10 +104,16 @@ export const Select: Story = {
       />
     </div>
   ),
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 export const SelectWithNote: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
     <div className="w-full p-4 sm:max-w-xs">
       <StatusChangeControl
@@ -119,10 +125,15 @@ export const SelectWithNote: Story = {
       />
     </div>
   ),
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const Workflow: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
     <div className="w-full p-4 sm:max-w-sm">
       <StatusChangeControl
@@ -134,10 +145,15 @@ export const Workflow: Story = {
       />
     </div>
   ),
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const WorkflowRequiredNote: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
     <div className="w-full p-4 sm:max-w-sm">
       <StatusChangeControl
@@ -150,10 +166,15 @@ export const WorkflowRequiredNote: Story = {
       />
     </div>
   ),
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const WorkflowWithHistory: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: () => (
     <div className="w-full p-4 sm:max-w-sm">
       <StatusChangeControl
@@ -166,13 +187,19 @@ export const WorkflowWithHistory: Story = {
       />
     </div>
   ),
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: 'uk@320: Ukrainian labels via t(labelKey) — no hardcoded locale fixtures needed. Use locale toolbar for other locales; viewport toolbar for other widths.' } },
+    docs: { description: { story: 'uk@320: Ukrainian labels via t(labelKey) — no hardcoded locale fixtures needed. Use locale toolbar for other locales; viewport toolbar for other widths.' } }
   },
+
   render: () => (
     <div className="p-3 space-y-4">
       <StatusChangeControl
@@ -190,4 +217,11 @@ export const LocaleStress: Story = {
       />
     </div>
   ),
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

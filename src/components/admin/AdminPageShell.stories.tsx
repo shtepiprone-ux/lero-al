@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { AdminPageShell } from './AdminPageShell'
@@ -190,7 +190,6 @@ function MultiActionShellDemo({
 // ════════════════════════════════════════════════════════════════════════════════
 
 export const Default: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -199,13 +198,19 @@ export const Default: Story = {
       </AdminPageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const WithTabs: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Canonical Tabs primitive in filterBar slot. Click tabs to switch active state.' } },
+    docs: { description: { story: 'Canonical Tabs primitive in filterBar slot. Click tabs to switch active state.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -219,13 +224,20 @@ export const WithTabs: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const WithActions: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Action slot: size="xl" (44px). Click button → in-canvas feedback.' } },
+    docs: { description: { story: 'Action slot: size="xl" (44px). Click button → in-canvas feedback.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -238,13 +250,20 @@ export const WithActions: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const WithTabsAndActions: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Full pattern: title + count + actions + canonical tabs.' } },
+    docs: { description: { story: 'Full pattern: title + count + actions + canonical tabs.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -258,13 +277,20 @@ export const WithTabsAndActions: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const MultipleActions: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Multiple page-level actions: all size="xl" (44px). At <md: actions stack full-width.' } },
+    docs: { description: { story: 'Multiple page-level actions: all size="xl" (44px). At <md: actions stack full-width.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -279,10 +305,16 @@ export const MultipleActions: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const NoHeader: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1440' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -291,13 +323,19 @@ export const NoHeader: Story = {
       </AdminPageShell>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  },
 }
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: 'uk@320: full-width action + Ukrainian canonical tabs. Use locale toolbar to switch; viewport toolbar for widths.' } },
+    docs: { description: { story: 'uk@320: full-width action + Ukrainian canonical tabs. Use locale toolbar to switch; viewport toolbar for widths.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -311,4 +349,11 @@ export const LocaleStress: Story = {
       />
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

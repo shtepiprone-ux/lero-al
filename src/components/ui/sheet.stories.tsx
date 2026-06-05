@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Filter, Menu } from "lucide-react";
 import { Button } from "./button";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "./sheet";
@@ -32,7 +32,17 @@ export const FilterSheetRight: Story = {
       </Sheet>
     );
   },
-  parameters: { viewport: { defaultViewport: "mobile375" }, docs: { description: { story: "Filter panel sheet — canonical pattern for mobile filter overlay." } } },
+
+  parameters: {
+    docs: { description: { story: "Filter panel sheet — canonical pattern for mobile filter overlay." } }
+  },
+
+  globals: {
+    viewport: {
+      value: "mobile375",
+      isRotated: false
+    }
+  }
 };
 
 export const NavDrawerLeft: Story = {
@@ -55,7 +65,17 @@ export const NavDrawerLeft: Story = {
       </Sheet>
     );
   },
-  parameters: { viewport: { defaultViewport: "mobile375" }, docs: { description: { story: "Navigation drawer — canonical left-side panel for mobile navigation." } } },
+
+  parameters: {
+    docs: { description: { story: "Navigation drawer — canonical left-side panel for mobile navigation." } }
+  },
+
+  globals: {
+    viewport: {
+      value: "mobile375",
+      isRotated: false
+    }
+  }
 };
 
 export const LocaleSheetContent: Story = {

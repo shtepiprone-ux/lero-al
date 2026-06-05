@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Button } from "./button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./dropdown-menu";
 import { storyT } from '@/stories/_storyI18n';
@@ -14,7 +14,6 @@ type Story = StoryObj;
 const d = (k: string, l = "en") => storyT(l, `storybook.dropdown.${k}`);
 
 export const Default: Story = {
-  parameters: {},
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
@@ -28,11 +27,14 @@ export const Default: Story = {
         </DropdownMenuContent>
       </DropdownMenu>
     );
-  },
+  }
 };
 
 export const MobileBottomSheet: Story = {
-  parameters: { viewport: { defaultViewport: "mobile320" }, docs: { description: { story: "@320: menu opens as a full-width bottom sheet — edge-to-edge, drag handle, items >=44px, long labels wrap. Use locale toolbar." } } },
+  parameters: {
+    docs: { description: { story: "@320: menu opens as a full-width bottom sheet — edge-to-edge, drag handle, items >=44px, long labels wrap. Use locale toolbar." } }
+  },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
@@ -49,4 +51,11 @@ export const MobileBottomSheet: Story = {
       </div>
     );
   },
+
+  globals: {
+    viewport: {
+      value: "mobile320",
+      isRotated: false
+    }
+  }
 };

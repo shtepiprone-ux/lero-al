@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Skeleton } from './skeleton';
 
 const meta: Meta = {
@@ -41,14 +41,21 @@ export const ListingGridSkeleton: Story = {
       ))}
     </div>
   ),
+
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story: 'Listing grid skeleton — 8 cards. Note `2xl:grid-cols-4` for huge desktop.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 };
 
 export const AdminCardSkeleton: Story = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Home, Search, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { storyT } from '@/stories/_storyI18n';
@@ -62,5 +62,10 @@ export const MobileEmptyState: Story = {
     const l = (context?.globals?.locale as string) ?? 'en'
     return <EmptyStateBlock icon={Home} title={e('no_listings_title',l)} description={e('no_listings_desc',l)} action={<Button size="xl" className="w-full">{e('clear_filters',l)}</Button>} />
   },
-  parameters: { viewport: { defaultViewport: 'mobile375' } },
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  },
 };

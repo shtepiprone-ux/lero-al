@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { Loader2, Plus, Trash2 } from 'lucide-react'
 import { Button } from './button'
@@ -133,15 +133,22 @@ function MobileSafeDemo({ locale }: { locale: string }) {
 
 export const MobileSafe: Story = {
   render: (_, context) => <MobileSafeDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'mobile375' },
     docs: {
       description: {
         story: 'All text sizes are mobile-safe: `max-sm:w-full` (full-width at <640px), ' +
                '`max-sm:min-h-11` (≥44px touch target). `size="xl"` shown here — same contract applies to sm/default/lg.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 }
 
 // ── With icons ────────────────────────────────────────────────────────────────
@@ -223,16 +230,23 @@ function ControlRowDesktopDemo({ locale }: { locale: string }) {
 
 export const ControlRowRhythm_Desktop: Story = {
   render: (_, context) => <ControlRowDesktopDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
     docs: {
       description: {
         story:
           'One-row-one-height proof: primary, secondary (outline), ghost/tertiary, and destructive, all at size="xl" (h-11 = 44px). ' +
           'In the same DS control row, no action button may be visually taller or shorter than its siblings.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 function ControlRowMobile320Demo({ locale }: { locale: string }) {
@@ -254,16 +268,23 @@ function ControlRowMobile320Demo({ locale }: { locale: string }) {
 
 export const ControlRowRhythm_Stacked: Story = {
   render: (_, context) => <ControlRowMobile320Demo locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
     docs: {
       description: {
         story:
           '320px: all four action types at size="xl" (44px). ' +
           'Full-width is automatic via `max-sm:w-full` in the primitive — no manual `className="w-full"` needed.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 // ── Long locale label stress ───────────────────────────────────────────────────
@@ -289,15 +310,22 @@ function LongLocaleLabelDemo({ locale }: { locale: string }) {
 
 export const LongLocaleLabel: Story = {
   render: (_, context) => <LongLocaleLabelDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'mobile375' },
     docs: {
       description: {
         story: 'Long locale labels at 375px — all text sizes must wrap gracefully, never clip. ' +
                'Full-width is automatic at <640px for `xl`, `lg`, `default`, `sm`. Use locale toolbar to switch language.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile375',
+      isRotated: false
+    }
+  }
 }
 
 // ── Locale stress — full-width at mobile + long label fit ─────────────────────
@@ -328,8 +356,8 @@ function LocaleStressDemo({ locale }: { locale: string }) {
 
 export const LocaleStress: Story = {
   render: (_, context) => <LocaleStressDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
+
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
     docs: {
       description: {
         story:
@@ -337,6 +365,13 @@ export const LocaleStress: Story = {
           'and long labels wrap without overflow. Each size is ≥44px tall (`max-sm:min-h-11`). ' +
           'Use locale toolbar — labels switch between sq/en/uk/it. At ≥640px buttons revert to content-width.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { storyT } from '@/stories/_storyI18n';
 
 const meta: Meta = {
@@ -37,15 +37,23 @@ export const ContainerWide: Story = {
       </div>
     </div>
   )},
+
   parameters: {
     layout: 'fullscreen',
-    viewport: { defaultViewport: 'desktop2560' },
+
     docs: {
       description: {
         story: 'At 2560px: `.container-wide` bounds content at 1408px, preventing whitespace wasteland.',
       },
-    },
+    }
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop2560',
+      isRotated: false
+    }
+  }
 };
 
 export const ContainerNarrow: Story = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "./command";
 import { Button } from "./button";
 import { useState } from "react";
@@ -55,8 +55,7 @@ function DialogStory({ locale }: { locale: string }) {
 }
 
 export const WithDialog: Story = {
-  parameters: {},
-  render: (_, context) => <DialogStory locale={(context?.globals?.locale as string) ?? "en"} />,
+  render: (_, context) => <DialogStory locale={(context?.globals?.locale as string) ?? "en"} />
 };
 
 function MobileStory({ locale }: { locale: string }) {
@@ -82,6 +81,16 @@ function MobileStory({ locale }: { locale: string }) {
 }
 
 export const MobileBottomSheet: Story = {
-  parameters: { viewport: { defaultViewport: "mobile320" }, docs: { description: { story: "@320: CommandDialog opens as a full-width bottom sheet. Use locale toolbar for sq/en/uk/it." } } },
+  parameters: {
+    docs: { description: { story: "@320: CommandDialog opens as a full-width bottom sheet. Use locale toolbar for sq/en/uk/it." } }
+  },
+
   render: (_, context) => <MobileStory locale={(context?.globals?.locale as string) ?? "en"} />,
+
+  globals: {
+    viewport: {
+      value: "mobile320",
+      isRotated: false
+    }
+  }
 };

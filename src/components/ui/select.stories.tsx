@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import {
   Select,
   SelectContent,
@@ -65,7 +65,6 @@ function getSettlements(locale: string) {
 // ════════════════════════════════════════════════════════════════════════════════
 
 export const Default: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -79,10 +78,15 @@ export const Default: Story = {
       </div>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const NoSelection: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -96,13 +100,19 @@ export const NoSelection: Story = {
       </div>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const LongLabelLocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: '@320: selected long label must be truncated in trigger — no horizontal overflow. Open dropdown: options must wrap. Use locale toolbar for sq/en/uk/it.' } },
+    docs: { description: { story: '@320: selected long label must be truncated in trigger — no horizontal overflow. Open dropdown: options must wrap. Use locale toolbar for sq/en/uk/it.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const items = getStatusItems(locale)
@@ -117,10 +127,16 @@ export const LongLabelLocaleStress: Story = {
       </div>
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 export const Disabled: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -134,10 +150,15 @@ export const Disabled: Story = {
       </div>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const OutlineVariant: Story = {
-  parameters: { viewport: { defaultViewport: 'desktop1280' } },
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
@@ -151,13 +172,19 @@ export const OutlineVariant: Story = {
       </div>
     )
   },
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  },
 }
 
 export const MobileBottomSheet: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: '@320: Select opens as a full-width bottom sheet — edge-to-edge, rounded-t-2xl, drag handle, slide-up. Items ≥44px. Use locale toolbar for sq/en/uk/it.' } },
+    docs: { description: { story: '@320: Select opens as a full-width bottom sheet — edge-to-edge, rounded-t-2xl, drag handle, slide-up. Items ≥44px. Use locale toolbar for sq/en/uk/it.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const items = getStatusItems(locale)
@@ -172,11 +199,17 @@ export const MobileBottomSheet: Story = {
       </div>
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 export const SettlementsLocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
     docs: {
       description: {
         story:
@@ -184,8 +217,9 @@ export const SettlementsLocaleStress: Story = {
           'Use the locale toolbar to switch sq/en/uk/it — each locale shows the appropriate settlement label. ' +
           'Trigger value must truncate; no horizontal overflow.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const data = getSettlements(locale)
@@ -200,4 +234,11 @@ export const SettlementsLocaleStress: Story = {
       </div>
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -132,86 +132,135 @@ function FilterBarDemo({
 
 export const Default: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: 'Desktop ≥1024: Row 1 = search full-width · Row 2 = active chips + count + Reset · Row 3 = available filters. 2 pre-active. Use locale toolbar — chips, labels, search placeholder all update.' } },
+    docs: { description: { story: 'Desktop ≥1024: Row 1 = search full-width · Row 2 = active chips + count + Reset · Row 3 = available filters. 2 pre-active. Use locale toolbar — chips, labels, search placeholder all update.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={2} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const NoActiveFilters: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: '0 active: no count, no Reset. Row 3 = available filters only. Click any filter → it moves to Row 2 active.' } },
+    docs: { description: { story: '0 active: no count, no Reset. Row 3 = available filters only. Click any filter → it moves to Row 2 active.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={0} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const WithActiveFilters: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: '3 of 6 pre-active. Row 2 = active + count(3) + Reset. Row 3 = available. Reset clears all → Row 2 empties, everything moves to Row 3.' } },
+    docs: { description: { story: '3 of 6 pre-active. Row 2 = active + count(3) + Reset. Row 3 = available. Reset clears all → Row 2 empties, everything moves to Row 3.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={6} initialActiveCount={3} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const TabletStack: Story = {
   parameters: {
-    viewport: { defaultViewport: 'tablet768' },
-    docs: { description: { story: '640–1023 band: Sheet trigger inline with search (not stacked). Desktop hierarchy hidden. Sheet opens with active+available sections.' } },
+    docs: { description: { story: '640–1023 band: Sheet trigger inline with search (not stacked). Desktop hierarchy hidden. Sheet opens with active+available sections.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={1} />
   },
+
+  globals: {
+    viewport: {
+      value: 'tablet768',
+      isRotated: false
+    }
+  }
 }
 
 export const MobileStack: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile390' },
-    docs: { description: { story: '<640: Sheet trigger full-width, search full-width, stacked. Desktop hierarchy hidden. Open Sheet → active + available filters inside.' } },
+    docs: { description: { story: '<640: Sheet trigger full-width, search full-width, stacked. Desktop hierarchy hidden. Open Sheet → active + available filters inside.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={2} />
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile390',
+      isRotated: false
+    }
+  }
 }
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile320' },
-    docs: { description: { story: 'uk@320: longest-locale stress. Sheet trigger + search full-width at 320. Ukrainian labels wrap in Sheet. No h-scroll.' } },
+    docs: { description: { story: 'uk@320: longest-locale stress. Sheet trigger + search full-width at 320. Ukrainian labels wrap in Sheet. No h-scroll.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={3} />
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
 }
 
 export const ManyFilters: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1440' },
-    docs: { description: { story: '11 chips: at ≥1024 active row wraps correctly; available row wraps. Reset + count always adjacent to active row.' } },
+    docs: { description: { story: '11 chips: at ≥1024 active row wraps correctly; available row wraps. Reset + count always adjacent to active row.' } }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <FilterBarDemo locale={locale} totalChips={11} initialActiveCount={3} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1440',
+      isRotated: false
+    }
+  }
 }
 
 export const AllLocalesDesktop: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
-    docs: { description: { story: 'Four locale instances at desktop — verify hierarchy correct in sq/en/uk/it.' } },
+    docs: { description: { story: 'Four locale instances at desktop — verify hierarchy correct in sq/en/uk/it.' } }
   },
+
   render: () => (
     <div className="space-y-8">
       <FilterBarDemo locale="sq" totalChips={4} initialActiveCount={1} />
@@ -220,4 +269,11 @@ export const AllLocalesDesktop: Story = {
       <FilterBarDemo locale="it" totalChips={4} initialActiveCount={1} />
     </div>
   ),
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
 import { AdminTable, type AdminTableColumn } from './AdminTable'
 import { storyT } from '@/stories/_storyI18n'
@@ -406,7 +406,6 @@ type Story = StoryObj
 
 export const Default: Story = {
   parameters: {
-    viewport: { defaultViewport: 'canonical1200' },
     docs: {
       description: {
         story:
@@ -414,12 +413,20 @@ export const Default: Story = {
           'Click a ⇅ to open the sort/hide menu. "Columns" button opens the visibility manager. ' +
           'Global search narrows rows. No filter chips. No row interaction (no chevron).',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} />
   },
+
+  globals: {
+    viewport: {
+      value: 'canonical1200',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -432,7 +439,6 @@ export const Default: Story = {
 
 export const ColumnMenu: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story:
@@ -441,12 +447,20 @@ export const ColumnMenu: Story = {
           'After sorting, the active column shows a Check indicator and the ⇅ icon turns primary. ' +
           'After hiding a column, restore it via the Columns manager.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -458,7 +472,6 @@ export const ColumnMenu: Story = {
 
 export const ManageColumns: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story:
@@ -466,12 +479,20 @@ export const ManageColumns: Story = {
           'Re-check "Email" to restore the column. ' +
           '"Name" (first/sticky column) is locked — cannot be hidden to prevent all-columns-hidden state.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} initialHidden={['email']} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -483,7 +504,6 @@ export const ManageColumns: Story = {
 
 export const CardMode: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile390' },
     docs: {
       description: {
         story:
@@ -491,12 +511,20 @@ export const CardMode: Story = {
           'Sort model is the same as desktop; column hide/manage is table-mode only. ' +
           'No row chevron (static). Use viewport toolbar to check 320–960px range.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} />
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile390',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -507,7 +535,6 @@ export const CardMode: Story = {
 
 export const Interactive: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story:
@@ -516,12 +543,20 @@ export const Interactive: Story = {
           'Sort menus, global search, and Columns manager coexist with row interaction. ' +
           'Compare Default (static, no chevron) to see identical sort/search/columns UI.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} interactive />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -532,19 +567,26 @@ export const Interactive: Story = {
 
 export const InteractiveCardMode: Story = {
   parameters: {
-    viewport: { defaultViewport: 'mobile390' },
     docs: {
       description: {
         story:
           '390px card mode — interactive. Auto-ChevronRight in card trailing (via AdminCardList). ' +
           'Click a card → "Selected record" panel. Sort dropdown + search + Columns manager all present.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} interactive />
   },
+
+  globals: {
+    viewport: {
+      value: 'mobile390',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -557,7 +599,6 @@ export const InteractiveCardMode: Story = {
 
 export const Responsive: Story = {
   parameters: {
-    viewport: { defaultViewport: 'tablet768' },
     docs: {
       description: {
         story:
@@ -565,12 +606,20 @@ export const Responsive: Story = {
           '< 1024px → card mode + Sort dropdown; ≥ 1024px → table mode + ⇅ column menus. ' +
           'Same component, same props, same sort model throughout.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return <AdminTableDemo locale={locale} />
   },
+
+  globals: {
+    viewport: {
+      value: 'tablet768',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -582,7 +631,6 @@ export const Responsive: Story = {
 
 export const LocaleStress: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story:
@@ -591,8 +639,9 @@ export const LocaleStress: Story = {
           'Use the locale toolbar to check sq / it / en — all sort labels and "Columns" manager are localized. ' +
           'Use the viewport toolbar to check 320–2560px.',
       },
-    },
+    }
   },
+
   render: () => {
     // Long-string interactive table (uses UK_ROWS dataset for extreme title length test)
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -629,6 +678,13 @@ export const LocaleStress: Story = {
       </div>
     )
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -639,15 +695,15 @@ export const LocaleStress: Story = {
 
 export const EmptyState: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story:
           'Empty state. No rows → no chevrons, no sort affordances active. ' +
           'Type in the search box to trigger the "No records match the search" empty state.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const L = makeLabels(locale)
@@ -659,6 +715,13 @@ export const EmptyState: Story = {
     ]
     return <AdminTable rows={[]} columns={cols} rowKey={r => r.id} emptyState={L.noData} />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════════
@@ -668,13 +731,13 @@ export const EmptyState: Story = {
 
 export const LoadingState: Story = {
   parameters: {
-    viewport: { defaultViewport: 'desktop1280' },
     docs: {
       description: {
         story: 'Loading skeleton — animate-pulse rows. No active affordances.',
       },
-    },
+    }
   },
+
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const L = makeLabels(locale)
@@ -685,4 +748,11 @@ export const LoadingState: Story = {
     ]
     return <AdminTable rows={[]} columns={cols} rowKey={r => r.id} emptyState={L.noData} loading />
   },
+
+  globals: {
+    viewport: {
+      value: 'desktop1280',
+      isRotated: false
+    }
+  }
 }

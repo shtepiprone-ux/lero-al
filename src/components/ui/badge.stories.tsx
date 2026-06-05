@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Badge } from './badge';
 import { storyT } from '@/stories/_storyI18n';
 

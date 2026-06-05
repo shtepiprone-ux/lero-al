@@ -7,9 +7,9 @@
 
 ## Last Session
 
-**2026-06-05 — Task 393 COMPLETE (rendered proof + CI wiring).** AC1: `check:locale-leak` full run on Windows → `leakCount: 0` (157 stories × sq/uk/it × 3 viewports, fresh storybook build). AC2/AC3: `screenshots:assert` 812/812 re-accepted (Tasks 383/390 matrix still green, key cells: StatusChangeControl/Command/Skeleton/AdminToolbar + uk@320/375/390 all PASS). AC4: `check:locale-leak` wired into CI (`locale-leak` job in `governance-pr.yml`, 45-min timeout) + documented in `docs/storybook-governance.md` §14.8. Vitest: 505/505. `tsc=0`, `lint=0`, `check:stories=0`, `check:i18n` PASS.
+**2026-06-05 — Task 395 RE-DO COMPLETE (pending orchestrator diff review).** All 5 rejection items addressed: `node --check` passes (455 lines, complete tail); `git diff messages/en.json` = 0 bytes; `.gitignore` intact (`.claude/` ignored, `# Local Settings` present); Files Changed table corrected (phantom `src/app/[locale]/(admin)/layout.stories.tsx` → real `src/stories/AdminLayout.stories.tsx`); Task 396 filed for `dialog.tsx:81` sr-only hardcode remediation (PER_STORY_TOKENS entry is temporary). Fresh gate evidence: fast `19-03` = 0 leaks; full `19-27` = 0 leaks; negative flow `19-15` = exit 1 `[sq/uk/it] "Close"` in Dialog; `check:stories` = 0 violations. All gates GREEN.
 
-**Next: orchestrator diff review of Tasks 372–393 → explicit-path commit emission → Design System baseline CLOSED-AND-COMMITTED.**
+**Next: orchestrator diff review of Tasks 394 + 395 → commit emission → Sprint 34 unblock (308→309→…).**
 
 ## Pending Action Items
 
@@ -23,7 +23,7 @@ Design System baseline **CLOSED-AND-COMMITTED** (372–393 committed `923827b2d`
 
 **Active queue = Sprint 34** (`tasks/Sprints/Sprint_34_—_Remaining_Backlog_DS_Aligned.md`) — fresh per-task kickoffs for every remaining open task, all on the current contract (clauses 1–13).
 
-1. **🔴 Task 394 — Storybook upgrade (PREREQUISITE, blocks all)** — upgrade SB 8.6 → latest stable, retire <640 workarounds, re-prove `check:stories`/`check:locale-leak`/`screenshots:assert` on the new build.
+1. **✅ Task 394 + 395 — COMPLETE (uncommitted)** → SB10 migration sound + locale-leak gate corrected. Pending orchestrator diff review + commit emission.
 2. Then: **308 → 309** (admin mobile) → **237 → 238** (listing form) → **316/317/318** (i18n) → **243 / 246** → **310 → 311** → **313** (after DB-schema sign-off). Kickoffs filed in `/tasks` per the Sprint 34 index.
 
 ## Frozen / deferred tasks — relevance after Design System (reviewed 2026-06-05)
@@ -45,7 +45,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 >
 > **🆕 Standing principle (owner 2026-06-05):** every still-open task consumes the global Design System (`docs/design-system.md`, Task 340) wherever UI/responsive/overlay surfaces are touched. `docs/rule-index.md` already mandates `design-system.md` as the first pre-read for UI/layout/admin task types — re-scope any pre-DS plan to it before execution.
 
-**Task numbering.** Last used: **394** (Storybook upgrade prerequisite). Next free: **395**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Task numbering.** Last used: **398** (story-coverage gate + scaffold template — PARKED, outside active focus; depends on 396). 397 = batched hardcode remediation (burns down 396 baseline; OPEN, deps 396+395). 396 = sr-only hardcode remediation — `dialog.tsx:81` + `sheet.tsx:74` + `pagination.tsx:121` (OPEN, deps 395). 395 (locale-leak gate re-scope) = RE-DO COMPLETE, pending review. 394 (Storybook 10 upgrade) = migration done, NOT APPROVED, held pending 395 review. **Active focus: 395 re-do review → 396 → 397.** Next free: **399**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH — see `Epic_HH` "Open product decisions"):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. (351/352/353 close + 308/309 DS re-scope — DECIDED 2026-06-05.)
 

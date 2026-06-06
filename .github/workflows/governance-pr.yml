@@ -59,6 +59,9 @@ jobs:
       - name: Static i18n hardcode gate (fail-on-new, baseline-diff)
         run: npm run check:i18n-hardcode
 
+      - name: File integrity gate (NUL bytes, BOM, parse errors, truncation)
+        run: npm run check:file-integrity:all
+
       - name: Full governance report (summary)
         if: always()
         run: npm run governance

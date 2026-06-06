@@ -7,9 +7,9 @@
 
 ## Last Session
 
-**2026-06-05 — Task 396 COMPLETE (pending orchestrator diff review).** Static i18n hardcode scanner built: `scripts/check-hardcoded-i18n.mjs` (327 lines, `node --check` passes, `run()` invoked at end); baseline `scripts/i18n-hardcode-baseline.json` (47 entries, 25 files); audit `docs/i18n-hardcode-audit.md` (all 3 sr-only + 11 aria-label known items confirmed, + 33 additional). Gate wired: `check:i18n-hardcode` in `package.json` + CI `governance-pr.yml`. Negative flows proven: planted `aria-label="Brand New Hardcode"` → exit 1; same word in new file → exit 1; reverted → exit 0. `tsc=0`. No `src/**` edits.
+**2026-06-06 — Task 400 COMPLETE (file-integrity gate).** `scripts/check-file-integrity.mjs` built + verified: `node --check` clean, 0 NUL bytes, complete (ends `\nrun();\n`). `npm run check:file-integrity:all` runs green over 818 files. Negative-flow proven: NUL plant → exit 1 naming offender; `{`-only JSON → exit 1; truncated `.mjs` → exit 1; all three plants reverted → exit 0. `check:file-integrity` + `:all` scripts added to `package.json`; `File integrity gate` step wired into CI (`governance-pr.yml`); `docs/ai-behavior.md` Note 18 updated with clause-14 cross-link + `integrity=PASS` added to self-validation verdict line. `tsc --noEmit` = 0. Pending orchestrator review + commit.
 
-**Next: orchestrator diff review of Tasks 394 + 395 + 396 → commit emission → Task 397 (batched remediation).**
+**2026-06-05 — Task 397 APPROVED + commit emitted.** Native verification: NUL=0, `check:i18n-hardcode` exit 0, `tsc --noEmit`=0. Commit: `fix(Task397): remediate 47 i18n hardcodes …`. **Next: Task 400 → 399 → parked 398.**
 
 ## Pending Action Items
 
@@ -45,7 +45,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 >
 > **🆕 Standing principle (owner 2026-06-05):** every still-open task consumes the global Design System (`docs/design-system.md`, Task 340) wherever UI/responsive/overlay surfaces are touched. `docs/rule-index.md` already mandates `design-system.md` as the first pre-read for UI/layout/admin task types — re-scope any pre-DS plan to it before execution.
 
-**Task numbering.** Last used: **398** (story-coverage gate + scaffold template — PARKED, outside active focus; depends on 396). 397 = batched hardcode remediation (burns down 396 baseline; OPEN, deps 396+395). 396 = static i18n hardcode scanner + baseline + CI gate (COMPLETE, pending review). 395 (locale-leak gate re-scope) = RE-DO COMPLETE, pending review. 394 (Storybook 10 upgrade) = migration done, NOT APPROVED, held pending 395 review. **Active focus: 394+395+396 review → commit emission → 397.** Next free: **399**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Task numbering.** Last used: **400** (file-integrity gate — COMPLETE, pending commit). 399 = harden i18n scanner vs `{'...'}` evasion (depends on 397). 398 = story-coverage gate + scaffold (PARKED). 397 = COMMITTED. 396 = COMMITTED. 394+395 = COMMITTED. **Active focus: orchestrator review + commit 400; then 399.** Next free: **401**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH — see `Epic_HH` "Open product decisions"):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. (351/352/353 close + 308/309 DS re-scope — DECIDED 2026-06-05.)
 

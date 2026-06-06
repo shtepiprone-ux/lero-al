@@ -107,9 +107,20 @@ Before reporting any task complete, Sonnet 4.6 MUST run, in order, and paste the
    - For any admin table or admin edit screen, verify every row-level action and every sidebar control
      that existed before the change still exists and is reachable (Note 20).
 
-5. **Self-validation verdict line in the session log:**
+5. **File-integrity check (agent-contract clause 14, Task 400, 2026-06-06 — mandatory for every touched file):**
+   For EVERY file written or edited in this task, confirm before writing the session log:
+   - **0 NUL bytes**: `node -e "const b=require('fs').readFileSync(p); if(b.includes(0)) throw new Error('NUL')" p=<file>` exits 0
+   - **No stray UTF-8 BOM**: first 3 bytes ≠ `ef bb bf`
+   - **JSON parses**: `node -e "JSON.parse(require('fs').readFileSync('<file>','utf8'))"` exits 0 (for `.json` files)
+   - **MJS/JS syntax clean**: `node --check <file>` exits 0 (for `.mjs`/`.js` files)
+   - **Not truncated**: re-read the tail; the intended last line is present
+   - Run `npm run check:file-integrity` (or `check:file-integrity:all`) and paste the green transcript.
+   A claimed `tsc=0`/gate-green contradicted by NUL bytes or a parse failure is a fabricated proof and a TASK FAILURE.
+   Full rule: `docs/agent-contract.md` clause 14. Gate script: `scripts/check-file-integrity.mjs` (Task 400).
+
+6. **Self-validation verdict line in the session log:**
    ```
-   Self-validation: tsc=0 errors · build=passes · AC table=all green · runtime locale=uk PASS · scope=clean
+   Self-validation: tsc=0 errors · build=passes · AC table=all green · runtime locale=uk PASS · scope=clean · integrity=PASS
    ```
    This single line is the executor's signed claim. If it is missing OR any field is not "PASS/green",
    the task is INCOMPLETE and the orchestrator will route it back.

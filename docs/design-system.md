@@ -695,4 +695,59 @@ Source of truth for breakpoints: `@import "tailwindcss"`. Use `sm:` / `lg:` etc.
 
 | Token | Value | Use via |
 |---|---|---|
-| `--container-max` | `88rem` (1408px) | `var(--container-max)` — `.container-wide` max-width source of truth |
+| `--width-page-max` | `88rem` (1408px) | `var(--width-page-max)` / the `.container-wide` rule — **NOT** `max-w-max` (that resolves to CSS `max-content`, not the token) |
+
+---
+
+## §23 — `check:design-tokens` gate (report → strict in Task 407) — Task 402, Epic JJ Phase 2
+
+> **The gate runs in report mode now (always exit 0). Strict mode (exit 1 on violation)
+> will be wired to CI in Task 407 after the refactor surface (Tasks 403–406) is clean.**
+
+### §23.1 — What it detects
+
+`scripts/check-design-tokens.mjs` scans `src/**/*.{tsx,ts,css}` for raw style-value literals
+that bypass the token system defined in §22:
+
+| Category | Examples flagged | Examples NOT flagged |
+|---|---|---|
+| Color literals | `#abcdef`, `#fff`, `rgb(255,0,0)`, `hsl(220,100%,50%)`, `oklch(...)` | `var(--color-primary)`, `text-red-500` |
+| Length (arbitrary) | `p-[13px]`, `h-[340px]`, `text-[10px]`, `max-w-[220px]` | `p-4`, `h-11`, `text-sm`, `max-w-md` |
+| Z-index (arbitrary) | `z-[100]`, `z-[9999]`, `zIndex: 9999` | `z-50`, `z-30` |
+| Shadow (arbitrary) | `shadow-[0_2px_4px_rgba(...)]` | `shadow-sm`, `shadow-md` |
+| Duration (arbitrary) | `duration-[450ms]`, `transitionDuration: '300ms'` | `duration-200`, `duration-300` |
+| Inline style px/rem | `width: '220px'`, `height: "44px"` | `var(--control-h-lg)` |
+
+Excluded from scanning:
+- `src/app/globals.css` — the token source of truth (§22 lives here)
+- Everything in `scripts/design-tokens-allowlist.json` (email templates, brand SVG colors)
+
+### §23.2 — Allowlist (`scripts/design-tokens-allowlist.json`)
+
+A JSON map of `"path-prefix": "one-line justification"` for genuinely un-tokenizable values:
+
+| Path | Reason |
+|---|---|
+| `src/modules/notifications/lib/emails` | HTML email clients do not support CSS custom properties |
+| `src/modules/notifications/lib/sendTemplatedEmail.ts` | HTML email layout with inline hex literals |
+| `src/app/api/auth-email-hook/route.ts` | Supabase auth email hook — inline HTML email for email_change events |
+| `src/modules/auth/components/AuthSheet.tsx` | Official Google brand SVG colors (policy-fixed) |
+
+To add an entry: edit the file directly with a real justification (no stubs). Stale entries
+(pointing to non-existent paths) are printed as warnings but do NOT fail the check.
+
+### §23.3 — CLI modes
+
+| npm script | Behavior |
+|---|---|
+| `npm run check:design-tokens` | Report mode — prints inventory, **always exit 0** |
+| `npm run check:design-tokens:strict` | Strict mode — exit 1 on any violation (NOT in CI yet) |
+| `npm run check:design-tokens:update-allowlist` | Seed/refresh allowlist stubs from current scan |
+
+### §23.4 — Rollout plan
+
+| Task | Action |
+|---|---|
+| **402** (done) | Detector built + report mode wired to CI (`continue-on-error: true`) |
+| **403–406** | Refactor consumers: replace raw values with tokens from §22 |
+| **407** | Flip CI step to strict (`continue-on-error: false`); remove this note |

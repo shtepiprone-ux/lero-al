@@ -234,8 +234,9 @@
   --icon-sm: 0.75rem;       /* 12px — h-3 w-3: tiny/badge icons */
   --icon-md: 1rem;          /* 16px — h-4 w-4: standard UI icons */
   --icon-lg: 1.5rem;        /* 24px — h-6 w-6: section/decorative icons */
-  /* Container max-width: .container-wide source of truth (design-system.md §4) */
-  --container-max: 88rem;   /* 1408px — public page max-width */
+  /* Container max-width: .container-wide source of truth (design-system.md §4).
+     NOT in the --container-* namespace (avoids max-w-max keyword clash). */
+  --width-page-max: 88rem;  /* 1408px — access via var(--width-page-max) or .container-wide */
 }
 
 /* ─────────────────────────────────────────────

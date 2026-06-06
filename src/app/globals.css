@@ -90,6 +90,152 @@
   --font-sans:    var(--font-geist-sans);
   --font-mono:    var(--font-geist-mono);
   --font-heading: var(--font-geist-sans);
+
+  /* ═══════════════════════════════════════════════════════════════
+     DESIGN VARIABLES — Epic JJ Phase 1 (Task 401, 2026-06-06)
+     Token foundation: spacing · typography · elevation · z-index ·
+     motion · breakpoints · sizing.
+     Single source of truth for all raw style values in src/**.
+     Raw px/rem/hex/z-index/shadow/duration literals in src/**
+     are forbidden after Task 402 (check:design-tokens gate).
+     To change a value project-wide → change it HERE first.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ── 1. Spacing scale — 4 px base (Tailwind default) ────────── */
+  /* Named tokens --space-N mirror the Tailwind spacing step N.
+     --spacing-N: var(--space-N) wires each p-N / m-N / gap-N / h-N
+     utility to resolve through the named token, not the formula
+     (satisfies "NOT a parallel definition" rule). */
+  --space-0:   0px;
+  --space-1:   0.25rem;    /*  4px */
+  --space-2:   0.5rem;     /*  8px */
+  --space-3:   0.75rem;    /* 12px */
+  --space-4:   1rem;       /* 16px */
+  --space-5:   1.25rem;    /* 20px */
+  --space-6:   1.5rem;     /* 24px */
+  --space-7:   1.75rem;    /* 28px */
+  --space-8:   2rem;       /* 32px */
+  --space-9:   2.25rem;    /* 36px */
+  --space-10:  2.5rem;     /* 40px */
+  --space-11:  2.75rem;    /* 44px — touch-target floor (§12a) */
+  --space-12:  3rem;       /* 48px */
+  --space-14:  3.5rem;     /* 56px — bottom-nav height */
+  --space-16:  4rem;       /* 64px */
+  --space-20:  5rem;       /* 80px */
+  --space-24:  6rem;       /* 96px */
+  /* Fractional steps — var() access only (CSS names cannot contain ".") */
+  --space-0-5: 0.125rem;   /*  2px */
+  --space-1-5: 0.375rem;   /*  6px */
+  --space-2-5: 0.625rem;   /* 10px */
+  --space-3-5: 0.875rem;   /* 14px */
+  /* Spacing utility wiring (Tailwind v4: explicit --spacing-N overrides computed scale) */
+  --spacing-0:  var(--space-0);
+  --spacing-1:  var(--space-1);
+  --spacing-2:  var(--space-2);
+  --spacing-3:  var(--space-3);
+  --spacing-4:  var(--space-4);
+  --spacing-5:  var(--space-5);
+  --spacing-6:  var(--space-6);
+  --spacing-7:  var(--space-7);
+  --spacing-8:  var(--space-8);
+  --spacing-9:  var(--space-9);
+  --spacing-10: var(--space-10);
+  --spacing-11: var(--space-11);
+  --spacing-12: var(--space-12);
+  --spacing-14: var(--space-14);
+  --spacing-16: var(--space-16);
+  --spacing-20: var(--space-20);
+  --spacing-24: var(--space-24);
+
+  /* ── 2. Typography scale ──────────────────────────────────────── */
+  /* --text-N mirrors Tailwind v4 default sizes (visually inert);
+     --text-N--line-height backs the matching line-height emitted by
+     Tailwind's text-N utility alongside font-size. */
+  --text-xs:               0.75rem;   /* 12px */
+  --text-xs--line-height:  1rem;      /* 16px */
+  --text-sm:               0.875rem;  /* 14px */
+  --text-sm--line-height:  1.25rem;   /* 20px */
+  --text-base:             1rem;      /* 16px */
+  --text-base--line-height: 1.5rem;   /* 24px */
+  --text-lg:               1.125rem;  /* 18px */
+  --text-lg--line-height:  1.75rem;   /* 28px */
+  --text-xl:               1.25rem;   /* 20px */
+  --text-xl--line-height:  1.75rem;   /* 28px */
+  --text-2xl:              1.5rem;    /* 24px */
+  --text-2xl--line-height: 2rem;      /* 32px */
+  --text-3xl:              1.875rem;  /* 30px */
+  --text-3xl--line-height: 2.25rem;   /* 36px */
+  --text-4xl:              2.25rem;   /* 36px */
+  --text-4xl--line-height: 2.5rem;    /* 40px */
+  --text-5xl:              3rem;      /* 48px */
+  --text-5xl--line-height: 1;         /* unitless */
+  /* Font weights — backs font-{name} utilities */
+  --font-weight-normal:    400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  /* Letter-spacing — backs tracking-{name} utilities */
+  --tracking-tight:  -0.025em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.025em;
+
+  /* ── 3. Elevation — shadow scale ─────────────────────────────── */
+  /* Mirrors Tailwind v4 defaults. Backs shadow-{xs,sm,md,lg,xl} utilities.
+     Defining explicitly makes the source of truth visible and changeable here. */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  /* ── 4. Z-index — canonical semantic scale ───────────────────── */
+  /* Reconciles ui-rules.md §16 (Chrome z-30 / Scrim z-40 / Floating z-50).
+     Backs z-{name} utilities; numeric aliases z-30/z-40/z-50 remain valid.
+     Exception: z-[9999] (Combobox mobile sheet, PerfDevOverlay) is intentionally
+     above the scale and stays as an allowlisted arbitrary value. */
+  --z-base:     0;    /* base page content */
+  --z-dropdown: 10;   /* within-card absolute positioning (sticky cols, count badges) */
+  --z-sticky:   30;   /* chrome: site header, bottom nav, sticky admin header */
+  --z-overlay:  40;   /* scrim: sheet/dialog backdrop (covers chrome) */
+  --z-modal:    50;   /* floating: dialog/sheet panels */
+  --z-popover:  50;   /* floating: combobox, dropdowns (same tier as modal) */
+  --z-toast:    100;  /* highest: Sonner toasts, ListingGallery lightbox (allowlisted) */
+
+  /* ── 5. Motion — durations + easing ─────────────────────────── */
+  /* Durations derived from actual usage: backdrop=100ms, hover=200ms, image=300ms.
+     Backs duration-{name} utilities. */
+  --duration-fast: 100ms;  /* micro-interactions: dialog backdrop, chip state */
+  --duration-base: 200ms;  /* standard: hover/active transitions */
+  --duration-slow: 300ms;  /* deliberate: image fade-in, reveal animations */
+  /* Easing — backs ease-{name} utilities.
+     ease-in / ease-out mirror Tailwind v4 defaults (visually inert);
+     ease-standard is a new general-purpose alias for ease-in-out. */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);  /* general-purpose (ease-in-out) */
+  --ease-in:       cubic-bezier(0.4, 0, 1, 1);     /* accelerating/exiting */
+  --ease-out:      cubic-bezier(0, 0, 0.2, 1);      /* decelerating/entering */
+
+  /* ── 6. Breakpoints — reference tokens (docs / JS use only) ─── */
+  /* Source of truth for Tailwind breakpoints is @import "tailwindcss".
+     These tokens document canonical widths; do NOT use in @media queries
+     (Tailwind breakpoints are not forked). */
+  --bp-sm:  640px;    /* sm: — first responsive step */
+  --bp-md:  768px;    /* md: */
+  --bp-lg:  1024px;   /* lg: — admin sidebar + table↔card flip */
+  --bp-xl:  1280px;   /* xl: */
+  --bp-2xl: 1536px;   /* 2xl: — huge desktop */
+
+  /* ── 7. Sizing — control heights · icon sizes · container ────── */
+  /* Control heights: one-row-one-height contract (design-system.md §12a / ui-rules.md §15).
+     Three tiers for form-controls (Input / Combobox / Select / Button). */
+  --control-h-sm: 2rem;     /* 32px — xs: compact admin chrome (desktop only) */
+  --control-h-md: 2.25rem;  /* 36px — sm: desktop-dense rows (h-9 / size="sm") */
+  --control-h-lg: 2.75rem;  /* 44px — default: mobile-safe touch target (h-11 / size="xl") */
+  /* Icon sizes: canonical from ui-rules.md §5 */
+  --icon-sm: 0.75rem;       /* 12px — h-3 w-3: tiny/badge icons */
+  --icon-md: 1rem;          /* 16px — h-4 w-4: standard UI icons */
+  --icon-lg: 1.5rem;        /* 24px — h-6 w-6: section/decorative icons */
+  /* Container max-width: .container-wide source of truth (design-system.md §4) */
+  --container-max: 88rem;   /* 1408px — public page max-width */
 }
 
 /* ─────────────────────────────────────────────

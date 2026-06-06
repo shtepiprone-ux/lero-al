@@ -542,3 +542,157 @@ ANY of the following = FAIL (route back, do not approve):
 ---
 
 *End of Global Responsive Design System Contract v1 (Task 340).*
+
+---
+
+## §22 — Design Variables (canonical token registry) — Task 401, Epic JJ Phase 1
+
+> **This registry is the single source of truth for all style values.**
+> Raw hex/rgb/hsl/px/rem/z-index/shadow/duration literals in `src/**` are forbidden
+> (enforced by `check:design-tokens`, Task 402/407). To change a value project-wide,
+> change it HERE. All tokens live in `src/app/globals.css` → `@theme inline`, Epic JJ
+> section (added 2026-06-06). Note: the kickoff referenced §20 but that section was already
+> occupied; §22 is the correct placement.
+
+### §22.1 — Spacing tokens
+
+| Token | Value | px | Use via |
+|---|---|---|---|
+| `--space-0` | `0px` | 0 | `p-0`, `m-0`, `gap-0`, or `var(--space-0)` |
+| `--space-1` | `0.25rem` | 4 | `p-1`, `m-1`, `gap-1` |
+| `--space-2` | `0.5rem` | 8 | `p-2`, `gap-2` — toolbar/button-group gap |
+| `--space-3` | `0.75rem` | 12 | `p-3`, `gap-3` — compact card padding |
+| `--space-4` | `1rem` | 16 | `p-4`, `gap-4` — standard card/form gap |
+| `--space-5` | `1.25rem` | 20 | `p-5` — admin card padding |
+| `--space-6` | `1.5rem` | 24 | `p-6`, `gap-6` — dialog/section inner |
+| `--space-7` | `1.75rem` | 28 | `p-7`, `gap-7` |
+| `--space-8` | `2rem` | 32 | `p-8`, `py-8` — tight section padding |
+| `--space-9` | `2.25rem` | 36 | `p-9`, `h-9` — sm form-control height |
+| `--space-10` | `2.5rem` | 40 | `p-10` |
+| `--space-11` | `2.75rem` | 44 | `h-11` — **touch-target floor** (§12a) |
+| `--space-12` | `3rem` | 48 | `py-12` — standard section padding |
+| `--space-14` | `3.5rem` | 56 | `h-14` — bottom-nav height |
+| `--space-16` | `4rem` | 64 | `py-16` — wide section padding |
+| `--space-20` | `5rem` | 80 | `py-20` — 2xl section padding |
+| `--space-24` | `6rem` | 96 | `py-24` — hero section padding |
+| `--space-0-5` | `0.125rem` | 2 | `var(--space-0-5)` (fractional — var only) |
+| `--space-1-5` | `0.375rem` | 6 | `var(--space-1-5)` |
+| `--space-2-5` | `0.625rem` | 10 | `var(--space-2-5)` |
+| `--space-3-5` | `0.875rem` | 14 | `var(--space-3-5)` |
+
+Utilities are wired: `--spacing-N: var(--space-N)` → `p-N` / `m-N` / `gap-N` / `h-N` resolve through the token.
+
+### §22.2 — Typography tokens
+
+**Font sizes + line-heights**
+
+| Token | Value | px | Paired line-height token | Use via |
+|---|---|---|---|---|
+| `--text-xs` | `0.75rem` | 12 | `--text-xs--line-height: 1rem` | `text-xs` |
+| `--text-sm` | `0.875rem` | 14 | `--text-sm--line-height: 1.25rem` | `text-sm` — body, labels |
+| `--text-base` | `1rem` | 16 | `--text-base--line-height: 1.5rem` | `text-base` |
+| `--text-lg` | `1.125rem` | 18 | `--text-lg--line-height: 1.75rem` | `text-lg` — subsection H3 |
+| `--text-xl` | `1.25rem` | 20 | `--text-xl--line-height: 1.75rem` | `text-xl` — section H2 base |
+| `--text-2xl` | `1.5rem` | 24 | `--text-2xl--line-height: 2rem` | `text-2xl` — section H2 sm: |
+| `--text-3xl` | `1.875rem` | 30 | `--text-3xl--line-height: 2.25rem` | `text-3xl` — page H1 sm: |
+| `--text-4xl` | `2.25rem` | 36 | `--text-4xl--line-height: 2.5rem` | `text-4xl` — hero sm: |
+| `--text-5xl` | `3rem` | 48 | `--text-5xl--line-height: 1` | `text-5xl` — hero md: |
+
+**Font weights**
+
+| Token | Value | Use via |
+|---|---|---|
+| `--font-weight-normal` | `400` | `font-normal` |
+| `--font-weight-medium` | `500` | `font-medium` — label H4 |
+| `--font-weight-semibold` | `600` | `font-semibold` — subsection H3, card titles |
+| `--font-weight-bold` | `700` | `font-bold` — headings, section H2 |
+
+**Letter-spacing**
+
+| Token | Value | Use via |
+|---|---|---|
+| `--tracking-tight` | `-0.025em` | `tracking-tight` — headings |
+| `--tracking-normal` | `0em` | `tracking-normal` — body |
+| `--tracking-wide` | `0.025em` | `tracking-wide` — labels |
+
+### §22.3 — Elevation tokens
+
+**Shadows**
+
+| Token | Value | Use via |
+|---|---|---|
+| `--shadow-xs` | `0 1px 2px 0 rgb(0 0 0 / 0.05)` | `shadow-xs` — very subtle (selection highlight) |
+| `--shadow-sm` | `0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)` | `shadow-sm` — **canonical card** (`bg-card rounded-2xl border shadow-sm`) |
+| `--shadow-md` | `0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)` | `shadow-md` — popover/dropdown |
+| `--shadow-lg` | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` | `shadow-lg` — sheet/combobox, hover-elevated card |
+| `--shadow-xl` | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` | `shadow-xl` — DatePicker |
+
+**Z-index** (reconciles `ui-rules.md §16`: Chrome=30 / Scrim=40 / Floating=50)
+
+| Token | Value | Tier | Use via |
+|---|---|---|---|
+| `--z-base` | `0` | base | `z-base` or `z-0` — base page content |
+| `--z-dropdown` | `10` | within-card | `z-dropdown` or `z-10` — sticky cols, count badges, abs-within-card |
+| `--z-sticky` | `30` | chrome | `z-sticky` or `z-30` — site header, bottom nav, sticky admin header |
+| `--z-overlay` | `40` | scrim | `z-overlay` or `z-40` — sheet/dialog backdrop (covers chrome) |
+| `--z-modal` | `50` | floating | `z-modal` or `z-50` — dialog/sheet panels |
+| `--z-popover` | `50` | floating | `z-popover` or `z-50` — combobox, dropdowns (same tier as modal) |
+| `--z-toast` | `100` | highest | `z-toast` — Sonner toasts, ListingGallery lightbox (allowlisted) |
+
+Exception: `z-[9999]` (Combobox mobile bottom sheet, PerfDevOverlay) is intentionally above the scale and stays as an allowlisted arbitrary value.
+
+### §22.4 — Motion tokens
+
+**Durations** (derived from actual usage: dialog=100ms, hover=200ms, image=300ms)
+
+| Token | Value | Use via |
+|---|---|---|
+| `--duration-fast` | `100ms` | `duration-fast` — micro-interactions (backdrop, chip state) |
+| `--duration-base` | `200ms` | `duration-base` — standard hover/active transitions |
+| `--duration-slow` | `300ms` | `duration-slow` — deliberate: image fade-in, reveal |
+
+**Easing**
+
+| Token | Value | Use via |
+|---|---|---|
+| `--ease-standard` | `cubic-bezier(0.4, 0, 0.2, 1)` | `ease-standard` — general-purpose (ease-in-out) |
+| `--ease-in` | `cubic-bezier(0.4, 0, 1, 1)` | `ease-in` — accelerating/exiting elements |
+| `--ease-out` | `cubic-bezier(0, 0, 0.2, 1)` | `ease-out` — decelerating/entering elements |
+
+Note: navigation-menu uses a spring curve `cubic-bezier(0.22,1,0.36,1)` — a justified allowlisted special case that stays as an arbitrary value.
+
+### §22.5 — Breakpoints + sizing tokens
+
+**Breakpoint reference tokens** (documentation/JS use — Tailwind breakpoints NOT forked)
+
+| Token | Value | Tailwind prefix | Note |
+|---|---|---|---|
+| `--bp-sm` | `640px` | `sm:` | First responsive step; mobile/tablet boundary |
+| `--bp-md` | `768px` | `md:` | Tablet; navigation changes |
+| `--bp-lg` | `1024px` | `lg:` | Desktop; admin sidebar + table↔card flip |
+| `--bp-xl` | `1280px` | `xl:` | Wide desktop; grid expansions |
+| `--bp-2xl` | `1536px` | `2xl:` | Huge desktop; MUST add for grids/containers |
+
+Source of truth for breakpoints: `@import "tailwindcss"`. Use `sm:` / `lg:` etc. in Tailwind classes; use `var(--bp-lg)` only in JS (e.g., matchMedia calls, portal positioning).
+
+**Control heights** (one-row-one-height contract — `design-system.md §12a` / `ui-rules.md §15`)
+
+| Token | Value | px | Use via |
+|---|---|---|---|
+| `--control-h-sm` | `2rem` | 32 | `var(--control-h-sm)` — xs: compact admin chrome (desktop only) |
+| `--control-h-md` | `2.25rem` | 36 | `var(--control-h-md)` — sm: desktop-dense rows (`h-9` / `size="sm"`) |
+| `--control-h-lg` | `2.75rem` | 44 | `var(--control-h-lg)` — default: **mobile-safe touch target** (`h-11` / `size="xl"`) |
+
+**Icon sizes** (canonical from `ui-rules.md §5`)
+
+| Token | Value | px | Use via |
+|---|---|---|---|
+| `--icon-sm` | `0.75rem` | 12 | `var(--icon-sm)` — `h-3 w-3`: tiny/badge icons |
+| `--icon-md` | `1rem` | 16 | `var(--icon-md)` — `h-4 w-4`: standard UI icons |
+| `--icon-lg` | `1.5rem` | 24 | `var(--icon-lg)` — `h-6 w-6`: section/decorative icons |
+
+**Container**
+
+| Token | Value | Use via |
+|---|---|---|
+| `--container-max` | `88rem` (1408px) | `var(--container-max)` — `.container-wide` max-width source of truth |

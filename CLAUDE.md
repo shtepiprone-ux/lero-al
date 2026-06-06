@@ -14,16 +14,34 @@
 > locales (uk@320/375/390 mandatory). tsc/build passing is NOT proof.** Full rule: `docs/agent-contract.md`
 > clauses 11–12 + `docs/orchestrator-role.md` → "Mobile <640 full-width gate".
 
-> ## 🧭 ORCHESTRATOR SESSION-START PROTOCOL (Opus) — DO THIS FIRST, EVERY SESSION
-> Before any planning/work, the Opus orchestrator MUST:
-> 1. **Read `docs/orchestrator-role.md`** (loop, review checklist, commit-emission rules).
-> 2. **Read `docs/agent-contract.md` + `docs/backlog.md`** (P0 contract + current state). Never plan from memory.
-> 3. **Pre-read per `docs/rule-index.md`** for the task type — not "read all docs".
-> 4. **Git = single-writer:** Opus NEVER runs mutating git (`add/commit/push/reset/...`); only the owner, in PowerShell. Opus emits explicit-path commit commands AFTER diff review.
-> 5. **Every kickoff → a FILE in `/tasks`** (never only chat), with **both** Positive & Negative flows; on return, **review the real `git diff`, not the report**.
-> 6. **Opus does not write product code** (`src/`, `app/`, `components/`, `modules/`, migrations, locales) unless the owner explicitly instructs it. Implementation is Sonnet's job.
+> ## 🛑🔴 ORCHESTRATOR SESSION-START GATE (Opus) — HARD BLOCK, NO EXCEPTION (owner P0, 2026-06-06, demanded repeatedly) 🔴🛑
+> **THE OWNER HAS REJECTED THIS BEING SKIPPED EVERY SESSION. This is now a HARD GATE, not a reminder.**
+> **Before reading the task, before ANY analysis, review, planning, tool call, or answer — the FIRST action of
+> every orchestrator session MUST be to OPEN AND READ these files in full (via the Read tool, not from memory,
+> not from a `git diff` fragment):**
+> 1. **`docs/orchestrator-role.md`** (loop, review checklist, commit-emission rules).
+> 2. **`docs/agent-contract.md`** (the 14 P0 clauses).
+> 3. **`docs/backlog.md`** (current state). Never plan or review from memory.
+> 4. **Pre-read per `docs/rule-index.md`** for the task type — not "read all docs".
 >
-> Detail lives in `docs/orchestrator-role.md` — this block is only the unmissable trigger.
+> **MANDATORY SELF-ATTESTATION — the orchestrator's FIRST message of every session MUST begin with this exact line,
+> filled in, BEFORE any other content:**
+> ```
+> ✅ Session-start gate: read orchestrator-role.md · agent-contract.md (clauses 1–14) · backlog.md (HEAD=<sha>) · rule-index pre-read for <task-type>.
+> ```
+> **If that attestation line is not the first thing emitted, the orchestrator has VIOLATED the gate. Any review,
+> verdict, plan, or commit emission produced without it is INVALID and must be discarded and redone from the top —
+> the owner will reject it on sight.** Reading the rules only AFTER starting work (as happened on Task 400 review,
+> 2026-06-06) is the exact failure this gate exists to stop. NO EXCEPTION, NO "I already know the rules", NO
+> "it's a quick task". Read first, attest first, THEN work.
+>
+> **Standing rules carried by every session (verify against the read, not memory):**
+> - **Git = single-writer:** Opus NEVER runs mutating git (`add/commit/push/reset/...`); only the owner, in PowerShell. Opus emits explicit-path commit commands AFTER diff review.
+> - **Every kickoff → a FILE in `/tasks`** (never only chat), with **both** Positive & Negative flows; on return, **review the real `git diff`, not the report**.
+> - **Opus does not write product code** (`src/`, `app/`, `components/`, `modules/`, migrations, locales) unless the owner explicitly instructs it. Implementation is Sonnet's job.
+> - **Integrity re-runs are a SCREEN, not a verdict** (agent-contract clause 14): the Cowork sandbox mount can serve stale/fluctuating reads; the authoritative integrity check is native (owner PowerShell) or CI.
+>
+> Detail lives in `docs/orchestrator-role.md` — this block is the unmissable, MANDATORY trigger.
 
 ## Project Context
 Real Estate Marketplace for the Albanian market.

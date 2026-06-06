@@ -4,6 +4,13 @@
 > The rest of `/docs/` (especially `ai-behavior.md`) defines rules for the **Sonnet 4.6**
 > executor. This file defines the rules for the planning/review layer that sits above it.
 > Read this at the start of every orchestrator session.
+>
+> **🛑 SESSION-START GATE (owner P0, 2026-06-06):** reading this file is not optional and not "later" — it is a
+> HARD BLOCK. The FIRST output of every orchestrator session MUST be the session-start attestation line defined in
+> `CLAUDE.md` → "ORCHESTRATOR SESSION-START GATE" (`✅ Session-start gate: read orchestrator-role.md · agent-contract.md
+> (clauses 1–14) · backlog.md (HEAD=<sha>) · rule-index pre-read for <task-type>.`). Any review/verdict/plan produced
+> without having read this file + `agent-contract.md` + `backlog.md` FIRST is INVALID and must be redone. Reading the
+> rules only after starting work (Task 400 review, 2026-06-06) is the exact failure this gate stops.
 
 **Related sources of truth (read before writing a kickoff):**
 - `docs/agent-contract.md` — the short P0 Sonnet contract every kickoff must enforce.
@@ -158,6 +165,7 @@ a hard gate on BOTH sides of the loop:
 
 ## Review checklist (run on every returned task)
 
+- [ ] **🔴 File-integrity (agent-contract clause 14) — RE-RUN, do not trust the log:** every touched file has **0 NUL bytes** (`tr -cd '\000' < f | wc -c` = 0), no stray BOM, `.json` passes `JSON.parse`, `.mjs/.js` passes `node --check`, `.ts/.tsx` compiles, and no file is truncated mid-token. A NUL/unparseable/truncated touched file = **auto-reject, route back** — even if the log claims `tsc=0`/gate-green (that claim is then fabricated). This caught Task 395 (truncated gate script) and Task 397 ×2 (truncated baseline + NUL-corrupted email files).
 - [ ] Diff actually matches the session-log "Files Changed" table (no undisclosed edits).
 - [ ] Every acceptance criterion verifiable in the diff (not just ticked in the report).
 - [ ] **Self-validation block present in the session log** (Note 18, `ai-behavior.md`): the AC-by-AC

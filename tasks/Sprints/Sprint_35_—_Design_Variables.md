@@ -9,8 +9,8 @@
 
 | # | Task | Type | Status | Kickoff file |
 |---|------|------|--------|--------------|
-| **401** | Token foundation — complete `@theme` variable layer + `design-system.md` registry (visually inert) | tooling/styling + governance | KICKOFF READY | `Sprint_35_kickoff_prompt_Task_401_TokenFoundation.md` |
-| **402** | `check:design-tokens` detector — report mode; raw hex/rgb/hsl/px/rem/z/shadow/duration scan + CI report step | tooling/governance | TO DRAFT | (after 401 approved) |
+| **401** | Token foundation — complete `@theme` variable layer + `design-system.md` registry (visually inert) | tooling/styling + governance | ✅ APPROVED (commit emitted) — inertness proven vs TW 4.3 engine source | `Sprint_35_kickoff_prompt_Task_401_TokenFoundation.md` |
+| **402** | `check:design-tokens` detector — report mode; raw hex/rgb/hsl/px/rem/z/shadow/duration scan + non-blocking CI report step. **Folds in:** `--container-max`→`--width-page-max` cleanup (401 footgun fix) | tooling/governance + tiny token fix | KICKOFF READY | `Sprint_35_kickoff_prompt_Task_402_DesignTokensDetector.md` |
 | **403** | Refactor `src/components/ui/**` to tokens (visually inert) | UI/styling | TO DRAFT | (after 402) |
 | **404** | Refactor `src/components/shared/**` + `src/components/layout/**` to tokens | UI/styling | TO DRAFT | (after 403) |
 | **405** | Refactor `src/components/admin/**` to tokens | UI/admin/styling | TO DRAFT | (after 404) |

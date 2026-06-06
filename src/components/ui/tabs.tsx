@@ -27,7 +27,7 @@ function Tabs({
 // clipped. Without this, overflow content starts from the centre, cutting the
 // first tab on the left edge (Sprint 32 RC-1, Task 382).
 const tabsListClass =
-  "group/tabs-list inline-flex w-fit max-w-full overflow-x-auto flex-nowrap gap-1 items-center justify-center rounded-none bg-transparent p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col max-sm:flex max-sm:w-full max-sm:h-auto max-sm:justify-start no-scrollbar"
+  "group/tabs-list inline-flex w-fit max-w-full overflow-x-auto flex-nowrap gap-1 items-center justify-center rounded-none bg-transparent p-[3px] text-muted-foreground group-data-horizontal/tabs:h-8 group-data-vertical/tabs:h-fit group-data-vertical/tabs:flex-col max-sm:flex max-sm:w-full max-sm:h-auto max-sm:justify-start no-scrollbar" // design-tokens-allow: p-[3px] — tablist inset; off-scale (space-0.5=2px, space-1=4px)
 
 function TabsList({
   className,

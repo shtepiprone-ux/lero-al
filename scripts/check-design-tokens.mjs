@@ -19,7 +19,19 @@
  *   - var(--token) references
  *   - Named token utilities (p-4, text-sm, shadow-md, z-50, max-w-md, duration-200)
  *   - src/app/globals.css (the token source of truth — excluded entirely)
- *   - Entries in scripts/design-tokens-allowlist.json
+ *   - Entries in scripts/design-tokens-allowlist.json (path-level allowlist)
+ *   - Values covered by a same-line design-tokens-allow: <value> — <reason> marker
+ *
+ * Inline suppression (Task 403, Part 0):
+ *   Place a comment on the SAME physical line as the match:
+ *     // design-tokens-allow: <exact raw value> — <reason>
+ *   One marker suppresses one exact value string on that physical line. Distinct
+ *   raw values on the same line need distinct markers. Duplicate occurrences of
+ *   the same exact value on the same physical line are suppressed together; split
+ *   the line if occurrence-level control is needed.
+ *   A missing or empty <reason> (nothing after —) is an ERROR in both modes.
+ *   A marker whose <exact raw value> is not found on the line is a stale-marker
+ *   violation (detected in both modes; exits 1 in strict).
  *
  * Usage:
  *   node scripts/check-design-tokens.mjs             — report mode (exit 0)
@@ -29,6 +41,7 @@
  *   npm run check:design-tokens
  *
  * Added by Task 402 (Sprint 35, 2026-06-06). Epic JJ Phase 2.
+ * Inline suppression added by Task 403 (Sprint 35, 2026-06-06). Epic JJ Phase 3.
  * Docs: docs/design-system.md §23
  */
 
@@ -139,13 +152,59 @@ const DETECTION_PATTERNS = [
 // ── Skip heuristics ───────────────────────────────────────────────────────────
 function shouldSkipLine(line) {
   const trimmed = line.trimStart();
-  // Comment lines
+  // Comment-only lines (value inside a trailing // comment is not runtime code)
   if (trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*')) return true;
   // CSS comment lines
   if (trimmed.startsWith('/*') || trimmed.startsWith('*')) return true;
   // Import / type declarations — no runtime style values
   if (/^\s*(import\s|export\s+type|type\s+\w|interface\s+\w)/.test(line)) return true;
   return false;
+}
+
+// ── Inline suppression (design-tokens-allow: <value> — <reason>) ─────────────
+//
+// One marker suppresses one exact value string on that physical line.
+// Distinct raw values on the same line need distinct markers.
+// Duplicate occurrences of the same exact value on the same physical line are
+// suppressed together; split the line if occurrence-level control is needed.
+// A missing/empty reason is an ERROR (exit 1 in both report and strict modes).
+// A marker whose rawValue is absent from the line's detections = stale-marker violation.
+const ALLOW_MARKER_PREFIX = 'design-tokens-allow:';
+
+// Returns Array of { rawValue: string, hasReason: boolean }
+function parseInlineMarkers(line) {
+  const results = [];
+  let searchFrom = 0;
+  while (true) {
+    const pos = line.indexOf(ALLOW_MARKER_PREFIX, searchFrom);
+    if (pos === -1) break;
+
+    const afterPrefix = line.slice(pos + ALLOW_MARKER_PREFIX.length).trimStart();
+    if (!afterPrefix) {
+      searchFrom = pos + ALLOW_MARKER_PREFIX.length;
+      continue;
+    }
+
+    // Extract the value (non-whitespace sequence = a Tailwind/CSS class name)
+    const valueMatch = afterPrefix.match(/^(\S+)/);
+    if (!valueMatch) {
+      searchFrom = pos + ALLOW_MARKER_PREFIX.length;
+      continue;
+    }
+    const rawValue = valueMatch[1];
+
+    // Look for the em-dash separator (—) followed by a non-empty reason
+    const afterValue = afterPrefix.slice(rawValue.length).trimStart();
+    let hasReason = false;
+    if (afterValue.startsWith('—')) {
+      const reasonPart = afterValue.slice(1).trim();
+      hasReason = reasonPart.length > 0;
+    }
+
+    results.push({ rawValue, hasReason });
+    searchFrom = pos + ALLOW_MARKER_PREFIX.length + rawValue.length;
+  }
+  return results;
 }
 
 // ── Area grouping ─────────────────────────────────────────────────────────────
@@ -235,11 +294,18 @@ function scanFile(filePath, allowlist) {
 
     if (shouldSkipLine(line)) continue;
 
+    // Strip trailing // comment before detection so that the marker text itself
+    // (which contains the suppressed value string) is not scanned as a violation.
+    // parseInlineMarkers runs on the full original line to find the markers.
+    const codeOnly = line.replace(/\s*\/\/.*$/, '');
+
+    // Collect all pattern matches on the code portion of this line
+    const rawMatches = [];
     for (const { re, cat, label } of DETECTION_PATTERNS) {
       re.lastIndex = 0;
       let m;
-      while ((m = re.exec(line)) !== null) {
-        findings.push({
+      while ((m = re.exec(codeOnly)) !== null) {
+        rawMatches.push({
           file: relPath,
           line: lineNum,
           cat,
@@ -247,6 +313,51 @@ function scanFile(filePath, allowlist) {
           match: m[0],
           area: getArea(relPath),
         });
+      }
+    }
+
+    // Parse inline suppression markers from the full line (including comment)
+    const markers = parseInlineMarkers(line);
+
+    if (rawMatches.length === 0 && markers.length === 0) continue;
+
+    // Build set of detected value strings on this line
+    const detectedValues = new Set(rawMatches.map(f => f.match));
+
+    // Process each marker: check for stale or missing-reason
+    const suppressedValues = new Set();
+    for (const { rawValue, hasReason } of markers) {
+      if (!detectedValues.has(rawValue)) {
+        // Stale marker — value not detected on this line
+        findings.push({
+          file: relPath,
+          line: lineNum,
+          cat: 'stale-marker',
+          label: 'stale inline suppression (value not detected on this line)',
+          match: rawValue,
+          area: getArea(relPath),
+        });
+      } else if (!hasReason) {
+        // Missing/empty reason — this is always an error (exit 1 in both modes)
+        findings.push({
+          file: relPath,
+          line: lineNum,
+          cat: 'missing-reason',
+          label: 'design-tokens-allow marker missing reason after —',
+          match: rawValue,
+          area: getArea(relPath),
+        });
+        // A missing-reason marker does NOT suppress the value
+      } else {
+        // Valid marker with reason — suppress this exact value on this line
+        suppressedValues.add(rawValue);
+      }
+    }
+
+    // Emit unsuppressed matches as findings
+    for (const finding of rawMatches) {
+      if (!suppressedValues.has(finding.match)) {
+        findings.push(finding);
       }
     }
   }
@@ -277,11 +388,12 @@ function run() {
     allFindings.push(...scanFile(f, allowlist));
   }
 
-  // ── --update-allowlist mode
+  // ── --update-allowlist mode (only uses regular findings, not marker errors)
   if (UPDATE_ALLOWLIST) {
     const existing = loadAllowlist();
     const newAllowlist = { ...existing };
-    for (const f of allFindings) {
+    const regularFindings = allFindings.filter(f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker');
+    for (const f of regularFindings) {
       if (!(f.file in newAllowlist)) {
         newAllowlist[f.file] = 'STUB: add justification (replace this before committing)';
       }
@@ -293,6 +405,11 @@ function run() {
     process.exit(0);
   }
 
+  // ── Separate finding types
+  const missingReasonFindings = allFindings.filter(f => f.cat === 'missing-reason');
+  const staleMarkerFindings = allFindings.filter(f => f.cat === 'stale-marker');
+  const regularFindings = allFindings.filter(f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker');
+
   // ── Group findings by area → file → category
   const byArea = {};
   for (const finding of allFindings) {
@@ -300,9 +417,9 @@ function run() {
     byArea[finding.area][finding.file].push(finding);
   }
 
-  // ── Category summary counters
+  // ── Category summary counters (regular violations only)
   const catCounts = {};
-  for (const f of allFindings) {
+  for (const f of regularFindings) {
     catCounts[f.cat] = (catCounts[f.cat] ?? 0) + 1;
   }
 
@@ -312,7 +429,7 @@ function run() {
     const byFile = byArea[area];
     if (!byFile) continue;
     const areaCount = Object.values(byFile).reduce((s, a) => s + a.length, 0);
-    console.log(`  ── ${area.toUpperCase()}  (${areaCount} violation${areaCount === 1 ? '' : 's'}) ──`);
+    console.log(`  ── ${area.toUpperCase()}  (${areaCount} finding${areaCount === 1 ? '' : 's'}) ──`);
     for (const file of Object.keys(byFile).sort()) {
       const items = byFile[file];
       console.log(`  ${file}  (${items.length})`);
@@ -324,29 +441,44 @@ function run() {
   }
 
   // ── Summary
-  console.log(`  Total: ${allFindings.length} raw style-value violation(s) across ${Object.keys(byArea).length} area(s)`);
+  console.log(`  Total: ${regularFindings.length} raw style-value violation(s) | ${staleMarkerFindings.length} stale-marker(s) | ${missingReasonFindings.length} missing-reason error(s)`);
   if (Object.keys(catCounts).length > 0) {
-    console.log('  By category:');
+    console.log('  By category (regular violations):');
     for (const [cat, count] of Object.entries(catCounts).sort((a, b) => b[1] - a[1])) {
       console.log(`    ${cat.padEnd(20)} ${count}`);
     }
   }
   console.log('');
 
+  // ── missing-reason is always an error (exit 1 in BOTH report and strict modes)
+  if (missingReasonFindings.length > 0) {
+    console.error(`❌  check:design-tokens — ${missingReasonFindings.length} design-tokens-allow marker(s) with missing or empty reason.`);
+    console.error('    Every design-tokens-allow: marker MUST have a non-empty reason after the — separator.');
+    console.error('    Example: // design-tokens-allow: rounded-[4px] — 4px corner, no scale token');
+    console.error('    Docs: docs/design-system.md §23.2');
+    process.exit(1);
+  }
+
   // ── Mode: strict vs. report
-  if (STRICT_MODE && allFindings.length > 0) {
-    console.error(`❌  check:design-tokens STRICT — ${allFindings.length} raw style-value violation(s) found.`);
+  if (STRICT_MODE && (regularFindings.length > 0 || staleMarkerFindings.length > 0)) {
+    console.error(`❌  check:design-tokens STRICT — ${regularFindings.length} raw style-value violation(s) + ${staleMarkerFindings.length} stale-marker(s) found.`);
     console.error('    Fix: replace raw values with design tokens from docs/design-system.md §22,');
-    console.error('    or add a justified entry to scripts/design-tokens-allowlist.json.');
+    console.error('    or add a justified entry to scripts/design-tokens-allowlist.json (path-level),');
+    console.error('    or add a same-line // design-tokens-allow: <value> — <reason> marker (exact-value).');
     console.error('    Docs: docs/design-system.md §22–23');
     process.exit(1);
   }
 
-  if (allFindings.length === 0) {
-    console.log('✅  check:design-tokens — 0 raw style-value violations found.');
+  if (regularFindings.length === 0 && staleMarkerFindings.length === 0) {
+    console.log('✅  check:design-tokens — 0 violations found.');
   } else {
-    console.log(`📋  Report mode — ${allFindings.length} violation(s) listed above (inventory for Tasks 403–406).`);
-    console.log('    Run with --strict to block on these. Strict gate lands in Task 407.');
+    if (staleMarkerFindings.length > 0) {
+      console.log(`⚠️  ${staleMarkerFindings.length} stale-marker(s) listed above — remove or correct the design-tokens-allow marker(s).`);
+    }
+    if (regularFindings.length > 0) {
+      console.log(`📋  Report mode — ${regularFindings.length} violation(s) listed above (inventory for Tasks 403–406).`);
+      console.log('    Run with --strict to block on these. Strict gate lands in Task 407.');
+    }
   }
 
   process.exit(0);

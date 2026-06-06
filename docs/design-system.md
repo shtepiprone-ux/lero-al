@@ -722,9 +722,15 @@ Excluded from scanning:
 - `src/app/globals.css` — the token source of truth (§22 lives here)
 - Everything in `scripts/design-tokens-allowlist.json` (email templates, brand SVG colors)
 
-### §23.2 — Allowlist (`scripts/design-tokens-allowlist.json`)
+### §23.2 — Allowlist mechanisms (path-level + exact-value inline)
 
-A JSON map of `"path-prefix": "one-line justification"` for genuinely un-tokenizable values:
+Two complementary suppression mechanisms cover genuinely un-tokenizable values. Both require
+explicit justification — no stubs, no undocumented suppressions.
+
+#### §23.2.a — Path-level allowlist (`scripts/design-tokens-allowlist.json`)
+
+A JSON map of `"path-prefix": "one-line justification"` for whole files or directories where
+**every** raw value is legitimately un-tokenizable (e.g. HTML email templates, inline SVG):
 
 | Path | Reason |
 |---|---|
@@ -732,9 +738,46 @@ A JSON map of `"path-prefix": "one-line justification"` for genuinely un-tokeniz
 | `src/modules/notifications/lib/sendTemplatedEmail.ts` | HTML email layout with inline hex literals |
 | `src/app/api/auth-email-hook/route.ts` | Supabase auth email hook — inline HTML email for email_change events |
 | `src/modules/auth/components/AuthSheet.tsx` | Official Google brand SVG colors (policy-fixed) |
+| `src/components/ui/appImageConfig.ts` | Next/Image sizes media-descriptor strings + inline SVG blur placeholder color — neither can reference CSS custom properties |
 
 To add an entry: edit the file directly with a real justification (no stubs). Stale entries
 (pointing to non-existent paths) are printed as warnings but do NOT fail the check.
+
+#### §23.2.b — Exact-value inline suppression (Task 403, Epic JJ Phase 3)
+
+For individual bespoke off-scale values inside otherwise-tokenizable files, place a
+`design-tokens-allow` marker comment on the **same physical line** as the value:
+
+```ts
+"...rounded-[4px]...", // design-tokens-allow: rounded-[4px] — 4px corner on 16px box; no scale radius token
+```
+
+**Semantics:**
+
+- **One marker suppresses one exact value string** on that physical line. Distinct raw values
+  on the same line need distinct markers.
+- **Duplicate occurrences** of the same exact value on the same physical line are suppressed
+  together by one marker. If only one occurrence should be suppressed, split the class/value
+  string so the occurrences live on separate physical lines before adding the marker.
+- **Reason is required.** A marker with a missing or empty `<reason>` (nothing after `—`) is
+  an **error** — the scanner exits 1 in BOTH report and strict modes. It is NOT a warning.
+- **Stale marker** — a marker whose `<exact raw value>` is not detected on that line is reported
+  as a `stale-marker` violation (exits 1 in strict; listed in report mode).
+- Markers are parsed from the `//` comment portion; detection runs on the code portion only.
+
+**Current inline-suppressed values (Task 403, 2026-06-06):**
+
+| File | Value | Reason |
+|---|---|---|
+| `src/components/ui/checkbox.tsx` | `rounded-[4px]` | 4px corner on a 16px box; no scale radius token (radius-sm = 7.2px here) |
+| `src/components/ui/tabs.tsx` | `p-[3px]` | Tablist inset; off-scale (space-0.5=2px, space-1=4px) |
+| `src/components/ui/button.tsx` | `text-[0.8rem]` | 12.8px on size=sm button; off-scale (xs=12px, sm=14px) |
+| `src/components/ui/switch.tsx` | `h-[18.4px]` | Switch default track height; no scale token |
+
+**Escalation guardrail (Tasks 404–407):** if the same bespoke off-scale value is
+inline-suppressed **3+ times** across areas 403–406, it MUST be escalated as a token-candidate
+for owner/orchestrator review instead of being repeatedly suppressed. Do NOT create a new token
+inside 404–406 — only escalate for owner decision.
 
 ### §23.3 — CLI modes
 

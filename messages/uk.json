@@ -426,7 +426,12 @@
     "aria_main_nav": "Головна навігація",
     "favorite_error": "Не вдалося оновити обрані. Спробуйте ще раз.",
     "show_password": "Показати пароль",
-    "hide_password": "Приховати пароль"
+    "hide_password": "Приховати пароль",
+    "aria_breadcrumb": "Навігаційний шлях",
+    "aria_pagination": "Пагінація",
+    "aria_avatar_crop": "Область обрізання аватара; перетягніть для позиціонування",
+    "command_palette": "Палітра команد",
+    "location_name_hint": "Назва (алб.)"
   },
   "cabinet": {
     "title": "Кабінет",
@@ -734,7 +739,8 @@
       "avatar_upload_photo": "Завантажити фото",
       "avatar_optional_hint": "Необов'язково — можна додати після створення",
       "verify_success": "Користувача верифіковано",
-      "revoke_success": "Верифікацію знято"
+      "revoke_success": "Верифікацію знято",
+      "avatar_preview_alt": "Попередній перегляд аватара"
     },
     "pages": {
       "listings_title": "Оголошення",
@@ -803,7 +809,9 @@
       "empty_locale_warning": "Ця локаль порожня — буде використано албанський контент як fallback",
       "migration_pending_banner": "Міграція не застосована — зверніться до адміністратора",
       "delete_confirm": "Ви впевнені, що хочете видалити цю сторінку?",
-      "preview_open": "Відкрити перегляд"
+      "preview_open": "Відкрити перегляд",
+      "field_slug_label": "Slug",
+      "slug_url_warning": "Зміна slug змінить URL цієї сторінки."
     },
     "footer": {
       "tab_sq": "Албанська",
@@ -832,7 +840,8 @@
       "error_invalid_internal_link": "Одне або кілька внутрішніх посилань не існує. Виправте їх перед збереженням.",
       "link_url_internal_help": "Використовуйте внутрішні шляхи без префіксу локалі (напр. /contact, не /sq/contact).",
       "link_url_invalid_internal": "Ця внутрішня сторінка ще не існує. Використайте існуючий маршрут або вимкніть це посилання, доки створення сторінок не буде доступне.",
-      "not_initialized": "Таблиця footer-у не ініціалізована. Зверніться до адміністратора."
+      "not_initialized": "Таблиця footer-у не ініціалізована. Зверніться до адміністратора.",
+      "section_brand": "Бренд"
     },
     "inquiries": {
       "filter_all": "Всі",
@@ -945,7 +954,8 @@
       "ticket_type_helper_empty": "Виберіть тип тікету, щоб розпочати",
       "support_subject_placeholder": "Коротке резюме звернення…",
       "support_details_label": "Опис / деталі звернення",
-      "support_details_placeholder": "Опишіть звернення…"
+      "support_details_placeholder": "Опишіть звернення…",
+      "aria_clear_selection": "Очистити вибір"
     },
     "popular_locations": {
       "add": "Додати локацію",
@@ -1083,7 +1093,10 @@
       "save_btn": "Зберегти зміни",
       "saving_btn": "Збереження...",
       "saved_btn": "Збережено",
-      "save_error": "Помилка збереження"
+      "save_error": "Помилка збереження",
+      "field_meta_title": "Мета-заголовок",
+      "field_meta_desc": "Мета-опис",
+      "field_og_image": "URL зображення OG"
     },
     "legal": {
       "modal_title_new": "Новий документ",
@@ -1107,7 +1120,8 @@
       "save_success": "Документ збережено",
       "save_error": "Не вдалося зберегти документ",
       "delete_success": "Документ видалено",
-      "delete_error": "Не вдалося видалити документ"
+      "delete_error": "Не вдалося видалити документ",
+      "field_slug_label": "Slug"
     },
     "user_profile": {
       "validation": {
@@ -1289,7 +1303,8 @@
       "success_deleted": "Тип видалено",
       "deactivate": "Деактивувати",
       "activate": "Активувати",
-      "search_placeholder": "Пошук за назвою або slug..."
+      "search_placeholder": "Пошук за назвою або slug...",
+      "col_created": "Створено"
     },
     "currency": {
       "title": "Управління валютами",
@@ -1328,7 +1343,8 @@
         "success_deactivated": "Валюту деактивовано",
         "success_default_set": "Валюту за замовчуванням оновлено",
         "delete_confirm": "Видалити цю валюту?",
-        "delete_blocked": "Неможливо видалити: це валюта за замовчуванням"
+        "delete_blocked": "Неможливо видалити: це валюта за замовчуванням",
+        "search_placeholder": "EUR, ALL…"
       },
       "providers": {
         "new": "Новий постачальник",
@@ -1913,7 +1929,10 @@
   "ui": {
     "pagination": {
       "previous": "Назад",
-      "next": "Вперед"
+      "next": "Вперед",
+      "aria_prev": "Перейти до попередньої сторінки",
+      "aria_next": "Перейти до наступньої сторінки",
+      "aria_ellipsis": "Більше сторінок"
     }
   }
 }

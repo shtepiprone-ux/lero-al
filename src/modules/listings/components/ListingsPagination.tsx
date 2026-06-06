@@ -41,7 +41,7 @@ export function ListingsPagination({ total, page, perPage }: Props) {
   }
 
   return (
-    <nav className="listings-pagination flex items-center justify-center gap-1 py-8" aria-label="Pagination">
+    <nav className="listings-pagination flex items-center justify-center gap-1 py-8" aria-label={tc('aria_pagination')}>
       <Button
         variant="outline"
         size="icon"

@@ -192,6 +192,7 @@ export default async function ListingPage({ params }: Props) {
   const { slug, locale } = await params
   const t = await getTranslations('listing')
   const tNav = await getTranslations('nav')
+  const tc = await getTranslations('common')
 
   // One client instance for the entire page — reused for listing + favorites.
   // getUser() creates its own client internally (separate auth API call).
@@ -326,7 +327,7 @@ export default async function ListingPage({ params }: Props) {
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
         <div className="container-wide py-2.5">
-          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap" aria-label={tc('aria_breadcrumb')}>
             <Link href={`/${locale}`} className="hover:text-foreground transition-colors">{tNav('home')}</Link>
             <span>/</span>
             <Link href={`/${locale}/listings`} className="hover:text-foreground transition-colors">{t('all_listings')}</Link>

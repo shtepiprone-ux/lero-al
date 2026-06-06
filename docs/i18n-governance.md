@@ -82,13 +82,17 @@ Words like `Close`, `Save`, `Loading`, `Breadcrumb`, `Pagination`, `Privacy`,
 
 ---
 
-## §3 — GATE MODE: fail-on-new
+## §3 — GATE MODE: strict (zero-tolerance)
 
 The scanner uses a **committed baseline** (`scripts/i18n-hardcode-baseline.json`)
 to distinguish existing debt from new introductions.
 
-- **Gate exits 0 (pass):** all findings are in the baseline. Existing debt is tracked, not blocking.
+- **Gate exits 0 (pass):** all findings are in the baseline. With an empty baseline, passes only when there are zero findings.
 - **Gate exits 1 (fail):** one or more findings have a `file:line` key not in the baseline = NEW hardcode introduced.
+
+**Current status (Task 397 complete):** the baseline has 1 documented accepted entry —
+`PasswordChangedEmail.tsx:66` "Ekipi i Lero.al" (sq-only Albanian email per Epic GG; pure ASCII, `isEnglishish` false-positive).
+Any finding NOT in the baseline exits 1 — the gate is zero-tolerance for new hardcodes.
 
 The baseline is keyed by `"file:line"` (e.g. `"src/components/ui/dialog.tsx:81"`).
 Moving the same hardcode to a different line counts as NEW at the new location
@@ -99,8 +103,7 @@ to hide" workarounds.
 
 Only update the baseline when:
 1. A finding is confirmed to be a false positive (document the reason)
-2. Task 397 remediates a finding (it disappears from the scan, baseline entry becomes stale)
-3. A new allowlist entry is added (re-run to shrink baseline)
+2. A new allowlist entry is added (re-run to shrink baseline)
 
 ```
 npm run check:i18n-hardcode:update-baseline

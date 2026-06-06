@@ -28,6 +28,10 @@ const STRINGS: Record<string, {
   securityGreeting: string
   securityBody: string
   securityAdvice: string
+  labelCurrentEmail: string
+  labelNewEmail: string
+  labelTime: string
+  labelDevice: string
 }> = {
   sq: {
     verifySubject: 'Konfirmoni adresën tuaj të re të emailit',
@@ -40,6 +44,10 @@ const STRINGS: Record<string, {
     securityGreeting: 'Përshëndetje,',
     securityBody: 'Dikush ka kërkuar ndryshimin e adresës së emailit të lidhur me llogarinë tuaj.',
     securityAdvice: 'Nëse nuk e keni bërë ju këtë ndryshim, ju rekomandojmë të ndryshoni fjalëkalimin tuaj menjëherë.',
+    labelCurrentEmail: 'Email aktual:',
+    labelNewEmail: 'Email i ri:',
+    labelTime: 'Koha:',
+    labelDevice: 'Pajisja:',
   },
   en: {
     verifySubject: 'Confirm your new email address',
@@ -52,6 +60,10 @@ const STRINGS: Record<string, {
     securityGreeting: 'Hello,',
     securityBody: 'Someone has requested to change the email address associated with your account.',
     securityAdvice: 'If this was not you, we recommend changing your password immediately.',
+    labelCurrentEmail: 'Current email:',
+    labelNewEmail: 'New email:',
+    labelTime: 'Time:',
+    labelDevice: 'Device:',
   },
   uk: {
     verifySubject: 'Підтвердіть нову електронну адресу',
@@ -64,6 +76,10 @@ const STRINGS: Record<string, {
     securityGreeting: 'Вітаємо,',
     securityBody: 'Хтось надіслав запит на зміну електронної адреси вашого облікового запису.',
     securityAdvice: 'Якщо це були не ви, рекомендуємо негайно змінити пароль.',
+    labelCurrentEmail: 'Поточний email:',
+    labelNewEmail: 'Новий email:',
+    labelTime: 'Час:',
+    labelDevice: 'Пристрій:',
   },
   it: {
     verifySubject: 'Conferma il tuo nuovo indirizzo email',
@@ -76,6 +92,10 @@ const STRINGS: Record<string, {
     securityGreeting: 'Ciao,',
     securityBody: 'Qualcuno ha richiesto di modificare l\'indirizzo email associato al tuo account.',
     securityAdvice: 'Se non sei stato tu, ti consigliamo di cambiare immediatamente la password.',
+    labelCurrentEmail: 'Email attuale:',
+    labelNewEmail: 'Nuovo email:',
+    labelTime: 'Orario:',
+    labelDevice: 'Dispositivo:',
   },
 }
 
@@ -131,10 +151,10 @@ function securityHtml(s: ReturnType<typeof getStrings>, oldEmail: string, newEma
     <p style="font-size:16px;color:#18181b;margin:0 0 16px;">${s.securityGreeting}</p>
     <p style="font-size:15px;color:#3f3f46;margin:0 0 24px;line-height:1.6;">${s.securityBody}</p>
     <table style="background:#f4f4f5;border-radius:8px;padding:16px;width:100%;border-collapse:collapse;margin-bottom:24px;">
-      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Current email:</td><td style="font-size:13px;color:#18181b;font-weight:500;">${oldEmail}</td></tr>
-      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">New email:</td><td style="font-size:13px;color:#18181b;font-weight:500;">${newEmail}</td></tr>
-      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Time:</td><td style="font-size:13px;color:#18181b;">${timestamp}</td></tr>
-      ${deviceHint ? `<tr><td style="font-size:13px;color:#71717a;padding:4px 0;">Device:</td><td style="font-size:13px;color:#18181b;">${deviceHint}</td></tr>` : ''}
+      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelCurrentEmail}</td><td style="font-size:13px;color:#18181b;font-weight:500;">${oldEmail}</td></tr>
+      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelNewEmail}</td><td style="font-size:13px;color:#18181b;font-weight:500;">${newEmail}</td></tr>
+      <tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelTime}</td><td style="font-size:13px;color:#18181b;">${timestamp}</td></tr>
+      ${deviceHint ? `<tr><td style="font-size:13px;color:#71717a;padding:4px 0;">${s.labelDevice}</td><td style="font-size:13px;color:#18181b;">${deviceHint}</td></tr>` : ''}
     </table>
     <p style="font-size:14px;color:#ef4444;font-weight:500;margin:0;">${s.securityAdvice}</p>
   `)

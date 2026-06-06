@@ -222,16 +222,18 @@ components with NO story, which the render gate cannot see:
 
 ---
 
-## False positives (3 entries, in baseline, no remediation needed)
+## Accepted entries in baseline (1 — post Task 397)
 
-These entries are in the committed baseline but should NOT be remediated by Task 397.
-They are pure-ASCII text in non-English languages that `isEnglishish()` cannot distinguish.
+After Task 397 remediation, only one entry remains in `scripts/i18n-hardcode-baseline.json`.
+It is a documented accepted `isEnglishish` false-positive, not real English hardcode.
 
-| File | Line | Value | Reason |
-|---|---|---|---|
-| `AdminSettings.tsx` | 197 | `"Tregu kryesor i pasurive..."` | Albanian placeholder (no accented chars); sq-only admin field |
-| `LocationCombobox.tsx` | 127 | `"Nazva (alb.)"` | Appears to be Ukrainian/admin internal label in Latin script |
-| `PasswordChangedEmail.tsx` | 66 | `"Ekipi i Lero.al"` | Albanian text ("Lero.al Team") in sq-only email; Epic GG policy |
+| File | Line | Value | Reason | Baseline note |
+|---|---|---|---|---|
+| `PasswordChangedEmail.tsx` | 66 | `"Ekipi i Lero.al"` | Albanian text ("Lero.al Team") in sq-only email per Epic GG; pure ASCII (no ë/ç) so `isEnglishish` false-flags it | `"sq-only email per Epic GG — correct Albanian content (ASCII, no ë/ç); isEnglishish false-positive accepted"` |
+
+**False positives resolved by Task 397 (no longer in baseline):**
+- `AdminSettings.tsx:197` — placeholder now uses full tagline with `ë` (`"Tregu kryesor i pasurive të paluajtshme..."`); `isEnglishish` returns false naturally
+- `LocationCombobox.tsx:127` — properly i18n'd: `tc('location_name_hint')` with 4-locale keys
 
 ---
 

@@ -189,7 +189,7 @@ function PageEditorModal({ page, locale: adminLocale, onClose, onDone }: {
 
         {/* Shared fields */}
         <div className="flex flex-col gap-1.5 mt-1">
-          <Label className="text-xs">Slug</Label>
+          <Label className="text-xs">{t('field_slug_label')}</Label>
           <AdminInput
             value={slug}
             onChange={e => handleSlugChange(e.target.value)}
@@ -197,7 +197,7 @@ function PageEditorModal({ page, locale: adminLocale, onClose, onDone }: {
             placeholder="about-us"
           />
           {slugError && <p className="text-xs text-destructive">{slugError}</p>}
-          {page && <p className="text-xs text-status-warning">Changing the slug will change this page&apos;s URL.</p>}
+          {page && <p className="text-xs text-status-warning">{t('slug_url_warning')}</p>}
         </div>
 
         <div className="flex items-center gap-3 mt-1">

@@ -66,11 +66,11 @@ export function BaseEmail({ preview, locale = 'sq', children }: BaseEmailProps) 
             <Text style={footerBrand}>
               Lero<span style={{ color: BRAND_ACCENT }}>.al</span>
             </Text>
-            <Text style={footerSub}>Real estate marketplace for Albania</Text>
+            <Text style={footerSub}>Tregu kryesor i pasurive të paluajtshme në Shqipëri</Text>
             <Text style={footerLinks}>
-              <Link href="https://lero.al/help" style={footerLink}>Help center</Link>
+              <Link href="https://lero.al/help" style={footerLink}>Qendra e ndihmës</Link>
               <span style={{ color: '#d4d4d8' }}>&nbsp;·&nbsp;</span>
-              <Link href="https://lero.al/privacy" style={footerLink}>Privacy</Link>
+              <Link href="https://lero.al/privacy" style={footerLink}>Privatësia</Link>
               <span style={{ color: '#d4d4d8' }}>&nbsp;·&nbsp;</span>
               <span>© {new Date().getFullYear()} Lero.al</span>
             </Text>

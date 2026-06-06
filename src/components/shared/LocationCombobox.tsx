@@ -124,7 +124,7 @@ export function LocationCombobox({
               <Input
                 value={addName}
                 onChange={e => setAddName(e.target.value)}
-                placeholder="Nazva (alb.)"
+                placeholder={tc('location_name_hint')}
                 className="h-9 rounded-xl text-sm"
               />
               <Combobox

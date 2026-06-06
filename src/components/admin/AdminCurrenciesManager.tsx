@@ -354,7 +354,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
           <Input
             value={query}
             onChange={e => setQuery(e.target.value)}
-            placeholder="EUR, ALL…"
+            placeholder={t('search_placeholder')}
             className="pl-9 h-9 rounded-xl text-sm"
           />
         </div>

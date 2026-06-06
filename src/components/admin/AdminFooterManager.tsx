@@ -166,7 +166,7 @@ function LocaleTab({
     <div className="flex flex-col gap-5 pt-4">
       {/* Brand */}
       <div className="rounded-xl border bg-card p-4 flex flex-col gap-3">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Brand</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{t('section_brand')}</p>
         <FormField label={t('field_brand_title')}>
           <Input value={data.brand_title} onChange={e => onChange('brand_title', e.target.value)} disabled={isPending} className="h-10 rounded-xl" />
         </FormField>

@@ -194,7 +194,7 @@ export function AdminSettings({ initialSettings }: Props) {
             </Section>
             <Section title={t('section_footer_text')}>
               <Field label={t('field_about_al')} id="about-al">
-                <Textarea id="about-al" rows={3} value={settings.about_al} onChange={set('about_al')} placeholder="Tregu kryesor i pasurive..." className="rounded-xl resize-none" />
+                <Textarea id="about-al" rows={3} value={settings.about_al} onChange={set('about_al')} placeholder="Tregu kryesor i pasurive të paluajtshme..." className="rounded-xl resize-none" />
               </Field>
               <Field label={t('field_about_uk')} id="about-uk">
                 <Textarea id="about-uk" rows={3} value={settings.about_uk} onChange={set('about_uk')} placeholder="Головний ринок нерухомості..." className="rounded-xl resize-none" />
@@ -206,13 +206,13 @@ export function AdminSettings({ initialSettings }: Props) {
         {tab === 'seo' && (
           <>
             <Section title={t('section_seo')}>
-              <Field label="Meta title" id="meta-title">
+              <Field label={t('field_meta_title')} id="meta-title">
                 <AdminInput id="meta-title" value={settings.meta_title} onChange={set('meta_title')} />
               </Field>
-              <Field label="Meta description" id="meta-desc">
+              <Field label={t('field_meta_desc')} id="meta-desc">
                 <Textarea id="meta-desc" rows={3} value={settings.meta_desc} onChange={set('meta_desc')} className="rounded-xl resize-none" />
               </Field>
-              <Field label="OG Image URL" id="og-image">
+              <Field label={t('field_og_image')} id="og-image">
                 <AdminInput id="og-image" value={settings.og_image} onChange={set('og_image')} placeholder="https://lero.al/og-image.jpg" />
               </Field>
             </Section>

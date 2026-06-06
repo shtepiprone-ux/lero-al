@@ -87,6 +87,10 @@ const STATIC_ALLOWLIST = [
   /^OpenStreetMap$/,
   // ── Storybook chrome — appears in some rendered DOM inspected by scripts ──
   /^(Docs|Canvas|Controls|Actions|Accessibility|Interactions|Required)$/,
+  // ── Social media / platform brand names (proper nouns, not translated) ─────
+  /^(Facebook|Instagram|LinkedIn|YouTube|Twitter|X|TikTok|WhatsApp|Telegram)$/,
+  // ── Language-code display sequences (e.g. "EN / UK / IT") ────────────────
+  /^[A-Z]{2}(\s*\/\s*[A-Z]{2})+$/,
 ];
 
 function isAllowlisted(value) {

@@ -153,7 +153,7 @@ function emailChangeHtml(s: ReturnType<typeof getEmailChangeStrings>, verifyUrl:
         </td></tr>
         <tr><td style="border-top:1px solid #f0f0f0;padding:24px 48px 36px;background:#fafafa;">
           <p style="font-size:13px;font-weight:500;color:#3f3f46;margin:0;">Lero<span style="color:#EC5447">.al</span></p>
-          <p style="font-size:12px;color:#a1a1aa;margin:4px 0 0;">Real estate marketplace for Albania</p>
+          <p style="font-size:12px;color:#a1a1aa;margin:4px 0 0;">Tregu kryesor i pasurive të paluajtshme në Shqipëri</p>
         </td></tr>
       </table>
     </td></tr>

@@ -311,12 +311,12 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
               <thead>
                 <tr className="border-b bg-muted/30 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   <th className="px-5 py-3 text-left">ID</th>
-                  <th className="px-5 py-3 text-left">Slug</th>
+                  <th className="px-5 py-3 text-left">{t('slug_label')}</th>
                   <th className="px-5 py-3 text-left">SQ</th>
                   <th className="px-5 py-3 text-left">EN / UK / IT</th>
                   <th className="px-5 py-3 text-left">{t('sort_order')}</th>
                   <th className="px-5 py-3 text-left">{t('is_active')}</th>
-                  <th className="px-5 py-3 text-left">Created</th>
+                  <th className="px-5 py-3 text-left">{t('col_created')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y">

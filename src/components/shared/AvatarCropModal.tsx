@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useTranslations } from 'next-intl'
 import Cropper from 'react-easy-crop'
 import type { Area } from 'react-easy-crop'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
@@ -58,6 +59,7 @@ export function AvatarCropModal({
   imageSrc, title, hint, zoomLabel, cancelLabel, saveLabel,
   onConfirm, onCancel,
 }: AvatarCropModalProps) {
+  const tc = useTranslations('common')
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null)
@@ -101,7 +103,7 @@ export function AvatarCropModal({
           <div
             className="relative h-72 w-full rounded-xl overflow-hidden bg-muted"
             role="application"
-            aria-label="Avatar crop area; drag to position"
+            aria-label={tc('aria_avatar_crop')}
           >
             <Cropper
               image={imageSrc}

@@ -40,6 +40,7 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
 
   const t = await getTranslations({ locale, namespace: 'favorites' })
   const tNav = await getTranslations({ locale, namespace: 'nav' })
+  const tc = await getTranslations({ locale, namespace: 'common' })
 
   const typeFilter = parsePropertyType(sp.type)
 
@@ -68,7 +69,7 @@ export default async function FavoritesPage({ params, searchParams }: Props) {
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
         <div className="container-wide py-2.5">
-          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label={tc('aria_breadcrumb')}>
             <Link href={`/${locale}`} className="hover:text-foreground transition-colors flex items-center gap-1">
               <Home className="h-3 w-3" />
               {tNav('home')}

@@ -426,7 +426,12 @@
     "aria_main_nav": "Navigimi kryesor",
     "favorite_error": "Nuk mund të bëhet ndryshimi. Provo sërish.",
     "show_password": "Shfaq fjalëkalimin",
-    "hide_password": "Fshih fjalëkalimin"
+    "hide_password": "Fshih fjalëkalimin",
+    "aria_breadcrumb": "Rrugëzimi",
+    "aria_pagination": "Faqëzimi",
+    "aria_avatar_crop": "Zona e prerjes së avatarës; zvarrit për të pozicionuar",
+    "command_palette": "Paleta e Komandave",
+    "location_name_hint": "Emri (alb.)"
   },
   "cabinet": {
     "title": "Kabineti",
@@ -734,7 +739,8 @@
       "avatar_upload_photo": "Ngarko foto",
       "avatar_optional_hint": "Opsional — mund të shtohet pas krijimit",
       "verify_success": "Përdoruesi u verifikua",
-      "revoke_success": "Verifikimi u hoq"
+      "revoke_success": "Verifikimi u hoq",
+      "avatar_preview_alt": "Pamja paraprake e avatarës"
     },
     "pages": {
       "listings_title": "Njoftime",
@@ -803,7 +809,9 @@
       "empty_locale_warning": "Kjo lokale është bosh — do të përdoret përmbajtja Shqip si fallback",
       "migration_pending_banner": "Migrim i pa-aplikuar — kontaktoni administratorin",
       "delete_confirm": "A jeni i sigurt që doni ta fshini këtë faqe?",
-      "preview_open": "Hap pamjen"
+      "preview_open": "Hap pamjen",
+      "field_slug_label": "Slug",
+      "slug_url_warning": "Ndryshimi i slug-ut do të ndryshojë URL-në e kësaj faqeje."
     },
     "footer": {
       "tab_sq": "Shqip",
@@ -832,7 +840,8 @@
       "error_invalid_internal_link": "Njëra ose më shumë lidhje të brendshme nuk ekzistojnë. Korrigjoni para ruajtjes.",
       "link_url_internal_help": "Përdorni rrugë të brendshme pa prefiks lokaliteti (p.sh. /contact, jo /sq/contact).",
       "link_url_invalid_internal": "Kjo faqe e brendshme nuk ekziston ende. Përdorni një rrugë ekzistuese ose çaktivizoni këtë lidhje derisa krijimi i faqeve të jetë i disponueshëm.",
-      "not_initialized": "Tabela e footer-it nuk është inicializuar. Kontaktoni administratorin."
+      "not_initialized": "Tabela e footer-it nuk është inicializuar. Kontaktoni administratorin.",
+      "section_brand": "Marka"
     },
     "inquiries": {
       "filter_all": "Të gjitha",
@@ -945,7 +954,8 @@
       "ticket_type_helper_empty": "Zgjidh tipin e tiketës për të filluar",
       "support_subject_placeholder": "Përmbledhje e shkurtër e kërkesës…",
       "support_details_label": "Përshkrimi / detajet e kërkesës",
-      "support_details_placeholder": "Përshkruaj kërkesën…"
+      "support_details_placeholder": "Përshkruaj kërkesën…",
+      "aria_clear_selection": "Pastro zgjedhjen"
     },
     "popular_locations": {
       "add": "Shto Vendndodhje",
@@ -1083,7 +1093,10 @@
       "save_btn": "Ruaj ndryshimet",
       "saving_btn": "Duke ruajtur...",
       "saved_btn": "U ruajt",
-      "save_error": "Gabim gjatë ruajtjes"
+      "save_error": "Gabim gjatë ruajtjes",
+      "field_meta_title": "Titulli Meta",
+      "field_meta_desc": "Përshkrimi Meta",
+      "field_og_image": "URL-ja e Imazhit OG"
     },
     "legal": {
       "modal_title_new": "Dokument i ri",
@@ -1107,7 +1120,8 @@
       "save_success": "Dokumenti u ruajt",
       "save_error": "Ruajtja e dokumentit dështoi",
       "delete_success": "Dokumenti u fshi",
-      "delete_error": "Fshirja e dokumentit dështoi"
+      "delete_error": "Fshirja e dokumentit dështoi",
+      "field_slug_label": "Slug"
     },
     "user_profile": {
       "validation": {
@@ -1289,7 +1303,8 @@
       "success_deleted": "Lloji u fshi",
       "deactivate": "Çaktivizo",
       "activate": "Aktivizo",
-      "search_placeholder": "Kërko sipas emrit ose slug..."
+      "search_placeholder": "Kërko sipas emrit ose slug...",
+      "col_created": "Krijuar"
     },
     "currency": {
       "title": "Menaxhimi i Valutave",
@@ -1328,7 +1343,8 @@
         "success_deactivated": "Valuta u çaktivizua",
         "success_default_set": "Valuta parazgjedhëse u ndryshua",
         "delete_confirm": "Fshij këtë valutë?",
-        "delete_blocked": "Nuk mund të fshihet: kjo është valuta parazgjedhëse"
+        "delete_blocked": "Nuk mund të fshihet: kjo është valuta parazgjedhëse",
+        "search_placeholder": "EUR, ALL…"
       },
       "providers": {
         "new": "Ofrues i ri",
@@ -1913,7 +1929,10 @@
   "ui": {
     "pagination": {
       "previous": "E mëparshme",
-      "next": "E ardhshme"
+      "next": "E ardhshme",
+      "aria_prev": "Shko te faqja e mëparshme",
+      "aria_next": "Shko te faqja tjëtrë",
+      "aria_ellipsis": "Faqe të tjera"
     }
   }
 }

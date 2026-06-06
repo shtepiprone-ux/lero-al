@@ -426,7 +426,12 @@
     "aria_main_nav": "Navigazione principale",
     "favorite_error": "Impossibile aggiornare i preferiti. Riprova.",
     "show_password": "Mostra password",
-    "hide_password": "Nascondi password"
+    "hide_password": "Nascondi password",
+    "aria_breadcrumb": "Percorso di navigazione",
+    "aria_pagination": "Paginazione",
+    "aria_avatar_crop": "Area di ritaglio avatar; trascina per posizionare",
+    "command_palette": "Tavolozza dei comandi",
+    "location_name_hint": "Nome (alb.)"
   },
   "cabinet": {
     "title": "Il mio account",
@@ -734,7 +739,8 @@
       "avatar_upload_photo": "Carica foto",
       "avatar_optional_hint": "Opzionale — può essere aggiunto dopo la creazione",
       "verify_success": "Utente verificato",
-      "revoke_success": "Verifica revocata"
+      "revoke_success": "Verifica revocata",
+      "avatar_preview_alt": "Anteprima avatar"
     },
     "pages": {
       "listings_title": "Annunci",
@@ -803,7 +809,9 @@
       "empty_locale_warning": "Questa lingua è vuota — verrà usato il contenuto albanese come fallback",
       "migration_pending_banner": "Migrazione in sospeso — contatta l'admin",
       "delete_confirm": "Sei sicuro di voler eliminare questa pagina?",
-      "preview_open": "Apri anteprima"
+      "preview_open": "Apri anteprima",
+      "field_slug_label": "Slug",
+      "slug_url_warning": "Cambiare lo slug cambierà l’URL di questa pagina."
     },
     "footer": {
       "tab_sq": "Albanese",
@@ -832,7 +840,8 @@
       "error_invalid_internal_link": "Uno o più link interni non esistono. Correggili prima di salvare.",
       "link_url_internal_help": "Usa percorsi interni senza prefisso locale (es. /contact, non /sq/contact).",
       "link_url_invalid_internal": "Questa pagina interna non esiste ancora. Usa un percorso esistente o disattiva questo link finché la creazione delle pagine non sarà disponibile.",
-      "not_initialized": "Tabella footer non inizializzata. Contatta l'amministratore."
+      "not_initialized": "Tabella footer non inizializzata. Contatta l'amministratore.",
+      "section_brand": "Brand"
     },
     "inquiries": {
       "filter_all": "Tutti",
@@ -945,7 +954,8 @@
       "ticket_type_helper_empty": "Seleziona il tipo di ticket per iniziare",
       "support_subject_placeholder": "Breve riepilogo della richiesta…",
       "support_details_label": "Descrizione / dettagli della richiesta",
-      "support_details_placeholder": "Descrivi la richiesta…"
+      "support_details_placeholder": "Descrivi la richiesta…",
+      "aria_clear_selection": "Cancella selezione"
     },
     "popular_locations": {
       "add": "Aggiungi Luogo",
@@ -1083,7 +1093,10 @@
       "save_btn": "Salva modifiche",
       "saving_btn": "Salvataggio...",
       "saved_btn": "Salvato",
-      "save_error": "Errore di salvataggio"
+      "save_error": "Errore di salvataggio",
+      "field_meta_title": "Titolo Meta",
+      "field_meta_desc": "Descrizione Meta",
+      "field_og_image": "URL immagine OG"
     },
     "legal": {
       "modal_title_new": "Nuovo documento",
@@ -1107,7 +1120,8 @@
       "save_success": "Documento salvato",
       "save_error": "Impossibile salvare il documento",
       "delete_success": "Documento eliminato",
-      "delete_error": "Impossibile eliminare il documento"
+      "delete_error": "Impossibile eliminare il documento",
+      "field_slug_label": "Slug"
     },
     "user_profile": {
       "validation": {
@@ -1289,7 +1303,8 @@
       "success_deleted": "Tipo eliminato",
       "deactivate": "Disattiva",
       "activate": "Attiva",
-      "search_placeholder": "Cerca per nome o slug..."
+      "search_placeholder": "Cerca per nome o slug...",
+      "col_created": "Creato"
     },
     "currency": {
       "title": "Gestione valute",
@@ -1328,7 +1343,8 @@
         "success_deactivated": "Valuta disattivata",
         "success_default_set": "Valuta predefinita aggiornata",
         "delete_confirm": "Eliminare questa valuta?",
-        "delete_blocked": "Impossibile eliminare: questa è la valuta predefinita"
+        "delete_blocked": "Impossibile eliminare: questa è la valuta predefinita",
+        "search_placeholder": "EUR, ALL…"
       },
       "providers": {
         "new": "Nuovo fornitore",
@@ -1913,7 +1929,10 @@
   "ui": {
     "pagination": {
       "previous": "Precedente",
-      "next": "Successivo"
+      "next": "Successivo",
+      "aria_prev": "Vai alla pagina precedente",
+      "aria_next": "Vai alla pagina successiva",
+      "aria_ellipsis": "Altre pagine"
     }
   }
 }

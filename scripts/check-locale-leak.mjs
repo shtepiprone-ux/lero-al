@@ -130,8 +130,6 @@ const PER_STORY_TOKENS = {
   'primitives-checkbox': ['Studio', 'Villa'],
   // Command: cmdk CommandList renders aria-label="Suggestions" by default (library default).
   'primitives-command': ['Suggestions'],
-  // Dialog: dialog.tsx has sr-only hardcoded "Close" — src/ fix is out of scope.
-  'primitives-dialog': ['Close'],
   // Input: PhoneNumericValidation fixture demo labels rendered as raw JSX strings.
   'primitives-input': [
     'Phone (valid — digits only)',

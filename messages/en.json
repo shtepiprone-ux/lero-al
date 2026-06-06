@@ -426,7 +426,12 @@
     "aria_main_nav": "Main navigation",
     "favorite_error": "Couldn't update favorites. Please try again.",
     "show_password": "Show password",
-    "hide_password": "Hide password"
+    "hide_password": "Hide password",
+    "aria_breadcrumb": "Breadcrumb",
+    "aria_pagination": "Pagination",
+    "aria_avatar_crop": "Avatar crop area; drag to position",
+    "command_palette": "Command Palette",
+    "location_name_hint": "Name (alb.)"
   },
   "cabinet": {
     "title": "My Account",
@@ -734,7 +739,8 @@
       "avatar_upload_photo": "Upload photo",
       "avatar_optional_hint": "Optional — can be added after creation",
       "verify_success": "User verified",
-      "revoke_success": "Verification revoked"
+      "revoke_success": "Verification revoked",
+      "avatar_preview_alt": "Avatar preview"
     },
     "pages": {
       "listings_title": "Listings",
@@ -803,7 +809,9 @@
       "empty_locale_warning": "This locale is empty — Albanian content will be used as fallback",
       "migration_pending_banner": "Migration pending — contact admin",
       "delete_confirm": "Are you sure you want to delete this page?",
-      "preview_open": "Open preview"
+      "preview_open": "Open preview",
+      "field_slug_label": "Slug",
+      "slug_url_warning": "Changing the slug will change this page’s URL."
     },
     "footer": {
       "tab_sq": "Albanian",
@@ -832,7 +840,8 @@
       "error_invalid_internal_link": "One or more internal links do not exist. Fix them before saving.",
       "link_url_internal_help": "Use internal paths without locale prefix (e.g. /contact, not /sq/contact).",
       "link_url_invalid_internal": "This internal page does not exist yet. Use an existing route or disable this link until page creation is available.",
-      "not_initialized": "Footer table not initialized. Contact the system administrator."
+      "not_initialized": "Footer table not initialized. Contact the system administrator.",
+      "section_brand": "Brand"
     },
     "inquiries": {
       "filter_all": "All",
@@ -945,7 +954,8 @@
       "ticket_type_helper_empty": "Select a ticket type to get started",
       "support_subject_placeholder": "Brief summary of the request…",
       "support_details_label": "Description / request details",
-      "support_details_placeholder": "Describe the request…"
+      "support_details_placeholder": "Describe the request…",
+      "aria_clear_selection": "Clear selection"
     },
     "popular_locations": {
       "add": "Add Location",
@@ -1083,7 +1093,10 @@
       "save_btn": "Save changes",
       "saving_btn": "Saving...",
       "saved_btn": "Saved",
-      "save_error": "Save error"
+      "save_error": "Save error",
+      "field_meta_title": "Meta title",
+      "field_meta_desc": "Meta description",
+      "field_og_image": "OG Image URL"
     },
     "legal": {
       "modal_title_new": "New document",
@@ -1107,7 +1120,8 @@
       "save_success": "Document saved",
       "save_error": "Failed to save document",
       "delete_success": "Document deleted",
-      "delete_error": "Failed to delete document"
+      "delete_error": "Failed to delete document",
+      "field_slug_label": "Slug"
     },
     "user_profile": {
       "validation": {
@@ -1289,7 +1303,8 @@
       "success_deleted": "Type deleted",
       "deactivate": "Deactivate",
       "activate": "Activate",
-      "search_placeholder": "Search by name or slug..."
+      "search_placeholder": "Search by name or slug...",
+      "col_created": "Created"
     },
     "currency": {
       "title": "Currency Management",
@@ -1328,7 +1343,8 @@
         "success_deactivated": "Currency deactivated",
         "success_default_set": "Default currency updated",
         "delete_confirm": "Delete this currency?",
-        "delete_blocked": "Cannot delete: this is the default currency"
+        "delete_blocked": "Cannot delete: this is the default currency",
+        "search_placeholder": "EUR, ALL…"
       },
       "providers": {
         "new": "New provider",
@@ -1913,7 +1929,10 @@
   "ui": {
     "pagination": {
       "previous": "Previous",
-      "next": "Next"
+      "next": "Next",
+      "aria_prev": "Go to previous page",
+      "aria_next": "Go to next page",
+      "aria_ellipsis": "More pages"
     }
   }
 }

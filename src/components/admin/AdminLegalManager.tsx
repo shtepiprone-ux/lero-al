@@ -65,7 +65,7 @@ function PageModal({ page, onClose, onDone }: {
             <AdminInput value={title} onChange={e => { setTitle(e.target.value); if (!page) setSlug(toSlug(e.target.value)) }} />
           </div>
           <div className="flex flex-col gap-1.5 col-span-2 sm:col-span-1">
-            <Label className="text-xs">Slug</Label>
+            <Label className="text-xs">{t('field_slug_label')}</Label>
             <AdminInput value={slug} onChange={e => setSlug(e.target.value)} className="font-mono text-xs" />
           </div>
         </div>
@@ -164,7 +164,7 @@ export function AdminLegalManager({ pages: init }: Props) {
               <thead>
                 <tr className="border-b bg-muted/40">
                   <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_title')}</th>
-                  <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">Slug</th>
+                  <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('field_slug_label')}</th>
                   <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_status')}</th>
                   <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_updated')}</th>
                   <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_actions')}</th>

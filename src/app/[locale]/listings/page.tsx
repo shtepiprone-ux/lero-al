@@ -26,6 +26,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
   const sp       = await searchParams
   const t        = await getTranslations({ locale, namespace: 'listing' })
   const tNav     = await getTranslations({ locale, namespace: 'nav' })
+  const tc       = await getTranslations({ locale, namespace: 'common' })
 
   const filters = parseSearchParams(sp)
   const { tab, sort, page } = filters
@@ -81,7 +82,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
       {/* Breadcrumbs */}
       <div className="bg-muted/40 border-b">
         <div className="container-wide py-2.5">
-          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-1.5 text-xs text-muted-foreground" aria-label={tc('aria_breadcrumb')}>
             <Link href={`/${locale}`} className="hover:text-foreground transition-colors">
               {tNav('home')}
             </Link>

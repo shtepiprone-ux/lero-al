@@ -18,6 +18,7 @@
  */
 
 import { useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { Loader2 } from 'lucide-react'
 import { openAuthSheet, type AuthSheetView } from '@/lib/auth/authSheet'
 import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
@@ -34,6 +35,7 @@ interface Props {
 }
 
 export function AuthRedirect({ view, next, sessionLost }: Props) {
+  const tc = useTranslations('common')
   useEffect(() => {
     // Store the intended destination so AuthSheet can redirect after login.
     // sanitizeReturnTo ensures only same-origin relative paths are accepted.
@@ -50,7 +52,7 @@ export function AuthRedirect({ view, next, sessionLost }: Props) {
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center" aria-live="polite">
-      <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" aria-label="Loading…" />
+      <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" aria-label={tc('loading')} />
     </div>
   )
 }

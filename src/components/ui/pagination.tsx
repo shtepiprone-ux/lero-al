@@ -72,7 +72,7 @@ function PaginationPrevious({
   const t = useTranslations('ui.pagination')
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label={t('aria_prev')}
       size="default"
       className={cn("pl-1.5!", className)}
       {...props}
@@ -91,7 +91,7 @@ function PaginationNext({
   const t = useTranslations('ui.pagination')
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label={t('aria_next')}
       size="default"
       className={cn("pr-1.5!", className)}
       {...props}
@@ -106,6 +106,7 @@ function PaginationEllipsis({
   className,
   ...props
 }: React.ComponentProps<"span">) {
+  const t = useTranslations('ui.pagination')
   return (
     <span
       aria-hidden
@@ -118,7 +119,7 @@ function PaginationEllipsis({
     >
       <MoreHorizontalIcon
       />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{t('aria_ellipsis')}</span>
     </span>
   )
 }

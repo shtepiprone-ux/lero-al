@@ -58,11 +58,11 @@ function brandEmailLayout(innerHtml: string, locale: string): string {
         <!-- footer -->
         <tr><td style="border-top:1px solid #f0f0f0;padding:24px 48px 36px;background:#fafafa;">
           <p style="font-size:13px;font-weight:500;color:#3f3f46;margin:0;">Lero<span style="color:${BRAND_ACCENT}">.al</span></p>
-          <p style="font-size:12px;color:#a1a1aa;margin:4px 0 0;">Real estate marketplace for Albania</p>
+          <p style="font-size:12px;color:#a1a1aa;margin:4px 0 0;">Tregu kryesor i pasurive të paluajtshme në Shqipëri</p>
           <p style="font-size:12px;color:#a1a1aa;margin:14px 0 0;">
-            <a href="https://lero.al/help" style="color:#71717a;text-decoration:none;">Help center</a>
+            <a href="https://lero.al/help" style="color:#71717a;text-decoration:none;">Qendra e ndihmës</a>
             &nbsp;·&nbsp;
-            <a href="https://lero.al/privacy" style="color:#71717a;text-decoration:none;">Privacy</a>
+            <a href="https://lero.al/privacy" style="color:#71717a;text-decoration:none;">Privatësia</a>
             &nbsp;·&nbsp;
             © ${year} Lero.al
           </p>

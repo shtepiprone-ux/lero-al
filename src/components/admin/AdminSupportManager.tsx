@@ -133,7 +133,7 @@ function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) 
         variant="ghost"
         onClick={onClear}
         className="shrink-0 h-auto p-0.5 rounded text-muted-foreground hover:text-foreground transition-colors"
-        aria-label="Clear selection"
+        aria-label={t('aria_clear_selection')}
       >
         <X className="h-3.5 w-3.5" />
       </Button>

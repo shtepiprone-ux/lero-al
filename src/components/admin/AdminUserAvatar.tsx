@@ -159,7 +159,7 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
             <AppImage
               variant="listing-thumb"
               src={currentUrl}
-              alt="Avatar preview"
+              alt={tu('avatar_preview_alt')}
             />
           ) : (
             <UserCircle2 className="h-12 w-12 text-muted-foreground" />

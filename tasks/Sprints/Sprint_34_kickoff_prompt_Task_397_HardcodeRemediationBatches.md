@@ -1,3 +1,59 @@
+> # 🔴 REVIEW #2 VERDICT 2026-06-05: REJECTED — file-integrity corruption (read this FIRST)
+> The email-hygiene INTENT is now correct: the 4 `{'...'}` brace-wraps are reverted to plain text, the footer is plain
+> Albanian, `src/modules/notifications/**` stays in scanner scope, locale parity is intact (1768×4). **But the write
+> introduced corruption that makes the redo un-committable — same truncation/encoding gremlin as the 395 reject:**
+>
+> 1. **🔴 `scripts/i18n-hardcode-baseline.json` is truncated to a lone `{`** → invalid JSON → `check:i18n-hardcode`
+>    EXITS 1 (`⚠️ Baseline file is not valid JSON`). The intended accepted entry for `Ekipi i Lero.al` never landed.
+> 2. **🔴 `BaseEmail.tsx` contains 12 embedded NUL bytes**; **🔴 `PasswordChangedEmail.tsx` contains 4 NUL bytes**
+>    (`tr -cd '\000' | wc -c`). `git`/`grep` see them as **binary files**. NUL bytes in `.tsx` break the TS compiler —
+>    so any `tsc=0` claim in the session log is impossible; re-verify.
+>
+> **Re-do bar (round 2):**
+> - Rewrite `BaseEmail.tsx` and `PasswordChangedEmail.tsx` as clean UTF-8, NO NUL bytes (`tr -cd '\000' < f | wc -c` = 0
+>   for every touched file), `node`/`tsc` clean. Verify the intended plain-text Albanian content is intact.
+> - Regenerate a VALID `i18n-hardcode-baseline.json` via `npm run check:i18n-hardcode:update-baseline`, then OPEN the file
+>   and confirm it is valid JSON (`python -c "import json,sys;json.load(open(...))"` / `node -e "JSON.parse(...)"`) and
+>   ends properly (Task 395 truncation lesson — re-read the file end). It must contain the accepted sq-only email entry
+>   with its justification mirrored in `docs/i18n-hardcode-audit.md`.
+> - `check:i18n-hardcode` GREEN; **negative-flow proof:** plant an English string in an email file → gate FAILS (proves
+>   notifications still scanned, no blind spot) → revert.
+> - `tsc=0`, `lint=0`; Files Changed table matches the real diff. **Self-audit MUST include a `tr -cd '\000'` zero-NUL
+>   check on every touched file and a `JSON.parse` check on the baseline** — these are the two things that just failed.
+>
+> ---
+>
+> # 🟠 REVIEW #1 VERDICT 2026-06-05: MOSTLY CORRECT — small email-hygiene RE-DO before commit (superseded by REVIEW #2)
+> The UI/component remediation is **approved in substance**: `dialog`/`sheet` → `t('common.close')`, `pagination`
+> → `t('ui.pagination.aria_*'/'aria_ellipsis')` (4-locale parity confirmed), `command`, breadcrumbs, admin files,
+> `LocationCombobox`, auth/modules — all genuine `t()` calls, locale parity 1768×4, `primitives-dialog:['Close']`
+> crutch removed, baseline emptied. **Do NOT touch the UI part.** Email content being Albanian is CORRECT per the
+> Albanian-only outbound-email policy (Epic GG / Task 251 / `docs/integrations.md` "Outbound email language policy").
+>
+> **The ONLY rejection is the METHOD used to clear the email-layer findings from the scanner — fix this, then it ships:**
+>
+> **🔴 Remove the scanner-evasion, keep the email layer IN scanner scope (no blind spot).** Findings were cleared by
+> (a) wrapping literals in `{'...'}` expression containers and (b) relying on non-ASCII Albanian dodging `isEnglishish`.
+> Both hide strings instead of declaring them. Owner-confirmed requirement (no email blind spot):
+> 1. **Revert all 4 `{'...'}` brace-wraps to plain text** — `BaseEmail.tsx` (`Tregu kryesor i pasurive të paluajtshme
+>    në Shqipëri`, `Qendra e ndihmës`, `Privatësia`) and `PasswordChangedEmail.tsx` (`Ekipi i Lero.al`). The non-ASCII
+>    ones pass `isEnglishish` naturally; the wrap was pointless.
+> 2. **Do NOT path-SKIP `src/modules/notifications/**`** — keep it scanned, so future *English* hardcode in a sq-only
+>    email (a real bug) is still caught.
+> 3. **For the few ASCII-Albanian email strings that `isEnglishish` false-flags** (e.g. `Ekipi i Lero.al`): add them to
+>    the scanner **baseline as documented accepted entries** with reason `"sq-only email per Epic GG — correct Albanian
+>    content"`. Baseline is the honest, visible accept-mechanism — not brace-wrapping. (Result: baseline is not strictly
+>    empty, but every entry is an explicit, justified accept; `check:i18n-hardcode` stays green; NEW English in emails
+>    still fails the gate.)
+>
+> **Re-submission bar:** no `{'...'}` literal-evasion remains in the diff (`git grep "{'"` on the touched email files is
+> clean); `src/modules/notifications/**` still in scanner scope; the accepted email entries are in `i18n-hardcode-baseline.json`
+> with justifications (and mirrored in `docs/i18n-hardcode-audit.md`); `check:i18n-hardcode` green; a negative-flow plant
+> of an *English* string in an email file still FAILS the gate (proves no blind spot); `tsc=0`, `lint=0`; Files Changed
+> table matches the diff. UI/component remediation untouched. Scanner-hardening against `{'...'}` evasion = separate Task 399.
+
+---
+
 # Sprint 34 — Task 397 — Burn down the i18n-hardcode baseline (batched remediation of ALL findings from Task 396)
 
 > **Follow-up to Task 396** (static scanner + full inventory + 'fail-on-new' CI gate). This task **fixes** every

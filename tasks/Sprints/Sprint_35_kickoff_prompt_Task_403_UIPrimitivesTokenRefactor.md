@@ -3,8 +3,11 @@
 > **Read `docs/agent-contract.md` (clauses 1–14) FIRST. STOP & ASK if ambiguous.**
 > Implements **Epic JJ** Phase 3, first of four area-refactors. Replaces raw style-value literals in
 > `src/components/ui/**` with design tokens / named utilities from `docs/design-system.md §22`. Depends on **Task 402**
-> (detector + inventory) committed. This task is **visually inert** — every change must compile to the SAME pixels;
-> proven by a rendered before/after matrix, NOT by reasoning or `tsc=0`.
+> (detector + inventory) committed. This task is **visually inert for Group A swaps** and **suppression-only for bespoke
+> Group C values**. The only intentional timing change is the owner-approved duration harmonization:
+> `duration-[0.35s]` → `duration-300`. Group A inertness is **primarily proven by browser-computed target-property
+> equality** and **corroborated by the rendered before/after matrix**. The duration harmonization is proven by **computed
+> `transition-duration` evidence**; screenshots prove only no layout/color/position regression.
 
 ```
 Type:        UI/styling refactor (primitives) — consume-the-tokens
@@ -110,8 +113,8 @@ silently hidden. Add **exact-value inline suppression** to `scripts/check-design
 ## Positive flow
 1. **Part 0:** add the **exact-value** `design-tokens-allow: <value> — <reason>` suppression to `scripts/check-design-tokens.mjs`
    (reason required = error if missing; same-line other values still reported) + document in `§23.2`.
-2. Apply all **Group A** swaps — but FIRST run the project-local utility verification (compiled CSS, computed-identical);
-   STOP & ASK on any non-generated / non-identical utility.
+2. Apply all **Group A** swaps — but FIRST run the project-local utility verification (browser-computed target-property
+   identical); STOP & ASK on any non-generated / non-identical utility.
 3. Add the **Group B** path-level allowlist entry for `appImageConfig.ts`; re-run `check:design-tokens` → file gone from report.
 4. **Group C:** harmonize `navigation-menu.tsx` `duration-[0.35s]`→`duration-300` (×3); add the four **exact-value**
    `// design-tokens-allow: <value> — <reason>` markers (checkbox/tabs/button/switch) exactly as written in the Group C table.
@@ -216,5 +219,6 @@ suppressed. **Do NOT create any new token inside Task 403** — only document th
 
 **Allowlist bespoke off-scale values (value-level, via Part 0 inline suppression) + harmonize `duration-[0.35s]`→`duration-300`.**
 Applies to Group C here AND to off-scale items in 404–406. The token *scale* stays clean; genuinely bespoke
-primitive-internal pixels are suppressed inline with a justification; the one duration is harmonized (50ms, near-inert,
-proven in the rendered matrix). Group C above is finalized accordingly — no remaining STOP&ASK for this task.
+primitive-internal pixels are suppressed inline with a justification; the one duration is harmonized (350ms→300ms,
+owner-approved timing change, proven by computed `transition-duration` evidence; the rendered matrix proves only no
+layout/color/position regression). Group C above is finalized accordingly — no remaining STOP&ASK for this task.

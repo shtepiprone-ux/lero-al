@@ -67,8 +67,19 @@ the last hardcode blind spot (style values) the way Task 396 closed the i18n-str
 
 ## Acceptance (epic-level, met when Task 407 lands)
 
-- `check:design-tokens` is **blocking** and **green** on a clean `src/**`.
+> **Strict semantics (policy A, owner-confirmed 2026-06-06).** The end state is NOT "zero raw values exist" — it is
+> **"zero unjustified / unsuppressed raw style-value violations"**. Strict-mode success = **0 unsuppressed violations**;
+> path-allowlisted and inline-suppressed values are allowed **only with explicit justification**; reports must **never
+> imply that no bespoke raw values exist** when suppressed values remain.
+
+- `check:design-tokens` is **blocking** and **green** (0 unsuppressed violations) on `src/**`.
 - `docs/design-system.md` documents the full token registry as the single source of truth.
-- No raw hex/`rgb`/`hsl`/`px`/`rem`/z-index/shadow/duration literal remains in `src/**` (except the short justified
-  exemption list).
-- All refactor tasks proven visually inert at the canonical breakpoints × four locales.
+- Every remaining raw style-value literal in `src/**` is **either** path-allowlisted **or** inline-suppressed
+  (`design-tokens-allow: <exact value> — <reason>`) with an explicit justification — none unjustified.
+- All refactor tasks proven inert: **primary** proof = browser-computed target-property equality; **corroboration +
+  regression** = the full canonical rendered matrix (320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560 ×
+  sq/en/uk/it). Owner-approved motion harmonizations (e.g. 350ms→300ms) proven via computed `transition-duration`.
+
+**Escalation guardrail (404–407):** if the same bespoke off-scale value is inline-suppressed **3+ times** across areas
+403–406, escalate it as a **token-candidate** for owner/orchestrator review rather than suppressing it again. New tokens
+are introduced only by an explicit, owner-approved task — never silently inside a refactor task.

@@ -46,7 +46,11 @@
     "check:i18n-hardcode:report": "node scripts/check-hardcoded-i18n.mjs --report",
     "check:i18n-hardcode:update-baseline": "node scripts/check-hardcoded-i18n.mjs --update-baseline",
     "check:file-integrity": "node scripts/check-file-integrity.mjs",
-    "check:file-integrity:all": "node scripts/check-file-integrity.mjs --all"
+    "check:file-integrity:all": "node scripts/check-file-integrity.mjs --all",
+    "check:story-coverage": "node scripts/check-story-coverage.mjs",
+    "check:story-coverage:report": "node scripts/check-story-coverage.mjs --report",
+    "check:story-coverage:update-exempt": "node scripts/check-story-coverage.mjs --update-exempt",
+    "new:story": "node scripts/scaffold-story.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.0",

@@ -639,3 +639,67 @@ npm run check:locale-leak:fast # fast — 320 viewport only, single locale pair 
 - Arrow/separator patterns, Storybook UI chrome labels
 
 Full allowlist: `scripts/check-locale-leak.mjs` → `LEAK_ALLOWLIST` array.
+
+---
+
+## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
+
+**Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.
+
+### §15.1 Gate: `check:story-coverage`
+
+Every component under `src/components/**` must EITHER:
+- Have a colocated `*.stories.tsx`, OR
+- Be listed in `scripts/story-coverage-exempt.json` with a one-line justification.
+
+A component that is neither → **gate FAILS, CI exit 1, naming the component**.
+
+**"Fail-on-new" rollout:** all currently storyless components are seeded into the exemption allowlist. Going forward, a NEW component must come with a story OR an explicit (reviewed) exemption entry. The allowlist is only flipped to strict (remove exemptions) once backlog "should-have-a-story" components are covered.
+
+**Stale-entry check:** any exemption entry pointing at a non-existent file is flagged as a warning (not a hard fail). Clean up with `--update-exempt`.
+
+```bash
+npm run check:story-coverage                    # gate check (CI default)
+npm run check:story-coverage:report             # full report, always exit 0
+npm run check:story-coverage:update-exempt      # seed/refresh exemption allowlist
+```
+
+### §15.2 Exemption allowlist (`scripts/story-coverage-exempt.json`)
+
+Each entry:
+```json
+"src/components/shared/Map.tsx": "Leaflet map requiring browser DOM + live tile URL; cannot be safely rendered in Storybook (SSR-incompatible)"
+```
+
+Tiering:
+- **Full exemption** (keep indefinitely): trivial presentational primitives (no user-facing strings, no interactive/responsive behavior), components requiring live auth/Supabase/third-party integrations that cannot be safely mocked, one-off page-shell wrappers.
+- **Temporary exemption** (marked as "future story candidate"): complex interactive components where story coverage is desirable but blocked on canonical pattern establishment.
+
+Only the orchestrator may review and promote a stub justification to a permanent exemption.
+
+### §15.3 Scaffold generator (`npm run new:story`)
+
+Generates a colocated `*.stories.tsx` skeleton pre-wired to the canonical patterns — passes `check:stories` immediately with zero edits.
+
+```bash
+npm run new:story src/components/shared/MyComponent.tsx
+# → creates src/components/shared/MyComponent.stories.tsx
+```
+
+The scaffold:
+- Uses `parameters: { /* layout: 'fullscreen' is the canonical default */ }` (withCanvas provides the gutter)
+- Exports `Default` + `LocaleStress` (toolbar-reactive, pinned to `mobile320`)
+- Has TODO placeholders — no raw English string literals (so `check:stories` passes)
+- Uses `storyT(locale, 'storybook.NAMESPACE.key')` pattern via commented-out example
+
+**After scaffolding:**
+1. Fill props with `storyT(locale, 'storybook.NAMESPACE.key')`.
+2. Add keys to `messages/{sq,en,uk,it}.json` under `storybook.NAMESPACE.*`.
+3. Run `npm run check:stories` (must exit 0 before committing).
+4. Remove the component from `story-coverage-exempt.json` if it was exempted.
+
+**Intentional gate behavior:** adding a raw English literal to a watched prop (title/label/placeholder/aria-label/…) in the filled-in story WILL make `check:stories` fail — proving the scaffold doesn't smuggle hardcode past the gate.
+
+### §15.4 CI wiring
+
+`check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, after the file-integrity gate. It does not require Storybook to build — it is a pure filesystem check (fast, ~100ms).

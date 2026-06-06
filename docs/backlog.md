@@ -7,6 +7,8 @@
 
 ## Last Session
 
+**2026-06-06 — Task 398 COMPLETE (story-coverage gate + scaffold).** `check:story-coverage` gate built (fail-on-new; `scripts/story-coverage-exempt.json` with 72 justified entries seeded from current state). Scaffold generator (`npm run new:story`) produces stories that pass `check:stories` unmodified. CI wired. All negative flows proven. `node --check` PASS, 0 NUL bytes, `tsc=0`. Pending orchestrator review + commit.
+
 **2026-06-06 — Task 399 COMPLETE (scanner hardening: brace-literal evasion).** Extended `scripts/check-hardcoded-i18n.mjs` with `JSX_EXPR_CHILD_PATTERNS` to detect `{'VALUE'}` / `{"VALUE"}` / `` {`VALUE`} `` in JSX children. Negative flow proven: planted `{'Evasion Probe'}` and `` {`Static Template Literal`} `` → exit 1 named as `[expr-child]`. Dynamic forms `{t('x')}`, `{name}`, `` {`Page ${n}`} `` → 0 false positives. Gate green on clean tree (1 baseline entry). `docs/i18n-governance.md` §2 updated. `node --check` PASS, 0 NUL bytes, `tsc=0`. Pending orchestrator review + commit.
 
 **2026-06-06 — Task 400 COMPLETE (file-integrity gate).** `scripts/check-file-integrity.mjs` built + verified. Pending orchestrator review + commit.
@@ -47,7 +49,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 >
 > **🆕 Standing principle (owner 2026-06-05):** every still-open task consumes the global Design System (`docs/design-system.md`, Task 340) wherever UI/responsive/overlay surfaces are touched. `docs/rule-index.md` already mandates `design-system.md` as the first pre-read for UI/layout/admin task types — re-scope any pre-DS plan to it before execution.
 
-**Task numbering.** Last used: **400** (file-integrity gate — COMPLETE, pending commit). 399 = harden i18n scanner vs `{'...'}` evasion — COMPLETE, pending commit. 398 = story-coverage gate + scaffold (PARKED). 397 = COMMITTED. 396 = COMMITTED. 394+395 = COMMITTED. **Active focus: orchestrator review + commit 400 + 399; then 398 (when unparked).** Next free: **401**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Task numbering.** Last used: **400** (file-integrity gate — COMPLETE, pending commit). 399 = harden i18n scanner vs `{'...'}` evasion — COMPLETE, pending commit. 398 = story-coverage gate + scaffold — COMPLETE, pending commit. 397 = COMMITTED. 396 = COMMITTED. 394+395 = COMMITTED. **Active focus: orchestrator review + commit 400 + 399; then 398 (when unparked).** Next free: **401**. Reserved/deferred: 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3). CLOSED: 351/352/353 (DS-6/7/8 — superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH — see `Epic_HH` "Open product decisions"):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. (351/352/353 close + 308/309 DS re-scope — DECIDED 2026-06-05.)
 

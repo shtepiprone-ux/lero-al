@@ -62,6 +62,9 @@ jobs:
       - name: File integrity gate (NUL bytes, BOM, parse errors, truncation)
         run: npm run check:file-integrity:all
 
+      - name: Story coverage gate (fail-on-new; exemption allowlist)
+        run: npm run check:story-coverage
+
       - name: Full governance report (summary)
         if: always()
         run: npm run governance

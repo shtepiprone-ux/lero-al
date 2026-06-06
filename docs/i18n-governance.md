@@ -38,7 +38,21 @@ All `src/**/*.tsx` (and `.ts` where JSX/HTML strings appear), excluding:
 2. **JSX text children** on the same line (the `>TEXT<` form):
    - Covers `sr-only` span content
    - Covers visible JSX prose (email templates, admin labels)
-   - Excludes `{…}` expressions (already a JS value)
+   - Excludes `{…}` expressions (see item 3 below)
+
+3. **JSX expression-child string literals** (added Task 399, 2026-06-06):
+   - `{'VALUE'}` — single-quoted string inside a JSX expression container
+   - `{"VALUE"}` — double-quoted string inside a JSX expression container
+   - `` {`VALUE`} `` — template literal with **no** `${…}` interpolation
+   - These are semantically identical to a raw `>VALUE<` text child and were
+     previously invisible to the `>TEXT<` detector (which explicitly excluded `{…}`).
+   - **Not flagged:** `{t('x')}`, `{name}`, `` {`Page ${n}`} ``, `{cond ? a : b}`
+     (excluded by `shouldSkipLine` for `t(` / `useTranslations`, by the
+     no-`${}` template pattern, and by the fact that non-literal expressions
+     don't match the bare-string regex forms).
+   - Attribute form `attr={'VALUE'}` is excluded via a `(?<!=)` negative lookbehind
+     (attribute syntax writes `key={…}` with `=` immediately before `{`);
+     watched-attribute expression forms are already covered by item 1 above.
 
 ### String-form coverage
 
@@ -147,7 +161,8 @@ Task 396 materialises Epic II Phase 1 (P1 audit + P3 CI gate):
 |---|---|---|
 | Phase 0 — Sprint 21 hotfix | 300 | CLOSED |
 | Phase 1 P1 — Static scan + audit | **396** | DONE (2026-06-05) |
-| Phase 1 P2 — Batch remediation | **397** | NEXT |
+| Phase 1 P1a — Scanner hardening (brace-literal evasion) | **399** | DONE (2026-06-06) |
+| Phase 1 P2 — Batch remediation | **397** | DONE (2026-06-05) |
 | Phase 2 — Notification locale-binding | 319 | PLANNED |
 | Phase 2 — Dynamic-key remediation | 320 | PLANNED |
 | Phase 3 — CI hardening | 323 | PLANNED |

@@ -182,6 +182,27 @@ const ATTR_PATTERNS = WATCHED_ATTRS.flatMap(attr => {
 // match (the `>` in `=>` paired with the `<` in `Promise<…>`).
 const JSX_TEXT_RE = /(?<!=)>([^<>{}\n]+)</g;
 
+// ── JSX expression-child string literals ─────────────────────────────────────
+// Detects bare string/template-literal values inside a JSX expression child:
+//   {'VALUE'}   {"VALUE"}   {`VALUE`}  (no ${…} interpolation)
+// These are semantically identical to a raw >VALUE< text child and were
+// previously invisible to JSX_TEXT_RE (which excludes {…} via [^<>{}\n]+).
+//
+// Negative lookbehind (?<!=) excludes attribute assignments key={'VALUE'},
+// because JSX attribute syntax writes key={...} with = immediately before {.
+// Dynamic/already-translated expressions are excluded by:
+//   (a) shouldSkipLine skips any line containing t( / useTranslations / storyT(
+//   (b) the template pattern [^`\n${}]+ rejects strings with ${ interpolation
+//   (c) ATTR_PATTERNS already cover watched-attribute expression forms
+//
+// Added by Task 399 (Sprint 34, 2026-06-06) to close the brace-literal evasion.
+// Docs: docs/i18n-governance.md §2 — "JSX expression-child string literals".
+const JSX_EXPR_CHILD_PATTERNS = [
+  /(?<!=)\{[ \t]*'([^'\n{}]+)'[ \t]*\}/g,  // {'VALUE'}
+  /(?<!=)\{[ \t]*"([^"\n{}]+)"[ \t]*\}/g,  // {"VALUE"}
+  /(?<!=)\{[ \t]*`([^`\n${}]+)`[ \t]*\}/g, // {`VALUE`} — no interpolation
+];
+
 // ── Per-line skip heuristics ──────────────────────────────────────────────────
 // A line that already uses an i18n call is considered safe.
 // A line that is a comment or import/type declaration is not JSX user-facing text.
@@ -235,6 +256,19 @@ function scanFile(filePath) {
       if (isAllowlisted(text)) continue;
       findings.push({ file: relPath, line: lineNum, kind: 'jsx-text', attr: null, value: text });
     }
+
+    // ── JSX expression-child string literals: {'VALUE'} / {"VALUE"} / {`VALUE`}
+    for (const exprRe of JSX_EXPR_CHILD_PATTERNS) {
+      exprRe.lastIndex = 0;
+      let em;
+      while ((em = exprRe.exec(line)) !== null) {
+        const text = em[1].trim();
+        if (!text) continue;
+        if (!isEnglishish(text)) continue;
+        if (isAllowlisted(text)) continue;
+        findings.push({ file: relPath, line: lineNum, kind: 'jsx-expr-child', attr: null, value: text });
+      }
+    }
   }
 
   return findings;
@@ -264,7 +298,7 @@ function run() {
     const items = byFile[file];
     console.log(`  ${file}  (${items.length})`);
     for (const { line, kind, attr, value } of items) {
-      const tag = kind === 'attr' ? `[${attr}]` : '[text-child]';
+      const tag = kind === 'attr' ? `[${attr}]` : kind === 'jsx-expr-child' ? '[expr-child]' : '[text-child]';
       console.log(`    :${line}  ${tag}  "${value}"`);
     }
   }
@@ -318,7 +352,7 @@ function run() {
 
   console.error(`❌  check:i18n-hardcode FAILED — ${newFindings.length} NEW hardcode(s) not in baseline:\n`);
   for (const { file, line, kind, attr, value } of newFindings) {
-    const tag = kind === 'attr' ? `[${attr}]` : '[text-child]';
+    const tag = kind === 'attr' ? `[${attr}]` : kind === 'jsx-expr-child' ? '[expr-child]' : '[text-child]';
     console.error(`  ${file}:${line}  ${tag}  "${value}"`);
   }
   console.error('');

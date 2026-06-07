@@ -588,6 +588,7 @@ Utilities are wired: `--spacing-N: var(--space-N)` → `p-N` / `m-N` / `gap-N` /
 
 | Token | Value | px | Paired line-height token | Use via |
 |---|---|---|---|---|
+| `--text-2xs` | `0.625rem` | 10 | `--text-2xs--line-height: 0.75rem` | `text-2xs` — **micro-label only**: badge counter, metadata badge, compact status, helper/counter text. Do NOT use for primary copy, form labels, button labels, filter chips, or nav labels. (Task 404, Epic JJ) |
 | `--text-xs` | `0.75rem` | 12 | `--text-xs--line-height: 1rem` | `text-xs` |
 | `--text-sm` | `0.875rem` | 14 | `--text-sm--line-height: 1.25rem` | `text-sm` — body, labels |
 | `--text-base` | `1rem` | 16 | `--text-base--line-height: 1.5rem` | `text-base` |

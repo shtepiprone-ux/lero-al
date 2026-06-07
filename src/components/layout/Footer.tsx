@@ -69,7 +69,7 @@ export async function Footer() {
               <span className="text-primary">{brand}</span>
               <span className="text-foreground">{tld}</span>
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-[220px]">
+            <p className="text-sm text-muted-foreground leading-relaxed max-w-55">
               {tagline}
             </p>
           </div>

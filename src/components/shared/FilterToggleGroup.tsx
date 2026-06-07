@@ -24,7 +24,7 @@ export function FilterToggleGroup({
           type="button"
           variant={!value ? 'default' : 'outline'}
           size="sm"
-          className="min-h-[44px] h-auto px-3 py-2 text-xs rounded-xl justify-start"
+          className="min-h-11 h-auto px-3 py-2 text-xs rounded-xl justify-start"
           onClick={() => onToggle(null)}
         >
           {allLabel}
@@ -36,7 +36,7 @@ export function FilterToggleGroup({
           type="button"
           variant={value === opt.value ? 'default' : 'outline'}
           size="sm"
-          className="min-h-[44px] h-auto px-3 py-2 text-xs rounded-xl whitespace-normal leading-snug text-left justify-start"
+          className="min-h-11 h-auto px-3 py-2 text-xs rounded-xl whitespace-normal leading-snug text-left justify-start"
           onClick={() => onToggle(value === opt.value ? null : opt.value)}
         >
           {getLabel(opt.labelKey)}

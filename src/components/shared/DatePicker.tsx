@@ -98,7 +98,9 @@ export function DatePicker({ value, onChange, placeholder, className, maxDate }:
         sideOffset={6}
         className="p-0 w-auto rounded-2xl shadow-xl"
       >
-        <div className="w-[272px] p-3 select-none">
+        <div
+          className="w-[272px] p-3 select-none" // design-tokens-allow: w-[272px] — calendar grid fixed width; off-scale (no spacing token = 272px)
+        >
 
           {/* Month navigation */}
           <div className="flex items-center justify-between mb-2">

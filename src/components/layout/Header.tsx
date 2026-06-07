@@ -188,7 +188,7 @@ export function Header() {
                     <AvatarImage src={user.avatar_url ?? undefined} />
                     <AvatarFallback className="text-xs">{userInitials}</AvatarFallback>
                   </Avatar>
-                  <span className="text-sm max-w-[120px] truncate">{user.name}</span>
+                  <span className="text-sm max-w-30 truncate">{user.name}</span>
                   <ChevronDown className="h-3 w-3 opacity-60" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">

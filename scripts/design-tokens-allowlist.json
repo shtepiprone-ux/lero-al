@@ -3,5 +3,6 @@
   "src/modules/notifications/lib/sendTemplatedEmail.ts": "HTML email layout template using BRAND_ACCENT const and inline hex literals; CSS custom properties are unsupported in email HTML",
   "src/app/api/auth-email-hook/route.ts": "Supabase auth email hook — generates inline HTML email for email_change events; CSS custom properties are unsupported in email HTML",
   "src/modules/auth/components/AuthSheet.tsx": "Official Google brand SVG fill colors (#4285F4/#34A853/#FBBC05/#EA4335) from Google Identity Guidelines — brand colors are fixed by Google policy and cannot be replaced with design tokens",
-  "src/components/ui/appImageConfig.ts": "Next/Image sizes media-descriptor strings + inline SVG blur placeholder color — neither can reference CSS custom properties"
+  "src/components/ui/appImageConfig.ts": "Next/Image sizes media-descriptor strings + inline SVG blur placeholder color — neither can reference CSS custom properties",
+  "src/components/shared/PerfDevOverlay.tsx": "Dev-only performance diagnostic overlay — guarded by process.env.NODE_ENV !== 'development' (build-time constant); returns null and is tree-shaken from production bundles; z-[9999] and text-[10px] are non-production UI"
 }

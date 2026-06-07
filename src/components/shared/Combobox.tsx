@@ -132,7 +132,6 @@ export function Combobox({
         right: 0,
         width: '100%',
         maxHeight: '90dvh',
-        zIndex: 9999,
       })
       return
     }
@@ -156,7 +155,6 @@ export function Combobox({
         left: safeLeft,
         width: dropdownWidth,
         maxHeight: Math.min(maxH, spaceBelow - 8),
-        zIndex: 9999,
       })
     } else {
       // Open upward
@@ -166,7 +164,6 @@ export function Combobox({
         left: safeLeft,
         width: dropdownWidth,
         maxHeight: Math.min(maxH, spaceAbove - 8),
-        zIndex: 9999,
       })
     }
   }, [portal, dropdownMinWidth])
@@ -204,6 +201,7 @@ export function Combobox({
         !portal && 'absolute top-full mt-1 left-0 right-0 z-50',
         // Mobile: full-width bottom sheet (overrides absolute positioning)
         !portal && 'max-sm:!fixed max-sm:!inset-x-0 max-sm:!bottom-0 max-sm:!top-auto max-sm:!mt-0',
+        portal && 'z-[9999]', // design-tokens-allow: z-[9999] — portal dropdown/bottom-sheet must sit above z-modal/z-popover (50) when Combobox is portal-rendered inside a Dialog or Sheet; exceptional overlay escape-hatch (§22.4)
         MOBILE_POPUP,
         // Desktop-only rounded corners (mobile: rounded-t-2xl from MOBILE_POPUP)
         'sm:rounded-xl',

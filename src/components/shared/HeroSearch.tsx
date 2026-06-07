@@ -129,7 +129,7 @@ export function HeroSearch() {
                 <SlidersHorizontal className="h-4 w-4" />
                 <span className="hidden sm:inline">{t('advanced_filters')}</span>
                 {activeFiltersCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+                  <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-bold">
                     {activeFiltersCount}
                   </span>
                 )}

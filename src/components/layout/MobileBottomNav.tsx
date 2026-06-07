@@ -24,7 +24,7 @@ export function MobileBottomNav() {
 
   return (
     <nav
-      className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-30 md:hidden bg-card border-t shadow-[0_-2px_16px_rgba(0,0,0,0.08)] flex items-stretch h-14"
+      className="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-30 md:hidden bg-card border-t shadow-[0_-2px_16px_rgba(0,0,0,0.08)] flex items-stretch h-14" // design-tokens-allow: shadow-[0_-2px_16px_rgba(0,0,0,0.08)] — bespoke upward nav shadow (negative-y offset); no --shadow-* token matches upward direction (Task 408 detector blind spot)
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       aria-label={tc('aria_main_nav')}
     >
@@ -43,7 +43,9 @@ export function MobileBottomNav() {
         )}>
           <Plus className="h-6 w-6 text-primary-foreground" strokeWidth={2.5} />
         </span>
-        <span className="text-[10px] font-medium text-muted-foreground leading-none">{t('add_listing')}</span>
+        <span
+          className="text-[10px] font-medium text-muted-foreground leading-none" // design-tokens-allow: text-[10px] — primary MobileBottomNav FAB label; interactive/mobile-critical nav text (MobileBottomNav protection)
+        >{t('add_listing')}</span>
       </Link>
 
       {user ? (
@@ -77,14 +79,18 @@ function BottomNavItem({
     return (
       <Button type="button" variant="ghost" onClick={onClick} className={cn(className, 'h-full rounded-none p-0')}>
         <Icon className="h-5 w-5" />
-        <span className="text-[10px] font-medium leading-none">{label}</span>
+        <span
+          className="text-[10px] font-medium leading-none" // design-tokens-allow: text-[10px] — primary MobileBottomNav nav item label; interactive/mobile-critical nav text (MobileBottomNav protection)
+        >{label}</span>
       </Button>
     )
   }
   return (
     <Link href={href!} className={className}>
       <Icon className="h-5 w-5" />
-      <span className="text-[10px] font-medium leading-none">{label}</span>
+      <span
+        className="text-[10px] font-medium leading-none" // design-tokens-allow: text-[10px] — primary MobileBottomNav nav item label; interactive/mobile-critical nav text (MobileBottomNav protection)
+      >{label}</span>
     </Link>
   )
 }

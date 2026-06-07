@@ -407,7 +407,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
           <Button size="xl" className="w-full relative" onClick={handleApply}>
             {t('apply_filters')}
             {activeCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+              <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-bold">
                 {activeCount}
               </span>
             )}

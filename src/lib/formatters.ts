@@ -44,3 +44,20 @@ export function formatDate(dateStr: string | null | undefined, locale: string): 
     return '—'
   }
 }
+
+/**
+ * Compact localized listing-card date that always includes the year.
+ * e.g. en:"Jan 15, 2026" · uk:"15 січ. 2026" · it:"15 gen 2026" · sq:localized
+ * Requires explicit locale for SSR/client parity (no hydration mismatch).
+ * Returns '—' on null, undefined, or invalid input.
+ */
+export function formatListingDate(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' }).format(d)
+  } catch {
+    return '—'
+  }
+}

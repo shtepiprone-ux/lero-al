@@ -99,7 +99,7 @@ const meta: Meta<RvsArgs> = {
           'Mobile: horizontal scroll (w-48 cards, no-scrollbar). ' +
           'sm+: 2-col grid → md: 3-col → lg: 4-col. ' +
           'Clear button (profile only) via clearSlot prop. ' +
-          'Cards use shared StoryListingCard (Task 370 parity: image, status/premium, price + €/m², beds/area, location, photo count, favorite, days-ago). ' +
+          'Cards use shared StoryListingCard (Task 370 parity: image, status/premium, price + /m², beds/area, location, photo count, favorite, days-ago). ' +
           'See docs/responsive-screenshot-governance.md for screenshot matrix.',
       },
     },

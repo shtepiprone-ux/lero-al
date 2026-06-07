@@ -8,16 +8,17 @@
  * Single source — Note 14 (no duplicate mock card components).
  *
  * Fields: image placeholder, premium stripe + border, status badges (new/price_reduced/
- * sold overlay/rented overlay/archived), photo count, favorite stub, price + €/m²,
- * old price (strike-through), features row (area/beds), location, public-id copy, days-ago.
+ * sold overlay/rented overlay/archived), photo count, favorite stub, price + /m²,
+ * old price (strike-through), features row (area/beds), location, public-id copy, date-with-year.
  */
 
 import { useState } from 'react'
 import { MapPin, Maximize2, Camera, Heart, Copy, Check, BedDouble } from 'lucide-react'
-import { useTranslations, useFormatter } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { formatPrice, formatListingDate } from '@/lib/formatters'
 import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import { LISTINGS_GRID_FIXTURE, makeListingFixtures } from './fixtures/listing.fixture'
 
@@ -62,12 +63,13 @@ export const STORY_LISTINGS: StoryCardData[] = makeStoryListings('en')
 
 export function StoryListingCard({ data }: { data: StoryCardData }) {
   const t = useTranslations('listing')
-  const formatter = useFormatter()
+  const locale = useLocale()
   const [copied, setCopied] = useState(false)
   const [favorited, setFavorited] = useState(false)
 
   const isClosed = isListingClosed(data.status)
   const isArchived = isListingArchived(data.status)
+  const activeCurrency = data.displayCurrency ?? data.currency
 
   function handleCopy(e: React.MouseEvent) {
     e.preventDefault()
@@ -163,25 +165,25 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
           {data.title}
         </h3>
 
-        {/* Price block */}
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col">
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold text-primary">
-                €{data.price.toLocaleString()}
+        {/* Price block — mirrors live PriceBlock contract: one currency marker, atomic clusters */}
+        <div className="w-full">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 justify-between">
+            <div className="flex flex-wrap items-baseline gap-2">
+              <span className="text-lg font-bold text-primary whitespace-nowrap">
+                {formatPrice(data.price, activeCurrency, locale)}
               </span>
-              {data.price_old && (
-                <span className="text-xs text-muted-foreground line-through">
-                  €{data.price_old.toLocaleString()}
+              {data.price_old && data.price < data.price_old && (
+                <span className="text-xs text-muted-foreground line-through whitespace-nowrap">
+                  {formatPrice(data.price_old, activeCurrency, locale)}
                 </span>
               )}
             </div>
+            {pricePerSqm && (
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                {formatPrice(pricePerSqm, activeCurrency, locale)} {t('per_sqm')}
+              </span>
+            )}
           </div>
-          {pricePerSqm && (
-            <span className="text-xs text-muted-foreground">
-              €{pricePerSqm} {t('per_sqm')}
-            </span>
-          )}
         </div>
 
         {/* Features row */}
@@ -217,8 +219,8 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
                 : <Copy className="size-2.5 shrink-0 opacity-50" />
               }
             </Button>
-            <span className="text-[10px]">
-              {formatter.dateTime(new Date(data.created_at), { month: 'short', day: 'numeric' })}
+            <span className="text-[10px] whitespace-nowrap">
+              {formatListingDate(data.created_at, locale)}
             </span>
           </span>
         </div>

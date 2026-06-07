@@ -6,10 +6,9 @@ import { useLocale, useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
-import { formatPrice } from '@/lib/formatters'
+import { formatPrice, formatListingDate } from '@/lib/formatters'
 import { MapPin, Camera, Maximize2, Copy, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { RelativeTime } from '@/components/shared/RelativeTime'
 import { cn } from '@/lib/utils'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
@@ -65,26 +64,26 @@ interface PriceBlockProps {
 
 function PriceBlock({ displayPrice, activeCurrency, locale, displayPriceOld, originalPriceStr, pricePerSqm, perSqmLabel, priceSize }: PriceBlockProps) {
   return (
-    <div className="flex items-start justify-between">
-      <div className="flex flex-col">
-        <div className="flex items-baseline gap-2">
-          <span className={cn(priceSize === 'lg' ? 'text-lg' : 'text-base', 'font-bold text-primary')}>
+    <div className="w-full">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 justify-between">
+        <div className="flex flex-wrap items-baseline gap-2">
+          <span className={cn(priceSize === 'lg' ? 'text-lg' : 'text-base', 'font-bold text-primary whitespace-nowrap')}>
             {formatPrice(displayPrice, activeCurrency, locale)}
           </span>
           {displayPriceOld && (
-            <span className="text-xs text-muted-foreground line-through">
+            <span className="text-xs text-muted-foreground line-through whitespace-nowrap">
               {formatPrice(displayPriceOld, activeCurrency, locale)}
             </span>
           )}
         </div>
-        {originalPriceStr && (
-          <span className="text-2xs text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
+        {pricePerSqm && (
+          <span className="text-xs text-muted-foreground whitespace-nowrap">
+            {formatPrice(pricePerSqm, activeCurrency, locale)} {perSqmLabel}
+          </span>
         )}
       </div>
-      {pricePerSqm && (
-        <span className="text-xs text-muted-foreground">
-          {formatPrice(pricePerSqm, activeCurrency, locale)} {perSqmLabel}
-        </span>
+      {originalPriceStr && (
+        <span className="text-2xs text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
       )}
     </div>
   )
@@ -260,7 +259,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                     : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
                   }
                 </button>
-                <RelativeTime date={listing.created_at} />
+                <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
               </span>
             </div>
           </div>
@@ -393,7 +392,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                 : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
               }
             </button>
-            <RelativeTime date={listing.created_at} />
+            <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
           </span>
         </div>
       </div>

@@ -37,6 +37,7 @@ const BASE = {
   slug: 'modern-apartment-tirana-center',
   price:            95000,
   currency:         'EUR' as string,
+  displayCurrency:  'EUR' as string,
   transaction_type: 'sale' as string,
   property_type:    'apartment' as string,
   area_sqm:         75,

@@ -405,7 +405,7 @@ export default async function ListingPage({ params }: Props) {
                 <div className="flex items-baseline gap-3 flex-wrap">
                   <span className="text-3xl font-bold text-primary">{formattedPrice}</span>
                   {isPriceReduced && <span className="text-lg text-muted-foreground line-through">{formatPrice(displayPriceOld!, displayCurrencyCode, locale)}</span>}
-                  {pricePerSqm && <span className="text-sm text-muted-foreground">{formatPrice(pricePerSqm, displayCurrencyCode, locale)}/{t('per_sqm').split('/')[1] ?? 'm²'}</span>}
+                  {pricePerSqm && <span className="text-sm text-muted-foreground whitespace-nowrap">{formatPrice(pricePerSqm, displayCurrencyCode, locale)} {t('per_sqm')}</span>}
                 </div>
                 {originalPriceStr && (
                   <span className="text-xs text-muted-foreground">{t('original_price')}: {originalPriceStr}</span>

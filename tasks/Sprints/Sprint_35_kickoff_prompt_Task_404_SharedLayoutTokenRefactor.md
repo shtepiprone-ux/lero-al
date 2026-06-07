@@ -30,7 +30,23 @@ NON-goal:    admin/** + listing/** + app/** + modules/** (405–406). Any visual
    the session note** so Task 408 closes it. A blind-spot value that is "fixed" but invisible to the gate must still be
    recorded (as the 403 `translate-y-[-2.5rem]` case showed).
 
+## Coverage requirements — Localization + Responsive (MANDATORY)
+
+**Localization coverage:**
+- This task must preserve behavior and visual layout in **sq / en / uk / it**.
+- `uk` at 320/375/390 is a mandatory **stress subset**, NOT a replacement for full locale coverage.
+- Do NOT edit `messages/*.json` unless a real regression requires it and the owner approves.
+
+**Responsive coverage:**
+- Validate affected shared/layout surfaces at: **320, 375, 390, 480, 560, 680, 768, 810, 960, 1024, 1200, 1440, 1920, 2560**.
+- 320/375/390 are the P0 mobile full-width proof points, **not** the whole responsive scope.
+
 ## Scope — SHARED (12) + LAYOUT (6) inventory from Task 402, classified
+
+> **The listed `file:line` entries are the known Task 402 baseline, NOT a closed list.** Before editing, re-run
+> `check:design-tokens` and reconcile EVERY current unsuppressed hit under `src/components/shared/**` and
+> `src/components/layout/**`. If line numbers moved, search by file / path / raw value / class — not by stale line number.
+> Do NOT leave any newly discovered SHARED/LAYOUT unsuppressed hit unresolved or undocumented.
 
 ### Group A — inert swaps to a spacing-backed named utility (DO; prove computed-identical)
 | File:line | Raw | After (inert) | Note |
@@ -48,6 +64,12 @@ For EACH: render the element, read `getComputedStyle` (min-height / max-width), 
 | File | Proposed allowlist reason | Confirm first |
 |---|---|---|
 | `shared/PerfDevOverlay.tsx` (`z-[9999]`, `text-[10px]`) | Dev-only performance diagnostic overlay, not shipped/rendered in production UI | **STOP & ASK / verify** it is genuinely dev-gated (not rendered in prod) before allowlisting the whole file. If it IS user-visible, treat its `z-[9999]`/`text-[10px]` under the Owner-Decision values below instead. |
+
+**PerfDevOverlay dev-only proof (required IN THE SESSION LOG before path-allowlisting):**
+- where it is imported / rendered;
+- the exact dev/prod gating condition (env flag / `NODE_ENV` / mount guard);
+- confirmation that it is NOT reachable in production UI.
+If this cannot be proven, **do NOT path-allowlist the file** — handle its `z-[9999]` / `text-[10px]` under the normal rules (z-9999 exception / Group D).
 
 ### Group C — off-scale bespoke → exact-value inline suppression (policy A)
 | File:line | Raw | Suppress reason (inline `// design-tokens-allow: <value> — <reason>`) |
@@ -72,6 +94,15 @@ Owner approved adding a **narrowly-scoped micro-label** token (NOT a general bod
   (c) rendered before/after shows **no visible shift** for each swapped micro-label (single-line labels: typically none).
   Any occurrence showing a real vertical-rhythm/clip change → revert that one to `text-[10px]` and STOP & ASK. This is an
   owner-approved token promotion, proven by font-size equality + rendered no-shift (not pure computed equality).
+- **Final allowed states (reconciles "leave + STOP&ASK" with "unsuppressed = 0"):** NO final state may contain an
+  **unsuppressed** `text-[10px]` in SHARED/LAYOUT. Each occurrence must end as exactly ONE of:
+  (a) swapped to `text-2xs` with the required proof; (b) kept as `text-[10px]` with an **exact inline suppression +
+  documented reason**; (c) **reported as a blocker (STOP & ASK) WITHOUT claiming acceptance**. "Acceptance = unsuppressed
+  SHARED+LAYOUT = 0" is met only by (a)/(b); (c) means the task is NOT done — never report a false green.
+- **MobileBottomNav protection:** for `layout/MobileBottomNav`, treat navigation item **labels as interactive /
+  mobile-critical by default** — do NOT swap nav labels to `text-2xs` unless that occurrence is proven decorative /
+  secondary (not the primary nav label). Badges / counters / helper metadata MAY use `text-2xs` if the proof passes.
+  (Explicit guard against swapping nav labels just to turn the gate green.)
 
 ### `z-[9999]` / `zIndex: 9999` (Q2 RESOLVED: do NOT add a token — keep as justified exception)
 Owner declined a general `--z-max` (avoid legitimizing an "emergency z" everyone reaches for). Handle as:
@@ -81,6 +112,9 @@ Owner declined a general `--z-max` (avoid legitimizing an "emergency z" everyone
   regression**, keep `zIndex: 9999` and add an exact-value inline suppression: `// design-tokens-allow: zIndex: 9999 —
   exceptional overlay escape-hatch for the mobile bottom-sheet portal; not a reusable layer (§22.4)`. Provide the rendered
   layering proof either way. (Expectation: the bottom-sheet likely must stay 9999 to sit above z-50 dialogs — but verify.)
+  - **Classify each of the 3 occurrences (135/159/169) SEPARATELY — do NOT blanket-lower all three.** For each, the proof
+    must cover BOTH the **desktop dropdown** behavior AND the **mobile bottom-sheet** behavior. Lower an occurrence to a
+    canonical layer only if THAT occurrence is proven safe at both; otherwise suppress THAT occurrence with reason.
 - **`shared/PerfDevOverlay.tsx:43` (`z-[9999]`):** covered by the Group B dev-only path-allowlist (no change).
 - **Do NOT create `--z-max`.** Keep normal product overlays on the canonical z scale (dropdown/sticky/overlay/modal/popover/toast).
 
@@ -123,6 +157,10 @@ Owner declined a general `--z-max` (avoid legitimizing an "emergency z" everyone
 - `check:design-tokens`: SHARED + LAYOUT unsuppressed = 0 (before/after pasted); 0 stale / 0 missing-reason; 0 new violations.
 - `tsc=0`, `lint=0 new`, `check:file-integrity` green (post-edit), screenshots:assert + responsive pass.
 - Mobile <640 full-width preserved (rendered evidence at 320/375/390, uk mandatory).
+- **Coverage requirements met:** sq/en/uk/it preserved (uk@320/375/390 is the stress subset, not the whole scope); the
+  full canonical breakpoint set validated (320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560); `messages/*.json`
+  untouched unless an owner-approved regression fix required it.
+- **No unsuppressed `text-[10px]` remains in SHARED/LAYOUT** — every occurrence is swapped (proof) / exact-suppressed (reason) / reported as a blocker; MobileBottomNav nav labels NOT swapped unless proven decorative.
 - Four-part token-resolution report present (fixed swaps / token-added-if-approved / path-allowlisted / inline-suppressed),
   headline **"unsuppressed SHARED+LAYOUT violations = 0"** (must not imply no bespoke values exist).
 - New detector blind spots (if any) logged for Task 408.

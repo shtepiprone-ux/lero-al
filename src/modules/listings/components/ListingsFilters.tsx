@@ -31,7 +31,7 @@ function AccordionSection({
         type="button"
         variant="ghost"
         onClick={onToggle}
-        className="flex w-full items-center justify-between select-none min-h-[44px] h-auto rounded-none px-0 hover:bg-transparent group"
+        className="flex w-full items-center justify-between select-none min-h-11 h-auto rounded-none px-0 hover:bg-transparent group"
       >
         <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider group-hover:text-primary transition-colors duration-150">
           {title}

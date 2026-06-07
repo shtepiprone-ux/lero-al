@@ -78,7 +78,7 @@ function PriceBlock({ displayPrice, activeCurrency, locale, displayPriceOld, ori
           )}
         </div>
         {originalPriceStr && (
-          <span className="text-[10px] text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
+          <span className="text-2xs text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
         )}
       </div>
       {pricePerSqm && (
@@ -171,7 +171,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         className={cn(
           "listing-card listing-card--horizontal group flex gap-3 rounded-xl border bg-card transition-shadow overflow-hidden",
           listing.is_premium
-            ? "border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)] hover:shadow-[0_4px_16px_oklch(0.700_0.162_65_/_0.25)]"
+            ? "border-badge-premium/50 shadow-listing-card-ring hover:shadow-listing-card-elevation-md"
             : "hover:shadow-md",
           isListingArchived(listing.status as ListingStatus) && "grayscale opacity-60 hover:opacity-70",
         )}
@@ -180,7 +180,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         onClick={() => onBeforeNavigate?.(listing.slug)}
       >
         {/* Image */}
-        <div className="relative w-32 shrink-0 sm:w-44 self-stretch min-h-[80px] overflow-hidden bg-muted">
+        <div className="relative w-32 shrink-0 sm:w-44 self-stretch min-h-20 overflow-hidden bg-muted">
           {coverImage ? (
             <AppImage variant="listing-thumb" src={coverImage.url} alt={listing.title} priority={priority} predictive />
           ) : (
@@ -191,7 +191,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {badges.map(b => (
-              <Badge key={b.label} variant={b.variant} className={cn('text-[10px] px-1.5 py-0', b.className)}>
+              <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
                 {t(b.label)}
               </Badge>
             ))}
@@ -252,7 +252,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
                   onClick={copyId}
                   title={listing.id}
                   aria-label={idCopied ? t('id_copied') : t('copy_id')}
-                  className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                  className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
                 >
                   #{listing.public_id ?? listing.id.slice(0, 8)}
                   {idCopied
@@ -275,7 +275,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
       className={cn(
         "listing-card listing-card--vertical group flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-200",
         listing.is_premium
-          ? "border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)] hover:shadow-[0_8px_24px_oklch(0.700_0.162_65_/_0.2)] hover:-translate-y-0.5"
+          ? "border-badge-premium/50 shadow-listing-card-ring hover:shadow-listing-card-elevation-lg hover:-translate-y-0.5"
           : "hover:shadow-lg hover:-translate-y-0.5",
         isListingArchived(listing.status as ListingStatus) && "grayscale opacity-60 hover:opacity-70",
       )}
@@ -312,7 +312,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
         {/* Badges top-left */}
         <div className="absolute top-2 left-2 flex flex-wrap gap-1">
           {badges.map(b => (
-            <Badge key={b.label} variant={b.variant} className={cn('text-[10px] px-1.5 py-0', b.className)}>
+            <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
               {t(b.label)}
             </Badge>
           ))}
@@ -385,7 +385,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
               onClick={copyId}
               title={listing.id}
               aria-label={idCopied ? t('id_copied') : t('copy_id')}
-              className="font-mono text-[10px] text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+              className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
             >
               #{listing.public_id ?? listing.id.slice(0, 8)}
               {idCopied

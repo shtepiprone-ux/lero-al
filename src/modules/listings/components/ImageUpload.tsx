@@ -107,7 +107,7 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
             >
               {/* Cover badge */}
               {img.is_cover && (
-                <Badge variant="default" className="absolute top-2 left-2 text-[10px] px-1.5 py-0 h-5 gap-1">
+                <Badge variant="default" className="absolute top-2 left-2 text-2xs px-1.5 py-0 h-5 gap-1">
                   <Star className="h-2.5 w-2.5" />
                   {t('cover_photo')}
                 </Badge>
@@ -164,7 +164,7 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
               </div>
 
               {/* Order number */}
-              <span className="absolute bottom-2 left-2 h-5 w-5 rounded-full bg-overlay/60 text-overlay-foreground text-[10px] font-bold flex items-center justify-center">
+              <span className="absolute bottom-2 left-2 h-5 w-5 rounded-full bg-overlay/60 text-overlay-foreground text-2xs font-bold flex items-center justify-center">
                 {index + 1}
               </span>
             </AppImage>

@@ -188,7 +188,7 @@ export function ActiveFilterChips({ locations }: Props) {
           type="button"
           variant="outline"
           onClick={() => removeChip(chip)}
-          className="gap-1.5 h-7 pl-3 pr-2 rounded-full bg-primary/10 text-primary text-xs font-medium border-primary/20 select-none hover:bg-primary/20 min-h-[44px] sm:min-h-0"
+          className="gap-1.5 h-7 pl-3 pr-2 rounded-full bg-primary/10 text-primary text-xs font-medium border-primary/20 select-none hover:bg-primary/20 min-h-11 sm:min-h-0"
           aria-label={`${chip.label} — ${t('aria_remove_filter')}`}
         >
           {chip.label}

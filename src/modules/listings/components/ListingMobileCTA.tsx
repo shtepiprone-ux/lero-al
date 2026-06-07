@@ -67,7 +67,7 @@ export function ListingMobileCTA({ price, hasPhone, hasWhatsapp, listingId, list
 
   return (
     <div
-      className="listing-mobile-cta fixed bottom-14 md:bottom-0 left-0 right-0 z-30 lg:hidden bg-card border-t shadow-[0_-2px_12px_rgba(0,0,0,0.10)] flex items-center gap-3 px-4 py-3"
+      className="listing-mobile-cta fixed bottom-14 md:bottom-0 left-0 right-0 z-30 lg:hidden bg-card border-t shadow-[0_-2px_12px_rgba(0,0,0,0.10)] flex items-center gap-3 px-4 py-3" // design-tokens-allow: shadow-[0_-2px_12px_rgba(0,0,0,0.10)] — bespoke upward sticky-CTA shadow; negative-y offset; no --shadow-* token matches upward direction (detector blind spot: negative-offset shadows, Task 408)
       style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}
     >
       <p className="flex-1 min-w-0 font-bold text-primary text-base leading-none truncate">

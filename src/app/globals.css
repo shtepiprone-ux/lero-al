@@ -189,6 +189,12 @@
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* ListingCard brand-highlight ring/elevation — narrowly-scoped semantic tokens (Task 405, §22.3) */
+  /* Consumed ONLY in ListingCard brand-highlight states (horizontal + vertical premium card). */
+  /* StoryListingCard uses same pattern — recorded cross-scope for Task 406. */
+  --shadow-listing-card-ring:         0 0 0 1px oklch(0.700 0.162 65 / 0.2);
+  --shadow-listing-card-elevation-md: 0 4px 16px oklch(0.700 0.162 65 / 0.25);
+  --shadow-listing-card-elevation-lg: 0 8px 24px oklch(0.700 0.162 65 / 0.2);
 
   /* ── 4. Z-index — canonical semantic scale ───────────────────── */
   /* Reconciles ui-rules.md §16 (Chrome z-30 / Scrim z-40 / Floating z-50).
@@ -239,6 +245,13 @@
   /* Container max-width: .container-wide source of truth (design-system.md §4).
      NOT in the --container-* namespace (avoids max-w-max keyword clash). */
   --width-page-max: 88rem;  /* 1408px — access via var(--width-page-max) or .container-wide */
+
+  /* ── 8. Listing layout — narrowly-scoped semantic layout tokens ─ */
+  /* Listing gallery frame heights — consumed ONLY at the 4 named listing gallery call sites. */
+  /* Do NOT apply to any other gallery/image/card surface. (Task 405, Epic JJ §22.5) */
+  --listing-gallery-h-mobile:  340px;  /* base / mobile: listing-gallery grid frame height */
+  --listing-gallery-h-tablet:  420px;  /* sm: (640px+): mid height */
+  --listing-gallery-h-desktop: 500px;  /* md: (768px+): desktop height */
 }
 
 /* ─────────────────────────────────────────────

@@ -29,7 +29,7 @@ export function GalleryStaticFrame({ coverUrl, title }: Props) {
   return (
     <div
       id="gallery-static-frame"
-      className="listing-gallery grid grid-cols-4 grid-rows-2 gap-2 h-[340px] sm:h-[420px] md:h-[500px] rounded-2xl overflow-hidden"
+      className="listing-gallery grid grid-cols-4 grid-rows-2 gap-2 h-[var(--listing-gallery-h-mobile)] sm:h-[var(--listing-gallery-h-tablet)] md:h-[var(--listing-gallery-h-desktop)] rounded-2xl overflow-hidden"
       aria-hidden="true"
     >
       <div className="col-span-4 md:col-span-2 row-span-2 relative bg-muted">

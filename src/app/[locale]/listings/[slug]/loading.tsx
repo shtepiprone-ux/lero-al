@@ -29,7 +29,7 @@ export default function ListingLoading() {
                 grid-cols-4 grid-rows-2, main image col-span-4 md:col-span-2 row-span-2,
                 four side thumbnails hidden on mobile. rounded-none because the parent
                 overflow-hidden already clips the 2xl corners. */}
-            <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[340px] sm:h-[420px] md:h-[500px] rounded-2xl overflow-hidden">
+            <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[var(--listing-gallery-h-mobile)] sm:h-[var(--listing-gallery-h-tablet)] md:h-[var(--listing-gallery-h-desktop)] rounded-2xl overflow-hidden">
               <Skeleton className="col-span-4 md:col-span-2 row-span-2 rounded-none" />
               <Skeleton className="hidden md:block rounded-none" />
               <Skeleton className="hidden md:block rounded-none" />

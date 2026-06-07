@@ -628,6 +628,18 @@ Utilities are wired: `--spacing-N: var(--space-N)` → `p-N` / `m-N` / `gap-N` /
 | `--shadow-lg` | `0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)` | `shadow-lg` — sheet/combobox, hover-elevated card |
 | `--shadow-xl` | `0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)` | `shadow-xl` — DatePicker |
 
+**Shadows — ListingCard brand-highlight (Task 405, §22.3)**
+
+Narrowly-scoped semantic tokens for the ListingCard premium brand-highlight states only.
+Do NOT apply to panels, galleries, admin tables, dialogs, or generic cards.
+`StoryListingCard` uses the same shadow pattern — recorded cross-scope for Task 406.
+
+| Token | Value | Use via |
+|---|---|---|
+| `--shadow-listing-card-ring` | `0 0 0 1px oklch(0.700 0.162 65 / 0.2)` | `shadow-listing-card-ring` — premium card base ring (both horizontal + vertical variants) |
+| `--shadow-listing-card-elevation-md` | `0 4px 16px oklch(0.700 0.162 65 / 0.25)` | `hover:shadow-listing-card-elevation-md` — hover elevation on horizontal (list-row) premium card |
+| `--shadow-listing-card-elevation-lg` | `0 8px 24px oklch(0.700 0.162 65 / 0.2)` | `hover:shadow-listing-card-elevation-lg` — hover elevation on vertical (grid) premium card |
+
 **Z-index** (reconciles `ui-rules.md §16`: Chrome=30 / Scrim=40 / Floating=50)
 
 | Token | Value | Tier | Use via |
@@ -638,7 +650,7 @@ Utilities are wired: `--spacing-N: var(--space-N)` → `p-N` / `m-N` / `gap-N` /
 | `--z-overlay` | `40` | scrim | `z-overlay` or `z-40` — sheet/dialog backdrop (covers chrome) |
 | `--z-modal` | `50` | floating | `z-modal` or `z-50` — dialog/sheet panels |
 | `--z-popover` | `50` | floating | `z-popover` or `z-50` — combobox, dropdowns (same tier as modal) |
-| `--z-toast` | `100` | highest | `z-toast` — Sonner toasts, ListingGallery lightbox (allowlisted) |
+| `--z-toast` | `100` | highest | `z-toast` — Sonner toasts, ListingGallery lightbox (Task 405) |
 
 Exception: `z-[9999]` (Combobox mobile bottom sheet, PerfDevOverlay) is intentionally above the scale and stays as an allowlisted arbitrary value.
 
@@ -697,6 +709,16 @@ Source of truth for breakpoints: `@import "tailwindcss"`. Use `sm:` / `lg:` etc.
 | Token | Value | Use via |
 |---|---|---|
 | `--width-page-max` | `88rem` (1408px) | `var(--width-page-max)` / the `.container-wide` rule — **NOT** `max-w-max` (that resolves to CSS `max-content`, not the token) |
+
+**Listing gallery frame heights (Task 405, §22.5)**
+
+Narrowly-scoped semantic layout tokens for the listing detail gallery frame only. Consumed via `h-[var(--listing-gallery-h-mobile)]` etc. in Tailwind arbitrary syntax (not a raw px literal — no detector violation). Applied ONLY at the 4 named call sites: `GalleryStaticFrame.tsx`, `ListingGallery.tsx`, `loading.tsx` (listing detail loading skeleton), `page.tsx` comment reference. Do NOT adopt on any other gallery/image/card surface.
+
+| Token | Value | Breakpoint | Call sites |
+|---|---|---|---|
+| `--listing-gallery-h-mobile` | `340px` | base (mobile) | `h-[var(--listing-gallery-h-mobile)]` |
+| `--listing-gallery-h-tablet` | `420px` | `sm:` (640px+) | `sm:h-[var(--listing-gallery-h-tablet)]` |
+| `--listing-gallery-h-desktop` | `500px` | `md:` (768px+) | `md:h-[var(--listing-gallery-h-desktop)]` |
 
 ---
 

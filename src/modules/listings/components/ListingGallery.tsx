@@ -78,7 +78,7 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
   return (
     <>
       {/* Grid gallery */}
-      <div className="listing-gallery grid grid-cols-4 grid-rows-2 gap-2 h-[340px] sm:h-[420px] md:h-[500px] rounded-2xl overflow-hidden">
+      <div className="listing-gallery grid grid-cols-4 grid-rows-2 gap-2 h-[var(--listing-gallery-h-mobile)] sm:h-[var(--listing-gallery-h-tablet)] md:h-[var(--listing-gallery-h-desktop)] rounded-2xl overflow-hidden">
         {/* Main image — priority must be explicit, no variant default */}
         <div
           className="col-span-4 md:col-span-2 row-span-2 relative cursor-zoom-in group"
@@ -132,7 +132,7 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
 
       {/* Lightbox */}
       {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-[100] bg-overlay/95 flex items-center justify-center" role="dialog" aria-modal="true" aria-label={t('close_gallery')}>
+        <div className="fixed inset-0 z-toast bg-overlay/95 flex items-center justify-center" role="dialog" aria-modal="true" aria-label={t('close_gallery')}>
           {/* Close */}
           <Button
             variant="ghost"

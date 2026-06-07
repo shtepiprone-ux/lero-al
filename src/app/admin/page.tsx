@@ -214,7 +214,7 @@ export default async function AdminDashboard() {
                 <Flag className="h-4 w-4 text-destructive shrink-0" />
                 <h2 className="font-semibold text-sm">{t('pending_reports_title')}</h2>
                 {(pendingReports ?? 0) > 0 && (
-                  <span className="bg-destructive text-destructive-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  <span className="bg-destructive text-destructive-foreground text-2xs font-bold px-1.5 py-0.5 rounded-full">
                     {pendingReports}
                   </span>
                 )}
@@ -258,7 +258,7 @@ export default async function AdminDashboard() {
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-status-warning shrink-0" />
                   <h2 className="font-semibold text-sm">{t('location_requests_title')}</h2>
-                  <span className="bg-status-warning text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  <span className="bg-status-warning text-white text-2xs font-bold px-1.5 py-0.5 rounded-full">
                     {locationRequestCount}
                   </span>
                 </div>

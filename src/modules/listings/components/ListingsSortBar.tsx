@@ -68,7 +68,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           <SlidersHorizontal className="h-4 w-4" />
           <span className="hidden sm:block">{t('filters_title')}</span>
           {activeFiltersCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+            <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-bold">
               {activeFiltersCount}
             </span>
           )}
@@ -81,7 +81,7 @@ export function ListingsSortBar({ total, page, perPage, view, onViewChange, onFi
           onChange={v => { if (v) setSort(v) }}
           variant="button"
           size="sm"
-          className="w-auto min-w-[140px]"
+          className="w-auto min-w-35"
         />
 
         {/* Grid / List toggle */}

@@ -125,7 +125,7 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
         <SlidersHorizontal className="h-3.5 w-3.5 shrink-0" />
         {tc('advanced_filters')}
         {activeCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-bold">
+          <span className="absolute -top-1.5 -right-1.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-bold">
             {activeCount}
           </span>
         )}

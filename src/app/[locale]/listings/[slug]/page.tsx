@@ -372,7 +372,7 @@ export default async function ListingPage({ params }: Props) {
                   before: [this wrapper] ── gap-8 ── [title section]
                   after:  [shell]        ── gap-8 ── [title section]
                 Both wrappers must have the same height for zero CLS.
-                  - GalleryStaticFrame: h-[340px] (mobile) exactly matches listing-gallery
+                  - GalleryStaticFrame: h-[var(--listing-gallery-h-mobile)] (mobile) exactly matches listing-gallery
                   - gallery-btn-placeholder (mt-3 h-5): matches the "All photos" button in
                     ListingGallery (also mt-3, text-sm ≈ 20px height)
                 ListingGallery.useEffect removes this entire wrapper and reveals the shell

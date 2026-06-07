@@ -149,7 +149,7 @@ export function AdminTable<Row>({
       <div className="hidden lg:block admin-table-scroll-wrap bg-card rounded-2xl border shadow-sm overflow-hidden">
         <div className="admin-table-scroll overflow-x-auto">
           <table className="w-full text-sm" aria-label={ariaLabel}>
-            <thead className="sticky top-0 z-[2] bg-card">
+            <thead className="sticky top-0 z-[2] bg-card"> {/* design-tokens-allow: z-[2] — local sticky-cell stacking inside admin table (sticky header over scrolling body); not a global elevation layer */}
               <tr className="border-b bg-muted/40">
                 {columns.map((col, idx) => {
                   const visClass   = col.visibility ? VISIBILITY_CLASS[col.visibility] : ''
@@ -165,7 +165,7 @@ export function AdminTable<Row>({
                         'px-4 py-3 font-medium whitespace-nowrap text-muted-foreground',
                         alignClass,
                         visClass,
-                        isSticky && 'sticky left-0 z-[1] bg-card',
+                        isSticky && 'sticky left-0 z-[1] bg-card', // design-tokens-allow: z-[1] — local sticky-cell stacking in admin table (sticky column over scrolling body); not a global elevation layer
                         col.className,
                       )}
                       aria-sort={
@@ -293,7 +293,7 @@ export function AdminTable<Row>({
                             'px-4 py-3',
                             alignClass,
                             visClass,
-                            isSticky && 'sticky left-0 z-[1] bg-card',
+                            isSticky && 'sticky left-0 z-[1] bg-card', // design-tokens-allow: z-[1] — local sticky-cell stacking in admin table (sticky column over scrolling body); not a global elevation layer
                             col.className,
                           )}
                         >

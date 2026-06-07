@@ -231,7 +231,7 @@ function TemplateEditorDialog({
                       onChange={e => setField(loc, 'html_body', e.target.value)}
                       rows={10}
                       placeholder="<p>Hello {{userName}},</p>"
-                      className="flex min-h-[120px] w-full rounded-xl border border-input bg-background px-3 py-2 text-sm font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-y"
+                      className="flex min-h-30 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-y"
                     />
                   </div>
 
@@ -368,7 +368,7 @@ export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { te
 
       {/* Toolbar */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="relative flex-1 min-w-[180px]">
+        <div className="relative flex-1 min-w-45">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           <Input
             value={search}
@@ -419,7 +419,7 @@ export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { te
                       {LOCALES.map(loc => (
                         <span
                           key={loc}
-                          className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded ${
+                          className={`text-2xs font-semibold uppercase px-1.5 py-0.5 rounded ${
                             localeMap.has(loc)
                               ? 'bg-primary/10 text-primary'
                               : 'bg-muted text-muted-foreground/50'

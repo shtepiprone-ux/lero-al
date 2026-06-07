@@ -137,7 +137,7 @@ function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
 
         <div className="flex justify-end gap-3 pt-2">
           <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
-          <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-[80px]">
+          <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
             {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
           </Button>
         </div>
@@ -242,20 +242,20 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
               providers.map(p => (
                 <tr key={p.id} className="border-b last:border-b-0 hover:bg-muted/30 transition-colors">
                   <td className="px-4 py-3 font-medium">{p.name}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell max-w-[200px] truncate font-mono">{p.endpoint_url}</td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell max-w-50 truncate font-mono">{p.endpoint_url}</td>
                   <td className="px-4 py-3 text-sm text-center">{p.priority}</td>
                   <td className="px-4 py-3">
-                    <Badge variant="outline" className="text-[10px]">{t(`mode_${p.mode}`)}</Badge>
+                    <Badge variant="outline" className="text-2xs">{t(`mode_${p.mode}`)}</Badge>
                   </td>
                   <td className="px-4 py-3">
                     <Badge
                       variant={p.is_enabled ? 'default' : 'secondary'}
-                      className="text-[10px] px-1.5 py-0"
+                      className="text-2xs px-1.5 py-0"
                     >
                       {p.is_enabled ? t('is_enabled') : t('disable')}
                     </Badge>
                   </td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground hidden lg:table-cell max-w-[160px] truncate">{p.notes ?? '—'}</td>
+                  <td className="px-4 py-3 text-xs text-muted-foreground hidden lg:table-cell max-w-40 truncate">{p.notes ?? '—'}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1 justify-end">
                       <Button

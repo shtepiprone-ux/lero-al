@@ -103,7 +103,7 @@ export function NotificationItem({ notification, onRead }: Props) {
               ? resolveStatusBody(notification.body, tl)
               : notification.body}
         </p>
-        <p className="text-[10px] text-muted-foreground/60 mt-1">
+        <p className="text-2xs text-muted-foreground/60 mt-1">
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}
         </p>
       </div>

@@ -200,16 +200,16 @@ export function AdminUserAvatar({ userId, avatarUrl, mode, onAvatarChange, onBlo
       )}
 
       {canEdit && (
-        <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
+        <p className="text-2xs text-muted-foreground text-center max-w-[130px] leading-tight"> {/* design-tokens-allow: max-w-[130px] — 130px off-grid (130/4=32.5, no integer spacing utility) */}
           {tc('avatar_hint')}
         </p>
       )}
       {mode === 'create' && !currentUrl && (
-        <p className="text-[10px] text-muted-foreground text-center max-w-[130px] leading-tight">
+        <p className="text-2xs text-muted-foreground text-center max-w-[130px] leading-tight"> {/* design-tokens-allow: max-w-[130px] — 130px off-grid (130/4=32.5, no integer spacing utility) */}
           {tu('avatar_optional_hint')}
         </p>
       )}
-      {error && <p className="text-xs text-destructive text-center max-w-[140px]">{error}</p>}
+      {error && <p className="text-xs text-destructive text-center max-w-35">{error}</p>}
 
       <input ref={inputRef} type="file" accept=".jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFileChange} />
 

@@ -119,9 +119,9 @@ const RATING_LABEL: Record<string, string> = {
 }
 
 const RATING_STYLE: Record<string, string> = {
-  'good':              'color:#22c55e;font-weight:bold',
-  'needs-improvement': 'color:#f59e0b;font-weight:bold',
-  'poor':              'color:#ef4444;font-weight:bold',
+  'good':              'color:#22c55e;font-weight:bold', // design-tokens-allow: #22c55e — perf reporter status palette (console output only; not user-facing UI)
+  'needs-improvement': 'color:#f59e0b;font-weight:bold', // design-tokens-allow: #f59e0b — perf reporter status palette (console output only; not user-facing UI)
+  'poor':              'color:#ef4444;font-weight:bold', // design-tokens-allow: #ef4444 — perf reporter status palette (console output only; not user-facing UI)
 }
 
 function formatValue(name: MetricName, value: number): string {

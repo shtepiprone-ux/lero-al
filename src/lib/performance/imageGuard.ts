@@ -98,7 +98,7 @@ function commit(next: GuardStats): void {
     if (isDebug && next.pressure === 'high') {
       console.warn(
         '%c[IMG GUARD] High pressure',
-        'color:#f97316;font-weight:bold',
+        'color:#f97316;font-weight:bold', // design-tokens-allow: #f97316 — dev/RUM performance instrumentation status color; not a user-facing UI surface (console.warn only)
         `combined=${sysPredictive + sysPriority} rate=${getRecentCount()}/s`,
       )
     }

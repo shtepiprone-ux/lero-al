@@ -120,7 +120,7 @@ export function StatusChangeControl<S extends string>({
               value={note}
               onChange={e => setNote(e.target.value)}
               placeholder={t('status_change_note_placeholder')}
-              className="min-h-[72px] text-sm resize-none"
+              className="min-h-18 text-sm resize-none"
               disabled={disabled || pending}
             />
             <Button
@@ -173,7 +173,7 @@ export function StatusChangeControl<S extends string>({
                 onClick={() => setSelectedStatus(isSelected ? null : tr.to)}
                 disabled={disabled || pending}
                 className={cn(
-                  'min-h-[44px] transition-colors gap-1.5 whitespace-normal break-words h-auto',
+                  'min-h-11 transition-colors gap-1.5 whitespace-normal break-words h-auto',
                   !isSelected && tr.destructive && 'text-destructive border-destructive/40 hover:bg-destructive/10',
                   isSelected && tr.destructive && 'bg-destructive text-destructive-foreground',
                 )}
@@ -192,7 +192,7 @@ export function StatusChangeControl<S extends string>({
         value={note}
         onChange={e => setNote(e.target.value)}
         placeholder={t('status_change_note_placeholder')}
-        className="min-h-[60px] text-sm resize-none"
+        className="min-h-15 text-sm resize-none"
         disabled={disabled || pending}
         aria-required={isNoteRequired}
       />

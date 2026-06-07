@@ -53,7 +53,7 @@ export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
       <div className="flex items-center gap-1.5 font-bold text-sm">
         <span className="text-primary">{brand}</span>
         <span className="text-foreground">{tld}</span>
-        <span className="bg-primary/10 text-primary text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
+        <span className="bg-primary/10 text-primary text-2xs font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
           Admin
         </span>
       </div>

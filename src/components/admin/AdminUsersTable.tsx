@@ -233,12 +233,12 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
                         <div className="min-w-0">
                           <Link
                             href={`/admin/users/${u.id}`}
-                            className="font-medium truncate max-w-[160px] hover:text-primary transition-colors block"
+                            className="font-medium truncate max-w-40 hover:text-primary transition-colors block"
                           >
                             {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
                           </Link>
                           {u.company_name && (
-                            <p className="text-xs text-muted-foreground truncate max-w-[160px]">{u.company_name}</p>
+                            <p className="text-xs text-muted-foreground truncate max-w-40">{u.company_name}</p>
                           )}
                           {u.location_request && (
                             <p className="text-xs text-status-warning flex items-center gap-1 mt-0.5">

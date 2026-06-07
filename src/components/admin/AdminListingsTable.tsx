@@ -461,7 +461,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
           className="flex items-center gap-2 text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
         >
           {l.is_premium && <Star className="h-3.5 w-3.5 text-badge-premium shrink-0" />}
-          <span className="font-medium truncate max-w-[200px]">{l.title}</span>
+          <span className="font-medium truncate max-w-50">{l.title}</span>
         </button>
       ),
     },

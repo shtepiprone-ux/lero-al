@@ -22,7 +22,7 @@ export function AdminLocaleSwitcher() {
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest px-3">
+      <p className="text-2xs font-semibold text-muted-foreground/60 uppercase tracking-widest px-3">
         {t('language')}
       </p>
       <div className="px-1">

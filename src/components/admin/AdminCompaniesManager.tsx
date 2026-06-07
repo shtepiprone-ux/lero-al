@@ -189,7 +189,7 @@ function CompanyFormDialog({
                 {logoError ? (
                   <p className="text-xs text-destructive">{logoError}</p>
                 ) : (
-                  <p className="text-[10px] text-muted-foreground">{ta('company_logo_hint')}</p>
+                  <p className="text-2xs text-muted-foreground">{ta('company_logo_hint')}</p>
                 )}
               </div>
             </div>

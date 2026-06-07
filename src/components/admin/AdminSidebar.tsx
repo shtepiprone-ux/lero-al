@@ -103,7 +103,7 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
         <Link href="/admin" className="flex items-center gap-2 font-bold text-base" onClick={onClose}>
           <span className="text-primary">{siteName.split('.')[0]}</span>
           <span className="text-foreground">.{siteName.split('.').slice(1).join('.')}</span>
-          <span className="bg-primary/10 text-primary text-[10px] font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
+          <span className="bg-primary/10 text-primary text-2xs font-semibold uppercase tracking-wider px-1.5 py-0.5 rounded-md">
             Admin
           </span>
         </Link>
@@ -124,7 +124,7 @@ function SidebarContent({ onClose, siteName }: { onClose?: () => void; siteName:
       <nav className="flex-1 overflow-y-auto px-3 py-4 flex flex-col gap-5">
         {GROUPS.map(group => (
           <div key={group.label}>
-            <p className="text-[10px] font-semibold text-muted-foreground/60 uppercase tracking-widest px-3 mb-1.5">
+            <p className="text-2xs font-semibold text-muted-foreground/60 uppercase tracking-widest px-3 mb-1.5">
               {group.label}
             </p>
             <div className="flex flex-col gap-0.5">

@@ -260,7 +260,7 @@ export function AdminSettings({ initialSettings }: Props) {
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-medium">{lang.label}</span>
                       {(settings.default_locale || 'sq') === lang.value && (
-                        <span className="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded font-semibold">DEFAULT</span>
+                        <span className="text-2xs bg-primary/10 text-primary px-1.5 py-0.5 rounded font-semibold">DEFAULT</span>
                       )}
                     </div>
                     <span className="text-xs font-medium text-status-success">{t('locale_active')}</span>

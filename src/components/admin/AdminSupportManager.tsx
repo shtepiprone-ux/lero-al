@@ -94,12 +94,12 @@ function UserLink({ user, label, showUuid }: { user: { id: string; name: string 
     <div>
       <Link
         href={`/admin/users/${user.id}`}
-        className="text-xs font-medium hover:text-primary transition-colors truncate max-w-[120px] block"
+        className="text-xs font-medium hover:text-primary transition-colors truncate max-w-30 block"
       >
         {displayName ?? user.id.slice(0, 8) + '…'}
       </Link>
       {showUuid && displayName && (
-        <span className="text-[10px] text-muted-foreground/50 font-mono block truncate max-w-[120px]">
+        <span className="text-2xs text-muted-foreground/50 font-mono block truncate max-w-30">
           {user.id.slice(0, 8)}…
         </span>
       )}
@@ -117,16 +117,16 @@ function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) 
       <div className="flex-1 min-w-0 space-y-0.5">
         <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
         <div className="flex items-center gap-1.5 flex-wrap">
-          <Badge variant="outline" className="text-[10px] h-4 px-1">{t(`role_${user.role}` as `role_admin`)}</Badge>
+          <Badge variant="outline" className="text-2xs h-4 px-1">{t(`role_${user.role}` as `role_admin`)}</Badge>
           {user.status && (
-            <Badge variant={statusVariant} className="text-[10px] h-4 px-1">{t(`user_status_${user.status}` as `user_status_active`)}</Badge>
+            <Badge variant={statusVariant} className="text-2xs h-4 px-1">{t(`user_status_${user.status}` as `user_status_active`)}</Badge>
           )}
           {user.phone && <span className="text-xs text-muted-foreground">{user.phone}</span>}
         </div>
         {user.company_name && (
           <p className="text-xs text-muted-foreground truncate">{user.company_name}</p>
         )}
-        <p className="text-[10px] text-muted-foreground/50 font-mono">{user.id.slice(0, 8)}…</p>
+        <p className="text-2xs text-muted-foreground/50 font-mono">{user.id.slice(0, 8)}…</p>
       </div>
       <Button
         type="button"
@@ -229,10 +229,10 @@ function UserPickerField({
                   >
                     <p className="text-sm font-medium truncate">{fullName ?? '—'}</p>
                     <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
-                      <Badge variant="outline" className="text-[10px] h-4 px-1">{t(`role_${u.role}` as `role_admin`)}</Badge>
+                      <Badge variant="outline" className="text-2xs h-4 px-1">{t(`role_${u.role}` as `role_admin`)}</Badge>
                       {u.phone && <span className="text-xs text-muted-foreground">{u.phone}</span>}
                     </div>
-                    <p className="text-[10px] text-muted-foreground/50 font-mono mt-0.5">{u.id.slice(0, 8)}…</p>
+                    <p className="text-2xs text-muted-foreground/50 font-mono mt-0.5">{u.id.slice(0, 8)}…</p>
                   </Button>
                 )
               })}
@@ -371,7 +371,7 @@ function TicketDetailDialog({
               value={note}
               onChange={e => setNote(e.target.value)}
               placeholder={t('note_placeholder')}
-              className="min-h-[60px] text-sm resize-none"
+              className="min-h-15 text-sm resize-none"
             />
             <Button
               size="sm"
@@ -569,7 +569,7 @@ function CreateTicketDialog({
                   value={reason}
                   onChange={e => setReason(e.target.value)}
                   placeholder={t('support_details_placeholder')}
-                  className="min-h-[80px] resize-none"
+                  className="min-h-20 resize-none"
                 />
                 {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
               </div>
@@ -625,7 +625,7 @@ function CreateTicketDialog({
                   value={reason}
                   onChange={e => setReason(e.target.value)}
                   placeholder={t('reason_placeholder')}
-                  className="min-h-[80px] resize-none"
+                  className="min-h-20 resize-none"
                 />
                 {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
               </div>
@@ -787,9 +787,9 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
                   onClick={() => setSelected(tk)}
                 >
                   <td className="px-4 py-3">
-                    <p className="font-medium truncate max-w-[200px]">{tk.subject}</p>
+                    <p className="font-medium truncate max-w-50">{tk.subject}</p>
                     {tk.reason && (
-                      <p className="text-xs text-muted-foreground truncate max-w-[200px] mt-0.5">{tk.reason}</p>
+                      <p className="text-xs text-muted-foreground truncate max-w-50 mt-0.5">{tk.reason}</p>
                     )}
                     {tk.ticket_type === 'user_complaint' && tk.complaint_type && (
                       <Badge variant="neutral" className="text-xs h-5 mt-1 w-fit">

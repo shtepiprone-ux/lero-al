@@ -123,7 +123,7 @@ function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
           <Input value={nameIt} onChange={e => setNameIt(e.target.value)} className="h-9 rounded-xl" />
         </div>
 
-        <div className="flex flex-col gap-1.5 max-w-[120px]">
+        <div className="flex flex-col gap-1.5 max-w-30">
           <Label className="text-xs">{t('decimals')}</Label>
           <Input
             type="number"
@@ -137,7 +137,7 @@ function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
 
         <div className="flex justify-end gap-3 pt-2">
           <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
-          <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-[80px]">
+          <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
             {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
           </Button>
         </div>
@@ -196,11 +196,11 @@ function CurrencyDetailDialog({ currency, onClose, onEdit, onToggleActive, onSet
           </div>
           <div className="col-span-2 flex gap-2 pt-1">
             {currency.is_default && (
-              <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-premium text-primary-foreground">
+              <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-premium text-primary-foreground">
                 {t('default_badge')}
               </Badge>
             )}
-            <Badge variant={currency.is_active ? 'default' : 'secondary'} className="text-[10px] px-1.5 py-0">
+            <Badge variant={currency.is_active ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
               {currency.is_active ? t('is_active') : t('deactivate')}
             </Badge>
           </div>
@@ -398,13 +398,13 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       {c.is_default && (
-                        <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-premium text-primary-foreground">
+                        <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-premium text-primary-foreground">
                           {t('default_badge')}
                         </Badge>
                       )}
                       <Badge
                         variant={c.is_active ? 'default' : 'secondary'}
-                        className="text-[10px] px-1.5 py-0"
+                        className="text-2xs px-1.5 py-0"
                       >
                         {c.is_active ? t('is_active') : t('deactivate')}
                       </Badge>

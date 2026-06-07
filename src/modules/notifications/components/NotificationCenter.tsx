@@ -28,7 +28,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
   const hasUnread = notifications.some(n => !n.is_read)
 
   return (
-    <div className="w-80 max-h-[480px] flex flex-col overflow-hidden rounded-xl border bg-background shadow-lg">
+    <div className="w-80 max-h-120 flex flex-col overflow-hidden rounded-xl border bg-background shadow-lg">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>

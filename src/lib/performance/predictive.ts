@@ -161,7 +161,7 @@ export function attemptPredictivePreload(
   if (isDebug) {
     console.log(
       `%c[PRED] ${trigger} → preloaded`,
-      'color:#818cf8;font-weight:bold',
+      'color:#818cf8;font-weight:bold', // design-tokens-allow: #818cf8 — dev/RUM performance instrumentation status color; not a user-facing UI surface (console.log only)
       `variant=${variant} | budget ${predictiveCount}/${MAX_PREDICTIVE_PRELOADS}`,
     )
   }

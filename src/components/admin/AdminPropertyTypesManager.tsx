@@ -331,7 +331,7 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
                       <button
                         type="button"
                         onClick={() => setEditTarget(pt)}
-                        className="font-medium truncate max-w-[140px] hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+                        className="font-medium truncate max-w-35 hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
                       >
                         {pt.name_sq}
                       </button>

@@ -85,7 +85,7 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
       className={cn(
         'listing-card listing-card--vertical flex flex-col h-full rounded-xl border bg-card overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5',
         data.is_premium
-          ? 'border-badge-premium/50 shadow-[0_0_0_1px_oklch(0.700_0.162_65_/_0.2)]'
+          ? 'border-badge-premium/50 shadow-listing-card-ring'
           : '',
         isArchived && 'grayscale opacity-60',
       )}
@@ -116,17 +116,17 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
         {/* Status badges — new / price_reduced / archived */}
         <div className="absolute top-2 left-2 flex flex-wrap gap-1">
           {data.is_new && (
-            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-new text-primary-foreground">
+            <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-new text-primary-foreground">
               {t('new')}
             </Badge>
           )}
           {data.price_old && data.price < data.price_old && (
-            <Badge variant="default" className="text-[10px] px-1.5 py-0 bg-badge-reduced text-primary-foreground">
+            <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-reduced text-primary-foreground">
               {t('price_reduced')}
             </Badge>
           )}
           {isArchived && (
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-border text-muted-foreground">
+            <Badge variant="outline" className="text-2xs px-1.5 py-0 border-border text-muted-foreground">
               {t('status_archived')}
             </Badge>
           )}
@@ -211,7 +211,7 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
               onClick={handleCopy}
               title={`ID: ${data.id}`}
               aria-label={copied ? t('id_copied') : t('copy_id')}
-              className="h-auto w-auto p-0 font-mono text-[10px] text-muted-foreground/70 hover:bg-transparent hover:text-muted-foreground rounded gap-0.5 focus-visible:ring-1"
+              className="h-auto w-auto p-0 font-mono text-2xs text-muted-foreground/70 hover:bg-transparent hover:text-muted-foreground rounded gap-0.5 focus-visible:ring-1"
             >
               #{data.public_id}
               {copied
@@ -219,7 +219,7 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
                 : <Copy className="size-2.5 shrink-0 opacity-50" />
               }
             </Button>
-            <span className="text-[10px] whitespace-nowrap">
+            <span className="text-2xs whitespace-nowrap">
               {formatListingDate(data.created_at, locale)}
             </span>
           </span>

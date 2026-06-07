@@ -80,7 +80,7 @@ function getServerSnapshot(): PerformanceState {
 const isDebug = process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_PERF_DEBUG === 'true'
 
 function tierColor(tier: PerformanceTier): string {
-  return tier === 'low' ? '#ef4444' : tier === 'high' ? '#22c55e' : '#f59e0b'
+  return tier === 'low' ? '#ef4444' : tier === 'high' ? '#22c55e' : '#f59e0b' // design-tokens-allow: #ef4444 — perf store tier color (dev instrumentation; console.log only) design-tokens-allow: #22c55e — perf store tier color (dev instrumentation) design-tokens-allow: #f59e0b — perf store tier color (dev instrumentation)
 }
 
 function logTierLock(tier: PerformanceTier, inp: number): void {

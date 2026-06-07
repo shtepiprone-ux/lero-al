@@ -887,7 +887,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-sm font-medium break-all">{authEmail}</span>
                       {emailConfirmedAt !== undefined && (
-                        <Badge variant={emailConfirmedAt ? 'success' : 'warning'} className="text-[10px] shrink-0">
+                        <Badge variant={emailConfirmedAt ? 'success' : 'warning'} className="text-2xs shrink-0">
                           {emailConfirmedAt ? t('fields.email_confirmed') : t('fields.email_not_confirmed')}
                         </Badge>
                       )}

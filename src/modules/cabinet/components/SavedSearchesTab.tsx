@@ -176,7 +176,7 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                     {search.name || tc('unnamed_search')}
                   </p>
                   {search.new_count > 0 && (
-                    <span className="shrink-0 bg-primary text-primary-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                    <span className="shrink-0 bg-primary text-primary-foreground text-2xs font-bold px-1.5 py-0.5 rounded-full">
                       {t('new_listings_badge', { count: search.new_count })}
                     </span>
                   )}
@@ -216,7 +216,7 @@ export function SavedSearchesTab({ savedSearches: initial }: Props) {
                     onChange={v => { if (v) handleFrequency(search.id, v) }}
                     variant="button"
                     size="xs"
-                    className="w-[90px] shrink-0"
+                    className="w-[90px] shrink-0" // design-tokens-allow: w-[90px] — 90px off-grid (90/4=22.5, no integer spacing utility); Combobox trigger fixed width for frequency selector
                   />
                 )}
 

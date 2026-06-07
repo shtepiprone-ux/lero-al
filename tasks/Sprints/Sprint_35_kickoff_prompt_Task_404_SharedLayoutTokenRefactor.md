@@ -132,8 +132,13 @@ Owner declined a general `--z-max` (avoid legitimizing an "emergency z" everyone
    integrity transcript, the four-part token-resolution report, and any NEW detector blind spots found → for Task 408).
 
 ## Negative flow (must be proven)
-- **Computed equality (primary):** before/after `getComputedStyle` per Group A swap (+ per token-swap if Q1/Q2 add tokens),
-  identical. A swap without this is INCOMPLETE.
+- **Computed equality (primary) — per change type (NOT a single "identical" for all):**
+  - **Group A swaps:** before/after `getComputedStyle` for the target property must be **identical**.
+  - **`text-2xs` swaps:** computed `font-size` must remain **10px**; the introduced `line-height` delta must be
+    **documented**; rendered before/after must show **no visible shift**. (Not full computed equality — line-height is newly set.)
+  - **`zIndex` changes:** **rendered stacking/layering proof** is required; computed equality is **not expected** when
+    lowering from `9999` to a canonical layer.
+  A change lacking its applicable proof is INCOMPLETE.
 - **Rendered corroboration (mandatory):** `screenshots:assert` + `screenshots:responsive` pass; for the responsive
   surfaces (Combobox bottom-sheet, Header, Footer, MobileBottomNav) the after-shots show no layout/clip/overflow change.
 - **🔴 Mobile <640 full-width gate (OWNER P0):** Combobox's mobile **full-width bottom-sheet**, Header, Footer, and
@@ -147,13 +152,14 @@ Owner declined a general `--z-max` (avoid legitimizing an "emergency z" everyone
 
 ## Acceptance criteria (machine-proven)
 - Group A swapped + computed-identical proof per item; rendered matrix corroborates.
-- PerfDevOverlay handled (allowlist if dev-only confirmed, else per Owner Decision).
+- **PerfDevOverlay handled according to proof:** path-allowlisted ONLY if dev-only / non-production reachability is proven
+  in the session log; otherwise its `z-[9999]` / `text-[10px]` are handled under the normal z-9999 / Group D rules.
 - Group C exact-value suppressed with reasons.
 - **Group D (`text-2xs`):** token added to `globals.css` + `§22.2`; eligible micro-label swaps done (per-occurrence log of
   swapped vs left + why); font-size computed-identical + line-height delta documented + rendered no-shift per swap;
   no swap on interactive/mobile-critical text.
 - **z 9999:** Combobox either lowered to a canonical layer (rendered layering proof) or `zIndex: 9999` exact-value
-  suppressed with reason; NO `--z-max` token created; PerfDevOverlay dev-only allowlisted.
+  suppressed with reason; NO `--z-max` token created.
 - `check:design-tokens`: SHARED + LAYOUT unsuppressed = 0 (before/after pasted); 0 stale / 0 missing-reason; 0 new violations.
 - `tsc=0`, `lint=0 new`, `check:file-integrity` green (post-edit), screenshots:assert + responsive pass.
 - Mobile <640 full-width preserved (rendered evidence at 320/375/390, uk mandatory).

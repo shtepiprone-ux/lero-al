@@ -47,10 +47,31 @@ Do **not** read beyond this set.
   command is the canonical full-matrix acceptance command.
 - `docs/backlog.md` + a new `docs/sessions/2026-06-08-task411-*.md` session log.
 
-**Out of scope (do NOT touch):** any `src/**` product code, any `*.stories.tsx`, any `app/**`,
+**Out of scope (do NOT touch):** any `src/**` product code, any **real** `*.stories.tsx`, any `app/**`,
 `modules/**`, migrations, locale JSON, RLS/auth/data-access. This task changes only the harness,
-the lint config, docs, and the backlog/session log. If you think a story or component must change,
-**STOP and ASK** — do not.
+the lint config, docs, and the backlog/session log. If you think a real story or component must
+change, **STOP and ASK** — do not. The ONLY permitted `src/**` writes are the temporary, deleted-
+before-report lint-probe files defined in "Clarification for negative-flow lint probes" below.
+
+### Clarification for negative-flow lint probes (resolves the scope ↔ negative-flow tension)
+
+The final diff MUST NOT include any change to a **real** `*.stories.tsx` file or any product code.
+
+For the planted-violation lint proofs, do NOT edit real stories. Instead create **temporary,
+uncommitted probe files** under a clearly named scratch path that is matched by the same ESLint
+rules, for example:
+- `src/__lint-probes__/Task411Probe.stories.tsx` — matches the story-governance block
+  (`src/**/*.stories.tsx`), so groups A/C/D/**E/F/G/H** apply: plant `layout:'centered'`, a raw
+  `<button>`, an export named `…Ukrainian…`, and a raw title literal here.
+- `src/__lint-probes__/task411-product-status-probe.ts` — matches the general `.ts` block, so the
+  B status-mutation selectors apply: plant `.update({ status: 'active' })` here.
+- (Optionally a story file containing `status: 'active'` fixture data to prove the narrow B
+  exemption — this must lint **clean**.)
+
+Create these ONLY for the negative-flow proof, run `npm run lint`, capture the FAIL/PASS transcript,
+then **delete every probe file** before the final report. Final `git status` / `git diff --name-only`
+MUST show **no** probe files and **no** real story changes. The session log pastes the transcript
+AND explicitly confirms the probe files were removed (`ls src/__lint-probes__` → not found).
 
 ---
 
@@ -63,9 +84,13 @@ clause 12) is exactly these 14 widths:
 320, 375, 390, 480, 560, 680, 768, 810, 960, 1024, 1200, 1440, 1920, 2560
 ```
 
-Pick **one** approach (prefer option 1 unless run-time is prohibitive — STOP and ASK if it is):
+**Use Option 1 by default — it is mandatory.** `npm run screenshots:assert` full mode MUST run the
+canonical 14-viewport matrix. **Option 2 is allowed ONLY if** you first prove the full run is
+operationally prohibitive AND receive **explicit owner/orchestrator approval** before implementing a
+separate command — otherwise do NOT create a second mode (two modes is exactly the confusion this
+task removes). If you think Option 2 is warranted, **STOP and ASK**; do not pick it unilaterally.
 
-**Option 1 (preferred): make `screenshots:assert` full mode = the canonical 14.**
+**Option 1 (DEFAULT, MANDATORY): make `screenshots:assert` full mode = the canonical 14.**
 - Replace `VIEWPORTS_FULL` so the non-`--fast` run iterates all 14 canonical widths above
   (heights per `responsive-screenshot-matrix.md`; reuse its names: `mobile-320…`, `canonical-560`,
   `canonical-680`, `tablet-768`, `canonical-810`, `canonical-960`, `desktop-1024`, `canonical-1200`,
@@ -123,15 +148,18 @@ selectors) without lint errors, **WITHOUT** disabling groups **A, C, D, E, F, G,
 - **Reduced-subset regression guard:** if the viewport source is ever reduced below the 14 canonical
   widths, acceptance must be impossible to pass off as full. Prove by temporarily trimming the list
   to 7 and showing the count/manifest reflects 7 (then restore) — document this as the planted check.
-- **Planted layout violation (group E) in a story:** add `parameters:{layout:'centered'}` to a story
-  temporarily → `npm run lint` must **FAIL** naming the E selector (proves Part B did NOT disable E).
-  Restore. Repeat the planted-violation FAIL proof for **F** (raw `<button>`), **G** (`Ukrainian`
-  export name), and **H** (raw title literal) — each must FAIL under `npm run lint` after Part B.
-- **Status fixture literal (group B) in a story:** a story containing `status: 'active'` as fixture
-  data must **NOT** error under `npm run lint` (proves the narrow B exemption works).
+- **Planted layout violation (group E):** put `parameters:{layout:'centered'}` in the
+  `src/__lint-probes__/Task411Probe.stories.tsx` probe → `npm run lint` must **FAIL** naming the E
+  selector (proves Part B did NOT disable E). Repeat the planted-violation FAIL proof in the same
+  probe for **F** (raw `<button>`), **G** (export named `…Ukrainian…`), and **H** (raw title
+  literal) — each must FAIL under `npm run lint` after Part B. (See "Clarification for negative-flow
+  lint probes" — use probe files, never real stories; delete before report.)
+- **Status fixture literal (group B) lints clean in a story:** a `*.stories.tsx` probe containing
+  `status: 'active'` as fixture data must **NOT** error under `npm run lint` (proves the narrow B
+  exemption works).
 - **Status mutation outside gateway still bites in product code:** plant `.update({status:'active'})`
-  in a scratch `src/**/*.ts` (non-story) → `npm run lint` must still **FAIL** (proves you narrowed by
-  rule for stories only, not globally). Restore.
+  in `src/__lint-probes__/task411-product-status-probe.ts` (non-story) → `npm run lint` must still
+  **FAIL** (proves you narrowed by rule for stories only, not globally). Delete the probe after.
 - **`screenshots:assert` with no built Storybook:** the script already errors with
   "storybook-static/ not found" — leave that guard intact; confirm it still exits non-zero.
 
@@ -175,3 +203,12 @@ add or alter any rendered component. If you believe a component needs a `max-sm`
   task or Task 410 — do **not** stage it, reference it, or commit it.
 - Heights/names for the canonical widths already exist in `docs/responsive-screenshot-matrix.md` and
   `.storybook/preview.tsx` canonical presets (Task 350-Fix) — reuse them, don't invent new names.
+
+## Ordering (orchestrator-enforced)
+
+1. **Task 411 must pass and be approved first** (canonical-14 harness + narrowed ESLint, both proven).
+2. **Then re-run / finish Task 410's rendered proof** using the corrected canonical-14
+   `screenshots:assert` — full `sq/en/uk/it × 14` matrix, `0 FAIL`, `uk@320/375/390` per admin
+   surface + ≥1 `≥1024` cell per admin surface.
+3. **Only then can Task 410 be approved** and its commit emitted.
+4. **Then continue Epic JJ: 408 → 407.**

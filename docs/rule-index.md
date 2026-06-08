@@ -24,7 +24,8 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 ## UI / layout / component task
 
 **Required:**
-- `docs/design-system.md` ← **canonical Global Responsive Design System Contract v1 (Task 340)** — read first for any layout/responsive/container/data-surface/overlay work
+- `docs/design-system.md` ← **canonical Global Responsive Design System Contract v1 (Task 340)** — read first for any layout/responsive/container/data-surface/overlay work.
+  **For responsive/mobile/overlay work: also read §24 (forbidden hardcodes), §25 (control-preservation), §26 (mobile <640 full-width + bottom-sheet gate), §27 (Storybook proof contract) — added Task 412.**
 - `docs/ui-rules.md`
 - `docs/component-rules.md`
 - `docs/qa-rules.md`
@@ -117,10 +118,22 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 - `docs/storybook-visual-snapshots.md`
 - `docs/component-rules.md`
 - `docs/qa-rules.md`
+- `docs/design-system.md §27` (Storybook responsive-proof contract — what `screenshots:assert` does and does NOT prove) — **added Task 412**
 
 **Only if relevant:**
-- `docs/responsive-screenshot-governance.md`
+- `docs/responsive-screenshot-governance.md` (§MQ: machine-detection limits + manual QA requirement — added Task 412)
 - `docs/responsive-screenshot-matrix.md`
+
+## Responsive/global-inventory task (canonical standard + Storybook matrix)
+
+**Required:**
+- `docs/design-system.md` — full read (§3 14-viewport canon, §10 tableAt, §14 overlays, §24–§27 canonical responsive contracts — added Task 412)
+- `docs/storybook-governance.md` (§14 enforced gates, §MQ manual-QA requirement — added Task 412)
+- `docs/responsive-screenshot-governance.md` (§MQ machine-detection limits — added Task 412)
+- `docs/responsive-screenshot-matrix.md`
+- `docs/responsive-storybook-inventory.md` ← **global story inventory** (created Task 412)
+- `docs/agent-contract.md`
+- `docs/backlog.md`
 
 ## Tailwind / styling governance task
 

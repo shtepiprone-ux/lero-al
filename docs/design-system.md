@@ -179,6 +179,10 @@ Every data surface declares ONE of these responsive strategies. The decision is 
 
 Column-visibility tokens for tables (`tableAtLg`/`tableAtXl`): `'always'` (sticky-first + 1–2 critical, e.g. price/status), `'sm'` (640+), `'md'` (768+), `'lg'` (1024+), `'xl'` (1280+). Sticky first column applies at `lg:+` only. Cards must carry an explicit `cardRow` (`title/subtitle/meta/trailing`) for any surface with non-trivial row visuals; synthesis from columns is a best-effort fallback only.
 
+**Capability preservation (§25):** every `tableAt` migration MUST record and preserve all existing user capabilities — columns, row-click behavior, row actions, inline controls, filters, search, sort, pagination, bulk actions, empty/loading/error/validation states. No capability may be silently removed. See §25 for the full rule.
+
+**768/810/960 tablet widths** (where `tableAtLg` shows cards because `<1024`) must be intentionally designed: the card layout at these widths must be usable — not a squished desktop table or a broken hybrid. Each of 768, 810, and 960 is a distinct verification target in the 14-viewport canon (§3).
+
 ---
 
 ## §11 — Filters / search / tabs / actions — one global pattern
@@ -340,6 +344,7 @@ Every `Select` trigger and `Combobox` button-variant trigger MUST display its se
 
 1. **Width tiers** (from `admin-ux-rules.md §11`, now global): dialogs cap at a sensible max (≤768px unless justified); content-heavy dialogs use the tier table in `admin-ux-rules.md §11.1`.
 2. **Mobile fallback**: at `<lg:` (1024), Dialog → **bottom Sheet** (matches the table↔card switch boundary and Epic Z.2 modal pattern). Below `lg:` overlays are full-width / near-full-width.
+2a. **Mobile bottom-sheet contract (`<640px`)** — see **§26.2** for the full contract. At `<640px` ALL overlay/popup primitives (Dialog / Sheet / Select dropdown / Combobox dropdown / DropdownMenu / NavigationMenu / Popover / Command) render as full-width bottom sheets (bottom-anchored, edge-to-edge, rounded-top, ≤90dvh + internal scroll, drag-handle). The item-2 rule above is the wider tablet-level transition (Dialog → Sheet at 1024); §26.2 is the tighter mobile-specific contract (full-width bottom sheet at 640).
 3. **Destructive actions** use **AlertDialog**, never a plain Dialog.
 4. **One overlay implementation**: shadcn Dialog/Sheet/DropdownMenu only. Hand-rolled `fixed inset-0` overlays (AdminSidebar mobile drawer, ListingsShell filter overlay) are forbidden and are migration targets.
 5. Dropdowns/popovers respect the z-index scale (`ui-rules.md §16`); chrome at `z-30`; no `z-[999]`/`z-[9999]` emergency overrides.
@@ -471,6 +476,8 @@ PASS requires **real rendered verification** at the §3 canon:
 3. **uk @ 320px** walked end-to-end for the touched flow (longest-locale overflow guard).
 4. For interactive surfaces: empty / loading / error / success / cancel states each verified at mobile + desktop (this is also a flow requirement, §12/§14).
 5. Either **browser QA evidence** (preferred) **OR an explicit `OWNER QA REQUIRED` gate** recorded in the session log. A task may not self-approve a responsive change purely from code analysis.
+
+**§27 (Storybook responsive-proof contract)** governs what counts as PASS/FAIL for each story × viewport × locale cell. See §27.3 for what `screenshots:assert` does and does NOT prove (button full-width, popup bottom-sheet compliance, and wide-desktop sparsity are NOT machine-checked); §27.4 for the error-screen = FAIL rule.
 
 ---
 
@@ -817,3 +824,287 @@ inside 404–406 — only escalate for owner decision.
 | **402** (done) | Detector built + report mode wired to CI (`continue-on-error: true`) |
 | **403–406** | Refactor consumers: replace raw values with tokens from §22 |
 | **407** | Flip CI step to strict (`continue-on-error: false`); remove this note |
+
+---
+
+## §24 — Forbidden responsive hardcodes and pseudo-fixes (A2 mandate, 2026-06-08)
+
+> **This clause is BINDING and OVERRIDES any weaker local wording. Any pattern listed here
+> applied in a task without an approved exception entry is a FAIL — do not approve or commit.**
+
+The §15 list covers forbidden Tailwind/responsive patterns at a class-fragment level. This
+section adds the complete, enforceable rule for every form of responsive hardcode or pseudo-fix.
+
+### 24.1 — Raw dimension values
+
+- Raw pixel widths, heights, min-width, max-width in `className` or `style={{}}` for layout
+  purposes: `w-[NNNpx]`, `min-w-[NNNpx]`, `max-w-[NNNpx]`, `h-[NNNpx]` — unless already a
+  documented, approved design-system exception (§22, §22.5, or §24.8 table).
+- Raw `rem`/`em` width or height values not drawn from the token system (§22).
+- Inline `style={{ width: '…', height: '…', maxWidth: '…', minWidth: '…' }}` layout fixes.
+
+### 24.2 — Arbitrary Tailwind values for layout rhythm
+
+- `w-[…]`, `min-w-[…]`, `max-w-[…]` on content columns or surfaces — use §4 container classes.
+- `h-[…]`, `text-[…]`, `gap-[…]`, `p-[…]`, `m-[…]`, `z-[…]` when a canonical token exists (§22).
+- Exception: token-equivalent inline-suppressed values with `design-tokens-allow` markers
+  (§23.2.b) cover the token-detection gate only; the responsive-layout rule still applies
+  independently — both gates must be satisfied.
+
+### 24.3 — Local breakpoint invention
+
+- `min-[NNNpx]:` or `max-[NNNpx]:` arbitrary responsive prefixes — only the 5 canonical
+  Tailwind breakpoints (`sm: md: lg: xl: 2xl:`) are allowed.
+- Component-local media queries that bypass the canonical breakpoint system.
+- Per-component `useEffect`/`useState` window-width checks for layout switching (§2.4 —
+  hydration risk).
+
+### 24.4 — Overflow masking
+
+- `overflow-hidden` applied to hide a responsive layout defect — fix the root cause (`min-w-0`,
+  `flex-wrap`, `flex-1`, or a §4 container).
+- `whitespace-nowrap` on localized labels unless paired with an approved `truncate`/`line-clamp`
+  AND a `min-w-0` parent (§6.3).
+
+### 24.5 — Capability shrinkage and silent removal
+
+- Shrinking text or buttons below canonical touch/readability rules (`size="xl"` = 44px floor,
+  §12a) to "make it fit" — expand the container or use a §10 `tableAt` pattern instead.
+- Removing labels, actions, columns, filters, row actions, pagination, validation, or
+  empty/loading/error states to make a screenshot pass. See §25 for the full preservation rule.
+- Making an editable control read-only to eliminate a layout challenge (agent-contract clause 4).
+
+### 24.6 — Locale-specific hacks
+
+- CSS or class-name changes scoped to `uk`/`it`/`sq`/`en` locale to paper over a
+  wrapping/overflow defect — the fix must work for all four locales.
+- Story-only hardcoded text or layout fixtures that make screenshots pass while product
+  behavior remains non-canonical.
+
+### 24.7 — Storybook proof masking
+
+- `parameters.layout: 'centered'` or `'padded'` in stories — forbidden; use `layout:'fullscreen'`
+  + `withCanvas` (§27.1).
+- Story-local `max-w-*` / padding wrappers that artificially compress the canvas to hide an
+  overflow defect.
+
+### 24.8 — Approved exception proposal
+
+If a genuine, un-tokenizable deviation is required, it MUST be recorded in the **Approved
+Exception Proposal** table before it may be committed. Unapproved exceptions = FAIL.
+
+| Surface | Reason | Affected locales | Affected viewports | Why canonical tokens/classes cannot solve it | Owner approval |
+|---|---|---|---|---|---|
+| _(example: DatePicker `w-[272px]`)_ | _(Fixed-width calendar grid; fluid layout breaks day-cell alignment)_ | all | all | _(No Tailwind scale equivalent; day-cell grid requires exact pixel alignment)_ | _(Task 404 §23.2.b allowlist)_ |
+
+---
+
+## §25 — Global control-preservation rule (A4 mandate, 2026-06-08)
+
+**Every user capability, control, and action MUST remain reachable and usable at EVERY
+canonical viewport (§3) and EVERY locale (sq/en/uk/it). Silent removal is FORBIDDEN.**
+
+A task that removes a control without explicit owner approval is a TASK FAILURE regardless
+of whether the result is "visually clean."
+
+### 25.1 — Capability categories
+
+For every data surface (table, list, card grid) or form touched by a task, the session log
+MUST record the current and post-task state of:
+
+| Capability | What to preserve |
+|---|---|
+| **Columns** | All columns present; column-visibility tokens (`'always'`, `'sm'`, `'md'`, `'lg'`, `'xl'`) declared per §10. |
+| **Row-click behavior** | Primary-text click → detail page OR preview dialog (§11, `component-governance.md §11`). |
+| **Row actions** | Edit / delete / status-change / custom actions present and reachable at every viewport. |
+| **Inline controls** | Status selectors, toggle switches, inline edits — must remain editable, not replaced with read-only labels. |
+| **Filters / search / sort** | Search input, filter chips, column sort — all reachable; not pushed off-screen at narrow widths. |
+| **Pagination** | Page controls reachable at every viewport; never hidden to save space. |
+| **Bulk actions** | If present: selection checkboxes + bulk action buttons present and reachable. |
+| **Empty state** | Styled, localized empty state present and visible when the list has 0 rows. |
+| **Loading state** | Skeleton or spinner state present during data fetch. |
+| **Error state** | Error message + retry control present on fetch failure. |
+| **Validation states** | Form validation errors styled and visible; never hidden by overflow. |
+| **Submit / save / cancel / destructive actions** | Buttons visible and ≥44px at every viewport; destructive actions use AlertDialog (§14.3). |
+| **Mobile / tablet / desktop behavior** | 320 / 768 / 1024 / 1440 / 2560 each have an intentionally designed layout — no "desktop squeezed onto mobile" or "broken hybrid at 768–960". |
+
+### 25.2 — Allowed capability moves
+
+A capability MAY move to a new location/pattern ONLY when:
+
+1. The new location is **implemented in the same task** (never deferred to a follow-up).
+2. The new location / pattern is explicitly documented in the session log.
+3. The new location is **equally discoverable** (not hidden behind an undocumented gesture).
+4. The new pattern still meets the ≥44px touch target rule at every mobile viewport.
+
+### 25.3 — Capability-removal approval
+
+A capability MAY be removed (not moved) ONLY with **explicit owner approval** recorded in the
+kickoff. The session log must cite the exact kickoff text authorizing the removal.
+
+### 25.4 — Read-only label is not a replacement
+
+Replacing an editable control (text input, select, combobox, checkbox, toggle) with a
+read-only text label is **NOT** an acceptable responsive fix. The editable control must remain
+editable — either in-place or in a discoverable alternate location implemented in the same task.
+
+---
+
+## §26 — Mobile `<640px` full-width gate + popup bottom-sheet contract (owner P0, 2026-06-08)
+
+> This section codifies agent-contract clauses 11–12 as a design-system rule. It applies to ALL
+> surfaces globally. Where this section conflicts with an older or weaker rule, this section wins.
+> Slice kickoffs MUST reference the specific clauses they enforce.
+
+### 26.1 — Full-width interactive controls at `<sm` (`<640px`)
+
+At every viewport **below 640px**, ALL of the following MUST span the **full available width**
+(no side margins, no content-width centering, no fixed-width, no `w-auto` shrinkage):
+
+| Element class | Canonical mobile class | Notes |
+|---|---|---|
+| Text `Button` (all label-bearing sizes) | `max-sm:w-full` (already in primitive, §12b) | Icon-only sizes exempt — see §26.4 |
+| `TabsList` / Tabs triggers | `max-sm:flex max-sm:w-full` (already in primitive, §12b) | |
+| `FilterBar` controls / triggers | `[&>*]:max-sm:w-full` on container (§11, §12a) | |
+| `SelectTrigger` | `max-sm:w-full` | Inherited from primitive |
+| `Combobox` button-variant trigger | `max-sm:w-full` | |
+| `PhoneField` | `max-sm:w-full` | |
+| Form action rows (Submit / Save / Cancel / Destructive) | `[&>*]:max-sm:w-full` on container (§12a/§12b) | |
+| Admin action clusters / toolbars | `[&>*]:max-sm:w-full` on container (§12a) | |
+| CTA buttons | `max-sm:w-full` | |
+
+An interactive surface that is NOT full-width at `<640px` without a documented icon-only
+exemption (§26.4) is a **FAIL** (§21).
+
+### 26.2 — All popups = full-width bottom sheet at `<640px`
+
+Every overlay/popup primitive MUST render below 640px as a **full-width bottom sheet**:
+bottom-anchored, edge-to-edge (no `max-w-*` leaking below 640px), rounded TOP corners only,
+slide-up animation, `≤90dvh` with internal vertical scroll, drag-handle bar at top.
+
+| Primitive | `<640` contract |
+|---|---|
+| `Dialog` | Bottom-anchored, edge-to-edge, rounded-top only, `≤90dvh` + internal scroll. |
+| `Sheet` | `side="bottom"`, edge-to-edge, rounded top corners. |
+| `Select` dropdown | Bottom-anchored, full-width. |
+| `Combobox` dropdown (all variants: Location/PropertyType/Year) | Bottom-anchored, full-width. |
+| `DropdownMenu` | Bottom-anchored, full-width. |
+| `NavigationMenu` | Bottom-anchored, full-width. |
+| `Popover` | Bottom-anchored, full-width. |
+| `Command` | Bottom-anchored, full-width. |
+
+**NOT a centered card, NOT a mini-dropdown, NOT an anchored popover** at `<640px`.
+At `≥640px` the existing desktop popup/anchor behavior is restored.
+
+**Drag handle:** every mobile bottom sheet displays a small centered grabber strip at the top.
+
+**Close/dismiss:** backdrop tap + Esc closes; focus returns to trigger.
+
+**Touch targets:** ≥44px (`min-h-11`) for all items inside the bottom sheet.
+
+**Labels:** `whitespace-normal break-words` — long sq/en/uk/it labels wrap, never clip.
+
+**Horizontal scroll at 320:** forbidden inside any bottom sheet.
+
+### 26.3 — Map-marker popup exemption
+
+Non-UI map-marker popups (e.g. Leaflet `Map.tsx` pin labels) are **exempt** — they are
+positioning artifacts, not interactive popups. If encountered in a task, **STOP & ASK** before
+applying the bottom-sheet rule.
+
+### 26.4 — Icon-only / compact control exemptions
+
+Icon-only controls are exempt from the full-width rule. Each exemption MUST be listed in the
+session log:
+
+| Control | Reason |
+|---|---|
+| `Button size="icon"` / `size="icon-xl"` | Icon-only tap target; fixed size intentional |
+| `Button size="icon-sm"` / `size="icon-xs"` | Admin table micro-actions |
+| Search icon prefix inside `Input` (icon-group) | Icon takes fixed width; input fills remaining |
+| Column sort ⇅ icon (12px) | Metadata icon in table header; no label |
+
+Any text-containing control NOT listed = subject to full-width enforcement.
+
+### 26.5 — PASS / FAIL for the mobile full-width gate
+
+**PASS:** every text interactive control fills the full available width at `<640px`; every popup
+renders as a bottom sheet edge-to-edge.
+
+**FAIL (auto-reject):**
+- A text button, select trigger, combobox trigger, tabs list, filter control, form action row,
+  or CTA that is NOT full-width at any viewport `<640px` without a documented icon-only exemption.
+- A popup that renders as a centered card, mini-dropdown, or anchored popover at `<640px`.
+- An overlay with `max-w-sm` / `max-w-[calc(100%-2rem)]` that does not go edge-to-edge below 640px.
+
+---
+
+## §27 — Storybook responsive-proof contract (2026-06-08)
+
+> Supplements `docs/storybook-governance.md §14` and `docs/responsive-screenshot-governance.md`.
+> This section defines what counts as PASS/FAIL for a rendered Storybook cell (story × viewport × locale).
+
+### 27.1 — Canvas requirement
+
+Every story MUST render in a full-available-width frame that accurately reflects `<640` behavior:
+
+- **Required:** `parameters.layout: 'fullscreen'` + global `withCanvas` decorator (`.storybook/preview.tsx`).
+- **Forbidden:** `parameters.layout: 'centered'` or `'padded'` — lint-enforced; defeats full-width enforcement.
+- A `max-sm:w-full` primitive MUST visibly fill the `<640` viewport in the Storybook canvas. If
+  it does not, the canvas is masking a layout defect — fix the story setup, not the component.
+
+### 27.2 — Proof requirements
+
+`tsc=0` / `lint=0` / `build-storybook` are baselines, **never proof**. A Storybook/UI cell is
+PASS ONLY when:
+
+1. The story renders in a browser at the specified viewport × locale (not just "builds").
+2. The rendered output is visually inspected or machine-asserted against the acceptance criteria.
+3. Evidence is recorded: `screenshots:assert` PNG/JSON artifacts per cell (uk@320/375/390 mandatory).
+
+### 27.3 — What `screenshots:assert` does and does NOT prove
+
+`scripts/check-stories-rendered.mjs` machine-checks three assertions per cell:
+
+| Assertion | What it checks | Reliable? |
+|---|---|---|
+| (a) No horizontal overflow | `scrollWidth > clientWidth` at the viewport | ✅ Reliable |
+| (b) Form controls full-width | `SelectTrigger`, `TabsList`, form `input` elements fill their parent at `<640` | ✅ Reliable for those selectors |
+| (c) No render failure | Error-boundary screen, blank canvas, missing router/provider | ✅ Reliable for known error patterns |
+
+**What `screenshots:assert` does NOT detect (requires manual visual QA):**
+
+| Gap | Description | Manual QA gate |
+|---|---|---|
+| Button not full-width | Buttons are explicitly excluded from assertion (b) — too many edge-cases | §26.1 compliance |
+| Overflow-hidden masking | `overflow-hidden` hides a defect — no overflow but content clipped | §24.4 |
+| Popup bottom-sheet non-compliance | No DOM check for bottom-anchored / edge-to-edge popup at `<640` | §26.2 compliance |
+| Inaccessible table columns | Columns off-screen at specific viewport but parent not overflowing | §25.1 |
+| Wide-desktop sparsity | Whitespace waste at 1920/2560 — no whitespace detector | §4, §8 |
+| Labels behind sticky/fixed layers | z-index collision hiding content | §22.3 z-index |
+| Visually broken but non-overflowing | Layout broken but `scrollWidth` not exceeded | General |
+
+**These gaps MUST be covered by manual visual QA** and recorded as `OWNER QA REQUIRED`
+in the session log for any task touching these surfaces.
+
+### 27.4 — Error screen = FAIL
+
+A screenshot of a Storybook error boundary (`sb-show-errordisplay`, blank canvas, "invariant
+expected app router") is a FAILED render — it is NOT proof of any kind. The cell must be
+re-rendered after the root cause is fixed before it can contribute to PASS evidence.
+
+### 27.5 — PASS / FAIL per cell (story × viewport × locale)
+
+**PASS:**
+- Story renders without error (27.4 not triggered).
+- No horizontal overflow at the viewport.
+- Full-width form controls at `<640` (machine-checked).
+- `screenshots:assert` exit 0 for the cell.
+- uk@320/375/390 cells explicitly passed (mandatory stress cells).
+
+**FAIL:**
+- Render error / error-boundary screen.
+- Any `scrollWidth > clientWidth` overflow.
+- Form control (SelectTrigger / TabsList / input) not full-width at `<640`.
+- Cell not run — untested cells are NOT PASS; mark `OWNER QA REQUIRED`.
+- `screenshots:assert` exit 1 for the cell.

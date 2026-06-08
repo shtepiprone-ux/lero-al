@@ -1,4 +1,4 @@
-# Sprint 35 — Task 411 — Rendered-proof harness → canonical 14 viewports + narrow the story ESLint ignore
+# Sprint 35 — Task 411 — Make `screenshots:assert` a trustworthy rendered-proof gate: canonical 14 viewports + FAIL on Storybook error screens + global App Router mock + narrow the story ESLint ignore
 
 **Type:** Storybook / visual-snapshot + governance-config (ESLint) — mixed
 **Executor:** Sonnet 4.6
@@ -6,7 +6,7 @@
 **Created by:** orchestrator review of Task 410, 2026-06-08 (HEAD `1e31dbb39`)
 
 > **Why this exists.** Task 410 added 14 admin harness stories + 16 `ASSERT_STORIES` entries and is
-> otherwise clean, but it CANNOT be approved on its current rendered proof for two reasons the
+> otherwise clean, but it CANNOT be approved on its current rendered proof for three reasons the
 > orchestrator confirmed against the real files:
 > 1. **`npm run screenshots:assert` renders only 7 viewports** (`VIEWPORTS_FULL` in
 >    `scripts/check-stories-rendered.mjs` = 320·375·390·480·**640**·768·1280), but the project
@@ -23,6 +23,24 @@
 >    names, raw title literals). `scripts/check-stories.mjs` happens to re-cover E–H, so the build
 >    stayed green — but the ESLint copy of story governance is now dead, which is not what the change
 >    claimed ("status literals are fixture data, not mutations") and is not proven governance-safe.
+> 3. **🔴 `screenshots:assert` reports PASS for stories that did not render (owner-found, 2026-06-08).**
+>    The owner ran the command and inspected the PNGs: several admin cells are **Storybook runtime
+>    error screens**, yet they are counted PASS. Example — `admin-adminlocaleswitcher--default` at
+>    `en × canonical-560/680/810/960/2560` shows **"invariant expected app router to be mounted"**.
+>    Root cause in `scripts/check-stories-rendered.mjs`: the pass rule is
+>    `cell.pass = noOverflow && (viewport.width >= 640 || fullWidthOk)`, and the `try/catch` only
+>    catches Playwright navigation/evaluate throws — **never** a React/Storybook error boundary that
+>    renders as ordinary DOM. So an error screen (no overflow, no select/tabs/input to measure) scores
+>    PASS. **The gate currently validates "a PNG was produced," not "the story rendered." That makes
+>    the whole rendered-proof gate untrustworthy** — a screenshot of an error boundary is a FAILED
+>    render and MUST fail the gate. (This also proves Task 410's AdminLocaleSwitcher story never
+>    actually rendered — its App Router context is missing — so 410 needs a real story/mock fix, not
+>    just more viewports.)
+
+> **🔴 GOVERNING PRINCIPLE FOR THIS TASK: a screenshot of a Storybook error boundary is NOT rendered
+> proof — it is a failed render and must FAIL the gate.** Until `screenshots:assert` enforces this,
+> every "0 FAIL" transcript it has ever produced is suspect. No code commits (410 or 411) until the
+> hardened gate renders real UI at 14 viewports with 0 FAIL and zero error screens.
 
 ---
 
@@ -40,11 +58,14 @@ Do **not** read beyond this set.
 
 ## Scope (exactly these files — no others)
 
-- `scripts/check-stories-rendered.mjs` — viewport matrix source.
-- `eslint.config.mjs` — narrow the story status-literal exemption.
-- `package.json` — only if you add a dedicated full-matrix script (Part A option 2).
-- `docs/responsive-screenshot-matrix.md` and/or `docs/storybook-governance.md` — document whichever
-  command is the canonical full-matrix acceptance command.
+- `scripts/check-stories-rendered.mjs` — viewport matrix source **+ render-error detection (Part C)**.
+- `eslint.config.mjs` — narrow the story status-literal exemption (Part B).
+- `.storybook/preview.tsx` (and/or a `.storybook/**` decorator file) — global App Router /
+  `next/navigation` mock (Part D) so router-dependent stories render. **Global infra only — do NOT
+  edit real `*.stories.tsx` files.**
+- `package.json` — only if Part A Option 2 is explicitly approved.
+- `docs/responsive-screenshot-matrix.md` and/or `docs/storybook-governance.md` — document the
+  canonical full-matrix acceptance command **and** the new render-success requirement (§14 gate).
 - `docs/backlog.md` + a new `docs/sessions/2026-06-08-task411-*.md` session log.
 
 **Out of scope (do NOT touch):** any `src/**` product code, any **real** `*.stories.tsx`, any `app/**`,
@@ -126,7 +147,66 @@ selectors) without lint errors, **WITHOUT** disabling groups **A, C, D, E, F, G,
   Stories then keep full story governance while their fixture status literals are allowed.
 - If you find a cleaner equivalent that satisfies the same property (B off for stories, A/C/D/E–H on
   for stories) and is consistent with the flat-config LAST-WINS warning at the top of the file,
-  that is acceptable — but it MUST be proven by the Part-C negative-flow lint run, not asserted.
+  that is acceptable — but it MUST be proven by the negative-flow lint run below, not asserted.
+
+---
+
+## Part C — `screenshots:assert` must FAIL on a story that did not render (gate-validity fix) 🔴
+
+This is the most important part: the gate must distinguish "story rendered correctly" from "Storybook
+showed an error screen." A produced PNG is NOT proof.
+
+Harden `scripts/check-stories-rendered.mjs` so each cell is marked **FAIL** (with a recorded reason in
+the manifest) when ANY of these is true — in ADDITION to the existing overflow / full-width checks:
+
+- **Playwright `pageerror` event** fired during the cell (attach `page.on('pageerror', …)` before
+  `goto`; any uncaught exception ⇒ FAIL with the message).
+- **Console error indicating render failure** (attach `page.on('console', …)`; treat `type==='error'`
+  whose text matches the render-failure set below as FAIL — keep a small allowlist for known-benign
+  noise if needed, documented).
+- **Storybook / React error-boundary DOM is present**, detected by `page.evaluate` checking for, at
+  minimum: the Storybook error display container (e.g. `#error-message`, `.sb-errordisplay`,
+  `[data-test-id="sb-error"]` — confirm the actual selector Storybook 10 renders), and body text
+  matching any of:
+  - `expected app router to be mounted`
+  - `The component failed to render properly`
+  - `Couldn't find story matching` / `did not render`
+  - `Missing Context` / missing provider
+  - a generic `Error: ` / stack-trace block occupying the canvas.
+- **Empty/blank canvas** where a story is expected (e.g. `#storybook-root` has no element children),
+  which is the other shape a silent failure takes.
+
+A cell that hits any of the above is `pass:false`, `error:"<reason>"`, and the run exits non-zero.
+The summary must print failed cells with their reason (it already prints failed cells — extend it to
+include the render-failure reason, not just the overflow/full-width hints).
+
+**Negative-flow proof (mandatory, via the probe path from the clarification block):**
+- Create a temporary `src/__lint-probes__/...`-style **broken** probe story (e.g. one that throws on
+  render, or that calls `useRouter()` with no provider) under a path Storybook builds, build, and run
+  `screenshots:assert` → the probe cell MUST be reported **FAIL** with the render-error reason.
+  Equivalently, you may run the assert against the CURRENT broken `AdminLocaleSwitcher` state BEFORE
+  Part D and show it FAILs. Either way, paste the FAIL transcript. Then remove the probe.
+- After Parts C+D, the same command on the real tree must be **0 FAIL** with no error screens.
+
+---
+
+## Part D — Provide the App Router / `next/navigation` context mock globally (Storybook infra)
+
+The `invariant expected app router to be mounted` failure means router-dependent admin stories
+(AdminLocaleSwitcher, AdminMobileHeader, AdminSidebar, … anything using `useRouter`/`usePathname`/
+`useSearchParams`) have no App Router context in Storybook.
+
+- Add the App Router mock at the **global** Storybook level — `.storybook/preview.tsx` parameters
+  (with `@storybook/nextjs-vite` this is typically `parameters: { nextjs: { appDirectory: true,
+  navigation: { … } } }`) and/or a shared decorator — so EVERY story gets a mounted router context.
+  **Do this globally; do NOT edit individual real `*.stories.tsx` files.** Confirm the exact API for
+  the installed Storybook/next adapter version before implementing; if the correct API is ambiguous,
+  **STOP and ASK** rather than guess.
+- This Part fixes the gate's environment. Any admin story that STILL renders an error after a global
+  router mock (because it needs per-story data/session/params beyond what global infra can give) is
+  **out of scope for Task 411** — it is routed to **Task 410 rework** (fix the individual story's
+  mock, or reclassify it as a GAP back into `scripts/story-coverage-exempt.json` with justification).
+  Task 411 must NOT fake a pass for such a story and must NOT silently re-exempt it; list it for 410.
 
 ---
 
@@ -138,8 +218,12 @@ selectors) without lint errors, **WITHOUT** disabling groups **A, C, D, E, F, G,
 3. The transcript header reads `Viewports: 14` (not 7) and the run ends **`N/N PASS, 0 FAIL`** with a
    manifest under `.screenshots/rendered-assert/<ts>/` containing every `storyId × {sq,en,uk,it} ×
    {14 widths}` cell.
-4. `npm run lint` passes with **0 new errors** on the real tree.
-5. Post-conditions: every admin harness story has `uk@320`, `uk@375`, `uk@390` cells **and** at least
+4. **Every cell rendered real UI** — the hardened gate (Part C) found no error boundary, no
+   `pageerror`, no render-failure console error, no blank canvas. AdminLocaleSwitcher (and every
+   router-dependent admin story) shows its actual control, NOT "invariant expected app router to be
+   mounted." Spot-confirm by opening a sample of the PNGs.
+5. `npm run lint` passes with **0 new errors** on the real tree.
+6. Post-conditions: every admin harness story has `uk@320`, `uk@375`, `uk@390` cells **and** at least
    one `≥1024` desktop cell in the manifest; AdminTable and StatusChangeControl appear as asserted
    cells (not merely "pre-existing storied").
 
@@ -162,6 +246,10 @@ selectors) without lint errors, **WITHOUT** disabling groups **A, C, D, E, F, G,
   **FAIL** (proves you narrowed by rule for stories only, not globally). Delete the probe after.
 - **`screenshots:assert` with no built Storybook:** the script already errors with
   "storybook-static/ not found" — leave that guard intact; confirm it still exits non-zero.
+- **Render-failure detection (Part C) actually bites:** with a broken probe story (or the current
+  pre-Part-D AdminLocaleSwitcher state), `screenshots:assert` must report that cell **FAIL** with a
+  render-error reason in the manifest — NOT PASS. Paste this FAIL transcript. After Part D, the real
+  tree is 0 FAIL with no error screens. This is the proof that the gate is no longer "PNG = PASS."
 
 ## Acceptance criteria (each maps to a flow + must be verifiable in diff/transcript)
 
@@ -178,9 +266,19 @@ selectors) without lint errors, **WITHOUT** disabling groups **A, C, D, E, F, G,
   (Negative flow: planted E/F/G/H FAIL.)
 - **AC5 (Part B):** negative-flow lint transcript pasted: planted E,F,G,H each FAIL; planted product
   `.update({status})` FAILs; story fixture `status:'active'` does NOT error. (Negative flow.)
-- **AC6:** if Option 2 chosen, `docs/storybook-governance.md` + `docs/responsive-screenshot-matrix.md`
+- **AC6 (Part C):** `scripts/check-stories-rendered.mjs` fails any cell with a Storybook/React error
+  boundary, `pageerror`, render-failure console error, or blank canvas, and records the reason in the
+  manifest — verifiable at the file:line of the new detection logic. (Positive flow step 4.)
+- **AC7 (Part C):** negative-flow transcript pasted showing a broken probe (or pre-Part-D
+  AdminLocaleSwitcher) cell reported **FAIL** with a render-error reason; and the real-tree run is
+  0 FAIL with no error screens. (Negative flow: render-failure detection.)
+- **AC8 (Part D):** the App Router / `next/navigation` mock is applied globally in `.storybook/**`
+  (no real `*.stories.tsx` edited); router-dependent admin stories render real UI. Any story that
+  still cannot render is listed for Task 410 rework (fix or GAP), NOT faked or silently re-exempted.
+- **AC9:** if Option 2 chosen, `docs/storybook-governance.md` + `docs/responsive-screenshot-matrix.md`
   state the full-matrix command is the acceptance command and the smoke subset never closes a task.
-- **AC7 (clause 14):** integrity transcript for every touched file (0 NUL, no BOM, `node --check` for
+  Either way, the docs record the new render-success requirement (an error-screen PNG is not proof).
+- **AC10 (clause 14):** integrity transcript for every touched file (0 NUL, no BOM, `node --check` for
   `.mjs`, `JSON.parse` for `.json`, `tsc --noEmit` 0-new).
 
 ## Hard contract (verified against the diff on return)
@@ -206,9 +304,16 @@ add or alter any rendered component. If you believe a component needs a `max-sm`
 
 ## Ordering (orchestrator-enforced)
 
-1. **Task 411 must pass and be approved first** (canonical-14 harness + narrowed ESLint, both proven).
-2. **Then re-run / finish Task 410's rendered proof** using the corrected canonical-14
-   `screenshots:assert` — full `sq/en/uk/it × 14` matrix, `0 FAIL`, `uk@320/375/390` per admin
-   surface + ≥1 `≥1024` cell per admin surface.
+1. **Task 411 must pass and be approved first** — canonical-14 harness (Part A) + narrowed ESLint
+   (Part B) + **render-failure detection (Part C)** + **global App Router mock (Part D)**, each
+   proven (incl. the negative-flow FAIL transcript showing the gate catches an error screen).
+2. **Then re-run / finish Task 410's rendered proof** on the now-trustworthy canonical-14
+   `screenshots:assert` — full `sq/en/uk/it × 14`, `0 FAIL`, **no error screens**, `uk@320/375/390`
+   per admin surface + ≥1 `≥1024` cell per admin surface. Every admin story listed by Part D as still
+   broken must be **fixed (per-story mock) or reclassified as a GAP** in this 410 rework — the
+   hardened gate will now surface them honestly instead of green-washing them.
 3. **Only then can Task 410 be approved** and its commit emitted.
 4. **Then continue Epic JJ: 408 → 407.**
+
+> **No code commits (410 or 411) until the hardened gate renders real UI at all 14 viewports with
+> 0 FAIL and zero Storybook error screens.** A screenshot of an error boundary is not proof.

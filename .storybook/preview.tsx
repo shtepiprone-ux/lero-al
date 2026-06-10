@@ -163,6 +163,13 @@ const preview: Preview = {
     },
     // Accessibility — will be used when @storybook/addon-a11y is added in Phase 5
     a11y: { disable: true },
+    // Enable App Router context globally so stories using next/navigation hooks
+    // (useRouter, usePathname, useSearchParams) do not throw
+    // "invariant expected app router to be mounted".
+    // @storybook/nextjs-vite mounts AppRouterProvider when appDirectory: true.
+    nextjs: {
+      appDirectory: true,
+    },
   },
 
   initialGlobals: {

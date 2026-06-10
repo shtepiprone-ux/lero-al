@@ -363,12 +363,17 @@ const eslintConfig = defineConfig([
   // ── no-restricted-syntax governance — STORY FILES ────────────────────────
   //
   // MUST come LAST so it takes precedence over the general src/**/*.tsx block
-  // for story files (flat-config LAST-WINS on same rule key). Includes ALL
-  // general .tsx selectors (A–D) PLUS story-specific selectors (E–H) so that
-  // story files are not accidentally exempt from the general rules.
+  // for story files (flat-config LAST-WINS on same rule key). Includes general
+  // .tsx selectors A, C, D PLUS story-specific selectors E–H.
+  //
+  // Intentionally OMITS group B (listing-status mutation selectors): story files
+  // and src/stories/** fixtures carry status literals as fixture data (not mutations).
+  // The narrow B omission is the governance-safe approach — A/C/D/E/F/G/H remain
+  // active so raw-img, window.location, suppressHydrationWarning, layout:centered,
+  // raw HTML controls, /Ukrainian/ exports, and raw title literals still FAIL lint.
+  // See docs/governance-enforcement.md §5 + Task 411.
   //
   // Scoped to: src/**/*.stories.tsx and src/stories/**
-  // (*.stories.tsx are not in scripts/ or storybook-static/, so no extra ignores needed.)
   //
   // Story-specific selector groups:
   //   E. layout:'centered'|'padded' — forbidden (withCanvas + fullscreen is the canon)
@@ -400,26 +405,6 @@ const eslintConfig = defineConfig([
         {
           selector: "JSXAttribute[name.name='fetchPriority']",
           message: "Inline fetchPriority is not allowed outside AppImage.",
-        },
-
-        // ── B. Listing status governance (same as general .tsx block) ────
-        {
-          selector:
-            "BinaryExpression[right.type='Literal'][right.value=/^(active|inactive|sold|rented|archived|pending)$/]:matches([operator='==='],[operator='!==']) > MemberExpression.left[property.name='status']",
-          message:
-            "Direct .status comparison outside the semantic domain. " +
-            "Use helpers from '@/modules/listings/domain'.",
-        },
-        {
-          selector:
-            "Property[key.name='status'][value.type='Literal'][value.value=/^(active|inactive|sold|rented|archived|pending)$/]",
-          message:
-            "Raw status string literal outside the mutation gateway. " +
-            "Use resolveTransition(status, action).nextStatus.",
-        },
-        {
-          selector: "CallExpression[callee.property.name='update'] Property[key.name='status']",
-          message: "Direct status write in .update() outside the mutation gateway.",
         },
 
         // ── C. window.location governance (same as general .tsx block) ───

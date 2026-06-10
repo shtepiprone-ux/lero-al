@@ -511,7 +511,7 @@ the gates green — plus a negative-flow transcript proving each gate FAILS on a
 - `makeListingFixtures(locale)` factory returns locale-resolved fixtures.
 - Backward-compat static exports (e.g. `LISTING_FIXTURE`) default to English until Task 381 migrates consumers.
 
-**ESLint story block** (`eslint.config.mjs`): scoped to `src/**/*.stories.tsx` + `src/stories/**`. Must come LAST in the config (flat-config LAST-WINS for `no-restricted-syntax`). Includes all general `.tsx` selectors (A–D) PLUS story-specific selectors (E–H).
+**ESLint story block** (`eslint.config.mjs`): scoped to `src/**/*.stories.tsx` + `src/stories/**`. Must come LAST in the config (flat-config LAST-WINS for `no-restricted-syntax`). Includes general `.tsx` selectors A, C, D PLUS story-specific selectors E–H. **Intentionally omits group B** (listing-status mutation selectors) so that fixture `status: 'active'` literals do not trigger lint errors — stories are not the mutation gateway. A/C/D/E/F/G/H remain active for stories (Task 411).
 
 **AST selectors documented (story-specific, group E–H):**
 ```
@@ -537,7 +537,7 @@ H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃ�
 9. Known hardcoded user-facing English literals in runtime `src/components/**` and `src/modules/**` (e.g. `'Previous'`, `'Next'`, `'Hide column'`, `'Sort A→Z'`)
 10. English-literal JSX string props (`title|description|label|placeholder|heading|subject|cta|alt|aria-label|name="…"`) in `*.stories.tsx` not produced by `storyT()`/`t()` — see §14.7
 
-**check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,640,768,1280} × {sq,en,uk,it}. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only buttons `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`.
+**check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} (canonical 14 from `docs/responsive-screenshot-matrix.md §1`) × {sq,en,uk,it}. `--fast` runs only {320,375,390} for quick local loops. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`. **`npm run screenshots:assert` (non-fast) is the canonical full-matrix acceptance command** — its transcript must show `Viewports: 14` for rendered-proof approval (Task 411).
 
 ### 14.6 Inline locale map prohibition (Task 389, 2026-06-04)
 
@@ -703,3 +703,32 @@ The scaffold:
 ### §15.4 CI wiring
 
 `check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, after the file-integrity gate. It does not require Storybook to build — it is a pure filesystem check (fast, ~100ms).
+
+---
+
+## §MQ — Manual visual QA requirements (machine-detection limits, 2026-06-08)
+
+> Added by Task 412. See also `docs/design-system.md §27.3` and `docs/responsive-screenshot-governance.md §MQ`.
+
+`screenshots:assert` (`check-stories-rendered.mjs`) machine-checks three assertions per cell:
+(a) no `scrollWidth > clientWidth` overflow; (b) SelectTrigger / TabsList / form input fill their
+parent at `<640`; (c) no render-failure (error-boundary, blank canvas, missing router).
+
+**The following failure classes are NOT detectable by `screenshots:assert` and REQUIRE manual visual QA.** Every task touching these surfaces MUST include an `OWNER QA REQUIRED` gate in the session log for these specific checks:
+
+| Failure class | Why it escapes machine detection | Manual check required |
+|---|---|---|
+| Button not full-width at `<640` | Buttons explicitly excluded from assertion (b) | `§26.1` — verify every text button spans full width at 320/375/390 |
+| `overflow-hidden` masking a layout defect | No overflow detected; content silently clipped | `§24.4` — verify no content hidden behind overflow-hidden |
+| Popup not rendering as bottom sheet at `<640` | No DOM check for bottom-anchor / edge-to-edge | `§26.2` — open each overlay at 320/375/390 and confirm bottom-sheet |
+| Inaccessible table columns | Columns off-screen; parent container not overflowing | `§25.1` — verify all columns/row-actions reachable at 768–1023 |
+| Wide-desktop sparsity at 1920/2560 | No whitespace-waste detector | `§4`, `§8` — visual check at 1920/2560 |
+| Labels behind sticky/fixed layers | Content present but overlapped | `§22.3 z-index` — verify nothing is overlapped by sticky chrome |
+| Visually broken but technically non-overflowing layout | `scrollWidth` not exceeded | General — visual inspection at key viewports |
+| Popup bottom-sheet drag handle / close behavior | Static PNG cannot assert interaction | `§26.2` — interactive test: backdrop tap + Esc closes |
+
+**Requirement for tasks touching these surfaces:**
+
+Session logs MUST include an explicit `OWNER QA REQUIRED` row for each applicable failure class, with the specific story × viewport × locale combinations to check manually. The `screenshots:assert` PASS alone is **insufficient** for these classes.
+
+**Future harness improvement:** a proposed slice (see `docs/responsive-storybook-inventory.md §5`) would add DOM assertions for button width and overlay-positioning, reducing the manual QA burden. Until that slice ships, manual QA is mandatory for the above classes.

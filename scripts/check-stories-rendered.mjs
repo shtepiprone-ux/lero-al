@@ -8,6 +8,10 @@
  *   (a) No horizontal scrollbar / overflow: document.scrollWidth <= document.clientWidth at 320px.
  *   (b) At viewport width < 640: any visible button (data-slot="button" or role="button")
  *       that is not icon-only has offsetWidth >= containerWidth - TOLERANCE.
+ *   (c) Render-failure detection: FAIL if pageerror fires, a render-failure console error is
+ *       logged, Storybook's error display (sb-show-errordisplay body class) is present, body text
+ *       matches known error patterns, or #storybook-root has no element children (blank canvas).
+ *       An error-screen PNG is NOT rendered proof and must score FAIL (Part C, Task 411).
  *
  * Output:
  *   .screenshots/rendered-assert/<timestamp>/
@@ -52,13 +56,24 @@ const VIEWPORTS_MOBILE = [
   { name: 'mobile-390', width: 390,  height: 844 },
 ];
 
-/** Extended viewport matrix for full assert run */
+/**
+ * Full assert run — canonical 14 viewports (docs/responsive-screenshot-matrix.md §1 DS-5 canon).
+ * agent-contract clause 12 requires this exact set for rendered-evidence approval.
+ * --fast uses VIEWPORTS_MOBILE (3 widths) for quick local dev loops.
+ */
 const VIEWPORTS_FULL = [
-  ...VIEWPORTS_MOBILE,
-  { name: 'mobile-480',   width: 480,  height: 900  },
-  { name: 'tablet-640',   width: 640,  height: 960  },
-  { name: 'tablet-768',   width: 768,  height: 1024 },
-  { name: 'desktop-1280', width: 1280, height: 800  },
+  ...VIEWPORTS_MOBILE,                                               // 320, 375, 390
+  { name: 'mobile-480',    width:  480, height:  900 },
+  { name: 'canonical-560', width:  560, height:  812 },
+  { name: 'canonical-680', width:  680, height:  812 },
+  { name: 'tablet-768',    width:  768, height: 1024 },
+  { name: 'canonical-810', width:  810, height:  812 },
+  { name: 'canonical-960', width:  960, height:  812 },
+  { name: 'desktop-1024',  width: 1024, height:  768 },
+  { name: 'canonical-1200',width: 1200, height:  812 },
+  { name: 'desktop-1440',  width: 1440, height:  900 },
+  { name: 'huge-1920',     width: 1920, height: 1080 },
+  { name: 'huge-2560',     width: 2560, height: 1440 },
 ];
 
 /** All four locales — uk is the Ukrainian long-string stress locale */
@@ -84,12 +99,28 @@ const ASSERT_STORIES = [
   { id: 'primitives-tabs--default',                           label: 'Tabs/Default' },
   // Shared (1)
   { id: 'shared-combobox--button-variant',                    label: 'Combobox/ButtonVariant' },
-  // Admin (5)
+  // Admin (19 — 5 existing + 14 new Task 410 harness stories)
   { id: 'admin-admincardlist--default',                       label: 'AdminCardList/Default' },
   { id: 'admin-adminpageshell--default',                      label: 'AdminPageShell/Default' },
   { id: 'admin-admintable--default',                          label: 'AdminTable/Default' },
   { id: 'admin-statuschangecontrol--select',                  label: 'StatusChangeControl/Select' },
   { id: 'admin-statuschangehistory--empty',                   label: 'StatusChangeHistory/Empty' },
+  { id: 'admin-adminlocaleswitcher--default',                 label: 'AdminLocaleSwitcher/Default' },
+  { id: 'admin-adminmobileheader--default',                   label: 'AdminMobileHeader/Default' },
+  { id: 'admin-adminuseravatar--view-placeholder',            label: 'AdminUserAvatar/ViewPlaceholder' },
+  { id: 'admin-adminuseravatar--edit-mode',                   label: 'AdminUserAvatar/EditMode' },
+  { id: 'admin-adminsidebar--desktop',                        label: 'AdminSidebar/Desktop' },
+  { id: 'admin-adminsidebar--mobile-drawer-open',             label: 'AdminSidebar/MobileDrawerOpen' },
+  { id: 'admin-adminsettings--default',                       label: 'AdminSettings/Default' },
+  { id: 'admin-admincurrenciesmanager--default',              label: 'AdminCurrenciesManager/Default' },
+  { id: 'admin-adminexchangeprovidersmanager--default',       label: 'AdminExchangeProvidersManager/Default' },
+  { id: 'admin-adminpropertytypesmanager--default',           label: 'AdminPropertyTypesManager/Default' },
+  { id: 'admin-admincompaniesmanager--default',               label: 'AdminCompaniesManager/Default' },
+  { id: 'admin-adminsupportmanager--default',                 label: 'AdminSupportManager/Default' },
+  { id: 'admin-adminemailtemplatesmanager--default',          label: 'AdminEmailTemplatesManager/Default' },
+  { id: 'admin-adminlistingstable--default',                  label: 'AdminListingsTable/Default' },
+  { id: 'admin-adminuserstable--default',                     label: 'AdminUsersTable/Default' },
+  { id: 'admin-adminuserprofile--default',                    label: 'AdminUserProfile/Default' },
   // Layout (4)
   { id: 'layout-filterbar--default',                          label: 'FilterBar/Default' },
   { id: 'layout-pageheader--default',                         label: 'PageHeader/Default' },
@@ -226,9 +257,65 @@ async function runAssert() {
 
           try {
             const page = await browser.newPage();
+
+            // ── Render-failure signal collectors (attached before goto) ────
+            const pageErrors = [];
+            const consoleErrors = [];
+            page.on('pageerror', (err) => { pageErrors.push(err.message.slice(0, 200)); });
+            page.on('console', (msg) => {
+              if (msg.type() === 'error') {
+                const t = msg.text();
+                // Filter to render-failure patterns only — avoid flagging benign browser noise
+                if (
+                  /invariant expected app router/i.test(t) ||
+                  /The above error occurred in the/i.test(t) ||
+                  /Error rendering story/i.test(t) ||
+                  /Uncaught \[Error:/i.test(t)
+                ) consoleErrors.push(t.slice(0, 200));
+              }
+            });
+
             await page.setViewportSize({ width: viewport.width, height: viewport.height });
             await page.goto(storyUrl, { waitUntil: 'networkidle', timeout: 20000 });
             await page.waitForTimeout(400); // allow fonts/animations
+
+            // ── Assertion (c): Render-failure detection (Part C, Task 411) ─
+            // A screenshot of a Storybook error screen is NOT rendered proof.
+            const renderResult = await page.evaluate(() => {
+              // Storybook sets 'sb-show-errordisplay' on <body> when its error display is shown
+              if (document.body.classList.contains('sb-show-errordisplay')) {
+                const errEl = document.querySelector('#error-message') || document.body;
+                return { failed: true, reason: 'sb-show-errordisplay',
+                  detail: (errEl.textContent ?? '').slice(0, 200) };
+              }
+              const bodyText = document.body?.innerText ?? '';
+              if (/invariant expected app router to be mounted/i.test(bodyText))
+                return { failed: true, reason: 'app-router-missing', detail: bodyText.slice(0, 200) };
+              if (/The component failed to render properly/i.test(bodyText))
+                return { failed: true, reason: 'react-render-error', detail: bodyText.slice(0, 200) };
+              if (/Missing.*[Cc]ontext|Missing.*[Pp]roviders?/i.test(bodyText))
+                return { failed: true, reason: 'missing-context', detail: bodyText.slice(0, 200) };
+              if (/Couldn't find story matching/i.test(bodyText))
+                return { failed: true, reason: 'story-not-found', detail: bodyText.slice(0, 200) };
+              if (/Error rendering story/i.test(bodyText))
+                return { failed: true, reason: 'render-error', detail: bodyText.slice(0, 200) };
+              // Blank canvas: decorators rendered but story itself produced no elements
+              const root = document.querySelector('#storybook-root');
+              if (root && root.children.length === 0)
+                return { failed: true, reason: 'blank-canvas', detail: '' };
+              return { failed: false, reason: null, detail: '' };
+            });
+
+            const renderFailed = renderResult.failed || pageErrors.length > 0 || consoleErrors.length > 0;
+            cell.assertions.renderCheck = {
+              pageErrors:    pageErrors.slice(0, 2),
+              consoleErrors: consoleErrors.slice(0, 2),
+              domFailed:     renderResult.failed,
+              failReason:    renderResult.failed
+                ? renderResult.reason
+                : (pageErrors.length > 0 ? 'pageerror' : (consoleErrors.length > 0 ? 'console-error' : null)),
+              failDetail:    renderResult.detail || pageErrors[0] || consoleErrors[0] || '',
+            };
 
             // ── Assertion (a): No horizontal overflow at 320 ──────────────
             const noOverflow = await page.evaluate(() => {
@@ -292,7 +379,7 @@ async function runAssert() {
             }
             cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? fullWidthOk : null;
 
-            cell.pass = noOverflow && (viewport.width >= 640 || fullWidthOk);
+            cell.pass = !renderFailed && noOverflow && (viewport.width >= 640 || fullWidthOk);
 
             await page.screenshot({ path: screenshotPath, fullPage: false });
             await page.close();
@@ -327,8 +414,14 @@ async function runAssert() {
       console.error('\n❌ Failed cells:');
       for (const cell of matrix.filter(c => !c.pass)) {
         console.error(`  ${cell.story} × ${cell.locale} × ${cell.viewport}`);
-        if (cell.error) console.error(`    Error: ${cell.error}`);
-        else {
+        if (cell.error) {
+          console.error(`    Error: ${cell.error}`);
+        } else {
+          const rc = cell.assertions.renderCheck;
+          if (rc?.failReason) {
+            const detail = (rc.failDetail ?? '').replace(/\n/g, ' ').slice(0, 120);
+            console.error(`    ✗ render failure [${rc.failReason}]${detail ? ': ' + detail : ''}`);
+          }
           if (!cell.assertions.noHorizontalOverflow) console.error('    ✗ horizontal overflow detected');
           if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ text button not full-width at <640');
         }

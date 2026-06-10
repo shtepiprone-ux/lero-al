@@ -1050,6 +1050,16 @@ owner decision (sibling precedent: §26.3 map-marker exemption).
 
 Any OTHER overlay/popup remains bound by §26.2. These two exemptions are exhaustive as of Task 414.
 
+**Combobox pointer-dismiss focus-return residual (owner-approved, 2026-06-10, Task 415).** For the
+shared `Combobox`, the §26.2 dismiss contract is satisfied as follows: **Esc closes AND returns
+focus to the trigger (required — implemented, PASS)**, and **backdrop / outside-pointer tap closes
+the dropdown (PASS)**. The one accepted residual: an outside-**pointer** tap MAY close the dropdown
+**without** force-returning focus to the trigger. Forcing focus-return after a pointer dismissal is
+UX-questionable (a user who taps elsewhere usually does not expect focus to jump back) and would
+require a document-level `pointerdown`/`mousedown` listener in a high-blast-radius shared component.
+This is an **owner-approved residual**, not a defect or a silent PASS — do NOT add a document-level
+pointer listener to fix it without a fresh owner decision. Esc focus-return must remain PASS.
+
 ---
 
 ## §27 — Storybook responsive-proof contract (2026-06-08)

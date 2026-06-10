@@ -1037,6 +1037,19 @@ renders as a bottom sheet edge-to-edge.
 - A popup that renders as a centered card, mini-dropdown, or anchored popover at `<640px`.
 - An overlay with `max-w-sm` / `max-w-[calc(100%-2rem)]` that does not go edge-to-edge below 640px.
 
+### 26.6 — Approved §26.2 pattern exceptions (owner-approved, 2026-06-10, Task 414 Slice 2)
+
+Two overlay surfaces are **owner-approved exceptions** to the literal §26.2 bottom-sheet contract.
+They are NOT defects and MUST NOT be "fixed" into bottom sheets by any future slice without a fresh
+owner decision (sibling precedent: §26.3 map-marker exemption).
+
+| Surface | File | Pattern kept | Why it is exempt |
+|---|---|---|---|
+| Fullscreen image lightbox | `src/modules/listings/components/ListingGallery.tsx` (`fixed inset-0 z-toast bg-overlay/95`) | Fullscreen, edge-to-edge, full-viewport photo viewer with `icon-xl` (≥44px) prev/next/close | A fullscreen media viewer is a different category from a transient popup. It is already stronger than "full-width bottom sheet" (full-viewport, not `≤90dvh`); converting it would shrink the image area and break the prev/next/close gallery UX (matches dom.ria.com reference). |
+| Admin left nav drawer | `src/components/admin/AdminSidebar.tsx` (`Sheet`/`SheetContent` `side="left"`) | Left-anchored slide-in nav drawer (`data-[side=left]:w-3/4 … sm:max-w-sm`) | A persistent app-chrome navigation drawer is a different interaction pattern from a transient popup/menu/dialog. Users expect the hamburger menu to slide from the edge, not the bottom. The `ui/sheet.tsx` primitive gives only `side="bottom"` the §26.2 treatment by design; adding a `side="left"` mobile override is a separate primitive change, not in scope for the overlay slice. |
+
+Any OTHER overlay/popup remains bound by §26.2. These two exemptions are exhaustive as of Task 414.
+
 ---
 
 ## §27 — Storybook responsive-proof contract (2026-06-08)

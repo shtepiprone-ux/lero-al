@@ -232,10 +232,23 @@ no viewport/locale config changed).
   `text-2xs`, `max-w-50`/`max-w-40` reuse existing tokens/utilities from the Slice-1 precedent).
 - `npm run build-storybook` → PASS, clean build (no new errors/warnings for the 5 affected
   stories).
-- `npm run check:locale-leak` — **not run** (port 6009 held by a pre-existing unrelated process,
-  `EADDRINUSE`; this check is NOT in Task 416's required validation list per the kickoff —
-  `tsc`/`lint`/`check:stories`/`check:i18n`/`check:story-coverage`/`check:design-tokens`/
-  `build-storybook`/`screenshots:assert` are required, `check:locale-leak` is not).
+- `npm run check:locale-leak` — initially blocked (port 6009 `EADDRINUSE`, pre-existing unrelated
+  process); the queued background run later completed with **exit 0** (report-mode, non-blocking;
+  NOT in Task 416's required validation list — `tsc`/`lint`/`check:stories`/`check:i18n`/
+  `check:story-coverage`/`check:design-tokens`/`build-storybook`/`screenshots:assert` are
+  required, `check:locale-leak` is not). Result: `leakCount: 474` (was 221 at Task 414/415,
+  `.screenshots/locale-leak/2026-06-10T14-41/report.json`). Inspected the leaks attributed to the
+  3 migrated surfaces (`admin-adminexchangeprovidersmanager--default` ×10,
+  `admin-adminsupportmanager--default` ×3, `admin-adminuserstable--default` ×9, plus `--tablet`/
+  `--verified-tab`/`--location-requests` variants) — all are **fixture mock-data tokens**
+  (`BankOfAlbania`, `ExchangeRatesAPI`, `ManualRates`, `Gentiana Hoxha`, `Tirana Real Estate
+  Group`, `Online`, `Moderator` — from `src/stories/fixtures/admin.fixtures.ts`, untouched by
+  this task), identical to the pre-existing baseline pattern, NOT new translation-key
+  regressions. The largest increase (`admin-adminuserprofile--tablet` ×187,
+  `--create-mode` ×72 = 259 of the +253 delta) is in `AdminUserProfile`, also untouched by this
+  task. `check:locale-leak` count growth is unrelated to the Task 416 diff and is a pre-existing
+  fixture-data characteristic — flagged here for visibility, not actioned (out of scope; no
+  fixtures/translations changed by this task).
 - `node scripts/task416-qa-tablet-and-cards.mjs` → **75/75 PASS, 0 FAIL** (Part 4 above).
 - Native `npm run screenshots:assert` (2520-cell canonical matrix, clause 14) — **PENDING owner**.
 

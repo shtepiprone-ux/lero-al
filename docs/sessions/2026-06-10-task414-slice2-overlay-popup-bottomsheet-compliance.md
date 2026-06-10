@@ -247,6 +247,27 @@ Two new untracked QA scripts added (precedent: `scripts/task404-computed-proof.m
 `scripts/task414-qa-recompute.mjs` (re-derives PASS/FAIL from the captured manifest with refined
 touch-target criteria, no re-capture). Both are QA evidence tooling, not product code.
 
+### AC2 — OWNER NATIVE `screenshots:assert` (authoritative, 2026-06-10, post-commit)
+
+Run natively in PowerShell on the freshly-rebuilt `storybook-static/` (`build-storybook` PASS first —
+the hundreds of Vite `"use client"`/`"use server"` directive notices are harmless warnings, build
+"completed successfully"; `check:stories` = 47 files / 0 violations):
+
+```
+> node scripts/check-stories-rendered.mjs
+📸  Starting rendered assertion (full mode)
+    Stories: 45 | Viewports: 14 | Locales: 4
+Results: 2520/2520 PASS, 0 FAIL
+✅ All rendered assertions PASSED.
+Manifest: .screenshots/rendered-assert/2026-06-10T13-15/manifest.json
+```
+
+**Clean 2520/2520, 0 FAIL** — the clause-12/13 rendered gate for Slice 2 is fully discharged. The
+2 FAIL cells from the in-session run (`Sheet/FilterRight×it×680` chunk-load + `StatusChangeHistory/
+Empty×uk×2560` ERR_NO_BUFFER_SPACE) are confirmed **transient** (passed on native rerun, neither
+story touched by this slice). First native attempt aborted on a `EADDRINUSE :6008` port conflict
+(a stale static-server from a prior run) — resolved by freeing the port; not a test failure.
+
 ---
 
 ## Confirmations

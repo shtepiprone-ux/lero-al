@@ -40,7 +40,7 @@ export const MobileBottomSheet: Story = {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
       <div className="p-4">
-        <Popover>
+        <Popover defaultOpen>
           <PopoverTrigger render={<Button>{p("open_long", locale)}</Button>} />
           <PopoverContent>
             <PopoverHeader>

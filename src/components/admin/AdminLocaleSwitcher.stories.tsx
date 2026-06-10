@@ -16,3 +16,15 @@ export const Default: Story = {
 export const LocaleStress: Story = {
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }
+
+export const MobileBottomSheet: Story = {
+  parameters: {
+    docs: { description: { story: '@320: language menu opens as a full-width bottom sheet — edge-to-edge, drag handle, items >=44px. Use locale toolbar.' } }
+  },
+  render: () => (
+    <div className="p-4 max-w-xs">
+      <AdminLocaleSwitcher defaultOpen />
+    </div>
+  ),
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}

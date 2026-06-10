@@ -21,13 +21,15 @@ import type { DBExchangeProvider } from '@/types/database'
 
 // ── Form dialog ───────────────────────────────────────────────────────────────
 
-interface FormDialogProps {
+export interface ProviderFormDialogProps {
   initial?: DBExchangeProvider | null
   onClose: () => void
   onSaved: (p: DBExchangeProvider) => void
 }
 
-function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
+type FormDialogProps = ProviderFormDialogProps
+
+export function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
   const t = useTranslations('admin.currency.providers')
   const [isPending, startTransition] = useTransition()
 
@@ -81,68 +83,71 @@ function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-card rounded-2xl shadow-2xl border w-full max-w-lg p-6 flex flex-col gap-4 max-h-[90vh] overflow-y-auto">
-        <h2 className="font-semibold text-base">{initial ? t('edit') : t('new')}</h2>
+    <Dialog open onOpenChange={open => { if (!open) onClose() }}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>{initial ? t('edit') : t('new')}</DialogTitle>
+        </DialogHeader>
 
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('name')}</Label>
-          <Input value={name} onChange={e => setName(e.target.value)} className="h-9 rounded-xl" />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('endpoint')}</Label>
-          <Input value={endpoint} onChange={e => setEndpoint(e.target.value)} placeholder="https://" className="h-9 rounded-xl font-mono text-sm" />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('api_key')}</Label>
-          <PasswordInput value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="(optional)" className="h-9 rounded-xl" />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('refresh_interval')}</Label>
-            <Input type="number" min={1} value={interval} onChange={e => setInterval(Number(e.target.value))} className="h-9 rounded-xl" />
+            <Label className="text-xs">{t('name')}</Label>
+            <Input value={name} onChange={e => setName(e.target.value)} className="h-9 rounded-xl" />
           </div>
+
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('priority')}</Label>
-            <Input type="number" min={1} value={priority} onChange={e => setPriority(Number(e.target.value))} className="h-9 rounded-xl" />
+            <Label className="text-xs">{t('endpoint')}</Label>
+            <Input value={endpoint} onChange={e => setEndpoint(e.target.value)} placeholder="https://" className="h-9 rounded-xl font-mono text-sm" />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs">{t('api_key')}</Label>
+            <PasswordInput value={apiKey} onChange={e => setApiKey(e.target.value)} placeholder="(optional)" className="h-9 rounded-xl" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs">{t('refresh_interval')}</Label>
+              <Input type="number" min={1} value={interval} onChange={e => setInterval(Number(e.target.value))} className="h-9 rounded-xl" />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs">{t('priority')}</Label>
+              <Input type="number" min={1} value={priority} onChange={e => setPriority(Number(e.target.value))} className="h-9 rounded-xl" />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs">{t('mode')}</Label>
+            <div className="flex rounded-xl border overflow-hidden">
+              {(['auto', 'manual', 'hybrid'] as const).map(m => (
+                <Button
+                  key={m}
+                  type="button"
+                  onClick={() => setMode(m)}
+                  size="lg"
+                  variant={mode === m ? 'default' : 'ghost'}
+                  className="flex-1 rounded-none text-xs"
+                >
+                  {t(`mode_${m}`)}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs">{t('notes')}</Label>
+            <Input value={notes} onChange={e => setNotes(e.target.value)} className="h-9 rounded-xl" />
+          </div>
+
+          <div className="flex justify-end gap-3 pt-2">
+            <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
+            <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
+              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
+            </Button>
           </div>
         </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('mode')}</Label>
-          <div className="flex rounded-xl border overflow-hidden">
-            {(['auto', 'manual', 'hybrid'] as const).map(m => (
-              <Button
-                key={m}
-                type="button"
-                onClick={() => setMode(m)}
-                size="lg"
-                variant={mode === m ? 'default' : 'ghost'}
-                className="flex-1 rounded-none text-xs"
-              >
-                {t(`mode_${m}`)}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('notes')}</Label>
-          <Input value={notes} onChange={e => setNotes(e.target.value)} className="h-9 rounded-xl" />
-        </div>
-
-        <div className="flex justify-end gap-3 pt-2">
-          <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
-          <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
-          </Button>
-        </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

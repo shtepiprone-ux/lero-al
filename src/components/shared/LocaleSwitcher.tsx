@@ -27,6 +27,8 @@ interface LocaleSwitcherProps {
   align?: 'start' | 'center' | 'end'
   side?: 'top' | 'right' | 'bottom' | 'left'
   className?: string
+  /** Render the menu open on mount (Storybook/QA evidence only — not for app usage). */
+  defaultOpen?: boolean
 }
 
 export function LocaleSwitcher({
@@ -36,6 +38,7 @@ export function LocaleSwitcher({
   align = 'end',
   side = 'bottom',
   className,
+  defaultOpen,
 }: LocaleSwitcherProps) {
   const currentLocale = useLocale()
   const t = useTranslations('nav')
@@ -49,7 +52,7 @@ export function LocaleSwitcher({
   }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu defaultOpen={defaultOpen}>
       <DropdownMenuTrigger
         disabled={isPending}
         className={cn(

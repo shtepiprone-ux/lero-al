@@ -23,13 +23,15 @@ import type { DBCurrency } from '@/types/database'
 
 // ── Form dialog (create / edit) ───────────────────────────────────────────────
 
-interface FormDialogProps {
+export interface CurrencyFormDialogProps {
   initial?: DBCurrency | null
   onClose: () => void
   onSaved: (c: DBCurrency) => void
 }
 
-function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
+type FormDialogProps = CurrencyFormDialogProps
+
+export function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
   const t = useTranslations('admin.currency.currencies')
   const [isPending, startTransition] = useTransition()
 
@@ -78,72 +80,75 @@ function CurrencyFormDialog({ initial, onClose, onSaved }: FormDialogProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
-      <div className="absolute inset-0 bg-overlay/40 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-card rounded-2xl shadow-2xl border w-full max-w-lg max-h-[90vh] overflow-y-auto p-6 flex flex-col gap-5">
-        <h2 className="font-semibold text-base">{initial ? t('edit') : t('new')}</h2>
+    <Dialog open onOpenChange={open => { if (!open) onClose() }}>
+      <DialogContent className="max-w-lg">
+        <DialogHeader>
+          <DialogTitle>{initial ? t('edit') : t('new')}</DialogTitle>
+        </DialogHeader>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs">{t('code')}</Label>
+              <Input
+                value={code}
+                onChange={e => setCode(e.target.value.toUpperCase())}
+                placeholder="EUR"
+                maxLength={10}
+                disabled={!!initial}
+                className="h-9 rounded-xl font-mono"
+              />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label className="text-xs">{t('symbol')}</Label>
+              <Input
+                value={symbol}
+                onChange={e => setSymbol(e.target.value)}
+                placeholder="€"
+                maxLength={10}
+                className="h-9 rounded-xl"
+              />
+            </div>
+          </div>
+
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('code')}</Label>
-            <Input
-              value={code}
-              onChange={e => setCode(e.target.value.toUpperCase())}
-              placeholder="EUR"
-              maxLength={10}
-              disabled={!!initial}
-              className="h-9 rounded-xl font-mono"
-            />
+            <Label className="text-xs">{t('name_sq')}</Label>
+            <Input value={nameSq} onChange={e => setNameSq(e.target.value)} className="h-9 rounded-xl" />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label className="text-xs">{t('symbol')}</Label>
+            <Label className="text-xs">{t('name_en')}</Label>
+            <Input value={nameEn} onChange={e => setNameEn(e.target.value)} className="h-9 rounded-xl" />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs">{t('name_uk')}</Label>
+            <Input value={nameUk} onChange={e => setNameUk(e.target.value)} className="h-9 rounded-xl" />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label className="text-xs">{t('name_it')}</Label>
+            <Input value={nameIt} onChange={e => setNameIt(e.target.value)} className="h-9 rounded-xl" />
+          </div>
+
+          <div className="flex flex-col gap-1.5 max-w-30">
+            <Label className="text-xs">{t('decimals')}</Label>
             <Input
-              value={symbol}
-              onChange={e => setSymbol(e.target.value)}
-              placeholder="€"
-              maxLength={10}
+              type="number"
+              min={0}
+              max={8}
+              value={decimals}
+              onChange={e => setDecimals(Number(e.target.value))}
               className="h-9 rounded-xl"
             />
           </div>
-        </div>
 
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('name_sq')}</Label>
-          <Input value={nameSq} onChange={e => setNameSq(e.target.value)} className="h-9 rounded-xl" />
+          <div className="flex justify-end gap-3 pt-2">
+            <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
+            <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
+              {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('name_en')}</Label>
-          <Input value={nameEn} onChange={e => setNameEn(e.target.value)} className="h-9 rounded-xl" />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('name_uk')}</Label>
-          <Input value={nameUk} onChange={e => setNameUk(e.target.value)} className="h-9 rounded-xl" />
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <Label className="text-xs">{t('name_it')}</Label>
-          <Input value={nameIt} onChange={e => setNameIt(e.target.value)} className="h-9 rounded-xl" />
-        </div>
-
-        <div className="flex flex-col gap-1.5 max-w-30">
-          <Label className="text-xs">{t('decimals')}</Label>
-          <Input
-            type="number"
-            min={0}
-            max={8}
-            value={decimals}
-            onChange={e => setDecimals(Number(e.target.value))}
-            className="h-9 rounded-xl"
-          />
-        </div>
-
-        <div className="flex justify-end gap-3 pt-2">
-          <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
-          <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
-            {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
-          </Button>
-        </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 

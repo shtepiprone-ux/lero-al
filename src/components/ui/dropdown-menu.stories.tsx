@@ -39,7 +39,7 @@ export const MobileBottomSheet: Story = {
     const locale = (context?.globals?.locale as string) ?? "en";
     return (
       <div className="p-4">
-        <DropdownMenu>
+        <DropdownMenu defaultOpen>
           <DropdownMenuTrigger render={<Button>{d("actions", locale)}</Button>} />
           <DropdownMenuContent>
             <DropdownMenuItem>{d("edit_long", locale)}</DropdownMenuItem>

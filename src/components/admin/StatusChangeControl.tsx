@@ -48,6 +48,8 @@ export type StatusChangeControlProps<S extends string> = {
   submitLabelKey?: string
   disabled?: boolean
   'aria-label'?: string
+  /** variant="select" only: render the dropdown open on mount (Storybook/QA evidence only — not for app usage). */
+  defaultOpen?: boolean
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -64,6 +66,7 @@ export function StatusChangeControl<S extends string>({
   submitLabelKey,
   disabled = false,
   'aria-label': ariaLabel,
+  defaultOpen,
 }: StatusChangeControlProps<S>) {
   const t = useTranslations('admin.common.status_control')
   const [, startTransition] = useTransition()
@@ -112,6 +115,7 @@ export function StatusChangeControl<S extends string>({
           variant="button"
           size="sm"
           disabled={disabled || pending}
+          defaultOpen={defaultOpen}
         />
 
         {enableNote && (

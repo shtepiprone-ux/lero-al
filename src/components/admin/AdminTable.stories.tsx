@@ -644,7 +644,6 @@ export const LocaleStress: Story = {
 
   render: () => {
     // Long-string interactive table (uses UK_ROWS dataset for extreme title length test)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [selected, setSelected] = useState<UkRow | null>(null)
     const ukCols: AdminTableColumn<UkRow>[] = [
       {

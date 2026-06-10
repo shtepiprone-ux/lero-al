@@ -113,6 +113,31 @@ export const Select: Story = {
   }
 }
 
+export const SelectMobileBottomSheet: Story = {
+  parameters: {
+    docs: { description: { story: '@320: variant="select" dropdown opens as a full-width bottom sheet — edge-to-edge, drag handle, items >=44px. Use locale toolbar.' } }
+  },
+
+  render: () => (
+    <div className="w-full p-3">
+      <StatusChangeControl
+        variant="select"
+        currentStatus={'new' as IStatus}
+        statuses={INQUIRY_STATUSES}
+        onSubmit={() => {}}
+        defaultOpen
+      />
+    </div>
+  ),
+
+  globals: {
+    viewport: {
+      value: 'mobile320',
+      isRotated: false
+    }
+  }
+}
+
 export const SelectWithNote: Story = {
   render: () => (
     <div className="w-full p-4 sm:max-w-xs">

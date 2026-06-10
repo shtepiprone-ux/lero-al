@@ -59,7 +59,7 @@ export const WithDialog: Story = {
 };
 
 function MobileStory({ locale }: { locale: string }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <div className="p-4">
       <Button onClick={() => setOpen(true)}>{c("search_short", locale)}</Button>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { AdminExchangeProvidersManager } from './AdminExchangeProvidersManager'
+import { AdminExchangeProvidersManager, ProviderFormDialog } from './AdminExchangeProvidersManager'
 import { FIXTURE_PROVIDERS } from '@/stories/fixtures/admin.fixtures'
 
 const meta: Meta<typeof AdminExchangeProvidersManager> = {
@@ -20,5 +20,15 @@ export const Tablet: Story = {
 }
 
 export const LocaleStress: Story = {
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+export const FormDialogMobileBottomSheet: Story = {
+  parameters: {
+    docs: { description: { story: '@320: ProviderFormDialog (add/edit) opens as a full-width bottom sheet — edge-to-edge, drag handle, ≤90dvh scroll, fields wrap. Use locale toolbar for sq/en/uk/it.' } }
+  },
+  render: () => (
+    <ProviderFormDialog initial={null} onClose={() => {}} onSaved={() => {}} />
+  ),
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }

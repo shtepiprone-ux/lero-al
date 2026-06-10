@@ -61,6 +61,8 @@ interface ComboboxProps {
   searchable?: boolean
   /** Placeholder for the internal search input when searchable=true. */
   searchPlaceholder?: string
+  /** Render the dropdown open on mount (Storybook/QA evidence only — not for app usage). */
+  defaultOpen?: boolean
 }
 
 export function Combobox({
@@ -83,13 +85,14 @@ export function Combobox({
   onInputChange,
   searchable = false,
   searchPlaceholder = '',
+  defaultOpen = false,
 }: ComboboxProps) {
   const uid = useId()
   const inputId = `combobox-${uid}`
   const listboxId = `listbox-${uid}`
   const [internalSearch, setInternalSearch] = useState('')
   const [search, setSearch] = useState('')
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(defaultOpen)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -254,7 +257,7 @@ export function Combobox({
             role="option"
             aria-selected={value === opt.value}
             className={cn(
-              'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2',
+              'w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors flex items-center justify-between gap-2 max-sm:min-h-11',
               value === opt.value && 'bg-primary/10 text-primary'
             )}
             onMouseDown={() => { onChange(opt.value); setSearch(''); setOpen(false) }}
@@ -291,7 +294,10 @@ export function Combobox({
           onChange={e => { setSearch(e.target.value); onChange(''); setOpen(true); onInputChange?.(e.target.value) }}
           onFocus={() => { setOpen(true); updateDropdownPosition() }}
           onBlur={() => setTimeout(() => setOpen(false), 150)}
-          onKeyDown={onKeyDown}
+          onKeyDown={e => {
+            if (e.key === 'Escape' && open) { e.stopPropagation(); setOpen(false) }
+            onKeyDown?.(e)
+          }}
           inputMode={inputMode}
           placeholder={placeholder}
           disabled={disabled}
@@ -307,6 +313,9 @@ export function Combobox({
               if (searchable && containerRef.current?.contains(document.activeElement)) return
               setOpen(false)
             }, 150)
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Escape' && open) { e.stopPropagation(); setOpen(false) }
           }}
           disabled={disabled}
           className={cn(triggerBase, 'cursor-pointer')}

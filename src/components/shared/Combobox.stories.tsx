@@ -44,12 +44,12 @@ function getLocationOptions(locale: string): ComboboxOption[] {
 }
 
 function ComboboxInteractive({
-  options, initialValue = '', variant, placeholder, disabled,
+  options, initialValue = '', variant, placeholder, disabled, defaultOpen,
 }: {
-  options: ComboboxOption[]; initialValue?: string; variant?: 'button' | 'input'; placeholder?: string; disabled?: boolean
+  options: ComboboxOption[]; initialValue?: string; variant?: 'button' | 'input'; placeholder?: string; disabled?: boolean; defaultOpen?: boolean
 }) {
   const [value, setValue] = useState(initialValue)
-  return <Combobox options={options} value={value} onChange={setValue} variant={variant} placeholder={placeholder} disabled={disabled} />
+  return <Combobox options={options} value={value} onChange={setValue} variant={variant} placeholder={placeholder} disabled={disabled} defaultOpen={defaultOpen} />
 }
 
 export const ButtonVariant: Story = {
@@ -105,7 +105,7 @@ export const DropdownOpen: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const options = getLocationOptions(locale)
-    return (<div className="p-4"><ComboboxInteractive options={options} initialValue="" variant="input" placeholder={cb('search_short', locale)} /></div>)
+    return (<div className="p-4"><ComboboxInteractive options={options} initialValue="" variant="input" placeholder={cb('search_short', locale)} defaultOpen /></div>)
   },
 
   globals: {

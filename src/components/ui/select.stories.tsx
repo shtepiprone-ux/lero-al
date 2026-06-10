@@ -190,7 +190,7 @@ export const MobileBottomSheet: Story = {
     const items = getStatusItems(locale)
     return (
       <div className="p-3">
-        <Select items={items}>
+        <Select items={items} defaultOpen>
           <SelectTrigger><SelectValue placeholder={sel('status_ph', locale)} /></SelectTrigger>
           <SelectContent>
             {items.map(i => (<SelectItem key={i.value} value={i.value}>{i.label}</SelectItem>))}

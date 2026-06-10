@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, Loader2, ChevronRight } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PasswordInput } from '@/components/ui/PasswordInput'
 import { Badge } from '@/components/ui/badge'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import {
   createExchangeProvider,
   updateExchangeProvider,
@@ -198,6 +199,90 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
     })
   }
 
+  const columns: AdminTableColumn<DBExchangeProvider>[] = [
+    {
+      key: 'name',
+      header: t('name'),
+      cell: p => (
+        <button
+          type="button"
+          onClick={e => { e.stopPropagation(); openEdit(p) }}
+          className="font-medium text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          {p.name}
+        </button>
+      ),
+    },
+    {
+      key: 'endpoint',
+      header: t('endpoint'),
+      visibility: 'md',
+      cell: p => <span className="text-xs text-muted-foreground max-w-50 truncate font-mono block">{p.endpoint_url}</span>,
+    },
+    {
+      key: 'priority',
+      header: t('priority'),
+      cell: p => <span className="text-sm">{p.priority}</span>,
+    },
+    {
+      key: 'mode',
+      header: t('mode'),
+      cell: p => <Badge variant="outline" className="text-2xs">{t(`mode_${p.mode}`)}</Badge>,
+    },
+    {
+      key: 'is_enabled',
+      header: t('is_enabled'),
+      cell: p => (
+        <Badge variant={p.is_enabled ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
+          {p.is_enabled ? t('is_enabled') : t('disable')}
+        </Badge>
+      ),
+    },
+    {
+      key: 'notes',
+      header: t('notes'),
+      visibility: 'lg',
+      cell: p => <span className="text-xs text-muted-foreground max-w-40 truncate block">{p.notes ?? '—'}</span>,
+    },
+    {
+      key: 'actions',
+      header: '',
+      align: 'right',
+      cell: p => (
+        <div className="flex items-center gap-1 justify-end">
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            title={p.is_enabled ? t('disable') : t('enable')}
+            onClick={e => { e.stopPropagation(); handleToggle(p) }}
+          >
+            {p.is_enabled
+              ? <ToggleRight className="h-3.5 w-3.5 text-status-success" />
+              : <ToggleLeft className="h-3.5 w-3.5 text-muted-foreground" />
+            }
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            title={t('edit')}
+            onClick={e => { e.stopPropagation(); openEdit(p) }}
+          >
+            <Pencil className="h-3.5 w-3.5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="text-destructive hover:text-destructive hover:bg-destructive/10"
+            title={t('delete')}
+            onClick={e => { e.stopPropagation(); setDeleteTarget(p) }}
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      ),
+    },
+  ]
+
   return (
     <>
     {deleteTarget && (
@@ -225,82 +310,66 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
         </Button>
       </div>
 
-      <div className="border rounded-xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b bg-muted/40">
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('name')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">{t('endpoint')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('priority')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('mode')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('is_enabled')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden lg:table-cell">{t('notes')}</th>
-              <th className="px-4 py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {providers.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</td>
-              </tr>
-            ) : (
-              providers.map(p => (
-                <tr key={p.id} className="border-b last:border-b-0 hover:bg-muted/30 transition-colors">
-                  <td className="px-4 py-3 font-medium">{p.name}</td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground hidden md:table-cell max-w-50 truncate font-mono">{p.endpoint_url}</td>
-                  <td className="px-4 py-3 text-sm text-center">{p.priority}</td>
-                  <td className="px-4 py-3">
-                    <Badge variant="outline" className="text-2xs">{t(`mode_${p.mode}`)}</Badge>
-                  </td>
-                  <td className="px-4 py-3">
-                    <Badge
-                      variant={p.is_enabled ? 'default' : 'secondary'}
-                      className="text-2xs px-1.5 py-0"
-                    >
-                      {p.is_enabled ? t('is_enabled') : t('disable')}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground hidden lg:table-cell max-w-40 truncate">{p.notes ?? '—'}</td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-1 justify-end">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 rounded-lg"
-                        title={p.is_enabled ? t('disable') : t('enable')}
-                        onClick={() => handleToggle(p)}
-                      >
-                        {p.is_enabled
-                          ? <ToggleRight className="h-3.5 w-3.5 text-status-success" />
-                          : <ToggleLeft className="h-3.5 w-3.5 text-muted-foreground" />
-                        }
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 rounded-lg"
-                        title={t('edit')}
-                        onClick={() => openEdit(p)}
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 rounded-lg text-destructive hover:text-destructive hover:bg-destructive/10"
-                        title={t('delete')}
-                        onClick={() => setDeleteTarget(p)}
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      <AdminTable
+        rows={providers}
+        columns={columns}
+        rowKey={p => String(p.id)}
+        onRowClick={openEdit}
+        emptyState={t('empty')}
+        ariaLabel={t('name')}
+        cardRow={p => ({
+          title: (
+            <button
+              type="button"
+              onClick={e => { e.stopPropagation(); openEdit(p) }}
+              className="font-medium text-left hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+            >
+              {p.name}
+            </button>
+          ),
+          subtitle: (
+            <div className="flex items-center gap-2 flex-wrap mt-1">
+              <Badge variant="outline" className="text-2xs">{t(`mode_${p.mode}`)}</Badge>
+              <Badge variant={p.is_enabled ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
+                {p.is_enabled ? t('is_enabled') : t('disable')}
+              </Badge>
+            </div>
+          ),
+          meta: (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap mt-0.5">
+              <span>{t('priority')}: {p.priority}</span>
+              {p.endpoint_url && <span className="font-mono truncate max-w-50">{p.endpoint_url}</span>}
+              {p.notes && <span className="truncate max-w-40">{p.notes}</span>}
+            </div>
+          ),
+          trailing: (
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                title={p.is_enabled ? t('disable') : t('enable')}
+                onClick={e => { e.stopPropagation(); handleToggle(p) }}
+              >
+                {p.is_enabled
+                  ? <ToggleRight className="h-3.5 w-3.5 text-status-success" />
+                  : <ToggleLeft className="h-3.5 w-3.5 text-muted-foreground" />
+                }
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="text-muted-foreground hover:text-destructive hover:bg-destructive/5 shrink-0"
+                title={t('delete')}
+                onClick={e => { e.stopPropagation(); setDeleteTarget(p) }}
+                aria-label={tc('delete')}
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+              <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" aria-hidden="true" />
+            </div>
+          ),
+        })}
+      />
 
       {dialogOpen && (
         <ProviderFormDialog

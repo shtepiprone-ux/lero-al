@@ -4,7 +4,7 @@ import { useState, useTransition, useEffect, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
 import {
-  Plus, Loader2, ChevronRight, Clock, User, ShieldAlert,
+  Plus, Loader2, Clock, User, ShieldAlert,
   CheckCircle2, XCircle, AlertCircle, Circle, Search, X,
 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -19,6 +19,7 @@ import { formatDate } from '@/lib/formatters'
 import { createSupportTicket, updateTicketStatus, searchUsersForPicker } from '@/modules/admin/actions'
 import type { TicketStatus, ComplaintType } from '@/types/database'
 import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -698,6 +699,67 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
     }])
   }
 
+  const ticketColumns: AdminTableColumn<SupportTicketRow>[] = [
+    {
+      key: 'subject',
+      header: t('col_subject'),
+      cell: tk => (
+        <div>
+          <p className="font-medium truncate max-w-50">{tk.subject}</p>
+          {tk.reason && (
+            <p className="text-xs text-muted-foreground truncate max-w-50 mt-0.5">{tk.reason}</p>
+          )}
+          {tk.ticket_type === 'user_complaint' && tk.complaint_type && (
+            <Badge variant="neutral" className="text-xs h-5 mt-1 w-fit">
+              {t(`complaint_type_${tk.complaint_type}` as 'complaint_type_other')}
+            </Badge>
+          )}
+        </div>
+      ),
+    },
+    {
+      key: 'type',
+      header: t('col_type'),
+      visibility: 'sm',
+      cell: tk => (
+        <Badge
+          variant={tk.ticket_type === 'user_complaint' ? 'destructive' : 'info'}
+          className="text-xs h-5"
+        >
+          {tk.ticket_type === 'user_complaint' ? t('type_user_complaint') : t('type_support')}
+        </Badge>
+      ),
+    },
+    {
+      key: 'reporter',
+      header: t('col_reporter'),
+      visibility: 'md',
+      cell: tk => <UserLink user={tk.reporter} label="—" />,
+    },
+    {
+      key: 'reported',
+      header: t('col_reported'),
+      visibility: 'md',
+      cell: tk => <UserLink user={tk.reported} label="—" />,
+    },
+    {
+      key: 'status',
+      header: t('col_status'),
+      cell: tk => (
+        <Badge variant={STATUS_VARIANT[tk.status] ?? 'neutral'} className="text-xs h-5 gap-1">
+          {STATUS_ICON[tk.status]}
+          {t(`support_status_${tk.status}` as `support_status_open`)}
+        </Badge>
+      ),
+    },
+    {
+      key: 'updated',
+      header: t('col_updated'),
+      visibility: 'lg',
+      cell: tk => <span className="text-xs text-muted-foreground">{formatDate(tk.updated_at, locale)}</span>,
+    },
+  ]
+
   return (
     <div className="space-y-5">
       {/* Stats row */}
@@ -758,77 +820,65 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
         </Button>
       </div>
 
-      {/* Table */}
-      <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/40">
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_subject')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">{t('col_type')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_reporter')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_reported')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_status')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_updated')}</th>
-                <th className="px-4 py-3 w-8" />
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {filtered.length === 0 ? (
-                <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center text-muted-foreground">
-                    {tp('support_empty')}
-                  </td>
-                </tr>
-              ) : filtered.map(tk => (
-                <tr
-                  key={tk.id}
-                  className="hover:bg-muted/20 cursor-pointer transition-colors"
-                  onClick={() => setSelected(tk)}
-                >
-                  <td className="px-4 py-3">
-                    <p className="font-medium truncate max-w-50">{tk.subject}</p>
-                    {tk.reason && (
-                      <p className="text-xs text-muted-foreground truncate max-w-50 mt-0.5">{tk.reason}</p>
-                    )}
-                    {tk.ticket_type === 'user_complaint' && tk.complaint_type && (
-                      <Badge variant="neutral" className="text-xs h-5 mt-1 w-fit">
-                        {t(`complaint_type_${tk.complaint_type}` as 'complaint_type_other')}
-                      </Badge>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 hidden sm:table-cell">
-                    <Badge
-                      variant={tk.ticket_type === 'user_complaint' ? 'destructive' : 'info'}
-                      className="text-xs h-5"
-                    >
-                      {tk.ticket_type === 'user_complaint' ? t('type_user_complaint') : t('type_support')}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-3 hidden md:table-cell">
-                    <UserLink user={tk.reporter} label="—" />
-                  </td>
-                  <td className="px-4 py-3 hidden md:table-cell">
-                    <UserLink user={tk.reported} label="—" />
-                  </td>
-                  <td className="px-4 py-3">
-                    <Badge variant={STATUS_VARIANT[tk.status] ?? 'neutral'} className="text-xs h-5 gap-1">
-                      {STATUS_ICON[tk.status]}
-                      {t(`support_status_${tk.status}` as `support_status_open`)}
-                    </Badge>
-                  </td>
-                  <td className="px-4 py-3 hidden lg:table-cell text-xs text-muted-foreground">
-                    {formatDate(tk.updated_at, locale)}
-                  </td>
-                  <td className="px-4 py-3">
-                    <ChevronRight className="h-4 w-4 text-muted-foreground/40" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      {/* Table (lg+) / Card (<lg) — tableAtLg pattern */}
+      <AdminTable
+        rows={filtered}
+        columns={ticketColumns}
+        rowKey={tk => tk.id}
+        onRowClick={tk => setSelected(tk)}
+        emptyState={tp('support_empty')}
+        ariaLabel={t('col_subject')}
+        cardRow={tk => ({
+          title: (
+            <div className="min-w-0">
+              <p className="font-medium truncate">{tk.subject}</p>
+              {tk.reason && (
+                <p className="text-xs text-muted-foreground truncate mt-0.5">{tk.reason}</p>
+              )}
+              {tk.ticket_type === 'user_complaint' && tk.complaint_type && (
+                <Badge variant="neutral" className="text-xs h-5 mt-1 w-fit">
+                  {t(`complaint_type_${tk.complaint_type}` as 'complaint_type_other')}
+                </Badge>
+              )}
+            </div>
+          ),
+          subtitle: (
+            <div className="flex items-center gap-2 flex-wrap mt-1">
+              <Badge variant={STATUS_VARIANT[tk.status] ?? 'neutral'} className="text-xs h-5 gap-1">
+                {STATUS_ICON[tk.status]}
+                {t(`support_status_${tk.status}` as `support_status_open`)}
+              </Badge>
+              <Badge
+                variant={tk.ticket_type === 'user_complaint' ? 'destructive' : 'info'}
+                className="text-xs h-5"
+              >
+                {tk.ticket_type === 'user_complaint' ? t('type_user_complaint') : t('type_support')}
+              </Badge>
+            </div>
+          ),
+          meta: (
+            <div className="flex flex-col gap-1 mt-1">
+              {(tk.reporter || tk.reported) && (
+                <div className="flex items-center gap-3 flex-wrap">
+                  {tk.reporter && (
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <span>{t('col_reporter')}:</span>
+                      <UserLink user={tk.reporter} label="—" />
+                    </div>
+                  )}
+                  {tk.ticket_type === 'user_complaint' && tk.reported && (
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <span>{t('col_reported')}:</span>
+                      <UserLink user={tk.reported} label="—" />
+                    </div>
+                  )}
+                </div>
+              )}
+              <span className="text-xs text-muted-foreground">{formatDate(tk.updated_at, locale)}</span>
+            </div>
+          ),
+        })}
+      />
 
       {/* Dialogs */}
       {showNew && (

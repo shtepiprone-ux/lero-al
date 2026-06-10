@@ -13,6 +13,7 @@ import { formatDate } from '@/lib/formatters'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
 import { toast } from 'sonner'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 
 export interface VerifiedAgent {
   id: string
@@ -87,6 +88,148 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
     startTransition(async () => { await fn(); setLoadingId(null) })
   }
 
+  function verifyToggle(u: AdminUser, isLoading: boolean) {
+    if (isLoading) return <Loader2 className="h-4 w-4 animate-spin text-muted-foreground shrink-0" />
+    return (
+      <button
+        type="button"
+        onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, !u.is_verified); toast.success(t(u.is_verified ? 'revoke_success' : 'verify_success')) })}
+        title={u.is_verified ? t('revoke_verify') : t('verify')}
+        className={`h-6 w-6 rounded flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
+          u.is_verified
+            ? 'text-status-success hover:text-destructive'
+            : 'text-muted-foreground/40 hover:text-status-success'
+        }`}
+      >
+        {u.is_verified
+          ? <ShieldCheck className="h-4 w-4" />
+          : <ShieldOff className="h-3.5 w-3.5" />}
+      </button>
+    )
+  }
+
+  const userColumns: AdminTableColumn<AdminUser>[] = [
+    {
+      key: 'user',
+      header: t('col_user'),
+      cell: u => {
+        const isLoading = loadingId === u.id
+        const initials = u.name
+          ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+          : '?'
+        return (
+          <div className={`flex items-center gap-3 ${isLoading ? 'opacity-50' : ''}`}>
+            <Avatar className="h-8 w-8 shrink-0">
+              <AvatarImage src={u.avatar_url ?? undefined} />
+              <AvatarFallback className="text-xs bg-primary/10 text-primary">{initials}</AvatarFallback>
+            </Avatar>
+            <div className="min-w-0">
+              <Link
+                href={`/admin/users/${u.id}`}
+                className="font-medium truncate max-w-40 hover:text-primary transition-colors block"
+              >
+                {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
+              </Link>
+              {u.company_name && (
+                <p className="text-xs text-muted-foreground truncate max-w-40">{u.company_name}</p>
+              )}
+              {u.location_request && (
+                <p className="text-xs text-status-warning flex items-center gap-1 mt-0.5">
+                  <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
+                </p>
+              )}
+              {u.public_id != null && (
+                <p className="text-xs text-muted-foreground/50 font-mono leading-none mt-0.5">#{u.public_id}</p>
+              )}
+            </div>
+            {verifyToggle(u, isLoading)}
+          </div>
+        )
+      },
+    },
+    {
+      key: 'role',
+      header: t('col_role'),
+      cell: u => (
+        <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5">
+          {t(`role_${u.role}` as `role_admin`)}
+        </Badge>
+      ),
+    },
+    {
+      key: 'status',
+      header: t('col_status'),
+      visibility: 'sm',
+      cell: u => (
+        <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
+          {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
+        </Badge>
+      ),
+    },
+    {
+      key: 'phone',
+      header: t('col_phone'),
+      visibility: 'md',
+      cell: u => <span className="text-muted-foreground text-xs">{u.phone ?? '—'}</span>,
+    },
+    {
+      key: 'date',
+      header: t('col_date'),
+      visibility: 'lg',
+      cell: u => (
+        <div className="flex flex-col gap-0.5 text-muted-foreground text-xs">
+          <span>{formatDate(u.created_at, locale)}</span>
+          {u.last_seen_at && (
+            <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
+          )}
+        </div>
+      ),
+    },
+  ]
+
+  const verifiedColumns: AdminTableColumn<VerifiedAgent>[] = [
+    {
+      key: 'agent',
+      header: t('col_agent'),
+      cell: u => {
+        const isLoading = loadingId === u.id
+        return (
+          <div className={`flex items-center gap-2 ${isLoading ? 'opacity-50' : ''}`}>
+            <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
+              {u.name ?? '—'}
+            </Link>
+            {/* Revoke verification — inline action (no separate Actions column) */}
+            {isLoading
+              ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground shrink-0" />
+              : (
+                <button
+                  type="button"
+                  onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false); toast.success(t('revoke_success')) })}
+                  title={t('revoke_verify')}
+                  className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <ShieldOff className="h-3.5 w-3.5" />
+                </button>
+              )
+            }
+          </div>
+        )
+      },
+    },
+    {
+      key: 'company',
+      header: t('col_company'),
+      visibility: 'md',
+      cell: u => <span className="text-muted-foreground">{u.company_name ?? '—'}</span>,
+    },
+    {
+      key: 'date',
+      header: t('col_date'),
+      visibility: 'lg',
+      cell: u => <span className="text-muted-foreground text-xs">{formatDate(u.created_at, locale)}</span>,
+    },
+  ]
+
   return (
     <div className="admin-users-table flex flex-col gap-4">
       {/* Tabs */}
@@ -106,50 +249,41 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
       </div>
 
       {activeTab === 'verified' ? (
-        <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/40">
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground">{t('col_agent')}</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_company')}</th>
-                <th className="text-left px-5 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_date')}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {verifiedAgents.length === 0 ? (
-                <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground">{t('empty_verified')}</td></tr>
-              ) : verifiedAgents.map(u => (
-                <tr key={u.id} className={`hover:bg-muted/20 ${loadingId === u.id ? 'opacity-50' : ''}`}>
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-2">
-                      <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
-                        {u.name ?? '—'}
-                      </Link>
-                      {/* Revoke verification — inline action (no separate Actions column) */}
-                      {loadingId === u.id
-                        ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground shrink-0" />
-                        : (
-                          <button
-                            type="button"
-                            onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false); toast.success(t('revoke_success')) })}
-                            title={t('revoke_verify')}
-                            className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                          >
-                            <ShieldOff className="h-3.5 w-3.5" />
-                          </button>
-                        )
-                      }
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5 hidden md:table-cell text-muted-foreground">{u.company_name ?? '—'}</td>
-                  <td className="px-5 py-3.5 hidden lg:table-cell text-muted-foreground text-xs">
-                    {formatDate(u.created_at, locale)}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <AdminTable
+          rows={verifiedAgents}
+          columns={verifiedColumns}
+          rowKey={u => u.id}
+          emptyState={t('empty_verified')}
+          ariaLabel={t('col_agent')}
+          rowClassName={u => loadingId === u.id ? 'opacity-50' : ''}
+          cardRow={u => ({
+            title: (
+              <div className={`flex items-center gap-2 ${loadingId === u.id ? 'opacity-50' : ''}`}>
+                <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
+                  {u.name ?? '—'}
+                </Link>
+              </div>
+            ),
+            subtitle: u.company_name ? (
+              <span className="text-sm text-muted-foreground">{u.company_name}</span>
+            ) : undefined,
+            meta: (
+              <span className="text-xs text-muted-foreground">{formatDate(u.created_at, locale)}</span>
+            ),
+            trailing: loadingId === u.id
+              ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground shrink-0" />
+              : (
+                <button
+                  type="button"
+                  onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false); toast.success(t('revoke_success')) })}
+                  title={t('revoke_verify')}
+                  className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                >
+                  <ShieldOff className="h-3.5 w-3.5" />
+                </button>
+              ),
+          })}
+        />
       ) : (
       <>
       {/* Search */}
@@ -200,103 +334,67 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
         ))}
       </div>
 
-      <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b bg-muted/40">
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_user')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground">{t('col_role')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden sm:table-cell">{t('col_status')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden md:table-cell">{t('col_phone')}</th>
-                <th className="text-left px-4 py-3 font-medium text-muted-foreground hidden lg:table-cell">{t('col_date')}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {items.length === 0 ? (
-                <tr><td colSpan={5} className="px-4 py-12 text-center text-muted-foreground">{t('empty')}</td></tr>
-              ) : items.map(u => {
-                const isLoading = loadingId === u.id
-                const initials = u.name
-                  ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
-                  : '?'
-
-                return (
-                  <tr key={u.id} className={`transition-colors ${isLoading ? 'opacity-50' : 'hover:bg-muted/20'}`}>
-                    {/* Name — primary click affordance → profile page (K.1 canonical) */}
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-8 w-8 shrink-0">
-                          <AvatarImage src={u.avatar_url ?? undefined} />
-                          <AvatarFallback className="text-xs bg-primary/10 text-primary">{initials}</AvatarFallback>
-                        </Avatar>
-                        <div className="min-w-0">
-                          <Link
-                            href={`/admin/users/${u.id}`}
-                            className="font-medium truncate max-w-40 hover:text-primary transition-colors block"
-                          >
-                            {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
-                          </Link>
-                          {u.company_name && (
-                            <p className="text-xs text-muted-foreground truncate max-w-40">{u.company_name}</p>
-                          )}
-                          {u.location_request && (
-                            <p className="text-xs text-status-warning flex items-center gap-1 mt-0.5">
-                              <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
-                            </p>
-                          )}
-                          {u.public_id != null && (
-                            <p className="text-xs text-muted-foreground/50 font-mono leading-none mt-0.5">#{u.public_id}</p>
-                          )}
-                        </div>
-                        {/* Verify toggle — inline, icon-only (no separate Actions column) */}
-                        {isLoading
-                          ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground shrink-0" />
-                          : (
-                            <button
-                              type="button"
-                              onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, !u.is_verified); toast.success(t(u.is_verified ? 'revoke_success' : 'verify_success')) })}
-                              title={u.is_verified ? t('revoke_verify') : t('verify')}
-                              className={`h-6 w-6 rounded flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
-                                u.is_verified
-                                  ? 'text-status-success hover:text-destructive'
-                                  : 'text-muted-foreground/40 hover:text-status-success'
-                              }`}
-                            >
-                              {u.is_verified
-                                ? <ShieldCheck className="h-4 w-4" />
-                                : <ShieldOff className="h-3.5 w-3.5" />}
-                            </button>
-                          )
-                        }
-                      </div>
-                    </td>
-                    <td className="px-4 py-3">
-                      <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5">
-                        {t(`role_${u.role}` as `role_admin`)}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 hidden sm:table-cell">
-                      <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
-                        {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
-                      </Badge>
-                    </td>
-                    <td className="px-4 py-3 hidden md:table-cell text-muted-foreground text-xs">{u.phone ?? '—'}</td>
-                    <td className="px-4 py-3 hidden lg:table-cell text-muted-foreground text-xs">
-                      <div className="flex flex-col gap-0.5">
-                        <span>{formatDate(u.created_at, locale)}</span>
-                        {u.last_seen_at && (
-                          <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <AdminTable
+        rows={items}
+        columns={userColumns}
+        rowKey={u => u.id}
+        emptyState={t('empty')}
+        ariaLabel={t('col_user')}
+        rowClassName={u => loadingId === u.id ? 'opacity-50' : ''}
+        cardRow={u => {
+          const isLoading = loadingId === u.id
+          const initials = u.name
+            ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+            : '?'
+          return {
+            title: (
+              <div className="flex items-center gap-3">
+                <Avatar className="h-8 w-8 shrink-0">
+                  <AvatarImage src={u.avatar_url ?? undefined} />
+                  <AvatarFallback className="text-xs bg-primary/10 text-primary">{initials}</AvatarFallback>
+                </Avatar>
+                <div className="min-w-0">
+                  <Link
+                    href={`/admin/users/${u.id}`}
+                    className="font-medium truncate hover:text-primary transition-colors block"
+                  >
+                    {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
+                  </Link>
+                  {u.company_name && (
+                    <p className="text-xs text-muted-foreground truncate">{u.company_name}</p>
+                  )}
+                </div>
+              </div>
+            ),
+            subtitle: (
+              <div className="flex items-center gap-2 flex-wrap mt-1">
+                <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5">
+                  {t(`role_${u.role}` as `role_admin`)}
+                </Badge>
+                <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
+                  {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
+                </Badge>
+                {u.location_request && (
+                  <Badge variant="warning" className="text-xs h-5 gap-1">
+                    <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
+                  </Badge>
+                )}
+              </div>
+            ),
+            meta: (
+              <div className="flex flex-col gap-0.5 mt-1 text-xs text-muted-foreground">
+                {u.public_id != null && <span className="font-mono opacity-70">#{u.public_id}</span>}
+                {u.phone && <span>{u.phone}</span>}
+                <span>{formatDate(u.created_at, locale)}</span>
+                {u.last_seen_at && (
+                  <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
+                )}
+              </div>
+            ),
+            trailing: verifyToggle(u, isLoading),
+          }
+        }}
+      />
 
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2">

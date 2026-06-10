@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Pencil, Trash2, Star, ToggleLeft, ToggleRight, Loader2, Search } from 'lucide-react'
+import { Plus, Pencil, Trash2, Star, ToggleLeft, ToggleRight, Loader2, Search, ChevronRight } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import {
   createCurrency,
   updateCurrency,
@@ -313,6 +314,58 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
     })
   }
 
+  const columns: AdminTableColumn<DBCurrency>[] = [
+    {
+      key: 'code',
+      header: t('code'),
+      cell: c => (
+        <button
+          type="button"
+          onClick={e => { e.stopPropagation(); setDetailTarget(c) }}
+          className="font-mono text-sm font-semibold hover:text-primary transition-colors"
+        >
+          {c.code}
+        </button>
+      ),
+    },
+    {
+      key: 'symbol',
+      header: t('symbol'),
+      cell: c => <span className="text-muted-foreground">{c.symbol}</span>,
+    },
+    {
+      key: 'name',
+      header: t('name_en'),
+      cell: c => <span>{c.name_en || c.name_sq}</span>,
+    },
+    {
+      key: 'is_active',
+      header: t('is_active'),
+      cell: c => (
+        <div className="flex items-center gap-2">
+          {c.is_default && (
+            <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-premium text-primary-foreground">
+              {t('default_badge')}
+            </Badge>
+          )}
+          <Badge variant={c.is_active ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
+            {c.is_active ? t('is_active') : t('deactivate')}
+          </Badge>
+        </div>
+      ),
+    },
+    {
+      key: 'last_updated',
+      header: t('last_updated'),
+      visibility: 'lg',
+      cell: c => (
+        <span className="text-xs text-muted-foreground">
+          <RelativeTime date={c.updated_at} />
+        </span>
+      ),
+    },
+  ]
+
   return (
     <>
     {/* Delete confirmation dialog */}
@@ -334,7 +387,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
       </Dialog>
     )}
 
-    {/* §11 detail dialog — opens on code cell click */}
+    {/* §11 detail dialog — opens on row / code cell click */}
     {detailTarget && (
       <CurrencyDetailDialog
         currency={detailTarget}
@@ -347,15 +400,15 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
     )}
 
     <div className="flex flex-col gap-4">
-      {/* Toolbar */}
-      <div className="flex items-center gap-3">
-        <div className="relative flex-1 max-w-xs">
+      {/* Toolbar — flex-col at <sm (both controls full-width), flex-row at sm+ */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
             value={query}
             onChange={e => setQuery(e.target.value)}
             placeholder={t('search_placeholder')}
-            className="pl-9 h-9 rounded-xl text-sm"
+            className="pl-9 h-9 rounded-xl text-sm w-full"
           />
         </div>
         <Button onClick={openNew} size="sm" className="rounded-xl gap-2" disabled={isPending}>
@@ -364,61 +417,35 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
         </Button>
       </div>
 
-      {/* Table — §11: code is the only click target; no Actions column */}
-      <div className="border rounded-xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b bg-muted/40">
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('code')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('symbol')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('name_en')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('is_active')}</th>
-              <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">{t('last_updated')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</td>
-              </tr>
-            ) : (
-              filtered.map(c => (
-                <tr key={c.id} className="border-b last:border-b-0 hover:bg-muted/30 transition-colors">
-                  <td className="px-4 py-3">
-                    <button
-                      type="button"
-                      onClick={() => setDetailTarget(c)}
-                      className="font-mono text-sm font-semibold hover:text-primary transition-colors"
-                    >
-                      {c.code}
-                    </button>
-                  </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground">{c.symbol}</td>
-                  <td className="px-4 py-3 text-sm">{c.name_en || c.name_sq}</td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      {c.is_default && (
-                        <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-premium text-primary-foreground">
-                          {t('default_badge')}
-                        </Badge>
-                      )}
-                      <Badge
-                        variant={c.is_active ? 'default' : 'secondary'}
-                        className="text-2xs px-1.5 py-0"
-                      >
-                        {c.is_active ? t('is_active') : t('deactivate')}
-                      </Badge>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-xs text-muted-foreground">
-                    <RelativeTime date={c.updated_at} />
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+      {/* Table (lg+) / Card (<lg) — tableAtLg pattern */}
+      <AdminTable
+        rows={filtered}
+        columns={columns}
+        rowKey={c => String(c.id)}
+        onRowClick={c => setDetailTarget(c)}
+        emptyState={t('empty')}
+        cardRow={c => ({
+          title: <span className="font-mono text-sm font-semibold">{c.code}</span>,
+          subtitle: (
+            <span className="text-sm text-muted-foreground">
+              {c.symbol} · {c.name_en || c.name_sq}
+            </span>
+          ),
+          meta: (
+            <div className="flex items-center gap-2 mt-1 flex-wrap">
+              {c.is_default && (
+                <Badge variant="default" className="text-2xs px-1.5 py-0 bg-badge-premium text-primary-foreground">
+                  {t('default_badge')}
+                </Badge>
+              )}
+              <Badge variant={c.is_active ? 'default' : 'secondary'} className="text-2xs px-1.5 py-0">
+                {c.is_active ? t('is_active') : t('deactivate')}
+              </Badge>
+            </div>
+          ),
+          trailing: <ChevronRight className="h-4 w-4 text-muted-foreground/40" aria-hidden="true" />,
+        })}
+      />
 
       {dialogOpen && (
         <CurrencyFormDialog

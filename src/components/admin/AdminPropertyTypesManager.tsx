@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label'
 import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
 import { Badge } from '@/components/ui/badge'
 import { RelativeTime } from '@/components/shared/RelativeTime'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import {
   createPropertyType,
   updatePropertyType,
@@ -267,6 +268,79 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
     })
   }
 
+  const columns: AdminTableColumn<DBPropertyType>[] = [
+    {
+      key: 'id',
+      header: 'ID',
+      visibility: 'xl',
+      cell: pt => <span className="text-muted-foreground text-xs">{pt.id}</span>,
+    },
+    {
+      key: 'slug',
+      header: t('slug_label'),
+      visibility: 'sm',
+      cell: pt => <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{pt.slug}</code>,
+    },
+    {
+      key: 'name_sq',
+      header: 'SQ',
+      cell: pt => (
+        <button
+          type="button"
+          onClick={e => { e.stopPropagation(); setEditTarget(pt) }}
+          className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          {pt.name_sq}
+        </button>
+      ),
+    },
+    {
+      key: 'names',
+      header: 'EN / UK / IT',
+      visibility: 'md',
+      cell: pt => (
+        <div className="flex flex-col gap-0.5 text-xs text-muted-foreground">
+          {pt.name_en && <span>{pt.name_en}</span>}
+          {pt.name_uk && <span>{pt.name_uk}</span>}
+          {pt.name_it && <span>{pt.name_it}</span>}
+        </div>
+      ),
+    },
+    {
+      key: 'sort_order',
+      header: t('sort_order'),
+      visibility: 'lg',
+      cell: pt => <span className="text-muted-foreground text-xs">{pt.sort_order}</span>,
+    },
+    {
+      key: 'is_active',
+      header: t('is_active'),
+      cell: pt => (
+        <button
+          type="button"
+          onClick={e => { e.stopPropagation(); handleToggleActive(pt) }}
+          disabled={isPending}
+          title={pt.is_active ? t('deactivate') : t('activate')}
+          className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs cursor-pointer hover:opacity-80 transition-opacity">
+            {pt.is_active ? t('is_active') : t('deactivate')}
+          </Badge>
+        </button>
+      ),
+    },
+    {
+      key: 'created',
+      header: t('col_created'),
+      visibility: 'xl',
+      cell: pt => (
+        <span className="text-xs text-muted-foreground">
+          <RelativeTime date={pt.created_at} />
+        </span>
+      ),
+    },
+  ]
+
   return (
     <>
       {/* Form dialog */}
@@ -288,12 +362,12 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
         />
       )}
 
-      {/* Toolbar */}
-      <div className="flex items-center gap-3 mb-4">
+      {/* Toolbar — flex-col at <sm (both controls full-width), flex-row at sm+ */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-4">
         <AdminSearchInput
           value={searchQuery}
           placeholder={t('search_placeholder')}
-          className="flex-1 max-w-xs"
+          className="flex-1"
         />
         <Button size="sm" className="gap-1.5" onClick={() => setEditTarget('new')}>
           <Plus className="h-4 w-4" />
@@ -301,73 +375,38 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
         </Button>
       </div>
 
-      {/* Table */}
-      <div className="bg-card rounded-2xl border shadow-sm overflow-hidden">
-        {filtered.length === 0 ? (
-          <p className="px-6 py-12 text-center text-muted-foreground">{t('empty')}</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b bg-muted/30 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  <th className="px-5 py-3 text-left">ID</th>
-                  <th className="px-5 py-3 text-left">{t('slug_label')}</th>
-                  <th className="px-5 py-3 text-left">SQ</th>
-                  <th className="px-5 py-3 text-left">EN / UK / IT</th>
-                  <th className="px-5 py-3 text-left">{t('sort_order')}</th>
-                  <th className="px-5 py-3 text-left">{t('is_active')}</th>
-                  <th className="px-5 py-3 text-left">{t('col_created')}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {filtered.map(pt => (
-                  <tr key={pt.id} className="hover:bg-muted/20 transition-colors">
-                    <td className="px-5 py-3 text-muted-foreground text-xs">{pt.id}</td>
-                    <td className="px-5 py-3">
-                      <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{pt.slug}</code>
-                    </td>
-                    {/* SQ name — primary click affordance → opens edit (K.1 canonical) */}
-                    <td className="px-5 py-3">
-                      <button
-                        type="button"
-                        onClick={() => setEditTarget(pt)}
-                        className="font-medium truncate max-w-35 hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                      >
-                        {pt.name_sq}
-                      </button>
-                    </td>
-                    <td className="px-5 py-3 text-xs text-muted-foreground">
-                      <div className="flex flex-col gap-0.5">
-                        {pt.name_en && <span>{pt.name_en}</span>}
-                        {pt.name_uk && <span>{pt.name_uk}</span>}
-                        {pt.name_it && <span>{pt.name_it}</span>}
-                      </div>
-                    </td>
-                    <td className="px-5 py-3 text-muted-foreground text-xs">{pt.sort_order}</td>
-                    {/* is_active — inline toggle (clickable badge, no separate Actions column) */}
-                    <td className="px-5 py-3">
-                      <button
-                        type="button"
-                        onClick={() => handleToggleActive(pt)}
-                        disabled={isPending}
-                        title={pt.is_active ? t('deactivate') : t('activate')}
-                        className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                      >
-                        <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs cursor-pointer hover:opacity-80 transition-opacity">
-                          {pt.is_active ? t('is_active') : t('deactivate')}
-                        </Badge>
-                      </button>
-                    </td>
-                    <td className="px-5 py-3 text-xs text-muted-foreground">
-                      <RelativeTime date={pt.created_at} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+      {/* Table (lg+) / Card (<lg) — tableAtLg pattern */}
+      <AdminTable
+        rows={filtered}
+        columns={columns}
+        rowKey={pt => String(pt.id)}
+        onRowClick={pt => setEditTarget(pt)}
+        emptyState={t('empty')}
+        cardRow={pt => ({
+          title: <span className="font-medium">{pt.name_sq}</span>,
+          subtitle: <code className="text-xs bg-muted px-1.5 py-0.5 rounded">{pt.slug}</code>,
+          meta: (
+            <div className="flex items-center gap-2 mt-1 flex-wrap">
+              <button
+                type="button"
+                onClick={e => { e.stopPropagation(); handleToggleActive(pt) }}
+                disabled={isPending}
+                title={pt.is_active ? t('deactivate') : t('activate')}
+                className="focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+              >
+                <Badge variant={pt.is_active ? 'success' : 'neutral'} className="text-xs cursor-pointer hover:opacity-80 transition-opacity">
+                  {pt.is_active ? t('is_active') : t('deactivate')}
+                </Badge>
+              </button>
+              {(pt.name_en || pt.name_uk || pt.name_it) && (
+                <span className="text-xs text-muted-foreground">
+                  {[pt.name_en, pt.name_uk, pt.name_it].filter(Boolean).join(' · ')}
+                </span>
+              )}
+            </div>
+          ),
+        })}
+      />
     </>
   )
 }

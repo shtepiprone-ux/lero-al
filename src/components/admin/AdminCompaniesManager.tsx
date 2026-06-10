@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
-import { Plus, Trash2, Loader2, Building2, ImagePlus, Search } from 'lucide-react'
+import { Plus, Trash2, Loader2, Building2, ImagePlus, Search, ChevronRight } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -15,6 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { createCompanyAction, updateCompanyAction, deleteCompanyAction } from '@/modules/companies/actions'
 import { normalizeSearch } from '@/lib/utils'
 import type { Company } from '@/types/database'
@@ -270,88 +271,124 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
     setDeletingId(null)
   }
 
+  const columns: AdminTableColumn<CompanyRow>[] = [
+    {
+      key: 'logo',
+      header: t('table_logo'),
+      className: 'w-14',
+      cell: company => (
+        <div className="h-9 w-9 rounded-lg border bg-muted flex items-center justify-center overflow-hidden">
+          {company.logo_url ? (
+            <AppImage variant="avatar" src={company.logo_url} alt={company.name} />
+          ) : (
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+          )}
+        </div>
+      ),
+    },
+    {
+      key: 'name',
+      header: t('table_name'),
+      cell: company => (
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={e => { e.stopPropagation(); setEditing(company) }}
+            className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+          >
+            {company.name}
+          </button>
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="text-muted-foreground hover:text-destructive hover:bg-destructive/5 shrink-0"
+            onClick={e => { e.stopPropagation(); setDeletingId(company.id) }}
+            aria-label={tc('delete')}
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+          </Button>
+        </div>
+      ),
+    },
+    {
+      key: 'agents',
+      header: t('table_agents'),
+      visibility: 'sm',
+      cell: company => (
+        <span className="text-muted-foreground">
+          {company.agentCount > 0 ? (
+            company.agentCount === 1
+              ? t('agents_count_one')
+              : t('agents_count_other', { count: company.agentCount })
+          ) : '—'}
+        </span>
+      ),
+    },
+    {
+      key: 'created',
+      header: t('table_created'),
+      visibility: 'md',
+      cell: company => (
+        <span className="text-muted-foreground">
+          <RelativeTime date={company.created_at} />
+        </span>
+      ),
+    },
+  ]
+
   return (
     <div className="flex flex-col gap-4">
-      {/* Toolbar */}
-      <div className="flex items-center gap-3">
-        <div className="relative flex-1 max-w-xs">
+      {/* Toolbar — flex-col at <sm (both controls full-width), flex-row at sm+ */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           <Input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder={t('search_placeholder')}
-            className="h-9 pl-9 rounded-xl"
+            className="h-9 pl-9 rounded-xl w-full"
           />
         </div>
-        <Button size="sm" className="gap-1.5 ml-auto" onClick={() => setCreating(true)}>
+        <Button size="sm" className="gap-1.5" onClick={() => setCreating(true)}>
           <Plus className="h-4 w-4 shrink-0" />
           {t('new_btn')}
         </Button>
       </div>
 
-      {/* Table */}
-      {filtered.length === 0 ? (
-        <p className="text-sm text-muted-foreground py-12 text-center">{t('empty')}</p>
-      ) : (
-        <div className="rounded-2xl border bg-card overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="border-b bg-muted/30">
-              <tr>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground w-14">{t('table_logo')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">{t('table_name')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden sm:table-cell">{t('table_agents')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden md:table-cell">{t('table_created')}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y">
-              {filtered.map(company => (
-                <tr key={company.id} className="hover:bg-muted/20 transition-colors">
-                  <td className="px-5 py-3">
-                    <div className="h-9 w-9 rounded-lg border bg-muted flex items-center justify-center overflow-hidden">
-                      {company.logo_url ? (
-                        <AppImage variant="avatar" src={company.logo_url} alt={company.name} />
-                      ) : (
-                        <Building2 className="h-4 w-4 text-muted-foreground" />
-                      )}
-                    </div>
-                  </td>
-                  {/* Name — primary click affordance → edit dialog (K.1 canonical) */}
-                  <td className="px-5 py-3">
-                    <div className="flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setEditing(company)}
-                        className="font-medium hover:text-primary transition-colors text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                      >
-                        {company.name}
-                      </button>
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        className="text-muted-foreground hover:text-destructive hover:bg-destructive/5 shrink-0"
-                        onClick={() => setDeletingId(company.id)}
-                        aria-label={tc('delete')}
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3 text-muted-foreground hidden sm:table-cell">
-                    {company.agentCount > 0 ? (
-                      company.agentCount === 1
-                        ? t('agents_count_one')
-                        : t('agents_count_other', { count: company.agentCount })
-                    ) : '—'}
-                  </td>
-                  <td className="px-5 py-3 text-muted-foreground hidden md:table-cell">
-                    <RelativeTime date={company.created_at} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {/* Table (lg+) / Card (<lg) — tableAtLg pattern */}
+      <AdminTable
+        rows={filtered}
+        columns={columns}
+        rowKey={company => company.id}
+        onRowClick={company => setEditing(company)}
+        emptyState={t('empty')}
+        cardRow={company => ({
+          title: <span className="font-medium">{company.name}</span>,
+          subtitle: (
+            <span className="text-sm text-muted-foreground">
+              {company.agentCount > 0 ? (
+                company.agentCount === 1
+                  ? t('agents_count_one')
+                  : t('agents_count_other', { count: company.agentCount })
+              ) : '—'}
+            </span>
+          ),
+          trailing: (
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="text-muted-foreground hover:text-destructive hover:bg-destructive/5 shrink-0"
+                onClick={e => { e.stopPropagation(); setDeletingId(company.id) }}
+                aria-label={tc('delete')}
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+              <ChevronRight className="h-4 w-4 text-muted-foreground/40 shrink-0" aria-hidden="true" />
+            </div>
+          ),
+        })}
+      />
 
       {/* Create modal */}
       {creating && (

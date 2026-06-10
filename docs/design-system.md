@@ -412,12 +412,12 @@ Full route inventories are maintained in the Task 340 session log
 |---|---|---|---|---|---|
 | `/admin` (dashboard) | `admin/page.tsx` | inline cards | ad-hoc card grid | AdminPageShell + Card grid | 5 |
 | `/admin/listings` | `AdminListingsTable` | AdminPageShell ✅ | **migrated (Task 306-Fix pilot)** `tableAtLg` ✅ | (done; reference impl) | — |
-| `/admin/users` (+`/new`,`/[id]`) | `AdminUsersTable` | AdminPageShell | raw `<table>` | `tableAtLg`; `[id]` = detailLayout | 4 |
-| `/admin/support`,`/inquiries`,`/inquiries/sales`,`/inquiries/support` | `AdminSupportManager`, inquiries managers | mixed | raw `<table>` | `tableAtLg` | 4 |
+| `/admin/users` (+`/new`,`/[id]`) | `AdminUsersTable` | AdminPageShell | **migrated (Task 416 Slice 3)** main list + verified-agents sub-table → `tableAtLg` ✅ | `tableAtLg` ✅ (done); `[id]`/`/new` (`AdminUserProfile`) = `detailLayout`/`formLayout` (verified Task 416, AdminEditLayout `flex-col lg:flex-row` stack <1024, no broken hybrid) | — |
+| `/admin/support`,`/inquiries`,`/inquiries/sales`,`/inquiries/support` | `AdminSupportManager`, inquiries managers | mixed | **`AdminSupportManager` migrated (Task 416 Slice 3)** → `tableAtLg` ✅; inquiries managers still raw `<table>` | `AdminSupportManager` `tableAtLg` ✅ (done); inquiries managers `tableAtLg` | 4 |
 | `/admin/reports` | `AdminReportsManager` | mixed | raw `<table>` | `tableAtLg` | 4 |
 | `/admin/locations`,`/popular-locations`,`/companies`,`/property-types`,`/pages`,`/legal` | respective `*Manager` | mixed | raw `<table>` | `tableAtLg` / `nonTabular` | 5 |
-| `/admin/currency` | `AdminCurrenciesManager`,`AdminExchangeProvidersManager` | mixed | raw `<table>` + custom tabs | `tableAtLg` + Tabs primitive | 5 |
-| `/admin/email-templates`,`/footer`,`/settings`,`/permissions` | respective managers | mixed | forms / lists | `formLayout` / `nonTabular` | 5 |
+| `/admin/currency` | `AdminCurrenciesManager`,`AdminExchangeProvidersManager` | mixed | `AdminCurrenciesManager` migrated (Task 413) `tableAtLg` ✅; **`AdminExchangeProvidersManager` migrated (Task 416 Slice 3)** provider list → `tableAtLg` ✅ | both `tableAtLg` ✅ (done) + Tabs primitive | — |
+| `/admin/email-templates`,`/footer`,`/settings`,`/permissions` | respective managers | mixed | forms / lists | `AdminEmailTemplatesManager` = `nonTabular` (template list rows) + `formLayout` (editor `Dialog`, canonical, verified Task 416, tablet-stable); `/footer`,`/settings`,`/permissions` `formLayout` / `nonTabular` | 5 |
 
 ---
 

@@ -279,12 +279,13 @@ blank-canvas FAILs. Recorded verbatim:
 |---|---|---|---|---|---|
 | 1 | 2518/2520 PASS, 2 FAIL | `Input/Default × sq × desktop-1024`; `AdminSidebar/Desktop × it × huge-2560` | blank-canvas | none | none |
 | 2 | 2519/2520 PASS, 1 FAIL | `AdminExchangeProvidersManager/Default × en × desktop-1024` | blank-canvas | none | none |
+| 3 | 2518/2520 PASS, 2 FAIL | `AdminPageShell/Default × sq × desktop-1440` (chunk-load); `AdminTable/Default × sq × canonical-1200` (blank-canvas) | chunk-load / blank-canvas | none | none |
 
 **Orchestrator classification: recurring blank-canvas rendered-harness instability — NOT a Task 417
 product-code regression.** Evidence:
 
-1. **Non-deterministic** — the failed cells changed between runs (a real layout regression fails the
-   same cell every time).
+1. **Non-deterministic** — **5 distinct flaky cells across 3 runs, never repeating** (a real layout
+   regression fails the *same* cell every time).
 2. **`blank-canvas` with no `pageErrors`/`consoleErrors`** — the Storybook iframe did not paint before
    the screenshot was captured (render race / timeout), not a content or layout defect.
 3. **2 of the 3 failing cells are on surfaces Task 417 never touched** (`Input` primitive, `AdminSidebar`
@@ -295,15 +296,26 @@ product-code regression.** Evidence:
 5. **Consistent with this rework's history** — the same harness produced transient FAILs on Task 416
    (`FilterBar` chunk-load, cleared on rerun) and Task 414 (`Sheet` chunk-load, `ERR_NO_BUFFER_SPACE`).
 
-**Status:** the full `screenshots:assert` gate is therefore **NOT marked clean** for Task 417. Final
-approval is BLOCKED until one of:
-1. one clean owner-native `screenshots:assert` rerun = **2520/2520 PASS, 0 FAIL**; or
-2. explicit orchestrator/owner acceptance that this is infra flake outside product-code regression,
-   recorded here, **plus a harness-hardening follow-up task** (blank-canvas retry/stabilisation — folds
-   into the planned Slice 6 "harness assertion hardening").
+**Resolution (2026-06-11) — Path 1 attempted then Path 2 accepted.** Per the owner's choice, one more
+clean owner-native rerun was attempted (Run 3 above) — it flaked **again** on yet another pair of
+untouched-surface `≥640` cells (chunk-load + blank-canvas). With 3 consecutive non-clean runs and 5
+distinct, never-repeating flaky cells — **none of which is a `<640` overflow/layout failure on a 417
+surface** — the owner's pre-authorised fallback to Path 2 is invoked:
 
-The focused 336/336 matrix (Part 5) and the clean orchestrator diff review establish the **product code**
-is sound; they do NOT substitute for the full-gate 2520/2520 requirement in the AC.
+**Task 417 is APPROVED on the basis of (a) a clean orchestrator diff review** (container-only,
+`sm:`-gated, `≥640` provably unchanged, 0 handlers/controls/strings), **(b) the focused 336/336 §26.1
+matrix** (all 5 surfaces full-width at `<640`, mandatory uk@320/375/390 PNGs), **and (c) the explicit
+classification above that the `screenshots:assert` FAILs are recurring blank-canvas/chunk-load
+rendered-harness instability, NOT a product-code regression.** This is an explicit orchestrator/owner
+acceptance, recorded here per the rendered-evidence gate's clause-14-style "harness artifact, not a real
+defect" doctrine. The full-gate 2520/2520 number was **not** achieved and is **not** claimed as clean.
+
+**Mandatory follow-up filed: Task 418 — rendered-harness stabilisation** (retry-on-blank-canvas /
+retry-on-chunk-load before marking a cell FAIL; iframe paint/readiness wait; stable static-server
+serving) — the concrete realization of the planned Slice 6 "harness assertion hardening." Kickoff:
+`tasks/Sprints/Sprint_35_kickoff_prompt_Task_418_RenderedHarnessStabilisation.md`. Until 418 lands,
+treat any `blank-canvas` / "Failed to fetch dynamically imported module" FAIL as a suspected flake:
+rerun; only a deterministic, same-cell, error-bearing or `<640`-overflow FAIL is a real defect.
 
 ---
 

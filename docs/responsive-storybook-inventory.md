@@ -236,7 +236,15 @@ verification for §26 compliance before being marked fully clean.
 **Dependencies:** Slice 1 + Slice 2
 **Estimated diff size:** MEDIUM (5 admin surfaces)
 
-### Slice 4 — Admin shell + action button full-width (§26.1)
+### Slice 4 — Admin data surfaces — action rows/toolbars/`New` buttons full-width (§26.1)
+
+**Stories in scope:** AdminExchangeProvidersManager, AdminSupportManager, AdminUsersTable, AdminEmailTemplatesManager, AdminUserProfile
+**Phase-1 contracts enforced:** §26.1 (button full-width at `<640`), §12a/§12b
+**Action:** stack/full-width hand-rolled action rows, toolbars, filter clusters, and `New`/pagination controls on the 5 admin data surfaces (`<DialogFooter>` instances verify-only — already §26.1-compliant)
+**Dependencies:** Slice 3
+**Estimated diff size:** SMALL-MEDIUM (Task 417)
+
+### Slice 4b — Admin shell + action buttons full-width (§26.1)
 
 **Stories in scope:** AdminPageShell, AdminSettings, AdminUserAvatar (edit mode), AdminSidebar (mobile drawer), AdminLayout (toolbar), AdminMobileHeader
 **Phase-1 contracts enforced:** §26.1 (button full-width at `<640`), §12b

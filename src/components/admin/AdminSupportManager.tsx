@@ -350,7 +350,7 @@ function TicketDetailDialog({
           {/* Status change */}
           <div className="border rounded-xl p-4 space-y-3 bg-muted/20">
             <p className="text-sm font-medium">{t('status_change_label')}</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
               {TICKET_STATUSES.map(s => (
                 <Button
                   key={s}
@@ -777,7 +777,7 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-3 flex-wrap">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:gap-3 [&>*]:max-sm:w-full">
         {/* Type filter */}
         <div className="flex gap-1.5 flex-wrap">
           {(['all', 'support', 'user_complaint'] as const).map(f => (
@@ -814,7 +814,7 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
             </Button>
           ))}
         </div>
-        <Button size="sm" className="ml-auto gap-1.5" onClick={() => setShowNew(true)}>
+        <Button size="sm" className="sm:ml-auto gap-1.5" onClick={() => setShowNew(true)}>
           <Plus className="h-3.5 w-3.5" />
           {t('new_ticket_btn')}
         </Button>

@@ -140,7 +140,7 @@ export function ProviderFormDialog({ initial, onClose, onSaved }: FormDialogProp
             <Input value={notes} onChange={e => setNotes(e.target.value)} className="h-9 rounded-xl" />
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:justify-end sm:gap-3 pt-2">
             <Button variant="outline" onClick={onClose} disabled={isPending} className="rounded-xl">{t('cancel')}</Button>
             <Button onClick={handleSubmit} disabled={isPending} className="rounded-xl min-w-20">
               {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : t('save')}
@@ -303,7 +303,7 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
       </Dialog>
     )}
     <div className="flex flex-col gap-4">
-      <div className="flex justify-end">
+      <div className="flex sm:justify-end">
         <Button onClick={openNew} size="sm" className="rounded-xl gap-2" disabled={isPending}>
           {isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />}
           {t('new')}

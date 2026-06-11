@@ -53,7 +53,7 @@ function HtmlPreview({ html, title }: { html: string; title: string }) {
   const t = useTranslations('admin.email_templates')
   return (
     <>
-      <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)} className="gap-1.5 shrink-0 max-sm:w-auto">
+      <Button type="button" variant="outline" size="sm" onClick={() => setOpen(true)} className="gap-1.5 sm:shrink-0">
         <Eye className="h-3.5 w-3.5 shrink-0" />
         {t('preview_btn')}
       </Button>
@@ -219,7 +219,7 @@ function TemplateEditorDialog({
 
                   {/* HTML body */}
                   <div className="flex flex-col gap-1.5">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                       <Label htmlFor={`body-${loc}`}>{t('field_html_body')}</Label>
                       {d.html_body.trim() && (
                         <HtmlPreview html={d.html_body} title={`${key || '—'} / ${loc}`} />
@@ -367,7 +367,7 @@ export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { te
       </Alert>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-3 flex-wrap">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap sm:gap-3 [&>*]:max-sm:w-full">
         <div className="relative flex-1 min-w-45">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           <Input
@@ -377,7 +377,7 @@ export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { te
             className="pl-9"
           />
         </div>
-        <Button onClick={() => setEditorKey('')} className="gap-1.5 shrink-0">
+        <Button onClick={() => setEditorKey('')} className="gap-1.5 sm:shrink-0">
           <Plus className="h-4 w-4 shrink-0" />
           {t('create_btn')}
         </Button>

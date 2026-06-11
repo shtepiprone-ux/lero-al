@@ -293,7 +293,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
         className="max-w-sm"
       />
       {/* Role filter */}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 flex-wrap [&>*]:max-sm:w-full">
         {(['', ...ROLES]).map(r => (
           <button
             key={r || 'all'}
@@ -318,7 +318,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
       </div>
 
       {/* Status filter */}
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 flex-wrap [&>*]:max-sm:w-full">
         {STATUS_FILTERS.map(s => (
           <button
             key={s || 'all-status'}
@@ -397,7 +397,7 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
       />
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
           <Button variant="outline" size="sm" disabled={page === 1} onClick={() => navigate({ page: String(page - 1) })}>{t('prev_page')}</Button>
           <span className="text-sm text-muted-foreground">{page} / {totalPages}</span>
           <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => navigate({ page: String(page + 1) })}>{t('next_page')}</Button>

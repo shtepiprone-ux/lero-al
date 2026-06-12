@@ -40,6 +40,7 @@
 > - **Every kickoff → a FILE in `/tasks`** (never only chat), with **both** Positive & Negative flows; on return, **review the real `git diff`, not the report**.
 > - **Opus does not write product code** (`src/`, `app/`, `components/`, `modules/`, migrations, locales) unless the owner explicitly instructs it. Implementation is Sonnet's job.
 > - **Integrity re-runs are a SCREEN, not a verdict** (agent-contract clause 14): the Cowork sandbox mount can serve stale/fluctuating reads; the authoritative integrity check is native (owner PowerShell) or CI.
+> - **🔴 BACKLOG TIDY = MANDATORY AFTER EVERY TASK VERIFY/CLOSE (owner P0, 2026-06-12, demanded repeatedly — STOP forgetting this).** The MOMENT you finish verifying/reviewing/closing a task, immediately tidy `docs/backlog.md` in the same turn: **(1)** `## Last Session` holds ONLY the newest session (2–4 lines); **(2)** move every older session entry to ONE row at the TOP of [`docs/backlog-archive.md`](docs/backlog-archive.md) (newest first); **(3)** keep `docs/backlog.md` under ~80 lines of active content. This is not optional and not "later" — it is part of closing the task. Full rule: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 >
 > Detail lives in `docs/orchestrator-role.md` — this block is the unmissable, MANDATORY trigger.
 

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-12 — Task 419 (Slice 4b: admin shell action buttons full-width §26.1) — APPROVED + COMMITTED.** Orchestrator diff review + owner-native clause-14 gates: focused QA `scripts/task419-qa-shell-fullwidth.mjs` 144/144 PASS, `screenshots:assert` 2520/2520, 0 FAIL (flaky-recovered 1, `AdminUserAvatar/EditMode×en×tablet-768` retry-recovered — tolerated, cf. 418). Static concern that the `AdminSettings` Save `<Button>` (`inline-flex`) might stay content-width inside its `w-full` block wrapper was disproven by the rendered button-level measurement (full-width at every uk@320/375/390 cell). 2 container-only `max-sm:` fixes (`AdminSettings.tsx`, `AdminUserAvatar.tsx`). Session: `docs/sessions/2026-06-12-task419-slice4b-admin-shell-fullwidth.md`. **Next: Slice 5 (public/listing/system).**
+**2026-06-12 — Task 420 (Slice 5: public/listing grid §8.3 step + container audit) — APPROVED (orchestrator diff review + owner-native gate), PENDING COMMIT.** Fixed `FeaturedListings.tsx:61,80` (`lg:`→`xl:grid-cols-3`) and `SimilarListings.tsx:89` (added missing `xl:grid-cols-3`, moved 4-col step `lg`→`2xl`); canonical surfaces (`CollectionsSection`/`FavoritesShell`/`ListingsShell`/`PageShell`) verify-only, 0 edits; `RecentlyViewed*`/`PopularLocations` exempt; `LatestListings.tsx` 3-col horizontal-card grid flagged as a deliberate different pattern (not modified). New stories `System/FeaturedListings`+`System/SimilarListings` + focused QA `scripts/task420-qa-grid-step.mjs` = 88/88 PASS. `tsc`/`lint`/`check:*` all green; global `ASSERT_STORIES` matrix unchanged in size (Slice 6 untouched). Diff confirmed to match §8.3 canon (design-system.md §150/§337) exactly; both grids `grid-cols-1` base = full-width at <640; stories clean (no `layout:centered`, no `Ukrainian*`, strings via `t()`); clause-14 integrity re-screen clean (0 NUL / no BOM / parses). **Owner-native `screenshots:assert` = 2520/2520 PASS, 0 FAIL, flaky-recovered 0 — authoritative clause-14 gate MET.** Session: `docs/sessions/2026-06-12-task420-slice5-public-grid-step.md`. **Next: owner runs the emitted commit; then Slice 6 proper.**
 
 ## Pending Action Items
 
@@ -25,12 +25,11 @@
 - **Slice 2 (414/415) — APPROVED + COMMITTED** (`bd2adc106` / `def476ea2`). DONE.
 - **Task 418 + 418 REWORK — APPROVED + COMMITTED** — owner-native 3× `screenshots:assert` = 2520/2520, 0 FAIL (flaky-recovered 1/0/0); deterministic gate satisfied.
 - **Task 419 (Slice 4b) — APPROVED + COMMITTED** — orchestrator diff review (AdminSettings/AdminUserAvatar full-width verified) + owner-native clause-14 gate: focused QA 144/144, `screenshots:assert` 2520/2520, 0 FAIL (flaky-recovered 1, tolerated).
+- **Task 420 (Slice 5) — APPROVED, PENDING COMMIT** — orchestrator diff review (`FeaturedListings`/`SimilarListings` §8.3 fixes match canon, scope-clean, stories clean) + owner-native `screenshots:assert` 2520/2520, 0 FAIL, flaky-recovered 0 (authoritative gate MET); focused QA 88/88 PASS; `tsc`/`lint`/`check:*` green. Commit command emitted — owner to run.
 
-**Ordering:** **Slice 4b** (Task 419, DONE) → **Slice 5** (public/listing/system). With the now-deterministic gate, 4b+ get a clean 2520/2520 close. **Slice 6 proper** (NEW DOM assertions for button full-width + popup bottom-sheet) remains separate/open. Then resume **Epic JJ 408 → 407**.
+**Ordering:** **Slice 5** (Task 420, done — awaiting review + owner-native gate) → **Slice 6 proper** (NEW DOM assertions for button full-width + popup bottom-sheet, remains separate/open). Then resume **Epic JJ 408 → 407**.
 
 **Task numbering — last used: 420.** **Next free: 421.**
-
-> **Task 420 (Slice 5 — public/listing grid §8.3 step + container audit) KICKED OFF** — `tasks/Sprints/Sprint_35_kickoff_prompt_Task_420_Slice5_PublicListingGridStep.md`. Bounded §8.3 sweep (owner 2026-06-12): FIX `FeaturedListings` (`lg`→`xl`) + `SimilarListings` (+`xl:3`, 4-col `lg`→`2xl`); canonical surfaces verify-only; RecentlyViewed carousel = STOP&ASK exemption; new minimal stories + `scripts/task420-qa-grid-step.mjs` (harness untouched — Slice 6 gated). Awaiting Sonnet.
 
 **Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 237/238 (Epic Y), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 

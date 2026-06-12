@@ -312,7 +312,7 @@ defect" doctrine. The full-gate 2520/2520 number was **not** achieved and is **n
 
 **Mandatory follow-up filed: Task 418 — rendered-harness stabilisation** (retry-on-blank-canvas /
 retry-on-chunk-load before marking a cell FAIL; iframe paint/readiness wait; stable static-server
-serving) — the concrete realization of the planned Slice 6 "harness assertion hardening." Kickoff:
+serving) — **Slice 6a / harness-stabilisation prerequisite** (a precursor to Slice 6, NOT its completion: Slice 6 also adds NEW DOM assertions for button full-width + popup bottom-sheet, which 418 does not). Kickoff:
 `tasks/Sprints/Sprint_35_kickoff_prompt_Task_418_RenderedHarnessStabilisation.md`. Until 418 lands,
 treat any `blank-canvas` / "Failed to fetch dynamically imported module" FAIL as a suspected flake:
 rerun; only a deterministic, same-cell, error-bearing or `<640`-overflow FAIL is a real defect.

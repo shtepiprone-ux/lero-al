@@ -175,9 +175,92 @@ function startStaticServer(staticDir, port) {
         }
       }
     });
+    server.once('error', (err) => {
+      if (err.code === 'EADDRINUSE') err.portInUse = true;
+      reject(err);
+    });
     server.listen(port, '127.0.0.1', () => resolve(server));
-    server.on('error', reject);
   });
+}
+
+// ── Stable-serve readiness ping (Task 418, item 3) ────────────────────────────
+// Confirms the harness's own static server is actually serving chunks before
+// the run starts. Does NOT touch any process other than the one this script
+// itself spawned via startStaticServer.
+// P2-b (Task 418 REWORK, acknowledged debt): only pings /iframe.html, not a
+// specific JS chunk — a static server that serves HTML serves its sibling
+// assets, so this is acceptable but does not assert any one chunk returns 200.
+async function waitForServerReady(baseUrl, retries = 20, delayMs = 100) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await fetch(`${baseUrl}/iframe.html`);
+      if (res.ok) return;
+    } catch {
+      // server not up yet — keep polling
+    }
+    await sleep(delayMs);
+  }
+  throw new Error(`Static server at ${baseUrl} did not become ready after ${retries} readiness pings (iframe.html not served)`);
+}
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+// ── Readiness wait before capture (Task 418, item 2) ──────────────────────────
+// Waits for the story root to actually be rendered (#storybook-root non-empty
+// with a non-zero bounding box) OR for Storybook's error display to be shown,
+// before assessing/capturing the cell. Bounded timeout: on timeout the cell is
+// captured and assessed normally (and may FAIL).
+// P2-a (Task 418 REWORK, acknowledged debt): readiness is a non-empty
+// #storybook-root with a non-zero bounding box (or the error display), not a
+// Storybook `storyRendered` event or a non-uniform-pixel check — acceptable
+// per the original kickoff's "e.g. non-empty bbox" wording.
+async function waitForStoryReady(page, timeoutMs = 5000, pollMs = 150) {
+  const start = Date.now();
+  for (;;) {
+    const state = await page.evaluate(() => {
+      if (document.body.classList.contains('sb-show-errordisplay')) return { ready: true };
+      const root = document.querySelector('#storybook-root');
+      if (!root || root.children.length === 0) return { ready: false };
+      const rect = root.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return { ready: false };
+      return { ready: true };
+    });
+    if (state.ready) return;
+    if (Date.now() - start >= timeoutMs) return;
+    await page.waitForTimeout(pollMs);
+  }
+}
+
+// ── Transient-failure classification (Task 418, item 1) ───────────────────────
+// A cell is retried ONLY when it failed for a transient blank-canvas / chunk-load
+// reason AND there is no pageError, no consoleError, and no overflow/full-width
+// defect. Real defects (overflow, render errors, full-width violations) are
+// never retried into a false pass.
+const TRANSIENT_FETCH_PATTERN = /Failed to fetch dynamically imported module|ChunkLoadError|Loading chunk/i;
+const TRANSIENT_NETWORK_PATTERN = /ERR_NO_BUFFER_SPACE|net::ERR_/i;
+
+function isTransientFailure(cell) {
+  if (cell.pass !== false) return false;
+
+  // Hard navigation/network error from the harness's own server — retry rather
+  // than emitting a false FAIL (item 3).
+  if (cell.error) {
+    return TRANSIENT_NETWORK_PATTERN.test(cell.error) || TRANSIENT_FETCH_PATTERN.test(cell.error);
+  }
+
+  const rc = cell.assertions?.renderCheck;
+  if (!rc) return false;
+  if ((rc.pageErrors?.length ?? 0) > 0) return false;
+  if ((rc.consoleErrors?.length ?? 0) > 0) return false;
+  if (cell.assertions.noHorizontalOverflow === false) return false;
+  if (cell.assertions.fullWidthControlsAtMobile === false) return false;
+
+  if (rc.failReason === 'blank-canvas') return true;
+  if (rc.failReason === 'sb-show-errordisplay' && TRANSIENT_FETCH_PATTERN.test(rc.failDetail || '')) return true;
+
+  return false;
 }
 
 // ── Check mode ────────────────────────────────────────────────────────────────
@@ -201,6 +284,168 @@ async function runCheck() {
   console.log('\n✅ check-stories-rendered setup OK.');
   console.log('   Build Storybook first: npm run build-storybook');
   console.log('   Then run: npm run screenshots:assert');
+}
+
+// ── Single-cell capture (one attempt) ─────────────────────────────────────────
+// Navigates, waits for readiness, runs all assertions, and screenshots a single
+// story × locale × viewport cell. Returns the cell result; the caller decides
+// whether to retry based on isTransientFailure().
+async function captureCell(browser, storyUrl, story, locale, viewport, filename, screenshotPath) {
+  const cell = {
+    story:    story.label,
+    storyId:  story.id,
+    locale,
+    viewport: viewport.name,
+    width:    viewport.width,
+    screenshot: filename,
+    assertions: {},
+    pass: null,
+    error: null,
+  };
+
+  // Hoisted so the `finally` below can always close the page — on the happy
+  // path, on a thrown exception (e.g. goto timeout), and on a render-fail
+  // (Task 418 REWORK, P1-b: prevents page leaks under retry).
+  let page;
+  try {
+    page = await browser.newPage();
+
+    // ── Render-failure signal collectors (attached before goto) ────
+    const pageErrors = [];
+    const consoleErrors = [];
+    page.on('pageerror', (err) => { pageErrors.push(err.message.slice(0, 200)); });
+    page.on('console', (msg) => {
+      if (msg.type() === 'error') {
+        const t = msg.text();
+        // Filter to render-failure patterns only — avoid flagging benign browser noise
+        if (
+          /invariant expected app router/i.test(t) ||
+          /The above error occurred in the/i.test(t) ||
+          /Error rendering story/i.test(t) ||
+          /Uncaught \[Error:/i.test(t)
+        ) consoleErrors.push(t.slice(0, 200));
+      }
+    });
+
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto(storyUrl, { waitUntil: 'networkidle', timeout: 20000 });
+    await page.waitForTimeout(400); // allow fonts/animations
+
+    // ── Readiness wait (Task 418, item 2): wait for the story root to be
+    // actually rendered/non-blank before assessing/capturing the cell. ──
+    await waitForStoryReady(page);
+
+    // ── Assertion (c): Render-failure detection (Part C, Task 411) ─
+    // A screenshot of a Storybook error screen is NOT rendered proof.
+    const renderResult = await page.evaluate(() => {
+      // Storybook sets 'sb-show-errordisplay' on <body> when its error display is shown
+      if (document.body.classList.contains('sb-show-errordisplay')) {
+        const errEl = document.querySelector('#error-message') || document.body;
+        return { failed: true, reason: 'sb-show-errordisplay',
+          detail: (errEl.textContent ?? '').slice(0, 200) };
+      }
+      const bodyText = document.body?.innerText ?? '';
+      if (/invariant expected app router to be mounted/i.test(bodyText))
+        return { failed: true, reason: 'app-router-missing', detail: bodyText.slice(0, 200) };
+      if (/The component failed to render properly/i.test(bodyText))
+        return { failed: true, reason: 'react-render-error', detail: bodyText.slice(0, 200) };
+      if (/Missing.*[Cc]ontext|Missing.*[Pp]roviders?/i.test(bodyText))
+        return { failed: true, reason: 'missing-context', detail: bodyText.slice(0, 200) };
+      if (/Couldn't find story matching/i.test(bodyText))
+        return { failed: true, reason: 'story-not-found', detail: bodyText.slice(0, 200) };
+      if (/Error rendering story/i.test(bodyText))
+        return { failed: true, reason: 'render-error', detail: bodyText.slice(0, 200) };
+      // Blank canvas: decorators rendered but story itself produced no elements
+      const root = document.querySelector('#storybook-root');
+      if (root && root.children.length === 0)
+        return { failed: true, reason: 'blank-canvas', detail: '' };
+      return { failed: false, reason: null, detail: '' };
+    });
+
+    const renderFailed = renderResult.failed || pageErrors.length > 0 || consoleErrors.length > 0;
+    cell.assertions.renderCheck = {
+      pageErrors:    pageErrors.slice(0, 2),
+      consoleErrors: consoleErrors.slice(0, 2),
+      domFailed:     renderResult.failed,
+      failReason:    renderResult.failed
+        ? renderResult.reason
+        : (pageErrors.length > 0 ? 'pageerror' : (consoleErrors.length > 0 ? 'console-error' : null)),
+      failDetail:    renderResult.detail || pageErrors[0] || consoleErrors[0] || '',
+    };
+
+    // ── Assertion (a): No horizontal overflow at 320 ──────────────
+    const noOverflow = await page.evaluate(() => {
+      return document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1;
+    });
+    cell.assertions.noHorizontalOverflow = noOverflow;
+
+    // ── Assertion (b): Full-width FORM CONTROLS at <640 ──────────
+    // Checks that Select triggers, Tabs lists, and form inputs fill their
+    // DIRECT PARENT's content width (not the outer canvas width) —  this
+    // correctly handles story wrappers that add inner padding/max-width.
+    //
+    // Does NOT check buttons: too many edge-cases (flex-1, w-auto overrides,
+    // ghost/icon buttons, cards with inline ID badges, etc.).
+    // Horizontal overflow check (a) above is the primary overflow guard.
+    let fullWidthOk = true;
+    if (viewport.width < 640) {
+      fullWidthOk = await page.evaluate((tolerance) => {
+        function parentContentWidth(el) {
+          const p = el.parentElement;
+          if (!p) return 0;
+          const s = window.getComputedStyle(p);
+          return p.clientWidth - (parseFloat(s.paddingLeft) || 0) - (parseFloat(s.paddingRight) || 0);
+        }
+
+        // SelectTrigger must fill its direct parent container
+        for (const el of document.querySelectorAll('[data-slot="select-trigger"]')) {
+          if (el.closest('[role="dialog"]')) continue;
+          const pw = parentContentWidth(el);
+          if (pw > 0 && el.offsetWidth < pw - tolerance) return false;
+        }
+
+        // TabsList must fill its direct parent container
+        for (const el of document.querySelectorAll('[data-slot="tabs-list"]')) {
+          const pw = parentContentWidth(el);
+          if (pw > 0 && el.offsetWidth < pw - tolerance) return false;
+        }
+
+        // Form inputs must fill their parent. Skip:
+        //   - inputs with offsetWidth ≤ 1 (hidden form-submission inputs)
+        //   - inputs inside overlays
+        //   - micro-container parents (< 50px)
+        //   - inputs inside flex rows with siblings (input-group with icon prefix/
+        //     suffix — the icon takes some width; input fills the REMAINING space,
+        //     which is correct and intentional; e.g. CommandInput, search fields)
+        for (const inp of document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="search"], input:not([type])')) {
+          if (inp.offsetWidth <= 1) continue; // hidden internal input
+          if (inp.closest('[role="dialog"]')) continue;
+          const parent = inp.parentElement;
+          if (!parent) continue;
+          // Skip inputs inside flex containers with siblings (icon-group pattern)
+          const parentFlex = window.getComputedStyle(parent).display === 'flex';
+          if (parentFlex && parent.children.length > 1) continue;
+          const pw = parentContentWidth(inp);
+          if (pw < 50) continue; // micro-container
+          if (pw > 0 && inp.offsetWidth < pw - tolerance) return false;
+        }
+
+        return true;
+      }, FULL_WIDTH_TOLERANCE);
+    }
+    cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? fullWidthOk : null;
+
+    cell.pass = !renderFailed && noOverflow && (viewport.width >= 640 || fullWidthOk);
+
+    await page.screenshot({ path: screenshotPath, fullPage: false });
+  } catch (err) {
+    cell.pass = false;
+    cell.error = err.message;
+  } finally {
+    await page?.close().catch(() => {});
+  }
+
+  return cell;
 }
 
 // ── Main assertion runner ─────────────────────────────────────────────────────
@@ -233,8 +478,27 @@ async function runAssert() {
   const matrix = [];
 
   try {
-    server = await startStaticServer(storybookStaticDir, PORT);
+    try {
+      server = await startStaticServer(storybookStaticDir, PORT);
+    } catch (err) {
+      if (err.portInUse || err.code === 'EADDRINUSE') {
+        console.error(`\n❌ Port ${PORT} is already in use by another process.`);
+        console.error(`   This harness only tears down the static server it spawns itself —`);
+        console.error(`   it will NOT kill an unknown/foreign process on port ${PORT}.`);
+        console.error(`   Free port ${PORT} and rerun.`);
+        process.exit(1);
+      }
+      throw err;
+    }
+
+    // Readiness ping — confirm the static server is actually serving chunks
+    // before the run starts (Task 418, item 3).
+    await waitForServerReady(baseUrl);
+
     browser = await chromium.launch();
+
+    const MAX_ATTEMPTS = 3;
+    let flakyRecovered = 0;
 
     for (const story of ASSERT_STORIES) {
       for (const locale of LOCALES) {
@@ -243,151 +507,21 @@ async function runAssert() {
           const filename = `${story.id}__${locale}__${viewport.name}.png`;
           const screenshotPath = join(outputDir, filename);
 
-          const cell = {
-            story:    story.label,
-            storyId:  story.id,
-            locale,
-            viewport: viewport.name,
-            width:    viewport.width,
-            screenshot: filename,
-            assertions: {},
-            pass: null,
-            error: null,
-          };
+          let cell;
+          let attempt = 0;
+          for (;;) {
+            attempt++;
+            cell = await captureCell(browser, storyUrl, story, locale, viewport, filename, screenshotPath);
+            if (cell.pass || !isTransientFailure(cell) || attempt >= MAX_ATTEMPTS) break;
+            await sleep(300 * attempt); // small backoff before re-navigate + re-capture
+          }
+          cell.retryCount = attempt - 1;
+          if (cell.pass && cell.retryCount > 0) flakyRecovered++;
 
-          try {
-            const page = await browser.newPage();
-
-            // ── Render-failure signal collectors (attached before goto) ────
-            const pageErrors = [];
-            const consoleErrors = [];
-            page.on('pageerror', (err) => { pageErrors.push(err.message.slice(0, 200)); });
-            page.on('console', (msg) => {
-              if (msg.type() === 'error') {
-                const t = msg.text();
-                // Filter to render-failure patterns only — avoid flagging benign browser noise
-                if (
-                  /invariant expected app router/i.test(t) ||
-                  /The above error occurred in the/i.test(t) ||
-                  /Error rendering story/i.test(t) ||
-                  /Uncaught \[Error:/i.test(t)
-                ) consoleErrors.push(t.slice(0, 200));
-              }
-            });
-
-            await page.setViewportSize({ width: viewport.width, height: viewport.height });
-            await page.goto(storyUrl, { waitUntil: 'networkidle', timeout: 20000 });
-            await page.waitForTimeout(400); // allow fonts/animations
-
-            // ── Assertion (c): Render-failure detection (Part C, Task 411) ─
-            // A screenshot of a Storybook error screen is NOT rendered proof.
-            const renderResult = await page.evaluate(() => {
-              // Storybook sets 'sb-show-errordisplay' on <body> when its error display is shown
-              if (document.body.classList.contains('sb-show-errordisplay')) {
-                const errEl = document.querySelector('#error-message') || document.body;
-                return { failed: true, reason: 'sb-show-errordisplay',
-                  detail: (errEl.textContent ?? '').slice(0, 200) };
-              }
-              const bodyText = document.body?.innerText ?? '';
-              if (/invariant expected app router to be mounted/i.test(bodyText))
-                return { failed: true, reason: 'app-router-missing', detail: bodyText.slice(0, 200) };
-              if (/The component failed to render properly/i.test(bodyText))
-                return { failed: true, reason: 'react-render-error', detail: bodyText.slice(0, 200) };
-              if (/Missing.*[Cc]ontext|Missing.*[Pp]roviders?/i.test(bodyText))
-                return { failed: true, reason: 'missing-context', detail: bodyText.slice(0, 200) };
-              if (/Couldn't find story matching/i.test(bodyText))
-                return { failed: true, reason: 'story-not-found', detail: bodyText.slice(0, 200) };
-              if (/Error rendering story/i.test(bodyText))
-                return { failed: true, reason: 'render-error', detail: bodyText.slice(0, 200) };
-              // Blank canvas: decorators rendered but story itself produced no elements
-              const root = document.querySelector('#storybook-root');
-              if (root && root.children.length === 0)
-                return { failed: true, reason: 'blank-canvas', detail: '' };
-              return { failed: false, reason: null, detail: '' };
-            });
-
-            const renderFailed = renderResult.failed || pageErrors.length > 0 || consoleErrors.length > 0;
-            cell.assertions.renderCheck = {
-              pageErrors:    pageErrors.slice(0, 2),
-              consoleErrors: consoleErrors.slice(0, 2),
-              domFailed:     renderResult.failed,
-              failReason:    renderResult.failed
-                ? renderResult.reason
-                : (pageErrors.length > 0 ? 'pageerror' : (consoleErrors.length > 0 ? 'console-error' : null)),
-              failDetail:    renderResult.detail || pageErrors[0] || consoleErrors[0] || '',
-            };
-
-            // ── Assertion (a): No horizontal overflow at 320 ──────────────
-            const noOverflow = await page.evaluate(() => {
-              return document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1;
-            });
-            cell.assertions.noHorizontalOverflow = noOverflow;
-
-            // ── Assertion (b): Full-width FORM CONTROLS at <640 ──────────
-            // Checks that Select triggers, Tabs lists, and form inputs fill their
-            // DIRECT PARENT's content width (not the outer canvas width) —  this
-            // correctly handles story wrappers that add inner padding/max-width.
-            //
-            // Does NOT check buttons: too many edge-cases (flex-1, w-auto overrides,
-            // ghost/icon buttons, cards with inline ID badges, etc.).
-            // Horizontal overflow check (a) above is the primary overflow guard.
-            let fullWidthOk = true;
-            if (viewport.width < 640) {
-              fullWidthOk = await page.evaluate((tolerance) => {
-                function parentContentWidth(el) {
-                  const p = el.parentElement;
-                  if (!p) return 0;
-                  const s = window.getComputedStyle(p);
-                  return p.clientWidth - (parseFloat(s.paddingLeft) || 0) - (parseFloat(s.paddingRight) || 0);
-                }
-
-                // SelectTrigger must fill its direct parent container
-                for (const el of document.querySelectorAll('[data-slot="select-trigger"]')) {
-                  if (el.closest('[role="dialog"]')) continue;
-                  const pw = parentContentWidth(el);
-                  if (pw > 0 && el.offsetWidth < pw - tolerance) return false;
-                }
-
-                // TabsList must fill its direct parent container
-                for (const el of document.querySelectorAll('[data-slot="tabs-list"]')) {
-                  const pw = parentContentWidth(el);
-                  if (pw > 0 && el.offsetWidth < pw - tolerance) return false;
-                }
-
-                // Form inputs must fill their parent. Skip:
-                //   - inputs with offsetWidth ≤ 1 (hidden form-submission inputs)
-                //   - inputs inside overlays
-                //   - micro-container parents (< 50px)
-                //   - inputs inside flex rows with siblings (input-group with icon prefix/
-                //     suffix — the icon takes some width; input fills the REMAINING space,
-                //     which is correct and intentional; e.g. CommandInput, search fields)
-                for (const inp of document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="search"], input:not([type])')) {
-                  if (inp.offsetWidth <= 1) continue; // hidden internal input
-                  if (inp.closest('[role="dialog"]')) continue;
-                  const parent = inp.parentElement;
-                  if (!parent) continue;
-                  // Skip inputs inside flex containers with siblings (icon-group pattern)
-                  const parentFlex = window.getComputedStyle(parent).display === 'flex';
-                  if (parentFlex && parent.children.length > 1) continue;
-                  const pw = parentContentWidth(inp);
-                  if (pw < 50) continue; // micro-container
-                  if (pw > 0 && inp.offsetWidth < pw - tolerance) return false;
-                }
-
-                return true;
-              }, FULL_WIDTH_TOLERANCE);
-            }
-            cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? fullWidthOk : null;
-
-            cell.pass = !renderFailed && noOverflow && (viewport.width >= 640 || fullWidthOk);
-
-            await page.screenshot({ path: screenshotPath, fullPage: false });
-            await page.close();
-            process.stdout.write(cell.pass ? '✓' : '✗');
-          } catch (err) {
-            cell.pass = false;
-            cell.error = err.message;
+          if (cell.error) {
             process.stdout.write('E');
+          } else {
+            process.stdout.write(cell.pass ? (cell.retryCount > 0 ? '~' : '✓') : '✗');
           }
 
           matrix.push(cell);
@@ -407,13 +541,21 @@ async function runAssert() {
     const total   = matrix.length;
 
     console.log(`Results: ${passed}/${total} PASS, ${failed} FAIL`);
+    console.log(`flaky-recovered: ${flakyRecovered}`);
+    if (flakyRecovered > 0) {
+      console.log('  Recovered cells (passed only after retry):');
+      for (const cell of matrix.filter(c => c.pass && c.retryCount > 0)) {
+        console.log(`    ${cell.story} × ${cell.locale} × ${cell.viewport} (retries: ${cell.retryCount})`);
+      }
+    }
     console.log(`Manifest: .screenshots/rendered-assert/${timestamp}/manifest.json`);
     console.log(`PNGs: .screenshots/rendered-assert/${timestamp}/*.png`);
 
     if (failed > 0) {
       console.error('\n❌ Failed cells:');
       for (const cell of matrix.filter(c => !c.pass)) {
-        console.error(`  ${cell.story} × ${cell.locale} × ${cell.viewport}`);
+        const retrySuffix = cell.retryCount > 0 ? ` (after ${cell.retryCount} retries)` : '';
+        console.error(`  ${cell.story} × ${cell.locale} × ${cell.viewport}${retrySuffix}`);
         if (cell.error) {
           console.error(`    Error: ${cell.error}`);
         } else {
@@ -426,7 +568,10 @@ async function runAssert() {
           if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ text button not full-width at <640');
         }
       }
-      process.exit(1);
+      // Task 418 REWORK (P1-a): set exitCode + return (not process.exit) so the
+      // `finally` below still runs `browser?.close()` / `server?.close()` on FAIL.
+      process.exitCode = 1;
+      return;
     } else {
       console.log('\n✅ All rendered assertions PASSED.');
     }

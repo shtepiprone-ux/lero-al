@@ -1,6 +1,6 @@
 # Sprint 35 — Task 418 — Rendered-harness stabilisation (blank-canvas / chunk-load flake elimination)
 
-**Type:** Storybook / visual-snapshot harness (TOOLING — not product code) — concrete realization of Slice 6 "harness assertion hardening"
+**Type:** Storybook / visual-snapshot harness (TOOLING — not product code) — **Slice 6a / harness-stabilisation prerequisite** (a precursor to Slice 6, NOT its completion: Slice 6 also covers NEW DOM assertions for button full-width + popup bottom-sheet, which this task does NOT add)
 **Executor:** Sonnet 4.6
 **Status:** OPEN — hand off now (filed as the mandatory follow-up from Task 417's Path-2 acceptance)
 **Created by:** orchestrator, 2026-06-11, after 3 consecutive non-clean owner-native `screenshots:assert` runs on Task 417
@@ -32,7 +32,7 @@
 
 1. **Retry-on-transient.** When a cell's failReason is **`blank-canvas`** OR a **module-fetch render failure** (`sb-show-errordisplay` whose message matches `Failed to fetch dynamically imported module` / chunk-load), AND there are **no `pageErrors`, no `consoleErrors`, and no overflow detected**, RE-NAVIGATE + re-capture that single cell up to **N=3** attempts (small backoff) before deciding. Mark FAIL only if it still fails after all retries.
 2. **Readiness wait before capture.** Before screenshotting, wait for the story root to be actually rendered: Storybook `storyRendered`/`#storybook-root` non-empty AND canvas not blank (e.g. a non-empty bounding box / non-uniform pixel check) AND no pending `sb-show-errordisplay`, with a bounded timeout. This is the primary fix; retry is the safety net.
-3. **Stable serving.** Ensure the static `storybook-static` server the harness hits (port 6008) is fully up and serving chunks before the run starts (readiness ping), and is torn down cleanly. If `EADDRINUSE`/`ERR_NO_BUFFER_SPACE`/chunk 404s are observed, free/retry rather than emitting a false FAIL.
+3. **Stable serving.** Ensure the static `storybook-static` server the harness hits (port 6008) is fully up and serving chunks before the run starts (readiness ping), and is torn down cleanly. **Port-cleanup safety (mandatory):** the harness may tear down **only the server process it itself spawned** (track its PID/handle) or use the existing safe cleanup path — it MUST NOT kill an arbitrary process occupying 6008. **If port 6008 is occupied by an unknown/foreign process, do NOT kill it** — fail fast with a clear instruction to the operator (e.g. "port 6008 in use by a non-harness process; free it and rerun"). On `ERR_NO_BUFFER_SPACE`/chunk 404s from the harness's own server, retry rather than emitting a false FAIL.
 4. **Transparency.** Log per-cell retry counts and a run summary line: `flaky-recovered: <n>` (cells that passed only after retry) so recurring instability stays visible instead of being silently masked.
 
 **NOT in scope:**
@@ -74,6 +74,7 @@ Do not read beyond this set.
 - **Retry loops unbounded / run time explodes** → cap at N=3 per cell with backoff; a cell failing all retries is a FAIL.
 - **Readiness wait hangs** → bounded timeout; on timeout the cell is captured and assessed normally (and may FAIL).
 - **Determinism not achieved** (a 3× run still flakes) → do NOT lower thresholds to force green; report findings and STOP & ASK — the fix may need a different serve strategy.
+- **Killing an unknown process on port 6008** → forbidden. Only the harness-spawned server may be torn down; a foreign occupant means fail-fast with a clear operator instruction, never a kill.
 - **Scope creep** into product/story/locale files → forbidden; harness only.
 
 ---
@@ -108,4 +109,4 @@ Do not read beyond this set.
 
 ## Ordering
 
-418 (this) → orchestrator diff review + owner-native 3× stability proof → commit. Then **Slice 4b** (admin shell §26.1), **Slice 5** (public/listing/system). With a deterministic gate, Slice 4b+ get a clean 2520/2520 close instead of flake-chasing. Then resume Epic JJ 408 → 407.
+418 (this, = **Slice 6a**) → orchestrator diff review + owner-native 3× stability proof → commit. Then **Slice 4b** (admin shell §26.1), **Slice 5** (public/listing/system). With a deterministic gate, Slice 4b+ get a clean 2520/2520 close instead of flake-chasing. **Slice 6 proper remains open and separate** — adding NEW DOM assertions for button full-width + popup bottom-sheet is NOT in this task; 418 only stabilises the existing gate so that future work (incl. Slice 6's new assertions) runs deterministically. Then resume Epic JJ 408 → 407.

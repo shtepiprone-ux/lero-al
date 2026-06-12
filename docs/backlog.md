@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-12 — Task 418 + REWORK (rendered-harness stabilisation: retry/readiness + clean teardown on FAIL + per-page leak fix) — APPROVED + COMMITTED.** `scripts/check-stories-rendered.mjs` only. REWORK: P1-a FAIL branch `process.exit(1)` → `process.exitCode = 1; return;` (so `finally` tears down browser+server on FAIL; remaining `process.exit(1)` only on pre-create paths); P1-b `captureCell` hoisted `let page;` + `finally { await page?.close().catch(()=>{}) }` (no leak across N=3 retry); P2-a/P2-b ack comments. **Owner-native clause-14 gate: 3× consecutive `screenshots:assert` = 2520/2520, 0 FAIL (flaky-recovered 1/0/0)** — deterministic. Diff-verified correct; tsc/lint/build clean. Sessions: `docs/sessions/2026-06-11-task418-rendered-harness-stabilisation.md` + `2026-06-12-task418-rework-teardown-pageleak.md`. **Net diff: `scripts/check-stories-rendered.mjs` only (scratch `task4xx-*.mjs`/`*.txt` excluded). Next: Slice 4b (admin shell §26.1).**
+**2026-06-12 — Task 419 (Slice 4b: admin shell action buttons full-width §26.1) — APPROVED + COMMITTED.** Orchestrator diff review + owner-native clause-14 gates: focused QA `scripts/task419-qa-shell-fullwidth.mjs` 144/144 PASS, `screenshots:assert` 2520/2520, 0 FAIL (flaky-recovered 1, `AdminUserAvatar/EditMode×en×tablet-768` retry-recovered — tolerated, cf. 418). Static concern that the `AdminSettings` Save `<Button>` (`inline-flex`) might stay content-width inside its `w-full` block wrapper was disproven by the rendered button-level measurement (full-width at every uk@320/375/390 cell). 2 container-only `max-sm:` fixes (`AdminSettings.tsx`, `AdminUserAvatar.tsx`). Session: `docs/sessions/2026-06-12-task419-slice4b-admin-shell-fullwidth.md`. **Next: Slice 5 (public/listing/system).**
 
 ## Pending Action Items
 
@@ -24,10 +24,11 @@
 - **Bundle 410 + 411 + 412 + 413 + 416 + 417** — APPROVED + COMMITTED (`50c93fa8e` Task411 incl. 410 ASSERT_STORIES + 412 §MQ; `b44b996d4`/`b9441c60b` Task416; `8d952a547`/`bca52538e` Task417). Matrix green (2520/2520).
 - **Slice 2 (414/415) — APPROVED + COMMITTED** (`bd2adc106` / `def476ea2`). DONE.
 - **Task 418 + 418 REWORK — APPROVED + COMMITTED** — owner-native 3× `screenshots:assert` = 2520/2520, 0 FAIL (flaky-recovered 1/0/0); deterministic gate satisfied.
+- **Task 419 (Slice 4b) — APPROVED + COMMITTED** — orchestrator diff review (AdminSettings/AdminUserAvatar full-width verified) + owner-native clause-14 gate: focused QA 144/144, `screenshots:assert` 2520/2520, 0 FAIL (flaky-recovered 1, tolerated).
 
-**Ordering:** **Slice 4b** (admin shell §26.1: AdminPageShell/AdminSettings/AdminSidebar/AdminLayout/AdminMobileHeader — kickoff TBD) → **Slice 5** (public/listing/system). With the now-deterministic gate, 4b+ get a clean 2520/2520 close. **Slice 6 proper** (NEW DOM assertions for button full-width + popup bottom-sheet) remains separate/open. Then resume **Epic JJ 408 → 407**.
+**Ordering:** **Slice 4b** (Task 419, DONE) → **Slice 5** (public/listing/system). With the now-deterministic gate, 4b+ get a clean 2520/2520 close. **Slice 6 proper** (NEW DOM assertions for button full-width + popup bottom-sheet) remains separate/open. Then resume **Epic JJ 408 → 407**.
 
-**Task numbering — last used: 418** (418 REWORK shares the number). **Next free: 419.**
+**Task numbering — last used: 419.** **Next free: 420.**
 
 **Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 237/238 (Epic Y), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 

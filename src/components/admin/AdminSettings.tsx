@@ -271,14 +271,14 @@ export function AdminSettings({ initialSettings }: Props) {
           </>
         )}
 
-        <div className="flex items-center justify-between pt-2 border-t">
+        <div className="flex items-center justify-between pt-2 border-t max-sm:flex-col max-sm:items-stretch [&>*]:max-sm:w-full">
           {saveState === 'error' && (
             <span className="flex items-center gap-1.5 text-sm text-destructive">
               <AlertCircle className="h-4 w-4" />
               {t('save_error')}
             </span>
           )}
-          <div className="ml-auto">
+          <div className="ml-auto max-sm:ml-0 max-sm:w-full">
             <Button
               type="button"
               className="gap-2 rounded-xl h-10"

@@ -244,13 +244,14 @@ verification for §26 compliance before being marked fully clean.
 **Dependencies:** Slice 3
 **Estimated diff size:** SMALL-MEDIUM (Task 417)
 
-### Slice 4b — Admin shell + action buttons full-width (§26.1)
+### Slice 4b — Admin shell + action buttons full-width (§26.1) — ✅ DONE (Task 419)
 
 **Stories in scope:** AdminPageShell, AdminSettings, AdminUserAvatar (edit mode), AdminSidebar (mobile drawer), AdminLayout (toolbar), AdminMobileHeader
 **Phase-1 contracts enforced:** §26.1 (button full-width at `<640`), §12b
 **Action:** verify and fix action buttons in admin shells not covered by existing `[&>*]:max-sm:w-full` patterns
 **Dependencies:** Slice 1
 **Estimated diff size:** SMALL-MEDIUM
+**Result (Task 419, 2026-06-12):** Audit of all 6 surfaces found two non-compliant controls, both fixed container-only/`max-sm:`-gated (byte-identical at `≥640`): (1) `AdminSettings.tsx` Save-button footer (`<div className="ml-auto">`, content-width at `<640`) → `max-sm:flex-col max-sm:items-stretch [&>*]:max-sm:w-full` on the footer row + `max-sm:ml-0 max-sm:w-full` on the Save wrapper; (2) `AdminUserAvatar.tsx` edit-mode Replace/Upload+Remove wrapper (`flex flex-col sm:flex-row gap-2`, measured ~96px regardless of viewport — `max-sm:w-full` on the Button primitive was defeated by the `items-center` ancestor's indefinite cross-size) → added `max-sm:w-full` to the wrapper div (now 288/343/358px at 320/375/390, unchanged 96px at `≥640`). AdminPageShell/AdminSidebar/AdminMobileHeader/AdminLayout confirmed already §26.1/§26.4/§26.6-compliant — verify-only, no edits. New focused QA `scripts/task419-qa-shell-fullwidth.mjs`: 144/144 PASS (sq/en/uk/it × 320/375/390/1024). Tab bar left as-is (owner-decided); overflow=0 verified at all locales/breakpoints. `screenshots:assert` (owner-native) = 2520/2520, 0 FAIL — gate met; flaky-recovered non-deterministic (0–1 across runs: `AdminUserAvatar/EditMode × en × tablet-768` retry-recovered — informational, not a FAIL; cf. Task 418 `1/0/0`). Session: `docs/sessions/2026-06-12-task419-slice4b-admin-shell-fullwidth.md`.
 
 ### Slice 5 — Public/Listing/System surfaces — 2xl grid step + container audit
 

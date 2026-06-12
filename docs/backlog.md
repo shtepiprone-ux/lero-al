@@ -28,7 +28,9 @@
 
 **Ordering:** **Slice 4b** (Task 419, DONE) → **Slice 5** (public/listing/system). With the now-deterministic gate, 4b+ get a clean 2520/2520 close. **Slice 6 proper** (NEW DOM assertions for button full-width + popup bottom-sheet) remains separate/open. Then resume **Epic JJ 408 → 407**.
 
-**Task numbering — last used: 419.** **Next free: 420.**
+**Task numbering — last used: 420.** **Next free: 421.**
+
+> **Task 420 (Slice 5 — public/listing grid §8.3 step + container audit) KICKED OFF** — `tasks/Sprints/Sprint_35_kickoff_prompt_Task_420_Slice5_PublicListingGridStep.md`. Bounded §8.3 sweep (owner 2026-06-12): FIX `FeaturedListings` (`lg`→`xl`) + `SimilarListings` (+`xl:3`, 4-col `lg`→`2xl`); canonical surfaces verify-only; RecentlyViewed carousel = STOP&ASK exemption; new minimal stories + `scripts/task420-qa-grid-step.mjs` (harness untouched — Slice 6 gated). Awaiting Sonnet.
 
 **Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 237/238 (Epic Y), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 

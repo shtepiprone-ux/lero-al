@@ -256,8 +256,9 @@ full epic plan.
 ```
 
 Both files: 0 NUL bytes, no BOM, valid syntax, complete final content.
-`npx eslint scripts/check-i18n-dynamic.mjs` — same "file ignored by matching ignore pattern"
-warning as before (consistent with `check-i18n-parity.mjs`), 0 errors. `tsc` N/A for `.mjs`.
+`npx eslint scripts/check-i18n-dynamic.mjs` was **ignored** — the file matches ESLint's ignore
+pattern (same as `check-i18n-parity.mjs`), so it was **NOT linted**; this is *not* "lint clean".
+Syntax is instead validated by `node --check` (OK, above). `tsc` N/A for `.mjs`.
 
 ## 7. `git diff --stat src` — confirmed EMPTY
 
@@ -278,6 +279,9 @@ pre-test backups above).
 |---|---|---|
 | `scripts/check-i18n-dynamic.mjs` | Added `PLACEHOLDER_OWNER`/`PLACEHOLDER_OWNER_RE` constants; manifest validation now requires unique non-empty `id` + non-empty `site` (in addition to existing `namespace`/`keys` checks); new baseline structural-validation block requires non-empty, non-placeholder `owner` per entry; `--update-baseline` prints a placeholder-owner notice | Task 423 — closes the two validation gaps flagged at Task 317 review |
 | `docs/i18n-rules.md` | §3 fail-fast conditions updated for `id`/`site`/`owner`/placeholder; §4 manifest-maintenance section documents mandatory unique `id` + `site`; §5 baseline section documents mandatory non-placeholder `owner` + the self-enforcing `--update-baseline` loop | Task 423 docs deliverable |
+| `docs/backlog.md` | "Last Session" Task 423 entry + Epic II queue note | Mandatory backlog update (agent-contract clause 10) |
+| `docs/backlog-archive.md` | Older session row archived | Backlog-tidy rule (owner P0 2026-06-12) |
+| `docs/sessions/2026-06-13-task423-i18n-dynamic-scanner-hardening.md` | This session log (new file) | Required session log (agent-contract clause 10) |
 
 No manifest/baseline data changed (`scripts/i18n-dynamic-manifest.json`,
 `scripts/i18n-dynamic-baseline.json` byte-identical to the Task 317 commit — diffed in §4

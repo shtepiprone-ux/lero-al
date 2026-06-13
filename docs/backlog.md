@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-13 — Task 423 (Epic II — check-i18n-dynamic.mjs validation hardening) — DONE, awaiting orchestrator review.** Additive-only: manifest entries now require unique non-empty `id` + non-empty `site`; baseline entries now require a real non-placeholder `owner` (`/UPDATE ME/i` rejected); `--update-baseline` prints a placeholder-owner notice (self-enforcing loop demonstrated). Zero data edits — manifest (33 entries/183 pairs) + baseline (3 keys/12 cells) byte-identical to Task 317. Positive flow still exit 0 (12 baselined WARNs); all 6 negative branches + 2 Task 317 regression proofs pasted; `git diff --stat src` empty. `docs/i18n-rules.md` updated. Session log: `docs/sessions/2026-06-13-task423-i18n-dynamic-scanner-hardening.md`. **Next: Task 318** (notif locale-binding) → **320** (fills the 3 baselined keys) → **323** (CI wiring).
+**2026-06-13 — Task 423 (Epic II — check-i18n-dynamic.mjs validation hardening) — ✅ APPROVED.** Orchestrator diff-review + **native** gate run (`node check-i18n-dynamic.mjs` → 33 entries / 183 keys / 12 baselined-warn / 0 err PASS) confirmed; commit emitted. Additive-only: manifest entries now require unique non-empty `id` + non-empty `site`; baseline entries now require a real non-placeholder `owner` (`/UPDATE ME/i` rejected); `--update-baseline` prints a placeholder-owner notice (self-enforcing loop demonstrated). Zero data edits — manifest (33 entries/183 pairs) + baseline (3 keys/12 cells) byte-identical to Task 317. Positive flow still exit 0 (12 baselined WARNs); all 6 negative branches + 2 Task 317 regression proofs pasted; `git diff --stat src` empty. `docs/i18n-rules.md` updated. Session log: `docs/sessions/2026-06-13-task423-i18n-dynamic-scanner-hardening.md`. **Next: Task 318** (notif locale-binding) → **320** (fills the 3 baselined keys) → **323** (CI wiring).
 
 ## Pending Action Items
 
@@ -19,7 +19,7 @@
 
 **Sprint 35 (Epic JJ tokens + global responsive rework) — FULLY COMMITTED, nothing pending.** All slices + Epic JJ landed on `main` (408 `6a0b9e623`, 419 committed, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`). Per-task detail + commit SHAs in [`backlog-archive.md`](backlog-archive.md); session logs in `docs/sessions/`.
 
-**Epic II — Global i18n Hardening: Task 316 COMMITTED (`65a97a8cc`); Task 317 ✅ APPROVED (commit emitted, pending owner run); Task 423 DONE, awaiting review.** Task 317 output: `scripts/check-i18n-dynamic.mjs` + manifest + baseline + `docs/i18n-rules.md`. Task 423 hardened the same scanner's manifest/baseline validation (see Last Session) — zero data edits. Next queue: **318** (notification locale-binding audit, cross-ref ready) → **320** (remediation, fills the 3 baselined `admin.support.user_status_*` keys) → **323** (CI wiring, proposal in Task 317 session log).
+**Epic II — Global i18n Hardening: Task 316 COMMITTED (`65a97a8cc`); Task 317 ✅ APPROVED (commit emitted, pending owner run); Task 423 ✅ APPROVED (commit emitted).** Task 317 output: `scripts/check-i18n-dynamic.mjs` + manifest + baseline + `docs/i18n-rules.md`. Task 423 hardened the same scanner's manifest/baseline validation (see Last Session) — zero data edits. Next queue: **318** (notification locale-binding audit, cross-ref ready) → **320** (remediation, fills the 3 baselined `admin.support.user_status_*` keys) → **323** (CI wiring, proposal in Task 317 session log).
 
 **Task numbering — last used: 423. Epic II uses reserved 316–323.** **Next free (new): 424.**
 

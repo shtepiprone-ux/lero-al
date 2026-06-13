@@ -186,7 +186,7 @@ pending owner sign-off on making it blocking.
 |---|---|---|
 | Phase 1 P1 — Dynamic-key audit | 316 | DONE (2026-06-13) |
 | Phase 1 P1 — Dynamic-key scanner + manifest + baseline | **317** | DONE (2026-06-13) |
-| Phase 2 — Notification locale-binding | 318/319 | PLANNED |
+| Phase 2 — Notification locale-binding | 318/319 | 318 audit DONE (2026-06-13) — see `docs/governance-reports/2026-06-13-notification-locale-audit.md`; 319 fix PLANNED |
 | Phase 2 — Dynamic-key remediation (`admin.support.user_status_*`) | 320 | PLANNED |
 | Phase 3 — CI hardening (wire `check:i18n-dynamic` into CI) | 323 | PLANNED |
 

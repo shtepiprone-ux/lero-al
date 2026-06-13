@@ -8,9 +8,10 @@ import type { FormValues } from '@/modules/listings/types/form'
 import type { FieldRendererProps } from './fieldRegistry'
 
 const LABEL_KEYS: Partial<Record<ListingField, { ns: 'listing' | 'common'; key: string }>> = {
-  bedrooms:  { ns: 'listing', key: 'bedrooms' },
-  bathrooms: { ns: 'listing', key: 'bathrooms' },
-  toilets:   { ns: 'listing', key: 'toilets' },
+  bedrooms:    { ns: 'listing', key: 'bedrooms' },
+  bathrooms:   { ns: 'listing', key: 'bathrooms' },
+  toilets:     { ns: 'listing', key: 'toilets' },
+  floors_total: { ns: 'listing', key: 'floors_total' },
 }
 
 const FIELD_BOUNDS: Partial<Record<ListingField, { min: number; max: number }>> = {

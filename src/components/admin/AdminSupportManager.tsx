@@ -57,7 +57,7 @@ export interface SupportTicketEventRow {
   actor: { name: string | null } | null
 }
 
-interface PickerUser {
+export interface PickerUser {
   id: string
   name: string | null
   last_name: string | null
@@ -108,8 +108,9 @@ function UserLink({ user, label, showUuid }: { user: { id: string; name: string 
   )
 }
 
-function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) {
+export function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) {
   const t = useTranslations('admin.support')
+  const tu = useTranslations('admin.users')
   const fullName = pickerUserName(user)
   const USER_STATUS_VARIANT: Record<string, BadgeVariant> = { active: 'success', blocked: 'destructive' }
   const statusVariant: BadgeVariant = USER_STATUS_VARIANT[user.status ?? ''] ?? 'neutral'
@@ -120,7 +121,7 @@ function UserCard({ user, onClear }: { user: PickerUser; onClear: () => void }) 
         <div className="flex items-center gap-1.5 flex-wrap">
           <Badge variant="outline" className="text-2xs h-4 px-1">{t(`role_${user.role}` as `role_admin`)}</Badge>
           {user.status && (
-            <Badge variant={statusVariant} className="text-2xs h-4 px-1">{t(`user_status_${user.status}` as `user_status_active`)}</Badge>
+            <Badge variant={statusVariant} className="text-2xs h-4 px-1">{tu(`user_status_${user.status}` as `user_status_active`)}</Badge>
           )}
           {user.phone && <span className="text-xs text-muted-foreground">{user.phone}</span>}
         </div>

@@ -97,9 +97,9 @@
     {
       "id": "admin-support-user-status",
       "site": "src/components/admin/AdminSupportManager.tsx:123",
-      "namespace": "admin.support",
+      "namespace": "admin.users",
       "keys": ["user_status_active", "user_status_blocked", "user_status_inactive"],
-      "note": "UserStatus (3) — audit §2 site #17. 🔴 GAP #1 (Task 320 fill target). Baselined in scripts/i18n-dynamic-baseline.json — owner: Task 320."
+      "note": "UserStatus (3) — audit §2 site #17. Task 320 namespace fix (Strategy A): UserCard now resolves these via a second useTranslations('admin.users') scope (tu), matching admin-users-user-status (#38/#41). No admin.support.user_status_* keys exist or are added."
     },
     {
       "id": "admin-support-complaint-type",
@@ -182,8 +182,8 @@
       "id": "listing-presentation-engine-labels",
       "site": "src/app/[locale]/listings/[slug]/page.tsx:438",
       "namespace": "listing",
-      "keys": ["rooms", "bedrooms", "bathrooms", "toilets", "area_gross_label", "area_net", "floor", "year_built"],
-      "note": "presentationEngine card/detail labelKeys (FIELD_DEFAULTS, featureGroup:'primary') — audit §2 sites #53, 54. Includes the LABEL_KEYS bedrooms/bathrooms/toilets set (#63)."
+      "keys": ["rooms", "bedrooms", "bathrooms", "toilets", "floors_total", "area_gross_label", "area_net", "floor", "year_built"],
+      "note": "presentationEngine card/detail labelKeys (FIELD_DEFAULTS, featureGroup:'primary') — audit §2 sites #53, 54. Includes the LABEL_KEYS bedrooms/bathrooms/toilets set (#63). 'floors_total' added by Task 320 — NumInputField.tsx:26 LABEL_KEYS gained a floors_total entry (was a raw-key leak, audit §1b Bucket 3)."
     },
     {
       "id": "listing-heating-wall-offer-labels",

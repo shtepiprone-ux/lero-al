@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-13 — Task 316 (Epic II P1 — project-wide dynamic-key i18n AUDIT) — DONE, awaiting orchestrator review.** New `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` (83 dynamic `t()` sites, count==grep; exact 4-locale key parity confirmed — debunks "uk.json larger" premise; exactly ONE gap: `admin.support.user_status_*` namespace mismatch, 3 keys × 4 locales) + session log `docs/sessions/2026-06-13-task316-i18n-dynamic-key-audit.md`. `git diff --stat src messages scripts` empty. Feeds Task 317 (scanner), 318 (notification locale-binding, cross-referenced), 320 (remediation buckets ready).
+**2026-06-13 — Task 316 (Epic II P1 — dynamic-key i18n AUDIT) — APPROVED & COMMITTED `65a97a8cc`.** Report `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` (83 dynamic `t()` sites, count==grep; exact 4-locale parity — debunks "uk.json larger" premise; ONE live gap: `admin.support.user_status_*` namespace mismatch, 3 keys × 4 locales) + session log. Orchestrator review: deliverables clause-14 clean natively; the sandbox-reported 8 truncated `src/`+`scripts/` files were a Cowork **mount phantom** (native `git status` clean — clause 14: native wins). **Next: Task 317 (scanner)**, then 318 (notif locale-binding, cross-ref ready), 320 (remediation buckets ready).
 
 ## Pending Action Items
 
@@ -19,7 +19,7 @@
 
 **Sprint 35 (Epic JJ tokens + global responsive rework) — FULLY COMMITTED, nothing pending.** All slices + Epic JJ landed on `main` (408 `6a0b9e623`, 419 committed, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`). Per-task detail + commit SHAs in [`backlog-archive.md`](backlog-archive.md); session logs in `docs/sessions/`.
 
-**Epic II — Global i18n Hardening: Task 316 DONE (this session), awaiting orchestrator review.** Output: `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` (83-site inventory, exact 4-locale parity, 1 gap found). Next queue after review: **317** (missing-key scanner) → **318** (notification locale-binding audit, cross-ref ready) → **320** (remediation, buckets ready in the report).
+**Epic II — Global i18n Hardening: Task 316 APPROVED & COMMITTED (`65a97a8cc`).** Output: `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` (83-site inventory, exact 4-locale parity, 1 live gap found). Next queue: **317** (missing-key scanner) → **318** (notification locale-binding audit, cross-ref ready) → **320** (remediation, buckets ready in the report).
 
 **Task numbering — last used: 422 (new tasks). Epic II uses reserved 316–323.** **Next free (new): 423.**
 

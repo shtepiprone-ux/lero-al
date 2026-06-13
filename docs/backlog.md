@@ -19,7 +19,7 @@
 
 **Sprint 35 (Epic JJ tokens + global responsive rework) — FULLY COMMITTED, nothing pending.** All slices + Epic JJ landed on `main` (408 `6a0b9e623`, 419 committed, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`). Per-task detail + commit SHAs in [`backlog-archive.md`](backlog-archive.md); session logs in `docs/sessions/`.
 
-**Epic II — Global i18n Hardening: Task 316 COMMITTED (`65a97a8cc`); Task 317 ✅ APPROVED (commit emitted, pending owner run); Task 423 ✅ APPROVED (commit emitted).** Task 317 output: `scripts/check-i18n-dynamic.mjs` + manifest + baseline + `docs/i18n-rules.md`. Task 423 hardened the same scanner's manifest/baseline validation (see Last Session) — zero data edits. Next queue: **318** (notification locale-binding audit, cross-ref ready) → **320** (remediation, fills the 3 baselined `admin.support.user_status_*` keys) → **323** (CI wiring, proposal in Task 317 session log).
+**Epic II — Global i18n Hardening: Task 316 COMMITTED (`65a97a8cc`); Task 317 ✅ APPROVED (commit emitted, pending owner run); Task 423 ✅ APPROVED (commit emitted).** Task 317 output: `scripts/check-i18n-dynamic.mjs` + manifest + baseline + `docs/i18n-rules.md`. Task 423 hardened the same scanner's manifest/baseline validation (see Last Session) — zero data edits. Next queue: **318** (notification locale-binding audit — **kickoff READY**: `tasks/Epics/Epic_II_kickoff_prompt_Task_318.md`, refreshed 2026-06-13 to clauses 1–14 + concrete 7-producer map; audit-only, zero code) → **320** (remediation, fills the 3 baselined `admin.support.user_status_*` keys) → **323** (CI wiring, proposal in Task 317 session log).
 
 **Task numbering — last used: 423. Epic II uses reserved 316–323.** **Next free (new): 424.**
 

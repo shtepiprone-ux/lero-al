@@ -19,9 +19,9 @@
 
 **Sprint 35 (Epic JJ tokens + global responsive rework) — FULLY COMMITTED, nothing pending.** All slices + Epic JJ landed on `main` (408 `6a0b9e623`, 419 committed, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`). Per-task detail + commit SHAs in [`backlog-archive.md`](backlog-archive.md); session logs in `docs/sessions/`.
 
-**Next queue:** owner to pick the next epic from the open list below (Y / BB / DD / HH / II). No active sprint in flight.
+**Next queue: Epic II — Global i18n Hardening (owner-selected 2026-06-13).** Phase 1 (audit/spec, ships standalone): **Task 316** (project-wide dynamic-key + missing-key audit) → 317 (missing-key scanner) → 318 (notification locale-binding audit). **Task 316 kickoff REFRESHED to current contract + ready for Sonnet:** [`tasks/Epics/Epic_II_kickoff_prompt_Task_316.md`](../tasks/Epics/Epic_II_kickoff_prompt_Task_316.md) (stale `Sprint_24_…_Task_316.md` duplicate collapsed to a pointer). Audit-only: 0 src/messages/scripts delta, output = `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md`.
 
-**Task numbering — last used: 422.** **Next free: 423.**
+**Task numbering — last used: 422 (new tasks). Epic II uses reserved 316–323.** **Next free (new): 423.**
 
 **Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 237/238 (Epic Y), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 

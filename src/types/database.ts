@@ -427,6 +427,9 @@ export interface Notification {
   link: string | null
   is_read: boolean
   created_at: string
+  // added Task 319 — Epic II render-time locale-binding fix
+  template_id: string | null
+  template_params: Record<string, unknown> | null
 }
 
 export interface NotificationSettings {

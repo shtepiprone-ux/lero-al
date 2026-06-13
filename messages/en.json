@@ -1511,8 +1511,20 @@
     "type_marketing": "News from Lero.al",
     "type_report_outcome": "Report outcome",
     "type_price_change": "Price change",
-    "saved_search_match_title": "New results",
-    "saved_search_match_body": "{count} new listings match your saved search"
+    "saved_search_match_title": "Saved search: {searchName}",
+    "saved_search_match_body": "{count} new listings match your saved search",
+    "support_created_title": "A complaint about your account",
+    "support_created_body": "An administrator has opened a complaint about your account. Our team will review it.",
+    "support_resolved_title": "Your case has been resolved",
+    "support_resolved_body": "The complaint about your account has been reviewed and resolved by our team.",
+    "support_closed_title": "Your case has been closed",
+    "support_closed_body": "The complaint about your account has been closed by our team.",
+    "report_resolved_title": "Your report has been resolved",
+    "report_resolved_body": "Thank you for your report. We have reviewed the complaint and taken the necessary steps. Your contribution helps keep the Lero.al community safe.",
+    "report_dismissed_title": "Your report has been reviewed",
+    "report_dismissed_body": "Thank you for your report. After careful review, we did not find a violation of our guidelines for the reported listing.",
+    "price_change_title": "Price change: {listingName}",
+    "price_change_body": "{oldPrice} → {newPrice}"
   },
   "saved_search": {
     "save_action": "Save search",

@@ -1511,8 +1511,20 @@
     "type_marketing": "Notizie da Lero.al",
     "type_report_outcome": "Esito della segnalazione",
     "type_price_change": "Variazione di prezzo",
-    "saved_search_match_title": "Nuovi risultati",
-    "saved_search_match_body": "{count} nuovi annunci corrispondono alla tua ricerca salvata"
+    "saved_search_match_title": "Ricerca salvata: {searchName}",
+    "saved_search_match_body": "{count} nuovi annunci corrispondono alla tua ricerca salvata",
+    "support_created_title": "Un reclamo sul tuo account",
+    "support_created_body": "Un amministratore ha aperto un reclamo riguardante il tuo account. Il nostro team lo esaminerà.",
+    "support_resolved_title": "Il tuo caso è stato risolto",
+    "support_resolved_body": "Il reclamo riguardante il tuo account è stato esaminato e risolto dal nostro team.",
+    "support_closed_title": "Il tuo caso è stato chiuso",
+    "support_closed_body": "Il reclamo riguardante il tuo account è stato chiuso dal nostro team.",
+    "report_resolved_title": "La tua segnalazione è stata esaminata",
+    "report_resolved_body": "Grazie per la tua segnalazione. Abbiamo esaminato il reclamo e adottato le misure necessarie. Il tuo contributo aiuta a mantenere sicura la comunità di Lero.al.",
+    "report_dismissed_title": "La tua segnalazione è stata esaminata",
+    "report_dismissed_body": "Grazie per la tua segnalazione. Dopo un'attenta revisione, non abbiamo riscontrato violazioni delle nostre linee guida per l'annuncio segnalato.",
+    "price_change_title": "Variazione prezzo: {listingName}",
+    "price_change_body": "{oldPrice} → {newPrice}"
   },
   "saved_search": {
     "save_action": "Salva ricerca",

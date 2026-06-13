@@ -24,31 +24,10 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { sendTemplatedEmail } from '@/modules/notifications/lib/sendTemplatedEmail'
 import { createNotification } from '@/modules/notifications/lib/mutations'
 
-// ── Inline notification strings (cron has no request context) ─────────────────
-
-const NOTIF: Record<string, {
-  title: (listingTitle: string) => string
-  body: (oldPrice: string, newPrice: string) => string
-}> = {
-  sq: {
-    title: t => `Ndryshim çmimi: ${t}`,
-    body: (o, n) => `${o} → ${n}`,
-  },
-  en: {
-    title: t => `Price change: ${t}`,
-    body: (o, n) => `${o} → ${n}`,
-  },
-  uk: {
-    title: t => `Зміна ціни: ${t}`,
-    body: (o, n) => `${o} → ${n}`,
-  },
-  it: {
-    title: t => `Variazione prezzo: ${t}`,
-    body: (o, n) => `${o} → ${n}`,
-  },
-}
-
-function getNotif(locale: string) { return NOTIF[locale] ?? NOTIF.en }
+// ── sq-fallback price formatter (Owner decision 2, Task 319) ──────────────────
+// Used only for the `title`/`body` sq-fallback columns; viewer-locale render
+// formats prices via Intl.NumberFormat(viewerLocale) from template_params
+// (NotificationItem.tsx).
 
 function fmtPrice(price: number, currency: string): string {
   return `${Math.round(price).toLocaleString('en')} ${currency}`
@@ -144,20 +123,29 @@ export async function POST(request: NextRequest) {
     // Price changed — notify
     try {
       // Albanian-only policy (Task 251): price-alert emails always in sq.
-      const locale = 'sq'
       const { data: authData } = await db.auth.admin.getUserById(fav.user_id)
       const userEmail = authData?.user?.email
 
-      const s = getNotif(locale)
       const oldPriceStr = fmtPrice(lastPrice, listing.currency)
       const newPriceStr = fmtPrice(currentPrice, listing.currency)
       const listingUrl = `${SITE_URL}/sq/listings/${listing.slug}`
 
+      // In-app notification — sq-fallback title/body (Owner decision 2, Task 319);
+      // viewer-locale render comes from notifications.price_change_title/_body
+      // (NotificationItem.tsx) via templateId + numeric templateParams.
       await createNotification({
         userId: fav.user_id,
         type: 'price_change',
-        title: s.title(listing.title),
-        body: s.body(oldPriceStr, newPriceStr),
+        templateId: 'price_change',
+        templateParams: {
+          oldPrice: lastPrice,
+          newPrice: currentPrice,
+          currency: listing.currency,
+          listingName: listing.title,
+          listingId: listing.id,
+        },
+        title: `Ndryshim çmimi: ${listing.title}`,
+        body: `${oldPriceStr} → ${newPriceStr}`,
         link: listingUrl,
       })
 

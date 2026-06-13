@@ -12,12 +12,16 @@ export async function createNotification({
   title,
   body,
   link,
+  templateId,
+  templateParams,
 }: {
   userId: string
   type: NotificationType
   title: string
   body: string
   link?: string
+  templateId?: string
+  templateParams?: Record<string, unknown>
 }): Promise<void> {
   const db = createAdminClient()
   const { error } = await db.from('notifications').insert({
@@ -26,6 +30,8 @@ export async function createNotification({
     title,
     body,
     link: link ?? null,
+    template_id: templateId ?? null,
+    template_params: templateParams ?? null,
   })
   if (error) {
     console.error('[notifications] createNotification failed', { error, userId, type })

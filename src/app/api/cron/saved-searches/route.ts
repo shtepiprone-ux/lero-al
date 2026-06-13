@@ -28,20 +28,6 @@ import {
   type CanonicalFilters,
 } from '@/modules/listings/lib/savedSearchCanonicalize'
 
-// ── Inline notification strings (cron has no request context) ─────────────────
-
-const NOTIF: Record<string, {
-  title: (name: string) => string
-  body:  (count: number) => string
-}> = {
-  sq: { title: n => `Kërkim i ruajtur: ${n}`, body: c => `${c} listim të reja` },
-  en: { title: n => `Saved search: ${n}`, body: c => `${c} new listing${c === 1 ? '' : 's'} found` },
-  uk: { title: n => `Збережений пошук: ${n}`, body: c => `${c} нових оголошень` },
-  it: { title: n => `Ricerca salvata: ${n}`, body: c => `${c} nuov${c === 1 ? 'o annuncio' : 'i annunci'}` },
-}
-
-function getNotif(locale: string) { return NOTIF[locale] ?? NOTIF.en }
-
 // ── Frequency gate ─────────────────────────────────────────────────────────────
 
 function shouldCheck(frequency: string | null, lastCheckedAt: string | null): boolean {
@@ -123,20 +109,22 @@ export async function POST(request: NextRequest) {
       if (!newCount || newCount === 0) continue
 
       // Albanian-only policy (Task 251): saved-search alert emails always in sq.
-      const locale = 'sq'
       const { data: authData } = await db.auth.admin.getUserById(search.user_id)
       const userEmail = authData?.user?.email
 
-      const s = getNotif(locale)
       const searchUrl = `${SITE_URL}/sq/listings?${sp.toString()}`
       const searchName = search.name || ''
 
-      // In-app notification
+      // In-app notification — sq-fallback title/body (Owner decision 2, Task 319);
+      // viewer-locale render comes from notifications.saved_search_match_title/_body
+      // (NotificationItem.tsx) via templateId + templateParams.
       await createNotification({
         userId: search.user_id,
         type: 'saved_search_match',
-        title: s.title(searchName),
-        body: s.body(newCount),
+        templateId: 'saved_search_match',
+        templateParams: { searchName, count: newCount },
+        title: `Kërkim i ruajtur: ${searchName}`,
+        body: `${newCount} listim të reja`,
         link: searchUrl,
       })
 

@@ -153,13 +153,17 @@ async function notifyReporter(
     (data as unknown as { listings: { title: string } | null }).listings?.title ?? ''
 
   // Albanian-only policy (Task 251): reporter notification email always in sq.
-  const locale = 'sq'
-  const s = getReporterNotificationEmailStrings(locale, status)
+  const emailLocale = 'sq'
+  const s = getReporterNotificationEmailStrings(emailLocale, status)
 
-  // In-app notification
+  // In-app notification — sq-fallback title/body (Owner decision 2, Task 319);
+  // viewer-locale render comes from notifications.report_resolved_*/report_dismissed_*
+  // (NotificationItem.tsx) via templateId.
   await createNotification({
     userId: reporterUserId,
     type: 'report_outcome',
+    templateId: status === 'resolved' ? 'report_resolved' : 'report_dismissed',
+    templateParams: {},
     title: s.heading,
     body: s.body.slice(0, 120) + (s.body.length > 120 ? '…' : ''),
   })
@@ -175,7 +179,7 @@ async function notifyReporter(
     react: React.createElement(ReporterNotificationEmail, {
       status,
       listingTitle,
-      locale,
+      locale: emailLocale,
     }),
   })
 }

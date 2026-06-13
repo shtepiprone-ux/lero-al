@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-05-30T16:34:42.539Z by: npm run check:schema-drift
+-- Generated 2026-06-13T20:51:36.919Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -17,11 +17,11 @@
 --   ListingReport        → listing_reports          (7 cols)
 --   ReportAction         → report_actions           (8 cols)
 --   SupportTicket        → support_tickets          (12 cols)
---   Notification         → notifications            (8 cols)
+--   Notification         → notifications            (10 cols)
 --   DBCurrency           → currencies               (12 cols)
 --   DBExchangeProvider   → exchange_providers       (11 cols)
 --   DBPropertyType       → property_types           (10 cols)
---   Page                 → pages                    (7 cols; content JSONB shape after Task 326A migration: {sq:{title,body},en:{...},uk:{...},it:{...}})
+--   Page                 → pages                    (7 cols)
 --   SiteSetting          → site_settings            (3 cols)
 --   Company              → companies                (4 cols)
 --   Collection           → collections              (5 cols)
@@ -219,6 +219,8 @@ WITH expected(table_name, column_name) AS (
     ('notifications', 'link'),
     ('notifications', 'is_read'),
     ('notifications', 'created_at'),
+    ('notifications', 'template_id'),
+    ('notifications', 'template_params'),
     ('currencies', 'id'),
     ('currencies', 'code'),
     ('currencies', 'symbol'),
@@ -534,6 +536,8 @@ WITH expected(table_name, column_name) AS (
     ('notifications', 'link'),
     ('notifications', 'is_read'),
     ('notifications', 'created_at'),
+    ('notifications', 'template_id'),
+    ('notifications', 'template_params'),
     ('currencies', 'id'),
     ('currencies', 'code'),
     ('currencies', 'symbol'),

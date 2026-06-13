@@ -4,8 +4,10 @@
  * from any new email sender. Replace existing email-context calls with the constant 'sq'.
  *
  * This file is intentionally NOT deleted so the policy can be reversed by un-deprecating
- * it and restoring callers. Two consumers remain in admin/actions/index.ts for IN-APP
- * notification locale (not email) — those are intentionally preserved.
+ * it and restoring callers. As of Task 319 (Epic II) this function has NO remaining
+ * callers — the former IN-APP notification-locale consumers in admin/actions/index.ts
+ * now use render-time template IDs (NotificationItem.tsx) instead of a creation-time
+ * `preferred_locale` snapshot, which was the root cause of the wrong-locale bug.
  *
  * Original purpose: returns the locale to use when sending email to a user.
  * Fallback chain: profile.preferred_locale → requestLocale (if provided) → 'sq'

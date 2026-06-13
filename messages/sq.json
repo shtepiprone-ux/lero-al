@@ -1511,8 +1511,20 @@
     "type_marketing": "Lajme nga Lero.al",
     "type_report_outcome": "Rezultat i ankesës",
     "type_price_change": "Ndryshim çmimi",
-    "saved_search_match_title": "Rezultate të reja",
-    "saved_search_match_body": "{count} njoftime të reja për kërkimin tuaj të ruajtur"
+    "saved_search_match_title": "Kërkim i ruajtur: {searchName}",
+    "saved_search_match_body": "{count} njoftime të reja për kërkimin tuaj të ruajtur",
+    "support_created_title": "Ankesë për llogarinë tuaj",
+    "support_created_body": "Administratori ka hapur një ankesë lidhur me llogarinë tuaj. Ekipi ynë do ta shqyrtojë.",
+    "support_resolved_title": "Çështja juaj u zgjidh",
+    "support_resolved_body": "Ankesa lidhur me llogarinë tuaj u shqyrtua dhe u zgjidh nga ekipi ynë.",
+    "support_closed_title": "Çështja juaj u mbyll",
+    "support_closed_body": "Ankesa lidhur me llogarinë tuaj u mbyll nga ekipi ynë.",
+    "report_resolved_title": "Raporti juaj u shqyrtua",
+    "report_resolved_body": "Faleminderit për raportimin tuaj. Ne kemi shqyrtuar ankesën dhe kemi ndërmarrë hapat e nevojshëm. Angazhimi juaj ndihmon komunitetin Lero.al të jetë i sigurt.",
+    "report_dismissed_title": "Raporti juaj u rishikua",
+    "report_dismissed_body": "Faleminderit për raportimin tuaj. Pas shqyrtimit të kujdesshëm, nuk kemi gjetur shkelje të rregullave tona për listimin e raportuar.",
+    "price_change_title": "Ndryshim çmimi: {listingName}",
+    "price_change_body": "{oldPrice} → {newPrice}"
   },
   "saved_search": {
     "save_action": "Ruaj kërkimin",

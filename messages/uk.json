@@ -1511,8 +1511,20 @@
     "type_marketing": "Новини від Lero.al",
     "type_report_outcome": "Результат скарги",
     "type_price_change": "Зміна ціни",
-    "saved_search_match_title": "Нові результати",
-    "saved_search_match_body": "{count} нових оголошень відповідають вашому збереженому пошуку"
+    "saved_search_match_title": "Збережений пошук: {searchName}",
+    "saved_search_match_body": "{count} нових оголошень відповідають вашому збереженому пошуку",
+    "support_created_title": "Скарга на ваш акаунт",
+    "support_created_body": "Адміністратор відкрив скаргу щодо вашого акаунту. Наша команда її розгляне.",
+    "support_resolved_title": "Вашу справу вирішено",
+    "support_resolved_body": "Скаргу щодо вашого акаунту розглянуто і вирішено нашою командою.",
+    "support_closed_title": "Вашу справу закрито",
+    "support_closed_body": "Скаргу щодо вашого акаунту закрито нашою командою.",
+    "report_resolved_title": "Ваш звіт розглянуто",
+    "report_resolved_body": "Дякуємо за ваш звіт. Ми розглянули скаргу і вжили необхідних заходів. Ваша участь допомагає зберегти безпеку спільноти Lero.al.",
+    "report_dismissed_title": "Ваш звіт розглянуто",
+    "report_dismissed_body": "Дякуємо за ваш звіт. Після ретельного розгляду ми не виявили порушень наших правил щодо зазначеного оголошення.",
+    "price_change_title": "Зміна ціни: {listingName}",
+    "price_change_body": "{oldPrice} → {newPrice}"
   },
   "saved_search": {
     "save_action": "Зберегти пошук",

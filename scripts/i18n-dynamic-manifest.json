@@ -233,6 +233,13 @@
       "namespace": "listing",
       "keys": ["sort_newest", "sort_price_asc", "sort_price_desc", "sort_area_desc", "sort_area_asc"],
       "note": "SORT_OPTIONS (5) — audit §2 site #78. 'listing.sort_by' exists in messages but is a SUSPECTED ORPHAN per audit §7.2 (zero references in src/) — deliberately EXCLUDED here."
+    },
+    {
+      "id": "notification-templates",
+      "site": "src/modules/notifications/components/NotificationItem.tsx (t(`${template_id}_title`/`_body`, params))",
+      "namespace": "notifications",
+      "keys": ["support_created_title", "support_created_body", "support_resolved_title", "support_resolved_body", "support_closed_title", "support_closed_body", "saved_search_match_title", "saved_search_match_body", "price_change_title", "price_change_body", "report_resolved_title", "report_resolved_body", "report_dismissed_title", "report_dismissed_body"],
+      "note": "Task 319 (Epic II Phase 2) — notification.template_id values (7 canonical IDs from createNotification producers #1-#5) resolved dynamically via t(`${template_id}_title`) / t(`${template_id}_body`) at render time in NotificationItem.tsx. 'saved_search_match_title' gained a {searchName} param (was static); 'saved_search_match_body' unchanged ({count})."
     }
   ]
 }

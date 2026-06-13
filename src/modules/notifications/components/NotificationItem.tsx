@@ -30,6 +30,65 @@ interface Props {
 }
 
 /**
+ * Safely resolve a `notifications.*` template key. Returns `null` (never a raw
+ * key string) if the key is missing in the current locale or resolution throws —
+ * callers fall back to the stored sq-fallback `title`/`body` column (Task 319).
+ */
+function safeT(
+  t: ReturnType<typeof useTranslations<'notifications'>>,
+  key: string,
+  params?: Record<string, string | number>,
+): string | null {
+  try {
+    if (!t.has(key as Parameters<typeof t.has>[0])) return null
+    return t(key as Parameters<typeof t>[0], params as never)
+  } catch {
+    return null
+  }
+}
+
+/** Title params for `template_id`-driven titles — only some templates take params. */
+function resolveTitleParams(templateId: string, params: Record<string, unknown>): Record<string, string> | undefined {
+  switch (templateId) {
+    case 'saved_search_match':
+      return { searchName: typeof params.searchName === 'string' ? params.searchName : '' }
+    case 'price_change': {
+      const listingName = typeof params.listingName === 'string' && params.listingName
+        ? params.listingName
+        : typeof params.listingId === 'string' ? params.listingId : ''
+      return { listingName }
+    }
+    default:
+      return undefined
+  }
+}
+
+/**
+ * Resolve the `price_change` body: formats `oldPrice`/`newPrice` with
+ * `Intl.NumberFormat(viewerLocale)` (Owner decision 3, Task 319). Returns
+ * `null` (→ sq-fallback body) if the numeric params are missing/malformed.
+ */
+function resolvePriceChangeBody(
+  t: ReturnType<typeof useTranslations<'notifications'>>,
+  params: Record<string, unknown>,
+  locale: string,
+): string | null {
+  const { oldPrice, newPrice, currency } = params
+  if (
+    typeof oldPrice !== 'number' || !Number.isFinite(oldPrice) ||
+    typeof newPrice !== 'number' || !Number.isFinite(newPrice) ||
+    typeof currency !== 'string' || !currency
+  ) {
+    return null
+  }
+  const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 })
+  return safeT(t, 'price_change_body', {
+    oldPrice: `${fmt.format(oldPrice)} ${currency}`,
+    newPrice: `${fmt.format(newPrice)} ${currency}`,
+  })
+}
+
+/**
  * Resolve the display body for a notification, localizing structured payloads.
  *
  * `listing_status_change` stores two formats:
@@ -76,6 +135,37 @@ export function NotificationItem({ notification, onRead }: Props) {
     })
   }
 
+  // ── Title/body resolution (Task 319: render-time locale binding) ────────────
+  // `template_id` present → resolve `t(<template_id>_title/_body, params)` in the
+  // viewer's current locale. `template_id` NULL (legacy row) → verbatim title/body
+  // + the two pre-existing special-cases. Missing-key/param resolution falls back
+  // to the stored sq-fallback `title`/`body` columns — never a wrong locale.
+  const templateId = notification.template_id
+  const templateParams = (notification.template_params ?? {}) as Record<string, unknown>
+
+  let displayTitle: string
+  let displayBody: string
+
+  if (templateId) {
+    displayTitle = safeT(t, `${templateId}_title`, resolveTitleParams(templateId, templateParams)) ?? notification.title
+
+    if (notification.type === 'saved_search_match') {
+      const count = typeof templateParams.count === 'number' ? templateParams.count : parseInt(notification.body) || 1
+      displayBody = t('saved_search_match_body', { count })
+    } else if (templateId === 'price_change') {
+      displayBody = resolvePriceChangeBody(t, templateParams, locale) ?? notification.body
+    } else {
+      displayBody = safeT(t, `${templateId}_body`) ?? notification.body
+    }
+  } else {
+    displayTitle = notification.title
+    displayBody = notification.type === 'saved_search_match'
+      ? t('saved_search_match_body', { count: parseInt(notification.body) || 1 })
+      : notification.type === 'listing_status_change'
+        ? resolveStatusBody(notification.body, tl)
+        : notification.body
+  }
+
   const content = (
     <div
       className={cn(
@@ -93,15 +183,11 @@ export function NotificationItem({ notification, onRead }: Props) {
         {TYPE_ICON[notification.type] ?? '🔔'}
       </span>
       <div className="flex-1 min-w-0">
-        <p className={cn('text-sm leading-snug', !notification.is_read && 'font-medium')}>
-          {notification.title}
+        <p className={cn('text-sm leading-snug whitespace-normal break-words', !notification.is_read && 'font-medium')}>
+          {displayTitle}
         </p>
-        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
-          {notification.type === 'saved_search_match'
-            ? t('saved_search_match_body', { count: parseInt(notification.body) || 1 })
-            : notification.type === 'listing_status_change'
-              ? resolveStatusBody(notification.body, tl)
-              : notification.body}
+        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2 whitespace-normal break-words">
+          {displayBody}
         </p>
         <p className="text-2xs text-muted-foreground/60 mt-1">
           {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true, locale: dfLocale })}

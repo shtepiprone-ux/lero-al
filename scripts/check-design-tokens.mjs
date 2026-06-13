@@ -10,21 +10,35 @@
  * Detects:
  *   - Color literals: #hex, rgb( / rgba( / hsl( / hsla( / oklch(
  *   - Length arbitrary Tailwind values: *-[Npx] / *-[Nrem]
+ *   - Length function-wrapped arbitrary values: *-[calc(...)] / *-[min(...)] /
+ *     *-[max(...)] / *-[clamp(...)] containing a raw px/rem literal with NO
+ *     var(--token) reference anywhere in the brackets (incl. viewport-relative
+ *     forms, e.g. min-h-[calc(100vh-4rem)] — no broad viewport exemption)
  *   - Inline style px/rem string values in style props
- *   - Z-index arbitrary: z-[N] and inline zIndex: N
- *   - Shadow arbitrary: shadow-[...]
+ *   - Z-index arbitrary: z-[N] and inline zIndex: N / 'z-index': N
+ *   - Shadow arbitrary: shadow-[...] (including negative-offset, e.g. shadow-[0_-2px_...])
  *   - Duration arbitrary: duration-[...] and inline transitionDuration/animationDuration
  *
  * Does NOT flag:
- *   - var(--token) references
+ *   - var(--token) references, including function-wrapped *-[var(--token)] forms
+ *     (e.g. rounded-[min(var(--radius-md),10px)], rounded-[calc(var(--radius)-5px)] —
+ *     token-anchored function forms are exempt even if they also contain px/rem)
  *   - Named token utilities (p-4, text-sm, shadow-md, z-50, max-w-md, duration-200)
+ *   - Non-literal inline z-index (zIndex: Z_TOKEN, zIndex: 'var(--z-toast)', zIndex: someVar)
  *   - src/app/globals.css (the token source of truth — excluded entirely)
  *   - Entries in scripts/design-tokens-allowlist.json (path-level allowlist)
  *   - Values covered by a same-line design-tokens-allow: <value> — <reason> marker
+ *   - JSX comment blocks {/* ... *\/} (single- AND multi-line) — stripped to whitespace
+ *     before detection so commented-out code is not scanned as a live violation. A
+ *     real violation earlier on the same line as a trailing {/* ... *\/} is still
+ *     flagged (only the comment span is blanked).
  *
- * Inline suppression (Task 403, Part 0):
+ * Inline suppression (Task 403, Part 0; marker-value parsing widened Task 408):
  *   Place a comment on the SAME physical line as the match:
  *     // design-tokens-allow: <exact raw value> — <reason>
+ *   <exact raw value> is everything between the marker prefix and the — separator,
+ *   trimmed — this MAY contain spaces (e.g. `zIndex: 9999`), so it must match the
+ *   detected token's source text byte-for-byte including internal whitespace.
  *   One marker suppresses one exact value string on that physical line. Distinct
  *   raw values on the same line need distinct markers. Duplicate occurrences of
  *   the same exact value on the same physical line are suppressed together; split
@@ -39,9 +53,12 @@
  *   node scripts/check-design-tokens.mjs --strict    — exit 1 on violation (NOT in CI yet)
  *   node scripts/check-design-tokens.mjs --update-allowlist — seed/refresh allowlist stubs
  *   npm run check:design-tokens
+ *   npx vitest run scripts/__tests__/check-design-tokens.test.ts — detector unit tests
  *
  * Added by Task 402 (Sprint 35, 2026-06-06). Epic JJ Phase 2.
  * Inline suppression added by Task 403 (Sprint 35, 2026-06-06). Epic JJ Phase 3.
+ * Detector hardening (JSX-comment strip, inline zIndex marker, negative/var lock
+ * tests) added by Task 408 (Sprint 35, 2026-06-13). Epic JJ Phase 4.
  * Docs: docs/design-system.md §23
  */
 
@@ -81,7 +98,7 @@ const SKIP_SUFFIXES = ['.stories.tsx', '.test.tsx', '.test.ts'];
 // NOT flagged by design: var(--token) (no # or rgb() in it), named Tailwind
 // utilities (p-4 = no bracket, z-50 = no bracket, shadow-md = no bracket,
 // duration-200 = no bracket), token definitions in globals.css (file excluded).
-const DETECTION_PATTERNS = [
+export const DETECTION_PATTERNS = [
   // Color literals — hex (3/6/8 digit)
   {
     re: /#[0-9a-fA-F]{3,8}\b/g,
@@ -102,6 +119,20 @@ const DETECTION_PATTERNS = [
     cat: 'length',
     label: 'arbitrary px/rem utility',
   },
+  // Length: function-wrapped arbitrary value (calc/min/max/clamp) containing a
+  // raw px/rem literal with NO var(--token) reference anywhere in the brackets
+  // (Task 408, §C row 2). Token-anchored forms — e.g. rounded-[min(var(--radius-md),10px)],
+  // rounded-[calc(var(--radius)-5px)] — are exempt (filter below). Pure-literal
+  // forms — incl. viewport-relative, e.g. min-h-[calc(100vh-4rem)],
+  // max-w-[calc(100vw-2rem)] — are FLAGGED (no broad viewport exemption).
+  // Matches: w-[calc(100px+2rem)], h-[calc(100%-1px)], translate-x-[calc(100%-2px)]
+  // Does NOT match: rounded-[min(var(--radius-md),10px)], rounded-[calc(var(--radius)-5px)]
+  {
+    re: /\b[\w-]+-\[(?:calc|min|max|clamp)\([^\]]*\)\]/g,
+    cat: 'length',
+    label: 'function-wrapped arbitrary length (calc/min/max/clamp) with raw px/rem',
+    filter: (m) => /(?:px|rem)\b/.test(m) && !/var\(--/.test(m),
+  },
   // Length: inline style px/rem string values (style prop objects)
   // Matches: width: '220px', height: "44px", maxWidth: '600px'
   // Does NOT match: className="...", var(--space-4)
@@ -118,10 +149,12 @@ const DETECTION_PATTERNS = [
     cat: 'z-index',
     label: 'arbitrary z-index class',
   },
-  // Z-index: inline style object value
-  // Matches: zIndex: 100, zIndex: 9999, zIndex: 50 (even if same as named utility)
+  // Z-index: inline style object value — raw numeric literals only
+  // Matches: zIndex: 100, zIndex:9999, 'z-index': 50, "z-index": 2
+  // Does NOT match: zIndex: Z_TOKEN, zIndex: 'var(--z-toast)', zIndex: someVar
+  // (no \d+ immediately after the colon — not a numeric literal)
   {
-    re: /\bzIndex\s*:\s*\d+/g,
+    re: /(?:\bzIndex|['"]z-index['"])\s*:\s*\d+/g,
     cat: 'z-index',
     label: 'inline zIndex value',
   },
@@ -149,6 +182,26 @@ const DETECTION_PATTERNS = [
   },
 ];
 
+// ── JSX comment stripping (Task 408, §A) ──────────────────────────────────────
+//
+// Replace every {/* ... */} block (including multi-line spans) with whitespace
+// of the same shape (newlines preserved, all other characters become spaces) so
+// that line/column numbers of any REAL code after the strip are unchanged. This
+// runs on the whole file content BEFORE per-line detection, so commented-out
+// JSX attribute values (e.g. {/* className="text-[10px]" */}) are never scanned
+// as live violations — while a real violation earlier on the same physical line
+// as a trailing {/* ... */} is still detected (only the comment span is blanked).
+//
+// Inline suppression markers (design-tokens-allow:) are still parsed from the
+// ORIGINAL (unstripped) line, so a marker placed inside a {/* ... */} JSX
+// comment (the existing convention, e.g. AdminTable's sticky z-[1]/z-[2]) keeps
+// working.
+export function stripJsxComments(content) {
+  return content.replace(/\{\/\*[\s\S]*?\*\/\}/g, (match) =>
+    match.replace(/[^\n]/g, ' ')
+  );
+}
+
 // ── Skip heuristics ───────────────────────────────────────────────────────────
 function shouldSkipLine(line) {
   const trimmed = line.trimStart();
@@ -172,37 +225,36 @@ function shouldSkipLine(line) {
 const ALLOW_MARKER_PREFIX = 'design-tokens-allow:';
 
 // Returns Array of { rawValue: string, hasReason: boolean }
-function parseInlineMarkers(line) {
+//
+// The raw value is everything between the marker prefix and the — separator,
+// trimmed. This MAY contain internal whitespace (Task 408, §B) so that values
+// like `zIndex: 9999` — whose detected source text includes the colon-space —
+// can be suppressed with a marker that matches byte-for-byte.
+export function parseInlineMarkers(line) {
   const results = [];
   let searchFrom = 0;
   while (true) {
     const pos = line.indexOf(ALLOW_MARKER_PREFIX, searchFrom);
     if (pos === -1) break;
 
-    const afterPrefix = line.slice(pos + ALLOW_MARKER_PREFIX.length).trimStart();
-    if (!afterPrefix) {
+    const afterPrefix = line.slice(pos + ALLOW_MARKER_PREFIX.length);
+    const dashIdx = afterPrefix.indexOf('—');
+    const valuePart = dashIdx === -1 ? afterPrefix : afterPrefix.slice(0, dashIdx);
+    const rawValue = valuePart.trim();
+
+    if (!rawValue) {
       searchFrom = pos + ALLOW_MARKER_PREFIX.length;
       continue;
     }
 
-    // Extract the value (non-whitespace sequence = a Tailwind/CSS class name)
-    const valueMatch = afterPrefix.match(/^(\S+)/);
-    if (!valueMatch) {
-      searchFrom = pos + ALLOW_MARKER_PREFIX.length;
-      continue;
-    }
-    const rawValue = valueMatch[1];
-
-    // Look for the em-dash separator (—) followed by a non-empty reason
-    const afterValue = afterPrefix.slice(rawValue.length).trimStart();
     let hasReason = false;
-    if (afterValue.startsWith('—')) {
-      const reasonPart = afterValue.slice(1).trim();
+    if (dashIdx !== -1) {
+      const reasonPart = afterPrefix.slice(dashIdx + 1).trim();
       hasReason = reasonPart.length > 0;
     }
 
     results.push({ rawValue, hasReason });
-    searchFrom = pos + ALLOW_MARKER_PREFIX.length + rawValue.length;
+    searchFrom = pos + ALLOW_MARKER_PREFIX.length + valuePart.length;
   }
   return results;
 }
@@ -278,14 +330,17 @@ function collectFiles(dir, exts) {
 }
 
 // ── File scanner ──────────────────────────────────────────────────────────────
-function scanFile(filePath, allowlist) {
-  const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
+//
+// scanContent operates on raw text + a relPath used only for grouping/allowlist
+// lookups — it does not touch the filesystem, so tests can plant fixtures as
+// in-memory strings (Task 408, §E).
+export function scanContent(content, relPath, allowlist = {}) {
   if (isAllowlisted(relPath, allowlist)) return [];
 
-  let content;
-  try { content = readFileSync(filePath, 'utf8'); } catch { return []; }
-
   const lines = content.split('\n');
+  // §A: strip {/* ... */} JSX comment blocks (incl. multi-line) before detection.
+  // Markers are still parsed from the ORIGINAL (unstripped) lines below.
+  const strippedLines = stripJsxComments(content).split('\n');
   const findings = [];
 
   for (let i = 0; i < lines.length; i++) {
@@ -297,14 +352,15 @@ function scanFile(filePath, allowlist) {
     // Strip trailing // comment before detection so that the marker text itself
     // (which contains the suppressed value string) is not scanned as a violation.
     // parseInlineMarkers runs on the full original line to find the markers.
-    const codeOnly = line.replace(/\s*\/\/.*$/, '');
+    const codeOnly = strippedLines[i].replace(/\s*\/\/.*$/, '');
 
     // Collect all pattern matches on the code portion of this line
     const rawMatches = [];
-    for (const { re, cat, label } of DETECTION_PATTERNS) {
+    for (const { re, cat, label, filter } of DETECTION_PATTERNS) {
       re.lastIndex = 0;
       let m;
       while ((m = re.exec(codeOnly)) !== null) {
+        if (filter && !filter(m[0])) continue;
         rawMatches.push({
           file: relPath,
           line: lineNum,
@@ -316,7 +372,8 @@ function scanFile(filePath, allowlist) {
       }
     }
 
-    // Parse inline suppression markers from the full line (including comment)
+    // Parse inline suppression markers from the full original line (including
+    // markers placed inside {/* ... */} JSX comments, e.g. AdminTable z-[1]/z-[2])
     const markers = parseInlineMarkers(line);
 
     if (rawMatches.length === 0 && markers.length === 0) continue;
@@ -363,6 +420,13 @@ function scanFile(filePath, allowlist) {
   }
 
   return findings;
+}
+
+function scanFile(filePath, allowlist) {
+  const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
+  let content;
+  try { content = readFileSync(filePath, 'utf8'); } catch { return []; }
+  return scanContent(content, relPath, allowlist);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -484,4 +548,9 @@ function run() {
   process.exit(0);
 }
 
-run();
+// ── CLI entrypoint ────────────────────────────────────────────────────────────
+// Guarded so this module can be `import`-ed by tests (Task 408, §E) without
+// triggering process.exit().
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  run();
+}

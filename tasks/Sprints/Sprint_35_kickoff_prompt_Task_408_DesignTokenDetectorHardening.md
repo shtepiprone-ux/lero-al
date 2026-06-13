@@ -149,3 +149,80 @@ AdminTable `z-[1]/z-[2]` are currently exact-suppressed as "local sticky-cell st
 > **Sequencing.** Owner directive: **410 first, then 408.** After 408 lands (blind spots closed + tested + whole-tree
 > still 0 + strict dry-run 0), the JJ critical path concludes at **Task 407** (flip to strict/blocking). 408 is the gate
 > that makes 407 safe.
+
+---
+
+# 🔁 Task 408 — REWORK ADDENDUM (orchestrator review 2026-06-13, HEAD=9a60ee784)
+
+> **Verdict on the first pass: NOT APPROVED — PARTIAL accepted.** §A, §B (incl. the real un-suppressibility
+> defect), §C rows 1+3, §E harness, and the §23 docs are implemented and good. **Two owner decisions are now made
+> (below), so the task is no longer blocked on STOP & ASK.** This addendum closes the remaining gaps. Do NOT
+> declare Task 407 safe until every item here is green. Single-writer git still applies (Files-Changed table only;
+> no `git add`/`commit` from the executor).
+
+## Owner decisions (made 2026-06-13 — implement exactly, do NOT re-litigate)
+
+- **§C row 2 — DECISION: detect pure-literal function forms; exact-suppress the existing cases. NO new tokens. NO broad viewport exemption.**
+- **§D — DECISION: KEEP-SUPPRESSED.** No `--z-table-sticky` token; AdminTable `z-[1]/z-[2]` stay exact-suppressed. No product-code tokenization. Just confirm the decision is recorded in `docs/design-system.md §23`, `docs/backlog.md`, and the session log.
+
+## §C-R2 — Implement function-wrapped raw-length detection (the open blind spot)
+
+Add a detection pattern for function-wrapped arbitrary Tailwind values that carry a raw `px`/`rem` literal and are **not** token-anchored:
+
+- **FLAG** `*-[<fn>(…)]` where `<fn>` ∈ {`calc`,`min`,`max`,`clamp`} AND the bracket content contains a raw `px`/`rem` literal AND contains **no** `var(--…)` reference. Category `length` (or a clearly-named function-length label). Example that MUST flag: `w-[calc(100px+2rem)]`, `min-h-[calc(100vh-4rem)]`, `max-w-[calc(100vw-2rem)]`.
+- **DO NOT FLAG** the same function forms when the bracket contains a `var(--…)` reference (token-anchored). Example that MUST stay clean: `rounded-[min(var(--radius-md),10px)]`, `rounded-[calc(var(--radius)-5px)]`.
+- **DO NOT** add a broad "viewport-relative" (`100vh`/`100dvh`/`100%`/`100vw`) exemption — viewport-relative literal math is still a raw literal and MUST flag (owner ruling).
+- This pattern must not regress §C row 3: `*-[var(--token)]` (no function wrapper) stays not-flagged.
+
+### Resolve the 6 existing in-tree occurrences (5 distinct values, no `var()`) with exact suppressions + reasons
+
+These will become true violations once the pattern lands. Suppress each with an exact same-line `design-tokens-allow:` marker (use the existing JSX-comment marker convention for className lines, `//` marker for style-object lines) and a clear local-geometry/viewport-layout reason. **No tokens, no value changes, no visual change.**
+
+```
+src/app/[locale]/layout.tsx:50                         min-h-[calc(100vh-4rem)]
+src/components/shared/Combobox.tsx:235                 max-sm:max-h-[calc(90dvh-2.5rem)]
+src/components/ui/switch.tsx:26                         translate-x-[calc(100%-2px)]   (appears ×2 — identical value, one marker covers both per the same-line dedup rule)
+src/components/ui/tabs.tsx:50                           h-[calc(100%-1px)]
+src/modules/listings/components/SaveSearchButton.tsx:80  max-w-[calc(100vw-2rem)]
+```
+
+The `button.tsx`/`input-group.tsx` clamps (`min(var(--radius-md),…)`, `calc(var(--radius)-…)`) contain `var(--…)` → token-anchored → must remain clean WITHOUT a marker. Confirm this in the run.
+
+### Tests to ADD (lock the chosen behavior — kickoff §C row 2 requires it)
+
+- `w-[calc(100px+2rem)]` (pure literal, no var) → **flagged**.
+- `min-h-[calc(100vh-4rem)]` and `max-w-[calc(100vw-2rem)]` (viewport-relative literal) → **flagged** (proves NO broad viewport exemption).
+- `rounded-[min(var(--radius-md),10px)]` and `rounded-[calc(var(--radius)-5px)]` (var-anchored) → **NOT flagged**.
+- One of the 6 in-tree forms WITH its new marker → **suppressed**; same form with a missing reason → `missing-reason`; with a stale value → `stale-marker`.
+
+## Fix the Files-Changed / integrity gaps (review findings)
+
+1. **`docs/backlog.md` is modified on disk but missing from the session-log "Files Changed" table** (clause 10 / Task 264). The table MUST list every touched path — add `docs/backlog.md` and the 5 product files above with one-line rationales.
+2. **Native clause-14 integrity re-run is MANDATORY** (the orchestrator's Cowork sandbox served a truncated read of `check-design-tokens.mjs` — a mount artifact; native is ground truth). In PowerShell/native, re-run and paste GREEN transcripts: `node --check scripts/check-design-tokens.mjs`, `node scripts/check-design-tokens.mjs --report`, `… --strict` (dry-run, exit 0), `npx vitest run scripts/__tests__/check-design-tokens.test.ts`, `npx tsc --noEmit`, `npm run lint`, and `git diff --numstat` for every touched file.
+
+## §F re-validation (after §C-R2 lands)
+
+- `--report` → still **0 false positives**; whole-tree unsuppressed = **0** (the 6 cases are now suppressed-with-reason, the var-anchored ones clean). `--strict` dry-run → exit **0**.
+- If any NEW true violation surfaces beyond the 6 listed, **STOP & ASK** — do not mask via allowlist.
+
+## Positive flow (rework)
+1. Add the §C-R2 detection pattern. 2. Add the 4 lock tests above (vitest → all green). 3. Add the 6 exact suppressions with reasons to the 5 product files. 4. Record the §D KEEP-SUPPRESSED decision in §23 + backlog + session log. 5. Run native §F + clause-14 transcripts (paste green). 6. Update `docs/design-system.md §23.1.b` to state row 2 is now CLOSED (pure-literal flagged; var-anchored exempt; no viewport exemption). 7. Fix the Files-Changed table. 8. State explicitly that the three blind spots are now closed and Task 407 strict flip is safe.
+
+## Negative flow (must be proven)
+- New pure-literal `calc/min/max/clamp` with px/rem, no var, no marker → **flagged** (strict exit 1).
+- Var-anchored function form → **not flagged**.
+- A suppression with missing reason → `missing-reason` exit 1; with stale value → `stale-marker` exit 1.
+- `*-[var(--token)]` (no function) → still not flagged (no §C row 3 regression).
+- No allowlist masking; no token added; no visual/behavior change in the 5 product files (comment-only edits).
+
+## Acceptance (rework — all required to close 408 + unblock 407)
+- §C-R2 detection pattern implemented + the 4 lock tests pass; vitest total updated and green.
+- The 6 in-tree occurrences suppressed-with-reason; var-anchored clamps confirmed clean without markers.
+- `--report` 0 false positives + whole-tree unsuppressed 0; `--strict` dry-run exit 0 (native).
+- §D recorded as KEEP-SUPPRESSED in §23 + backlog + session log; no product-code tokenization.
+- Native clause-14 transcripts pasted (node --check, vitest, tsc, lint, numstat) — sandbox truncation resolved.
+- Files-Changed table lists ALL touched paths incl. `docs/backlog.md` + the 5 product files.
+- Explicit "Task 407 strict flip is now safe — all three blind spots closed & tested" statement.
+
+## Mobile <640 gate — N/A (documented exemption)
+This task touches only the detector script, tests, docs, and **comment-only** suppression markers in product files (no rendered/behavioral/visual change). The mobile full-width gate and the breakpoint × locale render matrix do not apply. State this exemption explicitly in the session log.

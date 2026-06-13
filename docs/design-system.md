@@ -742,15 +742,42 @@ that bypass the token system defined in §22:
 | Category | Examples flagged | Examples NOT flagged |
 |---|---|---|
 | Color literals | `#abcdef`, `#fff`, `rgb(255,0,0)`, `hsl(220,100%,50%)`, `oklch(...)` | `var(--color-primary)`, `text-red-500` |
-| Length (arbitrary) | `p-[13px]`, `h-[340px]`, `text-[10px]`, `max-w-[220px]` | `p-4`, `h-11`, `text-sm`, `max-w-md` |
-| Z-index (arbitrary) | `z-[100]`, `z-[9999]`, `zIndex: 9999` | `z-50`, `z-30` |
-| Shadow (arbitrary) | `shadow-[0_2px_4px_rgba(...)]` | `shadow-sm`, `shadow-md` |
+| Length (arbitrary) | `p-[13px]`, `h-[340px]`, `text-[10px]`, `max-w-[220px]`, `w-[calc(100px+2rem)]`, `min-h-[calc(100vh-4rem)]` (function-wrapped, raw px/rem, no `var()` — Task 408 rework) | `p-4`, `h-11`, `text-sm`, `max-w-md`, `h-[var(--listing-gallery-h-mobile)]`, `w-[var(--some-token)]`, `rounded-[min(var(--radius-md),10px)]`, `rounded-[calc(var(--radius)-5px)]` (var-anchored function forms) |
+| Z-index (arbitrary) | `z-[100]`, `z-[9999]`, `zIndex: 9999`, `zIndex:9999`, `'z-index': 50` | `z-50`, `z-30`, `zIndex: Z_TOKEN`, `zIndex: 'var(--z-toast)'`, `zIndex: someVar` |
+| Shadow (arbitrary) | `shadow-[0_2px_4px_rgba(...)]`, `shadow-[0_-2px_12px_rgba(...)]` (negative offset — also flagged) | `shadow-sm`, `shadow-md` |
 | Duration (arbitrary) | `duration-[450ms]`, `transitionDuration: '300ms'` | `duration-200`, `duration-300` |
 | Inline style px/rem | `width: '220px'`, `height: "44px"` | `var(--control-h-lg)` |
 
 Excluded from scanning:
 - `src/app/globals.css` — the token source of truth (§22 lives here)
 - Everything in `scripts/design-tokens-allowlist.json` (email templates, brand SVG colors)
+- `{/* ... */}` JSX comment blocks (see §23.1.a)
+
+### §23.1.a — JSX comment handling (Task 408, blind spot 1)
+
+Before per-line detection, every `{/* ... */}` block — including multi-line spans — is
+stripped to whitespace (newlines preserved, so line numbers of real code are unaffected).
+This means:
+
+- A commented-out attribute value, e.g. `{/* className="text-[10px]" */}` (single- or
+  multi-line), is **NOT flagged** — it is dead code, not a live violation.
+- A **real** violation earlier on the same physical line as a trailing `{/* ... */}` comment
+  is **still flagged** — only the comment span is blanked.
+- `design-tokens-allow:` markers are parsed from the **original, unstripped** line, so a
+  marker placed *inside* a `{/* ... */}` JSX comment (the existing AdminTable convention for
+  `z-[1]`/`z-[2]`, see §23.2.b) continues to work unchanged.
+- Existing `//` / `/* */` / leading-`*` comment-line skipping (`shouldSkipLine`) is unchanged
+  and applies after the JSX-comment strip.
+
+### §23.1.b — Negative-offset / function-wrapped / var() arbitrary values (Task 408, blind spot 3)
+
+Audited and locked with tests (`scripts/__tests__/check-design-tokens.test.ts`):
+
+| Form | Behavior | Status |
+|---|---|---|
+| `shadow-[0_-2px_12px_rgba(0,0,0,0.1)]` (negative Y offset) | **FLAGGED** — the existing `\bshadow-\[[^\]]+\]` regex already matches `-` inside the brackets; no evasion. Locked with a test. | Resolved |
+| `*-[var(--token)]` (any utility, e.g. `h-[var(--listing-gallery-h-mobile)]`) | **NOT FLAGGED** — the approved token-consumption form. No detection pattern starts a match on `var(...)`. Locked with a test so future regex changes can't regress it. | Resolved |
+| `*-[calc(...)]`, `*-[min(...)]`, `*-[max(...)]`, `*-[clamp(...)]` containing a raw `px`/`rem` literal AND no `var(--…)` reference (e.g. `w-[calc(100px+2rem)]`, `min-h-[calc(100vh-4rem)]`, `max-w-[calc(100vw-2rem)]`) | **FLAGGED** (Task 408 rework, owner decision: pure-literal forms only, no broad viewport exemption). Same form WITH a `var(--…)` reference anywhere in the brackets (e.g. `rounded-[min(var(--radius-md),10px)]`, `rounded-[calc(var(--radius)-5px)]`) is **NOT FLAGGED** (token-anchored exemption). The 6 pre-existing pure-literal occurrences (5 distinct values: `min-h-[calc(100vh-4rem)]` in `layout.tsx`, `max-h-[calc(90dvh-2.5rem)]` in `Combobox.tsx`, `translate-x-[calc(100%-2px)]` ×2 in `switch.tsx`, `h-[calc(100%-1px)]` in `tabs.tsx`, `max-w-[calc(100vw-2rem)]` in `SaveSearchButton.tsx`) are exact-suppressed with `design-tokens-allow` markers + reasons. `button.tsx`/`input-group.tsx` `rounded-[min/calc(var(--radius...),...)]` clamps remain clean without markers (var-anchored). All 4 lock tests pass. | **Resolved (Task 408 rework)** |
 
 ### §23.2 — Allowlist mechanisms (path-level + exact-value inline)
 
@@ -795,7 +822,20 @@ For individual bespoke off-scale values inside otherwise-tokenizable files, plac
   as a `stale-marker` violation (exits 1 in strict; listed in report mode).
 - Markers are parsed from the `//` comment portion; detection runs on the code portion only.
 
-**Current inline-suppressed values (Task 403, 2026-06-06):**
+**Inline zIndex marker form (Task 408, §B):** the marker's `<exact raw value>` is everything
+between the `design-tokens-allow:` prefix and the `—` separator, **trimmed** — this may contain
+internal whitespace (widened from the original single-token `\S+` extraction). For an inline
+`zIndex: 9999`, the marker must reproduce the detected source text byte-for-byte, e.g.:
+
+```ts
+style={{ zIndex: 9999 }} // design-tokens-allow: zIndex: 9999 — needed above modal overlay
+```
+
+If the source has no space after the colon (`zIndex:9999`), the marker must match that exactly
+(`design-tokens-allow: zIndex:9999 — …`). Missing-reason and stale-marker semantics are
+identical to the className mechanism above.
+
+**Current inline-suppressed values (Task 403, 2026-06-06; Task 408 additions, 2026-06-13):**
 
 | File | Value | Reason |
 |---|---|---|
@@ -803,6 +843,20 @@ For individual bespoke off-scale values inside otherwise-tokenizable files, plac
 | `src/components/ui/tabs.tsx` | `p-[3px]` | Tablist inset; off-scale (space-0.5=2px, space-1=4px) |
 | `src/components/ui/button.tsx` | `text-[0.8rem]` | 12.8px on size=sm button; off-scale (xs=12px, sm=14px) |
 | `src/components/ui/switch.tsx` | `h-[18.4px]` | Switch default track height; no scale token |
+| `src/components/layout/MobileBottomNav.tsx` | `shadow-[0_-2px_16px_rgba(0,0,0,0.08)]` | Bespoke upward nav shadow (negative-Y offset); no `--shadow-*` token matches upward direction |
+| `src/modules/listings/components/ListingMobileCTA.tsx` | `shadow-[0_-2px_12px_rgba(0,0,0,0.10)]` | Bespoke upward sticky-CTA shadow; negative-Y offset; no `--shadow-*` token matches upward direction |
+| `src/app/[locale]/layout.tsx` | `min-h-[calc(100vh-4rem)]` | Viewport-minus-header height; no scale token (Task 408 rework, §23.1.b row 2) |
+| `src/components/shared/Combobox.tsx` | `max-h-[calc(90dvh-2.5rem)]` | Mobile sheet height minus header; no scale token (Task 408 rework, §23.1.b row 2) |
+| `src/components/ui/switch.tsx` | `translate-x-[calc(100%-2px)]` (×2, same line — one marker) | Switch thumb travel minus border; no scale token (Task 408 rework, §23.1.b row 2) |
+| `src/components/ui/tabs.tsx` | `h-[calc(100%-1px)]` | Tab trigger fills list height minus border; no scale token (Task 408 rework, §23.1.b row 2) |
+| `src/modules/listings/components/SaveSearchButton.tsx` | `max-w-[calc(100vw-2rem)]` | Viewport-minus-margin dialog width; no scale token (Task 408 rework, §23.1.b row 2) |
+
+**§D — `--z-table-sticky` token decision (carried from Task 406, closed Task 408 rework,
+2026-06-13): KEEP-SUPPRESSED.** `AdminTable.tsx`'s `z-[1]`/`z-[2]` remain exact-suppressed
+(plain local sticky-cell stacking, unrelated to the negative-offset-shadow analogy) — no
+`--z-table-sticky` token added, no product-code change. If the owner later wants Decision B
+(add the token), that is a separate follow-up touching `globals.css` + `AdminTable.tsx` + a
+computed-z-index inert proof + the Task 410 story render.
 
 **Escalation guardrail (Tasks 404–407):** if the same bespoke off-scale value is
 inline-suppressed **3+ times** across areas 403–406, it MUST be escalated as a token-candidate
@@ -823,7 +877,41 @@ inside 404–406 — only escalate for owner decision.
 |---|---|
 | **402** (done) | Detector built + report mode wired to CI (`continue-on-error: true`) |
 | **403–406** | Refactor consumers: replace raw values with tokens from §22 |
+| **408** (done) | Detector hardening: JSX-comment strip (§23.1.a), inline-zIndex detect+suppress (§23.2.b), negative-offset/var()/function-wrapped audit (§23.1.b — all 3 rows closed), planted-violation test harness (§23.5, 25 tests). §D `--z-table-sticky` decision recorded: KEEP-SUPPRESSED (§23.2.b). All 3 blind spots closed — Task 407 strict flip is safe. |
 | **407** | Flip CI step to strict (`continue-on-error: false`); remove this note |
+
+### §23.5 — Detector test harness (Task 408, §E)
+
+`scripts/__tests__/check-design-tokens.test.ts` (run via `npx vitest run
+scripts/__tests__/check-design-tokens.test.ts` or `npm test`) imports `scanContent`,
+`stripJsxComments`, and `parseInlineMarkers` directly from `scripts/check-design-tokens.mjs`
+(no filesystem fixtures — content is planted as in-memory strings against a fixture path that
+does not match any `design-tokens-allowlist.json` entry).
+
+For every category and blind spot, the suite plants **both** a violating case (must be caught)
+and a valid/commented/var/suppressed case (must NOT be caught or must be suppressed):
+
+- **§A (JSX comments):** live arbitrary value flagged; single- and multi-line `{/* ... */}`
+  commented value NOT flagged; real value + trailing comment on the same line still flagged;
+  `//` / `/* */` / leading-`*` line skipping unchanged; marker inside a `{/* ... */}` block
+  (AdminTable convention) still suppresses.
+- **§B (inline zIndex):** raw `zIndex: 9999` and `'z-index': 50` flagged; `var(--z-toast)` and
+  identifier-bound zIndex NOT flagged; matching marker+reason suppresses; missing-reason marker
+  reported as `missing-reason` (does not suppress); stale marker reported as `stale-marker`
+  (real value remains flagged).
+- **§C (shadow/var):** negative-offset shadow flagged; `*-[var(--token)]` (incl. the listing
+  gallery height tokens) NOT flagged.
+- **§C row 2 (function-wrapped calc/min/max/clamp, Task 408 rework):** pure-literal
+  `w-[calc(100px+2rem)]` flagged; viewport-relative literal `min-h-[calc(100vh-4rem)]` /
+  `max-w-[calc(100vw-2rem)]` flagged (no broad viewport exemption); var-anchored
+  `rounded-[min(var(--radius-md),10px)]` / `rounded-[calc(var(--radius)-5px)]` NOT flagged; an
+  in-tree pure-literal form with a marker suppresses, with missing-reason and stale-marker still
+  gating.
+
+**25 tests, all passing** (`npx vitest run scripts/__tests__/check-design-tokens.test.ts`).
+
+This harness is the evidence that the gate's positive AND negative paths are exercised before
+Task 407 flips it to strict/blocking.
 
 ---
 

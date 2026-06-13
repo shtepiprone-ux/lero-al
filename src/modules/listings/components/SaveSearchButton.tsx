@@ -77,7 +77,7 @@ export function SaveSearchButton() {
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-80 max-w-[calc(100vw-2rem)]">
+        <DialogContent className="w-80 max-w-[calc(100vw-2rem)]"> {/* design-tokens-allow: max-w-[calc(100vw-2rem)] — viewport-minus-margin dialog width, no scale token */}
           <DialogHeader>
             <DialogTitle className="text-sm font-semibold">{t('save_modal_title')}</DialogTitle>
           </DialogHeader>

@@ -47,7 +47,7 @@ export default async function LocaleLayout({
       <AuthProvider initialUser={initialUser}>
         <>
           <Header />
-          <main className="min-h-[calc(100vh-4rem)] pb-14 md:pb-0">
+          <main className="min-h-[calc(100vh-4rem)] pb-14 md:pb-0"> {/* design-tokens-allow: min-h-[calc(100vh-4rem)] — viewport-minus-header height, no scale token */}
             {children}
           </main>
           <Footer />

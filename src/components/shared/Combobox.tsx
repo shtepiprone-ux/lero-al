@@ -232,7 +232,7 @@ export function Combobox({
           />
         </div>
       )}
-      <div id={listboxId} role="listbox" className="overflow-y-auto max-h-56 max-sm:max-h-[calc(90dvh-2.5rem)]">
+      <div id={listboxId} role="listbox" className="overflow-y-auto max-h-56 max-sm:max-h-[calc(90dvh-2.5rem)]"> {/* design-tokens-allow: max-h-[calc(90dvh-2.5rem)] — mobile sheet height minus header, no scale token */}
         {clearLabel && (
           <button
             type="button"

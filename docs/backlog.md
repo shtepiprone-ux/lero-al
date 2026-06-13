@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-13 — Task 422 (MOBILE_POSITIONER v4 `!`-suffix + NavigationMenu bottom-sheet) — APPROVED, PENDING COMMIT.** Diff + evidence-addendum (§9) reviewed against ground truth: AC1 v4 `!`-suffix fix + AC3 scoped `max-sm:max-w-none!`; AC2 uk@320/375/390 explicit PASS; AC5 literal both-token grep = 4 real consumers (Sheet/Dialog/Command correctly non-consumers, no fabricated rows). Sandbox-read truncation was a clause-14 mount artifact (files intact natively). **Owner-native `screenshots:assert` = 2912/2912 PASS, 0 FAIL** (2 unrelated flaky-recovered) — authoritative gate MET. Commit emitted. **Next: resume Epic JJ 408 → 407.**
+**2026-06-13 — Task 408 (check:design-tokens detector hardening) — APPROVED on diff, PENDING owner native gate + commit.** All 3 blind spots closed: §A JSX `{/* */}` comment strip; §B inline `zIndex`/`'z-index'` detect + fixed un-suppressible marker bug; §C rows 1–3 incl. §C-R2 function-wrapped `calc/min/max/clamp` flagged unless `var()`-anchored (no broad viewport exemption) — 6 in-tree pure-literals exact-suppressed across `layout`/`Combobox`/`switch`/`tabs`/`SaveSearchButton`. §D = KEEP-SUPPRESSED (no token). 25-test vitest harness; whole-tree `--report`/`--strict` = 0/exit-0. Orchestrator diff review ✅ (matches Files-Changed table incl. backlog + 5 product files; §C-R2 `filter` hook confirmed applied in scan loop). Clause-14 integrity + gate run is **owner-native-authoritative** (sandbox served a truncated read = mount artifact). Task 407 strict flip unblocked once native gate confirms. Commit emitted. Session: `docs/sessions/2026-06-13-task408-design-token-detector-hardening.md`. **Task 422 still PENDING COMMIT.**
 
 ## Pending Action Items
 
@@ -66,7 +66,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 | **DD — Admin Audit & History Hygiene** | 246 open | DD.1 admin can clear change history (gated + audited) | [`Epic_DD_…`](../tasks/Epics/Epic_DD_Admin_Audit_and_History_Hygiene.md) |
 | **HH — Admin UX System** | 310 (P4), 311 (P5, partial), 313 (P6) | 308/309 page-migration need remains — re-scope vs canonical primitives | [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md) |
 | **II — Global i18n Hardening** | 316–323 (planned) | P1 audit + scanner → P2 remediation → P3 CI gate | [`Epic_II_…`](../tasks/Epics/Epic_II_Global_i18n_Hardening.md) |
-| **JJ — Design Variables (single-source tokens)** | 401/402/403 ✅ committed, 404–406 done, 408 (planned), 407 (final strict flip) | Project-wide `@theme` token layer + strict no-raw-value gate (report-mode → blocking) | [`Epic_JJ_…`](../tasks/Epics/Epic_JJ_Design_Variables_Single_Source.md) |
+| **JJ — Design Variables (single-source tokens)** | 401/402/403 ✅ committed, 404–406 done, 408 done (pending commit), 407 (final strict flip) | Project-wide `@theme` token layer + strict no-raw-value gate (report-mode → blocking) | [`Epic_JJ_…`](../tasks/Epics/Epic_JJ_Design_Variables_Single_Source.md) |
 
 > **Standing governance (codified in `/docs`):** Notes 18–23 (`ai-behavior.md`) + `agent-contract.md` (P0, clauses 1–14) + `rule-index.md` (task-type pre-reads) + Positive+Negative flow rule (`orchestrator-role.md`). Non-optional acceptance gates on every task.
 

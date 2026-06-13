@@ -6,12 +6,20 @@
  *
  * Assertions per cell:
  *   (a) No horizontal scrollbar / overflow: document.scrollWidth <= document.clientWidth at 320px.
- *   (b) At viewport width < 640: any visible button (data-slot="button" or role="button")
- *       that is not icon-only has offsetWidth >= containerWidth - TOLERANCE.
+ *   (b) At viewport width < 640: Select triggers, TabsList, and form inputs (NOT buttons —
+ *       see (d)) have offsetWidth >= parentContentWidth - TOLERANCE.
  *   (c) Render-failure detection: FAIL if pageerror fires, a render-failure console error is
  *       logged, Storybook's error display (sb-show-errordisplay body class) is present, body text
  *       matches known error patterns, or #storybook-root has no element children (blank canvas).
  *       An error-screen PNG is NOT rendered proof and must score FAIL (Part C, Task 411).
+ *   (d) At viewport width < 640: every visible [data-slot="button"]:not([data-icon-only]) text
+ *       button — excluding members of [data-slot="button-group"] — has
+ *       offsetWidth >= parentContentWidth - TOLERANCE. Text buttons inside open overlays
+ *       (dialog/sheet/popover/dropdown/select) ARE checked (Task 421 Slice 6).
+ *   (e) At viewport width < 640: every visible open overlay content slot (dialog-content,
+ *       sheet-content except data-side="left", select-content, popover-content,
+ *       dropdown-menu-content, navigation-menu-popup) is edge-to-edge full-width and
+ *       bottom-anchored (bottom-sheet contract, design-system.md §26.2; Task 421 Slice 6).
  *
  * Output:
  *   .screenshots/rendered-assert/<timestamp>/
@@ -132,6 +140,14 @@ const ASSERT_STORIES = [
   { id: 'system-emptystate--no-listings',                     label: 'EmptyState/NoListings' },
   { id: 'system-listinggrid--desktop',                        label: 'ListingGrid/Desktop' },
   { id: 'system-recentlyviewedsection--populated',            label: 'RVS/Populated' },
+  // Open-state overlays (7 — Task 421 Slice 6, assertion (e) targets)
+  { id: 'primitives-dialog--mobile-full-width',               label: 'Dialog/MobileFullWidth' },
+  { id: 'primitives-select--mobile-bottom-sheet',             label: 'Select/MobileBottomSheet' },
+  { id: 'primitives-popover--mobile-bottom-sheet',            label: 'Popover/MobileBottomSheet' },
+  { id: 'primitives-dropdownmenu--mobile-bottom-sheet',       label: 'DropdownMenu/MobileBottomSheet' },
+  { id: 'primitives-command--mobile-bottom-sheet',            label: 'Command/MobileBottomSheet' },
+  { id: 'primitives-sheet--mobile-bottom-sheet',              label: 'Sheet/MobileBottomSheet' },
+  { id: 'primitives-navigationmenu--mobile-open',             label: 'NavigationMenu/MobileOpen' },
 ];
 
 // ── Tolerance for full-width assertion (px) ────────────────────────────────────
@@ -256,6 +272,8 @@ function isTransientFailure(cell) {
   if ((rc.consoleErrors?.length ?? 0) > 0) return false;
   if (cell.assertions.noHorizontalOverflow === false) return false;
   if (cell.assertions.fullWidthControlsAtMobile === false) return false;
+  if (cell.assertions.fullWidthButtonsAtMobile === false) return false;
+  if (cell.assertions.popupBottomSheetAtMobile === false) return false;
 
   if (rc.failReason === 'blank-canvas') return true;
   if (rc.failReason === 'sb-show-errordisplay' && TRANSIENT_FETCH_PATTERN.test(rc.failDetail || '')) return true;
@@ -435,7 +453,92 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     }
     cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? fullWidthOk : null;
 
-    cell.pass = !renderFailed && noOverflow && (viewport.width >= 640 || fullWidthOk);
+    // ── Assertion (d): Full-width TEXT BUTTONS at <640 ───────────
+    // Every visible [data-slot="button"]:not([data-icon-only]) — excluding
+    // members of [data-slot="button-group"] — must fill its direct parent's
+    // content width. Text CTA/action buttons inside open overlays (dialog,
+    // sheet, popover, dropdown, select) ARE checked — no blanket overlay skip.
+    let fullWidthButtonsOk = true;
+    let failingButtons = [];
+    let checkedAnyButton = false;
+    if (viewport.width < 640) {
+      const result = await page.evaluate((tolerance) => {
+        function parentContentWidth(el) {
+          const p = el.parentElement;
+          if (!p) return 0;
+          const s = window.getComputedStyle(p);
+          return p.clientWidth - (parseFloat(s.paddingLeft) || 0) - (parseFloat(s.paddingRight) || 0);
+        }
+
+        const failures = [];
+        let checkedAny = false;
+        for (const el of document.querySelectorAll('[data-slot="button"]:not([data-icon-only])')) {
+          if (el.offsetWidth <= 1) continue; // hidden / not rendered
+          if (el.closest('[data-slot="button-group"]')) continue;
+          checkedAny = true;
+          const pw = parentContentWidth(el);
+          if (pw > 0 && el.offsetWidth < pw - tolerance) {
+            failures.push((el.textContent ?? '').trim().slice(0, 40) || '(empty)');
+          }
+        }
+        return { failures, checkedAny };
+      }, FULL_WIDTH_TOLERANCE);
+      failingButtons = result.failures;
+      checkedAnyButton = result.checkedAny;
+      fullWidthButtonsOk = failingButtons.length === 0;
+    }
+    cell.assertions.fullWidthButtonsAtMobile = viewport.width < 640 ? (checkedAnyButton ? fullWidthButtonsOk : null) : null;
+    if (failingButtons.length > 0) cell.assertions.failingButtonLabels = failingButtons;
+
+    // ── Assertion (e): Open popups = bottom-anchored full-width at <640 ──
+    // Every visible open overlay content slot must be edge-to-edge full-width
+    // and bottom-anchored. data-side="left" sheets (e.g. AdminSidebar drawer,
+    // design-system.md §26.6) are skipped.
+    let popupBottomSheetOk = true;
+    let failingPopups = [];
+    let checkedAnyPopup = false;
+    if (viewport.width < 640) {
+      const result = await page.evaluate((tolerance) => {
+        const selectors = [
+          '[data-slot="dialog-content"]',
+          '[data-slot="sheet-content"]',
+          '[data-slot="select-content"]',
+          '[data-slot="popover-content"]',
+          '[data-slot="dropdown-menu-content"]',
+          '[data-slot="navigation-menu-popup"]',
+        ];
+        const failures = [];
+        let checkedAny = false;
+        for (const sel of selectors) {
+          for (const el of document.querySelectorAll(sel)) {
+            if (el.getAttribute('data-side') === 'left') continue;
+            const rect = el.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) continue; // not open/visible
+
+            checkedAny = true;
+            const edgeToEdge =
+              rect.width >= window.innerWidth - tolerance &&
+              Math.abs(rect.left) <= tolerance &&
+              Math.abs(rect.right - window.innerWidth) <= tolerance;
+            const bottomAnchored = Math.abs(rect.bottom - window.innerHeight) <= tolerance;
+
+            if (!edgeToEdge || !bottomAnchored) {
+              const side = el.getAttribute('data-side');
+              failures.push(el.getAttribute('data-slot') + (side ? `[data-side=${side}]` : ''));
+            }
+          }
+        }
+        return { failures, checkedAny };
+      }, FULL_WIDTH_TOLERANCE);
+      failingPopups = result.failures;
+      checkedAnyPopup = result.checkedAny;
+      popupBottomSheetOk = failingPopups.length === 0;
+    }
+    cell.assertions.popupBottomSheetAtMobile = viewport.width < 640 ? (checkedAnyPopup ? popupBottomSheetOk : null) : null;
+    if (failingPopups.length > 0) cell.assertions.failingPopupSlots = failingPopups;
+
+    cell.pass = !renderFailed && noOverflow &&
+      (viewport.width >= 640 || (fullWidthOk && fullWidthButtonsOk && popupBottomSheetOk));
 
     await page.screenshot({ path: screenshotPath, fullPage: false });
   } catch (err) {
@@ -565,7 +668,9 @@ async function runAssert() {
             console.error(`    ✗ render failure [${rc.failReason}]${detail ? ': ' + detail : ''}`);
           }
           if (!cell.assertions.noHorizontalOverflow) console.error('    ✗ horizontal overflow detected');
-          if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ text button not full-width at <640');
+          if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ form control not full-width at <640');
+          if (cell.assertions.fullWidthButtonsAtMobile === false) console.error(`    ✗ text button not full-width at <640: ${(cell.assertions.failingButtonLabels ?? []).join(', ')}`);
+          if (cell.assertions.popupBottomSheetAtMobile === false) console.error(`    ✗ popup not bottom-sheet at <640: ${(cell.assertions.failingPopupSlots ?? []).join(', ')}`);
         }
       }
       // Task 418 REWORK (P1-a): set exitCode + return (not process.exit) so the

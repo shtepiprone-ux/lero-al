@@ -477,7 +477,7 @@ PASS requires **real rendered verification** at the §3 canon:
 4. For interactive surfaces: empty / loading / error / success / cancel states each verified at mobile + desktop (this is also a flow requirement, §12/§14).
 5. Either **browser QA evidence** (preferred) **OR an explicit `OWNER QA REQUIRED` gate** recorded in the session log. A task may not self-approve a responsive change purely from code analysis.
 
-**§27 (Storybook responsive-proof contract)** governs what counts as PASS/FAIL for each story × viewport × locale cell. See §27.3 for what `screenshots:assert` does and does NOT prove (button full-width, popup bottom-sheet compliance, and wide-desktop sparsity are NOT machine-checked); §27.4 for the error-screen = FAIL rule.
+**§27 (Storybook responsive-proof contract)** governs what counts as PASS/FAIL for each story × viewport × locale cell. See §27.3 for what `screenshots:assert` does and does NOT prove (button full-width and popup bottom-sheet compliance are machine-checked as of Task 421; wide-desktop sparsity is NOT machine-checked); §27.4 for the error-screen = FAIL rule.
 
 ---
 
@@ -1087,21 +1087,21 @@ PASS ONLY when:
 
 ### 27.3 — What `screenshots:assert` does and does NOT prove
 
-`scripts/check-stories-rendered.mjs` machine-checks three assertions per cell:
+`scripts/check-stories-rendered.mjs` machine-checks five assertions per cell:
 
 | Assertion | What it checks | Reliable? |
 |---|---|---|
 | (a) No horizontal overflow | `scrollWidth > clientWidth` at the viewport | ✅ Reliable |
 | (b) Form controls full-width | `SelectTrigger`, `TabsList`, form `input` elements fill their parent at `<640` | ✅ Reliable for those selectors |
 | (c) No render failure | Error-boundary screen, blank canvas, missing router/provider | ✅ Reliable for known error patterns |
+| (d) Text buttons full-width | Every visible `[data-slot="button"]:not([data-icon-only])` (excluding `[data-slot="button-group"]` members) fills its parent at `<640` — including text CTAs inside open overlays | ✅ Reliable for those selectors (Task 421) |
+| (e) Open popups = bottom sheet | Every visible open overlay content slot (`dialog-content`, `sheet-content` except `data-side="left"`, `select-content`, `popover-content`, `dropdown-menu-content`, `navigation-menu-popup`) is edge-to-edge full-width and bottom-anchored at `<640` | ✅ Reliable for those selectors (Task 421) |
 
 **What `screenshots:assert` does NOT detect (requires manual visual QA):**
 
 | Gap | Description | Manual QA gate |
 |---|---|---|
-| Button not full-width | Buttons are explicitly excluded from assertion (b) — too many edge-cases | §26.1 compliance |
 | Overflow-hidden masking | `overflow-hidden` hides a defect — no overflow but content clipped | §24.4 |
-| Popup bottom-sheet non-compliance | No DOM check for bottom-anchored / edge-to-edge popup at `<640` | §26.2 compliance |
 | Inaccessible table columns | Columns off-screen at specific viewport but parent not overflowing | §25.1 |
 | Wide-desktop sparsity | Whitespace waste at 1920/2560 — no whitespace detector | §4, §8 |
 | Labels behind sticky/fixed layers | z-index collision hiding content | §22.3 z-index |

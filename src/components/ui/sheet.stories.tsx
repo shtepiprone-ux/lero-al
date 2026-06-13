@@ -45,6 +45,36 @@ export const FilterSheetRight: Story = {
   }
 };
 
+export const MobileBottomSheet: Story = {
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? "en";
+    return (
+      <Sheet defaultOpen>
+        <SheetContent side="bottom">
+          <SheetHeader>
+            <SheetTitle>{s("filters", locale)}</SheetTitle>
+            <SheetDescription>{s("narrow_q", locale)}</SheetDescription>
+          </SheetHeader>
+          <div className="py-4 space-y-4">
+            <p className="text-sm text-muted-foreground">{s("filter_here", locale)}</p>
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  },
+
+  parameters: {
+    docs: { description: { story: "@320: sheet pre-opened with side=\"bottom\" — full-width bottom sheet, drag handle, edge-to-edge. Use locale toolbar." } }
+  },
+
+  globals: {
+    viewport: {
+      value: "mobile320",
+      isRotated: false
+    }
+  }
+};
+
 export const NavDrawerLeft: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? "en";

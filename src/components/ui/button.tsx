@@ -43,15 +43,19 @@ const buttonVariants = cva(
   }
 )
 
+const ICON_ONLY_SIZES = new Set(["icon", "icon-xl", "icon-xs", "icon-sm", "icon-lg"])
+
 function Button({
   className,
   variant = "default",
   size = "default",
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+  const isIconOnly = ICON_ONLY_SIZES.has(size ?? "default")
   return (
     <ButtonPrimitive
       data-slot="button"
+      data-icon-only={isIconOnly ? "" : undefined}
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />

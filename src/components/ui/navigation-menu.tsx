@@ -115,7 +115,7 @@ function NavigationMenuPositioner({
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className={cn(
+        <NavigationMenuPrimitive.Popup data-slot="navigation-menu-popup" className={cn(
           "data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-lg bg-popover text-popover-foreground shadow ring-1 ring-foreground/10 transition-[opacity,transform,width,height,scale,translate] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] outline-none",
           "sm:data-ending-style:scale-90 sm:data-ending-style:opacity-0 sm:data-ending-style:duration-150 sm:data-starting-style:scale-90 sm:data-starting-style:opacity-0",
           "max-sm:data-starting-style:translate-y-full max-sm:data-ending-style:translate-y-full",

@@ -33,6 +33,11 @@ const args = process.argv.slice(2)
 const REPORT_ONLY = args.includes('--report')
 const UPDATE_BASELINE = args.includes('--update-baseline')
 
+// Sentinel written by --update-baseline for newly-discovered misses (decision 5,
+// single source of truth shared by the validator below and the --update-baseline writer).
+const PLACEHOLDER_OWNER = 'UPDATE ME — owning task'
+const PLACEHOLDER_OWNER_RE = /UPDATE ME/i
+
 // ── flatten helper (mirrors check-i18n-parity.mjs collectKeys) ────────────────
 
 function collectKeys(obj, prefix = '') {
@@ -87,13 +92,27 @@ if (!Array.isArray(manifest.entries) || manifest.entries.length === 0) {
   process.exit(1)
 }
 
+const seenManifestIds = new Set()
 for (const entry of manifest.entries) {
+  if (typeof entry.id !== 'string' || !entry.id) {
+    console.error(`❌ check:i18n-dynamic — malformed manifest entry ${JSON.stringify(entry)}: "id" must be a non-empty string.`)
+    process.exit(1)
+  }
+  if (seenManifestIds.has(entry.id)) {
+    console.error(`❌ check:i18n-dynamic — duplicate manifest entry id "${entry.id}".`)
+    process.exit(1)
+  }
+  seenManifestIds.add(entry.id)
+  if (typeof entry.site !== 'string' || !entry.site) {
+    console.error(`❌ check:i18n-dynamic — malformed manifest entry "${entry.id}": "site" must be a non-empty string.`)
+    process.exit(1)
+  }
   if (typeof entry.namespace !== 'string' || !entry.namespace) {
-    console.error(`❌ check:i18n-dynamic — malformed manifest entry ${JSON.stringify(entry.id ?? entry)}: "namespace" must be a non-empty string.`)
+    console.error(`❌ check:i18n-dynamic — malformed manifest entry "${entry.id}": "namespace" must be a non-empty string.`)
     process.exit(1)
   }
   if (!Array.isArray(entry.keys) || entry.keys.length === 0 || !entry.keys.every((k) => typeof k === 'string' && k)) {
-    console.error(`❌ check:i18n-dynamic — malformed manifest entry "${entry.id ?? entry.namespace}": "keys" must be a non-empty array of non-empty strings.`)
+    console.error(`❌ check:i18n-dynamic — malformed manifest entry "${entry.id}": "keys" must be a non-empty array of non-empty strings.`)
     process.exit(1)
   }
 }
@@ -111,6 +130,17 @@ try {
 } catch (err) {
   console.error(`❌ check:i18n-dynamic — scripts/i18n-dynamic-baseline.json is not valid JSON: ${err.message}`)
   process.exit(1)
+}
+
+for (const [fullKey, info] of Object.entries(baseline)) {
+  if (!info || typeof info.owner !== 'string' || !info.owner) {
+    console.error(`❌ check:i18n-dynamic — baseline entry "${fullKey}" must have a non-empty "owner".`)
+    process.exit(1)
+  }
+  if (PLACEHOLDER_OWNER_RE.test(info.owner)) {
+    console.error(`❌ check:i18n-dynamic — baseline entry "${fullKey}" still has the placeholder owner — assign an owning task.`)
+    process.exit(1)
+  }
 }
 
 // ── build distinct namespace.key set ────────────────────────────────────────
@@ -195,15 +225,21 @@ console.log('')
 
 if (UPDATE_BASELINE) {
   const newBaseline = {}
+  let placeholderCount = 0
   for (const [fullKey, missingLocales] of Object.entries(missingByKey)) {
     const existingOwner = baseline[fullKey]?.owner
+    const owner = existingOwner ?? PLACEHOLDER_OWNER
+    if (PLACEHOLDER_OWNER_RE.test(owner)) placeholderCount++
     newBaseline[fullKey] = {
       locales: missingLocales,
-      owner: existingOwner ?? 'UPDATE ME — owning task',
+      owner,
     }
   }
   writeFileSync(BASELINE_PATH, JSON.stringify(newBaseline, null, 2) + '\n', 'utf8')
   console.log(`Baseline written -> scripts/i18n-dynamic-baseline.json (${Object.keys(newBaseline).length} entries).`)
+  if (placeholderCount > 0) {
+    console.log(`${placeholderCount} new entry(ies) written with placeholder owner — assign an owning task before the gate will pass.`)
+  }
   process.exit(0)
 }
 

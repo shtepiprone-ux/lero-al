@@ -78,9 +78,13 @@ exact `namespace.key` and locale(s) missing it.
 
 - `messages/{sq,en,uk,it}.json` missing or invalid JSON → exit 1.
 - `scripts/i18n-dynamic-manifest.json` missing, invalid JSON, empty `entries`,
-  or any entry missing a non-empty `namespace` / non-empty `keys[]` → exit 1
-  with the offending entry's `id`.
-- `scripts/i18n-dynamic-baseline.json` missing or invalid JSON → exit 1.
+  or any entry missing a non-empty `id` (unique across entries), non-empty
+  `site`, non-empty `namespace`, or non-empty `keys[]` → exit 1 naming the
+  offending entry (Task 423).
+- `scripts/i18n-dynamic-baseline.json` missing or invalid JSON, or any entry
+  missing a non-empty `owner`, or whose `owner` matches `/UPDATE ME/i` (the
+  `--update-baseline` placeholder) → exit 1 naming the offending key
+  (Task 423).
 
 ---
 
@@ -102,6 +106,12 @@ When you add a **new** dynamic `t()` call site (a `t(\`prefix_${var}\`)` or
   (same namespace, overlapping value set), add the new keys to that entry's
   `keys[]` instead of duplicating — the scanner dedupes via a `namespace.key`
   set, so listing the same pair in two entries is harmless but adds noise.
+
+**`id` and `site` are mandatory and enforced (Task 423):** every entry must
+have a non-empty `id`, unique across the whole manifest, and a non-empty
+`site` (free-text `File.ext:line` — not regex-validated). These are what make
+an `ERROR`/`WARN` line diagnosable back to "which call site owns this key?" —
+a manifest entry missing either, or with a duplicate `id`, fails the gate.
 
 ### Reachability — do NOT add unreachable keys
 
@@ -132,6 +142,16 @@ Task 320 should: (a) add the 3 keys to `messages/{sq,en,uk,it}.json` under
 `admin.support`, then (b) remove the corresponding entries from
 `scripts/i18n-dynamic-baseline.json` (or run `--update-baseline`, which drops
 entries whose keys are no longer missing).
+
+**Every baseline entry MUST carry a real, non-placeholder `owner` (Task 423):**
+a missing/empty `owner`, or an `owner` matching `/UPDATE ME/i`, fails the gate.
+`--update-baseline` still writes new entries with the placeholder owner
+`"UPDATE ME — owning task"` (so the regenerated file is reviewable diff-wise)
+and prints "N new entry(ies) written with placeholder owner — assign an
+owning task before the gate will pass." — but the very next normal run of
+`check:i18n-dynamic` then FAILS until a real owning task is assigned. This is
+the intended self-enforcing loop: you cannot silently accept new dynamic-key
+debt without naming who owns the fix.
 
 ---
 

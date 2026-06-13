@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-13 — Task 407 (Epic JJ final — flip check:design-tokens to STRICT/blocking) — APPROVED + COMMITTED (`84037666f`).** `governance-pr.yml` design-token step → `check:design-tokens:strict`, `continue-on-error` removed (no other job/step touched); `package.json` bare `check:design-tokens` → `--strict` + new `check:design-tokens:report`; `design-system.md` §23 final-contract + §23.3/§23.4 rows. Detector/allowlist untouched (`6a0b9e623`). Orchestrator diff review + owner-native clause-14 confirm (sandbox showed truncation/NUL on all 3 files — confirmed a Cowork mount artifact; native `JSON.parse`/0-NUL/tail clean). Green-on-flip, 5 negative plants exit 1. **Epic JJ CLOSED.** Sprint 35 fully committed (408 `6a0b9e623`, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`).
+**2026-06-13 — Task 316 (Epic II P1 — project-wide dynamic-key i18n AUDIT) — DONE, awaiting orchestrator review.** New `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` (83 dynamic `t()` sites, count==grep; exact 4-locale key parity confirmed — debunks "uk.json larger" premise; exactly ONE gap: `admin.support.user_status_*` namespace mismatch, 3 keys × 4 locales) + session log `docs/sessions/2026-06-13-task316-i18n-dynamic-key-audit.md`. `git diff --stat src messages scripts` empty. Feeds Task 317 (scanner), 318 (notification locale-binding, cross-referenced), 320 (remediation buckets ready).
 
 ## Pending Action Items
 
@@ -19,7 +19,7 @@
 
 **Sprint 35 (Epic JJ tokens + global responsive rework) — FULLY COMMITTED, nothing pending.** All slices + Epic JJ landed on `main` (408 `6a0b9e623`, 419 committed, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`). Per-task detail + commit SHAs in [`backlog-archive.md`](backlog-archive.md); session logs in `docs/sessions/`.
 
-**Next queue: Epic II — Global i18n Hardening (owner-selected 2026-06-13).** Phase 1 (audit/spec, ships standalone): **Task 316** (project-wide dynamic-key + missing-key audit) → 317 (missing-key scanner) → 318 (notification locale-binding audit). **Task 316 kickoff REFRESHED to current contract + ready for Sonnet:** [`tasks/Epics/Epic_II_kickoff_prompt_Task_316.md`](../tasks/Epics/Epic_II_kickoff_prompt_Task_316.md) (stale `Sprint_24_…_Task_316.md` duplicate collapsed to a pointer). Audit-only: 0 src/messages/scripts delta, output = `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md`.
+**Epic II — Global i18n Hardening: Task 316 DONE (this session), awaiting orchestrator review.** Output: `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` (83-site inventory, exact 4-locale parity, 1 gap found). Next queue after review: **317** (missing-key scanner) → **318** (notification locale-binding audit, cross-ref ready) → **320** (remediation, buckets ready in the report).
 
 **Task numbering — last used: 422 (new tasks). Epic II uses reserved 316–323.** **Next free (new): 423.**
 

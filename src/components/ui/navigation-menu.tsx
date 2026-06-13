@@ -111,6 +111,10 @@ function NavigationMenuPositioner({
         className={cn(
           "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none sm:data-[side=bottom]:before:top-[-10px] sm:data-[side=bottom]:before:right-0 sm:data-[side=bottom]:before:left-0",
           MOBILE_POSITIONER,
+          // max-w-(--available-width) above caps the Positioner below the full
+          // viewport width even with MOBILE_POSITIONER's inset-x-0!/w-auto! —
+          // remove the cap at <640 so the bottom sheet is edge-to-edge (Task 422).
+          "max-sm:max-w-none!",
           className
         )}
         {...props}

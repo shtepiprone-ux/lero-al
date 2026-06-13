@@ -9,11 +9,11 @@
 
 /**
  * Apply to Base-UI `Positioner` to override its inline-style anchor positioning
- * at <640px. Uses `!important` (Tailwind `!` prefix) to beat inline styles.
+ * at <640px. Uses `!important` (Tailwind v4 `!` suffix) to beat inline styles.
  */
 export const MOBILE_POSITIONER =
-  "max-sm:!fixed max-sm:!inset-x-0 max-sm:!bottom-0 max-sm:!top-auto max-sm:!w-auto max-sm:!h-auto " +
-  "max-sm:![transform:none] max-sm:![translate:none]"
+  "max-sm:fixed! max-sm:inset-x-0! max-sm:bottom-0! max-sm:top-auto! max-sm:w-auto! max-sm:h-auto! " +
+  "max-sm:[transform:none]! max-sm:[translate:none]!"
 
 /**
  * Apply to the popup surface (Base-UI `Popup`, custom dropdown div, etc.)

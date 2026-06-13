@@ -67,6 +67,31 @@ risk is inherent to two processes sharing one `.git`, so this rule remains MANDA
   active — `Remove-Item .git\index` then `git reset` (rebuilds the index from HEAD; working files are
   untouched), then `git status` to confirm a clean tree.
 
+## Sandbox-corruption screen → emit a native check, NEVER reject blind (owner P0, 2026-06-13) — MANDATORY
+
+When the orchestrator's Cowork **sandbox** view shows ANY sign of corruption — a file truncated mid-token,
+embedded NUL bytes, a failed `node --check` / `JSON.parse`, phantom `git` deletions, mass unexplained `-N`
+line removals in already-committed files, or a working tree far dirtier than the task's real scope — that is
+a **SCREEN signal, NOT a verdict.** The sandbox mount has repeatedly served stale (40+ min old) and truncated
+snapshots of this repo that the owner's native filesystem does NOT reproduce (observed again on the Task 423
+review, 2026-06-13: sandbox showed both Task-423 files truncated mid-token + a 38-file phantom-dirty tree with
+fake `tsconfig.json`/`vercel.json`/`vitest.config.ts` deletions; native showed both files intact, the gate
+`PASSED`, and exactly the 4 + 1 real Task-423 files).
+
+**Rule:** the orchestrator MUST NOT declare a defect, reject a task, route it back, call a file corrupt, or
+otherwise issue a verdict from a sandbox read alone. It MUST instead **emit the exact PowerShell command(s)
+for the owner to run natively** and **AWAIT the native result before any verdict.** Typical commands to hand
+over: `node --check <file>`, `node <gate-script>`, `Get-Content <file> -Tail N`, `git status`,
+`git diff --stat HEAD`. Native is ground truth:
+
+- native **CLEAN** → the sandbox reading was a mount artifact; proceed normally (re-screen, then approve / emit commit);
+- native **CONFIRMS** the corruption → only THEN is it a real clause-14 defect — auto-reject / route back (and, for a
+  phantom `.git/index`, hand over the recovery line `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset`).
+
+The orchestrator also never writes to the mount to "fix" a suspected corruption — it hands the owner a
+verification (and, if needed, recovery) command and waits. This applies equally to file-integrity
+(`agent-contract.md` clause 14) and to a phantom-corrupt `.git/index` (see "Environment & git safety" above).
+
 ## Orchestrator loop
 
 1. **Read state first.** `docs/backlog.md`, the relevant `/docs/` rule files, the relevant

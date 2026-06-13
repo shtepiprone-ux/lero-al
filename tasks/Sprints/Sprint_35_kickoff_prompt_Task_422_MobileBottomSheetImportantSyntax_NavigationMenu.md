@@ -14,11 +14,21 @@ Area:        `src/components/ui/mobile-bottom-sheet.ts` (`MOBILE_POSITIONER` tok
               `select.tsx`, `combobox`/`command.tsx`, `dropdown-menu.tsx`, `navigation-menu.tsx`,
               `popover.tsx` (grep to confirm exact consumer list)
 
-Pre-read (mandatory before any code change):
-1. `docs/agent-contract.md` (clauses 1–14; clause 11 = mobile <640 full-width + bottom-sheet gate).
+Pre-read (mandatory before any code change — this is the `rule-index.md` "Storybook / visual
+snapshot task" bundle, plus the Tailwind-governance pair because the bug IS a Tailwind v4
+important-syntax defect):
+1. `docs/agent-contract.md` (clauses 1–14; clause 11 = mobile <640 full-width + bottom-sheet gate;
+   clause 12 = rendered-evidence matrix; clause 13 = Storybook no-hardcode gate; clause 14 = file
+   integrity).
 2. `docs/backlog.md`.
-3. `docs/design-system.md` §26.2 (popup bottom-sheet contract) and §27.3 (assertion (e), Task 421).
-4. `docs/rule-index.md` pre-reads for UI/primitive task type.
+3. `docs/design-system.md` §26.2 (popup bottom-sheet contract), §26.6 (left-drawer exception),
+   §27.3 (assertion (e), Task 421 — what `screenshots:assert` proves).
+4. `docs/storybook-governance.md` (§14 enforced gates) + `docs/storybook-visual-snapshots.md`.
+5. `docs/component-rules.md` + `docs/qa-rules.md`.
+6. `docs/tailwind-governance.md` + `docs/tailwind-canonical-fragments.md` — **v4 important-modifier
+   is the SUFFIX form** (`fixed!`, `[transform:none]!`); the v3 prefix form (`!fixed`) is a silent
+   no-op. This is the canonical fact this whole task turns on.
+7. `docs/responsive-screenshot-governance.md` §MQ (machine-detection limits).
 
 ---
 
@@ -76,6 +86,14 @@ receive `MOBILE_POSITIONER` at all (their bottom-sheet behavior comes entirely f
 need to override inline anchor styles), or (b) the underlying Base-UI component doesn't set
 conflicting inline `position`/`transform` styles at all. **This must be verified empirically per
 primitive before changing the shared token** — see "Required investigation" below.
+
+**Scope note (verified by orchestrator at kickoff, 2026-06-13):** only `MOBILE_POSITIONER` carries
+the v3 `!`-prefix bug. Its sibling tokens in `mobile-bottom-sheet.ts` — `MOBILE_POPUP`,
+`MOBILE_SLIDE_ANIMATION`, `DRAG_HANDLE_WRAPPER`, `DRAG_HANDLE_BAR` — use **no** important modifier
+and are correct; do NOT touch them. The fix is confined to the one token (plus, only if step 3
+proves necessary, a targeted `navigation-menu.tsx` Popup class). The token's docstring (lines
+10–13) still says "Tailwind `!` prefix" — update that comment to the v4 suffix form as part of the
+fix so the next reader isn't misled.
 
 ## Required fix
 
@@ -146,19 +164,73 @@ primitive before changing the shared token** — see "Required investigation" be
 
 ---
 
+## Mobile <640 full-width gate (OWNER P0 — clause 11) — surfaces in scope
+
+This task makes a previously-dormant bottom-sheet token actually fire, so the <640 gate is the
+core acceptance, not a side-check. Required `max-sm` end-state for every surface touched:
+
+| Surface (open overlay at <640) | Required mobile end-state | Touch / label |
+|---|---|---|
+| `navigation-menu-popup` (the failing one) | `fixed inset-x-0 bottom-0`, full viewport width edge-to-edge (left=0, right=innerWidth), bottom-anchored, `rounded-t-2xl` only, `max-h-[90dvh]` internal scroll, drag-handle bar at top | ≥44px targets; sq/en/uk/it labels wrap, no clip, no h-scroll at 320 |
+| Dialog · Sheet (non-`left`) · Select · Popover · DropdownMenu · Command popups | MUST REMAIN full-width bottom sheet (already passing (e)) — verify no regression after the token activates | same |
+
+**Exemptions (must stay skipped, do NOT convert to bottom sheet):** `data-side="left"` drawers
+(AdminSidebar, §26.6) and the non-UI Leaflet map-marker popup — if any ambiguity arises on those,
+STOP & ASK, do not guess. At `≥640` all six primitives keep their existing anchored desktop
+positioning — the fix is `max-sm:`-scoped only and MUST NOT alter any `sm:`/`md:`+ behavior.
+
+## Rendered-evidence requirements (OWNER P0 — clauses 12 & 13; Sprint 33 gate) — BLOCKS approval
+
+"tsc=0 / build=✅" is NOT proof and will NOT close this task. The session log MUST contain:
+
+1. **The machine-produced `screenshots:assert` matrix** (full 52×14×4 = 2912 cells), with the
+   per-cell evidence for assertion (e) on all 6 popup primitives' open-state stories. **uk@320 /
+   uk@375 / uk@390 are mandatory stress cells** and must be shown explicitly PASS for
+   `NavigationMenu/MobileOpen`.
+2. **Before/after discrimination proof** — the pre-fix authoritative baseline is **2892/2912, 20
+   FAIL** (all `NavigationMenu/MobileOpen`, from Task 421). The post-fix run must be **2912/2912,
+   0 FAIL**. Paste BOTH summary lines; this delta is itself the proof that assertion (e) bites and
+   the fix closes exactly the 20 cells with zero collateral. If the post-fix run is not a clean
+   2912/2912, the task is INCOMPLETE — STOP and report per the Negative flow, do not approve-around it.
+3. **Global-consumer enumeration (Note 14 — fix every consumer, no diverging call site):** paste the
+   output of `grep -rn "MOBILE_POSITIONER\|MOBILE_POPUP" src/components/ui/` and, per consumer,
+   state its assertion-(e) result before and after. A primitive left unverified = INCOMPLETE.
+4. No `parameters.layout:'centered'|'padded'`, no raw string literals, no `Ukrainian*` story
+   introduced (`check:stories` green) — this task adds no new stories, but confirm the gate stays green.
+
+## Owner-native authoritative run (clause 14)
+
+The orchestrator's Cowork sandbox `screenshots:assert` is a SCREEN, not the verdict (mount can
+serve stale/fluctuating reads). The authoritative 2912/2912 result is the **owner-native** (Windows
+PowerShell) or CI run. Session log notes which environment produced the attached matrix; final
+sign-off uses the native number.
+
+---
+
 ## Acceptance criteria
 
-- **AC1:** `MOBILE_POSITIONER` in `mobile-bottom-sheet.ts` uses correct Tailwind v4
-  important-suffix syntax. Verifiable at file:line + `npm run build-storybook` succeeds with no
-  Tailwind warnings about unrecognized classes.
-- **AC2:** Full `screenshots:assert` (2912 cells) — `NavigationMenu/MobileOpen` × all 4 locales ×
-  all `<640` viewports → `popupBottomSheetAtMobile: true`. 0 new regressions in the other 5
-  primitives' (e) results or anywhere else in the matrix vs. the pre-fix baseline (2892/2912,
-  20 FAIL — all `NavigationMenu/MobileOpen`).
-- **AC3:** If `navigation-menu.tsx` required an additional targeted fix (step 3), it is
-  documented in the session log with before/after class diffs + reasoning; `npx tsc --noEmit`,
-  `npm run lint`, `npm run check:design-tokens` all green.
-- **AC4 (clause 14):** every touched file — 0 NUL bytes, no BOM, compiles. Paste integrity
+> Each AC maps to the Positive flow (PF) or Negative flow (NF) above.
+
+- **AC1 (PF step 1):** `MOBILE_POSITIONER` in `mobile-bottom-sheet.ts` uses correct Tailwind v4
+  important-suffix syntax, and its docstring (lines 10–13) no longer says "Tailwind `!` prefix".
+  Verifiable at file:line + `npm run build-storybook` succeeds with no Tailwind warnings about
+  unrecognized classes.
+- **AC2 (PF steps 2–3):** Full `screenshots:assert` (2912 cells) — `NavigationMenu/MobileOpen` ×
+  all 4 locales × all `<640` viewports → `popupBottomSheetAtMobile: true`, **uk@320/375/390
+  shown explicitly**. Final result **2912/2912 PASS, 0 FAIL**.
+- **AC2b (rendered-evidence gate, clause 12):** the session log contains the rendered matrix AND
+  both summary lines — pre-fix **2892/2912 (20 FAIL)** → post-fix **2912/2912 (0 FAIL)** — proving
+  the fix closes exactly the 20 `NavigationMenu/MobileOpen` cells with zero collateral. Owner-native
+  or CI is the authoritative number (clause 14).
+- **AC3 (PF step 4 / NF "other 5 regress"):** 0 new regressions in the other 5 primitives' (e)
+  results or anywhere else in the matrix vs. the pre-fix baseline. Per-consumer before/after stated.
+- **AC4 (NF "nav-menu still fails"):** if `navigation-menu.tsx` required an additional targeted fix
+  (Required-fix step 3), it is documented in the session log with before/after class diffs +
+  reasoning; `npx tsc --noEmit`, `npm run lint`, `npm run check:design-tokens` all green. If the
+  token fix alone sufficed, state that explicitly (no `navigation-menu.tsx` change).
+- **AC5 (Note 14 — every consumer):** paste `grep -rn "MOBILE_POSITIONER\|MOBILE_POPUP"
+  src/components/ui/`; every listed consumer has a stated assertion-(e) result before and after.
+- **AC6 (clause 14):** every touched file — 0 NUL bytes, no BOM, compiles. Paste integrity
   transcript in session log.
 - `docs/backlog.md` updated; session log under `docs/sessions/` with "Files Changed" table.
   Do NOT emit `git add`/`git commit`.

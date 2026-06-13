@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-13 — Task 407 (Epic JJ final — flip check:design-tokens to STRICT/blocking) — gate flipped, green-on-flip.** `.github/workflows/governance-pr.yml`: design-token step now runs `check:design-tokens:strict`, `continue-on-error` removed, renamed "Design token strict gate (blocking — 0 unsuppressed raw values)". `package.json`: bare `check:design-tokens` → `--strict`; new `check:design-tokens:report` → `--report` (inventory preserved); `:strict`/`:update-allowlist` unchanged. `scripts/check-design-tokens.mjs` and `scripts/design-tokens-allowlist.json` untouched (byte-identical to `6a0b9e623`). Positive: clean tree → exit 0 (native transcript). Negative: planted `text-[13px]` → exit 1 (named file:line), reverted → exit 0; missing-reason marker → exit 1; stale marker → exit 1; `:report` on planted violation → exit 0. `docs/design-system.md` §23 final-contract block + §23.3/§23.4 rollout row updated. `node --check`/`tsc`/`lint` clean. **Epic JJ complete.** **Task 422 still PENDING COMMIT.**
+**2026-06-13 — Task 407 (Epic JJ final — flip check:design-tokens to STRICT/blocking) — APPROVED + COMMITTED (`84037666f`).** `governance-pr.yml` design-token step → `check:design-tokens:strict`, `continue-on-error` removed (no other job/step touched); `package.json` bare `check:design-tokens` → `--strict` + new `check:design-tokens:report`; `design-system.md` §23 final-contract + §23.3/§23.4 rows. Detector/allowlist untouched (`6a0b9e623`). Orchestrator diff review + owner-native clause-14 confirm (sandbox showed truncation/NUL on all 3 files — confirmed a Cowork mount artifact; native `JSON.parse`/0-NUL/tail clean). Green-on-flip, 5 negative plants exit 1. **Epic JJ CLOSED.** Sprint 35 fully committed (408 `6a0b9e623`, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`).
 
 ## Pending Action Items
 
@@ -17,19 +17,9 @@
 
 ## Next Immediate Tasks
 
-**Active queue = Sprint 35 (Epic JJ tokens + global responsive rework).** Per-task detail in `docs/sessions/`; closed-task ledger in [`backlog-archive.md`](backlog-archive.md).
+**Sprint 35 (Epic JJ tokens + global responsive rework) — FULLY COMMITTED, nothing pending.** All slices + Epic JJ landed on `main` (408 `6a0b9e623`, 419 committed, 420 `19c39740d`, 421 `44227e995`, 422 `4561a6e82`, 407 `84037666f`). Per-task detail + commit SHAs in [`backlog-archive.md`](backlog-archive.md); session logs in `docs/sessions/`.
 
-**Live commit/review state:**
-
-- **Bundle 410 + 411 + 412 + 413 + 416 + 417** — APPROVED + COMMITTED (`50c93fa8e` Task411 incl. 410 ASSERT_STORIES + 412 §MQ; `b44b996d4`/`b9441c60b` Task416; `8d952a547`/`bca52538e` Task417). Matrix green (2520/2520).
-- **Slice 2 (414/415) — APPROVED + COMMITTED** (`bd2adc106` / `def476ea2`). DONE.
-- **Task 418 + 418 REWORK — APPROVED + COMMITTED** — owner-native 3× `screenshots:assert` = 2520/2520, 0 FAIL (flaky-recovered 1/0/0); deterministic gate satisfied.
-- **Task 419 (Slice 4b) — APPROVED + COMMITTED** — orchestrator diff review (AdminSettings/AdminUserAvatar full-width verified) + owner-native clause-14 gate: focused QA 144/144, `screenshots:assert` 2520/2520, 0 FAIL (flaky-recovered 1, tolerated).
-- **Task 420 (Slice 5) — APPROVED, PENDING COMMIT** — orchestrator diff review (`FeaturedListings`/`SimilarListings` §8.3 fixes match canon, scope-clean, stories clean) + owner-native `screenshots:assert` 2520/2520, 0 FAIL, flaky-recovered 0 (authoritative gate MET); focused QA 88/88 PASS; `tsc`/`lint`/`check:*` green. Commit command emitted — owner to run.
-- **Task 421 (Slice 6) — APPROVED, PENDING COMMIT** — orchestrator diff review (2026-06-13): diff matches §10 Files-Changed table; assertions (d)/(e) implemented with `checkedAny*`/null three-state (AC9); `data-icon-only` + `navigation-menu-popup` markers inert; both negative-flow plants confirmed reverted (`button.stories.tsx`/`dialog.stories.tsx` byte-identical to HEAD); clause-14 NUL/BOM/parse screen clean; `ASSERT_STORIES` 45→52, matrix 2912. Final `screenshots:assert` 2892/2912, 20 FAIL = 1 real Decision-B finding (`NavigationMenu/MobileOpen`, Tailwind v3/v4 `!important` syntax bug), 0 violations in original 45 stories → Task 422 follow-up filed. `tsc`/`lint`/`check:*` green. Commit command emitted — owner to run.
-- **Task 422 — APPROVED, PENDING COMMIT** — orchestrator diff review (v4 `!`-suffix fix in `mobile-bottom-sheet.ts` + scoped `max-sm:max-w-none!` in `navigation-menu.tsx`, AC3 documented; both files intact natively — sandbox truncation was a clause-14 mount artifact) + evidence addendum §9 (explicit uk@320/375/390 cells + literal `MOBILE_POSITIONER\|MOBILE_POPUP` grep, 4 real consumers, Sheet/Dialog/Command correctly non-consumers) verified against ground-truth grep. **Owner-native `screenshots:assert` 2912/2912, 0 FAIL** (flaky-recovered 2, unrelated: `AdminEmailTemplatesManager/it/canonical-560`, `RVS/Populated/uk/canonical-810`) — authoritative gate MET; 20 prior `NavigationMenu/MobileOpen` FAILs all PASS, 0 regressions. `tsc`/`lint`/`check:design-tokens`/`build-storybook` green; clause-14 clean. Commit command emitted — owner to run. Session: `docs/sessions/2026-06-13-task422-mobile-positioner-v4-syntax-navmenu.md`.
-
-**Ordering:** **Slice 5** (Task 420, approved — pending commit) → **Slice 6** (Task 421, approved — pending commit) → **Task 422** (v4 `!`-suffix + NavigationMenu bottom-sheet — APPROVED, pending commit) → resume **Epic JJ 408 → 407**.
+**Next queue:** owner to pick the next epic from the open list below (Y / BB / DD / HH / II). No active sprint in flight.
 
 **Task numbering — last used: 422.** **Next free: 423.**
 

@@ -729,10 +729,23 @@ Narrowly-scoped semantic layout tokens for the listing detail gallery frame only
 
 ---
 
-## §23 — `check:design-tokens` gate (report → strict in Task 407) — Task 402, Epic JJ Phase 2
+## §23 — `check:design-tokens` gate — BLOCKING (Task 407, Epic JJ final) — Task 402, Epic JJ Phase 2
 
-> **The gate runs in report mode now (always exit 0). Strict mode (exit 1 on violation)
-> will be wired to CI in Task 407 after the refactor surface (Tasks 403–406) is clean.**
+> **FINAL CONTRACT (Task 407, Epic JJ complete): `check:design-tokens` is now STRICT and
+> BLOCKING — no baseline.** The bare `npm run check:design-tokens` and
+> `npm run check:design-tokens:strict` both run `--strict`: any **unsuppressed** raw style-value
+> violation, missing-reason marker, or stale marker exits **1**, failing the local script AND
+> the `governance-pr` CI job (the "Design token strict gate" step, no `continue-on-error`).
+> "Unsuppressed" means not covered by the canonical, frozen (Task 408) exemption mechanisms:
+> inline `// design-tokens-allow: <exact value> — <reason>` markers (incl. the
+> JSX-comment-wrapped form, §23.1.a) and the path-level `scripts/design-tokens-allowlist.json`
+> (§23.2.a). The report/inventory tool is preserved separately as
+> `npm run check:design-tokens:report` (non-blocking, for inventory only).
+>
+> **Escalation guardrail (standing policy, carried from Tasks 404–407):** if the same bespoke
+> off-scale value is inline-suppressed **3+ times** across areas, it should be escalated as a
+> token-candidate for owner/orchestrator review rather than suppressed again. No action this
+> task — noted as standing policy.
 
 ### §23.1 — What it detects
 
@@ -867,8 +880,9 @@ inside 404–406 — only escalate for owner decision.
 
 | npm script | Behavior |
 |---|---|
-| `npm run check:design-tokens` | Report mode — prints inventory, **always exit 0** |
-| `npm run check:design-tokens:strict` | Strict mode — exit 1 on any violation (NOT in CI yet) |
+| `npm run check:design-tokens` | **Strict mode (default, Task 407)** — exit 1 on any unsuppressed violation, missing-reason, or stale marker. Blocks CI. |
+| `npm run check:design-tokens:strict` | Same as above (explicit alias, kept for clarity) |
+| `npm run check:design-tokens:report` | Report mode — prints inventory, **always exit 0** for raw-value findings (missing-reason/stale still exit 1). Non-blocking inventory tool. |
 | `npm run check:design-tokens:update-allowlist` | Seed/refresh allowlist stubs from current scan |
 
 ### §23.4 — Rollout plan
@@ -878,7 +892,7 @@ inside 404–406 — only escalate for owner decision.
 | **402** (done) | Detector built + report mode wired to CI (`continue-on-error: true`) |
 | **403–406** | Refactor consumers: replace raw values with tokens from §22 |
 | **408** (done) | Detector hardening: JSX-comment strip (§23.1.a), inline-zIndex detect+suppress (§23.2.b), negative-offset/var()/function-wrapped audit (§23.1.b — all 3 rows closed), planted-violation test harness (§23.5, 25 tests). §D `--z-table-sticky` decision recorded: KEEP-SUPPRESSED (§23.2.b). All 3 blind spots closed — Task 407 strict flip is safe. |
-| **407** | Flip CI step to strict (`continue-on-error: false`); remove this note |
+| **407** (done) | Strict flip landed: `governance-pr.yml` design-token step now runs `check:design-tokens:strict` with `continue-on-error` removed (blocking); `package.json` bare `check:design-tokens` repointed to `--strict`; `check:design-tokens:report` added for the preserved inventory path. Green-on-flip (0 violations on clean tree, native transcript). **Epic JJ complete.** |
 
 ### §23.5 — Detector test harness (Task 408, §E)
 
@@ -910,8 +924,8 @@ and a valid/commented/var/suppressed case (must NOT be caught or must be suppres
 
 **25 tests, all passing** (`npx vitest run scripts/__tests__/check-design-tokens.test.ts`).
 
-This harness is the evidence that the gate's positive AND negative paths are exercised before
-Task 407 flips it to strict/blocking.
+This harness is the evidence that the gate's positive AND negative paths are exercised, and
+backs the Task 407 strict/blocking flip (now landed — see §23.4).
 
 ---
 

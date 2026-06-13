@@ -50,8 +50,9 @@
     "check:story-coverage": "node scripts/check-story-coverage.mjs",
     "check:story-coverage:report": "node scripts/check-story-coverage.mjs --report",
     "check:story-coverage:update-exempt": "node scripts/check-story-coverage.mjs --update-exempt",
-    "check:design-tokens": "node scripts/check-design-tokens.mjs --report",
+    "check:design-tokens": "node scripts/check-design-tokens.mjs --strict",
     "check:design-tokens:strict": "node scripts/check-design-tokens.mjs --strict",
+    "check:design-tokens:report": "node scripts/check-design-tokens.mjs --report",
     "check:design-tokens:update-allowlist": "node scripts/check-design-tokens.mjs --update-allowlist",
     "new:story": "node scripts/scaffold-story.mjs"
   },

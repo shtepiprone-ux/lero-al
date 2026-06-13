@@ -65,9 +65,8 @@ jobs:
       - name: Story coverage gate (fail-on-new; exemption allowlist)
         run: npm run check:story-coverage
 
-      - name: Design token report — report only (strict gate lands in Task 407)
-        run: npm run check:design-tokens
-        continue-on-error: true
+      - name: Design token strict gate (blocking — 0 unsuppressed raw values)
+        run: npm run check:design-tokens:strict
 
       - name: Full governance report (summary)
         if: always()

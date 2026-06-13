@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-13 — Task 408 (check:design-tokens detector hardening) — APPROVED + COMMITTED (`6a0b9e623`).** All 3 blind spots closed: §A JSX `{/* */}` comment strip; §B inline `zIndex`/`'z-index'` detect + fixed un-suppressible marker bug; §C rows 1–3 incl. §C-R2 function-wrapped `calc/min/max/clamp` flagged unless `var()`-anchored (no broad viewport exemption) — 6 in-tree pure-literals exact-suppressed across `layout`/`Combobox`/`switch`/`tabs`/`SaveSearchButton`. §D = KEEP-SUPPRESSED (no token). Orchestrator diff review ✅ (11 files, §C-R2 `filter` hook confirmed in scan loop). **Owner-native gate green:** vitest 25/25, `--report` 0, `--strict` exit 0, `node --check`/`tsc`/`lint` clean (clause-14 satisfied; earlier sandbox truncation was a mount artifact). **All 3 detector blind spots closed → Task 407 strict flip is now unblocked (next active task).** Session: `docs/sessions/2026-06-13-task408-design-token-detector-hardening.md`. **Task 422 still PENDING COMMIT.**
+**2026-06-13 — Task 407 (Epic JJ final — flip check:design-tokens to STRICT/blocking) — gate flipped, green-on-flip.** `.github/workflows/governance-pr.yml`: design-token step now runs `check:design-tokens:strict`, `continue-on-error` removed, renamed "Design token strict gate (blocking — 0 unsuppressed raw values)". `package.json`: bare `check:design-tokens` → `--strict`; new `check:design-tokens:report` → `--report` (inventory preserved); `:strict`/`:update-allowlist` unchanged. `scripts/check-design-tokens.mjs` and `scripts/design-tokens-allowlist.json` untouched (byte-identical to `6a0b9e623`). Positive: clean tree → exit 0 (native transcript). Negative: planted `text-[13px]` → exit 1 (named file:line), reverted → exit 0; missing-reason marker → exit 1; stale marker → exit 1; `:report` on planted violation → exit 0. `docs/design-system.md` §23 final-contract block + §23.3/§23.4 rollout row updated. `node --check`/`tsc`/`lint` clean. **Epic JJ complete.** **Task 422 still PENDING COMMIT.**
 
 ## Pending Action Items
 
@@ -66,7 +66,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 | **DD — Admin Audit & History Hygiene** | 246 open | DD.1 admin can clear change history (gated + audited) | [`Epic_DD_…`](../tasks/Epics/Epic_DD_Admin_Audit_and_History_Hygiene.md) |
 | **HH — Admin UX System** | 310 (P4), 311 (P5, partial), 313 (P6) | 308/309 page-migration need remains — re-scope vs canonical primitives | [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md) |
 | **II — Global i18n Hardening** | 316–323 (planned) | P1 audit + scanner → P2 remediation → P3 CI gate | [`Epic_II_…`](../tasks/Epics/Epic_II_Global_i18n_Hardening.md) |
-| **JJ — Design Variables (single-source tokens)** | 401/402/403 ✅ committed, 404–406 done, 408 done (pending commit), 407 (final strict flip) | Project-wide `@theme` token layer + strict no-raw-value gate (report-mode → blocking) | [`Epic_JJ_…`](../tasks/Epics/Epic_JJ_Design_Variables_Single_Source.md) |
+| **JJ — Design Variables (single-source tokens)** | 401–408 ✅, 407 strict flip landed — **Epic JJ CLOSED** | Project-wide `@theme` token layer + strict no-raw-value gate (report-mode → blocking, now blocking) | [`Epic_JJ_…`](../tasks/Epics/Epic_JJ_Design_Variables_Single_Source.md) |
 
 > **Standing governance (codified in `/docs`):** Notes 18–23 (`ai-behavior.md`) + `agent-contract.md` (P0, clauses 1–14) + `rule-index.md` (task-type pre-reads) + Positive+Negative flow rule (`orchestrator-role.md`). Non-optional acceptance gates on every task.
 

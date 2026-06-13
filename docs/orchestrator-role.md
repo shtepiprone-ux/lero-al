@@ -92,6 +92,36 @@ The orchestrator also never writes to the mount to "fix" a suspected corruption 
 verification (and, if needed, recovery) command and waits. This applies equally to file-integrity
 (`agent-contract.md` clause 14) and to a phantom-corrupt `.git/index` (see "Environment & git safety" above).
 
+## Orchestrator NEVER runs git or integrity checks in the Cowork sandbox (owner P0, 2026-06-13) — MANDATORY
+
+The repeated "mount artifacts" the owner sees (phantom `.git/index` objects, over-dirty trees, false NUL
+bytes / truncation on files that are actually intact) are NOT a bug to patch — they are an inherent property
+of a Linux sandbox mounting a Windows-hosted git repo through a caching bridge. The orchestrator cannot fix
+the mount, but it generates most of the noise itself by reading through it. **Eliminate the self-inflicted
+share by changing orchestrator behavior, per these standing rules:**
+
+- **🔴 Do NOT run ANY git in the sandbox — not even read-only.** No `git status`, `git diff`, `git log`,
+  `git show`, `git rev-parse` via the Cowork bash tool. Two git processes touching one `.git` (the owner's
+  native git + the sandbox's git) corrupt `.git/index` — this is the entire source of the `fatal: unable to
+  read <hash>` phantom-object errors and the bogus over-dirty trees (observed again 2026-06-13: sandbox
+  showed a 25-file dirty tree incl. `src/`/`package.json` while native `git status` showed only the real
+  6-file Task-318 docs change). **All git facts — `status`, `diff`, `diff --stat`, SHAs, blame — come from
+  the owner's NATIVE PowerShell run via emitted commands, never from sandbox git.** If a single committed
+  blob is genuinely needed for review, ask the owner to paste it; do not reach for sandbox `git show`.
+- **🔴 Use the Read tool, NOT bash-mount reads, to inspect file content and screen integrity.** The Cowork
+  bash mount has repeatedly served stale/partially-zeroed cache pages — e.g. 2026-06-13 `tr -cd '\000' <
+  docs/backlog.md` reported **1245 NUL bytes** on a file the Read tool returned fully intact and native
+  PowerShell confirmed `NUL=0`. The Read tool went through a different, reliable path. So: read files via
+  the Read tool; treat any bash `tr -cd`/`wc -c`/`tail` integrity numbers as **advisory screen only**, never
+  as a verdict. The authoritative clause-14 integrity check is the owner's NATIVE PowerShell pass (or CI).
+- **Reaffirmed: sandbox = SCREEN, native = VERDICT.** A sandbox-side corruption/dirty signal is a prompt to
+  emit a native verification command and AWAIT the owner's result — never a reason to reject a task, declare
+  a file corrupt, or write to the mount to "fix" it (see "Sandbox-corruption screen" above + `agent-contract.md`
+  clause 14). When sandbox and native disagree, native wins every time.
+- **Realistic expectation:** these rules remove the index-corruption class entirely (single git writer) and
+  almost all false NUL/truncation alarms. Residual stale reads may still occur (the mount cache is outside
+  the orchestrator's control); that is exactly why the native run, not the sandbox, issues every verdict.
+
 ## Orchestrator loop
 
 1. **Read state first.** `docs/backlog.md`, the relevant `/docs/` rule files, the relevant

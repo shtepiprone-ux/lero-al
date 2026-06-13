@@ -1,0 +1,238 @@
+{
+  "version": 1,
+  "source": "docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md §2 (Task 316)",
+  "description": "Reviewable, human-maintained list of every namespace.key resolvable from a dynamic t() call site. check-i18n-dynamic.mjs verifies each (namespace + key) pair exists in messages/{sq,en,uk,it}.json. When you add a new value to one of the source enums/arrays cited in 'note', add the corresponding key here AND to all 4 locale files (docs/i18n-rules.md).",
+  "entries": [
+    {
+      "id": "listing-status",
+      "site": "src/lib/i18n/listingStatusLabel.ts:39",
+      "namespace": "listing",
+      "keys": ["status_pending", "status_active", "status_inactive", "status_sold", "status_rented", "status_archived", "status_banner_sold", "status_banner_rented", "status_banner_archived"],
+      "note": "ListingStatus full-6 (audit §2 sites #42 listing-ns, #47) + status_banner_* (#1, reachable sold/rented/archived). Also resolved at ListingCard.tsx:306 (#47) and StoryListingCard.tsx:111 (#51, sold/rented)."
+    },
+    {
+      "id": "cabinet-status",
+      "site": "src/lib/i18n/listingStatusLabel.ts:39",
+      "namespace": "cabinet",
+      "keys": ["status_pending", "status_active", "status_inactive", "status_sold", "status_rented", "status_archived"],
+      "note": "ListingStatus full-6 (audit §2 site #42 cabinet-ns) — identical to LISTING_STATUS_CODES via #44 ListingsTab.tsx:309."
+    },
+    {
+      "id": "listing-action-disabled",
+      "site": "src/modules/listings/components/ListingCard.tsx:135",
+      "namespace": "listing",
+      "keys": ["action_disabled_sold", "action_disabled_rented"],
+      "note": "audit §2 sites #45 (ListingCard.tsx:135), #49 (ListingContact.tsx:68) — reachable sold|rented via isListingClosed()."
+    },
+    {
+      "id": "listing-property-type",
+      "site": "src/app/[locale]/listings/[slug]/page.tsx:397",
+      "namespace": "listing",
+      "keys": ["property_type_apartment", "property_type_house", "property_type_room", "property_type_land", "property_type_commercial", "property_type_office", "property_type_garage", "property_type_parking", "property_type_warehouse", "property_type_other"],
+      "note": "PropertyType (10) — audit §2 sites #2, 46, 48, 50."
+    },
+    {
+      "id": "admin-currency-providers-mode",
+      "site": "src/components/admin/AdminExchangeProvidersManager.tsx:132",
+      "namespace": "admin.currency.providers",
+      "keys": ["mode_auto", "mode_manual", "mode_hybrid"],
+      "note": "audit §2 sites #3-5 — ('auto'|'manual'|'hybrid')."
+    },
+    {
+      "id": "admin-inquiries-filter",
+      "site": "src/components/admin/AdminInquiriesManager.tsx:201",
+      "namespace": "admin.inquiries",
+      "keys": ["filter_new", "filter_in_progress", "filter_closed"],
+      "note": "audit §2 site #6 — 'all' branch uses static filter_all (deliberately excluded, not part of the dynamic enum)."
+    },
+    {
+      "id": "admin-inquiries-filter-mailbox",
+      "site": "src/components/admin/AdminInquiriesManager.tsx:214",
+      "namespace": "admin.inquiries",
+      "keys": ["filter_mailbox_support", "filter_mailbox_sales"],
+      "note": "audit §2 site #7 — 'all' branch uses static filter_mailbox_all (deliberately excluded)."
+    },
+    {
+      "id": "admin-inquiries-status",
+      "site": "src/components/admin/AdminInquiriesManager.tsx:238",
+      "namespace": "admin.inquiries",
+      "keys": ["status_new", "status_in_progress", "status_closed"],
+      "note": "audit §2 site #8 — ContactStatus."
+    },
+    {
+      "id": "admin-permissions-keys",
+      "site": "src/components/admin/AdminPermissionsManager.tsx:104",
+      "namespace": "admin.permissions.keys",
+      "keys": ["listings_delete", "listings_set_premium", "users_create", "users_change_role", "users_soft_delete", "users_hard_delete", "locations_manage", "settings_manage", "legal_manage", "reports_manage"],
+      "note": "PERMISSION_KEYS (10) — audit §2 sites #9-12."
+    },
+    {
+      "id": "admin-permissions-descriptions",
+      "site": "src/components/admin/AdminPermissionsManager.tsx:107",
+      "namespace": "admin.permissions.descriptions",
+      "keys": ["listings_delete", "listings_set_premium", "users_create", "users_change_role", "users_soft_delete", "users_hard_delete", "locations_manage", "settings_manage", "legal_manage", "reports_manage"],
+      "note": "PERMISSION_KEYS (10) — audit §2 sites #9-12, identical set."
+    },
+    {
+      "id": "admin-reports-status",
+      "site": "src/components/admin/AdminReportsManager.tsx:96",
+      "namespace": "admin.reports",
+      "keys": ["status_pending", "status_reviewed", "status_resolved", "status_dismissed"],
+      "note": "ReportStatus — audit §2 sites #13, 15."
+    },
+    {
+      "id": "admin-reports-filter",
+      "site": "src/components/admin/AdminReportsManager.tsx:253",
+      "namespace": "admin.reports",
+      "keys": ["filter_pending", "filter_reviewed", "filter_resolved", "filter_dismissed"],
+      "note": "FILTERS — audit §2 site #14; 'all' branch uses static filter_all (deliberately excluded)."
+    },
+    {
+      "id": "admin-support-role",
+      "site": "src/components/admin/AdminSupportManager.tsx:121",
+      "namespace": "admin.support",
+      "keys": ["role_admin", "role_moderator", "role_agent", "role_user"],
+      "note": "UserRole (4) — audit §2 sites #16, 18."
+    },
+    {
+      "id": "admin-support-user-status",
+      "site": "src/components/admin/AdminSupportManager.tsx:123",
+      "namespace": "admin.support",
+      "keys": ["user_status_active", "user_status_blocked", "user_status_inactive"],
+      "note": "UserStatus (3) — audit §2 site #17. 🔴 GAP #1 (Task 320 fill target). Baselined in scripts/i18n-dynamic-baseline.json — owner: Task 320."
+    },
+    {
+      "id": "admin-support-complaint-type",
+      "site": "src/components/admin/AdminSupportManager.tsx:325",
+      "namespace": "admin.support",
+      "keys": ["complaint_type_fraud_or_scam", "complaint_type_fake_listing_or_profile", "complaint_type_harassment_or_abuse", "complaint_type_inappropriate_content", "complaint_type_spam", "complaint_type_payment_or_deposit_issue", "complaint_type_duplicate_or_impersonation", "complaint_type_other"],
+      "note": "ComplaintType (8) — audit §2 sites #19, 22, 23, 26."
+    },
+    {
+      "id": "admin-support-support-status",
+      "site": "src/components/admin/AdminSupportManager.tsx:333",
+      "namespace": "admin.support",
+      "keys": ["support_status_open", "support_status_in_progress", "support_status_resolved", "support_status_closed"],
+      "note": "TicketStatus (4) — audit §2 sites #20, 21, 24, 25, 27; #25's falsy branch uses static filter_all_status (deliberately excluded)."
+    },
+    {
+      "id": "admin-user-profile-profile-types",
+      "site": "src/components/admin/AdminUserCreate.tsx:111",
+      "namespace": "admin.user_profile.profile_types",
+      "keys": ["admin", "moderator", "private", "agent", "developer"],
+      "note": "PROFILE_TYPES (5) — audit §2 site #28."
+    },
+    {
+      "id": "admin-user-profile-validation-phone",
+      "site": "src/components/admin/AdminUserCreate.tsx:146",
+      "namespace": "admin.user_profile.validation",
+      "keys": ["error_phone_invalid", "error_phone_no_country_code", "error_phone_digits_only"],
+      "note": "PhoneErrorKey (3 reachable) — audit §2 sites #29-34. 'error_phone_country_mismatch' is deliberately EXCLUDED — dead union member, never reaches t() (audit §1a)."
+    },
+    {
+      "id": "admin-user-profile-statuses",
+      "site": "src/components/admin/AdminUserProfile.tsx:1049",
+      "namespace": "admin.user_profile.statuses",
+      "keys": ["active", "blocked", "inactive"],
+      "note": "UserStatus (3) — audit §2 sites #35, 36."
+    },
+    {
+      "id": "admin-users-role",
+      "site": "src/components/admin/AdminUsersTable.tsx:155",
+      "namespace": "admin.users",
+      "keys": ["role_admin", "role_moderator", "role_agent", "role_user"],
+      "note": "UserRole (4) — audit §2 sites #37, 40."
+    },
+    {
+      "id": "admin-users-user-status",
+      "site": "src/components/admin/AdminUsersTable.tsx:165",
+      "namespace": "admin.users",
+      "keys": ["user_status_active", "user_status_blocked", "user_status_inactive"],
+      "note": "UserStatus (3) — audit §2 sites #38, 41."
+    },
+    {
+      "id": "admin-users-filter-status",
+      "site": "src/components/admin/AdminUsersTable.tsx:332",
+      "namespace": "admin.users",
+      "keys": ["filter_status_active", "filter_status_inactive", "filter_status_blocked"],
+      "note": "STATUS_FILTERS — audit §2 site #39; '' branch uses static filter_status_all (deliberately excluded)."
+    },
+    {
+      "id": "cabinet-filter-visibility",
+      "site": "src/modules/cabinet/components/ListingsTab.tsx:184",
+      "namespace": "cabinet",
+      "keys": ["filter_ALL", "filter_VISIBLE", "filter_HIDDEN", "filter_ARCHIVED", "filter_CLOSED"],
+      "note": "VALID_VISIBILITY_GROUPS (5) — audit §2 site #43. 'cabinet.filter_PREMIUM' exists in messages but is out-of-family (audit §7.1 row 18 — used via a separate static t('filter_PREMIUM') call, not this dynamic enum)."
+    },
+    {
+      "id": "cabinet-no-listings",
+      "site": "src/modules/cabinet/components/ListingsTab.tsx:250",
+      "namespace": "cabinet",
+      "keys": ["no_listings_VISIBLE", "no_listings_HIDDEN", "no_listings_ARCHIVED", "no_listings_CLOSED", "no_listings_PREMIUM"],
+      "note": "audit §2 site #56."
+    },
+    {
+      "id": "listing-type",
+      "site": "src/app/[locale]/listings/[slug]/page.tsx:396",
+      "namespace": "listing",
+      "keys": ["sale", "rent"],
+      "note": "ListingType (2) — audit §2 sites #52, 65, 67, 68, 69, 70, 79, 83."
+    },
+    {
+      "id": "listing-presentation-engine-labels",
+      "site": "src/app/[locale]/listings/[slug]/page.tsx:438",
+      "namespace": "listing",
+      "keys": ["rooms", "bedrooms", "bathrooms", "toilets", "area_gross_label", "area_net", "floor", "year_built"],
+      "note": "presentationEngine card/detail labelKeys (FIELD_DEFAULTS, featureGroup:'primary') — audit §2 sites #53, 54. Includes the LABEL_KEYS bedrooms/bathrooms/toilets set (#63)."
+    },
+    {
+      "id": "listing-heating-wall-offer-labels",
+      "site": "src/modules/listings/components/form/ButtonGroupField.tsx:35",
+      "namespace": "listing",
+      "keys": ["heating_label", "wall_type_label", "offer_type", "heating_electric", "heating_gas", "heating_central", "heating_wood", "heating_none", "wall_brick", "wall_concrete", "wall_panel", "wall_wood", "wall_other", "offer_owner", "offer_agency", "offer_developer"],
+      "note": "LABEL_KEYS heating/wall/offer + value sets — audit §2 sites #57, 58; also resolved via #55 (presentationEngine detail-attr valueKey heating_*/wall_* prefixes)."
+    },
+    {
+      "id": "listing-condition-land-labels",
+      "site": "src/modules/listings/components/form/EnumSelectorField.tsx:41",
+      "namespace": "listing",
+      "keys": ["condition_label", "land_legal_status", "land_zoning", "land_development_potential", "condition_new_build", "condition_good", "condition_needs_repair", "condition_needs_renovation", "condition_under_construction", "land_legal_agricultural", "land_legal_urban", "land_legal_forest", "land_legal_pasture", "land_zoning_residential", "land_zoning_commercial", "land_zoning_tourism", "land_zoning_industrial", "land_zoning_mixed_use", "land_dev_buildable", "land_dev_change_of_use_required", "land_dev_non_buildable"],
+      "note": "LABEL_KEYS condition/land_* + value sets — audit §2 sites #59, 60; also resolved via #55 (presentationEngine detail-attr valueKey condition_* prefix)."
+    },
+    {
+      "id": "listing-purchase-conditions",
+      "site": "src/modules/listings/components/form/MultiToggleField.tsx:38",
+      "namespace": "listing",
+      "keys": ["purchase_conditions", "purchase_installment", "purchase_mortgage", "purchase_assignment", "purchase_negotiable", "purchase_no_commission"],
+      "note": "audit §2 sites #61, 62."
+    },
+    {
+      "id": "listing-badges",
+      "site": "src/modules/listings/components/ListingCard.tsx:194",
+      "namespace": "listing",
+      "keys": ["status_sold", "status_rented", "status_archived", "new", "price_reduced"],
+      "note": "getBadges() labels — audit §2 sites #64, 66. status_sold/status_rented/status_archived duplicate the 'listing-status' entry above (harmless, checked once via the distinct-key set)."
+    },
+    {
+      "id": "listing-market-type",
+      "site": "src/modules/listings/components/ListingsFilters.tsx:154",
+      "namespace": "listing",
+      "keys": ["market_type_secondary", "market_type_new_building"],
+      "note": "MARKET_TYPES (2) — audit §2 site #71."
+    },
+    {
+      "id": "listing-layout-features",
+      "site": "src/modules/listings/components/ListingsFilters.tsx:254",
+      "namespace": "listing",
+      "keys": ["layout_studio", "layout_free", "layout_duplex", "layout_penthouse", "layout_small_family"],
+      "note": "LAYOUT_FEATURES (5) — audit §2 site #73."
+    },
+    {
+      "id": "listing-sort-options",
+      "site": "src/modules/listings/components/ListingsSortBar.tsx:79",
+      "namespace": "listing",
+      "keys": ["sort_newest", "sort_price_asc", "sort_price_desc", "sort_area_desc", "sort_area_asc"],
+      "note": "SORT_OPTIONS (5) — audit §2 site #78. 'listing.sort_by' exists in messages but is a SUSPECTED ORPHAN per audit §7.2 (zero references in src/) — deliberately EXCLUDED here."
+    }
+  ]
+}

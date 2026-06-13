@@ -282,6 +282,7 @@ must be referenced from A's entry point so the user can still reach editing with
   ```
 
 ### Localization (i18n) Rules
+- **Dynamic `t()` calls** (`t(\`prefix_${var}\`)` / `t(variableExpr)`): every resolved key must be registered in `scripts/i18n-dynamic-manifest.json` and pass `npm run check:i18n-dynamic` — see `docs/i18n-rules.md`.
 - **Scope:** site UI is 4-locale (sq/en/uk/it). Outbound email is `sq`-only — see `docs/integrations.md` → "Outbound email language policy (Albanian-only, 2026-05-25)".
 - ALWAYS check `messages/sq.json`, `messages/en.json`, `messages/uk.json`, `messages/it.json`.
 - Every new text string must be added to ALL four language files simultaneously.

@@ -165,6 +165,6 @@ Task 396 materialises Epic II Phase 1 (P1 audit + P3 CI gate):
 | Phase 1 P2 — Batch remediation | **397** | DONE (2026-06-05) |
 | Phase 2 — Notification locale-binding | 319 | PLANNED |
 | Phase 2 — Dynamic-key remediation | 320 | PLANNED |
-| Phase 3 — CI hardening | 323 | PLANNED |
+| Phase 3 — CI hardening | 323 | DONE (2026-06-14) |
 
 See `tasks/Epics/Epic_II_Global_i18n_Hardening.md` for full epic plan.

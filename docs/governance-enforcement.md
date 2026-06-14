@@ -388,6 +388,7 @@ A whitespace wasteland is a viewport condition where:
 | Non-canonical py-* spacing | Script regex | MEDIUM | ❌ | No | LOW |
 | Missing locale file | Script check | CRITICAL | ✅ | No | NONE |
 | Locale key count mismatch | Script JSON analysis | HIGH | ✅ | No | NONE |
+| Dynamic i18n key unresolved in any locale (`check:i18n-dynamic`, Task 323) | Script (manifest-driven, resolved-key coverage) | HIGH | ✅ | No | NONE |
 | `fixed inset-0` non-Sheet/Dialog | Script regex | HIGH | ✅ | No | LOW |
 | `useWindowSize`/viewport hooks | Script regex + ESLint | HIGH | ✅ | No | LOW |
 | `useLayoutEffect` | Script regex | HIGH | ✅ | No | LOW |

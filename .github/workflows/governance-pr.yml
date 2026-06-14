@@ -59,6 +59,9 @@ jobs:
       - name: Static i18n hardcode gate (fail-on-new, baseline-diff)
         run: npm run check:i18n-hardcode
 
+      - name: Dynamic i18n key gate (resolved-key coverage, fail-on-new)
+        run: npm run check:i18n-dynamic
+
       - name: File integrity gate (NUL bytes, BOM, parse errors, truncation)
         run: npm run check:file-integrity:all
 

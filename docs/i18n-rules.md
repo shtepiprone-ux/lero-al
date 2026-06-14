@@ -172,11 +172,11 @@ for the other three. `check:i18n-dynamic` is the only one that understands
 
 ## §7 — CI WIRING STATUS
 
-**Not yet wired into CI as a blocking gate** — `npm run check:i18n-dynamic` is
-available locally/in any script-running context but is not invoked by
-`.github/workflows/governance-pr.yml`. Wiring it (alongside the existing
-`check:i18n-hardcode` step) is **Task 323** (Epic II Phase 3, CI hardening),
-pending owner sign-off on making it blocking.
+**Wired as a blocking step in the `governance` job, Task 323** — `npm run check:i18n-dynamic`
+runs as the **"Dynamic i18n key gate (resolved-key coverage, fail-on-new)"** step in
+`.github/workflows/governance-pr.yml`, placed immediately after the
+`check:i18n-hardcode` step and before the file-integrity gate. No `continue-on-error`:
+a non-zero exit (any non-baselined missing `namespace.key`) fails the PR check.
 
 ---
 
@@ -188,7 +188,7 @@ pending owner sign-off on making it blocking.
 | Phase 1 P1 — Dynamic-key scanner + manifest + baseline | **317** | DONE (2026-06-13) |
 | Phase 2 — Notification locale-binding | 318/319 | 318 audit DONE (2026-06-13) — see `docs/governance-reports/2026-06-13-notification-locale-audit.md`; 319 fix PLANNED |
 | Phase 2 — Dynamic-key remediation (`admin.support.user_status_*`) | 320 | PLANNED |
-| Phase 3 — CI hardening (wire `check:i18n-dynamic` into CI) | 323 | PLANNED |
+| Phase 3 — CI hardening (wire `check:i18n-dynamic` into CI) | 323 | DONE (2026-06-14) |
 
 See `docs/governance-reports/2026-06-13-i18n-dynamic-key-audit.md` for the
 full Task 316 audit and `tasks/Epics/Epic_II_Global_i18n_Hardening.md` for the

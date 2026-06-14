@@ -109,7 +109,7 @@ Task **300** — Admin Support i18n missing keys (`admin.support.role_*`, `admin
 | Phase 0 — Sprint 21 hotfix slice | 300 (Admin Support i18n) | FORMED 2026-05-30 |
 | Phase 1 — Audit + scanner | 316, 317, 318 | PLANNED (kickoffs to be written after Phase 0 ships) |
 | Phase 2 — Remediation | 319 (notif), 320 (dynamic-key), 321 (email), 322 (toast/modal) | PLANNED (blocked on Phase 1 output) |
-| Phase 3 — CI / governance | 323 | PLANNED (blocked on Phase 2) |
+| Phase 3 — CI / governance | 323 | DONE (2026-06-14) — `check:i18n-dynamic` wired as a blocking step in `governance-pr.yml`, immediately after `check:i18n-hardcode`; parity gate (`governance:localization`) verified green, unchanged |
 
 ## Cross-Epic references
 

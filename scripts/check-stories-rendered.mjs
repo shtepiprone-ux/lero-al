@@ -152,6 +152,21 @@ const ASSERT_STORIES = [
   { id: 'notifications-notificationcenter--default',          label: 'NotificationCenter/Default' },
   { id: 'notifications-notificationcenter--mobile-bottom-sheet', label: 'NotificationCenter/MobileBottomSheet' },
   { id: 'notifications-notificationcenter--empty',             label: 'NotificationCenter/Empty' },
+  // ListingDetailView (Task 237 — admin moderation preview, shared layout evidence)
+  { id: 'listings-listingdetailview--public-listing',                    label: 'ListingDetailView/Public' },
+  { id: 'listings-listingdetailview--staff-preview-unpublished',         label: 'ListingDetailView/StaffPreviewUnpublished' },
+  { id: 'listings-listingdetailview--staff-preview-published',           label: 'ListingDetailView/StaffPreviewPublished' },
+  { id: 'listings-listingdetailview--public-listing-mobile-320',         label: 'ListingDetailView/PublicMobile320' },
+  { id: 'listings-listingdetailview--public-listing-mobile-375',         label: 'ListingDetailView/PublicMobile375' },
+  { id: 'listings-listingdetailview--public-listing-mobile-390',         label: 'ListingDetailView/PublicMobile390' },
+  { id: 'listings-listingdetailview--staff-preview-unpublished-mobile-320', label: 'ListingDetailView/StaffPreviewUnpublishedMobile320' },
+  { id: 'listings-listingdetailview--staff-preview-unpublished-mobile-375', label: 'ListingDetailView/StaffPreviewUnpublishedMobile375' },
+  { id: 'listings-listingdetailview--staff-preview-unpublished-mobile-390', label: 'ListingDetailView/StaffPreviewUnpublishedMobile390' },
+  { id: 'listings-listingdetailview--staff-preview-published-mobile-320', label: 'ListingDetailView/StaffPreviewPublishedMobile320' },
+  { id: 'listings-listingdetailview--staff-preview-published-mobile-375', label: 'ListingDetailView/StaffPreviewPublishedMobile375' },
+  { id: 'listings-listingdetailview--staff-preview-published-mobile-390', label: 'ListingDetailView/StaffPreviewPublishedMobile390' },
+  { id: 'listings-listingdetailview--public-listing-tablet-768',         label: 'ListingDetailView/PublicTablet768' },
+  { id: 'listings-listingdetailview--public-listing-desktop-1440',       label: 'ListingDetailView/PublicDesktop1440' },
 ];
 
 // ── Tolerance for full-width assertion (px) ────────────────────────────────────

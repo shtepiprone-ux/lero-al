@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-14 — Task 323 ✅ APPROVED (Epic II Phase 3, FINAL) — `check:i18n-dynamic` wired into CI as a BLOCKING gate.** Verified against real files (Read tool, not sandbox git): new step at `governance-pr.yml` L62–63, after `check:i18n-hardcode`, before `check:file-integrity:all`, no `continue-on-error`. Clean-tree 195/195 keys exit 0; planted-violation 4 errors exit 1 then reverted; parity 1781/1781 unchanged; docs flipped (i18n-rules §7/§8, i18n-governance §6, governance-enforcement §9, Epic II status). **Minor report note only (no rework):** session log L212 says "executor ran no git" but L97/179/202 cite read-only `git diff --stat` — read as "no *mutating* git"; per single-writer rule the executor should avoid even read-only sandbox git. Commit emitted at review. Log: `docs/sessions/2026-06-14-task323-ci-i18n-dynamic-gate.md`. **Epic II (316–323) fully implemented; remaining = owner-run commits.**
+**2026-06-14 — Task 237 (Epic Y.2, admin moderation preview) — ✅ APPROVED, commit emitted (pending owner run).** Orchestrator re-verified on the owner's NATIVE PowerShell run (not sandbox): `ASSERT_STORIES` = 69 (55 existing + 14 new `ListingDetailView`, none commented/`TEMP`); two full `screenshots:assert` runs = **3864/3864 PASS, 0 FAIL** (69×14×4, incl. all 14 ListingDetailView + uk@320/375/390 stress cells); `build-storybook` OK, `check:stories` 54 files / 0 violations; session log placeholder-free. Shared async-wrapper + sync `ListingDetailViewBody` reuse, #28 `btn_view` 404 fix, `isListingHidden`-gated `btn_open_public`, control inventory, and 4-locale parity (1787/1787) all verified. Log: `docs/sessions/2026-06-14-task237-admin-moderation-preview.md`.
 
 ## Pending Action Items
 
@@ -23,7 +23,7 @@
 
 **Task numbering — last used: 424 (NotificationBell mobile bottom-sheet, Task 319 follow-up). Epic II uses reserved 316–323.** **Next free (new): 425.**
 
-**Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 237/238 (Epic Y), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 238 (Epic Y; 237 ✅ APPROVED, commit pending owner run), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility.
 
@@ -51,7 +51,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 
 | Epic | Tasks | Source notes | Plan |
 |---|---|---|---|
-| **Y — Listing Form & Lifecycle UX** | **237, 238** open (236, 239 ✅) | Y.2 admin moderation preview · Y.3 edit side-panel + status control + dirty-state save | [`Epic_Y_…`](../tasks/Epics/Epic_Y_Listing_Form_and_Lifecycle_UX.md) |
+| **Y — Listing Form & Lifecycle UX** | **238** open (236, 237 ✅, 239 ✅) | Y.2 admin moderation preview ✅ (237, commit pending owner run) · Y.3 edit side-panel + status control + dirty-state save | [`Epic_Y_…`](../tasks/Epics/Epic_Y_Listing_Form_and_Lifecycle_UX.md) |
 | **BB — Listing Inquiries: Report & Message** | **243** open (242 ✅) | BB.2 inquiry/message flow; BB.3 chat = Task 342 | [`Epic_BB_…`](../tasks/Epics/Epic_BB_Listing_Inquiries_Report_and_Message.md) |
 | **DD — Admin Audit & History Hygiene** | 246 open | DD.1 admin can clear change history (gated + audited) | [`Epic_DD_…`](../tasks/Epics/Epic_DD_Admin_Audit_and_History_Hygiene.md) |
 | **HH — Admin UX System** | 310 (P4), 311 (P5, partial), 313 (P6) | 308/309 page-migration need remains — re-scope vs canonical primitives | [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md) |

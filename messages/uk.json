@@ -116,6 +116,9 @@
     "contact_load_failed": "Не вдалося завантажити контактну інформацію. Спробуйте ще раз.",
     "verified_agent": "Верифікований агент",
     "back_to_listings": "Назад до оголошень",
+    "preview_banner_unpublished": "ПОПЕРЕДНІЙ ПЕРЕГЛЯД — оголошення не опубліковане. Цю сторінку бачить лише персонал.",
+    "preview_banner_published": "Опубліковано — публічна сторінка активна.",
+    "preview_open_public": "Відкрити публічну сторінку",
     "show_more": "Показати ще",
     "photo_count": "фото",
     "upload_photos": "Завантажити фото",
@@ -679,6 +682,7 @@
       "prev_page": "Назад",
       "next_page": "Далі",
       "btn_view": "Переглянути оголошення",
+      "btn_open_public": "Відкрити публічну сторінку",
       "delete_dialog_body": "Цю дію не можна скасувати.",
       "preview_title": "Деталі оголошення",
       "delete_success": "Оголошення видалено",
@@ -1937,6 +1941,10 @@
     },
     "containers": {
       "content": "Вміст обмежений у цьому контейнері"
+    },
+    "listing_detail_view": {
+      "similar_listings_omitted": "Схожі оголошення — Пропущено в історії — живі дані Supabase у проді",
+      "recently_viewed_omitted": "Недавно переглянуті — Пропущено в історії — живі дані Supabase у проді"
     }
   },
   "ui": {

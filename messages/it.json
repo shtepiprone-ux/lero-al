@@ -116,6 +116,9 @@
     "contact_load_failed": "Impossibile caricare le informazioni di contatto. Riprova.",
     "verified_agent": "Agente verificato",
     "back_to_listings": "Torna agli annunci",
+    "preview_banner_unpublished": "ANTEPRIMA — questo annuncio non è pubblicato. Solo lo staff può vedere questa pagina.",
+    "preview_banner_published": "Pubblicato — la pagina pubblica è online.",
+    "preview_open_public": "Apri la pagina pubblica",
     "show_more": "Mostra altri",
     "photo_count": "foto",
     "upload_photos": "Carica foto",
@@ -679,6 +682,7 @@
       "prev_page": "Indietro",
       "next_page": "Avanti",
       "btn_view": "Visualizza annuncio",
+      "btn_open_public": "Apri la pagina pubblica",
       "delete_dialog_body": "Questa azione non può essere annullata.",
       "preview_title": "Dettagli annuncio",
       "delete_success": "Annuncio eliminato",
@@ -1937,6 +1941,10 @@
     },
     "containers": {
       "content": "Contenuto delimitato in questo contenitore"
+    },
+    "listing_detail_view": {
+      "similar_listings_omitted": "Annunci simili — Omesso nella story — dati Supabase live in prod",
+      "recently_viewed_omitted": "Visti di recente — Omesso nella story — dati Supabase live in prod"
     }
   },
   "ui": {

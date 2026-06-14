@@ -116,6 +116,9 @@
     "contact_load_failed": "Could not load contact info. Please try again.",
     "verified_agent": "Verified agent",
     "back_to_listings": "Back to listings",
+    "preview_banner_unpublished": "PREVIEW — this listing is not published. Only staff can see this page.",
+    "preview_banner_published": "Published — the public page is live.",
+    "preview_open_public": "Open public page",
     "show_more": "Show more",
     "photo_count": "photos",
     "close_gallery": "Close gallery",
@@ -679,6 +682,7 @@
       "prev_page": "Back",
       "next_page": "Next",
       "btn_view": "View listing",
+      "btn_open_public": "Open public page",
       "delete_dialog_body": "This action cannot be undone.",
       "preview_title": "Listing details",
       "delete_success": "Listing deleted",
@@ -1937,6 +1941,10 @@
     },
     "containers": {
       "content": "Content bounded within this container"
+    },
+    "listing_detail_view": {
+      "similar_listings_omitted": "Similar listings — Omitted in story — live Supabase data in prod",
+      "recently_viewed_omitted": "Recently viewed — Omitted in story — live Supabase data in prod"
     }
   },
   "ui": {

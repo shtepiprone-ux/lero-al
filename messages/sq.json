@@ -116,6 +116,9 @@
     "contact_load_failed": "Nuk mund të ngarkohej informacioni i kontaktit. Provoni sërish.",
     "verified_agent": "Agjent i verifikuar",
     "back_to_listings": "Kthehu te njoftimet",
+    "preview_banner_unpublished": "PARASHIKIM — ky njoftim nuk është publikuar. Vetëm stafi e sheh këtë faqe.",
+    "preview_banner_published": "Publikuar — faqja publike është aktive.",
+    "preview_open_public": "Hap faqen publike",
     "show_more": "Shfaq më shumë",
     "photo_count": "foto",
     "upload_photos": "Ngarko foto",
@@ -679,6 +682,7 @@
       "prev_page": "Mbrapa",
       "next_page": "Tjetër",
       "btn_view": "Shiko listimin",
+      "btn_open_public": "Hap faqen publike",
       "delete_dialog_body": "Ky veprim nuk mund te kthehet.",
       "preview_title": "Detajet e listimit",
       "delete_success": "Njoftimi u fshi",
@@ -1937,6 +1941,10 @@
     },
     "containers": {
       "content": "Përmbajtje brenda kufijve të kontejnerit"
+    },
+    "listing_detail_view": {
+      "similar_listings_omitted": "Njoftime të ngjashme — Hequr në story — të dhëna Supabase live në prod",
+      "recently_viewed_omitted": "Të parët kohët e fundit — Hequr në story — të dhëna Supabase live në prod"
     }
   },
   "ui": {

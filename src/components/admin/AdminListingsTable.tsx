@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { useLocale } from 'next-intl'
-import { ExternalLink, Pencil, Trash2, Star, Loader2, Copy, Check, ChevronRight } from 'lucide-react'
+import { ExternalLink, Eye, Pencil, Trash2, Star, Loader2, Copy, Check, ChevronRight } from 'lucide-react'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { AdminInput } from '@/components/admin/AdminInput'
 import { Label } from '@/components/ui/label'
@@ -26,7 +26,7 @@ import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable
 import { formatPrice } from '@/lib/formatters'
 import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
-import { isListingArchived } from '@/modules/listings/domain'
+import { isListingArchived, isListingHidden } from '@/modules/listings/domain'
 import { getListingStatusLabel, LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
@@ -347,19 +347,28 @@ function ListingPreviewDialog({
             </div>
           </div>
         ) : (
-          <DialogFooter className="flex-wrap gap-2 sm:flex-row">
+          <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
             <Link
-              href={`/${locale}/listings/${listing.slug}`}
-              target="_blank"
-              className={buttonVariants({ variant: 'outline', size: 'sm' }) + ' gap-1.5'}
+              href={`/admin/listings/${listing.id}/preview`}
+              className={buttonVariants({ variant: 'outline', size: 'sm' }) + ' gap-1.5 max-sm:w-full max-sm:min-h-11'}
             >
-              <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+              <Eye className="h-3.5 w-3.5 shrink-0" />
               {t('btn_view')}
             </Link>
+            {!isListingHidden(listing.status) && (
+              <Link
+                href={`/${locale}/listings/${listing.slug}`}
+                target="_blank"
+                className={buttonVariants({ variant: 'outline', size: 'sm' }) + ' gap-1.5 max-sm:w-full max-sm:min-h-11'}
+              >
+                <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                {t('btn_open_public')}
+              </Link>
+            )}
             <Link
               href={`/${locale}/listings/${listing.slug}/edit`}
               target="_blank"
-              className={buttonVariants({ variant: 'outline', size: 'sm' }) + ' gap-1.5'}
+              className={buttonVariants({ variant: 'outline', size: 'sm' }) + ' gap-1.5 max-sm:w-full max-sm:min-h-11'}
             >
               <Pencil className="h-3.5 w-3.5 shrink-0" />
               {tc('edit')}
@@ -368,7 +377,7 @@ function ListingPreviewDialog({
               variant="outline"
               size="sm"
               onClick={onPremium}
-              className="gap-1.5 border-badge-premium/40 text-badge-premium hover:bg-badge-premium/10"
+              className="gap-1.5 border-badge-premium/40 text-badge-premium hover:bg-badge-premium/10 max-sm:w-full max-sm:min-h-11"
             >
               <Star className="h-3.5 w-3.5 shrink-0" />
               {listing.is_premium ? t('premium_change') : t('premium_set')}
@@ -377,7 +386,7 @@ function ListingPreviewDialog({
               variant="outline"
               size="sm"
               onClick={() => setShowDeleteConfirm(true)}
-              className="gap-1.5 text-destructive border-destructive/30 hover:bg-destructive/5 ml-auto"
+              className="gap-1.5 text-destructive border-destructive/30 hover:bg-destructive/5 max-sm:w-full max-sm:min-h-11 sm:ml-auto"
             >
               <Trash2 className="h-3.5 w-3.5 shrink-0" />
               {tc('delete')}

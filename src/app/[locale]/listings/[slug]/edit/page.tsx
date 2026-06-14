@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { ListingFormLoader } from '@/modules/listings/components/ListingFormLoader'
-import { checkEditPermission } from '@/modules/listings/domain/listingPermissions'
+import { checkEditPermission, canAdminEditListing } from '@/modules/listings/domain/listingPermissions'
 import type { FormValues } from '@/modules/listings/types/form'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
 import type { ListingStatus } from '@/types/database'
@@ -43,16 +43,15 @@ export default async function EditListingPage({ params }: Props) {
 
   if (!listing) notFound()
 
-  // Fetch role only when the caller is not the owner (avoids unnecessary query for owners)
-  let userRole: string | null = null
-  if (listing.user_id !== user.id) {
-    const { data: profile } = await supabase
-      .from('users')
-      .select('role')
-      .eq('id', user.id)
-      .single()
-    userRole = profile?.role ?? null
-  }
+  // Always fetch the caller's role: needed both for checkEditPermission (staff
+  // override) and to compute canManageStatus (status control visibility) even
+  // when the caller is the listing owner.
+  const { data: profile } = await supabase
+    .from('users')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+  const userRole = profile?.role ?? null
 
   const check = checkEditPermission(user.id, {
     user_id: listing.user_id,
@@ -60,6 +59,8 @@ export default async function EditListingPage({ params }: Props) {
   }, userRole)
 
   if (!check.ok) redirect(`/${locale}/listings/${listing.slug}`)
+
+  const canManageStatus = canAdminEditListing(userRole)
 
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? ''
   const uploadFolder = `${listing.user_id}/listings/${listing.id}`
@@ -116,6 +117,8 @@ export default async function EditListingPage({ params }: Props) {
         mode="edit"
         listingId={listing.id}
         initialValues={initialValues}
+        canManageStatus={canManageStatus}
+        currentStatus={listing.status as ListingStatus}
       />
     </div>
   )

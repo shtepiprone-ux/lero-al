@@ -167,6 +167,9 @@ const ASSERT_STORIES = [
   { id: 'listings-listingdetailview--staff-preview-published-mobile-390', label: 'ListingDetailView/StaffPreviewPublishedMobile390' },
   { id: 'listings-listingdetailview--public-listing-tablet-768',         label: 'ListingDetailView/PublicTablet768' },
   { id: 'listings-listingdetailview--public-listing-desktop-1440',       label: 'ListingDetailView/PublicDesktop1440' },
+  // ListingFormShellView (Task 238 — edit/create side-panel + status control)
+  { id: 'listings-listingformshellview--owner',                          label: 'ListingFormShellView/Owner' },
+  { id: 'listings-listingformshellview--staff',                          label: 'ListingFormShellView/Staff' },
 ];
 
 // ── Tolerance for full-width assertion (px) ────────────────────────────────────

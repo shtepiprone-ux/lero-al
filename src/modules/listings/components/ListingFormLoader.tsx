@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
 import type { FormValues } from '@/modules/listings/types/form'
+import type { ListingStatus } from '@/types/database'
 
 const ListingFormShell = dynamic(
   () => import('./ListingFormShell').then(m => m.ListingFormShell),
@@ -28,6 +29,9 @@ interface EditLoaderProps extends BaseLoaderProps {
   mode: 'edit'
   listingId: string
   initialValues: Partial<FormValues>
+  /** Server-computed (canAdminEditListing) — only staff (admin/moderator) get the status control. */
+  canManageStatus: boolean
+  currentStatus: ListingStatus
 }
 
 type Props = CreateLoaderProps | EditLoaderProps
@@ -43,7 +47,7 @@ export function ListingFormLoader(props: Props) {
   )
 
   if (mode === 'edit') {
-    const { listingId, initialValues } = props as EditLoaderProps
+    const { listingId, initialValues, canManageStatus, currentStatus } = props as EditLoaderProps
     return (
       <ListingFormShell
         locale={locale}
@@ -53,6 +57,8 @@ export function ListingFormLoader(props: Props) {
         mode="edit"
         listingId={listingId}
         initialValues={initialValues}
+        canManageStatus={canManageStatus}
+        currentStatus={currentStatus}
       />
     )
   }

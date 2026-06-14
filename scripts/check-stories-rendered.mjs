@@ -148,6 +148,10 @@ const ASSERT_STORIES = [
   { id: 'primitives-command--mobile-bottom-sheet',            label: 'Command/MobileBottomSheet' },
   { id: 'primitives-sheet--mobile-bottom-sheet',              label: 'Sheet/MobileBottomSheet' },
   { id: 'primitives-navigationmenu--mobile-open',             label: 'NavigationMenu/MobileOpen' },
+  // Notification bell popup (Task 424 — §26.2 bottom-sheet conversion)
+  { id: 'notifications-notificationcenter--default',          label: 'NotificationCenter/Default' },
+  { id: 'notifications-notificationcenter--mobile-bottom-sheet', label: 'NotificationCenter/MobileBottomSheet' },
+  { id: 'notifications-notificationcenter--empty',             label: 'NotificationCenter/Empty' },
 ];
 
 // ── Tolerance for full-width assertion (px) ────────────────────────────────────

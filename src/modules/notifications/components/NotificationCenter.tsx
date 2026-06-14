@@ -28,7 +28,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
   const hasUnread = notifications.some(n => !n.is_read)
 
   return (
-    <div className="w-80 max-h-120 flex flex-col overflow-hidden rounded-xl border bg-background shadow-lg">
+    <div className="flex flex-1 min-h-0 flex-col overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>
@@ -47,7 +47,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
       </div>
 
       {/* List */}
-      <div className="flex-1 overflow-y-auto divide-y">
+      <div className="flex-1 min-h-0 overflow-y-auto divide-y">
         {notifications.length === 0 ? (
           <p className="px-4 py-8 text-center text-sm text-muted-foreground">{t('empty')}</p>
         ) : (

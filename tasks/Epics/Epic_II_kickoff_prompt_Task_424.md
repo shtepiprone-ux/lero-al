@@ -141,3 +141,41 @@ Inventory (verify in the session log before/after):
 - **Any `git add`/`git commit`** — orchestrator emits commits at review (clause 10).
 - **§26.6 exempt surfaces** (image lightbox, etc.) — irrelevant here; do not touch.
 ```
+
+---
+
+## 🔁 Orchestrator review follow-up — EVIDENCE CLEANUP (2026-06-14, verdict: APPROVED WITH MINOR EVIDENCE CLEANUP)
+
+Diff reviewed; code direction APPROVED — **no product-code rework**. Before the orchestrator emits the
+commit, close these evidence gaps **inline in Task 424** (same task, no new number). Items 1–2 are mandatory
+(machine-proof + arithmetic); 3–4 are session-log wording.
+
+1. **(MANDATORY — clause 12 negative-flow gap.)** `Default` and `MobileBottomSheet` share `args: ROWS` and
+   differ only by a default-viewport global, so the assert harness (which sweeps all 14 viewports itself)
+   tests them **redundantly**. The one genuinely-new case — `Empty` (`EMPTY_ROWS`) — is NOT in
+   `ASSERT_STORIES`, so the empty-list branch the kickoff's Negative flow requires is not machine-proven.
+   **Add the entry** to `scripts/check-stories-rendered.mjs`:
+   ```js
+   { id: 'notifications-notificationcenter--empty', label: 'NotificationCenter/Empty' },
+   ```
+   then **re-run the scoped full-matrix** `screenshots:assert` over the 3 notification stories and paste the
+   new PASS total + manifest path into the session log. (Optional but cleaner: drop the now-redundant
+   `MobileBottomSheet` if `Default` already carries `ROWS` across all viewports — your call; if kept,
+   note it is intentional duplication.)
+
+2. **(MANDATORY — §6 arithmetic.)** The ≥640 breakdown is wrong three times. Correct figures: of the 14
+   canonical viewports, `<640` = {320,375,390,480,560} = **5** (→ 5×4×2 = **40** cells); `≥640` = **9**
+   (→ 9×4×2 = **72** cells); total = **112** (or the new total after item 1). Rewrite the §6 prose to
+   72/40/112 — delete the "11 ≥640 viewports / 2×11×4=88 / 80 such cells / minus 12" lines.
+
+3. **(LOG.)** Soften "pixel-identical" (§3 + §5 + §9) → "desktop visual/behavior contract preserved":
+   positioning changed from hand-rolled `absolute right-0 top-full mt-2` to Base-UI `Positioner align="end"
+   sideOffset={8}` + an `sm:hidden` drag-handle node, so it is class-/contract-equivalent, not pixel-diffed.
+
+4. **(LOG.)** For the Esc / backdrop-tap / focus-return claims (not covered by the layout harness), add a
+   one-line reference to the canonical `Popover` interaction proof (shared primitive coverage) or a short
+   transcript — so the claim cites evidence, not just "Popover does it".
+
+**Do NOT run git.** After items 1–4 land, ping the orchestrator: it re-reads the diff and emits the
+explicit-path `git add`/`git commit` (incl. `docs/backlog.md` + session log). Until then backlog stays
+"COMPLETE, pending evidence cleanup", NOT "COMMITTED".

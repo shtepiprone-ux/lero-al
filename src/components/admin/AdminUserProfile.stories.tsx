@@ -4,6 +4,8 @@ import {
   FIXTURE_PROFILE_USER,
   FIXTURE_CITIES,
   FIXTURE_REGIONS,
+  FIXTURE_CHANGE_LOG,
+  FIXTURE_STATUS_HISTORY,
 } from '@/stories/fixtures/admin.fixtures'
 
 const meta: Meta = {
@@ -19,9 +21,10 @@ const sharedArgs = {
   emailConfirmedAt: '2026-01-15T09:00:00Z',
   cities: FIXTURE_CITIES,
   regions: FIXTURE_REGIONS,
-  changeLog: [],
-  statusHistory: [],
+  changeLog: FIXTURE_CHANGE_LOG,
+  statusHistory: FIXTURE_STATUS_HISTORY,
   isAdmin: true,
+  canClearHistory: true,
 }
 
 export const Default: Story = {
@@ -45,6 +48,7 @@ export const CreateMode: Story = {
       changeLog={[]}
       statusHistory={[]}
       isAdmin={true}
+      canClearHistory={true}
     />
   ),
   globals: { viewport: { value: 'desktop1280', isRotated: false } },

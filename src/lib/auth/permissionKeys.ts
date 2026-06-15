@@ -9,6 +9,7 @@ export const PERMISSION_KEYS = [
   'settings.manage',
   'legal.manage',
   'reports.manage',
+  'audit.clear_history',
 ] as const
 
 export type PermissionKey = typeof PERMISSION_KEYS[number]

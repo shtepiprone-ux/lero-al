@@ -1231,7 +1231,9 @@
         "create_user": "Crea utente",
         "reject_request": "Rifiuta",
         "region_auto": "(auto)",
-        "delete_permanently": "Elimina definitivamente"
+        "delete_permanently": "Elimina definitivamente",
+        "clear_history": "Cancella cronologia",
+        "clear_history_row_aria": "Elimina questa voce della cronologia"
       },
       "header": {
         "new_user_title": "Nuovo utente",
@@ -1249,7 +1251,10 @@
         "save_error": "Errore durante il salvataggio. Riprova.",
         "deactivate_success": "Profilo disattivato.",
         "reactivate_success": "Profilo riattivato.",
-        "reason_required": "Il motivo è obbligatorio."
+        "reason_required": "Il motivo è obbligatorio.",
+        "clear_history_success": "Cronologia cancellata.",
+        "clear_history_error": "Errore durante la cancellazione della cronologia. Riprova.",
+        "clear_history_forbidden": "Non hai i permessi per questa azione."
       },
       "dialogs": {
         "unsaved_title": "Modifiche non salvate",
@@ -1285,7 +1290,13 @@
         "reactivate_reason_label": "Motivo (obbligatorio)",
         "reactivate_reason_placeholder": "Motivo della riattivazione...",
         "reactivate_confirm": "Riattiva",
-        "reactivate_cancel": "Annulla"
+        "reactivate_cancel": "Annulla",
+        "clear_row_title": "Eliminare questa voce?",
+        "clear_row_body": "Questa azione rimuoverà definitivamente questa voce della cronologia. Non può essere annullata.",
+        "clear_entity_title": "Cancellare tutta la cronologia?",
+        "clear_entity_body": "Questa azione rimuoverà definitivamente tutte le voci di questo elenco per questo utente. Non può essere annullata.",
+        "clear_cancel": "Annulla",
+        "clear_confirm": "Cancella"
       },
       "password_info": {
         "title": "Impostazione password",
@@ -1471,7 +1482,8 @@
         "locations_manage": "Gestisci posizioni",
         "settings_manage": "Gestisci impostazioni sito",
         "legal_manage": "Gestisci pagine legali",
-        "reports_manage": "Gestisci segnalazioni"
+        "reports_manage": "Gestisci segnalazioni",
+        "audit_clear_history": "Cancella cronologia utente"
       },
       "descriptions": {
         "listings_delete": "Può eliminare qualsiasi annuncio dalla piattaforma",
@@ -1483,7 +1495,8 @@
         "locations_manage": "Può creare, modificare o eliminare le posizioni",
         "settings_manage": "Può salvare le impostazioni del sito",
         "legal_manage": "Può creare, modificare o eliminare le pagine legali",
-        "reports_manage": "Può esaminare, risolvere o ignorare le segnalazioni"
+        "reports_manage": "Può esaminare, risolvere o ignorare le segnalazioni",
+        "audit_clear_history": "Può cancellare le voci della cronologia delle modifiche e dello stato del profilo utente"
       }
     },
     "common": {

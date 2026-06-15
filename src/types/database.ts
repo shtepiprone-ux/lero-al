@@ -106,6 +106,22 @@ export interface RolePermissionEvent {
   note: string | null
 }
 
+export type HistoryClearSource = 'user_change_log' | 'user_status_history'
+export type HistoryClearScope = 'row' | 'entity'
+
+export interface HistoryClearEvent {
+  id: string
+  actor_user_id: string | null
+  entity_type: string
+  entity_id: string
+  history_source: HistoryClearSource
+  clear_scope: HistoryClearScope
+  cleared_row_ids: string[] | null
+  cleared_row_count: number
+  metadata: Record<string, unknown> | null
+  created_at: string
+}
+
 export interface Company {
   id: string
   name: string

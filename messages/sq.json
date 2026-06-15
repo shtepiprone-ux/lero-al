@@ -1231,7 +1231,9 @@
         "create_user": "Krijo përdorues",
         "reject_request": "Refuzo",
         "region_auto": "(auto)",
-        "delete_permanently": "Fshi përgjithmonë"
+        "delete_permanently": "Fshi përgjithmonë",
+        "clear_history": "Pastro historikun",
+        "clear_history_row_aria": "Pastro këtë hyrje të historikut"
       },
       "header": {
         "new_user_title": "Përdorues i ri",
@@ -1249,7 +1251,10 @@
         "save_error": "Gabim gjatë ruajtjes. Ju lutemi provoni sërish.",
         "deactivate_success": "Profili u çaktivizua.",
         "reactivate_success": "Profili u riaktivizua.",
-        "reason_required": "Arsyeja është e detyrueshme."
+        "reason_required": "Arsyeja është e detyrueshme.",
+        "clear_history_success": "Historiku u pastrua.",
+        "clear_history_error": "Gabim në pastrimin e historikut. Provo përsëri.",
+        "clear_history_forbidden": "Nuk ke leje për këtë veprim."
       },
       "dialogs": {
         "unsaved_title": "Ndryshime të paruajtura",
@@ -1285,7 +1290,13 @@
         "reactivate_reason_label": "Arsyeja (e detyrueshme)",
         "reactivate_reason_placeholder": "Arsyeja e riaktivizimit...",
         "reactivate_confirm": "Riaktivizo",
-        "reactivate_cancel": "Anulo"
+        "reactivate_cancel": "Anulo",
+        "clear_row_title": "Të pastrohet kjo hyrje?",
+        "clear_row_body": "Kjo do të heqë përgjithmonë këtë hyrje historiku. Ky veprim nuk mund të zhbëhet.",
+        "clear_entity_title": "Të pastrohet i gjithë historiku?",
+        "clear_entity_body": "Kjo do të heqë përgjithmonë të gjitha hyrjet e kësaj liste për këtë përdorues. Ky veprim nuk mund të zhbëhet.",
+        "clear_cancel": "Anulo",
+        "clear_confirm": "Pastro"
       },
       "password_info": {
         "title": "Konfigurimi i fjalëkalimit",
@@ -1471,7 +1482,8 @@
         "locations_manage": "Menaxho vendndodhjet",
         "settings_manage": "Menaxho cilësimet e faqes",
         "legal_manage": "Menaxho faqet ligjore",
-        "reports_manage": "Menaxho raportet"
+        "reports_manage": "Menaxho raportet",
+        "audit_clear_history": "Pastro historikun e përdoruesit"
       },
       "descriptions": {
         "listings_delete": "Mund të fshijë çdo njoftim nga platforma",
@@ -1483,7 +1495,8 @@
         "locations_manage": "Mund të krijojë, ndryshojë ose fshijë vendndodhje",
         "settings_manage": "Mund të ruajë cilësimet e faqes",
         "legal_manage": "Mund të krijojë, ndryshojë ose fshijë faqet ligjore",
-        "reports_manage": "Mund të shqyrtojë, zgjidhë ose refuzojë raportet e njoftimeve"
+        "reports_manage": "Mund të shqyrtojë, zgjidhë ose refuzojë raportet e njoftimeve",
+        "audit_clear_history": "Mund të pastrojë hyrjet e historikut të ndryshimeve dhe statusit të profilit të përdoruesit"
       }
     },
     "common": {

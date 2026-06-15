@@ -1231,7 +1231,9 @@
         "create_user": "Create user",
         "reject_request": "Reject",
         "region_auto": "(auto)",
-        "delete_permanently": "Delete permanently"
+        "delete_permanently": "Delete permanently",
+        "clear_history": "Clear history",
+        "clear_history_row_aria": "Clear this history entry"
       },
       "header": {
         "new_user_title": "New user",
@@ -1249,7 +1251,10 @@
         "save_error": "Error saving profile. Please try again.",
         "deactivate_success": "Profile deactivated.",
         "reactivate_success": "Profile reactivated.",
-        "reason_required": "A reason is required."
+        "reason_required": "A reason is required.",
+        "clear_history_success": "History cleared.",
+        "clear_history_error": "Error clearing history. Please try again.",
+        "clear_history_forbidden": "You don't have permission to do this."
       },
       "dialogs": {
         "unsaved_title": "Unsaved changes",
@@ -1285,7 +1290,13 @@
         "reactivate_reason_label": "Reason (required)",
         "reactivate_reason_placeholder": "Reason for reactivation...",
         "reactivate_confirm": "Reactivate",
-        "reactivate_cancel": "Cancel"
+        "reactivate_cancel": "Cancel",
+        "clear_row_title": "Clear this entry?",
+        "clear_row_body": "This will permanently remove this history entry. This action cannot be undone.",
+        "clear_entity_title": "Clear all history?",
+        "clear_entity_body": "This will permanently remove all entries in this list for this user. This action cannot be undone.",
+        "clear_cancel": "Cancel",
+        "clear_confirm": "Clear"
       },
       "password_info": {
         "title": "Password setup",
@@ -1471,7 +1482,8 @@
         "locations_manage": "Manage locations",
         "settings_manage": "Manage site settings",
         "legal_manage": "Manage legal pages",
-        "reports_manage": "Manage reports"
+        "reports_manage": "Manage reports",
+        "audit_clear_history": "Clear user history"
       },
       "descriptions": {
         "listings_delete": "Can delete any listing from the platform",
@@ -1483,7 +1495,8 @@
         "locations_manage": "Can create, edit or delete locations",
         "settings_manage": "Can save site settings",
         "legal_manage": "Can create, edit or delete legal pages",
-        "reports_manage": "Can review, resolve or dismiss listing reports"
+        "reports_manage": "Can review, resolve or dismiss listing reports",
+        "audit_clear_history": "Can clear user profile change and status history entries"
       }
     },
     "common": {

@@ -1231,7 +1231,9 @@
         "create_user": "Створити користувача",
         "reject_request": "Відхилити",
         "region_auto": "(авто)",
-        "delete_permanently": "Видалити назавжди"
+        "delete_permanently": "Видалити назавжди",
+        "clear_history": "Очистити історію",
+        "clear_history_row_aria": "Видалити цей запис історії"
       },
       "header": {
         "new_user_title": "Новий користувач",
@@ -1249,7 +1251,10 @@
         "save_error": "Помилка збереження профілю. Спробуйте ще раз.",
         "deactivate_success": "Профіль деактивовано.",
         "reactivate_success": "Профіль реактивовано.",
-        "reason_required": "Причина обов'язкова."
+        "reason_required": "Причина обов'язкова.",
+        "clear_history_success": "Історію очищено.",
+        "clear_history_error": "Помилка очищення історії. Спробуйте ще раз.",
+        "clear_history_forbidden": "У вас немає прав для цієї дії."
       },
       "dialogs": {
         "unsaved_title": "Незбережені зміни",
@@ -1285,7 +1290,13 @@
         "reactivate_reason_label": "Причина (обов'язкова)",
         "reactivate_reason_placeholder": "Причина реактивації...",
         "reactivate_confirm": "Реактивувати",
-        "reactivate_cancel": "Скасувати"
+        "reactivate_cancel": "Скасувати",
+        "clear_row_title": "Видалити цей запис?",
+        "clear_row_body": "Це остаточно видалить цей запис історії. Цю дію неможливо скасувати.",
+        "clear_entity_title": "Очистити всю історію?",
+        "clear_entity_body": "Це остаточно видалить усі записи цього списку для цього користувача. Цю дію неможливо скасувати.",
+        "clear_cancel": "Скасувати",
+        "clear_confirm": "Очистити"
       },
       "password_info": {
         "title": "Встановлення паролю",
@@ -1471,7 +1482,8 @@
         "locations_manage": "Керування локаціями",
         "settings_manage": "Керування налаштуваннями сайту",
         "legal_manage": "Керування юридичними сторінками",
-        "reports_manage": "Керування скаргами"
+        "reports_manage": "Керування скаргами",
+        "audit_clear_history": "Очищення історії користувача"
       },
       "descriptions": {
         "listings_delete": "Може видалити будь-яке оголошення з платформи",
@@ -1483,7 +1495,8 @@
         "locations_manage": "Може створювати, редагувати або видаляти локації",
         "settings_manage": "Може зберігати налаштування сайту",
         "legal_manage": "Може створювати, редагувати або видаляти правові сторінки",
-        "reports_manage": "Може переглядати, вирішувати або відхиляти скарги на оголошення"
+        "reports_manage": "Може переглядати, вирішувати або відхиляти скарги на оголошення",
+        "audit_clear_history": "Може очищати записи історії змін і статусу профілю користувача"
       }
     },
     "common": {

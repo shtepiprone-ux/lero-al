@@ -33,8 +33,9 @@ import {
   approveLocationRequest, rejectLocationRequest, createAdminUser,
   type ProfileType,
 } from '@/modules/admin/actions'
+import { clearHistoryRow, clearHistoryForEntity } from '@/modules/admin/actions/clearHistory'
 import { Textarea } from '@/components/ui/textarea'
-import type { User, UserChangeLog, UserStatusHistory } from '@/types/database'
+import type { User, UserChangeLog, UserStatusHistory, HistoryClearSource } from '@/types/database'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -54,6 +55,7 @@ interface Props {
   changeLog: UserChangeLog[]
   statusHistory: UserStatusHistory[]
   isAdmin: boolean
+  canClearHistory: boolean
 }
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -329,6 +331,36 @@ function DeleteConfirmDialog({ userName, email, onConfirm, onReturn, deleting }:
   )
 }
 
+function ClearHistoryDialog({ scope, onConfirm, onReturn, loading }: {
+  scope: 'row' | 'entity'
+  onConfirm: () => void; onReturn: () => void; loading: boolean
+}) {
+  const t = useTranslations('admin.user_profile')
+  const isEntity = scope === 'entity'
+  return (
+    <Dialog open onOpenChange={open => { if (!open) onReturn() }}>
+      <DialogContent showCloseButton={false} className="sm:max-w-sm">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-destructive">
+            <Trash2 className="h-5 w-5" />
+            {isEntity ? t('dialogs.clear_entity_title') : t('dialogs.clear_row_title')}
+          </DialogTitle>
+        </DialogHeader>
+        <p className="text-sm text-muted-foreground">
+          {isEntity ? t('dialogs.clear_entity_body') : t('dialogs.clear_row_body')}
+        </p>
+        <DialogFooter>
+          <Button variant="outline" onClick={onReturn} disabled={loading}>{t('dialogs.clear_cancel')}</Button>
+          <Button variant="destructive" onClick={onConfirm} disabled={loading}>
+            {loading && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+            {t('dialogs.clear_confirm')}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
 // ── Password requirements (create mode) ──────────────────────────────────────
 
 function PasswordInfo() {
@@ -356,7 +388,7 @@ function PasswordInfo() {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin }: Props) {
+export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin, canClearHistory }: Props) {
   const router = useRouter()
   const t = useTranslations('admin.user_profile')
   const locale = useLocale()
@@ -389,6 +421,9 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   const [reactivateReason, setReactivateReason] = useState('')
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false)
   const [pendingNavHref, setPendingNavHref] = useState<string | null>(null)
+  const [clearRowTarget, setClearRowTarget] = useState<{ source: HistoryClearSource; rowId: string } | null>(null)
+  const [clearEntitySource, setClearEntitySource] = useState<HistoryClearSource | null>(null)
+  const [clearingHistory, setClearingHistory] = useState(false)
 
   // Async state
   const [saving, setSaving] = useState(false)
@@ -592,6 +627,34 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     toast.success(t('feedback.reactivate_success'))
     setShowReactivateDialog(false)
     setReactivateReason('')
+    router.refresh()
+  }
+
+  async function handleClearHistoryRow() {
+    if (!clearRowTarget || !user) return
+    setClearingHistory(true)
+    const result = await clearHistoryRow(clearRowTarget.source, user.id, clearRowTarget.rowId)
+    setClearingHistory(false)
+    if (result.error) {
+      toast.error(result.error === 'forbidden' ? t('feedback.clear_history_forbidden') : t('feedback.clear_history_error'))
+      return
+    }
+    toast.success(t('feedback.clear_history_success'))
+    setClearRowTarget(null)
+    router.refresh()
+  }
+
+  async function handleClearHistoryForEntity() {
+    if (!clearEntitySource || !user) return
+    setClearingHistory(true)
+    const result = await clearHistoryForEntity(clearEntitySource, user.id)
+    setClearingHistory(false)
+    if (result.error) {
+      toast.error(result.error === 'forbidden' ? t('feedback.clear_history_forbidden') : t('feedback.clear_history_error'))
+      return
+    }
+    toast.success(t('feedback.clear_history_success'))
+    setClearEntitySource(null)
     router.refresh()
   }
 
@@ -1011,11 +1074,21 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             {/* ── Change history (not shown in create mode) ─────────────────── */}
             {!isCreate && changeLog.length > 0 && (
               <SectionCard title={t('sections.change_log')}>
+                {canClearHistory && (
+                  <Button
+                    type="button" variant="outline"
+                    onClick={() => setClearEntitySource('user_change_log')}
+                    className="self-start"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    {t('actions.clear_history')}
+                  </Button>
+                )}
                 <div className="flex flex-col gap-2">
                   {changeLog.map(entry => (
                     <div key={entry.id} className="flex items-start gap-3 text-xs">
                       <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <span className="text-muted-foreground">
                           {new Date(entry.changed_at).toLocaleDateString(locale, {
                             day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
@@ -1025,6 +1098,16 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                         <span className="font-medium">{PROFILE_TYPE_LABELS[entry.old_value as ProfileType] ?? entry.old_value}</span>{' → '}
                         <span className="font-medium">{PROFILE_TYPE_LABELS[entry.new_value as ProfileType] ?? entry.new_value}</span>
                       </div>
+                      {canClearHistory && (
+                        <Button
+                          type="button" variant="ghost" size="icon-xl"
+                          className="text-muted-foreground hover:text-destructive shrink-0"
+                          aria-label={t('actions.clear_history_row_aria')}
+                          onClick={() => setClearRowTarget({ source: 'user_change_log', rowId: entry.id })}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1034,11 +1117,21 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
             {/* ── Status history (not shown in create mode) ─────────────────── */}
             {!isCreate && statusHistory.length > 0 && (
               <SectionCard title={t('sections.status_history')}>
+                {canClearHistory && (
+                  <Button
+                    type="button" variant="outline"
+                    onClick={() => setClearEntitySource('user_status_history')}
+                    className="self-start"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    {t('actions.clear_history')}
+                  </Button>
+                )}
                 <div className="flex flex-col gap-2">
                   {statusHistory.slice(0, 10).map(entry => (
                     <div key={entry.id} className="flex items-start gap-3 text-xs">
                       <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
-                      <div className="min-w-0 flex flex-col gap-0.5">
+                      <div className="min-w-0 flex-1 flex flex-col gap-0.5">
                         <div>
                           <span className="text-muted-foreground">
                             {new Date(entry.changed_at).toLocaleDateString(locale, {
@@ -1053,6 +1146,16 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                           <span className="text-muted-foreground">{t('feedback.reason_prefix', { reason: entry.reason })}</span>
                         )}
                       </div>
+                      {canClearHistory && (
+                        <Button
+                          type="button" variant="ghost" size="icon-xl"
+                          className="text-muted-foreground hover:text-destructive shrink-0"
+                          aria-label={t('actions.clear_history_row_aria')}
+                          onClick={() => setClearRowTarget({ source: 'user_status_history', rowId: entry.id })}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1097,6 +1200,22 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
         <UnsavedChangesDialog
           onLeave={handleConfirmLeave}
           onStay={() => { setShowUnsavedDialog(false); setPendingNavHref(null) }}
+        />
+      )}
+      {clearRowTarget && (
+        <ClearHistoryDialog
+          scope="row"
+          onConfirm={handleClearHistoryRow}
+          onReturn={() => setClearRowTarget(null)}
+          loading={clearingHistory}
+        />
+      )}
+      {clearEntitySource && (
+        <ClearHistoryDialog
+          scope="entity"
+          onConfirm={handleClearHistoryForEntity}
+          onReturn={() => setClearEntitySource(null)}
+          loading={clearingHistory}
         />
       )}
     </div>

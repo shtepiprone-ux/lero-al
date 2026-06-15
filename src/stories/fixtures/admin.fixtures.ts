@@ -19,6 +19,8 @@ import type {
   UserType,
   TicketStatus,
   ComplaintType,
+  UserChangeLog,
+  UserStatusHistory,
 } from '@/types/database'
 
 import type { AdminListing } from '@/components/admin/AdminListingsTable'
@@ -577,6 +579,39 @@ export const FIXTURE_PROFILE_USER = {
   created_at: D1,
   location: null,
 }
+
+export const FIXTURE_CHANGE_LOG: UserChangeLog[] = [
+  {
+    id: 'chg-001',
+    user_id: 'usr-001',
+    changed_by: 'usr-admin',
+    field_name: 'profile_type',
+    old_value: 'private',
+    new_value: 'agent',
+    changed_at: D3,
+  },
+]
+
+export const FIXTURE_STATUS_HISTORY: UserStatusHistory[] = [
+  {
+    id: 'sth-001',
+    user_id: 'usr-001',
+    old_status: 'active',
+    new_status: 'inactive',
+    reason: 'Requested by user',
+    changed_by: 'usr-admin',
+    changed_at: D4,
+  },
+  {
+    id: 'sth-002',
+    user_id: 'usr-001',
+    old_status: 'inactive',
+    new_status: 'active',
+    reason: null,
+    changed_by: 'usr-admin',
+    changed_at: D5,
+  },
+]
 
 export const FIXTURE_CITIES = [
   { id: 1, name_al: 'Tirana', region_id: 1 },

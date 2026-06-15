@@ -43,6 +43,13 @@ const ROOT = resolve(__dirname, '..')
 //   listings.search_vector — tsvector generated column; typed as unknown | null;
 //     never SELECT-projected (filter-only via .textSearch()); included so drift
 //     guard flags if the column is ever dropped from the DB schema.
+//
+// Audit table with no .from() consumer (Task 431):
+//   history_clear_events — written only via the clear_user_history() RPC
+//     (SECURITY DEFINER), never accessed through PostgREST/.from() in src/.
+//     Included for drift coverage (keeps HistoryClearEvent <-> live table in sync;
+//     protects a future direct-read consumer) — an exception to the
+//     ".from()-confirmed" inclusion rule, like the search_vector entry above.
 const INTERFACE_TABLE_MAP = {
   User:               'users',
   UserChangeLog:      'user_change_log',
@@ -76,6 +83,7 @@ const INTERFACE_TABLE_MAP = {
   SiteFooter:             'site_footer',
   ListingContactEvent:    'listing_contact_events',
   ListingInquiry:         'listing_inquiries',
+  HistoryClearEvent:      'history_clear_events',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

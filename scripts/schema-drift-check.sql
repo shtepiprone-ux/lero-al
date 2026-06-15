@@ -1,5 +1,5 @@
 -- schema-drift-check.sql
--- Generated 2026-06-15T15:05:57.654Z by: npm run check:schema-drift
+-- Generated 2026-06-15T19:57:35.167Z by: npm run check:schema-drift
 -- Run in Supabase SQL Editor. Read-only — does not modify any data.
 --
 -- Interface → table mapping covered:
@@ -35,6 +35,7 @@
 --   SiteFooter           → site_footer              (12 cols)
 --   ListingContactEvent  → listing_contact_events   (9 cols)
 --   ListingInquiry       → listing_inquiries        (9 cols)
+--   HistoryClearEvent    → history_clear_events     (10 cols)
 --
 -- To regenerate after any change to src/types/database.ts:
 --   npm run check:schema-drift
@@ -350,7 +351,17 @@ WITH expected(table_name, column_name) AS (
     ('listing_inquiries', 'message'),
     ('listing_inquiries', 'requester_ip'),
     ('listing_inquiries', 'status'),
-    ('listing_inquiries', 'created_at')
+    ('listing_inquiries', 'created_at'),
+    ('history_clear_events', 'id'),
+    ('history_clear_events', 'actor_user_id'),
+    ('history_clear_events', 'entity_type'),
+    ('history_clear_events', 'entity_id'),
+    ('history_clear_events', 'history_source'),
+    ('history_clear_events', 'clear_scope'),
+    ('history_clear_events', 'cleared_row_ids'),
+    ('history_clear_events', 'cleared_row_count'),
+    ('history_clear_events', 'metadata'),
+    ('history_clear_events', 'created_at')
 )
 SELECT
   e.table_name,
@@ -676,7 +687,17 @@ WITH expected(table_name, column_name) AS (
     ('listing_inquiries', 'message'),
     ('listing_inquiries', 'requester_ip'),
     ('listing_inquiries', 'status'),
-    ('listing_inquiries', 'created_at')
+    ('listing_inquiries', 'created_at'),
+    ('history_clear_events', 'id'),
+    ('history_clear_events', 'actor_user_id'),
+    ('history_clear_events', 'entity_type'),
+    ('history_clear_events', 'entity_id'),
+    ('history_clear_events', 'history_source'),
+    ('history_clear_events', 'clear_scope'),
+    ('history_clear_events', 'cleared_row_ids'),
+    ('history_clear_events', 'cleared_row_count'),
+    ('history_clear_events', 'metadata'),
+    ('history_clear_events', 'created_at')
 )
 SELECT
   ic.table_name,
@@ -687,6 +708,6 @@ LEFT JOIN expected e
   ON  e.table_name   = ic.table_name
   AND e.column_name  = ic.column_name
 WHERE ic.table_schema = 'public'
-  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles', 'site_footer', 'listing_contact_events', 'listing_inquiries')
+  AND ic.table_name IN ('users', 'user_change_log', 'user_status_history', 'email_change_tokens', 'email_templates', 'locations', 'listings', 'listing_images', 'favorites', 'favorite_price_alerts', 'saved_searches', 'listing_reports', 'report_actions', 'support_tickets', 'notifications', 'currencies', 'exchange_providers', 'property_types', 'pages', 'site_settings', 'companies', 'collections', 'collection_items', 'recently_viewed', 'role_permissions', 'role_permission_events', 'contact_inquiries', 'contact_inquiry_replies', 'public_user_profiles', 'site_footer', 'listing_contact_events', 'listing_inquiries', 'history_clear_events')
   AND e.column_name IS NULL
 ORDER BY ic.table_name, ic.column_name;

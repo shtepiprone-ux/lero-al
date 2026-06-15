@@ -23,6 +23,37 @@ This is a **diagnosis** task. The ONLY deliverable is a root-cause report file (
 - Do NOT change scope, do NOT invent architecture, STOP and ASK if blocked.
 - No `git add` / `git commit` — orchestrator emits commits.
 
+## 🔴 PRIME SUSPECT (orchestrator-traced 2026-06-15) — check this FIRST
+
+The owner reproduced the failure while **logged in** (so NOT `unauthorized`), reporting another
+user's listing. That isolates the failure to the **`listing_reports` INSERT being rejected by the DB**
+(`save_failed`). The most recent change to this exact insert path is **Task 270 (RLS INSERT tightening,
+2026-05-28, `docs/sessions/2026-05-28-task-270-rls-insert-tightening.md`)**, which **DROPPED the
+permissive `"Users can create reports"` policy (`WITH CHECK (true)`)** and left `listing_reports` with
+a SINGLE insert policy:
+
+```sql
+CREATE POLICY listing_reports_insert_own ON public.listing_reports
+  FOR INSERT TO authenticated
+  WITH CHECK (auth.uid() = user_id);
+```
+
+**Hypothesis:** the insert now fails the `auth.uid() = user_id` WITH CHECK — i.e. inside the DB request,
+`auth.uid()` does not equal the `user_id` the action inserts (`user.id` from `getUser()`). Either
+`auth.uid()` resolves NULL in the server-action's PostgREST context, or there is a uid mismatch. The
+old permissive policy used to mask this; Task 270 removed the mask, surfacing the latent failure. The
+session client (`src/lib/supabase/server.ts`) is a standard `@supabase/ssr` cookie client, so this is
+about whether the authenticated JWT reaches Postgres — NOT a malformed client.
+
+**Confirm/deny before anything else:** capture the Postgres error in the `[reportListing] insert failed`
+server log. If it is **`42501` / "new row violates row-level security policy for table
+\"listing_reports\""**, the hypothesis is CONFIRMED → the fix is an RLS/auth-context fix (re-evaluate the
+policy predicate vs. what `auth.uid()` actually returns in the action; do NOT just re-add a
+`WITH CHECK (true)` permissive policy — that reopens the impersonation hole Task 270 closed). If the code
+is `23502`/`23514`/`22P02`/`23503`/`42P01`, it is a not-null/check/enum/FK/missing-table issue instead —
+classify accordingly. As a quick probe, log `user.id` and a `select auth.uid()` result from the same
+session client inside the action to see whether they match.
+
 ## Known code facts (already traced by the orchestrator — start here, do not re-derive)
 
 - UI: `src/modules/listings/components/ListingReportDialog.tsx` → `handleSubmit` calls

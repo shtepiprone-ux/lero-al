@@ -187,3 +187,13 @@ Run the regenerated `scripts/schema-drift-check.sql` natively in the Supabase SQ
 to be **empty** (the live `history_clear_events` table was created with exactly these 10 columns in Task 246, so
 no drift is expected). If RESULT SET 1 returns rows, do NOT alter the guard — flag for a real reconciliation
 decision (per the kickoff's negative-flow table).
+
+## Closure (orchestrator, 2026-06-15)
+
+First native drift run reported **all 10** `history_clear_events` columns as "missing in DB" — the signature of an
+**absent table**, not column drift, because **Task 246's table-creation migration had not yet been applied** (Task 246
+was still "pending owner SQL run"). The guard behaved correctly (it flagged that the types expect a table the live DB
+lacked); per the negative-flow rule the guard was **NOT** altered. Owner then applied Task 246's full SQL (Sections 1–3:
+`history_clear_events` table + `clear_user_history()` RPC + `audit.clear_history` moderator default-deny seed) → "Success.
+No rows returned", and re-ran `scripts/schema-drift-check.sql` → **"Success. No rows returned"** (RESULT SET 1 empty).
+**Zero real drift confirmed natively. Task 431 CLOSED.** Side effect: this also discharged Task 246's pending SQL migration.

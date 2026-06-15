@@ -75,6 +75,7 @@ const INTERFACE_TABLE_MAP = {
   PublicUserProfile:      'public_user_profiles',
   SiteFooter:             'site_footer',
   ListingContactEvent:    'listing_contact_events',
+  ListingInquiry:         'listing_inquiries',
 }
 
 // ── Parser ────────────────────────────────────────────────────────────────────

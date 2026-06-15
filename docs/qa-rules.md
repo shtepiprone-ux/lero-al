@@ -65,6 +65,42 @@
 - Verify all 4 language versions display correctly.
 - Check that no text is hardcoded (all must use i18n).
 
+### Encoding hygiene (UTF-8, mojibake gate — Task 428)
+
+All tracked text in this repo is **UTF-8, no BOM**. `npm run check:mojibake`
+(`scripts/check-mojibake.mjs`) scans `docs/`, `src/`, `app/`, `components/`, `modules/`,
+`messages/`, `tasks/`, and root `*.md` for double-encoding / corruption artifacts and is a
+**blocking CI step** (see `.github/workflows/governance-pr.yml`). There is no native pre-commit
+hook in this repo (`.git/hooks/` has only `.sample` files) — run `npm run check:mojibake` manually
+before committing if you touched non-ASCII text.
+
+What it catches — text that was UTF-8 but got re-decoded as CP1252/Latin-1 somewhere in the
+authoring pipeline, e.g. `Ô£à` (was `✅`), `ÔåÆ` (was `→`), `ÔÇö` (was `—`), `â€“` (was `–`), or the
+literal replacement character `�` (lossy decode). Also covers (added Task 429, 2026-06-15, to
+close blind spots for the `sq`/`uk` locales): Albanian accents `Ã«` (was `ë`) and `Ã§` (was `ç`);
+the `Â…` family `Â ` (NBSP), `Â«`, `Â»`, `Â©`, `Â®`, `Â°` (specific paired sequences only, never a
+bare `Â`); and the Cyrillic `Ð…`/`Ñ…` family — paired sequences for common `uk` letters (e.g. `Ð°`
+was `а`, `Ñ€` was `р`, `Ñ–` was `і`) — never a bare `Ð`/`Ñ`. A file that fails `check:mojibake` is
+reported with `path:line:col` + a remediation hint; intentional documentation that quotes these
+artifacts (like this section, the Task 428/429 kickoffs, the Task 426 session log, and the Task
+428 session log) is path-scoped in `scripts/mojibake-allowlist.json` — do NOT blanket-disable the
+gate.
+
+**Root cause and prevention (origin: 2026-06-15 owner report of mojibake in a PowerShell paste —
+the files themselves were clean UTF-8; the artifact was console rendering):**
+- The owner's PowerShell console MUST run UTF-8: `chcp 65001` and/or set
+  `[Console]::OutputEncoding = [Text.Encoding]::UTF8` (or use PowerShell 7, which defaults to
+  UTF-8). Without this, non-ASCII bytes (✅, →, —, locale text) render as mojibake **in the
+  console only** — but copying that rendered text back into a file bakes the corruption in.
+- **Never redirect console output into a repo file** — `git show <sha>:<path> > file` or
+  `Get-Content ... | Out-File` adopts the console's code page and can corrupt non-ASCII content.
+  Read files with the `Read` tool / editor, not via redirected console output.
+- Editors must save files as **UTF-8 without BOM** (see `docs/agent-contract.md` clause 14 — BOM
+  check).
+
+Cross-ref: `docs/agent-contract.md` clause 14 (file-integrity gate) covers NUL/BOM/truncation;
+`check:mojibake` is the companion gate for double-encoding/replacement-character corruption.
+
 ### Error Handling
 - Every Supabase query must have error handling.
 - Never expose raw error messages to users — show friendly localized messages.

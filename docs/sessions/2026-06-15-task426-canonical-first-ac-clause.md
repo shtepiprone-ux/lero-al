@@ -102,3 +102,16 @@ implementation into the "open task" commit.
 
 Executor does not emit `git add`/`git commit` — orchestrator reviews the diff and emits explicit-path
 commit commands at review (single-writer rule).
+
+## Appendix: encoding-artifact reference (Task 428)
+
+This file is allowlisted in `scripts/mojibake-allowlist.json` because the Task 428 mojibake gate's
+origin discussion (2026-06-15 owner report) is anchored to this session's timeline. Reference
+examples of the double-encoding artifacts that gate detects, quoted intentionally for documentation
+(`check:mojibake` skips this file):
+
+- `Ô£à` is UTF-8 for `✅` mis-decoded as CP1252.
+- `ÔåÆ` is UTF-8 for `→` mis-decoded as CP1252.
+- `ÔÇö` is UTF-8 for `—` mis-decoded as CP1252.
+- `â€“` is UTF-8 for `–` mis-decoded as CP1252.
+- `�` is the U+FFFD replacement character (lossy decode).

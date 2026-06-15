@@ -65,6 +65,9 @@ jobs:
       - name: File integrity gate (NUL bytes, BOM, parse errors, truncation)
         run: npm run check:file-integrity:all
 
+      - name: Mojibake / encoding artifact gate (UTF-8 double-encoding, U+FFFD)
+        run: npm run check:mojibake
+
       - name: Story coverage gate (fail-on-new; exemption allowlist)
         run: npm run check:story-coverage
 

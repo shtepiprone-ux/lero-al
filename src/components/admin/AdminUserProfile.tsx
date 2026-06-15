@@ -639,6 +639,12 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
       toast.error(result.error === 'forbidden' ? t('feedback.clear_history_forbidden') : t('feedback.clear_history_error'))
       return
     }
+    if (result.cleared === 0) {
+      toast.info(t('feedback.clear_history_noop'))
+      setClearRowTarget(null)
+      router.refresh()
+      return
+    }
     toast.success(t('feedback.clear_history_success'))
     setClearRowTarget(null)
     router.refresh()
@@ -651,6 +657,12 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
     setClearingHistory(false)
     if (result.error) {
       toast.error(result.error === 'forbidden' ? t('feedback.clear_history_forbidden') : t('feedback.clear_history_error'))
+      return
+    }
+    if (result.cleared === 0) {
+      toast.info(t('feedback.clear_history_noop'))
+      setClearEntitySource(null)
+      router.refresh()
       return
     }
     toast.success(t('feedback.clear_history_success'))

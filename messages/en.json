@@ -1254,7 +1254,8 @@
         "reason_required": "A reason is required.",
         "clear_history_success": "History cleared.",
         "clear_history_error": "Error clearing history. Please try again.",
-        "clear_history_forbidden": "You don't have permission to do this."
+        "clear_history_forbidden": "You don't have permission to do this.",
+        "clear_history_noop": "Nothing to clear — the history was already empty."
       },
       "dialogs": {
         "unsaved_title": "Unsaved changes",

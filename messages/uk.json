@@ -1254,7 +1254,8 @@
         "reason_required": "Причина обов'язкова.",
         "clear_history_success": "Історію очищено.",
         "clear_history_error": "Помилка очищення історії. Спробуйте ще раз.",
-        "clear_history_forbidden": "У вас немає прав для цієї дії."
+        "clear_history_forbidden": "У вас немає прав для цієї дії.",
+        "clear_history_noop": "Немає чого очищати — історія вже порожня."
       },
       "dialogs": {
         "unsaved_title": "Незбережені зміни",

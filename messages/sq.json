@@ -1254,7 +1254,8 @@
         "reason_required": "Arsyeja është e detyrueshme.",
         "clear_history_success": "Historiku u pastrua.",
         "clear_history_error": "Gabim në pastrimin e historikut. Provo përsëri.",
-        "clear_history_forbidden": "Nuk ke leje për këtë veprim."
+        "clear_history_forbidden": "Nuk ke leje për këtë veprim.",
+        "clear_history_noop": "Asgjë për të pastruar — historiku ishte tashmë bosh."
       },
       "dialogs": {
         "unsaved_title": "Ndryshime të paruajtura",

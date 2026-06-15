@@ -1254,7 +1254,8 @@
         "reason_required": "Il motivo è obbligatorio.",
         "clear_history_success": "Cronologia cancellata.",
         "clear_history_error": "Errore durante la cancellazione della cronologia. Riprova.",
-        "clear_history_forbidden": "Non hai i permessi per questa azione."
+        "clear_history_forbidden": "Non hai i permessi per questa azione.",
+        "clear_history_noop": "Niente da cancellare — la cronologia era già vuota."
       },
       "dialogs": {
         "unsaved_title": "Modifiche non salvate",

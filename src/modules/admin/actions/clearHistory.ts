@@ -16,7 +16,7 @@ async function clearHistory(
   source: HistoryClearSource,
   entityId: string,
   rowId: string | null,
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; cleared?: number }> {
   const allowed = await hasPermission('audit.clear_history').catch(() => false)
   if (!allowed) return { error: 'forbidden' }
 
@@ -38,23 +38,24 @@ async function clearHistory(
   }
 
   const result = data as { cleared_row_count: number } | null
-  if (!result || result.cleared_row_count === 0) return {}
+  const cleared = result?.cleared_row_count ?? 0
+  if (cleared === 0) return { cleared: 0 }   // no-op: no audit row, no delete, no revalidate
 
   revalidatePath(`/admin/users/${entityId}`)
-  return {}
+  return { cleared }
 }
 
 export async function clearHistoryRow(
   source: HistoryClearSource,
   entityId: string,
   rowId: string,
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; cleared?: number }> {
   return clearHistory(source, entityId, rowId)
 }
 
 export async function clearHistoryForEntity(
   source: HistoryClearSource,
   entityId: string,
-): Promise<{ error?: string }> {
+): Promise<{ error?: string; cleared?: number }> {
   return clearHistory(source, entityId, null)
 }

@@ -112,6 +112,9 @@ const ASSERT_STORIES = [
   { id: 'admin-adminpageshell--default',                      label: 'AdminPageShell/Default' },
   { id: 'admin-admintable--default',                          label: 'AdminTable/Default' },
   { id: 'admin-statuschangecontrol--select',                  label: 'StatusChangeControl/Select' },
+  // Task 425 — submit-button mobile <640 full-width proof (select-note + workflow)
+  { id: 'admin-statuschangecontrol--select-with-note',        label: 'StatusChangeControl/SelectWithNote' },
+  { id: 'admin-statuschangecontrol--workflow-required-note',  label: 'StatusChangeControl/WorkflowRequiredNote' },
   { id: 'admin-statuschangehistory--empty',                   label: 'StatusChangeHistory/Empty' },
   { id: 'admin-adminlocaleswitcher--default',                 label: 'AdminLocaleSwitcher/Default' },
   { id: 'admin-adminmobileheader--default',                   label: 'AdminMobileHeader/Default' },

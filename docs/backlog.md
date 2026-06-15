@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-14 — Task 238 (Epic Y.3, listing edit/create side-panel + status control + dirty-state Save) — ✅ APPROVED, commit emitted (pending owner run).** Orchestrator reviewed actual files + owner native gates (HEAD `9bafe3db`; tsc=0, lint=0, check:stories=0, screenshots:assert=3976/3976 PASS; diff/status match Files Changed). Faithful: server-gated `changeListingStatus.ts`→`applyListingTransitionByStatus(source:'cabinet')`, `canManageStatus`/`currentStatus` server-threaded, status options from engine, neg-branches 7/8/9 real (StatusChangeControl catches). One doc line corrected (Save before-state). **Task 425 opened** (owner Option 1): canonical `StatusChangeControl` note/action submit buttons → `max-sm:w-full min-h-11` (238 §4 gap, fenced by 238 §10). Log: `docs/sessions/2026-06-14-task238-listing-form-side-panel.md`. **Next: owner runs the 238 commit; Sonnet executes Task 425.**
+**2026-06-14 — Task 425 (Epic Y, StatusChangeControl mobile <640 full-width submit buttons — Task 238 §4 follow-up) — ✅ APPROVED (commit emitted, pending owner run).** Orchestrator-verified evidence-only closure: **zero diff to `StatusChangeControl.tsx`** (premise already satisfied by canonical `<Button size="sm">`, Task 421 `button.tsx:26`); sole change = 2 `ASSERT_STORIES` entries (`check-stories-rendered.mjs:116-117`) for rendered proof. Native `git status`/`diff` reconciled against the session-log Files Changed table — it omitted `docs/backlog-archive.md` (238-row tidy), now folded into the commit. Rendered matrix 4088/4088 PASS, uk@320/375/390 `fullWidthButtonsAtMobile:true`. Kickoff AC was over-strict (demanded a literal local diff where canonical already covered) → 'canonical-first / no-duplicate-class' clause to be added to the task template. Log: `docs/sessions/2026-06-14-task425-statuschangecontrol-mobile-note-submit.md`. **Next: owner runs the Task 425 commit.**
 
 ## Pending Action Items
 
@@ -23,9 +23,7 @@
 
 **Task numbering — last used: 425 (StatusChangeControl mobile note/action submit full-width — Task 238 follow-up). Epic II uses reserved 316–323.** **Next free (new): 426.**
 
-**Open follow-up — Task 425** (`tasks/Epics/Epic_Y_kickoff_prompt_Task_425_statuschangecontrol_mobile_note_submit.md`): canonical `StatusChangeControl` select-variant note submit button + workflow-variant submit button → `max-sm:w-full max-sm:min-h-11` (CSS-only, no behavior change); rendered uk@320/375/390 proof. Spun out of Task 238 §4 (fenced by 238 §10). **Ready for Sonnet.**
-
-**Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 238 (Epic Y; ✅ APPROVED, commit emitted pending owner run), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
+**Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 316–323 (Epic II P1–3), 238 (Epic Y; ✅ APPROVED, commit emitted pending owner run), 425 (Epic Y; ✅ APPROVED, commit emitted pending owner run — zero-diff finding), 243 (Epic BB), 246 (Epic DD). **CLOSED:** 351/352/353 (superseded by global DS). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 
 **Owner decisions still needed (Epic HH):** Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility.
 
@@ -53,7 +51,7 @@ The global DS work (Task 340 contract + Sprint 32/33, Tasks 372–392) is the ca
 
 | Epic | Tasks | Source notes | Plan |
 |---|---|---|---|
-| **Y — Listing Form & Lifecycle UX** | **238** ✅ APPROVED (commit emitted) · **425** open follow-up (236, 237 ✅, 239 ✅) | Y.3 edit side-panel + status control + dirty-state save ✅ — `docs/sessions/2026-06-14-task238-listing-form-side-panel.md`; 425 = canonical `StatusChangeControl` mobile submit full-width (238 §4 gap) | [`Epic_Y_…`](../tasks/Epics/Epic_Y_Listing_Form_and_Lifecycle_UX.md) |
+| **Y — Listing Form & Lifecycle UX** | **238** ✅ APPROVED (commit emitted) · **425** ✅ APPROVED (commit emitted) (236, 237 ✅, 239 ✅) | Y.3 edit side-panel + status control + dirty-state save ✅ — `docs/sessions/2026-06-14-task238-listing-form-side-panel.md`; 425 = `StatusChangeControl` mobile submit full-width already satisfied (Task 421) — `docs/sessions/2026-06-14-task425-statuschangecontrol-mobile-note-submit.md` | [`Epic_Y_…`](../tasks/Epics/Epic_Y_Listing_Form_and_Lifecycle_UX.md) |
 | **BB — Listing Inquiries: Report & Message** | **243** open (242 ✅) | BB.2 inquiry/message flow; BB.3 chat = Task 342 | [`Epic_BB_…`](../tasks/Epics/Epic_BB_Listing_Inquiries_Report_and_Message.md) |
 | **DD — Admin Audit & History Hygiene** | 246 open | DD.1 admin can clear change history (gated + audited) | [`Epic_DD_…`](../tasks/Epics/Epic_DD_Admin_Audit_and_History_Hygiene.md) |
 | **HH — Admin UX System** | 310 (P4), 311 (P5, partial), 313 (P6) | 308/309 page-migration need remains — re-scope vs canonical primitives | [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md) |

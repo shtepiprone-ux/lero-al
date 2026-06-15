@@ -23,36 +23,50 @@ This is a **diagnosis** task. The ONLY deliverable is a root-cause report file (
 - Do NOT change scope, do NOT invent architecture, STOP and ASK if blocked.
 - No `git add` / `git commit` — orchestrator emits commits.
 
-## 🔴 PRIME SUSPECT (orchestrator-traced 2026-06-15) — check this FIRST
+## 🔴 ACTUAL ERROR SIGNATURE (owner browser console, 2026-06-15) — READ THIS FIRST
 
-The owner reproduced the failure while **logged in** (so NOT `unauthorized`), reporting another
-user's listing. That isolates the failure to the **`listing_reports` INSERT being rejected by the DB**
-(`save_failed`). The most recent change to this exact insert path is **Task 270 (RLS INSERT tightening,
-2026-05-28, `docs/sessions/2026-05-28-task-270-rls-insert-tightening.md`)**, which **DROPPED the
-permissive `"Users can create reports"` policy (`WITH CHECK (true)`)** and left `listing_reports` with
-a SINGLE insert policy:
+The failure is **NOT a returned `save_failed` and NOT (primarily) RLS.** The owner's browser console shows
+the **server-action POST itself failing at the transport layer**:
 
-```sql
-CREATE POLICY listing_reports_insert_own ON public.listing_reports
-  FOR INSERT TO authenticated
-  WITH CHECK (auth.uid() = user_id);
+```
+reportListing.ts:23 Fetch failed loading: POST "http://localhost:3000/uk/listings/<slug>".
+  (anonymous) @ fetch.ts:86
+  fetchServerAction @ server-action-reducer.ts:92
+  ... action @ react-server-dom-turbopack-client.browser.development.js
+  (anonymous) @ reportListing.ts:23
+  handleSubmit @ ListingReportDialog.tsx:53
 ```
 
-**Hypothesis:** the insert now fails the `auth.uid() = user_id` WITH CHECK — i.e. inside the DB request,
-`auth.uid()` does not equal the `user_id` the action inserts (`user.id` from `getUser()`). Either
-`auth.uid()` resolves NULL in the server-action's PostgREST context, or there is a uid mismatch. The
-old permissive policy used to mask this; Task 270 removed the mask, surfacing the latent failure. The
-session client (`src/lib/supabase/server.ts`) is a standard `@supabase/ssr` cookie client, so this is
-about whether the authenticated JWT reaches Postgres — NOT a malformed client.
+A `listing_reports` RLS denial would return **HTTP 200 with `{ error: 'save_failed' }`** and a clean error
+toast — it would NOT log "Fetch failed loading". "Fetch failed loading: POST" means the action POST got a
+**500 / aborted / intercepted response** (no normal RSC payload). So the **prior RLS / Task 270 hypothesis
+is DEMOTED** to a low-priority candidate. Re-prioritised hypotheses (most→least likely given this signature):
 
-**Confirm/deny before anything else:** capture the Postgres error in the `[reportListing] insert failed`
-server log. If it is **`42501` / "new row violates row-level security policy for table
-\"listing_reports\""**, the hypothesis is CONFIRMED → the fix is an RLS/auth-context fix (re-evaluate the
-policy predicate vs. what `auth.uid()` actually returns in the action; do NOT just re-add a
-`WITH CHECK (true)` permissive policy — that reopens the impersonation hole Task 270 closed). If the code
-is `23502`/`23514`/`22P02`/`23503`/`42P01`, it is a not-null/check/enum/FK/missing-table issue instead —
-classify accordingly. As a quick probe, log `user.id` and a `select auth.uid()` result from the same
-session client inside the action to see whether they match.
+1. **Middleware interferes with the server-action POST on a localized route.** `src/middleware.ts` matcher
+   catches `/uk/listings/...` for **all methods including POST**, and runs BOTH `handleI18nRouting`
+   (next-intl) and `refreshSession` on it. next-intl middleware running on a server-action POST is a known
+   footgun that yields exactly this "Fetch failed loading: POST". Inspect whether `handleI18nRouting`
+   redirects/rewrites the POST (the action dispatch needs the POST to reach the route unchanged), and
+   whether the action POST should be skipped (it carries `Next-Action` + `Next-Router-State-Tree` headers).
+2. **The server action throws an unhandled exception (500)** before returning a typed error. Decisive
+   evidence = the **Next.js dev SERVER TERMINAL** stack at click time (NOT the browser console). Candidates
+   inside the call chain: `getUser()`, `getBlockedError()` (`src/lib/auth/blockCheck.ts` — `createClient()`
+   + `.single()`), or `createClient()`.
+3. **Dev-only stale server-action ID.** The logs show heavy `[Fast Refresh] rebuilding` around the failure.
+   In `next dev`, a page rendered before a recompile can POST a server-action ID the new bundle no longer
+   knows → the POST 500s. **This would NOT reproduce on a production build.**
+4. **RLS / `auth.uid()` mismatch (DEMOTED).** Only relevant if the server log shows a 200 + Postgres
+   `42501`; left in as the prior Task-270 lead (`docs/sessions/2026-05-28-task-270-rls-insert-tightening.md`
+   dropped the permissive `"Users can create reports"` policy, leaving `WITH CHECK (auth.uid() = user_id)`).
+
+**Three cheap discriminators to capture FIRST (they collapse the hypothesis space):**
+- **(D1) Server terminal output** at the moment of clicking Submit — the real 500/stack. This is the single
+  most decisive artifact; the browser console is a dead end here.
+- **(D2) Production build:** does it reproduce under `npm run build && npm start`, or ONLY in `next dev`?
+  Only-in-dev ⇒ hypothesis 3 (stale action id), not a real product bug.
+- **(D3) Sibling action:** does the **"Send message" / listing inquiry** server action (Task 243) succeed on
+  the SAME `/uk/listings/<slug>` page? Inquiry works + report fails ⇒ report-action-specific (hyp. 2).
+  BOTH fail ⇒ middleware-wide on localized POSTs (hyp. 1).
 
 ## Known code facts (already traced by the orchestrator — start here, do not re-derive)
 

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-15 — Tasks 428+429 (mojibake/UTF-8 double-encoding gate `check:mojibake`) — ✅ COMMITTED `e7396b0c8`.** Native gate green (0 artifacts / 1189 files, exit 0). 428's gate (scanner + CI step + allowlist + docs) was routed back at review for 2 defects (signature blind spot + unjustified backlog allowlist entry); 429 fixed both (+22 paired Albanian/Cyrillic signatures, allowlist pruned); consolidated into one commit. Detail → [`backlog-archive.md`](backlog-archive.md). **Next: Task 426 still pending owner-run commit.**
+**2026-06-15 — Tasks 428+429 (mojibake/UTF-8 double-encoding gate `check:mojibake`) — ✅ COMMITTED `e7396b0c8`.** Native gate green (0 artifacts / 1189 files, exit 0). 428's gate (scanner + CI step + allowlist + docs) was routed back at review for 2 defects (signature blind spot + unjustified backlog allowlist entry); 429 fixed both (+22 paired Albanian/Cyrillic signatures, allowlist pruned); consolidated into one commit. Detail → [`backlog-archive.md`](backlog-archive.md). **Next: nothing pending from this session. Local `main` is 8 commits ahead of `origin/main` (tree clean) — push when ready.**
 
 ## Pending Action Items
 
@@ -25,7 +25,7 @@
 
 **Task 427 (Epic I, OPEN — not started):** fix the owner-reported defect where `sold`/`rented` listings open the PUBLIC VIEW (not the editor) from admin "Редагувати", and only "Архівувати" is offered. Both are intentional current design (`listingPermissions.ts:68` edit-gate applies to admin too; `listingTransitionEngine.ts:78-79` `sold/rented:['ARCHIVE']`). Supersedes the never-implemented **Task 355**. Owner decisions (2026-06-15): admin/mod (any listing) AND owner (own listing) get FULL control — edit at any status, delete at any status, and direct any-status→any-status transitions at any time (owner pending→active self-approve intentionally allowed). Architecture: keep base matrix + semantic helpers unchanged; add a pure privileged any-status resolver; widen the single-write gateway to `privileged = isOwner || canAdminEditListing`. Kickoff: `tasks/Epics/Epic_I_kickoff_prompt_Task_427_AdminOwnerFullEditAndStatusAccess.md`.
 
-**Task 426 (governance, ✅ APPROVED — commit emitted, pending owner run):** "canonical-first / no-duplicate-class" AC clause in the Canonical Task Template (`docs/ai-behavior.md:862`) + matching orchestrator review-checklist item (`docs/orchestrator-role.md:237`). Clause + backlog entries committed in `c4a711ab4`; review commit = `orchestrator-role.md` + session log. Origin: Task 425 review (over-strict literal-local-diff AC where canonical `Button` already satisfied). Kickoff: `tasks/kickoff_prompt_Task_426_canonical_first_ac_clause.md`. Log: `docs/sessions/2026-06-15-task426-canonical-first-ac-clause.md`.
+**Task 426 (governance, ✅ COMMITTED — `c4a711ab4` + review commit; working tree clean, verified 2026-06-15):** "canonical-first / no-duplicate-class" AC clause in the Canonical Task Template (`docs/ai-behavior.md:862`) + matching orchestrator review-checklist item (`docs/orchestrator-role.md:237`). Origin: Task 425 review (over-strict literal-local-diff AC where canonical `Button` already satisfied). Kickoff: `tasks/kickoff_prompt_Task_426_canonical_first_ac_clause.md`. Log: `docs/sessions/2026-06-15-task426-canonical-first-ac-clause.md`.
 
 **Tasks 428 + 429 (governance/tooling — `check:mojibake` UTF-8 double-encoding gate) — ✅ COMMITTED `e7396b0c8`.** Gate + Albanian/Cyrillic signature coverage + allowlist hardening. Full detail archived → [`backlog-archive.md`](backlog-archive.md).
 

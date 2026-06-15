@@ -234,6 +234,7 @@ a hard gate on BOTH sides of the loop:
 - [ ] **🔴 Mobile <640 full-width gate (OWNER P0):** every in-scope text/container surface is full-width at `max-sm` in the diff (Buttons `max-sm:w-full`; Dialog/Sheet popup full-bleed; Tabs/FilterBar/Select/Combobox/Phone/CTA/toolbars too); icon-only exemptions each documented; ≥44px touch targets; labels wrap. **A non-full-width text/container surface at <640 without a documented exemption = REJECT.**
 - [ ] **🔴 Rendered verification matrix present (OWNER P0, clause 12):** breakpoints × sq/en/uk/it with real per-cell evidence; uk@320/375/390 stress cells present. **No matrix, or tsc/build-only "proof" = REJECT, route back.**
 - [ ] Canonical components only; no governance anti-patterns.
+- [ ] **Canonical-first respected (Task 426):** where a canonical primitive already provides the required behavior, the diff does NOT duplicate the class locally; closure is canonical-source proof (`file:line`) + rendered evidence. A duplicated class that diverges a consumer from the canonical single-source = route back.
 - [ ] **UI tasks only:** the §17 UI pre-flight checklist output (`ui-rules.md`) is in the session log —
       non-canonical-dropdown grep, control-height alignment (§15), z-index scale (§16), overflow at 320px
       in `uk`, all 7 breakpoints. **Do NOT approve a UI task whose session log lacks this.**

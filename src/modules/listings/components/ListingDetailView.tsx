@@ -89,6 +89,11 @@ export interface ListingDetailViewProps {
   isInitiallyFavorited: boolean
   /** Listing ID required to enable the favorite action; omit/undefined disables it. */
   listingId?: string
+  /** False only when the viewer is signed in AND is the listing owner (self-inquiry guard). Default true. */
+  canSendInquiry?: boolean
+  /** Prefill values for signed-in viewers' inquiry dialog. */
+  inquirerName?: string
+  inquirerEmail?: string
   /** True when rendered from the admin staff preview route (`/admin/listings/[id]/preview`). */
   isStaffPreview?: boolean
   /** Staff-only banner shown above the content grid in preview mode. */
@@ -136,6 +141,9 @@ export function ListingDetailViewBody({
   canReport,
   isInitiallyFavorited,
   listingId,
+  canSendInquiry = true,
+  inquirerName,
+  inquirerEmail,
   isStaffPreview = false,
   previewBanner = null,
   t,
@@ -151,6 +159,8 @@ export function ListingDetailViewBody({
   const effectiveCanReport = isStaffPreview ? false : canReport
   const effectiveIsFavorited = isStaffPreview ? false : isInitiallyFavorited
   const effectiveListingId = isStaffPreview ? undefined : listingId
+  // Preview mode never allows the inquiry trigger (Note 14 — keep inert).
+  const effectiveCanSendInquiry = isStaffPreview ? false : canSendInquiry
 
   return (
     <div className="pb-32 md:pb-20 lg:pb-8">
@@ -375,6 +385,10 @@ export function ListingDetailViewBody({
             listingId={effectiveListingId}
             isFavorited={effectiveIsFavorited}
             canReport={effectiveCanReport}
+            inquiryListingId={listing.id}
+            canSendInquiry={effectiveCanSendInquiry}
+            inquirerName={inquirerName}
+            inquirerEmail={inquirerEmail}
           />
         </div>
       </div>

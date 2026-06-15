@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { getListingOwnerContact } from '@/modules/listings/actions/getListingOwnerContact'
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
@@ -14,6 +13,7 @@ import { isListingClosed } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
+import { ListingInquiryDialog } from '@/modules/listings/components/ListingInquiryDialog'
 import { trackListingContactEvent } from '@/modules/listings/actions/contactEvents'
 import { openAuthSheet } from '@/lib/auth/authSheet'
 import type { ListingStatus } from '@/types/database'
@@ -50,9 +50,16 @@ interface ListingContactProps {
   isFavorited?: boolean
   /** True when the viewer is authenticated and is NOT the listing owner. */
   canReport?: boolean
+  /** Real listing ID — always available (unlike `listingId`, which is gated to authenticated viewers). Used for the inquiry dialog. */
+  inquiryListingId: string
+  /** False only when the viewer is signed in AND is the listing owner (self-inquiry guard). */
+  canSendInquiry?: boolean
+  /** Prefill values for signed-in viewers. */
+  inquirerName?: string
+  inquirerEmail?: string
 }
 
-export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false, canReport = false }: ListingContactProps) {
+export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false, canReport = false, inquiryListingId, canSendInquiry = true, inquirerName, inquirerEmail }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const [copied, setCopied] = useState(false)
@@ -67,6 +74,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
   const listingClosed = listingStatus ? isListingClosed(listingStatus) : false
   const closedLabel = listingClosed && listingStatus ? t(`action_disabled_${listingStatus}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const initials = owner.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) ?? '?'
+  // Trigger hidden for owner-deleted, owner-profile-unavailable (genuinely orphaned listing,
+  // not the guest-RLS case), closed listings, and self-inquiry.
+  const showInquiryTrigger = !ownerDeleted && !ownerDataUnavailable && !listingClosed && canSendInquiry
+  const hasContactButtons = !ownerDeleted && !showGuestCTA && (owner.has_whatsapp || owner.has_phone)
 
   async function handleContactClick(type: 'whatsapp' | 'call') {
     if (!listingId || contactLoading) return
@@ -223,16 +234,24 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
                     <MessageCircle className="h-5 w-5 shrink-0" />
                     {t('send_message')}
                   </Button>
-                ) : (
-                  <Link
-                    href={`/${locale}/messages/new?listing=${encodeURIComponent(listingTitle)}`}
-                    className={buttonVariants({ size: 'xl', variant: 'default' })}
-                    data-track="contact_owner"
-                  >
-                    <MessageCircle className="size-5" />
-                    {t('send_message')}
-                  </Link>
-                )}
+                ) : showInquiryTrigger ? (
+                  <ListingInquiryDialog
+                    listingId={inquiryListingId}
+                    listingTitle={listingTitle}
+                    defaultName={inquirerName}
+                    defaultEmail={inquirerEmail}
+                    trigger={
+                      <button
+                        type="button"
+                        className={buttonVariants({ size: 'xl', variant: 'default' })}
+                        data-track="contact_owner"
+                      >
+                        <MessageCircle className="size-5" />
+                        {t('send_message')}
+                      </button>
+                    }
+                  />
+                ) : null}
                 {listingClosed && closedLabel && (
                   <p className="text-xs text-muted-foreground text-center">{closedLabel}</p>
                 )}
@@ -287,60 +306,84 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
         className="listing-contact-mobile lg:hidden fixed bottom-14 md:bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 pt-3"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}
       >
-        <div className="flex items-center gap-3 max-w-lg mx-auto">
-          <div className="flex-1 min-w-0">
-            <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency, locale)}</p>
-            <p className="text-xs text-muted-foreground break-words">
-              {ownerDeleted
-                ? t('owner_deleted')
-                : ownerDataUnavailable
-                  ? t('owner_name_unavailable')
-                  : owner.name ?? t('owner_name_unavailable')}
-            </p>
+        <div className="flex flex-col gap-2 max-w-lg mx-auto">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <p className="text-lg font-bold text-primary leading-none">{formatPrice(price, currency, locale)}</p>
+              <p className="text-xs text-muted-foreground break-words">
+                {ownerDeleted
+                  ? t('owner_deleted')
+                  : ownerDataUnavailable
+                    ? t('owner_name_unavailable')
+                    : owner.name ?? t('owner_name_unavailable')}
+              </p>
+            </div>
+            {!ownerDeleted && !showGuestCTA && (
+              <div className="flex gap-2 shrink-0">
+                {owner.has_whatsapp && (
+                  <button
+                    type="button"
+                    onClick={() => handleContactClick('whatsapp')}
+                    disabled={contactLoading}
+                    className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0 max-sm:w-auto')}
+                    data-track="whatsapp_click"
+                    aria-label={t('whatsapp_aria_label')}
+                  >
+                    {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
+                    {t('whatsapp_button_label')}
+                  </button>
+                )}
+                {owner.has_phone && (
+                  <button
+                    type="button"
+                    onClick={() => handleContactClick('call')}
+                    disabled={contactLoading}
+                    className={buttonVariants({ size: 'icon-xl', variant: 'outline' })}
+                    data-track="contact_owner"
+                  >
+                    {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Phone className="size-5" />}
+                  </button>
+                )}
+              </div>
+            )}
+            {ownerDeleted && (
+              <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted text-muted-foreground text-xs font-medium">
+                <UserX className="h-3.5 w-3.5 shrink-0" />
+                <span>{t('owner_deleted_label')}</span>
+              </div>
+            )}
+            {showGuestCTA && (
+              <button
+                type="button"
+                onClick={() => openAuthSheet('login')}
+                className="shrink-0 h-11 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm flex items-center gap-1.5 transition-colors"
+              >
+                <LogIn className="h-4 w-4" />
+                {t('contact_guest_cta')}
+              </button>
+            )}
           </div>
-          {!ownerDeleted && !showGuestCTA && (
-            <div className="flex gap-2 shrink-0">
-              {owner.has_whatsapp && (
+
+          {/* Message trigger — independent of has_phone/has_whatsapp; renders for guests too
+              (Task 243: dual mobile-bar overlap with ListingMobileCTA documented in session log,
+              out of scope — wired into this bar only, per owner decision 2026-06-15). */}
+          {showInquiryTrigger && (
+            <ListingInquiryDialog
+              listingId={inquiryListingId}
+              listingTitle={listingTitle}
+              defaultName={inquirerName}
+              defaultEmail={inquirerEmail}
+              trigger={
                 <button
                   type="button"
-                  onClick={() => handleContactClick('whatsapp')}
-                  disabled={contactLoading}
-                  className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0 max-sm:w-auto')}
-                  data-track="whatsapp_click"
-                  aria-label={t('whatsapp_aria_label')}
-                >
-                  {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-                  {t('whatsapp_button_label')}
-                </button>
-              )}
-              {owner.has_phone && (
-                <button
-                  type="button"
-                  onClick={() => handleContactClick('call')}
-                  disabled={contactLoading}
-                  className={buttonVariants({ size: 'icon-xl', variant: 'outline' })}
+                  className={cn(buttonVariants({ size: 'xl', variant: hasContactButtons ? 'outline' : 'default' }), 'w-full')}
                   data-track="contact_owner"
                 >
-                  {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Phone className="size-5" />}
+                  <MessageCircle className="size-5" />
+                  {t('send_message')}
                 </button>
-              )}
-            </div>
-          )}
-          {ownerDeleted && (
-            <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted text-muted-foreground text-xs font-medium">
-              <UserX className="h-3.5 w-3.5 shrink-0" />
-              <span>{t('owner_deleted_label')}</span>
-            </div>
-          )}
-          {showGuestCTA && (
-            <button
-              type="button"
-              onClick={() => openAuthSheet('login')}
-              className="shrink-0 h-11 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm flex items-center gap-1.5 transition-colors"
-            >
-              <LogIn className="h-4 w-4" />
-              {t('contact_guest_cta')}
-            </button>
+              }
+            />
           )}
         </div>
       </div>

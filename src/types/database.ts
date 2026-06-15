@@ -49,6 +49,7 @@ export type ReportReason = 'spam' | 'fraud' | 'duplicate' | 'wrong_category' | '
 export type ReportStatus = 'pending' | 'reviewed' | 'resolved' | 'dismissed'
 export type NotificationType = 'new_message' | 'saved_search_match' | 'listing_status_change' | 'support_reply' | 'listing_expires_soon' | 'agent_verified' | 'marketing' | 'report_outcome' | 'price_change'
 export type ContactStatus = 'new' | 'in_progress' | 'closed'
+export type ListingInquiryStatus = 'new' | 'read' | 'archived'
 
 export interface ContactInquiry {
   id: string
@@ -71,6 +72,18 @@ export interface ContactInquiryReply {
   inquiry_id: string
   replied_by: string
   body: string
+  created_at: string
+}
+
+export interface ListingInquiry {
+  id: string
+  listing_id: string
+  listing_owner_id: string
+  name: string
+  email: string
+  message: string
+  requester_ip: string | null
+  status: ListingInquiryStatus
   created_at: string
 }
 

@@ -164,10 +164,11 @@ export default async function ListingPage({ params }: Props) {
   let preferredCurrency: PreferredCurrency = 'ALL'
   let hasValidProfile = false
   let ownerRaw: PublicUserProfile | null = null
+  let inquirerName: string | undefined
   if (authUser) {
     const [favResult, profileResult, ownerResult] = await Promise.all([
       supabase.from('favorites').select('id').eq('user_id', authUser.id).eq('listing_id', listing.id).maybeSingle(),
-      supabase.from('users').select('preferred_currency').eq('id', authUser.id).single(),
+      supabase.from('users').select('preferred_currency, name').eq('id', authUser.id).single(),
       supabase
         .from('public_user_profiles')
         .select('id, name, avatar_url, user_type, is_verified, company_name, deleted_at, has_phone, has_whatsapp')
@@ -178,11 +179,15 @@ export default async function ListingPage({ params }: Props) {
     preferredCurrency = (profileResult.data?.preferred_currency as PreferredCurrency) ?? 'ALL'
     hasValidProfile = !!profileResult.data
     ownerRaw = ownerResult.data as PublicUserProfile | null
+    inquirerName = profileResult.data?.name ?? undefined
   }
   // A zombie session has a valid JWT (authUser truthy) but no profile row (deleted/orphaned account).
   // Treat zombie sessions as guests so the contact card shows "Sign in" instead of "Account deleted".
   const isGuest = !authUser || !hasValidProfile
   const canReport = !isGuest && !!authUser && authUser.id !== listing.user_id
+  // Inquiry trigger hidden only for the listing's own (authenticated, non-zombie) owner.
+  const canSendInquiry = !authUser || isGuest || authUser.id !== listing.user_id
+  const inquirerEmail = !isGuest ? (authUser?.email ?? undefined) : undefined
 
   // Viewer auth state (isGuest) and owner account status (deleted_at) are independent concerns.
   // ownerRaw is null for guests (RLS blocks the embed join) or when the owner row is genuinely gone.
@@ -262,6 +267,9 @@ export default async function ListingPage({ params }: Props) {
       canReport={canReport}
       isInitiallyFavorited={isInitiallyFavorited}
       listingId={authUser ? listing.id : undefined}
+      canSendInquiry={canSendInquiry}
+      inquirerName={inquirerName}
+      inquirerEmail={inquirerEmail}
       isStaffPreview={false}
       previewBanner={null}
     />

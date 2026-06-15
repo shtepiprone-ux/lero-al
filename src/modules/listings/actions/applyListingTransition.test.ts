@@ -10,7 +10,7 @@ import type { TransitionActorContext } from './applyListingTransition'
 // Tests inject a mock DB via the optional _db parameter.
 // This keeps tests pure (no vi.mock needed, no module hoisting concerns).
 
-type MockSelectResult = { data: { id: string; status: string } | null; error: null }
+type MockSelectResult = { data: { id: string; status: string; user_id?: string } | null; error: null }
 type MockUpdateResult = { error: null | { message: string } }
 
 function makeMockDb(selectResult: MockSelectResult, updateResult: MockUpdateResult = { error: null }) {
@@ -211,11 +211,17 @@ describe('applyListingTransitionByStatus — not found', () => {
   })
 })
 
-describe('applyListingTransitionByStatus — same-status no-op', () => {
-  it('returns ok with same nextStatus when status unchanged', async () => {
+describe('applyListingTransitionByStatus — same-status is not a transition (Task 427 rework)', () => {
+  it('admin: same-status returns invalid_transition (not a no-op success)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'active' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'active', adminActor, db)
-    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
+    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+  })
+
+  it('owner of own listing: same-status returns invalid_transition (not a no-op success)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'active', user_id: 'user-1' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'active', userActor, db)
+    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
   })
 })
 
@@ -251,29 +257,32 @@ describe('applyListingTransitionByStatus — valid transitions', () => {
   })
 })
 
-describe('applyListingTransitionByStatus — invalid transitions', () => {
-  it('sold → active returns invalid_transition (no direct path)', async () => {
+// (Task 427) For a privileged actor (admin/moderator, or owner of their own
+// listing), applyListingTransitionByStatus allows direct transition to ANY
+// other status — these previously-"invalid" status pairs now succeed.
+describe('applyListingTransitionByStatus — privileged any-status transitions (Task 427)', () => {
+  it('sold → active (admin, no base-matrix path, now allowed)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'sold' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'active', adminActor, db)
-    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
   })
 
-  it('sold → pending returns invalid_transition', async () => {
+  it('sold → pending (admin, now allowed)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'sold' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'pending', adminActor, db)
-    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+    expect(result).toEqual({ ok: true, nextStatus: 'pending', listingId: 'l1' })
   })
 
-  it('archived → active returns invalid_transition (must go via inactive first)', async () => {
+  it('archived → active (admin, now allowed without going via inactive)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'archived' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'active', adminActor, db)
-    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
   })
 
-  it('rented → inactive returns invalid_transition', async () => {
+  it('rented → inactive (admin, now allowed)', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'rented' }, error: null })
     const result = await applyListingTransitionByStatus('l1', 'inactive', adminActor, db)
-    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+    expect(result).toEqual({ ok: true, nextStatus: 'inactive', listingId: 'l1' })
   })
 })
 
@@ -289,6 +298,53 @@ describe('applyListingTransitionByStatus — admin restore flow', () => {
     const step2 = await applyListingTransitionByStatus('l1', 'active', adminActor, db2)
     expect(step2).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
   })
+})
+
+// ── applyListingTransitionByStatus — privileged any-status (Task 427) ────────
+
+describe('applyListingTransitionByStatus — privileged any-status access', () => {
+  it('owner of own listing: sold → active (self-approve, no base-matrix path)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'sold', user_id: 'user-1' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'active', userActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
+  })
+
+  it('owner of own listing: archived → pending (no base-matrix path)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'archived', user_id: 'user-1' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'pending', userActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'pending', listingId: 'l1' })
+  })
+
+  it('admin: sold → active (privileged any-status, beyond base matrix)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'sold', user_id: 'other-user' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'active', adminActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
+  })
+
+  it('non-owner, non-staff caller: forbidden even for same-status no-op', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'active', user_id: 'other-user' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'active', userActor, db)
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
+  })
+
+  it('non-owner, non-staff caller: forbidden for any target status', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'sold', user_id: 'other-user' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'active', userActor, db)
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
+  })
+
+  it('owner targeting a listing they do not own: forbidden', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'sold', user_id: 'someone-else' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'active', userActor, db)
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
+  })
+
+  it('null-role caller: forbidden regardless of target status', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'active', user_id: 'other-user' }, error: null })
+    const result = await applyListingTransitionByStatus('l1', 'sold', noRoleActor, db)
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
+  })
+
 })
 
 describe('bypass prevention — no direct DB access from outside gateway', () => {

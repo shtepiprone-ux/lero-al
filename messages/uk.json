@@ -704,6 +704,7 @@
       "btn_archive": "Архівувати",
       "btn_send_review": "Надіслати на перевірку",
       "btn_restore": "Відновити",
+      "btn_set_status": "Встановити: {status}",
       "status_update_success": "Статус оновлено",
       "status_update_error": "Помилка при зміні статусу"
     },

@@ -60,7 +60,9 @@ export default async function EditListingPage({ params }: Props) {
 
   if (!check.ok) redirect(`/${locale}/listings/${listing.slug}`)
 
-  const canManageStatus = canAdminEditListing(userRole)
+  // Owner-of-listing OR admin/moderator sees the status-correction control
+  // (Task 427: privileged any-status access for owner + staff).
+  const canManageStatus = listing.user_id === user.id || canAdminEditListing(userRole)
 
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ?? ''
   const uploadFolder = `${listing.user_id}/listings/${listing.id}`

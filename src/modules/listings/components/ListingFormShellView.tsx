@@ -19,7 +19,7 @@ import { DynamicFieldSection } from './form/DynamicFieldSection'
 import { isEditMode } from '@/modules/listings/domain/listingFormMode'
 import {
   ALLOWED_LISTING_TRANSITIONS,
-  getTransitionActionForStatus,
+  getAllowedTargetStatuses,
 } from '@/modules/listings/domain/listingTransitionEngine'
 import type { ListingFormMode } from '@/modules/listings/domain/listingFormMode'
 import type { FormValues } from '@/modules/listings/types/form'
@@ -109,9 +109,15 @@ export function ListingFormShellView({
   const tc = useTranslations('common')
   const tStatus = useTranslations('admin.common.status_control')
 
+  // Owner-or-staff (the only viewers for whom `statusControl` is set, per
+  // edit/page.tsx) gets the full privileged any-status set (Task 427).
+  const allowedTargetStatuses = statusControl
+    ? getAllowedTargetStatuses(statusControl.currentStatus, { privileged: true })
+    : []
+
   const statusOptions: StatusOption<ListingStatus>[] = statusControl
     ? ALL_LISTING_STATUSES
-        .filter(s => s === statusControl.currentStatus || getTransitionActionForStatus(statusControl.currentStatus, s) !== null)
+        .filter(s => s === statusControl.currentStatus || allowedTargetStatuses.includes(s))
         .map(s => ({
           code: s,
           label: t(`status_${s}` as 'status_active'),

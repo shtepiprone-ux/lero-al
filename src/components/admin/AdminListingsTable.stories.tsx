@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { within, userEvent } from 'storybook/test'
 import { AdminListingsTable } from './AdminListingsTable'
 import { FIXTURE_LISTINGS } from '@/stories/fixtures/admin.fixtures'
 
@@ -38,4 +39,24 @@ export const Tablet: Story = {
 
 export const LocaleStress: Story = {
   globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+// ── Task 427 rework AC R4 — rendered-evidence harness only, no production ────
+// component, styling, i18n, engine, gateway, or option-derivation change.
+// Opens ListingPreviewDialog for the `sold` fixture (lst-004), which now
+// renders the full privileged status-action set (5 buttons).
+export const PreviewDialogSoldStatusActions: Story = {
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Task 427 rework AC R4 — opens ListingPreviewDialog for a `sold` listing, which now renders the full privileged status-action set (5 buttons). Rendered-evidence harness only.',
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const trigger = await canvas.findByText('Apartament 2+1 — Durrës, pranë bregdetit')
+    await userEvent.click(trigger)
+  },
 }

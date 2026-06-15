@@ -11,7 +11,12 @@ import {
   isTerminalListingStatus,
   isMarketClosedStatus,
   isModeratableStatus,
+  getPrivilegedTargetStatuses,
+  canSetStatusPrivileged,
+  getAllowedTargetStatuses,
 } from './listingTransitionEngine'
+
+const ALL_STATUSES: ListingStatus[] = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived']
 
 // ── Transition matrix coverage ────────────────────────────────────────────────
 
@@ -411,6 +416,106 @@ describe('transition determinism', () => {
         expect(result.ok).toBe(true)
         if (result.ok) expect(result.nextStatus).toBe(to)
       }
+    }
+  })
+})
+
+// ── Regression guard: base matrix + semantic helpers unchanged (Task 427) ────
+
+describe('regression guard — base matrix and semantic helpers unchanged', () => {
+  it('ALLOWED_LISTING_TRANSITIONS still has exactly the original six statuses', () => {
+    expect(Object.keys(ALLOWED_LISTING_TRANSITIONS).sort()).toEqual([...ALL_STATUSES].sort())
+  })
+
+  it('sold/rented/archived base matrices unchanged', () => {
+    expect(ALLOWED_LISTING_TRANSITIONS.sold).toEqual(['ARCHIVE'])
+    expect(ALLOWED_LISTING_TRANSITIONS.rented).toEqual(['ARCHIVE'])
+    expect(ALLOWED_LISTING_TRANSITIONS.archived).toEqual(['RESTORE'])
+  })
+
+  it('isTerminalListingStatus/isMarketClosedStatus/isModeratableStatus unchanged for all statuses', () => {
+    expect(isTerminalListingStatus('sold')).toBe(true)
+    expect(isTerminalListingStatus('rented')).toBe(true)
+    expect(isTerminalListingStatus('archived')).toBe(false)
+    expect(isMarketClosedStatus('sold')).toBe(true)
+    expect(isMarketClosedStatus('rented')).toBe(true)
+    expect(isModeratableStatus('pending')).toBe(true)
+    expect(isModeratableStatus('active')).toBe(false)
+  })
+})
+
+// ── getPrivilegedTargetStatuses (Task 427) ────────────────────────────────────
+
+describe('getPrivilegedTargetStatuses', () => {
+  it('returns all other statuses, excluding the current one', () => {
+    for (const s of ALL_STATUSES) {
+      const targets = getPrivilegedTargetStatuses(s)
+      expect(targets).not.toContain(s)
+      expect(targets.sort()).toEqual(ALL_STATUSES.filter(x => x !== s).sort())
+    }
+  })
+
+  it('sold can target every other status, not just archived', () => {
+    const targets = getPrivilegedTargetStatuses('sold')
+    expect(targets).toContain('active')
+    expect(targets).toContain('pending')
+    expect(targets).toContain('inactive')
+    expect(targets).toContain('rented')
+    expect(targets).toContain('archived')
+  })
+
+  it('archived can target active directly (privileged-only, not in base matrix)', () => {
+    expect(getPrivilegedTargetStatuses('archived')).toContain('active')
+  })
+})
+
+// ── canSetStatusPrivileged (Task 427) ─────────────────────────────────────────
+
+describe('canSetStatusPrivileged', () => {
+  it('returns false for same-status (from === to)', () => {
+    for (const s of ALL_STATUSES) {
+      expect(canSetStatusPrivileged(s, s)).toBe(false)
+    }
+  })
+
+  it('returns true for any distinct pair of known statuses', () => {
+    for (const from of ALL_STATUSES) {
+      for (const to of ALL_STATUSES) {
+        if (from === to) continue
+        expect(canSetStatusPrivileged(from, to)).toBe(true)
+      }
+    }
+  })
+
+  it('allows transitions not present in the base matrix (e.g. sold → active, archived → pending)', () => {
+    expect(canSetStatusPrivileged('sold', 'active')).toBe(true)
+    expect(canSetStatusPrivileged('archived', 'pending')).toBe(true)
+    expect(canSetStatusPrivileged('pending', 'sold')).toBe(true)
+  })
+})
+
+// ── getAllowedTargetStatuses (Task 427) ───────────────────────────────────────
+
+describe('getAllowedTargetStatuses', () => {
+  it('privileged: true returns the full any-status set (excluding current)', () => {
+    for (const s of ALL_STATUSES) {
+      expect(getAllowedTargetStatuses(s, { privileged: true }).sort())
+        .toEqual(getPrivilegedTargetStatuses(s).sort())
+    }
+  })
+
+  it('privileged: false matches the base-matrix-derived targets (unchanged behavior)', () => {
+    expect(getAllowedTargetStatuses('active', { privileged: false }).sort())
+      .toEqual(['archived', 'inactive', 'pending', 'rented', 'sold'].sort())
+    expect(getAllowedTargetStatuses('sold', { privileged: false }))
+      .toEqual(['archived'])
+    expect(getAllowedTargetStatuses('archived', { privileged: false }))
+      .toEqual(['inactive'])
+  })
+
+  it('privileged: false never includes the current status itself', () => {
+    for (const s of ALL_STATUSES) {
+      expect(getAllowedTargetStatuses(s, { privileged: false })).not.toContain(s)
     }
   })
 })

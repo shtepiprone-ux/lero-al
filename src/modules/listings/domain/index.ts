@@ -70,4 +70,7 @@ export {
   isTerminalListingStatus,
   isMarketClosedStatus,
   isModeratableStatus,
+  getPrivilegedTargetStatuses,
+  canSetStatusPrivileged,
+  getAllowedTargetStatuses,
 } from './listingTransitionEngine'

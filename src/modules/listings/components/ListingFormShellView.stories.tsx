@@ -98,3 +98,32 @@ export const Staff: Story = {
     },
   },
 }
+
+// ── Task 427 rework AC R4 — rendered-evidence harness only, no production ────
+// component, styling, i18n, engine, gateway, or option-derivation change.
+// Opens the "Change status" Combobox so the full privileged any-status set
+// (6 options for currentStatus='pending') renders as a bottom sheet at <640.
+export const StaffStatusControlOpen: Story = {
+  args: {
+    statusControl: {
+      currentStatus: 'pending',
+      listingId: 'story-listing-1',
+      onStatusChange: noopStatusChange,
+    },
+  },
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Task 427 rework AC R4 — opens the owner/editor "Change status" control to render the full privileged 6-option set as a bottom sheet at <640. Rendered-evidence harness only.',
+      },
+    },
+  },
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector<HTMLButtonElement>('button.cursor-pointer')
+    if (trigger) {
+      const { userEvent } = await import('storybook/test')
+      await userEvent.click(trigger)
+    }
+  },
+}

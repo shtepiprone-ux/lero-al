@@ -163,6 +163,49 @@ export function getTransitionActionForStatus(
   return null
 }
 
+// ── Privileged any-status API (Task 427) ──────────────────────────────────────
+//
+// Separate authorization path for an authorized human editor (listing owner OR
+// admin/moderator): they may move a listing directly to ANY other status,
+// bypassing ALLOWED_LISTING_TRANSITIONS. The base matrix above (and the
+// semantic helpers derived from it) remain the source of truth for automation
+// and moderation flows — this is an additive UI/admin pathway only, gated by
+// authorization performed in applyListingTransition.ts (not here).
+
+const ALL_LISTING_STATUSES = Object.keys(ALLOWED_LISTING_TRANSITIONS) as ListingStatus[]
+
+/**
+ * Returns every listing status other than `currentStatus` — the full set of
+ * direct targets a privileged actor (owner-of-listing or admin/moderator) may
+ * select, regardless of the base transition matrix.
+ */
+export function getPrivilegedTargetStatuses(currentStatus: ListingStatus): ListingStatus[] {
+  return ALL_LISTING_STATUSES.filter(status => status !== currentStatus)
+}
+
+/**
+ * Returns true when a privileged actor may set the listing status directly
+ * from `from` to `to` — valid for any two distinct known listing statuses.
+ */
+export function canSetStatusPrivileged(from: ListingStatus, to: ListingStatus): boolean {
+  return from !== to && ALL_LISTING_STATUSES.includes(from) && ALL_LISTING_STATUSES.includes(to)
+}
+
+/**
+ * Returns the set of selectable target statuses for `currentStatus`.
+ * - `privileged: true`  → the full any-status set (getPrivilegedTargetStatuses).
+ * - `privileged: false` → the base-matrix-derived set (via getTransitionActionForStatus).
+ *
+ * Single entry point for UIs deciding which status options to render.
+ */
+export function getAllowedTargetStatuses(
+  currentStatus: ListingStatus,
+  { privileged }: { privileged: boolean },
+): ListingStatus[] {
+  if (privileged) return getPrivilegedTargetStatuses(currentStatus)
+  return ALL_LISTING_STATUSES.filter(status => getTransitionActionForStatus(currentStatus, status) !== null)
+}
+
 // ── Assertion API ─────────────────────────────────────────────────────────────
 
 export class ListingTransitionError extends Error {

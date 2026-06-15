@@ -112,6 +112,9 @@ const STORY_TARGETS = [
   { id: 'system-recentlyviewedsection--mobile-scroll', label: 'RecentlyViewedSection/MobileScroll', viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
   { id: 'system-recentlyviewedsection--empty-state', label: 'RecentlyViewedSection/EmptyState',  viewports: ['desktop-1280'] },
   { id: 'system-recentlyviewedsection--ukrainian-locale', label: 'RecentlyViewedSection/Ukrainian', locales: ['uk'], viewports: ['mobile-375', 'desktop-1280'] },
+  // Task 427 rework AC R4 — targeted rendered proof for the 2 density-changed surfaces
+  { id: 'admin-adminlistingstable--preview-dialog-sold-status-actions', label: 'AdminListingsTable/PreviewDialogSoldStatusActions', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
+  { id: 'listings-listingformshellview--staff-status-control-open', label: 'ListingFormShellView/StaffStatusControlOpen', locales: ['uk'], viewports: ['mobile-320', 'mobile-375', 'mobile-390'] },
 ];
 
 // ── MIME types for static server ──────────────────────────────────────────────

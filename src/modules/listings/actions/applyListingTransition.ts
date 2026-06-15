@@ -24,9 +24,11 @@
  *   → Used by: moderation flows, automation, programmatic APIs.
  *
  * applyListingTransitionByStatus(listingId, toStatus, actor)
- *   → status-based bridge: caller knows the desired target status.
- *   → Used by: UI-facing flows where user selects a status (admin dropdown).
- *   → Internally maps to action via getTransitionActionForStatus, then delegates.
+ *   → status-based, PRIVILEGED any-status bridge: caller knows the desired target status.
+ *   → Used by: UI-facing flows where user selects a status (admin dropdown, owner cabinet).
+ *   → Authorized when the actor is the listing owner OR admin/moderator (Task 427); the
+ *     listing may then move directly to ANY other status (canSetStatusPrivileged) — not
+ *     limited to ALLOWED_LISTING_TRANSITIONS.
  *
  * ─────────────────────────────────────────────────────────────────────────────
  * PURITY CONTRACT
@@ -43,7 +45,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { routing } from '@/i18n/routing'
 import {
   resolveTransition,
-  getTransitionActionForStatus,
+  canSetStatusPrivileged,
 } from '@/modules/listings/domain/listingTransitionEngine'
 import { canAdminEditListing } from '@/modules/listings/domain/listingPermissions'
 import { createNotification } from '@/modules/notifications/lib/mutations'
@@ -72,38 +74,32 @@ type DbClient = ReturnType<typeof createAdminClient>
 // ── Core execution (private) ──────────────────────────────────────────────────
 
 /**
- * Applies an already-validated transition action against a known current status.
- * Called by both public functions after their own fetch and validation.
- * This is the ONLY place that writes to listings.status in the entire codebase.
+ * Writes listings.status and applies all side-effects (owner notification,
+ * cache invalidation). This is the ONLY place that writes to listings.status
+ * in the entire codebase — both public gateways below funnel through it after
+ * their own fetch and validation.
  */
-async function executeTransition(
+async function writeListingStatus(
   listingId: string,
   currentStatus: ListingStatus,
-  action: ListingTransitionAction,
+  nextStatus: ListingStatus,
   actor: TransitionActorContext,
   db: DbClient,
   slug: string | null,
   listingTitle: string | null,
   ownerId: string | null,
 ): Promise<TransitionApplicationResult> {
-  const transition = resolveTransition(currentStatus, action)
-
-  if (!transition.ok) {
-    return { ok: false, reason: 'invalid_transition' }
-  }
-
   const { error } = await db
     .from('listings')
-    .update({ status: transition.nextStatus })
+    .update({ status: nextStatus })
     .eq('id', listingId)
 
   if (error) {
     console.error('applyListingTransition: DB write failed', {
       error,
       listingId,
-      action,
       from: currentStatus,
-      to: transition.nextStatus,
+      to: nextStatus,
       actor: actor.source ?? actor.userId,
     })
     return { ok: false, reason: 'db_error' }
@@ -117,7 +113,7 @@ async function executeTransition(
       title: listingTitle ?? listingId,
       // Store status codes as JSON so the renderer can localize them at display time
       // in the viewer's active locale (not baked at write time). Format: {"from":"X","to":"Y"}.
-      body: JSON.stringify({ from: currentStatus, to: transition.nextStatus }),
+      body: JSON.stringify({ from: currentStatus, to: nextStatus }),
       link: slug ? `/listings/${slug}` : undefined,
     }).catch(e => console.error('[notifications] listing_status_change notify failed', e))
   }
@@ -135,7 +131,30 @@ async function executeTransition(
     }
   }
 
-  return { ok: true, nextStatus: transition.nextStatus, listingId }
+  return { ok: true, nextStatus, listingId }
+}
+
+/**
+ * Applies an already-validated transition action against a known current status.
+ * Validates via the pure transition engine, then delegates the write.
+ */
+async function executeTransition(
+  listingId: string,
+  currentStatus: ListingStatus,
+  action: ListingTransitionAction,
+  actor: TransitionActorContext,
+  db: DbClient,
+  slug: string | null,
+  listingTitle: string | null,
+  ownerId: string | null,
+): Promise<TransitionApplicationResult> {
+  const transition = resolveTransition(currentStatus, action)
+
+  if (!transition.ok) {
+    return { ok: false, reason: 'invalid_transition' }
+  }
+
+  return writeListingStatus(listingId, currentStatus, transition.nextStatus, actor, db, slug, listingTitle, ownerId)
 }
 
 // ── Public gateway — action-based ────────────────────────────────────────────
@@ -173,11 +192,16 @@ export async function applyListingTransition(
 // ── Public gateway — status-based bridge ─────────────────────────────────────
 
 /**
- * Status-based bridge variant. Use when the caller selects a target status
- * rather than a semantic action (e.g., admin UI dropdown).
+ * Status-based bridge variant — THE PRIVILEGED ANY-STATUS ENTRY. Use when the
+ * caller (UI) selects a target status rather than a semantic action.
  *
- * Maps toStatus → action internally via getTransitionActionForStatus,
- * then delegates to the core transition pathway. Single DB fetch.
+ * Authorization: the caller must be the listing owner (`actor.userId ===
+ * listing.user_id`) OR have an admin/moderator role (`canAdminEditListing`).
+ * When privileged, the listing may move directly to ANY other status
+ * (`canSetStatusPrivileged`) — not limited to the base
+ * `ALLOWED_LISTING_TRANSITIONS` matrix. `applyListingTransition` (action-based)
+ * remains the entry point for automation/moderation and keeps its unchanged
+ * `canAdminEditListing`-only gate.
  *
  * The optional _db parameter is for testing only — callers must omit it.
  */
@@ -187,10 +211,6 @@ export async function applyListingTransitionByStatus(
   actor: TransitionActorContext,
   _db?: DbClient,
 ): Promise<TransitionApplicationResult> {
-  if (!canAdminEditListing(actor.role)) {
-    return { ok: false, reason: 'forbidden' }
-  }
-
   const db = _db ?? createAdminClient()
 
   const { data: current } = await db
@@ -201,15 +221,18 @@ export async function applyListingTransitionByStatus(
 
   if (!current) return { ok: false, reason: 'not_found' }
 
-  // Same-status: no-op success (UI may emit the current status as "change")
-  if (current.status === toStatus) {
-    return { ok: true, nextStatus: toStatus, listingId }
+  const isOwner = current.user_id === actor.userId
+  if (!isOwner && !canAdminEditListing(actor.role)) {
+    return { ok: false, reason: 'forbidden' }
   }
 
-  const action = getTransitionActionForStatus(current.status as ListingStatus, toStatus)
-  if (!action) {
+  const currentStatus = current.status as ListingStatus
+
+  // Same-status is not a real transition — canSetStatusPrivileged(x, x) is
+  // false, so this falls through to invalid_transition below.
+  if (!canSetStatusPrivileged(currentStatus, toStatus)) {
     return { ok: false, reason: 'invalid_transition' }
   }
 
-  return executeTransition(listingId, current.status as ListingStatus, action, actor, db, current.slug ?? null, current.title ?? null, current.user_id ?? null)
+  return writeListingStatus(listingId, currentStatus, toStatus, actor, db, current.slug ?? null, current.title ?? null, current.user_id ?? null)
 }

@@ -704,6 +704,7 @@
       "btn_archive": "Archivia",
       "btn_send_review": "Invia in revisione",
       "btn_restore": "Ripristina",
+      "btn_set_status": "Imposta su {status}",
       "status_update_success": "Stato aggiornato",
       "status_update_error": "Errore nell'aggiornamento dello stato"
     },

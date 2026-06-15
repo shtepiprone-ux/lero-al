@@ -8,7 +8,6 @@
  * FORBIDDEN outside this file:
  *   listing.user_id === userId           (use canUserEditListing)
  *   role === 'admin' || role === 'mod'   (use canAdminEditListing)
- *   status === 'sold' || ...             (use isListingEditableStatus)
  *
  * ALLOWED anywhere:
  *   checkEditPermission(...)             → returns typed result
@@ -21,7 +20,6 @@
  */
 
 import type { ListingStatus } from '@/types/database'
-import { isListingEditableStatus } from './listingSemanticHelpers'
 
 // ── Ownership / role checks ───────────────────────────────────────────────────
 
@@ -50,24 +48,22 @@ export function canAdminEditListing(userRole: string | null): boolean {
 
 export type EditPermissionCheck =
   | { ok: true }
-  | { ok: false; reason: 'not_editable' | 'forbidden' }
+  | { ok: false; reason: 'forbidden' }
 
 /**
- * Checks all editability preconditions and returns a typed result.
+ * Checks edit authorization and returns a typed result.
  *
- * Checks in order:
- *   1. Listing status must permit editing (not sold / rented / archived).
- *      This applies to everyone including admin — change the status first.
- *   2. Caller must be the listing owner OR have admin / moderator role.
+ * Caller must be the listing owner OR have admin / moderator role.
+ *
+ * (Task 427) The listing status no longer gates editing for an authorized
+ * editor — owner-of-listing or admin/moderator may edit at ANY status. A
+ * non-owner/non-staff caller is `forbidden` regardless of status.
  */
 export function checkEditPermission(
   userId: string,
   listing: { user_id: string; status: ListingStatus },
   userRole: string | null,
 ): EditPermissionCheck {
-  if (!isListingEditableStatus(listing.status)) {
-    return { ok: false, reason: 'not_editable' }
-  }
   if (!canUserEditListing(userId, listing.user_id, userRole)) {
     return { ok: false, reason: 'forbidden' }
   }
@@ -77,7 +73,7 @@ export function checkEditPermission(
 // ── Assertion API ─────────────────────────────────────────────────────────────
 
 export class ListingEditForbiddenError extends Error {
-  constructor(public readonly reason: 'not_editable' | 'forbidden') {
+  constructor(public readonly reason: 'forbidden') {
     super(`Listing edit forbidden: ${reason}`)
     this.name = 'ListingEditForbiddenError'
   }

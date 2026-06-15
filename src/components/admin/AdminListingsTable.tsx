@@ -26,39 +26,45 @@ import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable
 import { formatPrice } from '@/lib/formatters'
 import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
-import { isListingArchived, isListingHidden } from '@/modules/listings/domain'
+import {
+  isListingArchived,
+  isListingHidden,
+  getPrivilegedTargetStatuses,
+  getTransitionActionForStatus,
+  type ListingTransitionAction,
+} from '@/modules/listings/domain'
 import { getListingStatusLabel, LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
 
-// Status transitions available to admin per current status.
-// Matches ALLOWED_LISTING_TRANSITIONS in listingTransitionEngine.ts.
+// Status-action button styling/label per transition ACTION (engine vocabulary,
+// not per from/to status pair — Note 14: no divergent hardcoded status matrix).
 type StatusActionDef = { toStatus: ListingStatus; labelKey: string; className?: string }
-const STATUS_ACTIONS: Record<ListingStatus, StatusActionDef[]> = {
-  pending:  [
-    { toStatus: 'active',   labelKey: 'btn_approve',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
-    { toStatus: 'inactive', labelKey: 'btn_reject',      className: 'text-status-warning border-status-warning/30 hover:bg-status-warning/10' },
-    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
-  ],
-  active:   [
-    { toStatus: 'inactive', labelKey: 'btn_deactivate' },
-    { toStatus: 'sold',     labelKey: 'btn_mark_sold',   className: 'text-status-info border-status-info/30 hover:bg-status-info/10' },
-    { toStatus: 'rented',   labelKey: 'btn_mark_rented', className: 'text-status-rented border-status-rented/30 hover:bg-status-rented/10' },
-    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
-  ],
-  inactive: [
-    { toStatus: 'active',   labelKey: 'btn_activate',    className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
-    { toStatus: 'pending',  labelKey: 'btn_send_review' },
-    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
-  ],
-  sold:     [
-    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
-  ],
-  rented:   [
-    { toStatus: 'archived', labelKey: 'btn_archive',     className: 'text-muted-foreground' },
-  ],
-  archived: [
-    { toStatus: 'inactive', labelKey: 'btn_restore',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
-  ],
+const ACTION_LABELS: Record<ListingTransitionAction, { labelKey: string; className?: string }> = {
+  APPROVE:        { labelKey: 'btn_approve',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+  REJECT:         { labelKey: 'btn_reject',      className: 'text-status-warning border-status-warning/30 hover:bg-status-warning/10' },
+  PUBLISH:        { labelKey: 'btn_activate',    className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+  UNPUBLISH:      { labelKey: 'btn_deactivate' },
+  SEND_TO_REVIEW: { labelKey: 'btn_send_review' },
+  MARK_AS_SOLD:   { labelKey: 'btn_mark_sold',   className: 'text-status-info border-status-info/30 hover:bg-status-info/10' },
+  MARK_AS_RENTED: { labelKey: 'btn_mark_rented', className: 'text-status-rented border-status-rented/30 hover:bg-status-rented/10' },
+  ARCHIVE:        { labelKey: 'btn_archive',     className: 'text-muted-foreground' },
+  RESTORE:        { labelKey: 'btn_restore',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+}
+
+// Admin/moderator (and owner, via the same privileged gateway) may move a
+// listing directly to ANY other status — derived from the transition engine's
+// privileged any-status resolver (Task 427). Transitions covered by the base
+// matrix keep their specific action label; all other targets fall back to the
+// generic 'btn_set_status' label (i18n key takes a `{status}` param).
+function getStatusActionsForStatus(status: ListingStatus): StatusActionDef[] {
+  return getPrivilegedTargetStatuses(status).map(toStatus => {
+    const action = getTransitionActionForStatus(status, toStatus)
+    if (action) {
+      const { labelKey, className } = ACTION_LABELS[action]
+      return { toStatus, labelKey, className }
+    }
+    return { toStatus, labelKey: 'btn_set_status', className: 'text-muted-foreground' }
+  })
 }
 
 const STATUS_BADGE: Record<ListingStatus, string> = {
@@ -227,6 +233,7 @@ function PremiumDialog({ listing, onClose, onDone }: {
 function ListingPreviewDialog({
   listing,
   statusLabel,
+  statusLabels,
   typeLabel,
   onClose,
   onDeleted,
@@ -236,6 +243,7 @@ function ListingPreviewDialog({
 }: {
   listing: AdminListing
   statusLabel: string
+  statusLabels: Record<ListingStatus, string>
   typeLabel: string
   onClose: () => void
   onDeleted: (id: string) => void
@@ -308,13 +316,13 @@ function ListingPreviewDialog({
         </div>
 
         {/* Status actions */}
-        {!showDeleteConfirm && STATUS_ACTIONS[listing.status].length > 0 && (
+        {!showDeleteConfirm && getStatusActionsForStatus(listing.status).length > 0 && (
           <div className="flex flex-col gap-2 border-t pt-3">
             <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               {t('status_section_label')}
             </p>
             <div className="flex flex-wrap gap-2">
-              {STATUS_ACTIONS[listing.status].map(({ toStatus, labelKey, className }) => (
+              {getStatusActionsForStatus(listing.status).map(({ toStatus, labelKey, className }) => (
                 <Button
                   key={toStatus}
                   variant="outline"
@@ -324,7 +332,9 @@ function ListingPreviewDialog({
                   className={`gap-1.5 ${className ?? ''}`}
                 >
                   {changingStatus === toStatus && <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />}
-                  {t(labelKey as Parameters<typeof t>[0])}
+                  {labelKey === 'btn_set_status'
+                    ? t('btn_set_status', { status: statusLabels[toStatus] })
+                    : t(labelKey as Parameters<typeof t>[0])}
                 </Button>
               ))}
             </div>
@@ -568,6 +578,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
         <ListingPreviewDialog
           listing={previewListing}
           statusLabel={STATUS_LABEL[previewListing.status]}
+          statusLabels={STATUS_LABEL}
           typeLabel={`${(tl as (k: string) => string)(previewListing.listing_type)} · ${propertyTypes.find(pt => pt.value === previewListing.property_type)?.label ?? previewListing.property_type}`}
           locale={locale}
           onClose={() => setPreviewListing(null)}

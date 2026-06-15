@@ -74,25 +74,24 @@ describe('checkEditPermission', () => {
     expect(result).toEqual({ ok: true })
   })
 
-  it('returns not_editable for sold listing — applies to owner', () => {
+  it('returns ok for owner with sold listing (Task 427: edit-at-any-status)', () => {
     const result = checkEditPermission('owner', { user_id: 'owner', status: 'sold' }, null)
-    expect(result).toEqual({ ok: false, reason: 'not_editable' })
+    expect(result).toEqual({ ok: true })
   })
 
-  it('returns not_editable for rented listing — applies to owner', () => {
+  it('returns ok for owner with rented listing (Task 427: edit-at-any-status)', () => {
     const result = checkEditPermission('owner', { user_id: 'owner', status: 'rented' }, null)
-    expect(result).toEqual({ ok: false, reason: 'not_editable' })
+    expect(result).toEqual({ ok: true })
   })
 
-  it('returns not_editable for archived listing — applies to admin too', () => {
+  it('returns ok for admin editing a foreign archived listing (Task 427: edit-at-any-status)', () => {
     const result = checkEditPermission('admin', { user_id: 'owner', status: 'archived' }, 'admin')
-    expect(result).toEqual({ ok: false, reason: 'not_editable' })
+    expect(result).toEqual({ ok: true })
   })
 
-  it('not_editable takes precedence over forbidden', () => {
-    // non-owner + sold: status check runs first
+  it('returns forbidden for non-owner on sold listing (no not_editable precedence)', () => {
     const result = checkEditPermission('other', { user_id: 'owner', status: 'sold' }, null)
-    expect(result).toEqual({ ok: false, reason: 'not_editable' })
+    expect(result).toEqual({ ok: false, reason: 'forbidden' })
   })
 
   it('returns forbidden for non-owner on editable listing', () => {
@@ -113,12 +112,10 @@ describe('assertCanEditListing', () => {
     ).not.toThrow()
   })
 
-  it('throws ListingEditForbiddenError with reason not_editable for sold', () => {
-    let caught: unknown
-    try { assertCanEditListing('owner', { user_id: 'owner', status: 'sold' }, null) }
-    catch (e) { caught = e }
-    expect(caught).toBeInstanceOf(ListingEditForbiddenError)
-    expect((caught as ListingEditForbiddenError).reason).toBe('not_editable')
+  it('does not throw for owner with sold listing (Task 427: edit-at-any-status)', () => {
+    expect(() =>
+      assertCanEditListing('owner', { user_id: 'owner', status: 'sold' }, null)
+    ).not.toThrow()
   })
 
   it('throws ListingEditForbiddenError with reason forbidden for non-owner', () => {

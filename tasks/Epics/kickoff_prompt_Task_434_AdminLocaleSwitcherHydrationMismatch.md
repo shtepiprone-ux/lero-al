@@ -1,99 +1,89 @@
-# Task 434 — Admin sidebar LocaleSwitcher hydration mismatch (DIAGNOSE → FIX)
+# Task 434 — AdminUserProfile history-timestamp hydration mismatch (FIX)
 
-> **Type:** UI / hydration / SSR-CSR boundary bug. **Owner-reported console error (2026-06-15).**
-> Separate from Task 432 (clear-history toast), Task 433 (globals.css/Tailwind), Task 435 (report submit).
-> **Supersedes the earlier vague "whitespace hydration in AdminTable.tsx" framing** — the real error is a
-> Base-UI `DropdownMenu` auto-`id` mismatch on the admin `LocaleSwitcher` trigger, NOT AdminTable whitespace.
+> **Type:** UI / hydration / SSR-CSR determinism bug. **Root cause CONFIRMED by owner repro 2026-06-15.**
+> **(This file keeps its original name; the real root cause is the date-format mismatch below — NOT the
+> earlier Base-UI `LocaleSwitcher` id hypothesis, which is withdrawn.)**
+> Separate from 433 (deferred), 435 (report submit), 436 (prevention), 437 (perf).
 
-## The actual error (verbatim, owner-supplied)
+## Confirmed root cause (owner repro)
 
-```
-A tree hydrated but some attributes of the server rendered HTML didn't match the client properties.
-...
-<LocaleSwitcher onSwitch={…} isPending={false} showLabel={true} align="start" …>
-  <DropdownMenu defaultOpen={undefined}>
-    …<DropdownMenuTrigger …>
-      <button … aria-haspopup="menu"
-+        id="base-ui-_R_eelitmlb_"
--        id="base-ui-_R_1pqmitmlb_"
-        data-slot="dropdown-menu-trigger" … >
-  at AdminLayout (src/app/admin/layout.tsx:61:7)
-Next.js 15.5.18 (Turbopack)
-```
+- **Route:** `/admin/users/[id]`
+- **Error:** "Hydration failed because the server rendered text didn't match the client."
+- **Code frame:** `src/components/admin/AdminUserProfile.tsx:1149` (status-history entry timestamp).
+- **Problem code:** `new Date(entry.changed_at).toLocaleDateString(locale, { day:'2-digit', month:'2-digit',
+  year:'numeric', hour:'2-digit', minute:'2-digit' })`
+- **Mismatch:** server rendered `06/15/2026, 11:47 PM` (en-US fallback) vs client `15.06.2026, 11:47 m.d.`
+  (actual locale). I.e. `toLocaleDateString` produces **different output on server vs browser for the same
+  `locale` arg** — classic SSR/CSR `Intl` divergence (server ICU/locale-data fallback and/or timezone
+  differs from the browser). This is NOT a Base-UI id issue.
 
-Only the auto-generated `id` differs (server vs client). `id="base-ui-_R_…_"` = Base UI prefix +
-**React 19 `useId()`**. A `useId` value mismatch means the React tree (number of `useId`-consuming
-nodes, or subtree shape) **diverges between SSR and first client render somewhere at or above
-`AdminLocaleSwitcher`** in `AdminShell` → `SidebarContent`. Env: `@base-ui/react ^1.4.0`, `react 19.2.4`,
-`next 15.5.18` (Turbopack).
+## All affected call sites (fix ALL — Note 14 global-change rule)
 
-## Pre-read (rule-index → UI/layout task + SSR boundary)
+`toLocaleDateString(locale, …)` in `AdminUserProfile.tsx` at **three** sites, all must become deterministic:
+- **L1149** — status-history entry (date + time) ← the reported one.
+- **L1105** — change-log entry (date + time) ← same pattern, same latent mismatch.
+- **L762** — `suspended_until` (date only) ← same family; convert for consistency.
+- Sweep the file (and sibling admin/history surfaces) for any other `toLocale*` and convert them too — no
+  diverging call sites left behind.
+
+## Pre-read (rule-index → UI/layout + profile/edit-flow)
 
 - `docs/agent-contract.md` + `docs/backlog.md` (always)
 - `docs/ui-rules.md`, `docs/component-rules.md`, `docs/qa-rules.md`
-- `docs/state-authority.md` (SSR vs client authority — central to this bug)
-- `docs/dependencies.md` (**only if** the fix turns out to be a Base-UI version bump)
+- `docs/ai-behavior.md` → Note 14 (global-change), Note 23 (edit-flow preservation)
+- `src/lib/formatters.ts` (existing hydration-safe `formatPrice`/`formatDate` pattern to extend)
 
-## Orchestrator-traced facts (start here — do not re-derive)
+## Required fix (deterministic SSR === CSR text; NO `suppressHydrationWarning`)
 
-- `src/app/admin/layout.tsx` (server component) resolves locale from the `admin-locale` cookie, gates on
-  auth/role, then renders `<NextIntlClientProvider><AdminShell …><Toaster/></NextIntlClientProvider>`.
-- `src/components/admin/AdminLocaleSwitcher.tsx` and `src/components/shared/LocaleSwitcher.tsx` are both
-  `'use client'` and contain **no** `Date.now()/Math.random()/typeof window` branch — they are
-  deterministic given `useLocale()`/`useTranslations()`. So the divergence is NOT inside the switcher
-  itself; it is an **ancestor** that renders differently SSR vs CSR (offsetting the `useId` counter), OR
-  an external DOM mutation before hydration.
-- Candidate ancestors to inspect for SSR/CSR divergence: `src/components/admin/AdminShell.tsx` and its
-  `SidebarContent` (collapsed/expanded state from a cookie/localStorage? client-only active-nav? a
-  client-only conditional that adds/removes a node?), the `Toaster`, and any client-only overlay
-  (`src/components/shared/WebVitalsReporter.tsx` — the perf HUD visible in the owner's screenshots).
+`suppressHydrationWarning` is **explicitly forbidden** as the fix. The initial server text and the initial
+client text must be **byte-identical**. Pick the approach that GUARANTEES parity and VERIFY it at runtime
+(do not assume `Intl` parity — the bug IS `Intl` non-parity):
 
-## Diagnose (ordered, do NOT fix until the divergence is named)
+- **Preferred:** add a deterministic `formatDateTime(dateStr, locale)` (and reuse `formatDate` for the
+  date-only L762) to `src/lib/formatters.ts`, built on `Intl.DateTimeFormat(locale, { …, timeZone: <fixed> })`
+  with an **explicit `timeZone`** so server (UTC) and client (local) cannot diverge on the time. If
+  `Intl`-with-explicit-locale+timeZone still diverges in this environment (server ICU fallback to en-US),
+  fall back to **server-preformatting**: format the timestamp in the server component
+  (`src/app/admin/users/[id]/page.tsx`) and pass the finished string down so the client renders it verbatim
+  with no client-side reformat.
+- Whichever path: the helper takes an **explicit locale** (route locale on server, `useLocale()` on client)
+  and a fixed timezone; it must return identical output in Node and the browser. Confirm by rendering
+  `/admin/users/[id]` and checking the console.
+- **Preserve `sq`/`en`/`uk`/`it`** date/time presentation (locale-correct, just deterministic) — verify all
+  four. Keep the existing visual format intent (day/month/year + hour:minute).
 
-1. **Rule out external DOM mutation FIRST (cheapest):** reproduce in a **clean incognito window with all
-   browser extensions disabled** and with any dev/perf HUD overlay off. If the mismatch disappears, the
-   cause is an extension/overlay injecting DOM before React hydrates — document that and STOP (no product
-   fix needed; note it for the owner). If it persists in clean incognito, it is a real app-tree divergence
-   → continue.
-2. **Locate the divergent ancestor:** identify which node between `AdminShell`/`SidebarContent` and
-   `AdminLocaleSwitcher` renders a different subtree on the server's HTML vs the first client render
-   (a client-only conditional, a cookie/localStorage-derived collapsed state, a `mounted` flag pattern,
-   suspense boundary, or invalid HTML nesting the browser auto-corrects). Capture the exact file:line.
-3. **Check Base-UI:** confirm whether `@base-ui/react ^1.4.0` resolves to a version with a known SSR
-   `useId`/id-stability fix available WITHIN the `^1.4` range (changelog) — record the resolved version
-   from `package-lock.json` and whether a patch bump addresses it. Do NOT bump outside the kickoff's
-   authorization; report the finding.
-4. **Classify the single root cause** (external-overlay / divergent-ancestor / base-ui-version / invalid-nesting)
-   with file:line + evidence.
+## Cross-task hook (Task 436)
 
-## Fix (only the classified cause; minimal change)
+`/admin/users/[id]` MUST be added to the hydration/console-error gate route list in **Task 436** so this
+class is caught automatically going forward. (Do not implement 436 here — just ensure the route is named in
+436's coverage; coordinate, don't duplicate.)
 
-- **Divergent ancestor:** make the ancestor render the SAME tree on server and client (e.g. read the
-  collapse state so the server markup matches, or gate the client-only node behind a stable wrapper that
-  does not shift `useId` for siblings). Do NOT "fix" by suppressing hydration warnings broadly.
-- `suppressHydrationWarning` is NOT an acceptable fix for a real tree divergence — only acceptable on a
-  genuinely unavoidable single attribute, and must be justified in the session log.
-- **Base-UI version:** if a patch within `^1.4` fixes it, bump per `docs/dependencies.md` and re-verify.
-- Preserve the switcher's behavior, all 4 locales, and the mobile <640 full-width bottom-sheet gate for
-  the dropdown (agent-contract clause 11) — verify the dropdown still renders correctly after the fix.
+## Explicitly OUT of scope / separate
+
+- The OpenTelemetry `import-in-the-middle can't be external` version-mismatch terminal warnings are a
+  **separate, unrelated** issue — do NOT touch them in this task.
+- Task 433 (globals.css/Tailwind) is deferred/non-reproducible — not part of this work.
 
 ## Positive flow
 
-Admin loads `/admin` → sidebar renders server-side → hydrates with **no** console hydration warning →
-LocaleSwitcher opens, switching locale calls `setAdminLocale` + `router.refresh()` and updates the UI.
+Admin opens `/admin/users/[id]` with status-history + change-log rows → page SSRs the timestamps → hydration
+completes with **zero** hydration warnings → timestamps display locale-correctly in sq/en/uk/it.
 
 ## Negative flow
 
-- Mismatch caused by extension/overlay (step 1) → documented, no product change.
-- Locale cookie missing/invalid → `resolveLocale` falls back to `en`; server and client must agree on the
-  fallback (verify no divergence from the fallback path).
-- Switch while `isPending` → guarded (no double-submit); confirm still works post-fix.
+- No history rows → sections don't render (unchanged); no regression.
+- Invalid/null `changed_at` → helper returns `—` (match existing `formatDate` contract); same on both sides.
+- Locale switch (sq/en/uk/it) → format changes locale-correctly AND stays SSR===CSR identical per locale.
 
 ## Acceptance criteria
 
-- AC1 — Mismatch reproduced and step-1 extension/overlay rule-out performed (incognito result recorded).
-- AC2 — Single root cause classified with file:line evidence (or documented as external-overlay, no fix).
-- AC3 — If app-tree cause: fix makes SSR and CSR markup match; **console shows zero hydration warnings**
-  on `/admin` load (rendered evidence in the session log, all 4 locales).
-- AC4 — LocaleSwitcher behavior + 4 locales + mobile <640 dropdown bottom-sheet preserved (verified).
-- AC5 — `npx tsc --noEmit` = 0; no scope creep; "Files Changed" table; file-integrity green.
+- AC1 — All `toLocale*` timestamp sites in `AdminUserProfile.tsx` (L762, L1105, L1149 + any swept) use the
+  deterministic helper / server-preformat; no `suppressHydrationWarning`.
+- AC2 — `/admin/users/[id]` loads with **zero** hydration warnings in the browser console — rendered
+  evidence (console screenshot/transcript) in the session log, for all four locales.
+- AC3 — Server and client initial text are byte-identical (state the chosen mechanism: explicit
+  locale+timeZone helper, or server-preformat).
+- AC4 — sq/en/uk/it timestamps remain locale-correct (4-locale evidence).
+- AC5 — `/admin/users/[id]` named in Task 436's hydration-gate route coverage.
+- AC6 — `npx tsc --noEmit` = 0; file-integrity green; "Files Changed" table; no mutating git; OTel warning
+  untouched.

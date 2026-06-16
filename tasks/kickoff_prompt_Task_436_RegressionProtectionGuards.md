@@ -69,8 +69,8 @@ routes. Must catch at least: "Hydration failed", "Text content does not match", 
 cannot be a child of", invalid-HTML-nesting warnings, and React SSR/client tree-mismatch warnings.
 - Must NOT rely only on `npm run build` / `tsc` / `lint` — those did NOT catch Task 434.
 - Integrate into the existing Playwright/screenshot/`--assert` infra if feasible; expose an exact command.
-- Cover at minimum the admin routes implicated by Task 434 plus 1–2 key public routes (incl. a listing
-  detail page, where the Task 435 report dialog lives).
+- Cover at minimum **`/admin/users/[id]`** (the exact Task 434 date-format hydration route — MUST be in
+  the gate) plus 1–2 key public routes (incl. a listing detail page, where the Task 435 report dialog lives).
 
 ## Guard 3 — RLS-change test rule (governance)
 

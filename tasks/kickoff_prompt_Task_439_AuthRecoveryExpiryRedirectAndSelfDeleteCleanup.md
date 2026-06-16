@@ -6,6 +6,18 @@
 > **Number note:** the owner reported this as "435", but 435 (report-listing diagnosis) and 438
 > (AdminTable `<thead>` whitespace) are already taken — this incident is **Task 439**.
 
+> ## 🔴 OWNER GUARDRAILS (2026-06-16 — read before starting, enforced at review)
+> 1. **Task 439 is P0 and MUST be completed before ANY Regression Shield slice** (436/441/442+). The
+>    auth-prefetch and email-reuse regression cells stay `pending-439` until this lands.
+> 2. **Do NOT close code-only.** Production/staging validation (§10) AND the Supabase owner checklist
+>    (§7 — OTP expiry ≥ 900 s, Redirect URLs, Resend link-tracking OFF, Send Email Hook URL) are
+>    **blocking** acceptance items. A green `tsc`/`build` does NOT close this task.
+> 3. **Do NOT expand the mobile dialog into a broad Dialog-system refactor.** Make ONLY the in-scope
+>    reset-password + delete surfaces compliant enough to pass the §9 gate. If full bottom-sheet
+>    compliance would require touching the shared `Dialog`/`Sheet` primitive, **STOP and ASK** — do not
+>    refactor the shared component under a P0 auth fix.
+> 4. **No incidental "while I'm here" fixes.** Touch only the recovery + self-delete surfaces.
+
 ---
 
 ## 0. Incident summary (owner, 2026-06-16)
@@ -203,9 +215,13 @@ No hardcoded UI strings. Auth EMAILS remain `sq`-only (Task 251 policy) — do n
 In scope UI: the **reset-password card** and the **delete-account confirm dialog** (`ProfileTab.tsx`).
 - Reset-password: inputs + the submit `Button` full-width at `max-sm` (no clip/overflow at 320; labels
   wrap across sq/en/uk/it).
-- Delete dialog: at <640 it MUST be a **full-width edge-to-edge bottom sheet** (rounded top, drag-handle,
-  ≤90dvh scroll, ≥44px targets, closes on backdrop + Esc) per agent-contract clause 11 / design-system
-  §26. If the current dialog's correct mobile pattern is ambiguous, **STOP and ASK** before guessing.
+- Delete dialog: must be **usable and not broken** at <640 (no horizontal overflow at 320/375/390, ≥44px
+  targets, labels wrap, closes on backdrop + Esc). **Scope guard (owner P0):** if the shared `Dialog`/
+  `Sheet` primitive ALREADY renders as the canonical full-width bottom sheet at <640, the delete dialog
+  inherits it — do nothing extra. If it does NOT, do the **minimum** to make THIS dialog pass the gate;
+  **do NOT refactor the shared Dialog/Sheet system** for this P0 — if full bottom-sheet compliance would
+  require changing the shared primitive, **STOP and ASK** (open a separate DS task). The P0 bar is
+  "reset-password usable + delete dialog not broken on mobile", not a Dialog-system rework.
 
 ---
 

@@ -5,6 +5,11 @@
 > **🔴 PREVENTION ONLY.** This slice does NOT fix Task 439 (auth recovery + self-delete) or any other live
 > bug. It builds the regression net for the auth lifecycle so those flows cannot silently break again.
 > Coordinate with Task 439 but do NOT implement 439's product fix here.
+> **✅ UPDATE 2026-06-16 — Task 439 HAS LANDED on `main` (`f84f0ce40` + `3cd13c816`, approved + prod-validated).**
+> The recovery-prefetch and self-delete-email-reuse cells are NO LONGER `pending-439`: assert the REAL shipped
+> behavior (not just the contract), and flip those registry rows to ✅ when the smoke is green. (A separate live
+> defect — signup confirmation → `/auth/verified` header mismatch — is owned by **Task 446**, NOT this slice; its
+> Signup-confirmation registry row stays open until 446 lands.)
 
 ## Goal
 
@@ -41,14 +46,18 @@ For each: happy path + one failure/edge path. Reuse the registry's happy/failure
   same response).
 - **Recovery link → reset** — link lands on the reset form (not login/verified); **a plain GET on the link
   (scanner simulation) does NOT consume the token** and the user can still reset afterwards; expired/used
-  token → localized error + request-new CTA. *(Asserts the invariant Task 439 must deliver; if 439 has not
-  landed yet, assert the contract and mark the prefetch cell pending-439 — do not implement 439 here.)*
+  token → localized error + request-new CTA. *(Task 439 has LANDED — assert the REAL shipped behavior:
+  `buildConfirmUrl` routes recovery → `/{locale}/auth/reset-password?token_hash=…&type=recovery`, and
+  `ResetPasswordClient` calls `verifyOtp` only inside `handleSubmit`, never on mount. This cell is active, not
+  pending-439.)*
 - **Logout** — session cleared; header reflects guest.
 - **OAuth (Google)** + **magic link** — mock/stub where a real provider round-trip is infeasible, or
   document as manual-only with an exact checklist (do not ship a flaky live-OAuth test).
 - **Email change** — token consumed → email updated; expired token → error.
 - **Self-delete + email reuse** — after self-delete, the **same email can sign up again**; auth-delete
-  failure → error, NOT a false success. *(Asserts the invariant Task 439 delivers; same pending-439 rule.)*
+  failure → error, NOT a false success. *(Task 439 has LANDED — assert the REAL shipped behavior:
+  `deleteOwnAccount` hard-deletes the users row then calls `auth.admin.deleteUser`, returning distinct
+  `delete_failed` vs `profile_deleted_auth_failed` (no false success). This cell is active, not pending-439.)*
 
 ## Gate requirements
 
@@ -56,8 +65,9 @@ For each: happy path + one failure/edge path. Reuse the registry's happy/failure
   local command (e.g. `npm run test:e2e -- auth`).
 - The suite must be deterministic (no real external email/OAuth in the blocking path; use stubs/intercepts
   or split to a documented manual checklist).
-- Update `docs/critical-flow-registry.md`: flip each covered flow's status to ✅ with its command; leave
-  prefetch/email-reuse cells as 🟡 pending-439 if 439 hasn't landed, with a TODO.
+- Update `docs/critical-flow-registry.md`: flip each covered flow's status to ✅ with its command. The
+  recovery-link (prefetch) and self-delete-email-reuse rows are **active** (439 has landed) — flip them to ✅
+  once their smoke is green, no pending-439 carve-out. The Signup-confirmation row stays open (owned by Task 446).
 
 ## Positive flow
 
@@ -79,8 +89,8 @@ OAuth/email in the blocking suite. No broad coverage beyond the registry's P0 au
 
 - AC1 — e2e harness established (Playwright config + `test:e2e` script) or justified alternative; no parallel stack invented.
 - AC2 — Smoke covers every registry P0 auth flow: happy + one failure/edge each (OAuth/magic-link may be mock or documented-manual).
-- AC3 — Recovery-link smoke asserts: lands on reset (not login), scanner-GET does not burn the token, expired path localized. (pending-439 allowed, documented.)
-- AC4 — Self-delete smoke asserts email reuse after delete + no false success on auth-delete failure. (pending-439 allowed, documented.)
+- AC3 — Recovery-link smoke asserts the SHIPPED 439 behavior: lands on reset (not login/verified), scanner-GET does not burn the token, reset completes afterwards, expired path localized. Registry row flipped to ✅ (active, not pending-439).
+- AC4 — Self-delete smoke asserts the SHIPPED 439 behavior: email reuse after delete + no false success on auth-delete failure (`delete_failed` vs `profile_deleted_auth_failed`). Registry row flipped to ✅ (active, not pending-439).
 - AC5 — Suite is deterministic and wired into `governance-pr.yml` as blocking; exact command documented.
 - AC6 — Each gate has a planted-violation FAIL transcript in the session log.
 - AC7 — `docs/critical-flow-registry.md` coverage statuses + commands updated.

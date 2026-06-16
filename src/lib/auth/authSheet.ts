@@ -15,6 +15,8 @@
 export type AuthSheetView = 'login' | 'register' | 'register-agent' | 'forgot-password'
 
 export const AUTH_SHEET_EVENT = 'lero:open-auth-sheet'
+/** Fired by Header whenever the AuthSheet closes (login success OR dismiss/cancel). */
+export const AUTH_SHEET_CLOSED_EVENT = 'lero:auth-sheet-closed'
 
 export function openAuthSheet(view: AuthSheetView = 'login'): void {
   if (typeof window === 'undefined') return

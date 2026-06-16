@@ -22,7 +22,7 @@ import dynamic from 'next/dynamic'
 import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
 import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
-import { AUTH_SHEET_EVENT } from '@/lib/auth/authSheet'
+import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
 
 const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
@@ -350,7 +350,14 @@ export function Header() {
         </div>
       </div>
 
-      <AuthSheet open={authOpen} onOpenChange={setAuthOpen} initialView={authView} />
+      <AuthSheet
+        open={authOpen}
+        onOpenChange={(open) => {
+          setAuthOpen(open)
+          if (!open) window.dispatchEvent(new CustomEvent(AUTH_SHEET_CLOSED_EVENT))
+        }}
+        initialView={authView}
+      />
     </header>
   )
 }

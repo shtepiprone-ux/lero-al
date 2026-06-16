@@ -163,3 +163,122 @@ Security greps:
 - **Signup-confirm prefetch risk:** `/auth/confirm` still calls `verifyOtp` on GET for `signup/invite/magiclink` — same theoretical prefetch vulnerability. Explicitly out of scope; flagged for RS follow-up task.
 - **Auth emails `sq`-only:** Per Task 251 policy. `delete_account_auth_failed` is a UI string (not email), so it IS localized.
 - **Listings archive error handling:** if individual `applyListingTransitionByStatus` fails during self-delete, `deleteOwnAccount` continues (mirrors `hardDeleteUser`). Stricter "all or nothing" would need a DB transaction — separate architectural decision.
+
+---
+
+# 2026-06-16 — Task 439 (POST-DEPLOYMENT VALIDATION + REGRESSION REWORK)
+
+## Production Validation Results (first fix attempt — FAILED)
+
+**Passed:** recovery email routing, curl scanner safety, password reset form, new password submit, manual cabinet/listings navigation.
+
+**Still failing after first regression fix:**
+- Already-authenticated user opens `/uk/auth/login` → still shows infinite spinner ❌
+- Header shows authenticated UI (avatar/name/notification) — session confirmed valid
+- `client-side useEffect + useUser()` approach did not reliably redirect before the spinner settled
+
+---
+
+## Root Cause Analysis (complete)
+
+### Why the first regression fix failed
+The first fix added `useUser()` + `useEffect` to `AuthRedirect`. It should have worked but didn't reliably in production. Likely cause: the `lero:auth-sheet-closed` event (not yet wired) was never fired, and the status-watcher effect might have run before `AuthProvider.mount()` registered the Supabase listener — or `router.replace` silently no-oped under some hydration timing condition.
+
+### Deeper root causes addressed in rework
+
+**Root A — No server-side auth guard on `/auth/login`.**  
+`LoginPage` was a pure passthrough. An already-authenticated user requesting the page was never redirected server-side. All client logic depended on the auth context settling after hydration.
+
+**Root B — `AuthRedirect` never stored a fallback destination.**  
+When `/auth/login` had no `?next=` param (recovery flow case: `signOut()` happens after reset, then "Увійти зараз" navigates to `/auth/login`), `AUTH_NEXT_KEY` was never written to `sessionStorage`. `LoginView.handleSubmit` found no key → fell through to `router.refresh()` → stayed on `/auth/login` with spinner.
+
+**Root C — No cancel/dismiss escape.**  
+When the user dismissed the AuthSheet (X, backdrop, Esc) from `/auth/login`, there was no event to drive them away. They stayed on the bridge page with the spinner.
+
+---
+
+## Rework: Four Files Changed
+
+### 1. `src/lib/auth/authSheet.ts`
+Added `AUTH_SHEET_CLOSED_EVENT = 'lero:auth-sheet-closed'` constant. Fired by Header whenever the AuthSheet closes for any reason.
+
+### 2. `src/components/layout/Header.tsx`
+`AuthSheet.onOpenChange` now dispatches `AUTH_SHEET_CLOSED_EVENT` when the sheet closes. `AuthRedirect` (only mounted on `/auth/login`) listens for this to navigate away on cancel.
+
+### 3. `src/app/[locale]/auth/login/page.tsx`
+Added `params` prop, `resolveSession()` call, and `redirect()` at the SSR level:
+```
+if (user) redirect(sanitizeReturnTo(next) ?? `/${locale}/cabinet`)
+```
+This is the bulletproof fix for cases A and B — no client JS, no spinner possible.
+
+### 4. `src/modules/auth/components/AuthRedirect.tsx`
+Complete rework. Three responsibilities:
+
+| Responsibility | Mechanism |
+|---|---|
+| Already-authenticated (client-side backup) | `useEffect` on `status` → `router.replace(destination)` when `authenticated` |
+| Always store destination | `sessionStorage.setItem(AUTH_NEXT_KEY, destination)` on mount — ensures `LoginView` navigates away instead of `router.refresh()` |
+| Cancel/dismiss redirect | Listens for `AUTH_SHEET_CLOSED_EVENT`; if `status !== 'authenticated'`, redirects to destination |
+
+Destination priority: `sanitizeReturnTo(next) ?? `/${locale}/cabinet``.
+
+Auth sheet opened exactly once per mount (via `sheetOpenedRef` guard) to prevent re-opening on status bounces.
+
+## Files Changed Table
+
+| File | Change |
+|------|--------|
+| `src/lib/auth/authSheet.ts` | Add `AUTH_SHEET_CLOSED_EVENT` constant |
+| `src/components/layout/Header.tsx` | Dispatch `AUTH_SHEET_CLOSED_EVENT` on AuthSheet close; import constant |
+| `src/app/[locale]/auth/login/page.tsx` | Add params, SSR auth check, server-side redirect if authenticated |
+| `src/modules/auth/components/AuthRedirect.tsx` | Full rework: always store destination, status watcher, cancel listener |
+
+`npx tsc --noEmit` → 0 errors ✅
+
+## Destination split (cancel vs login)
+
+After owner correction: cancel/dismiss must NOT fall back to `/cabinet` (gated — would loop).
+
+| Scenario | `?next=` present | Fallback |
+|---|---|---|
+| Login success | `sanitizeReturnTo(next)` | `/{locale}/cabinet` |
+| Cancel / dismiss | `sanitizeReturnTo(next)` | `/{locale}` (home — always public) |
+
+`AuthRedirect` now holds two memos: `loginDestination` and `cancelDestination`. The cancel handler uses `cancelDestination`; the status watcher and `AUTH_NEXT_KEY` stored for `LoginView` use `loginDestination`.
+
+## Behavior Matrix After Rework
+
+| Case | Flow | Expected | Mechanism |
+|------|------|----------|-----------|
+| A | Open `/uk/auth/login` while authenticated, no `next` | → `/uk/cabinet` | SSR `redirect()` in LoginPage |
+| B | Open `/uk/auth/login?next=/uk/listings` while authenticated | → `/uk/listings` | SSR `redirect(sanitizeReturnTo(next))` |
+| C | Login from Header on `/uk/listings` | Stay on `/uk/listings` | `LoginView` → `router.refresh()` (no `AUTH_NEXT_KEY` set by Header path) |
+| D | Cancel AuthSheet from Header on `/uk/listings` | Stay on `/uk/listings` | `AuthRedirect` not mounted; no URL change |
+| E | Login from Header on `/uk/listings/slug` | Stay on slug | Same as C |
+| F | Cancel AuthSheet from Header on `/uk/listings/slug` | Stay on slug | Same as D |
+| G | Recovery → `/uk/auth/login` → login, no `next` | → `/uk/cabinet` | `AUTH_NEXT_KEY = /cabinet`; `LoginView` navigates there |
+| G-cancel | Recovery → `/uk/auth/login` → dismiss, no `next` | → `/uk` (home) | Cancel handler uses `cancelDestination = /{locale}` |
+| H | Old password rejected, new accepted | Correct | Unchanged |
+
+## Lint fix (pre-commit blocker)
+
+Native lint flagged 2 unused `eslint-disable-next-line react-hooks/exhaustive-deps` directives on the two `useMemo` blocks in `AuthRedirect.tsx` (lines 58 and 67). `validNext` and `locale` are plain string values — ESLint correctly identified the suppression as unnecessary. Both comments removed; no behavior change.
+
+Post-fix checks:
+```
+npx tsc --noEmit  → 0 errors ✅
+npm run lint      → 0 warnings, 0 errors ✅
+npm run build     → succeeded ✅
+```
+
+## Revalidation Checklist (owner-run, blocking closure)
+
+1. ⏳ Open `/uk/auth/login` while already authenticated → immediate redirect to `/uk/cabinet`, no spinner (case A)
+2. ⏳ Open `/uk/auth/login?next=/uk/listings` while authenticated → redirect to `/uk/listings` (case B)
+3. ⏳ On `/uk/listings`, click Login → complete login → stay on `/uk/listings` (case C)
+4. ⏳ On `/uk/listings`, click Login → close sheet → stay on `/uk/listings` (case D)
+5. ⏳ Full recovery flow: reset password → "Увійти зараз" → login → `/uk/cabinet`, no spinner (case G)
+6. ⏳ Recovery flow → "Увійти зараз" → dismiss sheet → `/uk` home, no `/cabinet` loop (case G-cancel)
+7. ⏳ Old password rejected after reset (case H)
+8. ⏳ Open `/uk/auth/login` unauthenticated → auth sheet opens normally (regression check)

@@ -511,6 +511,7 @@
     "delete_account_type_confirm": "Digita DELETE per confermare",
     "delete_account_confirm": "Elimina account",
     "delete_account_success": "Il tuo account è stato eliminato",
+    "delete_account_auth_failed": "Il tuo account è stato eliminato, ma l'indirizzo email non è stato liberato. Contatta il supporto.",
     "email_label": "Email",
     "email_current_label": "Email attuale",
     "email_change_hint": "Inserisci un nuovo indirizzo email per modificare quello attuale",

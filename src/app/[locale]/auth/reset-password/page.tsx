@@ -3,6 +3,7 @@ import { ResetPasswordClient } from '@/modules/auth/components/ResetPasswordClie
 
 interface Props {
   params: Promise<{ locale: string }>
+  searchParams: Promise<{ token_hash?: string; type?: string }>
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -11,7 +12,8 @@ export async function generateMetadata({ params }: Props) {
   return { title: `${t('reset_password_title')} | Lero.al` }
 }
 
-export default async function ResetPasswordPage({ params }: Props) {
+export default async function ResetPasswordPage({ params, searchParams }: Props) {
   const { locale } = await params
-  return <ResetPasswordClient locale={locale} />
+  const { token_hash, type } = await searchParams
+  return <ResetPasswordClient locale={locale} tokenHash={token_hash} otpType={type} />
 }

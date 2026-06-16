@@ -184,17 +184,39 @@ function verifyHookSignature(
 }
 
 // ── Action URL builder ─────────────────────────────────────────────────────────
-// Routes the user through /auth/confirm (verifyOtp token-hash flow) so links
-// work cross-device (no PKCE code_verifier cookie needed).
-// Derives appOrigin + next from redirect_to (format: ${SITE_URL}/auth/callback?next=/${locale}/...).
+// For RECOVERY: routes directly to /{locale}/auth/reset-password?token_hash=…&type=recovery
+//   so the one-time token is NOT consumed on a plain GET (email-scanner/prefetch protection).
+//   verifyOtp runs only on form submit (user gesture).
+// For all other types (signup/invite/magiclink/email_change): routes through /auth/confirm
+//   (verifyOtp token-hash flow, cross-device, no PKCE cookie needed).
+// appOrigin is derived from redirect_to; locale is derived from the ?next= param when present.
+
+const LOCALE_SEGMENT_RE = /^\/(sq|en|uk|it)\//
 
 function buildConfirmUrl(tokenHash: string, type: string, redirectTo: string): string {
   let appOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://lero.al'
+  try {
+    appOrigin = new URL(redirectTo).origin
+  } catch {}
+
+  if (type === 'recovery') {
+    // Derive locale from redirect_to's ?next param; fall back to 'sq' (B-fix: dashboard sends no ?next).
+    let locale = 'sq'
+    try {
+      const nextParam = new URL(redirectTo).searchParams.get('next')
+      if (nextParam) {
+        const m = LOCALE_SEGMENT_RE.exec(nextParam)
+        if (m) locale = m[1]
+      }
+    } catch {}
+    const params = new URLSearchParams({ token_hash: tokenHash, type: 'recovery' })
+    return `${appOrigin}/${locale}/auth/reset-password?${params.toString()}`
+  }
+
+  // signup / invite / magiclink / email_change — keep the existing /auth/confirm path.
   let next = '/sq/auth/verified'
   try {
-    const url = new URL(redirectTo)
-    appOrigin = url.origin
-    const nextParam = url.searchParams.get('next')
+    const nextParam = new URL(redirectTo).searchParams.get('next')
     if (nextParam) next = nextParam
   } catch {}
   const params = new URLSearchParams({ token_hash: tokenHash, type, next })

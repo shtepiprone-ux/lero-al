@@ -511,6 +511,7 @@
     "delete_account_type_confirm": "Введіть DELETE для підтвердження",
     "delete_account_confirm": "Видалити акаунт",
     "delete_account_success": "Ваш акаунт було видалено",
+    "delete_account_auth_failed": "Ваш обліковий запис видалено, але адресу електронної пошти не вдалося звільнити. Зверніться до підтримки.",
     "email_label": "Email",
     "email_current_label": "Поточний email",
     "email_change_hint": "Введіть новий email для зміни поточної адреси",

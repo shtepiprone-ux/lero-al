@@ -511,6 +511,7 @@
     "delete_account_type_confirm": "Shkruani DELETE për të konfirmuar",
     "delete_account_confirm": "Fshi llogarinë",
     "delete_account_success": "Llogaria juaj është fshirë",
+    "delete_account_auth_failed": "Llogaria u fshi, por adresa e emailit nuk u lirua. Kontaktoni mbështetjen.",
     "email_label": "Email",
     "email_current_label": "Email aktual",
     "email_change_hint": "Shkruani email të ri për të ndryshuar emailin tuaj aktual",

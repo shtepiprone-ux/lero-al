@@ -13,6 +13,7 @@ import type { PreferredCurrency } from '@/types/database'
 import { sendEmailChangeEmails } from '@/modules/notifications/lib/emails/emailChange'
 import { allPasswordRulesMet } from '@/lib/passwordRules'
 import { sendPasswordChangedEmail } from '@/modules/notifications/lib/emails/passwordChanged'
+import { applyListingTransitionByStatus } from '@/modules/listings/actions/applyListingTransition'
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -234,59 +235,36 @@ export async function updateSavedSearchNotify(
 
 export async function deleteOwnAccount(): Promise<{ error?: string }> {
   const userId = await resolveAuthUser()
-  if (!userId) return { error: 'Unauthorized' }
+  if (!userId) return { error: 'Unauthorized' }  // N7
 
   const db = createAdminClient()
 
-  // Archive all user's listings in one transactional update
-  const { error: listingsError } = await db
+  // 1. Archive non-terminal listings through the mutation gateway (mirrors hardDeleteUser).
+  //    Fetches only listings that aren't already in a terminal/archived state.
+  const { data: listingsToArchive } = await db
     .from('listings')
-    // eslint-disable-next-line no-restricted-syntax -- bulk cascade during account deletion; applyListingTransition handles single listings only, not bulk user-scoped updates
-    .update({ status: 'archived' })
+    .select('id')
     .eq('user_id', userId)
-    .not('status', 'in', '("sold","rented")')
+    .not('status', 'in', '("sold","rented","archived")')
+  const actor = { userId, role: 'user', source: 'cabinet' as const }
+  await Promise.all(
+    (listingsToArchive ?? []).map(l => applyListingTransitionByStatus(l.id, 'archived', actor))
+  )
 
-  if (listingsError) {
-    console.error('deleteOwnAccount: listings archive failed', { error: listingsError, userId })
-  } else {
-    // Bulk-archive bypasses the transition gateway (single-listing-only), so we
-    // must compensate by manually firing the same cache invalidations the gateway
-    // would have triggered. Compare: softDeleteUser/hardDeleteUser in admin actions
-    // which correctly use applyListingTransitionByStatus per-listing.
-    revalidateTag('site-stats')
-    for (const locale of routing.locales) {
-      revalidatePath(`/${locale}/listings`, 'page')
-    }
-  }
-
-  // Soft-delete the user row
-  const { error: userError } = await db
-    .from('users')
-    // eslint-disable-next-line no-restricted-syntax -- UserStatus soft-delete update on users table, not ListingStatus; applyListingTransition not applicable here
-    .update({ deleted_at: new Date().toISOString(), status: 'inactive' })
-    .eq('id', userId)
-
-  if (userError) {
-    console.error('deleteOwnAccount: user soft-delete failed', { error: userError, userId })
+  // 2. Hard-delete the user profile row (FK cascade removes related records).
+  //    On failure: return delete_failed, do NOT proceed to auth deletion (N9).
+  const { error: profileError } = await db.from('users').delete().eq('id', userId)
+  if (profileError) {
+    console.error('deleteOwnAccount: profile delete failed', { error: profileError, userId })
     return { error: 'delete_failed' }
   }
 
-  // Write status history entry
-  try {
-    await db.from('user_status_history').insert({
-      user_id: userId,
-      old_status: 'active',
-      new_status: 'self_deleted',
-      reason: 'User self-deleted account',
-      changed_by: userId,
-    })
-  } catch {}
-
-  // Sign the user out via admin API
-  try {
-    await db.auth.admin.signOut(userId)
-  } catch (e) {
-    console.error('deleteOwnAccount: signOut failed', e)
+  // 3. Remove the Supabase Auth identity — frees the email for future signups (Root Cause C).
+  //    On failure: return profile_deleted_auth_failed — email not yet freed, UI must NOT show success (N10).
+  const { error: authError } = await db.auth.admin.deleteUser(userId)
+  if (authError) {
+    console.error('deleteOwnAccount: auth delete failed', { error: authError, userId })
+    return { error: 'profile_deleted_auth_failed' }
   }
 
   return {}

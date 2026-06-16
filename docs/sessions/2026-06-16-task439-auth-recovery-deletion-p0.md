@@ -73,3 +73,93 @@ flag for a follow-up. `hardDeleteUser` (admin) must remain untouched. Auth email
 
 Kickoff ready for Sonnet. No product code touched. Not closeable until Sonnet implements AND the
 Supabase owner-actions in §5 are applied/confirmed (TTL-only ≠ closure).
+
+---
+
+# 2026-06-16 — Task 439 (EXECUTION) — Sonnet 4.6
+
+**Status:** ✅ DONE — pending orchestrator diff review + owner staging validation (§10 below)
+
+## Files Changed (Sonnet execution)
+
+| File | Change | Rationale |
+|------|--------|-----------|
+| `src/lib/auth/browser.ts` | Added `verifyOtp` export | Client-side OTP verify for prefetch-safe submit flow |
+| `src/app/api/auth-email-hook/route.ts` | Rewrote `buildConfirmUrl` for recovery type | Recovery → `/{locale}/auth/reset-password?token_hash=…&type=recovery`; other types unchanged |
+| `src/app/[locale]/auth/reset-password/page.tsx` | Added `searchParams` prop | Forwards `token_hash` + `type` to `ResetPasswordClient` |
+| `src/modules/auth/components/ResetPasswordClient.tsx` | Complete rewrite | Prefetch-safe: form shown immediately, `verifyOtp` only on form submit; legacy session path preserved |
+| `src/modules/cabinet/actions/index.ts` | Rewrote `deleteOwnAccount` | Hard-delete: gateway archive → users row delete → `auth.admin.deleteUser`; `profile_deleted_auth_failed` on partial failure |
+| `src/modules/cabinet/components/ProfileTab.tsx` | Updated `handleDeleteAccount` error branch | `profile_deleted_auth_failed` → `delete_account_auth_failed` key; never shows success on partial failure |
+| `messages/sq.json` | Added `cabinet.delete_account_auth_failed` | sq: "Llogaria u fshi, por adresa e emailit nuk u lirua. Kontaktoni mbështetjen." |
+| `messages/en.json` | Added `cabinet.delete_account_auth_failed` | en: "Your account was deleted, but the email address could not be freed. Please contact support." |
+| `messages/uk.json` | Added `cabinet.delete_account_auth_failed` | uk: "Ваш обліковий запис видалено, але адресу електронної пошти не вдалося звільнити. Зверніться до підтримки." |
+| `messages/it.json` | Added `cabinet.delete_account_auth_failed` | it: "Il tuo account è stato eliminato, ma l'indirizzo email non è stato liberato. Contatta il supporto." |
+
+## AC Self-Audit
+
+| AC | Requirement | Status |
+|----|-------------|--------|
+| AC1 | Recovery link usable ≥15 min; scanner GET does NOT burn it | ✅ `verifyOtp` in `handleSubmit` only (line 69), never in `useEffect` |
+| AC2 | OTP expiry ≥900s documented as owner action | ✅ See §7 Supabase checklist |
+| AC3 | Both app- and dashboard-recovery open reset-password | ✅ `buildConfirmUrl(recovery)` → `/{locale}/auth/reset-password?token_hash=…`; dashboard defaults to `sq` |
+| AC4 | Valid reset + expired/invalid + rule-fail + server-error handled | ✅ N2/N3/N4 all covered |
+| AC5 | Login with new password works; old password rejected | ⏳ Staging validation required |
+| AC6 | Recovery request neutral, non-enumerating | ✅ `requestPasswordResetWithCaptcha` unchanged |
+| AC7 | Self-delete hard-deletes auth user; same email reusable after | ✅ `auth.admin.deleteUser(userId)` called |
+| AC8 | Self-scope enforced; failure paths distinct; no false success | ✅ `resolveAuthUser()` self-scoped; `delete_failed` vs `profile_deleted_auth_failed` distinct |
+| AC9 | No `service_role` in client bundle | ✅ Security greps clean |
+| AC10 | sq/en/uk/it parity; no hardcode | ✅ `check:i18n` → 1818 keys, parity PASSED |
+| AC11 | Mobile <640 full-width: reset card + delete dialog | ⏳ Requires rendered staging evidence |
+| AC12 | Existing flows intact | ✅ Build clean; `/auth/confirm` for signup/magiclink unchanged; `hardDeleteUser` untouched |
+
+## Validation Transcript
+
+```
+npx tsc --noEmit          → (no output) 0 errors ✅
+npm run lint              → 0 errors, 3 pre-existing warnings ✅
+npm run check:i18n        → ✅ Parity PASSED — 1818 keys all 4 locales ✅
+npm run build             → ✅ Build succeeded ✅
+
+File integrity (10 files):
+  src/lib/auth/browser.ts                           4632 bytes, 103 lines ✅
+  src/app/api/auth-email-hook/route.ts             14632 bytes, 307 lines ✅
+  src/app/[locale]/auth/reset-password/page.tsx      738 bytes,  16 lines ✅
+  src/modules/auth/components/ResetPasswordClient  7373 bytes,  179 lines ✅
+  src/modules/cabinet/actions/index.ts            20432 bytes,  473 lines ✅
+  src/modules/cabinet/components/ProfileTab.tsx   21860 bytes,  487 lines ✅
+  messages/sq.json                                91319 bytes, 1990 lines ✅
+  messages/en.json                                85343 bytes, 1990 lines ✅
+  messages/uk.json                               119530 bytes, 1990 lines ✅
+  messages/it.json                                90069 bytes, 1990 lines ✅
+
+Security greps:
+  service_role/createAdminClient in browser.ts, ResetPasswordClient, ProfileTab → (no matches) ✅
+  deleteOwnAccount signature → no userId arg ✅
+  verifyOtp not on mount → line 69 is inside handleSubmit only ✅
+```
+
+## Supabase Owner Checklist (§7 — owner actions, blocking)
+
+| Item | Where | Action |
+|------|-------|--------|
+| **Mailer OTP Expiration** | Auth → Emails | Check current value → **set ≥ 900s** (recommend 3600s to match email copy) |
+| **Redirect URLs** | Auth → URL Configuration | Ensure allow-list includes: `${SITE_URL}/auth/callback`, `${SITE_URL}/auth/confirm`, `${SITE_URL}/{locale}/auth/reset-password` |
+| **Resend link tracking** | Resend dashboard → Domains | Confirm click-tracking OFF for auth emails |
+| **Send Email Hook** | Auth → Hooks | Confirm enabled → `https://lero.al/api/auth-email-hook` |
+
+## Staging Manual Validation (§10 — owner-run, blocking)
+
+1. ⏳ Recovery email arrives via Resend
+2. ⏳ Link opens `/{locale}/auth/reset-password` (not `/auth/verified`, not login)
+3. ⏳ `curl` the link once → page renders, token NOT consumed → complete reset in browser — succeeds (proves A)
+4. ⏳ Expired/invalid link → localized expired state + "request new link" CTA
+5. ⏳ Reset succeeds; login with new password works; old password rejected
+6. ⏳ Dashboard-sent recovery → link → `/sq/auth/reset-password` form (proves B)
+7. ⏳ Self-delete → same email signs up as brand-new account (proves C)
+8. ⏳ Auth-delete-failure path (mock) → error shown, no success toast (proves N10)
+
+## Known Limitations
+
+- **Signup-confirm prefetch risk:** `/auth/confirm` still calls `verifyOtp` on GET for `signup/invite/magiclink` — same theoretical prefetch vulnerability. Explicitly out of scope; flagged for RS follow-up task.
+- **Auth emails `sq`-only:** Per Task 251 policy. `delete_account_auth_failed` is a UI string (not email), so it IS localized.
+- **Listings archive error handling:** if individual `applyListingTransitionByStatus` fails during self-delete, `deleteOwnAccount` continues (mirrors `hardDeleteUser`). Stricter "all or nothing" would need a DB transaction — separate architectural decision.

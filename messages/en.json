@@ -511,6 +511,7 @@
     "delete_account_type_confirm": "Type DELETE to confirm",
     "delete_account_confirm": "Delete account",
     "delete_account_success": "Your account has been deleted",
+    "delete_account_auth_failed": "Your account was deleted, but the email address could not be freed. Please contact support.",
     "email_label": "Email",
     "email_current_label": "Current email",
     "email_change_hint": "Enter a new email to change your current email address",

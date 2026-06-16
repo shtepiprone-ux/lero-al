@@ -213,7 +213,11 @@ export function ProfileTab({ profile, locale, cities, regions, email, onAvatarCh
     const result = await deleteOwnAccount()
     setDeleting(false)
     if (result.error) {
-      setDeleteError(t('error_deleting'))
+      // N10: profile_deleted_auth_failed means profile is gone but email not freed — never show success.
+      const key = result.error === 'profile_deleted_auth_failed'
+        ? 'delete_account_auth_failed'
+        : 'error_deleting'
+      setDeleteError(t(key as Parameters<typeof t>[0]))
       return
     }
     setShowDeleteDialog(false)

@@ -51,6 +51,11 @@ export function updatePassword(password: string) {
   return createClient().auth.updateUser({ password })
 }
 
+export function verifyOtp({ token_hash, type }: { token_hash: string; type: string }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return createClient().auth.verifyOtp({ token_hash, type: type as any })
+}
+
 // ── Sign-out ─────────────────────────────────────────────────────────────────
 
 export function signOut(scope?: 'global' | 'local') {

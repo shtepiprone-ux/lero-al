@@ -46,6 +46,31 @@ export function formatDate(dateStr: string | null | undefined, locale: string): 
 }
 
 /**
+ * Formats an ISO datetime string as a locale-aware absolute date+time (day/month/year hour:minute).
+ * Uses an explicit fixed timezone (UTC) so the Node.js server and the browser always produce
+ * byte-identical text, preventing SSR/CSR hydration mismatches caused by Intl locale or timezone
+ * divergence between runtimes.
+ * Returns '—' on null, undefined, or invalid input.
+ */
+export function formatDateTime(dateStr: string | null | undefined, locale: string): string {
+  if (!dateStr) return '—'
+  try {
+    const d = new Date(dateStr)
+    if (isNaN(d.getTime())) return '—'
+    return new Intl.DateTimeFormat(locale, {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'UTC',
+    }).format(d)
+  } catch {
+    return '—'
+  }
+}
+
+/**
  * Compact localized listing-card date that always includes the year.
  * e.g. en:"Jan 15, 2026" · uk:"15 січ. 2026" · it:"15 gen 2026" · sq:localized
  * Requires explicit locale for SSR/client parity (no hydration mismatch).

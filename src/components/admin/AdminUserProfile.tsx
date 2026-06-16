@@ -36,6 +36,7 @@ import {
 import { clearHistoryRow, clearHistoryForEntity } from '@/modules/admin/actions/clearHistory'
 import { Textarea } from '@/components/ui/textarea'
 import type { User, UserChangeLog, UserStatusHistory, HistoryClearSource } from '@/types/database'
+import { formatDate, formatDateTime } from '@/lib/formatters'
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -56,6 +57,11 @@ interface Props {
   statusHistory: UserStatusHistory[]
   isAdmin: boolean
   canClearHistory: boolean
+  // Pre-formatted on the server to prevent SSR/CSR Intl locale-data divergence (sq ICU mismatch).
+  // When provided, these strings are rendered verbatim — no client-side Intl call.
+  changeLogDates?: Record<string, string>
+  statusHistoryDates?: Record<string, string>
+  suspendedUntilFormatted?: string | null
 }
 
 // ── Constants ────────────────────────────────────────────────────────────────
@@ -388,7 +394,7 @@ function PasswordInfo() {
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin, canClearHistory }: Props) {
+export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cities, regions, changeLog, statusHistory, isAdmin, canClearHistory, changeLogDates, statusHistoryDates, suspendedUntilFormatted }: Props) {
   const router = useRouter()
   const t = useTranslations('admin.user_profile')
   const locale = useLocale()
@@ -759,7 +765,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
           {user!.status === 'blocked' && user!.suspended_until && (
             <p className="text-xs text-muted-foreground border-t pt-2">
               {t('fields.suspended_until').toLowerCase()}{' '}
-              {new Date(user!.suspended_until).toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })}
+              {suspendedUntilFormatted ?? formatDate(user!.suspended_until, locale)}
             </p>
           )}
           {user!.block_reason && (
@@ -1102,9 +1108,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                       <History className="h-3.5 w-3.5 text-muted-foreground mt-0.5 shrink-0" />
                       <div className="min-w-0 flex-1">
                         <span className="text-muted-foreground">
-                          {new Date(entry.changed_at).toLocaleDateString(locale, {
-                            day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
-                          })}
+                          {changeLogDates?.[entry.id] ?? formatDateTime(entry.changed_at, locale)}
                         </span>
                         {' · '}
                         <span className="font-medium">{PROFILE_TYPE_LABELS[entry.old_value as ProfileType] ?? entry.old_value}</span>{' → '}
@@ -1146,9 +1150,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
                       <div className="min-w-0 flex-1 flex flex-col gap-0.5">
                         <div>
                           <span className="text-muted-foreground">
-                            {new Date(entry.changed_at).toLocaleDateString(locale, {
-                              day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
-                            })}
+                            {statusHistoryDates?.[entry.id] ?? formatDateTime(entry.changed_at, locale)}
                           </span>
                           {' · '}
                           <span className="font-medium">{entry.old_status ? t(`statuses.${entry.old_status}` as Parameters<typeof t>[0]) : '—'}</span>{' → '}

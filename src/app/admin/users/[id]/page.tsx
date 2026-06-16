@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation'
+import { getLocale } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminUserProfile } from '@/components/admin/AdminUserProfile'
 import { hasPermission } from '@/lib/auth/permissions'
+import { formatDate, formatDateTime } from '@/lib/formatters'
 import type { UserChangeLog, UserStatusHistory } from '@/types/database'
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -75,6 +77,15 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
   const isAdmin = myProfile?.role === 'admin'
   const canClearHistory = await hasPermission('audit.clear_history').catch(() => false)
 
+  // Pre-format timestamps on the server so the client renders verbatim strings.
+  // Prevents SSR/CSR Intl locale-data divergence (sq ICU differs between Node.js and Chromium).
+  const locale = await getLocale()
+  const changeLogDates = Object.fromEntries(changeLog.map(e => [e.id, formatDateTime(e.changed_at, locale)]))
+  const statusHistoryDates = Object.fromEntries(statusHistory.map(e => [e.id, formatDateTime(e.changed_at, locale)]))
+  const suspendedUntilFormatted = user.status === 'blocked' && user.suspended_until
+    ? formatDate(user.suspended_until, locale)
+    : null
+
   return (
     <div className="p-6 lg:p-8 max-w-5xl mx-auto">
       <AdminUserProfile
@@ -87,6 +98,9 @@ export default async function AdminUserProfilePage({ params }: { params: Promise
         statusHistory={statusHistory}
         isAdmin={isAdmin}
         canClearHistory={canClearHistory}
+        changeLogDates={changeLogDates}
+        statusHistoryDates={statusHistoryDates}
+        suspendedUntilFormatted={suspendedUntilFormatted}
       />
     </div>
   )

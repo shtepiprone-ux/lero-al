@@ -45,6 +45,7 @@ These rules apply to every orchestrator session from 2026-05-27 onward:
 - **The orchestrator must reject work — and open a follow-up task — if an existing capability has silently disappeared.** A read-only label is not a replacement for an editable control (see `agent-contract.md` clause 4 + `ai-behavior.md` Note 21).
 - **Approval is allowed only after actual `git diff` review.** The session log is the executor's *claim*; the diff is the *proof*. If the two disagree, the diff wins. A "complete" session log without diff verification is not approval.
 - **Approval is also blocked if the diff implements only the positive flow.** Every negative branch listed in the kickoff must have a verifiable line in the diff (handler, guard, toast call, early return, locale key). A diff that ships only the happy path is INCOMPLETE — route back as a follow-up, do not approve.
+- **🔴 Regression-coverage gate (Epic RS / agent-contract clause 15, owner P0 2026-06-16).** If a task touches any flow in `docs/critical-flow-registry.md`, the kickoff MUST require — and the review MUST verify — a regression test that (a) was green on the OLD behavior (baseline recorded) and (b) covers the changed behavior, plus a planted-violation FAIL transcript proving the gate is real. **Approval is forbidden without that automated proof** that the pre-existing critical functionality still works; a manual one-case check is not acceptable. If the touched flow lacks a registry row, the task must add it. The orchestrator updates the flow's coverage status in the registry at approval time.
 
 ## Environment & git safety (Cowork / Windows) — MANDATORY
 
@@ -256,6 +257,7 @@ a hard gate on BOTH sides of the loop:
 - [ ] `docs/backlog.md` + `docs/sessions/` updated and consistent with the diff.
 - [ ] **"Files Changed" table present in session log** (Task 264 rule) — one row per touched path + 1-line rationale; matches the real diff. A missing or mismatched table = INCOMPLETE; route back.
 - [ ] **Commit commands emitted by the orchestrator** (Task 264 rule) using explicit paths matching every file in the real diff for the approved tasks; no `git add -A`, no `git add -u`, no wildcards; one commit per logical change. Sonnet-emitted commit commands are silently ignored and the contract violation noted.
+- [ ] **🔴 Regression-coverage gate (Epic RS / clause 15):** if the diff touches any `docs/critical-flow-registry.md` flow — a regression test exists, was green on the pre-change behavior (baseline noted), covers the new behavior, runs in CI, and FAILS on a planted violation (transcript present). Registry coverage status updated. **No automated proof of preserved critical functionality = INCOMPLETE; do not approve.** A manual one-case check does not satisfy this.
 - [ ] Verdict recorded: **approve** or **follow-up task opened**.
 
 ## Approval rule (Task 253 — restated for emphasis)

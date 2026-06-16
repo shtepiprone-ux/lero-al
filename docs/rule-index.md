@@ -20,6 +20,9 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 
 - `docs/agent-contract.md`
 - `docs/backlog.md`
+- `docs/critical-flow-registry.md` — **scan it for any flow your task touches.** If it touches one, the
+  regression-coverage P0 rule (`agent-contract.md` clause 15 / Epic RS) is in scope: baseline the existing
+  test, add/update a regression test, and do not close without automated proof the old behavior still works.
 
 ## UI / layout / component task
 
@@ -177,6 +180,19 @@ This is the bundle that exists specifically to prevent the "moved editable contr
 - `docs/ai-behavior.md`
 - `docs/governance-checklists.md`
 - `docs/governance-enforcement.md`
+
+## Regression / critical-flow coverage task (Epic RS — Regression Shield)
+
+**Required:**
+- `docs/critical-flow-registry.md` — the registry being extended (single source of truth)
+- `tasks/Epics/Epic_RS_Regression_Shield.md` — slice contracts + definition of done
+- `docs/qa-rules.md` — test/error-handling conventions
+- `docs/agent-contract.md` (clause 15) + `docs/orchestrator-role.md` (regression-coverage gate)
+
+**Only if relevant (by the flow group being covered):**
+- Auth/listings/admin slices → the matching task-type bundle above (email/auth lifecycle, DB/RLS, admin).
+- `docs/rls-rules.md` + `docs/data-access-rules.md` for the server-action/RLS permission-coverage slice.
+- `docs/responsive-screenshot-governance.md` for the i18n/hydration/mobile slice.
 
 ## Schema / migration task
 

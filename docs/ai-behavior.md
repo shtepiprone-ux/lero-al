@@ -785,6 +785,11 @@ Acceptance criteria:
 - Relevant governance checks pass (only the ones for the scope changed).
 - All four locales (sq/en/uk/it) render correctly at runtime if UI/text changed.
 - All seven breakpoints (320/375/390/768/1280/1440/2560) render correctly if UI/layout changed.
+- **Regression coverage (agent-contract clause 15 / Epic RS):** if this task touches a flow in
+  `docs/critical-flow-registry.md`, a regression test (a) was green on the OLD behavior before the change
+  (baseline pasted in the session log) and (b) covers the new behavior; it runs in CI and FAILS on a
+  planted violation. The registry coverage status + command are updated. **No close without this automated
+  proof** — a manual one-case check is insufficient. If the flow has no registry row, this task adds one.
 - `docs/backlog.md` is updated.
 - A session log under `docs/sessions/` is added, with the Note 18 self-validation block.
 - A **"Files Changed" table** is present in the session log (one row per touched path + 1-line
@@ -857,6 +862,7 @@ If editing moves from one component to another, the new component must include:
 - DO NOT write `Localization coverage: N/A` unless the task literally has zero user-visible text.
 - DO NOT write `Responsive coverage: N/A` unless the task does not touch any rendered UI.
 - DO NOT restart task numbering per sprint — preserve the global counter (`docs/backlog.md`).
+- DO NOT omit the **Regression coverage** AC when the task touches a `docs/critical-flow-registry.md` flow. The kickoff must name the exact regression test + command, require the pre-change green baseline, and require a planted-violation FAIL transcript. A flow-touching task without regression proof is INCOMPLETE (agent-contract clause 15 / Epic RS).
 - DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
 - DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor NEVER emits `git add` / `git commit` commands and NEVER runs git itself (single-writer rule); the orchestrator (Opus) emits commit commands during review. This applies to EVERY task, including non-UI and docs-only tasks.
 - **Canonical-first / no-duplicate-class AC (Task 426, 2026-06-15).** For any control rendered by a canonical primitive (`Button`, `Combobox`, `Input`, `Select`, `Dialog`, `Sheet`, `Popover`, …), acceptance criteria are *canonical-first*: a task adds a local responsive/utility class ONLY if the required behavior is **not already inherited** from the canonical primitive. If the primitive already provides the behavior, the deliverable is **canonical-source proof** (primitive `file:line`) **+ rendered evidence** — duplicating the class locally is a **rejection, not a pass** (it diverges the consumer from the canonical single-source per Note 14 and can regress the primitive's other size/state variants). Kickoffs MUST phrase such ACs conditionally, e.g.: *"add `max-sm:w-full max-sm:min-h-11` locally **only if not already inherited** from canonical `Button`; otherwise provide canonical-source proof + rendered evidence and **do not duplicate** the classes."* A flat "the class must appear in the local diff" AC, where a canonical primitive already satisfies it, is a kickoff defect.

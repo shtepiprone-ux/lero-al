@@ -1,6 +1,15 @@
-# Task 436 — Regression-protection guards (PREVENTION ONLY)
+# Task 436 — Regression Shield · SLICE 1: Foundational guards (PREVENTION ONLY)
 
-> **Type:** QA / tooling / governance. **Owner-directed scope, 2026-06-15.**
+> **🛡️ REFRAMED 2026-06-16 — this is now Slice 1 of Epic RS (Regression Shield), not a
+> Task-432-only fix.** See `tasks/Epics/Epic_RS_Regression_Shield.md` + `docs/critical-flow-registry.md`.
+> Slice 1 lands the foundational machine gates (hydration/console-error gate, admin-users & report-listing
+> smoke, RLS-change rule, actionable-error-toast rule). The flows it covers map to registry rows
+> (admin-users-list, admin-user-detail, report-listing, clear-history) — flip their coverage status to ✅
+> and paste the command into the registry when this slice lands. The broader auth/listings/admin/RLS/i18n
+> coverage continues in Slices 2–6 (Tasks 441–445). The P0 regression-coverage RULE (agent-contract
+> clause 15) is ALREADY LIVE as of Task 440 — Slice 1 is the first coverage, not the rule's start.
+>
+> **Type:** QA / tooling / governance. **Owner-directed scope, 2026-06-15; reframed under Epic RS 2026-06-16.**
 > **🔴 This task does NOT fix any current bug.** The live bugs stay as their own tasks:
 > - **Task 434** — admin LocaleSwitcher hydration / SSR-CSR mismatch (separate fix task).
 > - **Task 435** — report-listing submit failure (separate diagnose→fix task).

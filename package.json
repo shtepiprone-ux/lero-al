@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:auth": "vitest run src/lib/auth/__tests__/browser.smoke.test.ts src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts src/modules/auth/actions/__tests__/requestPasswordReset.smoke.test.ts src/app/api/auth-email-hook/__tests__/recoveryUrl.smoke.test.ts src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts",
+    "test:listings": "vitest run src/modules/listings/actions/__tests__/reportListing.smoke.test.ts src/modules/listings/actions/__tests__/createListing.smoke.test.ts src/modules/listings/actions/__tests__/updateListing.smoke.test.ts src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts src/modules/listings/components/__tests__/ReportListingDialog.smoke.test.tsx",
     "governance": "node scripts/governance/governance.mjs all",
     "governance:primitives": "node scripts/governance/governance.mjs primitives",
     "governance:responsive": "node scripts/governance/governance.mjs responsive",

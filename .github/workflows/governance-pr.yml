@@ -41,6 +41,9 @@ jobs:
       - name: Auth lifecycle regression guard (Epic RS Slice 2)
         run: npm run test:auth
 
+      - name: Listings lifecycle regression guard (Epic RS Slice 3)
+        run: npm run test:listings
+
       - name: Storybook governance gate
         run: npm run check:stories
 

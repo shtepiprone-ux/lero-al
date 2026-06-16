@@ -173,6 +173,11 @@ const ASSERT_STORIES = [
   // ListingFormShellView (Task 238 — edit/create side-panel + status control)
   { id: 'listings-listingformshellview--owner',                          label: 'ListingFormShellView/Owner' },
   { id: 'listings-listingformshellview--staff',                          label: 'ListingFormShellView/Staff' },
+  // VerifiedPage card (Task 446 rework — toolbar-reactive; harness sweeps sq/en/uk/it × all viewports)
+  { id: 'auth-verifiedpage--success',                                    label: 'VerifiedPage/Success' },
+  { id: 'auth-verifiedpage--error-state',                                label: 'VerifiedPage/ErrorState' },
+  { id: 'auth-verifiedpage--sync-fail',                                  label: 'VerifiedPage/SyncFail' },
+  { id: 'auth-verifiedpage--locale-stress',                              label: 'VerifiedPage/LocaleStress' },
 ];
 
 // ── Tolerance for full-width assertion (px) ────────────────────────────────────

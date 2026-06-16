@@ -2,6 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Exclude docs/ and tasks/ from Tailwind's automatic content detection (Task 433).
+   These dirs contain Tailwind class-name EXAMPLES in prose (e.g. the pseudo-code
+   `rounded-[min/calc(var(--radius...),...)]` in design-system.md / session logs),
+   which the v4 scanner would otherwise extract as real candidates and emit as
+   invalid CSS, breaking the build. Nothing in docs/ or tasks/ is ever rendered, so
+   excluding them drops no real utility. */
+@source not "../../docs";
+@source not "../../tasks";
+
 @custom-variant dark (&:is(.dark *));
 
 /* ─────────────────────────────────────────────

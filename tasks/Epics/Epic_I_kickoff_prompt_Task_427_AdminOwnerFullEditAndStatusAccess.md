@@ -143,8 +143,11 @@ Two coupled defects on listings whose status is `sold` / `rented` (and `archived
 Do NOT make `pending` listings publicly visible by default; do NOT let a random/unauthenticated user change status;
 do NOT let an owner edit/transition someone else's listing; do NOT remove archive/edit/view/premium/delete actions;
 do NOT bypass the `applyListingTransition` single-write gateway with a direct `db.update({ status })`; do NOT regress
-the post-save redirect logic (`getPostSaveRedirect`). Owner stays restricted to base+REOPEN (no self-approve from
-pending) per the policy note above.
+the post-save redirect logic (`getPostSaveRedirect`). **NOTE (corrected 2026-06-15): the owner is NOT restricted to
+base+REOPEN.** Per the owner directive (lines 51–71) an authorized owner-of-listing OR admin/moderator may move the
+listing to ANY status from ANY status, **including a `pending → active` self-approve on their OWN listing** (this is
+explicitly allowed — do NOT reject it). The ONLY callers who get nothing are unauthenticated / non-owner / non-staff
+actors (and an owner targeting a listing they do not own).
 
 ## Localization (sq / en / uk / it — full parity, no English fallback)
 

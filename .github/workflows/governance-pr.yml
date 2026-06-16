@@ -74,6 +74,9 @@ jobs:
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 
+      - name: Hydration gate self-test (verifies gate detects violations — CI-safe, no server needed)
+        run: npm run check:hydration:verify
+
       - name: Full governance report (summary)
         if: always()
         run: npm run governance

@@ -34,11 +34,11 @@
 
 | Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |
 |---|---|---|---|---|---|---|---|
-| Admin users list loads | `/admin/users` | HH | list renders, no console/hydration error | — | smoke + hydration gate | Slice 1 (436) / Slice 4 | 🟡 (436) |
-| Admin user detail loads | `/admin/users/[id]` (`AdminUserProfile.tsx`) | 434 | renders, no hydration/date-format mismatch | — | hydration gate on this exact route | `screenshots:assert` + new hydration gate (436) | 🟡 (436) |
-| User status / role / account-type change | `modules/admin/actions/index.ts` | 427 | change persists + history row written | permission denied → error | smoke: change writes `user_status_history` + RLS neg | Slice 4 | ❌ |
-| Clear history (success) | `clear_user_history()` RPC (`admin/actions`) | 246 | rows cleared, audited | — | smoke success | Slice 1/4 | 🟡 |
-| Clear history (no-op race) | same | 432 | `{cleared:0}` → neutral info toast | — | smoke: no-op neutral toast | Slice 1/4 | 🟡 |
+| Admin users list loads | `/admin/users` | HH | list renders, no console/hydration error | — | smoke + hydration gate | `BASE_URL=http://localhost:3000 npm run check:hydration --with-admin` (owner-run with auth cookies; admin routes require HYDRATION_GATE_COOKIES) | 🟡 (436: gate script live, requires owner auth run to fully cover) |
+| Admin user detail loads | `/admin/users/[id]` (`AdminUserProfile.tsx`) | 434 | renders, no hydration/date-format mismatch | — | hydration gate on this exact route (MUST include `/admin/users/[id]`) | `HYDRATION_ADMIN_USER_ID=<uuid> BASE_URL=http://localhost:3000 HYDRATION_GATE_COOKIES='[...]' npm run check:hydration --with-admin` | 🟡 (Task 448: HYDRATION_ADMIN_USER_ID-parametrized; when unset → NOT-REAL-COVERAGE/skip; full ✅ requires owner auth run with real user UUID) |
+| User status / role / account-type change | `updateUserProfileFull` (`modules/admin/actions/index.ts`) | 427 / **448** | change persists + `user_status_history` / `user_change_log` row written | permission denied → `{ error: 'Forbidden' }` | smoke: status-change writes history row; profileType-change writes change-log row; forbidden/unauthorized paths | `npx vitest run src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts` | ✅ (Task 448: vitest smoke — status-change writes history, profileType-change writes change-log, forbidden + unauthorized paths; planted-violation FAIL confirmed) |
+| Clear history (success) | `clear_user_history()` RPC (`admin/actions`) | 246 | rows cleared, audited | rpc failure → `clear_failed` + console.error logged | smoke: vitest unit, action contract | `npx vitest run src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts` | ✅ (Task 436: vitest smoke — happy path + rpc-failure diagnosable) |
+| Clear history (no-op race) | same | 432 | `{cleared:0}` → neutral info toast | — | smoke: no-op neutral toast (cleared=0 path) | `npx vitest run src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts` | ✅ (Task 436: vitest smoke — cleared=0 no-op path covered) |
 | Hard-delete user (admin) | `hardDeleteUser` (`admin/actions/index.ts:564`) | — | listings archived → row deleted → `auth.admin.deleteUser` | auth fail → `profile_deleted_auth_failed` | smoke: delete + email-free; auth-fail path | Slice 4 | ❌ |
 
 ## P0/P1 — Listings lifecycle (Slice 3 / Task 442)
@@ -48,7 +48,7 @@
 | Create listing | listing form → create action | Y | valid → listing created (pending/active) | validation error → typed | smoke: create ok + validation fail | Slice 3 | ❌ |
 | Edit listing | edit side-panel (`Task 238`) | Y/238 | edit persists; dirty-state save | save error → typed | smoke: edit ok | Slice 3 | ❌ |
 | Status change | `applyListingTransitionByStatus` / `StatusChangeControl` | 427/I | allowed transition persists | illegal transition blocked | smoke: legal + illegal transition | Slice 3 | ❌ |
-| Report listing | `reportListing.ts` → report dialog | 243/BB / **435** | submit success | transport/RLS fail → **diagnosable** typed error (not generic dead-end) | smoke: report ok + failure is diagnosable | Slice 1 (436) / Slice 3 | 🟡 (436) |
+| Report listing | `reportListing.ts` → report dialog | 243/BB / **435** | submit success | transport/RLS fail → **diagnosable** typed error + console.error (not generic dead-end) | smoke: report ok (incl. table-name assertion) + save_failed → console.error asserted | `npx vitest run src/modules/listings/actions/__tests__/reportListing.smoke.test.ts` | ✅ (Task 436/448: vitest smoke — happy path asserts `.from('listing_reports')` table name (Task 448 item C) + save_failed diagnosable with console.error verification; dialog open smoke pending Slice 3/442) |
 | Inquiry / send message | `submitListingInquiry` + `ListingInquiryDialog` | 243 | sent → owner email; rate-limited | email transient → partial-success UX | smoke: inquiry ok + rate-limit | Slice 3 | ❌ |
 
 ## P0 — Server-action / RLS write paths (Slice 5 / Task 444)
@@ -65,7 +65,9 @@
 | Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |
 |---|---|---|---|---|---|---|---|
 | i18n parity on key routes | sq/en/uk/it | II | all keys present, render correct | missing key / leak | `check:i18n` + runtime render | `npm run check:i18n` | ✅ (parity) / 🟡 (runtime) |
-| Hydration / invalid-HTML / console errors | key admin/user/listing routes | 434/436 | zero hydration/console errors | mismatch/invalid nesting → gate FAILS | console-error gate on tested routes | new gate (436), expanded (445) | 🟡 (436) |
+| Hydration / console errors — detector + self-test | embedded violation server | 434/436 | gate FAILS on planted violation | gate broken → exit 0 on violation | `check:hydration:verify` self-test, no server needed | `npm run check:hydration:verify` | ✅ (Task 436: planted-violation FAIL confirmed — 2 patterns detected; CI-safe) |
+| Hydration / console errors — live public routes | `/en`, `/en/listings`, `/sq`, `/uk`, listing-detail | 434/448 | zero hydration/console errors | mismatch → gate FAILS | `check:hydration` on running server | `BASE_URL=http://localhost:3000 npm run check:hydration` · listing-detail via `HYDRATION_LISTING_PATH=/en/listings/<slug>` | 🟡 (Task 448: listing-detail HYDRATION_LISTING_PATH-parametrized; owner-run; CI job pending Slice 6/445) |
+| Hydration / console errors — admin routes | `/en/admin/users`, `/en/admin/users/[id]` | 434/448 | zero hydration/console errors | mismatch → gate FAILS | `check:hydration --with-admin` with real user UUID | `HYDRATION_ADMIN_USER_ID=<uuid> HYDRATION_GATE_COOKIES='[...]' BASE_URL=http://localhost:3000 npm run check:hydration --with-admin` | 🟡 (Task 448: HYDRATION_ADMIN_USER_ID-parametrized; when unset → NOT-REAL-COVERAGE/skip; owner-run with auth cookies + real UUID) |
 | Date-format SSR/CSR match | `AdminUserProfile` + any `Intl` render | 434 | server-preformatted = client | sq ICU divergence → gate FAILS | hydration gate incl. date-format route | Slice 6 | 🟡 |
 | Mobile no-overflow at 320/375/390 | critical admin/user/listing routes | DS/JJ | no horizontal scroll, full-width <640 | overflow → gate FAILS | responsive assert on critical routes (uk@320 mandatory) | `npm run screenshots:assert` (extend) | 🟡 |
 

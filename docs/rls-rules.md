@@ -1,5 +1,35 @@
 # Database & Row Level Security (Supabase)
 
+## RLS-Change Test Requirement (Epic RS Slice 1, Task 436, 2026-06-16)
+
+> **Origin:** The Task 270 RLS policy change broke `reportListingAction`'s insert path with no test
+> catching it — discovered only via Task 435 days later. This rule closes that class of regression.
+> Referenced from `docs/rule-index.md` "DB / server action / RLS" and "Schema / migration" bundles,
+> and from `docs/agent-contract.md` clause 15 (regression-coverage P0).
+
+Any task that **changes Supabase RLS policies, DB permissions, SECURITY DEFINER functions,
+service_role access, or write-path tables** MUST include ALL of the following in the same diff:
+
+1. **Affected write-path inventory** — every `server-action insert/update/delete` touching the
+   changed table (list action name + file path). A "policy looks correct" assertion is NOT enough.
+2. **Positive permission test** — the legitimate actor (per role matrix below) can still perform the
+   write; a vitest test asserts this AFTER the policy change is in place.
+3. **Negative permission test** — an illegitimate actor (e.g. anonymous user, wrong role, another
+   user's row) cannot perform the write; a test asserts the action returns a typed error or the RLS
+   rejects the insert.
+4. **Actor matrix** (where relevant): anonymous / authenticated user / owner / admin / service_role —
+   document which actors are tested and which are N/A with a short rationale.
+5. **Runtime proof** — existing server actions still work AFTER the policy change; "the SQL looks
+   right" is insufficient. The positive-permission test must run against the actual action code
+   (not just a raw SQL assertion), because the action can fail even when the policy is correct
+   (e.g. wrong client type, missing GRANT, stale column reference).
+
+A task that changes an RLS policy **CANNOT be marked complete or approved** without positive AND
+negative test coverage verifiable by CI. The orchestrator review-checklist includes this as a
+blocking item.
+
+---
+
 ## User Roles
 - `admin` — full access, can create/delete any user including moderators.
 - `moderator` — manage listings, users (agent/user only), support tickets, conversations. CANNOT create/delete admins. CANNOT delete users. CANNOT change user role.

@@ -62,9 +62,9 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 
 **Required:**
 - `docs/data-access-rules.md`
-- `docs/rls-rules.md`
+- `docs/rls-rules.md` ← **read "RLS-Change Test Requirement" section (Task 436, 2026-06-16): any RLS/permission/SECURITY DEFINER/write-path-table change requires positive + negative test coverage. Cannot close without CI-verifiable proof.**
 - `docs/domain-rules.md`
-- `docs/qa-rules.md`
+- `docs/qa-rules.md` ← **read "Actionable Error-Toast Rule" section (Task 436, 2026-06-16): server actions must log the root cause and return typed error keys; test must verify console.error is called.**
 
 **Only if relevant:**
 - `docs/state-authority.md`
@@ -199,7 +199,7 @@ This is the bundle that exists specifically to prevent the "moved editable contr
 **Required:**
 - `docs/data-access-rules.md`
 - `docs/domain-rules.md`
-- `docs/rls-rules.md`
+- `docs/rls-rules.md` ← **read "RLS-Change Test Requirement" (Task 436): positive + negative write-path tests are mandatory for any RLS/permission change.**
 - `docs/qa-rules.md`
 - `docs/architecture.md`
 

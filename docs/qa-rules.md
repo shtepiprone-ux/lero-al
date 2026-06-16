@@ -101,6 +101,39 @@ the files themselves were clean UTF-8; the artifact was console rendering):**
 Cross-ref: `docs/agent-contract.md` clause 14 (file-integrity gate) covers NUL/BOM/truncation;
 `check:mojibake` is the companion gate for double-encoding/replacement-character corruption.
 
+### Actionable Error-Toast Rule (Epic RS Slice 1, Task 436, 2026-06-16)
+
+> **Origin:** Generic "Failed, try again" toasts with no server log made Task 432's no-op
+> clear-history race and Task 435's report-submit RLS failure very slow to diagnose — the
+> developer had no idea whether the failure was an RLS violation, a network error, or a
+> validation issue. This rule closes that diagnosis gap.
+> Referenced from `docs/rule-index.md` "DB / server action / RLS" and "UI / layout" bundles.
+
+For **critical write actions** (admin / moderation / reporting / payment / history flows),
+a generic "Failed, try again" toast is insufficient unless the code ALSO logs the specific
+server-side cause. Minimum standard:
+
+1. **User-facing copy**: localized, non-technical, in all 4 locales (sq/en/uk/it); describes
+   what happened without leaking internal details. Never a raw Supabase error message.
+2. **Server-side log**: before returning any generic error key to the client, the server action
+   MUST call `console.error(tag, { error, context })` with the specific root cause — so that
+   the failure is diagnosable from server logs without reproducing it in the browser.
+3. **Typed error category**: the server action returns a typed error key
+   (`'save_failed'`, `'forbidden'`, `'rate_limited'`, `'unauthorized'`, `'already_reported'`, etc.)
+   — never a raw Supabase error object. The UI maps keys to localized copy.
+4. **Test coverage**: at least one known failure branch is covered by a vitest test that
+   (a) asserts the typed error key is returned AND
+   (b) asserts `console.error` was called (use `vi.spyOn(console, 'error')`), confirming the
+   root cause is logged and not silently swallowed.
+5. **No catch-all collapse**: a single `catch (e) { return { error: 'failed' } }` that makes
+   RLS failures, validation errors, email delivery failures, and DB errors indistinguishable
+   is a **violation**. Each failure class MUST produce a distinct typed error key.
+
+This rule applies to all new server actions in critical flows AND to any existing action
+touched by a task in those flows. The orchestrator review-checklist verifies compliance.
+
+---
+
 ### Error Handling
 - Every Supabase query must have error handling.
 - Never expose raw error messages to users — show friendly localized messages.

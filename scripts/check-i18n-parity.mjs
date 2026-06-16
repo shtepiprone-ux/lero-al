@@ -88,9 +88,6 @@ for (const locale of LOCALES) {
 
 // ── Part 2: Raw-enum pattern scan ─────────────────────────────────────────────
 
-console.log('')
-console.log('── Part 2: Raw-enum leak scan ──────────────────────────────────')
-
 // Patterns that indicate a raw enum being rendered without going through t()
 const RAW_ENUM_PATTERNS = [
   // {x.role} {x.status} {x.plan} rendered directly without t()
@@ -115,25 +112,52 @@ function collectTsxFiles(dir) {
   return results
 }
 
+/**
+ * Scan a single TSX file's content for raw enum-value renders.
+ * Returns findings { line, text } for each suspicious match.
+ *
+ * AC1: skips if `{x.field}` is preceded by `=` (JSX attribute) or `$` (template interpolation).
+ * AC2: skips if any translator variant call `t…(` appears on the line (t(, tu(, tSort(, etc.).
+ * Known limitation: a line containing BOTH a real render AND an attribute/interpolation is silently
+ * skipped (AC1 fires on the attribute side). Such mixed-concern lines are extremely rare in practice.
+ */
+export function scanRawEnumLeaks(content, relPath) {
+  const findings = []
+  const lines = content.split('\n')
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i]
+    // Skip comments, imports, type definitions
+    if (line.trimStart().startsWith('//') || line.trimStart().startsWith('*') || line.includes('import ') || line.includes('type ') || line.includes('interface ')) continue
+    for (const pattern of RAW_ENUM_PATTERNS) {
+      pattern.lastIndex = 0
+      if (
+        pattern.test(line)
+        // AC1: attribute value (currentStatus={x.status}) or template interpolation (${x.status}) — not a render
+        && !/[=$]\{[a-z_]+\.(role|status|plan|user_type)\}/.test(line)
+        // AC2: any translator variant on the line (t(, tu(, tSort(, tStatus(, …) — already localized
+        && !/\bt[A-Za-z]*\(\s*[`'"]/.test(line)
+        && !line.includes('===') && !line.includes('!==')
+        && !line.includes('&&') && !line.includes('??')
+      ) {
+        findings.push({ line: i + 1, text: line.trim().slice(0, 120) })
+      }
+    }
+  }
+  return findings
+}
+
+console.log('')
+console.log('── Part 2: Raw-enum leak scan ──────────────────────────────────')
+
 const srcDir = resolve(ROOT, 'src')
 const tsxFiles = collectTsxFiles(srcDir)
 
 const rawEnumFindings = []
 for (const file of tsxFiles) {
   const content = readFileSync(file, 'utf8')
-  const lines = content.split('\n')
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i]
-    // Skip comments, imports, type definitions
-    if (line.trimStart().startsWith('//') || line.trimStart().startsWith('*') || line.includes('import ') || line.includes('type ') || line.includes('interface ')) continue
-    // Skip lines where the pattern is inside a t() call or comparison
-    for (const pattern of RAW_ENUM_PATTERNS) {
-      pattern.lastIndex = 0
-      if (pattern.test(line) && !line.includes('t(`') && !line.includes("t('") && !line.includes('t("') && !line.includes('===') && !line.includes('!==') && !line.includes('&&') && !line.includes('??')) {
-        const rel = file.replace(ROOT, '').replace(/\\/g, '/')
-        rawEnumFindings.push({ file: rel, line: i + 1, text: line.trim().slice(0, 120) })
-      }
-    }
+  const rel = file.replace(ROOT, '').replace(/\\/g, '/')
+  for (const f of scanRawEnumLeaks(content, rel)) {
+    rawEnumFindings.push({ file: rel, line: f.line, text: f.text })
   }
 }
 

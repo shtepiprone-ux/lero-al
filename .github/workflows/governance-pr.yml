@@ -38,6 +38,9 @@ jobs:
       - name: Gate unit tests (check-stories gate correctness)
         run: npm test
 
+      - name: Auth lifecycle regression guard (Epic RS Slice 2)
+        run: npm run test:auth
+
       - name: Storybook governance gate
         run: npm run check:stories
 

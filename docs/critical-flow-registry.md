@@ -55,10 +55,16 @@
 
 | Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |
 |---|---|---|---|---|---|---|---|
-| Every write action (insert/update/delete) touching an RLS table | all server actions in `modules/**/actions` | 270/444 | legitimate actor writes | illegitimate actor blocked by RLS | positive + negative permission test; actor matrix anon/user/owner/admin/service_role | Slice 5 | ❌ |
+| Archetype A: Anon-allowed public write guard | `submitContactInquiry` (`contacts/actions/index.ts:64`) | **444** | valid payload → insert + email | validation fail / rate-limited → no insert | guard smoke: positive (insert + email) + negative (validation + rate-limit + save_failed diagnosable) | `npm run test:rls-guards` | ✅ (Task 444: vitest smoke — 4 tests; positive: insert + email; negative: validation + rate-limited; diagnosability: insert fail → console.error. Already covered siblings: `reportListingAction` 🟢 Slice 3, `submitListingInquiry` 🟢 Slice 3) |
+| Archetype B: Authenticated self-scoped write guard | `updateCabinetProfile` (`cabinet/actions/index.ts:26`) | **444** | authenticated → update via user-scoped client, anchored to caller id | no session → Unauthorized, no write | guard smoke: positive (user-scoped client, ownership) + negative (unauthorized) + client-boundary (admin client NOT used) + diagnosability | `npm run test:rls-guards` | ✅ (Task 444: vitest smoke — 3 tests; positive: user-scoped client + `.eq('id', userId)` ownership; negative: Unauthorized; diagnosability: console.error. Already covered siblings: `deleteOwnAccount` 🟢 Slice 2, `createListing`/`updateListing` 🟢 Slice 3) |
+| Archetype C: Admin/moderator write guard | `createCurrency` (`admin/actions/currencies.ts:50`) | **444** | admin/moderator → insert via admin client | unauthenticated / regular user → forbidden, no insert | guard smoke: positive (admin → insert) + negative (unauthenticated + regular user) + diagnosability | `npm run test:rls-guards` | ✅ (Task 444: vitest smoke — 4 tests; positive: admin insert; negative: unauthenticated + forbidden; diagnosability: console.error. Already covered siblings: `updateUserProfileFull` 🟢 Slice 4, `clearHistory*` 🟢 Slice 4, `hardDeleteUser` 🟢 Slice 4) |
+| Archetype D: Admin-only (NOT moderator) boundary | `setModeratorPermission` (`admin/actions/permissions.ts:142`) | **444** | admin → upsert + audit event | moderator / unauthenticated → forbidden, no write | guard smoke: positive (admin → upsert + event) + negative (moderator rejected + unauthenticated) + diagnosability | `npm run test:rls-guards` | ✅ (Task 444: vitest smoke — 4 tests; positive: admin upsert + event; negative: moderator → forbidden, unauthenticated → forbidden; diagnosability: upsert fail → console.error; planted-violation FAIL confirmed) |
+| DB-level RLS policy enforcement (anon/role/cross-user, live-DB) | all RLS-enabled tables | 270/444 | Postgres RLS blocks illegitimate writes | — | live-DB integration test with real Postgres roles | — | ❌ (Slice 5b, deferred — mocked-client smoke cannot cover; see `docs/rls-write-path-manifest.md` Table 2 for detailed gaps) |
 
 > This is the exact gap that let Task 270's RLS change break the report flow (Task 435) with no test
-> catching it. Slice 5 makes positive+negative permission coverage mandatory for write paths.
+> catching it. Slice 5 action-guard coverage covers the "someone weakened/removed an action's guard or
+> swapped its client" regression class. DB-level RLS (a *policy* change breaking an insert while action
+> code is unchanged) is deferred to Slice 5b — see `docs/rls-write-path-manifest.md`.
 
 ## P1 — i18n / hydration / mobile contract (Slice 6 / Task 445)
 

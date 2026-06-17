@@ -47,6 +47,9 @@ jobs:
       - name: Admin lifecycle regression guard (Epic RS Slice 4)
         run: npm run test:admin
 
+      - name: RLS write-path guard smoke (Epic RS Slice 5)
+        run: npm run test:rls-guards
+
       - name: Storybook governance gate
         run: npm run check:stories
 

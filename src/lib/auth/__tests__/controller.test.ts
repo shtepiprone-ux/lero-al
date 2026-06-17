@@ -756,3 +756,97 @@ describe('Scenario 8 — UI state stability', () => {
     }
   })
 })
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SCENARIO 9: SELF-RETRIGGERED SIGNED_OUT LOOP (Task 449)
+// Guarantee: when syncFromServer() resolves to "no user" it calls
+// coreSignOut('local'), which makes the real Supabase client emit ANOTHER
+// SIGNED_OUT event. Without the `status === 'unauthenticated'` guard in
+// handleAuthEvent, that self-retriggered event calls syncFromServer() again,
+// which calls coreSignOut('local') again, forever — the ~3-4 req/s
+// /api/auth/me storm confirmed in the owner's dev log on 2026-06-17.
+//
+// The mock below re-creates the real SDK behavior: calling mockCoreSignOut
+// with the 'local' scope synchronously re-invokes the registered auth
+// callback with ('SIGNED_OUT', null), exactly like the browser client does.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe('Scenario 9 — Self-retriggered SIGNED_OUT loop (Task 449)', () => {
+  it('loop is broken: self-retriggered SIGNED_OUT after settling unauthenticated causes no second fetch (primary)', async () => {
+    mockCoreSignOut.mockImplementation((scope?: string) => {
+      if (scope === 'local') authCallbackRef.current?.('SIGNED_OUT', null)
+      return Promise.resolve({ error: null })
+    })
+    vi.mocked(global.fetch).mockResolvedValue(okResponse(null))
+
+    ctrl = mountAuthenticated()
+
+    authCallbackRef.current?.('SIGNED_OUT', null)
+
+    // Drive to the terminal state. The self-retriggered SIGNED_OUT (fired
+    // synchronously inside coreSignOut('local') above) must hit the new
+    // guard and return immediately — it must NOT start a second sync.
+    await vi.waitFor(() => expect(ctrl.getState()).toEqual(unauthenticated()))
+
+    // Flush any pending microtasks/timers so a latent second sync would have
+    // had the chance to start before we assert the fetch count.
+    await vi.waitFor(() => {
+      expect(ctrl.getState()).toEqual(unauthenticated())
+    })
+    await new Promise(r => setTimeout(r, 0))
+    await Promise.resolve()
+
+    // Exactly one fetch — the self-retriggered SIGNED_OUT did not loop.
+    // Without the guard this assertion fails (>1 fetch) or the test times out.
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+    expect(mockCoreSignOut).toHaveBeenCalledWith('local')
+  })
+
+  it('no fetch when the self-event arrives already unauthenticated (N1/N2)', () => {
+    ctrl = mountUnauthenticated()
+
+    authCallbackRef.current?.('SIGNED_OUT', null)
+
+    // Guest / already-unauthenticated must never poll /api/auth/me.
+    expect(vi.mocked(global.fetch)).not.toHaveBeenCalled()
+    expect(ctrl.getState()).toEqual(unauthenticated())
+  })
+
+  it('localStorage cleared but cookies still valid still re-verifies and stays authenticated (P3)', async () => {
+    // Server still finds a valid user (cookies valid) → coreSignOut('local')
+    // is never reached, so the mock has nothing to re-fire.
+    mockCoreSignOut.mockImplementation(() => Promise.resolve({ error: null }))
+    vi.mocked(global.fetch).mockResolvedValueOnce(okResponse(MOCK_USER))
+
+    ctrl = mountAuthenticated()
+
+    authCallbackRef.current?.('SIGNED_OUT', null)
+
+    await vi.waitFor(() => expect(ctrl.getState().status).toBe('authenticated'))
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+    expect(ctrl.getState()).toEqual(authenticated())
+    expect(mockCoreSignOut).not.toHaveBeenCalledWith('local')
+  })
+
+  it('genuine sign-out settles with exactly one extra server verification (P2)', async () => {
+    mockCoreSignOut.mockImplementation((scope?: string) => {
+      if (scope === 'local') authCallbackRef.current?.('SIGNED_OUT', null)
+      return Promise.resolve({ error: null })
+    })
+    vi.mocked(global.fetch).mockResolvedValue(okResponse(null))
+
+    ctrl = mountAuthenticated()
+
+    // External SIGNED_OUT (e.g. cross-tab logout / expired refresh token).
+    authCallbackRef.current?.('SIGNED_OUT', null)
+
+    await vi.waitFor(() => expect(ctrl.getState()).toEqual(unauthenticated()))
+    await new Promise(r => setTimeout(r, 0))
+
+    // Exactly one legitimate server verification after the external
+    // SIGNED_OUT; the self-retriggered SIGNED_OUT must not add a second.
+    expect(vi.mocked(global.fetch)).toHaveBeenCalledTimes(1)
+    expect(mockCoreSignOut).toHaveBeenCalledWith('local')
+    expect(ctrl.getState().status).toBe('unauthenticated')
+  })
+})

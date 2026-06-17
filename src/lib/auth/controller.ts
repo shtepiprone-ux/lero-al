@@ -180,6 +180,14 @@ export class AuthController {
     // Explicit sign-out (controller.signOut()) is guarded by the `signing_out`
     // status check above and never reaches this branch.
     if (!session || event === 'SIGNED_OUT') {
+      // Guard against the self-retriggered loop: syncFromServer() calls
+      // coreSignOut('local') when the server reports no user, which makes the
+      // Supabase client emit another SIGNED_OUT. If we are ALREADY
+      // unauthenticated there is nothing new to verify — re-syncing here would
+      // fetch /api/auth/me forever (~3–4 req/s). Only re-verify when the current
+      // state could still change (e.g. authenticated + localStorage cleared but
+      // cookies still valid → must re-confirm with the server).
+      if (this.state.status === 'unauthenticated') return
       this.syncFromServer()
       return
     }

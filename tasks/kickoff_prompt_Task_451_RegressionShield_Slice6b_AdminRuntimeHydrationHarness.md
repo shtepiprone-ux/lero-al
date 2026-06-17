@@ -23,6 +23,21 @@
 > If you find yourself wanting a live CI server, admin auth in CI, a product change, or to commit any
 > session/cookie artifact — **STOP and ASK.** That is the boundary, not the task.
 
+## Addendum before execution (owner review 2026-06-17 — binding, read FIRST)
+
+- **G-B is server-less/auth-less, so it must NOT perform real browser navigation and must NOT boot Next.js.** It
+  verifies only admin route planning / coverage classification / NOT-REAL-COVERAGE behavior. Real navigation
+  belongs only to the owner-run live `check:hydration --with-admin`.
+- **If both `HYDRATION_GATE_STORAGE_STATE` and `HYDRATION_GATE_COOKIES` are set, define deterministic behavior:**
+  prefer storageState OR fail-fast with a clear error. Do not silently merge stale sessions.
+- **`capture-admin-session.mjs` must explicitly support local env loading (`.env.local`)** OR the runbook must
+  show the exact shell commands to export `HYDRATION_ADMIN_EMAIL` / `HYDRATION_ADMIN_PASSWORD`. Never print
+  credentials.
+- **Because the executor is told not to run git, AC8 secret verification means scanning the touched files /
+  session log for secret-like values;** the orchestrator/owner verifies the actual git diff.
+- **For G-A negative proof, missing/empty credentials must be deterministic and produce no artifact.**
+  Wrong-credentials live-login proof is owner-native if a local runtime is available; do not fabricate it.
+
 ## Why this slice exists (the regression class)
 
 Task 434 was an `/admin/users/[id]` date-format SSR/CSR **hydration mismatch** that shipped green through
@@ -59,9 +74,12 @@ self-test that proves the admin branch of the gate is wired (not a no-op).
    the captured storageState file (e.g. `HYDRATION_GATE_STORAGE_STATE=<path>`) **in addition to** the existing
    `HYDRATION_GATE_COOKIES` JSON path (keep backward compatibility; do not remove the existing env var).
 3. **A deterministic, server-less, auth-less config self-test (G-B)** — proves the admin branch is not a
-   no-op: with `--with-admin` the admin routes are present; with no `HYDRATION_ADMIN_USER_ID` / no session the
-   admin-detail row is reported NOT-REAL-COVERAGE (not green); with a session present the admin routes are
-   actually navigated. This self-test needs NO running server and NO real auth, so it CAN be a blocking CI step.
+   no-op by checking the **route plan / coverage classification ONLY**, never real navigation: with
+   `--with-admin` the admin routes are present in the plan; with no `HYDRATION_ADMIN_USER_ID` / no session the
+   admin-detail row is classified NOT-REAL-COVERAGE (not green); with a session/UUID supplied the plan resolves
+   the detail path to the real UUID. This self-test needs NO running server and NO real auth (it does NOT launch
+   a browser or navigate), so it CAN be a blocking CI step. Real browser navigation of the admin routes is
+   OWNER-RUN only (`check:hydration --with-admin`).
 4. **An owner runbook** — exact, ordered commands to: set the admin credentials in `.env.local`, run the
    capture helper, then run `check:hydration --with-admin` with a real `HYDRATION_ADMIN_USER_ID`, and read the
    PASS/FAIL summary for `/en/admin/users` + `/en/admin/users/[id]`.
@@ -117,6 +135,8 @@ authenticated admin run is owner-run.
     `--with-admin` includes `/en/admin/users` + the detail route; unset `HYDRATION_ADMIN_USER_ID` → detail row
     flagged `notRealCoverage` (not green); set → detail path uses the UUID; OR
   - a `--verify-admin-config` dry mode in the script that asserts the same and exits non-zero on misconfig.
+- **It checks the route plan / coverage classification ONLY — it does NOT launch a browser, navigate, or boot
+  Next.js (real navigation is owner-run, per the addendum).**
 - This is the "gate is real" proof for the admin branch; it MUST be able to FAIL on a planted misconfig.
 
 ### Gate wiring
@@ -149,8 +169,10 @@ per the result (✅ only with owner evidence, else 🟡 + honest note). `.gitign
 
 ## Negative flow (PROOF the harness + gate are real)
 
-- **G-A capture fail:** wrong/empty credentials → the helper exits non-zero, writes NO session file, prints no
-  false success (transcript in session log).
+- **G-A capture fail (deterministic):** missing/empty credentials → the helper exits non-zero, writes NO session
+  file, prints no false success (deterministic transcript in session log — needs no runtime).
+- **G-A wrong-credentials (owner-native):** a real wrong-password login attempt is owner-run if a local runtime
+  is available; do NOT fabricate this transcript.
 - **G-B self-test:** a planted misconfig (e.g. admin route dropped from the builder, or detail row marked green
   while UUID unset) → the self-test FAILS; revert → green (transcript in session log). A self-test that cannot
   be made to fail is a no-op = TASK FAILURE.
@@ -184,22 +206,28 @@ product code or committing a secret → STOP and ASK.
 
 - **AC1** — NEW G-A `scripts/capture-admin-session.mjs`: logs in via env-supplied admin credentials, writes a
   **git-ignored** storageState/cookie artifact, prints the follow-up command; fails loudly with no artifact on
-  bad/empty credentials.
+  **missing/empty** credentials (deterministic). A wrong-password live attempt is owner-native — do NOT require a
+  fabricated transcript for it at review (see AC5 + addendum).
 - **AC2** — `check-hydration-console.mjs` extended to consume the captured session (e.g.
   `HYDRATION_GATE_STORAGE_STATE`) **without removing** the existing `HYDRATION_GATE_COOKIES` path; admin-route
-  NOT-REAL-COVERAGE honesty preserved when session/UUID absent.
+  NOT-REAL-COVERAGE honesty preserved when session/UUID absent. **If BOTH session sources are set → deterministic
+  behavior (storageState preferred OR fail-fast with a clear "set only one session source" error); never a
+  silent merge of stale sessions.**
 - **AC3** — NEW G-B deterministic, server-less, auth-less admin-config self-test that asserts the admin branch
   wiring and can FAIL on a planted misconfig.
 - **AC4** — npm scripts added (`capture:admin-session`, the G-B self-test) and **only G-B** wired into
   `governance-pr.yml` as a blocking step; exact owner-run admin command documented (NOT in CI).
-- **AC5** — Negative-flow transcripts in the session log: G-A bad-credentials no-artifact; G-B planted-misconfig
-  FAIL → revert → PASS; admin-without-session → NOT-REAL-COVERAGE.
+- **AC5** — Negative-flow transcripts in the session log: G-A missing/empty-credentials → deterministic
+  no-artifact (no runtime needed); G-B planted-misconfig FAIL → revert → PASS; admin-without-session →
+  NOT-REAL-COVERAGE. (G-A wrong-password live attempt is owner-native, not fabricated.)
 - **AC6** — Owner-run LIVE evidence section in the session log with the exact ordered commands; admin-route
   PASS results pasted by the owner OR rows left 🟡 (no fabricated PASS).
 - **AC7** — `docs/critical-flow-registry.md` admin rows updated honestly (✅ only with owner evidence, else 🟡 +
   harness-landed note); no CI-auth claim; no false green.
-- **AC8** — `.gitignore` covers the captured-session path and any `.env.local`; the diff contains NO secret,
-  cookie, token, storageState, or credential. (Verify the diff explicitly.)
+- **AC8** — `.gitignore` covers the captured-session path and any `.env.local`; NO secret, cookie, token,
+  storageState, or credential appears in any touched file or the session log. **Executor proof = scan the
+  touched files / session log for secret-like values (the executor does NOT run git); the orchestrator/owner
+  verifies the actual git diff.**
 - **AC9** — No product/route/component/formatter/message change; no admin-auth-in-CI; no booted-Next CI; no fix
   to live bugs; Slice 2–6 smokes + public-route hydration behavior unedited.
 - **AC10** — `npx tsc --noEmit` clean.

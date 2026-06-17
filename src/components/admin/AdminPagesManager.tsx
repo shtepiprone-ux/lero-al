@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff, ExternalLink, AlertTriangle } from 'lucide-react'
@@ -238,6 +238,7 @@ export function AdminPagesManager({ pages: init, adminLocale }: Props) {
   const [modal, setModal] = useState<'create' | Page | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [items, setItems] = useState(init)
+  useEffect(() => { setItems(init) }, [init])
 
   const migrationPending = isMigrationPending(items)
 

@@ -11,6 +11,8 @@
 - `docs/backlog.md`
 - `docs/critical-flow-registry.md` — **this task ADDS a row** (admin data freshness / moderation visibility);
   clause 15 regression-coverage rule is in scope.
+- `tasks/Epics/Epic_KK_Admin_Data_Freshness.md` — scope/sequence source for Epic KK (this kickoff references
+  the Epic; read it so scope stays inside KK.1 and the KK.2/Task 453 boundary is respected).
 
 **Admin table / admin control bundle + state boundary (required for this task):**
 - `docs/state-authority.md` — **the core reference.** SSR-L2 vs Live-L3 authority, the `useEffect([prop])`
@@ -55,6 +57,10 @@
      refresh was within the min interval.
    - Clean up listeners on unmount (no leaks; no double-binding under StrictMode/concurrent render).
    - Renders nothing; takes no required props. Make the min-interval injectable for tests.
+   - **No route-detection inside the hook.** The hook must NOT call `usePathname()`/`useSelectedLayoutSegments()`
+     or otherwise branch on the current route to decide whether to fire. "Only fires on admin routes" is
+     guaranteed by the **mount contract** (step 3: imported/mounted ONLY by `AdminShell`), not by route logic
+     inside the hook. Adding route detection here is invented architecture — STOP and ASK if you think it's needed.
 
 3. **Mount it once in `AdminShell`** alongside `usePresence()`. This is the ONLY mount; do not add it
    per-page.
@@ -64,6 +70,12 @@
    `docs/state-authority.md`. Do **not** refactor managers that already re-sync. Keep every existing control
    and manual refresh affordance (Note 20). If a flagged manager cannot be safely fixed within this task's
    scope, document it as a **KK.2 / Task 453 follow-up** in the inventory and the session log — do not force it.
+   **🔴 Hard scope cap (orchestrator, 2026-06-17):** if investigation flags **more than 3** client managers that
+   need a **non-trivial** prop re-sync change, **STOP and ASK the orchestrator** — do NOT fix them all in this
+   task. In Task 452, prioritize **Listings, Users, Reports, Inquiries (support + sales), and Support**; move
+   the excess (and anything non-trivial beyond those) to **KK.2 / Task 453**. Only trivial, mechanical
+   `useEffect([prop])` re-syncs on the priority surfaces stay in-scope here — this slice is a freshness slice,
+   not an admin-manager refactor.
 
 5. **Confirm admin reads are not accidentally cached stale.** Verify (in `docs/data-access-rules.md` terms)
    that the in-scope admin pages render dynamically so `router.refresh()` actually returns fresh rows. If any
@@ -113,9 +125,18 @@
 - **Tab hidden / not visible:** `visibilitychange` to hidden → **no** refresh (guard on `visibilityState`).
 - **Rapid focus/blur thrash:** multiple focus/visibility events inside the min interval → at most one
   `router.refresh()` (debounce + min-interval guard); no server storm.
-- **Refresh in flight:** a second trigger while a refresh is pending → coalesced; no overlapping refreshes,
-  no duplicate rows.
+- **Scheduled/burst refresh already queued:** if `focus` and `visibilitychange→visible` fire together (or in
+  quick succession), the hook coalesces them into **one** scheduled `router.refresh()` call via the
+  debounce + min-interval guards. **Do NOT try to `await` `router.refresh()`, wrap it in a Promise, add an
+  `isRefreshing` flag, or invent any router-level "in-flight" tracking** — App Router's `router.refresh()` is
+  an imperative refresh, not an awaitable/trackable async API. Coalescing is achieved with the debounce and
+  min-interval timers ONLY. (The server is the single source of truth, so even if two refreshes overlapped no
+  duplicate rows can result; correctness here is about not thrashing the server, not about awaiting a pending
+  refresh.)
 - **Not on an admin route:** hook only mounts inside `AdminShell` (admin layout) → never fires on public pages.
+  **Proven by MOUNT CONTRACT, not route logic:** verify (grep/import check) that `useAdminPageFreshness` is
+  imported/called ONLY by `AdminShell` and by nothing in any public layout/page. Do NOT add route detection
+  inside the hook to satisfy this branch.
 - **Unauthenticated / session lost mid-session:** `router.refresh()` re-hits the route; `admin/layout.tsx`
   SSR guard redirects to login (`?next=/admin&session=lost`) — existing behavior, **must not regress**.
   The hook must NOT swallow or interfere with that redirect.
@@ -160,6 +181,10 @@ This task ADDS a `docs/critical-flow-registry.md` row:
   FAIL (paste the transcript). A no-op gate is a task failure.
 - Mock `useRouter().refresh` and `document.visibilityState` / dispatch `focus`+`visibilitychange` events in
   jsdom. No live server needed for the unit coverage.
+- **"Non-admin route → never fires" is a MOUNT-CONTRACT proof, not a hook unit test** (the hook is route-agnostic
+  by design): assert via a grep/import check (or a tiny structural test) that `useAdminPageFreshness` is
+  imported only by `AdminShell` and by no public layout/page. Do not write a test that expects the hook to
+  inspect the route.
 
 ## Acceptance criteria (each maps to a flow + must be verifiable in the diff)
 

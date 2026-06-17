@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Loader2, Eye, EyeOff } from 'lucide-react'
@@ -114,6 +114,7 @@ export function AdminLegalManager({ pages: init }: Props) {
   const [modal, setModal] = useState<'create' | Page | null>(null)
   const [deletingId, setDeletingId] = useState<number | null>(null)
   const [items, setItems] = useState(init)
+  useEffect(() => { setItems(init) }, [init])
 
   function handleDone() { setModal(null); router.refresh() }
 

@@ -662,6 +662,8 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
   const locale = useLocale()
   const [items, setItems] = useState(init)
   const [allEvents, setAllEvents] = useState(initEvents)
+  useEffect(() => { setItems(init) }, [init])
+  useEffect(() => { setAllEvents(initEvents) }, [initEvents])
   const [showNew, setShowNew] = useState(false)
   const [selected, setSelected] = useState<SupportTicketRow | null>(null)
   const [typeFilter, setTypeFilter] = useState<'all' | 'support' | 'user_complaint'>('all')

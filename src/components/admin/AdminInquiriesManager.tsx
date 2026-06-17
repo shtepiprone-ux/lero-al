@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { toast } from 'sonner'
 import {
@@ -78,6 +78,8 @@ export function AdminInquiriesManager({ inquiries: initialInquiries, replies: in
 
   const [inquiries, setInquiries] = useState(initialInquiries)
   const [allReplies, setAllReplies] = useState<ReplyRow[]>(initialReplies)
+  useEffect(() => { setInquiries(initialInquiries) }, [initialInquiries])
+  useEffect(() => { setAllReplies(initialReplies) }, [initialReplies])
   const [selected, setSelected]   = useState<InquiryRow | null>(null)
   const [statusFilter, setStatusFilter] = useState<ContactStatus | 'all'>('all')
   const [mailboxFilter, setMailboxFilter] = useState<'all' | 'support' | 'sales'>('all')

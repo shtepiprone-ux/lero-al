@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useEffect } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
@@ -74,7 +74,8 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
   const searchParams = useSearchParams()
   const [, startTransition] = useTransition()
   const [loadingId, setLoadingId] = useState<string | null>(null)
-  const [items] = useState(init)
+  const [items, setItems] = useState(init)
+  useEffect(() => { setItems(init) }, [init])
   const totalPages = Math.ceil(total / perPage)
 
   function navigate(updates: Record<string, string | null>) {

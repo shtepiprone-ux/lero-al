@@ -50,6 +50,9 @@ jobs:
       - name: RLS write-path guard smoke (Epic RS Slice 5)
         run: npm run test:rls-guards
 
+      - name: Admin data freshness regression guard (Epic KK)
+        run: npm run test:admin-freshness
+
       - name: i18n/hydration regression guard (Epic RS Slice 6)
         run: npm run test:i18n-hydration
 

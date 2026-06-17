@@ -67,6 +67,12 @@
 > swapped its client" regression class. DB-level RLS (a *policy* change breaking an insert while action
 > code is unchanged) is deferred to Slice 5b — see `docs/rls-write-path-manifest.md`.
 
+## P1 — Admin data freshness / moderation visibility (Epic KK / Task 452)
+
+| Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |
+|---|---|---|---|---|---|---|---|
+| Admin data freshness (focus/visibility refresh) | `useAdminPageFreshness` + `AdminShell` | **452** | focus/visibility→visible while admin tab open → exactly one throttled `router.refresh()`; URL filters preserved | hidden tab → no refresh; burst → ≤1 refresh in interval; non-admin route → never fires (mount contract) | vitest: (1) focus fires router.refresh once; (2) visibilitychange→visible fires once, hidden→none; (3) burst within interval → 1 call; (4) listeners cleaned on unmount | `npm run test:admin-freshness` | ✅ (Task 452: 5 vitest tests — focus, visible, hidden, throttle-burst, unmount cleanup; planted-violation: throttle removed → burst test FAIL `expected 1 call, got 2`; mount contract verified via grep — imported only by `AdminShell.tsx`) |
+
 ## P1 — i18n / hydration / mobile contract (Slice 6 / Task 445)
 
 | Flow | Route / component / action | Owner task | Happy path | Failure path | Required regression test | Command | Coverage |

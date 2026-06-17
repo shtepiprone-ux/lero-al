@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useTransition } from 'react'
+import { useState, useMemo, useTransition, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { ExternalLink, Loader2, Flag } from 'lucide-react'
 import Link from 'next/link'
@@ -216,6 +216,7 @@ export function AdminReportsManager({ reports: initial, locale }: Props) {
   const tl = useTranslations('listing')
 
   const [reports, setReports] = useState<ReportRow[]>(initial)
+  useEffect(() => { setReports(initial) }, [initial])
   const [filter, setFilter] = useState<StatusFilter>('pending')
   const [selected, setSelected] = useState<ReportRow | null>(null)
 

@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { usePresence } from '@/hooks/usePresence'
+import { useAdminPageFreshness } from '@/hooks/useAdminPageFreshness'
 import { AdminSidebar } from '@/components/admin/AdminSidebar'
 import { AdminMobileHeader } from '@/components/admin/AdminMobileHeader'
 
 export function AdminShell({ children, siteName }: { children: React.ReactNode; siteName?: string; locale?: string }) {
   usePresence()
+  useAdminPageFreshness()
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (

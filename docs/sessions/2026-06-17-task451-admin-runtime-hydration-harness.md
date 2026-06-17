@@ -116,7 +116,22 @@ HYDRATION_GATE_STORAGE_STATE=playwright/.auth/admin-storage-state.json \
 
 **Owner pastes PASS results here for `/en/admin/users` AND `/en/admin/users/[id]`:**
 
-> _(pending — admin registry row stays 🟡 until owner provides evidence)_
+> **✅ Owner-verified live, 2026-06-17.** Real authenticated admin storageState (`capture:admin-session`,
+> 1 auth cookie) + real admin UUID `HYDRATION_ADMIN_USER_ID`, `BASE_URL=http://localhost:3002`:
+> ```
+> npm run check:hydration -- --with-admin
+>   Auth: storageState from playwright/.auth/admin-storage-state.json
+>   Homepage (en) … PASS ✅
+>   Listings list (en) … PASS ✅
+>   Homepage (sq) … PASS ✅
+>   Homepage (uk) … PASS ✅
+>   Listing detail — AC1 route … SKIP ⚠ (HYDRATION_LISTING_PATH not set — covered by public-route row)
+>   Admin users list (Task 434 area) … PASS ✅
+>   Admin user detail /admin/users/[id] (EXACT Task 434 route) … PASS ✅
+>   Summary: PASS 6  FAIL 0  SKIP 1  → ✅ No hydration violations
+> ```
+> Both admin routes were NAVIGATED (not SKIP) → confirms session loaded + planner navigates admin
+> routes when authenticated. Admin hydration registry row flipped 🟡 → ✅.
 
 ## Self-validation (AC6/AC7)
 

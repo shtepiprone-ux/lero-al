@@ -17,43 +17,48 @@
  *
  * Usage:
  *   # Verify the gate mechanism works (no server needed — self-test):
- *   node scripts/check-hydration-console.mjs --verify-gate
  *   npm run check:hydration:verify
  *
- *   # Check public routes on a running Next.js server:
- *   BASE_URL=http://localhost:3000 node scripts/check-hydration-console.mjs
- *   npm run check:hydration
+ *   # Verify admin route config is wired (no server, no auth — CI-safe):
+ *   npm run check:hydration:admin-config
  *
- *   # Also check admin routes (requires auth cookies as a JSON array):
- *   HYDRATION_GATE_COOKIES='[{"name":"sb-xxx-auth-token.0","value":"<tok>","domain":"localhost"}]' \
- *     BASE_URL=http://localhost:3000 node scripts/check-hydration-console.mjs --with-admin
+ *   # Check public routes on a running Next.js server:
+ *   BASE_URL=http://localhost:3000 npm run check:hydration
+ *
+ *   # Check public + admin routes (preferred: storageState from capture harness):
+ *   npm run capture:admin-session                        # Step 1: capture session
+ *   HYDRATION_GATE_STORAGE_STATE=playwright/.auth/admin-storage-state.json \
+ *     HYDRATION_ADMIN_USER_ID=<uuid> \
+ *     BASE_URL=http://localhost:3000 \
+ *     npm run check:hydration -- --with-admin            # Step 2: check
+ *
+ *   # Legacy fallback — admin via raw cookie JSON from browser DevTools:
+ *   HYDRATION_GATE_COOKIES='[{"name":"sb-xxx-auth-token.0","value":"…","domain":"localhost"}]' \
+ *     BASE_URL=http://localhost:3000 npm run check:hydration -- --with-admin
  *
  * Env vars:
- *   HYDRATION_LISTING_PATH   Path to a real published listing detail page (e.g.
- *                            /en/listings/my-listing-slug-123). When set the route is
- *                            checked; when unset the route appears in output as
- *                            NOT-REAL-COVERAGE / SKIP — never silently dropped.
- *   HYDRATION_ADMIN_USER_ID  UUID of a real user with history. When set admin-detail
- *                            uses /en/admin/users/<id>; when unset the admin-detail
- *                            check is reported as NOT-REAL-COVERAGE / SKIP.
+ *   HYDRATION_LISTING_PATH          Path to a real published listing detail page.
+ *   HYDRATION_ADMIN_USER_ID         UUID of a real user with history.
+ *   HYDRATION_GATE_STORAGE_STATE    Path to a Playwright storageState JSON (preferred).
+ *   HYDRATION_GATE_COOKIES          JSON array of cookie objects (legacy fallback).
+ *   If BOTH session sources are set → fail-fast (never silently merge stale sessions).
  *
- * Admin route note:
- *   Admin pages (/admin/users, /admin/users/[id]) require an authenticated session.
- *   For local owner validation, export the Supabase auth cookie from browser DevTools
- *   (Application → Cookies) as JSON and set HYDRATION_GATE_COOKIES.
- *   The exact route /admin/users/[id] is the Task 434 hydration regression route and
- *   MUST be checked with a real authenticated admin session before closing any admin task.
+ * Admin route coverage:
+ *   Admin routes are ONLY navigated when an authenticated session is provided.
+ *   Without a session, --with-admin marks both admin routes as SKIP / NOT-REAL-COVERAGE
+ *   — they are NEVER navigated unauthenticated (that would only render the login page,
+ *   producing a false PASS).
  *
  * CI integration:
  *   - `npm run check:hydration:verify` is CI-safe (self-test, no server needed).
- *   - `npm run check:hydration` requires a running `next start` or `next dev` instance.
- *   - See .github/workflows/governance-pr.yml for where to add the full check.
+ *   - `npm run check:hydration:admin-config` is CI-safe (config self-test, no server/auth).
+ *   - `npm run check:hydration` requires a running server — owner-run only.
  *
  * First run — install Playwright browsers:
  *   npx playwright install chromium
  *
- * Added by Task 436 (Epic RS Slice 1, 2026-06-16).
- * See docs/critical-flow-registry.md for the flow registry rows this gate covers.
+ * Added by Task 436 (Epic RS Slice 1, 2026-06-16). Slice 6b (Task 451): storageState,
+ * admin-config self-test, no-session admin SKIP.
  */
 
 import { createServer } from 'node:http';
@@ -65,20 +70,25 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // ── CLI flags ────────────────────────────────────────────────────────────────
 
 const args = process.argv.slice(2);
-const VERIFY_GATE = args.includes('--verify-gate');
-const WITH_ADMIN  = args.includes('--with-admin');
-const BASE_URL    = process.env.BASE_URL ?? 'http://localhost:3000';
+const VERIFY_GATE        = args.includes('--verify-gate');
+const VERIFY_ADMIN_CONFIG = args.includes('--verify-admin-config');
+const WITH_ADMIN         = args.includes('--with-admin');
+const BASE_URL           = process.env.BASE_URL ?? 'http://localhost:3000';
 
 // Owner-parametrizable coverage slots.
 // When unset: route appears as NOT-REAL-COVERAGE/SKIP — never silently dropped.
 const LISTING_PATH    = process.env.HYDRATION_LISTING_PATH   || null;
 const ADMIN_USER_ID   = process.env.HYDRATION_ADMIN_USER_ID  || null;
 
+// Authenticated session for admin routes.
+// HYDRATION_GATE_STORAGE_STATE: path to a Playwright storageState JSON file
+//   (produced by capture-admin-session.mjs). Preferred over HYDRATION_GATE_COOKIES.
+// HYDRATION_GATE_COOKIES: JSON array of Playwright cookie objects (legacy fallback).
+// If BOTH are set → fail-fast (never silently merge stale sessions).
+const STORAGE_STATE_PATH = process.env.HYDRATION_GATE_STORAGE_STATE || null;
+const COOKIES_JSON       = process.env.HYDRATION_GATE_COOKIES       || null;
+
 // ── Hydration / console-error patterns ───────────────────────────────────────
-//
-// These are the exact strings that React 18 and the browser emit for hydration
-// mismatches, invalid-HTML nesting, and SSR/CSR tree divergences.
-// Keep patterns case-insensitive for resilience against minor wording changes.
 
 const HYDRATION_PATTERNS = [
   /hydration failed/i,
@@ -90,57 +100,75 @@ const HYDRATION_PATTERNS = [
   /did not match. server:/i,
   /validatedomnesting/i,
   /did not match server-rendered html/i,
-  // React 18 tree regeneration message
   /this tree will be regenerated on the client/i,
-  // React 19 / Next 15 variant
   /server component rendered more hooks/i,
   /rendered fewer hooks than expected/i,
 ];
 
-// ── Route definitions ─────────────────────────────────────────────────────────
+// ── Route planner (pure function — shared by runChecks + verifyAdminConfig) ──
 //
-// PUBLIC_ROUTES: no auth needed — safe to check in CI or locally without cookies.
-// ADMIN_ROUTES:  require an authenticated admin session. Supplied via
-//               HYDRATION_GATE_COOKIES env var (JSON array of cookie objects).
-//               MUST include /admin/users/[id] — the exact Task 434 regression route.
+// Returns the full route list for a given configuration. Admin routes are
+// marked notRealCoverage when no session is available — they are NEVER
+// navigated unauthenticated (that would only render the login page = false PASS).
 
-const PUBLIC_ROUTES = [
-  { path: '/en',           label: 'Homepage (en)' },
-  { path: '/en/listings',  label: 'Listings list (en)' },
-  { path: '/sq',           label: 'Homepage (sq/Albanian)' },
-  { path: '/uk',           label: 'Homepage (uk/Ukrainian)' },
-  // Listing-detail — where the Task 435 report dialog lives.
-  // Set HYDRATION_LISTING_PATH=/en/listings/<slug> with a real published listing.
-  LISTING_PATH
-    ? { path: LISTING_PATH, label: `Listing detail (${LISTING_PATH})` }
-    : {
+function planRoutes({ withAdmin, hasSession, adminUserId, listingPath }) {
+  const routes = [
+    { path: '/en',           label: 'Homepage (en)' },
+    { path: '/en/listings',  label: 'Listings list (en)' },
+    { path: '/sq',           label: 'Homepage (sq/Albanian)' },
+    { path: '/uk',           label: 'Homepage (uk/Ukrainian)' },
+    listingPath
+      ? { path: listingPath, label: `Listing detail (${listingPath})` }
+      : {
+          path: null,
+          label: 'Listing detail — AC1 route (Task 448)',
+          notRealCoverage: true,
+          reason: 'HYDRATION_LISTING_PATH not set — set to /en/listings/<slug> of a real published listing',
+        },
+  ];
+
+  if (!withAdmin) return routes;
+
+  if (!hasSession) {
+    routes.push(
+      {
         path: null,
-        label: 'Listing detail — AC1 route (Task 448)',
+        label: 'Admin users list (Task 434 area)',
         notRealCoverage: true,
-        reason: 'HYDRATION_LISTING_PATH not set — set to /en/listings/<slug> of a real published listing',
+        reason: 'no admin session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set)',
       },
-];
-
-const ADMIN_ROUTES = [
-  { path: '/en/admin/users', label: 'Admin users list (Task 434 area)' },
-  // Admin user detail — EXACT Task 434 hydration regression route.
-  // Set HYDRATION_ADMIN_USER_ID to a real user UUID with history so this exercises
-  // the real components; unset → NOT-REAL-COVERAGE (dummy UUID yields not-found state).
-  ADMIN_USER_ID
-    ? { path: `/en/admin/users/${ADMIN_USER_ID}`, label: 'Admin user detail /admin/users/[id] (EXACT Task 434 hydration route)' }
-    : {
+      {
         path: null,
         label: 'Admin user detail /admin/users/[id] (EXACT Task 434 hydration route)',
         notRealCoverage: true,
-        reason: 'HYDRATION_ADMIN_USER_ID not set — set to a real user UUID so components render with actual data',
+        reason: 'no admin session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set)',
       },
-];
+    );
+    return routes;
+  }
+
+  // Session is available — list route is always navigated
+  routes.push({ path: '/en/admin/users', label: 'Admin users list (Task 434 area)' });
+
+  // Detail route gated on UUID
+  if (adminUserId) {
+    routes.push({
+      path: `/en/admin/users/${adminUserId}`,
+      label: 'Admin user detail /admin/users/[id] (EXACT Task 434 hydration route)',
+    });
+  } else {
+    routes.push({
+      path: null,
+      label: 'Admin user detail /admin/users/[id] (EXACT Task 434 hydration route)',
+      notRealCoverage: true,
+      reason: 'HYDRATION_ADMIN_USER_ID not set — set to a real user UUID so components render with actual data',
+    });
+  }
+
+  return routes;
+}
 
 // ── Planted-violation page ────────────────────────────────────────────────────
-//
-// Served by a tiny embedded HTTP server during --verify-gate mode.
-// Emits the exact console.error messages that React 18 emits for hydration
-// mismatches — the same pattern as the Task 434 date-format SSR/CSR divergence.
 
 const VIOLATION_PAGE_HTML = `<!DOCTYPE html>
 <html lang="en">
@@ -148,8 +176,6 @@ const VIOLATION_PAGE_HTML = `<!DOCTYPE html>
 <body>
 <div id="app">Server-rendered text: January 1 2026</div>
 <script>
-  // Simulate React 18 hydration mismatch (exact Task 434 failure pattern:
-  // server formatted date one way, browser ICU formatted it differently).
   console.error(
     "Hydration failed because the server rendered HTML didn't match the client. " +
     "As a result this tree will be regenerated on the client. " +
@@ -173,7 +199,7 @@ async function checkRoute(page, url, label) {
 
   const handler = msg => {
     const text = msg.text();
-    const type = msg.type(); // 'error' | 'warning' | 'log' | ...
+    const type = msg.type();
     if ((type === 'error' || type === 'warning') &&
         HYDRATION_PATTERNS.some(p => p.test(text))) {
       violations.push({ type, text: text.slice(0, 300) });
@@ -183,11 +209,8 @@ async function checkRoute(page, url, label) {
   page.on('console', handler);
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15_000 });
-    // Give React a moment to hydrate (it runs on the next tick after DOMContentLoaded).
     await page.waitForTimeout(800);
   } catch (err) {
-    // Navigation error is treated as a skip, not a violation — the route may not
-    // exist or may be unreachable. We report it as a warning.
     return { label, url, status: 'SKIP', reason: String(err.message).slice(0, 120), violations: [] };
   } finally {
     page.off('console', handler);
@@ -197,10 +220,6 @@ async function checkRoute(page, url, label) {
 }
 
 // ── Self-test: verify the gate is not a no-op ─────────────────────────────────
-//
-// Starts a tiny HTTP server that serves VIOLATION_PAGE_HTML, navigates to it,
-// and asserts that the gate DETECTS violations. If the gate fails to detect them,
-// that means the gate itself is broken (a no-op) — exits 1.
 
 async function runGateSelfTest() {
   console.log('\n🔬 Hydration gate self-test (--verify-gate)');
@@ -208,7 +227,6 @@ async function runGateSelfTest() {
 
   const { chromium } = await import('playwright');
 
-  // Start embedded violation server
   let violationServer;
   const violationUrl = await new Promise((resolve, reject) => {
     violationServer = createServer((req, res) => {
@@ -257,47 +275,151 @@ async function runGateSelfTest() {
   }
 }
 
+// ── G-B: admin-config self-test (--verify-admin-config) ──────────────────────
+//
+// Server-less, auth-less, deterministic. Verifies the route plan for all 3 session
+// states using the same planRoutes() function that runChecks() uses.
+// This MUST be able to FAIL on a planted misconfig (a no-op is a task failure).
+
+function verifyAdminConfig() {
+  console.log('\n🔬 Admin-config self-test (--verify-admin-config)');
+  console.log('   Purpose: prove the admin branch route plan is correctly gated.\n');
+
+  let pass = true;
+
+  // State 1: no session → both admin routes must be notRealCoverage
+  const noSessionPlan = planRoutes({ withAdmin: true, hasSession: false, adminUserId: null, listingPath: null });
+  const noSessionAdmin = noSessionPlan.filter(r => r.label.includes('Admin'));
+  if (noSessionAdmin.length !== 2) {
+    console.error(`   ❌ [1] no-session plan has ${noSessionAdmin.length} admin routes, expected 2`);
+    pass = false;
+  } else if (!noSessionAdmin.every(r => r.notRealCoverage)) {
+    const navigable = noSessionAdmin.filter(r => !r.notRealCoverage).map(r => r.label);
+    console.error(`   ❌ [1] no-session plan has navigable admin route(s): ${navigable.join(', ')} — false green`);
+    pass = false;
+  } else {
+    console.log('   ✅ [1] no-session: both admin routes → notRealCoverage (never PASS)');
+  }
+
+  // State 2: session, no UUID → list navigable, detail notRealCoverage
+  const sessionNoUuidPlan = planRoutes({ withAdmin: true, hasSession: true, adminUserId: null, listingPath: null });
+  const sessionNoUuidAdmin = sessionNoUuidPlan.filter(r => r.label.includes('Admin'));
+  const listRoute = sessionNoUuidAdmin.find(r => r.label.includes('list'));
+  const detailRoute = sessionNoUuidAdmin.find(r => r.label.includes('detail'));
+
+  if (!listRoute || listRoute.notRealCoverage || listRoute.path !== '/en/admin/users') {
+    console.error(`   ❌ [2] session-no-UUID: list route missing or not navigable (path=${listRoute?.path}, notReal=${listRoute?.notRealCoverage})`);
+    pass = false;
+  } else {
+    console.log(`   ✅ [2] session-no-UUID: list route navigable → ${listRoute.path}`);
+  }
+
+  if (!detailRoute || !detailRoute.notRealCoverage) {
+    console.error(`   ❌ [2] session-no-UUID: detail route is navigable when UUID not set — false green`);
+    pass = false;
+  } else {
+    console.log('   ✅ [2] session-no-UUID: detail route → notRealCoverage (correct)');
+  }
+
+  // State 3: session + UUID → both navigable with correct paths
+  const testUuid = 'test-uuid-451';
+  const fullPlan = planRoutes({ withAdmin: true, hasSession: true, adminUserId: testUuid, listingPath: null });
+  const fullAdmin = fullPlan.filter(r => r.label.includes('Admin'));
+  const fullList = fullAdmin.find(r => r.label.includes('list'));
+  const fullDetail = fullAdmin.find(r => r.label.includes('detail'));
+
+  if (!fullList || fullList.notRealCoverage || fullList.path !== '/en/admin/users') {
+    console.error(`   ❌ [3] session+UUID: list route not navigable`);
+    pass = false;
+  } else {
+    console.log(`   ✅ [3] session+UUID: list route → ${fullList.path}`);
+  }
+
+  const expectedDetailPath = `/en/admin/users/${testUuid}`;
+  if (!fullDetail || fullDetail.notRealCoverage || fullDetail.path !== expectedDetailPath) {
+    console.error(`   ❌ [3] session+UUID: detail route wrong (path=${fullDetail?.path}, notReal=${fullDetail?.notRealCoverage})`);
+    pass = false;
+  } else {
+    console.log(`   ✅ [3] session+UUID: detail route → ${fullDetail.path}`);
+  }
+
+  if (pass) {
+    console.log('\n✅ Admin-config self-test PASSED — route plan correctly gates on session state.\n');
+    process.exit(0);
+  } else {
+    console.error('\n❌ Admin-config self-test FAILED — misconfig detected.\n');
+    process.exit(1);
+  }
+}
+
 // ── Main: check routes on running Next.js server ──────────────────────────────
 
 async function runChecks() {
-  const routes = WITH_ADMIN
-    ? [...PUBLIC_ROUTES, ...ADMIN_ROUTES]
-    : PUBLIC_ROUTES;
+  // Fail-fast if both session sources are set (never silently merge stale sessions)
+  if (STORAGE_STATE_PATH && COOKIES_JSON) {
+    console.error('\n❌ Both HYDRATION_GATE_STORAGE_STATE and HYDRATION_GATE_COOKIES are set.');
+    console.error('   Set only one session source to avoid merging stale sessions.\n');
+    process.exit(1);
+  }
+
+  const hasSession = !!(STORAGE_STATE_PATH || COOKIES_JSON);
+
+  const routes = planRoutes({
+    withAdmin: WITH_ADMIN,
+    hasSession,
+    adminUserId: ADMIN_USER_ID,
+    listingPath: LISTING_PATH,
+  });
 
   console.log('\n🔍 Hydration / console-error gate');
   console.log(`   Target: ${BASE_URL}`);
   console.log(`   Routes: ${routes.length} (${WITH_ADMIN ? 'public + admin' : 'public only'})`);
   if (WITH_ADMIN) {
-    const hasCookies = !!process.env.HYDRATION_GATE_COOKIES;
-    console.log(`   Auth:   ${hasCookies ? 'cookies from HYDRATION_GATE_COOKIES' : 'NO cookies — admin routes will redirect to login'}`);
+    if (STORAGE_STATE_PATH) {
+      console.log(`   Auth:   storageState from ${STORAGE_STATE_PATH}`);
+    } else if (COOKIES_JSON) {
+      console.log(`   Auth:   cookies from HYDRATION_GATE_COOKIES`);
+    } else {
+      console.log(`   Auth:   NO session — admin routes will be SKIPPED (not navigated)`);
+    }
   }
   console.log('');
 
   const { chromium } = await import('playwright');
   const browser = await chromium.launch({ headless: true });
 
-  // Parse auth cookies if provided (for admin routes)
-  let authCookies = [];
-  if (process.env.HYDRATION_GATE_COOKIES) {
-    try {
-      authCookies = JSON.parse(process.env.HYDRATION_GATE_COOKIES);
-    } catch {
-      console.error('   ⚠  HYDRATION_GATE_COOKIES is not valid JSON — ignoring');
+  let context;
+  if (STORAGE_STATE_PATH) {
+    const { existsSync } = await import('node:fs');
+    if (!existsSync(STORAGE_STATE_PATH)) {
+      console.error(`   ❌ Storage state file not found: ${STORAGE_STATE_PATH}`);
+      console.error('   Run: npm run capture:admin-session\n');
+      await browser.close();
+      process.exit(1);
     }
-  }
+    context = await browser.newContext({ storageState: STORAGE_STATE_PATH });
+    console.log(`   Loaded storageState from ${STORAGE_STATE_PATH}\n`);
+  } else {
+    context = await browser.newContext();
 
-  const context = await browser.newContext();
-  if (authCookies.length > 0) {
-    await context.addCookies(authCookies);
-    console.log(`   Added ${authCookies.length} auth cookie(s)\n`);
+    if (COOKIES_JSON) {
+      let authCookies = [];
+      try {
+        authCookies = JSON.parse(COOKIES_JSON);
+      } catch {
+        console.error('   ⚠  HYDRATION_GATE_COOKIES is not valid JSON — ignoring');
+      }
+      if (authCookies.length > 0) {
+        await context.addCookies(authCookies);
+        console.log(`   Added ${authCookies.length} auth cookie(s) from HYDRATION_GATE_COOKIES\n`);
+      }
+    }
   }
 
   const page = await context.newPage();
   const results = [];
 
   for (const route of routes) {
-    // NOT-REAL-COVERAGE routes: env var not set → skip with explicit warning.
-    // Never silently dropped; never reported as green.
     if (route.notRealCoverage) {
       console.log(`   Checking ${route.label} … SKIP ⚠  (NOT-REAL-COVERAGE: ${route.reason})`);
       results.push({ label: route.label, url: null, status: 'SKIP', reason: `NOT-REAL-COVERAGE: ${route.reason}`, violations: [] });
@@ -319,8 +441,6 @@ async function runChecks() {
   }
 
   await browser.close();
-
-  // ── Summary ───────────────────────────────────────────────────────────────
 
   const failed  = results.filter(r => r.status === 'FAIL');
   const skipped = results.filter(r => r.status === 'SKIP');
@@ -358,6 +478,8 @@ async function runChecks() {
 async function main() {
   if (VERIFY_GATE) {
     await runGateSelfTest();
+  } else if (VERIFY_ADMIN_CONFIG) {
+    verifyAdminConfig();
   } else {
     await runChecks();
   }

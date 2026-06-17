@@ -95,6 +95,9 @@ jobs:
       - name: Hydration gate self-test (verifies gate detects violations — CI-safe, no server needed)
         run: npm run check:hydration:verify
 
+      - name: Admin hydration config self-test (verifies admin branch wiring — no server, no auth)
+        run: npm run check:hydration:admin-config
+
       - name: Full governance report (summary)
         if: always()
         run: npm run governance

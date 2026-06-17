@@ -65,6 +65,8 @@
     "check:design-tokens:update-allowlist": "node scripts/check-design-tokens.mjs --update-allowlist",
     "check:hydration": "node scripts/check-hydration-console.mjs",
     "check:hydration:verify": "node scripts/check-hydration-console.mjs --verify-gate",
+    "check:hydration:admin-config": "node scripts/check-hydration-console.mjs --verify-admin-config",
+    "capture:admin-session": "node scripts/capture-admin-session.mjs",
     "new:story": "node scripts/scaffold-story.mjs"
   },
   "dependencies": {

@@ -13,6 +13,7 @@
     "test:listings": "vitest run src/modules/listings/actions/__tests__/reportListing.smoke.test.ts src/modules/listings/actions/__tests__/createListing.smoke.test.ts src/modules/listings/actions/__tests__/updateListing.smoke.test.ts src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts src/modules/listings/components/__tests__/ReportListingDialog.smoke.test.tsx",
     "test:admin": "vitest run src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts",
     "test:rls-guards": "vitest run src/modules/__tests__/rls-write-guards.smoke.test.ts",
+    "test:i18n-hydration": "vitest run src/lib/__tests__/date-format-ssr-parity.smoke.test.ts src/i18n/__tests__/i18n-render-parity.smoke.test.tsx",
     "governance": "node scripts/governance/governance.mjs all",
     "governance:primitives": "node scripts/governance/governance.mjs primitives",
     "governance:responsive": "node scripts/governance/governance.mjs responsive",

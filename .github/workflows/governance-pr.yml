@@ -50,6 +50,12 @@ jobs:
       - name: RLS write-path guard smoke (Epic RS Slice 5)
         run: npm run test:rls-guards
 
+      - name: i18n/hydration regression guard (Epic RS Slice 6)
+        run: npm run test:i18n-hydration
+
+      - name: Static i18n parity gate (sq/en/uk/it key-set match)
+        run: npm run check:i18n
+
       - name: Storybook governance gate
         run: npm run check:stories
 

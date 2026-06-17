@@ -49,9 +49,21 @@ without altering OpenTelemetry / Sentry / Prisma instrumentation behavior.
    copies are compatible with — verify their peer/version ranges before choosing; do NOT blindly force
    `3.0.1` if the nested instrumentation requires `2.x`). **If the two consumers require incompatible
    major ranges, STOP and ASK the orchestrator — do not force a version that breaks instrumentation.**
+
+   **Record the exact ranges before choosing — a one-line "I verified compatibility" claim is NOT
+   acceptable.** Read the installed `package.json` of each consumer and put a table in the session log with:
+   - each consumer package + its installed version: root `@opentelemetry/instrumentation`, the nested
+     copy under `@fastify/otel`, and the nested copy under `@prisma/instrumentation`;
+   - each one's declared `import-in-the-middle` dependency range;
+   - the chosen target version;
+   - an explicit one-line justification of why that target satisfies **every** listed range.
 3. `npm install`, confirm `npm ls import-in-the-middle` now resolves to one version.
-4. `npm run dev` → confirm the `import-in-the-middle can't be external` warnings no longer appear
-   (paste a clean terminal excerpt covering startup + a few requests).
+4. `npm run dev` → confirm the `import-in-the-middle can't be external` warnings no longer appear.
+   The warning fires on server **compilation**, not just startup, so a clean startup excerpt alone is
+   NOT sufficient proof. Capture terminal output covering ALL of: (a) dev-server startup; (b) one
+   public page request; (c) one route/API request that triggers fresh server compilation; (d) one
+   repeated request after the initial compile. The pasted excerpt must show zero
+   `import-in-the-middle can't be external` lines across all four.
 5. `npx tsc --noEmit` → 0 errors; `npm run build` → passes.
 6. Confirm Sentry/OTel still initialize (instrumentation files compile; no new runtime error on boot).
 
@@ -68,15 +80,32 @@ without altering OpenTelemetry / Sentry / Prisma instrumentation behavior.
 
 ## Acceptance criteria
 
-- AC1: `npm ls import-in-the-middle` shows a single resolved version (transcript in the log).
-  → maps to Positive flow step 3.
-- AC2: `npm run dev` startup + request excerpt shows zero `import-in-the-middle can't be external`
-  warnings. → Positive flow step 4.
+- AC1: `npm ls import-in-the-middle` shows only ONE effective resolved version, with NO second
+  installed IITM version remaining under `@fastify/otel` or `@prisma/instrumentation` (a `deduped`/
+  overridden tree that still lists a distinct second version does NOT satisfy this). Full transcript
+  in the log. → maps to Positive flow step 3.
+- AC2: the `npm run dev` excerpt — covering startup + public-page request + a compile-triggering
+  route/API request + a repeated post-compile request — shows zero `import-in-the-middle can't be
+  external` warnings across all four. → Positive flow step 4.
 - AC3: `npx tsc --noEmit` = 0 errors and `npm run build` passes. → Positive flow step 5.
 - AC4: Sentry/OpenTelemetry instrumentation still initializes with no new boot error. → Positive flow step 6.
 - AC5: Diff limited to `package.json` + `package-lock.json` (no product code, no unrelated bumps).
+  **Prove it in the log** by pasting the output of `git diff --stat` and
+  `git diff -- package.json package-lock.json` (read-only git only — do NOT stage/commit). The
+  `--stat` output must list ONLY those two paths.
 - AC6: Session log under `docs/sessions/` with a "Files Changed" table. Executor does NOT run git;
   orchestrator emits the commit at review.
+
+## Out of scope (do NOT touch)
+
+- Do NOT edit product/runtime code.
+- Do NOT edit UI, routes, server actions, auth code, admin code, or listing code.
+- Do NOT remove or disable Sentry, OpenTelemetry, Prisma instrumentation, `@fastify/otel`, or
+  `@prisma/instrumentation`.
+- Do NOT suppress the warning by editing `next.config` `serverExternalPackages` (or any other Next
+  config) unless the orchestrator explicitly approves it — STOP and ASK first.
+- Do NOT replace the targeted `import-in-the-middle` dedupe with broad/unrelated dependency upgrades.
+- Do NOT run mutating git commands (single-writer rule — orchestrator emits commits, owner runs them).
 
 ## Notes
 

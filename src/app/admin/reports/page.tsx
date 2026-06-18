@@ -15,7 +15,7 @@ export default async function AdminReportsPage() {
   const { data: reports, count } = await db
     .from('listing_reports')
     .select(
-      'id, listing_id, user_id, reason, comment, status, created_at, listing:listings(id, title, slug), reporter:users!listing_reports_user_id_fkey(id, name)',
+      'id, listing_id, user_id, reason, comment, status, created_at, listing:listings(id, title, slug, owner:users!listings_user_id_fkey(id, name, user_type)), reporter:users!listing_reports_user_id_fkey(id, name)',
       { count: 'exact' }
     )
     .order('created_at', { ascending: false })

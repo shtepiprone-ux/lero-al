@@ -1055,7 +1055,10 @@
       "anonymous": "Anonymous",
       "empty": "No reports",
       "success_updated": "Status updated",
-      "error_update_failed": "Update failed"
+      "error_update_failed": "Update failed",
+      "col_owner": "Listing owner",
+      "owner_not_found": "Owner not found",
+      "open_profile": "Open profile"
     },
     "companies": {
       "add_title": "Add company",

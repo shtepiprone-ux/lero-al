@@ -1055,7 +1055,10 @@
       "anonymous": "Анонім",
       "empty": "Скарг немає",
       "success_updated": "Статус оновлено",
-      "error_update_failed": "Помилка оновлення"
+      "error_update_failed": "Помилка оновлення",
+      "col_owner": "Власник оголошення",
+      "owner_not_found": "Власник не знайдений",
+      "open_profile": "Відкрити профіль"
     },
     "companies": {
       "add_title": "Додати компанію",

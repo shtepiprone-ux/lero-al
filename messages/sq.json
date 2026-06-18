@@ -1055,7 +1055,10 @@
       "anonymous": "Anonim",
       "empty": "Nuk ka raporte",
       "success_updated": "Statusi u përditësua",
-      "error_update_failed": "Përditësimi dështoi"
+      "error_update_failed": "Përditësimi dështoi",
+      "col_owner": "Pronari i njoftimit",
+      "owner_not_found": "Pronari nuk u gjet",
+      "open_profile": "Hap profilin"
     },
     "companies": {
       "add_title": "Shto kompani",

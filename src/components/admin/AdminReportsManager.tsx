@@ -28,13 +28,23 @@ export interface ReportRow {
   comment: string | null
   status: ReportStatus
   created_at: string
-  listing: { id: string; title: string; slug: string } | null
+  listing: {
+    id: string
+    title: string
+    slug: string
+    owner: { id: string; name: string | null; user_type: string } | null
+  } | null
   reporter: { id: string; name: string | null } | null
 }
 
 type StatusFilter = 'all' | ReportStatus
 
 const FILTERS: StatusFilter[] = ['all', 'pending', 'reviewed', 'resolved', 'dismissed']
+
+const KNOWN_USER_TYPES = ['private', 'agent', 'developer'] as const
+function clampUserType(ut: string | null | undefined): string {
+  return (KNOWN_USER_TYPES as readonly string[]).includes(ut ?? '') ? ut! : 'private'
+}
 
 const STATUS_VARIANT: Record<ReportStatus, 'neutral' | 'warning' | 'success' | 'destructive'> = {
   pending:   'warning',
@@ -59,6 +69,7 @@ function ReportDetailDialog({
   const t = useTranslations('admin.reports')
   const tl = useTranslations('listing')
   const tc = useTranslations('common')
+  const tu = useTranslations('admin.users')
   const [isPending, startTransition] = useTransition()
   const [notes, setNotes] = useState('')
 
@@ -118,6 +129,27 @@ function ReportDetailDialog({
               </Link>
             ) : (
               <span className="text-muted-foreground">—</span>
+            )}
+          </div>
+
+          {/* Listing owner */}
+          <div className="flex flex-col gap-1.5">
+            <span className="text-muted-foreground">{t('col_owner')}</span>
+            {report.listing?.owner ? (
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-medium">{report.listing.owner.name ?? '—'}</span>
+                <Badge variant="neutral" className="text-xs capitalize">
+                  {tu(`profile_types.${clampUserType(report.listing.owner.user_type)}` as Parameters<typeof tu>[0])}
+                </Badge>
+                <Link
+                  href={`/admin/users/${report.listing.owner.id}`}
+                  className="text-primary hover:underline text-xs font-medium min-h-11 flex items-center"
+                >
+                  {t('open_profile')}
+                </Link>
+              </div>
+            ) : (
+              <span className="text-muted-foreground">{t('owner_not_found')}</span>
             )}
           </div>
 

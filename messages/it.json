@@ -1055,7 +1055,10 @@
       "anonymous": "Anonimo",
       "empty": "Nessuna segnalazione",
       "success_updated": "Stato aggiornato",
-      "error_update_failed": "Aggiornamento fallito"
+      "error_update_failed": "Aggiornamento fallito",
+      "col_owner": "Proprietario dell'annuncio",
+      "owner_not_found": "Proprietario non trovato",
+      "open_profile": "Apri profilo"
     },
     "companies": {
       "add_title": "Aggiungi azienda",

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-18 — Task 437 (preload-not-used perf hygiene) ✅ APPROVED, commit emitted.** Orchestrator verified the FINAL code (native + Read tool, no sandbox git): `src/middleware.ts` reduced to next-intl routing + `refreshSession` + cookie-copy + matcher only — `createServerClient`, the per-request `fetchListingCoverUrl` DB lookup, and Link-header emission all gone; `src/lib/imageDelivery.ts` keeps `buildGalleryMainPreloadAttrs` (full 640/960/1200/1600 srcset + sizes), `buildGalleryLcpPreloadHref` removed, no dead exports or stale JSDoc cross-ref. Owner NATIVE runs are the verdict: `Select-String` of all 4 removed symbols = empty, `npm run build` ✅, `npx tsc --noEmit` ✅. Non-UI / non-locale perf change → clauses 11–13 N/A; not a `critical-flow-registry` flow (auth/i18n middleware paths untouched) so clause 15 doesn't bite. **Next:** owner runs the 437 commit, then the pending Epic LV commit + kicks off Task 454. (Prior LV-planning + 451/452 sessions → [`backlog-archive.md`](backlog-archive.md).)
+**2026-06-18 — Task 454 REWORK ✅ IMPLEMENTED.** All 4 orchestrator findings fixed: B1 drift-guard test (policy deep-equal + 18-combo classification agreement); B2 explicit throw on mixed `requiresUnexpired` policy (Option 2); B3 `getSiteStats` change recorded as accepted behavior correction; B4 audit ran (total=1, hidden=0, report committed). 24 visibility + 17 regression = 41 tests green, tsc=0. Log: `docs/sessions/2026-06-18-task454-canonical-listing-visibility-predicate.md`. **Next:** orchestrator re-reviews diff.
 
 ## Pending Action Items
 

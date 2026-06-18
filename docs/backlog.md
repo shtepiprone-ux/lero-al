@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-18 — Task 454 REWORK ✅ IMPLEMENTED.** All 4 orchestrator findings fixed: B1 drift-guard test (policy deep-equal + 18-combo classification agreement); B2 explicit throw on mixed `requiresUnexpired` policy (Option 2); B3 `getSiteStats` change recorded as accepted behavior correction; B4 audit ran (total=1, hidden=0, report committed). 24 visibility + 17 regression = 41 tests green, tsc=0. Log: `docs/sessions/2026-06-18-task454-canonical-listing-visibility-predicate.md`. **Next:** orchestrator re-reviews diff.
+**2026-06-18 — Task 454 REWORK-2 ✅ IMPLEMENTED.** B1 fixed: script now exports policy + classifier, test imports from the ACTUAL `.mjs` (no hand-typed decoy). Planted-violation FAIL confirmed (`requiresUnexpired:true→false` → deep-equal fails; reverted → 24/24 pass). 41 tests green, tsc=0. Log: `docs/sessions/2026-06-18-task454-canonical-listing-visibility-predicate.md`. **Next:** orchestrator re-reviews diff.
 
 ## Pending Action Items
 

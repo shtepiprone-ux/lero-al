@@ -491,6 +491,9 @@
     "status_rented": "Rented",
     "status_archived": "Archived",
     "status_expired": "Expired",
+    "visibility_hidden_expired": "Hidden — expired",
+    "visibility_hidden_no_expiry": "Hidden — no expiry",
+    "visibility_hidden_status_not_public": "Hidden — status not public",
     "edit_listing": "Edit",
     "views": "views",
     "contact_count": "{count, plural, one {# contact} other {# contacts}}",
@@ -730,7 +733,17 @@
       "btn_renew": "Renew",
       "btn_set_status": "Set to {status}",
       "status_update_success": "Status updated",
-      "status_update_error": "Failed to update status — please try again"
+      "status_update_error": "Failed to update status — please try again",
+      "visibility_label": "Public visibility",
+      "visibility_visible": "Visible",
+      "visibility_hidden_expired": "Hidden — expired",
+      "visibility_hidden_no_expiry": "Hidden — no expiry",
+      "visibility_hidden_status_not_public": "Hidden — status not public",
+      "visibility_filter_hidden_eligible": "Public-eligible but hidden",
+      "audit_hidden_total": "Public-eligible but hidden: {count}",
+      "audit_hidden_expired": "expired {count}",
+      "audit_hidden_no_expiry": "no expiry {count}",
+      "audit_hidden_zero": "No hidden public-eligible listings"
     },
     "users": {
       "tab_all": "All users",

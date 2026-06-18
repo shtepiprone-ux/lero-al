@@ -491,6 +491,9 @@
     "status_rented": "Affittato",
     "status_archived": "Archiviato",
     "status_expired": "Scaduto",
+    "visibility_hidden_expired": "Nascosto — scaduto",
+    "visibility_hidden_no_expiry": "Nascosto — senza scadenza",
+    "visibility_hidden_status_not_public": "Nascosto — stato non pubblico",
     "edit_listing": "Modifica",
     "views": "visualizzazioni",
     "contact_count": "{count, plural, one {# contatto} other {# contatti}}",
@@ -730,7 +733,17 @@
       "btn_renew": "Rinnova",
       "btn_set_status": "Imposta su {status}",
       "status_update_success": "Stato aggiornato",
-      "status_update_error": "Errore nell'aggiornamento dello stato"
+      "status_update_error": "Errore nell'aggiornamento dello stato",
+      "visibility_label": "Visibilità pubblica",
+      "visibility_visible": "Visibile",
+      "visibility_hidden_expired": "Nascosto — scaduto",
+      "visibility_hidden_no_expiry": "Nascosto — senza scadenza",
+      "visibility_hidden_status_not_public": "Nascosto — stato non pubblico",
+      "visibility_filter_hidden_eligible": "Idonei pubblicamente ma nascosti",
+      "audit_hidden_total": "Idonei pubblicamente ma nascosti: {count}",
+      "audit_hidden_expired": "scaduti {count}",
+      "audit_hidden_no_expiry": "senza scadenza {count}",
+      "audit_hidden_zero": "Nessun annuncio nascosto idoneo pubblicamente"
     },
     "users": {
       "tab_all": "Tutti gli utenti",

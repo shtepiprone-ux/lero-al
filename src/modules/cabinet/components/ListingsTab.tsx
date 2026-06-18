@@ -21,6 +21,7 @@ import {
   type ListingVisibilityGroup,
   VALID_VISIBILITY_GROUPS,
 } from '@/modules/listings/domain'
+import { formatVisibility } from '@/modules/listings/lib/visibility'
 import {
   useCabinetListingsRealtime,
   type CabinetListingPatch,
@@ -309,6 +310,17 @@ export function ListingsTab({ listings: initial, locale, initialFilter, initialP
                   <Badge variant={STATUS_VARIANT[status]} className="text-xs px-1.5 py-0 h-5">
                     {t(`status_${status}`)}
                   </Badge>
+                  {(() => {
+                    const vis = formatVisibility({ status, expires_at: listing.expires_at ?? null })
+                    if (!vis.visible) {
+                      return (
+                        <span className="inline-flex items-center px-1.5 py-0 h-5 rounded-md border border-destructive/30 bg-destructive/10 text-destructive text-xs font-medium whitespace-normal break-words">
+                          {t(vis.labelKey as Parameters<typeof t>[0])}
+                        </span>
+                      )
+                    }
+                    return null
+                  })()}
                   {listing.is_premium && (
                     <Badge className="text-xs px-1.5 py-0 h-5 bg-badge-premium text-primary-foreground">
                       {t('filter_PREMIUM')}

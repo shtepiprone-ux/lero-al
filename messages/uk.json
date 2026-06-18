@@ -491,6 +491,9 @@
     "status_rented": "Орендовано",
     "status_archived": "В архіві",
     "status_expired": "Прострочене",
+    "visibility_hidden_expired": "Приховане — прострочене",
+    "visibility_hidden_no_expiry": "Приховане — без терміну",
+    "visibility_hidden_status_not_public": "Приховане — статус не публічний",
     "edit_listing": "Редагувати",
     "views": "переглядів",
     "contact_count": "{count, plural, one {# контакт} few {# контакти} many {# контактів} other {# контактів}}",
@@ -730,7 +733,17 @@
       "btn_renew": "Поновити",
       "btn_set_status": "Встановити: {status}",
       "status_update_success": "Статус оновлено",
-      "status_update_error": "Помилка при зміні статусу"
+      "status_update_error": "Помилка при зміні статусу",
+      "visibility_label": "Публічна видимість",
+      "visibility_visible": "Видиме",
+      "visibility_hidden_expired": "Приховане — прострочене",
+      "visibility_hidden_no_expiry": "Приховане — без терміну",
+      "visibility_hidden_status_not_public": "Приховане — статус не публічний",
+      "visibility_filter_hidden_eligible": "Публічно-прийнятні, але приховані",
+      "audit_hidden_total": "Публічно-прийнятні, але приховані: {count}",
+      "audit_hidden_expired": "прострочені {count}",
+      "audit_hidden_no_expiry": "без терміну {count}",
+      "audit_hidden_zero": "Немає прихованих публічно-прийнятних оголошень"
     },
     "users": {
       "tab_all": "Всі користувачі",

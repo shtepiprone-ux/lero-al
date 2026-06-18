@@ -30,6 +30,7 @@ export interface CardListingData extends ListingSnapshot {
   is_premium:   boolean
   status:       ListingStatus
   created_at:   string
+  expires_at?:  string | null
   images?:      { url: string; is_cover: boolean; order: number }[] | null
   location?:    { id: number; name_al: string; slug: string; type: string } | null
   views_count?: number

@@ -328,6 +328,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'apartament-3-1-tirane-qender-1001',
     created_at: D1,
+    expires_at: new Date(Date.now() + 30 * 86_400_000).toISOString(),
     owner: { name: 'Arben Krasniqi' },
   },
   {
@@ -342,6 +343,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'shtepi-250m2-kombinat-1002',
     created_at: D2,
+    expires_at: null,
     owner: { name: 'Oksana Petrenko' },
   },
   {
@@ -356,6 +358,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'lokal-tregtar-120m2-kavajes-1003',
     created_at: D3,
+    expires_at: null,
     owner: { name: 'Marco Rossi' },
   },
   {
@@ -370,6 +373,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'apartament-2-1-durres-bregdet-1004',
     created_at: D4,
+    expires_at: new Date(Date.now() - 10 * 86_400_000).toISOString(),
     owner: { name: 'Arben Krasniqi' },
   },
   {
@@ -384,6 +388,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'toke-500m2-vlore-rezidenciale-1005',
     created_at: D5,
+    expires_at: null,
     owner: null,
   },
 ]

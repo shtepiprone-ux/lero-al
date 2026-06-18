@@ -24,6 +24,7 @@ import { setListingPremium, deleteListing, updateListingStatus } from '@/modules
 import { AdminPageShell } from '@/components/admin/AdminPageShell'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { formatPrice } from '@/lib/formatters'
+import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import type { ListingStatus } from '@/types/database'
 import {
@@ -35,6 +36,7 @@ import {
 } from '@/modules/listings/domain'
 import { getListingStatusLabel, LISTING_STATUS_CODES } from '@/lib/i18n/listingStatusLabel'
 import { usePropertyTypes } from '@/hooks/usePropertyTypes'
+import { formatVisibility } from '@/modules/listings/lib/visibility'
 
 // Status-action button styling/label per transition ACTION (engine vocabulary,
 // not per from/to status pair — Note 14: no divergent hardcoded status matrix).
@@ -91,6 +93,7 @@ export interface AdminListing {
   currency: string
   slug: string
   created_at: string
+  expires_at: string | null
   owner?: { name: string | null } | null
 }
 
@@ -103,6 +106,9 @@ interface Props {
   searchQuery?: string
   activeTab?: string
   pageTitle?: string
+  activeVisibility?: string
+  activeReason?: string
+  auditCounts?: { total: number; expired: number; noExpiry: number }
 }
 
 // ── Premium Dialog (canonical Dialog wrapper) ─────────────────────────────────
@@ -301,6 +307,17 @@ function ListingPreviewDialog({
             </div>
           </div>
           <div>
+            <span className="text-muted-foreground text-xs">{t('visibility_label')}</span>
+            <div>
+              {(() => {
+                const vis = formatVisibility({ status: listing.status, expires_at: listing.expires_at })
+                return vis.visible
+                  ? <span className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium bg-status-success/15 text-status-success border-status-success/30">{t('visibility_visible')}</span>
+                  : <span className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium bg-destructive/10 text-destructive border-destructive/30 whitespace-normal break-words">{t(vis.labelKey as Parameters<typeof t>[0])}</span>
+              })()}
+            </div>
+          </div>
+          <div>
             <span className="text-muted-foreground text-xs">{t('col_type')}</span>
             <p className="font-medium">{typeLabel}</p>
           </div>
@@ -413,7 +430,7 @@ function ListingPreviewDialog({
 
 // ── Main table ────────────────────────────────────────────────────────────────
 
-export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all', pageTitle }: Props) {
+export function AdminListingsTable({ listings: init, total, page, perPage, activeStatus, searchQuery = '', activeTab = 'all', pageTitle, activeVisibility = '', activeReason = '', auditCounts }: Props) {
   const t = useTranslations('admin.listings')
   const tc = useTranslations('cabinet')
   const tl = useTranslations('listing')
@@ -445,6 +462,14 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
     const params = new URLSearchParams(searchParams.toString())
     Object.entries(updates).forEach(([k, v]) => v === null ? params.delete(k) : params.set(k, v))
     router.push(`${pathname}?${params.toString()}`)
+  }
+
+  function navigateVisibility(vis: string | null, reason?: string | null) {
+    navigate({
+      visibility: vis,
+      reason: reason ?? null,
+      page: '1',
+    })
   }
 
   const columns: AdminTableColumn<AdminListing>[] = [
@@ -512,6 +537,16 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
       ),
     },
     {
+      key: 'visibility',
+      header: t('visibility_label'),
+      cell: l => {
+        const vis = formatVisibility({ status: l.status, expires_at: l.expires_at })
+        return vis.visible
+          ? <span className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium bg-status-success/15 text-status-success border-status-success/30">{t('visibility_visible')}</span>
+          : <span className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium bg-destructive/10 text-destructive border-destructive/30 whitespace-normal break-words">{t(vis.labelKey as Parameters<typeof t>[0])}</span>
+      },
+    },
+    {
       key: 'agent',
       header: t('col_agent'),
       visibility: 'lg',
@@ -543,7 +578,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
         ))}
       </div>
 
-      {/* Search + Status filter */}
+      {/* Search + Status filter + Visibility filter */}
       <div className="flex flex-col sm:flex-row gap-3">
         <AdminSearchInput
           value={searchQuery}
@@ -558,6 +593,21 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
           size="sm"
           className="w-40"
         />
+        <Button
+          type="button"
+          variant={activeVisibility === 'hidden_eligible' ? 'default' : 'outline'}
+          size="sm"
+          onClick={() => {
+            if (activeVisibility === 'hidden_eligible') {
+              navigateVisibility(null)
+            } else {
+              navigateVisibility('hidden_eligible')
+            }
+          }}
+          className="max-sm:w-full max-sm:min-h-11 whitespace-normal break-words"
+        >
+          {t('visibility_filter_hidden_eligible')}
+        </Button>
       </div>
     </>
   )
@@ -607,6 +657,51 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
         countBadge={pageTitle ? { value: total } : undefined}
         filterBar={filterBar}
       >
+        {/* Audit panel: public-eligible but hidden counts */}
+        {auditCounts && (
+          <div className="rounded-xl border bg-card p-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
+            {auditCounts.total === 0 ? (
+              <span className="text-muted-foreground">{t('audit_hidden_zero')}</span>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => navigateVisibility('hidden_eligible')}
+                  className={cn(
+                    'font-medium hover:underline underline-offset-4 text-left max-sm:w-full max-sm:min-h-11 max-sm:flex max-sm:items-center',
+                    activeVisibility === 'hidden_eligible' && !activeReason ? 'text-primary' : 'text-foreground',
+                  )}
+                >
+                  {t('audit_hidden_total', { count: auditCounts.total })}
+                </button>
+                <span className="hidden sm:inline text-muted-foreground">·</span>
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  <button
+                    type="button"
+                    onClick={() => navigateVisibility('hidden_eligible', 'expired')}
+                    className={cn(
+                      'text-sm hover:underline underline-offset-4 text-left max-sm:w-full max-sm:min-h-11 max-sm:flex max-sm:items-center whitespace-normal break-words',
+                      activeReason === 'expired' ? 'text-primary font-medium' : 'text-muted-foreground',
+                    )}
+                  >
+                    {t('audit_hidden_expired', { count: auditCounts.expired })}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => navigateVisibility('hidden_eligible', 'no_expiry')}
+                    className={cn(
+                      'text-sm hover:underline underline-offset-4 text-left max-sm:w-full max-sm:min-h-11 max-sm:flex max-sm:items-center whitespace-normal break-words',
+                      activeReason === 'no_expiry' ? 'text-primary font-medium' : 'text-muted-foreground',
+                    )}
+                  >
+                    {t('audit_hidden_no_expiry', { count: auditCounts.noExpiry })}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
         <AdminTable
           rows={items}
           columns={columns}
@@ -622,14 +717,21 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
                 <span className="font-medium truncate">{l.title}</span>
               </div>
             ),
-            subtitle: (
-              <div className="flex items-center gap-2 flex-wrap mt-1">
-                <span className="font-medium text-sm">{formatPrice(l.price, l.currency, locale)}</span>
-                <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium ${STATUS_BADGE[l.status]}`}>
-                  {STATUS_LABEL[l.status]}
-                </span>
-              </div>
-            ),
+            subtitle: (() => {
+              const vis = formatVisibility({ status: l.status, expires_at: l.expires_at })
+              return (
+                <div className="flex items-center gap-2 flex-wrap mt-1">
+                  <span className="font-medium text-sm">{formatPrice(l.price, l.currency, locale)}</span>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium ${STATUS_BADGE[l.status]}`}>
+                    {STATUS_LABEL[l.status]}
+                  </span>
+                  {vis.visible
+                    ? <span className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium bg-status-success/15 text-status-success border-status-success/30">{t('visibility_visible')}</span>
+                    : <span className="inline-flex items-center px-2 py-0.5 rounded-md border text-xs font-medium bg-destructive/10 text-destructive border-destructive/30 whitespace-normal break-words">{t(vis.labelKey as Parameters<typeof t>[0])}</span>
+                  }
+                </div>
+              )
+            })(),
             meta: (
               <div className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap mt-0.5">
                 <span>{(tl as (k: string) => string)(l.listing_type)} · {propertyTypes.find(pt => pt.value === l.property_type)?.label ?? l.property_type}</span>

@@ -491,6 +491,9 @@
     "status_rented": "Dhënë me qira",
     "status_archived": "Arkivuar",
     "status_expired": "Skaduar",
+    "visibility_hidden_expired": "I fshehur — skaduar",
+    "visibility_hidden_no_expiry": "I fshehur — pa skadencë",
+    "visibility_hidden_status_not_public": "I fshehur — statusi jo publik",
     "edit_listing": "Ndrysho",
     "views": "shikime",
     "contact_count": "{count, plural, one {# kontakt} other {# kontakte}}",
@@ -730,7 +733,17 @@
       "btn_renew": "Rinovo",
       "btn_set_status": "Vendos si {status}",
       "status_update_success": "Statusi u përditësua",
-      "status_update_error": "Gabim gjatë ndryshimit të statusit"
+      "status_update_error": "Gabim gjatë ndryshimit të statusit",
+      "visibility_label": "Dukshmëria publike",
+      "visibility_visible": "I dukshëm",
+      "visibility_hidden_expired": "I fshehur — skaduar",
+      "visibility_hidden_no_expiry": "I fshehur — pa skadencë",
+      "visibility_hidden_status_not_public": "I fshehur — statusi jo publik",
+      "visibility_filter_hidden_eligible": "Të pranueshëm publikisht por të fshehur",
+      "audit_hidden_total": "Të pranueshëm publikisht por të fshehur: {count}",
+      "audit_hidden_expired": "skaduar {count}",
+      "audit_hidden_no_expiry": "pa skadencë {count}",
+      "audit_hidden_zero": "Nuk ka njoftime të fshehura publikisht të pranueshme"
     },
     "users": {
       "tab_all": "Të gjithë përdoruesit",

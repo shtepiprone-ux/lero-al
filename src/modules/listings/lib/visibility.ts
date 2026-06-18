@@ -51,6 +51,43 @@ export function isListingPubliclyVisible(listing: {
   return { visible: true, reason: null }
 }
 
+// ── Shared visibility formatter (surface consumption proof) ─────────────────
+// Every cabinet/admin badge MUST render through this formatter so tests can
+// prove the surface consumes the canonical helper, not an inline re-spell.
+
+export type VisibilityLabelKey =
+  | 'visibility_visible'
+  | 'visibility_hidden_expired'
+  | 'visibility_hidden_no_expiry'
+  | 'visibility_hidden_status_not_public'
+
+export interface FormattedVisibility {
+  visible: boolean
+  reason: HiddenReason | null
+  labelKey: VisibilityLabelKey
+}
+
+const REASON_LABEL_KEY: Record<HiddenReason, VisibilityLabelKey> = {
+  expired: 'visibility_hidden_expired',
+  no_expiry: 'visibility_hidden_no_expiry',
+  status_not_public: 'visibility_hidden_status_not_public',
+}
+
+export function formatVisibility(listing: {
+  status: ListingStatus
+  expires_at: string | null
+}): FormattedVisibility {
+  const result = isListingPubliclyVisible(listing)
+  if (result.visible) {
+    return { visible: true, reason: null, labelKey: 'visibility_visible' }
+  }
+  return {
+    visible: false,
+    reason: result.reason,
+    labelKey: REASON_LABEL_KEY[result.reason!],
+  }
+}
+
 // ── Composable Supabase filter ───────────────────────────────────────────────
 // Applies the public-visibility predicate to a Supabase query builder.
 // Reproduces the exact filter chain that was previously inline at each call site:
@@ -88,6 +125,40 @@ export function applyPublicVisibility<Q extends { eq: any; in: any; gte: any }>(
 
   if (allRequire) {
     q = q.gte('expires_at', new Date().toISOString())
+  }
+
+  return q as Q
+}
+
+// ── "Public-eligible but hidden" complement filter ──────────────────────────
+// The inverse within the eligible set: status claims public-eligible, but the
+// expiry condition hides it. Used by the admin audit panel and filter.
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function applyPublicEligibleButHidden<Q extends { eq: any; in: any; or: any; lt: any; is: any }>(
+  query: Q,
+  opts?: { reason?: string },
+): Q {
+  const eligibleStatuses = (Object.entries(PUBLIC_VISIBLE_STATUSES) as [ListingStatus, VisibilityRule][])
+    .filter(([, rule]) => rule.publicEligible)
+    .map(([status]) => status)
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let q: any = query
+  if (eligibleStatuses.length === 1) {
+    q = q.eq('status', eligibleStatuses[0])
+  } else {
+    q = q.in('status', eligibleStatuses)
+  }
+
+  const reason = opts?.reason
+  if (reason === 'expired') {
+    q = q.lt('expires_at', new Date().toISOString())
+  } else if (reason === 'no_expiry') {
+    q = q.is('expires_at', null)
+  } else {
+    const now = new Date().toISOString()
+    q = q.or(`expires_at.lt.${now},expires_at.is.null`)
   }
 
   return q as Q

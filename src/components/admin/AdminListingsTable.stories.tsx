@@ -15,6 +15,9 @@ const meta: Meta<typeof AdminListingsTable> = {
     activeStatus: '',
     searchQuery: '',
     activeTab: 'all',
+    activeVisibility: '',
+    activeReason: '',
+    auditCounts: { total: 2, expired: 1, noExpiry: 1 },
   },
 }
 export default meta
@@ -38,6 +41,23 @@ export const Tablet: Story = {
 }
 
 export const LocaleStress: Story = {
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+// ── Task 456 — visibility surfaces at mobile 320 ────────────────────────────
+
+export const VisibilityMobile320: Story = {
+  args: {
+    auditCounts: { total: 3, expired: 2, noExpiry: 1 },
+    activeVisibility: 'hidden_eligible',
+  },
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+export const VisibilityAuditZero: Story = {
+  args: {
+    auditCounts: { total: 0, expired: 0, noExpiry: 0 },
+  },
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }
 

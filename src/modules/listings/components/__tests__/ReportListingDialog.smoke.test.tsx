@@ -190,3 +190,67 @@ describe('ListingReportDialog — dialog-open smoke (Task 442)', () => {
     expect(container.querySelector('[data-testid="report-dialog"]')).toBeNull()
   })
 })
+
+// ── Task 458: per-branch error toast coverage ──────────────────────────────
+
+describe('ListingReportDialog — per-branch error toasts (Task 458 Fix B)', () => {
+  async function submitWithResponse(response: { error?: string } | Error) {
+    if (response instanceof Error) {
+      mockReportListingAction.mockRejectedValue(response)
+    } else {
+      mockReportListingAction.mockResolvedValue(response)
+    }
+    const { ListingReportDialog } = await import('../ListingReportDialog')
+    const { container } = render(React.createElement(ListingReportDialog, { listingId: 'l-t' }))
+
+    await act(async () => {
+      fireEvent.click(
+        Array.from(container.querySelectorAll('button')).find(btn => btn.textContent?.includes('report_listing'))!,
+      )
+    })
+    await act(async () => {
+      fireEvent.click(
+        Array.from(container.querySelectorAll('button')).find(btn => btn.textContent === 'report_reason_fraud')!,
+      )
+    })
+    await act(async () => {
+      fireEvent.click(
+        Array.from(container.querySelectorAll('button')).find(btn => btn.textContent?.includes('report_submit'))!,
+      )
+    })
+    return container
+  }
+
+  it('unauthorized → report_err_unauthorized toast, NOT the catch-all', async () => {
+    await submitWithResponse({ error: 'unauthorized' })
+    expect(mockToastError).toHaveBeenCalledWith('report_err_unauthorized')
+    expect(mockToastError).not.toHaveBeenCalledWith('report_error')
+  })
+
+  it('account_blocked → report_err_restricted toast', async () => {
+    await submitWithResponse({ error: 'account_blocked' })
+    expect(mockToastError).toHaveBeenCalledWith('report_err_restricted')
+  })
+
+  it('account_suspended → report_err_suspended toast (distinct from blocked)', async () => {
+    await submitWithResponse({ error: 'account_suspended' })
+    expect(mockToastError).toHaveBeenCalledWith('report_err_suspended')
+    expect(mockToastError).not.toHaveBeenCalledWith('report_err_restricted')
+  })
+
+  it('save_failed → report_err_server toast', async () => {
+    await submitWithResponse({ error: 'save_failed' })
+    expect(mockToastError).toHaveBeenCalledWith('report_err_server')
+  })
+
+  it('transport failure (action throws) → report_err_connection toast', async () => {
+    await submitWithResponse(new Error('Fetch failed'))
+    expect(mockToastError).toHaveBeenCalledWith('report_err_connection')
+  })
+
+  it('success → toast.success + dialog closes (preserved)', async () => {
+    const container = await submitWithResponse({})
+    expect(mockToastSuccess).toHaveBeenCalledWith('report_success')
+    expect(container.querySelector('[data-testid="report-dialog"]')).toBeNull()
+  })
+})

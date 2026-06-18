@@ -51,14 +51,32 @@ export function ListingReportDialog({ listingId }: Props) {
   function handleSubmit() {
     if (!reason) return
     startTransition(async () => {
-      const result = await reportListingAction(listingId, reason, comment)
+      let result: { error?: string }
+      try {
+        result = await reportListingAction(listingId, reason, comment)
+      } catch {
+        toast.error(t('report_err_connection'))
+        return
+      }
       if (result.error === 'already_reported') {
         toast.info(t('report_already_reported'))
         setOpen(false)
         return
       }
+      if (result.error === 'unauthorized') {
+        toast.error(t('report_err_unauthorized'))
+        return
+      }
+      if (result.error === 'account_blocked') {
+        toast.error(t('report_err_restricted'))
+        return
+      }
+      if (result.error === 'account_suspended') {
+        toast.error(t('report_err_suspended'))
+        return
+      }
       if (result.error) {
-        toast.error(t('report_error'))
+        toast.error(t('report_err_server'))
         return
       }
       toast.success(t('report_success'))

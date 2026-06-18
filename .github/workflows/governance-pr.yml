@@ -101,6 +101,9 @@ jobs:
       - name: Admin hydration config self-test (verifies admin branch wiring — no server, no auth)
         run: npm run check:hydration:admin-config
 
+      - name: listing_reports authenticated grant check (Task 460 / Epic BB)
+        run: npm run check:listing-reports-grants
+
       - name: Listing public-visibility invariant gate (Epic LV / LV.4)
         run: npm run check:listing-visibility
 

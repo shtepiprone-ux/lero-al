@@ -67,6 +67,7 @@
     "check:hydration": "node scripts/check-hydration-console.mjs",
     "check:hydration:verify": "node scripts/check-hydration-console.mjs --verify-gate",
     "check:hydration:admin-config": "node scripts/check-hydration-console.mjs --verify-admin-config",
+    "check:listing-reports-grants": "node scripts/check-listing-reports-grants.mjs",
     "check:listing-visibility": "node scripts/check-listing-visibility.mjs",
     "check:listing-visibility:report": "node scripts/check-listing-visibility.mjs --report",
     "check:listing-visibility:verify": "node scripts/check-listing-visibility.mjs --verify-gate",

@@ -53,9 +53,12 @@ revoke select, insert, update, delete on public.site_settings from authenticated
 revoke select, insert, update, delete on public.email_templates from anon;
 revoke select, insert, update, delete on public.email_templates from authenticated;
 
--- listing_reports — reportListing.ts inserts via createAdminClient(); no user direct path.
+-- listing_reports — reportListingAction (reportListing.ts:37) inserts/selects via the AUTHENTICATED
+--   user-scoped createClient(), NOT createAdminClient(). authenticated needs INSERT + SELECT.
+--   Admin report-status updates run via createAdminClient() (service_role) — no authenticated UPDATE needed.
+--   anon must stay locked out.
 revoke select, insert, update, delete on public.listing_reports from anon;
-revoke select, insert, update, delete on public.listing_reports from authenticated;
+revoke update, delete on public.listing_reports from authenticated;
 
 -- report_actions — admin audit log only.
 revoke select, insert, update, delete on public.report_actions from anon;
@@ -175,7 +178,8 @@ grant all on public.email_templates to service_role;
 -- exchange_providers — API keys; service_role only (anon/authenticated revoked above).
 grant all on public.exchange_providers to service_role;
 
--- listing_reports — admin manages; service_role only.
+-- listing_reports — authenticated needs INSERT + SELECT (reportListingAction, Task 460).
+grant insert, select on public.listing_reports to authenticated;
 grant all on public.listing_reports to service_role;
 
 -- report_actions — admin audit; service_role only.

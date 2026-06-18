@@ -43,8 +43,10 @@ export type ListingTransitionAction =
   | 'REJECT'           // pending → inactive (moderator declines the listing)
   | 'MARK_AS_SOLD'     // active → sold (transaction completed: sale)
   | 'MARK_AS_RENTED'   // active → rented (transaction completed: rental)
-  | 'ARCHIVE'          // active | inactive | sold | rented → archived (end of lifecycle)
+  | 'ARCHIVE'          // active | inactive | sold | rented | expired → archived (end of lifecycle)
   | 'RESTORE'          // archived → inactive (admin restores for re-activation)
+  | 'EXPIRE'           // active → expired (system: listing window lapsed)
+  | 'RENEW'            // expired → active (owner/admin re-activates expired listing)
 
 // ── Canonical transition matrix ───────────────────────────────────────────────
 //
@@ -55,9 +57,10 @@ export type ListingTransitionAction =
 //   pending → APPROVE | REJECT | ARCHIVE
 //     Pending listings are under review — only moderation or admin archival is valid.
 //
-//   active → UNPUBLISH | MARK_AS_SOLD | MARK_AS_RENTED | ARCHIVE | SEND_TO_REVIEW
+//   active → UNPUBLISH | MARK_AS_SOLD | MARK_AS_RENTED | ARCHIVE | SEND_TO_REVIEW | EXPIRE
 //     Active listings are live market listings. Owners can close or hide them.
 //     SEND_TO_REVIEW is included for future moderation-on-edit workflows.
+//     EXPIRE is system-only (reconciliation sweep when listing window lapses).
 //
 //   inactive → PUBLISH | SEND_TO_REVIEW | ARCHIVE
 //     Hidden listings can be re-published or submitted for review.
@@ -70,14 +73,18 @@ export type ListingTransitionAction =
 //
 //   archived → RESTORE
 //     Admin can restore archived listings to inactive for re-evaluation.
+//
+//   expired → RENEW | ARCHIVE
+//     Listing window lapsed. Owner/admin can renew (→ active) or archive.
 
 export const ALLOWED_LISTING_TRANSITIONS: Record<ListingStatus, readonly ListingTransitionAction[]> = {
   pending:  ['APPROVE', 'REJECT', 'ARCHIVE'],
-  active:   ['UNPUBLISH', 'MARK_AS_SOLD', 'MARK_AS_RENTED', 'ARCHIVE', 'SEND_TO_REVIEW'],
+  active:   ['UNPUBLISH', 'MARK_AS_SOLD', 'MARK_AS_RENTED', 'ARCHIVE', 'SEND_TO_REVIEW', 'EXPIRE'],
   inactive: ['PUBLISH', 'SEND_TO_REVIEW', 'ARCHIVE'],
   sold:     ['ARCHIVE'],
   rented:   ['ARCHIVE'],
   archived: ['RESTORE'],
+  expired:  ['RENEW', 'ARCHIVE'],
 } as const
 
 // ── Action → next status resolution ──────────────────────────────────────────
@@ -95,6 +102,8 @@ const ACTION_NEXT_STATUS: Record<ListingTransitionAction, ListingStatus> = {
   MARK_AS_RENTED: 'rented',
   ARCHIVE:        'archived',
   RESTORE:        'inactive',
+  EXPIRE:         'expired',
+  RENEW:          'active',
 } as const
 
 // ── Transition validity API ───────────────────────────────────────────────────

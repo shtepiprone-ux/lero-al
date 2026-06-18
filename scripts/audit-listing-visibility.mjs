@@ -35,6 +35,7 @@ export const PUBLIC_VISIBLE_STATUSES = {
   rented:   { publicEligible: false, requiresUnexpired: false },
   archived: { publicEligible: false, requiresUnexpired: false },
   pending:  { publicEligible: false, requiresUnexpired: false },
+  expired:  { publicEligible: false, requiresUnexpired: false },
 }
 
 export function classifyHiddenReason(listing) {

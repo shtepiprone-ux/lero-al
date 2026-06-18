@@ -16,13 +16,13 @@ import {
   getAllowedTargetStatuses,
 } from './listingTransitionEngine'
 
-const ALL_STATUSES: ListingStatus[] = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived']
+const ALL_STATUSES: ListingStatus[] = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived', 'expired']
 
 // ── Transition matrix coverage ────────────────────────────────────────────────
 
 describe('ALLOWED_LISTING_TRANSITIONS — exhaustive matrix', () => {
-  it('covers all six DB statuses', () => {
-    const statuses = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived'] as const
+  it('covers all seven DB statuses', () => {
+    const statuses = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived', 'expired'] as const
     for (const s of statuses) {
       expect(ALLOWED_LISTING_TRANSITIONS[s]).toBeDefined()
     }
@@ -34,12 +34,19 @@ describe('ALLOWED_LISTING_TRANSITIONS — exhaustive matrix', () => {
     expect(ALLOWED_LISTING_TRANSITIONS.pending).toContain('ARCHIVE')
   })
 
-  it('active allows UNPUBLISH, MARK_AS_SOLD, MARK_AS_RENTED, ARCHIVE, SEND_TO_REVIEW', () => {
+  it('active allows UNPUBLISH, MARK_AS_SOLD, MARK_AS_RENTED, ARCHIVE, SEND_TO_REVIEW, EXPIRE', () => {
     expect(ALLOWED_LISTING_TRANSITIONS.active).toContain('UNPUBLISH')
     expect(ALLOWED_LISTING_TRANSITIONS.active).toContain('MARK_AS_SOLD')
     expect(ALLOWED_LISTING_TRANSITIONS.active).toContain('MARK_AS_RENTED')
     expect(ALLOWED_LISTING_TRANSITIONS.active).toContain('ARCHIVE')
     expect(ALLOWED_LISTING_TRANSITIONS.active).toContain('SEND_TO_REVIEW')
+    expect(ALLOWED_LISTING_TRANSITIONS.active).toContain('EXPIRE')
+  })
+
+  it('expired allows RENEW and ARCHIVE', () => {
+    expect(ALLOWED_LISTING_TRANSITIONS.expired).toContain('RENEW')
+    expect(ALLOWED_LISTING_TRANSITIONS.expired).toContain('ARCHIVE')
+    expect(ALLOWED_LISTING_TRANSITIONS.expired).toHaveLength(2)
   })
 
   it('inactive allows PUBLISH, SEND_TO_REVIEW, ARCHIVE', () => {
@@ -78,6 +85,9 @@ describe('canTransitionListing — valid transitions', () => {
   it('sold → ARCHIVE is valid', () => expect(canTransitionListing('sold', 'ARCHIVE')).toBe(true))
   it('rented → ARCHIVE is valid', () => expect(canTransitionListing('rented', 'ARCHIVE')).toBe(true))
   it('archived → RESTORE is valid', () => expect(canTransitionListing('archived', 'RESTORE')).toBe(true))
+  it('active → EXPIRE is valid', () => expect(canTransitionListing('active', 'EXPIRE')).toBe(true))
+  it('expired → RENEW is valid', () => expect(canTransitionListing('expired', 'RENEW')).toBe(true))
+  it('expired → ARCHIVE is valid', () => expect(canTransitionListing('expired', 'ARCHIVE')).toBe(true))
 })
 
 describe('canTransitionListing — invalid transitions', () => {
@@ -98,6 +108,11 @@ describe('canTransitionListing — invalid transitions', () => {
   it('archived → ARCHIVE is invalid', () => expect(canTransitionListing('archived', 'ARCHIVE')).toBe(false))
   it('archived → PUBLISH is invalid', () => expect(canTransitionListing('archived', 'PUBLISH')).toBe(false))
   it('archived → APPROVE is invalid', () => expect(canTransitionListing('archived', 'APPROVE')).toBe(false))
+  it('expired → PUBLISH is invalid', () => expect(canTransitionListing('expired', 'PUBLISH')).toBe(false))
+  it('expired → APPROVE is invalid', () => expect(canTransitionListing('expired', 'APPROVE')).toBe(false))
+  it('expired → EXPIRE is invalid', () => expect(canTransitionListing('expired', 'EXPIRE')).toBe(false))
+  it('inactive → EXPIRE is invalid', () => expect(canTransitionListing('inactive', 'EXPIRE')).toBe(false))
+  it('sold → RENEW is invalid', () => expect(canTransitionListing('sold', 'RENEW')).toBe(false))
 })
 
 // ── getAvailableTransitions ───────────────────────────────────────────────────
@@ -194,6 +209,24 @@ describe('resolveTransition — valid transitions produce correct nextStatus', (
     const r = resolveTransition('archived', 'RESTORE')
     expect(r.ok).toBe(true)
     if (r.ok) expect(r.nextStatus).toBe('inactive')
+  })
+
+  it('active + EXPIRE → expired', () => {
+    const r = resolveTransition('active', 'EXPIRE')
+    expect(r.ok).toBe(true)
+    if (r.ok) expect(r.nextStatus).toBe('expired')
+  })
+
+  it('expired + RENEW → active', () => {
+    const r = resolveTransition('expired', 'RENEW')
+    expect(r.ok).toBe(true)
+    if (r.ok) expect(r.nextStatus).toBe('active')
+  })
+
+  it('expired + ARCHIVE → archived', () => {
+    const r = resolveTransition('expired', 'ARCHIVE')
+    expect(r.ok).toBe(true)
+    if (r.ok) expect(r.nextStatus).toBe('archived')
   })
 })
 
@@ -319,6 +352,9 @@ describe('isTerminalListingStatus', () => {
   it('archived is not terminal — RESTORE leads to inactive', () => {
     expect(isTerminalListingStatus('archived')).toBe(false)
   })
+  it('expired is not terminal — RENEW leads to active', () => {
+    expect(isTerminalListingStatus('expired')).toBe(false)
+  })
 })
 
 // ── isMarketClosedStatus ──────────────────────────────────────────────────────
@@ -330,8 +366,9 @@ describe('isMarketClosedStatus', () => {
   it('inactive is not market closed', () => expect(isMarketClosedStatus('inactive')).toBe(false))
   it('pending is not market closed', () => expect(isMarketClosedStatus('pending')).toBe(false))
   it('archived is not market closed', () => expect(isMarketClosedStatus('archived')).toBe(false))
+  it('expired is not market closed', () => expect(isMarketClosedStatus('expired')).toBe(false))
   it('equals isTerminalListingStatus for all statuses', () => {
-    const statuses = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived'] as const
+    const statuses = ['active', 'inactive', 'pending', 'sold', 'rented', 'archived', 'expired'] as const
     for (const s of statuses) {
       expect(isMarketClosedStatus(s)).toBe(isTerminalListingStatus(s))
     }
@@ -347,6 +384,7 @@ describe('isModeratableStatus', () => {
   it('sold is not moderatable', () => expect(isModeratableStatus('sold')).toBe(false))
   it('rented is not moderatable', () => expect(isModeratableStatus('rented')).toBe(false))
   it('archived is not moderatable', () => expect(isModeratableStatus('archived')).toBe(false))
+  it('expired is not moderatable', () => expect(isModeratableStatus('expired')).toBe(false))
 })
 
 // ── Restore flow ──────────────────────────────────────────────────────────────
@@ -423,7 +461,7 @@ describe('transition determinism', () => {
 // ── Regression guard: base matrix + semantic helpers unchanged (Task 427) ────
 
 describe('regression guard — base matrix and semantic helpers unchanged', () => {
-  it('ALLOWED_LISTING_TRANSITIONS still has exactly the original six statuses', () => {
+  it('ALLOWED_LISTING_TRANSITIONS has exactly seven statuses', () => {
     expect(Object.keys(ALLOWED_LISTING_TRANSITIONS).sort()).toEqual([...ALL_STATUSES].sort())
   })
 
@@ -431,6 +469,10 @@ describe('regression guard — base matrix and semantic helpers unchanged', () =
     expect(ALLOWED_LISTING_TRANSITIONS.sold).toEqual(['ARCHIVE'])
     expect(ALLOWED_LISTING_TRANSITIONS.rented).toEqual(['ARCHIVE'])
     expect(ALLOWED_LISTING_TRANSITIONS.archived).toEqual(['RESTORE'])
+  })
+
+  it('expired base matrix is RENEW + ARCHIVE', () => {
+    expect([...ALLOWED_LISTING_TRANSITIONS.expired].sort()).toEqual(['ARCHIVE', 'RENEW'])
   })
 
   it('isTerminalListingStatus/isMarketClosedStatus/isModeratableStatus unchanged for all statuses', () => {
@@ -506,7 +548,7 @@ describe('getAllowedTargetStatuses', () => {
 
   it('privileged: false matches the base-matrix-derived targets (unchanged behavior)', () => {
     expect(getAllowedTargetStatuses('active', { privileged: false }).sort())
-      .toEqual(['archived', 'inactive', 'pending', 'rented', 'sold'].sort())
+      .toEqual(['archived', 'expired', 'inactive', 'pending', 'rented', 'sold'].sort())
     expect(getAllowedTargetStatuses('sold', { privileged: false }))
       .toEqual(['archived'])
     expect(getAllowedTargetStatuses('archived', { privileged: false }))

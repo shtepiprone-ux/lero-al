@@ -37,6 +37,7 @@ const STATUS_BADGE_VARIANT: Record<ListingStatus, StatusOption<ListingStatus>['b
   sold:     'info',
   rented:   'info',
   archived: 'neutral',
+  expired:  'warning',
 }
 
 const ALL_LISTING_STATUSES = Object.keys(ALLOWED_LISTING_TRANSITIONS) as ListingStatus[]

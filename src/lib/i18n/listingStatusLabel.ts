@@ -17,7 +17,7 @@
  */
 
 export const LISTING_STATUS_CODES = [
-  'pending', 'active', 'inactive', 'sold', 'rented', 'archived',
+  'pending', 'active', 'inactive', 'sold', 'rented', 'archived', 'expired',
 ] as const
 
 export type ListingStatusCode = typeof LISTING_STATUS_CODES[number]

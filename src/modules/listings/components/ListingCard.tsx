@@ -113,6 +113,10 @@ function getBadges(listing: CardListingData) {
     badges.push({ label: 'status_archived', variant: 'outline', className: 'border-border text-muted-foreground' })
     return badges
   }
+  if (listing.status === 'expired') {
+    badges.push({ label: 'status_expired', variant: 'outline', className: 'border-status-warning text-status-warning' })
+    return badges
+  }
 
   // Active listing badges
   const sevenDaysAgo = new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)

@@ -40,7 +40,7 @@ export interface DBPropertyType {
 export type ListingCondition = 'new_build' | 'good' | 'needs_repair' | 'needs_renovation' | 'under_construction'
 export type WallType = 'brick' | 'concrete' | 'panel' | 'wood' | 'other'
 export type HeatingType = 'electric' | 'wood' | 'central' | 'gas' | 'none'
-export type ListingStatus = 'active' | 'inactive' | 'sold' | 'rented' | 'archived' | 'pending'
+export type ListingStatus = 'active' | 'inactive' | 'sold' | 'rented' | 'archived' | 'pending' | 'expired'
 export type ListingCurrency = 'ALL' | 'EUR'
 export type LocationType = 'region' | 'city' | 'village' | 'district'
 export type TicketStatus = 'open' | 'in_progress' | 'resolved' | 'closed'

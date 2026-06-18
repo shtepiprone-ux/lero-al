@@ -6,6 +6,7 @@ import { getBlockedError } from '@/lib/auth/blockCheck'
 import { listingSchema } from '@/modules/listings/validations'
 import type { ListingInput } from '@/modules/listings/validations'
 import type { ListingImage } from '@/modules/listings/components/ImageUpload'
+import { computeExpiresAt } from '@/modules/listings/domain/listingConstants'
 
 interface CreateListingPayload extends ListingInput {
   images: ListingImage[]
@@ -39,7 +40,7 @@ export async function createListing(
 
   const data = parsed.data
   const slug = generateSlug(data.title)
-  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+  const expiresAt = computeExpiresAt()
 
   const { data: listing, error: insertError } = await supabase
     .from('listings')

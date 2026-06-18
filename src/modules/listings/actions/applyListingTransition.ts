@@ -51,6 +51,7 @@ import { canAdminEditListing } from '@/modules/listings/domain/listingPermission
 import { createNotification } from '@/modules/notifications/lib/mutations'
 import type { ListingTransitionAction } from '@/modules/listings/domain/listingTransitionEngine'
 import type { ListingStatus } from '@/types/database'
+import { shouldReStampExpiresAt, computeExpiresAt } from '@/modules/listings/domain/listingConstants'
 
 // ── Actor context ─────────────────────────────────────────────────────────────
 
@@ -89,9 +90,14 @@ async function writeListingStatus(
   listingTitle: string | null,
   ownerId: string | null,
 ): Promise<TransitionApplicationResult> {
+  const updatePayload: Record<string, unknown> = { status: nextStatus }
+  if (shouldReStampExpiresAt(nextStatus)) {
+    updatePayload.expires_at = computeExpiresAt()
+  }
+
   const { error } = await db
     .from('listings')
-    .update({ status: nextStatus })
+    .update(updatePayload)
     .eq('id', listingId)
 
   if (error) {

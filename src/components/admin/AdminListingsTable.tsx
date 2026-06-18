@@ -49,6 +49,8 @@ const ACTION_LABELS: Record<ListingTransitionAction, { labelKey: string; classNa
   MARK_AS_RENTED: { labelKey: 'btn_mark_rented', className: 'text-status-rented border-status-rented/30 hover:bg-status-rented/10' },
   ARCHIVE:        { labelKey: 'btn_archive',     className: 'text-muted-foreground' },
   RESTORE:        { labelKey: 'btn_restore',     className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
+  EXPIRE:         { labelKey: 'btn_expire',      className: 'text-status-warning border-status-warning/30 hover:bg-status-warning/10' },
+  RENEW:          { labelKey: 'btn_renew',        className: 'text-status-success border-status-success/30 hover:bg-status-success/10' },
 }
 
 // Admin/moderator (and owner, via the same privileged gateway) may move a
@@ -74,6 +76,7 @@ const STATUS_BADGE: Record<ListingStatus, string> = {
   sold:     'bg-status-info/15 text-status-info border-status-info/30',
   rented:   'bg-status-rented/15 text-status-rented border-status-rented/30',
   archived: 'bg-muted text-muted-foreground/60 border-border',
+  expired:  'bg-status-warning/15 text-status-warning border-status-warning/30',
 }
 
 export interface AdminListing {

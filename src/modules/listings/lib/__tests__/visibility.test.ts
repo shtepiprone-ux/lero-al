@@ -8,7 +8,7 @@ import {
 } from '../visibility'
 import type { ListingStatus } from '@/types/database'
 
-const ALL_STATUSES: ListingStatus[] = ['active', 'inactive', 'sold', 'rented', 'archived', 'pending']
+const ALL_STATUSES: ListingStatus[] = ['active', 'inactive', 'sold', 'rented', 'archived', 'pending', 'expired']
 
 describe('PUBLIC_VISIBLE_STATUSES', () => {
   it('covers every ListingStatus value', () => {
@@ -42,7 +42,7 @@ describe('isListingPubliclyVisible', () => {
     expect(result).toEqual({ visible: false, reason: 'no_expiry' })
   })
 
-  const nonPublicStatuses: ListingStatus[] = ['inactive', 'sold', 'rented', 'archived', 'pending']
+  const nonPublicStatuses: ListingStatus[] = ['inactive', 'sold', 'rented', 'archived', 'pending', 'expired']
 
   for (const status of nonPublicStatuses) {
     it(`${status} → hidden (status_not_public)`, () => {
@@ -136,7 +136,7 @@ describe('audit-script drift guard (imports from the ACTUAL .mjs)', () => {
     expect(SCRIPT_POLICY).toEqual(PUBLIC_VISIBLE_STATUSES)
   })
 
-  it('script classifyHiddenReason agrees with isListingPubliclyVisible for all 6 statuses × 3 expiry states', () => {
+  it('script classifyHiddenReason agrees with isListingPubliclyVisible for all 7 statuses × 3 expiry states', () => {
     const futureDate = new Date(Date.now() + 86_400_000).toISOString()
     const pastDate = new Date(Date.now() - 86_400_000).toISOString()
     const expiryCases = [

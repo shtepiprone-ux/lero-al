@@ -33,6 +33,10 @@ describe('isListingVisible', () => {
   it('returns false for rented', () => {
     expect(isListingVisible('rented')).toBe(false)
   })
+
+  it('returns false for expired', () => {
+    expect(isListingVisible('expired')).toBe(false)
+  })
 })
 
 describe('isListingHidden', () => {
@@ -58,6 +62,10 @@ describe('isListingHidden', () => {
 
   it('returns false for rented', () => {
     expect(isListingHidden('rented')).toBe(false)
+  })
+
+  it('returns true for expired', () => {
+    expect(isListingHidden('expired')).toBe(true)
   })
 })
 
@@ -85,6 +93,10 @@ describe('isListingArchived', () => {
   it('returns false for pending', () => {
     expect(isListingArchived('pending')).toBe(false)
   })
+
+  it('returns false for expired', () => {
+    expect(isListingArchived('expired')).toBe(false)
+  })
 })
 
 describe('isListingClosed', () => {
@@ -110,6 +122,10 @@ describe('isListingClosed', () => {
 
   it('returns false for pending', () => {
     expect(isListingClosed('pending')).toBe(false)
+  })
+
+  it('returns false for expired', () => {
+    expect(isListingClosed('expired')).toBe(false)
   })
 })
 
@@ -138,12 +154,17 @@ describe('getListingVisibilityGroup', () => {
     expect(getListingVisibilityGroup('rented')).toBe('CLOSED')
   })
 
-  it('covers all six DB statuses without overlap', () => {
-    const allStatuses = ['active', 'inactive', 'pending', 'archived', 'sold', 'rented'] as const
+  it('maps expired → HIDDEN', () => {
+    expect(getListingVisibilityGroup('expired')).toBe('HIDDEN')
+  })
+
+  it('covers all seven DB statuses without overlap', () => {
+    const allStatuses = ['active', 'inactive', 'pending', 'archived', 'sold', 'rented', 'expired'] as const
     const groups = allStatuses.map(getListingVisibilityGroup)
-    expect(groups).toHaveLength(6)
+    expect(groups).toHaveLength(7)
     expect(getListingVisibilityGroup('archived')).not.toBe('CLOSED')
     expect(getListingVisibilityGroup('sold')).not.toBe('ARCHIVED')
+    expect(getListingVisibilityGroup('expired')).not.toBe('CLOSED')
   })
 })
 
@@ -170,6 +191,10 @@ describe('isListingEditableStatus', () => {
 
   it('returns false for archived', () => {
     expect(isListingEditableStatus('archived')).toBe(false)
+  })
+
+  it('returns true for expired (HIDDEN group → editable)', () => {
+    expect(isListingEditableStatus('expired')).toBe(true)
   })
 })
 
@@ -198,8 +223,12 @@ describe('isListingReadonlyStatus', () => {
     expect(isListingReadonlyStatus('archived')).toBe(true)
   })
 
+  it('returns false for expired', () => {
+    expect(isListingReadonlyStatus('expired')).toBe(false)
+  })
+
   it('is the exact inverse of isListingEditableStatus', () => {
-    const allStatuses = ['active', 'inactive', 'pending', 'archived', 'sold', 'rented'] as const
+    const allStatuses = ['active', 'inactive', 'pending', 'archived', 'sold', 'rented', 'expired'] as const
     for (const s of allStatuses) {
       expect(isListingReadonlyStatus(s)).toBe(!isListingEditableStatus(s))
     }

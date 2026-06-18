@@ -247,7 +247,7 @@ export function ListingDetailViewBody({
 
         {!isListingVisible(listing.status as ListingStatus) && (
           <ListingStatusBanner
-            status={listing.status as 'sold' | 'rented' | 'archived'}
+            status={listing.status as 'sold' | 'rented' | 'archived' | 'expired'}
             message={t(`status_banner_${listing.status}`)}
             similarLabel={t('similar_listings')}
           />

@@ -2,7 +2,7 @@ import { Info } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface Props {
-  status: 'sold' | 'rented' | 'archived'
+  status: 'sold' | 'rented' | 'archived' | 'expired'
   message: string
   similarLabel: string
 }
@@ -11,6 +11,7 @@ const STYLES: Record<Props['status'], string> = {
   sold:     'bg-status-info/10 border-status-info/30 text-status-info',
   rented:   'bg-status-rented/10 border-status-rented/30 text-status-rented',
   archived: 'bg-muted border-border text-muted-foreground',
+  expired:  'bg-status-warning/10 border-status-warning/30 text-status-warning',
 }
 
 export function ListingStatusBanner({ status, message, similarLabel }: Props) {

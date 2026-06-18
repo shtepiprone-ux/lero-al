@@ -126,6 +126,24 @@ describe('applyListingTransition — valid transitions', () => {
     const result = await applyListingTransition('l1', 'RESTORE', adminActor, db)
     expect(result).toEqual({ ok: true, nextStatus: 'inactive', listingId: 'l1' })
   })
+
+  it('active + EXPIRE → expired', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'active' }, error: null })
+    const result = await applyListingTransition('l1', 'EXPIRE', adminActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'expired', listingId: 'l1' })
+  })
+
+  it('expired + RENEW → active', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'expired' }, error: null })
+    const result = await applyListingTransition('l1', 'RENEW', adminActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'active', listingId: 'l1' })
+  })
+
+  it('expired + ARCHIVE → archived', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'expired' }, error: null })
+    const result = await applyListingTransition('l1', 'ARCHIVE', adminActor, db)
+    expect(result).toEqual({ ok: true, nextStatus: 'archived', listingId: 'l1' })
+  })
 })
 
 describe('applyListingTransition — invalid transitions', () => {
@@ -156,6 +174,18 @@ describe('applyListingTransition — invalid transitions', () => {
   it('inactive + APPROVE → invalid_transition', async () => {
     const db = makeMockDb({ data: { id: 'l1', status: 'inactive' }, error: null })
     const result = await applyListingTransition('l1', 'APPROVE', adminActor, db)
+    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+  })
+
+  it('expired + PUBLISH → invalid_transition', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'expired' }, error: null })
+    const result = await applyListingTransition('l1', 'PUBLISH', adminActor, db)
+    expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
+  })
+
+  it('expired + EXPIRE → invalid_transition (cannot double-expire)', async () => {
+    const db = makeMockDb({ data: { id: 'l1', status: 'expired' }, error: null })
+    const result = await applyListingTransition('l1', 'EXPIRE', adminActor, db)
     expect(result).toEqual({ ok: false, reason: 'invalid_transition' })
   })
 })

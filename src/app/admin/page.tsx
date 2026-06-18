@@ -24,6 +24,7 @@ async function getStats() {
     { count: rentedListings },
     { count: inactiveListings },
     { count: archivedListings },
+    { count: expiredListings },
     { data: recentListings },
     { data: pendingReportsList },
     { data: locationRequestUsers, count: locationRequestCount },
@@ -41,6 +42,7 @@ async function getStats() {
     db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'rented'),
     db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'inactive'),
     db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'archived'),
+    db.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'expired'),
 
     // Recent listings (last 8, Epic K clickable)
     db.from('listings')
@@ -65,7 +67,7 @@ async function getStats() {
 
   return {
     activeListings, newListings7d, totalUsers, newUsers7d, openTickets, pendingReports,
-    soldListings, rentedListings, inactiveListings, archivedListings,
+    soldListings, rentedListings, inactiveListings, archivedListings, expiredListings,
     recentListings: (recentListings ?? []) as unknown as DashboardListing[],
     pendingReportsList: (pendingReportsList ?? []) as unknown as PendingReport[],
     locationRequestUsers: (locationRequestUsers ?? []) as LocationRequestUser[],
@@ -150,13 +152,13 @@ export default async function AdminDashboard() {
 
   const {
     activeListings, newListings7d, totalUsers, newUsers7d, openTickets, pendingReports,
-    soldListings, rentedListings, inactiveListings, archivedListings,
+    soldListings, rentedListings, inactiveListings, archivedListings, expiredListings,
     recentListings, pendingReportsList, locationRequestUsers, locationRequestCount,
   } = await getStats()
 
   const totalListings =
     (activeListings ?? 0) + (soldListings ?? 0) + (rentedListings ?? 0) +
-    (inactiveListings ?? 0) + (archivedListings ?? 0)
+    (inactiveListings ?? 0) + (archivedListings ?? 0) + (expiredListings ?? 0)
 
   return (
     <div className="p-6 lg:p-8 max-w-6xl mx-auto">
@@ -303,6 +305,7 @@ export default async function AdminDashboard() {
           <StatusBar label={tl('status_rented')}   count={rentedListings ?? 0}   total={totalListings} colorClass="bg-status-rented" />
           <StatusBar label={tl('status_inactive')} count={inactiveListings ?? 0} total={totalListings} colorClass="bg-status-warning" />
           <StatusBar label={tl('status_archived')} count={archivedListings ?? 0} total={totalListings} colorClass="bg-muted-foreground/40" />
+          <StatusBar label={tl('status_expired')} count={expiredListings ?? 0} total={totalListings} colorClass="bg-status-warning/60" />
         </div>
       </div>
     </div>

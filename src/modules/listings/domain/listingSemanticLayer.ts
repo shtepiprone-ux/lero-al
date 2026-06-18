@@ -94,7 +94,7 @@ export const VALID_ATTRIBUTE_FILTERS: readonly ListingAttributeFilter[] = ['PREM
 
 export const VISIBILITY_DB_STATUSES: Record<Exclude<ListingVisibilityGroup, 'ALL'>, ListingStatus[]> = {
   VISIBLE:  ['active'],
-  HIDDEN:   ['inactive', 'pending'],
+  HIDDEN:   ['inactive', 'pending', 'expired'],
   ARCHIVED: ['archived'],
   CLOSED:   ['sold', 'rented'],
 }

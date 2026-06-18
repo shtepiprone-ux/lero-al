@@ -28,7 +28,7 @@ export type StoryCardData = Omit<typeof LISTINGS_GRID_FIXTURE[number], 'status'>
   price_old?: number
   public_id: number
   imageCount: number
-  status: 'active' | 'sold' | 'rented' | 'archived'
+  status: 'active' | 'sold' | 'rented' | 'archived' | 'expired'
   location: string
 }
 
@@ -128,6 +128,11 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
           {isArchived && (
             <Badge variant="outline" className="text-2xs px-1.5 py-0 border-border text-muted-foreground">
               {t('status_archived')}
+            </Badge>
+          )}
+          {data.status === 'expired' && (
+            <Badge variant="outline" className="text-2xs px-1.5 py-0 border-status-warning text-status-warning">
+              {t('status_expired')}
             </Badge>
           )}
         </div>

@@ -19,6 +19,7 @@ export const PUBLIC_VISIBLE_STATUSES: Record<ListingStatus, VisibilityRule> = {
   rented:   { publicEligible: false, requiresUnexpired: false },
   archived: { publicEligible: false, requiresUnexpired: false },
   pending:  { publicEligible: false, requiresUnexpired: false },
+  expired:  { publicEligible: false, requiresUnexpired: false },
 }
 
 export type HiddenReason = 'status_not_public' | 'expired' | 'no_expiry'

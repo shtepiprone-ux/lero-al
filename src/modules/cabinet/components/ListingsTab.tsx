@@ -51,6 +51,7 @@ const STATUS_VARIANT: Record<ListingStatus, BadgeVariant> = {
   sold:     'info',
   rented:   'rented',
   archived: 'neutral',
+  expired:  'warning',
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────

@@ -59,22 +59,26 @@ callers go through it; planted-violation (inline predicate) must FAIL the LV.4 g
 
 ## Task 455 — LV.2: Lifecycle reconciliation (close the silent state)
 
-**Type:** Schema / migration + server-action + (optional) cron. **Blocked by:** owner decision block below.
+**Type:** Schema / migration + server-action + cron. **Kickoff:**
+`tasks/Sprints/Sprint_36_kickoff_prompt_Task_455_LifecycleReconciliation.md`.
 
-**🛑 OWNER DECISION BLOCK (must be answered before the kickoff is finalized):**
-1. Lapsed-listing target state: **add `'expired'` to `ListingStatus`** (clean semantics, larger blast radius —
-   enum, transition matrix, admin filter, badge, `sq/en/uk/it` labels) **vs. reuse `'inactive'`** (smaller, but
-   loses "expired vs manually deactivated").
-2. Re-activation: should approving/re-activating a listing **re-stamp `expires_at = now + window`**? (Recommended
-   yes — otherwise re-activating an expired listing reproduces the bug.)
-3. `expires_at IS NULL` policy: **"never expires → visible"** vs **"invalid → hidden"** (current = hidden).
-4. Expiry mechanism: scheduled reconciliation sweep (cron/RPC) flipping lapsed `active` rows, and/or
-   owner-facing "your listing is about to expire / renew" — scope for this sprint vs follow-up.
+**✅ OWNER DECISIONS (FINAL 2026-06-18):**
+1. **Add a new `'expired'` `ListingStatus`** — do NOT reuse `inactive` (`inactive` = manual deactivation;
+   `expired` = system lifecycle state; keep distinct for honest diagnostics).
+2. **Yes — re-stamp `expires_at = now + window`** on every transition INTO a public-eligible status
+   (re-activation / approval / renew), so a stale timestamp can never recreate the bug.
+3. **`expires_at IS NULL` = invalid/hidden** (broken lifecycle data), NOT "never expires." The RECURRING sweep
+   leaves NULL rows untouched (no silent auto-expire), but the **one-time backfill in Task 455 explicitly
+   resolves `active+NULL → expired` (reason `no_expiry`)** so no `active` row stays silently invisible.
+4. **No auto-renew this slice; hard exclusion for expired; add reconciliation + backfill** moving lapsed
+   `active` → `expired`. Operator reason visibility = LV.3; CI guard = LV.4.
 
-**Outcome (after decisions):** the chosen reconciliation + window-refresh, applied; **backfill** the LV.1 audit
-set to zero; the invariant "`active` ⇒ publicly visible (or reconciled out of `active`)" holds in the DB.
-**Regression (clause 15):** reconciliation RPC/sweep test (lapsed active → target state; fresh active untouched);
-re-activation refreshes `expires_at`; RLS/permission positive+negative per `rls-rules.md`.
+**Outcome:** `expired` status + engine actions (`EXPIRE`/`RENEW`) + re-stamp-on-active in the single write path
++ service-role reconciliation sweep + one-time backfill + 4-locale `expired` labels. Invariant "`active` ⇒
+publicly visible (or reconciled out of `active`)" holds in the DB. **This is the slice that fixes the production
+bug.** **Regression (clause 15):** engine + re-stamp + sweep tests (lapsed active→expired; fresh active
+untouched; NULL excluded; expired→active yields fresh future `expires_at`); planted-violation drops the re-stamp.
+**DB migration RESOLVED:** `listings.status` is pg enum `listing_status` (owner native check 2026-06-18) → migration = `ALTER TYPE listing_status ADD VALUE IF NOT EXISTS 'expired';`, owner-run native, irreversible, **must commit before any backfill uses the value** (can't use a new enum value in the adding txn). **Cron runner DECIDED:** Vercel cron route `src/app/api/cron/listings-expiry/route.ts` mirroring `saved-searches`. No open STOP-and-ASK gates remain.
 
 ---
 

@@ -242,3 +242,115 @@ recorded for the orchestrator.
 4. **No new data exposure.** The query already uses the admin (service_role) client; you are only projecting
    one more embedded relation that admins are already entitled to see. Do NOT add any grant, policy, or
    public-facing change.
+
+---
+
+## 🔁 REWORK 1 (orchestrator review, 2026-06-18) — NOT APPROVED, route back
+
+Diff-verified on the real files (`page.tsx:18`, `AdminReportsManager.tsx:130-149`, the smoke test, all 4
+message files, the canonical helper `AdminUserProfile.tsx:128-134`). The core change is sound — embed added,
+owner row placed between Listing and Reporter, in-app `/admin/users/[ownerId]` link uses the OWNER id (not
+the reporter), null-owner + null-listing fallbacks present, existing rows/actions preserved, 4-locale keys
+present (1849 parity), no DB grant / RLS / middleware / public-UI change. But it cannot be approved:
+
+### 🔴 Blocker 1 (sufficient on its own) — AC6 rendered matrix was deferred to the owner
+The session log states: *"Rendered matrix deferred to owner (no Storybook story for AdminReportsManager
+exists — pre-existing gap)."* This is an **auto-reject** under agent-contract clause 12 + orchestrator-role
+"Mobile <640 full-width gate" + CLAUDE.md OWNER P0 — a UI task whose log lacks the rendered matrix is
+INCOMPLETE; `tsc=0`/tests-green is explicitly NOT proof. The kickoff (Hard contract §2 + AC6) **already
+authorised** adding a minimal admin-reports rendered harness/test fixture for exactly this — so "no story
+exists" is not a valid deferral.
+**Fix:** add/extend a minimal established rendered harness/story/fixture for `AdminReportsManager` →
+`ReportDetailDialog` and provide the matrix: **sq/en/uk/it × mobile widths, uk@320/375/390 mandatory**, with
+per-cell evidence that (a) the dialog stays a full-width edge-to-edge bottom sheet at <640, (b) the owner row
+(label + name + badge + "Відкрити профіль") wraps with no clip / no horizontal scroll at 320, (c) the profile
+link is a ≥44px touch target.
+
+### 🟠 Blocker 2 (must fix, hardening) — account-type badge built by raw string interpolation
+`AdminReportsManager.tsx:137` builds the key directly:
+`tu(\`profile_types.${report.listing.owner.user_type || 'private'}\`)`.
+**Correction to the first-pass note:** the `|| 'private'` default is NOT a mislabel — the canonical
+`/admin/users` helper `profileTypeFromUser` (`AdminUserProfile.tsx:128-134`) *also* returns `'private'` for any
+null/unknown non-privileged `user_type`, so null/empty renders the SAME label as `/admin/users`. The real,
+narrower defect: an **unexpected non-empty** `user_type` (anything outside `private|agent|developer`) yields
+`profile_types.<unknown>` → a missing-translation at runtime, because the code interpolates instead of
+**whitelisting** like the canonical helper. The kickoff's negative-flow ("owner account-type null / unknown →
+reuse the EXISTING /admin/users fallback") requires the canonical clamp, not a raw passthrough.
+**Fix:** clamp `user_type` to the known set with a `'private'` fallback (matching `profileTypeFromUser`'s
+default) before building the key — e.g. `const ownerType = (['private','agent','developer'] as const).includes(ut) ? ut : 'private'`
+— so an unexpected/null value can never produce a missing key. Do NOT fetch or substitute the permission
+`role` (Clarification 2 still holds).
+
+### 🟡 Test gap (bundle into the rework) — badge label not asserted; null/unknown branch untested
+The owner-present smoke asserts name + `col_owner` + `open_profile` + href + reporter, but never asserts the
+**account-type badge label** (with the key-returning mock the fixture's `user_type:'agent'` should surface
+`profile_types.agent`). AC7's "(cheap, if the fixture allows) null/unknown account-type" branch is also not
+covered.
+**Fix:** (1) assert the badge label in the owner-present test (`expect(text).toContain('profile_types.agent')`);
+(2) add a fixture with `user_type` null/unknown → asserts no crash, profile link still present, falls back to
+the `private` label; (3) keep the existing owner-null + listing-null tests. Re-run baseline + restored suite,
+re-confirm the planted-violation FAIL→PASS, and paste both transcripts.
+
+### 🟢 Nit (optional, not blocking) — duplicate `open_profile` key
+`admin.users.open_profile` already exists (messages `*.json:776`) and is used by admin components; the
+component already imports that namespace as `tu`. The kickoff's localization-reuse rule prefers reusing
+`tu('open_profile')` over adding a parallel `admin.reports.open_profile` (lines 1061). Either consolidate to
+the existing key or leave as-is and note the intentional duplication — orchestrator's call, low priority.
+
+### Stays OK (do not touch on rework)
+Embed shape + FK hint; owner-row placement (Listing → Owner → Reporter); owner link target = owner id;
+null-owner / null-listing fallbacks; control preservation; no grant/RLS/middleware/public change.
+
+**Re-submission must include:** the AC6 rendered matrix (uk@320/375/390), the clamped account-type helper,
+the strengthened tests + restored planted-violation transcripts, `tsc=0`, `check:i18n`, file-integrity
+transcript, and the updated session log. No `git add`/`git commit`. No commit will be emitted until rework
+passes review.
+
+---
+
+## 🔁 REWORK 2 verified + 🔁 REWORK 3 (orchestrator review, 2026-06-18) — STILL NOT APPROVED
+
+REWORK 1 + 2 product/test items are **confirmed fixed on the real files** and must NOT be re-touched:
+- `clampUserType()` whitelist (`AdminReportsManager.tsx:44-47`) used at the badge (`:137`) — closes Blocker 2.
+- Smoke tests strengthened: `profile_types.agent` asserted; `user_type:'bogus_value'` → `profile_types.private`
+  fallback + link present; owner-null + listing-null retained; planted-violation FAIL→PASS. ✅
+- Query embed, owner-row placement, owner-id link, fallbacks, control preservation — all good. ✅
+
+But the **AC6 Storybook approach is itself a governance violation** (this is the Sprint 32 failure mode — a
+self-reported matrix + the wrong story pattern). Two HARD blockers:
+
+### 🔴 Blocker A — `globals:{locale:'uk'}` pins make `check:stories` FAIL (un-committable)
+`AdminReportsManager.stories.tsx:76,82,88` use `globals: { locale: 'uk', … }`. This is the EXACT pattern
+banned by `scripts/check-stories.mjs` **Check 4** (`globals-locale-pin`) and agent-contract clause 13(c)
+("NO `globals:{locale:'uk'}` pin — one toolbar-reactive `LocaleStress` per component"). `npm run check:stories`
+is wired into `prebuild-storybook` + `prestorybook` + CI, so this **fails the build** — the task is not
+committable as-is. The whole per-locale-pinned-story matrix (`Dialog_{uk,sq,en,it}_{320,375,390}`) is the wrong
+mechanism: locale coverage comes from the **toolbar-reactive global**, not pinned story variants. The
+established precedent (`AdminListingsTable.stories.tsx`) uses ONE `LocaleStress` story + viewport stories and
+lets the toolbar/screenshot harness sweep locales.
+**Fix:** remove ALL `globals.locale` pins. Keep `LocaleStress` + dialog-opening stories at the three mandatory
+widths (320/375/390) that are toolbar-reactive (no locale pin), and let the locale sweep come from the
+rendered-screenshot harness below. Re-run `npm run check:stories` → must exit 0; paste the transcript.
+
+### 🔴 Blocker B — AC6 "matrix" is a self-reported session-log table, not machine-rendered evidence
+The session-log AC6 table (4 locales × 3 widths) is hand-authored PASS cells. Under the Sprint 33
+Rendered-evidence approval gate (`orchestrator-role.md`) + agent-contract clause 12/13, **a session-log table
+of self-reported PASS cells is an auto-reject** — the ONLY accepted rendered proof is the machine matrix from
+`npm run screenshots:assert` (`scripts/check-stories-rendered.mjs`) / `screenshots:responsive`, with
+**uk@320/375/390 mandatory**, proving per cell: dialog opens, full-width bottom sheet at <640, owner row wraps,
+no h-scroll/clip at 320, profile link ≥44px. The log shows neither `check:stories` nor `screenshots:assert`
+was run.
+**Fix:** run `npm run screenshots:assert` (and `screenshots:responsive` if needed to generate the PNG/JSON)
+and paste the real per-cell PASS matrix into the session log. Self-reported cells / "deferred" / "no browser
+access" do not close AC6.
+
+### 🟢 Nit — unused `canvas` in `openDialog` (`AdminReportsManager.stories.tsx:67`)
+`const canvas = within(canvasElement)` is declared but the function uses `canvasElement.querySelectorAll`
+instead — `canvas` (and the `within` import) are unused and may trip `no-unused-vars` in `npm run lint`.
+Either use `canvas` or drop the line + the `within` import.
+
+### Required gate transcripts for the next re-submission (all exit 0, pasted into the log)
+`npx tsc --noEmit` · `npm run lint` · `npm run check:stories` · `npm run check:i18n` · `npm run screenshots:assert`
+(the rendered matrix, uk@320/375/390) · vitest 20/20 · clause-14 file-integrity. Do NOT touch the query, owner
+row, `clampUserType`, or the RTL tests. No `git add`/`git commit` — no commit emitted until these gates are
+green on the real files.

@@ -3,13 +3,13 @@ import { createClient } from '@/lib/supabase/server'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { parseSearchParams, applyListingFilters } from '@/modules/listings/domain/filterEngine'
 import { LISTING_SELECT } from '@/modules/listings/lib/listingSelect'
+import { applyPublicVisibility } from '@/modules/listings/lib/visibility'
 
 export async function GET(req: NextRequest) {
   const filters = parseSearchParams(req.nextUrl.searchParams)
   const { tab, sort, page } = filters
   const from = (page - 1) * LISTINGS_PER_PAGE
   const to   = from + LISTINGS_PER_PAGE - 1
-  const now  = new Date().toISOString()
 
   const supabase = await createClient()
   let query = supabase
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
   if (tab === 'closed') {
     query = query.in('status', ['sold', 'rented'])
   } else {
-    query = query.eq('status', 'active').gte('expires_at', now)
+    query = applyPublicVisibility(query)
   }
 
   query = applyListingFilters(query, filters)

@@ -7,6 +7,7 @@ import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { parseSearchParams, applyListingFilters, countActiveFilters } from '@/modules/listings/domain/filterEngine'
 import { LISTING_SELECT } from '@/modules/listings/lib/listingSelect'
+import { applyPublicVisibility } from '@/modules/listings/lib/visibility'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -32,7 +33,6 @@ export default async function ListingsPage({ params, searchParams }: Props) {
   const { tab, sort, page } = filters
   const from = (page - 1) * LISTINGS_PER_PAGE
   const to   = from + LISTINGS_PER_PAGE - 1
-  const now  = new Date().toISOString()
 
   const [authUser, supabase] = await Promise.all([
     getUser(),
@@ -46,7 +46,7 @@ export default async function ListingsPage({ params, searchParams }: Props) {
   if (tab === 'closed') {
     query = query.in('status', ['sold', 'rented'])
   } else {
-    query = query.eq('status', 'active').gte('expires_at', now)
+    query = applyPublicVisibility(query)
   }
 
   query = applyListingFilters(query, filters)

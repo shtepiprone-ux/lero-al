@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { getExchangeRates } from '@/lib/getExchangeRateServer'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
+import { applyPublicVisibility } from '@/modules/listings/lib/visibility'
 
 interface Props {
   currentId: string
@@ -55,13 +56,13 @@ export async function SimilarListings({ currentId, propertyType, locationId }: P
   }
 
   const baseQuery = () =>
-    supabase
-      .from('listings')
-      .select(SELECT)
-      .eq('status', 'active')
+    applyPublicVisibility(
+      supabase
+        .from('listings')
+        .select(SELECT),
+    )
       .eq('property_type', propertyType)
       .neq('id', currentId)
-      .gte('expires_at', new Date().toISOString())
       .limit(4)
 
   // Try with same location first; fall back to any location if no results found.

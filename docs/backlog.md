@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-18 — Task 454 REWORK-2 ✅ IMPLEMENTED.** B1 fixed: script now exports policy + classifier, test imports from the ACTUAL `.mjs` (no hand-typed decoy). Planted-violation FAIL confirmed (`requiresUnexpired:true→false` → deep-equal fails; reverted → 24/24 pass). 41 tests green, tsc=0. Log: `docs/sessions/2026-06-18-task454-canonical-listing-visibility-predicate.md`. **Next:** orchestrator re-reviews diff.
+**2026-06-18 — Task 454 (Epic LV / LV.1) ✅ APPROVED after REWORK-2 — commits emitted (pending owner run).** Orchestrator diff-verified on the REAL files (sandbox "binary"/truncation reads were mount artifacts; Read tool confirmed all intact): (1) `visibility.test.ts` has NO hand-typed decoy — imports `PUBLIC_VISIBLE_STATUSES`+`classifyHiddenReason` from the ACTUAL `scripts/audit-listing-visibility.mjs` (L132); (2) script `export`s both + `createClient`/`config`/env moved inside `main()` + entry guard `if (process.argv[1]===fileURLToPath(import.meta.url)) main()` (L135) → import is side-effect-free; (3) B2 mixed-policy throw + B3 `getSiteStats` recorded decision + B4 audit run (1 eligible/0 hidden) intact; (4) write-path grep = 0 across all 3 code files; (5) per log tsc=0, 41 tests green. Canonical helper consumed by 7 sites (queries.ts ×3, listings page, api/listings, SimilarListings, saved-searches cron, +tests). **Still LV.1 ONLY — production bug NOT fixed until LV.2 (455) + LV.3 (456) + LV.4 (457).** Log: `docs/sessions/2026-06-18-task454-canonical-listing-visibility-predicate.md`. **Next:** owner runs the two emitted commits; then LV.2 decision block → Task 455 kickoff.
 
 ## Pending Action Items
 

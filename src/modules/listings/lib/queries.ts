@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/client'
 import type { PropertyType, ListingType } from '@/types/database'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
 import { LISTING_SELECT } from './listingSelect'
+import { applyPublicVisibility } from './visibility'
 
 export { LISTING_SELECT } from './listingSelect'
 
@@ -28,12 +29,12 @@ export interface ListingFilters {
 
 export async function getFeaturedListings() {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('listings')
-    .select(LISTING_SELECT)
-    .eq('status', 'active')
+  const { data, error } = await applyPublicVisibility(
+    supabase
+      .from('listings')
+      .select(LISTING_SELECT),
+  )
     .eq('is_premium', true)
-    .gte('expires_at', new Date().toISOString())
     .order('created_at', { ascending: false })
     .limit(6)
 
@@ -43,11 +44,11 @@ export async function getFeaturedListings() {
 
 export async function getLatestListings() {
   const supabase = createClient()
-  const { data, error } = await supabase
-    .from('listings')
-    .select(LISTING_SELECT)
-    .eq('status', 'active')
-    .gte('expires_at', new Date().toISOString())
+  const { data, error } = await applyPublicVisibility(
+    supabase
+      .from('listings')
+      .select(LISTING_SELECT),
+  )
     .order('is_premium', { ascending: false })
     .order('created_at', { ascending: false })
     .limit(8)
@@ -62,11 +63,11 @@ export async function getListings(filters: ListingFilters = {}) {
   const from = (page - 1) * LISTINGS_PER_PAGE
   const to = from + LISTINGS_PER_PAGE - 1
 
-  let query = supabase
-    .from('listings')
-    .select(LISTING_SELECT, { count: 'exact' })
-    .eq('status', 'active')
-    .gte('expires_at', new Date().toISOString())
+  let query = applyPublicVisibility(
+    supabase
+      .from('listings')
+      .select(LISTING_SELECT, { count: 'exact' }),
+  )
 
   if (filters.listing_type) query = query.eq('listing_type', filters.listing_type)
   if (filters.property_type) query = query.eq('property_type', filters.property_type)
@@ -96,11 +97,17 @@ export async function getListings(filters: ListingFilters = {}) {
 // change slowly. Cache for 1 hour to eliminate per-request Supabase round-trips.
 // The first request per revalidation period hits Supabase; all subsequent requests
 // within that window are served from the Next.js data cache.
+// getSiteStats is routed through the canonical visibility policy so the homepage
+// headline count matches the actual number of publicly visible listings on /listings.
+// Previously counted status='active' without expiry filter, which overstated the
+// count when active-but-expired listings existed. Aligned under Epic LV (Task 454).
 export const getSiteStats = unstable_cache(
   async () => {
     const supabase = createClient()
     const [{ count: listingsCount }, { count: locationsCount }] = await Promise.all([
-      supabase.from('listings').select('id', { count: 'exact', head: true }).eq('status', 'active'),
+      applyPublicVisibility(
+        supabase.from('listings').select('id', { count: 'exact', head: true }),
+      ),
       supabase.from('locations').select('id', { count: 'exact', head: true }).eq('type', 'city'),
     ])
     return {

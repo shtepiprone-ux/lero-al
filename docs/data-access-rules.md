@@ -31,9 +31,9 @@ Data API)" for the template and per-role rules.
 
 ## Naming Conventions in Database Queries
 
-- Filter publicly visible active listings: always add `.eq('status', 'active')`
-- Filter non-expired listings: always add `.gte('expires_at', new Date().toISOString())`
-- Filter expired listings: always add `.lt('expires_at', new Date().toISOString())`
+- Filter publicly visible listings: always use `applyPublicVisibility(query)` from
+  `src/modules/listings/lib/visibility.ts` — never inline `status='active'` + `expires_at`
+  filters at public read sites. The policy is defined in `PUBLIC_VISIBLE_STATUSES`.
 - Order listings: default by `is_premium desc, created_at desc`
 
 ---

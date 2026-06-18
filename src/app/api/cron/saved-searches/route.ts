@@ -27,6 +27,7 @@ import {
   canonicalToSearchParams,
   type CanonicalFilters,
 } from '@/modules/listings/lib/savedSearchCanonicalize'
+import { applyPublicVisibility } from '@/modules/listings/lib/visibility'
 
 // ── Frequency gate ─────────────────────────────────────────────────────────────
 
@@ -83,14 +84,11 @@ export async function POST(request: NextRequest) {
       const sp = canonicalToSearchParams(canonical)
       const parsed = parseSearchParams(sp)
 
-      // Query new active listings matching the saved filters created after the cutoff.
-      // .eq('status', 'active') is a READ filter, not a mutation — not subject to the
-      // listing-mutation-gateway ESLint rule (which only flags .update() calls).
-      let baseQuery = db
-        .from('listings')
-        .select('id', { count: 'exact', head: true })
-        .eq('status', 'active')
-        .gte('expires_at', now)
+      let baseQuery = applyPublicVisibility(
+        db
+          .from('listings')
+          .select('id', { count: 'exact', head: true }),
+      )
         .gt('created_at', cutoff)
 
       baseQuery = applyListingFilters(baseQuery, parsed) as typeof baseQuery

@@ -403,3 +403,70 @@ describe('Surface consumption proof — static import gate (Task 456)', () => {
     })
   })
 })
+
+// ── Task 457 (LV.4): per-ListingStatus invariant — query fragment ⇔ predicate ⇔ badge ─
+
+describe('Per-ListingStatus invariant: fragment ⇔ predicate ⇔ badge (Task 457)', () => {
+  const futureDate = new Date(Date.now() + 86_400_000).toISOString()
+  const pastDate = new Date(Date.now() - 86_400_000).toISOString()
+
+  const EXPIRY_CASES = [
+    { label: 'future', expires_at: futureDate },
+    { label: 'past', expires_at: pastDate },
+    { label: 'null', expires_at: null as string | null },
+  ] as const
+
+  function mockQueryCapture() {
+    const calls: Array<{ method: string; args: unknown[] }> = []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const q: any = {
+      eq(c: unknown, v: unknown) { calls.push({ method: 'eq', args: [c, v] }); return q },
+      in(c: unknown, v: unknown) { calls.push({ method: 'in', args: [c, v] }); return q },
+      gte(c: unknown, v: unknown) { calls.push({ method: 'gte', args: [c, v] }); return q },
+    }
+    return { q, calls }
+  }
+
+  function wouldFragmentSelect(status: ListingStatus, expires_at: string | null): boolean {
+    const { q, calls } = mockQueryCapture()
+    applyPublicVisibility(q)
+
+    const statusCall = calls[0]
+    let statusMatch = false
+    if (statusCall.method === 'eq') {
+      statusMatch = statusCall.args[1] === status
+    } else if (statusCall.method === 'in') {
+      statusMatch = (statusCall.args[1] as string[]).includes(status)
+    }
+    if (!statusMatch) return false
+
+    const gteCall = calls.find(c => c.method === 'gte' && c.args[0] === 'expires_at')
+    if (gteCall) {
+      if (expires_at === null) return false
+      return new Date(expires_at) >= new Date(gteCall.args[1] as string)
+    }
+    return true
+  }
+
+  for (const status of ALL_STATUSES) {
+    describe(`status="${status}"`, () => {
+      for (const { label, expires_at } of EXPIRY_CASES) {
+        it(`${label} expiry: fragment ⇔ predicate ⇔ badge agree`, () => {
+          const fragmentSelects = wouldFragmentSelect(status, expires_at)
+          const predicate = isListingPubliclyVisible({ status, expires_at })
+          const badge = formatVisibility({ status, expires_at })
+
+          expect(fragmentSelects, `fragment vs predicate for ${status}/${label}`).toBe(predicate.visible)
+          expect(badge.visible, `badge vs predicate for ${status}/${label}`).toBe(predicate.visible)
+          expect(badge.reason, `badge reason vs predicate for ${status}/${label}`).toBe(predicate.reason)
+
+          if (predicate.visible) {
+            expect(badge.labelKey).toBe('visibility_visible')
+          } else {
+            expect(badge.labelKey).not.toBe('visibility_visible')
+          }
+        })
+      }
+    })
+  }
+})

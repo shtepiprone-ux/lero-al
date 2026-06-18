@@ -101,6 +101,12 @@ jobs:
       - name: Admin hydration config self-test (verifies admin branch wiring — no server, no auth)
         run: npm run check:hydration:admin-config
 
+      - name: Listing public-visibility invariant gate (Epic LV / LV.4)
+        run: npm run check:listing-visibility
+
+      - name: Listing public-visibility gate self-test (verifies gate detects violations — CI-safe)
+        run: npm run check:listing-visibility:verify
+
       - name: Full governance report (summary)
         if: always()
         run: npm run governance

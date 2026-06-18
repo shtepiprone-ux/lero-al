@@ -145,3 +145,39 @@ The report must state which step actually breaks.
   "sign in to report", `blocked` → account-restricted message, true server/`save_failed` →
   an honest "problem on our side, try again later" (NOT "you did something wrong"). This messaging
   fix is part of the follow-up fix task, NOT applied here.
+
+---
+
+## 🔁 ORCHESTRATOR REVIEW — REWORK (minor, documentation-accuracy only) · 2026-06-18
+
+Diff-verified against the real files (`src/middleware.ts:6-11`, both deliverable docs, this kickoff,
+`critical-flow-registry.md` report-listing row). The middleware mechanism is plausible and the
+RLS-demotion is correct, but the report **overstates confidence**: AC1/AC2/AC3 are only partially
+satisfiable from a browser console alone (D1/D2/D3 never captured), so a *confirmed* single root cause
+cannot be claimed yet. **Apply these doc edits only — no product code, no new evidence invented:**
+
+- **R1 — Downgrade the certainty wording.** Replace every categorical "Root cause:" with
+  **"Primary probable cause (pending D1/D2/D3 confirmation):"** in BOTH files (report §"Root cause
+  classification" + session log §"Root cause"/"Summary").
+- **R2 — Remove the unproven causal claim.** In the session log, line "The action never executes
+  because the POST dies in middleware" → **"The available evidence is consistent with the POST failing
+  before the action runs; the server terminal (D1) is required to confirm."**
+- **R3 — Co-rank Hypothesis 3.** The heavy `[Fast Refresh] rebuilding` logs make the dev-only
+  stale-action-ID at least co-primary, not merely "CONTRIBUTING". State that **D1 (server terminal) is
+  the single decisive artifact** that distinguishes hyp 1 (middleware redirect/rewrite) from hyp 3
+  (stale action id). Note the hole in hyp 1: if `/uk/...` already carries the correct locale prefix,
+  `handleI18nRouting` returns a pass-through `next()`, NOT a redirect — so middleware-corruption is only
+  decisive if D1 shows a redirect/rewrite or no terminal stack.
+- **R4 — Harden Fix A for the follow-up.** Bind the guard to POST and import the symbol:
+  `const isServerAction = request.method === 'POST' && request.headers.has('Next-Action')` and add
+  `import { NextResponse } from 'next/server'`. Keep `refreshSession` + cookie-copy on the action path.
+- **R5 — Mark status honestly.** Title the deliverable a **hypothesis-ranked diagnosis pending owner
+  discriminators**, not "root cause confirmed". The follow-up FIX task **must start by capturing D1/D2/D3
+  before applying or approving the fix** (these are its first steps, not a blocker that stops it from opening).
+- **R6 — AC5 / commit hygiene.** `scripts/.../schema-drift-check.sql` (timestamp-only churn from an
+  earlier `check:schema-drift` run) MUST NOT be in the Task 435 commit — this is a docs-only task.
+  Owner confirms via NATIVE `git status` and reverts/leaves it unstaged.
+
+**Verdict: REWORK — minor.** Not a blocker for the eventual middleware fix; the direction is right.
+After R1–R5 land (docs only), Task 435 closes as a *diagnosis*, and the FIX task opens with D1/D2/D3
+capture as its first steps (before applying or approving the fix).

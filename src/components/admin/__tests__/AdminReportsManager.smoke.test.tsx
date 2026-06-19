@@ -91,14 +91,13 @@ const BASE_REPORT: ReportRow = {
   reporter: { id: 'u-reporter', name: 'Reporter Person' },
 }
 
-describe('AdminReportsManager — owner row smoke (Task 461)', () => {
-  it('owner present → shows owner name, account-type badge, and profile link with correct href', async () => {
+describe('AdminReportsManager — owner row smoke (Task 461 + Task 462 badge removal)', () => {
+  it('owner present → shows owner name + profile link, no badge/profile_types text', async () => {
     const { AdminReportsManager } = await import('../AdminReportsManager')
     const { container } = render(
       React.createElement(AdminReportsManager, { reports: [BASE_REPORT], locale: 'uk' }),
     )
 
-    // Click the data row (skip the thead tr)
     const rows = container.querySelectorAll('tbody tr')
     expect(rows.length).toBeGreaterThan(0)
     await act(async () => { fireEvent.click(rows[0]) })
@@ -111,22 +110,21 @@ describe('AdminReportsManager — owner row smoke (Task 461)', () => {
     expect(text).toContain('col_owner')
     expect(text).toContain('open_profile')
 
-    // Profile link points to the OWNER id, not the reporter
     const profileLink = Array.from(dialog!.querySelectorAll('a')).find(
       a => a.textContent?.includes('open_profile'),
     )
     expect(profileLink).toBeTruthy()
     expect(profileLink!.getAttribute('href')).toBe('/admin/users/u-owner')
 
-    // Account-type badge label rendered via the key-returning mock
-    expect(text).toContain('profile_types.agent')
+    // Task 462: no profile_types raw key anywhere in the dialog
+    expect(text).not.toMatch(/profile_types/)
 
-    // Reporter row still shows the reporter (distinct)
+    // Reporter row still distinct
     expect(text).toContain('Reporter Person')
     expect(text).toContain('col_reporter')
   })
 
-  it('owner with null/unknown user_type → no crash, falls back to private label, profile link present', async () => {
+  it('owner with unknown user_type → no crash, no raw key, profile link present', async () => {
     const report: ReportRow = {
       ...BASE_REPORT,
       listing: {
@@ -145,11 +143,9 @@ describe('AdminReportsManager — owner row smoke (Task 461)', () => {
     const dialog = container.querySelector('[data-testid="report-dialog"]')!
     const text = dialog.textContent ?? ''
 
-    // Falls back to 'private' label, not 'bogus_value'
-    expect(text).toContain('profile_types.private')
-    expect(text).not.toContain('profile_types.bogus_value')
+    // No raw profile_types key for any user_type
+    expect(text).not.toMatch(/profile_types/)
 
-    // Profile link still present
     const profileLink = Array.from(dialog.querySelectorAll('a')).find(
       a => a.textContent?.includes('open_profile'),
     )

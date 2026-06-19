@@ -129,7 +129,7 @@ export function AdminTable<Row>({
   const resolvedCardRow = cardRow ?? synthesizeCard
 
   return (
-    <>
+    <div data-testid="admin-table">
       {/* ── Card mode: visible below lg: ─────────────────────────────────────── */}
       <div className="lg:hidden">
         <AdminCardList
@@ -314,6 +314,6 @@ export function AdminTable<Row>({
           </table>
         </div>
       </div>
-    </>
+    </div>
   )
 }

@@ -103,7 +103,7 @@ export function StatusChangeControl<S extends string>({
     }))
 
     return (
-      <div className="flex flex-col gap-2" aria-label={ariaLabel}>
+      <div data-testid="status-change-control" className="flex flex-col gap-2" aria-label={ariaLabel}>
         <Combobox
           options={options}
           value={currentStatus}
@@ -160,7 +160,7 @@ export function StatusChangeControl<S extends string>({
     && !pending
 
   return (
-    <div className="rounded-xl border bg-muted/20 p-4 space-y-3" aria-label={ariaLabel}>
+    <div data-testid="status-change-control" className="rounded-xl border bg-muted/20 p-4 space-y-3" aria-label={ariaLabel}>
       <p className="text-sm font-medium">{t('status_change_label')}</p>
 
       {allowedTransitions.length > 0 ? (

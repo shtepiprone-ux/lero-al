@@ -49,7 +49,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
   const allowedCount = PERMISSION_KEYS.filter(k => permissions[k].allowed).length
 
   return (
-    <div className="flex flex-col gap-6 p-6 max-w-2xl">
+    <div data-testid="admin-permissions-manager" className="flex flex-col gap-6 p-6 max-w-2xl">
       {/* Header */}
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-2">
@@ -97,6 +97,7 @@ export function AdminPermissionsManager({ permissions: initial, events }: Props)
           return (
             <div
               key={key}
+              data-testid={`perm-row-${keySlug}`}
               className="grid grid-cols-[1fr_auto] items-center px-4 py-3.5 gap-4 hover:bg-muted/20 transition-colors"
             >
               <div className="flex flex-col gap-0.5 min-w-0">

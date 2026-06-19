@@ -342,7 +342,7 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
   ]
 
   return (
-    <>
+    <div data-testid="admin-property-types-manager">
       {/* Form dialog */}
       {editTarget !== undefined && (
         <PropertyTypeFormDialog
@@ -407,6 +407,6 @@ export function AdminPropertyTypesManager({ initialTypes, searchQuery }: Props) 
           ),
         })}
       />
-    </>
+    </div>
   )
 }

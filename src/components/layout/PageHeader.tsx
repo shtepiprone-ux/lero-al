@@ -20,6 +20,7 @@ export function PageHeader({
 }: PageHeaderProps) {
   return (
     <Comp
+      data-testid="page-header"
       className={cn(
         'flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between',
         className,

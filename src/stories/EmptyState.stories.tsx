@@ -15,7 +15,7 @@ const e = (k: string, l = 'en') => storyT(l, `storybook.emptystate.${k}`)
 
 function EmptyStateBlock({ icon: Icon, title, description, action }: { icon: React.ElementType; title: string; description: string; action?: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
+    <div data-testid="empty-state" className="flex flex-col items-center justify-center py-24 gap-4 text-center">
       <div className="h-16 w-16 rounded-2xl bg-muted flex items-center justify-center">
         <Icon className="h-8 w-8 text-muted-foreground" />
       </div>

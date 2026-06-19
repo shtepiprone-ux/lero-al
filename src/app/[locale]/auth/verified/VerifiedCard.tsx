@@ -14,7 +14,7 @@ interface VerifiedCardProps {
 export function VerifiedCard({ variant, title, body, ctaLabel, ctaHref }: VerifiedCardProps) {
   const isSuccess = variant === 'success'
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
+    <div data-testid="verified-page" className="min-h-[60vh] flex items-center justify-center px-4">
       <div className="max-w-sm w-full bg-card border rounded-2xl shadow-sm p-8 flex flex-col items-center gap-5 text-center">
         {isSuccess
           ? <CheckCircle2 className="h-14 w-14 text-status-success shrink-0" />

@@ -49,11 +49,13 @@ export async function RecentlyViewedSection({
   }
 
   return (
-    <RecentlyViewedGrid
-      listings={listings}
-      showEmptyState={showEmptyState}
-      clearSlot={showClear ? <ClearRecentlyViewedButton /> : undefined}
-    />
+    <div data-testid="recently-viewed-section">
+      <RecentlyViewedGrid
+        listings={listings}
+        showEmptyState={showEmptyState}
+        clearSlot={showClear ? <ClearRecentlyViewedButton /> : undefined}
+      />
+    </div>
   )
 }
 

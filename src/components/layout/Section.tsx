@@ -12,7 +12,7 @@ export function Section({ title, description, children, className }: SectionProp
   const hasHeading = title != null || description != null
 
   return (
-    <div className={cn(className)}>
+    <div data-testid="section" className={cn(className)}>
       {hasHeading && (
         <div className="min-w-0 mb-4">
           {title && (

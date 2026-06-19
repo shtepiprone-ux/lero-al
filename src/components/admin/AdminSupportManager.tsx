@@ -764,7 +764,7 @@ export function AdminSupportManager({ tickets: init, events: initEvents }: Props
   ]
 
   return (
-    <div className="space-y-5">
+    <div data-testid="admin-support-manager" className="space-y-5">
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-3">
         {[

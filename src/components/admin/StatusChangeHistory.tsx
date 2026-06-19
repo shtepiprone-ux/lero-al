@@ -26,7 +26,7 @@ export function StatusChangeHistory({ events, labelFormatter, emptyKey }: Props)
 
   if (events.length === 0) {
     return (
-      <div className="rounded-lg border bg-muted/30 p-3">
+      <div data-testid="status-change-history" className="rounded-lg border bg-muted/30 p-3">
         <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1">
           {t('status_change_history_title')}
         </h4>
@@ -43,7 +43,7 @@ export function StatusChangeHistory({ events, labelFormatter, emptyKey }: Props)
   const label = (s: string) => labelFormatter ? labelFormatter(s) : humanize(s)
 
   return (
-    <div className="rounded-lg border bg-muted/30 p-3">
+    <div data-testid="status-change-history" className="rounded-lg border bg-muted/30 p-3">
       <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
         {t('status_change_history_title')}
       </h4>

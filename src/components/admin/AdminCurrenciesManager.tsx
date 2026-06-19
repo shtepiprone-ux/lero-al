@@ -372,7 +372,7 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
   ]
 
   return (
-    <>
+    <div data-testid="admin-currencies-manager">
     {/* Delete confirmation dialog */}
     {deleteTarget && (
       <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
@@ -460,6 +460,6 @@ export function AdminCurrenciesManager({ initialCurrencies }: Props) {
         />
       )}
     </div>
-    </>
+    </div>
   )
 }

@@ -18,7 +18,7 @@ export const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputPro
     const [visible, setVisible] = React.useState(false)
 
     return (
-      <div className="relative">
+      <div data-slot="password-input" className="relative">
         <Input
           {...props}
           ref={ref}

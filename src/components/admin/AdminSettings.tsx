@@ -117,7 +117,7 @@ export function AdminSettings({ initialSettings }: Props) {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div data-testid="admin-settings" className="flex flex-col gap-5">
       {/* Tab bar */}
       <div className="flex gap-1 bg-muted rounded-xl p-1 flex-wrap">
         {TABS.map(tb => (

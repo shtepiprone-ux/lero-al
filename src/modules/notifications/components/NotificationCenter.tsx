@@ -28,7 +28,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
   const hasUnread = notifications.some(n => !n.is_read)
 
   return (
-    <div className="flex flex-1 min-h-0 flex-col overflow-hidden">
+    <div data-testid="notification-center" className="flex flex-1 min-h-0 flex-col overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>

@@ -163,7 +163,7 @@ export function ListingDetailViewBody({
   const effectiveCanSendInquiry = isStaffPreview ? false : canSendInquiry
 
   return (
-    <div className="pb-32 md:pb-20 lg:pb-8">
+    <div data-testid="listing-detail-view" className="pb-32 md:pb-20 lg:pb-8">
       {/* ── LCP image preload — native RSC <link>, hoisted to <head> by React 19 / Next.js. */}
       {galleryPreload && (
         <link

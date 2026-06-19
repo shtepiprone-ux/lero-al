@@ -24,7 +24,7 @@ export function PageShell({
     )
 
   return (
-    <Comp className={cn('container-wide py-8 sm:py-12 lg:py-16 2xl:py-20', className)}>
+    <Comp data-testid="page-shell" className={cn('container-wide py-8 sm:py-12 lg:py-16 2xl:py-20', className)}>
       {inner}
     </Comp>
   )

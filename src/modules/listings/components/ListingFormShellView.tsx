@@ -128,7 +128,7 @@ export function ListingFormShellView({
     : []
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div data-testid="listing-form-shell-view" className="container mx-auto px-4 py-8 max-w-5xl">
 
       {/* Page header */}
       <div className="mb-8">

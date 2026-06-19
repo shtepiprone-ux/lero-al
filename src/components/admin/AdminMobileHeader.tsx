@@ -38,7 +38,7 @@ export function AdminMobileHeader({ onOpen, siteName = 'Lero.al' }: Props) {
     : [siteName, '']
 
   return (
-    <header className="admin-mobile-header lg:hidden sticky top-0 z-30 min-h-14 bg-card border-b flex items-center gap-3 px-4 shrink-0">
+    <header data-testid="admin-mobile-header" className="admin-mobile-header lg:hidden sticky top-0 z-30 min-h-14 bg-card border-b flex items-center gap-3 px-4 shrink-0">
       <Button
         type="button"
         variant="ghost"

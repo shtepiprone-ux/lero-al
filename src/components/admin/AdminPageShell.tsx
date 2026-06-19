@@ -23,7 +23,7 @@ export function AdminPageShell({
   stickyHeader = false,
 }: AdminPageShellProps) {
   return (
-    <div className="container-admin">
+    <div data-testid="admin-page-shell" className="container-admin">
       <div className="p-3 md:p-6 flex flex-col gap-4">
         {(title || actions) && (
           <div

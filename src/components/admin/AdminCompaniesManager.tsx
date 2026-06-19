@@ -337,7 +337,7 @@ export function AdminCompaniesManager({ companies: initial }: Props) {
   ]
 
   return (
-    <div className="flex flex-col gap-4">
+    <div data-testid="admin-companies-manager" className="flex flex-col gap-4">
       {/* Toolbar — flex-col at <sm (both controls full-width), flex-row at sm+ */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">

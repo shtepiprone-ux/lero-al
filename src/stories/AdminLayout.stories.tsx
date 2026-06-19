@@ -45,7 +45,7 @@ type Story = StoryObj<AdminLayoutArgs>;
 function AdminToolbarRender({ onFilter, onAddListing, locale = 'en' }: { onFilter?: () => void; onAddListing?: () => void; locale?: string }) {
   const [lastAction, setLastAction] = useState<string | null>(null)
   return (
-    <div className="space-y-2">
+    <div data-testid="admin-toolbar" className="space-y-2">
       {/* <768: flex-col — title row on top, each control full-width (long translations like uk/it fit).
           ≥768 (md:): flex-row — horizontal desktop layout with controls on the right. */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4 md:p-6 border-b bg-card rounded-t-2xl gap-3">

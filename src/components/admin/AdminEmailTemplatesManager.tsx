@@ -360,7 +360,7 @@ export function AdminEmailTemplatesManager({ templates: initial, isAdmin }: { te
     : new Map<Locale, EmailTemplate>()
 
   return (
-    <div className="flex flex-col gap-4">
+    <div data-testid="admin-email-templates-manager" className="flex flex-col gap-4">
       {/* Albanian-only policy notice */}
       <Alert>
         <AlertDescription>{t('albanian_only_notice')}</AlertDescription>

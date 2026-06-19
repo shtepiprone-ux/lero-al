@@ -36,7 +36,7 @@ export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot
   if (!listings.length) {
     if (!showEmptyState) return null
     return (
-      <div className="recently-viewed">
+      <div data-testid="recently-viewed-section" className="recently-viewed">
         <h2 className="text-xl font-bold mb-4">{t('recently_viewed_title')}</h2>
         <p className="text-sm text-muted-foreground">{t('recently_viewed_empty')}</p>
       </div>
@@ -44,7 +44,7 @@ export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot
   }
 
   return (
-    <div className="recently-viewed">
+    <div data-testid="recently-viewed-section" className="recently-viewed">
       {/* Flat flex-wrap: title + clear button on same row; only wraps left-aligned when title fills the row.
           Same fix family as FilterBar (Task 389 / Task 392). */}
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">

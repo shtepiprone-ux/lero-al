@@ -76,7 +76,7 @@ export function FilterBar({
   ) : filters
 
   return (
-    <div className={cn('flex flex-col gap-3', className)}>
+    <div data-testid="filter-bar" className={cn('flex flex-col gap-3', className)}>
 
       {/* ── Row 1: Sheet trigger (hidden ≥1024) + Search ─────────────────────── */}
       {/* <640: stacked full-width. 640–1023: inline row.

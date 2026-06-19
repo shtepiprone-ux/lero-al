@@ -613,7 +613,7 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
   )
 
   return (
-    <>
+    <div data-testid="admin-listings-table">
       {/* Premium Dialog */}
       {premiumDialog && (
         <PremiumDialog
@@ -754,6 +754,6 @@ export function AdminListingsTable({ listings: init, total, page, perPage, activ
           </div>
         )}
       </AdminPageShell>
-    </>
+    </div>
   )
 }

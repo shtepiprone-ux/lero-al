@@ -498,6 +498,16 @@ All five Storybook categories are required sweep scope:
 its session log references the `--assert` PNG/JSON artifacts per rendered cell (uk@320/375/390 mandatory) and shows
 the gates green — plus a negative-flow transcript proving each gate FAILS on a planted violation, then reverts.
 
+### 14.4.1 Rendered-proof contract (Task 464, 2026-06-19)
+A screenshot is NOT proof of rendered Storybook content unless the gate verifies ALL FIVE layers:
+1. **No unresolved loader** — spinner/progress/skeleton (for non-allowlisted stories) must be absent at capture time; timeout with loader still present → `loader-only` FAIL.
+2. **Non-empty visible DOM** — `#storybook-root` must exist, have a non-zero bbox, contain visible rendered descendants, and not be merely the Storybook shell or an empty wrapper; violation → `blank-canvas` or `empty-canvas` FAIL.
+3. **Required semantic anchors** — every `ASSERT_STORIES` entry declares ≥1 `anchors[]` marker; every declared anchor must be found AND visible in the DOM; missing anchor → `anchor-missing` FAIL; no declared anchors on a non-allowlisted story → config-error FAIL.
+4. **Non-blank screenshot bitmap** — the captured PNG must not be visually empty/near-uniform (blank white, transparent, or shell-only); violation → `blank-screenshot` FAIL.
+5. **Manifest evidence** — per-cell `anchorsExpected`, `anchorsFound`, `visualContentCheck` metrics recorded; top-level `summary` with `total/passed/failed/loaderOnly/blankCanvas/emptyCanvas/blankScreenshot/anchorMissing` counters.
+
+**Horizontal-overflow, responsive, full-width, popup, and regression checks are INVALID unless the story first passes rendered-proof (layers 1–4).** The harness evaluates each cell in this exact order, short-circuiting on the first layer that fails. A PASS is valid only when BOTH rendered-proof AND visual-assertion layers pass.
+
 ### 14.5 Implementation notes (Task 380, 2026-06-04)
 
 **Canvas gutter token:** `.container-wide py-6` — `container-wide` from `src/app/globals.css` §4 provides horizontal padding `1rem` (base) → `1.5rem` (≥640px) → `2rem` (≥1024px) → `3rem` (≥1536px); `py-6` (1.5rem / 24px, design-system.md §5 Tailwind 4px scale) provides canonical vertical separation from the Storybook toolbar. This is the ONLY canonical gutter — do NOT use ad-hoc `px-N`/`py-N` in story wrappers or Storybook's `padded` layout. Task 386 added the `py-6` vertical component.

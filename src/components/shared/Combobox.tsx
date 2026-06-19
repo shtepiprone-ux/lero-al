@@ -274,7 +274,7 @@ export function Combobox({
   )
 
   return (
-    <div ref={containerRef} className={cn('relative', className)}>
+    <div ref={containerRef} data-testid="combobox" className={cn('relative', className)}>
       {icon && (
         <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10 text-muted-foreground">
           {icon}

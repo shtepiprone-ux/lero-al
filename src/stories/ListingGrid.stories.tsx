@@ -22,7 +22,7 @@ export const Desktop: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <div className="container-wide mx-auto px-4 py-8">
+      <div data-testid="listing-grid" className="container-wide mx-auto px-4 py-8">
         <h2 className="text-xl sm:text-2xl font-bold mb-6">{HEADING(locale)}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
@@ -47,7 +47,7 @@ export const HugeDesktop: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <div className="container-wide mx-auto px-4 py-8">
+      <div data-testid="listing-grid" className="container-wide mx-auto px-4 py-8">
         <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mb-6">{HEADING(locale)}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
@@ -72,7 +72,7 @@ export const Mobile: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <div className="px-4 py-4">
+      <div data-testid="listing-grid" className="px-4 py-4">
         <h2 className="text-lg font-bold mb-4">{HEADING(locale)}</h2>
         <div className="grid grid-cols-1 gap-4">
           {makeStoryListings(locale).slice(0, 4).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
@@ -97,7 +97,7 @@ export const LocaleStress: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-      <div className="container-wide mx-auto px-4 py-8">
+      <div data-testid="listing-grid" className="container-wide mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {makeStoryListings(locale).slice(0, 4).map(listing => (
             <StoryListingCard key={listing.id} data={listing} />
@@ -125,7 +125,7 @@ export const OldPriceWrap: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const stressCard = makeStoryListings(locale)[0]!
     return (
-      <div className="px-3 py-4" style={{ maxWidth: 320 }}>
+      <div data-testid="listing-grid" className="px-3 py-4" style={{ maxWidth: 320 }}>
         <StoryListingCard data={stressCard} />
       </div>
     )
@@ -149,7 +149,7 @@ export const CurrencyUSD: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const listings = makeStoryListings(locale).map(l => ({ ...l, displayCurrency: 'USD' as string }))
     return (
-      <div className="container-wide mx-auto px-4 py-8">
+      <div data-testid="listing-grid" className="container-wide mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {listings.map(listing => (
             <StoryListingCard key={listing.id} data={listing} />

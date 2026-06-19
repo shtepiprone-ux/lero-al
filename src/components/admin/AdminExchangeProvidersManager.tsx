@@ -284,7 +284,7 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
   ]
 
   return (
-    <>
+    <div data-testid="admin-exchange-providers-manager">
     {deleteTarget && (
       <Dialog open onOpenChange={v => !v && setDeleteTarget(null)}>
         <DialogContent className="max-w-sm">
@@ -379,6 +379,6 @@ export function AdminExchangeProvidersManager({ initialProviders }: Props) {
         />
       )}
     </div>
-    </>
+    </div>
   )
 }

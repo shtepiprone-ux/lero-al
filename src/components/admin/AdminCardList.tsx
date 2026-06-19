@@ -44,7 +44,7 @@ export function AdminCardList<Row>({
 
   if (loading) {
     return (
-      <div className="divide-y rounded-2xl border bg-card" aria-label={ariaLabel}>
+      <div data-testid="admin-card-list" className="divide-y rounded-2xl border bg-card" aria-label={ariaLabel}>
         {loadingState ?? (
           Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className={cn(padding, 'animate-pulse space-y-2')}>
@@ -59,14 +59,14 @@ export function AdminCardList<Row>({
 
   if (rows.length === 0) {
     return (
-      <div className="rounded-2xl border bg-card px-4 py-12 text-center text-sm text-muted-foreground" aria-label={ariaLabel}>
+      <div data-testid="admin-card-list" className="rounded-2xl border bg-card px-4 py-12 text-center text-sm text-muted-foreground" aria-label={ariaLabel}>
         {emptyState}
       </div>
     )
   }
 
   return (
-    <div className="divide-y rounded-2xl border bg-card" aria-label={ariaLabel}>
+    <div data-testid="admin-card-list" className="divide-y rounded-2xl border bg-card" aria-label={ariaLabel}>
       {rows.map(row => {
         const cardContent = card(row)
         return (

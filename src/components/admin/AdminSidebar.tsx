@@ -175,7 +175,7 @@ interface AdminSidebarProps {
 
 export function AdminSidebar({ mobileOpen = false, onMobileOpenChange, siteName = 'Lero.al' }: AdminSidebarProps) {
   return (
-    <>
+    <div data-testid="admin-sidebar">
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-60 shrink-0 border-r h-screen sticky top-0">
         <SidebarContent siteName={siteName} />
@@ -187,6 +187,6 @@ export function AdminSidebar({ mobileOpen = false, onMobileOpenChange, siteName 
           <SidebarContent siteName={siteName} onClose={() => onMobileOpenChange?.(false)} />
         </SheetContent>
       </Sheet>
-    </>
+    </div>
   )
 }

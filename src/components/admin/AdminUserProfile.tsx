@@ -857,7 +857,7 @@ export function AdminUserProfile({ user, email: authEmail, emailConfirmedAt, cit
   )
 
   return (
-    <div className="flex flex-col gap-4">
+    <div data-testid="admin-user-profile" className="flex flex-col gap-4">
 
       {/* ── Back button — full width above layout ───────────────────────────── */}
       <div className="flex items-center">

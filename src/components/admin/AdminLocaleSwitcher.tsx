@@ -26,7 +26,7 @@ export function AdminLocaleSwitcher({ defaultOpen }: AdminLocaleSwitcherProps = 
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div data-testid="admin-locale-switcher" className="flex flex-col gap-2">
       <p className="text-2xs font-semibold text-muted-foreground/60 uppercase tracking-widest px-3">
         {t('language')}
       </p>

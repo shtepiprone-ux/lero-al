@@ -31,7 +31,7 @@ export const ContainerWide: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
-    <div className="w-full bg-muted/30 py-8">
+    <div data-testid="container" className="w-full bg-muted/30 py-8">
       <div className="container-wide mx-auto px-4">
         <DemoBox label=".container-wide — max 88rem (1408px) — public pages" locale={locale} />
       </div>

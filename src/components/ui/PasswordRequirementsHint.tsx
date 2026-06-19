@@ -40,7 +40,7 @@ export function PasswordRequirementsHint({ value }: PasswordRequirementsHintProp
   const allMet = Object.values(rules).every(Boolean)
 
   return (
-    <div className="flex flex-col gap-1 mt-1">
+    <div data-testid="password-requirements-hint" className="flex flex-col gap-1 mt-1">
       {hasInput && !allMet && (
         <p className="text-xs text-destructive">{t('password_requirements_error')}</p>
       )}

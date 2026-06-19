@@ -16,6 +16,19 @@
 > key REQUIRES `keys.<slug>` + `descriptions.<slug>` i18n entries in all four locales or the Дозволи page renders a raw
 > key / MISSING_MESSAGE (the exact bug class Task 462 just fixed).
 
+> **🔁 RE-EXECUTION after Task 464 (owner directive 2026-06-19) — READ.** Task 464 landed and COMMITTED (`5c2edabae`) the
+> repaired Storybook rendered-proof gate (`scripts/check-stories-rendered.mjs`): a 5-layer fail-closed system
+> (loader-only / blank-canvas / empty-canvas / blank-screenshot via `sharp` / anchor-missing, rendered-proof BEFORE the
+> visual gates). **That committed gate already enumerates this task's stories and semantic anchors** (`ASSERT_STORIES`
+> rows for `admin-adminreportsmanager--full-management/terminal-reopen/delete-confirm-mobile-{320,375,390}` and
+> `admin-adminpermissionsmanager--{default,mobile-320,375,390}`). Therefore: this is a clean re-execution, but the
+> implementation MUST converge EXACTLY on the story IDs + anchor `data-testid`s pinned in the **"Storybook rendered-proof
+> contract"** section below — renaming an export or a testid will break the already-committed gate (anchor-missing). Treat
+> THIS kickoff as the single source of truth; do not assume any prior partial 463 attempt in the working tree is correct —
+> bring the implementation to exactly this spec. The prior intermingled overflow fix (`overflow-x-auto` on the filter tab
+> bar + `px-3 sm:px-5` responsive table padding) IS required and belongs to THIS task (it left 464's commit deliberately).
+> **A `data-testid` is an attribute-only anchor — it must NOT change layout/className/DOM structure beyond adding the attribute.**
+
 ## Pre-read (`docs/rule-index.md` → "Admin control" + "DB / server action / RLS" bundles + always-required)
 
 - `docs/agent-contract.md` (clauses 1–15) · `docs/backlog.md` · `docs/critical-flow-registry.md` → **"Report listing" row** (clause 15 applies — add/extend regression tests; cannot close without automated proof old behavior still works)
@@ -33,6 +46,7 @@
 5. **Delete requires a confirmation dialog** before it fires.
 6. After a successful delete, the report disappears from the list **without a full page reload** (optimistic state removal, like the existing status-update flow).
 7. **"Close"** is satisfied by the existing terminal transitions (`resolved` / `dismissed`). **Do NOT add a new `ReportStatus` enum value** (no `closed`) unless the orchestrator approves a separate schema task.
+8. **Audit-retention for a hard-deleted report — RESOLVED (owner decision 2026-06-19), NOT a STOP & ASK.** For a HARD-deleted report, dependent `report_actions` rows may be removed as part of deleting that report, whether by explicit dependent delete or by FK cascade. This is acceptable for this product because hard delete means the report and its report-specific audit trail are intentionally disposed. Sonnet must still document the actual FK shape and the chosen implementation path, but this audit-retention question is **resolved and is NOT a STOP & ASK trigger** — UNLESS the schema reveals a broader/shared audit-table impact beyond this report's own `report_actions` (e.g. the delete would cascade into a shared, cross-entity audit table), in which case STOP & ASK.
 
 ## What already exists (read before changing)
 
@@ -59,10 +73,10 @@
    - Else (any non-noop transition NOT in the allowlist — incl. `reviewed → pending`, `resolved ↔ dismissed`, and any terminal → `pending`/`reviewed` reopen) → require `hasPermission('reports.status_override')`. Admin passes automatically; a `reports.manage`-only moderator is denied (`forbidden`); a moderator granted `reports.status_override` passes.
    - Decide the `isNoop` (same→same) handling explicitly: treat as `invalid_status` (no write) unless the current code already no-ops it — match existing behavior and state which in the log.
    - Keep the `report_actions` audit-log write for every status change (including reopen). Emit `console.error` + typed error keys on failure (Task 436 actionable-error rule). On permission failure → `return { error: 'forbidden' }` (do NOT throw to the client).
-2. **`deleteReportAction(reportId)`** — new action. Gate on `hasPermission('reports.delete')`. If not permitted → `return { error: 'forbidden' }` (do NOT throw). If unauthenticated → `return { error: 'unauthorized' }`. Use the service-role `createAdminClient()`. **Hard-delete** the `listing_reports` row. Handle the `report_actions` FK: if `report_actions.report_id` references `listing_reports.id` **without `ON DELETE CASCADE`**, the raw delete will fail — either (a) delete dependent `report_actions` rows first in the same action, or (b) add an `ON DELETE CASCADE` migration. **Verify the actual FK in the schema and pick the correct path; both the FK situation AND whether deleting the audit rows conflicts with audit-retention policy are STOP & ASK triggers (see below).** On a missing/already-deleted row → `return { error: 'not_found' }` (do NOT return `{}` for a missing row — a no-op would let the UI show a false success). **Implement missing-row detection explicitly** — a bare Supabase `.delete().eq('id', reportId)` does not clearly signal that no row matched, so use a count-/return-aware path (e.g. `.delete().eq('id', reportId).select('id')` and treat an empty result as `not_found`) so an already-deleted report can never return a false success. On DB error → `console.error('[deleteReport] …', error)` + `return { error: 'save_failed' }`. On success → `return {}`.
+2. **`deleteReportAction(reportId)`** — new action. Gate on `hasPermission('reports.delete')`. If not permitted → `return { error: 'forbidden' }` (do NOT throw). If unauthenticated → `return { error: 'unauthorized' }`. Use the service-role `createAdminClient()`. **Hard-delete** the `listing_reports` row. Handle the `report_actions` FK: if `report_actions.report_id` references `listing_reports.id` **without `ON DELETE CASCADE`**, the raw delete will fail — either (a) delete dependent `report_actions` rows first in the same action, or (b) add an `ON DELETE CASCADE` migration. **Verify the actual FK in the schema and pick the correct path. The report-specific `report_actions` audit-retention question is already RESOLVED by owner decision #8 and is NOT a STOP & ASK trigger. STOP & ASK only if the schema reveals deletion/cascade into a broader or shared audit table beyond this report's own `report_actions`.** On a missing/already-deleted row → `return { error: 'not_found' }` (do NOT return `{}` for a missing row — a no-op would let the UI show a false success). **Implement missing-row detection explicitly** — a bare Supabase `.delete().eq('id', reportId)` does not clearly signal that no row matched, so use a count-/return-aware path (e.g. `.delete().eq('id', reportId).select('id')` and treat an empty result as `not_found`) so an already-deleted report can never return a false success. On DB error → `console.error('[deleteReport] …', error)` + `return { error: 'save_failed' }`. On success → `return {}`.
 3. Do NOT weaken `reportListingAction` (submission) or the reporter-notification path.
 
-> **STOP & ASK triggers (clause 2):** (a) the report's `report_actions` audit rows would be removed — whether by an **explicit dependent-delete OR by an existing `ON DELETE CASCADE`** — and the audit-retention policy does NOT explicitly permit disposing of audit history for deleted reports. Cascade can silently erase audit history exactly like a manual delete, so document the FK/cascade situation and STOP & ASK unless retention is explicitly disposable for deleted reports; (b) a confirm/AlertDialog canonical primitive does not already exist. *(The "is moderator seeded?" question is RESOLVED: keys default OFF, delegable via Дозволи — no seed, no exclusion.)*
+> **STOP & ASK triggers (clause 2):** (a) **only if** deleting this report would cascade/dependent-delete into a **broader or shared audit table beyond this report's own `report_actions`** (cross-entity audit history) — disposing of THIS report's own `report_actions` rows is already RESOLVED as acceptable (decision #8 above) and is NOT a STOP & ASK; still document the actual FK shape and chosen path; (b) a confirm/AlertDialog canonical primitive does not already exist. *(The "is moderator seeded?" question is RESOLVED: keys default OFF, delegable via Дозволи — no seed, no exclusion.)*
 
 ### Permission catalog (`src/lib/auth/permissionKeys.ts` + i18n)
 
@@ -114,6 +128,47 @@ All new strings via `t()` with **sq/en/uk/it** parity. No hardcoded user-facing 
 - The new **status `Select` + Apply**, **Reopen** button, **Delete** button, and the **confirmation dialog** must all be **full-width at `max-sm`** (controls `max-sm:w-full`; the `Select` dropdown AND the confirm dialog are full-width bottom sheets via the canonical primitives — drag-handle, ≥90dvh internal scroll, close on backdrop + Esc). Action rows use `flex-wrap`/full-width at <640. ≥44px touch targets. Labels wrap in all 4 locales. No h-scroll at 320. Spell out the exact `max-sm` classes — no "make it responsive".
 - The two new rows on the **Дозволи** matrix are an existing surface (+2 rows); confirm they still render full-width with wrapping labels at <640 in all 4 locales (no regression, no clip).
 
+## Storybook rendered-proof contract (Task 464 gate — MANDATORY, EXACT IDs + anchors)
+
+The committed `scripts/check-stories-rendered.mjs` (`5c2edabae`) already lists the stories and anchors below. Your stories
+and components MUST match them **byte-for-byte on export name + testid value**, render REAL content (no loader-only / blank /
+empty canvas), expose each anchor AFTER the story's `play` runs, and pass the visual gates (no horizontal overflow at 320,
+non-blank bitmap). Do NOT add `parameters.layout: 'centered'|'padded'` (the global `withCanvas`/`fullscreen` decorator must
+fill <640); locale is toolbar-reactive (no `globals.locale` pin to a single language); no hardcoded user-facing strings.
+
+**Required `data-testid` anchors in `AdminReportsManager.tsx` (attribute-only — no layout change):**
+- root container → `data-testid="admin-reports-manager"`
+- the admin status-override block (Select + Apply), rendered when `canOverrideReportStatus` → `data-testid="status-override-section"`
+- the Reopen button (terminal reports, when `canOverrideReportStatus`) → `data-testid="reopen-btn"`
+- the Delete button (when `canDeleteReports`) → `data-testid="delete-btn"`
+- the filter tab bar carries `overflow-x-auto`; table cells use `px-3 sm:px-5` (the no-overflow-at-320 fix — required here).
+
+**Required `data-testid` anchors in `AdminPermissionsManager.tsx`:** root `data-testid="admin-permissions-manager"` and one
+`data-testid="perm-row-${key.replace('.', '_')}"` per permission row (so `perm-row-reports_status_override` /
+`perm-row-reports_delete` resolve). **These two rows only render if `reports.status_override` + `reports.delete` are in
+`PERMISSION_KEYS` (this task) — that is the dependency that makes the committed gate's permission cells pass.** If the
+AdminPermissionsManager `data-testid`s / story file already landed under Task 464, do NOT re-add or re-commit them — only
+ensure the two new keys exist so the rows (and their anchors) render; if they did NOT land, add them here.
+
+**Required stories — `src/components/admin/AdminReportsManager.stories.tsx`** (`title: 'Admin/AdminReportsManager'`), exact exports → IDs → anchors:
+
+| Export | Story ID | Args | Anchors that MUST resolve after `play` |
+|---|---|---|---|
+| `FullManagement_Mobile320/375/390` | `admin-adminreportsmanager--full-management-mobile-{320,375,390}` | `canOverrideReportStatus: true, canDeleteReports: true`; `play` opens a pending report's dialog | `admin-reports-manager` + `status-override-section` |
+| `TerminalReopen_Mobile320/375/390` | `admin-adminreportsmanager--terminal-reopen-mobile-{320,375,390}` | resolved/terminal fixture, caps true; `play` opens the terminal report | `admin-reports-manager` + `reopen-btn` |
+| `DeleteConfirm_Mobile320/375/390` | `admin-adminreportsmanager--delete-confirm-mobile-{320,375,390}` | `canDeleteReports: true`; `play` opens dialog then clicks `[data-testid="delete-btn"]` | `admin-reports-manager` + `delete-btn` |
+
+**Required stories — `AdminPermissionsManager.stories.tsx`** (`title: 'Admin/AdminPermissionsManager'`): `Default`, `Mobile320`,
+`Mobile375`, `Mobile390` with fixture permissions/events → IDs `admin-adminpermissionsmanager--{default,mobile-320,375,390}` →
+anchors `admin-permissions-manager` + `perm-row-reports_status_override` + `perm-row-reports_delete`. (If already committed by
+464, leave as-is; just ensure the keys exist.)
+
+**Proof required in the session log:** run `npm run screenshots:assert` (or `--fast` for 320/375/390 × 4 locales) and paste the
+result — every story above PASS with `anchorsFound` matching `anchorsExpected`, non-blank bitmap, no overflow. **A spinner-only
+/ blank / anchor-missing cell is a HARD FAIL under the 464 gate — `tsc=0`/`check:stories` is NOT proof.** Include the
+uk@320/375/390 matrix. **The orchestrator confirms the diff; the AUTHORITATIVE rendered-proof run is the owner's NATIVE run on
+the committed tree** (sandbox is screen-only) — note this in the log so the owner re-runs after commit.
+
 ## Regression coverage (clause 15 — MANDATORY, "Report listing" critical flow)
 
 Baseline first: record that the existing report tests pass before the change. Then ADD:
@@ -126,7 +181,7 @@ Baseline first: record that the existing report tests pass before the change. Th
 
 **Allowed:** `src/components/admin/AdminReportsManager.tsx`; `src/modules/listings/actions/reportListing.ts`; `src/lib/auth/permissionKeys.ts`; the admin reports **page** server component (to compute + thread `canOverrideReportStatus`/`canDeleteReports`; name it in the log; STOP & ASK before widening); `src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx`; new server-action test file(s); `src/components/admin/AdminReportsManager.stories.tsx`; `messages/{sq,en,uk,it}.json` (report controls + the two new `admin.permissions.keys.*`/`descriptions.*`); migration/seed SQL file if FK-cascade is required (provide idempotent SQL in the session log); `docs/critical-flow-registry.md` / `docs/backlog.md` / `docs/sessions/` / `docs/rls-rules.md` (RLS-change test note).
 
-**Do NOT touch:** report submission flow behavior, the reporter-notification email/in-app path, public listing UI, unrelated admin surfaces, middleware, the Task 462 owner-row cleanup (assume it landed), and the `AdminPermissionsManager` component logic itself (it auto-renders the new keys — only the i18n entries are added). **Do not add a new `ReportStatus` enum value.** **Do not emit git commands.**
+**Do NOT touch:** report submission flow behavior, the reporter-notification email/in-app path, public listing UI, unrelated admin surfaces, middleware, the Task 462 owner-row cleanup (assume it landed), and the `AdminPermissionsManager` component **logic** (it auto-renders the new keys — the i18n entries are what's added). **Scope clarification:** if the required `AdminPermissionsManager` anchors (`data-testid="admin-permissions-manager"`, `perm-row-${slug}`) are MISSING (not already landed under Task 464), an **attribute-only** `data-testid` addition in `AdminPermissionsManager.tsx` IS allowed — do not change logic, className, layout, state, or behavior. **Do not add a new `ReportStatus` enum value.** **Do not emit git commands.**
 
 ## Acceptance criteria (each maps to a flow + verifiable in the diff)
 
@@ -137,7 +192,8 @@ Baseline first: record that the existing report tests pass before the change. Th
 5. New keys (`reports.status_override`, `reports.delete`) added to `PERMISSION_KEYS`; their `admin.permissions.keys.*`/`descriptions.*` + all report-control strings have sq/en/uk/it parity; no raw keys; Дозволи page renders both toggles localized; `check:i18n` green.
 6. UI control visibility is driven by the `canOverrideReportStatus`/`canDeleteReports` capability props (not `isAdmin`) — *UI test asserts both true→shown, both false→hidden*.
 7. Mobile <640 gate satisfied for all new controls + the confirm dialog + the Дозволи new rows, with the rendered matrix (uk@320/375/390) in the log.
-8. Gates green: `tsc --noEmit`=0; `check:i18n`; `check:stories`; the new vitest suites; `screenshots:assert`; file-integrity (clause 14) on every touched file. Idempotent SQL (if any) pasted for owner apply.
+8. **Storybook rendered-proof (Task 464 gate):** all stories in the "Storybook rendered-proof contract" section exist with the EXACT export names → IDs → anchor `data-testid`s, render real content, and pass `screenshots:assert` with `anchorsFound == anchorsExpected`, non-blank bitmap, no overflow at 320; uk@320/375/390 matrix in the log — *contract section + screenshots:assert transcript*.
+9. Gates green: `tsc --noEmit`=0; `check:i18n`; `check:stories`; the new vitest suites; `screenshots:assert` (rendered-proof, anchors found); file-integrity (clause 14) on every touched file. Idempotent SQL (if any) pasted for owner apply. **Note in the log that the authoritative rendered-proof run is the owner's NATIVE run on the committed tree.**
 
 ## Hard contract (verified against the diff)
 

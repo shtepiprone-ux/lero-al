@@ -1055,7 +1055,20 @@
       "anonymous": "Anonim",
       "empty": "Nuk ka raporte",
       "success_updated": "Statusi u përditësua",
+      "success_deleted": "Raporti u fshi",
       "error_update_failed": "Përditësimi dështoi",
+      "error_conflict": "Ky raport ka ndryshuar që kur e hapët — rifreskoni dhe provoni përsëri",
+      "error_forbidden": "Nuk keni leje për të kryer këtë veprim",
+      "error_unauthorized": "Duhet të jeni të identifikuar për të kryer këtë veprim",
+      "error_delete_failed": "Fshirja dështoi",
+      "error_not_found": "Raporti nuk u gjet",
+      "change_status_label": "Ndrysho statusin",
+      "action_apply": "Apliko",
+      "action_reopen": "Rihap",
+      "action_delete": "Fshi",
+      "action_confirm_delete": "Konfirmo fshirjen",
+      "confirm_delete_title": "Fshi raportin?",
+      "confirm_delete_body": "Ky raport dhe historiku i auditimit do të fshihen përgjithmonë. Ky veprim nuk mund të kthehet.",
       "col_owner": "Pronari i njoftimit",
       "owner_not_found": "Pronari nuk u gjet",
       "open_profile": "Hap profilin"
@@ -1514,6 +1527,8 @@
         "settings_manage": "Menaxho cilësimet e faqes",
         "legal_manage": "Menaxho faqet ligjore",
         "reports_manage": "Menaxho raportet",
+        "reports_status_override": "Ndryshimi i lirë i statusit të raporteve",
+        "reports_delete": "Fshirja e raporteve",
         "audit_clear_history": "Pastro historikun e përdoruesit"
       },
       "descriptions": {
@@ -1527,6 +1542,8 @@
         "settings_manage": "Mund të ruajë cilësimet e faqes",
         "legal_manage": "Mund të krijojë, ndryshojë ose fshijë faqet ligjore",
         "reports_manage": "Mund të shqyrtojë, zgjidhë ose refuzojë raportet e njoftimeve",
+        "reports_status_override": "Mund të ndryshojë lirshëm statusin e raporteve, duke përfshirë rihapjen e raporteve të mbyllura",
+        "reports_delete": "Mund të fshijë përgjithmonë raportet e njoftimeve",
         "audit_clear_history": "Mund të pastrojë hyrjet e historikut të ndryshimeve dhe statusit të profilit të përdoruesit"
       }
     },

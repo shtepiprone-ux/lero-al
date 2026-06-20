@@ -65,6 +65,11 @@ export async function reportListingAction(
   return {}
 }
 
+const MODERATOR_ALLOWED: Record<string, string[]> = {
+  pending:  ['reviewed', 'resolved', 'dismissed'],
+  reviewed: ['resolved', 'dismissed'],
+}
+
 export async function updateReportStatusAction(
   reportId: string,
   newStatus: string,
@@ -75,15 +80,18 @@ export async function updateReportStatusAction(
   const user = await getUser()
   if (!user) return { error: 'unauthorized' }
 
+  // Gate: verify caller has at least one report capability BEFORE any service-role read
+  const [canManage, canOverride] = await Promise.all([
+    hasPermission('reports.manage'),
+    hasPermission('reports.status_override'),
+  ])
+  if (!canManage && !canOverride) return { error: 'forbidden' }
+
   const db = createAdminClient()
 
-  // Permission check
   const { data: profile } = await db.from('users').select('role').eq('id', user.id).single()
   if (!profile) return { error: 'forbidden' }
-  const canManageReports = await hasPermission('reports.manage')
-  if (!canManageReports) return { error: 'forbidden' }
 
-  // Get current status for the audit log
   const { data: report } = await db
     .from('listing_reports')
     .select('status')
@@ -92,12 +100,23 @@ export async function updateReportStatusAction(
 
   if (!report) return { error: 'not_found' }
 
-  // Update status — report status, not a listing status transition; disable is justified
+  const oldStatus = report.status as string
+  if (oldStatus === newStatus) return { error: 'invalid_status' }
+
+  // Classify: override holders pass any transition; manage-only restricted to allowlist
+  if (!canOverride) {
+    const isModeratorAllowed = MODERATOR_ALLOWED[oldStatus]?.includes(newStatus) ?? false
+    if (!isModeratorAllowed) return { error: 'forbidden' }
+  }
+
+  // CAS update: filter on oldStatus to prevent concurrent transition race
   /* eslint-disable no-restricted-syntax */
-  const { error: updateError } = await db
+  const { data: updated, error: updateError } = await db
     .from('listing_reports')
     .update({ status: newStatus })
     .eq('id', reportId)
+    .eq('status', oldStatus)
+    .select('id')
   /* eslint-enable no-restricted-syntax */
 
   if (updateError) {
@@ -105,29 +124,70 @@ export async function updateReportStatusAction(
     return { error: 'save_failed' }
   }
 
-  // Log the action
+  if (!updated || updated.length === 0) return { error: 'conflict' }
+
   const trimmedNotes = notes.trim() || null
-  await db.from('report_actions').insert({
+  const { error: auditError } = await db.from('report_actions').insert({
     report_id: reportId,
     actor_id: user.id,
     actor_role: profile.role,
-    old_status: report.status,
+    old_status: oldStatus,
     new_status: newStatus,
     notes: trimmedNotes,
   })
 
-  // Send reporter notification when transitioning to a terminal status (resolved / dismissed)
-  // and the status actually changed (idempotency guard).
+  if (auditError) {
+    // CAS revert: only revert if the row still has OUR newStatus (prevents clobbering a concurrent write)
+    /* eslint-disable no-restricted-syntax */
+    const { data: reverted, error: revertError } = await db
+      .from('listing_reports')
+      .update({ status: oldStatus })
+      .eq('id', reportId)
+      .eq('status', newStatus)
+      .select('id')
+    /* eslint-enable no-restricted-syntax */
+    if (revertError || !reverted || reverted.length === 0) {
+      console.error('[updateReportStatus] CRITICAL: audit insert failed and status NOT reverted (concurrent change or revert error)', { reportId, oldStatus, newStatus, revertError })
+    } else {
+      console.error('[updateReportStatus] audit insert failed, status reverted', auditError)
+    }
+    return { error: 'save_failed' }
+  }
+
   const TERMINAL: ReportStatus[] = ['resolved', 'dismissed']
-  if (
-    TERMINAL.includes(newStatus as ReportStatus) &&
-    newStatus !== report.status
-  ) {
-    // Fire-and-forget — notification failure must NOT block the moderation action
+  if (TERMINAL.includes(newStatus as ReportStatus)) {
     notifyReporter(db, reportId, newStatus as 'resolved' | 'dismissed').catch(e =>
       console.error('[reporter-notification] failed', { reportId, newStatus, error: e }),
     )
   }
+
+  return {}
+}
+
+export async function deleteReportAction(
+  reportId: string,
+): Promise<{ error?: string }> {
+  const user = await getUser()
+  if (!user) return { error: 'unauthorized' }
+
+  const canDelete = await hasPermission('reports.delete')
+  if (!canDelete) return { error: 'forbidden' }
+
+  const db = createAdminClient()
+
+  // ON DELETE CASCADE on report_actions.report_id handles dependent audit rows
+  const { data: deleted, error } = await db
+    .from('listing_reports')
+    .delete()
+    .eq('id', reportId)
+    .select('id')
+
+  if (error) {
+    console.error('[deleteReport] delete failed', error)
+    return { error: 'save_failed' }
+  }
+
+  if (!deleted || deleted.length === 0) return { error: 'not_found' }
 
   return {}
 }

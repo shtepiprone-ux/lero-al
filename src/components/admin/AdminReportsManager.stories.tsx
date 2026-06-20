@@ -38,11 +38,17 @@ const FIXTURE_REPORTS: ReportRow[] = [
   },
 ]
 
+const FIXTURE_RESOLVED_REPORT: ReportRow = {
+  ...FIXTURE_REPORT,
+  id: 'r-story-resolved',
+  status: 'resolved',
+}
+
 const meta: Meta<typeof AdminReportsManager> = {
   title: 'Admin/AdminReportsManager',
   component: AdminReportsManager,
   tags: ['autodocs'],
-  args: { reports: FIXTURE_REPORTS, locale: 'uk' },
+  args: { reports: FIXTURE_REPORTS, locale: 'uk', canOverrideReportStatus: false, canDeleteReports: false },
 }
 export default meta
 type Story = StoryObj<typeof AdminReportsManager>
@@ -65,7 +71,8 @@ export const LocaleStress: Story = {
 
 const openDialog = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
   const rows = canvasElement.querySelectorAll('tbody tr')
-  if (rows[0]) await userEvent.click(rows[0])
+  if (!rows[0]) throw new Error('No table rows found')
+  await userEvent.click(rows[0])
 }
 
 export const DialogOwnerRow_Mobile320: Story = {
@@ -86,4 +93,99 @@ export const DialogOwnerRow_Mobile390: Story = {
 export const DialogOwnerRow_Desktop: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
   play: openDialog,
+}
+
+// ── Task 463 — Full management controls (status override + reopen + delete) ──
+
+const openPendingDialogWithCaps = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  const rows = canvasElement.querySelectorAll('tbody tr')
+  if (!rows[0]) throw new Error('No table rows found')
+  await userEvent.click(rows[0])
+}
+
+export const FullManagement_Mobile320: Story = {
+  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+  play: openPendingDialogWithCaps,
+}
+
+export const FullManagement_Mobile375: Story = {
+  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile375', isRotated: false } },
+  play: openPendingDialogWithCaps,
+}
+
+export const FullManagement_Mobile390: Story = {
+  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile390', isRotated: false } },
+  play: openPendingDialogWithCaps,
+}
+
+// Terminal report with Reopen + Delete
+
+const clickResolvedFilter = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  const tabs = canvasElement.querySelectorAll('button')
+  let clicked = false
+  for (const tab of tabs) {
+    if (tab.textContent?.includes('filter_resolved') || tab.textContent?.includes('Resolved') || tab.textContent?.includes('Вирішено') || tab.textContent?.includes('Zgjidhur') || tab.textContent?.includes('Risolte')) {
+      await userEvent.click(tab)
+      clicked = true
+      break
+    }
+  }
+  if (!clicked) throw new Error('Resolved filter tab not found')
+  await new Promise(r => setTimeout(r, 100))
+  const rows = canvasElement.querySelectorAll('tbody tr')
+  if (!rows[0]) throw new Error('No table rows found after switching to resolved filter')
+  await userEvent.click(rows[0])
+}
+
+export const TerminalReopen_Mobile320: Story = {
+  args: { reports: [FIXTURE_RESOLVED_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+  play: clickResolvedFilter,
+}
+
+export const TerminalReopen_Mobile375: Story = {
+  args: { reports: [FIXTURE_RESOLVED_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile375', isRotated: false } },
+  play: clickResolvedFilter,
+}
+
+export const TerminalReopen_Mobile390: Story = {
+  args: { reports: [FIXTURE_RESOLVED_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile390', isRotated: false } },
+  play: clickResolvedFilter,
+}
+
+// Delete confirmation dialog
+
+const openDeleteConfirm = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+  const rows = canvasElement.querySelectorAll('tbody tr')
+  if (!rows[0]) throw new Error('No table rows found')
+  await userEvent.click(rows[0])
+  await new Promise(r => setTimeout(r, 300))
+  const deleteBtn = canvasElement.querySelector('[data-testid="delete-btn"]') as HTMLElement
+  if (!deleteBtn) throw new Error('delete-btn not found in dialog')
+  deleteBtn.scrollIntoView({ block: 'center' })
+  await new Promise(r => setTimeout(r, 100))
+  await userEvent.click(deleteBtn)
+}
+
+export const DeleteConfirm_Mobile320: Story = {
+  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: false, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+  play: openDeleteConfirm,
+}
+
+export const DeleteConfirm_Mobile375: Story = {
+  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: false, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile375', isRotated: false } },
+  play: openDeleteConfirm,
+}
+
+export const DeleteConfirm_Mobile390: Story = {
+  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: false, canDeleteReports: true },
+  globals: { viewport: { value: 'mobile390', isRotated: false } },
+  play: openDeleteConfirm,
 }

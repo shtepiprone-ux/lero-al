@@ -1055,7 +1055,20 @@
       "anonymous": "Anonimo",
       "empty": "Nessuna segnalazione",
       "success_updated": "Stato aggiornato",
+      "success_deleted": "Segnalazione eliminata",
       "error_update_failed": "Aggiornamento fallito",
+      "error_conflict": "Questa segnalazione è stata modificata da quando l'hai aperta — aggiorna e riprova",
+      "error_forbidden": "Non hai i permessi per eseguire questa azione",
+      "error_unauthorized": "Devi effettuare l'accesso per eseguire questa azione",
+      "error_delete_failed": "Eliminazione fallita",
+      "error_not_found": "Segnalazione non trovata",
+      "change_status_label": "Cambia stato",
+      "action_apply": "Applica",
+      "action_reopen": "Riapri",
+      "action_delete": "Elimina",
+      "action_confirm_delete": "Conferma eliminazione",
+      "confirm_delete_title": "Eliminare la segnalazione?",
+      "confirm_delete_body": "Questa segnalazione e il suo registro di audit verranno eliminati definitivamente. Questa azione non può essere annullata.",
       "col_owner": "Proprietario dell'annuncio",
       "owner_not_found": "Proprietario non trovato",
       "open_profile": "Apri profilo"
@@ -1514,6 +1527,8 @@
         "settings_manage": "Gestisci impostazioni sito",
         "legal_manage": "Gestisci pagine legali",
         "reports_manage": "Gestisci segnalazioni",
+        "reports_status_override": "Override stato segnalazioni",
+        "reports_delete": "Elimina segnalazioni",
         "audit_clear_history": "Cancella cronologia utente"
       },
       "descriptions": {
@@ -1527,6 +1542,8 @@
         "settings_manage": "Può salvare le impostazioni del sito",
         "legal_manage": "Può creare, modificare o eliminare le pagine legali",
         "reports_manage": "Può esaminare, risolvere o ignorare le segnalazioni",
+        "reports_status_override": "Può cambiare liberamente lo stato delle segnalazioni, inclusa la riapertura di quelle chiuse",
+        "reports_delete": "Può eliminare definitivamente le segnalazioni",
         "audit_clear_history": "Può cancellare le voci della cronologia delle modifiche e dello stato del profilo utente"
       }
     },

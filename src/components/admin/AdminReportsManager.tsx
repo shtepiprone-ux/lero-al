@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useTransition, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-import { ExternalLink, Loader2, Flag } from 'lucide-react'
+import { ExternalLink, Loader2, Flag, Trash2, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -13,10 +13,19 @@ import { RelativeTime } from '@/components/shared/RelativeTime'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { updateReportStatusAction } from '@/modules/listings/actions/reportListing'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { updateReportStatusAction, deleteReportAction } from '@/modules/listings/actions/reportListing'
 import { cn } from '@/lib/utils'
 import type { ReportStatus, ReportReason } from '@/types/database'
 
@@ -50,28 +59,45 @@ const STATUS_VARIANT: Record<ReportStatus, 'neutral' | 'warning' | 'success' | '
 
 // ── Report detail dialog ──────────────────────────────────────────────────────
 
+const ALL_STATUSES: ReportStatus[] = ['pending', 'reviewed', 'resolved', 'dismissed']
+
 function ReportDetailDialog({
   report,
   locale,
   onClose,
   onUpdated,
+  onDeleted,
+  canOverrideReportStatus,
+  canDeleteReports,
 }: {
   report: ReportRow
   locale: string
   onClose: () => void
   onUpdated: (id: string, status: ReportStatus) => void
+  onDeleted: (id: string) => void
+  canOverrideReportStatus: boolean
+  canDeleteReports: boolean
 }) {
   const t = useTranslations('admin.reports')
   const tl = useTranslations('listing')
   const tc = useTranslations('common')
   const [isPending, startTransition] = useTransition()
   const [notes, setNotes] = useState('')
+  const [selectedStatus, setSelectedStatus] = useState<ReportStatus>(report.status)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+
+  const ERROR_KEYS: Record<string, string> = {
+    forbidden: 'error_forbidden',
+    unauthorized: 'error_unauthorized',
+    conflict: 'error_conflict',
+    not_found: 'error_not_found',
+  }
 
   function handleAction(newStatus: ReportStatus) {
     startTransition(async () => {
       const result = await updateReportStatusAction(report.id, newStatus, notes)
       if (result.error) {
-        toast.error(t('error_update_failed'))
+        toast.error(t((ERROR_KEYS[result.error] ?? 'error_update_failed') as Parameters<typeof t>[0]))
         return
       }
       toast.success(t('success_updated'))
@@ -80,8 +106,30 @@ function ReportDetailDialog({
     })
   }
 
+  function handleDelete() {
+    startTransition(async () => {
+      const result = await deleteReportAction(report.id)
+      if (result.error) {
+        toast.error(t((ERROR_KEYS[result.error] ?? 'error_delete_failed') as Parameters<typeof t>[0]))
+        setShowDeleteConfirm(false)
+        return
+      }
+      toast.success(t('success_deleted'))
+      onDeleted(report.id)
+      setShowDeleteConfirm(false)
+      onClose()
+    })
+  }
+
   const reasonKey = `report_reason_${report.reason}` as Parameters<typeof tl>[0]
   const listingUrl = report.listing ? `/${locale}/listings/${report.listing.slug}` : null
+  const isOpen = report.status === 'pending' || report.status === 'reviewed'
+  const isTerminal = report.status === 'resolved' || report.status === 'dismissed'
+
+  const statusItems = ALL_STATUSES.map(s => ({
+    value: s,
+    label: t(`status_${s}` as Parameters<typeof t>[0]),
+  }))
 
   return (
     <Dialog open onOpenChange={open => { if (!open) onClose() }}>
@@ -164,9 +212,42 @@ function ReportDetailDialog({
             <RelativeTime date={report.created_at} />
           </div>
 
+          {/* Status override: free any→any Select + Apply */}
+          {canOverrideReportStatus && (
+            <div className="flex flex-col gap-2" data-testid="status-override-section">
+              <Label className="text-xs">{t('change_status_label')}</Label>
+              <div className="flex flex-col max-sm:w-full sm:flex-row gap-2">
+                <Select
+                  value={selectedStatus}
+                  onValueChange={v => setSelectedStatus(v as ReportStatus)}
+                  items={statusItems}
+                >
+                  <SelectTrigger variant="outline" size="sm" className="max-sm:w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ALL_STATUSES.map(s => (
+                      <SelectItem key={s} value={s}>
+                        {t(`status_${s}` as Parameters<typeof t>[0])}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button
+                  size="sm"
+                  onClick={() => handleAction(selectedStatus)}
+                  disabled={isPending || selectedStatus === report.status}
+                  className="gap-1.5 max-sm:w-full"
+                >
+                  {isPending && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
+                  {t('action_apply')}
+                </Button>
+              </div>
+            </div>
+          )}
+
           {/* Action notes */}
-          {/* eslint-disable-next-line no-restricted-syntax -- report status, not listing status */}
-          {report.status === 'pending' || report.status === 'reviewed' ? (
+          {isOpen && (
             <>
               <div className="flex flex-col gap-1.5">
                 <Label className="text-xs">{t('notes_label')}</Label>
@@ -180,8 +261,8 @@ function ReportDetailDialog({
                 />
               </div>
 
-              {/* Action buttons */}
-              <div className="flex flex-wrap gap-2 justify-end">
+              {/* Action buttons — standard moderator transitions */}
+              <div className="flex flex-wrap gap-2 max-sm:flex-col justify-end">
                 {/* eslint-disable-next-line no-restricted-syntax -- report status, not listing status */}
                 {report.status === 'pending' && (
                   <Button
@@ -189,7 +270,7 @@ function ReportDetailDialog({
                     size="sm"
                     onClick={() => handleAction('reviewed')}
                     disabled={isPending}
-                    className="gap-1.5"
+                    className="gap-1.5 max-sm:w-full"
                   >
                     {isPending && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
                     {t('action_review')}
@@ -200,7 +281,7 @@ function ReportDetailDialog({
                   size="sm"
                   onClick={() => handleAction('dismissed')}
                   disabled={isPending}
-                  className="gap-1.5 text-destructive hover:text-destructive border-destructive/30 hover:border-destructive/60"
+                  className="gap-1.5 max-sm:w-full text-destructive hover:text-destructive border-destructive/30 hover:border-destructive/60"
                 >
                   {isPending && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
                   {t('action_dismiss')}
@@ -209,20 +290,88 @@ function ReportDetailDialog({
                   size="sm"
                   onClick={() => handleAction('resolved')}
                   disabled={isPending}
-                  className="gap-1.5"
+                  className="gap-1.5 max-sm:w-full"
                 >
                   {isPending && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
                   {t('action_resolve')}
                 </Button>
               </div>
             </>
-          ) : (
-            <Button variant="ghost" size="sm" onClick={onClose} className="self-end">
-              {tc('close')}
+          )}
+
+          {/* Reopen quick-action for terminal reports */}
+          {isTerminal && canOverrideReportStatus && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handleAction('pending')}
+              disabled={isPending}
+              className="gap-1.5 max-sm:w-full self-end"
+              data-testid="reopen-btn"
+            >
+              {isPending && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
+              <RotateCcw className="h-3 w-3 shrink-0" />
+              {t('action_reopen')}
             </Button>
           )}
+
+          {/* Bottom actions: delete + close */}
+          <div className="flex flex-wrap gap-2 max-sm:flex-col justify-end border-t pt-3">
+            {canDeleteReports && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowDeleteConfirm(true)}
+                disabled={isPending}
+                className="gap-1.5 max-sm:w-full text-destructive hover:text-destructive border-destructive/30 hover:border-destructive/60"
+                data-testid="delete-btn"
+              >
+                <Trash2 className="h-3 w-3 shrink-0" />
+                {t('action_delete')}
+              </Button>
+            )}
+            {!isOpen && !canOverrideReportStatus && (
+              <Button variant="ghost" size="sm" onClick={onClose} className="max-sm:w-full self-end">
+                {tc('close')}
+              </Button>
+            )}
+          </div>
         </div>
       </DialogContent>
+
+      {/* Delete confirmation dialog */}
+      {showDeleteConfirm && (
+        <Dialog open onOpenChange={open => { if (!open) setShowDeleteConfirm(false) }}>
+          <DialogContent className="max-w-sm" data-testid="delete-confirm-dialog">
+            <DialogHeader>
+              <DialogTitle className="text-destructive">{t('confirm_delete_title')}</DialogTitle>
+              <DialogDescription>{t('confirm_delete_body')}</DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={isPending}
+                className="max-sm:w-full"
+              >
+                {tc('cancel')}
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={handleDelete}
+                disabled={isPending}
+                className="gap-1.5 max-sm:w-full"
+                data-testid="confirm-delete-btn"
+              >
+                {isPending && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
+                {t('action_confirm_delete')}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </Dialog>
   )
 }
@@ -232,9 +381,11 @@ function ReportDetailDialog({
 interface Props {
   reports: ReportRow[]
   locale: string
+  canOverrideReportStatus: boolean
+  canDeleteReports: boolean
 }
 
-export function AdminReportsManager({ reports: initial, locale }: Props) {
+export function AdminReportsManager({ reports: initial, locale, canOverrideReportStatus, canDeleteReports }: Props) {
   const t = useTranslations('admin.reports')
   const tl = useTranslations('listing')
 
@@ -258,10 +409,15 @@ export function AdminReportsManager({ reports: initial, locale }: Props) {
     setReports(prev => prev.map(r => r.id === id ? { ...r, status } : r))
   }
 
+  function handleDeleted(id: string) {
+    setReports(prev => prev.filter(r => r.id !== id))
+    setSelected(null)
+  }
+
   return (
-    <div className="flex flex-col gap-4">
+    <div data-testid="admin-reports-manager" className="flex flex-col gap-4">
       {/* Status filter tabs */}
-      <div className="flex gap-1 border-b">
+      <div className="flex gap-1 border-b overflow-x-auto">
         {FILTERS.map(f => (
           <button
             key={f}
@@ -295,11 +451,11 @@ export function AdminReportsManager({ reports: initial, locale }: Props) {
           <table className="w-full text-sm">
             <thead className="border-b bg-muted/30">
               <tr>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">{t('col_reason')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden md:table-cell">{t('col_listing')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden lg:table-cell">{t('col_reporter')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground">{t('col_status')}</th>
-                <th className="px-5 py-3 text-left font-medium text-muted-foreground hidden sm:table-cell">{t('col_date')}</th>
+                <th className="px-3 sm:px-5 py-3 text-left font-medium text-muted-foreground">{t('col_reason')}</th>
+                <th className="px-3 sm:px-5 py-3 text-left font-medium text-muted-foreground hidden md:table-cell">{t('col_listing')}</th>
+                <th className="px-3 sm:px-5 py-3 text-left font-medium text-muted-foreground hidden lg:table-cell">{t('col_reporter')}</th>
+                <th className="px-3 sm:px-5 py-3 text-left font-medium text-muted-foreground">{t('col_status')}</th>
+                <th className="px-3 sm:px-5 py-3 text-left font-medium text-muted-foreground hidden sm:table-cell">{t('col_date')}</th>
               </tr>
             </thead>
             <tbody className="divide-y">
@@ -311,19 +467,19 @@ export function AdminReportsManager({ reports: initial, locale }: Props) {
                     className="hover:bg-muted/20 transition-colors cursor-pointer"
                     onClick={() => setSelected(report)}
                   >
-                    <td className="px-5 py-3 font-medium">{tl(reasonKey)}</td>
-                    <td className="px-5 py-3 text-muted-foreground hidden md:table-cell max-w-xs truncate">
+                    <td className="px-3 sm:px-5 py-3 font-medium">{tl(reasonKey)}</td>
+                    <td className="px-3 sm:px-5 py-3 text-muted-foreground hidden md:table-cell max-w-xs truncate">
                       {report.listing?.title ?? '—'}
                     </td>
-                    <td className="px-5 py-3 text-muted-foreground hidden lg:table-cell">
+                    <td className="px-3 sm:px-5 py-3 text-muted-foreground hidden lg:table-cell">
                       {report.reporter?.name ?? t('anonymous')}
                     </td>
-                    <td className="px-5 py-3">
+                    <td className="px-3 sm:px-5 py-3">
                       <Badge variant={STATUS_VARIANT[report.status]}>
                         {t(`status_${report.status}` as Parameters<typeof t>[0])}
                       </Badge>
                     </td>
-                    <td className="px-5 py-3 text-muted-foreground hidden sm:table-cell">
+                    <td className="px-3 sm:px-5 py-3 text-muted-foreground hidden sm:table-cell">
                       <RelativeTime date={report.created_at} />
                     </td>
                   </tr>
@@ -341,6 +497,9 @@ export function AdminReportsManager({ reports: initial, locale }: Props) {
           locale={locale}
           onClose={() => setSelected(null)}
           onUpdated={handleUpdated}
+          onDeleted={handleDeleted}
+          canOverrideReportStatus={canOverrideReportStatus}
+          canDeleteReports={canDeleteReports}
         />
       )}
     </div>

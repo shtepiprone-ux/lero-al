@@ -1055,7 +1055,20 @@
       "anonymous": "Anonymous",
       "empty": "No reports",
       "success_updated": "Status updated",
+      "success_deleted": "Report deleted",
       "error_update_failed": "Update failed",
+      "error_conflict": "This report changed since you opened it — refresh and try again",
+      "error_forbidden": "You do not have permission to perform this action",
+      "error_unauthorized": "You must be logged in to perform this action",
+      "error_delete_failed": "Delete failed",
+      "error_not_found": "Report not found",
+      "change_status_label": "Change status",
+      "action_apply": "Apply",
+      "action_reopen": "Reopen",
+      "action_delete": "Delete",
+      "action_confirm_delete": "Confirm delete",
+      "confirm_delete_title": "Delete report?",
+      "confirm_delete_body": "This report and its audit history will be permanently deleted. This action cannot be undone.",
       "col_owner": "Listing owner",
       "owner_not_found": "Owner not found",
       "open_profile": "Open profile"
@@ -1514,6 +1527,8 @@
         "settings_manage": "Manage site settings",
         "legal_manage": "Manage legal pages",
         "reports_manage": "Manage reports",
+        "reports_status_override": "Override report status",
+        "reports_delete": "Delete reports",
         "audit_clear_history": "Clear user history"
       },
       "descriptions": {
@@ -1527,6 +1542,8 @@
         "settings_manage": "Can save site settings",
         "legal_manage": "Can create, edit or delete legal pages",
         "reports_manage": "Can review, resolve or dismiss listing reports",
+        "reports_status_override": "Can freely change report status, including reopening closed reports",
+        "reports_delete": "Can permanently delete listing reports",
         "audit_clear_history": "Can clear user profile change and status history entries"
       }
     },

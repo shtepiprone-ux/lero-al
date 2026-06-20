@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { getAdminLocale } from '@/lib/admin/getAdminLocale'
+import { hasPermission } from '@/lib/auth/permissions'
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { AdminReportsManager, type ReportRow } from '@/components/admin/AdminReportsManager'
 
@@ -9,6 +10,11 @@ export const metadata = { title: 'Reports — Admin' }
 export default async function AdminReportsPage() {
   const locale = await getAdminLocale()
   const t = await getTranslations('admin.pages')
+
+  const [canOverrideReportStatus, canDeleteReports] = await Promise.all([
+    hasPermission('reports.status_override'),
+    hasPermission('reports.delete'),
+  ])
 
   const db = createAdminClient()
 
@@ -30,6 +36,8 @@ export default async function AdminReportsPage() {
       <AdminReportsManager
         reports={(reports ?? []) as unknown as ReportRow[]}
         locale={locale}
+        canOverrideReportStatus={canOverrideReportStatus}
+        canDeleteReports={canDeleteReports}
       />
     </div>
   )

@@ -9,6 +9,8 @@ export const PERMISSION_KEYS = [
   'settings.manage',
   'legal.manage',
   'reports.manage',
+  'reports.status_override',
+  'reports.delete',
   'audit.clear_history',
 ] as const
 

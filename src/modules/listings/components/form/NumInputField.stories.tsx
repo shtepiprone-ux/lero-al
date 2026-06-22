@@ -30,14 +30,3 @@ export const FloorsTotal: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const FloorsTotalMobile320: Story = {
-  globals: { viewport: { value: 'mobile320', isRotated: false }, locale: 'uk' },
-}
-
-export const FloorsTotalMobile375: Story = {
-  globals: { viewport: { value: 'mobile375', isRotated: false }, locale: 'uk' },
-}
-
-export const FloorsTotalMobile390: Story = {
-  globals: { viewport: { value: 'mobile390', isRotated: false }, locale: 'uk' },
-}

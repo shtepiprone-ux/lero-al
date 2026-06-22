@@ -190,8 +190,11 @@ Breakpoints are verified using the **Storybook viewport toolbar** — NOT as sep
 
 ### Locales via the locale toolbar (required)
 Locales (sq/en/uk/it) are exercised via the **locale toolbar** — NOT as separate locale-named exports.
-- One `LocaleStress` story per component (pinned to `mobile320` + `uk` locale) covers the worst-case overflow scenario.
-- The locale toolbar handles routine sq/it/en switching for all other stories.
+- One `LocaleStress` story per component (pinned to `mobile320` viewport, **toolbar-reactive for locale — NO `locale` pin**) covers the worst-case overflow scenario.
+- The locale toolbar handles all locale switching for all stories. Per-locale export families (`Uk*`/`Sq*`/`It*`/`En*`/`Ukrainian*`/etc.) are FORBIDDEN (Check 3).
+- Hardcoded `locale` values in `globals`, `args`, or JSX props are FORBIDDEN (Check 4). Resolve locale from `context.globals.locale`.
+- Viewport/width-named exports (`Mobile320`, `Tablet`, `Desktop`, etc.) are FORBIDDEN unless allowlisted as a real overlay/interaction mode in `scripts/story-realmode-allowlist.json` (Check 12).
+- Duplicate-family export names (`Proof*`, `Demo*`, `Filtered*`, `Canonical*`) are FORBIDDEN unless allowlisted (Check 13).
 
 ### One canonical set per component (required)
 Each component section has ONE canonical story per real mode. "Real mode" = a state the component genuinely reaches (e.g. filter with 0 active vs 2 active vs sheet open). There is NO per-width duplicate of the same mode.
@@ -482,13 +485,21 @@ All five Storybook categories are required sweep scope:
   `globals:{locale:'uk'}` pin. `LocaleStress` is one toolbar-reactive export per component, **never named "Ukrainian".**
 
 ### 14.3 Machine gates (a violation FAILS the build — not a checklist)
-- **ESLint** (scoped to `**/*.stories.tsx` + `src/stories/**`) errors on: `layout:'centered'|'padded'`; raw
-  `<button>/<input>/<select>/<textarea>` JSX; story export names matching `/Ukrainian/`; raw user-facing string
-  literals in JSX text / `aria-label` / `title`/`label`/`placeholder` / fixture fields (anything not from
-  `t()`/`storyT()`, minus a tight, documented dev-prose allowlist).
-- **`scripts/check-stories.mjs`** runs the same checks + `storybook.*` parity and exits non-zero on any violation;
-  wired into `prebuild-storybook`/`prestorybook` and CI, exposed as `npm run check:stories`. So `build-storybook`
-  and CI FAIL on reintroduced hardcode.
+- **ESLint** (scoped to `src/**/*.stories.tsx`, `src/**/*.stories.ts`, `src/stories/**`) errors on: `layout:'centered'|'padded'`; raw
+  `<button>/<input>/<select>/<textarea>` JSX; raw user-facing string literals in JSX text / `aria-label` /
+  `title`/`label`/`placeholder` / fixture fields (anything not from `t()`/`storyT()`, minus a documented allowlist).
+  ESLint is a static best-effort signal; `check-stories.mjs` is authoritative for allowlist-aware checks.
+- **`scripts/check-stories.mjs`** (`npm run check:stories`, `checksRan: 13`) runs 13 governance checks over
+  `**/*.stories.{ts,tsx}` and exits non-zero on any violation; wired into `prebuild-storybook`/`prestorybook` and CI.
+  Checks 1–11 are the original checks (layout, raw HTML, locale-NAME families, locale pins, title literals, key parity,
+  inline locale maps, uk.json Cyrillic, runtime hardcode, JSX string-prop literals, toolbar overflow). Task 468 broadened
+  **Check 3** (locale-NAME export families: `Ukrainian`/`Albanian`/`Italian`/`English` + `Uk`/`Sq`/`It`/`En` leading
+  segments, identifier-token, file-scoped allowlist), **Check 4** (all hardcoded locale literals `uk`/`sq`/`en`/`it` in
+  object properties AND multiline JSX props — excludes function parameter defaults and fixtures), and added **Check 12**
+  (viewport/width-named exports via identifier-token segmentation vs `scripts/story-realmode-allowlist.json`), **Check 13**
+  (duplicate-family export names `Proof`/`Demo`/`Filtered`/`Canonical` vs same allowlist), plus a stale-allowlist-entry check.
+  The file-scoped allowlist (`scripts/story-realmode-allowlist.json`) keys by `{file, export, check, reason}` — a name
+  allowlisted in one file does NOT bypass the check in a different file.
 - **`responsive-screenshots --assert`** captures each story × breakpoint × locale AND asserts no horizontal scroll
   at 320 and full-width text controls at <640, emitting a machine-readable matrix (JSON + PNGs). **This is the only
   accepted rendered proof.** "OWNER QA REQUIRED / NOT CHECKED / no browser access" no longer closes a UI cell.
@@ -508,6 +519,34 @@ A screenshot is NOT proof of rendered Storybook content unless the gate verifies
 
 **Horizontal-overflow, responsive, full-width, popup, and regression checks are INVALID unless the story first passes rendered-proof (layers 1–4).** The harness evaluates each cell in this exact order, short-circuiting on the first layer that fails. A PASS is valid only when BOTH rendered-proof AND visual-assertion layers pass.
 
+### 14.4.2 Geometry/visual-integrity layer (Task 467, 2026-06-19)
+
+Layer 3 of the rendered-proof harness checks that every visible interactive element is geometrically intact at 320/375/390 × sq/en/uk/it. A screenshot is NOT proof unless, in addition to the five points above, every visible interactive element also passes geometry/visual-integrity:
+
+1. **`text-clipped`** — interactive element text is clipped by an `overflow:hidden`/`clip` ancestor with NO `text-overflow:ellipsis` affordance (cut mid-glyph). Inspects nearest text-bearing descendant, not root; icon-only with `aria-label` exempt. Intentional `text-overflow:ellipsis` with an intact accessible name routes to `text-clipped-ellipsis` (ambiguous third state, not hard FAIL).
+2. **`offscreen-control`** — interactive element extends beyond viewport boundaries horizontally (fail-closed). Elements with an `overflow-x:auto|scroll` ancestor route to `ambiguous-offscreen` (reachable by horizontal scrolling). Vertical offscreen fails only when unreachable by normal scrolling.
+3. **`element-overlap`** — two visible interactive elements overlap by >1px after algorithmic exclusions (ancestor/descendant, label↔input, aria-hidden/inert, closed overlay layers, `pointer-events:none`). Library-internal elements (base-ui/radix/floating-ui) and `position:absolute|fixed` over a non-positioned sibling (popup-over-trigger) route to `ambiguous-overlap` (third state).
+4. **`outside-container`** — interactive element extends beyond its nearest `overflow:hidden`/`clip` clipping ancestor.
+5. **`bottomsheet-overflow`** — at <640, interactive content inside a bottom-sheet/dialog exceeds the sheet's reachable area (non-scrollable sheet with controls past its bottom edge, including partial clip where control top is inside but bottom extends past).
+6. **`self-clipped`** — DEFERRED (F-H, Round 3). Documented in contract and summary counter, but not yet implemented in `geometry-integrity.mjs` (structurally 0). Will detect an interactive element whose own content box clips its actionable content. Implementation reserved for a follow-up task.
+
+The geometry layer runs on **ALL stories** (global enumeration from `storybook-static/index.json`; read failure aborts the run, never silently drops coverage), not only `ASSERT_STORIES`. Results are classified into **three buckets** via the per-cell `verdict` field (`'pass' | 'fail' | 'ambiguous'`): hard defects (`verdict='fail'`), **ambiguous/needs-owner-decision** (`verdict='ambiguous'`, `cell.pass=false`, `cell.ambiguousOnly=true` — cannot be cited as green proof, cannot be read as clean PASS by any consumer), and clean PASS (`verdict='pass'`). Planted violation stories in `src/stories/PlantedVisualViolations.stories.tsx` (9 stories: 5 hard-FAIL classes + 1 known-good PASS + 2 ambiguous third-state proofs + 1 unstyled-render fixture) serve as **standing fixtures**; OLD@`5c2edabae`-PASS / NEW-FAIL proof **owner-native verified (2026-06-22)** for ALL 9 planted stories: ClippedButtonText(`text-clipped`), OverlappingActions(`element-overlap`), OffViewportControl(`offscreen-control`), ContainerClipped(`text-clipped`), ContainerEscape(`outside-container`), KnownGoodControl(PASS guard), AmbiguousOverlap(`ambiguous-overlap`), IntentionalEllipsis(`text-clipped-ellipsis`), UnstyledFrame(`unstyled-render`, `hardAfterRetries=true`). Evidence: `docs/sessions/task467-{old,new}-planted-containerescape-unstyledframe.json`. The harness auto-generates a per-cell inventory (`docs/governance-reports/`) from the manifest on each run; current inventory: 287 stories, 7756 cells (`docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md`) — generated by the V1–V2 full (non-fast) run; process exited with controlled code 1 (defects found). Full run is authoritative for AC1/AC9.
+
+### 14.4.3 Style-integrity layer (Task 467 R4, 2026-06-20)
+
+A screenshot is NOT proof unless the captured frame has CSS/design-system styles applied. The style-integrity layer detects `unstyled-render` via a multi-signal detector — four deterministic DOM/computed-style signals, any two of which failing triggers the verdict:
+
+1. **Preflight applied (body margin):** `getComputedStyle(document.body).margin === '0px'` (Tailwind preflight zeroes body margin; UA default is `8px`). Failing = `bodyMargin ≠ "0px"`.
+2. **Stylesheets loaded with rules:** `document.styleSheets` non-empty AND at least one sheet has `cssRules.length > 0`. Failing = no sheets or all sheets empty.
+3. **Font not UA-serif default:** the first visible text node's `font-family` does not resolve to `"Times New Roman"` / bare `serif`. Failing = font is serif/Times.
+4. **DS control themed (tri-state):** `[data-slot="button"]` evaluates to `true` (themed), `false` (UA-default), or `not-applicable` (no DS control in story — neutral, does not contribute to verdict). Failing = `false`.
+
+Fail when ≥2 of the applicable signals indicate unstyled. Style-not-ready is retried up to `MAX_ATTEMPTS` (re-navigate + await stylesheets); only after all attempts exhausted → hard `unstyled-render` FAIL. After `MAX_ATTEMPTS`, the cell is marked `hardAfterRetries=true` and `isTransientFailure` returns `false`, so the final `unstyled-render` is non-transient and can never be retried into a pass. An unstyled capture is NEVER PASS and NEVER citable as proof.
+
+**Planted UnstyledFrame proof (owner-native 2026-06-22):** The standing fixture uses CSS `revert` to trip `bodyMargin="8px"` (signal 1) and `data-slot="button"` after `all: revert` to trip `controlThemed=false` (signal 4). `sheetsWithRules` stays `true` (stylesheets remain loaded). `fontFamily` stays `"Geist, sans-serif"` (inherited from the un-reverted Storybook shell ancestor — CSS `revert` on a child cannot change inherited properties from ancestors outside the revert scope). Two of four signals fail → `unstyled-render` FAIL after `retryCount=2`, `hardAfterRetries=true`. Evidence: `docs/sessions/task467-new-planted-containerescape-unstyledframe.json`.
+
+**The pre-467 gate (Task 464 only) could report PASS on visually broken stories and must not be cited as proof for any task until Task 467 is committed and the tree passes the repaired harness.** Owner-native evidence attached 2026-06-22 (`docs/sessions/task467-*.{log,json,txt}`); awaiting orchestrator review + commit.
+
 ### 14.5 Implementation notes (Task 380, 2026-06-04)
 
 **Canvas gutter token:** `.container-wide py-6` — `container-wide` from `src/app/globals.css` §4 provides horizontal padding `1rem` (base) → `1.5rem` (≥640px) → `2rem` (≥1024px) → `3rem` (≥1536px); `py-6` (1.5rem / 24px, design-system.md §5 Tailwind 4px scale) provides canonical vertical separation from the Storybook toolbar. This is the ONLY canonical gutter — do NOT use ad-hoc `px-N`/`py-N` in story wrappers or Storybook's `padded` layout. Task 386 added the `py-6` vertical component.
@@ -521,7 +560,7 @@ A screenshot is NOT proof of rendered Storybook content unless the gate verifies
 - `makeListingFixtures(locale)` factory returns locale-resolved fixtures.
 - Backward-compat static exports (e.g. `LISTING_FIXTURE`) default to English until Task 381 migrates consumers.
 
-**ESLint story block** (`eslint.config.mjs`): scoped to `src/**/*.stories.tsx` + `src/stories/**`. Must come LAST in the config (flat-config LAST-WINS for `no-restricted-syntax`). Includes general `.tsx` selectors A, C, D PLUS story-specific selectors E–H. **Intentionally omits group B** (listing-status mutation selectors) so that fixture `status: 'active'` literals do not trigger lint errors — stories are not the mutation gateway. A/C/D/E/F/G/H remain active for stories (Task 411).
+**ESLint story block** (`eslint.config.mjs`): scoped to `src/**/*.stories.tsx`, `src/**/*.stories.ts`, `src/stories/**`. Must come LAST in the config (flat-config LAST-WINS for `no-restricted-syntax`). Includes general `.tsx` selectors A, C, D PLUS story-specific selectors E–H. **Intentionally omits group B** (listing-status mutation selectors) so that fixture `status: 'active'` literals do not trigger lint errors — stories are not the mutation gateway. A/C/D/E/F/G/H remain active for stories (Task 411). ESLint is a static best-effort signal; `check-stories.mjs` is authoritative for allowlist-aware checks (§14.3).
 
 **AST selectors documented (story-specific, group E–H):**
 ```
@@ -535,17 +574,20 @@ G:  ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/U
 H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜ][A-Za-zÀ-ÖØ-öø-ÿ\s]{7,}$/]
 ```
 
-**check-stories.mjs checks (updated Task 390, 2026-06-04):**
-1. `layout:\s*['"](?:centered|padded)['"]` — grep all story files
-2. `<(?:button|input|select|textarea)[\s/>]` — JSX raw HTML controls (string-literal false-positives filtered)
-3. `export const .*Ukrainian` — banned export names
-4. `globals:\s*\{.*locale.*['"]uk['"]` — banned pinned locale
+**check-stories.mjs checks (`checksRan: 13`, updated Task 468 2026-06-22):**
+1. `layout:'centered'|'padded'` — banned layout values
+2. `<button|input|select|textarea>` — raw HTML controls in JSX (string-literal context filtered)
+3. **Locale-NAME export families** (broadened Task 468) — identifier-token segmentation; FAIL if any segment equals `Ukrainian|Albanian|Italian|English` or `Uk|Sq|It|En` as a leading segment. File-scoped allowlist (`scripts/story-realmode-allowlist.json`). Token-segment, not substring: `Items`/`Enabled`/`Square` PASS
+4. **Hardcoded locale pins** (broadened Task 468) — all four locales (`uk|sq|en|it`). Object property `locale: '…'` (`:` form — catches globals, args, meta.args) + JSX `locale="…"` / `locale={'…'}` (multiline-aware via JSX tag tracking). Excludes function parameter defaults (`locale = 'en'` with `=`) and fixture data files. Toolbar-reactive `context.globals.locale` PASS
 5. Known English/Cyrillic title literals in `src/stories/fixtures/**`
 6. `storybook.*` namespace key parity across sq/en/uk/it
-7. `\buk\s*:\s*['"]` / `\bsq\s*:\s*['"]` inline locale-map literals in `*.stories.tsx` — ALL story text must come via `storyT()` from `messages/*.json`; NO `{ en:…, sq:…, uk:…, it:… }` maps in story files
-8. `messages/uk.json` storybook.* values containing Latin letters but NO Cyrillic — transliterated Ukrainian is forbidden (allowlist: place names, brand codes, arrow labels like `A→Z`)
-9. Known hardcoded user-facing English literals in runtime `src/components/**` and `src/modules/**` (e.g. `'Previous'`, `'Next'`, `'Hide column'`, `'Sort A→Z'`)
-10. English-literal JSX string props (`title|description|label|placeholder|heading|subject|cta|alt|aria-label|name="…"`) in `*.stories.tsx` not produced by `storyT()`/`t()` — see §14.7
+7. Inline locale-map literals (`uk:`/`sq:` in stories) — all text must come via `storyT()` from `messages/*.json`
+8. `messages/uk.json` storybook.* values Latin-only without Cyrillic — transliterated Ukrainian forbidden
+9. Hardcoded user-facing English literals in runtime `src/components/**` and `src/modules/**`
+10. English-literal JSX string props and text children in `*.stories.tsx` — see §14.7
+11. `sm:flex-row` + `sm:flex-wrap` on same line — toolbar 640px overflow; use `md:flex-row md:flex-wrap`
+12. **Viewport/width-named exports** (new Task 468) — identifier-token segmentation; FAIL if any segment equals `Mobile|Tablet|Desktop|Laptop|Wide|Huge`, `keyword+digits` (e.g. `Mobile320`), or a bare width number (`320…2560`). File-scoped allowlist (`scripts/story-realmode-allowlist.json`, keyed by `{file, export, check, reason}`). Stale-entry check: an allowlist entry pointing at a non-existent file or export FAIL
+13. **Duplicate-family export names** (new Task 468) — FAIL if any identifier segment equals `Proof|Demo|Canonical(+digits)|Filtered`. Same file-scoped allowlist; only `AdminListingsTable/FilteredPending` allowlisted
 
 **check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} (canonical 14 from `docs/responsive-screenshot-matrix.md §1`) × {sq,en,uk,it}. `--fast` runs only {320,375,390} for quick local loops. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`. **`npm run screenshots:assert` (non-fast) is the canonical full-matrix acceptance command** — its transcript must show `Viewports: 14` for rendered-proof approval (Task 411).
 
@@ -608,7 +650,7 @@ const T = { en: 'New Listing', sq: 'Njoftim i ri', uk: 'Orenda ta prodazh', it: 
 wrap in a JSX expression `{'Developer note text'}` — breaks the `>text<` regex while preserving display.
 Do NOT use this pattern for real user-facing content; always localize that via storyT.
 
-**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 10 checks and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
+**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 13 checks (including Check 3/4 broadened + Check 12/13 new — Task 468) and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
 
 ---
 
@@ -698,7 +740,7 @@ npm run new:story src/components/shared/MyComponent.tsx
 
 The scaffold:
 - Uses `parameters: { /* layout: 'fullscreen' is the canonical default */ }` (withCanvas provides the gutter)
-- Exports `Default` + `LocaleStress` (toolbar-reactive, pinned to `mobile320`)
+- Exports `Default` + `LocaleStress` (toolbar-reactive for locale — NO locale pin; viewport pinned to `mobile320`)
 - Has TODO placeholders — no raw English string literals (so `check:stories` passes)
 - Uses `storyT(locale, 'storybook.NAMESPACE.key')` pattern via commented-out example
 

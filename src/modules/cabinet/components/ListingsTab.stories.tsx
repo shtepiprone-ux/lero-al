@@ -109,7 +109,3 @@ type Story = StoryObj
 export const Default: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
-
-export const VisibilityMobile320: Story = {
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
-}

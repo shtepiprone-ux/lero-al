@@ -32,11 +32,6 @@ export const Default: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const Tablet: Story = {
-  render: () => <AdminUserProfile {...sharedArgs} />,
-  globals: { viewport: { value: 'tablet768', isRotated: false } },
-}
-
 export const CreateMode: Story = {
   render: () => (
     <AdminUserProfile

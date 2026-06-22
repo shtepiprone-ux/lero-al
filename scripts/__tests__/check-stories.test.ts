@@ -139,34 +139,188 @@ describe('Check 2: raw HTML controls', () => {
 
 // ── Check 3: Ukrainian export names ──────────────────────────────────────────
 
-describe('Check 3: Ukrainian export names', () => {
-  it('BAD — export const MyUkrainianStory triggers ukrainian-export', () => {
+describe('Check 3: Locale-NAME export families', () => {
+  it('BAD — export const MyUkrainianStory triggers locale-name-export', () => {
     const root = tmpRoot()
     writeStory(root, 'Test.stories.tsx', `export const MyUkrainianStory = {}`)
-    expect(hasRule(gate(root).violations, 'ukrainian-export')).toBe(true)
+    expect(hasRule(gate(root).violations, 'locale-name-export')).toBe(true)
   })
 
   it('GOOD — export const LocaleStress passes', () => {
     const root = tmpRoot()
     writeStory(root, 'Test.stories.tsx', `export const LocaleStress = {}`)
-    expect(hasRule(gate(root).violations, 'ukrainian-export')).toBe(false)
+    expect(hasRule(gate(root).violations, 'locale-name-export')).toBe(false)
+  })
+
+  it('BAD (p) — UkDialogOpen/SqProof/EnDesktop/AlbanianFull FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const UkDialogOpen = {}\nexport const SqProof = {}\nexport const EnDesktop = {}\nexport const AlbanianFull = {}`)
+    const { violations } = gate(root)
+    const localeViolations = violations.filter(v => v.rule === 'locale-name-export')
+    expect(localeViolations.length).toBe(4)
+  })
+
+  it('GOOD (q) — Items/Enabled/Square/Editable PASS (no It/En/Sq false-positive)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const Items = {}\nexport const Enabled = {}\nexport const Square = {}\nexport const Editable = {}`)
+    expect(hasRule(gate(root).violations, 'locale-name-export')).toBe(false)
+  })
+
+  it('BAD — .stories.ts file is scanned', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.ts', `export const UkDialogOpen = {}`)
+    expect(hasRule(gate(root).violations, 'locale-name-export')).toBe(true)
   })
 })
 
 // ── Check 4: Pinned globals.locale = 'uk' ────────────────────────────────────
 
-describe("Check 4: globals:{locale:'uk'} pin", () => {
-  it("BAD — globals:{locale:'uk'} triggers globals-locale-pin", () => {
+describe('Check 4: Hardcoded locale pins (globals + args + props)', () => {
+  it("BAD — globals:{locale:'uk'} triggers locale-pin", () => {
     const root = tmpRoot()
     writeStory(root, 'Test.stories.tsx',
-      `export const Default = { parameters: { globals: { locale: 'uk' } } }`)
-    expect(hasRule(gate(root).violations, 'globals-locale-pin')).toBe(true)
+      `export const Default = { globals: { locale: 'uk' } }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
   })
 
   it('GOOD — no locale pin passes', () => {
     const root = tmpRoot()
     writeStory(root, 'Test.stories.tsx', `export const Default = { parameters: {} }`)
-    expect(hasRule(gate(root).violations, 'globals-locale-pin')).toBe(false)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(false)
+  })
+
+  it("BAD (f) — multiline globals with locale:'uk' FAIL", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = {\n  globals: {\n    viewport: { value: 'mobile320' },\n    locale: 'uk'\n  }\n}`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it("BAD (g) — key-order globals:{ locale:'sq', viewport:… } FAIL", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { globals: { locale: 'sq', viewport: { value: 'mobile320' } } }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it("BAD (h) — each of uk/sq/en/it FAIL", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const A = { args: { locale: 'uk' } }\nexport const B = { args: { locale: 'sq' } }\nexport const C = { args: { locale: 'it' } }\nexport const D = { args: { locale: 'en' } }`)
+    const localeViolations = gate(root).violations.filter(v => v.rule === 'locale-pin')
+    expect(localeViolations.length).toBe(4)
+  })
+
+  it("BAD — args:{ locale:'en' } FAIL (not just non-en)", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { args: { locale: 'en' } }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it('BAD — JSX locale="en" FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <Component locale="en" /> }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it('GOOD — function parameter default locale = \'en\' PASS (not a pin)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `function Demo({ locale = 'en' }: { locale?: string }) { return null }\nexport const Default = { render: (_, ctx) => <Demo locale={ctx.globals.locale} /> }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(false)
+  })
+
+  it('BAD — multiline JSX locale="en" FAIL (prop on separate line from tag)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => (\n  <Component\n    locale="en"\n  />\n) }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it('BAD — multiline JSX prop + closing slash on same line: locale="en" />', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => (\n  <Component\n    locale="en" />\n) }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it("BAD — multiline expression prop + closing slash on same line: locale={'uk'} />", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => (\n  <Component\n    locale={'uk'} />\n) }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it("BAD — JSX locale={'uk'} expression prop FAIL", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <Component locale={'uk'} /> }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it("BAD — multiline JSX locale={'it'} expression prop FAIL", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => (\n  <Component\n    locale={'it'}\n  />\n) }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it('GOOD — arrow fn parameter default locale = \'en\' PASS', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `const L = (key: string, locale = 'en') => storyT(locale, key)\nexport const Default = {}`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(false)
+  })
+
+  it('GOOD — destructured obj parameter default locale = \'en\' on continuation line PASS', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `function Demo({\n  locale = 'en',\n}: { locale?: string }) { return null }\nexport const Default = {}`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(false)
+  })
+
+  it("BAD (i) — args:{ locale:'uk' } FAIL", () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { args: { locale: 'uk' } }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it('BAD (i) — JSX locale="uk" FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: () => <C locale="uk" /> }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
+  })
+
+  it('GOOD (j) — toolbar-reactive locale={ctx.globals.locale} PASS', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { render: (_, ctx) => <C locale={ctx.globals.locale ?? 'en'} /> }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(false)
+  })
+
+  it('GOOD (j) — viewport-only pin PASS', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { globals: { viewport: { value: 'mobile320' } } }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(false)
+  })
+
+  it('GOOD (o) — a single pin yields exactly ONE violation (no double-count)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx',
+      `export const Default = { globals: { locale: 'uk' } }`)
+    const localeViolations = gate(root).violations.filter(v => v.rule === 'locale-pin')
+    expect(localeViolations.length).toBe(1)
+  })
+
+  it('BAD — .stories.ts file is scanned', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.ts', `export const Default = { args: { locale: 'uk' } }`)
+    expect(hasRule(gate(root).violations, 'locale-pin')).toBe(true)
   })
 })
 
@@ -462,13 +616,130 @@ describe('Check 11: sm:flex-row + sm:flex-wrap (toolbar overflow at 640px)', () 
   })
 })
 
+// ── Check 12: Viewport/width-named exports ──────────────────────────────────
+
+describe('Check 12: Viewport/width-named exports (identifier-token)', () => {
+  it('BAD (a) — export const FooMobile320 FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const FooMobile320 = {}`)
+    expect(hasRule(gate(root).violations, 'viewport-width-export')).toBe(true)
+  })
+
+  it('BAD (b) — bare Tablet/Desktop/HugeDesktop FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const Tablet = {}\nexport const Desktop = {}\nexport const HugeDesktop = {}`)
+    const vpV = gate(root).violations.filter(v => v.rule === 'viewport-width-export')
+    expect(vpV.length).toBe(3)
+  })
+
+  it('BAD (c) — prefix/infix TabletStack/MobileStack FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const TabletStack = {}\nexport const MobileStack = {}`)
+    const vpV = gate(root).violations.filter(v => v.rule === 'viewport-width-export')
+    expect(vpV.length).toBe(2)
+  })
+
+  it('GOOD (d) — allowlisted real modes PASS', () => {
+    const root = tmpRoot()
+    mkdirSync(join(root, 'scripts'), { recursive: true })
+    writeFileSync(join(root, 'scripts', 'story-realmode-allowlist.json'), JSON.stringify([
+      { file: 'src/Test.stories.tsx', export: 'MobileBottomSheet', check: 12, reason: 'test' },
+      { file: 'src/Test.stories.tsx', export: 'MobileDrawerOpen', check: 12, reason: 'test' },
+    ]))
+    writeStory(root, 'Test.stories.tsx', `export const MobileBottomSheet = {}\nexport const MobileDrawerOpen = {}`)
+    expect(hasRule(gate(root).violations, 'viewport-width-export')).toBe(false)
+  })
+
+  it('BAD (e) — non-allowlisted SheetOpenMobile FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const SheetOpenMobile = {}`)
+    expect(hasRule(gate(root).violations, 'viewport-width-export')).toBe(true)
+  })
+
+  it('GOOD (l) — WorldwideResults PASS (no Wide false-positive)', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const WorldwideResults = {}`)
+    expect(hasRule(gate(root).violations, 'viewport-width-export')).toBe(false)
+  })
+
+  it('GOOD (m) — file-scoped: MobileScroll in allowlisted file PASS, same name in different file FAIL', () => {
+    const root = tmpRoot()
+    mkdirSync(join(root, 'scripts'), { recursive: true })
+    writeFileSync(join(root, 'scripts', 'story-realmode-allowlist.json'), JSON.stringify([
+      { file: 'src/AllowedFile.stories.tsx', export: 'MobileScroll', check: 12, reason: 'test' },
+    ]))
+    writeStory(root, 'AllowedFile.stories.tsx', `export const MobileScroll = {}`)
+    writeStory(root, 'OtherFile.stories.tsx', `export const MobileScroll = {}`)
+    const vpV = gate(root).violations.filter(v => v.rule === 'viewport-width-export')
+    expect(vpV.length).toBe(1)
+    expect(vpV[0].file).toContain('OtherFile')
+  })
+
+  it('BAD (n) — stale allowlist entry for non-existent file FAIL', () => {
+    const root = tmpRoot()
+    mkdirSync(join(root, 'scripts'), { recursive: true })
+    writeFileSync(join(root, 'scripts', 'story-realmode-allowlist.json'), JSON.stringify([
+      { file: 'src/NonExistent.stories.tsx', export: 'MobileScroll', check: 12, reason: 'test' },
+    ]))
+    expect(hasRule(gate(root).violations, 'stale-allowlist-entry')).toBe(true)
+  })
+
+  it('BAD (k) — .stories.ts file is scanned', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.ts', `export const FooMobile320 = {}`)
+    expect(hasRule(gate(root).violations, 'viewport-width-export')).toBe(true)
+  })
+})
+
+// ── Check 13: Duplicate-family export names ──────────────────────────────────
+
+describe('Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical)', () => {
+  it('BAD (r) — ProofRow/DemoState/Canonical320/FilteredDraft FAIL', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.tsx', `export const ProofRow = {}\nexport const DemoState = {}\nexport const Canonical320 = {}\nexport const FilteredDraft = {}`)
+    const famV = gate(root).violations.filter(v => v.rule === 'duplicate-family-export')
+    expect(famV.length).toBe(4)
+  })
+
+  it('GOOD (s) — allowlisted FilteredPending PASS', () => {
+    const root = tmpRoot()
+    mkdirSync(join(root, 'scripts'), { recursive: true })
+    mkdirSync(join(root, 'src', 'components', 'admin'), { recursive: true })
+    writeFileSync(join(root, 'scripts', 'story-realmode-allowlist.json'), JSON.stringify([
+      { file: 'src/components/admin/AdminListingsTable.stories.tsx', export: 'FilteredPending', check: 13, reason: 'test' },
+    ]))
+    writeStory(root, 'components/admin/AdminListingsTable.stories.tsx', `export const FilteredPending = {}`)
+    expect(hasRule(gate(root).violations, 'duplicate-family-export')).toBe(false)
+  })
+
+  it('BAD (t) — same Filtered* name in a different file FAIL', () => {
+    const root = tmpRoot()
+    mkdirSync(join(root, 'scripts'), { recursive: true })
+    mkdirSync(join(root, 'src', 'components', 'admin'), { recursive: true })
+    writeFileSync(join(root, 'scripts', 'story-realmode-allowlist.json'), JSON.stringify([
+      { file: 'src/components/admin/AdminListingsTable.stories.tsx', export: 'FilteredPending', check: 13, reason: 'test' },
+    ]))
+    writeStory(root, 'components/admin/AdminListingsTable.stories.tsx', `export const FilteredPending = {}`)
+    writeStory(root, 'OtherFile.stories.tsx', `export const FilteredPending = {}`)
+    const famV = gate(root).violations.filter(v => v.rule === 'duplicate-family-export')
+    expect(famV.length).toBe(1)
+    expect(famV[0].file).toContain('OtherFile')
+  })
+
+  it('BAD — .stories.ts file is scanned', () => {
+    const root = tmpRoot()
+    writeStory(root, 'Test.stories.ts', `export const ProofRow = {}`)
+    expect(hasRule(gate(root).violations, 'duplicate-family-export')).toBe(true)
+  })
+})
+
 // ── Gate completeness ─────────────────────────────────────────────────────────
 
 describe('gate completeness', () => {
-  it('checksRan === 11 on a clean root (all 11 checks executed)', () => {
+  it('checksRan === 13 on a clean root (all 13 checks executed)', () => {
     const root = tmpRoot()
     const { checksRan } = gate(root)
-    expect(checksRan).toBe(11)
+    expect(checksRan).toBe(13)
   })
 
   it('returns 0 violations on a clean root with valid messages', () => {

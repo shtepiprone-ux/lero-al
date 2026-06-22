@@ -17,13 +17,12 @@ type Story = StoryObj;
 
 const HEADING = (l: string) => storyT(l, 'storybook.listinggrid.heading')
 
-
-export const Desktop: Story = {
+export const Default: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <div data-testid="listing-grid" className="container-wide mx-auto px-4 py-8">
-        <h2 className="text-xl sm:text-2xl font-bold mb-6">{HEADING(locale)}</h2>
+        <h2 className="text-lg sm:text-2xl 2xl:text-3xl font-bold mb-6">{HEADING(locale)}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
           {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
         </div>
@@ -32,65 +31,8 @@ export const Desktop: Story = {
   },
 
   parameters: {
-    docs: { description: { story: '1280px desktop. Cards match live ListingCard field set.' } }
+    docs: { description: { story: 'Responsive grid: 1-col@mobile → 2-col@sm → 3-col@xl → 4-col@2xl. Full fixture set. Use viewport toolbar for breakpoint proofs.' } }
   },
-
-  globals: {
-    viewport: {
-      value: 'desktop1280',
-      isRotated: false
-    }
-  }
-};
-
-export const HugeDesktop: Story = {
-  render: (_, context) => {
-    const locale = (context?.globals?.locale as string) ?? 'en'
-    return (
-      <div data-testid="listing-grid" className="container-wide mx-auto px-4 py-8">
-        <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mb-6">{HEADING(locale)}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
-          {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
-        </div>
-      </div>
-    )
-  },
-
-  parameters: {
-    docs: { description: { story: 'At 2560px: 4 columns via 2xl:grid-cols-4.' } }
-  },
-
-  globals: {
-    viewport: {
-      value: 'desktop2560',
-      isRotated: false
-    }
-  }
-};
-
-export const Mobile: Story = {
-  render: (_, context) => {
-    const locale = (context?.globals?.locale as string) ?? 'en'
-    return (
-      <div data-testid="listing-grid" className="px-4 py-4">
-        <h2 className="text-lg font-bold mb-4">{HEADING(locale)}</h2>
-        <div className="grid grid-cols-1 gap-4">
-          {makeStoryListings(locale).slice(0, 4).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
-        </div>
-      </div>
-    )
-  },
-
-  parameters: {
-    docs: { description: { story: '375px: single-column grid.' } }
-  },
-
-  globals: {
-    viewport: {
-      value: 'mobile375',
-      isRotated: false
-    }
-  }
 };
 
 export const LocaleStress: Story = {

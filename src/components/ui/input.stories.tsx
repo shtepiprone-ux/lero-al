@@ -115,7 +115,7 @@ function MobileFormDemo({ locale }: { locale: string }) {
   )
 }
 
-export const MobileForm: Story = {
+export const PhoneForm: Story = {
   render: (_, context) => <MobileFormDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
 
   parameters: {

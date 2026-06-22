@@ -36,17 +36,13 @@ export const FilteredPending: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const Tablet: Story = {
-  globals: { viewport: { value: 'tablet768', isRotated: false } },
-}
-
 export const LocaleStress: Story = {
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }
 
 // ── Task 456 — visibility surfaces at mobile 320 ────────────────────────────
 
-export const VisibilityMobile320: Story = {
+export const Visibility: Story = {
   args: {
     auditCounts: { total: 3, expired: 2, noExpiry: 1 },
     activeVisibility: 'hidden_eligible',

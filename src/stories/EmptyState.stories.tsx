@@ -56,16 +56,3 @@ export const LocaleStress: Story = {
   },
   parameters: { docs: { description: { story: 'Locale stress — longer text must fit within max-w-sm. Use locale toolbar for sq/en/uk/it.' } } },
 };
-
-export const MobileEmptyState: Story = {
-  render: (_, context) => {
-    const l = (context?.globals?.locale as string) ?? 'en'
-    return <EmptyStateBlock icon={Home} title={e('no_listings_title',l)} description={e('no_listings_desc',l)} action={<Button size="xl" className="w-full">{e('clear_filters',l)}</Button>} />
-  },
-  globals: {
-    viewport: {
-      value: 'mobile375',
-      isRotated: false
-    }
-  },
-};

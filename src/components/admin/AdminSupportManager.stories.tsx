@@ -15,10 +15,6 @@ export const Default: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const Tablet: Story = {
-  globals: { viewport: { value: 'tablet768', isRotated: false } },
-}
-
 export const EmptyState: Story = {
   args: { tickets: [], events: [] },
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
@@ -49,17 +45,3 @@ export const UserCardStatusBadges: StoryObj = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const UserCardStatusBadgesMobile320: StoryObj = {
-  ...UserCardStatusBadges,
-  globals: { viewport: { value: 'mobile320', isRotated: false }, locale: 'uk' },
-}
-
-export const UserCardStatusBadgesMobile375: StoryObj = {
-  ...UserCardStatusBadges,
-  globals: { viewport: { value: 'mobile375', isRotated: false }, locale: 'uk' },
-}
-
-export const UserCardStatusBadgesMobile390: StoryObj = {
-  ...UserCardStatusBadges,
-  globals: { viewport: { value: 'mobile390', isRotated: false }, locale: 'uk' },
-}

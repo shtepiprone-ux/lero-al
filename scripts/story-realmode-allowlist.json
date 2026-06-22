@@ -1,0 +1,20 @@
+[
+  { "file": "src/components/ui/sheet.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: canonical bottom-sheet open state." },
+  { "file": "src/components/ui/select.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: select bottom-sheet open state." },
+  { "file": "src/components/ui/command.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: command palette bottom-sheet open state." },
+  { "file": "src/components/ui/popover.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: popover bottom-sheet open state." },
+  { "file": "src/components/ui/dropdown-menu.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: dropdown-menu bottom-sheet open state." },
+  { "file": "src/components/admin/AdminLocaleSwitcher.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: locale-switcher bottom-sheet open state." },
+  { "file": "src/components/admin/AdminCurrenciesManager.stories.tsx", "export": "FormDialogMobileBottomSheet", "check": 12, "reason": "Real overlay mode: currency form dialog bottom-sheet open state." },
+  { "file": "src/components/admin/AdminExchangeProvidersManager.stories.tsx", "export": "FormDialogMobileBottomSheet", "check": 12, "reason": "Real overlay mode: provider form dialog bottom-sheet open state." },
+  { "file": "src/components/admin/StatusChangeControl.stories.tsx", "export": "SelectMobileBottomSheet", "check": 12, "reason": "Real overlay mode: status-change select bottom-sheet open state." },
+  { "file": "src/components/admin/AdminSidebar.stories.tsx", "export": "MobileDrawerOpen", "check": 12, "reason": "Real overlay mode: sidebar drawer open state." },
+  { "file": "src/components/ui/navigation-menu.stories.tsx", "export": "MobileOpen", "check": 12, "reason": "Real overlay mode: navigation-menu mobile open state." },
+  { "file": "src/components/ui/dialog.stories.tsx", "export": "MobileDialog", "check": 12, "reason": "Real overlay mode: dialog mobile-optimised open state." },
+  { "file": "src/components/ui/dialog.stories.tsx", "export": "MobileFullWidth", "check": 12, "reason": "Real overlay mode: dialog full-width mobile open state." },
+  { "file": "src/components/ui/tabs.stories.tsx", "export": "MobileScroll", "check": 12, "reason": "Real interaction mode: horizontal tab overflow scroll." },
+  { "file": "src/stories/RecentlyViewedSection.stories.tsx", "export": "MobileScroll", "check": 12, "reason": "Real interaction mode: horizontal card scroll on mobile." },
+  { "file": "src/modules/notifications/components/NotificationCenter.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: notification center bottom-sheet open state." },
+  { "file": "src/stories/Containers.stories.tsx", "export": "ContainerWide", "check": 12, "reason": "Container variant name (wide vs narrow), not a viewport keyword." },
+  { "file": "src/components/admin/AdminListingsTable.stories.tsx", "export": "FilteredPending", "check": 13, "reason": "Genuine filter-state REAL_MODE (filtered → pending), not a proof duplicate — Group 5 canonical KEEP." }
+]

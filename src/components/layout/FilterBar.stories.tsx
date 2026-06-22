@@ -184,42 +184,6 @@ export const WithActiveFilters: Story = {
   }
 }
 
-export const TabletStack: Story = {
-  parameters: {
-    docs: { description: { story: '640–1023 band: Sheet trigger inline with search (not stacked). Desktop hierarchy hidden. Sheet opens with active+available sections.' } }
-  },
-
-  render: (_, context) => {
-    const locale = (context?.globals?.locale as string) ?? 'en'
-    return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={1} />
-  },
-
-  globals: {
-    viewport: {
-      value: 'tablet768',
-      isRotated: false
-    }
-  }
-}
-
-export const MobileStack: Story = {
-  parameters: {
-    docs: { description: { story: '<640: Sheet trigger full-width, search full-width, stacked. Desktop hierarchy hidden. Open Sheet → active + available filters inside.' } }
-  },
-
-  render: (_, context) => {
-    const locale = (context?.globals?.locale as string) ?? 'en'
-    return <FilterBarDemo locale={locale} totalChips={5} initialActiveCount={2} />
-  },
-
-  globals: {
-    viewport: {
-      value: 'mobile390',
-      isRotated: false
-    }
-  }
-}
-
 export const LocaleStress: Story = {
   parameters: {
     docs: { description: { story: 'uk@320: longest-locale stress. Sheet trigger + search full-width at 320. Ukrainian labels wrap in Sheet. No h-scroll.' } }
@@ -256,24 +220,3 @@ export const ManyFilters: Story = {
   }
 }
 
-export const AllLocalesDesktop: Story = {
-  parameters: {
-    docs: { description: { story: 'Four locale instances at desktop — verify hierarchy correct in sq/en/uk/it.' } }
-  },
-
-  render: () => (
-    <div className="space-y-8">
-      <FilterBarDemo locale="sq" totalChips={4} initialActiveCount={1} />
-      <FilterBarDemo locale="en" totalChips={4} initialActiveCount={1} />
-      <FilterBarDemo locale="uk" totalChips={4} initialActiveCount={1} />
-      <FilterBarDemo locale="it" totalChips={4} initialActiveCount={1} />
-    </div>
-  ),
-
-  globals: {
-    viewport: {
-      value: 'desktop1280',
-      isRotated: false
-    }
-  }
-}

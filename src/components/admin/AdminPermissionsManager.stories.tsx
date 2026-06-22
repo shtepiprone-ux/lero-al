@@ -36,14 +36,3 @@ export const Default: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const Mobile320: Story = {
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
-}
-
-export const Mobile375: Story = {
-  globals: { viewport: { value: 'mobile375', isRotated: false } },
-}
-
-export const Mobile390: Story = {
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
-}

@@ -2,19 +2,20 @@
 /**
  * check-stories.mjs — Build-gating Storybook governance script.
  *
- * Checks all *.stories.tsx files and src/stories/** for banned patterns:
+ * Checks all *.stories.tsx and *.stories.ts files and src/stories/** for banned patterns:
  *   1. layout:'centered'|'padded' — must use fullscreen + withCanvas
  *   2. Raw HTML controls (<button>/<input>/<select>/<textarea> in JSX)
- *   3. /Ukrainian/ story export names — use LocaleStress instead
- *   4. globals:{locale:'uk'} pins — stories must be toolbar-reactive
+ *   3. Locale-NAME export families (Ukrainian/Albanian/Italian/English + Uk/Sq/It/En segments)
+ *   4. Hardcoded locale pins (globals.locale + args.locale + locale="…" JSX props)
  *   5. Known hardcoded English user-facing title literals in fixtures
  *   6. storybook.* namespace key parity across sq/en/uk/it
  *   7. Inline locale maps (uk:/sq:/it: object literals) in story files
  *   8. messages/uk.json storybook.* values with Latin letters only (no Cyrillic)
  *   9. Runtime component hardcoded English literals
  *  10. English JSX string-prop literals and JSX text children in story files
- *      (double-quote, single-quote, expression-double, expression-single,
- *       template-literal props; plus text directly between > and <)
+ *  11. sm:flex-row sm:flex-wrap — toolbar overflow at 640px
+ *  12. Viewport/width-named exports (identifier-token vs file-scoped allowlist)
+ *  13. Duplicate-family export names (Proof/Demo/Filtered/Canonical vs allowlist)
  *
  * Exit 0 on clean tree. Exit non-zero on any violation.
  * Wired into prebuild-storybook, prestorybook, and CI.
@@ -82,7 +83,7 @@ export const JSX_PROP_ALLOWLIST = [
 // ── Gate runner (exported for testing) ────────────────────────────────────────
 
 /**
- * Run all 10 governance checks against the given repo root.
+ * Run all 13 governance checks against the given repo root.
  *
  * @param {string} root - Absolute path to the repo root (defaults to this script's parent dir).
  * @param {{ verbose?: boolean }} opts - When verbose=true, prints check-header lines to stdout.
@@ -93,13 +94,37 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
   const log    = verbose ? (...a) => console.log(...a)   : () => {};
   const logErr = verbose ? (...a) => console.error(...a) : () => {};
 
-  // Story files: colocated *.stories.tsx + src/stories/**
+  // Story files: colocated *.stories.tsx + *.stories.ts + src/stories/**
   const STORY_FILES = [
-    ...collectFiles(join(root, 'src'), ['.stories.tsx']),
+    ...collectFiles(join(root, 'src'), ['.stories.tsx', '.stories.ts']),
     ...collectFiles(join(root, 'src', 'stories'), ['.ts', '.tsx']).filter(
-      f => !f.endsWith('.stories.tsx')
+      f => !f.endsWith('.stories.tsx') && !f.endsWith('.stories.ts')
     ),
   ];
+
+  // ── Load file-scoped real-mode allowlist ────────────────────────────────────
+  let allowlist = [];
+  try {
+    const allowlistPath = join(root, 'scripts', 'story-realmode-allowlist.json');
+    allowlist = JSON.parse(readFileSync(allowlistPath, 'utf8'));
+  } catch { /* allowlist missing = no exceptions */ }
+
+  function isAllowlisted(filePath, exportName, checkNum) {
+    const rel = relative(root, filePath).replace(/\\/g, '/');
+    return allowlist.some(e =>
+      e.file === rel && e.export === exportName && (e.check === checkNum || !e.check)
+    );
+  }
+
+  // ── Identifier-token segmentation ──────────────────────────────────────────
+  function segmentIdentifier(name) {
+    return name
+      .replace(/_/g, '\0')
+      .replace(/([a-z0-9])([A-Z])/g, '$1\0$2')
+      .replace(/([A-Z]+)([A-Z][a-z])/g, '$1\0$2')
+      .split('\0')
+      .filter(Boolean);
+  }
 
   const violations = [];
   function fail(file, line, rule, detail) {
@@ -192,32 +217,94 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     checkFile(f, RAW_CONTROL_CHECKS);
   }
 
-  // ── Check 3: /Ukrainian/ story export names ────────────────────────────────
+  // ── Check 3: Locale-NAME export families ────────────────────────────────
+  // Broadened by Task 468: FAIL on identifier segments that equal a locale token.
+  // Full words: Ukrainian|Albanian|Italian|English
+  // Short codes as leading segment: Uk|Sq|It|En (followed by uppercase or _)
+  // Identifier-token match, NOT substring — Items, Enabled, Square, Editable PASS.
 
-  log('── Check 3: Ukrainian export names ────────────────────────────────');
+  log('── Check 3: Locale-NAME export families ─────────────────────────────');
 
-  for (const f of STORY_FILES.filter(f => f.endsWith('.tsx'))) {
-    checkFile(f, [
-      {
-        pattern: /export\s+const\s+\w*Ukrainian\w*/,
-        rule: 'ukrainian-export',
-        detail: "Story exports matching /Ukrainian/ are FORBIDDEN. Rename to 'LocaleStress' (§13/§14).",
-      },
-    ]);
+  const LOCALE_FULL_WORDS = new Set(['Ukrainian', 'Albanian', 'Italian', 'English']);
+  const LOCALE_SHORT_CODES = new Set(['Uk', 'Sq', 'It', 'En']);
+  const EXPORT_RE = /export\s+const\s+(\w+)/;
+
+  for (const f of STORY_FILES.filter(f => f.endsWith('.tsx') || f.endsWith('.ts'))) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const m = EXPORT_RE.exec(lines[i]);
+      if (!m) continue;
+      const name = m[1];
+      const segments = segmentIdentifier(name);
+      const hasLocaleToken = segments.some(seg =>
+        LOCALE_FULL_WORDS.has(seg) || LOCALE_SHORT_CODES.has(seg)
+      );
+      if (hasLocaleToken && !isAllowlisted(f, name, 3)) {
+        fail(f, i + 1, 'locale-name-export',
+          `Export '${name}' contains a locale-NAME segment (${segments.join('|')}). ` +
+          `Use 'LocaleStress' instead — per-locale export families are FORBIDDEN (§13/§14, Check 3).`);
+      }
+    }
   }
 
-  // ── Check 4: Pinned globals.locale = 'uk' ─────────────────────────────────
+  // ── Check 4: Hardcoded locale pins AND props ─────────────────────────────
+  // Broadened by Task 468: catches globals.locale, args.locale / meta.args.locale,
+  // and JSX locale="…" / locale={'…'} props — ALL four locales (uk/sq/en/it).
+  // Legal: locale resolved from context.globals.locale (toolbar-reactive);
+  //        viewport-only pin; function parameter defaults (`locale = 'en'`).
+  // Fixture data files (*.fixtures.*) are excluded — they carry locale as data.
 
-  log('── Check 4: Pinned globals.locale pins ─────────────────────────────');
+  log('── Check 4: Hardcoded locale pins (globals + args + props) ─────────');
 
-  for (const f of STORY_FILES.filter(f => f.endsWith('.tsx'))) {
-    checkFile(f, [
-      {
-        pattern: /globals\s*:\s*\{[^}]*locale\s*:\s*['"]uk['"]/,
-        rule: 'globals-locale-pin',
-        detail: "globals:{locale:'uk'} pins are FORBIDDEN. Stories must be toolbar-reactive (§13/§14).",
-      },
-    ]);
+  const isFixtureFile = (f) => /[/\\]fixtures[/\\]/.test(f) || f.includes('.fixtures.');
+
+  // Detect whether a line is inside a function parameter list / destructuring
+  // (where `locale = 'en'` is a legal default), versus inside JSX or an object
+  // literal (where it is a hardcoded pin).
+  // Strategy: track unclosed `<Tag` across lines for JSX context.
+  // For the `=` form, only flag when inside JSX context (not param defaults).
+  // For the `:` form, always flag (object property = pin).
+
+  for (const f of STORY_FILES.filter(f => (f.endsWith('.tsx') || f.endsWith('.ts')) && !isFixtureFile(f))) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    let inJsxTag = false; // tracks unclosed <Component ... (multiline JSX opening)
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trimStart();
+      if (trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*')) continue;
+      if (/^\s*(import|export\s+type|type\s+|interface\s+)/.test(line)) continue;
+      if (/context\??\.globals\??\.locale|ctx\??\.globals\??\.locale/.test(line)) continue;
+
+      // Track JSX context: <Component opens; /> or > closes.
+      // Snapshot BEFORE clearing so a line like `locale="en" />` is still in-JSX.
+      if (/<[A-Z]/.test(line)) inJsxTag = true;
+      const lineIsJsx = inJsxTag;
+      if (inJsxTag && (/\/>/.test(line) || />[^<]*$/.test(line))) inJsxTag = false;
+
+      // (i) locale PROPERTY (colon) with any of uk/sq/en/it — catches globals, args, meta.args
+      const localePropMatch = /\blocale\s*:\s*['"](uk|sq|en|it)['"]/.exec(line);
+      if (localePropMatch) {
+        fail(f, i + 1, 'locale-pin',
+          `Hardcoded locale:'${localePropMatch[1]}' pin. Stories must be toolbar-reactive — ` +
+          `resolve locale from context.globals.locale (§13/§14, Check 4).`);
+        continue;
+      }
+
+      // (ii) JSX locale="…" or locale={'…'} prop — all four locales
+      // Uses the snapshot taken before the close-tag cleared inJsxTag.
+      if (lineIsJsx) {
+        const jsxLocaleMatch = /\blocale\s*=\s*(?:["'](uk|sq|en|it)["']|\{\s*["'](uk|sq|en|it)["']\s*\})/.exec(line);
+        if (jsxLocaleMatch) {
+          const val = jsxLocaleMatch[1] || jsxLocaleMatch[2];
+          fail(f, i + 1, 'locale-pin',
+            `Hardcoded locale="${val}" JSX prop. Stories must be toolbar-reactive (§13/§14, Check 4).`);
+        }
+      }
+    }
   }
 
   // ── Check 5: Known hardcoded English title literals in fixture files ──────────
@@ -619,7 +706,104 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
-  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 11 };
+  // ── Check 12: Viewport/width-named exports (identifier-token rule) ────────
+  // Splits export name into PascalCase segments + underscore splits.
+  // FAIL if any segment exactly equals a viewport keyword or width number.
+
+  log('── Check 12: Viewport/width-named exports ────────────────────────────');
+
+  const VIEWPORT_KEYWORDS = new Set([
+    'Mobile', 'Tablet', 'Desktop', 'Laptop', 'Wide', 'Huge',
+  ]);
+  const WIDTH_NUMBERS = new Set([
+    '320', '375', '390', '768', '1024', '1280', '1440', '1920', '2560',
+  ]);
+
+  for (const f of STORY_FILES.filter(f => f.endsWith('.tsx') || f.endsWith('.ts'))) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const m = EXPORT_RE.exec(lines[i]);
+      if (!m) continue;
+      const name = m[1];
+      const segments = segmentIdentifier(name);
+      const hasForbiddenSegment = segments.some(seg => {
+        if (VIEWPORT_KEYWORDS.has(seg)) return true;
+        if (WIDTH_NUMBERS.has(seg)) return true;
+        // keyword+digits pattern: Mobile320, Tablet768, etc.
+        const kwMatch = seg.match(/^(Mobile|Tablet|Desktop|Laptop|Wide|Huge)(\d+)$/);
+        if (kwMatch) return true;
+        // bare width number at segment level
+        if (/^\d{3,4}$/.test(seg) && WIDTH_NUMBERS.has(seg)) return true;
+        return false;
+      });
+      if (hasForbiddenSegment && !isAllowlisted(f, name, 12)) {
+        fail(f, i + 1, 'viewport-width-export',
+          `Export '${name}' contains a viewport/width segment (${segments.join('|')}). ` +
+          `Use a real-mode name or add a file-scoped allowlist entry (§14.3, Check 12).`);
+      }
+    }
+  }
+
+  // ── Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical) ──
+
+  log('── Check 13: Duplicate-family export names ─────────────────────────────');
+
+  const FAMILY_KEYWORDS = new Set(['Proof', 'Demo', 'Canonical', 'Filtered']);
+
+  for (const f of STORY_FILES.filter(f => f.endsWith('.tsx') || f.endsWith('.ts'))) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const m = EXPORT_RE.exec(lines[i]);
+      if (!m) continue;
+      const name = m[1];
+      const segments = segmentIdentifier(name);
+      const hasFamilySegment = segments.some(seg => {
+        if (FAMILY_KEYWORDS.has(seg)) return true;
+        // Canonical+digits: Canonical320, Canonical375
+        if (/^Canonical\d+$/.test(seg)) return true;
+        return false;
+      });
+      if (hasFamilySegment && !isAllowlisted(f, name, 13)) {
+        fail(f, i + 1, 'duplicate-family-export',
+          `Export '${name}' contains a duplicate-family segment (${segments.join('|')}). ` +
+          `Rename to a real-scenario name or add a file-scoped allowlist entry (§14.3, Check 13).`);
+      }
+    }
+  }
+
+  // ── Stale allowlist entry check ────────────────────────────────────────────
+
+  log('── Stale allowlist entry check ──────────────────────────────────────');
+
+  for (const entry of allowlist) {
+    const entryPath = join(root, entry.file);
+    if (!existsSync(entryPath)) {
+      violations.push({
+        file: entry.file,
+        line: 0,
+        rule: 'stale-allowlist-entry',
+        detail: `Allowlist entry for '${entry.export}' points at non-existent file '${entry.file}'.`,
+      });
+      continue;
+    }
+    let content;
+    try { content = readFileSync(entryPath, 'utf8'); } catch { continue; }
+    const exportPattern = new RegExp(`export\\s+const\\s+${entry.export}\\b`);
+    if (!exportPattern.test(content)) {
+      violations.push({
+        file: entry.file,
+        line: 0,
+        rule: 'stale-allowlist-entry',
+        detail: `Allowlist entry for '${entry.export}' — export not found in '${entry.file}'.`,
+      });
+    }
+  }
+
+  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 13 };
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────

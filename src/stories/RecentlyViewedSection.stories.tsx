@@ -167,31 +167,6 @@ export const MobileScroll: Story = {
   }
 }
 
-/** Huge desktop — 4-col grid via lg:grid-cols-4 (2560px, container-wide bounds content). */
-export const HugeDesktop: Story = {
-  args: { onClear: fn() },
-
-  render: (args, context) => {
-    const locale = (context?.globals?.locale as string) ?? 'en'
-    return (
-      <div className="container-wide mx-auto px-4 py-8">
-        <RecentlyViewedLayout listings={makeStoryListings(locale)} showClear onClear={args.onClear} />
-      </div>
-    )
-  },
-
-  parameters: {
-    docs: { description: { story: '2560px: 4-col grid via lg:grid-cols-4. Content bounded by .container-wide.' } }
-  },
-
-  globals: {
-    viewport: {
-      value: 'desktop2560',
-      isRotated: false
-    }
-  }
-}
-
 /** Empty state — shown after clearing history or before any listing is visited. */
 export const EmptyState: Story = {
   render: () => (

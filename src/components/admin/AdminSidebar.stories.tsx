@@ -14,7 +14,7 @@ const meta: Meta<typeof AdminSidebar> = {
 export default meta
 type Story = StoryObj<typeof AdminSidebar>
 
-export const Desktop: Story = {
+export const CollapsedRail: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 

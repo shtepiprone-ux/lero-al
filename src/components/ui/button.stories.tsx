@@ -131,7 +131,7 @@ function MobileSafeDemo({ locale }: { locale: string }) {
   )
 }
 
-export const MobileSafe: Story = {
+export const TouchSafe: Story = {
   render: (_, context) => <MobileSafeDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
 
   parameters: {
@@ -228,7 +228,7 @@ function ControlRowDesktopDemo({ locale }: { locale: string }) {
   )
 }
 
-export const ControlRowRhythm_Desktop: Story = {
+export const ControlRowRhythm_Inline: Story = {
   render: (_, context) => <ControlRowDesktopDemo locale={(context?.globals?.locale as string) ?? 'en'} />,
 
   parameters: {

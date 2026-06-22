@@ -381,7 +381,7 @@ const eslintConfig = defineConfig([
   //   G. /Ukrainian/ story export names — forbidden (use LocaleStress instead)
   //   H. Raw user-facing title literals (≥8-char English/Latin heuristic) in fixture fields
   {
-    files: ["src/**/*.stories.tsx", "src/stories/**/*.ts", "src/stories/**/*.tsx"],
+    files: ["src/**/*.stories.tsx", "src/**/*.stories.ts", "src/stories/**/*.ts", "src/stories/**/*.tsx"],
     ignores: [
       ...IMAGE_RENDER_EXCEPTIONS,
       ...LISTING_STATUS_IGNORES,

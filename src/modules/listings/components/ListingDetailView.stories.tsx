@@ -125,6 +125,7 @@ function ListingDetailViewStory(
   return (
     <ListingDetailViewBody
       {...props}
+      locale={storyLocale}
       t={t}
       tNav={tNav}
       tc={tc}
@@ -156,7 +157,6 @@ const meta: Meta<typeof ListingDetailViewStory> = {
     formattedPrice: '€125,000',
     relativeTimeStr: '2 days ago',
     listingUrl: 'https://lero.al/en/listings/shitet-apartament-2-1-tirane',
-    locale: 'en',
     isGuest: true,
     canReport: false,
     isInitiallyFavorited: false,
@@ -174,18 +174,6 @@ export const PublicListing: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const PublicListingMobile320: Story = {
-  globals: { viewport: { value: 'mobile320', isRotated: false }, locale: 'uk' },
-}
-
-export const PublicListingMobile375: Story = {
-  globals: { viewport: { value: 'mobile375', isRotated: false }, locale: 'uk' },
-}
-
-export const PublicListingMobile390: Story = {
-  globals: { viewport: { value: 'mobile390', isRotated: false }, locale: 'uk' },
-}
-
 // ── Staff preview — unpublished listing (status: pending) ────────────────────
 export const StaffPreviewUnpublished: Story = {
   args: {
@@ -196,39 +184,6 @@ export const StaffPreviewUnpublished: Story = {
     listingId: undefined,
   },
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
-}
-
-export const StaffPreviewUnpublishedMobile320: Story = {
-  args: {
-    listing: { ...baseListing, status: 'pending' },
-    isStaffPreview: true,
-    previewBanner: 'unpublished',
-    isGuest: true,
-    listingId: undefined,
-  },
-  globals: { viewport: { value: 'mobile320', isRotated: false }, locale: 'uk' },
-}
-
-export const StaffPreviewUnpublishedMobile375: Story = {
-  args: {
-    listing: { ...baseListing, status: 'pending' },
-    isStaffPreview: true,
-    previewBanner: 'unpublished',
-    isGuest: true,
-    listingId: undefined,
-  },
-  globals: { viewport: { value: 'mobile375', isRotated: false }, locale: 'uk' },
-}
-
-export const StaffPreviewUnpublishedMobile390: Story = {
-  args: {
-    listing: { ...baseListing, status: 'pending' },
-    isStaffPreview: true,
-    previewBanner: 'unpublished',
-    isGuest: true,
-    listingId: undefined,
-  },
-  globals: { viewport: { value: 'mobile390', isRotated: false }, locale: 'uk' },
 }
 
 // ── Staff preview — published listing (link to public page) ──────────────────
@@ -243,44 +198,3 @@ export const StaffPreviewPublished: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const StaffPreviewPublishedMobile320: Story = {
-  args: {
-    listing: { ...baseListing, status: 'active' },
-    isStaffPreview: true,
-    previewBanner: 'published',
-    isGuest: true,
-    listingId: undefined,
-  },
-  globals: { viewport: { value: 'mobile320', isRotated: false }, locale: 'uk' },
-}
-
-export const StaffPreviewPublishedMobile375: Story = {
-  args: {
-    listing: { ...baseListing, status: 'active' },
-    isStaffPreview: true,
-    previewBanner: 'published',
-    isGuest: true,
-    listingId: undefined,
-  },
-  globals: { viewport: { value: 'mobile375', isRotated: false }, locale: 'uk' },
-}
-
-export const StaffPreviewPublishedMobile390: Story = {
-  args: {
-    listing: { ...baseListing, status: 'active' },
-    isStaffPreview: true,
-    previewBanner: 'published',
-    isGuest: true,
-    listingId: undefined,
-  },
-  globals: { viewport: { value: 'mobile390', isRotated: false }, locale: 'uk' },
-}
-
-// ── Desktop sweep — broader breakpoint coverage for layout reuse ──────────────
-export const PublicListingTablet768: Story = {
-  globals: { viewport: { value: 'tablet768', isRotated: false } },
-}
-
-export const PublicListingDesktop1440: Story = {
-  globals: { viewport: { value: 'desktop1440', isRotated: false } },
-}

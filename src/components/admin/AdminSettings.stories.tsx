@@ -15,10 +15,6 @@ export const Default: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const Tablet: Story = {
-  globals: { viewport: { value: 'tablet768', isRotated: false } },
-}
-
 export const LocaleStress: Story = {
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }

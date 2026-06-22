@@ -136,16 +136,6 @@ export const AllCases: Story = {
   globals: { viewport: { value: 'mobile390', isRotated: false } },
 }
 
-export const AllCasesMobile320: Story = {
-  ...AllCases,
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
-}
-
-export const AllCasesMobile375: Story = {
-  ...AllCases,
-  globals: { viewport: { value: 'mobile375', isRotated: false } },
-}
-
 /** Single price_change row, unread, mobile320 — focuses on the long listing name + ICU price params. */
 export const PriceChangeUnread: Story = {
   args: { notification: ROWS[1], onRead: () => {} },

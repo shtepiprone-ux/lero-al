@@ -48,7 +48,10 @@ const meta: Meta<typeof AdminReportsManager> = {
   title: 'Admin/AdminReportsManager',
   component: AdminReportsManager,
   tags: ['autodocs'],
-  args: { reports: FIXTURE_REPORTS, locale: 'uk', canOverrideReportStatus: false, canDeleteReports: false },
+  args: { reports: FIXTURE_REPORTS, canOverrideReportStatus: false, canDeleteReports: false },
+  render: (args, ctx) => (
+    <AdminReportsManager {...args} locale={(ctx?.globals?.locale as string) ?? 'en'} />
+  ),
 }
 export default meta
 type Story = StoryObj<typeof AdminReportsManager>
@@ -57,17 +60,9 @@ export const Default: Story = {
   globals: { viewport: { value: 'desktop1280', isRotated: false } },
 }
 
-export const Tablet: Story = {
-  globals: { viewport: { value: 'tablet768', isRotated: false } },
-}
-
 export const LocaleStress: Story = {
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }
-
-// ── Task 461 AC6 — ReportDetailDialog with owner row at mobile breakpoints ──
-// Toolbar-reactive: locale comes from the Storybook locale toolbar, not pinned.
-// screenshots:assert sweeps locales (uk@320/375/390 mandatory) per rendered-evidence gate.
 
 const openDialog = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
   const rows = canvasElement.querySelectorAll('tbody tr')
@@ -75,27 +70,9 @@ const openDialog = async ({ canvasElement }: { canvasElement: HTMLElement }) => 
   await userEvent.click(rows[0])
 }
 
-export const DialogOwnerRow_Mobile320: Story = {
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
+export const DialogOwnerRow: Story = {
   play: openDialog,
 }
-
-export const DialogOwnerRow_Mobile375: Story = {
-  globals: { viewport: { value: 'mobile375', isRotated: false } },
-  play: openDialog,
-}
-
-export const DialogOwnerRow_Mobile390: Story = {
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
-  play: openDialog,
-}
-
-export const DialogOwnerRow_Desktop: Story = {
-  globals: { viewport: { value: 'desktop1280', isRotated: false } },
-  play: openDialog,
-}
-
-// ── Task 463 — Full management controls (status override + reopen + delete) ──
 
 const openPendingDialogWithCaps = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
   const rows = canvasElement.querySelectorAll('tbody tr')
@@ -103,25 +80,10 @@ const openPendingDialogWithCaps = async ({ canvasElement }: { canvasElement: HTM
   await userEvent.click(rows[0])
 }
 
-export const FullManagement_Mobile320: Story = {
+export const FullManagement: Story = {
   args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
   play: openPendingDialogWithCaps,
 }
-
-export const FullManagement_Mobile375: Story = {
-  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile375', isRotated: false } },
-  play: openPendingDialogWithCaps,
-}
-
-export const FullManagement_Mobile390: Story = {
-  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
-  play: openPendingDialogWithCaps,
-}
-
-// Terminal report with Reopen + Delete
 
 const clickResolvedFilter = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
   const tabs = canvasElement.querySelectorAll('button')
@@ -140,25 +102,10 @@ const clickResolvedFilter = async ({ canvasElement }: { canvasElement: HTMLEleme
   await userEvent.click(rows[0])
 }
 
-export const TerminalReopen_Mobile320: Story = {
+export const TerminalReopen: Story = {
   args: { reports: [FIXTURE_RESOLVED_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
   play: clickResolvedFilter,
 }
-
-export const TerminalReopen_Mobile375: Story = {
-  args: { reports: [FIXTURE_RESOLVED_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile375', isRotated: false } },
-  play: clickResolvedFilter,
-}
-
-export const TerminalReopen_Mobile390: Story = {
-  args: { reports: [FIXTURE_RESOLVED_REPORT], canOverrideReportStatus: true, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
-  play: clickResolvedFilter,
-}
-
-// Delete confirmation dialog
 
 const openDeleteConfirm = async ({ canvasElement }: { canvasElement: HTMLElement }) => {
   const rows = canvasElement.querySelectorAll('tbody tr')
@@ -172,20 +119,7 @@ const openDeleteConfirm = async ({ canvasElement }: { canvasElement: HTMLElement
   await userEvent.click(deleteBtn)
 }
 
-export const DeleteConfirm_Mobile320: Story = {
+export const DeleteConfirm: Story = {
   args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: false, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile320', isRotated: false } },
-  play: openDeleteConfirm,
-}
-
-export const DeleteConfirm_Mobile375: Story = {
-  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: false, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile375', isRotated: false } },
-  play: openDeleteConfirm,
-}
-
-export const DeleteConfirm_Mobile390: Story = {
-  args: { reports: [FIXTURE_REPORT], canOverrideReportStatus: false, canDeleteReports: true },
-  globals: { viewport: { value: 'mobile390', isRotated: false } },
   play: openDeleteConfirm,
 }

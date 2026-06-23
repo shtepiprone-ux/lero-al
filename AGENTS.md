@@ -1,3 +1,7 @@
+# Codex startup rule
+
+Before opening task files or making changes, read `.codex/RULES.md` and follow it.
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 

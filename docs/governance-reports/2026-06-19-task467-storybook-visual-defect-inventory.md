@@ -1,6 +1,6 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
-**Date:** 2026-06-22 | **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8)
+**Date:** 2026-06-23 | **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8)
 **Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (240 stories, 6532 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
@@ -11,8 +11,8 @@
 | Counter | Count |
 |---------|-------|
 | Total cells | 6532 |
-| PASS (clean, verdict=pass) | 5327 |
-| FAIL (hard defect, verdict=fail) | 757 |
+| PASS (clean, verdict=pass) | 5326 |
+| FAIL (hard defect, verdict=fail) | 758 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 108 |
 | AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 340 |
 | text-clipped | 231 |
@@ -217,6 +217,7 @@
 | `listings-listingdetailview--staff-preview-published` | it | tablet-768 | `listings-listingdetailview--staff-preview-published__it__tablet-768.png` | element-overlap: button("Chiama") ↔ button("Scrivi su WhatsApp"); element-overlap: button("Scrivi su WhatsApp") ↔ button("Scrivi su WhatsApp"); element-overlap: button("Scrivi su WhatsApp") ↔ button | button("Chiama") ↔ button("Scrivi su WhatsApp") | "Chiama" ↔ "Contatta tramite WhatsApp" |
 | `listings-listingdetailview--staff-preview-published` | it | canonical-810 | `listings-listingdetailview--staff-preview-published__it__canonical-810.png` | element-overlap: button("Chiama") ↔ button("Scrivi su WhatsApp"); element-overlap: button("Scrivi su WhatsApp") ↔ button("Scrivi su WhatsApp"); element-overlap: button("Scrivi su WhatsApp") ↔ button | button("Chiama") ↔ button("Scrivi su WhatsApp") | "Chiama" ↔ "Contatta tramite WhatsApp" |
 | `listings-listingdetailview--staff-preview-published` | it | canonical-960 | `listings-listingdetailview--staff-preview-published__it__canonical-960.png` | element-overlap: button("Chiama") ↔ button("Scrivi su WhatsApp"); element-overlap: button("Chiama") ↔ button | button("Chiama") ↔ button("Scrivi su WhatsApp") | "Chiama" ↔ "Contatta tramite WhatsApp" |
+| `listings-listingformshellview--staff` | sq | mobile-390 | `listings-listingformshellview--staff__sq__mobile-390.png` | blank-canvas |  |  |
 | `admin-adminreportsmanager--dialog-owner-row` | sq | mobile-480 | `admin-adminreportsmanager--dialog-owner-row__sq__mobile-480.png` | (render/visual) |  |  |
 | `admin-adminreportsmanager--dialog-owner-row` | sq | canonical-560 | `admin-adminreportsmanager--dialog-owner-row__sq__canonical-560.png` | (render/visual) |  |  |
 | `admin-adminreportsmanager--dialog-owner-row` | en | mobile-480 | `admin-adminreportsmanager--dialog-owner-row__en__mobile-480.png` | (render/visual) |  |  |
@@ -1237,4 +1238,4 @@
 
 - **Harness-generated:** all rows above are emitted from the manifest, not hand-written.
 - **Authoritative full run** = owner NATIVE on committed tree.
-- **Run timestamp:** 2026-06-22T20-10
+- **Run timestamp:** 2026-06-23T08-44

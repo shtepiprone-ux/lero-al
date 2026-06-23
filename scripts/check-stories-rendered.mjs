@@ -45,6 +45,21 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkGeometryIntegrity } from './geometry-integrity.mjs';
+
+// Crash guards: ensure the process always exits with a controlled integer
+// code, never -1 (OS kill / unhandled exception). Exit 2 = harness crash
+// (distinguishable from controlled exit 1 = defects found).
+process.on('uncaughtException', (err) => {
+  console.error('❌ check-stories-rendered: uncaughtException — exiting with code 2');
+  console.error(err);
+  process.exitCode = 2;
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('❌ check-stories-rendered: unhandledRejection — exiting with code 2');
+  console.error(reason);
+  process.exitCode = 2;
+});
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -141,7 +156,7 @@ const ASSERT_STORIES = [
   { id: 'system-adminlayout--admin-toolbar',       label: 'AdminLayout/AdminToolbar',         anchors: [{ type: 'testid', value: 'admin-toolbar', label: 'toolbar' }] },
   { id: 'system-containers--container-wide',       label: 'Containers/Wide',                  anchors: [{ type: 'testid', value: 'container', label: 'container' }] },
   { id: 'system-emptystate--no-listings',          label: 'EmptyState/NoListings',            anchors: [{ type: 'testid', value: 'empty-state', label: 'empty-state' }] },
-  { id: 'system-listinggrid--desktop',             label: 'ListingGrid/Desktop',              anchors: [{ type: 'testid', value: 'listing-grid', label: 'listing-grid' }] },
+  { id: 'system-listinggrid--default',              label: 'ListingGrid/Default',              anchors: [{ type: 'testid', value: 'listing-grid', label: 'listing-grid' }] },
   { id: 'system-recentlyviewedsection--populated', label: 'RVS/Populated',                   anchors: [{ type: 'selector', value: '.recently-viewed', label: 'rvs' }] },
   // ── Open-state overlays (7 — Task 421 Slice 6) ──
   { id: 'primitives-dialog--mobile-full-width',    label: 'Dialog/MobileFullWidth',           anchors: [{ type: 'slot', value: 'dialog-content', label: 'dialog-content' }] },
@@ -155,21 +170,10 @@ const ASSERT_STORIES = [
   { id: 'notifications-notificationcenter--default',          label: 'NotificationCenter/Default',          anchors: [{ type: 'testid', value: 'notification-center', label: 'notif-center' }] },
   { id: 'notifications-notificationcenter--mobile-bottom-sheet', label: 'NotificationCenter/MobileBottomSheet', anchors: [{ type: 'testid', value: 'notification-center', label: 'notif-center' }] },
   { id: 'notifications-notificationcenter--empty',            label: 'NotificationCenter/Empty',            anchors: [{ type: 'testid', value: 'notification-center', label: 'notif-center' }] },
-  // ── ListingDetailView (14 — Task 237) ──
-  { id: 'listings-listingdetailview--public-listing',                       label: 'ListingDetailView/Public',                       anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-unpublished',            label: 'ListingDetailView/StaffPreviewUnpublished',       anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-published',              label: 'ListingDetailView/StaffPreviewPublished',         anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--public-listing-mobile-320',            label: 'ListingDetailView/PublicMobile320',               anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--public-listing-mobile-375',            label: 'ListingDetailView/PublicMobile375',               anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--public-listing-mobile-390',            label: 'ListingDetailView/PublicMobile390',               anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-unpublished-mobile-320', label: 'ListingDetailView/StaffPreviewUnpublishedMobile320', anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-unpublished-mobile-375', label: 'ListingDetailView/StaffPreviewUnpublishedMobile375', anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-unpublished-mobile-390', label: 'ListingDetailView/StaffPreviewUnpublishedMobile390', anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-published-mobile-320',   label: 'ListingDetailView/StaffPreviewPublishedMobile320',  anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-published-mobile-375',   label: 'ListingDetailView/StaffPreviewPublishedMobile375',  anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--staff-preview-published-mobile-390',   label: 'ListingDetailView/StaffPreviewPublishedMobile390',  anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--public-listing-tablet-768',            label: 'ListingDetailView/PublicTablet768',               anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
-  { id: 'listings-listingdetailview--public-listing-desktop-1440',          label: 'ListingDetailView/PublicDesktop1440',             anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
+  // ── ListingDetailView (3 — Task 468 dedup: 14→3) ──
+  { id: 'listings-listingdetailview--public-listing',            label: 'ListingDetailView/Public',                  anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
+  { id: 'listings-listingdetailview--staff-preview-unpublished', label: 'ListingDetailView/StaffPreviewUnpublished', anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
+  { id: 'listings-listingdetailview--staff-preview-published',   label: 'ListingDetailView/StaffPreviewPublished',   anchors: [{ type: 'testid', value: 'listing-detail-view', label: 'ldv' }] },
   // ── ListingFormShellView (2 — Task 238) ──
   { id: 'listings-listingformshellview--owner',    label: 'ListingFormShellView/Owner',       anchors: [{ type: 'testid', value: 'listing-form-shell-view', label: 'lfsv' }] },
   { id: 'listings-listingformshellview--staff',    label: 'ListingFormShellView/Staff',       anchors: [{ type: 'testid', value: 'listing-form-shell-view', label: 'lfsv' }] },
@@ -178,21 +182,27 @@ const ASSERT_STORIES = [
   { id: 'auth-verifiedpage--error-state',          label: 'VerifiedPage/ErrorState',          anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
   { id: 'auth-verifiedpage--sync-fail',            label: 'VerifiedPage/SyncFail',            anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
   { id: 'auth-verifiedpage--locale-stress',        label: 'VerifiedPage/LocaleStress',        anchors: [{ type: 'testid', value: 'verified-page', label: 'verified' }] },
-  // ── Task 463 — AdminReportsManager full management (9) ──
-  { id: 'admin-adminreportsmanager--full-management-mobile-320',  label: 'AdminReportsManager/FullManagement320',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'status-override-section', label: 'status-override' }] },
-  { id: 'admin-adminreportsmanager--full-management-mobile-375',  label: 'AdminReportsManager/FullManagement375',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'status-override-section', label: 'status-override' }] },
-  { id: 'admin-adminreportsmanager--full-management-mobile-390',  label: 'AdminReportsManager/FullManagement390',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'status-override-section', label: 'status-override' }] },
-  { id: 'admin-adminreportsmanager--terminal-reopen-mobile-320',  label: 'AdminReportsManager/TerminalReopen320',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
-  { id: 'admin-adminreportsmanager--terminal-reopen-mobile-375',  label: 'AdminReportsManager/TerminalReopen375',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
-  { id: 'admin-adminreportsmanager--terminal-reopen-mobile-390',  label: 'AdminReportsManager/TerminalReopen390',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
-  { id: 'admin-adminreportsmanager--delete-confirm-mobile-320',   label: 'AdminReportsManager/DeleteConfirm320',   anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
-  { id: 'admin-adminreportsmanager--delete-confirm-mobile-375',   label: 'AdminReportsManager/DeleteConfirm375',   anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
-  { id: 'admin-adminreportsmanager--delete-confirm-mobile-390',   label: 'AdminReportsManager/DeleteConfirm390',   anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
-  // ── Task 464 — AdminPermissionsManager (Дозволі page) ──
-  { id: 'admin-adminpermissionsmanager--default',   label: 'AdminPermissionsManager/Default',  anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
-  { id: 'admin-adminpermissionsmanager--mobile-320', label: 'AdminPermissionsManager/Mobile320', anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
-  { id: 'admin-adminpermissionsmanager--mobile-375', label: 'AdminPermissionsManager/Mobile375', anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
-  { id: 'admin-adminpermissionsmanager--mobile-390', label: 'AdminPermissionsManager/Mobile390', anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
+  // ── Task 468 — AdminReportsManager canonical scenarios (5, dedup: 9→5) ──
+  { id: 'admin-adminreportsmanager--default',         label: 'AdminReportsManager/Default',       anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }] },
+  { id: 'admin-adminreportsmanager--dialog-owner-row', label: 'AdminReportsManager/DialogOwnerRow', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'slot', value: 'dialog-content', label: 'dialog-open' }, { type: 'selector', value: 'a[href*="u-owner"]', label: 'owner-link' }] },
+  { id: 'admin-adminreportsmanager--full-management', label: 'AdminReportsManager/FullManagement', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'status-override-section', label: 'status-override' }] },
+  { id: 'admin-adminreportsmanager--terminal-reopen', label: 'AdminReportsManager/TerminalReopen', anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'reopen-btn', label: 'reopen' }] },
+  { id: 'admin-adminreportsmanager--delete-confirm',  label: 'AdminReportsManager/DeleteConfirm',  anchors: [{ type: 'testid', value: 'admin-reports-manager', label: 'reports-mgr' }, { type: 'testid', value: 'delete-btn', label: 'delete' }] },
+  // ── Task 464/468 — AdminPermissionsManager (1, dedup: 4→1) ──
+  { id: 'admin-adminpermissionsmanager--default',     label: 'AdminPermissionsManager/Default',    anchors: [{ type: 'testid', value: 'admin-permissions-manager', label: 'perms-mgr' }, { type: 'testid', value: 'perm-row-reports_status_override', label: 'perm-status-override' }, { type: 'testid', value: 'perm-row-reports_delete', label: 'perm-delete' }] },
+  // ── Planted visual violations (9 — Task 467 + R1/R2 + C2/R4) ──
+  { id: 'planted-visualviolations--clipped-button-text',  label: 'Planted/ClippedButtonText',  anchors: [{ type: 'testid', value: 'planted-clipped-btn', label: 'clipped-btn' }] },
+  { id: 'planted-visualviolations--overlapping-actions',  label: 'Planted/OverlappingActions',  anchors: [{ type: 'testid', value: 'planted-overlap-a', label: 'overlap-a' }] },
+  { id: 'planted-visualviolations--off-viewport-control', label: 'Planted/OffViewportControl',  anchors: [{ type: 'testid', value: 'planted-offscreen-btn', label: 'offscreen-btn' }] },
+  { id: 'planted-visualviolations--container-clipped',    label: 'Planted/ContainerClipped',    anchors: [{ type: 'testid', value: 'planted-container-clip', label: 'container-clip' }] },
+  { id: 'planted-visualviolations--known-good-control',   label: 'Planted/KnownGoodControl',    anchors: [{ type: 'testid', value: 'planted-good', label: 'good-ctrl' }] },
+  { id: 'planted-visualviolations--ambiguous-overlap',    label: 'Planted/AmbiguousOverlap',    anchors: [{ type: 'testid', value: 'planted-ambiguous-trigger', label: 'ambig-trigger' }] },
+  { id: 'planted-visualviolations--intentional-ellipsis', label: 'Planted/IntentionalEllipsis', anchors: [{ type: 'testid', value: 'planted-ellipsis-link', label: 'ellipsis-link' }] },
+  { id: 'planted-visualviolations--container-escape',     label: 'Planted/ContainerEscape',     anchors: [{ type: 'testid', value: 'planted-escape-btn', label: 'escape-btn' }] },
+  { id: 'planted-visualviolations--unstyled-frame',       label: 'Planted/UnstyledFrame',       anchors: [{ type: 'testid', value: 'planted-unstyled-btn', label: 'unstyled-btn' }] },
+  { id: 'planted-visualviolations--sr-only-icon-button',  label: 'Planted/SrOnlyIconButton',    anchors: [{ type: 'testid', value: 'planted-sronly-btn', label: 'sronly-btn' }] },
+  { id: 'planted-visualviolations--narrow-range-guard',    label: 'Planted/NarrowRangeGuard',    anchors: [{ type: 'testid', value: 'planted-narrow-range-btn', label: 'narrow-range-btn' }] },
+  { id: 'planted-visualviolations--large-range-guard',     label: 'Planted/LargeRangeGuard',      anchors: [{ type: 'testid', value: 'planted-large-range-btn', label: 'wide-range-btn' }] },
 ];
 
 // ── Loader-allowlist: story IDs whose intended content IS a loading/skeleton state ──
@@ -323,10 +333,43 @@ const TRANSIENT_NETWORK_PATTERN = /ERR_NO_BUFFER_SPACE|net::ERR_/i;
 
 const HARD_FAIL_REASONS = new Set([
   'loader-only', 'blank-canvas', 'empty-canvas', 'blank-screenshot', 'anchor-missing',
+  'text-clipped', 'offscreen-control', 'outside-container',
+  'element-overlap', 'bottomsheet-overflow', 'unstyled-render',
+  // self-clipped: DEFERRED (F-H) — documented but not implemented in geometry-integrity.mjs;
+  // counter kept in summary for future implementation, structurally 0 until then.
 ]);
+
+// ── Geometry allowlist: intentional overlaps / escapes (Task 467) ─────────
+// Each entry: { storyId, selector?, reason }. Matching violations are suppressed.
+const GEOMETRY_ALLOWLIST = [
+  // Badge-on-avatar, drag-handle overlaps, etc. — add with documented reason.
+];
+
+// ── Viewport range per story (V1-FINAL FP-CLASSES B/C) ──────────────────
+// Stories that only render meaningful content within a specific viewport range.
+// Outside this range, blank-screenshot / geometry failures are viewport-mismatch
+// (not product defects) and are routed to a separate inventory section.
+const STORY_VIEWPORT_RANGE = {
+  'admin-adminmobileheader--default': { maxWidth: 960 },
+  'admin-adminsidebar--mobile-drawer-open': { maxWidth: 960 },
+  'admin-adminsidebar--collapsed-rail': { minWidth: 1024 },
+  'planted-visualviolations--narrow-range-guard': { maxWidth: 960 },
+  'planted-visualviolations--large-range-guard': { minWidth: 1024 },
+};
+
+function isOutOfViewportRange(cell) {
+  const range = STORY_VIEWPORT_RANGE[cell.storyId];
+  if (!range) return false;
+  if (range.maxWidth && cell.width > range.maxWidth) return true;
+  if (range.minWidth && cell.width < range.minWidth) return true;
+  return false;
+}
 
 function isTransientFailure(cell) {
   if (cell.pass !== false) return false;
+
+  // B8: after MAX_ATTEMPTS exhausted, the cell is marked hard — never transient
+  if (cell.hardAfterRetries) return false;
 
   // Hard navigation/network error from the harness's own server — retry rather
   // than emitting a false FAIL (item 3).
@@ -346,9 +389,15 @@ function isTransientFailure(cell) {
   if (cell.assertions.fullWidthControlsAtMobile === false) return false;
   if (cell.assertions.fullWidthButtonsAtMobile === false) return false;
   if (cell.assertions.popupBottomSheetAtMobile === false) return false;
+  if (cell.assertions.visualIntegrity?.pass === false) return false;
 
   if (rc.failReason === 'blank-canvas') return true;
   if (rc.failReason === 'sb-show-errordisplay' && TRANSIENT_FETCH_PATTERN.test(rc.failDetail || '')) return true;
+
+  // Style-not-ready is transient during the retry loop (R4): re-navigate may
+  // load stylesheets. After MAX_ATTEMPTS the loop breaks and the cell stays
+  // failed with 'unstyled-render' (hard capture failure, never cited as proof).
+  if (cell.assertions.styleIntegrity?.pass === false) return true;
 
   return false;
 }
@@ -356,8 +405,13 @@ function isTransientFailure(cell) {
 // ── Bitmap sanity check (Task 464, item 7) ───────────────────────────────────
 // Uses sharp to detect blank/near-uniform screenshots. Returns a verdict +
 // metrics so the manifest is self-describing.
+// When domRenderPassed=true, the DOM check already confirmed visible content
+// exists (text, images, data-slot controls, portal content). In that case,
+// near-uniform bitmaps at large viewports (e.g. a tiny badge on a 2560px
+// canvas) are expected — not blank. Only truly degenerate captures (zero
+// variance, all one colour) still fail.
 
-async function assertScreenshotHasMeaningfulPixels(screenshotPath) {
+async function assertScreenshotHasMeaningfulPixels(screenshotPath, { domRenderPassed = false } = {}) {
   const result = { pass: true, failReason: null, failDetail: '', metrics: { width: 0, height: 0, nonBackgroundRatio: 0, variance: 0 } };
   try {
     const { default: sharp } = await import('sharp');
@@ -404,11 +458,21 @@ async function assertScreenshotHasMeaningfulPixels(screenshotPath) {
     const variance = (sumLumaSq / pixelCount) - (meanLuma * meanLuma);
     result.metrics.variance = Math.round(variance * 100) / 100;
 
-    // Fail if near-uniform: nonBackgroundRatio < 0.5% AND variance < 10
+    // When DOM render check already confirmed visible content, near-uniform
+    // bitmaps are expected at large viewports (tiny badge on 2560px canvas,
+    // closed sheet, small popover). Only truly degenerate bitmaps (zero
+    // variance = literally one flat colour, no content at all) still fail.
+    if (domRenderPassed) {
+      if (variance === 0 && nonBackgroundRatio === 0) {
+        return { pass: false, failReason: 'blank-screenshot', failDetail: `dom-passed but zero-variance single-colour (bg=${(backgroundRatio * 100).toFixed(1)}%, var=${variance.toFixed(1)})`, metrics: result.metrics };
+      }
+      return result;
+    }
+
+    // No DOM confirmation — use strict thresholds (self-test path, early failures)
     if (nonBackgroundRatio < 0.005 && variance < 10) {
       return { pass: false, failReason: 'blank-screenshot', failDetail: `near-uniform (bg=${(backgroundRatio * 100).toFixed(1)}%, var=${variance.toFixed(1)})`, metrics: result.metrics };
     }
-    // Fail if almost entirely one flat colour (>99.5% single colour + very low variance)
     if (backgroundRatio > 0.995 && variance < 5) {
       return { pass: false, failReason: 'blank-screenshot', failDetail: `flat-colour (bg=${(backgroundRatio * 100).toFixed(1)}%, var=${variance.toFixed(1)})`, metrics: result.metrics };
     }
@@ -527,6 +591,7 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
         failDetail: 'spinner/loader still present at readiness timeout',
       };
       cell.pass = false;
+      cell.verdict = 'fail';
       await page.screenshot({ path: screenshotPath, fullPage: false });
       cell.visualContentCheck = await assertScreenshotHasMeaningfulPixels(screenshotPath);
       return cell;
@@ -580,17 +645,19 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     await page.screenshot({ path: screenshotPath, fullPage: false });
 
     // ── 1d. Bitmap sanity check ──
-    cell.visualContentCheck = await assertScreenshotHasMeaningfulPixels(screenshotPath);
+    cell.visualContentCheck = await assertScreenshotHasMeaningfulPixels(screenshotPath, { domRenderPassed: !renderResult.failed });
     if (!cell.visualContentCheck.pass) {
       cell.assertions.renderCheck.failReason = cell.assertions.renderCheck.failReason ?? cell.visualContentCheck.failReason;
       cell.assertions.renderCheck.failDetail = cell.assertions.renderCheck.failDetail || cell.visualContentCheck.failDetail;
       cell.pass = false;
+      cell.verdict = 'fail';
       return cell;
     }
 
     // Short-circuit: if DOM render-check already failed, skip anchors + visual gates
     if (renderFailed) {
       cell.pass = false;
+      cell.verdict = 'fail';
       return cell;
     }
 
@@ -606,21 +673,92 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
           failDetail: `missing: ${missing.join(', ')}`,
         };
         cell.pass = false;
+        cell.verdict = 'fail';
         return cell;
       }
-    } else if (!LOADER_ALLOWLIST.has(story.id)) {
-      // No anchors declared for a non-allowlisted story = config error
+    } else if (!LOADER_ALLOWLIST.has(story.id) && !story.geometryOnly) {
+      // No anchors declared for a non-allowlisted, non-geometry-only story = config error
       cell.assertions.renderCheck = {
         ...cell.assertions.renderCheck,
         failReason: 'anchor-missing',
         failDetail: 'no anchors declared (config error)',
       };
       cell.pass = false;
+      cell.verdict = 'fail';
       return cell;
     }
 
     // ════════════════════════════════════════════════════════════════
-    // LAYER 2: Visual gates (only if layer 1 passed)
+    // STYLE INTEGRITY: CSS/design-system styles applied (Task 467 R4)
+    // Detects unstyled/raw-UA frames via deterministic DOM signals.
+    // Runs BEFORE Layer 2/3 — measurements on unstyled content are meaningless.
+    // ════════════════════════════════════════════════════════════════
+    const styleSignals = await page.evaluate(() => {
+      const signals = {};
+      // 1. Preflight applied (Tailwind zeroes body margin; UA default is 8px)
+      signals.bodyMargin = getComputedStyle(document.body).margin;
+      const preflightOk = signals.bodyMargin === '0px';
+
+      // 2. Stylesheets loaded with rules
+      let sheetsWithRules = false;
+      try {
+        for (const sheet of document.styleSheets) {
+          try { if (sheet.cssRules && sheet.cssRules.length > 0) { sheetsWithRules = true; break; } }
+          catch { /* CORS cross-origin sheet */ }
+        }
+      } catch { /* empty */ }
+      signals.sheetsWithRules = sheetsWithRules;
+
+      // 3. Font not UA-serif default
+      const root = document.querySelector('#storybook-root');
+      let fontFamily = '';
+      if (root) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+        let textNode = walker.nextNode();
+        while (textNode) {
+          if ((textNode.textContent ?? '').trim().length > 0 && textNode.parentElement) {
+            fontFamily = getComputedStyle(textNode.parentElement).fontFamily;
+            break;
+          }
+          textNode = walker.nextNode();
+        }
+      }
+      signals.fontFamily = fontFamily;
+      // F-serif: detect both "Times New Roman" and bare generic `serif` as UA-default
+      const fontOk = !/^("?Times New Roman"?|serif)$/i.test(fontFamily.split(',')[0]?.trim() ?? '');
+
+      // 4. DS control themed (tri-state: true / false / 'not-applicable')
+      const dsCtrl = document.querySelector('[data-slot="button"]');
+      let controlThemed = 'not-applicable';
+      if (dsCtrl) {
+        const cs = getComputedStyle(dsCtrl);
+        const hasRadius = cs.borderRadius !== '0px';
+        const hasBg = cs.backgroundColor !== 'rgba(0, 0, 0, 0)' && cs.backgroundColor !== 'transparent';
+        const hasPadding = parseFloat(cs.paddingTop) > 2 || parseFloat(cs.paddingLeft) > 4;
+        controlThemed = (hasRadius || hasBg || hasPadding) ? true : false;
+      }
+      signals.controlThemed = controlThemed;
+
+      // Verdict: fail when ≥2 of the applicable signals indicate unstyled
+      const checks = [preflightOk, sheetsWithRules, fontOk];
+      if (controlThemed !== 'not-applicable') checks.push(controlThemed);
+      const failCount = checks.filter(c => !c).length;
+      return { pass: failCount < 2, signals };
+    });
+
+    cell.assertions.styleIntegrity = {
+      pass: styleSignals.pass,
+      failReason: styleSignals.pass ? null : 'unstyled-render',
+      signals: styleSignals.signals,
+    };
+    if (!styleSignals.pass) {
+      cell.pass = false;
+      cell.verdict = 'fail';
+      return cell;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // LAYER 2: Visual gates (only if layer 1 + style passed)
     // ════════════════════════════════════════════════════════════════
 
     // ── Assertion (a): No horizontal overflow ──
@@ -738,11 +876,33 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     cell.assertions.popupBottomSheetAtMobile = viewport.width < 640 ? (checkedAnyPopup ? popupBottomSheetOk : null) : null;
     if (failingPopups.length > 0) cell.assertions.failingPopupSlots = failingPopups;
 
-    cell.pass = noOverflow &&
+    // ════════════════════════════════════════════════════════════════
+    // LAYER 3: Geometry / visual integrity (Task 467)
+    // ════════════════════════════════════════════════════════════════
+    const storyAllowlist = GEOMETRY_ALLOWLIST.filter(a => a.storyId === story.id);
+    const geometryResult = await checkGeometryIntegrity(page, viewport.width, storyAllowlist);
+    cell.assertions.visualIntegrity = {
+      pass: geometryResult.pass,
+      ambiguousOnly: geometryResult.ambiguousOnly,
+      violations: geometryResult.violations,
+      ambiguous: geometryResult.ambiguous,
+    };
+    const geometryHardFail = geometryResult.violations.length > 0;
+
+    const hardPass = noOverflow && !geometryHardFail &&
       (viewport.width >= 640 || (fullWidthOk && fullWidthButtonsOk && popupBottomSheetOk));
+    if (hardPass && geometryResult.ambiguousOnly) {
+      cell.pass = false;
+      cell.ambiguousOnly = true;
+      cell.verdict = 'ambiguous';
+    } else {
+      cell.pass = hardPass;
+      cell.verdict = hardPass ? 'pass' : 'fail';
+    }
 
   } catch (err) {
     cell.pass = false;
+    cell.verdict = 'fail';
     cell.error = err.message;
     // Try to capture a screenshot even on error
     try { if (page) await page.screenshot({ path: screenshotPath, fullPage: false }); } catch {}
@@ -775,7 +935,7 @@ async function runAssert() {
   mkdirSync(outputDir, { recursive: true });
 
   console.log(`📸  Starting rendered assertion (${FAST_MODE ? 'fast/mobile' : 'full'} mode)`);
-  console.log(`    Stories: ${ASSERT_STORIES.length} | Viewports: ${viewports.length} | Locales: ${LOCALES.length}`);
+  console.log(`    Assert stories: ${ASSERT_STORIES.length} | Viewports: ${viewports.length} | Locales: ${LOCALES.length}`);
   console.log(`    Output: .screenshots/rendered-assert/${timestamp}/`);
   console.log('');
 
@@ -821,9 +981,34 @@ async function runAssert() {
       try { unlinkSync(blankPath); } catch {}
     }
 
+    // ── Global story enumeration (Task 467 AC1) ──────────────────────
+    // Read all story IDs from the built Storybook index for geometry-only checks.
+    const indexPath = join(storybookStaticDir, 'index.json');
+    let geometryOnlyStories = [];
+    try {
+      const indexData = JSON.parse(await readFile(indexPath, 'utf8'));
+      const assertIds = new Set(ASSERT_STORIES.map(s => s.id));
+      geometryOnlyStories = Object.values(indexData.entries)
+        .filter(e => e.type === 'story' && !assertIds.has(e.id))
+        .map(e => ({ id: e.id, label: `${e.title}/${e.name}`, anchors: [], geometryOnly: true }));
+    } catch (err) {
+      console.error(`❌ Cannot read ${indexPath} for global story enumeration: ${err.message}`);
+      console.error('   The geometry layer requires story enumeration from the built index — aborting.');
+      process.exitCode = 1;
+      return;
+    }
+
+    // Geometry-only stories use mobile viewports only (320/375/390)
+    const geometryViewports = VIEWPORTS_MOBILE;
+    const totalAssertCells = ASSERT_STORIES.length * LOCALES.length * viewports.length;
+    const totalGeometryCells = geometryOnlyStories.length * LOCALES.length * geometryViewports.length;
+    console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
+    console.log('');
+
     const MAX_ATTEMPTS = 3;
     let flakyRecovered = 0;
 
+    // ── Phase 1: ASSERT_STORIES (full Layer 1 + 2 + 3, anchors required) ──
     for (const story of ASSERT_STORIES) {
       for (const locale of LOCALES) {
         for (const viewport of viewports) {
@@ -840,12 +1025,28 @@ async function runAssert() {
             await sleep(300 * attempt); // small backoff before re-navigate + re-capture
           }
           cell.retryCount = attempt - 1;
-          if (cell.pass && cell.retryCount > 0) flakyRecovered++;
+          // P1/B8: after exhausting retries, unstyled-render becomes a hard non-transient failure
+          // Stamp renderCheck.failReason HERE (not inside captureCell) so the retry loop works
+          if (!cell.pass && !cell.ambiguousOnly && attempt >= MAX_ATTEMPTS && cell.assertions?.styleIntegrity?.pass === false) {
+            cell.hardAfterRetries = true;
+            cell.assertions.renderCheck = {
+              ...cell.assertions.renderCheck,
+              failReason: cell.assertions.renderCheck?.failReason ?? 'unstyled-render',
+            };
+          }
+          // V1-FINAL: out-of-range cells are never citable as rendered proof
+          if (isOutOfViewportRange(cell)) {
+            cell.pass = false;
+            cell.verdict = 'out-of-range';
+            cell.viewportMismatch = true;
+          }
+          if (cell.verdict === 'pass' && cell.retryCount > 0) flakyRecovered++;
 
           if (cell.error) {
             process.stdout.write('E');
           } else {
-            process.stdout.write(cell.pass ? (cell.retryCount > 0 ? '~' : '✓') : '✗');
+            const ch = { pass: '✓', fail: '✗', ambiguous: '?', 'out-of-range': 'R' }[cell.verdict] ?? '✗';
+            process.stdout.write(cell.retryCount > 0 && cell.verdict === 'pass' ? '~' : ch);
           }
 
           matrix.push(cell);
@@ -853,37 +1054,224 @@ async function runAssert() {
       }
     }
 
+    // ── Phase 2: Geometry-only stories (render-proof + geometry, no anchors) ──
+    if (geometryOnlyStories.length > 0 && !FAST_MODE) {
+      process.stdout.write('\n  geometry-only: ');
+      for (const story of geometryOnlyStories) {
+        for (const locale of LOCALES) {
+          for (const viewport of geometryViewports) {
+            const storyUrl = `${baseUrl}/iframe.html?id=${story.id}&globals=locale:${locale}&viewMode=story`;
+            const filename = `${story.id}__${locale}__${viewport.name}.png`;
+            const screenshotPath = join(outputDir, filename);
+
+            let cell;
+            let attempt = 0;
+            for (;;) {
+              attempt++;
+              cell = await captureCell(browser, storyUrl, story, locale, viewport, filename, screenshotPath);
+              if (cell.pass || !isTransientFailure(cell) || attempt >= MAX_ATTEMPTS) break;
+              await sleep(300 * attempt);
+            }
+            cell.retryCount = attempt - 1;
+            cell.phase = 'geometry-only';
+            if (!cell.pass && !cell.ambiguousOnly && attempt >= MAX_ATTEMPTS && cell.assertions?.styleIntegrity?.pass === false) {
+              cell.hardAfterRetries = true;
+              cell.assertions.renderCheck = {
+                ...cell.assertions.renderCheck,
+                failReason: cell.assertions.renderCheck?.failReason ?? 'unstyled-render',
+              };
+            }
+            if (isOutOfViewportRange(cell)) {
+              cell.pass = false;
+              cell.verdict = 'out-of-range';
+              cell.viewportMismatch = true;
+            }
+            if (cell.verdict === 'pass' && cell.retryCount > 0) flakyRecovered++;
+
+            if (cell.error) {
+              process.stdout.write('E');
+            } else {
+              const ch = { pass: '✓', fail: '✗', ambiguous: '?', 'out-of-range': 'R' }[cell.verdict] ?? '✗';
+              process.stdout.write(cell.retryCount > 0 && cell.verdict === 'pass' ? '~' : ch);
+            }
+
+            matrix.push(cell);
+          }
+        }
+      }
+    }
+
     console.log('\n');
 
     // ── Emit manifest.json with summary ─────────────────────────────────
-    const passed  = matrix.filter(c => c.pass === true).length;
-    const failed  = matrix.filter(c => c.pass === false).length;
+    const outOfRange = matrix.filter(c => c.verdict === 'out-of-range').length;
+    const passed  = matrix.filter(c => c.verdict === 'pass').length;
+    // Defensive: any cell with pass=false that isn't explicitly ambiguous or out-of-range is a hard fail
+    const failed  = matrix.filter(c => c.verdict === 'fail' || (c.pass === false && c.verdict !== 'ambiguous' && c.verdict !== 'out-of-range')).length;
+    const ambiguousOnlyCount = matrix.filter(c => c.verdict === 'ambiguous').length;
     const total   = matrix.length;
 
     const summary = {
       total,
       passed,
       failed,
-      loaderOnly:      matrix.filter(c => c.assertions?.renderCheck?.failReason === 'loader-only').length,
-      blankCanvas:     matrix.filter(c => c.assertions?.renderCheck?.failReason === 'blank-canvas').length,
-      emptyCanvas:     matrix.filter(c => c.assertions?.renderCheck?.failReason === 'empty-canvas').length,
-      blankScreenshot: matrix.filter(c => c.assertions?.renderCheck?.failReason === 'blank-screenshot' || c.visualContentCheck?.failReason === 'blank-screenshot').length,
-      anchorMissing:   matrix.filter(c => c.assertions?.renderCheck?.failReason === 'anchor-missing').length,
+      outOfRange,
+      ambiguousOnly: ambiguousOnlyCount,
+      loaderOnly:          matrix.filter(c => c.assertions?.renderCheck?.failReason === 'loader-only').length,
+      blankCanvas:         matrix.filter(c => c.assertions?.renderCheck?.failReason === 'blank-canvas').length,
+      emptyCanvas:         matrix.filter(c => c.assertions?.renderCheck?.failReason === 'empty-canvas').length,
+      blankScreenshot:     matrix.filter(c => c.assertions?.renderCheck?.failReason === 'blank-screenshot' || c.visualContentCheck?.failReason === 'blank-screenshot').length,
+      anchorMissing:       matrix.filter(c => c.assertions?.renderCheck?.failReason === 'anchor-missing').length,
+      textClipped:         matrix.filter(c => c.assertions?.visualIntegrity?.violations?.some(v => v.failReason === 'text-clipped')).length,
+      selfClipped:         matrix.filter(c => c.assertions?.visualIntegrity?.violations?.some(v => v.failReason === 'self-clipped')).length,
+      offscreenControl:    matrix.filter(c => c.assertions?.visualIntegrity?.violations?.some(v => v.failReason === 'offscreen-control')).length,
+      outsideContainer:    matrix.filter(c => c.assertions?.visualIntegrity?.violations?.some(v => v.failReason === 'outside-container')).length,
+      elementOverlap:      matrix.filter(c => c.assertions?.visualIntegrity?.violations?.some(v => v.failReason === 'element-overlap')).length,
+      bottomsheetOverflow: matrix.filter(c => c.assertions?.visualIntegrity?.violations?.some(v => v.failReason === 'bottomsheet-overflow')).length,
+      ambiguousOverlap:    matrix.filter(c => (c.assertions?.visualIntegrity?.ambiguous?.length ?? 0) > 0).length,
+      unstyledRender:      matrix.filter(c => c.assertions?.styleIntegrity?.failReason === 'unstyled-render').length,
     };
 
     const manifestPath = join(outputDir, 'manifest.json');
     writeFileSync(manifestPath, JSON.stringify({ timestamp, summary, matrix }, null, 2), 'utf8');
 
-    console.log(`Results: ${passed}/${total} PASS, ${failed} FAIL`);
+    // ── Generate per-cell inventory markdown from manifest ─────────────
+    const inventoryPath = join(ROOT, 'docs', 'governance-reports', '2026-06-19-task467-storybook-visual-defect-inventory.md');
+    const inventoryLines = [
+      '# Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)',
+      '',
+      `**Date:** ${new Date().toISOString().slice(0, 10)} | **Harness:** \`scripts/check-stories-rendered.mjs\` + \`scripts/geometry-integrity.mjs\` (Task 467 R1–R4/B1–B8)`,
+      `**Run mode:** ${FAST_MODE ? '--fast' : 'full'} (320/375/390 × sq/en/uk/it) | **Scope:** ${FAST_MODE ? 'ASSERT_STORIES (' + ASSERT_STORIES.length + ' stories, ' + totalAssertCells + ' cells)' : 'Global enumeration (' + (ASSERT_STORIES.length + geometryOnlyStories.length) + ' stories, ' + total + ' cells)'}`,
+      '',
+      '> **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.',
+      `> ${FAST_MODE ? 'Task 467 INCOMPLETE for full global inventory — pending owner NATIVE full run.' : 'Full global-enumeration run.'}`,
+      '',
+      '## Summary (three-bucket model + style integrity)',
+      '',
+      '| Counter | Count |',
+      '|---------|-------|',
+      `| Total cells | ${total} |`,
+      `| PASS (clean, verdict=pass) | ${passed} |`,
+      `| FAIL (hard defect, verdict=fail) | ${failed} |`,
+      `| OUT-OF-RANGE (viewport mismatch, not product defect) | ${outOfRange} |`,
+      `| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | ${ambiguousOnlyCount} |`,
+      `| text-clipped | ${summary.textClipped} |`,
+      `| offscreen-control | ${summary.offscreenControl} |`,
+      `| outside-container | ${summary.outsideContainer} |`,
+      `| element-overlap | ${summary.elementOverlap} |`,
+      `| bottomsheet-overflow | ${summary.bottomsheetOverflow} |`,
+      `| ambiguous-overlap | ${summary.ambiguousOverlap} |`,
+      `| unstyled-render | ${summary.unstyledRender} |`,
+      '',
+      '---',
+      '',
+      '## Bucket 1: Hard defects (true positives — product layout fixes needed)',
+      '',
+      '| Story ID | Locale | Viewport | Screenshot | Fail Reason | Selector | Label |',
+      '|---|---|---|---|---|---|---|',
+    ];
+    // F-I: exclude style-only failures from Bucket 1 (they go to the style-integrity section)
+    // V1-FINAL: viewport-mismatch cells have verdict='out-of-range', not 'fail', so they're excluded automatically
+    const hardCells = matrix.filter(c => c.verdict === 'fail' && !c.storyId?.startsWith('planted-') && c.assertions?.styleIntegrity?.pass !== false);
+    for (const c of hardCells) {
+      const reasons = [];
+      const rc = c.assertions?.renderCheck;
+      if (rc?.failReason) reasons.push(rc.failReason);
+      if (c.assertions?.styleIntegrity?.pass === false) reasons.push('unstyled-render');
+      for (const v of (c.assertions?.visualIntegrity?.violations ?? [])) {
+        reasons.push(`${v.failReason}: ${v.selector}`);
+      }
+      const reasonStr = reasons.join('; ') || '(render/visual)';
+      const firstViolation = c.assertions?.visualIntegrity?.violations?.[0];
+      inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${reasonStr} | ${firstViolation?.selector ?? ''} | ${firstViolation?.label ?? ''} |`);
+    }
+    if (hardCells.length === 0) inventoryLines.push('| *(none)* | | | | | | |');
+
+    inventoryLines.push('', '---', '', '## Bucket 2: Needs-owner-decision (ambiguous third state)', '',
+      '| Story ID | Locale | Viewport | Screenshot | Fail Reason | Selector | Label | Reason |',
+      '|---|---|---|---|---|---|---|---|');
+    const ambiguousCells = matrix.filter(c => c.verdict === 'ambiguous' && !c.storyId?.startsWith('planted-'));
+    for (const c of ambiguousCells) {
+      for (const a of (c.assertions?.visualIntegrity?.ambiguous ?? [])) {
+        inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${a.failReason} | ${a.selector} | ${a.label} | ${a.reason ?? ''} |`);
+      }
+    }
+    if (ambiguousCells.length === 0) inventoryLines.push('| *(none)* | | | | | | | |');
+
+    inventoryLines.push('', '---', '', '## Capture / style-integrity failures (NOT product layout defects)', '',
+      '| Story ID | Locale | Viewport | Failing Signals | Screenshot |',
+      '|---|---|---|---|---|');
+    const styleCells = matrix.filter(c => c.assertions?.styleIntegrity?.failReason === 'unstyled-render' && !c.storyId?.startsWith('planted-'));
+    for (const c of styleCells) {
+      const s = c.assertions.styleIntegrity.signals;
+      inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | bodyMargin=${s.bodyMargin}, sheets=${s.sheetsWithRules}, font=${(s.fontFamily ?? '').slice(0, 30)}, ctrl=${s.controlThemed} | \`${c.screenshot}\` |`);
+    }
+    if (styleCells.length === 0) inventoryLines.push('| *(none in this run)* | | | | |');
+
+    inventoryLines.push('', '---', '', '## Viewport-mismatch failures (NOT product layout defects)', '',
+      '> Stories rendered outside their meaningful viewport range (e.g. mobile-only header at desktop, mobile drawer at desktop).',
+      '',
+      '| Story ID | Locale | Viewport | Screenshot | Fail Reason | Range |',
+      '|---|---|---|---|---|---|');
+    const outOfRangeCells = matrix.filter(c => c.verdict === 'out-of-range' && !c.storyId?.startsWith('planted-'));
+    for (const c of outOfRangeCells) {
+      const reasons = [];
+      const rc = c.assertions?.renderCheck;
+      if (rc?.failReason) reasons.push(rc.failReason);
+      for (const v of (c.assertions?.visualIntegrity?.violations ?? [])) {
+        reasons.push(v.failReason);
+      }
+      const reasonStr = reasons.join('; ') || '(render/visual)';
+      const range = STORY_VIEWPORT_RANGE[c.storyId];
+      const rangeStr = range ? [range.minWidth ? `min=${range.minWidth}` : null, range.maxWidth ? `max=${range.maxWidth}` : null].filter(Boolean).join(', ') : '';
+      inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${reasonStr} | ${rangeStr} |`);
+    }
+    if (outOfRangeCells.length === 0) inventoryLines.push('| *(none)* | | | | | |');
+
+    inventoryLines.push('', '---', '', '## Planted violation stories (standing fixtures — NOT product defects)', '',
+      '| Story ID | Verdict | Fail Reason | Cells |',
+      '|---|---|---|---|');
+    const plantedIds = [...new Set(matrix.filter(c => c.storyId?.startsWith('planted-')).map(c => c.storyId))];
+    for (const pid of plantedIds) {
+      const pCells = matrix.filter(c => c.storyId === pid);
+      const pLabel = pCells[0]?.story ?? pid;
+      const verdicts = [...new Set(pCells.map(c => c.verdict))];
+      const reasons = [...new Set(pCells.flatMap(c => [
+        ...(c.assertions?.visualIntegrity?.violations ?? []).map(v => v.failReason),
+        ...(c.assertions?.visualIntegrity?.ambiguous ?? []).map(a => a.failReason),
+        ...(c.assertions?.styleIntegrity?.failReason ? [c.assertions.styleIntegrity.failReason] : []),
+      ]))];
+      inventoryLines.push(`| \`${pLabel}\` | ${verdicts.join('/')} | ${reasons.join(', ') || '—'} | ${pCells.length}/${pCells.length} |`);
+    }
+
+    inventoryLines.push('', '---', '',
+      '## Notes', '',
+      '- **Harness-generated:** all rows above are emitted from the manifest, not hand-written.',
+      '- **Authoritative full run** = owner NATIVE on committed tree.',
+      `- **Run timestamp:** ${timestamp}`,
+    );
+
+    writeFileSync(inventoryPath, inventoryLines.join('\n') + '\n', 'utf8');
+    console.log(`Inventory: docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md`);
+
+    console.log(`Results: ${passed}/${total} PASS, ${failed} FAIL${outOfRange > 0 ? `, ${outOfRange} OUT-OF-RANGE` : ''}${ambiguousOnlyCount > 0 ? `, ${ambiguousOnlyCount} AMBIGUOUS (needs-owner-decision)` : ''}`);
     if (summary.loaderOnly > 0) console.log(`  loader-only: ${summary.loaderOnly}`);
     if (summary.blankCanvas > 0) console.log(`  blank-canvas: ${summary.blankCanvas}`);
     if (summary.emptyCanvas > 0) console.log(`  empty-canvas: ${summary.emptyCanvas}`);
     if (summary.blankScreenshot > 0) console.log(`  blank-screenshot: ${summary.blankScreenshot}`);
     if (summary.anchorMissing > 0) console.log(`  anchor-missing: ${summary.anchorMissing}`);
+    if (summary.textClipped > 0) console.log(`  text-clipped: ${summary.textClipped}`);
+    if (summary.selfClipped > 0) console.log(`  self-clipped: ${summary.selfClipped}`);
+    if (summary.offscreenControl > 0) console.log(`  offscreen-control: ${summary.offscreenControl}`);
+    if (summary.outsideContainer > 0) console.log(`  outside-container: ${summary.outsideContainer}`);
+    if (summary.elementOverlap > 0) console.log(`  element-overlap: ${summary.elementOverlap}`);
+    if (summary.bottomsheetOverflow > 0) console.log(`  bottomsheet-overflow: ${summary.bottomsheetOverflow}`);
+    if (summary.ambiguousOverlap > 0) console.log(`  ambiguous-overlap: ${summary.ambiguousOverlap}`);
+    if (summary.unstyledRender > 0) console.log(`  unstyled-render: ${summary.unstyledRender}`);
     console.log(`flaky-recovered: ${flakyRecovered}`);
     if (flakyRecovered > 0) {
       console.log('  Recovered cells (passed only after retry):');
-      for (const cell of matrix.filter(c => c.pass && c.retryCount > 0)) {
+      for (const cell of matrix.filter(c => c.verdict === 'pass' && c.retryCount > 0)) {
         console.log(`    ${cell.story} × ${cell.locale} × ${cell.viewport} (retries: ${cell.retryCount})`);
       }
     }
@@ -892,7 +1280,7 @@ async function runAssert() {
 
     if (failed > 0) {
       console.error('\n❌ Failed cells:');
-      for (const cell of matrix.filter(c => !c.pass)) {
+      for (const cell of matrix.filter(c => c.verdict === 'fail')) {
         const retrySuffix = cell.retryCount > 0 ? ` (after ${cell.retryCount} retries)` : '';
         console.error(`  ${cell.story} × ${cell.locale} × ${cell.viewport}${retrySuffix}`);
         if (cell.error) {
@@ -907,12 +1295,53 @@ async function runAssert() {
           if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ form control not full-width at <640');
           if (cell.assertions.fullWidthButtonsAtMobile === false) console.error(`    ✗ text button not full-width at <640: ${(cell.assertions.failingButtonLabels ?? []).join(', ')}`);
           if (cell.assertions.popupBottomSheetAtMobile === false) console.error(`    ✗ popup not bottom-sheet at <640: ${(cell.assertions.failingPopupSlots ?? []).join(', ')}`);
+          if (cell.assertions.styleIntegrity?.pass === false) {
+            const s = cell.assertions.styleIntegrity.signals;
+            console.error(`    ✗ style [unstyled-render]: bodyMargin=${s.bodyMargin}, sheets=${s.sheetsWithRules}, font=${(s.fontFamily ?? '').slice(0, 30)}, ctrl=${s.controlThemed}`);
+          }
+          if (cell.assertions.visualIntegrity?.pass === false) {
+            for (const v of cell.assertions.visualIntegrity.violations) {
+              console.error(`    ✗ geometry [${v.failReason}]: ${v.selector} — ${v.label}`);
+            }
+          }
         }
+      }
+      if (ambiguousOnlyCount > 0) {
+        console.log(`\n⚠️  ${ambiguousOnlyCount} cells have ambiguous findings (needs-owner-decision):`);
+        for (const cell of matrix.filter(c => c.ambiguousOnly)) {
+          console.log(`  ${cell.story} × ${cell.locale} × ${cell.viewport}`);
+          for (const a of (cell.assertions.visualIntegrity?.ambiguous ?? [])) {
+            console.log(`    ? [${a.failReason}]: ${a.selector} — ${a.reason ?? a.label}`);
+          }
+        }
+      }
+      if (outOfRange > 0) {
+        console.log(`\nℹ️  ${outOfRange} cells are out-of-viewport-range (verdict=out-of-range, not product defects):`);
+        for (const cell of matrix.filter(c => c.verdict === 'out-of-range').slice(0, 20)) {
+          const range = STORY_VIEWPORT_RANGE[cell.storyId];
+          console.log(`  ${cell.story} × ${cell.locale} × ${cell.viewport} (range: ${[range?.minWidth ? 'min=' + range.minWidth : null, range?.maxWidth ? 'max=' + range.maxWidth : null].filter(Boolean).join(', ')})`);
+        }
+        if (outOfRange > 20) console.log(`  … and ${outOfRange - 20} more`);
       }
       // Task 418 REWORK (P1-a): set exitCode + return (not process.exit) so the
       // `finally` below still runs `browser?.close()` / `server?.close()` on FAIL.
       process.exitCode = 1;
       return;
+    }
+
+    if (outOfRange > 0) {
+      console.log(`\nℹ️  ${outOfRange} cells are out-of-viewport-range (verdict=out-of-range, not product defects).`);
+    }
+
+    if (ambiguousOnlyCount > 0) {
+      console.log(`\n⚠️  ${ambiguousOnlyCount} cells have ambiguous findings (needs-owner-decision, verdict=ambiguous):`);
+      for (const cell of matrix.filter(c => c.verdict === 'ambiguous')) {
+        console.log(`  ${cell.story} × ${cell.locale} × ${cell.viewport}`);
+        for (const a of (cell.assertions.visualIntegrity?.ambiguous ?? [])) {
+          console.log(`    ? [${a.failReason}]: ${a.selector} — ${a.reason ?? a.label}`);
+        }
+      }
+      console.log('\n✅ All hard assertions PASSED (ambiguous cells need owner triage — not citable as green proof).');
     } else {
       console.log('\n✅ All rendered assertions PASSED.');
     }

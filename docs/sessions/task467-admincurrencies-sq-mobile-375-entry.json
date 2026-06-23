@@ -1,0 +1,58 @@
+{
+    "story": "AdminCurrenciesManager/Default",
+    "storyId": "admin-admincurrenciesmanager--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "admin-admincurrenciesmanager--default__sq__mobile-375.png",
+    "assertions": {
+        "renderCheck": {
+            "pageErrors": [],
+            "consoleErrors": [],
+            "domFailed": false,
+            "failReason": null,
+            "failDetail": ""
+        },
+        "styleIntegrity": {
+            "pass": true,
+            "failReason": null,
+            "signals": {
+                "bodyMargin": "0px",
+                "sheetsWithRules": true,
+                "fontFamily": "Geist, sans-serif",
+                "controlThemed": true
+            }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": true,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+            "pass": true,
+            "ambiguousOnly": false,
+            "violations": [],
+            "ambiguous": []
+        }
+    },
+    "anchorsExpected": [
+        "currencies"
+    ],
+    "anchorsFound": [
+        "currencies"
+    ],
+    "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+            "width": 375,
+            "height": 812,
+            "nonBackgroundRatio": 0.47,
+            "variance": 815.74
+        }
+    },
+    "pass": true,
+    "error": null,
+    "verdict": "pass",
+    "retryCount": 0
+}

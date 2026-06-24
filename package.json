@@ -77,6 +77,11 @@
   "dependencies": {
     "@base-ui/react": "^1.4.0",
     "@hookform/resolvers": "^5.2.2",
+    "@mantine/core": "^8.3.18",
+    "@mantine/form": "^8.3.18",
+    "@mantine/hooks": "^8.3.18",
+    "@mantine/modals": "^8.3.18",
+    "@mantine/notifications": "^8.3.18",
     "@marsidev/react-turnstile": "^1.5.2",
     "@react-email/components": "^1.0.12",
     "@sentry/nextjs": "^10.49.0",
@@ -111,6 +116,7 @@
     "import-in-the-middle": "3.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-docs": "^10.4.2",
     "@storybook/nextjs-vite": "^10.4.2",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
@@ -123,6 +129,7 @@
     "esbuild": "^0.25.12",
     "eslint": "^9",
     "eslint-config-next": "15.5.18",
+    "eslint-plugin-storybook": "10.4.2",
     "jsdom": "^29.1.1",
     "lighthouse": "^13.3.0",
     "playwright": "^1.60.0",
@@ -132,8 +139,6 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vite": "^6.0.0",
-    "vitest": "^4.1.5",
-    "eslint-plugin-storybook": "10.4.2",
-    "@storybook/addon-docs": "^10.4.2"
+    "vitest": "^4.1.5"
   }
 }

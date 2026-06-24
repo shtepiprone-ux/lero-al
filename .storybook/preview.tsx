@@ -1,7 +1,19 @@
 import type { Preview, Decorator } from '@storybook/nextjs-vite';
 import { NextIntlClientProvider } from 'next-intl';
+import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
+import { ModalsProvider } from '@mantine/modals';
 
+// ── CSS imports ───────────────────────────────────────────────────────────────
+// Mantine CSS must appear before globals.css so Tailwind utilities take precedence
+// when both are applied. Mantine uses @layer mantine (separate cascade layer from
+// Tailwind's @layer base/utilities), so coexistence is clean.
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import '../src/app/globals.css';
+
+// ── Mantine theme ─────────────────────────────────────────────────────────────
+import { theme as mantineTheme } from '../src/design-system/mantine/theme';
 
 // ── Locale message fixtures ──────────────────────────────────────────────────
 // Import message files for all four supported locales.
@@ -19,12 +31,14 @@ const LOCALE_MESSAGES: Record<string, Record<string, unknown>> = {
 };
 
 // ── Viewport presets ─────────────────────────────────────────────────────────
-// Covers all project breakpoints: 320px → ultrawide.
-// canonical560/680/810/960/1200 are the 5 design-system.md §3 canonical widths
-// that have no Tailwind breakpoint of their own but are required for the 14-width
-// QA canon. Added in Task 350-Fix (DS-5 corrective).
+// Owner-approved Mantine proof widths (Task 482, 2026-06-24): 275, 320, 390, 480,
+// 560, 680, 768, 960, 1024, 1200, 1440, 1920. All available via the Storybook
+// toolbar. Mantine pattern stories (Patterns/Mantine/*) use this toolbar for
+// responsive proof — they do NOT create separate exported stories per viewport.
+// canonical560/680/810/960/1200 cover design-system.md §3 canonical widths.
 const VIEWPORTS = {
-  mobile320: { name: 'Mobile 320px',    styles: { width: '320px',  height: '812px' } },
+  mobile275: { name: '275px',           styles: { width: '275px',  height: '812px' } },
+  mobile320: { name: '320px',           styles: { width: '320px',  height: '812px' } },
   mobile360: { name: 'Mobile 360px',    styles: { width: '360px',  height: '800px' } },
   mobile375: { name: 'Mobile 375px',    styles: { width: '375px',  height: '812px' } },
   mobile390: { name: 'Mobile 390px',    styles: { width: '390px',  height: '844px' } },
@@ -46,6 +60,38 @@ const VIEWPORTS = {
   ultrawide:    { name: 'Ultrawide 3440px',   styles: { width: '3440px', height: '1440px' } },
 };
 
+// ── Mantine decorator ─────────────────────────────────────────────────────────
+// Wraps ALL stories in MantineProvider (global — pure context, no visual impact
+// on legacy stories). Enables Mantine components and theming globally.
+//
+// Light-only: the app uses a single Light theme (owner requirement, Task 482).
+// forceColorScheme="light" ensures Mantine always renders the Light palette,
+// regardless of system preference or the legacy theme toolbar value.
+// The theme toolbar remains for legacy Tailwind stories (withTheme decorator);
+// it does NOT enable Mantine dark-mode rendering.
+//
+// ModalsProvider: includes the Mantine modal manager stack.
+// Notifications: renders the notification portal for NotificationPattern stories.
+//
+// Mantine-native proof layer for Patterns/Mantine/* stories:
+// - Responsive proof via Storybook toolbar viewport selector (not per-story exports)
+// - Locale proof via Storybook toolbar locale selector (not per-locale exports)
+// - Theme is always Light (no Dark story exports)
+// Legacy stories (non-Mantine) are unaffected by this provider.
+const withMantine: Decorator = (Story) => {
+  return (
+    <MantineProvider
+      theme={mantineTheme}
+      forceColorScheme="light"
+    >
+      <ModalsProvider>
+        <Notifications position="top-right" />
+        <Story />
+      </ModalsProvider>
+    </MantineProvider>
+  );
+};
+
 // ── Locale decorator ─────────────────────────────────────────────────────────
 // Wraps all stories in NextIntlClientProvider.
 // Locale can be set per-story via: parameters.locale or globalTypes.locale.
@@ -61,9 +107,14 @@ const withLocale: Decorator = (Story, context) => {
 };
 
 // ── Canvas decorator ──────────────────────────────────────────────────────────
-// Wraps every story in the canonical .container-wide page-gutter so that
+// Wraps every LEGACY story in the canonical .container-wide page-gutter so that
 // max-sm:w-full controls fill the <640 viewport edge-to-edge (minus the real
 // app gutter) rather than being centred/shrink-wrapped by Storybook.
+//
+// Mantine pattern stories (Patterns/Mantine/*) set parameters.skipCanvas=true to
+// bypass this wrapper and use Mantine-native layout containers instead.
+// This means Mantine stories are NOT proven through .container-wide — they use
+// Mantine's own Box/Container/AppShell as their responsive proof layer.
 //
 // Horizontal gutter token: .container-wide from globals.css —
 //   padding: 1rem (base) → 1.5rem (≥640) → 2rem (≥1024) → 3rem (≥1536).
@@ -72,11 +123,17 @@ const withLocale: Decorator = (Story, context) => {
 // This MUST match the canonical container-wide definition in design-system.md §4.
 // Do NOT substitute ad-hoc px values or Storybook's built-in padded layout.
 // Do NOT add per-story wrapper py-* — the canvas provides the canonical value.
-const withCanvas: Decorator = (Story) => (
-  <div className="container-wide py-6">
-    <Story />
-  </div>
-);
+const withCanvas: Decorator = (Story, context) => {
+  if (context.parameters.skipCanvas) {
+    // Mantine stories bypass withCanvas and use Mantine-native containers.
+    return <Story />;
+  }
+  return (
+    <div className="container-wide py-6">
+      <Story />
+    </div>
+  );
+};
 
 // ── Theme decorator ───────────────────────────────────────────────────────────
 // Applies dark/light class to the document root for stories that use semantic tokens.
@@ -111,23 +168,23 @@ export const globalTypes = {
     toolbar: {
       icon: 'globe',
       items: [
-        { value: 'en', title: '🇬🇧 English' },
-        { value: 'sq', title: '🇦🇱 Albanian (sq)' },
-        { value: 'uk', title: '🇺🇦 Ukrainian (uk) — longest strings' },
-        { value: 'it', title: '🇮🇹 Italian (it)' },
+        { value: 'en', title: 'GB English' },
+        { value: 'uk', title: 'UA Ukrainian' },
+        { value: 'sq', title: 'SQ Albanian' },
+        { value: 'it', title: 'IT Italian' },
       ],
       dynamicTitle: true,
     },
   },
   theme: {
-    name: 'Theme',
-    description: 'Light / Dark mode',
+    name: 'Theme (legacy Tailwind only)',
+    description: 'Light/Dark CSS class for legacy Tailwind stories. Does NOT affect Mantine stories — Mantine is always Light (forceColorScheme="light").',
     defaultValue: 'light',
     toolbar: {
       icon: 'circlehollow',
       items: [
-        { value: 'light', title: '☀️ Light' },
-        { value: 'dark',  title: '🌙 Dark' },
+        { value: 'light', title: '☀️ Light (Tailwind legacy)' },
+        { value: 'dark',  title: '🌙 Dark (Tailwind legacy only — not Mantine)' },
       ],
       dynamicTitle: true,
     },
@@ -135,9 +192,11 @@ export const globalTypes = {
 };
 
 // ── Global decorators ─────────────────────────────────────────────────────────
-// Order (outermost → innermost): withTheme → withLocale → withCanvas → Story
-// withCanvas is innermost so the canonical gutter is applied directly around the story.
-export const decorators: Decorator[] = [withTheme, withLocale, withCanvas];
+// Order (outermost → innermost): withTheme → withMantine → withLocale → withCanvas → Story
+// withMantine is after withTheme so forceColorScheme receives the correct theme value.
+// withCanvas is innermost so the canonical gutter is applied directly around the story
+// (or skipped for Mantine stories via parameters.skipCanvas=true).
+export const decorators: Decorator[] = [withTheme, withMantine, withLocale, withCanvas];
 
 // ── Preview config ────────────────────────────────────────────────────────────
 const preview: Preview = {

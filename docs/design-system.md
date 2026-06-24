@@ -1,22 +1,29 @@
 # Global Responsive Design System Contract — v1
 
-**Status:** CANONICAL RULE LAYER — single global source of truth for responsive layout, containers, spacing, typography, data surfaces, forms, overlays, and responsive QA across the **entire** lero-al app (public site + cabinet/auth + admin + shared primitives + all future surfaces). **Task 340 is rejected as an implementation path; execution is superseded by Task 344's graduated DS-1..DS-8 queue.**
+> **Task 482 supersession notice — 2026-06-24.**
+> This document is now a LEGACY reference for existing Tailwind/Base UI/shadcn-style surfaces only.
+> It is not the future responsive UI authority. New UI/layout/component work must use
+> `docs/mantine-responsive-design-system.md` as the source of truth. Mantine patterns,
+> Mantine theme, Mantine responsive props, and the Mantine Storybook toolbar proof path supersede
+> the old `.container-wide` / Tailwind breakpoint / `withCanvas` responsive proof model.
+
+**Status:** ~~CANONICAL RULE LAYER~~ **LEGACY REFERENCE** — This document now governs only existing legacy Tailwind/Base UI/shadcn-style surfaces during the migration period. For new UI/layout/component work, `docs/mantine-responsive-design-system.md` is the canonical source of truth. **Task 340 is rejected as an implementation path; execution is superseded by Task 344's graduated DS-1..DS-8 queue.**
 **Created:** 2026-05-31 — Task 340 (Opus 4.7 orchestrator/architect).
 **Supersedes:** the 7-width and 9-width verification canons previously listed in `docs/responsive-governance.md §1`, `docs/ui-rules.md §17`, and `docs/admin-ux-rules.md §14`. Those documents now INHERIT this contract (see "Document inheritance map" below).
 **Source:** Owner-uploaded `issues.md` (2026-05-31, ~6100 lines) — "Create Global Responsive Design System Contract v1" + ADDENDUM (14-width × 4-locale canon supersedes 7/9-width canons). `issues.md` itself is not checked into the repo; this document is the canonical, repo-resident embodiment of its Sections 1–21 + ADDENDUM, reconciled against the already-shipped Sprint 28 primitives.
 
-> **Governance status of this document.** This file is authoritative as the **rule layer** for future UI / layout / responsive / component work. However, 
-> **Task 340's original delivery mechanism is NOT approved for execution**: the all-five-primitives Task 343 kickoff is frozen, and implementation now follows Task 344's graduated DS-1..DS-8 queue. Where a local doc disagrees with this contract, THIS contract wins and the local doc is to be corrected to point here. Pointer updates already applied:
-> `responsive-governance.md`, `ui-rules.md §17`, `admin-ux-rules.md §14`, `rule-index.md`,
-> `component-catalog.md`.
+> ~~**Governance status of this document.** This file is authoritative as the **rule layer** for future UI / layout / responsive / component work.~~ **SUPERSEDED by Task 482 (2026-06-24).** This document is now a LEGACY reference only. It is NOT the rule layer for future UI work. `docs/mantine-responsive-design-system.md` is the active canonical source of truth for all new UI/layout/component work. The sections below remain valid governance ONLY for existing Tailwind/Base UI/shadcn surfaces during the migration period.
 
 ---
 
 ## Document inheritance map
 
+> **Task 482 update (2026-06-24):** `docs/design-system.md` is no longer the future canonical UI authority. It is a legacy reference for existing Tailwind/Base UI surfaces. `docs/mantine-responsive-design-system.md` is the active canonical source of truth for new UI work.
+
 | Doc | Relationship to this contract |
 |---|---|
-| `docs/design-system.md` (this file) | **Canonical rule layer.** Defines the global rules; implementation is superseded by Task 344's DS-1..DS-8 queue. |
+| `docs/design-system.md` (this file) | **LEGACY reference layer.** Governs existing Tailwind/Base UI surfaces only. New UI work must use `docs/mantine-responsive-design-system.md`. |
+| `docs/mantine-responsive-design-system.md` | **ACTIVE canonical source of truth** for new UI/layout/component work (Task 482, 2026-06-24). Supersedes this document for future work. |
 | `docs/responsive-governance.md` | INHERITS. 7/9-width lists marked SUPERSEDED; breakpoint philosophy still valid; verification widths now = the 14-width canon here. |
 | `docs/ui-rules.md` §17 | INHERITS. UI pre-flight checklist runs the 14-width canon defined here. |
 | `docs/admin-ux-rules.md` §14 | INHERITS. Admin container/table/switch rules are a SPECIALISATION of §4/§9/§10 here. |

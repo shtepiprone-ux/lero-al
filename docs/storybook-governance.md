@@ -3,6 +3,18 @@
 Established: 2026-05-18
 Status: PERMANENT GOVERNANCE REFERENCE
 
+> **Task 482 Mantine proof-path supersession — 2026-06-24.**
+> `withCanvas` / `.container-wide` is retained only for legacy stories while migration is in progress.
+> New Mantine stories under `Patterns/Mantine/*` must set `parameters.skipCanvas: true` and render through
+> the global `withMantine` decorator. Their responsive and locale proof is toolbar-driven:
+> the owner switches viewport and locale using Storybook globals, while each pattern group exposes one
+> canonical `Default` story that renders reusable components from `src/design-system/mantine/patterns/**`.
+> Task 482 uses a Light-only theme and does not require `Dark`, `LongUk`, viewport, locale, `Pass`, or `Fail` story exports.
+>
+> **Two proof paths exist after Task 482:**
+> - **Mantine path (new):** `Patterns/Mantine/*` stories use `skipCanvas: true`, `withMantine` decorator, Mantine layout components, toolbar viewport + locale proof, Light-only theme. No per-viewport exports, no per-locale exports.
+> - **Legacy path (existing):** All other stories use `withCanvas` / `.container-wide` per the existing governance below. These rules remain valid for legacy surfaces until migration.
+
 **Storybook version:** `10.4.2` (upgraded from 8.6.18 by Task 394, 2026-06-05)
 **Framework:** `@storybook/nextjs-vite@10.4.2` (was `@storybook/experimental-nextjs-vite@8.6.18`)
 **Addons:** `@storybook/addon-docs@10.4.2` (addon-essentials replaced; controls/actions/backgrounds/viewport are now SB10 core)
@@ -110,10 +122,12 @@ Individual stories may also set locale directly via `parameters.locale`.
 
 ## §5 — RESPONSIVE VIEWPORT STORY RULES
 
-Every story MUST be responsive-aware. The global viewport toolbar includes all 15 project breakpoints.
+> **Task 482 Mantine update:** New `Patterns/Mantine/*` stories must NOT use `parameters.viewport.defaultViewport` to create per-viewport exports. Viewport switching for Mantine stories is toolbar-driven (owner selects from the 12 proof widths: 275, 320, 390, 480, 560, 680, 768, 960, 1024, 1200, 1440, 1920). Each Mantine pattern group exports exactly one story: `Default`. The rules below apply to legacy non-Mantine stories only.
 
-### When to explicitly set viewport
-Set `parameters.viewport.defaultViewport` when the story demonstrates:
+Every legacy story MUST be responsive-aware. The global viewport toolbar includes all project breakpoints.
+
+### When to explicitly set viewport (legacy non-Mantine stories only)
+Set `parameters.viewport.defaultViewport` when the legacy story demonstrates:
 - Mobile-specific behavior (drawers, bottom bars, touch targets)
 - Huge desktop behavior (container bounds, 4-column grids)
 - Tablet-specific layout changes

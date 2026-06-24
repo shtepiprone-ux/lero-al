@@ -1,8 +1,12 @@
 import type { Viewport } from 'next'
 import { Geist } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ColorSchemeScript } from '@mantine/core'
 import { headers, cookies } from 'next/headers'
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 import './globals.css'
+import { MantineRootProvider } from '@/design-system/mantine/MantineRootProvider'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -21,6 +25,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={locale} suppressHydrationWarning className={geist.className} data-scroll-behavior="smooth">
       <head>
+        {/* Mantine color-scheme script — prevents flash of wrong color scheme (FOUC).
+            Must be the first script in <head>, before any CSS or body content. */}
+        <ColorSchemeScript defaultColorScheme="light" />
         {/* Cloudinary CDN preconnect — eliminates DNS+TCP+TLS overhead before
             the browser encounters the first Cloudinary image URL in the body.
             Most critical for the gallery LCP candidate on listing detail pages.
@@ -29,7 +36,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
       </head>
       <body>
-        {children}
+        <MantineRootProvider>
+          {children}
+        </MantineRootProvider>
         <SpeedInsights />
       </body>
     </html>

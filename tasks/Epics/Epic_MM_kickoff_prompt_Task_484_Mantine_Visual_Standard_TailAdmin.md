@@ -63,6 +63,39 @@ Body line-height 1.5; headings ~1.3. Secondary text = `c="dimmed"` (gray-500/600
 - **Horizontal:** page/card gutter `lg`; table cell horizontal `md`; inline control gaps `sm`; label↔value
   inside meta rows = aligned 2-col (label fixed ~`38%`, value flush-left in its column — NOT space-between).
 
+## 1b. 🔴 REAL TailAdmin tokens — extracted from the owner's uploaded files (these are AUTHORITATIVE; supersede the §1 estimates wherever they differ)
+
+Source: TailAdmin compiled `css/style.css` (Tailwind v4 `@theme`) + HTML markup. Implement THESE exact values.
+
+**Font:** `Outfit, sans-serif` — **ADOPT Outfit globally for Mantine UI (owner decision 2026-06-25).** Load it
+the same way the project loads its current font (Next font loader or the Storybook preview-head font injection);
+set `theme.fontFamily` + heading font to Outfit. Keep the existing font available only for any not-yet-migrated
+legacy surfaces. The size/line-height scale below applies regardless.
+
+**Spacing base:** 4px grid (`--spacing: 0.25rem`). Mantine `theme.spacing`: `xs`=8 / `sm`=12 / `md`=16 / `lg`=20 / `xl`=24 (px). (TailAdmin cards use p-5=20/p-6=24; table cells px-5=20/py-4=16; block gaps gap-5/gap-6.)
+
+**Type scale (px / line-height):** `xs` 12/18 · `sm` 14/20 · `base` 16/24 · `lg` 18 · `xl` 20/30 · titles: `title-xs` 24/32 · `title-sm` 30/38 · `title-md` 36/44 · `title-lg` 48/60. Map Mantine `fontSizes` xs12/sm14/md16/lg18/xl20; headings to the title scale.
+
+**Radius (real):** xs 2 · sm 4 · md 6 · **lg 8 (controls: Button/Input/Select)** · xl 12 · **2xl 16 (Card/Paper)** · 3xl 24 (px). Badge = pill (full).
+
+**Color palette (adopt gray + semantic; KEEP brand `#EC5447`, do NOT use TailAdmin brand `#465fff`):**
+| Scale | 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| gray | #f9fafb | #f2f4f7 | #e4e7ec | #d0d5dd | #98a2b3 | #667085 | #475467 | #344054 | #1d2939 | #101828 |
+| success | #ecfdf3 | #d1fadf | — | #6ce9a6 | — | #12b76a | #039855 | #027a48 | #05603a | — |
+| warning | #fffaeb | — | — | — | #fdb022 | #f79009 | #dc6803 | #b54708 | — | — |
+| error | #fef3f2 | #fee4e2 | — | #fda29b | #f97066 | #f04438 | #d92d20 | #b42318 | #912018 | — |
+
+**Card (TailAdmin content card):** `rounded-2xl` (radius 16) + `border` `gray-100` (#f2f4f7) + `bg white` + **NO shadow** (flat; shadow only on dropdowns/popovers) + padding `20` (mobile) / `24` (≥sm). Map to Mantine `Card`/`Paper` defaults: `radius` 16, `withBorder`, `shadow={undefined}`, border color gray-1≈#f2f4f7, `padding` md(16)/lg(20)→responsive.
+
+**Table:** header `Th` + body `Td` padding = **horizontal 20 (px-5) / vertical 16 (py-4)** → Mantine `Table horizontalSpacing` ≈ `lg`(20), `verticalSpacing` `md`(16). Header text: 12px (`xs`), `font-medium` (fw 500), `text-gray-500` (#667085), `text-left`. Row divider: `border-gray-100` (#f2f4f7). `highlightOnHover`.
+
+**Status badge:** pill, `text-xs` (12), `font-medium`, semantic light tint — e.g. Active→success (bg #ecfdf3 / text #039855), Pending→warning (#fffaeb / #b54708), Blocked/Inactive→error (#fef3f2 / #d92d20). Mantine `Badge variant="light"` with the mapped color + `radius` pill.
+
+**Secondary text:** gray-500 (#667085); primary text gray-700/800.
+
+> Where §1b differs from §1, §1b wins (e.g. table cells are 16×20, NOT 12×16; card border is gray-100, NOT gray-200). Keep a short "TailAdmin token map" table in the design-system doc §6 citing these as the source.
+
 ## 2. Restyle the canonical patterns to the standard
 
 - `MantineDataTableToCards` (card + table) and `MantineAdminSurfacePattern`: consume ONLY theme tokens (no raw

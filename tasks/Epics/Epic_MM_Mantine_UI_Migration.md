@@ -43,7 +43,8 @@ patterns), §14 (roadmap). Each slice executes off those rows — no system rein
 
 | Slice | Surface(s) | Mantine target | Status |
 |---|---|---|---|
-| **MM.1 — Task 483** | `AdminUsersTable` (recipe-proving slice) | `MantineAdminSurfacePattern` / `MantineDataTableToCards` (extend for interactive cells: verify/revoke, detail link, status badge) | 📋 KICKOFF READY |
+| **MM.0 — Task 484** ⛔ BLOCKS ALL | Mantine **visual standard** — TailAdmin-derived spacing matrix (H/V) + typography + component density → `theme.ts` + design-system doc as source of truth (brand stays `#EC5447`) | `theme.ts` + canonical card/table patterns | 📋 KICKOFF READY (owner: demo.tailadmin.com = UI source of truth) |
+| **MM.1 — Task 483** | `AdminUsersTable` (recipe-proving slice) — **consumes MM.0 standard** | `MantineAdminSurfacePattern` / `MantineDataTableToCards` (interactive cells + structured `CardConfig`) | 🔧 IN REWORK — closes after MM.0 lands + renders balanced |
 | MM.2 | `AdminListingsTable` | AdminSurfacePattern | ⏳ planned |
 | MM.3 | `AdminReportsManager` (+ owner-row work from 461/462/463 already landed) | AdminSurfacePattern + DialogDrawer | ⏳ planned |
 | MM.4 | Remaining admin managers (Companies/Currencies/EmailTemplates/ExchangeProviders/PropertyTypes/Permissions/Support/Inquiries/Legal/Locations/Pages/PopularLocations/Footer + `AdminTable`/`AdminCardList` primitives) | AdminSurfacePattern / primitives | ⏳ planned |

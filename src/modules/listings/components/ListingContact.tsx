@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { isListingClosed } from '@/modules/listings/domain'
+import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import { FavoriteButton } from '@/modules/listings/components/FavoriteButton'
 import { SaveToCollectionButton } from '@/modules/listings/components/SaveToCollectionButton'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
@@ -52,6 +52,8 @@ interface ListingContactProps {
   canReport?: boolean
   /** Real listing ID — always available (unlike `listingId`, which is gated to authenticated viewers). Used for the inquiry dialog. */
   inquiryListingId: string
+  /** Real listing ID for phone/WhatsApp contact actions. Always listing.id — never gated by preview or auth state. */
+  contactListingId: string
   /** False only when the viewer is signed in AND is the listing owner (self-inquiry guard). */
   canSendInquiry?: boolean
   /** Prefill values for signed-in viewers. */
@@ -59,7 +61,7 @@ interface ListingContactProps {
   inquirerEmail?: string
 }
 
-export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false, canReport = false, inquiryListingId, canSendInquiry = true, inquirerName, inquirerEmail }: ListingContactProps) {
+export function ListingContact({ owner, isGuest = false, listingTitle, listingUrl, price, currency, originalPrice, originalPriceLabel, listingStatus, listingId, isFavorited = false, canReport = false, inquiryListingId, contactListingId, canSendInquiry = true, inquirerName, inquirerEmail }: ListingContactProps) {
   const t = useTranslations('listing')
   const locale = useLocale()
   const [copied, setCopied] = useState(false)
@@ -72,6 +74,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
   // Authenticated viewer but owner row was genuinely null (e.g. orphaned listing).
   const ownerDataUnavailable = !isGuest && !owner.id && !ownerDeleted
   const listingClosed = listingStatus ? isListingClosed(listingStatus) : false
+  const listingArchived = listingStatus ? isListingArchived(listingStatus) : false
   const closedLabel = listingClosed && listingStatus ? t(`action_disabled_${listingStatus}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
   const initials = owner.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) ?? '?'
   // Trigger hidden for owner-deleted, owner-profile-unavailable (genuinely orphaned listing,
@@ -80,10 +83,10 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
   const hasContactButtons = !ownerDeleted && !showGuestCTA && (owner.has_whatsapp || owner.has_phone)
 
   async function handleContactClick(type: 'whatsapp' | 'call') {
-    if (!listingId || contactLoading) return
+    if (!contactListingId || contactLoading) return
     setContactLoading(true)
     try {
-      const result = await getListingOwnerContact(listingId)
+      const result = await getListingOwnerContact(contactListingId)
       if (result.error || (!result.phone && !result.whatsapp)) {
         toast.error(t('contact_load_failed'))
         return
@@ -91,7 +94,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
       const digits = (type === 'whatsapp' ? result.whatsapp : result.phone)?.replace(/\D/g, '') ?? ''
       if (!digits) { toast.error(t('contact_load_failed')); return }
       if (type === 'whatsapp') {
-        void trackListingContactEvent({ listingId, listingOwnerId: owner.id, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
+        void trackListingContactEvent({ listingId: contactListingId, listingOwnerId: owner.id, channel: 'whatsapp', source: 'listing_detail_contact_card', locale })
         const waText = encodeURIComponent(t('whatsapp_preset_message', { title: listingTitle }))
         window.open(`https://wa.me/${digits}?text=${waText}`, '_blank', 'noopener,noreferrer')
       } else {
@@ -301,8 +304,8 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
         </div>
       </div>
 
-      {/* Mobile fixed bottom bar — sits above MobileBottomNav (h-14) on small screens */}
-      <div
+      {/* Mobile fixed bottom bar — suppressed for archived listings (no active contact CTA on archived) */}
+      {!listingArchived && <div
         className="listing-contact-mobile lg:hidden fixed bottom-14 md:bottom-0 left-0 right-0 z-40 bg-background border-t shadow-lg px-4 pt-3"
         style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.75rem)' }}
       >
@@ -319,32 +322,47 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
               </p>
             </div>
             {!ownerDeleted && !showGuestCTA && (
-              <div className="flex gap-2 shrink-0">
-                {owner.has_whatsapp && (
-                  <button
-                    type="button"
-                    onClick={() => handleContactClick('whatsapp')}
-                    disabled={contactLoading}
-                    className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 shrink-0 max-sm:w-auto')}
-                    data-track="whatsapp_click"
-                    aria-label={t('whatsapp_aria_label')}
-                  >
-                    {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
-                    {t('whatsapp_button_label')}
-                  </button>
-                )}
+              <>
+                {/* ≥640: WA + Phone icon side by side next to price */}
+                <div className="hidden sm:flex gap-2 shrink-0">
+                  {owner.has_whatsapp && (
+                    <button
+                      type="button"
+                      onClick={() => handleContactClick('whatsapp')}
+                      disabled={contactLoading}
+                      className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90')}
+                      data-track="whatsapp_click"
+                      aria-label={t('whatsapp_aria_label')}
+                    >
+                      {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
+                      {t('whatsapp_button_label')}
+                    </button>
+                  )}
+                  {owner.has_phone && (
+                    <button
+                      type="button"
+                      onClick={() => handleContactClick('call')}
+                      disabled={contactLoading}
+                      className={buttonVariants({ size: 'icon-xl', variant: 'outline' })}
+                      data-track="contact_owner"
+                    >
+                      {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Phone className="size-5" />}
+                    </button>
+                  )}
+                </div>
+                {/* <640: only Phone icon in price row (icon-only, exempt from full-width); WA moves to own row below */}
                 {owner.has_phone && (
                   <button
                     type="button"
                     onClick={() => handleContactClick('call')}
                     disabled={contactLoading}
-                    className={buttonVariants({ size: 'icon-xl', variant: 'outline' })}
+                    className={cn(buttonVariants({ size: 'icon-xl', variant: 'outline' }), 'sm:hidden')}
                     data-track="contact_owner"
                   >
                     {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Phone className="size-5" />}
                   </button>
                 )}
-              </div>
+              </>
             )}
             {ownerDeleted && (
               <div className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted text-muted-foreground text-xs font-medium">
@@ -364,9 +382,22 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
             )}
           </div>
 
-          {/* Message trigger — independent of has_phone/has_whatsapp; renders for guests too
-              (Task 243: dual mobile-bar overlap with ListingMobileCTA documented in session log,
-              out of scope — wired into this bar only, per owner decision 2026-06-15). */}
+          {/* <640: WA full-width below price row — avoids WA↔Phone overlap (Task 466) */}
+          {!ownerDeleted && !showGuestCTA && owner.has_whatsapp && (
+            <button
+              type="button"
+              onClick={() => handleContactClick('whatsapp')}
+              disabled={contactLoading}
+              className={cn(buttonVariants({ size: 'xl', variant: 'default' }), 'bg-whatsapp hover:bg-whatsapp/90 sm:hidden')}
+              data-track="whatsapp_click"
+              aria-label={t('whatsapp_aria_label')}
+            >
+              {contactLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <MessageCircle className="h-4 w-4" />}
+              {t('whatsapp_button_label')}
+            </button>
+          )}
+
+          {/* Message trigger — independent of has_phone/has_whatsapp */}
           {showInquiryTrigger && (
             <ListingInquiryDialog
               listingId={inquiryListingId}
@@ -386,7 +417,7 @@ export function ListingContact({ owner, isGuest = false, listingTitle, listingUr
             />
           )}
         </div>
-      </div>
+      </div>}
     </>
   )
 }

@@ -11,13 +11,12 @@ import { MapWrapper } from '@/components/shared/MapWrapper'
 import { Badge } from '@/components/ui/badge'
 import { ListingBackButton } from '@/modules/listings/components/ListingBackButton'
 import { ListingStatusBanner } from '@/modules/listings/components/ListingStatusBanner'
-import { ListingMobileCTA } from '@/modules/listings/components/ListingMobileCTA'
 import { ViewTracker } from '@/modules/listings/components/ViewTracker'
 import { RecentlyViewedTracker } from '@/modules/listings/components/RecentlyViewedTracker'
 import { RecentlyViewedSection, RecentlyViewedSkeleton } from '@/modules/listings/components/RecentlyViewedSection'
 import { formatPrice } from '@/lib/formatters'
 import type { DetailFeature, DetailAttribute } from '@/modules/listings/domain/presentationEngine'
-import { isListingArchived, isListingVisible } from '@/modules/listings/domain'
+import { isListingVisible } from '@/modules/listings/domain'
 import { ListingFeatureIcon } from '@/modules/listings/components/ListingFeatureIcon'
 import { buildGalleryMainPreloadAttrs } from '@/lib/imageDelivery'
 import { ListingReportDialog } from '@/modules/listings/components/ListingReportDialog'
@@ -163,7 +162,7 @@ export function ListingDetailViewBody({
   const effectiveCanSendInquiry = isStaffPreview ? false : canSendInquiry
 
   return (
-    <div data-testid="listing-detail-view" className="pb-32 md:pb-20 lg:pb-8">
+    <div data-testid="listing-detail-view" className="pb-44 md:pb-20 lg:pb-8">
       {/* ── LCP image preload — native RSC <link>, hoisted to <head> by React 19 / Next.js. */}
       {galleryPreload && (
         <link
@@ -183,19 +182,6 @@ export function ListingDetailViewBody({
           <ViewTracker slug={listing.slug} />
           <RecentlyViewedTracker listingId={listing.id} />
         </>
-      )}
-
-      {/* Sticky mobile contact bar — shown only on mobile when owner has contact info */}
-      {!isListingArchived(listing.status as ListingStatus) && (owner.has_phone || owner.has_whatsapp) && (
-        <ListingMobileCTA
-          price={formattedPrice}
-          hasPhone={owner.has_phone}
-          hasWhatsapp={owner.has_whatsapp}
-          listingId={listing.id}
-          listingTitle={listing.title}
-          listingOwnerId={listing.user_id}
-          locale={locale}
-        />
       )}
 
       {/* Breadcrumbs */}
@@ -386,6 +372,7 @@ export function ListingDetailViewBody({
             isFavorited={effectiveIsFavorited}
             canReport={effectiveCanReport}
             inquiryListingId={listing.id}
+            contactListingId={listing.id}
             canSendInquiry={effectiveCanSendInquiry}
             inquirerName={inquirerName}
             inquirerEmail={inquirerEmail}

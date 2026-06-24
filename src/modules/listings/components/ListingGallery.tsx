@@ -77,8 +77,20 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
 
   return (
     <>
+      {/* Mobile-only: "All photos (N)" above gallery — full-width via buttonVariants default size (max-sm:w-full); positioned here to avoid Y-overlap with the fixed contact bar */}
+      {sorted.length > 1 && (
+        <Button
+          variant="link"
+          className="sm:hidden mb-3 text-sm font-medium gap-1.5"
+          onClick={() => setLightboxIndex(0)}
+        >
+          <Camera className="h-4 w-4 shrink-0" />
+          {t('all_photos')} ({sorted.length})
+        </Button>
+      )}
+
       {/* Grid gallery */}
-      <div className="listing-gallery grid grid-cols-4 grid-rows-2 gap-2 h-[var(--listing-gallery-h-mobile)] sm:h-[var(--listing-gallery-h-tablet)] md:h-[var(--listing-gallery-h-desktop)] rounded-2xl overflow-hidden">
+      <div className="listing-gallery relative grid grid-cols-4 grid-rows-2 gap-2 h-[var(--listing-gallery-h-mobile)] sm:h-[var(--listing-gallery-h-tablet)] md:h-[var(--listing-gallery-h-desktop)] rounded-2xl overflow-hidden">
         {/* Main image — priority must be explicit, no variant default */}
         <div
           className="col-span-4 md:col-span-2 row-span-2 relative cursor-zoom-in group"
@@ -106,23 +118,26 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
           </div>
         ))}
 
-        {/* Mobile photo count badge */}
-        <Button
-          variant="ghost"
-          className="md:hidden absolute bottom-3 right-3 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70"
-          onClick={() => setLightboxIndex(0)}
-          aria-label={t('all_photos')}
-        >
-          <Camera className="h-4 w-4 shrink-0" />
-          {sorted.length} {t('photo_count')}
-        </Button>
+        {/* Mobile photo count badge — wrapper div is the positioned element (shrinks to content);
+            Button is max-sm:w-full of the wrapper (not of the gallery) → no outside-container escape */}
+        <div className="md:hidden absolute top-3 right-3">
+          <Button
+            variant="ghost"
+            className="gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70"
+            onClick={() => setLightboxIndex(0)}
+            aria-label={t('all_photos')}
+          >
+            <Camera className="h-4 w-4 shrink-0" />
+            {sorted.length} {t('photo_count')}
+          </Button>
+        </div>
       </div>
 
-      {/* All photos button */}
+      {/* Desktop/tablet (≥640): "All photos (N)" below gallery */}
       {sorted.length > 1 && (
         <Button
           variant="link"
-          className="mt-3 text-sm font-medium gap-1.5 h-auto p-0"
+          className="hidden sm:inline-flex mt-3 text-sm font-medium gap-1.5 h-auto p-0"
           onClick={() => setLightboxIndex(0)}
         >
           <Camera className="h-4 w-4 shrink-0" />

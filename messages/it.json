@@ -2106,7 +2106,11 @@
       "card_demo_action": "Vedi dettagli",
       "card_paper_title": "Superficie Paper",
       "avatar_demo_name": "Giulia Romano",
-      "avatar_demo_subtitle": "Amministratore"
+      "avatar_demo_subtitle": "Amministratore",
+      "tabs_demo_tab_overview": "Panoramica",
+      "tabs_demo_tab_details": "Dettagli",
+      "tabs_demo_tab_activity": "Registro attività",
+      "tabs_demo_panel_text": "Contenuto del pannello per la scheda selezionata."
     }
   },
   "ui": {

@@ -2106,7 +2106,11 @@
       "card_demo_action": "Shiko detajet",
       "card_paper_title": "Sipërfaqja Paper",
       "avatar_demo_name": "Arta Berisha",
-      "avatar_demo_subtitle": "Administrator"
+      "avatar_demo_subtitle": "Administrator",
+      "tabs_demo_tab_overview": "Përmbledhje",
+      "tabs_demo_tab_details": "Detajet",
+      "tabs_demo_tab_activity": "Regjistri i aktivitetit",
+      "tabs_demo_panel_text": "Përmbajtja e panelit për skedën e zgjedhur."
     }
   },
   "ui": {

@@ -2106,7 +2106,11 @@
       "card_demo_action": "Переглянути деталі",
       "card_paper_title": "Поверхня Paper",
       "avatar_demo_name": "Олена Коваленко",
-      "avatar_demo_subtitle": "Адміністратор"
+      "avatar_demo_subtitle": "Адміністратор",
+      "tabs_demo_tab_overview": "Огляд",
+      "tabs_demo_tab_details": "Деталі",
+      "tabs_demo_tab_activity": "Журнал активності",
+      "tabs_demo_panel_text": "Вміст панелі для вибраної вкладки."
     }
   },
   "ui": {

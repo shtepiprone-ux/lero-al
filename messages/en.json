@@ -2106,7 +2106,11 @@
       "card_demo_action": "View details",
       "card_paper_title": "Paper surface",
       "avatar_demo_name": "Jane Cooper",
-      "avatar_demo_subtitle": "Administrator"
+      "avatar_demo_subtitle": "Administrator",
+      "tabs_demo_tab_overview": "Overview",
+      "tabs_demo_tab_details": "Details",
+      "tabs_demo_tab_activity": "Activity log",
+      "tabs_demo_panel_text": "Panel content for the selected tab."
     }
   },
   "ui": {

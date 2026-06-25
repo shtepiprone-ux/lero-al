@@ -222,6 +222,20 @@ export const theme = createTheme({
         horizontalSpacing: 'xl',
       },
     },
+    // Tabs: brand active indicator (§6c). color:'brand' is redundant with primaryColor but
+    // explicit for single-source self-documentation. Font-size 14px is already Mantine's
+    // default (var(--mantine-font-size-sm)). fw=500 + ≥44px mih via styles.tab.
+    // list.flexWrap:'nowrap' → tabs always stay in a single horizontal row (owner P0 —
+    // never wrap to a second line; consumers wrap Tabs.List in Box overflowX="auto").
+    // Inactive/active text-color exact §6c match (inactive gray.5 / active brand text)
+    // requires CSS [data-active] selector — beyond trivial styles block; deferred.
+    Tabs: {
+      defaultProps: { color: 'brand' },
+      styles: {
+        tab: { fontWeight: 500, minHeight: '2.75rem' },
+        list: { flexWrap: 'nowrap' },
+      },
+    },
     Alert: {
       defaultProps: { radius: 'lg' },
     },

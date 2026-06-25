@@ -2095,7 +2095,12 @@
       "admin_status_active": "Attivo",
       "admin_status_pending": "In attesa",
       "admin_status_archived": "Archiviato",
-      "fail_planted_label": "FAIL esempio violazione"
+      "fail_planted_label": "FAIL esempio violazione",
+      "admin_table_col_role": "Ruolo",
+      "admin_table_col_phone": "Telefono",
+      "admin_card_actions_detail": "Dettaglio",
+      "badge_blocked": "Bloccato",
+      "badge_brand": "Brand"
     }
   },
   "ui": {

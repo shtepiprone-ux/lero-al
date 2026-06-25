@@ -2095,7 +2095,12 @@
       "admin_status_active": "Aktiv",
       "admin_status_pending": "Në pritë",
       "admin_status_archived": "Arkivuar",
-      "fail_planted_label": "FAIL shembull"
+      "fail_planted_label": "FAIL shembull",
+      "admin_table_col_role": "Roli",
+      "admin_table_col_phone": "Telefoni",
+      "admin_card_actions_detail": "Detaj",
+      "badge_blocked": "Bllokuar",
+      "badge_brand": "Brand"
     }
   },
   "ui": {

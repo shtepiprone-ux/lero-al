@@ -2095,7 +2095,12 @@
       "admin_status_active": "Active",
       "admin_status_pending": "Pending",
       "admin_status_archived": "Archived",
-      "fail_planted_label": "FAIL planted example"
+      "fail_planted_label": "FAIL planted example",
+      "admin_table_col_role": "Role",
+      "admin_table_col_phone": "Phone",
+      "admin_card_actions_detail": "Detail",
+      "badge_blocked": "Blocked",
+      "badge_brand": "Brand"
     }
   },
   "ui": {

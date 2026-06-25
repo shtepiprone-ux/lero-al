@@ -2100,7 +2100,11 @@
       "admin_table_col_phone": "Telefono",
       "admin_card_actions_detail": "Dettaglio",
       "badge_blocked": "Bloccato",
-      "badge_brand": "Brand"
+      "badge_brand": "Brand",
+      "card_demo_title": "Titolo card",
+      "card_demo_body": "Card piatta — angoli arrotondati, bordo grigio, nessuna ombra.",
+      "card_demo_action": "Vedi dettagli",
+      "card_paper_title": "Superficie Paper"
     }
   },
   "ui": {

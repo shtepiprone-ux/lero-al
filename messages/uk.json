@@ -2100,7 +2100,11 @@
       "admin_table_col_phone": "Телефон",
       "admin_card_actions_detail": "Деталі",
       "badge_blocked": "Заблокований",
-      "badge_brand": "Бренд"
+      "badge_brand": "Бренд",
+      "card_demo_title": "Заголовок картки",
+      "card_demo_body": "Пласка картка — заокруглені кути, сірий бордюр, без тіні.",
+      "card_demo_action": "Переглянути деталі",
+      "card_paper_title": "Поверхня Paper"
     }
   },
   "ui": {

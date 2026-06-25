@@ -2100,7 +2100,11 @@
       "admin_table_col_phone": "Telefoni",
       "admin_card_actions_detail": "Detaj",
       "badge_blocked": "Bllokuar",
-      "badge_brand": "Brand"
+      "badge_brand": "Brand",
+      "card_demo_title": "Titulli i kartës",
+      "card_demo_body": "Kartë e sheshtë — qoshe të rrumbullakuara, kufi gri, pa hije.",
+      "card_demo_action": "Shiko detajet",
+      "card_paper_title": "Sipërfaqja Paper"
     }
   },
   "ui": {

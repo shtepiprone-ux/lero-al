@@ -2104,7 +2104,9 @@
       "card_demo_title": "Card title",
       "card_demo_body": "Flat content card — rounded corners, gray border, no shadow.",
       "card_demo_action": "View details",
-      "card_paper_title": "Paper surface"
+      "card_paper_title": "Paper surface",
+      "avatar_demo_name": "Jane Cooper",
+      "avatar_demo_subtitle": "Administrator"
     }
   },
   "ui": {

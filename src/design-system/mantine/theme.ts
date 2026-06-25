@@ -181,6 +181,11 @@ export const theme = createTheme({
     SegmentedControl: {
       defaultProps: { radius: 'lg', size: 'sm' },
     },
+    // Avatar: pill radius (TailAdmin rounded-full). Size 40 = standard composite-cell consumer; size 44 = form/input row.
+    // Size is NOT baked in here — passed by consumers (40 default, 44 form).
+    Avatar: {
+      defaultProps: { radius: 'pill' },
+    },
     // Badge: pill radius, light variant, sm size, fw=500 (TailAdmin status badge standard).
     Badge: {
       defaultProps: { radius: 'pill', variant: 'light', size: 'sm' },

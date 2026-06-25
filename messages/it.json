@@ -2104,7 +2104,9 @@
       "card_demo_title": "Titolo card",
       "card_demo_body": "Card piatta — angoli arrotondati, bordo grigio, nessuna ombra.",
       "card_demo_action": "Vedi dettagli",
-      "card_paper_title": "Superficie Paper"
+      "card_paper_title": "Superficie Paper",
+      "avatar_demo_name": "Giulia Romano",
+      "avatar_demo_subtitle": "Amministratore"
     }
   },
   "ui": {

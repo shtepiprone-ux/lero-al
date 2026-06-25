@@ -2104,7 +2104,9 @@
       "card_demo_title": "Заголовок картки",
       "card_demo_body": "Пласка картка — заокруглені кути, сірий бордюр, без тіні.",
       "card_demo_action": "Переглянути деталі",
-      "card_paper_title": "Поверхня Paper"
+      "card_paper_title": "Поверхня Paper",
+      "avatar_demo_name": "Олена Коваленко",
+      "avatar_demo_subtitle": "Адміністратор"
     }
   },
   "ui": {

@@ -2110,7 +2110,13 @@
       "tabs_demo_tab_overview": "Panoramica",
       "tabs_demo_tab_details": "Dettagli",
       "tabs_demo_tab_activity": "Registro attività",
-      "tabs_demo_panel_text": "Contenuto del pannello per la scheda selezionata."
+      "tabs_demo_panel_text": "Contenuto del pannello per la scheda selezionata.",
+      "seg_demo_role_all": "Tutti",
+      "seg_demo_role_admin": "Amministratore",
+      "seg_demo_role_blocked": "Bloccato",
+      "seg_demo_status_active": "Attivo",
+      "seg_demo_status_pending": "In attesa",
+      "seg_demo_status_sold": "Venduto"
     }
   },
   "ui": {

@@ -2110,7 +2110,13 @@
       "tabs_demo_tab_overview": "Огляд",
       "tabs_demo_tab_details": "Деталі",
       "tabs_demo_tab_activity": "Журнал активності",
-      "tabs_demo_panel_text": "Вміст панелі для вибраної вкладки."
+      "tabs_demo_panel_text": "Вміст панелі для вибраної вкладки.",
+      "seg_demo_role_all": "Усі",
+      "seg_demo_role_admin": "Адміністратор",
+      "seg_demo_role_blocked": "Заблокований",
+      "seg_demo_status_active": "Активний",
+      "seg_demo_status_pending": "Очікує",
+      "seg_demo_status_sold": "Продано"
     }
   },
   "ui": {

@@ -2110,7 +2110,13 @@
       "tabs_demo_tab_overview": "Overview",
       "tabs_demo_tab_details": "Details",
       "tabs_demo_tab_activity": "Activity log",
-      "tabs_demo_panel_text": "Panel content for the selected tab."
+      "tabs_demo_panel_text": "Panel content for the selected tab.",
+      "seg_demo_role_all": "All",
+      "seg_demo_role_admin": "Administrator",
+      "seg_demo_role_blocked": "Blocked",
+      "seg_demo_status_active": "Active",
+      "seg_demo_status_pending": "Pending",
+      "seg_demo_status_sold": "Sold"
     }
   },
   "ui": {

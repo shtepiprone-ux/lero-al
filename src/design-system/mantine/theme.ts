@@ -178,8 +178,28 @@ export const theme = createTheme({
     Switch: {
       defaultProps: { size: 'md' },
     },
+    // SegmentedControl: TailAdmin §6c segment toggle (gray track, white active pill, shadow-xs).
+    // color NOT set → Mantine varsResolver auto-sets --sc-shadow = var(--mantine-shadow-xs). ✅
+    // fullWidth NOT set → content-width on desktop; swipe-scroll via ScrollArea <640 (owner P0, Task 489 precedent).
+    // Already matches §6c: track bg gray-1 ✅ | active pill white ✅ | shadow-theme-xs ✅ | fw=500 ✅ | 14px ✅.
+    // Added here: border-gray-2 (Mantine has no border by default) | active text gray-9 (--sc-label-color) |
+    //             ≥44px label touch-target (2.75rem exemption — same as Button/Tabs).
+    // Deferred: inactive label gray.7 vs §6c gray.5 | hover black vs §6c gray.7 —
+    //   require [data-active]:not CSS selectors beyond trivial styles block (same boundary as Task 489 Tabs).
     SegmentedControl: {
       defaultProps: { radius: 'lg', size: 'sm' },
+      styles: {
+        root: {
+          border: '1px solid var(--mantine-color-gray-2)',
+        },
+        label: {
+          minHeight: '2.75rem',     // ≥44px touch target (rem exemption — same as Button/Tabs)
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          '--sc-label-color': 'var(--mantine-color-gray-9)', // §6c active text = gray-900
+        },
+      },
     },
     // Avatar: pill radius (TailAdmin rounded-full). Size 40 = standard composite-cell consumer; size 44 = form/input row.
     // Size is NOT baked in here — passed by consumers (40 default, 44 form).

@@ -2110,7 +2110,13 @@
       "tabs_demo_tab_overview": "Përmbledhje",
       "tabs_demo_tab_details": "Detajet",
       "tabs_demo_tab_activity": "Regjistri i aktivitetit",
-      "tabs_demo_panel_text": "Përmbajtja e panelit për skedën e zgjedhur."
+      "tabs_demo_panel_text": "Përmbajtja e panelit për skedën e zgjedhur.",
+      "seg_demo_role_all": "Të gjithë",
+      "seg_demo_role_admin": "Administrator",
+      "seg_demo_role_blocked": "I bllokuar",
+      "seg_demo_status_active": "Aktiv",
+      "seg_demo_status_pending": "Në pritje",
+      "seg_demo_status_sold": "Shitur"
     }
   },
   "ui": {

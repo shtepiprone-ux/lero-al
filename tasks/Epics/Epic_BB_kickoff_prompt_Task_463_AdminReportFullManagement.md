@@ -198,3 +198,74 @@ Baseline first: record that the existing report tests pass before the change. Th
 ## Hard contract (verified against the diff)
 
 No scope creep; no invented architecture (use the STOP & ASK triggers); literal AC; self-validation block + AC-by-AC table; UX-flow + control-preservation before/after inventory; both positive AND every negative branch implemented with the correct typed error/locale key; **"Files Changed" table**; do NOT run or emit git. Security boundary is the **server action via `hasPermission`**, never UI hiding or a role-string check.
+
+## 🔁 REWORK required (R10–R12) — 2026-06-20, after orchestrator functional review (owner-confirmed)
+
+The functional implementation is APPROVED in shape, but three items BLOCK closure. Fix exactly these; do not change anything else.
+
+**R10 [P1 — data-integrity] CAS-guard the audit-failure revert in `updateReportStatusAction`.** The current revert
+`db.from('listing_reports').update({ status: oldStatus }).eq('id', reportId)` filters on `id` ONLY. Under a concurrent
+write (request B moves `reviewed→resolved` after A's forward update but before A's audit-failure revert), A's revert
+clobbers B's later status. Replace with a CAS revert that only reverts if the row is still A's `newStatus`, and handle the
+miss:
+```ts
+const { data: reverted, error: revertError } = await db
+  .from('listing_reports')
+  .update({ status: oldStatus })
+  .eq('id', reportId)
+  .eq('status', newStatus)          // CAS: revert ONLY if still our value
+  .select('id')
+if (revertError || !reverted || reverted.length === 0) {
+  // Concurrent change OR revert error → do NOT clobber; surface a CRITICAL log:
+  // state is "status changed without an audit row".
+  console.error('[updateReportStatus] CRITICAL: audit insert failed and status NOT reverted (concurrent change or revert error)', { reportId, oldStatus, newStatus, revertError })
+}
+return { error: 'save_failed' }
+```
+(The clean long-term fix is an RPC/transaction; CAS-revert is the in-scope minimum. Do NOT add a migration for this.)
+
+**R11 [P1 — test] Add the revert-race regression test** in `deleteReport.smoke.test.ts`: audit insert fails AND the CAS
+revert matches 0 rows (status already changed again) → assert the CRITICAL `console.error` fires, the action returns
+`save_failed`, and the second `update` (revert) was attempted with `{ status: oldStatus }` but did NOT throw/clobber. Use
+`mockUpdateSelect.mockResolvedValueOnce(forward).mockResolvedValueOnce([])` to distinguish the forward update from the
+revert. Keep the existing audit-revert test (status reverted on the happy revert path).
+
+**R12 [P2 — negative-flow completeness] Surface the `conflict` branch distinctly in the UI.** `handleAction` in
+`AdminReportsManager.tsx` currently collapses EVERY update error into the generic `t('error_update_failed')` toast — so the
+new CAS `conflict` (the report changed under the user) is indistinguishable from a real failure. Map `result.error ===
+'conflict'` to a distinct toast (new key `admin.reports.error_conflict`, e.g. "This report changed since you opened it —
+refresh and try again") in all four locales (`sq/en/uk/it`), and on conflict do NOT optimistically update the row (it
+already early-returns before `onUpdated`). Other error codes may keep the generic toast. This satisfies the kickoff's
+"per-branch negative flow with the correct locale key" requirement for the conflict branch.
+
+**R13 [P2 — typed error toasts] Map EACH server-action error code to a distinct localized toast** in
+`AdminReportsManager.tsx`, replacing the current two-way fallbacks in `handleAction` and `handleDelete`. Use one shared map
++ a per-action generic fallback so both handlers stay consistent:
+```ts
+const ERROR_KEYS: Record<string, string> = {
+  forbidden: 'error_forbidden',
+  unauthorized: 'error_unauthorized',
+  conflict: 'error_conflict',
+  not_found: 'error_not_found',
+}
+// handleAction (status update): toast.error(t(ERROR_KEYS[result.error] ?? 'error_update_failed'))
+// handleDelete:                 toast.error(t(ERROR_KEYS[result.error] ?? 'error_delete_failed'))
+```
+- `handleAction`: `forbidden→error_forbidden`, `unauthorized→error_unauthorized`, `conflict→error_conflict`,
+  `invalid_status`/other/`save_failed→error_update_failed`.
+- `handleDelete`: `forbidden→error_forbidden`, `unauthorized→error_unauthorized`, `not_found→error_not_found`,
+  other/`save_failed→error_delete_failed`.
+- Add new keys `admin.reports.error_forbidden` + `admin.reports.error_unauthorized` in ALL four locales
+  (`sq/en/uk/it`), same key set; `check:i18n` green. (`error_conflict`/`error_not_found`/`error_update_failed`/
+  `error_delete_failed` already exist.)
+- **Tests:** add UI cases — status-update `forbidden` → `mockToastError` called with `error_forbidden`; delete
+  `forbidden` → `error_forbidden`; (optionally `unauthorized` → `error_unauthorized`). No other behavior/markup/layout
+  change — error-message mapping ONLY (scope discipline).
+
+> **Orchestrator verification already done (no need to re-attach):** the real `AdminReportsManager.tsx` was read in full —
+> anchors (`admin-reports-manager`/`status-override-section`/`reopen-btn`/`delete-btn`) correctly placed; every new control
+> carries `max-sm:w-full`; the component imports NO `useRouter` and uses local state only (`setReports`/`handleDeleted`)
+> for both update and delete → **no `router.refresh`/full reload on any path** (the test's mock-not-called assertion
+> reflects the real component); delete success closes BOTH the confirm and the detail dialog + optimistic list removal;
+> existing review/dismiss/resolve buttons preserved. Only R10–R12 are missing. **Rendered-proof stays deferred to the
+> Task 467 harness per the owner's P0 cycle — do NOT claim `screenshots:assert` as authoritative for 463 here.**

@@ -96,6 +96,17 @@ legacy surfaces. The size/line-height scale below applies regardless.
 
 > Where §1b differs from §1, §1b wins (e.g. table cells are 16×20, NOT 12×16; card border is gray-100, NOT gray-200). Keep a short "TailAdmin token map" table in the design-system doc §6 citing these as the source.
 
+**🔴 FULL extraction reference: `docs/tailadmin-style-reference.md`** (extracted from the owner's uploaded
+files). It is the authoritative source — §1–§5 tokens (font/spacing/type/radius/color/shadow) AND §6 component
+conventions. Task 484 MUST also encode the §6 **component defaults** into `theme.ts`, not just the raw tokens:
+- **Button:** filled brand (#EC5447) radius 8 / ~44px / fw500; secondary = gray-300 border + `shadow-theme-xs`.
+- **TextInput/Select/Textarea:** h≈44, radius 8, border gray-200, `shadow-theme-xs`, focus border brand-300 +
+  ring brand/10 (`0 1px 2px 0 rgba(0,0,0,.05)` = the xs shadow value).
+- **Card/Paper:** radius 16, border gray-100, NO shadow, padding 20/24.
+- **Table:** horizontalSpacing≈20, verticalSpacing 16, header `xs`/fw500/gray-500, row divider gray-100.
+- **Badge:** pill, `xs`/fw500, light semantic tint (success/warning/error per §6).
+Cite `docs/tailadmin-style-reference.md` from `mantine-responsive-design-system.md` §6.
+
 ## 2. Restyle the canonical patterns to the standard
 
 - `MantineDataTableToCards` (card + table) and `MantineAdminSurfacePattern`: consume ONLY theme tokens (no raw

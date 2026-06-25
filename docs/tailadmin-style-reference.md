@@ -66,6 +66,28 @@ Accent: theme-pink #ee46bc · theme-purple #7a5af8. `gray-dark` #1a2231. Primary
 | **Label** | `text-theme-sm font-medium text-gray-700` | form label 14 fw500 gray-700 |
 | **Avatar (sm)** | `h-11 w-11 rounded-full` | `Avatar` ~44, radius full |
 
+## 6b. Admin table BLOCK anatomy (CRM "Recent Orders" reference — exact)
+
+The whole table is a **card**, not a bare table. Replicating this structure (not just tokens) is what makes it
+look like the reference.
+
+- **Card wrapper:** `rounded-2xl` (16) · `border border-gray-200` (#e4e7ec) · `bg-white` · `px-5 pt-5 pb-5
+  sm:px-6 sm:pt-6` (20→24). Card header above table: title `text-lg font-semibold gray-800` + actions (Filter /
+  See all / tabs).
+- **Scroll:** `max-w-full overflow-x-auto`.
+- **Thead tr:** `border-y border-gray-100` (#f2f4f7) + **`bg-gray-50`** (#f9fafb).
+- **Th:** `px-6 py-3` (24×12) · `whitespace-nowrap` · `text-theme-xs` (12) · `font-medium` · `text-gray-500`
+  · left · NOT uppercase.
+- **Td:** `px-6 py-3` · `whitespace-nowrap` · 14px · `text-gray-700`. Row divider gray-100; hover `bg-gray-50`.
+- **Composite user cell:** `flex items-center gap-3` → avatar `h-10 w-10 rounded-full` (tinted) + stack(name
+  `text-theme-sm font-medium text-gray-700`, subtitle `text-theme-xs text-gray-500 mb-0.5`).
+- **Status cell:** `rounded-full px-2 py-0.5 text-theme-xs font-medium bg-{sem}-50 text-{sem}-600`.
+- **Action cell:** right-aligned icon buttons.
+
+> The previous §6 "Table cell" row (20×16 from basic-tables) and this CRM block (24×12 card-wrapped) are two
+> TailAdmin table densities. **Use THIS card-wrapped CRM block as the admin-table standard** — it is the owner's
+> reference.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

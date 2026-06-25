@@ -217,6 +217,7 @@ story exports.
 |---|---|
 | P0 mobile gate | All tappable text buttons, selects, inputs, tabs, and controls must be full-width below `sm` (40em / 640px) |
 | P0 popup gate | All popups (Dialog, Drawer, Select, Menu, Combobox) must render as full-width bottom sheet below `sm`: `position="bottom"`, top-only radius, ≤90dvh, internal scroll, drag handle, closes on backdrop + Esc |
+| 🔴 P0 table gate (owner P0, 2026-06-25, restated) | **Every data table MUST collapse to stacked cards below `sm` (40em/640px) — one card per row, via `MantineDataTableToCards`.** Horizontal scrolling of table *content* on mobile is **FORBIDDEN** — neither page-level nor an internal `ScrollArea`/`overflow-x`. The mobile reader never side-scrolls a table; they read cards. At ≥`sm` the desktop §6b card-wrapped table is kept (a desktop-only `ScrollArea` inside the card is acceptable there). **Table-specific** — does NOT override the §7.1 filter-control rule, where `SegmentedControl`/`Tabs` MAY use horizontal swipe-scroll (those are controls, not data tables). A data table left scrolling horizontally on mobile is a TASK FAILURE. |
 | Responsive API | Use `{ base: X, sm: Y }` responsive objects on Mantine props (e.g. `w={{ base: '100%', sm: 'auto' }}`) |
 | Touch targets | Every mobile-reachable text button: `size="lg"` (50px) or `styles.root.minHeight: '2.75rem'` |
 | No Tailwind responsive | New Mantine components must NOT use Tailwind `sm:` / `md:` responsive class prefixes |

@@ -1,19 +1,20 @@
 'use client'
 
-import { useState, useTransition, useEffect } from 'react'
+import { useState, useTransition, useEffect, useRef } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations, useLocale } from 'next-intl'
 import Link from 'next/link'
-import { ShieldCheck, ShieldOff, Loader2, MapPin } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { AdminSearchInput } from '@/components/admin/AdminSearchInput'
+import { ShieldCheck, ShieldOff, MapPin, Search, ChevronRight } from 'lucide-react'
+import {
+  Avatar, Badge, Button, Group, Stack, Tabs, Text, TextInput, ActionIcon, Loader,
+  SegmentedControl, ScrollArea,
+} from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
+import { MantineDataTableToCards, type TableColumn, type CardConfig } from '@/design-system/mantine/patterns'
 import { formatDate } from '@/lib/formatters'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
 import { toast } from 'sonner'
-import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 
 export interface VerifiedAgent {
   id: string
@@ -22,16 +23,14 @@ export interface VerifiedAgent {
   created_at: string
 }
 
-type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info' | 'neutral'
-
 const ROLES: UserRole[] = ['user', 'agent', 'moderator', 'admin']
 
-const ROLE_VARIANT: Record<UserRole, BadgeVariant> = {
-  user: 'neutral', agent: 'info', moderator: 'warning', admin: 'success',
+const ROLE_COLOR: Record<UserRole, string> = {
+  user: 'gray', agent: 'blue', moderator: 'orange', admin: 'green',
 }
 
-const STATUS_VARIANT: Record<string, BadgeVariant> = {
-  active: 'success', blocked: 'destructive', inactive: 'warning',
+const STATUS_COLOR: Record<string, string> = {
+  active: 'green', blocked: 'red', inactive: 'red', // §1b: Inactive→error (same as blocked)
 }
 
 export interface AdminUser {
@@ -51,8 +50,6 @@ export interface AdminUser {
   avatar_url?: string | null
 }
 
-const STATUS_FILTERS = ['', 'active', 'inactive', 'blocked'] as const
-
 interface Props {
   users: AdminUser[]
   total: number
@@ -66,7 +63,18 @@ interface Props {
   verifiedAgents?: VerifiedAgent[]
 }
 
-export function AdminUsersTable({ users: init, total, page, perPage, activeRole, activeStatus = '', locationRequestFilter, searchQuery = '', activeTab = 'all', verifiedAgents = [] }: Props) {
+export function AdminUsersTable({
+  users: init,
+  total,
+  page,
+  perPage,
+  activeRole,
+  activeStatus = '',
+  locationRequestFilter,
+  searchQuery = '',
+  activeTab = 'all',
+  verifiedAgents = [],
+}: Props) {
   const t = useTranslations('admin.users')
   const locale = useLocale()
   const router = useRouter()
@@ -75,8 +83,24 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
   const [, startTransition] = useTransition()
   const [loadingId, setLoadingId] = useState<string | null>(null)
   const [items, setItems] = useState(init)
-  useEffect(() => { setItems(init) }, [init])
+  const [searchValue, setSearchValue] = useState(searchQuery)
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const totalPages = Math.ceil(total / perPage)
+
+  // SSR: useMediaQuery returns false on first render; mobile layout applies after hydration.
+  // Admin pages are auth-gated — the desktop→mobile reflow is not visible to unauthenticated users.
+  const isMobile = useMediaQuery('(max-width: 40em)')
+
+  useEffect(() => { setItems(init) }, [init])
+
+  // Sync search field from URL only when no debounce is pending (user not mid-type).
+  useEffect(() => {
+    if (!debounceRef.current) setSearchValue(searchQuery)
+  }, [searchQuery])
+
+  useEffect(() => () => {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+  }, [])
 
   function navigate(updates: Record<string, string | null>) {
     const params = new URLSearchParams(searchParams.toString())
@@ -84,328 +108,437 @@ export function AdminUsersTable({ users: init, total, page, perPage, activeRole,
     router.push(`${pathname}?${params.toString()}`)
   }
 
+  function handleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const next = e.target.value
+    setSearchValue(next)
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      debounceRef.current = null
+      const params = new URLSearchParams(searchParams.toString())
+      if (next) params.set('q', next)
+      else params.delete('q')
+      params.delete('page')
+      router.push(`${pathname}?${params.toString()}`)
+    }, 300)
+  }
+
   function withLoading(id: string, fn: () => Promise<void>) {
     setLoadingId(id)
     startTransition(async () => { await fn(); setLoadingId(null) })
   }
 
-  function verifyToggle(u: AdminUser, isLoading: boolean) {
-    if (isLoading) return <Loader2 className="h-4 w-4 animate-spin text-muted-foreground shrink-0" />
-    return (
-      <button
-        type="button"
-        onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, !u.is_verified); toast.success(t(u.is_verified ? 'revoke_success' : 'verify_success')) })}
-        title={u.is_verified ? t('revoke_verify') : t('verify')}
-        className={`h-6 w-6 rounded flex items-center justify-center shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${
-          u.is_verified
-            ? 'text-status-success hover:text-destructive'
-            : 'text-muted-foreground/40 hover:text-status-success'
-        }`}
-      >
-        {u.is_verified
-          ? <ShieldCheck className="h-4 w-4" />
-          : <ShieldOff className="h-3.5 w-3.5" />}
-      </button>
-    )
+  // Mobile card config — designed hierarchy for <40em.
+  // Desktop uses userColumns table (below). Handlers + testids are identical in both paths.
+  const userCard: CardConfig<AdminUser> = {
+    id: (u) => u.public_id != null ? `#${u.public_id}` : undefined,
+    actions: (u) => {
+      const isLoading = loadingId === u.id
+      return (
+        <Group gap="xs">
+          {isLoading
+            ? <Loader size="xs" />
+            : (
+              <ActionIcon
+                variant="subtle"
+                color={u.is_verified ? 'red' : 'green'}
+                size="sm"
+                mih="2.75rem"
+                miw="2.75rem"
+                title={u.is_verified ? t('revoke_verify') : t('verify')}
+                onClick={() => withLoading(u.id, async () => {
+                  await toggleUserVerified(u.id, !u.is_verified)
+                  toast.success(t(u.is_verified ? 'revoke_success' : 'verify_success'))
+                })}
+                data-testid={u.is_verified ? 'revoke-btn' : 'verify-btn'}
+              >
+                {u.is_verified ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
+              </ActionIcon>
+            )
+          }
+          <ActionIcon
+            variant="subtle"
+            size="sm"
+            mih="2.75rem"
+            miw="2.75rem"
+            component={Link as any}
+            href={`/admin/users/${u.id}`}
+            data-testid="user-detail-link"
+          >
+            <ChevronRight size={14} />
+          </ActionIcon>
+        </Group>
+      )
+    },
+    avatar: (u) => {
+      const initials = u.name
+        ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+        : '?'
+      return (
+        <Avatar src={u.avatar_url ?? null} radius="pill" size={40} color="brand">
+          {initials}
+        </Avatar>
+      )
+    },
+    title: (u) => (
+      <Text size="sm" fw={500} c="gray.7" truncate="end">
+        {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
+      </Text>
+    ),
+    subtitle: (u) => u.company_name || undefined,
+    badge: (u) => (
+      <Badge color={STATUS_COLOR[u.status ?? 'active'] ?? 'gray'} variant="light" size="sm">
+        {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
+      </Badge>
+    ),
+    meta: [
+      {
+        label: t('col_role'),
+        value: (u) => (
+          <Badge color={ROLE_COLOR[u.role as UserRole] ?? 'gray'} variant="light" size="sm">
+            {t(`role_${u.role}` as `role_admin`)}
+          </Badge>
+        ),
+      },
+      {
+        label: t('col_phone'),
+        value: (u) => <Text size="sm" c="gray.7">{u.phone ?? '—'}</Text>,
+      },
+      {
+        label: t('col_date'),
+        value: (u) => (
+          <Stack gap="xs">
+            <Text size="sm" c="gray.7">{formatDate(u.created_at, locale)}</Text>
+            {u.last_seen_at && (
+              <Text size="sm" c="gray.7" style={{ opacity: 0.7 }}>
+                {t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}
+              </Text>
+            )}
+          </Stack>
+        ),
+      },
+      {
+        label: t('location_request_badge'),
+        value: (u) => u.location_request ? (
+          <Group gap="xs" wrap="nowrap">
+            <MapPin size={10} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
+            <Text size="xs" c="orange.6">{t('location_request_badge')}</Text>
+          </Group>
+        ) : null,
+      },
+    ],
   }
 
-  const userColumns: AdminTableColumn<AdminUser>[] = [
+  const userColumns: TableColumn<AdminUser>[] = [
     {
       key: 'user',
-      header: t('col_user'),
-      cell: u => {
-        const isLoading = loadingId === u.id
+      label: t('col_user'),
+      width: '35%',
+      render: (u) => {
         const initials = u.name
           ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
           : '?'
+        const fullName = [u.name, u.last_name].filter(Boolean).join(' ') || '—'
         return (
-          <div className={`flex items-center gap-3 ${isLoading ? 'opacity-50' : ''}`}>
-            <Avatar className="h-8 w-8 shrink-0">
-              <AvatarImage src={u.avatar_url ?? undefined} />
-              <AvatarFallback className="text-xs bg-primary/10 text-primary">{initials}</AvatarFallback>
+          <Group gap="sm" wrap="nowrap">
+            <Avatar
+              src={u.avatar_url ?? null}
+              radius="pill"
+              size={40}
+              color="brand"
+              style={{ flexShrink: 0 }}
+            >
+              {initials}
             </Avatar>
-            <div className="min-w-0">
-              <Link
-                href={`/admin/users/${u.id}`}
-                className="font-medium truncate max-w-40 hover:text-primary transition-colors block"
-              >
-                {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
+            <Stack gap={0} style={{ minWidth: 0 }}>
+              <Link href={`/admin/users/${u.id}`} style={{ textDecoration: 'none' }}>
+                <Text size="sm" fw={500} c="gray.7" truncate="end">{fullName}</Text>
               </Link>
-              {u.company_name && (
-                <p className="text-xs text-muted-foreground truncate max-w-40">{u.company_name}</p>
+              {(u.company_name || u.public_id != null) && (
+                <Text size="xs" c="gray.5" truncate="end">
+                  {[u.company_name, u.public_id != null ? `#${u.public_id}` : null].filter(Boolean).join(' · ')}
+                </Text>
               )}
               {u.location_request && (
-                <p className="text-xs text-status-warning flex items-center gap-1 mt-0.5">
-                  <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
-                </p>
+                <Group gap="xs" wrap="nowrap">
+                  <MapPin size={10} style={{ color: 'var(--mantine-color-orange-6)', flexShrink: 0 }} />
+                  <Text size="xs" c="orange.6">{t('location_request_badge')}</Text>
+                </Group>
               )}
-              {u.public_id != null && (
-                <p className="text-xs text-muted-foreground/50 font-mono leading-none mt-0.5">#{u.public_id}</p>
-              )}
-            </div>
-            {verifyToggle(u, isLoading)}
-          </div>
+            </Stack>
+          </Group>
         )
       },
     },
     {
       key: 'role',
-      header: t('col_role'),
-      cell: u => (
-        <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5">
+      label: t('col_role'),
+      align: 'center',
+      width: '10%',
+      render: (u) => (
+        <Badge color={ROLE_COLOR[u.role as UserRole] ?? 'gray'} variant="light" size="sm">
           {t(`role_${u.role}` as `role_admin`)}
         </Badge>
       ),
     },
     {
       key: 'status',
-      header: t('col_status'),
-      visibility: 'sm',
-      cell: u => (
-        <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
+      label: t('col_status'),
+      align: 'center',
+      width: '10%',
+      render: (u) => (
+        <Badge color={STATUS_COLOR[u.status ?? 'active'] ?? 'gray'} variant="light" size="sm">
           {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
         </Badge>
       ),
     },
     {
       key: 'phone',
-      header: t('col_phone'),
-      visibility: 'md',
-      cell: u => <span className="text-muted-foreground text-xs">{u.phone ?? '—'}</span>,
+      label: t('col_phone'),
+      width: '13%',
+      render: (u) => <Text size="xs" c="dimmed">{u.phone ?? '—'}</Text>,
     },
     {
       key: 'date',
-      header: t('col_date'),
-      visibility: 'lg',
-      cell: u => (
-        <div className="flex flex-col gap-0.5 text-muted-foreground text-xs">
-          <span>{formatDate(u.created_at, locale)}</span>
+      label: t('col_date'),
+      align: 'right',
+      width: '20%',
+      render: (u) => (
+        <Stack gap="xs">
+          <Text size="xs" c="dimmed">{formatDate(u.created_at, locale)}</Text>
           {u.last_seen_at && (
-            <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
+            <Text size="xs" c="dimmed" style={{ opacity: 0.7 }}>
+              {t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}
+            </Text>
           )}
-        </div>
+        </Stack>
       ),
+    },
+    {
+      key: 'actions',
+      label: '',
+      align: 'right',
+      width: '12%',
+      render: (u) => {
+        const isLoading = loadingId === u.id
+        return (
+          <Group gap="xs" justify="flex-end" wrap="nowrap">
+            {isLoading ? (
+              <Loader size="xs" />
+            ) : (
+              <ActionIcon
+                variant="subtle"
+                color={u.is_verified ? 'red' : 'green'}
+                size="sm"
+                title={u.is_verified ? t('revoke_verify') : t('verify')}
+                onClick={() => withLoading(u.id, async () => {
+                  await toggleUserVerified(u.id, !u.is_verified)
+                  toast.success(t(u.is_verified ? 'revoke_success' : 'verify_success'))
+                })}
+                data-testid={u.is_verified ? 'revoke-btn' : 'verify-btn'}
+              >
+                {u.is_verified ? <ShieldCheck size={14} /> : <ShieldOff size={14} />}
+              </ActionIcon>
+            )}
+            <ActionIcon
+              variant="subtle"
+              size="sm"
+              component={Link as any}
+              href={`/admin/users/${u.id}`}
+              data-testid="user-detail-link"
+            >
+              <ChevronRight size={14} />
+            </ActionIcon>
+          </Group>
+        )
+      },
     },
   ]
 
-  const verifiedColumns: AdminTableColumn<VerifiedAgent>[] = [
+  const verifiedColumns: TableColumn<VerifiedAgent>[] = [
     {
       key: 'agent',
-      header: t('col_agent'),
-      cell: u => {
-        const isLoading = loadingId === u.id
+      label: t('col_agent'),
+      width: '55%',
+      render: (u) => {
+        const initials = u.name
+          ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+          : '?'
         return (
-          <div className={`flex items-center gap-2 ${isLoading ? 'opacity-50' : ''}`}>
-            <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
-              {u.name ?? '—'}
-            </Link>
-            {/* Revoke verification — inline action (no separate Actions column) */}
-            {isLoading
-              ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground shrink-0" />
-              : (
-                <button
-                  type="button"
-                  onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false); toast.success(t('revoke_success')) })}
-                  title={t('revoke_verify')}
-                  className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                >
-                  <ShieldOff className="h-3.5 w-3.5" />
-                </button>
-              )
-            }
-          </div>
+          <Group gap="sm" wrap="nowrap">
+            <Avatar radius="pill" size={40} color="brand" style={{ flexShrink: 0 }}>
+              {initials}
+            </Avatar>
+            <Stack gap={0} style={{ minWidth: 0 }}>
+              <Link href={`/admin/users/${u.id}`} style={{ textDecoration: 'none' }} data-testid="agent-detail-link">
+                <Text size="sm" fw={500} c="gray.7" truncate="end">{u.name ?? '—'}</Text>
+              </Link>
+              {u.company_name && (
+                <Text size="xs" c="gray.5" truncate="end">{u.company_name}</Text>
+              )}
+            </Stack>
+          </Group>
         )
       },
     },
     {
-      key: 'company',
-      header: t('col_company'),
-      visibility: 'md',
-      cell: u => <span className="text-muted-foreground">{u.company_name ?? '—'}</span>,
+      key: 'date',
+      label: t('col_date'),
+      align: 'right',
+      width: '25%',
+      render: (u) => <Text size="xs" c="dimmed">{formatDate(u.created_at, locale)}</Text>,
     },
     {
-      key: 'date',
-      header: t('col_date'),
-      visibility: 'lg',
-      cell: u => <span className="text-muted-foreground text-xs">{formatDate(u.created_at, locale)}</span>,
+      key: 'revoke',
+      label: '',
+      align: 'right',
+      width: '10%',
+      render: (u) => {
+        const isLoading = loadingId === u.id
+        if (isLoading) return <Group justify="flex-end"><Loader size="xs" /></Group>
+        return (
+          <Group justify="flex-end">
+            <ActionIcon
+              variant="subtle"
+              color="red"
+              size="sm"
+              title={t('revoke_verify')}
+              onClick={() => withLoading(u.id, async () => {
+                await toggleUserVerified(u.id, false)
+                toast.success(t('revoke_success'))
+              })}
+              data-testid="revoke-btn"
+            >
+              <ShieldOff size={14} />
+            </ActionIcon>
+          </Group>
+        )
+      },
     },
   ]
 
   return (
-    <div data-testid="admin-users-table" className="admin-users-table flex flex-col gap-4">
-      {/* Tabs */}
-      <div className="flex flex-wrap md:flex-nowrap gap-1 bg-muted rounded-xl p-1 w-full md:w-fit">
-        {([['all', t('tab_all')], ['verified', t('tab_verified')]] as const).map(([tab, label]) => (
-          <Button
-            key={tab}
-            type="button"
-            variant="ghost"
-            onClick={() => navigate({ tab: tab === 'all' ? null : tab, page: null, role: null, q: null })}
-            size="tab"
-            className={activeTab === tab ? 'bg-card shadow-sm text-foreground hover:bg-card' : 'text-muted-foreground hover:text-foreground'}
-          >
-            {label}
-          </Button>
-        ))}
-      </div>
+    <Stack gap="md" data-testid="admin-users-table">
+      {/* Tabs — full-width on mobile via Tabs.List grow */}
+      <Tabs
+        value={activeTab}
+        onChange={(tab) => navigate({
+          tab: tab === 'all' ? null : tab,
+          page: null,
+          role: null,
+          q: null,
+        })}
+      >
+        <Tabs.List grow>
+          <Tabs.Tab value="all">{t('tab_all')}</Tabs.Tab>
+          <Tabs.Tab value="verified">{t('tab_verified')}</Tabs.Tab>
+        </Tabs.List>
+      </Tabs>
 
       {activeTab === 'verified' ? (
-        <AdminTable
-          rows={verifiedAgents}
+        <MantineDataTableToCards<VerifiedAgent>
           columns={verifiedColumns}
-          rowKey={u => u.id}
-          emptyState={t('empty_verified')}
-          ariaLabel={t('col_agent')}
-          rowClassName={u => loadingId === u.id ? 'opacity-50' : ''}
-          cardRow={u => ({
-            title: (
-              <div className={`flex items-center gap-2 ${loadingId === u.id ? 'opacity-50' : ''}`}>
-                <Link href={`/admin/users/${u.id}`} className="font-medium hover:text-primary transition-colors">
-                  {u.name ?? '—'}
-                </Link>
-              </div>
-            ),
-            subtitle: u.company_name ? (
-              <span className="text-sm text-muted-foreground">{u.company_name}</span>
-            ) : undefined,
-            meta: (
-              <span className="text-xs text-muted-foreground">{formatDate(u.created_at, locale)}</span>
-            ),
-            trailing: loadingId === u.id
-              ? <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground shrink-0" />
-              : (
-                <button
-                  type="button"
-                  onClick={() => withLoading(u.id, async () => { await toggleUserVerified(u.id, false); toast.success(t('revoke_success')) })}
-                  title={t('revoke_verify')}
-                  className="h-5 w-5 rounded flex items-center justify-center text-muted-foreground hover:text-destructive transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                >
-                  <ShieldOff className="h-3.5 w-3.5" />
-                </button>
-              ),
-          })}
+          rows={verifiedAgents}
+          emptyLabel={t('empty_verified')}
+          rowClassName={(u) => loadingId === u.id ? 'opacity-50' : ''}
         />
       ) : (
-      <>
-      {/* Search */}
-      <AdminSearchInput
-        value={searchQuery}
-        placeholder={t('search_placeholder')}
-        className="max-w-sm"
-      />
-      {/* Role filter */}
-      <div className="flex gap-2 flex-wrap [&>*]:max-sm:w-full">
-        {(['', ...ROLES]).map(r => (
-          <button
-            key={r || 'all'}
-            onClick={() => navigate({ role: r || null, page: null })}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-              activeRole === r
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'border-border text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            {r || t('filter_all')}
-          </button>
-        ))}
-        {locationRequestFilter && (
-          <button
-            onClick={() => navigate({ location_request: null, page: null })}
-            className="px-3 py-1.5 rounded-lg text-xs font-medium border border-status-warning/50 text-status-warning bg-status-warning/10 flex items-center gap-1"
-          >
-            <MapPin className="h-3 w-3" /> {t('location_request_badge')} ×
-          </button>
-        )}
-      </div>
+        <>
+          {/* Search — full-width */}
+          <TextInput
+            value={searchValue}
+            placeholder={t('search_placeholder')}
+            leftSection={<Search size={14} />}
+            onChange={handleSearchChange}
+            style={{ width: '100%' }}
+            data-testid="users-search"
+          />
 
-      {/* Status filter */}
-      <div className="flex gap-2 flex-wrap [&>*]:max-sm:w-full">
-        {STATUS_FILTERS.map(s => (
-          <button
-            key={s || 'all-status'}
-            onClick={() => navigate({ status: s || null, page: null })}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
-              activeStatus === s
-                ? 'bg-primary text-primary-foreground border-primary'
-                : 'border-border text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            {s ? t(`filter_status_${s}` as Parameters<typeof t>[0]) : t('filter_status_all')}
-          </button>
-        ))}
-      </div>
+          {/* Role filter — SegmentedControl with horizontal scroll on mobile.
+              Ukrainian labels ("Адміністратор" 13 chars) clip at 320px with fullWidth.
+              ScrollArea scrollbars="x" lets users swipe to see all options. */}
+          <ScrollArea scrollbars="x" w="100%">
+            <SegmentedControl
+              value={activeRole}
+              onChange={(val) => navigate({ role: val || null, page: null })}
+              size="xs"
+              data-testid="role-segmented-control"
+              data={[
+                { value: '', label: t('filter_all') },
+                ...ROLES.map(r => ({ value: r, label: t(`role_${r}` as `role_admin`) })),
+              ]}
+            />
+          </ScrollArea>
 
-      <AdminTable
-        rows={items}
-        columns={userColumns}
-        rowKey={u => u.id}
-        emptyState={t('empty')}
-        ariaLabel={t('col_user')}
-        rowClassName={u => loadingId === u.id ? 'opacity-50' : ''}
-        cardRow={u => {
-          const isLoading = loadingId === u.id
-          const initials = u.name
-            ? u.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
-            : '?'
-          return {
-            title: (
-              <div className="flex items-center gap-3">
-                <Avatar className="h-8 w-8 shrink-0">
-                  <AvatarImage src={u.avatar_url ?? undefined} />
-                  <AvatarFallback className="text-xs bg-primary/10 text-primary">{initials}</AvatarFallback>
-                </Avatar>
-                <div className="min-w-0">
-                  <Link
-                    href={`/admin/users/${u.id}`}
-                    className="font-medium truncate hover:text-primary transition-colors block"
-                  >
-                    {[u.name, u.last_name].filter(Boolean).join(' ') || '—'}
-                  </Link>
-                  {u.company_name && (
-                    <p className="text-xs text-muted-foreground truncate">{u.company_name}</p>
-                  )}
-                </div>
-              </div>
-            ),
-            subtitle: (
-              <div className="flex items-center gap-2 flex-wrap mt-1">
-                <Badge variant={ROLE_VARIANT[u.role as UserRole] ?? 'neutral'} className="text-xs h-5">
-                  {t(`role_${u.role}` as `role_admin`)}
-                </Badge>
-                <Badge variant={STATUS_VARIANT[u.status ?? 'active'] ?? 'neutral'} className="text-xs h-5">
-                  {t(`user_status_${u.status ?? 'active'}` as `user_status_active`)}
-                </Badge>
-                {u.location_request && (
-                  <Badge variant="warning" className="text-xs h-5 gap-1">
-                    <MapPin className="h-2.5 w-2.5" /> {t('location_request_badge')}
-                  </Badge>
-                )}
-              </div>
-            ),
-            meta: (
-              <div className="flex flex-col gap-0.5 mt-1 text-xs text-muted-foreground">
-                {u.public_id != null && <span className="font-mono opacity-70">#{u.public_id}</span>}
-                {u.phone && <span>{u.phone}</span>}
-                <span>{formatDate(u.created_at, locale)}</span>
-                {u.last_seen_at && (
-                  <span className="opacity-70">{t('last_seen_short')}: {formatDate(u.last_seen_at, locale)}</span>
-                )}
-              </div>
-            ),
-            trailing: verifyToggle(u, isLoading),
-          }
-        }}
-      />
+          {locationRequestFilter && (
+            <Button
+              variant="light"
+              color="orange"
+              size="sm"
+              fullWidth={isMobile}
+              leftSection={<MapPin size={12} />}
+              onClick={() => navigate({ location_request: null, page: null })}
+              data-testid="location-request-filter"
+            >
+              {t('location_request_badge')} ×
+            </Button>
+          )}
 
-      {totalPages > 1 && (
-        <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
-          <Button variant="outline" size="sm" disabled={page === 1} onClick={() => navigate({ page: String(page - 1) })}>{t('prev_page')}</Button>
-          <span className="text-sm text-muted-foreground">{page} / {totalPages}</span>
-          <Button variant="outline" size="sm" disabled={page === totalPages} onClick={() => navigate({ page: String(page + 1) })}>{t('next_page')}</Button>
-        </div>
+          {/* Status filter — SegmentedControl with horizontal scroll on mobile.
+              "Заблокований" (12 chars uk) clips at ≤80px per segment. */}
+          <ScrollArea scrollbars="x" w="100%">
+            <SegmentedControl
+              value={activeStatus}
+              onChange={(val) => navigate({ status: val || null, page: null })}
+              size="xs"
+              data-testid="status-segmented-control"
+              data={[
+                { value: '', label: t('filter_status_all') },
+                { value: 'active', label: t('filter_status_active') },
+                { value: 'inactive', label: t('filter_status_inactive') },
+                { value: 'blocked', label: t('filter_status_blocked') },
+              ]}
+            />
+          </ScrollArea>
+
+          {/* Table/Cards — rendered via MantineDataTableToCards */}
+          <MantineDataTableToCards<AdminUser>
+            columns={userColumns}
+            rows={items}
+            emptyLabel={t('empty')}
+            rowClassName={(u) => loadingId === u.id ? 'opacity-50' : ''}
+            card={userCard}
+          />
+
+          {/* Pagination — full-width on mobile */}
+          {totalPages > 1 && (
+            <Group justify="center" gap="sm" wrap="wrap" align="center">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page === 1}
+                onClick={() => navigate({ page: String(page - 1) })}
+                fullWidth={isMobile}
+                data-testid="prev-page"
+              >
+                {t('prev_page')}
+              </Button>
+              <Text size="sm" c="dimmed">
+                {page} / {totalPages}
+              </Text>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={page === totalPages}
+                onClick={() => navigate({ page: String(page + 1) })}
+                fullWidth={isMobile}
+                data-testid="next-page"
+              >
+                {t('next_page')}
+              </Button>
+            </Group>
+          )}
+        </>
       )}
-      </>
-      )}
-    </div>
+    </Stack>
   )
 }

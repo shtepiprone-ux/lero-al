@@ -1,5 +1,5 @@
 import type { Viewport } from 'next'
-import { Geist } from 'next/font/google'
+import { Geist, Outfit } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ColorSchemeScript } from '@mantine/core'
 import { headers, cookies } from 'next/headers'
@@ -14,7 +14,10 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-const geist = Geist({ subsets: ['latin'] })
+// Geist: kept as CSS variable for any not-yet-migrated legacy surfaces.
+const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
+// Outfit: TailAdmin-aligned Mantine font (Task 484 §1b, owner decision 2026-06-25).
+const outfit = Outfit({ subsets: ['latin', 'latin-ext'] })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [headersList, jar] = await Promise.all([headers(), cookies()])
@@ -23,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = headersList.get('X-NEXT-INTL-LOCALE') ?? jar.get('admin-locale')?.value ?? 'sq'
 
   return (
-    <html lang={locale} suppressHydrationWarning className={geist.className} data-scroll-behavior="smooth">
+    <html lang={locale} suppressHydrationWarning className={`${geist.variable} ${outfit.className}`} data-scroll-behavior="smooth">
       <head>
         {/* Mantine color-scheme script — prevents flash of wrong color scheme (FOUC).
             Must be the first script in <head>, before any CSS or body content. */}

@@ -17,7 +17,7 @@ export { MantineCardGrid } from './MantineCardGrid'
 export type { MantineCardGridProps, CardGridItem } from './MantineCardGrid'
 
 export { MantineDataTableToCards } from './MantineDataTableToCards'
-export type { MantineDataTableToCardsProps, TableColumn, TableRow } from './MantineDataTableToCards'
+export type { MantineDataTableToCardsProps, TableColumn, TableRow, CardConfig } from './MantineDataTableToCards'
 
 export { MantineDialogDrawerPattern } from './MantineDialogDrawerPattern'
 export type { MantineDialogDrawerPatternProps } from './MantineDialogDrawerPattern'

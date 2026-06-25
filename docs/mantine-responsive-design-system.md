@@ -115,19 +115,76 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 
 ## §6 — Mantine theme architecture
 
+> **Visual reference:** [demo.tailadmin.com](https://demo.tailadmin.com) (structure, spacing, density — owner
+> decision 2026-06-25). Brand color stays `#EC5447`; TailAdmin blue is NOT used.
+
 | Theme concern | Decision | Value |
 |---|---|---|
 | Brand primary color | `#EC5447` (shade 7) | `primaryColor: 'brand', primaryShade: 7` |
-| Color palette | 10-shade brand array from brand-50 to brand-900 | `colors: { brand: [...10 shades] }` |
+| Color palette | Brand + TailAdmin gray + semantic (success/warning/error) | `colors: { brand, gray, green, yellow, red }` |
 | Light-only theme | Owner requirement: no dark mode | `defaultColorScheme: 'light'`; `forceColorScheme: 'light'` in Storybook |
-| Font family | Geist (project font via Next.js loader) | `var(--font-geist-sans, system-ui, ...)` |
-| Heading scale | h1=2.25rem to h6=1rem | `headings.sizes.*` |
-| Line height | xs=1.4 to xl=1.65 | `lineHeights.*` |
-| Spacing (4px base) | xs=4px to xxl=48px | `spacing: { xs: '0.25rem', ... xxl: '3rem' }` |
-| Radius | xs=4px to xl=16px, default=md=8px | `radius.*`, `defaultRadius: 'md'` |
-| Touch target | ≥44px minimum enforced via `Button styles.root.minHeight: '2.75rem'` | All Buttons ≥44px regardless of `size` prop |
+| Font family | **Outfit** (TailAdmin font, Task 484 §1b — owner decision 2026-06-25) | Next.js font loader; `fontFamily: 'Outfit, var(--font-outfit), system-ui, ...'` |
+| Heading scale | h1=3rem(48) → h6=1.125rem(18) — TailAdmin title-* scale | `headings.sizes.*` |
+| Spacing (4px base) | **xs=8 / sm=12 / md=16 / lg=20 / xl=24 px** (TailAdmin §1b) | `spacing: { xs: '0.5rem', sm: '0.75rem', md: '1rem', lg: '1.25rem', xl: '1.5rem' }` |
+| Radius | **xs=2 / sm=4 / md=6 / lg=8 (controls) / xl=12 / 2xl=16 (Card) / pill=9999 px** | `radius: { ..., '2xl': '1rem', pill: '9999px' }`; `defaultRadius: 'lg'` |
+| Touch target | ≥44px via `Button styles.root.minHeight: '2.75rem'` | All Buttons ≥44px regardless of `size` prop |
 | Theme breakpoints | 6 breakpoints covering the mobile gate and design widths | xs=20em(320), sm=40em(640), md=48em(768), lg=64em(1024), xl=80em(1280), xxl=90em(1440) |
-| Tailwind boundary | `@layer mantine` is separate from `@layer utilities`; Tailwind utilities override Mantine base when both apply | No conflict |
+| Tailwind boundary | `@layer mantine` is separate from `@layer utilities` | No conflict |
+
+### §6.1 — TailAdmin token map (§1b — authoritative; Task 484 2026-06-25)
+
+These values are extracted from TailAdmin's compiled `css/style.css` (Tailwind v4 `@theme`) and are the
+**single source of truth** for every Mantine-migrated admin surface. Where §1 estimates differ from §1b
+real values, §1b wins.
+
+**Spacing scale:**
+
+| Token | rem | px | Typical use |
+|---|---|---|---|
+| `xs` | 0.5rem | 8 | meta-row gap, badge padding, tight inline gaps |
+| `sm` | 0.75rem | 12 | control gaps, card section rhythm, **table `verticalSpacing` (CRM §6b)** |
+| `md` | 1rem | 16 | card inner gap, block gaps |
+| `lg` | 1.25rem | 20 | card `padding` |
+| `xl` | 1.5rem | 24 | page section separation, **table `horizontalSpacing` (CRM §6b px-6=24)** |
+
+**Radius scale:**
+
+| Token | px | Use |
+|---|---|---|
+| `xs` | 2 | — |
+| `sm` | 4 | Checkbox |
+| `md` | 6 | — |
+| `lg` | 8 | Button / TextInput / Select / SegmentedControl (`defaultRadius`) |
+| `xl` | 12 | — |
+| `2xl` | 16 | Card / Paper (`rounded-2xl`) |
+| `pill` | 9999 | Badge (status pill, `rounded-full`) |
+
+**Color palette (TailAdmin §1b):**
+
+| Scale | 0/50 | 1/100 | 2/200 | 3/300 | 4/400 | 5/500 | 6/600 | 7/700 | 8/800 | 9/900 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| `gray` | #f9fafb | #f2f4f7 | #e4e7ec | #d0d5dd | #98a2b3 | #667085 | #475467 | #344054 | #1d2939 | #101828 |
+| `green` (success) | #ecfdf3 | #d1fadf | #a9f3c3 | #6ce9a6 | #3dd68c | #12b76a | #039855 | #027a48 | #05603a | — |
+| `yellow` (warning) | #fffaeb | — | — | — | #fdb022 | #f79009 | #dc6803 | #b54708 | — | — |
+| `red` (error) | #fef3f2 | #fee4e2 | — | #fda29b | #f97066 | #f04438 | #d92d20 | #b42318 | #912018 | — |
+
+`Badge variant="light"` uses index 0 for background and index 6 for text (Mantine v8 light mode):
+- Active / success: bg `#ecfdf3` / text `#039855` ✅
+- Pending / warning: bg `#fffaeb` / text `#dc6803`
+- Error / blocked / inactive: bg `#fef3f2` / text `#d92d20` ✅
+
+**Component density defaults (theme.components):**
+
+| Component | defaultProps | styles |
+|---|---|---|
+| `Button` | `radius='lg', size='md'` | `root.minHeight: '2.75rem'` (44px touch target) |
+| `TextInput / Select / Textarea` | `radius='lg', size='md'` | — |
+| `SegmentedControl` | `radius='lg', size='sm'` | — |
+| `Badge` | `radius='pill', variant='light', size='sm'` | `root.fontWeight: '500'` |
+| `Card` | `radius='2xl', padding='lg'` | border color: `--mantine-color-gray-1` (#f2f4f7), no shadow |
+| `Paper` | `radius='2xl'` | border color: `--mantine-color-gray-1`, no shadow |
+| `Table` | `highlightOnHover, verticalSpacing='sm'(12px), horizontalSpacing='xl'(24px)` | CRM card-wrapped standard §6b — see `docs/tailadmin-style-reference.md §6b` |
+| `Modal` | `radius='lg', centered: true` | — |
 
 **Storybook proof viewport widths vs Mantine theme breakpoints:**
 
@@ -166,6 +223,66 @@ story exports.
 | No `.container-wide` | New Mantine pattern components must NOT depend on `.container-wide` for responsive layout |
 | `useMediaQuery` caveat | Only use `useMediaQuery` when Mantine responsive props cannot solve the requirement. Always document the SSR/hydration caveat (returns `initialValue=false` until hydration) |
 
+### §7.1 — Spacing rhythm (Task 483 REWORK — codified 2026-06-24)
+
+**All spacing in `src/design-system/mantine/**` and migrated surfaces uses Mantine `theme.spacing` tokens
+exclusively. Raw px values for spacing, gap, padding, or margin are forbidden.**
+
+| Concern | Rule | Example |
+|---|---|---|
+| Vertical padding on rows | Use `py="xs"` / `py="sm"` / `py="md"` | `py="xs"` (8px) not `py={4}` |
+| Gap between elements | Use Mantine `gap="xs"` / `gap="sm"` | `gap="sm"` (12px) not `gap={8}`, not `marginRight: 8` |
+| Table cell rhythm | Use `verticalSpacing="sm"` (12px) + `horizontalSpacing="xl"` (24px) on `<Table>` — CRM §6b standard (px-6 py-3), comes from `theme.components.Table.defaultProps`; explicit only when overriding | Replaces sparse auto columns |
+| Touch-target minimum | `mih="2.75rem"` (rem string) is the ONLY raw-value exemption — it is a touch-target, not spacing | `mih="2.75rem"` ✅ |
+| Card meta row layout | `Group justify="space-between"` — label flush LEFT edge, value flush RIGHT edge (`textAlign: 'right'`). NO fixed-percentage columns (38%/62% retracted). Vertical rhythm: `Stack gap="xs"` for meta rows, `gap="md"` on each row Group | Label left · value right |
+| Table column alignment | Pass `align?: 'left' \| 'center' \| 'right'` and `width?` through `TableColumn` → applied to `Table.Th`/`Table.Td` | No sparse sparse auto-column sprawl |
+| Filter controls | Use `SegmentedControl` (not individual Buttons) for mutually exclusive single-select filters; wrap in `ScrollArea scrollbars="x"` when i18n labels exceed container width at 320px | No full-width gray button bars |
+
+**Rationale:** Raw px values couple layout to pixel counts rather than to the design token scale, producing
+inconsistent spacing rhythm across surfaces and breaking Mantine's 4px-base grid. The edge-anchored card row
+(`justify="space-between"`) aligns labels to the left padded edge and values to the right padded edge — every
+row spans the full card width, no dead space.
+
+**Future-task obligation:** Every Mantine migration task that adds a data table or card list MUST use
+`MantineDataTableToCards` and satisfy this rhythm. Reviewer checklist (§16) includes a spacing-token gate.
+
+### §7.2 — Admin data card anatomy (Task 483 REWORK #2 — codified 2026-06-25)
+
+**The `CardConfig<R>` interface on `MantineDataTableToCards` is the ONLY canonical admin card design.**
+Generic label:value dumps (every column → a divided row) are NOT acceptable for admin user/listing surfaces.
+When providing a `card` prop, the mobile card MUST follow this anatomy:
+
+```
+┌─────────────────────────────────────────┐  Card padding="lg" (20px) defines side edges
+│ #101 (gray.5 xs)        [actions ≥44px] │  ← Header: Group justify="space-between"
+├─────────────────────────────────────────┤  ← Divider color="gray.1"
+│ [Avatar]  Name fw=500      [Status badge]│  ← Primary: Group justify="space-between"
+│           Company gray.5 xs             │     align="flex-start" (badge top-aligned)
+├─────────────────────────────────────────┤  ← Divider color="gray.1" (ONE above meta)
+│ Role                     [Role badge] ► │  ← Meta: Stack gap="xs"
+│ Phone             +355 69 xxx         ► │     Each row: Group justify="space-between"
+│ Date               24 Jun 2026        ► │     label: Text xs gray.5 flexShrink:0
+└─────────────────────────────────────────┘     value: div textAlign:'right'
+```
+
+Edge-anchoring rule: every card row is `Group justify="space-between"` — label hugs the LEFT padded edge, value hugs the RIGHT padded edge. NO fixed-percentage columns.
+
+| Anatomy zone | Rule |
+|---|---|
+| Header | `Group justify="space-between" wrap="nowrap" align="center"` → `Text size="xs" c="gray.5"` (id left) \| `Group gap="xs" wrap="nowrap"` (actions right); followed by `<Divider color="gray.1" />` |
+| Primary | `Group justify="space-between" wrap="nowrap" align="flex-start"` → `Group gap="sm"(avatar + Stack gap={2}(title, subtitle))` \| badge `div flexShrink:0` |
+| Title | Consumer-provided ReactNode (`size="sm" fw={500} c="gray.7"` recommended); pattern does NOT re-style |
+| Subtitle | `Text size="xs" c="gray.5" truncate="end"`; omitted if null/undefined |
+| Badge | Status badge `div flexShrink:0` top-aligned right; omitted if null/undefined |
+| Divider (meta) | `<Divider color="gray.1" />` — ONE above meta block, ONE after header. NOT one per field |
+| Meta rows | `Group justify="space-between" wrap="nowrap" align="center" gap="md"` → label `Text size="xs" c="gray.5" flexShrink:0` left \| value `div textAlign:'right' minWidth:0` right. Null returns skipped |
+| All spacing | Theme tokens only. `gap={2}` (title/subtitle micro-gap) is the only numeric exemption |
+| Actions touch | Card action `ActionIcon`: add `mih="2.75rem" miw="2.75rem"` (touch-target rem exemption). Keep visual `size="sm"` for icon proportions. |
+| No generic dump | Providing `card` prop = designed anatomy. Omitting `card` = backward-compatible generic layout |
+
+**Story proof requirement (§16 gate):** Pattern stories that accept `card` MUST demonstrate the anatomy with
+avatar/title/subtitle/badge/meta/actions — not a minimal stub. The story is the rendered specification.
+
 ---
 
 ## §8 — Mantine Storybook proof rules
@@ -177,7 +294,7 @@ story exports.
 | Viewport switching | Storybook toolbar (owner selects from 12 proof widths) |
 | Locale switching | Storybook toolbar (owner selects en / uk / sq / it) |
 | Theme | Light only — `forceColorScheme="light"` in `withMantine` |
-| Canvas wrapper | `parameters.skipCanvas: true` — bypasses `withCanvas` / `.container-wide` |
+| Canvas wrapper | `parameters.skipCanvas: true` — bypasses `withCanvas` / `.container-wide`. **Requires explicit page-gutter Box in the story's `render` fn** (see §8.1 below). Full-bleed is NEVER acceptable for page-content stories. |
 | Layout | `parameters.layout: 'fullscreen'` |
 | Canonical layout | Imported from `src/design-system/mantine/patterns/**` — not implemented inside the story |
 | i18n text | `storyT(locale, 'storybook.mantine.*')` via `src/stories/_storyI18n.ts` |
@@ -189,6 +306,35 @@ Viewport proof for Task 482 is toolbar-driven. Mantine stories do not export vie
 The owner switches viewport through the Storybook toolbar. Locale proof is toolbar-driven. The single
 Default story renders translated `storybook.mantine.*` strings for the active locale. Theme is
 Light-only — no Dark story exports exist or are required.
+
+### §8.1 — Mantine story page-gutter rule (Task 485 REWORK #2 — owner decision 2026-06-25)
+
+`parameters.skipCanvas: true` bypasses the `withCanvas` decorator (`.container-wide py-6`) entirely,
+rendering the story full-bleed (zero horizontal + vertical gutter). **Full-bleed is reserved ONLY for
+bottom-sheet popup stories.** Page-content stories (admin tables, card lists, form sections) MUST render
+inside an explicit responsive gutter container.
+
+**Required gutter wrapper for all admin/table/card Mantine stories:**
+
+```tsx
+export const Default: Story = {
+  render: (args, context) => {
+    const l = (context?.globals?.locale as string) ?? 'en';
+    return (
+      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+        {/* component here */}
+      </Box>
+    );
+  },
+};
+```
+
+| Concern | Rule |
+|---|---|
+| Gutter token | `px={{ base: 'md', sm: 'xl' }}` — 16px mobile / 24px desktop (owner-decided 2026-06-25). `py="md"` (16px). All theme tokens; no raw px. |
+| Why responsive | Mirrors the canonical admin page gutter. On mobile the card renders inset from the viewport edge (not full-bleed). On desktop the wider xl gutter matches the admin shell spacing. |
+| Out of scope | Full-bleed bottom-sheet popup stories (`Drawer`, dialog-only). Non-admin wide-layout stories may use a different token (decide per case). |
+| Migration debt | `/admin/users/page.tsx` still uses Tailwind `p-6 max-w-10xl` — migrating to a Mantine admin shell with this responsive gutter is a separate follow-up task. |
 
 ---
 
@@ -539,6 +685,12 @@ All future Mantine UI tasks must pass these gates:
 | check:design-tokens | Mantine design-system files allowlisted; no new raw values outside allowlist |
 | No product migration | Foundation tasks must not migrate existing product UI surfaces |
 | No DB/security | UI tasks must not touch DB migrations, RLS, or server actions |
+| Spacing tokens | No raw px for spacing/gap/padding/margin in `src/design-system/mantine/**` or migrated surfaces. Touch-target `mih="2.75rem"` (rem) is the only exemption. See §7.1 |
+| Card meta row rhythm | Each card meta row MUST use `Group justify="space-between"` — label `flexShrink:0` at left edge, value `textAlign:'right'` at right edge. NO fixed `width:'38%'` (retracted). `gap="md"` per row. `Divider color="gray.1"` between sections |
+| Table column rhythm | Desktop table must be card-wrapped (`Paper` radius=2xl, gray-2 border) per `docs/tailadmin-style-reference.md §6b`. Table uses `verticalSpacing="sm"` (12px) + `horizontalSpacing="xl"` (24px) from theme defaults. Thead bg-gray-0, border-y gray-1. Th: 12px fw=500 gray-500, NOT uppercase. Td: whitespace-nowrap, 14px gray-700. Each `TableColumn` must declare `align` and `width` for non-trivial surfaces |
+| Filter controls | Mutually exclusive single-select filters must use `SegmentedControl`, not individual Button chips. Wrap in `ScrollArea scrollbars="x"` when i18n labels clip at 320px |
+| Admin card anatomy | Any surface with `card` prop on `MantineDataTableToCards` MUST use the §7.2 anatomy: header (id + actions), primary (avatar + title + subtitle \| badge), meta (ONE divider + compact rows). Generic label:value dump rejected |
+| Card anatomy story proof | Pattern stories with `card` prop must demonstrate the full anatomy (avatar/title/subtitle/badge/meta/actions visible in Default story at 320 mobile viewport) |
 
 ---
 

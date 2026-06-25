@@ -1,8 +1,8 @@
 'use client'
 
-import { Stack, Group, TextInput, Button, Badge, Text, Paper, ActionIcon, Pagination } from '@mantine/core'
+import { Stack, Group, TextInput, Button, Badge, Text, ActionIcon, Pagination } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
-import { MantineDataTableToCards, type TableColumn, type TableRow } from './MantineDataTableToCards'
+import { MantineDataTableToCards, type TableColumn, type TableRow, type CardConfig } from './MantineDataTableToCards'
 
 export interface AdminFilter {
   key: string
@@ -10,18 +10,23 @@ export interface AdminFilter {
   options?: string[]
 }
 
-export interface MantineAdminSurfacePatternProps {
+export interface MantineAdminSurfacePatternProps<R extends { id: string } = TableRow> {
   title: string
   searchPlaceholder: string
   addLabel: string
-  columns: TableColumn[]
-  rows: TableRow[]
+  columns: TableColumn<R>[]
+  rows: R[]
   totalPages?: number
   currentPage?: number
   onSearch?: (query: string) => void
   onAdd?: () => void
   onPageChange?: (page: number) => void
   searchValue?: string
+  /** Per-row CSS class (forwarded to MantineDataTableToCards, e.g. 'opacity-50' for loading). */
+  rowClassName?: (row: R) => string
+  /** Structured card config for mobile — forwarded to MantineDataTableToCards.
+   *  When provided, mobile renders the designed CardConfig hierarchy instead of generic label:value. */
+  card?: CardConfig<R>
 }
 
 /**
@@ -38,13 +43,12 @@ export interface MantineAdminSurfacePatternProps {
  *   - Full Table with column headers.
  *   - Pagination at the right.
  *
- * Responsive API:
- *   - Group direction="column" at base, "row" at sm+ for the toolbar.
- *   - MantineDataTableToCards handles table→cards flip.
+ * Extension (Task 483): generic over row type R and accepts `rowClassName`
+ * for per-row loading/state styling. Forwards both to MantineDataTableToCards.
  *
  * Migration target: AdminListingsTable, AdminUsersTable, AdminReportsManager (Phase 4).
  */
-export function MantineAdminSurfacePattern({
+export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>({
   title,
   searchPlaceholder,
   addLabel,
@@ -56,7 +60,9 @@ export function MantineAdminSurfacePattern({
   onAdd,
   onPageChange,
   searchValue = '',
-}: MantineAdminSurfacePatternProps) {
+  rowClassName,
+  card,
+}: MantineAdminSurfacePatternProps<R>) {
   const isMobile = useMediaQuery('(max-width: 40em)')
 
   return (
@@ -100,9 +106,7 @@ export function MantineAdminSurfacePattern({
         </Button>
       </Group>
 
-      <Paper shadow="xs" radius="md" withBorder style={{ overflow: 'hidden' }}>
-        <MantineDataTableToCards columns={columns} rows={rows} />
-      </Paper>
+      <MantineDataTableToCards columns={columns} rows={rows} rowClassName={rowClassName} card={card} />
 
       {totalPages > 1 && (
         <Group justify={isMobile ? 'center' : 'flex-end'}>

@@ -1,0 +1,111 @@
+# Mantine + TailAdmin Migration Tracker — whole-project UI restyle (owner P0, 2026-06-25)
+
+> **Goal (owner directive 2026-06-25):** EVERY component and element across the WHOLE project styled to the
+> TailAdmin reference — not one Story. Done **step by step, component by component**, structured and balanced.
+> **Ground truth:** `demo_tailadmin_com.zip` (repo root, gitignored) + `docs/tailadmin-style-reference.md`
+> (§6/§6b/§6c/§6d) + `docs/mantine-responsive-design-system.md`. Brand stays `#EC5447`.
+
+## Why this order (root-cause fix)
+Surfaces (AdminUsersTable etc.) kept failing review because we styled the SURFACE before its PRIMITIVES were
+TailAdmin-correct at the theme level. Fix the primitives first → most surfaces inherit correct styling for free,
+and surface slices become small. **No surface slice starts until the primitives it consumes are ✅.**
+
+## Per-slice Definition of Done (the gate — applies to EVERY slice below)
+1. Migrated to Mantine primitive(s); legacy `@/components/ui/*` (shadcn) import removed from that surface.
+2. Exact TailAdmin values applied from `tailadmin-style-reference.md` §X (cite the section) — zero invented px/colors.
+3. Story uses the Mantine proof path AND renders inside the **canonical responsive page gutter** (NOT `skipCanvas`
+   full-bleed; full-bleed only for bottom-sheet popups).
+4. **Rendered proof matrix** attached: 320/375/480 × en/uk + sq/it@320 (uk@320/375/390 mandatory). No clip/overflow,
+   no h-scroll@320, controls full-width `<640`.
+5. **🔴 ZERO HARDCODE (owner P0, 2026-06-25).** No raw values anywhere in the slice:
+   - **No raw colors** (hex/rgb/hsl/named) — only theme tokens (`c="gray.7"`, `var(--mantine-color-*)`, brand).
+   - **No raw spacing/size px** for gap/padding/margin/radius — only Mantine tokens (`gap="sm"`, `radius="2xl"`).
+     Sole exemptions: touch-target `mih="2.75rem"`, `minWidth:0`/`flexShrink:0` helpers, `gap={2}` micro-gap — each must be justified.
+   - **No hardcoded user-facing strings** — every visible string + `aria-label`/`title` via `t()` with sq/en/uk/it parity.
+   - **No raw `<button>/<input>/<select>/<textarea>`** — canonical Mantine primitives only.
+   Enforced by `check:design-tokens` (raw values) + `check:i18n` (strings) + ESLint; orchestrator also greps the diff
+   for raw hex / raw px / string literals. Any hardcode = REJECT the slice.
+6. Gates green: `tsc=0`, `check:stories`, `check:i18n`, `check:design-tokens`. (Gates do NOT prove visuals.)
+7. No control/behavior regression (Note 19/20). Locale parity sq/en/uk/it.
+8. **Orchestrator reviews the rendered story SIDE-BY-SIDE with the archive** before approve. tsc/green ≠ approval.
+
+Status legend: ⬜ todo · 🟡 in progress · ✅ done · ➖ n/a
+
+---
+
+## PHASE 0 — Foundation (reference + theme)
+| Item | Ref | Status |
+|---|---|---|
+| TailAdmin reference doc §6/§6b/§6c/§6d | — | ✅ (6c/6d added 2026-06-25) |
+| Theme tokens (color/spacing/radius/type/density) | §1–§5 | ✅ Task 484 |
+| Component theme defaults (Button/Input/Card/Table/Badge…) | §6 | 🟡 verify each in Phase 1 |
+
+## PHASE 1 — Mantine primitive set → TailAdmin (do FIRST; everything depends on these)
+One slice per primitive: theme defaults + thin wrapper (if needed) + story + rendered proof. Maps legacy
+`src/components/ui/*` → Mantine.
+
+| # | Primitive | Legacy file | Ref § | Status |
+|---|---|---|---|---|
+| P1.01 | Button (+variants, ≥44px) | button.tsx | §6 Button | ⬜ |
+| P1.02 | TextInput + input-group | input.tsx, input-group.tsx | §6 Input, §6c | ⬜ |
+| P1.03 | Select (appearance-none, chevron) | select.tsx | §6d Select | ⬜ |
+| P1.04 | Textarea | textarea.tsx | §6 Input | ⬜ |
+| P1.05 | Checkbox | checkbox.tsx | §6d Checkbox | ⬜ |
+| P1.06 | Radio / RadioGroup | radio-group.tsx | §6d (radio) | ⬜ |
+| P1.07 | Switch (toggle) | switch.tsx | §6d Switch | ⬜ |
+| P1.08 | Badge (pill, semantic) | badge.tsx | §6 Badge | ⬜ |
+| P1.09 | Card / Paper (2xl, flat) | card.tsx | §6 Card | ⬜ |
+| P1.10 | Table (CRM card-wrapped) | table.tsx | §6b | 🟡 (in MantineDataTableToCards; finalize) |
+| P1.11 | Tabs (brand, not stretched) | tabs.tsx | §6c | ⬜ |
+| P1.12 | SegmentedControl (filters) | — (new) | §6c | ⬜ |
+| P1.13 | Pagination | pagination.tsx | §6d (extract on use) | ⬜ |
+| P1.14 | Avatar + AppImage | avatar.tsx, AppImage.tsx | §6b avatar | ⬜ |
+| P1.15 | Alert | alert.tsx | §6d (semantic-50 bg) | ⬜ |
+| P1.16 | Dialog / Modal (bottom-sheet <640) | dialog.tsx | §11 mobile gate | ⬜ |
+| P1.17 | Sheet / Drawer (bottom-sheet) | sheet.tsx | §11 | ⬜ |
+| P1.18 | Popover | popover.tsx | §6d (extract on use) | ⬜ |
+| P1.19 | DropdownMenu | dropdown-menu.tsx | §6d (extract on use) | ⬜ |
+| P1.20 | NavigationMenu | navigation-menu.tsx | §6c/§6d | ⬜ |
+| P1.21 | Command / Combobox base | command.tsx | §6d | ⬜ |
+| P1.22 | Tooltip | (in ui) | §6d (extract on use) | ⬜ |
+| P1.23 | Progress | progress.tsx | §6 | ⬜ |
+| P1.24 | Skeleton | skeleton.tsx | §5/§6 | ⬜ |
+| P1.25 | Separator | separator.tsx | §6 | ⬜ |
+| P1.26 | ScrollArea | scroll-area.tsx | §6 | ⬜ |
+| P1.27 | Slider | slider.tsx | §6 | ⬜ |
+| P1.28 | Label | label.tsx | §6 Label | ⬜ |
+| P1.29 | Toast (sonner) | sonner.tsx | §5 shadow | ⬜ |
+| P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | ⬜ |
+
+## PHASE 2 — Shared composites (21) — after the primitives they use are ✅
+Combobox · LocationCombobox · PropertyTypeCombobox · YearCombobox · DatePicker · PhoneField · AvatarCropModal ·
+FilterMultiToggle · FilterRangeInputs · FilterRoomsRow · FilterToggleGroup · FiltersPanel · HeroSearch ·
+HeroSearchClient · LocaleSwitcher · Map · MapWrapper · RelativeTime · (PerfDevOverlay/WebVitalsReporter/
+PerformanceStoreInit = ➖ non-visual).
+
+## PHASE 3 — Layout (7)
+Header · Footer · FilterBar · MobileBottomNav · PageHeader · PageShell · Section.
+
+## PHASE 4 — Admin surfaces (35) — one slice each
+AdminShell · AdminSidebar · AdminMobileHeader · AdminPageShell · AdminPageHeader · AdminEditLayout · AdminTable ·
+AdminCardList · AdminInput · AdminSearchInput · AdminUserAvatar · AdminUsersTable (🟡 Task 485 — close AFTER its
+primitives) · AdminUserProfile · AdminUserCreate · AdminListingsTable · AdminDashboardRecentListings ·
+AdminCompaniesManager · AdminCurrenciesManager · AdminCurrencyTabs · AdminExchangeProvidersManager ·
+AdminEmailTemplatesManager · AdminFooterManager · AdminInquiriesManager · AdminLegalManager · AdminLocationsManager ·
+AdminPopularLocationsManager · AdminPagesManager · AdminPermissionsManager · AdminPropertyTypesManager ·
+AdminReportsManager · AdminSettings · AdminSupportManager · AdminLocaleSwitcher · StatusChangeControl ·
+StatusChangeHistory.
+
+## PHASE 5 — Public / app surfaces (`src/app`, ~45) — listing, auth, profile, search, legal, etc.
+Inventory per route group to be expanded when Phase 4 nears done.
+
+## PHASE 6 — Remove legacy shadcn `src/components/ui/*`
+Once a primitive has zero remaining `@/components/ui/*` consumers, delete the legacy file + its stories.
+Track via `grep -rl "@/components/ui/<name>" src`.
+
+---
+
+## Current pointer
+- **NOW:** Phase 1 primitives. Start P1.11 Tabs + P1.12 SegmentedControl + P1.08 Badge + P1.14 Avatar + P1.10 Table
+  (the AdminUsersTable dependency set) so Task 485 can close cleanly as the first Phase-4 surface proof.
+- Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.

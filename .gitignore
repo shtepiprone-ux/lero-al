@@ -68,3 +68,6 @@ playwright/.auth/
 .claude/
 .codex/
 docs/chat-gpt-reports/
+
+# TailAdmin reference archive — local design ground-truth, never committed
+demo_tailadmin_com.zip

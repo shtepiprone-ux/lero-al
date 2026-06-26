@@ -46,20 +46,20 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 
 | # | Primitive | Legacy file | Ref § | Status |
 |---|---|---|---|---|
-| P1.01 | Button (+variants, ≥44px) | button.tsx | §6 Button | ⬜ |
-| P1.02 | TextInput + input-group | input.tsx, input-group.tsx | §6 Input, §6c | ⬜ |
-| P1.03 | Select (appearance-none, chevron) | select.tsx | §6d Select | ⬜ |
-| P1.04 | Textarea | textarea.tsx | §6 Input | ⬜ |
-| P1.05 | Checkbox | checkbox.tsx | §6d Checkbox | ⬜ |
-| P1.06 | Radio / RadioGroup | radio-group.tsx | §6d (radio) | ⬜ |
-| P1.07 | Switch (toggle) | switch.tsx | §6d Switch | ⬜ |
-| P1.08 | Badge (pill, semantic) | badge.tsx | §6 Badge | ⬜ |
-| P1.09 | Card / Paper (2xl, flat) | card.tsx | §6 Card | ⬜ |
-| P1.10 | Table (CRM card-wrapped) | table.tsx | §6b | 🟡 (in MantineDataTableToCards; finalize) |
-| P1.11 | Tabs (brand, not stretched) | tabs.tsx | §6c | ⬜ |
-| P1.12 | SegmentedControl (filters) | — (new) | §6c | ⬜ |
-| P1.13 | Pagination | pagination.tsx | §6d (extract on use) | ⬜ |
-| P1.14 | Avatar + AppImage | avatar.tsx, AppImage.tsx | §6b avatar | ⬜ |
+| P1.01 | Button (+variants, ≥44px) | button.tsx | §6 Button | 🟡 Sprint 38 (T493) |
+| P1.02 | TextInput + input-group | input.tsx, input-group.tsx | §6 Input, §6c | 🟡 Sprint 38 (T494) |
+| P1.03 | Select (appearance-none, chevron) | select.tsx | §6d Select | 🟡 Sprint 38 (T495) |
+| P1.04 | Textarea | textarea.tsx | §6 Input | 🟡 Sprint 38 (T496) |
+| P1.05 | Checkbox | checkbox.tsx | §6d Checkbox | 🟡 Sprint 38 (T497) |
+| P1.06 | Radio / RadioGroup | radio-group.tsx | §6d (radio) | 🟡 Sprint 38 (T498) |
+| P1.07 | Switch (toggle) | switch.tsx | §6d Switch | 🟡 Sprint 38 (T499) |
+| P1.08 | Badge (pill, semantic) | badge.tsx | §6 Badge | ✅ Task 486 |
+| P1.09 | Card / Paper (2xl, flat) | card.tsx | §6 Card | ✅ Task 487 |
+| P1.10 | Table (CRM card-wrapped) | table.tsx | §6b | ✅ Task 488 |
+| P1.11 | Tabs (brand, not stretched) | tabs.tsx | §6c | ✅ Task 489 |
+| P1.12 | SegmentedControl (filters) | — (new) | §6c | ✅ Task 490 |
+| P1.13 | Pagination | pagination.tsx | §6d (extract on use) | ⬜ (Batch D) |
+| P1.14 | Avatar + AppImage | avatar.tsx, AppImage.tsx | §6b avatar | ✅ Task 491 |
 | P1.15 | Alert | alert.tsx | §6d (semantic-50 bg) | ⬜ |
 | P1.16 | Dialog / Modal (bottom-sheet <640) | dialog.tsx | §11 mobile gate | ⬜ |
 | P1.17 | Sheet / Drawer (bottom-sheet) | sheet.tsx | §11 | ⬜ |
@@ -73,9 +73,9 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.25 | Separator | separator.tsx | §6 | ⬜ |
 | P1.26 | ScrollArea | scroll-area.tsx | §6 | ⬜ |
 | P1.27 | Slider | slider.tsx | §6 | ⬜ |
-| P1.28 | Label | label.tsx | §6 Label | ⬜ |
+| P1.28 | Label | label.tsx | §6 Label | 🟡 Sprint 38 (T501) |
 | P1.29 | Toast (sonner) | sonner.tsx | §5 shadow | ⬜ |
-| P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | ⬜ |
+| P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | 🟡 Sprint 38 (T500) |
 
 ## PHASE 2 — Shared composites (21) — after the primitives they use are ✅
 Combobox · LocationCombobox · PropertyTypeCombobox · YearCombobox · DatePicker · PhoneField · AvatarCropModal ·
@@ -106,6 +106,13 @@ Track via `grep -rl "@/components/ui/<name>" src`.
 ---
 
 ## Current pointer
-- **NOW:** Phase 1 primitives. Start P1.11 Tabs + P1.12 SegmentedControl + P1.08 Badge + P1.14 Avatar + P1.10 Table
-  (the AdminUsersTable dependency set) so Task 485 can close cleanly as the first Phase-4 surface proof.
+- **DONE — Batch A (AdminUsersTable dependency set):** P1.08 Badge ✅ · P1.09 Card ✅ · P1.10 Table ✅ · P1.11 Tabs ✅ ·
+  P1.12 SegmentedControl ✅ · P1.14 Avatar ✅ (Tasks 486–491, Sprint 37). Plus Task 492 = project font→Outfit + TailAdmin
+  type scale + control density (sm/14px/44px) across the theme.
+- **NOW — Batch B (Sprint 38, form controls):** P1.01 Button (493) · P1.02 TextInput (494) · P1.03 Select (495) ·
+  P1.04 Textarea (496) · P1.05 Checkbox (497) · P1.06 Radio (498) · P1.07 Switch (499) · P1.30 PasswordInput (500) ·
+  P1.28 Label (501). Plan: `tasks/Sprints/Sprint_38_MM_Phase1_FormControls.md`. Run order 493→501→494→496→500→495→497→498→499.
+- **NEXT — Batch C (overlays):** P1.16 Modal · P1.17 Drawer · P1.18 Popover · P1.19 DropdownMenu · P1.20 NavigationMenu ·
+  P1.22 Tooltip (P0 bottom-sheet <640). **Batch D (feedback/misc):** P1.13 Pagination · P1.15 Alert · P1.21 Command ·
+  P1.23 Progress · P1.24 Skeleton · P1.25 Separator · P1.26 ScrollArea · P1.27 Slider · P1.29 Toast.
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.

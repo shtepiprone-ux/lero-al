@@ -111,18 +111,17 @@ export const Default: Story = {
             </Button>
           </Stack>
 
-          {/* ── Long uk label — whitespace-normal, ≥44px, no clip at 320 (negative flow) ── */}
+          {/* ── Long label wrap (negative flow — theme default, no local override) ── */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              long label — whitespace-normal break-words, stays ≥44px, no clip at 320
+              long label — wraps to ≥2 lines at 320 via theme default; no clip; ≥44px (Task 502 fix)
             </Text>
             <Button
               variant="filled"
               color="brand"
               fullWidth
-              styles={{ root: { whiteSpace: 'normal', wordBreak: 'break-word' } }}
             >
-              {t('button_save_changes')}
+              {t('button_long_label')}
             </Button>
           </Stack>
 

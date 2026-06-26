@@ -2128,7 +2128,8 @@
       "button_save_changes": "Ruaj ndryshimet",
       "button_cancel": "Anulo",
       "button_add_listing": "Shto njoftim",
-      "button_saving": "Duke ruajtur…"
+      "button_saving": "Duke ruajtur…",
+      "button_long_label": "Ruaj të gjitha ndryshimet e njoftimit dhe njoftoni agentin"
     }
   },
   "ui": {

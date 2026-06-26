@@ -160,8 +160,13 @@ export const theme = createTheme({
     // default), NOT Mantine's 16px md. Heights pinned to 44px (TailAdmin h-11) for touch.
     Button: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (TailAdmin text-sm)
-      // rem exemption: minHeight is a touch-target, not spacing. fontWeight=500 = TailAdmin font-medium (Mantine default is 600).
-      styles: { root: { minHeight: '2.75rem', fontWeight: '500' } },
+      // rem exemption: minHeight is touch-target, not spacing. fontWeight=500 = TailAdmin font-medium.
+      // height:'auto' lets root grow beyond minHeight when label wraps (minHeight still guarantees 44px).
+      // label fix: Mantine ships white-space:nowrap on .mantine-Button-label — clips long labels (Task 502).
+      styles: {
+        root: { minHeight: '2.75rem', fontWeight: '500', height: 'auto' },
+        label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'break-word' },
+      },
     },
     TextInput: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text

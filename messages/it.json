@@ -2128,7 +2128,8 @@
       "button_save_changes": "Salva modifiche",
       "button_cancel": "Annulla",
       "button_add_listing": "Aggiungi annuncio",
-      "button_saving": "Salvataggio…"
+      "button_saving": "Salvataggio…",
+      "button_long_label": "Salva tutte le modifiche all'annuncio e notifica l'agente"
     }
   },
   "ui": {

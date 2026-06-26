@@ -2128,7 +2128,8 @@
       "button_save_changes": "Save changes",
       "button_cancel": "Cancel",
       "button_add_listing": "Add listing",
-      "button_saving": "Saving…"
+      "button_saving": "Saving…",
+      "button_long_label": "Save all listing changes and notify the agent"
     }
   },
   "ui": {

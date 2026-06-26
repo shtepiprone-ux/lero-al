@@ -2128,7 +2128,8 @@
       "button_save_changes": "Зберегти зміни",
       "button_cancel": "Скасувати",
       "button_add_listing": "Додати оголошення",
-      "button_saving": "Збереження…"
+      "button_saving": "Збереження…",
+      "button_long_label": "Зберегти всі зміни оголошення та повідомити агента"
     }
   },
   "ui": {

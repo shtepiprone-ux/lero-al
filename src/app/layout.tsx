@@ -1,5 +1,5 @@
 import type { Viewport } from 'next'
-import { Geist, Outfit } from 'next/font/google'
+import { Outfit } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ColorSchemeScript } from '@mantine/core'
 import { headers, cookies } from 'next/headers'
@@ -14,10 +14,10 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-// Geist: kept as CSS variable for any not-yet-migrated legacy surfaces.
-const geist = Geist({ subsets: ['latin'], variable: '--font-geist-sans' })
-// Outfit: TailAdmin-aligned Mantine font (Task 484 §1b, owner decision 2026-06-25).
-const outfit = Outfit({ subsets: ['latin', 'latin-ext'] })
+// Outfit: the single project font (TailAdmin source of truth, owner decision 2026-06-26).
+// Exposed as the --font-outfit CSS variable, which globals.css wires to --font-sans /
+// --font-heading so the whole app (and Mantine) renders in Outfit. Geist fully removed.
+const outfit = Outfit({ subsets: ['latin', 'latin-ext'], variable: '--font-outfit' })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [headersList, jar] = await Promise.all([headers(), cookies()])
@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = headersList.get('X-NEXT-INTL-LOCALE') ?? jar.get('admin-locale')?.value ?? 'sq'
 
   return (
-    <html lang={locale} suppressHydrationWarning className={`${geist.variable} ${outfit.className}`} data-scroll-behavior="smooth">
+    <html lang={locale} suppressHydrationWarning className={outfit.variable} data-scroll-behavior="smooth">
       <head>
         {/* Mantine color-scheme script — prevents flash of wrong color scheme (FOUC).
             Must be the first script in <head>, before any CSS or body content. */}

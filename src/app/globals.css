@@ -95,10 +95,12 @@
   --radius-3xl: calc(var(--radius) * 2.6);
   --radius-4xl: calc(var(--radius) * 3.2);
 
-  /* Font */
-  --font-sans:    var(--font-geist-sans);
-  --font-mono:    var(--font-geist-mono);
-  --font-heading: var(--font-geist-sans);
+  /* Font — Outfit is the single project family (TailAdmin source of truth).
+     --font-outfit is defined by the Next.js font loader (layout.tsx); Storybook
+     defines it in .storybook/preview.tsx. Geist fully removed (2026-06-26). */
+  --font-sans:    var(--font-outfit), system-ui, -apple-system, sans-serif;
+  --font-mono:    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-heading: var(--font-outfit), system-ui, -apple-system, sans-serif;
 
   /* ═══════════════════════════════════════════════════════════════
      DESIGN VARIABLES — Epic JJ Phase 1 (Task 401, 2026-06-06)
@@ -189,6 +191,28 @@
   --tracking-tight:  -0.025em;
   --tracking-normal:  0em;
   --tracking-wide:    0.025em;
+
+  /* ── TailAdmin UI type scale (source of truth: demo_tailadmin_com) ──
+     UI sizes with fixed px line-heights — back text-theme-{xs,sm,xl} utilities. */
+  --text-theme-xs:               12px;
+  --text-theme-xs--line-height:  18px;
+  --text-theme-sm:               14px;
+  --text-theme-sm--line-height:  20px;
+  --text-theme-xl:               20px;
+  --text-theme-xl--line-height:  30px;
+  /* TailAdmin title/display scale — back text-title-{xs..2xl} utilities. */
+  --text-title-xs:               24px;
+  --text-title-xs--line-height:  32px;
+  --text-title-sm:               30px;
+  --text-title-sm--line-height:  38px;
+  --text-title-md:               36px;
+  --text-title-md--line-height:  44px;
+  --text-title-lg:               48px;
+  --text-title-lg--line-height:  60px;
+  --text-title-xl:               60px;
+  --text-title-xl--line-height:  72px;
+  --text-title-2xl:              72px;
+  --text-title-2xl--line-height: 90px;
 
   /* ── 3. Elevation — shadow scale ─────────────────────────────── */
   /* Mirrors Tailwind v4 defaults. Backs shadow-{xs,sm,md,lg,xl} utilities.
@@ -475,7 +499,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    /* No Geist character-variant feature settings — Outfit uses normal defaults. */
   }
 
   /* Focus visible — accessible keyboard navigation */

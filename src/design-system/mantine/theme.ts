@@ -90,8 +90,8 @@ export const theme = createTheme({
 
   // Font: Outfit (TailAdmin standard, Task 484 §1b — owner decision 2026-06-25).
   // Loaded via Next.js font loader in layout.tsx; Storybook: Google Fonts CDN in preview-head.html.
-  fontFamily: 'Outfit, var(--font-outfit), system-ui, -apple-system, sans-serif',
-  fontFamilyMonospace: 'var(--font-geist-mono, "Courier New", monospace)',
+  fontFamily: 'var(--font-outfit), Outfit, system-ui, -apple-system, sans-serif',
+  fontFamilyMonospace: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   headings: {
     fontFamily: 'Outfit, var(--font-outfit), system-ui, -apple-system, sans-serif',
     // Heading scale: TailAdmin title-* sizes (§1b). Line heights ~1.25 per TailAdmin titles.
@@ -156,18 +156,22 @@ export const theme = createTheme({
 
   // Component-level defaults aligned to TailAdmin density (§1.4 / §1b).
   components: {
+    // TailAdmin control density: 14px text (text-sm/text-theme-sm — the source-of-truth
+    // default), NOT Mantine's 16px md. Heights pinned to 44px (TailAdmin h-11) for touch.
     Button: {
-      defaultProps: { radius: 'lg', size: 'md' },
+      defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (TailAdmin text-sm)
       styles: { root: { minHeight: '2.75rem' } }, // ≥44px touch target (rem — exemption)
     },
     TextInput: {
-      defaultProps: { radius: 'lg', size: 'md' },
+      defaultProps: { radius: 'lg', size: 'sm' }, // 14px text
+      styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
     },
     Textarea: {
-      defaultProps: { radius: 'lg', size: 'md' },
+      defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (multiline — no fixed height)
     },
     Select: {
-      defaultProps: { radius: 'lg', size: 'md' },
+      defaultProps: { radius: 'lg', size: 'sm' }, // 14px text
+      styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
     },
     Checkbox: {
       defaultProps: { radius: 'sm' },
@@ -176,7 +180,7 @@ export const theme = createTheme({
       defaultProps: {},
     },
     Switch: {
-      defaultProps: { size: 'md' },
+      defaultProps: { size: 'sm' }, // TailAdmin compact toggle density
     },
     // SegmentedControl: TailAdmin §6c segment toggle (gray track, white active pill, shadow-xs).
     // color NOT set → Mantine varsResolver auto-sets --sc-shadow = var(--mantine-shadow-xs). ✅

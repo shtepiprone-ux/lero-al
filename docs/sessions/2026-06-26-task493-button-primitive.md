@@ -24,7 +24,7 @@
 |---|---|---|---|
 | AC1 | `theme.components.Button` = §6 + Task 492 density (sm/14px/44px), each value cited | ✅ | See theme analysis below |
 | AC2 | `Button.stories.tsx` created — Mantine proof path, single Default, all sections | ✅ | `src/stories/mantine/primitives/Button.stories.tsx` created |
-| AC3 | Strings via `storyT()`; 12 new `storybook.mantine.button_*` keys ×4 locales; `check:i18n` parity | ✅ | `check:i18n` 1969 keys, parity ✅; uk = Cyrillic (`Зберегти зміни`) |
+| AC3 | Strings via `storyT()`; 11 new `storybook.mantine.button_*` keys ×4 locales; `check:i18n` parity | ✅ | `check:i18n` 1969 keys, parity ✅; uk = Cyrillic (`Зберегти зміни`) |
 | AC4 | Full-width `<640`; ≥44px; labels wrap; no clip/h-scroll@320 | OWNER QA REQUIRED | `fullWidth` prop + `styles.root.whiteSpace:'normal'` for long-label section; theme `minHeight:'2.75rem'` = 44px |
 | AC5 | Rendered proof matrix (320/375/480 × en/uk + sq/it@320; uk@320/375/390 mandatory) | OWNER QA REQUIRED | No browser access in executor session — owner to verify at all breakpoints × all 4 locales via Storybook toolbar |
 | AC6 | `tsc=0`, `check:stories`, `check:i18n`, `check:design-tokens` all green | ✅ | All 4 gates passed (see output below) |
@@ -86,7 +86,7 @@ Button: {
 | `button_add_listing` | Add listing | Додати оголошення | Shto njoftim | Aggiungi annuncio |
 | `button_saving` | Saving… | Збереження… | Duke ruajtur… | Salvataggio… |
 
-Total: 12 new keys × 4 locales = 48 additions. All uk values = real Cyrillic (check 8 ✅).
+Total: 11 new keys × 4 locales = 44 additions. All uk values = real Cyrillic (check 8 ✅).
 
 ---
 

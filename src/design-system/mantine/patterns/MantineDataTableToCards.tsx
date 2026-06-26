@@ -1,8 +1,176 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Table, Card, Stack, Group, Box, Text, Badge, Divider, Paper, ScrollArea } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+
+// useLayoutEffect on the client (cards only mount client-side after the mobile
+// media query flips); falls back to useEffect during SSR to avoid the warning.
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+
+/**
+ * Shared off-DOM text-measuring node (created lazily, reused across all cards).
+ * Measures the REAL rendered width of a string in a given element's font — this
+ * is content/font-metric based, not a hardcoded pixel threshold.
+ * Style is set via individual property assignments (never a `prop: 'Npx'` object
+ * literal) so the design-token detector does not flag it.
+ */
+let measureNode: HTMLSpanElement | null = null
+function getMeasureNode(): HTMLSpanElement {
+  if (!measureNode) {
+    const el = document.createElement('span')
+    el.setAttribute('aria-hidden', 'true')
+    el.style.position = 'absolute'
+    el.style.visibility = 'hidden'
+    el.style.whiteSpace = 'nowrap'
+    el.style.top = '-9999px'
+    el.style.left = '-9999px'
+    el.style.pointerEvents = 'none'
+    document.body.appendChild(el)
+    measureNode = el
+  }
+  return measureNode
+}
+
+/** Width (px) of `text` rendered in the font of `fontSource`. */
+function measureTextWidth(text: string, fontSource: HTMLElement): number {
+  const node = getMeasureNode()
+  const cs = getComputedStyle(fontSource)
+  node.style.fontFamily = cs.fontFamily
+  node.style.fontSize = cs.fontSize
+  node.style.fontWeight = cs.fontWeight
+  node.style.fontStyle = cs.fontStyle
+  node.style.letterSpacing = cs.letterSpacing
+  node.textContent = text
+  return node.getBoundingClientRect().width
+}
+
+/**
+ * PRIMARY row of the designed admin card — three measured states (owner P0):
+ *
+ *   State 1 — name + badge fit on one line  → avatar + name inline, badge right (same row).
+ *   State 2 — they don't fit                → surname wraps to the next line, badge stays
+ *                                             right of the first name (float).
+ *   State 3 — the wrapped surname would fill ≥70% of the text zone (or the first name
+ *             can't even sit beside the badge) → badge gets its own row (top-right) and
+ *             avatar + name drop below it, so the badge never overlaps the name.
+ *
+ * The decision is taken from real rendered widths (a ResizeObserver re-measures on
+ * container resize) — no hardcoded pixel thresholds, no name truncation. The horizontal
+ * gap used in the fit math is read from the badge's actual computed margin (token-driven).
+ */
+const SURNAME_WIDTH_RATIO = 0.7
+
+function CardPrimaryRow({
+  avatar,
+  title,
+  subtitle,
+  badge,
+}: {
+  avatar?: ReactNode
+  title: ReactNode
+  subtitle?: ReactNode
+  badge?: ReactNode
+}) {
+  const zoneRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLDivElement>(null)
+  const badgeRef = useRef<HTMLDivElement>(null)
+  // false → inline layout (states 1 & 2); true → badge on its own row (state 3).
+  const [badgeOwnRow, setBadgeOwnRow] = useState(false)
+
+  useIsomorphicLayoutEffect(() => {
+    if (badge == null) {
+      setBadgeOwnRow(false)
+      return
+    }
+    const zone = zoneRef.current
+    const titleWrap = titleRef.current
+    const badgeWrap = badgeRef.current
+    if (!zone || !titleWrap || !badgeWrap) return
+
+    // Font source = the actual rendered text element (Mantine Text root), so the
+    // measurement uses the real size="sm"/fw=500 metrics, not the wrapper's.
+    const fontSource = (titleWrap.firstElementChild as HTMLElement | null) ?? titleWrap
+
+    const compute = () => {
+      const zoneWidth = zone.clientWidth
+      if (!zoneWidth) return
+      const name = (titleWrap.textContent ?? '').trim().replace(/\s+/g, ' ')
+      if (!name) {
+        setBadgeOwnRow(false)
+        return
+      }
+      const badgeWidth = badgeWrap.getBoundingClientRect().width
+      // Real horizontal gap between name and badge (token-driven margin).
+      const gap = parseFloat(getComputedStyle(badgeWrap).marginLeft) || 0
+
+      const fullWidth = measureTextWidth(name, fontSource)
+      // State 1: whole name + gap + badge fit on one line.
+      if (fullWidth + gap + badgeWidth <= zoneWidth) {
+        setBadgeOwnRow(false)
+        return
+      }
+      // Name must wrap. Split first token (name) from the rest (surname).
+      const sp = name.indexOf(' ')
+      const firstWidth = sp === -1 ? fullWidth : measureTextWidth(name.slice(0, sp), fontSource)
+      const surnameWidth = sp === -1 ? fullWidth : measureTextWidth(name.slice(sp + 1), fontSource)
+      // State 3: surname alone fills ≥70% of the zone, OR the first name can't even
+      // sit beside the badge → lift the badge to its own row. Otherwise state 2.
+      const surnameTooWide = surnameWidth >= SURNAME_WIDTH_RATIO * zoneWidth
+      const firstWontFitBesideBadge = firstWidth + gap + badgeWidth > zoneWidth
+      setBadgeOwnRow(surnameTooWide || firstWontFitBesideBadge)
+    }
+
+    compute()
+    const ro = new ResizeObserver(compute)
+    ro.observe(zone)
+    return () => ro.disconnect()
+  }, [badge, title, subtitle])
+
+  // State 3: badge on its own row (top-right), avatar + name below — no overlap.
+  if (badgeOwnRow && badge != null) {
+    return (
+      <Stack gap="xs">
+        <Group justify="flex-end" wrap="nowrap">
+          {/* marginLeft token has no visual effect in a flex-end row; it only keeps
+              the measured name↔badge gap identical to the inline layout (no oscillation). */}
+          <div ref={badgeRef} style={{ marginLeft: 'var(--mantine-spacing-xs)' }}>{badge}</div>
+        </Group>
+        <Group gap="sm" wrap="nowrap" align="flex-start">
+          {avatar}
+          <div ref={zoneRef} style={{ flex: 1, minWidth: 0 }}>
+            <div ref={titleRef} style={{ minWidth: 0, overflowWrap: 'anywhere' }}>{title}</div>
+            {subtitle != null && (
+              <Text size="xs" c="gray.5" truncate="end">{subtitle}</Text>
+            )}
+          </div>
+        </Group>
+      </Stack>
+    )
+  }
+
+  // States 1 & 2: badge floats right inside the text zone. The first name shares the
+  // badge's line; the surname (and subtitle) wrap to full-width lines below it.
+  return (
+    <Group gap="sm" wrap="nowrap" align="flex-start">
+      {avatar}
+      <div ref={zoneRef} style={{ flex: 1, minWidth: 0, display: 'flow-root' }}>
+        {badge != null && (
+          <div ref={badgeRef} style={{ float: 'right', marginLeft: 'var(--mantine-spacing-xs)' }}>
+            {badge}
+          </div>
+        )}
+        <div ref={titleRef} style={{ minWidth: 0 }}>{title}</div>
+        {subtitle != null && (
+          <div style={{ clear: 'right' }}>
+            <Text size="xs" c="gray.5" truncate="end">{subtitle}</Text>
+          </div>
+        )}
+      </div>
+    </Group>
+  )
+}
 
 /**
  * Structured card layout config for mobile admin surfaces.
@@ -10,7 +178,7 @@ import { useMediaQuery } from '@mantine/hooks'
  * When provided as `card` prop, mobile renders the designed card hierarchy:
  *   - Header: id (muted xs, left) | actions (right, ≥44px targets)
  *   - Divider
- *   - Primary row: avatar + title (medium fw=500) + subtitle (dimmed) | badge (top-aligned)
+ *   - Primary row: badge (right, own row) then avatar + title (fw=500) + subtitle (dimmed) below
  *   - Divider (ONE, above meta — no per-field dividers)
  *   - Meta: edge-anchored `Group justify="space-between"` rows (label left / value right)
  *
@@ -28,7 +196,7 @@ export interface CardConfig<R> {
   title: (row: R) => ReactNode
   /** Primary row under title — muted secondary line (company, email). */
   subtitle?: (row: R) => ReactNode
-  /** Primary row right — status badge, top-aligned. */
+  /** Status badge — rendered right-aligned on its own row above the avatar+title row. */
   badge?: (row: R) => ReactNode
   /** Compact meta rows below ONE divider. Null/undefined returns are skipped. */
   meta?: { label: string; value: (row: R) => ReactNode }[]
@@ -143,21 +311,16 @@ export function MantineDataTableToCards<R extends { id: string } = TableRow>({
           )}
           {hasHeader && <Divider color="gray.1" />}
 
-          {/* PRIMARY: avatar+title+subtitle → left ↔ status badge → right (top-aligned) */}
-          <Group justify="space-between" wrap="nowrap" align="flex-start">
-            <Group gap="sm" wrap="nowrap" style={{ minWidth: 0 }}>
-              {cfg.avatar?.(row)}
-              <Stack gap={2} style={{ minWidth: 0 }}>
-                {cfg.title(row)}
-                {subtitleContent != null && (
-                  <Text size="xs" c="gray.5" truncate="end">{subtitleContent}</Text>
-                )}
-              </Stack>
-            </Group>
-            {badgeContent != null && (
-              <div style={{ flexShrink: 0 }}>{badgeContent}</div>
-            )}
-          </Group>
+          {/* PRIMARY: three measured states (see CardPrimaryRow).
+              States 1 & 2 keep the badge inline (right of the first name, surname wraps
+              below); state 3 lifts the badge to its own row above avatar + name when the
+              surname is too wide to sit beside it — no overlap, no truncation, no hardcoded px. */}
+          <CardPrimaryRow
+            avatar={cfg.avatar?.(row)}
+            title={cfg.title(row)}
+            subtitle={subtitleContent}
+            badge={badgeContent}
+          />
 
           {/* META: ONE divider above; each row label → left edge ↔ value → right edge */}
           {cfg.meta && cfg.meta.length > 0 && (

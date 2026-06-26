@@ -2098,6 +2098,7 @@
       "fail_planted_label": "FAIL planted example",
       "admin_table_col_role": "Role",
       "admin_table_col_phone": "Phone",
+      "admin_table_col_registered": "Registered",
       "admin_card_actions_detail": "Detail",
       "badge_blocked": "Blocked",
       "badge_brand": "Brand",

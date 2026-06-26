@@ -234,12 +234,41 @@ export const theme = createTheme({
     },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
+    // §6b style justification (Task 488):
+    //   withRowBorders:true     — Mantine default is true (added for explicit self-doc)
+    //   --table-border-color    — Mantine default is global border; override to gray-1 (#f2f4f7) per §6b
+    //   thead.backgroundColor   — Mantine default is none; add gray-0 (#f9fafb) per §6b thead bg
+    //   th.fontSize             — Mantine default is sm (14px); override to xs (12px) per §6b Th
+    //   th.fontWeight           — Mantine default is 700; override to 500 per §6b Th
+    //   th.color                — Mantine default inherits; set gray-5 (#667085) per §6b Th
+    //   th.textTransform        — Mantine default is uppercase on some themes; explicitly 'none' per §6b
+    //   td.fontSize             — Mantine default inherits body; set sm (14px) per §6b Td
+    //   td.color                — Mantine default inherits; set gray-7 (#344054) per §6b Td
+    //   td.whiteSpace           — Mantine default is normal; nowrap per §6b (desktop only; mobile→cards)
+    //   highlightOnHover:true   — Mantine default is false; override for §6b row hover gray-0
+    //   verticalSpacing/horizontalSpacing — already present (sm=12/xl=24 = §6b px-6 py-3)
     Table: {
       defaultProps: {
         striped: false,
         highlightOnHover: true,
         verticalSpacing: 'sm',
         horizontalSpacing: 'xl',
+        withRowBorders: true,
+      },
+      styles: {
+        table: { '--table-border-color': 'var(--mantine-color-gray-1)' },
+        thead: { backgroundColor: 'var(--mantine-color-gray-0)' },
+        th: {
+          fontSize: 'var(--mantine-font-size-xs)',
+          fontWeight: 500,
+          color: 'var(--mantine-color-gray-5)',
+          textTransform: 'none',
+        },
+        td: {
+          fontSize: 'var(--mantine-font-size-sm)',
+          color: 'var(--mantine-color-gray-7)',
+          whiteSpace: 'nowrap',
+        },
       },
     },
     // Tabs: brand active indicator (§6c). color:'brand' is redundant with primaryColor but

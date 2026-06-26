@@ -2117,7 +2117,18 @@
       "seg_demo_role_blocked": "Заблокований",
       "seg_demo_status_active": "Активний",
       "seg_demo_status_pending": "Очікує",
-      "seg_demo_status_sold": "Продано"
+      "seg_demo_status_sold": "Продано",
+      "button_variant_filled": "Заповнений",
+      "button_variant_default": "Стандартний",
+      "button_variant_subtle": "Прозорий",
+      "button_variant_light_red": "Небезпечна",
+      "button_variant_transparent": "Посилання",
+      "button_xs": "Дуже малий",
+      "button_sm": "Малий (стандарт)",
+      "button_save_changes": "Зберегти зміни",
+      "button_cancel": "Скасувати",
+      "button_add_listing": "Додати оголошення",
+      "button_saving": "Збереження…"
     }
   },
   "ui": {

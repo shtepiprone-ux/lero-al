@@ -2117,7 +2117,18 @@
       "seg_demo_role_blocked": "Bloccato",
       "seg_demo_status_active": "Attivo",
       "seg_demo_status_pending": "In attesa",
-      "seg_demo_status_sold": "Venduto"
+      "seg_demo_status_sold": "Venduto",
+      "button_variant_filled": "Pieno",
+      "button_variant_default": "Predefinito",
+      "button_variant_subtle": "Sottile",
+      "button_variant_light_red": "Distruttivo",
+      "button_variant_transparent": "Collegamento",
+      "button_xs": "Molto piccolo",
+      "button_sm": "Piccolo (predefinito)",
+      "button_save_changes": "Salva modifiche",
+      "button_cancel": "Annulla",
+      "button_add_listing": "Aggiungi annuncio",
+      "button_saving": "Salvataggio…"
     }
   },
   "ui": {

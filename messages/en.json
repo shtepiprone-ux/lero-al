@@ -2117,7 +2117,18 @@
       "seg_demo_role_blocked": "Blocked",
       "seg_demo_status_active": "Active",
       "seg_demo_status_pending": "Pending",
-      "seg_demo_status_sold": "Sold"
+      "seg_demo_status_sold": "Sold",
+      "button_variant_filled": "Filled",
+      "button_variant_default": "Default",
+      "button_variant_subtle": "Subtle",
+      "button_variant_light_red": "Destructive",
+      "button_variant_transparent": "Link",
+      "button_xs": "Extra small",
+      "button_sm": "Small (default)",
+      "button_save_changes": "Save changes",
+      "button_cancel": "Cancel",
+      "button_add_listing": "Add listing",
+      "button_saving": "Saving…"
     }
   },
   "ui": {

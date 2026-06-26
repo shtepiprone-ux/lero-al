@@ -160,7 +160,8 @@ export const theme = createTheme({
     // default), NOT Mantine's 16px md. Heights pinned to 44px (TailAdmin h-11) for touch.
     Button: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (TailAdmin text-sm)
-      styles: { root: { minHeight: '2.75rem' } }, // ≥44px touch target (rem — exemption)
+      // rem exemption: minHeight is a touch-target, not spacing. fontWeight=500 = TailAdmin font-medium (Mantine default is 600).
+      styles: { root: { minHeight: '2.75rem', fontWeight: '500' } },
     },
     TextInput: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text

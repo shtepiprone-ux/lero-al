@@ -2117,7 +2117,18 @@
       "seg_demo_role_blocked": "I bllokuar",
       "seg_demo_status_active": "Aktiv",
       "seg_demo_status_pending": "Në pritje",
-      "seg_demo_status_sold": "Shitur"
+      "seg_demo_status_sold": "Shitur",
+      "button_variant_filled": "I mbushur",
+      "button_variant_default": "Parazgjedhja",
+      "button_variant_subtle": "I qetë",
+      "button_variant_light_red": "Shkatërrues",
+      "button_variant_transparent": "Lidhje",
+      "button_xs": "Shumë i vogël",
+      "button_sm": "I vogël (parazgjedhja)",
+      "button_save_changes": "Ruaj ndryshimet",
+      "button_cancel": "Anulo",
+      "button_add_listing": "Shto njoftim",
+      "button_saving": "Duke ruajtur…"
     }
   },
   "ui": {

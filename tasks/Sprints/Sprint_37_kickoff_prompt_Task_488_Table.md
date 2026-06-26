@@ -1,124 +1,101 @@
-# Kickoff — Task 488 — Table primitive (CRM card-wrapped, mobile→cards) → TailAdmin (Sprint 37, MM Phase 1, P1.10)
+# Kickoff — Task 488 — Table PRIMITIVE → TailAdmin §6b (Sprint 37, MM Phase 1, P1.10)
 
 > **Executor:** Sonnet 4.6. **Orchestrator:** Opus (reviews the real diff + rendered story side-by-side with the TailAdmin archive).
-> **Epic:** MM (Mantine UI migration). **Sprint:** `tasks/Sprints/Sprint_37_MM_Phase1_PrimitivesA.md`.
-> **Program/tracker:** `docs/mantine-tailadmin-migration-tracker.md`. **Reference (copy-source):** `docs/tailadmin-style-reference.md` §6b "Admin table (CRM card-wrapped)" + `demo_tailadmin_com.zip`.
-> **Theme:** `src/design-system/mantine/theme.ts`. **Story path:** `src/stories/mantine/primitives/Table.stories.tsx`.
-> **Precedent (copy the proof-path EXACTLY):** Task 490 SegmentedControl + Task 489 Tabs + Task 491 Avatar primitive stories; **canonical data-table source:** `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` + Task 485 admin-table composition.
-> **This is the LAST Phase-1 primitive.** After 488 ✅, Task 485 REWORK2 reopens as the first Phase-4 surface proof (AdminUsersTable should need only composition).
+> **Epic:** MM (Mantine UI migration). **Sprint:** `tasks/Sprints/Sprint_37_MM_Phase1_PrimitivesA.md`. **Tracker:** `docs/mantine-tailadmin-migration-tracker.md`.
+> **Reference (copy-source):** `docs/tailadmin-style-reference.md` §6b "Admin table (CRM card-wrapped)" + `demo_tailadmin_com.zip`.
+> **Theme:** `src/design-system/mantine/theme.ts`. **Pattern component (CONSUMED, never edited):** `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`.
+> **This is the LAST Phase-1 primitive.** 486 Badge ✅ · 487 Card ✅ · 491 Avatar ✅ · 489 Tabs ✅ · 490 SegmentedControl ✅ · **488 Table = this task.**
 
-## 🔴🔴 OWNER P0 — THE DEFINING RULE OF THIS TASK (do not soften, do not "scroll instead")
-**Every data table converts to STACKED CARDS below `sm` (640px) — one card per row. Horizontal scrolling of table content on mobile is FORBIDDEN: not page-level, and not an internal `ScrollArea`/`overflow-x`. The mobile reader reads cards, never side-scrolls a table.** (Owner standing directive, restated 2026-06-25; now codified in `docs/mantine-responsive-design-system.md` §7 "P0 table gate".) At ≥`sm` the desktop §6b card-wrapped table is kept (a desktop-only `ScrollArea` inside the card is fine there). A data table left scrolling horizontally on mobile = TASK FAILURE, rejected on sight. This is table-specific and does NOT change the §7.1 rule that `SegmentedControl`/`Tabs` (controls, not tables) MAY swipe-scroll.
+## What this task IS (one sentence)
+Style the **Table primitive** to TailAdmin §6b via `theme.components.Table`, and prove it with **one primitive story `Mantine/Primitives/Table`** — created by **moving the existing `Patterns/Mantine/DataTableToCards` story into the primitives group** (the table demo becomes the Table primitive). Same shape as the five sibling primitives.
 
-## Hard contract (P0 — verified against the diff on return; see `docs/agent-contract.md` clauses 1–15)
-- Do NOT change scope. Phase-1 = `theme.components.Table` defaults + ONE proof story only. **NO product-surface edits** (no `src/components/**`, no `src/app/**`, no admin/listing tables).
-- **🔴 Do NOT modify `src/design-system/mantine/patterns/MantineDataTableToCards.tsx`** (or any pattern file). The story **CONSUMES** it (configures `columns`/`rows`/`card`), it does not edit it. Its API and its mobile table→cards transform MUST stay untouched. If you believe a §6b value or the cards behavior can only be achieved by editing the pattern → **STOP and ASK the orchestrator.**
-- Do NOT invent architecture. If a §6b value cannot be matched without a raw-value hack, or it needs a CSS selector beyond a trivial `theme.components.Table.styles` block (e.g. `[data-hover]`, `:hover`, striped-row selectors) → **STOP and ASK** (same boundary Tabs/SegmentedControl used to defer `[data-active]` selectors). Document any deferral.
-- Do NOT remove/alter existing Table or DataTableToCards consumer behavior. Only ADD/adjust `theme.components.Table` defaults + the new story.
-- Execute the AC literally. Self-validate BEFORE claiming complete (tsc=0, AC-by-AC table, read-back every written file per clause 14).
-- Update `docs/backlog.md` + add a session log under `docs/sessions/` with a **Files Changed** table. **Do NOT run git** (single-writer; the orchestrator emits commits).
+## 🔴🔴 OWNER P0 — non-negotiable
+1. **Correct TailAdmin §6b styles.** Every value below is copied EXACTLY from §6b — zero invented colors/px.
+2. **Tables → CARDS below `sm` (640px), one card per row. NO horizontal scroll on mobile — not page-level, not internal `ScrollArea`/`overflow-x`.** (Codified: `docs/mantine-responsive-design-system.md` §7 "P0 table gate".) Desktop ≥`sm` keeps the §6b card-wrapped table (desktop-only internal `ScrollArea` is fine there). A table that side-scrolls on mobile = TASK FAILURE.
+
+## Hard contract (P0 — verified against the diff on return; `docs/agent-contract.md` clauses 1–15)
+- Do NOT change scope. Phase-1 = `theme.components.Table` §6b defaults + the ONE primitive story. **NO product-surface edits** (no `src/components/**`, no `src/app/**`).
+- **🔴 Do NOT modify `MantineDataTableToCards.tsx`** (or any pattern *component*). The story CONSUMES it (configures `columns`/`rows`/`card`). If a §6b value or the cards behavior seems to need a pattern-component edit → **STOP and ASK.**
+- Do NOT invent architecture. If a §6b value can't be matched without a raw-value hack, or it needs a CSS selector beyond a trivial `theme.components.Table.styles` block (`[data-hover]`, `:hover`, striping) → **STOP and ASK / defer-with-reason** (the Tabs/SegmentedControl `[data-active]` precedent).
+- Self-validate BEFORE claiming complete (tsc=0, AC-by-AC table, read-back every written file per clause 14). Update `docs/backlog.md` + a session log under `docs/sessions/` with a **Files Changed** table. **Do NOT run git** (orchestrator emits commits).
 
 ## Pre-read (rule-index: UI/layout/component task — load ONLY these)
-**Always:** `docs/agent-contract.md`, `docs/backlog.md`, `docs/critical-flow-registry.md` (scan — this task touches NO registry flow; confirm and state so).
-**Required:** `docs/mantine-responsive-design-system.md` (§6.1 TailAdmin token map incl. Table row, **§7 "P0 table gate" — THE rule for this task**, §7.1 spacing rhythm + Table `verticalSpacing`/`horizontalSpacing`, §7.2 admin data-card anatomy [the mobile card design], §8 + §8.1 Mantine Storybook proof rules + page-gutter, §16 acceptance gates) ← **FIRST READ**; `docs/ui-rules.md`; `docs/component-rules.md`; `docs/qa-rules.md`.
-**This task specifically:** `tasks/Sprints/Sprint_37_MM_Phase1_PrimitivesA.md` (§ Task 488 + Shared DoD); `docs/tailadmin-style-reference.md` §6b; `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` (READ — confirm its `card` config + table→cards transform; do NOT edit); `src/stories/mantine/primitives/SegmentedControl.stories.tsx` + `Avatar.stories.tsx` (proof-path templates); the existing `Patterns/Mantine/DataTableToCards` story (reference for how rows/columns/card are wired).
+**Always:** `docs/agent-contract.md`, `docs/backlog.md`, `docs/critical-flow-registry.md` (scan — touches NO registry flow; confirm).
+**Required:** `docs/mantine-responsive-design-system.md` (§6.1 token map incl. Table row, **§7 "P0 table gate"**, §7.1 spacing rhythm, §7.2 admin data-card anatomy [the mobile card design], §8 + §8.1 Storybook proof rules) ← **FIRST READ**; `docs/ui-rules.md`; `docs/component-rules.md`; `docs/qa-rules.md`.
+**This task:** `tasks/Sprints/Sprint_37_MM_Phase1_PrimitivesA.md` (§ Task 488 + Shared DoD); `docs/tailadmin-style-reference.md` §6b; `MantineDataTableToCards.tsx` (READ — `CardConfig` + table→cards transform; do NOT edit); the CURRENT `src/stories/patterns/mantine/DataTableToCards.stories.tsx` (the content you are moving); a sibling primitive story e.g. `src/stories/mantine/primitives/SegmentedControl.stories.tsx` (proof-path template).
 
-## Required values (TailAdmin §6b — copy EXACTLY, zero invented values)
-**Desktop (≥`sm`) card-wrapped table:**
-- **Card wrapper:** `Paper` `radius="2xl"` (16) + **`gray-2` border** + `overflow="hidden"` (row borders clip to rounded corners).
-- **Table:** `withRowBorders`; `--table-border-color: var(--mantine-color-gray-1)` (#f2f4f7).
-- **Head:** `thead` `bg = gray-0` (#f9fafb) + border-y `gray-1`; **`Th` `size="xs"` (12px) `fw=500` `c="gray.5"` (#667085), NOT uppercase** (`textTransform: 'none'`).
-- **Body:** `Td` text **14px (theme-`sm`)** `c="gray.7"` (#344054), **`whiteSpace: 'nowrap'`** (desktop only — on mobile there are no table cells, there are cards).
-- **Rhythm:** `verticalSpacing="sm"` (12) + `horizontalSpacing="xl"` (24) = CRM `px-6 py-3`. (Already in theme defaults — VERIFY.)
-- **Row hover:** background `gray-0` (`highlightOnHover` already true — verify; if it needs `[data-hover]`/CSS-var beyond a trivial styles block, defer + document).
+## Correct §6b styles — `theme.components.Table` (the heart of this task)
+`components.Table` ALREADY exists (~L237: `{ defaultProps: { striped:false, highlightOnHover:true, verticalSpacing:'sm', horizontalSpacing:'xl' } }`). EXTEND it to the full §6b chrome **via theme tokens only** — verify each against Mantine's default, add only what is not already correct, justify each in the session log:
+- `defaultProps.withRowBorders: true` — row dividers ON.
+- `styles.table: { '--table-border-color': 'var(--mantine-color-gray-1)' }` — dividers = gray-1 (#f2f4f7).
+- `styles.thead: { backgroundColor: 'var(--mantine-color-gray-0)' }` — head bg = gray-0 (#f9fafb).
+- `styles.th: { fontSize: 'var(--mantine-font-size-xs)', fontWeight: 500, color: 'var(--mantine-color-gray-5)', textTransform: 'none' }` — 12px, fw500, gray-5 (#667085), **NOT uppercase**.
+- `styles.td: { fontSize: 'var(--mantine-font-size-sm)', color: 'var(--mantine-color-gray-7)', whiteSpace: 'nowrap' }` — 14px, gray-7 (#344054), nowrap (desktop).
+- Rhythm `verticalSpacing="sm"` (12) + `horizontalSpacing="xl"` (24) = CRM `px-6 py-3` — already present, VERIFY.
+- Row hover bg = gray-0 (`highlightOnHover` already true — verify; if it needs a selector beyond trivial styles, defer-with-reason).
+The card wrapper (`Paper radius="2xl"` + `gray-2` border + `overflow:hidden`, no shadow) comes from the canonical Card/Paper chrome — **reuse it, do not re-declare a raw border/radius** (canonical-first, Task 426). No raw hex/px anywhere.
 
-**Mobile (<`sm`) cards** — render via `MantineDataTableToCards` `card` config per `docs/mantine-responsive-design-system.md` §7.2 anatomy (header id + actions, primary avatar/title/subtitle + status badge, meta rows `Group justify="space-between"`). No table cells, no horizontal scroll.
+## Story — MOVE the existing demo into the primitives group
+**Create** `src/stories/mantine/primitives/Table.stories.tsx` and **delete** `src/stories/patterns/mantine/DataTableToCards.stories.tsx` (its content moves here — this is the "replace the existing story" the owner asked for; ONE table story, in the primitives set).
+- `title: 'Mantine/Primitives/Table'`, single `Default` export, `parameters: { skipCanvas:true, layout:'fullscreen' }`, and keep the existing **§8.1 responsive page gutter** `Box px={{ base: 'md', sm: 'xl' }} py="md"` (tracker DoD §3: canonical gutter, NOT full-bleed — full-bleed is bottom-sheet only).
+- It **CONSUMES `MantineDataTableToCards`** with `columns`/`rows`/`card`/`emptyLabel` — keep the existing demo's structure (4-ish cols: User / Role / Status / Date; ~3–4 rows; the §7.2 `card` config for mobile). This is the only way to render the §6b table on desktop AND the mandatory cards on mobile; do NOT hand-roll a raw `<Table>` and do NOT duplicate the pattern's logic.
+- **If deleting the pattern's only story makes `check:stories` flag the `MantineDataTableToCards` pattern as story-less, STOP and ASK** (do not invent a stub) — otherwise proceed with the move.
 
-## Current state to verify & preserve
-`src/design-system/mantine/theme.ts` ALREADY has `components.Table` (confirm at ~L237):
-```ts
-Table: {
-  defaultProps: { striped: false, highlightOnHover: true, verticalSpacing: 'sm', horizontalSpacing: 'xl' },
-},
+**Required fixes carried over from the current demo (verified in the diff):**
+1. **Off-palette role badge:** the `meta` role value renders `<Badge color="blue" …>`. `blue` is NOT in the palette (gray/green/yellow/red/brand) → use a token color (`gray` or `brand`; state which). Required to keep `check:design-tokens` honest.
+2. **Avatar radius:** card avatar uses `radius="xl"`; §6b/Task 491 standard is **pill** (circular) → `radius="pill"` (or inherit theme default) + `size={40}`.
+3. **Long-uk stress:** ensure one header/meta label is deliberately long in uk (e.g. "Дата реєстрації") to prove wrap (mobile card) / nowrap (desktop) with no clip at 320.
+4. Confirm `STATUS_COLOR` map is on-palette (green/yellow/gray — OK; no `blue`).
+All visible strings via `storyT()`; reuse the existing `storybook.mantine.admin_table_col_*` / `admin_status_*` / `empty_title` keys (confirm 4-locale parity); add a key ONLY for a new long-uk label if none fits.
+
+## Positive flow
+1. `Mantine/Primitives/Table → Default`, en, 1440: §6b card-wrapped table — rounded-16 gray-2-bordered `Paper`, gray-0 head, **12px fw500 gray-5 non-uppercase** headers, gray-1 head border + row dividers, **14px gray-7 nowrap** cells, 24×12 rhythm, row hover gray-0, no shadow.
+2. 1024 / 768: still the §6b table.
+3. **<640 (480/375/320): TRANSFORMS to stacked cards** (§7.2 anatomy: avatar + name/subtitle, status badge, role/date meta). **No table; nothing scrolls horizontally.**
+4. Locale en→uk→sq→it: headers (desktop) + card fields (mobile) update via `storyT()`; uk Cyrillic; no raw-key leak.
+5. Side-by-side vs §6b archive: desktop table matches; mobile clean cards; on-palette role badge; circular avatar.
+
+## Negative flow
+- **<640 = cards, ZERO horizontal scroll** (page + internal), verified at 320; long-uk label wraps in its card meta row, never a scrolling column.
+- **Long cell desktop (≥640):** nowrap inside the card; desktop-only internal `ScrollArea` may engage (acceptable desktop ONLY; must not leak to mobile).
+- **0 rows:** `emptyLabel` (`empty_title`) shows — not a header-only shell (pattern's empty path; don't rebuild it).
+- **Missing/unknown locale:** `storyT` → `en` fallback (no crash, no raw key).
+- **SSR/first render:** table↔cards switch returns the pattern's SSR/base value pre-hydration — document the caveat (comment + log). Inline content, no flash.
+
+## 🔴 Mobile <640 gate (OWNER P0)
+Cards only, one per row, full-width edge-to-edge (Box gutter aside); **NO horizontal scroll of any kind**; §7.2 anatomy; ≥44px card-action touch targets; all 4 locales wrap, never clip/overflow. ≥640 = §6b table. Transform = canonical `MantineDataTableToCards` — consume, never regress.
+
+## 🔴 Rendered proof (clauses 12–13 + DoD §3 — machine-produced)
+Rebuild Storybook, run, paste into the session log:
 ```
-EXTEND it to carry the remaining §6b chrome **via theme tokens only** (the executor verifies each against Mantine's actual default and only adds what is NOT already correct):
-- `defaultProps.withRowBorders: true`.
-- `styles.table: { '--table-border-color': 'var(--mantine-color-gray-1)' }`.
-- `styles.thead: { backgroundColor: 'var(--mantine-color-gray-0)' }`.
-- `styles.th: { fontSize: 'var(--mantine-font-size-xs)', fontWeight: 500, color: 'var(--mantine-color-gray-5)', textTransform: 'none' }`.
-- `styles.td: { fontSize: 'var(--mantine-font-size-sm)', color: 'var(--mantine-color-gray-7)', whiteSpace: 'nowrap' }`.
-For ANY value Mantine's default already matches, leave it out and SAY SO. Anything needing a selector beyond `table/thead/th/td/tr` trivial styles (hover/striping) → **STOP and ASK / defer-with-reason** (Tabs/Seg `[data-active]` precedent). No raw hex/px; `overflow`/`radius`/border live on the `Paper` wrapper (canonical Card/Paper chrome — reuse, do not re-declare), not as raw Table styles.
+npm run build-storybook
+npm run screenshots:assert
+```
+(Full run — NOT `--fast` — DoD §3 needs the 480 cells.) Required cells, each PASS with concrete evidence:
+- **Desktop 768 / 1024 / 1440 × en/uk:** card-wrapped §6b table? gray-0 head / gray-5 non-uppercase 12px headers? gray-7 14px nowrap cells? gray-1 dividers? 24×12? hover gray-0?
+- **Mobile 320 / 375 / 480 × en/uk + sq@320 + it@320 (uk@320/375/390 mandatory):** STACKED CARDS (no table)? **ZERO horizontal scroll (page + internal)?** §7.2 anatomy? long-uk wraps? on-palette badge? circular avatar?
+If the harness can't capture the moved story here, say so + attach what you captured; orchestrator/owner does the manual toolbar matrix at review (§13.10). "tsc=0/build green" is NOT rendered proof.
 
-## Story to create — `src/stories/mantine/primitives/Table.stories.tsx`
-> **First verify** a Table primitive story does NOT already exist at that path. If one exists → **STOP and ASK** (do not overwrite). The `Patterns/Mantine/DataTableToCards` *pattern* story is separate and must NOT be edited.
+## Gates (paste transcript into the session log)
+`tsc --noEmit` = 0 · `check:i18n` (matched ×4) · `check:stories` (0 violations) · `check:design-tokens` (0 violations — the `color="blue"` fix is required). Zero hardcode: tokens only (`gray.0/1/5/7`, `green/yellow/red/brand`, `var(--mantine-color-*)`), §7.1 spacing exemptions only, no raw strings, no raw `<table>/<th>/<td>`, no Tailwind `sm:` class.
 
-The story **CONSUMES `MantineDataTableToCards`** (it does not hand-roll a `<Table>` and it does not duplicate the pattern's logic — canonical-first, Task 426). This is the only way to prove BOTH halves of the gate in one story: the §6b desktop table AND the mandatory mobile cards.
-- `title: 'Mantine/Primitives/Table'`, single export **`Default`** only (no per-viewport/per-locale/Pass/Fail exports — forbidden by §8/§13/§16).
-- `parameters: { skipCanvas: true, layout: 'fullscreen' }`.
-- Locale via `context.globals.locale`; all headers + word-cells via `storyT(locale, key)` from `'../../_storyI18n'`.
-- Modest padded canvas: outer `Box p="xl"` (Sprint 37 DoD §6).
-- Provide `MantineDataTableToCards` with **4 columns** (User / Role / Status / Registered) × **~4 rows** of representative admin data, **and a `card` config** (§7.2 anatomy: avatar + name/subtitle, status badge, role/date meta rows) so the mobile path renders the designed card — NOT a generic label dump.
-- Status/role cell values via `storyT()` (reuse `seg_demo_*` where they fit); proper names/dates may be literal sample data (state this). Use the canonical `Badge` for the status cell and `Avatar` (40px) for the user cell — they're already styled by Tasks 486/491.
+## Acceptance criteria (each maps to a flow + verifiable in diff/render)
+1. `theme.components.Table` carries the full §6b chrome via tokens only (withRowBorders + gray-1 dividers + gray-0 thead + gray-5/12px/fw500/non-uppercase Th + gray-7/14px/nowrap Td), each addition justified vs Mantine default, selector-level values deferred-with-reason. No raw hex/px. → Positive 1.
+2. `src/stories/mantine/primitives/Table.stories.tsx` created (title `Mantine/Primitives/Table`, single Default, consumes `MantineDataTableToCards`) AND `src/stories/patterns/mantine/DataTableToCards.stories.tsx` deleted (story moved) — unless `check:stories` flags pattern coverage, in which case STOP and ASK. → Positive 1–3.
+3. The 4 demo fixes applied (role badge on-palette, avatar pill, long-uk stress, status map confirmed); strings via `storyT()`; reused/added keys at 4-locale parity; uk Cyrillic + long-uk present. → Positive 4.
+4. **🔴 Mobile = cards, ZERO horizontal scroll (page + internal) at <640**, proven 320/375/390; §7.2 anatomy intact; long-uk wraps. → Mobile gate / Negative.
+5. Desktop ≥640 = §6b card-wrapped table (desktop-only internal ScrollArea acceptable, never leaking to mobile). → Positive 1–2.
+6. Rendered matrix (desktop 768/1024/1440 × en/uk + mobile 320/375/480 × en/uk + sq/it@320; uk@320/375/390) attached, or explicit manual-fallback note. → Rendered proof.
+7. Gates green; zero hardcode; scope clean — `MantineDataTableToCards.tsx` and all product-surface files untouched (confirm in diff). → Hard contract.
+8. `docs/backlog.md` + `docs/sessions/2026-06-25-task488-table-primitive.md` updated; Files Changed table present; no git commands emitted by the executor.
 
-### i18n keys (namespace `storybook.mantine.*`, ALL 4 locales sq/en/uk/it — same key set)
-First check whether equivalent header/role/status keys already exist under `storybook.mantine` (the `seg_demo_*` role/status set is likely reusable for the role/status cells) and **reuse** them (say which). For column headers, add a 4-header set with locale-NATIVE labels, at least ONE deliberately long in uk to exercise wrap (cards) / nowrap (desktop):
-- `table_demo_col_user` — en "User" · uk "Користувач" · sq "Përdoruesi" · it "Utente"
-- `table_demo_col_role` — en "Role" · uk "Роль" · sq "Roli" · it "Ruolo"
-- `table_demo_col_status` — en "Status" · uk "Статус" · sq "Statusi" · it "Stato"
-- `table_demo_col_registered` — en "Registered" · uk "Дата реєстрації" (deliberately long) · sq "Regjistruar" · it "Registrato"
-Exact key parity across all four files; `check:i18n` stays green with matched counts. Reuse-and-note rather than duplicate where a string already exists.
-
-## Positive flow (happy path)
-1. Open Storybook → `Mantine/Primitives/Table → Default`, locale=en, viewport 1440 (desktop).
-2. **Desktop table** renders inside a **rounded-16 `Paper` with a flat `gray-2` border + `overflow:hidden`** (no shadow); header row = `gray-0` bg, headers **12px `fw500` `gray.5`, NOT uppercase**, separated by a `gray-1` border; body rows = **14px `gray.7`** nowrap with `gray-1` dividers; cell padding reads as `px-6 py-3`; row hover → `gray-0`.
-3. Resize to 1024 and 768 → still the §6b desktop table, legible.
-4. **Resize to <640 (480/375/320) → the table TRANSFORMS into stacked cards** (one per row, §7.2 anatomy: avatar + name/subtitle, status badge, role/date meta rows). **No table is visible; nothing scrolls horizontally.**
-5. Switch locale (en→uk→sq→it via toolbar): headers (desktop) + card fields (mobile) update from `storyT()`; uk renders Cyrillic; no missing-key/raw-key leak.
-6. Side-by-side vs `demo_tailadmin_com.zip` §6b: desktop card-wrapped table (gray-0 head, gray-1 dividers, non-uppercase gray-5 headers, gray-7 body); mobile = clean stacked cards.
-
-## Negative flow (every off-happy-path branch)
-- **<640 mobile = cards, ZERO horizontal scroll** (page AND internal). Verify at **320** there is no side-scroll anywhere; the long uk header ("Дата реєстрації") becomes a card meta-row **label that wraps**, not a scrolling column.
-- **Long cell on desktop (≥640):** stays `nowrap` inside the card-wrapped table; desktop-only `ScrollArea` within the `Paper` may engage (acceptable on desktop ONLY). This must NOT leak onto mobile.
-- **0 rows:** the cards/table region shows an empty/`No data` label (use the pattern's empty path — do not rebuild it), NOT a header-only shell.
-- **Missing/unknown locale:** `storyT` falls back to `en` (no crash, no raw key).
-- **SSR/first render:** the table↔cards switch is driven by the pattern's responsive logic; it returns its SSR/base value pre-hydration — **document the caveat** in a code comment + session log (cite the `MantineDialogDrawerPattern`/`MantineDataTableToCards` precedent). Inline content, no flash concern.
-
-## 🔴 Mobile <640 gate (OWNER P0 — see the defining rule at the top)
-- Below 640: **stacked cards only, one per row, full-width edge-to-edge** (the `Box p="xl"` story gutter is the only inset). **NO horizontal scroll of any kind.** Cards follow §7.2 anatomy; ≥44px touch targets on any card action; all 4 locales (sq/en/uk/it) wrap, never clip, never overflow.
-- At ≥640: the §6b card-wrapped desktop table (desktop-only internal `ScrollArea` acceptable).
-- The table→cards transform is the canonical `MantineDataTableToCards` behavior — **consume it, do not re-implement or regress it.**
-
-## 🔴 Rendered proof (clauses 12–13 + Sprint 37 DoD §3 — machine-produced is the canonical gate)
-- After writing the story, **rebuild Storybook** so the new story is in the build, then run the assert harness and paste the result into the session log:
-  ```
-  npm run build-storybook
-  npm run screenshots:assert
-  ```
-  (Full run — NOT `--fast` — Sprint 37 DoD §3 requires the **480** cells.)
-- Required matrix cells, each PASS with concrete evidence:
-  - **Desktop (table surface): 768 / 1024 / 1440 × en/uk** — card-wrapped §6b table? gray-0 head / gray-5 non-uppercase 12px headers? gray-7 14px nowrap cells? gray-1 dividers? 24×12 rhythm? hover gray-0?
-  - **Mobile (cards): 320 / 375 / 480 × en/uk + sq@320 + it@320**, **uk@320/375/390 mandatory** — renders as STACKED CARDS (no table)? **ZERO horizontal scroll (page + internal)?** §7.2 card anatomy intact? long-uk label wraps in its meta row?
-- If the harness cannot capture the freshly-added story here, say so explicitly and attach the per-cell evidence you DID capture; the orchestrator/owner does the manual Storybook toolbar matrix + side-by-side at review (as for Tasks 486/487/489/490/491, per §13.10). "tsc=0/build green" is NOT rendered proof.
-
-## Gates (all must pass; paste transcript into the session log)
-`tsc --noEmit` = 0 · `npm run check:i18n` (matched key counts ×4) · `npm run check:stories` (0 violations) · `npm run check:design-tokens` (0 violations). Zero hardcode: no raw hex/rgb/named colors (use `gray.0/1/5/7`, `brand` tokens + `var(--mantine-color-*)`), no raw spacing/radius px (theme tokens only; §7.1 exemptions only), no raw user-facing strings, no raw `<table>/<th>/<td>` HTML (Mantine `Table.*` via the pattern), no Tailwind `sm:` responsive class.
-
-## Acceptance criteria (each maps to a flow + is verifiable in the diff/render)
-1. `theme.components.Table` extended to carry §6b desktop chrome via theme tokens only (withRowBorders + border-color gray-1 + thead gray-0 + Th xs/fw500/gray.5/non-uppercase + Td sm/gray.7/nowrap), each addition justified against Mantine's default, any selector-level value (hover/striping) **deferred-with-reason**. No raw hex/px. → Positive flow 2.
-2. New `src/stories/mantine/primitives/Table.stories.tsx` exists: single `Default`, `skipCanvas:true`+`layout:'fullscreen'`, `Box p="xl"` canvas, **consumes `MantineDataTableToCards`** (4 cols × ~4 rows + a §7.2 `card` config), Avatar + Badge cells. → Positive flow 1–4.
-3. Headers + role/status cells via `storyT()`; new/reused `storybook.mantine.*` keys in all 4 locales with parity; uk Cyrillic + the long-uk header present. → Positive flow 5.
-4. **🔴 Mobile = cards, ZERO horizontal scroll (page + internal) at <640**, proven in the rendered matrix at 320/375/390; §7.2 card anatomy intact; long-uk label wraps. → Mobile gate / Negative flow.
-5. Desktop ≥640 = §6b card-wrapped table (desktop-only internal ScrollArea acceptable, never leaking to mobile). → Positive flow 2–3.
-6. Rendered matrix (desktop 768/1024/1440 × en/uk + mobile 320/375/480 × en/uk + sq/it@320; uk@320/375/390) attached, or explicit manual-fallback note with captured evidence. → Rendered proof.
-7. All gates green; zero hardcode; scope clean — **`MantineDataTableToCards.tsx` and all pattern/product-surface files untouched** (confirm in diff). → Hard contract.
-8. `docs/backlog.md` + session log `docs/sessions/2026-06-25-task488-table-primitive.md` updated; Files Changed table present; **no git commands emitted by the executor**.
-
-## Files expected to change (the orchestrator cross-checks the real diff against this)
-- `src/stories/mantine/primitives/Table.stories.tsx` (NEW — consumes `MantineDataTableToCards`).
-- `src/design-system/mantine/theme.ts` (EXTEND `components.Table` per the documented §6b decision).
-- `messages/{en,sq,uk,it}.json` (new `table_demo_col_*` keys, unless an equivalent already exists — say which; reuse `seg_demo_*` for role/status cells if applicable).
+## Files expected to change
+- `src/stories/mantine/primitives/Table.stories.tsx` (NEW — primitive, consumes the pattern).
+- `src/stories/patterns/mantine/DataTableToCards.stories.tsx` (DELETED — content moved to the primitive; STOP and ASK if this breaks `check:stories` pattern coverage).
+- `src/design-system/mantine/theme.ts` (EXTEND `components.Table` to §6b).
+- `messages/{en,sq,uk,it}.json` (ONLY if a new long-uk key is added; otherwise reuse existing keys — no change).
 - `docs/backlog.md` + `docs/sessions/2026-06-25-task488-table-primitive.md`.
-Anything else — especially `MantineDataTableToCards.tsx` or any `src/components/**` / `src/app/**` — = scope creep → STOP and ASK.
+Anything else — `MantineDataTableToCards.tsx`, any `src/components/**` / `src/app/**` — = scope creep → STOP and ASK.
 
 ## Run order context
-Sprint 37 Phase-1 Batch A: 486 Badge ✅ → 487 Card ✅ → 491 Avatar ✅ → 489 Tabs ✅ (`0bfa564b8`) → 490 SegmentedControl ✅ (`dbf5393e6`) → **488 Table (this task — LAST primitive)**. After 488 ✅, reopen **Task 485 REWORK2** as the first Phase-4 surface proof. Task numbering — last used: 491; next free: 492 (this task reuses the already-reserved 488).
+486 Badge ✅ → 487 Card ✅ → 491 Avatar ✅ → 489 Tabs ✅ (`0bfa564b8`) → 490 SegmentedControl ✅ (`dbf5393e6`) → **488 Table (this task — LAST primitive)**. After 488 ✅, reopen Task 485 REWORK2 as the first Phase-4 surface proof. Task numbering — last used: 491; next free: 492.

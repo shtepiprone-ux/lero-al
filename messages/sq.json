@@ -2129,7 +2129,13 @@
       "button_cancel": "Anulo",
       "button_add_listing": "Shto njoftim",
       "button_saving": "Duke ruajtur…",
-      "button_long_label": "Ruaj të gjitha ndryshimet e njoftimit dhe njoftoni agentin"
+      "button_long_label": "Ruaj të gjitha ndryshimet e njoftimit dhe njoftoni agentin",
+      "label_email": "Adresa e emailit",
+      "label_job_title": "Titulli i punës",
+      "label_job_placeholder": "Shtoni titullin tuaj të punës",
+      "label_job_hint": "Agjent, Menaxher, etj.",
+      "label_long": "Emri i plotë dhe informacioni i kontaktit për agentin e pronës",
+      "label_optional": "(opsionale)"
     }
   },
   "ui": {

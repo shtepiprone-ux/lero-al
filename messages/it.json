@@ -2129,7 +2129,13 @@
       "button_cancel": "Annulla",
       "button_add_listing": "Aggiungi annuncio",
       "button_saving": "Salvataggio…",
-      "button_long_label": "Salva tutte le modifiche all'annuncio e notifica l'agente"
+      "button_long_label": "Salva tutte le modifiche all'annuncio e notifica l'agente",
+      "label_email": "Indirizzo email",
+      "label_job_title": "Titolo professionale",
+      "label_job_placeholder": "Inserisci il tuo titolo professionale",
+      "label_job_hint": "Agente, Manager, ecc.",
+      "label_long": "Nome completo e informazioni di contatto per l'agente immobiliare",
+      "label_optional": "(facoltativo)"
     }
   },
   "ui": {

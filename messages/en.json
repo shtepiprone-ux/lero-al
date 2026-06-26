@@ -2129,7 +2129,13 @@
       "button_cancel": "Cancel",
       "button_add_listing": "Add listing",
       "button_saving": "Saving…",
-      "button_long_label": "Save all listing changes and notify the agent"
+      "button_long_label": "Save all listing changes and notify the agent",
+      "label_email": "Email Address",
+      "label_job_title": "Job Title",
+      "label_job_placeholder": "Add your job title",
+      "label_job_hint": "Agent, Manager, etc.",
+      "label_long": "Full name and contact information for the property agent",
+      "label_optional": "(optional)"
     }
   },
   "ui": {

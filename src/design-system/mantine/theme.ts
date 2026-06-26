@@ -169,7 +169,8 @@ export const theme = createTheme({
       },
     },
     TextInput: {
-      defaultProps: { radius: 'lg', size: 'sm' }, // 14px text
+      // inputWrapperOrder: description below input (owner UX decision, Task 503); Mantine default puts it above.
+      defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
       styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
     },
     Textarea: {
@@ -187,6 +188,29 @@ export const theme = createTheme({
     },
     Switch: {
       defaultProps: { size: 'sm' }, // TailAdmin compact toggle density
+    },
+    // InputWrapper: §6 label + §6d description treatment + owner no-asterisk policy (Task 503).
+    // NOTE: InputLabel and InputDescription both call useStyles({ name: "InputWrapper" }) internally —
+    // all three components share the same CSS module slots. theme.components.InputLabel /
+    // InputDescription are no-ops; the single-source override is theme.components.InputWrapper.
+    // owner decision (2026-06-26): all fields required by default → no `*`; optional fields use
+    // a localized "(optional)" suffix inline in the label text instead of a Mantine asterisk.
+    InputWrapper: {
+      styles: {
+        // §6: 14px (text-theme-sm), fw500 (font-medium), gray-700 (text-gray-700)
+        label: {
+          fontSize: 'var(--mantine-font-size-sm)',
+          fontWeight: 500,
+          color: 'var(--mantine-color-gray-7)',
+        },
+        // suppress Mantine's red `*` asterisk globally — no asterisk anywhere, even if `required` is passed
+        required: { display: 'none' },
+        // §6d: 12px secondary text, gray-500
+        description: {
+          fontSize: 'var(--mantine-font-size-xs)',
+          color: 'var(--mantine-color-gray-5)',
+        },
+      },
     },
     // SegmentedControl: TailAdmin §6c segment toggle (gray track, white active pill, shadow-xs).
     // color NOT set → Mantine varsResolver auto-sets --sc-shadow = var(--mantine-shadow-xs). ✅

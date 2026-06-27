@@ -43,7 +43,7 @@ This session fixes the two owner-rejected defects in the story + locale files.
 | `messages/it.json` | `ti_placeholder`→`example@gmail.com`; remove `ti_icon_label`; add `ti_name_placeholder: "es. Mario Rossi"` |
 | `scripts/check-stories.mjs` | Add email-address regex to `LATIN_ALLOWLIST_PATTERNS` (§5a enforcement) |
 
-**theme.ts: NOT TOUCHED** (accepted from first pass)
+| `src/design-system/mantine/theme.ts` | **Post-Task-496 fix (owner instruction):** added `'&[data-invalid]': { borderColor: 'var(--mantine-color-red-6)', boxShadow: 'none' }` to `TextInput.styles.input` — same error-border restore as Task 496 Textarea fix; resting `borderColor: gray-2` was overriding Mantine's `[data-invalid]` CSS via injection order |
 
 ---
 

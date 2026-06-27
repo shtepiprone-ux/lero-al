@@ -2138,7 +2138,12 @@
       "label_optional": "(opsionale)",
       "ti_placeholder": "example@gmail.com",
       "ti_name_placeholder": "p.sh. Lulëzim Hoxha",
-      "ti_error": "Ju lutemi vendosni një adresë emaili të vlefshme"
+      "ti_error": "Ju lutemi vendosni një adresë emaili të vlefshme",
+      "ta_label": "Përshkrimi i shpalljes",
+      "ta_placeholder": "Përshkruani pronën…",
+      "ta_hint": "Deri në 1000 karaktere",
+      "ta_error": "Përshkrimi është i detyrueshëm",
+      "ta_long_value": "Ky apartament i gjerë ndodhet në një lagje të qetë, afër shkollave, parqeve dhe transportit publik. Prona ka tre dhoma gjumi, kuzhinë moderne dhe ballkon me diell me pamje nga qyteti. E disponueshme menjëherë, ideale për familje ose profesionistë që kërkojnë komoditet dhe lehtësi."
     }
   },
   "ui": {

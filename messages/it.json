@@ -2138,7 +2138,12 @@
       "label_optional": "(facoltativo)",
       "ti_placeholder": "example@gmail.com",
       "ti_name_placeholder": "es. Mario Rossi",
-      "ti_error": "Inserisci un indirizzo email valido"
+      "ti_error": "Inserisci un indirizzo email valido",
+      "ta_label": "Descrizione dell'annuncio",
+      "ta_placeholder": "Descrivi l'immobile…",
+      "ta_hint": "Fino a 1000 caratteri",
+      "ta_error": "La descrizione è obbligatoria",
+      "ta_long_value": "Questo spazioso appartamento si trova in un quartiere tranquillo, vicino a scuole, parchi e trasporti pubblici. L'immobile dispone di tre camere da letto, una cucina moderna e un balcone soleggiato con vista sulla città. Disponibile subito, ideale per famiglie o professionisti che cercano comfort e praticità."
     }
   },
   "ui": {

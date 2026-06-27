@@ -155,6 +155,24 @@ debt without naming who owns the fix.
 
 ---
 
+## §5a — EMAIL / MACHINE-FORMAT PLACEHOLDERS ARE NEVER TRANSLATED (owner P0, 2026-06-27, Task 494)
+
+**An email address (and any other machine/Latin-only format value) is always written in Latin/English script. Its
+placeholder MUST NOT be transliterated or localized — least of all into Cyrillic for `uk`.**
+
+- **Email-format placeholders** (`you@…`, sample addresses) use ONE canonical Latin string, **identical across all 4
+  locales** — current canonical value: `example@gmail.com`. Do NOT produce `ви@приклад.com`, `ju@shembull.al`,
+  `tu@esempio.com`, etc. as locale variants of an email placeholder.
+- The same "never transliterate" principle applies to other machine-format sample values that are inherently
+  Latin/ASCII: URLs (`https://example.al`), E.164 phone digits, currency codes, IBANs, slugs.
+- **All OTHER placeholders DO localize** per normal language rules (e.g. a job-title hint, a full-name hint, a search
+  hint) — these are natural-language and must read naturally in `sq/en/uk/it`. A localized non-email placeholder under a
+  non-email label is correct; an email-script placeholder under an email label is the bug this rule exists to stop.
+- Origin: Task 494 first pass shipped `uk.json` `ti_placeholder = "ви@приклад.com"` (Cyrillic email) — owner-rejected
+  2026-06-27. Fixed in Task 494-R.
+
+---
+
 ## §6 — RELATIONSHIP TO OTHER GATES
 
 ```

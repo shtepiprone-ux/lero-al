@@ -148,13 +148,34 @@ defaults (add them if labels don't already render 14px/fw500/gray-7).
 **Story:** label + input pairs (normal, required, long-uk); `storyT()` ×4.
 **AC:** §6 Label values; 14px/fw500/gray-7; required marker; htmlFor association; zero hardcode; matrix green.
 
+## Task 502 — PhoneField composite primitive → Mantine (P1.31) — NEW (owner directive, 2026-06-27)
+**Why:** During the Task 494 review the owner clarified that a phone number is NOT a single `TextInput` — in this product
+it is the canonical **two-field composite** `PhoneField` (`src/components/shared/PhoneField.tsx`, Task 158/375): a
+**dial-code Combobox** (`+355`, country search, multi-country) + a **national-number Input**, mobile-stacked full-width
+`<640`, desktop Combobox fixed-width + Input fills. The TextInput story must NOT fake phone with an icon; phone gets its
+own Mantine primitive here.
+**Ref:** existing `PhoneField.tsx` behavior contract (DOES NOT validate internally; consumers call `validateNationalPhone`);
+§6/§6d input chrome for both sub-controls; §6d Select for the dial-code dropdown (P0 `<640` bottom-sheet).
+**Required values:** national Input = TextInput chrome (radius lg, sm/14px, 44px, gray-2 border, brand focus, shadow-xs);
+dial-code = Select/Combobox chrome (gray-3 border, chevron, `<640` full-width bottom sheet per the P0 overlay rule).
+**🔴 STOP-and-ASK:** (a) whether to build a NEW Mantine-native composite vs wrap the existing canonical `PhoneField`;
+(b) the dial-code `<640` bottom-sheet wiring if not already canonical in the Mantine theme. Do NOT invent — ask the
+orchestrator. This is a kickoff PLACEHOLDER reserving the number; a full kickoff is written when 502 is scheduled
+(after the 9 Batch-B controls land).
+**Story:** one `Default`; sections = default (empty), filled (`+355 69…`), error, disabled, full-width `<640` stack;
+`storyT()` ×4.
+**AC:** two-field composite renders dial-code + national; mobile full-width stack `<640`; dial-code dropdown `<640`
+bottom-sheet (or STOP-and-ASK noted); chrome matches §6/§6d; zero hardcode; matrix green incl. uk@320/375/390.
+
 ---
 
 ## Sequencing & numbering
 - Run order above (493 → 501 → 494 → 496 → 500 → 495 → 497 → 498 → 499); independent — reviewable one at a time.
+- **494 was owner-rejected 2026-06-27 → re-execute via `Sprint_38_kickoff_prompt_Task_494R_TextInput_Rework.md`** (story +
+  locale files only; `theme.ts` chrome accepted). **502 (PhoneField composite) added** — schedule after the 9 controls.
 - After all 9 ✅: Batch C = overlays (Modal/Drawer/Popover/DropdownMenu/NavigationMenu/Tooltip — P0 bottom-sheet) and
   Batch D = feedback/misc (Alert/Pagination/Progress/Skeleton/Separator/ScrollArea/Slider/Toast/Command).
-- **Task numbering — last used: 501 (this sprint 493–501). Next free: 502.**
+- **Task numbering — last used: 502 (493–501 Batch B + 502 PhoneField composite). Next free: 503.**
 - **STOP-and-ASK triggers in this sprint:** (a) brand focus-ring not achievable with tokens alone (494/495/500);
   (b) Select/any dropdown `<640` bottom-sheet wiring not already canonical (495); (c) required-asterisk color absent
   from the reference (501). Do NOT invent — ask the orchestrator.

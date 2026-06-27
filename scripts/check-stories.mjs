@@ -459,8 +459,9 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
   log('── Check 8: uk.json Latin-only values (non-Cyrillic check) ────────────');
 
   const LATIN_ALLOWLIST_PATTERNS = [
-    // URL paths, slugs, email domains
+    // URL paths, slugs, email addresses, email domains (i18n-rules.md §5a: email placeholders never translated)
     /https?:\/\//, /^[a-z0-9-]+\.[a-z]{2,}/, /^@/, /^[A-Z]+$/,
+    /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
     // City names (Albania) and brand names that appear in all locales
     /^(Tirana|Durrës|Vlorë|Shkodër|Berat|Kombinat|Sauk|Blloku|Elbasan)$/i,
     // WhatsApp, Email, brand identifiers

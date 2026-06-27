@@ -2135,7 +2135,10 @@
       "label_job_placeholder": "Add your job title",
       "label_job_hint": "Agent, Manager, etc.",
       "label_long": "Full name and contact information for the property agent",
-      "label_optional": "(optional)"
+      "label_optional": "(optional)",
+      "ti_placeholder": "example@gmail.com",
+      "ti_name_placeholder": "e.g. Jane Smith",
+      "ti_error": "Please enter a valid email address"
     }
   },
   "ui": {

@@ -2135,7 +2135,10 @@
       "label_job_placeholder": "Shtoni titullin tuaj të punës",
       "label_job_hint": "Agjent, Menaxher, etj.",
       "label_long": "Emri i plotë dhe informacioni i kontaktit për agentin e pronës",
-      "label_optional": "(opsionale)"
+      "label_optional": "(opsionale)",
+      "ti_placeholder": "example@gmail.com",
+      "ti_name_placeholder": "p.sh. Lulëzim Hoxha",
+      "ti_error": "Ju lutemi vendosni një adresë emaili të vlefshme"
     }
   },
   "ui": {

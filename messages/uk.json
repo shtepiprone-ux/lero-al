@@ -2135,7 +2135,10 @@
       "label_job_placeholder": "Введіть вашу посаду",
       "label_job_hint": "Агент, менеджер тощо",
       "label_long": "Повне ім'я та контактна інформація агента з нерухомості",
-      "label_optional": "(опційно)"
+      "label_optional": "(опційно)",
+      "ti_placeholder": "example@gmail.com",
+      "ti_name_placeholder": "напр., Іван Петренко",
+      "ti_error": "Будь ласка, введіть дійсну адресу електронної пошти"
     }
   },
   "ui": {

@@ -2135,7 +2135,10 @@
       "label_job_placeholder": "Inserisci il tuo titolo professionale",
       "label_job_hint": "Agente, Manager, ecc.",
       "label_long": "Nome completo e informazioni di contatto per l'agente immobiliare",
-      "label_optional": "(facoltativo)"
+      "label_optional": "(facoltativo)",
+      "ti_placeholder": "example@gmail.com",
+      "ti_name_placeholder": "es. Mario Rossi",
+      "ti_error": "Inserisci un indirizzo email valido"
     }
   },
   "ui": {

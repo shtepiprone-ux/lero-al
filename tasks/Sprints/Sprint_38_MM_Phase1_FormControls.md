@@ -148,7 +148,9 @@ defaults (add them if labels don't already render 14px/fw500/gray-7).
 **Story:** label + input pairs (normal, required, long-uk); `storyT()` ×4.
 **AC:** §6 Label values; 14px/fw500/gray-7; required marker; htmlFor association; zero hardcode; matrix green.
 
-## Task 502 — PhoneField composite primitive → Mantine (P1.31) — NEW (owner directive, 2026-06-27)
+## Task 504 — PhoneField composite primitive → Mantine (P1.31) — NEW (owner directive, 2026-06-27)
+> **Numbering note:** 502 (Button long-label wrap) and 503 (Label asterisk fix) were already used 2026-06-26;
+> PhoneField is therefore **504** (next free after 503).
 **Why:** During the Task 494 review the owner clarified that a phone number is NOT a single `TextInput` — in this product
 it is the canonical **two-field composite** `PhoneField` (`src/components/shared/PhoneField.tsx`, Task 158/375): a
 **dial-code Combobox** (`+355`, country search, multi-country) + a **national-number Input**, mobile-stacked full-width
@@ -172,10 +174,10 @@ bottom-sheet (or STOP-and-ASK noted); chrome matches §6/§6d; zero hardcode; ma
 ## Sequencing & numbering
 - Run order above (493 → 501 → 494 → 496 → 500 → 495 → 497 → 498 → 499); independent — reviewable one at a time.
 - **494 was owner-rejected 2026-06-27 → re-execute via `Sprint_38_kickoff_prompt_Task_494R_TextInput_Rework.md`** (story +
-  locale files only; `theme.ts` chrome accepted). **502 (PhoneField composite) added** — schedule after the 9 controls.
+  locale files only; `theme.ts` chrome accepted). **504 (PhoneField composite) added** — schedule after the 9 controls.
 - After all 9 ✅: Batch C = overlays (Modal/Drawer/Popover/DropdownMenu/NavigationMenu/Tooltip — P0 bottom-sheet) and
   Batch D = feedback/misc (Alert/Pagination/Progress/Skeleton/Separator/ScrollArea/Slider/Toast/Command).
-- **Task numbering — last used: 502 (493–501 Batch B + 502 PhoneField composite). Next free: 503.**
+- **Task numbering — last used: 504 (Batch B 493–501; 502 Button-wrap + 503 Label-fix follow-ups; 504 PhoneField composite). Next free: 505.**
 - **STOP-and-ASK triggers in this sprint:** (a) brand focus-ring not achievable with tokens alone (494/495/500);
   (b) Select/any dropdown `<640` bottom-sheet wiring not already canonical (495); (c) required-asterisk color absent
   from the reference (501). Do NOT invent — ask the orchestrator.

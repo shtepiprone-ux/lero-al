@@ -16,14 +16,14 @@ The owner rejected the first 494 pass for two reasons:
    composite** `PhoneField` (`src/components/shared/PhoneField.tsx` — dial-code Combobox + national Input), NOT a single
    `TextInput` with a phone icon. Misrepresenting it confuses the catalog. **Owner decision: remove the icons from the
    TextInput story entirely** (no `leftSection`/`rightSection` icon examples). The Mantine phone primitive is a
-   **separate task (502)** and is out of scope here.
+   **separate task (504)** and is out of scope here.
 
 ## Owner decisions captured for this rework (2026-06-27)
 - **Email placeholder string = `example@gmail.com`, IDENTICAL across all 4 locales** (en/sq/uk/it). Not transliterated,
   not localized. This is the single source for every email field in the story.
 - **Remove ALL icons from the TextInput story** — delete the `Phone` import and the entire "input-group" section. The
   TextInput primitive story shows plain text inputs only. (The input-group / `leftSection` affordance will be
-  demonstrated by the dedicated PhoneField task 502 and/or a later input-group example, not here.)
+  demonstrated by the dedicated PhoneField task 504 and/or a later input-group example, not here.)
 
 ## Pre-read (required)
 - `docs/agent-contract.md` (clauses 1–15), `docs/backlog.md`, `docs/critical-flow-registry.md` (scan — this task

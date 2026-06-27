@@ -1,113 +1,161 @@
-# Task 505 — Mantine input error-border attribute fix (TextInput + Textarea) — Sprint 38 corrective
+# Task 505 — Mantine input error-border fix (TextInput + Textarea), v2 CORRECTED — Sprint 38
 
-> **Type:** UI / component (Mantine `theme.ts` styling).
-> **Why this exists:** Tasks 496 (Textarea) and 494-R (TextInput) shipped a *dead* error-state
-> border override. The owner rejected on rendered evidence: **no red border in the error state**
-> of either control. The orchestrator confirmed the root cause against Mantine v8 source. Sonnet's
-> previous "fix" was tsc-green but never rendered-verified — a clause 12/13 violation.
+> **Type:** UI / component (Mantine theme + a new scoped CSS file).
+> **Status of prior attempts:** Task 496 + 494-R added an error override INSIDE `theme.components.*.styles.input`.
+> It never rendered. The owner re-rejected with DevTools proof (2026-06-27). The orchestrator's earlier
+> "use `[data-error]` not `[data-invalid]`" advice was ALSO wrong — same reason. Read the root cause below
+> in full; do not repeat either dead approach.
 
 ## Pre-read (rule-index → UI/component bundle)
 
 **Always required:** `docs/agent-contract.md`, `docs/backlog.md`, `docs/critical-flow-registry.md` (scan).
-**Required:** `docs/mantine-responsive-design-system.md` (FIRST — Mantine = source of truth; §7 mobile gate, §8 Storybook proof path, §16 acceptance gates), `docs/ui-rules.md`, `docs/component-rules.md`, `docs/qa-rules.md`.
+**Required:** `docs/mantine-responsive-design-system.md` (FIRST — Mantine = source of truth; §7 mobile gate,
+§8 Storybook proof path, §16 acceptance gates), `docs/ui-rules.md`, `docs/component-rules.md`, `docs/qa-rules.md`.
 
-## Root cause (confirmed by orchestrator — do not re-debate, just fix)
+## ROOT CAUSE — confirmed against Mantine v8 source + owner DevTools (do not re-debate)
 
-`src/design-system/mantine/theme.ts` overrides `components.TextInput.styles.input` and
-`components.Textarea.styles.input` with a literal resting `borderColor: var(--mantine-color-gray-2)`.
-Because the Emotion override class is injected after Mantine's base CSS, that literal `border-color`
-wins over Mantine's error rule (which only sets the CSS variable `--input-bd: var(--mantine-color-error)`),
-so the border stays gray in the error state.
+1. **Mantine v8 applies `theme.components.X.styles` as INLINE styles** on each slot element. The owner's
+   DevTools shows the input with `style="min-height:2.75rem; border-color: var(--mantine-color-gray-2);
+   box-shadow: var(--mantine-shadow-xs);"`. An **inline** `border-color` has higher priority than ANY
+   stylesheet rule (Mantine's base `border: … solid var(--input-bd)` AND its `[data-error]` rule). So the
+   border is frozen gray in every state. Toggling that inline `border-color` off in DevTools → the border
+   immediately turns red (Mantine's `[data-error]` rule then sets `--input-bd: var(--mantine-color-error)`).
+2. **Nested selector keys inside an inline `styles` object are never emitted.** `'&:focus'`,
+   `'&::placeholder'`, `'&[data-error]'`, `'&[data-invalid]'` cannot exist as inline styles, so Mantine
+   drops them. That means the existing focus/placeholder overrides AND every error-selector attempt
+   (`[data-invalid]` and `[data-error]` alike) were dead from the start.
+3. Mantine border facts (`node_modules/@mantine/core/styles/Input.css`): the input border is
+   `border: … solid var(--input-bd)` (L162); resting `--input-bd: var(--mantine-color-gray-4)` via
+   `[data-mantine-color-scheme='light'] .m_6c018570[data-variant='default']` (L99, specificity 0,3,0);
+   error `--input-bd: var(--mantine-color-error)` via `.m_6c018570[data-error]` (L135/139); focus
+   `--input-bd: var(--input-bd-focus)` (L194). Stable slot classes exist: the DOM shows
+   `class="m_8fb7ebe7 mantine-Input-input mantine-TextInput-input"` (Textarea analogously emits
+   `mantine-Textarea-input` — **confirm this at runtime before relying on it**).
 
-Sonnet attempted to restore it with:
+**Conclusion:** the border override must live in a STYLESHEET (so `:focus` / `[data-error]` work) and must set
+`border-color` **directly** on a stable class (so it bypasses the `--input-bd` variable cascade and we control
+every state ourselves). It must NOT stay in inline `styles`.
 
-```ts
-'&[data-invalid]': { borderColor: 'var(--mantine-color-red-6)', boxShadow: 'none' },
+## The fix — exactly this, no improvisation
+
+### Step 1 — new file `src/design-system/mantine/input-chrome.css`
+
+Create it with these rules (tokens only — no raw hex; passes `check:design-tokens`). Both controls share
+the same per-state border treatment:
+
+```css
+/* Task 505 — TextInput/Textarea border chrome via stylesheet so the error/focus cascade works.
+   Border-color is set DIRECTLY here (not via Mantine's --input-bd) and must NOT be set in
+   theme.components.*.styles.input (inline styles freeze the border + drop state selectors). */
+.mantine-TextInput-input,
+.mantine-Textarea-input {
+  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
+}
+.mantine-TextInput-input::placeholder,
+.mantine-Textarea-input::placeholder {
+  color: var(--mantine-color-gray-4);                 /* §6 placeholder — gray-400 */
+}
+.mantine-TextInput-input:focus,
+.mantine-Textarea-input:focus {
+  border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-TextInput-input[data-error],
+.mantine-Textarea-input[data-error],
+.mantine-TextInput-input[data-error]:focus,
+.mantine-Textarea-input[data-error]:focus {
+  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
+  box-shadow: none;
+}
 ```
 
-**`[data-invalid]` is not a Mantine attribute.** Mantine v8's `Input` marks the error state with
-**`data-error`** (verified: `node_modules/@mantine/core/styles/Input.css` L135–143 uses
-`[data-error]`; there is **zero** `data-invalid` anywhere in Mantine's stylesheets). The selector
-therefore matches no element and the override is functionally dead in BOTH blocks.
+**Specificity rationale (verify, do not change):** our resting `.mantine-TextInput-input` (0,1,0) ties
+Mantine's `.m_8fb7ebe7` border shorthand (0,1,0) and wins by later import order → gray-2 at rest.
+`[data-error]` (0,2,0) > resting (0,1,0) AND > `:focus` (0,1,1) → red wins in error and error+focus.
+`:focus` (0,1,1) > resting (0,1,0) → brand border on focus when not in error. Because we set `border-color`
+directly, Mantine's (0,3,0) `--input-bd` rules are irrelevant (we no longer read `--input-bd` for color).
+
+### Step 2 — import the file AFTER `@mantine/core/styles.css` in BOTH entry points
+
+- `src/app/layout.tsx` — insert `import '@/design-system/mantine/input-chrome.css'` (or correct relative
+  path) immediately AFTER line 6 (`import '@mantine/core/styles.css'`), before `globals.css`.
+- `.storybook/preview.tsx` — insert the same import immediately AFTER line 11 (`import '@mantine/core/styles.css'`),
+  before `globals.css`.
+
+### Step 3 — strip the now-dead inline overrides from `theme.ts`
+
+In `src/design-system/mantine/theme.ts`:
+- `components.TextInput.styles.input`: REMOVE `borderColor`, `boxShadow`, `'&::placeholder'`, `'&:focus'`,
+  and the `'&[data-invalid]'` line. KEEP `minHeight: '2.75rem'` and `color: 'var(--mantine-color-gray-8)'`
+  (flat, no state conflict). `defaultProps` (radius/size/inputWrapperOrder) unchanged.
+- `components.Textarea.styles.input`: REMOVE the same five keys. Textarea has no `minHeight`; keep
+  `color: 'var(--mantine-color-gray-8)'`. If the block becomes `{ color: … }` only, that is fine; do NOT
+  delete `defaultProps`.
+- Add a one-line comment in each block: `// border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade`.
+
+Do not touch any other component block, any locale file (NO key changes), or any product consumer
+(`@/components/ui/*` shadcn inputs are unaffected).
 
 ## Current behavior to preserve
 
-Everything else in both `styles.input` blocks stays byte-for-byte: resting `borderColor: gray-2`,
-`color: gray-8`, `boxShadow: shadow-xs`, placeholder `gray-4`, the `&:focus` brand-3 + ring,
-TextInput's `minHeight: 2.75rem`, `inputWrapperOrder`, and Textarea having no minHeight. Do **not**
-touch any other component block, any locale file, or any story content beyond what AC-4 requires.
+Resting gray-2 border, gray-8 text, shadow-xs, gray-4 placeholder, brand-3 focus border + brand-5/10 ring,
+TextInput 44px min-height, Textarea free-growing height, `inputWrapperOrder` (description below). The ONLY
+behavior that CHANGES is the one that's currently broken: the **error state now shows a red (`red-6`) border**.
 
-## Required after-behavior — the ONE change
+## Error-state appearance decision (orchestrator call — flag if owner disagrees)
 
-In **both** `components.TextInput.styles.input` and `components.Textarea.styles.input`, replace the
-dead selector key `'&[data-invalid]'` with **`'&[data-error]'`** (keep the same value:
-`{ borderColor: 'var(--mantine-color-red-6)', boxShadow: 'none' }`). Update the adjacent comment to
-read `// resting borderColor overrides Mantine's [data-error] default → restore explicitly`.
+On error: **border red-6, error message text red (Mantine default), label unchanged, and input text +
+placeholder stay neutral** (gray-8 / gray-4 — preserved by Step 1 + the retained inline `color`). This matches
+the story's own written contract ("red border + red message text; label unchanged"). If the owner wants FULL
+Mantine error styling (red input text + red placeholder too), that is a one-line change — STOP and ASK before
+shipping if unsure.
 
-That is the entire product change: two selector keys, two comment lines. No new keys, no value change.
+## Positive flow
 
-## Positive flow (happy path)
+Field with `error` set → Mantine puts `data-error` on the input → `input-chrome.css` `[data-error]` rule →
+**red border, no resting shadow**, at every breakpoint × locale. Message text red; label unchanged.
 
-- **Actor:** any user viewing a TextInput/Textarea in its error state (e.g. the "error" story, or a
-  product form field with a validation error).
-- **Steps:** field renders with `error` prop set → Mantine puts `data-error` on the input element →
-  the override `&[data-error]` rule applies → border renders **red (`--mantine-color-red-6` = #d92d20)**,
-  no resting shadow.
-- **Success state:** error-state border is unmistakably red at every breakpoint × every locale; the
-  red error message text below is unchanged; the label is unchanged (no red label).
-- **Post-conditions:** resting (non-error) fields still show the gray-2 border; focus still shows the
-  brand-3 border + ring; disabled still dimmed. No regression to those three states.
+## Negative flow
 
-## Negative flow (every off-happy-path branch)
-
-- **Resting / no error:** `data-error` absent → `&[data-error]` does not apply → border stays gray-2.
-  Verify the red does NOT leak into the resting state.
-- **Focus while in error:** focused + `data-error` → red border must remain (do not let `:focus`
-  brand border silently win in a way that hides the error; document whichever Mantine resolves and
-  confirm it visually — owner expects the error to remain visible/red on focus).
-- **Disabled:** disabled fields remain dimmed; no red border on a disabled-but-error edge case (not
-  expected in stories — note behavior if it arises, do not invent scope).
-- **Both components:** the fix MUST be verified independently for TextInput AND Textarea — they are
-  two separate blocks; proving one does not prove the other.
+- **Resting (no error):** `[data-error]` absent → gray-2 border; red must NOT leak in.
+- **Focus, no error:** brand-3 border + ring.
+- **Focus, in error:** red border stays (error selector outranks focus) — verify visually.
+- **Disabled:** dimmed, no focus ring, no red — Mantine default preserved.
+- **Both components independently:** prove TextInput AND Textarea separately.
 
 ## Mobile <640 full-width gate (OWNER P0)
 
-This is a color-only change and adds no layout, but the rendered proof MUST still confirm the error
-stories render full-width edge-to-edge at <640 (no regression): both error-state inputs span the full
-canvas width at 320/375/390, labels wrap (sq/en/uk/it), no clip, no horizontal scroll at 320. Stories
-must use the Mantine-native proof path (no `layout:'centered'/'padded'`). No control is exempted.
+Color-only change, but rendered proof must still show both error inputs full-width edge-to-edge at 320/375/390,
+labels wrapping (sq/en/uk/it), no clip, no h-scroll at 320; Mantine-native proof path (no `layout:'centered'/'padded'`).
 
-## Acceptance criteria (each maps to a flow + a verifiable artifact)
+## Acceptance criteria
 
-1. **AC-1 (Positive):** `theme.ts` TextInput block — `'&[data-error]'` present, `'&[data-invalid]'`
-   gone. Verifiable at `src/design-system/mantine/theme.ts` (TextInput `styles.input`).
-2. **AC-2 (Positive):** `theme.ts` Textarea block — same. Verifiable in the Textarea `styles.input`.
-3. **AC-3 (Negative — resting):** rendered proof shows resting border still gray, red only in error.
-4. **AC-4 (rendered proof — clause 12/13, THE deliverable):** machine-produced rendered matrix for
-   the TextInput **and** Textarea **error** stories — breakpoints 320/375/390/768/1280 × locales
-   sq/en/uk/it, **uk@320/375/390 mandatory** — each cell showing the **red error border** in the
-   actual pixels (not just the class in the diff). A green tsc/`check:stories` is a baseline, NOT
-   proof. "No browser access / owner QA required" does NOT close this — attach the PNG/JSON.
-5. **AC-5:** gates green in transcript — tsc=0, `npm run check:stories`, `npm run check:i18n`
-   (key count unchanged — this task adds NO locale keys), `npm run check:design-tokens`, plus the
-   rendered-assert run; AND a planted-violation negative transcript (e.g. revert to `[data-invalid]`)
-   showing the rendered error cell goes gray = proves the proof is real.
-6. **AC-6 (file integrity, clause 14):** `theme.ts` — 0 NUL bytes, no BOM, `tsc` clean, not truncated;
-   paste the integrity transcript.
-7. **AC-7:** `docs/backlog.md` Last Session + a session log under `docs/sessions/` updated; session log
-   includes the **Files Changed** table (one row per touched path + rationale). Do **NOT** emit
-   `git add`/`git commit` — the orchestrator emits commit commands at review.
+1. `input-chrome.css` created with the exact rules above (tokens only, no raw hex).
+2. Imported after `@mantine/core/styles.css` in BOTH `src/app/layout.tsx` and `.storybook/preview.tsx`.
+3. `theme.ts` TextInput + Textarea `styles.input` stripped of the five dead keys; `minHeight`/`color` retained as specified.
+4. **Runtime confirmation** that `mantine-Textarea-input` is the real Textarea slot class (paste the DOM/inspector evidence); if Mantine emits a different class, target the real one.
+5. **RENDERED PROOF (clause 12/13 — THE deliverable):** machine-produced matrix for the TextInput AND Textarea
+   **error** stories — 320/375/390/768/1280 × sq/en/uk/it, **uk@320/375/390 mandatory** — each cell showing the
+   **red error border in the actual pixels**, plus one resting + one focus cell proving no red leak / brand focus.
+   tsc/`check:stories` green is a baseline, NOT proof. "No browser / owner QA" does NOT close this.
+6. **Planted-violation transcript:** temporarily re-add inline `borderColor: gray-2` to `theme.ts` (or remove
+   the `[data-error]` rule) and capture the rendered error cell going gray — proves the proof is real — then revert.
+7. Gates: tsc=0, `npm run check:stories`, `npm run check:i18n` (count UNCHANGED), `npm run check:design-tokens`,
+   rendered-assert run — all green in transcript.
+8. File-integrity (clause 14): every touched file 0 NUL, no BOM, parses/compiles, not truncated — paste transcript.
+9. `docs/backlog.md` Last Session + a `docs/sessions/` log updated; session log has the **Files Changed** table.
+   Do NOT emit `git add`/`git commit` — the orchestrator emits commit commands at review.
 
-## Critical-flow / regression note
+## Critical-flow note
 
-Scan `docs/critical-flow-registry.md`. Input error-state styling is presentation-only; if no registry
-row covers it, no new automated test is mandated by clause 15 — BUT the rendered error-border proof
-in AC-4 IS the required evidence and the planted-violation transcript in AC-5 is the "gate is real"
-proof. If you believe a registry row is warranted, STOP and ASK rather than inventing one.
+Input error styling is presentation-only. Scan `docs/critical-flow-registry.md`; if no row covers it, clause 15
+mandates no new unit test here — the AC-5 rendered proof + AC-6 planted-violation transcript ARE the required
+evidence. Do not invent a registry row; STOP and ASK if you think one is warranted.
 
-## Hard contract reminder
+## Hard contract
 
-No scope change beyond the two selector keys + two comments. No architecture invented. Do not touch
-locale files (no key change), other component blocks, or product consumers (`@/components/ui/*` shadcn
-inputs are unaffected — this only changes the Mantine theme used by Storybook/Mantine surfaces).
-Self-validate before claiming complete (tsc=0 + AC-by-AC table + rendered run + uk@320 walk).
+No scope beyond the three files (`input-chrome.css`, `theme.ts`, the two import lines) + the session log/backlog.
+No architecture beyond what's specified here. No locale-key changes. Self-validate before "complete"
+(tsc=0 + AC table + rendered run + uk@320 walk). The owner has rejected this twice — the rendered red-border
+proof at uk@320 is the bar for approval, nothing less.

@@ -1,0 +1,24 @@
+/* Task 505 — TextInput/Textarea border chrome via stylesheet so the error/focus cascade works.
+   Border-color is set DIRECTLY here (not via Mantine's --input-bd) and must NOT be set in
+   theme.components.*.styles.input (inline styles freeze the border + drop state selectors). */
+.mantine-TextInput-input,
+.mantine-Textarea-input {
+  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
+}
+.mantine-TextInput-input::placeholder,
+.mantine-Textarea-input::placeholder {
+  color: var(--mantine-color-gray-4);                 /* §6 placeholder — gray-400 */
+}
+.mantine-TextInput-input:focus,
+.mantine-Textarea-input:focus {
+  border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-TextInput-input[data-error],
+.mantine-Textarea-input[data-error],
+.mantine-TextInput-input[data-error]:focus,
+.mantine-Textarea-input[data-error]:focus {
+  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
+  box-shadow: none;
+}

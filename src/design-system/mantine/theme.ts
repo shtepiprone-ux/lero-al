@@ -172,22 +172,22 @@ export const theme = createTheme({
       // inputWrapperOrder: description below input (owner UX decision, Task 503); Mantine default puts it above.
       defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
       styles: {
+        // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
         input: {
-          minHeight: '2.75rem',                                        // ≥44px touch / TailAdmin h-11 (rem — exemption)
-          borderColor: 'var(--mantine-color-gray-2)',                  // §6 resting border — gray-200 (#e4e7ec)
-          color: 'var(--mantine-color-gray-8)',                        // §6 text — gray-800 (#1d2939)
-          boxShadow: 'var(--mantine-shadow-xs)',                       // §5 shadow-theme-xs subtle resting shadow
-          '&::placeholder': { color: 'var(--mantine-color-gray-4)' }, // §6 placeholder — gray-400 (#98a2b3)
-          // §6 focus: brand-300 border + brand-500/10 outer ring (all-token; color-mix() CSS4, no raw hex)
-          '&:focus': {
-            borderColor: 'var(--mantine-color-brand-3)',
-            boxShadow: '0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent)',
-          },
+          minHeight: '2.75rem',                 // ≥44px touch / TailAdmin h-11 (rem — exemption)
+          color: 'var(--mantine-color-gray-8)', // §6 text — gray-800 (#1d2939)
         },
       },
     },
     Textarea: {
-      defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (multiline — no fixed height)
+      // inputWrapperOrder: description below input (Task 503 owner UX decision, matches TextInput)
+      defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
+      styles: {
+        // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
+        input: {
+          color: 'var(--mantine-color-gray-8)', // §6 text — gray-800
+        },
+      },
     },
     Select: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text

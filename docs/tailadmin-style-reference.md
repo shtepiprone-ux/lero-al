@@ -248,6 +248,47 @@ are source literals; `rounded-full` = Mantine default Radio shape, no raw px in 
 > **🔴 Always-verify-styles gate (owner P0, 2026-06-28):** every state above is verified against the rendered Radio at
 > the canonical breakpoints × sq/en/uk/it before approval. `tsc=0`/build-green is never style proof.
 
+## 6h. Switch — FULL state matrix (authoritative; owner P0, 2026-06-28)
+
+> Extracted from the source-of-truth components — do not infer:
+> - `src/components/ui/switch.tsx` (track + thumb classes)
+> - `src/components/ui/label.tsx` (label disabled treatment — shared with §6e/§6f/§6g)
+>
+> Same disabled discipline as §6e/§6f/§6g: when disabled, the **whole control dims (track + thumb + label) uniformly to
+> opacity 0.5**. Source carries `data-disabled:opacity-50` on the track root AND the label dims via root compositing.
+> Verifying only the track is a review failure (the §6e/§6f/§6g/§6h failing pattern).
+
+**Track geometry (default density, Mantine `size='sm'`):** source default = `h-[18.4px] w-8` (≈18×32px) + 16px thumb.
+Mantine sizes: `xs`=16px×32px (thumb 12px), `sm`=20px×38px (thumb 14px), `md`=24px×46px (thumb 18px). Neither `xs` nor
+`sm` is an exact match; `sm` is the closest height match and is the approved density (`theme.ts` Task 499 — see density
+correction note §6 header). **Owner to verify the rendered track height in DevTools; if the exact 18.4px source density is
+required, a CSS pin would be added.**
+
+| State | Track | Thumb | Label | Source class |
+|---|---|---|---|---|
+| **unchecked (resting)** | bg `var(--color-input)` = neutral-300 (#DEDEDE) · no base border · `rounded-full` | white, at rest-left | `text-sm` `gray-7` (#344054), wraps, ≥44px tap row | `data-unchecked:bg-input` |
+| **checked** | bg `brand-7` (#EC5447) | white, slid right | unchanged | `data-checked:bg-primary` |
+| **focus** | keyboard-visible brand ring (3px box-shadow) · not on mouse | — | unchanged | `focus-visible:border-ring focus-visible:ring-3` |
+| **error** | inset `red-6` (#d92d20) border-sim + 3px outer ring; **checked+error keeps brand fill** | — | unchanged | `aria-invalid:border-destructive` → Mantine `[data-error]` on track |
+| **disabled** | **opacity 0.5** · `cursor: not-allowed` · no focus ring | dims with track (root compositing) | **opacity 0.5** (dims with track) | `data-disabled:opacity-50`; label dims too |
+
+**Mantine selector reality (confirmed via Switch.mjs source):** track = `.mantine-Switch-track`, thumb =
+`.mantine-Switch-thumb`, input (visually hidden, a11y only) = `.mantine-Switch-input`, label = `.mantine-Switch-label`,
+root = `.mantine-Switch-root`. The input is `opacity:0 position:absolute` — it drives events but is never seen.
+**`data-error` lands on `.mantine-Switch-track`** (`Switch.mjs ~L153 mod:{error,...}`) — NOT on root or input.
+`data-checked` lands on `.mantine-Switch-root` and `.mantine-Switch-input`. Focus ring: `input:focus-visible +
+.mantine-Switch-track` (adjacent sibling — input precedes track in DOM). **Disabled: do NOT reset input opacity to 1**
+(the input's `opacity:0` is for visual hiding, not for disabled; resetting would un-hide it). Root `:has(:disabled)`
+opacity 0.5 composites track, thumb, and label uniformly — no Part 2 element reset needed for Switch.
+
+**Token discipline:** `var(--color-input)` for unchecked track (exact `--input` token = neutral-300 = #DEDEDE; §6d
+documents "gray-200" but the actual token maps to #DEDEDE — between gray-2/#e4e7ec and gray-3/#d0d5dd; Mantine's own
+default is gray-3; owner to confirm preference in DevTools). Brand `var(--mantine-color-brand-7)`, red
+`var(--mantine-color-red-6)`; `opacity:0.5` + `cursor:not-allowed` are source literals.
+
+> **🔴 Always-verify-styles gate (owner P0, 2026-06-28):** every state above is verified against the rendered Switch at
+> the canonical breakpoints × sq/en/uk/it before approval. `tsc=0`/build-green is never style proof.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

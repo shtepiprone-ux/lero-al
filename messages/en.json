@@ -2162,7 +2162,10 @@
       "cb_long_label": "I agree to the terms of service and privacy policy of this platform",
       "rb_label": "For sale",
       "rb_error": "Please select a listing type",
-      "rb_long_label": "I would like to receive personalized property recommendations and updates by email"
+      "rb_long_label": "I would like to receive personalized property recommendations and updates by email",
+      "sw_label": "Active",
+      "sw_error": "Please enable at least one option",
+      "sw_long_label": "I would like to receive email notifications about new property listings matching my search criteria"
     }
   },
   "ui": {

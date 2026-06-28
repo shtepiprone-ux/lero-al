@@ -2162,7 +2162,10 @@
       "cb_long_label": "Unë pranoj kushtet e shërbimit dhe politikën e privatësisë të kësaj platforme",
       "rb_label": "Për shitje",
       "rb_error": "Ju lutem zgjidhni llojin e listimit",
-      "rb_long_label": "Dëshiroj të marr rekomandime të personalizuara të pronës dhe përditësime me email"
+      "rb_long_label": "Dëshiroj të marr rekomandime të personalizuara të pronës dhe përditësime me email",
+      "sw_label": "Aktiv",
+      "sw_error": "Ju lutem aktivizoni të paktën një opsion",
+      "sw_long_label": "Dëshiroj të marr njoftime me email për listimet e reja të pronave që përputhen me kriteret e mia të kërkimit"
     }
   },
   "ui": {

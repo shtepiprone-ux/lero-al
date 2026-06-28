@@ -2162,7 +2162,10 @@
       "cb_long_label": "Accetto i termini di servizio e l'informativa sulla privacy di questa piattaforma",
       "rb_label": "In vendita",
       "rb_error": "Seleziona il tipo di annuncio",
-      "rb_long_label": "Vorrei ricevere raccomandazioni di immobili personalizzate e aggiornamenti via email"
+      "rb_long_label": "Vorrei ricevere raccomandazioni di immobili personalizzate e aggiornamenti via email",
+      "sw_label": "Attivo",
+      "sw_error": "Abilita almeno un'opzione",
+      "sw_long_label": "Vorrei ricevere notifiche email sulle nuove inserzioni immobiliari corrispondenti ai miei criteri di ricerca"
     }
   },
   "ui": {

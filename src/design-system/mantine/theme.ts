@@ -223,7 +223,13 @@ export const theme = createTheme({
       },
     },
     Switch: {
-      defaultProps: { size: 'sm' }, // TailAdmin compact toggle density
+      // size='sm' → 20px track height (closest to source 18.4px); density-correction-approved (Task 499).
+      // body min-height 44px touch target; label font-size reset: sm-size may vary, §6h requires 14px.
+      defaultProps: { size: 'sm' },
+      styles: {
+        body:  { minHeight: '2.75rem', alignItems: 'center' }, // ≥44px touch (rem — same exemption as Button/Checkbox)
+        label: { fontSize: 'var(--mantine-font-size-sm)', color: 'var(--mantine-color-gray-7)' }, // §6h 14px / gray-7
+      },
     },
     // InputWrapper: §6 label + §6d description treatment + owner no-asterisk policy (Task 503).
     // NOTE: InputLabel and InputDescription both call useStyles({ name: "InputWrapper" }) internally —

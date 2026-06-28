@@ -177,3 +177,52 @@
   opacity: 1;
   cursor: not-allowed;
 }
+
+/* ── Switch — §6h state chrome (Task 499) ─────────────────────────────── */
+/* DOM: .mantine-Switch-body (label) > input.mantine-Switch-input (opacity:0, pos:absolute, a11y only)
+        + .mantine-Switch-track (aria-hidden span; carries data-error via mod:{error,...} Switch.mjs ~L153)
+          > .mantine-Switch-thumb + .mantine-Switch-trackLabel
+        + .mantine-Switch-labelWrapper > .mantine-Switch-label
+   data-checked lands on .mantine-Switch-root and .mantine-Switch-input (NOT directly on track).
+   Adjacent sibling (+) works: input precedes track in the DOM. */
+
+/* Resting unchecked track background: var(--color-input) = neutral-300 = #DEDEDE (source: bg-input).
+   §6d documents "gray-200" but the actual --input token is neutral-300 (#DEDEDE); Mantine's own
+   default is gray-3 (#d0d5dd). Using the exact design-system token; owner to confirm in DevTools.
+   :not(:checked) preserves the Mantine checked brand-fill; specificity (0,3,0). */
+.mantine-Switch-input:not(:checked) + .mantine-Switch-track {
+  background-color: var(--color-input); /* neutral-300 = #DEDEDE */
+}
+
+/* Focus — keyboard only via :focus-visible on the hidden input; ring appears on the visible track */
+.mantine-Switch-input:focus-visible + .mantine-Switch-track {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-Switch-input:focus:not(:focus-visible) + .mantine-Switch-track {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Error: data-error is on .mantine-Switch-track (Switch.mjs ~L153 mod:{error,...}).
+   Inset shadow simulates a border without layout shift (track has no base border in Mantine CSS). */
+.mantine-Switch-track[data-error] {
+  box-shadow:
+    inset 0 0 0 1px var(--mantine-color-red-6),
+    0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent);
+}
+/* Checked+error: brand fill retained; clear the red ring. (0,4,0) beats error rule (0,2,0). */
+.mantine-Switch-root[data-checked] .mantine-Switch-track[data-error] {
+  box-shadow: none;
+}
+
+/* Disabled §6h — whole control (track + thumb + label) → opacity 0.5; §6e/§6f/§6g two-part pattern.
+   SWITCH-SPECIFIC: input has permanent opacity:0 for visual hiding (NOT 0.6 for disabled) — do NOT
+   add a Part 2 opacity reset. Resetting input opacity:0→1 would un-hide the hidden accessibility input.
+   Root 0.5 composites track, thumb, and label uniformly (Mantine does not set element-level opacity
+   on these slots for disabled state, so there is no double-stacking risk). */
+.mantine-Switch-root:has(:disabled),
+.mantine-Switch-root:has([data-disabled]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

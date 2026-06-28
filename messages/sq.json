@@ -2159,7 +2159,10 @@
       "sel_error": "Ju lutem zgjidhni llojin e pronës",
       "cb_label": "Më mbaj mend",
       "cb_error": "Duhet të pranoni kushtet",
-      "cb_long_label": "Unë pranoj kushtet e shërbimit dhe politikën e privatësisë të kësaj platforme"
+      "cb_long_label": "Unë pranoj kushtet e shërbimit dhe politikën e privatësisë të kësaj platforme",
+      "rb_label": "Për shitje",
+      "rb_error": "Ju lutem zgjidhni llojin e listimit",
+      "rb_long_label": "Dëshiroj të marr rekomandime të personalizuara të pronës dhe përditësime me email"
     }
   },
   "ui": {

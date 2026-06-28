@@ -133,3 +133,47 @@
   opacity: 1;
   cursor: not-allowed;
 }
+
+/* ── Radio — §6g state chrome (Task 498) ─────────────────────────────────── */
+
+/* Resting unchecked: gray-3 border (#d0d5dd per §6g). :not(:checked)/:not([data-checked]) preserves brand-7 fill. */
+.mantine-Radio-radio:not(:checked):not([data-checked]) {
+  border-color: var(--mantine-color-gray-3);
+}
+
+/* Focus — keyboard only via :focus-visible; suppress ring on mouse click */
+.mantine-Radio-radio:focus-visible {
+  outline: none;
+  border-color: var(--mantine-color-brand-7);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-Radio-radio:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Error: red-6 border + ring. Mantine emits data-error via mod:{error:!!error} in Radio.mjs ~L137.
+   :not(:checked) lifts specificity to (0,3,0) — same as resting rule — wins by source order.
+   checked+error → brand border wins (§6g: aria-invalid:aria-checked:border-primary precedent). */
+.mantine-Radio-radio[data-error]:not(:checked) {
+  border-color: var(--mantine-color-red-6);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent);
+}
+.mantine-Radio-radio[data-error]:checked {
+  border-color: var(--mantine-color-brand-7); /* checked+error: brand border wins, no ring */
+  box-shadow: none;
+}
+
+/* Disabled §6g — whole control (circle + label) → opacity 0.5; §6e/§6f two-part pattern (Task 508) */
+/* Part 1 — Root: uniform 0.5 fade composites circle, dot, and label together */
+.mantine-Radio-root:has(:disabled),
+.mantine-Radio-root:has([data-disabled]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Part 2 — Input: reset Mantine's element-level opacity → 1 (root 0.5 is the sole multiplier) */
+.mantine-Radio-radio:disabled,
+.mantine-Radio-radio[data-disabled] {
+  opacity: 1;
+  cursor: not-allowed;
+}

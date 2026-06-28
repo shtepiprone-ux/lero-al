@@ -214,7 +214,13 @@ export const theme = createTheme({
       },
     },
     Radio: {
-      defaultProps: {},
+      // size='xs' → 16px circle (sm ≈ 20px, too large per §6g); body min-height 44px touch target;
+      // label font-size reset: xs-size defaults to 12px, §6g requires 14px (sm).
+      defaultProps: { size: 'xs' },
+      styles: {
+        body:  { minHeight: '2.75rem', alignItems: 'center' }, // ≥44px touch (rem — same exemption as Button/Checkbox)
+        label: { fontSize: 'var(--mantine-font-size-sm)', color: 'var(--mantine-color-gray-7)' }, // §6g 14px / gray-7
+      },
     },
     Switch: {
       defaultProps: { size: 'sm' }, // TailAdmin compact toggle density

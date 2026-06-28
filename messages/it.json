@@ -2159,7 +2159,10 @@
       "sel_error": "Seleziona un tipo di proprietà",
       "cb_label": "Ricordami",
       "cb_error": "Devi accettare i termini",
-      "cb_long_label": "Accetto i termini di servizio e l'informativa sulla privacy di questa piattaforma"
+      "cb_long_label": "Accetto i termini di servizio e l'informativa sulla privacy di questa piattaforma",
+      "rb_label": "In vendita",
+      "rb_error": "Seleziona il tipo di annuncio",
+      "rb_long_label": "Vorrei ricevere raccomandazioni di immobili personalizzate e aggiornamenti via email"
     }
   },
   "ui": {

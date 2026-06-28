@@ -2159,7 +2159,10 @@
       "sel_error": "Please select a property type",
       "cb_label": "Remember me",
       "cb_error": "You must accept the terms",
-      "cb_long_label": "I agree to the terms of service and privacy policy of this platform"
+      "cb_long_label": "I agree to the terms of service and privacy policy of this platform",
+      "rb_label": "For sale",
+      "rb_error": "Please select a listing type",
+      "rb_long_label": "I would like to receive personalized property recommendations and updates by email"
     }
   },
   "ui": {

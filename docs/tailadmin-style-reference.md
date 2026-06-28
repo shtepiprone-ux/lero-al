@@ -213,6 +213,41 @@ are source literals; `rounded-[4px]` maps to `radius='sm'` (4px), no raw px in C
 > **🔴 Always-verify-styles gate (owner P0, 2026-06-28):** every state above is verified against the rendered Checkbox at
 > the canonical breakpoints × sq/en/uk/it before approval. `tsc=0`/build-green is never style proof.
 
+## 6g. Radio — FULL state matrix (authoritative; owner P0, 2026-06-28)
+
+> Extracted from the source-of-truth components — do not infer:
+> - `src/components/ui/radio-group.tsx` (circle + indicator classes)
+> - `src/components/ui/label.tsx` (label disabled treatment — shared with §6e/§6f)
+>
+> Same disabled discipline as §6e/§6f: when disabled, the **whole control dims (circle + label) uniformly to opacity 0.5** —
+> source carries `disabled:opacity-50` on the circle AND `peer-disabled:opacity-50` on the label.
+> Verifying only the circle is a review failure.
+
+**Circle geometry:** `size-4` = **16px circle**, `rounded-full` = **full radius**, center dot `size-2` = **8px white**. Mantine
+`size='sm'` ≈ 20px — confirm at runtime which Mantine `size` yields the **16px** circle (likely `size='xs'`, same as Checkbox);
+pin it in `theme.ts` `Radio.defaultProps` and document.
+
+| State | Circle | Dot | Label | Source-of-truth class |
+|---|---|---|---|---|
+| **unchecked (resting)** | border `gray-3` (#d0d5dd) · transparent bg · 16px · `rounded-full` | none | `text-sm` `gray-7` (#344054), wraps, ≥44px tap row | `border border-input` |
+| **checked** | bg `brand-7` (#EC5447) · border `brand-7` · 8px white center dot | `bg-primary-foreground` white 8px | unchanged | `data-checked:bg-primary data-checked:border-primary data-checked:text-primary-foreground` |
+| **focus** | keyboard-visible brand ring + brand border (not on mouse) | — | unchanged | `focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring` |
+| **error** | border `red-6` (#d92d20) + ring; **checked+error keeps brand border** | — | unchanged | `aria-invalid:border-destructive aria-invalid:ring-destructive/20` · `aria-invalid:aria-checked:border-primary` |
+| **disabled** | **opacity 0.5** · `cursor: not-allowed` · no focus ring | dims with circle | **opacity 0.5** (dims with circle) | `disabled:opacity-50`; label `peer-disabled:opacity-50` |
+
+**Mantine selector reality (confirm via DevTools, like §6e/§6f):** circle = `.mantine-Radio-radio`, dot = `.mantine-Radio-icon`,
+label = `.mantine-Radio-label`, root = `.mantine-Radio-root`. These are siblings inside the root → `:disabled` on the circle
+does NOT reach the label. Dim the whole control uniformly (root-level opacity, like §6e/§6f Part 1) — never stack two
+opacities (0.25). **Error attribute: Mantine emits `data-error` (not `aria-invalid`) via `mod:{error:!!error}` in `Radio.mjs`
+~L137** — same as Checkbox. State chrome that Mantine's `size`/`color` props cannot express lives in `input-chrome.css`,
+NOT `theme.ts` inline `styles`.
+
+**Token discipline:** brand `var(--mantine-color-brand-7)`, gray `…-gray-3`, red `…-red-6`; `opacity:0.5` + `cursor:not-allowed`
+are source literals; `rounded-full` = Mantine default Radio shape, no raw px in CSS.
+
+> **🔴 Always-verify-styles gate (owner P0, 2026-06-28):** every state above is verified against the rendered Radio at
+> the canonical breakpoints × sq/en/uk/it before approval. `tsc=0`/build-green is never style proof.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

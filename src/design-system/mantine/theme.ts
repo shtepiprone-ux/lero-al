@@ -205,7 +205,13 @@ export const theme = createTheme({
       styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
     },
     Checkbox: {
-      defaultProps: { radius: 'sm' },
+      // size='xs' → 16px box (sm ≈ 20px, too large per §6f); body min-height 44px touch target;
+      // label font-size reset: xs-size defaults to 12px, §6f requires 14px (sm).
+      defaultProps: { radius: 'sm', size: 'xs' },
+      styles: {
+        body:  { minHeight: '2.75rem', alignItems: 'center' }, // ≥44px touch (rem — same exemption as Button/TextInput)
+        label: { fontSize: 'var(--mantine-font-size-sm)', color: 'var(--mantine-color-gray-7)' }, // §6f 14px / gray-7
+      },
     },
     Radio: {
       defaultProps: {},

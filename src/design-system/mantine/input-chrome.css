@@ -88,3 +88,48 @@
   opacity: 1;                           /* reset Mantine's 0.6 — root provides the 0.5 fade */
   cursor: not-allowed;
 }
+
+/* ── Checkbox — §6f state chrome (Task 497) ─────────────────────────────── */
+
+/* Resting unchecked: gray-3 border (#d0d5dd per §6f).
+   :not(:checked)/:not([data-checked]) prevents overriding Mantine's brand-7 checked fill. */
+.mantine-Checkbox-input:not(:checked):not([data-checked]) {
+  border-color: var(--mantine-color-gray-3);
+}
+
+/* Focus — keyboard only via :focus-visible; suppress ring on mouse click */
+.mantine-Checkbox-input:focus-visible {
+  outline: none;
+  border-color: var(--mantine-color-brand-7);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-Checkbox-input:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Error: red-6 border + ring. Mantine emits data-error (not aria-invalid) via mod:{error:!!error}
+   in Checkbox.mjs ~L149. Specificity: :not(:checked) lifts to (0,3,0) — same as the resting rule —
+   so the error rule wins via source order. checked+error: brand border wins, no ring. */
+.mantine-Checkbox-input[data-error]:not(:checked) {
+  border-color: var(--mantine-color-red-6);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent);
+}
+.mantine-Checkbox-input[data-error]:checked {
+  border-color: var(--mantine-color-brand-7); /* checked+error: brand border wins, no ring */
+  box-shadow: none;
+}
+
+/* Disabled §6f — whole control (box + label) → opacity 0.5; §6e two-part pattern (Task 508) */
+/* Part 1 — Root: uniform 0.5 fade composites box, icon, and label together */
+.mantine-Checkbox-root:has(:disabled),
+.mantine-Checkbox-root:has([data-disabled]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* Part 2 — Input: reset Mantine's element-level opacity → 1 (root 0.5 is the sole multiplier) */
+.mantine-Checkbox-input:disabled,
+.mantine-Checkbox-input[data-disabled] {
+  opacity: 1;
+  cursor: not-allowed;
+}

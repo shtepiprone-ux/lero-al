@@ -2156,7 +2156,10 @@
       "sel_option_house": "Shtëpi",
       "sel_option_commercial": "Pronë komerciale",
       "sel_option_land": "Tokë",
-      "sel_error": "Ju lutem zgjidhni llojin e pronës"
+      "sel_error": "Ju lutem zgjidhni llojin e pronës",
+      "cb_label": "Më mbaj mend",
+      "cb_error": "Duhet të pranoni kushtet",
+      "cb_long_label": "Unë pranoj kushtet e shërbimit dhe politikën e privatësisë të kësaj platforme"
     }
   },
   "ui": {

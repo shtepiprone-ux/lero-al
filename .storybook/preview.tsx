@@ -138,19 +138,13 @@ const withCanvas: Decorator = (Story, context) => {
 
 // ── Theme decorator ───────────────────────────────────────────────────────────
 // Applies dark/light class to the document root for stories that use semantic tokens.
-// Also injects --font-outfit so that font-sans / @apply font-sans (globals.css wires
-// --font-sans → var(--font-outfit)) resolves to the CDN-loaded Outfit font
-// (preview-head.html). In the real app this variable is set by Next.js's font loader
-// (outfit.variable in src/app/layout.tsx). Without this injection the base font would
-// fall back to the browser default sans-serif instead of Outfit.
+// Open Sans resolves via the "Open Sans" literal in --font-sans / --font-heading
+// (globals.css) + the CDN <link> in preview-head.html — no JS injection needed.
 const withTheme: Decorator = (Story, context) => {
   const theme = context.globals.theme ?? 'light';
   if (typeof document !== 'undefined') {
     document.documentElement.classList.remove('light', 'dark');
     if (theme === 'dark') document.documentElement.classList.add('dark');
-    // Mirror what Next.js font loader (outfit.variable) sets in the real app.
-    // 'Outfit' is loaded via Google Fonts CDN in .storybook/preview-head.html.
-    document.documentElement.style.setProperty('--font-outfit', '"Outfit", sans-serif');
   }
   return (
     <div className="min-h-screen bg-background text-foreground">

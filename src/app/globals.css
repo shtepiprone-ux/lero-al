@@ -95,12 +95,13 @@
   --radius-3xl: calc(var(--radius) * 2.6);
   --radius-4xl: calc(var(--radius) * 3.2);
 
-  /* Font — Outfit is the single project family (TailAdmin source of truth).
-     --font-outfit is defined by the Next.js font loader (layout.tsx); Storybook
-     defines it in .storybook/preview.tsx. Geist fully removed (2026-06-26). */
-  --font-sans:    var(--font-outfit), system-ui, -apple-system, sans-serif;
+  /* Font — Open Sans is the single project family (Outfit retired 2026-06-27, no Cyrillic; Task 506).
+     --font-open-sans is emitted by the Next.js font loader (layout.tsx, variable:'--font-open-sans').
+     Storybook: --font-open-sans is absent; the "Open Sans" literal fallback picks up the CDN link
+     in .storybook/preview-head.html. Full Latin + Cyrillic + Cyrillic-ext subsets. */
+  --font-sans:    var(--font-open-sans, "Open Sans", system-ui, -apple-system, sans-serif);
   --font-mono:    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-heading: var(--font-outfit), system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-open-sans, "Open Sans", system-ui, -apple-system, sans-serif);
 
   /* ═══════════════════════════════════════════════════════════════
      DESIGN VARIABLES — Epic JJ Phase 1 (Task 401, 2026-06-06)
@@ -499,7 +500,7 @@
 
   body {
     @apply bg-background text-foreground;
-    /* No Geist character-variant feature settings — Outfit uses normal defaults. */
+    /* No Geist character-variant feature settings — Open Sans uses normal defaults. */
   }
 
   /* Focus visible — accessible keyboard navigation */

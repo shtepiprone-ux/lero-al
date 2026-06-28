@@ -88,12 +88,12 @@ export const theme = createTheme({
     xxl: '90em',  // 1440px — large desktop
   },
 
-  // Font: Outfit (TailAdmin standard, Task 484 §1b — owner decision 2026-06-25).
-  // Loaded via Next.js font loader in layout.tsx; Storybook: Google Fonts CDN in preview-head.html.
-  fontFamily: 'var(--font-outfit), Outfit, system-ui, -apple-system, sans-serif',
+  // Font: Open Sans (Outfit retired 2026-06-27 — no Cyrillic glyphs; Task 506).
+  // --font-open-sans: Next.js loader (layout.tsx); Storybook: "Open Sans" literal + CDN link in preview-head.html.
+  fontFamily: 'var(--font-open-sans, "Open Sans", system-ui, -apple-system, sans-serif)',
   fontFamilyMonospace: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   headings: {
-    fontFamily: 'Outfit, var(--font-outfit), system-ui, -apple-system, sans-serif',
+    fontFamily: 'var(--font-open-sans, "Open Sans", system-ui, -apple-system, sans-serif)',
     // Heading scale: TailAdmin title-* sizes (§1b). Line heights ~1.25 per TailAdmin titles.
     sizes: {
       h1: { fontSize: '3rem',     lineHeight: '1.25', fontWeight: '700' }, // title-lg 48px
@@ -189,6 +189,17 @@ export const theme = createTheme({
         },
       },
     },
+    PasswordInput: {
+      // inputWrapperOrder: description below input (Task 503 owner UX decision, matches TextInput/Textarea)
+      defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
+      styles: {
+        // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
+        input: {
+          minHeight: '2.75rem',                 // ≥44px outer div / TailAdmin h-11 (rem — exemption)
+          color: 'var(--mantine-color-gray-8)', // §6 text — gray-800
+        },
+      },
+    },
     Select: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text
       styles: { input: { minHeight: '2.75rem' } }, // ≥44px touch / TailAdmin h-11 (rem — exemption)
@@ -210,10 +221,11 @@ export const theme = createTheme({
     // a localized "(optional)" suffix inline in the label text instead of a Mantine asterisk.
     InputWrapper: {
       styles: {
-        // §6: 14px (text-theme-sm), fw500 (font-medium), gray-700 (text-gray-700)
+        // §6: 14px (text-theme-sm), gray-700 (text-gray-700). Weight 600 (semibold) — owner override of
+        // §6's fw500: Open Sans medium (500) is visually near-identical to 400, so labels use 600 for clear distinction.
         label: {
           fontSize: 'var(--mantine-font-size-sm)',
-          fontWeight: 500,
+          fontWeight: 600,
           color: 'var(--mantine-color-gray-7)',
         },
         // suppress Mantine's red `*` asterisk globally — no asterisk anywhere, even if `required` is passed

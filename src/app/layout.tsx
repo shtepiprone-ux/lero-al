@@ -1,5 +1,5 @@
 import type { Viewport } from 'next'
-import { Outfit } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { ColorSchemeScript } from '@mantine/core'
 import { headers, cookies } from 'next/headers'
@@ -15,10 +15,11 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-// Outfit: the single project font (TailAdmin source of truth, owner decision 2026-06-26).
-// Exposed as the --font-outfit CSS variable, which globals.css wires to --font-sans /
-// --font-heading so the whole app (and Mantine) renders in Outfit. Geist fully removed.
-const outfit = Outfit({ subsets: ['latin', 'latin-ext'], variable: '--font-outfit' })
+// Open Sans: the single project font (Outfit retired 2026-06-27 — no Cyrillic glyphs; Task 506).
+// Full Latin + Cyrillic + Cyrillic-ext subsets ensure uk (Ukrainian) text renders at the correct
+// weight (fw500 labels visible) instead of falling back to a system font with no medium glyph.
+// Exposed as --font-open-sans; globals.css wires it to --font-sans/--font-heading for app + Mantine.
+const sans = Open_Sans({ subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'], variable: '--font-open-sans', display: 'swap' })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [headersList, jar] = await Promise.all([headers(), cookies()])
@@ -27,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const locale = headersList.get('X-NEXT-INTL-LOCALE') ?? jar.get('admin-locale')?.value ?? 'sq'
 
   return (
-    <html lang={locale} suppressHydrationWarning className={outfit.variable} data-scroll-behavior="smooth">
+    <html lang={locale} suppressHydrationWarning className={sans.variable} data-scroll-behavior="smooth">
       <head>
         {/* Mantine color-scheme script — prevents flash of wrong color scheme (FOUC).
             Must be the first script in <head>, before any CSS or body content. */}

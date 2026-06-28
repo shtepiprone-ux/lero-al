@@ -41,15 +41,50 @@
   box-shadow: none;
 }
 
-/* Disabled — source-of-truth (src/components/ui/input.tsx + TailAdmin demo): a FADED TRANSPARENT field
-   (opacity 0.5 + not-allowed), NOT Mantine's solid gray --input-disabled-bg fill.
-   Covers TextInput / Textarea / Select / PasswordInput (outer box + :has for composite). */
+/* Select — border chrome mirrors TextInput (resting = gray-2 per owner decision 2026-06-27).
+   Disabled for Select is covered by the block below (Task 507) — do not duplicate. */
+.mantine-Select-input {
+  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
+}
+.mantine-Select-input::placeholder {
+  color: var(--mantine-color-gray-4);                 /* §6 placeholder — gray-400 */
+}
+.mantine-Select-input:focus {
+  border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-Select-input[data-error],
+.mantine-Select-input[data-error]:focus {
+  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
+  box-shadow: none;
+}
+
+/* Disabled §6e — source-of-truth: the WHOLE CONTROL dims (label + field + trailing icon → opacity 0.5),
+   not just the field. Two-part rule to avoid double-stacking (0.5 × Mantine's 0.6 = 0.3):
+   Part 1: root-level opacity 0.5 covers every child (label, input, chevron, reveal toggle) uniformly.
+   Part 2: per-element resets Mantine's input-level 0.6 → 1 so root 0.5 is the only multiplier. */
+
+/* Part 1 — Root: uniform fade (label + field + icon all at 0.5 via compositing) */
+.mantine-TextInput-root:has(:disabled),
+.mantine-TextInput-root:has([data-disabled]),
+.mantine-Textarea-root:has(:disabled),
+.mantine-Textarea-root:has([data-disabled]),
+.mantine-Select-root:has(:disabled),
+.mantine-Select-root:has([data-disabled]),
+.mantine-PasswordInput-root:has(:disabled),
+.mantine-PasswordInput-root:has([data-disabled]) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Part 2 — Per-element: transparent bg; opacity reset to 1 (root 0.5 already applies via compositing) */
 .mantine-TextInput-input:disabled,      .mantine-TextInput-input[data-disabled],
 .mantine-Textarea-input:disabled,       .mantine-Textarea-input[data-disabled],
 .mantine-Select-input:disabled,         .mantine-Select-input[data-disabled],
 .mantine-PasswordInput-input[data-disabled],
 .mantine-PasswordInput-input:has(input:disabled) {
   background-color: transparent;        /* kill Mantine's gray --input-disabled-bg */
-  opacity: 0.5;                         /* source opacity-50 (was Mantine 0.6) */
+  opacity: 1;                           /* reset Mantine's 0.6 — root provides the 0.5 fade */
   cursor: not-allowed;
 }

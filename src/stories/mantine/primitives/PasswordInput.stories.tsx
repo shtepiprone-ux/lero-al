@@ -85,10 +85,10 @@ export const Default: Story = {
             />
           </Stack>
 
-          {/* 4 — disabled: dimmed box + dimmed toggle; no focus ring; no pointer; no red */}
+          {/* 4 — disabled: whole control faded — label + outer box + reveal toggle all at opacity 0.5 (§6e) */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              disabled — dimmed outer box + dimmed toggle; no focus ring; no pointer; no red
+              disabled — whole control faded (label + outer box + reveal toggle → opacity 0.5); transparent bg; not-allowed; no red
             </Text>
             <PasswordInput
               label={t('pw_label')}

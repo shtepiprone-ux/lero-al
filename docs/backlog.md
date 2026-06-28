@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-28 — Task 495 (Select) ❌ REJECTED (owner rendered review) → corrective Task 508 opened.** Disabled Select faded the field only; **label + chevron stayed full-strength** vs source of truth (whole control → opacity 0.5). Root cause = orchestrator scope gap in Task 507 (disabled scoped to `.mantine-*-input`, never the sibling label/section); systemic across all 4 input primitives. Authored `tailadmin-style-reference.md` §6e (full state matrix incl. disabled label+icon) + standing "always-verify-styles" review gate (`orchestrator-role.md`). Kickoff `tasks/Sprints/Sprint_38_kickoff_prompt_Task_508_InputDisabledLabelIcon_SourceOfTruth.md`. **Next: owner runs the emitted governance commit → Sonnet executes Task 508 (495 closes via 508's Select disabled proof) → 497(Checkbox)→498(Radio)→499(Switch).**
+**2026-06-28 — Task 508 (disabled = whole-control fade) ✅ APPROVED → Task 495 (Select) CLOSED.** Two-part `input-chrome.css` rule: Part 1 `.mantine-{TextInput,Textarea,Select,PasswordInput}-root:has(:disabled)/:has([data-disabled])` → `opacity:0.5` composites label+field+icon uniformly; Part 2 resets the field's Mantine 0.6→`opacity:1` + `background:transparent` so no 0.5×0.6=0.3 double-stack. Select + PasswordInput disabled captions updated. Orchestrator diff-verified real `input-chrome.css` + owner rendered-proof: whole control faded (label dims with field+chevron) across en/uk/sq/it @320 + it@680. Gates: tsc=0, check:stories 85/0, check:i18n 1997/4, check:design-tokens 0, check:mojibake 0. Governance from the 495 rejection (§6e state matrix + always-verify-styles gate) landed same thread. **Next: 497(Checkbox)→498(Radio)→499(Switch).**
 ## Pending Action Items
 
 | Item | Owner | Notes |

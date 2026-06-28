@@ -56,6 +56,13 @@ Mantine addresses these failures:
 
 ## §3 — Mantine as source of truth
 
+> **🔴 SOURCE-OF-TRUTH SPLIT (owner standing rule, restated 2026-06-27 — applies to EVERY UI task):**
+> **BEHAVIOR + RESPONSIVE come from Mantine** (built-in component logic, interaction, a11y, and Mantine's responsive
+> system — never reimplemented, wrapped, or re-handled). **VISUAL UI comes from TailAdmin** (`docs/tailadmin-style-reference.md`
+> §6/§6d + `demo_tailadmin_com.zip` — every color/spacing/border/radius/shadow value; ZERO invented px/colors — if a value
+> isn't in the reference, STOP and ASK). In short: **Mantine supplies the mechanism; TailAdmin dictates the look.** We
+> only re-skin Mantine with TailAdmin tokens; we do not re-engineer its behavior or responsive handling.
+
 **For all new UI/layout/component work from Task 482 onward:**
 
 | Rule | Requirement |

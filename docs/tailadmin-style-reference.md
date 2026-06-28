@@ -135,6 +135,49 @@ of chips. Replicate these, do not invent.
   Pagination, Tooltip, NavigationMenu. When a slice first needs one, extract its exact classes into a new §6e row
   before implementing — do NOT invent.
 
+## 6e. Input / Select / Textarea / PasswordInput — FULL state matrix (authoritative; owner P0, 2026-06-28)
+
+> **Why this section exists:** the disabled state was previously specified for the *field only* (Task 507), so the
+> **label** and the **trailing icon** stayed at full strength when a field was disabled — a visible divergence from the
+> source of truth that the owner rejected (Task 495). Every state below is now extracted from the source-of-truth
+> components and is the **single thing rendered proof must be verified against**. A field's disabled render is correct
+> ONLY when the **label, the field, the value/placeholder text, AND the trailing icon (Select chevron / PasswordInput
+> reveal toggle) all dim together**. Verifying only the field is a review failure.
+
+**Source-of-truth components (read these, do not infer):**
+- `src/components/ui/input.tsx` (TextInput/Textarea trigger classes)
+- `src/components/ui/select.tsx` (trigger + chevron rendered INSIDE the trigger → inherits the trigger's opacity)
+- `src/components/ui/label.tsx` (label disabled treatment)
+
+**State matrix — every input primitive (TextInput · Textarea · Select · PasswordInput):**
+
+| State | Field (border / bg / shadow) | Label | Trailing icon | Source-of-truth class |
+|---|---|---|---|---|
+| **resting** | border `gray-2` (#e4e7ec) · bg transparent · `shadow-theme-xs` · text `gray-8` · placeholder `gray-4` | `text-theme-sm fw600 gray-7` (owner override of fw500) | `gray-5` region (chevron / reveal) | `border-input bg-transparent shadow … placeholder:text-muted-foreground` |
+| **focus** | border `brand-3` (#F7BBB5) · ring `brand-5 @10%` 3px · no error | unchanged | unchanged | `focus-visible:border-ring focus-visible:ring-2` |
+| **error** | border `red-6` (#d92d20) · **no shadow** · ring cleared (`[data-error]`, NOT `data-invalid`) | unchanged (label color does NOT turn red) | unchanged | `aria-invalid:border-destructive aria-invalid:ring-destructive/20` |
+| **disabled** | bg **transparent** (NOT Mantine gray fill) · **opacity 0.5** · `cursor: not-allowed` · no focus ring · no red | **opacity 0.5 + `not-allowed`** (was MISSING) | **opacity 0.5** (was MISSING — chevron/reveal must fade with the field) | field: `disabled:cursor-not-allowed disabled:opacity-50` (TailAdmin demo: transparent bg, not `bg-input/50`); label: `peer-disabled:opacity-50 peer-disabled:cursor-not-allowed` / `group-data-[disabled=true]:opacity-50` |
+
+**The disabled rule, restated (the part that was missed):** the source fades the WHOLE control to `opacity 0.5`. In the
+shadcn/TailAdmin DOM this is automatic because (a) the chevron is a child of the trigger so it inherits the trigger's
+`opacity-50`, and (b) the label carries `peer-disabled:opacity-50`. In **Mantine** the label (`.mantine-InputWrapper-label`)
+and the trailing section (`.mantine-Select-section`, PasswordInput reveal button) are **siblings of the input**, so
+`:disabled`/`[data-disabled]` on the input does NOT reach them. The fix must therefore dim label + section + field
+**uniformly to a single 0.5** (e.g. apply opacity at the wrapper-root level when disabled, OR add explicit
+`.mantine-InputWrapper-label` + section disabled rules — never stack two opacities and get 0.25). Implement in
+`input-chrome.css` (never `theme.ts` inline `styles`, which freezes the cascade and drops state selectors). Final
+selectors confirmed via DevTools per Task 505/506 lesson.
+
+**Token discipline:** every value above is a Mantine theme token (`var(--mantine-color-gray-2)`, `…-brand-3`, `…-red-6`,
+`var(--mantine-shadow-xs)`); no raw hex/px in CSS. Opacity `0.5` and `cursor: not-allowed` are the source-of-truth
+literals (no token exists for them).
+
+> **🔴 Always-verify-styles gate (owner P0, 2026-06-28):** any task touching an input/select primitive — and every
+> review of one — MUST verify the rendered output of EACH state in this matrix (resting/focus/error/disabled, label +
+> field + icon) against this section, with rendered evidence at the canonical breakpoints × sq/en/uk/it. "tsc=0 /
+> build green" is never proof of a style. If a state is not yet documented here, extract it from the source-of-truth
+> component into this matrix BEFORE implementing — do not invent or guess.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

@@ -223,7 +223,7 @@ export const ContainerEscape: Story = {
 // NEW harness: bodyMargin≠0px (preflightOk=false) + controlThemed=false
 // (data-slot="button" div has zero UA styling after revert) = 2/4 failing
 // signals → retries → still unstyled → unstyled-render FAIL.
-// NOTE: font inherits the project font (Outfit) from un-reverted #storybook-root parent
+// NOTE: font inherits the project font (Open Sans) from un-reverted #storybook-root parent
 // (CSS revert on child can't change inherited properties from ancestors),
 // so the controlThemed signal provides the second failing check.
 function UnstyledContent() {

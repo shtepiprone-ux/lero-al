@@ -29,7 +29,7 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 > **🔴 MANTINE FREEZE (owner, 2026-06-24, Task 482): Mantine is now the source of truth for all new UI work.** New components MUST use Mantine. New responsive layout MUST use Mantine's responsive prop system. New Storybook stories MUST use the Mantine-native proof path. See `docs/mantine-responsive-design-system.md` — read it FIRST for any UI/layout/component task.
 
 **Required:**
-- `docs/mantine-responsive-design-system.md` ← **FIRST READ for any UI/layout/component work (Task 482, 2026-06-24). Mantine = source of truth.** §7 = mobile gate rules. §12 = canonical patterns. §15 = governance freeze. §16 = acceptance gates.
+- `docs/mantine-responsive-design-system.md` ← **FIRST READ for any UI/layout/component work (Task 482, 2026-06-24). Mantine = source of truth.** §7 = mobile gate rules. §12 = canonical patterns. §15 = governance freeze. §16 = acceptance gates. **🔴 §18 = Mantine theming/CSS pitfalls (HARD-WON, Sprint 38) — MANDATORY before ANY input/theme styling: `theme.styles`=inline (no state selectors → use `input-chrome.css`); stable `.mantine-*-input` classes + PasswordInput anatomy; `data-error` not `data-invalid`; disabled `:disabled`/`[data-disabled]`/`:has`; `var()` fallback inside the parens; Open Sans + 600 labels; rendered proof ≠ tsc-green.**
 - `docs/ui-rules.md`
 - `docs/component-rules.md`
 - `docs/qa-rules.md`

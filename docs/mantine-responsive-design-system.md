@@ -705,4 +705,93 @@ All future Mantine UI tasks must pass these gates:
 | `src/components/ui/sonner.tsx` vs Mantine Notifications coexistence | RESOLVED for Task 482 — Sonner kept temporarily; migrated to Mantine Notifications in Phase 3 | No |
 | Admin table canonical pattern evolution | OPEN — `AdminListingsTable` is a complex surface (sort + hide-column + global search). Migration to MantineAdminSurfacePattern requires owner review of current feature parity | Yes — Phase 3 planning |
 | `postcss-preset-mantine` / `postcss-simple-vars` | RESOLVED — NOT needed. Mantine v9 prebuilt CSS imported directly; no Mantine PostCSS plugins required | No |
+
+## §18 — Mantine theming/CSS pitfalls — HARD-WON RULES (do not repeat) 🔴
+
+> **Read this BEFORE writing any Mantine input/theme styling.** Every rule below cost a rejection cycle in
+> Sprint 38 (Tasks 494–507). They are not theoretical — each is a bug that shipped, looked green on `tsc`/gates,
+> and was caught only by the owner's rendered DevTools check. The root cause of nearly all of them: **`tsc=0` /
+> gate-green is NOT proof of rendered correctness.**
+
+### §18.1 — `theme.components.*.styles` are applied as INLINE styles (the #1 trap)
+
+Mantine v8 injects `theme.components.X.styles` (and per-instance `styles`) as **inline `style=` attributes** on each
+slot element, NOT as a CSS class. Two consequences:
+
+1. **Flat properties land inline and outrank EVERY stylesheet rule** (including Mantine's own `[data-error]`,
+   `:focus`, `:disabled`). Setting `styles.input.borderColor` froze the border gray in ALL states — the error/focus
+   CSS could never win (Task 496/505).
+2. **Nested/state selectors inside a `styles` object are SILENTLY DROPPED.** `'&:focus'`, `'&::placeholder'`,
+   `'&[data-error]'`, `'&[data-disabled]'`, `':has(...)'` cannot exist as inline styles, so Mantine discards them.
+   A `styles.input['&[data-error]']` block compiles fine and does nothing (Task 496 `[data-invalid]`, and the
+   orchestrator's first `[data-error]` "fix" — both dead for this reason).
+
+**RULE:** state-dependent input chrome (resting/focus/error/disabled border, shadow, placeholder) lives in the
+stylesheet **`src/design-system/mantine/input-chrome.css`** (imported after `@mantine/core/styles.css` in
+`src/app/layout.tsx` AND `.storybook/preview-head.html`/`preview.tsx`), targeting stable classes — NEVER in inline
+`theme.styles`. `theme.components.X.styles.input` may ONLY hold flat, state-independent props (e.g. `minHeight`,
+`color`).
+
+### §18.2 — Stable class names + input anatomy
+
+Mantine emits stable `.mantine-{Component}-{slot}` classes alongside the hashed `.m_xxx`. Target these in
+`input-chrome.css`:
+
+- TextInput / Textarea / Select: border + state on `.mantine-TextInput-input` / `.mantine-Textarea-input` /
+  `.mantine-Select-input`. Placeholder on the same `-input`.
+- **PasswordInput is different:** the border + `data-error` + `data-disabled` are on the OUTER box
+  `.mantine-PasswordInput-input`; the real `<input>` is `.mantine-PasswordInput-innerInput` (border:0, transparent) —
+  **placeholder lives on `-innerInput`**, and the box focuses via **`:focus-within`**, not `:focus`.
+
+### §18.3 — Correct Mantine state attributes (verify in DevTools, don't assume)
+
+- **Error = `data-error`**, NOT `data-invalid` (zero `data-invalid` in `@mantine/core`). `Input.css` error rule sets
+  `--input-bd: var(--mantine-color-error)`.
+- **Disabled = `:disabled` OR `[data-disabled]`**, plus `:has(input:disabled)` for composites (PasswordInput).
+  Mantine's default disabled sets `background-color: var(--input-disabled-bg)` (a solid gray fill) + `opacity:0.6`.
+  Source-of-truth (`src/components/ui/input.tsx`: `disabled:opacity-50` + TailAdmin demo) = **faded transparent
+  field**: override with `background-color: transparent; opacity: 0.5; cursor: not-allowed`.
+- **Border** is `border: … solid var(--input-bd)` (Input.css). To control border per state robustly, set
+  `border-color` DIRECTLY on the stable class per state (rest gray-2 / `:focus` brand-3 / `[data-error]` red-6) so
+  you bypass the `--input-bd` variable cascade. `[data-error]` (0,2,0) > `:focus` (0,1,1) → error wins on focus.
+
+### §18.4 — CSS custom-property traps (font variables)
+
+- **Never name a `next/font` loader variable the same as an existing `@theme` token.** Naming the loader
+  `--font-sans` (an existing token) produced `--font-sans: var(--font-sans), …` — a **self-reference**, which CSS
+  treats as invalid → the font never applied (Task 506-R). Use a distinct loader var (`--font-open-sans`).
+- **`var()` fallback MUST be inside the parentheses:** `var(--x, "Open Sans", system-ui)` — NOT
+  `var(--x), "Open Sans", system-ui`. A `var()` referencing an **undefined** property with **no internal fallback**
+  invalidates the WHOLE declaration → `font-family` inherits → renders the default serif (Times New Roman in
+  Storybook, where `next/font` vars are undefined). Sibling-comma fonts after the `var()` are NEVER reached. This
+  is why Storybook showed Times New Roman with Open Sans loaded-but-unused (orchestrator direct fix, Task 506).
+
+### §18.5 — Project font = Open Sans (Cyrillic), input labels = 600
+
+- **Outfit has NO Cyrillic glyphs** (only latin/latin-ext) → all `uk` text fell back to a system font, hiding the
+  medium label weight. This was the real cause of "labels not bold" — the theme was always correct. Project font is
+  now **Open Sans** (`subsets: latin, latin-ext, cyrillic, cyrillic-ext`), loaded via `next/font` (app) +
+  Google CDN `<link>` (Storybook).
+- **Input labels use `fontWeight: 600` (semibold)** in `theme.components.InputWrapper.styles.label` — an owner
+  override of §6's medium(500), because Open Sans 500 is visually near-identical to 400.
+
+### §18.6 — Verification discipline (the meta-rule)
+
+`tsc=0`, `check:stories`, `check:design-tokens`, `check:i18n` green is a BASELINE, never rendered proof. Before
+claiming any input/theme styling works:
+
+1. **DevTools-confirm the actual rendered result** at `uk@320`: the computed `font-family` / "Fonts Used" panel
+   (is it really Open Sans, or a fallback?), and toggle the property off to confirm it's actually driving the render.
+2. **Confirm the real selector** carrying the state (`data-error` vs `data-invalid`; `:disabled` vs `[data-disabled]`
+   vs `:has`; `:focus` vs `:focus-within`) in the DOM before writing CSS against it.
+3. The rendered matrix (breakpoints × sq/en/uk/it, **uk@320/375/390 mandatory**) + a planted-violation transcript
+   is the verdict (clause 12/13). A green gate that contradicts the render is a fabricated proof.
+
+### §18.7 — Never run git or integrity checks in the Cowork sandbox
+
+Reaffirms `docs/orchestrator-role.md` → "Orchestrator NEVER runs git or integrity checks in the Cowork sandbox":
+sandbox `git diff`/`git status` returns a phantom over-dirty tree (and corrupts `.git/index`); sandbox `tsc`/`tr`/
+binary-flags serve mount artifacts (e.g. spurious "Invalid character" on an empty line, `.ts` flagged "binary").
+Use the **Read tool** for file content and the **owner's NATIVE PowerShell** for all git + the authoritative
+integrity/`tsc` verdict.
 | `@mantine/form` scope | RESOLVED for Task 482 — installed and used in `MantineTwoColumnForm`. Future auth/cabinet forms will use it in Phase 3 migration | No |

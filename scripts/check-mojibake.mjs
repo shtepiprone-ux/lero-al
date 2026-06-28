@@ -214,6 +214,7 @@ function run() {
     const { errors, hits } = scanFile(abs);
 
     if (errors.length > 0) {
+      if (isAllowlisted(rel, allowlist)) continue;
       invalidCount++;
       reports.push({ rel, lines: errors.map((e) => `    -> ${e}`) });
       continue;

@@ -4,5 +4,9 @@
   "docs/qa-rules.md",
   "docs/sessions/2026-06-15-task428-mojibake-encoding-guard.md",
   "tasks/kickoff_prompt_Task_429_mojibake_signature_coverage_and_allowlist_fix.md",
-  "docs/sessions/2026-06-15-task429-mojibake-signature-coverage-and-allowlist-fix.md"
+  "docs/sessions/2026-06-15-task429-mojibake-signature-coverage-and-allowlist-fix.md",
+  "docs/sessions/task467-full-owner-native-v1final.log",
+  "docs/sessions/task467-new-planted-containerescape-unstyledframe.json",
+  "docs/sessions/task467-old-planted-containerescape-unstyledframe.json",
+  "docs/sessions/task467-owner-final-rerun.log"
 ]

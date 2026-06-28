@@ -2143,7 +2143,12 @@
       "ta_placeholder": "Describe the property…",
       "ta_hint": "Up to 1000 characters",
       "ta_error": "Description is required",
-      "ta_long_value": "This spacious apartment is located in a quiet neighborhood close to schools, parks, and public transport. The property features three bedrooms, a modern kitchen, and a sunny balcony with city views. Available immediately, ideal for families or professionals seeking comfort and convenience."
+      "ta_long_value": "This spacious apartment is located in a quiet neighborhood close to schools, parks, and public transport. The property features three bedrooms, a modern kitchen, and a sunny balcony with city views. Available immediately, ideal for families or professionals seeking comfort and convenience.",
+      "pw_label": "Password",
+      "pw_placeholder": "Enter your password",
+      "pw_toggle_show": "Show password",
+      "pw_toggle_hide": "Hide password",
+      "pw_error": "Password is required"
     }
   },
   "ui": {

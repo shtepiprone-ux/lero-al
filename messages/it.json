@@ -2143,7 +2143,12 @@
       "ta_placeholder": "Descrivi l'immobile…",
       "ta_hint": "Fino a 1000 caratteri",
       "ta_error": "La descrizione è obbligatoria",
-      "ta_long_value": "Questo spazioso appartamento si trova in un quartiere tranquillo, vicino a scuole, parchi e trasporti pubblici. L'immobile dispone di tre camere da letto, una cucina moderna e un balcone soleggiato con vista sulla città. Disponibile subito, ideale per famiglie o professionisti che cercano comfort e praticità."
+      "ta_long_value": "Questo spazioso appartamento si trova in un quartiere tranquillo, vicino a scuole, parchi e trasporti pubblici. L'immobile dispone di tre camere da letto, una cucina moderna e un balcone soleggiato con vista sulla città. Disponibile subito, ideale per famiglie o professionisti che cercano comfort e praticità.",
+      "pw_label": "Password",
+      "pw_placeholder": "Inserisci la password",
+      "pw_toggle_show": "Mostra password",
+      "pw_toggle_hide": "Nascondi password",
+      "pw_error": "La password è obbligatoria"
     }
   },
   "ui": {

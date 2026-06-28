@@ -22,3 +22,34 @@
   border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
   box-shadow: none;
 }
+
+/* PasswordInput — border/shadow/error on the OUTER .input div; focus is :focus-within; placeholder on innerInput */
+.mantine-PasswordInput-input {
+  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
+}
+.mantine-PasswordInput-innerInput::placeholder {
+  color: var(--mantine-color-gray-4);                 /* §6 placeholder — gray-400 */
+}
+.mantine-PasswordInput-input:focus-within {
+  border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-PasswordInput-input[data-error],
+.mantine-PasswordInput-input[data-error]:focus-within {
+  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 */
+  box-shadow: none;
+}
+
+/* Disabled — source-of-truth (src/components/ui/input.tsx + TailAdmin demo): a FADED TRANSPARENT field
+   (opacity 0.5 + not-allowed), NOT Mantine's solid gray --input-disabled-bg fill.
+   Covers TextInput / Textarea / Select / PasswordInput (outer box + :has for composite). */
+.mantine-TextInput-input:disabled,      .mantine-TextInput-input[data-disabled],
+.mantine-Textarea-input:disabled,       .mantine-Textarea-input[data-disabled],
+.mantine-Select-input:disabled,         .mantine-Select-input[data-disabled],
+.mantine-PasswordInput-input[data-disabled],
+.mantine-PasswordInput-input:has(input:disabled) {
+  background-color: transparent;        /* kill Mantine's gray --input-disabled-bg */
+  opacity: 0.5;                         /* source opacity-50 (was Mantine 0.6) */
+  cursor: not-allowed;
+}

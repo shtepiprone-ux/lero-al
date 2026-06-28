@@ -2143,7 +2143,12 @@
       "ta_placeholder": "Përshkruani pronën…",
       "ta_hint": "Deri në 1000 karaktere",
       "ta_error": "Përshkrimi është i detyrueshëm",
-      "ta_long_value": "Ky apartament i gjerë ndodhet në një lagje të qetë, afër shkollave, parqeve dhe transportit publik. Prona ka tre dhoma gjumi, kuzhinë moderne dhe ballkon me diell me pamje nga qyteti. E disponueshme menjëherë, ideale për familje ose profesionistë që kërkojnë komoditet dhe lehtësi."
+      "ta_long_value": "Ky apartament i gjerë ndodhet në një lagje të qetë, afër shkollave, parqeve dhe transportit publik. Prona ka tre dhoma gjumi, kuzhinë moderne dhe ballkon me diell me pamje nga qyteti. E disponueshme menjëherë, ideale për familje ose profesionistë që kërkojnë komoditet dhe lehtësi.",
+      "pw_label": "Fjalëkalimi",
+      "pw_placeholder": "Vendosni fjalëkalimin",
+      "pw_toggle_show": "Trego fjalëkalimin",
+      "pw_toggle_hide": "Fshih fjalëkalimin",
+      "pw_error": "Fjalëkalimi është i detyrueshëm"
     }
   },
   "ui": {

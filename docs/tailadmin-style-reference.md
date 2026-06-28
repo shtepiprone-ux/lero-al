@@ -12,7 +12,7 @@
 
 ## 1. Foundations
 
-- **Font:** `Outfit, sans-serif` (owner-adopted).
+- **Font:** `Open Sans, sans-serif` (Outfit retired 2026-06-27 — no Cyrillic glyphs; Task 506).
 - **Spacing grid:** 4px base (`--spacing: 0.25rem`). Common steps: 8 (gap), 12, 16 (card/table vertical), 20
   (card pad / table horizontal), 24 (block gap), 32.
 - **Breakpoints:** sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536.

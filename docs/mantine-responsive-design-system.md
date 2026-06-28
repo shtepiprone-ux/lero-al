@@ -123,7 +123,7 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Brand primary color | `#EC5447` (shade 7) | `primaryColor: 'brand', primaryShade: 7` |
 | Color palette | Brand + TailAdmin gray + semantic (success/warning/error) | `colors: { brand, gray, green, yellow, red }` |
 | Light-only theme | Owner requirement: no dark mode | `defaultColorScheme: 'light'`; `forceColorScheme: 'light'` in Storybook |
-| Font family | **Outfit** (TailAdmin font, Task 484 §1b — owner decision 2026-06-25) | Next.js font loader; `fontFamily: 'Outfit, var(--font-outfit), system-ui, ...'` |
+| Font family | **Open Sans** (Outfit retired 2026-06-27 — no Cyrillic glyphs; Task 506) | Next.js font loader; `fontFamily: '"Open Sans", var(--font-sans), system-ui, ...'` |
 | Heading scale | h1=3rem(48) → h6=1.125rem(18) — TailAdmin title-* scale | `headings.sizes.*` |
 | Spacing (4px base) | **xs=8 / sm=12 / md=16 / lg=20 / xl=24 px** (TailAdmin §1b) | `spacing: { xs: '0.5rem', sm: '0.75rem', md: '1rem', lg: '1.25rem', xl: '1.5rem' }` |
 | Radius | **xs=2 / sm=4 / md=6 / lg=8 (controls) / xl=12 / 2xl=16 (Card) / pill=9999 px** | `radius: { ..., '2xl': '1rem', pill: '9999px' }`; `defaultRadius: 'lg'` |

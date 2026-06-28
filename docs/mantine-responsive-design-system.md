@@ -802,3 +802,65 @@ binary-flags serve mount artifacts (e.g. spurious "Invalid character" on an empt
 Use the **Read tool** for file content and the **owner's NATIVE PowerShell** for all git + the authoritative
 integrity/`tsc` verdict.
 | `@mantine/form` scope | RESOLVED for Task 482 — installed and used in `MantineTwoColumnForm`. Future auth/cabinet forms will use it in Phase 3 migration | No |
+
+---
+
+## §19 — Canonical responsive Select: `MantineSelect` (Tasks 509 + 510)
+
+> **Decision 2026-06-28 (Task 509):** build the bottom-sheet FOUNDATION first, before migrating individual overlays.
+> Reference-implemented on `Select`. Batch C overlays consume this foundation.
+>
+> **Decision 2026-06-28 (Task 510):** ONE canonical Select — responsive by default. There is no
+> "plain Select vs bottom-sheet Select" choice. `MantineSelect` IS the Select primitive.
+
+### §19.1 — Core mechanism
+
+**Location:** `src/design-system/mantine/patterns/MantineSelect.tsx`
+
+**Exports (shared by all Batch C overlays — import from `src/design-system/mantine/patterns`):**
+
+| Export | Type | Purpose |
+|---|---|---|
+| `useResponsiveDropdown()` | Hook | Returns `{ isMobile, drawerOpened, openDrawer, closeDrawer }`. Single source of truth for mobile detection + Drawer state. |
+| `bottomSheetDrawerStyles` | Const | `styles` object for Mantine `<Drawer>` matching the P0 bottom-sheet treatment (top-only radius, ≤90dvh, internal scroll, inner padding 0). |
+| `MantineSelect` | Component | Canonical P0-compliant responsive Select. Anchored dropdown at ≥640; full-width bottom sheet at <640. ONE component — no dual-path imports. |
+
+**How the dropdown interception works:**
+
+1. `useResponsiveDropdown()` returns `isMobile` from `useMediaQuery('(max-width: 40em)')` + `useDisclosure()` Drawer state.
+2. On mobile, Select is rendered with `dropdownOpened={false}` (prevents the Mantine anchored dropdown from showing) + `onDropdownOpen={openDrawer}` (fires when user clicks/keyboard-opens → opens Drawer instead).
+3. The Drawer uses `bottomSheetDrawerStyles` (edge-to-edge, top-only radius, drag handle, ≤90dvh, internal scroll, `returnFocus`).
+4. Desktop: `dropdownOpened={undefined}` + `onDropdownOpen={undefined}` → normal Select dropdown behavior unchanged.
+
+**Batch C adoption pattern (Menu/Popover/Combobox/NavigationMenu):**
+```tsx
+import { useResponsiveDropdown, bottomSheetDrawerStyles } from '@/design-system/mantine/patterns'
+
+// In your overlay component:
+const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
+
+// Wire the trigger to openDrawer on mobile; normal dropdown on desktop
+// Render a <Drawer ... styles={bottomSheetDrawerStyles} opened={drawerOpened} onClose={closeDrawer}>
+// inside the same component (always closed on SSR)
+```
+
+### §19.2 — SSR/hydration caveat
+
+Same documented trade-off as `MantineDialogDrawerPattern` (§4 table row): `useMediaQuery` returns `false` on first render (evaluated in `useEffect`). The Drawer is always closed on SSR so no flash occurs. The trigger renders as the desktop path server-side and switches to the mobile path after hydration. Acceptable — both paths use the same `<Select>` trigger chrome so there is no visible change.
+
+### §19.3 — Storybook proof location
+
+`src/stories/mantine/primitives/Select.stories.tsx` → `Default` — toolbar-driven. **ALL 6 sections use `MantineSelect`** — every section is a bottom sheet at <640 toolbar width and an anchored dropdown at ≥640. No section uses the raw `@mantine/core` Select as a rendered control.
+
+Sections: resting / open / error / disabled / long-uk-stress / disabled-no-open-sheet (negative flow).
+
+### §19.4 — P0 gate
+
+At `<640px`:
+- Trigger: `w={{ base: '100%', sm: 'auto' }}` (P0 full-width)
+- Dropdown: full-width bottom Drawer (NOT an anchored mini-dropdown)
+- Option rows: `mih="2.75rem"` (≥44px touch target), `whitespace: normal`, `wordBreak: break-word`
+- No horizontal scroll at 320px
+
+At `≥640px`:
+- Standard Mantine Select anchored dropdown — §6d chrome unchanged (gray-2 border, shadow-xs, brand focus, 44px, disabled fade)

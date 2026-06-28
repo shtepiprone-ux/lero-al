@@ -289,6 +289,23 @@ default is gray-3; owner to confirm preference in DevTools). Brand `var(--mantin
 > **🔴 Always-verify-styles gate (owner P0, 2026-06-28):** every state above is verified against the rendered Switch at
 > the canonical breakpoints × sq/en/uk/it before approval. `tsc=0`/build-green is never style proof.
 
+## 6i. Canonical responsive Select + dropdown bottom-sheet mechanism (Tasks 509 + 510)
+
+> **Canonical component:** `MantineSelect` — `src/design-system/mantine/patterns/MantineSelect.tsx`.
+> ONE responsive Select: anchored dropdown at ≥640, full-width bottom sheet at <640. No dual-path imports.
+> Reusable foundation: `useResponsiveDropdown()` hook + `bottomSheetDrawerStyles` const (both exported from
+> `MantineSelect.tsx`). Batch C overlays (Menu / Popover / Combobox / NavigationMenu) consume these —
+> no per-overlay copy-paste. Full specification: `docs/mantine-responsive-design-system.md` §19.
+
+| Aspect | Value |
+|---|---|
+| Breakpoint | `<40em` (640px) = bottom sheet; `≥40em` = anchored dropdown |
+| Sheet chrome | `borderRadius: var(--mantine-radius-lg) ... 0 0` · `maxHeight: 90dvh` · `inner.padding: 0` |
+| Drag handle | `width: 2.5rem` · `height: 0.25rem` · `borderRadius: 9999px` · `bg: var(--mantine-color-gray-3)` |
+| Option rows | `mih: 2.75rem` (≥44px) · `py: sm (12px)` · `px: md (16px)` · `whitespace: normal` · `wordBreak: break-word` |
+| Trigger width | `w={{ base: '100%', sm: 'auto' }}` — P0 full-width at mobile |
+| Story | `src/stories/mantine/primitives/Select.stories.tsx` Default sections 5–7 |
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

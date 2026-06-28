@@ -39,3 +39,6 @@ export type { MantineAdminSurfacePatternProps, AdminFilter } from './MantineAdmi
 
 export { MantineAuthFormPattern } from './MantineAuthFormPattern'
 export type { MantineAuthFormPatternProps, AuthMode } from './MantineAuthFormPattern'
+
+export { MantineSelect, useResponsiveDropdown, bottomSheetDrawerStyles } from './MantineSelect'
+export type { MantineSelectProps } from './MantineSelect'

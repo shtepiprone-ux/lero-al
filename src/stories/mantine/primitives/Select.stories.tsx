@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Select, Stack, Text } from '@mantine/core'
+import { Box, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineSelect } from '@/design-system/mantine/patterns'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Select',
@@ -21,16 +22,24 @@ export const Default: Story = {
       { value: 'land',      label: t('sel_option_land') },
     ]
 
+    const optionsWithStress = [
+      { value: 'apartment', label: t('sel_option_apartment') },
+      { value: 'house',     label: t('sel_option_house') },
+      { value: 'commercial', label: t('sel_option_commercial') },
+      { value: 'land',      label: t('sel_option_land') },
+      { value: 'long',      label: t('sel_option_long_stress') },
+    ]
+
     return (
       <Box px={{ base: 'md', sm: 'xl' }} py="md">
         <Stack gap="xl">
 
-          {/* 1 — basic: resting chrome / label / placeholder / description */}
+          {/* 1 — resting: §6d chrome (gray-2 border / shadow-xs / brand focus / 44px); responsive by default */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              basic — gray-2 border / shadow-xs / brand focus / gray-4 placeholder / 44px trigger / full-width ≤640
+              resting — §6d chrome: gray-2 border / shadow-xs / brand focus / gray-4 placeholder / 44px; full-width &lt;640, anchored ≥640
             </Text>
-            <Select
+            <MantineSelect
               label={t('sel_label')}
               placeholder={t('sel_placeholder')}
               description={t('sel_hint')}
@@ -38,12 +47,12 @@ export const Default: Story = {
             />
           </Stack>
 
-          {/* 2 — open state: dropdown anchored (desktop); dropdown bottom-sheet <640 = Batch C, pending */}
+          {/* 2 — open: at ≥640 dropdown pre-opens; at <640 tap to open the sheet */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              open state — anchored dropdown (desktop); ⚠️ dropdown bottom-sheet &lt;640 = Batch C, pending
+              open state — at ≥640: dropdown pre-opened; at &lt;640: tap trigger to open the sheet
             </Text>
-            <Select
+            <MantineSelect
               label={t('sel_label')}
               placeholder={t('sel_placeholder')}
               data={options}
@@ -52,12 +61,12 @@ export const Default: Story = {
             />
           </Stack>
 
-          {/* 3 — error: data-error on .mantine-Select-input → red-6 border / no shadow */}
+          {/* 3 — error: red-6 border / no shadow; data-error state */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              error — data-error on .mantine-Select-input → red-6 border / no shadow; long uk option no clip@320
+              error — red-6 border / no shadow; error message wraps at 320 in all 4 locales
             </Text>
-            <Select
+            <MantineSelect
               label={t('sel_label')}
               placeholder={t('sel_placeholder')}
               data={options}
@@ -65,15 +74,40 @@ export const Default: Story = {
             />
           </Stack>
 
-          {/* 4 — disabled: whole control faded — label + field + chevron all at opacity 0.5 (§6e) */}
+          {/* 4 — disabled: whole control faded (§6e); no focus ring; at <640 tap is a no-op */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              disabled — whole control faded (label + field + chevron → opacity 0.5); transparent bg; not-allowed; no focus ring
+              disabled — whole control faded (label + field + chevron → opacity 0.5); no focus ring; tap is a no-op at any width
             </Text>
-            <Select
+            <MantineSelect
               label={t('sel_label')}
               placeholder={t('sel_placeholder')}
               data={options}
+              disabled
+            />
+          </Stack>
+
+          {/* 5 — long-uk option stress: label wraps in sheet row / anchored row; no clip@320 */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              long-uk option stress — label wraps in sheet row / anchored dropdown row; no clip@320; no h-scroll; whitespace-normal
+            </Text>
+            <MantineSelect
+              label={t('sel_label')}
+              placeholder={t('sel_placeholder')}
+              data={optionsWithStress}
+            />
+          </Stack>
+
+          {/* 6 — disabled-no-open (negative flow): sheet does NOT open at <640 when disabled */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              disabled-no-open (negative) — disabled trigger at &lt;640: tap does NOT open the sheet; same §6e whole-control fade
+            </Text>
+            <MantineSelect
+              label={t('sel_label')}
+              placeholder={t('sel_placeholder')}
+              data={optionsWithStress}
               disabled
             />
           </Stack>

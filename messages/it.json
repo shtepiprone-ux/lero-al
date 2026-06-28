@@ -2148,7 +2148,15 @@
       "pw_placeholder": "Inserisci la password",
       "pw_toggle_show": "Mostra password",
       "pw_toggle_hide": "Nascondi password",
-      "pw_error": "La password è obbligatoria"
+      "pw_error": "La password è obbligatoria",
+      "sel_label": "Tipo di proprietà",
+      "sel_placeholder": "Seleziona tipo…",
+      "sel_hint": "Obbligatorio per l'annuncio",
+      "sel_option_apartment": "Appartamento",
+      "sel_option_house": "Casa",
+      "sel_option_commercial": "Spazio commerciale",
+      "sel_option_land": "Terreno",
+      "sel_error": "Seleziona un tipo di proprietà"
     }
   },
   "ui": {

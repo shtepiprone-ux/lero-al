@@ -2148,7 +2148,15 @@
       "pw_placeholder": "Введіть пароль",
       "pw_toggle_show": "Показати пароль",
       "pw_toggle_hide": "Приховати пароль",
-      "pw_error": "Пароль обов'язковий"
+      "pw_error": "Пароль обов'язковий",
+      "sel_label": "Тип нерухомості",
+      "sel_placeholder": "Оберіть тип…",
+      "sel_hint": "Обов'язково для оголошення",
+      "sel_option_apartment": "Квартира",
+      "sel_option_house": "Будинок",
+      "sel_option_commercial": "Комерційна нерухомість",
+      "sel_option_land": "Земельна ділянка",
+      "sel_error": "Будь ласка, оберіть тип нерухомості"
     }
   },
   "ui": {

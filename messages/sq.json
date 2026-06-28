@@ -2148,7 +2148,15 @@
       "pw_placeholder": "Vendosni fjalëkalimin",
       "pw_toggle_show": "Trego fjalëkalimin",
       "pw_toggle_hide": "Fshih fjalëkalimin",
-      "pw_error": "Fjalëkalimi është i detyrueshëm"
+      "pw_error": "Fjalëkalimi është i detyrueshëm",
+      "sel_label": "Lloji i pronës",
+      "sel_placeholder": "Zgjidh llojin…",
+      "sel_hint": "E nevojshme për listim",
+      "sel_option_apartment": "Apartament",
+      "sel_option_house": "Shtëpi",
+      "sel_option_commercial": "Pronë komerciale",
+      "sel_option_land": "Tokë",
+      "sel_error": "Ju lutem zgjidhni llojin e pronës"
     }
   },
   "ui": {

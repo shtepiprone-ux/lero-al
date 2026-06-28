@@ -2148,7 +2148,15 @@
       "pw_placeholder": "Enter your password",
       "pw_toggle_show": "Show password",
       "pw_toggle_hide": "Hide password",
-      "pw_error": "Password is required"
+      "pw_error": "Password is required",
+      "sel_label": "Property Type",
+      "sel_placeholder": "Select type…",
+      "sel_hint": "Required for listing",
+      "sel_option_apartment": "Apartment",
+      "sel_option_house": "House",
+      "sel_option_commercial": "Commercial space",
+      "sel_option_land": "Land",
+      "sel_error": "Please select a property type"
     }
   },
   "ui": {

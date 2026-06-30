@@ -306,6 +306,21 @@ default is gray-3; owner to confirm preference in DevTools). Brand `var(--mantin
 | Trigger width | `w={{ base: '100%', sm: 'auto' }}` — P0 full-width at mobile |
 | Story | `src/stories/mantine/primitives/Select.stories.tsx` Default sections 5–7 |
 
+## 6j. Canonical responsive Popover (Task 513, Batch C P1.18)
+
+> **Canonical component:** `MantinePopover` — `src/design-system/mantine/patterns/MantinePopover.tsx`.
+> ONE responsive Popover: anchored Mantine Popover at ≥640, full-width bottom sheet at <640. Consumes the
+> Task 509 foundation (`useResponsiveDropdown` + `bottomSheetDrawerStyles` from `MantineSelect.tsx`) — no
+> per-component copy-paste. Full specification: `docs/mantine-responsive-design-system.md` §20.
+
+| Aspect | Value |
+|---|---|
+| Breakpoint | `<40em` (640px) = bottom sheet; `≥40em` = anchored Mantine Popover |
+| API | `trigger: ReactNode` · `children: ReactNode` · `defaultOpened?` · `disabled?` · `title?` · `position?` · `width?` · `withArrow?` · `offset?` |
+| Sheet chrome | Same `bottomSheetDrawerStyles` as `MantineSelect` (top-only radius, ≤90dvh, inner padding 0) |
+| Drag handle | Replicated from `MantineSelect` private `DragHandle` (2.5rem × 0.25rem, gray-3, radius 9999px) |
+| Story | `src/stories/mantine/primitives/Popover.stories.tsx` Default (4 sections) |
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

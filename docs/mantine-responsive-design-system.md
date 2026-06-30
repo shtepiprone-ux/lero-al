@@ -893,21 +893,22 @@ At `≥640px`:
 |---|---|---|
 | `MantinePopover` | Component | Canonical P0-compliant responsive Popover. Anchored Mantine Popover at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `bottomSheetDrawerStyles` from `MantineSelect.tsx` — same foundation as `MantineSelect`, no copy-pasted block. |
 
-**How the Popover interception works:**
+**How the Popover interception works (Task 513 REWORK — span-wrapper pattern):**
 
 1. `useResponsiveDropdown()` returns `isMobile` + Drawer `openDrawer`/`closeDrawer`/`drawerOpened`.
-2. At mobile: `Popover` is controlled with `opened={false}` (anchored dropdown suppressed); `onChange` intercepts the open-intent (user clicks trigger) → calls `openDrawer()`.
-3. At desktop: normal `useDisclosure`-managed open/close.
-4. `defaultOpened=true`: at desktop `useDisclosure(true)` pre-opens the anchored Popover immediately; at mobile a `useEffect` fires once after hydration (when `isMobile` resolves to `true`) to open the Drawer.
-5. Drawer uses `bottomSheetDrawerStyles` (edge-to-edge, top-only radius, drag handle, ≤90dvh, `returnFocus`).
+2. At mobile (`isMobile=true`): the trigger is wrapped in an `inline-block` `Box` span that captures the click event (bubbled from the trigger button) → calls `openDrawer()`. No Mantine Popover `opened`/`onChange` involved on this path. This avoids Mantine v8's controlled-mode `onChange` behaviour where `onChange` fires with the *current* value (not `!current`), making controlled-suppressed-dropdown interception unreliable.
+3. At desktop (`isMobile=false`): standard Mantine `Popover` in uncontrolled mode — no `opened` prop, no `useDisclosure`; Mantine manages its own open/close state.
+4. Drawer uses `bottomSheetDrawerStyles` (edge-to-edge, top-only radius, drag handle, ≤90dvh, `returnFocus`).
+
+Note: `defaultOpened` prop does NOT exist on `MantinePopover` — it was removed in the Task 513 rework after the first pass proved that auto-open via `defaultOpened` masks a broken trigger handler (per §8.2).
 
 ### §20.2 — SSR/hydration caveat
 
-Same as §19.2 (MantineSelect): `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Drawer always closed on SSR; no flash. With `defaultOpened=true` at `<640`: `Popover.Dropdown` may render on SSR (desktop mode); after hydration `isMobile` resolves to `true`, Dropdown unmounts, Drawer auto-opens via `useEffect`. Brief transition accepted — same trade-off as foundation.
+Same as §19.2 (MantineSelect): `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). On SSR and initial client render the desktop Popover path renders. After hydration `useMediaQuery` resolves and the mobile path mounts. No user interaction is possible before this switch — transition is imperceptible. Drawer always closed on SSR; no flash.
 
 ### §20.3 — Storybook proof location
 
-`src/stories/mantine/primitives/Popover.stories.tsx` → `Default` — toolbar-driven. Four sections: trigger (closed) · open anchored (toolbar ≥640) · open bottom sheet (toolbar <640) · disabled. All strings via `storyT()` against `storybook.mantine.pop_*` keys.
+`src/stories/mantine/primitives/Popover.stories.tsx` → `Default` — toolbar-driven. **Two sections (§8.2): trigger (closed/resting) · disabled.** All strings via `storyT()` against `storybook.mantine.pop_*` keys. The open/bottom-sheet behavior is verified by clicking the trigger and switching the toolbar viewport on the ONE closed/resting section.
 
 ### §20.4 — P0 gate
 

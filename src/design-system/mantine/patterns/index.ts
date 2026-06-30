@@ -42,3 +42,6 @@ export type { MantineAuthFormPatternProps, AuthMode } from './MantineAuthFormPat
 
 export { MantineSelect, useResponsiveDropdown, bottomSheetDrawerStyles } from './MantineSelect'
 export type { MantineSelectProps } from './MantineSelect'
+
+export { MantinePopover } from './MantinePopover'
+export type { MantinePopoverProps } from './MantinePopover'

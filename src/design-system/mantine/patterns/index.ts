@@ -40,7 +40,10 @@ export type { MantineAdminSurfacePatternProps, AdminFilter } from './MantineAdmi
 export { MantineAuthFormPattern } from './MantineAuthFormPattern'
 export type { MantineAuthFormPatternProps, AuthMode } from './MantineAuthFormPattern'
 
-export { MantineSelect, useResponsiveDropdown, bottomSheetDrawerStyles } from './MantineSelect'
+export { useResponsiveDropdown, bottomSheetDrawerStyles, DragHandle, ResponsiveBottomSheet } from './responsiveBottomSheet'
+export type { ResponsiveBottomSheetProps } from './responsiveBottomSheet'
+
+export { MantineSelect } from './MantineSelect'
 export type { MantineSelectProps } from './MantineSelect'
 
 export { MantinePopover } from './MantinePopover'

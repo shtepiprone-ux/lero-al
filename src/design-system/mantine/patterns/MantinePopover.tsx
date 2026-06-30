@@ -1,26 +1,9 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Popover, Drawer, Box, Text } from '@mantine/core'
+import { Popover, Box } from '@mantine/core'
 import type { PopoverProps } from '@mantine/core'
-import { useResponsiveDropdown, bottomSheetDrawerStyles } from './MantineSelect'
-
-// Drag handle — replicates the private DragHandle in MantineSelect.tsx (not exported from foundation).
-// P0 bottom-sheet exemption: 2.5rem/0.25rem sizing + gray-3 token already used by MantineSelect.
-function DragHandle() {
-  return (
-    <Box style={{ display: 'flex', justifyContent: 'center', paddingBottom: '0.5rem' }}>
-      <Box
-        style={{
-          width: '2.5rem',
-          height: '0.25rem',
-          borderRadius: '9999px',
-          backgroundColor: 'var(--mantine-color-gray-3)',
-        }}
-      />
-    </Box>
-  )
-}
+import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
 
 export interface MantinePopoverProps {
   /** Trigger element — activates the popover on click (must forward refs for Popover.Target on desktop) */
@@ -46,17 +29,16 @@ export interface MantinePopoverProps {
  *
  * ONE component — no "plain Popover vs bottom-sheet Popover" choice.
  * Anchored Mantine Popover at ≥640px; full-width bottom sheet at <640px.
- * Consumes the Task 509 foundation (useResponsiveDropdown + bottomSheetDrawerStyles)
- * from MantineSelect.tsx — same single source as MantineSelect; no copy-pasted block.
+ * Consumes the Task 514 single-source foundation (useResponsiveDropdown +
+ * ResponsiveBottomSheet from ./responsiveBottomSheet) — same source as MantineSelect;
+ * no copy-pasted DragHandle or Drawer block.
  *
  * Desktop (≥640px): Mantine Popover in uncontrolled mode, anchored to trigger.
  * Position, width, and arrow are configurable.
  *
- * Mobile (<640px): clicking the trigger opens a P0-compliant bottom Drawer —
- * edge-to-edge, top-only radius, centered drag handle, ≤90dvh internal scroll,
+ * Mobile (<640px): clicking the trigger opens a P0-compliant ResponsiveBottomSheet —
+ * edge-to-edge, top-only radius, DragHandle, ≤90dvh internal scroll,
  * backdrop tap + Esc to close, returnFocus=true. Disabled trigger is a no-op.
- *
- * Accepts arbitrary children — no Select-option structure imposed.
  *
  * Mobile click mechanism: at <640 the trigger is wrapped in an inline-block span
  * that captures the click event (bubbled from the trigger button) and calls openDrawer().
@@ -109,29 +91,15 @@ export function MantinePopover({
         </Popover>
       )}
 
-      {/* P0 bottom sheet — only mounted after hydration when isMobile=true */}
+      {/* P0 bottom sheet — rendered via shared foundation (Task 514) */}
       {isMobile && (
-        <Drawer
+        <ResponsiveBottomSheet
           opened={drawerOpened}
           onClose={closeDrawer}
-          position="bottom"
-          withCloseButton={false}
-          size="auto"
-          returnFocus
-          title={
-            <Box>
-              <DragHandle />
-              {title && (
-                <Text fw={600} size="sm" c="gray.8">
-                  {title}
-                </Text>
-              )}
-            </Box>
-          }
-          styles={bottomSheetDrawerStyles}
+          title={title}
         >
           {children}
-        </Drawer>
+        </ResponsiveBottomSheet>
       )}
     </>
   )

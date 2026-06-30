@@ -830,32 +830,37 @@ integrity/`tsc` verdict.
 
 ### §19.1 — Core mechanism
 
-**Location:** `src/design-system/mantine/patterns/MantineSelect.tsx`
+**Foundation location (Task 514 — single source):** `src/design-system/mantine/patterns/responsiveBottomSheet.tsx`
+**Select consumer:** `src/design-system/mantine/patterns/MantineSelect.tsx`
 
-**Exports (shared by all Batch C overlays — import from `src/design-system/mantine/patterns`):**
+**Foundation exports (shared by all Batch C overlays — import from `src/design-system/mantine/patterns`):**
 
 | Export | Type | Purpose |
 |---|---|---|
 | `useResponsiveDropdown()` | Hook | Returns `{ isMobile, drawerOpened, openDrawer, closeDrawer }`. Single source of truth for mobile detection + Drawer state. |
 | `bottomSheetDrawerStyles` | Const | `styles` object for Mantine `<Drawer>` matching the P0 bottom-sheet treatment (top-only radius, ≤90dvh, internal scroll, inner padding 0). |
-| `MantineSelect` | Component | Canonical P0-compliant responsive Select. Anchored dropdown at ≥640; full-width bottom sheet at <640. ONE component — no dual-path imports. |
+| `DragHandle` | Component | ONE definition of the centered 2.5rem × 0.25rem gray-3 swipe affordance. |
+| `ResponsiveBottomSheet` | Component | Canonical P0 full-width bottom-sheet wrapper: bottom-anchored Drawer with fixed chrome (DragHandle, optional title, ≤90dvh, returnFocus, backdrop+Esc). Props: `opened`, `onClose`, `title?`, `children`. |
+| `MantineSelect` | Component | Canonical P0-compliant responsive Select. Anchored dropdown at ≥640; full-width bottom sheet at <640 via `ResponsiveBottomSheet`. ONE component — no dual-path imports. |
 
 **How the dropdown interception works:**
 
 1. `useResponsiveDropdown()` returns `isMobile` from `useMediaQuery('(max-width: 40em)')` + `useDisclosure()` Drawer state.
 2. On mobile, Select is rendered with `dropdownOpened={false}` (prevents the Mantine anchored dropdown from showing) + `onDropdownOpen={openDrawer}` (fires when user clicks/keyboard-opens → opens Drawer instead).
-3. The Drawer uses `bottomSheetDrawerStyles` (edge-to-edge, top-only radius, drag handle, ≤90dvh, internal scroll, `returnFocus`).
+3. The mobile sheet is `<ResponsiveBottomSheet>` (edge-to-edge, top-only radius, DragHandle, ≤90dvh, internal scroll, `returnFocus`).
 4. Desktop: `dropdownOpened={undefined}` + `onDropdownOpen={undefined}` → normal Select dropdown behavior unchanged.
 
-**Batch C adoption pattern (Menu/Popover/Combobox/NavigationMenu):**
+**Batch C adoption pattern (DropdownMenu/NavigationMenu/Tooltip):**
 ```tsx
-import { useResponsiveDropdown, bottomSheetDrawerStyles } from '@/design-system/mantine/patterns'
+import { useResponsiveDropdown, ResponsiveBottomSheet } from '@/design-system/mantine/patterns'
 
 // In your overlay component:
 const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
 
 // Wire the trigger to openDrawer on mobile; normal dropdown on desktop
-// Render a <Drawer ... styles={bottomSheetDrawerStyles} opened={drawerOpened} onClose={closeDrawer}>
+// Render <ResponsiveBottomSheet opened={drawerOpened} onClose={closeDrawer} title={...}>
+//   {content}
+// </ResponsiveBottomSheet>
 // inside the same component (always closed on SSR)
 ```
 
@@ -891,14 +896,14 @@ At `≥640px`:
 
 | Export | Kind | Description |
 |---|---|---|
-| `MantinePopover` | Component | Canonical P0-compliant responsive Popover. Anchored Mantine Popover at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `bottomSheetDrawerStyles` from `MantineSelect.tsx` — same foundation as `MantineSelect`, no copy-pasted block. |
+| `MantinePopover` | Component | Canonical P0-compliant responsive Popover. Anchored Mantine Popover at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as `MantineSelect`, no duplicated DragHandle or Drawer block. |
 
-**How the Popover interception works (Task 513 REWORK — span-wrapper pattern):**
+**How the Popover interception works (Task 513 REWORK — span-wrapper pattern; Task 514 — single source):**
 
-1. `useResponsiveDropdown()` returns `isMobile` + Drawer `openDrawer`/`closeDrawer`/`drawerOpened`.
+1. `useResponsiveDropdown()` (from `responsiveBottomSheet.tsx`) returns `isMobile` + Drawer `openDrawer`/`closeDrawer`/`drawerOpened`.
 2. At mobile (`isMobile=true`): the trigger is wrapped in an `inline-block` `Box` span that captures the click event (bubbled from the trigger button) → calls `openDrawer()`. No Mantine Popover `opened`/`onChange` involved on this path. This avoids Mantine v8's controlled-mode `onChange` behaviour where `onChange` fires with the *current* value (not `!current`), making controlled-suppressed-dropdown interception unreliable.
-3. At desktop (`isMobile=false`): standard Mantine `Popover` in uncontrolled mode — no `opened` prop, no `useDisclosure`; Mantine manages its own open/close state.
-4. Drawer uses `bottomSheetDrawerStyles` (edge-to-edge, top-only radius, drag handle, ≤90dvh, `returnFocus`).
+3. At desktop (`isMobile=false`): standard Mantine `Popover` in uncontrolled mode — no `opened` prop; Mantine manages its own open/close state.
+4. Mobile sheet rendered via `<ResponsiveBottomSheet>` (single source from `responsiveBottomSheet.tsx`) — edge-to-edge, top-only radius, `DragHandle`, ≤90dvh, `returnFocus`.
 
 Note: `defaultOpened` prop does NOT exist on `MantinePopover` — it was removed in the Task 513 rework after the first pass proved that auto-open via `defaultOpened` masks a broken trigger handler (per §8.2).
 

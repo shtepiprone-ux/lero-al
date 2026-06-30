@@ -1,66 +1,10 @@
 'use client'
 
-import { Select, Drawer, Box, Text, UnstyledButton, Stack, Group } from '@mantine/core'
-import { useDisclosure, useMediaQuery } from '@mantine/hooks'
+import { Select, Box, Text, UnstyledButton, Stack, Group } from '@mantine/core'
 import type { SelectProps, ComboboxData, ComboboxItem } from '@mantine/core'
-
-// ── Shared bottom-sheet Drawer styles ────────────────────────────────────────
-// Canonical P0 bottom-sheet treatment, identical to MantineDialogDrawerPattern (Task 482).
-// Batch C overlays (Menu/Popover/Combobox/NavigationMenu) import this constant
-// instead of copy-pasting — single source of truth for the bottom-sheet look.
-// Justified raw values: drag-handle 2.5rem/0.25rem, 90dvh, 0.5rem padding-bottom
-// are P0 bottom-sheet exemptions already used by MantineDialogDrawerPattern.
-export const bottomSheetDrawerStyles = {
-  content: {
-    borderRadius: 'var(--mantine-radius-lg) var(--mantine-radius-lg) 0 0',
-    maxHeight: '90dvh',
-    display: 'flex',
-    flexDirection: 'column' as const,
-  },
-  header: { paddingBottom: 0 },
-  body: { flex: 1, overflowY: 'auto' as const, padding: 0 },
-  inner: { padding: 0 },
-}
-
-// ── Foundation hook ───────────────────────────────────────────────────────────
-/**
- * useResponsiveDropdown — shared foundation hook for dropdown → bottom-sheet at <640px.
- *
- * Returns isMobile state + Drawer open/close controls. Batch C overlays (Menu, Popover,
- * Combobox, NavigationMenu) consume this hook alongside bottomSheetDrawerStyles to build
- * the P0 bottom-sheet pattern without copy-pasting either piece.
- *
- * SSR/hydration caveat: isMobile returns false on first render (getInitialValueInEffect=true
- * in Mantine v8 — query evaluated in useEffect after hydration). The Drawer is always closed
- * on SSR so there is no visible flash. Same documented trade-off as MantineDialogDrawerPattern.
- */
-export function useResponsiveDropdown() {
-  const isMobile = useMediaQuery('(max-width: 40em)')
-  const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false)
-  return {
-    isMobile: isMobile ?? false,
-    drawerOpened,
-    openDrawer,
-    closeDrawer,
-  }
-}
+import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
-
-function DragHandle() {
-  return (
-    <Box style={{ display: 'flex', justifyContent: 'center', paddingBottom: '0.5rem' }}>
-      <Box
-        style={{
-          width: '2.5rem',
-          height: '0.25rem',
-          borderRadius: '9999px',
-          backgroundColor: 'var(--mantine-color-gray-3)',
-        }}
-      />
-    </Box>
-  )
-}
 
 function CheckIcon() {
   return (
@@ -120,7 +64,7 @@ export interface MantineSelectProps extends SelectProps {}
  *
  * Mobile (<640px): the same themed <Select> serves as the trigger (§6d chrome preserved).
  * Its anchored dropdown is suppressed via `dropdownOpened={false}`; `onDropdownOpen` instead
- * opens a P0-compliant bottom Drawer:
+ * opens a P0-compliant ResponsiveBottomSheet (from the Task 514 single-source foundation):
  *   - Anchored to the bottom edge, edge-to-edge (inner padding 0)
  *   - Rounded top corners only (radius lg on top, 0 on bottom)
  *   - Drag handle centered at top of sheet
@@ -133,11 +77,11 @@ export interface MantineSelectProps extends SelectProps {}
  * Selecting an option closes the sheet and fires the same onChange as on desktop.
  * All SelectProps are forwarded unchanged — no consumer API break.
  *
- * Reusable foundation: useResponsiveDropdown() + bottomSheetDrawerStyles (exported from this
- * file) are the shared mechanism Batch C overlays consume without copy-pasting.
+ * Foundation: useResponsiveDropdown() + ResponsiveBottomSheet live in
+ * ./responsiveBottomSheet.tsx — single source consumed by all Batch C overlays.
  *
  * SSR/hydration: isMobile=false on first render (same caveat as MantineDialogDrawerPattern).
- * Drawer is always closed on SSR; both paths render the same <Select> trigger.
+ * Sheet is always closed on SSR; both paths render the same <Select> trigger.
  */
 export function MantineSelect({
   value,
@@ -179,27 +123,12 @@ export function MantineSelect({
         onDropdownOpen={isMobile && !disabled ? openDrawer : undefined}
       />
 
-      {/* P0 bottom sheet — only rendered on mobile to avoid SSR markup */}
+      {/* P0 bottom sheet — rendered via shared foundation (Task 514) */}
       {isMobile && (
-        <Drawer
+        <ResponsiveBottomSheet
           opened={drawerOpened}
           onClose={closeDrawer}
-          position="bottom"
-          withCloseButton={false}
-          size="auto"
-          returnFocus
-          title={
-            <Box>
-              {/* Drag handle — visual swipe affordance */}
-              <DragHandle />
-              {label && (
-                <Text fw={600} size="sm" c="gray.8">
-                  {label}
-                </Text>
-              )}
-            </Box>
-          }
-          styles={bottomSheetDrawerStyles}
+          title={label}
         >
           <Stack gap={0}>
             {items.length === 0 ? (
@@ -242,7 +171,7 @@ export function MantineSelect({
               ))
             )}
           </Stack>
-        </Drawer>
+        </ResponsiveBottomSheet>
       )}
     </>
   )

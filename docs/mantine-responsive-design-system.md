@@ -344,6 +344,18 @@ export const Default: Story = {
 | Out of scope | Full-bleed bottom-sheet popup stories (`Drawer`, dialog-only). Non-admin wide-layout stories may use a different token (decide per case). |
 | Migration debt | `/admin/users/page.tsx` still uses Tailwind `p-6 max-w-10xl` — migrating to a Mantine admin shell with this responsive gutter is a separate follow-up task. |
 
+### §8.2 — One section per STATE, never per viewport; interactive overlays must actually open (owner P0 — 2026-06-30, after the Task 513 Popover rejection) 🔴
+
+The owner rejected the Task 513 Popover story for the SAME defect class twice in a row (it had already been removed from Select in Task 511). This is now a HARD rule on every story and every kickoff:
+
+1. **🔴 NO viewport-duplicate sections.** A story MUST NEVER contain two (or more) sections that render the **same component state** and differ only in the **viewport they are meant to be viewed at** — e.g. the rejected Popover's `open anchored — switch toolbar ≥640` + `open bottom sheet — switch toolbar <640`, which are ONE open state shown twice. Responsive behavior is proven by the **Storybook toolbar viewport switcher on a SINGLE section**, never by duplicating the section per breakpoint. **Story sections represent distinct STATES** (resting/closed · error · disabled · loading · empty · long-label), **never distinct breakpoints.** Duplicating a component to demonstrate `<640` vs `≥640` is exactly what spawns the duplicate-component sprawl the owner is eliminating. A kickoff that lists per-viewport sections is a kickoff defect (this was MY error on Task 513).
+
+2. **🔴 NO fake-open via `defaultOpened`/`defaultDropdownOpened` standing in for working interaction.** An overlay's open state MUST be reachable by the **real user gesture** — clicking/tapping the trigger. A permanently-open `defaultOpened` snapshot is NOT acceptable as proof that the overlay "opens", because it hides a broken trigger handler — exactly what shipped on Popover (clicking the trigger did nothing; only the load-time `defaultOpened` render appeared). If an "open" demo is shown at all, it must open via a **real click in the canvas**, and the rendered proof must capture the **click → open transition**, not a baked-open element.
+
+**Consequence for every overlay story (Select · Popover · Menu/DropdownMenu · NavigationMenu · Tooltip · Combobox):** the `Default` story shows the **trigger in its real states only** (closed/resting + disabled, plus error/empty where applicable). The open / anchored-vs-bottom-sheet behavior is verified by **clicking the trigger and switching the toolbar viewport** — ONE trigger, both behaviors — never two baked-open sections. The clause-12 rendered matrix for an overlay MUST be produced from an **actually-clicked-open** overlay; a `defaultOpened` matrix is rejected on sight.
+
+> Candidate machine gate (follow-up): extend `check:stories` to flag (a) any `defaultOpened`/`defaultDropdownOpened` prop in a story and (b) sibling sections whose only delta is a viewport note. Until then this is enforced at orchestrator review with rendered evidence.
+
 ---
 
 ## §9 — UI migration classification (representative, not exhaustive per-file)
@@ -588,6 +600,7 @@ per migration phase will be established in each phase's kickoff document.*
 | CardGrid | SimpleGrid, Card | 1 column, cards full-width | 2 columns | 3 columns | Toolbar selects locale; card text from i18n | `Patterns/Mantine/CardGrid` Default — toolbar-driven |
 | DataTableToCards | Table, Stack, Card, Badge | Cards view: label/value pairs stacked | Transitions to table view | Table view with hover, sort | Toolbar selects locale; column headers and values from i18n | `Patterns/Mantine/DataTableToCards` Default — toolbar-driven |
 | DialogDrawerPattern | Drawer, Modal, Button, Stack, Group | P0 bottom Drawer: top-only radius, drag handle, ≤90dvh, stacked full-width actions | Modal (centered) if width triggers desktop branch | Centered Modal with row actions | Toolbar selects locale; title/body/actions from i18n | `Patterns/Mantine/DialogDrawerPattern` Default — toolbar-driven |
+| MantinePopover | Popover, Drawer, Box, Text, useDisclosure | P0 full-width bottom sheet (top-only radius, drag handle, ≤90dvh, backdrop+Esc); consumes Task 509 foundation | Same as desktop | Anchored Mantine Popover at trigger; position/width/arrow configurable | Toolbar selects locale; title + children via storyT() | `Mantine/Primitives/Popover` Default — toolbar-driven |
 | EmptyLoadingErrorState | Loader, Text, Button, Stack, Center | Centered content, full-width action button | Same centered layout | Same centered layout | Toolbar selects locale; title/description/action from i18n | `Patterns/Mantine/EmptyLoadingErrorState` Default (all 3 states) — toolbar-driven |
 | NotificationPattern | notifications, showNotification | Notifications portal (top-right adapts) | Same | Same | Toolbar selects locale; notification title/message from i18n | `Patterns/Mantine/NotificationPattern` Default — toolbar-driven |
 | ListingCardPattern | Card, Image, Badge, Button, Stack | Card full-width, CTA full-width (P0) | 2-column grid | 3-column grid | Toolbar selects locale; price/location/labels from i18n | `Patterns/Mantine/ListingCardPattern` Default — toolbar-driven |
@@ -699,6 +712,8 @@ All future Mantine UI tasks must pass these gates:
 | Filter controls | Mutually exclusive single-select filters must use `SegmentedControl`, not individual Button chips. Wrap in `ScrollArea scrollbars="x"` when i18n labels clip at 320px |
 | Admin card anatomy | Any surface with `card` prop on `MantineDataTableToCards` MUST use the §7.2 anatomy: header (id + actions), primary (avatar + title + subtitle \| badge), meta (ONE divider + compact rows). Generic label:value dump rejected |
 | Card anatomy story proof | Pattern stories with `card` prop must demonstrate the full anatomy (avatar/title/subtitle/badge/meta/actions visible in Default story at 320 mobile viewport) |
+| 🔴 One section per STATE (§8.2) | A story MUST NOT contain sibling sections that render the same component state differing only in target viewport (e.g. "open anchored ≥640" + "open bottom sheet <640"). Sections = distinct states; viewport is proven by the toolbar. Per-viewport sections = REJECT |
+| 🔴 Overlays open by real click (§8.2) | Overlay open state must be reachable by clicking the trigger. `defaultOpened`/`defaultDropdownOpened` as the ONLY way the overlay appears = REJECT. The clause-12 rendered matrix must be produced from an actually-clicked-open overlay, not a baked-open snapshot |
 
 ---
 
@@ -864,3 +879,43 @@ At `<640px`:
 
 At `≥640px`:
 - Standard Mantine Select anchored dropdown — §6d chrome unchanged (gray-2 border, shadow-xs, brand focus, 44px, disabled fade)
+
+---
+
+## §20 — Canonical responsive Popover: `MantinePopover` (Task 513)
+
+> **Decision 2026-06-30 (Task 513):** first Batch C overlay to consume the Task 509 foundation.
+> `MantinePopover` = ONE canonical Popover — no "plain Popover vs bottom-sheet Popover" choice.
+
+### §20.1 — Core mechanism
+
+| Export | Kind | Description |
+|---|---|---|
+| `MantinePopover` | Component | Canonical P0-compliant responsive Popover. Anchored Mantine Popover at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `bottomSheetDrawerStyles` from `MantineSelect.tsx` — same foundation as `MantineSelect`, no copy-pasted block. |
+
+**How the Popover interception works:**
+
+1. `useResponsiveDropdown()` returns `isMobile` + Drawer `openDrawer`/`closeDrawer`/`drawerOpened`.
+2. At mobile: `Popover` is controlled with `opened={false}` (anchored dropdown suppressed); `onChange` intercepts the open-intent (user clicks trigger) → calls `openDrawer()`.
+3. At desktop: normal `useDisclosure`-managed open/close.
+4. `defaultOpened=true`: at desktop `useDisclosure(true)` pre-opens the anchored Popover immediately; at mobile a `useEffect` fires once after hydration (when `isMobile` resolves to `true`) to open the Drawer.
+5. Drawer uses `bottomSheetDrawerStyles` (edge-to-edge, top-only radius, drag handle, ≤90dvh, `returnFocus`).
+
+### §20.2 — SSR/hydration caveat
+
+Same as §19.2 (MantineSelect): `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Drawer always closed on SSR; no flash. With `defaultOpened=true` at `<640`: `Popover.Dropdown` may render on SSR (desktop mode); after hydration `isMobile` resolves to `true`, Dropdown unmounts, Drawer auto-opens via `useEffect`. Brief transition accepted — same trade-off as foundation.
+
+### §20.3 — Storybook proof location
+
+`src/stories/mantine/primitives/Popover.stories.tsx` → `Default` — toolbar-driven. Four sections: trigger (closed) · open anchored (toolbar ≥640) · open bottom sheet (toolbar <640) · disabled. All strings via `storyT()` against `storybook.mantine.pop_*` keys.
+
+### §20.4 — P0 gate
+
+At `<640px`:
+- Dropdown: full-width bottom Drawer (NOT an anchored mini-popover, NOT a centered card)
+- Sheet: edge-to-edge, top-only radius, drag handle, ≤90dvh internal scroll
+- Content: `whiteSpace: normal`, `wordBreak: break-word`, no h-scroll at 320px
+- Disabled: trigger tap is a no-op
+
+At `≥640px`:
+- Standard Mantine `Popover` anchored to trigger — position/width/arrow configurable

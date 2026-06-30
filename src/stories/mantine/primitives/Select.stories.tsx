@@ -22,14 +22,6 @@ export const Default: Story = {
       { value: 'land',      label: t('sel_option_land') },
     ]
 
-    const optionsWithStress = [
-      { value: 'apartment', label: t('sel_option_apartment') },
-      { value: 'house',     label: t('sel_option_house') },
-      { value: 'commercial', label: t('sel_option_commercial') },
-      { value: 'land',      label: t('sel_option_land') },
-      { value: 'long',      label: t('sel_option_long_stress') },
-    ]
-
     return (
       <Box px={{ base: 'md', sm: 'xl' }} py="md">
         <Stack gap="xl">
@@ -47,21 +39,7 @@ export const Default: Story = {
             />
           </Stack>
 
-          {/* 2 — open: at ≥640 dropdown pre-opens; at <640 tap to open the sheet */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              open state — at ≥640: dropdown pre-opened; at &lt;640: tap trigger to open the sheet
-            </Text>
-            <MantineSelect
-              label={t('sel_label')}
-              placeholder={t('sel_placeholder')}
-              data={options}
-              defaultDropdownOpened
-              comboboxProps={{ withinPortal: false }}
-            />
-          </Stack>
-
-          {/* 3 — error: red-6 border / no shadow; data-error state */}
+          {/* 2 — error: red-6 border / no shadow; data-error state */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
               error — red-6 border / no shadow; error message wraps at 320 in all 4 locales
@@ -74,7 +52,7 @@ export const Default: Story = {
             />
           </Stack>
 
-          {/* 4 — disabled: whole control faded (§6e); no focus ring; at <640 tap is a no-op */}
+          {/* 3 — disabled: whole control faded (§6e); no focus ring; at <640 tap is a no-op */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
               disabled — whole control faded (label + field + chevron → opacity 0.5); no focus ring; tap is a no-op at any width
@@ -83,31 +61,6 @@ export const Default: Story = {
               label={t('sel_label')}
               placeholder={t('sel_placeholder')}
               data={options}
-              disabled
-            />
-          </Stack>
-
-          {/* 5 — long-uk option stress: label wraps in sheet row / anchored row; no clip@320 */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              long-uk option stress — label wraps in sheet row / anchored dropdown row; no clip@320; no h-scroll; whitespace-normal
-            </Text>
-            <MantineSelect
-              label={t('sel_label')}
-              placeholder={t('sel_placeholder')}
-              data={optionsWithStress}
-            />
-          </Stack>
-
-          {/* 6 — disabled-no-open (negative flow): sheet does NOT open at <640 when disabled */}
-          <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              disabled-no-open (negative) — disabled trigger at &lt;640: tap does NOT open the sheet; same §6e whole-control fade
-            </Text>
-            <MantineSelect
-              label={t('sel_label')}
-              placeholder={t('sel_placeholder')}
-              data={optionsWithStress}
               disabled
             />
           </Stack>

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-06-30 — Task 511 📋 KICKOFF READY (Storybook trim).** Owner reviewed Task 510's Select story and flagged duplicate per-breakpoint sections (anti-pattern vs the Mantine toolbar-driven proof path — `rule-index.md` → Storybook "Default only / no per-viewport exports"). Owner decision: keep ONLY resting · error · disabled. Kickoff `tasks/kickoff_prompt_Task_511_TrimSelectStorySections.md`: trim `Select.stories.tsx` from 6→3 sections (remove open-state #2, long-uk #5, disabled-no-open #6) + delete `optionsWithStress` + remove orphaned `storybook.mantine.sel_option_long_stress` from all 4 locales. Awaiting Sonnet.
+**2026-06-30 — Task 511 ✅ DONE — awaiting orchestrator diff review + commit emission.** Trimmed `Select.stories.tsx` from 6→3 sections (kept resting/error/disabled; removed open-state, long-uk stress, disabled-no-open). Deleted `optionsWithStress` const. Removed `storybook.mantine.sel_option_long_stress` from all 4 locales (2008→2007 keys). Gates: tsc=0 · check:stories 0/88 · check:i18n parity 2007×4. Log: `docs/sessions/2026-06-30-task511-trim-select-story-sections.md`.
 **2026-06-28 — Tasks 509 + 510 ✅ IMPLEMENTED — pending orchestrator diff review + owner commit.** Canonical responsive `MantineSelect` (anchored ≥640 / bottom sheet <640) + `useResponsiveDropdown`/`bottomSheetDrawerStyles` foundation; `Select.stories.tsx` rewritten on `MantineSelect`; §19 + §6i docs updated. Gates (sandbox screen): tsc=0, check:stories 0/88, check:i18n 2008×4, NUL=0. Logs: `docs/sessions/2026-06-28-task509-…` + `…task510-canonical-responsive-select.md`.
 ## Pending Action Items
 

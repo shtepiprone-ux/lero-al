@@ -16,6 +16,11 @@
  *  11. sm:flex-row sm:flex-wrap — toolbar overflow at 640px
  *  12. Viewport/width-named exports (identifier-token vs file-scoped allowlist)
  *  13. Duplicate-family export names (Proof/Demo/Filtered/Canonical vs allowlist)
+ *  14. Off-scale Mantine <Button size="lg"|"xl"> in src/stories/mantine/** +
+ *      src/design-system/mantine/patterns/** (Task 520 — Density Correction gate;
+ *      canonical default is size="sm"/14px + 44px min-height, theme.ts + §6 of
+ *      docs/tailadmin-style-reference.md). Escape hatch: "// @allow-button-size <reason>"
+ *      on the size="lg"/"xl" line or the line immediately above it.
  *
  * Exit 0 on clean tree. Exit non-zero on any violation.
  * Wired into prebuild-storybook, prestorybook, and CI.
@@ -83,7 +88,7 @@ export const JSX_PROP_ALLOWLIST = [
 // ── Gate runner (exported for testing) ────────────────────────────────────────
 
 /**
- * Run all 13 governance checks against the given repo root.
+ * Run all 14 governance checks against the given repo root.
  *
  * @param {string} root - Absolute path to the repo root (defaults to this script's parent dir).
  * @param {{ verbose?: boolean }} opts - When verbose=true, prints check-header lines to stdout.
@@ -776,6 +781,61 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
+  // ── Check 14: Off-scale Mantine Button size (Task 520 — Density Correction gate) ──
+
+  log('── Check 14: Mantine Button size="lg"|"xl" (off-scale, Task 520) ──────');
+
+  const MANTINE_BUTTON_SCOPE_FILES = [
+    ...collectFiles(join(root, 'src', 'stories', 'mantine'), ['.tsx', '.ts']),
+    ...collectFiles(join(root, 'src', 'design-system', 'mantine', 'patterns'), ['.tsx', '.ts']),
+  ];
+
+  const OFFSCALE_SIZE_RE = /size=["'](lg|xl)["']/;
+  const ALLOW_ESCAPE_RE = /@allow-button-size/;
+
+  for (const f of MANTINE_BUTTON_SCOPE_FILES) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    let i = 0;
+    while (i < lines.length) {
+      const line = lines[i];
+      const trimmed = line.trimStart();
+      const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
+      const openTagIdx = line.indexOf('<Button');
+      const isRealOpenTag = openTagIdx !== -1 && /^<Button(\s|>|\/|$)/.test(line.slice(openTagIdx));
+      if (!isComment && isRealOpenTag) {
+        // Collect the opening-tag block (may span multiple lines) until a bare '>' closes it.
+        let end = i;
+        let tagLines = [line];
+        let closed = />/.test(line.slice(openTagIdx));
+        while (!closed && end + 1 < lines.length) {
+          end++;
+          tagLines.push(lines[end]);
+          if (/>/.test(lines[end])) closed = true;
+        }
+        const sizeLineOffset = tagLines.findIndex(l => OFFSCALE_SIZE_RE.test(l));
+        if (sizeLineOffset !== -1) {
+          const sizeLineIdx = i + sizeLineOffset;
+          const sizeLine = lines[sizeLineIdx];
+          const prevLine = sizeLineIdx > 0 ? lines[sizeLineIdx - 1] : '';
+          const escaped = ALLOW_ESCAPE_RE.test(sizeLine) || ALLOW_ESCAPE_RE.test(prevLine);
+          if (!escaped) {
+            const sizeVal = sizeLine.match(OFFSCALE_SIZE_RE)[1];
+            fail(f, sizeLineIdx + 1, 'mantine-button-offscale-size',
+              `Mantine <Button size="${sizeVal}"> is off-scale — canonical default is size="sm" ` +
+              `(14px) + 44px min-height (theme.ts; docs/tailadmin-style-reference.md §6 Density ` +
+              `Correction, Task 492). Remove the size override, or add "// @allow-button-size <reason>" ` +
+              `on the previous line for a justified exception (Task 520).`);
+          }
+        }
+        i = end + 1;
+        continue;
+      }
+      i++;
+    }
+  }
+
   // ── Stale allowlist entry check ────────────────────────────────────────────
 
   log('── Stale allowlist entry check ──────────────────────────────────────');
@@ -804,7 +864,7 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
-  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 13 };
+  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 14 };
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────

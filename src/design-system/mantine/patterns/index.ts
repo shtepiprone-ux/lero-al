@@ -40,8 +40,8 @@ export type { MantineAdminSurfacePatternProps, AdminFilter } from './MantineAdmi
 export { MantineAuthFormPattern } from './MantineAuthFormPattern'
 export type { MantineAuthFormPatternProps, AuthMode } from './MantineAuthFormPattern'
 
-export { useResponsiveDropdown, bottomSheetDrawerStyles, DragHandle, ResponsiveBottomSheet } from './responsiveBottomSheet'
-export type { ResponsiveBottomSheetProps } from './responsiveBottomSheet'
+export { useResponsiveDropdown, bottomSheetDrawerStyles, DragHandle, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
+export type { ResponsiveBottomSheetProps, SheetContentProps } from './responsiveBottomSheet'
 
 export { MantineSelect } from './MantineSelect'
 export type { MantineSelectProps } from './MantineSelect'
@@ -54,3 +54,6 @@ export type { MantineDropdownMenuProps, DropdownMenuItemDef } from './MantineDro
 
 export { MantineNavigationMenu } from './MantineNavigationMenu'
 export type { MantineNavigationMenuProps, NavMenuSection, NavMenuLink } from './MantineNavigationMenu'
+
+export { MantineModal } from './MantineModal'
+export type { MantineModalProps } from './MantineModal'

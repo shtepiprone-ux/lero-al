@@ -120,3 +120,30 @@ export function ResponsiveBottomSheet({
     </Drawer>
   )
 }
+
+// ── SheetContent ──────────────────────────────────────────────────────────────
+export interface SheetContentProps {
+  children: ReactNode
+}
+
+/**
+ * Canonical content gutter for arbitrary-content `ResponsiveBottomSheet` consumers
+ * (Task 520 — Defect A fix).
+ *
+ * `ResponsiveBottomSheet`'s body is `padding: 0` so that row-based consumers
+ * (`MantineSelect` options, `MantineDropdownMenu`/`MantineNavigationMenu` items) can
+ * render ≥44px tap rows that span the full sheet width, each row supplying its own
+ * `px="md"` inset for the label. A consumer whose content is an arbitrary blob
+ * (not a list of full-width rows) — `MantineModal`, `MantinePopover` — must wrap that
+ * content in `SheetContent` so it aligns with the sheet's title inset instead of
+ * bleeding to the sheet's edges. Gutter = `px="md"` (16px) + `pb="md"`, matching the
+ * §6i Select option-row padding value. Purely additive: does not alter
+ * `ResponsiveBottomSheet`/`DragHandle`/`useResponsiveDropdown`/`bottomSheetDrawerStyles`.
+ */
+export function SheetContent({ children }: SheetContentProps) {
+  return (
+    <Box px="md" pb="md">
+      {children}
+    </Box>
+  )
+}

@@ -22,7 +22,7 @@ export interface MantineDialogDrawerPatternProps {
  *   - internal scroll region (overflowY: auto on body)
  *   - max-height ≤90dvh enforced via styles.content
  *   - no horizontal overflow
- *   - actions stacked full-width (size="lg" = 50px, well above 44px P0 minimum)
+ *   - actions stacked full-width (canonical default size — 14px text, 44px min-height, P0 compliant)
  *   - closes on backdrop tap (closeOnClickOutside default) + Esc key
  *
  * Desktop (sm+ / 640px+): renders as a centered Modal dialog.
@@ -61,7 +61,6 @@ export function MantineDialogDrawerPattern({
       <Button
         onClick={open}
         color="brand"
-        size="lg"
         w={{ base: '100%', sm: 'auto' }}
       >
         {triggerLabel}
@@ -105,12 +104,11 @@ export function MantineDialogDrawerPattern({
         >
           <Stack gap="md">
             <Text size="sm">{body}</Text>
-            {/* Actions: stacked full-width on mobile (size="lg" → 50px, P0 compliant) */}
+            {/* Actions: stacked full-width on mobile (canonical default size, 44px min-height, P0 compliant) */}
             <Stack gap="sm">
               <Button
                 variant="filled"
                 color="brand"
-                size="lg"
                 fullWidth
                 onClick={handleConfirm}
               >
@@ -119,7 +117,6 @@ export function MantineDialogDrawerPattern({
               <Button
                 variant="outline"
                 color="gray"
-                size="lg"
                 fullWidth
                 onClick={close}
               >

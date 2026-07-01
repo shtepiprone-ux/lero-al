@@ -818,6 +818,21 @@ Use the **Read tool** for file content and the **owner's NATIVE PowerShell** for
 integrity/`tsc` verdict.
 | `@mantine/form` scope | RESOLVED for Task 482 — installed and used in `MantineTwoColumnForm`. Future auth/cabinet forms will use it in Phase 3 migration | No |
 
+### §18.8 — KNOWN ISSUE (reported, NOT fixed): bottom-sheet body `flex:1` stretches to 90dvh regardless of content height (Task 520)
+
+`bottomSheetDrawerStyles` (`responsiveBottomSheet.tsx`) sets `content: { display:'flex', flexDirection:'column' }` +
+`body: { flex:1, overflowY:'auto' }` so that LONG content's scroll region fills the available space up to `90dvh`.
+The same mechanism has a side effect on SHORT content: the sheet still stretches to the full `90dvh` height even
+when the actual content ends far above that, leaving a large empty region below the content/footer. **Confirmed
+shared-source** (reproduces identically across all four foundation consumers at 275px width — `Modal` ≈574px,
+`Popover` ≈650px, `DropdownMenu` ≈573px, `NavigationMenu` ≈618px of empty space below content, measured via
+Playwright against a real `build-storybook` output). Per the Task 520 kickoff's explicit STOP-AND-ASK trigger
+("Any fix needing `responsiveBottomSheet.tsx` open/close/Drawer mechanics → STOP and ASK"), this was **reported,
+not fixed**, in Task 520 — fixing it requires changing the Task 514 single source's flex/height mechanics
+(e.g. sizing the sheet to content up to a `90dvh` cap instead of always filling it), which is out of scope for a
+consumer-level (Modal/Popover) task. Follow-up task needed; do not attempt a per-consumer workaround (would fork
+the foundation).
+
 ---
 
 ## §19 — Canonical responsive Select: `MantineSelect` (Tasks 509 + 510)
@@ -841,6 +856,7 @@ integrity/`tsc` verdict.
 | `bottomSheetDrawerStyles` | Const | `styles` object for Mantine `<Drawer>` matching the P0 bottom-sheet treatment (top-only radius, ≤90dvh, internal scroll, inner padding 0). |
 | `DragHandle` | Component | ONE definition of the centered 2.5rem × 0.25rem gray-3 swipe affordance. |
 | `ResponsiveBottomSheet` | Component | Canonical P0 full-width bottom-sheet wrapper: bottom-anchored Drawer with fixed chrome (DragHandle, optional title, ≤90dvh, returnFocus, backdrop+Esc). Props: `opened`, `onClose`, `title?`, `children`. |
+| `SheetContent` | Component | **(Task 520)** Canonical `px="md"` + `pb="md"` content gutter for arbitrary-content (blob, not row-list) consumers of `ResponsiveBottomSheet` — `MantineModal`, `MantinePopover`. The sheet `body` is `padding:0` by design so row-based consumers (`MantineSelect`/`MantineDropdownMenu`/`MantineNavigationMenu`) can render edge-to-edge ≥44px tap rows with their own per-row `px="md"`; a blob-content consumer wraps its `children` (and any `footer`) in `SheetContent` instead. Purely additive — does not change `ResponsiveBottomSheet`/`DragHandle`/`bottomSheetDrawerStyles`/`useResponsiveDropdown`. |
 | `MantineSelect` | Component | Canonical P0-compliant responsive Select. Anchored dropdown at ≥640; full-width bottom sheet at <640 via `ResponsiveBottomSheet`. ONE component — no dual-path imports. |
 
 **How the dropdown interception works:**
@@ -863,6 +879,22 @@ const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdow
 // </ResponsiveBottomSheet>
 // inside the same component (always closed on SSR)
 ```
+
+### §19.1a — `SheetContent` scope: blob-content consumers only (Task 520 correction)
+
+The Task 520 kickoff's Defect A described ALL FOUR overlay consumers (`MantineModal`, `MantinePopover`,
+`MantineDropdownMenu`, `MantineNavigationMenu`) as lacking a content gutter. Code-level verification during
+Task 520 found this true only for `MantineModal` (specifically its `footer`, rendered as a sibling with no
+padding while the story's own ad-hoc `Box` padded the body — the actual owner-visible bug) and, preventively,
+`MantinePopover` (arbitrary `children` blob, same shape as Modal's). **`MantineDropdownMenu` and
+`MantineNavigationMenu` were found to already comply**: both render their mobile sheet content as a `Stack` of
+individual full-width `UnstyledButton` rows, each already carrying its own `px="md"` (16px) — structurally
+identical to `MantineSelect`'s explicitly-exempted edge-to-edge option-row pattern (§19.4). Wrapping their row
+`Stack` in `SheetContent` would DOUBLE the inset (label padding + wrapper padding) and shrink the tap row from
+edge-to-edge to inset, regressing two owner-approved components (Tasks 515/518). **Decision: `SheetContent` is
+consumed only by `MantineModal` and `MantinePopover`** (blob-content primitives); `MantineDropdownMenu` and
+`MantineNavigationMenu` keep their existing per-row `px="md"` gutter, unchanged — all four still converge on the
+same `md` (16px) gutter **value**, applied at the structurally-correct level for each content shape.
 
 ### §19.2 — SSR/hydration caveat
 
@@ -896,7 +928,7 @@ At `≥640px`:
 
 | Export | Kind | Description |
 |---|---|---|
-| `MantinePopover` | Component | Canonical P0-compliant responsive Popover. Anchored Mantine Popover at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as `MantineSelect`, no duplicated DragHandle or Drawer block. |
+| `MantinePopover` | Component | Canonical P0-compliant responsive Popover. Anchored Mantine Popover at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as `MantineSelect`, no duplicated DragHandle or Drawer block. **(Task 520)** Mobile `children` are wrapped in `SheetContent` (§19.1) for a 16px content gutter — the sheet body is `padding:0` by design; desktop `Popover.Dropdown` is left unwrapped (Mantine's own default dropdown padding already applies there, unchanged). |
 
 **How the Popover interception works (Task 513 REWORK — span-wrapper pattern; Task 514 — single source):**
 
@@ -920,7 +952,7 @@ Same as §19.2 (MantineSelect): `isMobile=false` on first render (Mantine v8 `ge
 At `<640px`:
 - Dropdown: full-width bottom Drawer (NOT an anchored mini-popover, NOT a centered card)
 - Sheet: edge-to-edge, top-only radius, drag handle, ≤90dvh internal scroll
-- Content: `whiteSpace: normal`, `wordBreak: break-word`, no h-scroll at 320px
+- Content: inset by ONE 16px `SheetContent` gutter (Task 520), `whiteSpace: normal`, `wordBreak: break-word`, no h-scroll at 320px
 - Disabled: trigger tap is a no-op
 
 At `≥640px`:
@@ -1047,5 +1079,56 @@ At `≥640px`:
 |---|---|
 | `<640px`, section trigger | **Full-width edge-to-edge** — Mantine `Stack` default `align="stretch"` stretches each Button to 100% (Task 516 flex-column mechanism, no clone needed — this component renders its own triggers) |
 | `≥640px`, section trigger | **Natural/content width** — `Group` of `Menu.Target` triggers wrapped in `alignSelf:'flex-start'` Box; no stretch from a parent `Stack align="stretch"` |
+
+---
+
+## §23 — Canonical responsive Modal: `MantineModal` (Task 519)
+
+> **Decision 2026-07-01 (Task 519):** next overlay after Popover (513) + DropdownMenu (515) + NavigationMenu (518).
+> Same foundation-consuming shape, but `MantineModal` is fully **controlled** (caller owns `opened`/`onClose` and
+> supplies its own trigger) rather than a trigger-wrapping component like Popover/DropdownMenu. `MantineModal` = ONE
+> canonical Modal — no "plain Modal vs bottom-sheet Modal" choice.
+
+### §23.1 — Core mechanism
+
+| Export | Kind | Description |
+|---|---|---|
+| `MantineModal` | Component | Canonical P0-compliant responsive Modal. Centered Mantine `Modal` at ≥640px; full-width bottom sheet at <640px. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as `MantineSelect`/`MantinePopover`/`MantineDropdownMenu`/`MantineNavigationMenu`, no duplicated DragHandle or Drawer block. |
+
+**API:** `opened: boolean`, `onClose: () => void`, `title?: ReactNode`, `children: ReactNode` (body), `footer?: ReactNode` (caller-composed actions region), `size?: string` (desktop Modal size token, default `'md'`, ignored <640).
+
+**How the controlled split works (Task 519 — the only new element vs 513/515/518 is that this primitive has no trigger-wrapping/interception logic at all):**
+
+1. `useResponsiveDropdown()` (from `responsiveBottomSheet.tsx`) returns `isMobile`. Unlike Popover/DropdownMenu/NavigationMenu, `MantineModal` does NOT use the hook's own `drawerOpened`/`openDrawer`/`closeDrawer` — the caller's `opened`/`onClose` are passed straight through to whichever path renders, so there is exactly one source of truth for open state.
+2. At mobile (`isMobile=true`): renders `<ResponsiveBottomSheet opened={opened} onClose={onClose} title={title}>` with `children` and `footer` wrapped in `SheetContent` (§19.1, Task 520) for a 16px horizontal/bottom gutter, AND — nested inside that — a `<Stack gap="md">` (Task 521) around `children`/`footer` for a 16px VERTICAL gap between the body and the footer row; both scroll together (flex:1, overflowY:auto from the Task 514 source); the header (drag handle + title) stays pinned. Before Task 520, `children` and `footer` rendered raw with no horizontal gutter at all (`body:padding:0`) — that was fixed. Task 520's fix still concatenated `{children}{footer}` with ZERO vertical gap between them (owner-rejected on rendered review, 2026-07-01 — "stripped the spacing between the buttons and the text"); Task 521 added the `Stack gap="md"`. `footer=undefined` (the no-footer case) renders no phantom gap — `Stack`'s `gap` is a CSS row-gap between actual rendered flex children only.
+3. At desktop (`isMobile=false`): renders a centered Mantine `Modal` (`centered`, `radius="md"`, `size={size}`) with `title`, then `children`/`footer` likewise wrapped in `<Stack gap="md">` (Task 521 — matches `MantineDialogDrawerPattern`'s `Text ... mb="md"` + `Group` rhythm) — Modal's own X/backdrop/Esc close and `returnFocus` default apply.
+4. No `footer` provided → renders nothing extra (React skips `undefined`), body renders alone, no crash.
+5. The primitive does NOT impose a responsive stacked/row layout on `footer` — that is caller composition (the `Modal.stories.tsx` proof story wraps its footer Buttons in a `Flex direction={{ base: 'column-reverse', sm: 'row' }}` so they are full-width stacked at <640 and a natural-width right-aligned row at ≥640).
+
+### §23.2 — SSR/hydration caveat
+
+Same as §20.2/§21.2/§22.2: `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Desktop Modal path renders on SSR + initial client render; mobile path mounts after hydration. Because the overlay is controlled by the caller's `opened` state (closed by default), no flash occurs regardless of which path is active at hydration.
+
+### §23.3 — Storybook proof location
+
+`src/stories/mantine/primitives/Modal.stories.tsx` → `Default` — toolbar-driven. **Two sections (§8.2): standard dialog (closed/resting, local trigger) · long-content dialog (closed/resting, local trigger, no footer).** Because `MantineModal` is controlled, each section owns a local `useState` + a trigger `Button` — no `defaultOpened`. All strings via `storyT()` against `storybook.mantine.modal_*` keys (sq/en/uk/it parity, uk = real Cyrillic long body). Open behavior + the ≥640 centered/​<640 bottom-sheet split is verified by clicking a section's trigger and switching the toolbar viewport on that ONE section; the long-content section additionally proves internal scroll ≤90dvh at <640 with the title/handle pinned.
+
+### §23.4 — P0 gate
+
+At `<640px`:
+- Modal: full-width edge-to-edge bottom sheet via `ResponsiveBottomSheet` (NOT a centered card with margins, NOT a mini-dialog)
+- Sheet: top-only radius, centered drag handle (517), ≤90dvh internal scroll (children + footer scroll together; title/handle pinned)
+- Content: `children` + `footer` inset by ONE 16px `SheetContent` gutter (Task 520), horizontally + bottom — NOT edge-to-edge, NOT double-padded
+- Body↔footer: a 16px VERTICAL `Stack gap="md"` gap (Task 521) — NOT zero-gap concatenation, NOT a phantom gap when `footer` is omitted
+- Footer buttons (when provided by caller): ≥44px, full-width, stacked, canonical `size="sm"`/14px text (Task 520 — no `size="lg"|"xl"` override; §6 Density Correction)
+- Backdrop tap + Esc close without firing any footer handler; focus returns to the trigger
+- **Known issue (§18.8, reported not fixed):** short content leaves empty space below the footer up to the 90dvh sheet floor — shared-source `flex:1` behavior, not Modal-specific
+
+At `≥640px`:
+- Standard centered Mantine `Modal` — `title`, body, then a 16px `Stack gap="md"` vertical gap (Task 521) before `footer` (caller-composed row, e.g. `Flex justify="flex-end"`); X/backdrop/Esc close
+
+### §23.5 — Relationship to `MantineDialogDrawerPattern`
+
+`MantineDialogDrawerPattern.tsx` (Task 482) predates the Task 514 single-source extraction and inlines its own `<Drawer>` + drag-handle markup + bottom-sheet `styles` — it is NOT refactored onto `MantineModal`/`ResponsiveBottomSheet` in this task (separate follow-up). `MantineModal` is the new canonical primitive for future controlled-modal consumers; it does not replace or alter `MantineDialogDrawerPattern`'s existing behavior.
 
 NavigationMenu triggers are always text (section labels) — **no `iconOnlyTrigger` prop** exists on `MantineNavigationMenu`; unlike `MantinePopover`/`MantineDropdownMenu` there is no real icon-only nav-trigger case to exempt. Proof: `src/stories/mantine/primitives/NavigationMenu.stories.tsx` — two sections: `resting` · `disabled section`.

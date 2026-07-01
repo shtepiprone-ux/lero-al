@@ -31,7 +31,6 @@ export const Default: Story = {
                 <Text fw={600}>{t('storybook.mantine.card_demo_title')}</Text>
                 <Text size="sm" c="gray.7">{t('storybook.mantine.card_demo_body')}</Text>
                 <Button
-                  size="lg"
                   mih="2.75rem"
                   w={{ base: '100%', sm: 'fit-content' }}
                 >

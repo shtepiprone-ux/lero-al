@@ -16,13 +16,15 @@ export const Default: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
+    // No outer Box — MantinePopover supplies the mobile content gutter (Task 520);
+    // desktop Popover.Dropdown carries its own default padding.
     const content = (
-      <Box px="md" py="sm">
+      <>
         <Text fw={600} size="sm" c="gray.8" mb={4}>{t('pop_content_heading')}</Text>
         <Text size="sm" c="gray.7" style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
           {t('pop_content_body')}
         </Text>
-      </Box>
+      </>
     )
 
     return (

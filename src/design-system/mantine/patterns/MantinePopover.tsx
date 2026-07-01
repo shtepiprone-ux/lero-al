@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react'
 import { Popover, Box } from '@mantine/core'
 import type { PopoverProps } from '@mantine/core'
-import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
+import { useResponsiveDropdown, ResponsiveBottomSheet, SheetContent } from './responsiveBottomSheet'
 
 export interface MantinePopoverProps {
   /** Trigger element — activates the popover on click (must forward refs for Popover.Target on desktop) */
@@ -44,6 +44,10 @@ export interface MantinePopoverProps {
  * Mobile (<640px): clicking the trigger opens a P0-compliant ResponsiveBottomSheet —
  * edge-to-edge, top-only radius, DragHandle, ≤90dvh internal scroll,
  * backdrop tap + Esc to close, returnFocus=true. Disabled trigger is a no-op.
+ * `children` are wrapped in `SheetContent` (Task 520) so arbitrary popover content
+ * gets a 16px gutter instead of bleeding to the sheet's edges — the sheet body is
+ * `padding:0` by design for row-based consumers (Select/DropdownMenu/NavigationMenu),
+ * so a blob-content consumer like this one supplies its own inset.
  *
  * Mobile click mechanism: at <640 the trigger is wrapped in an inline-block span
  * that captures the click event (bubbled from the trigger button) and calls openDrawer().
@@ -112,7 +116,10 @@ export function MantinePopover({
           onClose={closeDrawer}
           title={title}
         >
-          {children}
+          {/* Task 520 — content gutter: the sheet body is padding:0 by design
+              (row-based consumers need edge-to-edge tap rows), so arbitrary
+              popover content must supply its own inset via SheetContent. */}
+          <SheetContent>{children}</SheetContent>
         </ResponsiveBottomSheet>
       )}
     </>

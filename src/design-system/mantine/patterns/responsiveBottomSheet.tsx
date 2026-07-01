@@ -16,6 +16,10 @@ export const bottomSheetDrawerStyles = {
     flexDirection: 'column' as const,
   },
   header: { paddingBottom: 0 },
+  // Stretch the title slot to the full header width so the centered DragHandle
+  // centers across the whole sheet (Mantine's .mantine-Drawer-title is otherwise
+  // content-width under the header's justify-content:space-between → handle drifts left).
+  title: { width: '100%' },
   body: { flex: 1, overflowY: 'auto' as const, padding: 0 },
   inner: { padding: 0 },
 }

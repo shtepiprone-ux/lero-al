@@ -64,7 +64,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.16 | Dialog / Modal (bottom-sheet <640) | dialog.tsx | §11 mobile gate | ⬜ |
 | P1.17 | Sheet / Drawer (bottom-sheet) | sheet.tsx | §11 | ⬜ |
 | P1.18 | Popover | popover.tsx → MantinePopover.tsx | §6d + P0 bottom-sheet <640 | ✅ Task 513 |
-| P1.19 | DropdownMenu | dropdown-menu.tsx | §6d (extract on use) | ⬜ |
+| P1.19 | DropdownMenu | dropdown-menu.tsx → MantineDropdownMenu.tsx | §6d + P0 bottom-sheet <640 | ✅ Task 515 |
 | P1.20 | NavigationMenu | navigation-menu.tsx | §6c/§6d | ⬜ |
 | P1.21 | Command / Combobox base | command.tsx | §6d | ⬜ |
 | P1.22 | Tooltip | (in ui) | §6d (extract on use) | ⬜ |

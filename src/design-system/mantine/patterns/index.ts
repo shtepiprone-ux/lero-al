@@ -48,3 +48,6 @@ export type { MantineSelectProps } from './MantineSelect'
 
 export { MantinePopover } from './MantinePopover'
 export type { MantinePopoverProps } from './MantinePopover'
+
+export { MantineDropdownMenu } from './MantineDropdownMenu'
+export type { MantineDropdownMenuProps, DropdownMenuItemDef } from './MantineDropdownMenu'

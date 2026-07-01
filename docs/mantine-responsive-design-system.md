@@ -913,7 +913,7 @@ Same as §19.2 (MantineSelect): `isMobile=false` on first render (Mantine v8 `ge
 
 ### §20.3 — Storybook proof location
 
-`src/stories/mantine/primitives/Popover.stories.tsx` → `Default` — toolbar-driven. **Two sections (§8.2): trigger (closed/resting) · disabled.** All strings via `storyT()` against `storybook.mantine.pop_*` keys. The open/bottom-sheet behavior is verified by clicking the trigger and switching the toolbar viewport on the ONE closed/resting section.
+`src/stories/mantine/primitives/Popover.stories.tsx` → `Default` — toolbar-driven. **Three sections (§8.2): trigger (closed/resting) · disabled · icon-only (clause-11 exempt).** All strings via `storyT()` against `storybook.mantine.pop_*` keys. The open/bottom-sheet behavior is verified by clicking the trigger and switching the toolbar viewport on the ONE closed/resting section.
 
 ### §20.4 — P0 gate
 
@@ -925,3 +925,72 @@ At `<640px`:
 
 At `≥640px`:
 - Standard Mantine `Popover` anchored to trigger — position/width/arrow configurable
+
+### §20.5 — Trigger-width contract (Task 516 corrective, 2026-07-01)
+
+**The component guarantees trigger width — consumers do not set it per-use.**
+
+| Context | Trigger width |
+|---|---|
+| `<640px`, text trigger (default: `iconOnlyTrigger=false`) | **Full-width edge-to-edge** — mobile wrapper is a `flex-column` container; `align-items:stretch` pulls the trigger to 100% of the container |
+| `<640px`, icon-only trigger (`iconOnlyTrigger=true`) | **Compact** (clause-11 exemption) — wrapper is `inline-block`; trigger stays at natural content size |
+| `≥640px`, any trigger | **Natural/content width** — desktop path wraps `<Popover>` in `alignSelf:flex-start` Box, preventing `Stack align="stretch"` from over-stretching the trigger |
+
+**Root cause this corrects (verified 2026-07-01):** Task 513 shipped a mobile wrapper of `display:inline-block` (span), which absorbed the flex-stretch from the parent, leaving the trigger compact at <640. Simultaneously the bare Popover was a direct Stack child at ≥640 and got stretched full-width. The fix inverts both: flex-column mobile wrapper → stretch; `alignSelf:flex-start` desktop wrapper → natural. Prop: `iconOnlyTrigger?: boolean` (default `false`).
+
+---
+
+## §21 — Canonical responsive DropdownMenu: `MantineDropdownMenu` (Task 515)
+
+> **Decision 2026-06-30 (Task 515):** first Batch C overlay after Popover to consume the Task 514 single source.
+> `MantineDropdownMenu` = ONE canonical DropdownMenu — no "plain Menu vs bottom-sheet Menu" choice.
+
+### §21.1 — Core mechanism
+
+| Export | Kind | Description |
+|---|---|---|
+| `MantineDropdownMenu` | Component | Canonical P0-compliant responsive DropdownMenu. Anchored Mantine Menu at ≥640; full-width bottom sheet at <640. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` from `responsiveBottomSheet.tsx` (Task 514 single source) — no DragHandle copy, no Drawer block copy. |
+
+**API:** `items: DropdownMenuItemDef[]` (each: `label`, `onClick?`, `icon?`, `color?`, `disabled?`, `separator?`). ONE items source for both paths — no duplication.
+
+**How the Menu interception works:**
+
+1. `useResponsiveDropdown()` (from `responsiveBottomSheet.tsx`) returns `isMobile` + `openDrawer`/`closeDrawer`/`drawerOpened`.
+2. At mobile (`isMobile=true`): trigger wrapped in `inline-block` span → click → `openDrawer()`. No Mantine `Menu` on mobile path. Items rendered as ≥44px `UnstyledButton` rows inside `ResponsiveBottomSheet`. Tapping an item fires its `onClick` + `closeDrawer()`.
+3. At desktop (`isMobile=false`): standard uncontrolled Mantine `Menu` — `Menu.Target` + `Menu.Dropdown` + `Menu.Item`s. No `opened` prop.
+4. Same span-onClick mechanism as `MantinePopover` — avoids Mantine v8 controlled-mode onChange quirk.
+
+### §21.2 — SSR/hydration caveat
+
+Same as §19.2 and §20.2: `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Desktop Menu path on SSR + initial client; mobile path mounts after hydration. No flash, no interaction possible before switch.
+
+### §21.3 — Storybook proof location
+
+`src/stories/mantine/primitives/DropdownMenu.stories.tsx` → `Default` — toolbar-driven. **Three sections (§8.2): trigger (closed/resting) · disabled · icon-only (clause-11 exempt).** All strings via `storyT()` against `storybook.mantine.dm_*` keys. Open behavior proven by clicking the trigger and switching the toolbar viewport on the ONE section.
+
+### §21.4 — P0 gate
+
+At `<640px`:
+- Menu: full-width bottom sheet via `ResponsiveBottomSheet` (NOT anchored mini-menu, NOT centered card)
+- Sheet: edge-to-edge, top-only radius, drag handle (from Task 514 source), ≤90dvh internal scroll
+- Rows: ≥44px touch target (`mih="2.75rem"`), label wraps (`whitespace-normal break-word`), no h-scroll@320
+- Destructive: `color='red'` → red text + icon on both paths
+- Disabled trigger: tap is a no-op
+- Disabled item: dimmed (opacity 0.5), no action on tap
+
+At `≥640px`:
+- Standard Mantine `Menu` anchored to trigger — §6d item chrome, separators, destructive color unchanged
+
+### §21.5 — Trigger-width contract (Task 516 corrective, 2026-07-01)
+
+**The component guarantees trigger width — consumers do not set it per-use.**
+
+Same contract as §20.5 (MantinePopover). Applies identically to `MantineDropdownMenu`:
+
+| Context | Trigger width |
+|---|---|
+| `<640px`, text trigger (default: `iconOnlyTrigger=false`) | **Full-width edge-to-edge** — flex-column mobile wrapper; `align-items:stretch` → trigger fills 100% |
+| `<640px`, icon-only trigger (`iconOnlyTrigger=true`) | **Compact** (clause-11 exemption) — `inline-block` wrapper; trigger stays content-sized |
+| `≥640px`, any trigger | **Natural/content width** — `<Menu>` wrapped in `alignSelf:flex-start` Box; no stretch from parent Stack |
+
+Prop: `iconOnlyTrigger?: boolean` (default `false`). Proof: `src/stories/mantine/primitives/DropdownMenu.stories.tsx` — three sections: `trigger (resting)` · `disabled` · `icon-only (exempt)`. Root cause corrected: see §20.5.

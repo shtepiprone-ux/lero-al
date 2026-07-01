@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Box, Stack, Text, Button, ActionIcon } from '@mantine/core'
 import { MoreVertical } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
-import { MantinePopover } from '@/design-system/mantine/patterns'
+import { MantineDropdownMenu } from '@/design-system/mantine/patterns'
+import type { DropdownMenuItemDef } from '@/design-system/mantine/patterns'
 
 const meta: Meta = {
-  title: 'Mantine/Primitives/Popover',
+  title: 'Mantine/Primitives/DropdownMenu',
   parameters: { skipCanvas: true, layout: 'fullscreen' },
 }
 export default meta
@@ -16,46 +17,42 @@ export const Default: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
-    const content = (
-      <Box px="md" py="sm">
-        <Text fw={600} size="sm" c="gray.8" mb={4}>{t('pop_content_heading')}</Text>
-        <Text size="sm" c="gray.7" style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
-          {t('pop_content_body')}
-        </Text>
-      </Box>
-    )
+    const items: DropdownMenuItemDef[] = [
+      { label: t('dm_item_view'), onClick: () => {} },
+      { label: t('dm_item_edit'), onClick: () => {} },
+      { label: t('dm_item_archive'), onClick: () => {} },
+      { label: t('dm_item_delete'), onClick: () => {}, color: 'red', separator: true },
+    ]
 
     return (
       <Box px={{ base: 'md', sm: 'xl' }} py="md">
         <Stack gap="xl">
 
           {/* 1 — trigger (closed/resting): click trigger to open
-              at ≥640 → anchored Mantine Popover; at <640 → full-width bottom sheet
+              at ≥640 → anchored Mantine Menu; at <640 → full-width bottom sheet
               Use the toolbar viewport switcher to verify both paths on this ONE section. */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              trigger (closed/resting) — click trigger to open; ≥640: anchored Mantine Popover; &lt;640: full-width bottom sheet (drag handle · ≤90dvh · long uk wraps · no h-scroll@320)
+              trigger (closed/resting) — click trigger to open; ≥640: anchored Mantine Menu; &lt;640: full-width bottom sheet (drag handle · ≥44px rows · long uk wraps · no h-scroll@320)
             </Text>
-            <MantinePopover
-              trigger={<Button variant="default">{t('pop_trigger')}</Button>}
-              title={t('pop_title')}
-            >
-              {content}
-            </MantinePopover>
+            <MantineDropdownMenu
+              trigger={<Button variant="default">{t('dm_trigger')}</Button>}
+              title={t('dm_title')}
+              items={items}
+            />
           </Stack>
 
-          {/* 2 — disabled: trigger tap is a no-op on both paths; no sheet/popover opens */}
+          {/* 2 — disabled: trigger tap is a no-op on both paths */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              disabled — trigger tap is a no-op; popover/sheet does NOT open; no focus ring
+              disabled — trigger tap is a no-op; menu/sheet does NOT open
             </Text>
-            <MantinePopover
-              trigger={<Button variant="default" disabled>{t('pop_trigger')}</Button>}
-              title={t('pop_title')}
+            <MantineDropdownMenu
+              trigger={<Button variant="default" disabled>{t('dm_trigger')}</Button>}
+              title={t('dm_title')}
+              items={items}
               disabled
-            >
-              {content}
-            </MantinePopover>
+            />
           </Stack>
 
           {/* 3 — icon-only exemption (clause 11): compact at <640, does NOT stretch */}
@@ -63,22 +60,21 @@ export const Default: Story = {
             <Text size="xs" c="gray.5" fw={500}>
               icon-only trigger (clause-11 exempt) — compact at &lt;640; taps still open the sheet
             </Text>
-            <MantinePopover
+            <MantineDropdownMenu
               trigger={
                 <ActionIcon
                   variant="default"
-                  aria-label={t('pop_icononly_aria')}
+                  aria-label={t('dm_icononly_aria')}
                   mih="2.75rem"
                   miw="2.75rem"
                 >
                   <MoreVertical size={16} />
                 </ActionIcon>
               }
-              title={t('pop_title')}
+              title={t('dm_title')}
+              items={items}
               iconOnlyTrigger
-            >
-              {content}
-            </MantinePopover>
+            />
           </Stack>
 
         </Stack>

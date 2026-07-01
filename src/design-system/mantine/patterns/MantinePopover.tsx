@@ -22,6 +22,11 @@ export interface MantinePopoverProps {
   withArrow?: boolean
   /** Offset from trigger in px (desktop) */
   offset?: number
+  /**
+   * Icon-only trigger exemption (clause 11). Set true for ⋮ kebab / icon-only triggers
+   * to keep them compact at <640. Default false = text trigger = full-width at <640.
+   */
+  iconOnlyTrigger?: boolean
 }
 
 /**
@@ -62,33 +67,42 @@ export function MantinePopover({
   width = 'max-content',
   withArrow = false,
   offset = 4,
+  iconOnlyTrigger = false,
 }: MantinePopoverProps) {
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
 
   return (
     <>
       {isMobile ? (
-        /* Mobile: span captures click from the trigger button (click bubbles up) → openDrawer().
-           No Mantine Popover involved on this path — no double-portal, no focus-trap conflict. */
+        /* Mobile: click is captured on the wrapper and delegates to openDrawer().
+           Text trigger (default): flex column container so the trigger fills full width
+           via align-items:stretch without needing to clone/patch the ReactNode.
+           Icon-only exemption (iconOnlyTrigger=true): inline-block keeps it compact. */
         <Box
-          component="span"
-          style={{ display: 'inline-block' }}
+          component={iconOnlyTrigger ? 'span' : 'div'}
+          style={iconOnlyTrigger
+            ? { display: 'inline-block' }
+            : { display: 'flex', flexDirection: 'column' }
+          }
           onClick={() => { if (!disabled) openDrawer() }}
         >
           {trigger}
         </Box>
       ) : (
-        /* Desktop: standard uncontrolled Mantine Popover, opens/closes on trigger click. */
-        <Popover
-          position={position}
-          width={width}
-          withArrow={withArrow}
-          offset={offset}
-          disabled={disabled}
-        >
-          <Popover.Target>{trigger}</Popover.Target>
-          <Popover.Dropdown>{children}</Popover.Dropdown>
-        </Popover>
+        /* Desktop: alignSelf:flex-start prevents a Stack align="stretch" parent from
+           over-stretching the trigger — trigger renders at natural content width. */
+        <Box style={{ alignSelf: 'flex-start' }}>
+          <Popover
+            position={position}
+            width={width}
+            withArrow={withArrow}
+            offset={offset}
+            disabled={disabled}
+          >
+            <Popover.Target>{trigger}</Popover.Target>
+            <Popover.Dropdown>{children}</Popover.Dropdown>
+          </Popover>
+        </Box>
       )}
 
       {/* P0 bottom sheet — rendered via shared foundation (Task 514) */}

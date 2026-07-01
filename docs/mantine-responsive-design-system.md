@@ -994,3 +994,58 @@ Same contract as §20.5 (MantinePopover). Applies identically to `MantineDropdow
 | `≥640px`, any trigger | **Natural/content width** — `<Menu>` wrapped in `alignSelf:flex-start` Box; no stretch from parent Stack |
 
 Prop: `iconOnlyTrigger?: boolean` (default `false`). Proof: `src/stories/mantine/primitives/DropdownMenu.stories.tsx` — three sections: `trigger (resting)` · `disabled` · `icon-only (exempt)`. Root cause corrected: see §20.5.
+
+---
+
+## §22 — Canonical responsive NavigationMenu: `MantineNavigationMenu` (Task 518)
+
+> **Decision 2026-07-01 (Task 518):** next overlay after Popover (513) + DropdownMenu (515). Same foundation-consuming
+> shape, but with **multiple top-level sections**, each opening its own links panel. `MantineNavigationMenu` = ONE
+> canonical NavigationMenu — no "plain nav vs bottom-sheet nav" choice.
+
+### §22.1 — Core mechanism
+
+| Export | Kind | Description |
+|---|---|---|
+| `MantineNavigationMenu` | Component | Canonical P0-compliant responsive NavigationMenu. Horizontal anchored nav bar at ≥640px (one Mantine `Menu` per section); stacked full-width section triggers + ONE shared full-width bottom sheet at <640px. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as `MantineSelect`/`MantinePopover`/`MantineDropdownMenu`, no duplicated DragHandle or Drawer block. |
+
+**API:** `sections: NavMenuSection[]` (each: `label`, `links: NavMenuLink[]`, `disabled?`) + `ariaLabel: string` (rendered as `<Box component="nav" aria-label>`). Each `NavMenuLink`: `label`, `href?`, `onClick?`, `icon?`, `disabled?`. ONE sections source for both paths — no duplication.
+
+**How the multi-section interception works (Task 518 — the only new element vs 515/516 is multiple sections + a shared drawer):**
+
+1. `useResponsiveDropdown()` (from `responsiveBottomSheet.tsx`) returns `isMobile` + `openDrawer`/`closeDrawer`/`drawerOpened`. A local `activeSectionIndex` state (component-local, NOT in the Task 514 source) tracks which section's links the ONE shared `ResponsiveBottomSheet` currently shows.
+2. At mobile (`isMobile=true`): section triggers are rendered as `Button`s inside a `Stack` (Mantine `Stack` default `align="stretch"` — same flex-column mechanism as Task 516 — stretches each Button to 100% width; this component owns trigger rendering so no clone/patch of an arbitrary ReactNode is needed, unlike `MantinePopover`/`MantineDropdownMenu`). Tapping a trigger calls `setActiveSectionIndex(i)` then `openDrawer()`; the shared sheet re-renders with that section's `links`.
+3. At desktop (`isMobile=false`): each section is an independent uncontrolled Mantine `Menu` — `Menu.Target` (the section's `Button`) + `Menu.Dropdown` (that section's `links` as `Menu.Item`s), all rendered inside a `Group` wrapped in an `alignSelf:'flex-start'` Box (Task 516 mechanism) so a parent `Stack align="stretch"` cannot stretch the nav bar's trigger row.
+4. Empty `links: []` for a section → its panel/sheet shows a neutral "—" placeholder (mirrors `MantineDropdownMenu`'s empty-items branch), no crash.
+5. Disabled section → trigger disabled on both paths (Menu `disabled` prop desktop; guarded `onClick` mobile), no panel/sheet opens. Disabled link → dimmed (opacity 0.5), tap guarded to a no-op (anchor navigation prevented via `event.preventDefault()`).
+
+### §22.2 — SSR/hydration caveat
+
+Same as §19.2/§20.2/§21.2: `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Desktop nav path renders on SSR + initial client render; mobile path mounts after hydration. No flash, no interaction possible before the switch.
+
+### §22.3 — Storybook proof location
+
+`src/stories/mantine/primitives/NavigationMenu.stories.tsx` → `Default` — toolbar-driven. **Two sections (§8.2): resting (≥2 sections × ≥3 links) · disabled section.** All strings via `storyT()` against `storybook.mantine.nav_*` keys. The open/bottom-sheet behavior is verified by clicking a section trigger and switching the toolbar viewport on the ONE resting section. NavigationMenu triggers are always text — no `iconOnlyTrigger` prop exists on this component (no real icon-only nav trigger case identified).
+
+### §22.4 — P0 gate
+
+At `<640px`:
+- Section triggers: full-width edge-to-edge, stacked (Mantine Stack), ≥44px (`mih="2.75rem"`)
+- Tapping a trigger: full-width bottom sheet via `ResponsiveBottomSheet` (NOT anchored mini-menu, NOT centered card) listing that section's links as ≥44px rows
+- Rows: label wraps (`whitespace: normal`, `wordBreak: break-word`), no h-scroll@320
+- Disabled section: trigger tap is a no-op, no sheet opens
+- Disabled link: dimmed (opacity 0.5), tap is a no-op, sheet stays open
+
+At `≥640px`:
+- Horizontal nav bar (`Group`), each section a natural/content-width trigger — standard Mantine `Menu` anchored per section
+
+### §22.5 — Trigger-width contract (Task 516, applied — no icon-only case)
+
+**The component guarantees trigger width — consumers do not set it per-use.** Same contract as §20.5/§21.5, applied to every section trigger:
+
+| Context | Trigger width |
+|---|---|
+| `<640px`, section trigger | **Full-width edge-to-edge** — Mantine `Stack` default `align="stretch"` stretches each Button to 100% (Task 516 flex-column mechanism, no clone needed — this component renders its own triggers) |
+| `≥640px`, section trigger | **Natural/content width** — `Group` of `Menu.Target` triggers wrapped in `alignSelf:'flex-start'` Box; no stretch from a parent `Stack align="stretch"` |
+
+NavigationMenu triggers are always text (section labels) — **no `iconOnlyTrigger` prop** exists on `MantineNavigationMenu`; unlike `MantinePopover`/`MantineDropdownMenu` there is no real icon-only nav-trigger case to exempt. Proof: `src/stories/mantine/primitives/NavigationMenu.stories.tsx` — two sections: `resting` · `disabled section`.

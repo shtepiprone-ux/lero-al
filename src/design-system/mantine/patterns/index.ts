@@ -51,3 +51,6 @@ export type { MantinePopoverProps } from './MantinePopover'
 
 export { MantineDropdownMenu } from './MantineDropdownMenu'
 export type { MantineDropdownMenuProps, DropdownMenuItemDef } from './MantineDropdownMenu'
+
+export { MantineNavigationMenu } from './MantineNavigationMenu'
+export type { MantineNavigationMenuProps, NavMenuSection, NavMenuLink } from './MantineNavigationMenu'

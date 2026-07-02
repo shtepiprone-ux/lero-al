@@ -484,6 +484,12 @@ outer "video card" is `rounded-2xl` (16px) + 1px gray-200 border.
 in-browser).** Every one of the 20 Storybook primitives has a measured composition/chrome row above. Only precise
 sub-measurements deferred to their own correction slice: Data-Tables toolbar, exact form field-group gap, and the Modal
 shell radius/padding (needs a triggered dialog). This §6l is the source of truth for the re-audit + correction slices.
+
+**🔵 Addendum — Overlay footer button-group + Popover radius (measured live 2026-07-02, orchestrator `getComputedStyle`, for Task 528 D3):**
+- **Overlay footer button-group gap = 12px (`gap-3`)** — measured on BOTH `demo.tailadmin.com/popovers` ("Popover with Button" footer: `mt-5 flex items-center gap-3`) AND `demo.tailadmin.com/modals` (every dialog footer: `flex items-center justify-end w-full gap-3 mt-6|8`). Footer is **right-aligned (`justify-end`)** on desktop, top margin `mt-6/mt-8`. 🔴 **Correction flag (D3):** our Modal/Drawer/Popover story footers use **20px (`gap="lg"`)** — that 20px is the STANDALONE `/buttons` group value (line 381), NOT the overlay-footer value. Overlay footers must use **12px**.
+- **Popover container radius = 12px (`rounded-xl`)**, 1px border gray-200 `#e4e7ec`, container padding 0 (inner sections padded), title 16px. 🔴 **Correction flag (D3):** our `theme.ts` sets Popover `radius:'2xl'` (**16px**) — wrong; Popover = **12px (`xl`)**. (Dropdowns/menus stay 16px `rounded-2xl` per the Dropdowns row — the two are intentionally different.)
+- **Badge per-usage mapping (D2 clarification):** the app's STATUS badges (Active/Pending/Blocked/Archived) are the **12px `text-theme-xs`** variant (§6/§6b), NOT the 14px large variant (line 411). Our theme Badge `size='sm'` (the status default) must map to **12px / 500 / padding 2×8–10 / line-height 18px**, not 14px.
+
 **Each correction slice is BLOCKED until its row here is measured + cited. No primitive is fixed before its composition
 row exists.**
 

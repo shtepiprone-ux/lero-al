@@ -117,3 +117,33 @@ Track via `grep -rl "@/components/ui/<name>" src`.
   P1.13 Pagination · P1.15 Alert · P1.21 Command · P1.23 Progress · P1.24 Skeleton · P1.25 Separator · P1.26 ScrollArea ·
   P1.27 Slider · P1.29 Toast.
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
+
+## Audit status (Task 525 — rendered conformance audit vs `demo_tailadmin_com.zip`, 2026-07-02)
+
+Full detail + rendered evidence: `docs/sessions/2026-07-02-task525-tailadmin-conformance-audit.md`. Audit-only — zero primitive/theme/story code changed.
+
+| Primitive | Verdict | Top finding |
+|---|---|---|
+| Button | NEEDS CORRECTION | `variant="default"` border/text/shadow diverge from §6 secondary-button spec |
+| TextInput | NEEDS CORRECTION (minor) | resting shadow = Mantine's own "xs" formula, not TailAdmin's simpler `shadow-theme-xs` |
+| Textarea | 🔴 NEEDS CORRECTION (P0) | resting min-height 36px, below the 44px touch-target gate |
+| Select | NEEDS CORRECTION | missing `color:gray-8` override → black resting text + red error text + wrong disabled shade |
+| PasswordInput | PASS (resting; not fully re-swept) | matches TextInput pattern |
+| Label | PASS | fw600 is a documented owner override, not a defect |
+| Checkbox | ✅ PASS | 16px box/geometry question from §6f now CONFIRMED correct |
+| Radio | ✅ PASS | 16px geometry question from §6g now CONFIRMED correct |
+| Switch | PASS-AS-APPROVED | track color/density already flagged as owner-decision-pending (§6h) |
+| Badge | NEEDS CORRECTION | fontSize renders 10px vs cited 12px (`text-theme-xs`) |
+| Card | NEEDS CORRECTION | border renders gray-300, not the intended gray-100 override |
+| Table | ✅ PASS | header/body chrome exact (thead bg confirmed after a selector-scoping fix) |
+| Tabs | PASS-WITH-KNOWN-GAP | active/inactive text-color parity already documented as deferred |
+| SegmentedControl | NEEDS CORRECTION | active-label CSS var not reaching the render (renders black, not gray-900) |
+| Avatar | ✅ PASS | pill radius + 40px "standard" size confirmed |
+| Popover | NEEDS CORRECTION | desktop dropdown has no shadow (`shadow-theme-lg` cited) |
+| DropdownMenu | NEEDS CORRECTION | same missing-shadow finding as Popover |
+| NavigationMenu | NEEDS CORRECTION | same missing-shadow finding as Popover |
+| Modal | NEEDS DECISION | desktop radius (6px) inconsistent with the theme's own stated 8px default |
+| Drawer | ✅ PASS | 0px radius correct for a flush side panel; shadow not yet cited (doc gap, not a defect) |
+| Tooltip | ✅ PASS (pre-existing) | §6k extracted + owner-approved in Tasks 524/526, not re-audited |
+
+**Priority-ordered correction queue:** Textarea min-height (P0) → Popover/Menu shadow-lg (3 primitives) → Card border → Select color parity → SegmentedControl active-label var → Button secondary chrome → Badge fontSize → input-family padding → Modal radius decision. Full citations + measured values in the audit doc.

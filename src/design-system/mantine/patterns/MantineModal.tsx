@@ -34,8 +34,10 @@ export interface MantineModalProps {
  * `onClose` and supplies its own trigger; this component only renders the
  * overlay content.
  *
- * Desktop (≥640px): centered Mantine `Modal` (`centered`, `radius="md"`,
- * configurable `size`) with `title`, then a `<Stack gap="md">` (Task 521 —
+ * Desktop (≥640px): centered Mantine `Modal` (`centered`, configurable `size`,
+ * radius from theme.components.Modal default — 8px, §6l — Task 527 fix #11;
+ * do NOT pass a hardcoded `radius` prop here, it would shadow the theme default)
+ * with `title`, then a `<Stack gap="md">` (Task 521 —
  * matches the `MantineDialogDrawerPattern` body/actions rhythm) containing
  * exactly two slots: `<Box>{children}</Box>` and `footer`. `children` is
  * wrapped in a `Box` so a multi-element `children` (e.g. an array of several
@@ -89,7 +91,7 @@ export function MantineModal({
   }
 
   return (
-    <Modal opened={opened} onClose={onClose} title={title} centered radius="md" size={size}>
+    <Modal opened={opened} onClose={onClose} title={title} centered size={size}>
       <Stack gap="md">
         <Box>{children}</Box>
         {footer}

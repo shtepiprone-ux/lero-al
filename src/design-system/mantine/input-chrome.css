@@ -3,8 +3,17 @@
    theme.components.*.styles.input (inline styles freeze the border + drop state selectors). */
 .mantine-TextInput-input,
 .mantine-Textarea-input {
-  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  border-color: var(--mantine-color-gray-3);          /* §6e resting border — gray-300 (owner decision 2026-07-02, supersedes gray-200) */
   box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
+}
+/* Textarea 44px floor via a CLASS rule (Task 528 D1) — NEVER via theme.ts styles.input.minHeight:
+   Mantine's <Textarea> renders through TextareaAutosize, which throws a hard runtime guard on any
+   inline style.minHeight ("Using style.minHeight for <TextareaAutosize/> is not supported. Please
+   use minRows."). A stylesheet class-applied min-height does not touch the component's inline
+   `style` prop, so it never hits that guard. TextInput/Select/PasswordInput are plain <input>s
+   (no autosize) — their theme.ts minHeight is safe and unaffected by this rule. */
+.mantine-Textarea-input {
+  min-height: 2.75rem; /* §6e/§6l field height 44px */
 }
 .mantine-TextInput-input::placeholder,
 .mantine-Textarea-input::placeholder {
@@ -25,7 +34,7 @@
 
 /* PasswordInput — border/shadow/error on the OUTER .input div; focus is :focus-within; placeholder on innerInput */
 .mantine-PasswordInput-input {
-  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  border-color: var(--mantine-color-gray-3);          /* §6e resting border — gray-300 (owner decision 2026-07-02, supersedes gray-200) */
   box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
 }
 .mantine-PasswordInput-innerInput::placeholder {
@@ -41,10 +50,10 @@
   box-shadow: none;
 }
 
-/* Select — border chrome mirrors TextInput (resting = gray-2 per owner decision 2026-06-27).
+/* Select — border chrome mirrors TextInput (resting = gray-3 per owner decision 2026-07-02).
    Disabled for Select is covered by the block below (Task 507) — do not duplicate. */
 .mantine-Select-input {
-  border-color: var(--mantine-color-gray-2);          /* §6 resting border — gray-200 */
+  border-color: var(--mantine-color-gray-3);          /* §6e resting border — gray-300 (owner decision 2026-07-02, supersedes gray-200) */
   box-shadow: var(--mantine-shadow-xs);               /* §5 resting subtle shadow */
 }
 .mantine-Select-input::placeholder {
@@ -58,6 +67,35 @@
 .mantine-Select-input[data-error]:focus {
   border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
   box-shadow: none;
+}
+
+/* Field padding — §6l Form Elements: 10px 16px (py-2.5 px-4). Task 527 fix #2/#5.
+   Vertical (10px) is always safe to set. Horizontal is guarded with :not([data-with-*-section])
+   so consumers with left/right section icons keep Mantine's icon-reserving padding untouched —
+   e.g. Select's built-in chevron always carries [data-with-right-section], so this override
+   never applies to Select's end-padding (would overlap the chevron otherwise). */
+.mantine-TextInput-input,
+.mantine-Textarea-input,
+.mantine-Select-input {
+  padding-top: 0.625rem;    /* §6l 10px */
+  padding-bottom: 0.625rem; /* §6l 10px */
+  color: var(--mantine-color-gray-8); /* §6l/§6e text — gray-800; Select was missing this (audit: black resting text) */
+}
+.mantine-TextInput-input:not([data-with-left-section]),
+.mantine-Textarea-input,
+.mantine-Select-input:not([data-with-left-section]) {
+  padding-inline-start: 1rem; /* §6l 16px */
+}
+.mantine-TextInput-input:not([data-with-right-section]),
+.mantine-Textarea-input,
+.mantine-Select-input:not([data-with-right-section]) {
+  padding-inline-end: 1rem; /* §6l 16px */
+}
+/* PasswordInput — text lives on the absolutely-positioned innerInput (vertical centering via
+   line-height, not padding — the outer 44px height already supplies it). Reveal toggle is ALWAYS
+   present (permanent right section), so end-padding is intentionally left to Mantine's reservation. */
+.mantine-PasswordInput-input:not([data-with-left-section]) .mantine-PasswordInput-innerInput {
+  padding-inline-start: 1rem; /* §6l 16px */
 }
 
 /* Disabled §6e — source-of-truth: the WHOLE CONTROL dims (label + field + trailing icon → opacity 0.5),
@@ -225,4 +263,15 @@
 .mantine-Switch-root:has([data-disabled]) {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ── SegmentedControl — §6l active label chrome (Task 527 fix #10) ──────────── */
+/* theme.ts already sets --sc-label-color: gray-9 as an inline style on the label slot, but
+   Mantine's own rule that consumes it — `.label:where([data-active]) { color: var(--sc-label-color, ...) }`
+   — uses :where() (0 specificity); it was being beaten in practice (audit: "active var not reaching
+   render"). Setting color directly here, scoped to [data-active], wins unconditionally. Track
+   bg-gray-1/padding-4px/radius-8px are already correct (Mantine defaults + theme radius='lg') —
+   only the active label color needed this explicit rule. */
+.mantine-SegmentedControl-label[data-active] {
+  color: var(--mantine-color-gray-9);
 }

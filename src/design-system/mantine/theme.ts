@@ -1,4 +1,4 @@
-import { createTheme, type MantineColorsTuple } from '@mantine/core'
+import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps } from '@mantine/core'
 
 // Brand color scale derived from globals.css oklch palette (EC5447 primary)
 // Mapped to hex approximations for Mantine's 10-shade color array.
@@ -163,10 +163,29 @@ export const theme = createTheme({
       // rem exemption: minHeight is touch-target, not spacing. fontWeight=500 = TailAdmin font-medium.
       // height:'auto' lets root grow beyond minHeight when label wraps (minHeight still guarantees 44px).
       // label fix: Mantine ships white-space:nowrap on .mantine-Button-label — clips long labels (Task 502).
-      styles: {
-        root: { minHeight: '2.75rem', fontWeight: '500', height: 'auto' },
+      // outline/default variant (Task 527 fix #6, §6l Buttons secondary): bg white, text gray-700,
+      // border gray-200, shadow-theme-xs, padding 12x16. Overridden as CSS custom properties
+      // (--button-bg/--button-color/--button-bd/--button-padding-x), NOT literal background/color,
+      // so Mantine's own :hover rule (which reads the same vars) keeps working — a literal inline
+      // backgroundColor would permanently block the :hover pseudo-class from ever repainting.
+      // Filled/primary variant is untouched (left to Mantine's variantColorResolver).
+      styles: (_theme: MantineTheme, props: ButtonProps) => ({
+        root: {
+          minHeight: '2.75rem',
+          fontWeight: '500',
+          height: 'auto',
+          ...(props.variant === 'outline' || props.variant === 'default'
+            ? {
+                '--button-bg': 'var(--mantine-color-white)',
+                '--button-color': 'var(--mantine-color-gray-7)',
+                '--button-bd': '1px solid var(--mantine-color-gray-2)',
+                '--button-padding-x': '1rem', // §6l 16px (px-4)
+                boxShadow: 'var(--mantine-shadow-xs)',
+              }
+            : {}),
+        },
         label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'break-word' },
-      },
+      }),
     },
     TextInput: {
       // inputWrapperOrder: description below input (owner UX decision, Task 503); Mantine default puts it above.
@@ -183,7 +202,10 @@ export const theme = createTheme({
       // inputWrapperOrder: description below input (Task 503 owner UX decision, matches TextInput)
       defaultProps: { radius: 'lg', size: 'sm', inputWrapperOrder: ['label', 'input', 'description', 'error'] },
       styles: {
-        // border/focus/error/placeholder chrome lives in input-chrome.css (Task 505) — inline styles freeze the cascade
+        // border/focus/error/placeholder/padding/min-height chrome lives in input-chrome.css (Task 505/527/528)
+        // — inline styles freeze the cascade. DO NOT put minHeight here: Mantine's <Textarea> renders via
+        // TextareaAutosize, which throws a hard guard on ANY inline style.minHeight ("Using style.minHeight
+        // for <TextareaAutosize/> is not supported. Please use minRows.") — Task 528 D1, §18.1/§18.2.
         input: {
           color: 'var(--mantine-color-gray-8)', // §6 text — gray-800
         },
@@ -245,6 +267,7 @@ export const theme = createTheme({
           fontSize: 'var(--mantine-font-size-sm)',
           fontWeight: 600,
           color: 'var(--mantine-color-gray-7)',
+          marginBottom: '0.375rem', // §6l Form Elements — label→field gap 6px (Task 527 fix #3)
         },
         // suppress Mantine's red `*` asterisk globally — no asterisk anywhere, even if `required` is passed
         required: { display: 'none' },
@@ -284,16 +307,40 @@ export const theme = createTheme({
       defaultProps: { radius: 'pill' },
     },
     // Badge: pill radius, light variant, sm size, fw=500 (TailAdmin status badge standard).
+    // Mantine's OWN Badge CSS hardcodes 10px/uppercase/700/letter-spacing per size, independent of
+    // theme.fontSizes. §6l Addendum (Task 528 D2, corrects Task 527 fix #9): the app's STATUS badges
+    // (Active/Pending/Blocked/Archived) are the 12px `text-theme-xs` variant (§6b line 62:
+    // `text-theme-xs rounded-full px-2 py-0.5 font-medium`), NOT the 14px large variant — our theme
+    // default `size='sm'` is the status default, so it must map to 12px/500/padding 2×8/line-height
+    // 18px, not 14px. The 14px variant remains reachable via `size='md'` for a consumer that needs
+    // it (untouched — no current consumer relies on 'md'/'lg'/'xl' via the 'sm' default).
     Badge: {
       defaultProps: { radius: 'pill', variant: 'light', size: 'sm' },
-      styles: { root: { fontWeight: '500' } },
+      styles: (_theme: MantineTheme, props: BadgeProps) => {
+        const size = props.size ?? 'sm'
+        return {
+          root: {
+            fontWeight: 500,
+            textTransform: 'none',
+            letterSpacing: 'normal',
+            ...((size === 'sm' || size === 'xs') && {
+              fontSize: '0.75rem',           // §6b/§6l Addendum — text-theme-xs 12px
+              lineHeight: '1.125rem',        // §6l Addendum — 18px (text-theme-xs cited value)
+              height: 'auto',
+              padding: '0.125rem 0.5rem',    // §6b px-2 py-0.5 — 2px 8px
+            }),
+          },
+        }
+      },
     },
     // Card: flat-border, 2xl radius (16px), lg padding (20px). No shadow (shadow only on popovers).
-    // Border color: gray-1 (#f2f4f7) via scoped CSS variable override.
+    // Border color: gray-2 (#e4e7ec) via scoped CSS variable override (Task 527 fix #7, §6l Cards —
+    // corrected from gray-1; live TailAdmin /cards is gray-200, not gray-100. Paper intentionally
+    // left at gray-1 — not cited in Task 527's scope, kept as previously decided).
     Card: {
       defaultProps: { radius: '2xl', padding: 'lg' },
       styles: {
-        root: { '--mantine-color-default-border': 'var(--mantine-color-gray-1)' },
+        root: { '--mantine-color-default-border': 'var(--mantine-color-gray-2)' },
       },
     },
     // Paper: matches Card for consistent admin surface chrome.
@@ -303,11 +350,52 @@ export const theme = createTheme({
         root: { '--mantine-color-default-border': 'var(--mantine-color-gray-1)' },
       },
     },
+    // Modal desktop radius = 8px (defaultProps.radius='lg', Task 527 fix #11 — the theme's own
+    // stated default; MantineModal.tsx no longer overrides it with a hardcoded radius="md").
+    // header styles: title→body gap 8px (Task 527 fix #12, §6l composition rhythm) — Mantine's
+    // ModalBase header padding defaults to spacing-md (16px) on every side; body's own top padding
+    // resets to 0 when a header is present, so header's bottom padding IS the title→body gap.
     Modal: {
       defaultProps: { radius: 'lg', centered: true },
+      styles: {
+        header: { paddingBottom: '0.5rem' }, // §6l 8px
+      },
     },
+    // Drawer shares Modal's ModalBase header/body composition — same title→body 8px rhythm (Task 527 fix #12).
     Drawer: {
       defaultProps: {},
+      styles: {
+        header: { paddingBottom: '0.5rem' }, // §6l 8px
+      },
+    },
+    // Popover / Menu (MantinePopover / MantineDropdownMenu / MantineNavigationMenu desktop panels) —
+    // §6l Dropdowns (Task 527 fix #8) + §6l Addendum (Task 528 D3, corrects Popover radius): Popover
+    // container radius 12px (`rounded-xl`, measured live on /popovers + /modals) + 1px gray-200 border
+    // + padding 12px + shadow-theme-lg. Dropdowns/Menu stay 16px (`rounded-2xl`) — intentionally
+    // different container, per the Addendum. Menu items: 14px / gray-700 / padding ~10x12 / radius 8px.
+    Popover: {
+      defaultProps: { radius: 'xl', shadow: 'lg' }, // §6l Addendum — 12px (was '2xl'/16px)
+      styles: {
+        dropdown: {
+          border: '1px solid var(--mantine-color-gray-2)',
+          padding: '0.75rem', // §6l 12px
+        },
+      },
+    },
+    Menu: {
+      defaultProps: { radius: '2xl', shadow: 'lg' },
+      styles: {
+        dropdown: {
+          border: '1px solid var(--mantine-color-gray-2)',
+          padding: '0.75rem', // §6l 12px
+        },
+        item: {
+          fontSize: 'var(--mantine-font-size-sm)',     // §6l 14px
+          color: 'var(--mantine-color-gray-7)',         // §6l gray-700
+          padding: '0.625rem 0.75rem',                  // §6l ~10x12
+          borderRadius: 'var(--mantine-radius-lg)',     // §6l 8px
+        },
+      },
     },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.

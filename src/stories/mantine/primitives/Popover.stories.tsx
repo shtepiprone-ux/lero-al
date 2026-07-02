@@ -20,7 +20,7 @@ export const Default: Story = {
     // desktop Popover.Dropdown carries its own default padding.
     const content = (
       <>
-        <Text fw={600} size="sm" c="gray.8" mb={4}>{t('pop_content_heading')}</Text>
+        <Text fw={600} size="sm" c="gray.8" mb={8}>{t('pop_content_heading')}</Text>
         <Text size="sm" c="gray.7" style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>
           {t('pop_content_body')}
         </Text>

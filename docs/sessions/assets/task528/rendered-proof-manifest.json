@@ -1,0 +1,5439 @@
+{
+  "pass": 280,
+  "fail": 0,
+  "total": 280,
+  "results": [
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__sq__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__en__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__uk__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-textarea--default",
+      "label": "Textarea/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-textarea--default__it__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__sq__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__en__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__uk__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-badge--default",
+      "label": "Badge/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": null,
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-badge--default__it__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__sq__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__en__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__uk__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-modal--default",
+      "label": "Modal/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-modal--default__it__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__sq__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__en__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__uk__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-drawer--default",
+      "label": "Drawer/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-drawer--default__it__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "sq",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__sq__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "en",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__en__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "uk",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__uk__huge-2560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-320",
+      "width": 320,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__mobile-320.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-375",
+      "width": 375,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__mobile-375.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-390",
+      "width": 390,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__mobile-390.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "mobile-480",
+      "width": 480,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__mobile-480.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-560",
+      "width": 560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__canonical-560.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-680",
+      "width": 680,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__canonical-680.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "tablet-768",
+      "width": 768,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__tablet-768.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-810",
+      "width": 810,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__canonical-810.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-960",
+      "width": 960,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__canonical-960.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__desktop-1024.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "canonical-1200",
+      "width": 1200,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__canonical-1200.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__desktop-1440.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-1920",
+      "width": 1920,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__huge-1920.png"
+    },
+    {
+      "storyId": "mantine-primitives-popover--default",
+      "label": "Popover/Default",
+      "viewport": "huge-2560",
+      "width": 2560,
+      "locale": "it",
+      "pass": true,
+      "closedCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "openCheck": {
+        "failed": false,
+        "reason": null,
+        "detail": ""
+      },
+      "pageErrors": [],
+      "consoleErrors": [],
+      "screenshot": "C:\\Users\\Nox\\AppData\\Local\\Temp\\claude\\C--Claude-Code-Projects-lero-al\\48c7b1a7-2007-402e-91be-1d390d496499\\scratchpad\\task528-proof\\mantine-primitives-popover--default__it__huge-2560.png"
+    }
+  ]
+}

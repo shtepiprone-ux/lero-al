@@ -321,6 +321,37 @@ default is gray-3; owner to confirm preference in DevTools). Brand `var(--mantin
 | Drag handle | Replicated from `MantineSelect` private `DragHandle` (2.5rem × 0.25rem, gray-3, radius 9999px) |
 | Story | `src/stories/mantine/primitives/Popover.stories.tsx` Default (4 sections) |
 
+## 6k. Tooltip — chrome (extracted 2026-07-02 from the LIVE demo; NOT in the supplied zip)
+
+> **Source of truth:** `https://demo.tailadmin.com/tooltips.html` — read from the rendered DOM (class list + computed
+> styles) via the browser, 2026-07-02. The supplied `demo_tailadmin_com.zip` contains **no generic UI tooltip** (only
+> 3rd-party `.jvm-tooltip` / `.apexcharts-tooltip` / `.leaflet-tooltip`), so the live component is the reference. Two
+> variants (Dark = default, White), each offered with and without an arrow. Values below are the extracted truth — consume
+> them; do NOT invent or re-derive.
+
+**Common bubble (both variants):**
+`hidden absolute z-99999 whitespace-nowrap rounded-lg border px-3.5 py-2 text-xs font-medium shadow-md`
+- **radius:** `rounded-lg` = **8px** (computed `border-radius: 8px`).
+- **padding:** `px-3.5 py-2` = **8px 14px** (computed `padding: 8px 14px`).
+- **type:** `text-xs` = **12px**, `font-medium` = **500**, Outfit.
+- **shadow:** `shadow-md` = `0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1)`.
+- single-line on desktop (`whitespace-nowrap`); our mobile bottom-sheet body overrides to wrap.
+
+**Dark (DEFAULT variant):** `bg-gray-800 text-white` — bg **`#1d2939`** (gray-800, computed `rgb(29,41,57)`), text **white**;
+**no border**.
+
+**White variant:** `bg-white text-gray-700 border border-gray-200` — bg **white**, text **`#344054`** (gray-700, computed
+`rgb(52,64,84)`), **1px border `#e4e7ec`** (gray-200).
+
+**Arrow:** TailAdmin ships with-arrow and without-arrow variants; the arrow is a **same-color square** matching the bubble
+bg (no separate border color). Mantine `Tooltip` `withArrow` reproduces this (arrow inherits the bubble background).
+
+**Mantine mapping (`MantineTooltip`, Task 524):** Mantine `Tooltip` — **default = Dark**: background gray-800 `#1d2939`,
+white text, `size` → 12px label, radius = TailAdmin `lg` (8px) token, padding 8px 14px, `shadow-md`, `withArrow` (arrow =
+bubble bg). White variant = bg-white / text gray-700 / 1px gray-200 border / `shadow-md`. `<640` the content is surfaced via
+the shared `ResponsiveBottomSheet` (P0), so this chrome applies to the **≥640 anchored tooltip**; the mobile sheet keeps the
+canonical bottom-sheet chrome.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

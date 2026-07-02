@@ -45,11 +45,15 @@ Input/Select/Textarea/PasswordInput),
   the tooltip chrome you will extract (bg, text color, font-size, padding, radius, shadow, arrow).
 
 ## Scope (exactly this — no more)
-1. **Extract the TailAdmin tooltip chrome into a new `tailadmin-style-reference.md §6k` row FIRST** (before coding the
-   component): the exact bg / text color / font-size / padding / border-radius / shadow / arrow treatment, taken from
-   `demo_tailadmin_com.zip` (or the live TailAdmin tooltip). ZERO invented values — cite the extracted values in §6k and
-   consume ONLY those in the component/theme. If the reference tooltip has an arrow/pointer, record it in §6k and decide
-   (STOP-and-ASK if unclear) whether the Mantine `Tooltip` `withArrow` reproduces it.
+1. **CONSUME the already-extracted `tailadmin-style-reference.md §6k` chrome — do NOT re-extract, do NOT invent.** The
+   orchestrator already extracted the real TailAdmin tooltip values from the live demo (`demo.tailadmin.com/tooltips.html`)
+   on 2026-07-02 and wrote them into **§6k** (the component is NOT in the supplied zip — that's why §6k cites the live
+   source). Apply §6k EXACTLY: **default = Dark** — bg gray-800 `#1d2939`, white text, 12px/`font-medium` 500 Outfit,
+   radius `lg` (8px), padding 8px 14px, `shadow-md`, `withArrow` (arrow inherits bubble bg). (White variant = bg-white /
+   text gray-700 / 1px gray-200 border / `shadow-md` — expose only if a consumer needs it; default is Dark.) This chrome
+   applies to the **≥640 anchored Mantine `Tooltip`**; at <640 the content uses the shared `ResponsiveBottomSheet` (P0),
+   which keeps the canonical bottom-sheet chrome. **Zero invented color/px/radius/shadow — every value traces to §6k.** If
+   any §6k value seems unworkable in Mantine → STOP and ASK (do NOT substitute your own).
 
 2. **New component** `src/design-system/mantine/patterns/MantineTooltip.tsx`, exported from
    `src/design-system/mantine/patterns/index.ts`. Canonical P0-compliant responsive Tooltip.
@@ -96,8 +100,8 @@ Input/Select/Textarea/PasswordInput),
 
 5. **Docs:** add **§25 — Canonical responsive Tooltip: `MantineTooltip` (Task 524)** to
    `docs/mantine-responsive-design-system.md`, following the §20/§21/§22/§23/§24 template (core mechanism · SSR/hydration
-   caveat · Storybook proof location · P0 gate · the hover→tap-sheet split ≥640 vs <640 · note the §6k chrome source). Add
-   the **§6k Tooltip chrome row** to `docs/tailadmin-style-reference.md` (Scope 1). Flip the tracker row
+   caveat · Storybook proof location · P0 gate · the hover→tap-sheet split ≥640 vs <640 · reference the §6k chrome).
+   **§6k already exists (orchestrator-populated 2026-07-02) — do NOT re-add, edit, or duplicate it; just cite it.** Flip the tracker row
    `P1.22 | Tooltip | (in ui) | §6d (extract on use) | ⬜` → `✅ Task 524` in
    `docs/mantine-tailadmin-migration-tracker.md`, and update the "Current pointer" line: **mark P1.22 ✅ and Batch C
    COMPLETE; next = Batch D (P1.13 Pagination · P1.15 Alert · P1.21 Command · P1.23 Progress · P1.24 Skeleton · P1.25
@@ -173,8 +177,8 @@ h-scroll@320; ≥640 = anchored Tooltip with §6k chrome opening on hover/focus.
 not a description. Hover/focus states captured on the ≥640 cell.)
 
 ## Acceptance criteria
-1. **§6k Tooltip chrome row added** to `tailadmin-style-reference.md` with extracted values (bg/text/font-size/padding/
-   radius/shadow/arrow), cited as the source; the component consumes ONLY those — zero invented px/colors. *(Scope 1; Task 426)*
+1. Component consumes the **existing §6k** values EXACTLY (dark default: bg gray-800 `#1d2939`, white text, 12px/500,
+   radius 8px, padding 8px 14px, `shadow-md`, `withArrow`); §6k is NOT re-added/edited; zero invented color/px/radius/shadow. *(Scope 1; Task 426; clause 16)*
 2. `MantineTooltip` exists with the literal API above and is exported from `patterns/index.ts`. *(Scope 2)*
 3. At <640 a tap opens the full-width `ResponsiveBottomSheet` (Task 514 source) edge-to-edge with a centered drag handle +
    optional heading; `label` in the `SheetContent` gutter; `position` has no effect; verifiable in the diff AND the rendered

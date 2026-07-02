@@ -153,7 +153,13 @@ of chips. Replicate these, do not invent.
 
 | State | Field (border / bg / shadow) | Label | Trailing icon | Source-of-truth class |
 |---|---|---|---|---|
-| **resting** | border `gray-2` (#e4e7ec) · bg transparent · `shadow-theme-xs` · text `gray-8` · placeholder `gray-4` | `text-theme-sm fw600 gray-7` (owner override of fw500) | `gray-5` region (chevron / reveal) | `border-input bg-transparent shadow … placeholder:text-muted-foreground` |
+| **resting** | border **`gray-3` (#d0d5dd)** · bg transparent · `shadow-theme-xs` · text `gray-8` · placeholder `gray-4` | `text-theme-sm fw600 gray-7` (owner override of fw500) | `gray-5` region (chevron / reveal) | `border-input bg-transparent shadow … placeholder:text-muted-foreground` |
+
+> **🔴 RESTING BORDER = `gray-3` (#d0d5dd) — OWNER DECISION 2026-07-02 (supersedes the 2026-06-27 `gray-2` decision).**
+> Aligned to the live TailAdmin `/form-elements` render (measured `rgb(208,213,221)` = gray-300). The input correction
+> slice MUST change `input-chrome.css` resting `border-color` from `--mantine-color-gray-2` → `--mantine-color-gray-3` for
+> **`.mantine-TextInput-input`, `.mantine-Textarea-input`, `.mantine-Select-input`, `.mantine-PasswordInput-input`**. Focus
+> (`brand-3`) and error (`red-6`) borders are unchanged.
 | **focus** | border `brand-3` (#F7BBB5) · ring `brand-5 @10%` 3px · no error | unchanged | unchanged | `focus-visible:border-ring focus-visible:ring-2` |
 | **error** | border `red-6` (#d92d20) · **no shadow** · ring cleared (`[data-error]`, NOT `data-invalid`) | unchanged (label color does NOT turn red) | unchanged | `aria-invalid:border-destructive aria-invalid:ring-destructive/20` |
 | **disabled** | bg **transparent** (NOT Mantine gray fill) · **opacity 0.5** · `cursor: not-allowed` · no focus ring · no red | **opacity 0.5 + `not-allowed`** (was MISSING) | **opacity 0.5** (was MISSING — chevron/reveal must fade with the field) | field: `disabled:cursor-not-allowed disabled:opacity-50` (TailAdmin demo: transparent bg, not `bg-input/50`); label: `peer-disabled:opacity-50 peer-disabled:cursor-not-allowed` / `group-data-[disabled=true]:opacity-50` |
@@ -428,10 +434,10 @@ heights **8 / 12 / 16 / 20px** (sm/md/lg/xl); fill height = track height.
 - **Label: 14px / 500 / gray-700 `#344054`, `display:block`, `margin-bottom: 6px`** → the label→field gap is **6px**.
 - **Input/Select/Textarea field: height 44px, 1px border gray-300 `#d0d5dd`, radius 8px, padding 10px 16px (py-2.5 px-4),
   14px, text gray-800 `#1d2939`.**
-- 🔴 **Correction flags:** (a) live TailAdmin resting border = **gray-300 `#d0d5dd`**, but our `input-chrome.css` uses
-  **gray-200** ("owner decision 2026-06-27") → **owner to confirm** which stands. (b) our input theme sets no explicit
-  **padding** → Mantine `size='sm'` padding ≠ TailAdmin 10×16; must set. (c) label→field 6px gap must be enforced (our
-  InputWrapper relies on Mantine default).
+- 🔴 **Correction flags:** (a) resting border → **gray-300 `#d0d5dd`** — **OWNER DECIDED 2026-07-02** (align to live
+  TailAdmin; `input-chrome.css` gray-2→gray-3 for TextInput/Textarea/Select/PasswordInput; supersedes 2026-06-27 gray-2).
+  (b) our input theme sets no explicit **padding** → Mantine `size='sm'` padding ≠ TailAdmin 10×16; must set.
+  (c) label→field 6px gap must be enforced (our InputWrapper relies on Mantine default).
 
 **Notifications / Toast (`/notifications`, measured):** notification card `rounded-xl` (12px), 1px border gray-200,
 bg white, padding **20px** (p-5), body 14px/gray-500. Compact toast: white bg, **`rounded-md` (6px), padding 12px (p-3)**,

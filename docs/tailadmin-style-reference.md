@@ -360,6 +360,127 @@ canonical bottom-sheet chrome.
 > still render compactly (no forced width). Every other §6k value (bg, text, radius, padding, shadow, arrow) is
 > unchanged.
 
+## 6l. Composition & spacing rhythm — THE MISSING LAYER (browser-measured live, 2026-07-02)
+
+> **Why this section exists (owner P0, 2026-07-02).** §1–§6k captured tokens + per-control chrome but NOT the
+> **composition/spacing rhythm** — the gaps between heading→text→buttons, button-group spacing, section rhythm, and exact
+> per-component padding. That omission is why the rendered Storybook primitives sit in the wrong spacing even when their
+> chrome is right. These values are **measured directly from the live TailAdmin demo via `getComputedStyle` (orchestrator,
+> not self-report)** and are the source of truth. **This is an in-progress systematic re-extraction** — component pages
+> measured so far are listed; the rest are being measured page by page.
+
+**Buttons (`demo.tailadmin.com/buttons`, measured):**
+- Primary: bg brand, radius **8px**, padding **12px 16px** (py-3 px-4), **14px / 500**, icon-gap 8px.
+- Secondary: bg white, text **gray-700 `#344054`**, border **gray-200 `#e4e7ec`**, radius 8px, padding 12×16, 14px/500.
+- **Button-group gap: 20px** (gap-5) between sibling buttons.
+- Section heading above a button block: **16px / 500 / gray-800 `#1d2939`**.
+
+**Popover / content-card rhythm (`demo.tailadmin.com/popovers`, measured):**
+- Container: white, **1px border gray-200 `#e4e7ec`**, radius **12px** (`rounded-xl`), drop shadow.
+- **Title → body text: 8px** (title `margin-bottom: 8px`); title **16px / 600 / gray-900 `#101828`**.
+- **Body text → action buttons: 16px** (paragraph `margin-bottom: 16px`); body **14px / gray-500 `#667085` / line-height 20px**.
+- Promo/content card variant: radius **16px** (`rounded-2xl`), padding **20px 16px**, bg gray-50.
+
+**Tooltip:** padding 8px 14px, radius 8px (see §6k for full chrome).
+
+**Alerts (`/alerts`, measured):** container `rounded-xl` = **12px**, **1px border semantic-500**, bg **semantic-50**,
+padding **16px** (p-4). Title **14px / 600 / gray-800 `#1d2939`**, `margin-bottom 4px`. Body **14px / gray-500 `#667085`
+/ line-height 20px`. Variants: success (border `#12b76a` / bg `#ecfdf3`) · warning (`#f79009` / `#fffaeb`) · error
+(`#f04438` / `#fef3f2`) · info (blue-light).
+
+**Cards (`/cards`, measured):** shell `rounded-2xl` = **16px**, **1px border gray-200 `#e4e7ec`**, bg white, **no shadow**.
+Title **16px / 500 / gray-800 `#1d2939`**; body text 14px / gray-500. Body padding p-5/p-6 (20/24px); image cards are
+full-bleed (padding 0 on shell, inner section padded). 🔴 **Correction flag:** our theme sets Card border = `gray-1`
+(gray-100 `#f2f4f7`) — TailAdmin's live `/cards` is **gray-200 `#e4e7ec`**. Fix Card border token to gray-2.
+
+**Dropdowns / menus (`/dropdowns`, measured):** container `rounded-2xl` (16px), **1px border gray-200 `#e4e7ec`**,
+padding **12px**, **`shadow-theme-lg`**, width ~260px. Items: **14px / gray-700 `#344054`**, padding **8–10px × 12px**,
+radius **8px** (`rounded-lg`). 🔴 Confirms audit: our `MantinePopover`/`DropdownMenu`/`NavigationMenu` desktop panels are
+missing `shadow-theme-lg` + this exact padding/item chrome.
+
+**Modals (`/modals`, measured — preview cards; full dialog needs trigger to confirm radius/padding):** content rhythm
+matches the popover/card rhythm — **title→body 8px**, **body→action-buttons 16px**; title 16px/600/gray-900 (promo) or
+16px/500/gray-800 (section). Modal shell border gray-200, radius 2xl+ (confirm rounded-3xl=24px on a triggered dialog).
+
+**Badge (`/badge`, measured):** `rounded-full` pill; default variant **14px / 500**, padding **2px 10px**, bg semantic-50
+/ text semantic (brand-50 bg `#ecf3ff` + brand text, success/warning/error analogues). 🔴 A smaller **12px** variant also
+exists (§6/§6b text-theme-xs) — capture both sizes; our theme Badge `size='sm'` must map to the correct one per usage.
+
+**Avatars (`/avatars`, measured):** `rounded-full`; sizes consumer-set (24 / 32 / 40 / 44 / 64px seen); online/offline
+status **dot 8px** (`h-2 w-2`) positioned top-right, semantic bg. Matches our theme (`radius='pill'`, size by consumer).
+
+**Tabs (`/tabs`, measured):** the canonical tab bar is the **segmented style** (confirms §6c) — track `bg-gray-100`,
+padding **4px** (`p-1`), radius **8px** (`rounded-lg`), `overflow-x-auto`; items **14px**, active = **white pill + shadow**,
+inactive gray. (NOT underline `border-b-2` tabs.) Our `SegmentedControl`/`Tabs` theme must render the gray-100 track +
+white active pill.
+
+**Pagination (`/pagination`, measured):** item **gap 8px**; Prev/Next: white bg, text gray-700, **1px border gray-300
+`#d0d5dd`**, radius **8px**, height 42px, 14px; active page number **40×40**, bg **brand**, white text, radius 8px;
+inactive numbers transparent/gray-700, hover gray-50.
+
+**Progress (`/progress-bar`, measured):** track bg **gray-200 `#e4e7ec`**, fill **brand**, `rounded-full` (pill), track
+heights **8 / 12 / 16 / 20px** (sm/md/lg/xl); fill height = track height.
+
+**Breadcrumb (`/breadcrumb`, measured):** item **gap 6px** (`gap-1.5`); links **gray-500 `#667085` / 14px**, current page
+**gray-800 `#1d2939` / 14px**; chevron/slash separator gray-400.
+
+**Form Elements (`/form-elements`, measured — the input-family composition):**
+- **Label: 14px / 500 / gray-700 `#344054`, `display:block`, `margin-bottom: 6px`** → the label→field gap is **6px**.
+- **Input/Select/Textarea field: height 44px, 1px border gray-300 `#d0d5dd`, radius 8px, padding 10px 16px (py-2.5 px-4),
+  14px, text gray-800 `#1d2939`.**
+- 🔴 **Correction flags:** (a) live TailAdmin resting border = **gray-300 `#d0d5dd`**, but our `input-chrome.css` uses
+  **gray-200** ("owner decision 2026-06-27") → **owner to confirm** which stands. (b) our input theme sets no explicit
+  **padding** → Mantine `size='sm'` padding ≠ TailAdmin 10×16; must set. (c) label→field 6px gap must be enforced (our
+  InputWrapper relies on Mantine default).
+
+**Notifications / Toast (`/notifications`, measured):** notification card `rounded-xl` (12px), 1px border gray-200,
+bg white, padding **20px** (p-5), body 14px/gray-500. Compact toast: white bg, **`rounded-md` (6px), padding 12px (p-3)**,
+`gap-3`, **semantic left accent** (success `#12b76a` / info `#0ba5ec` / warning `#f79009` / error), max-width ~340px.
+
+**Spinners (`/spinners`, measured):** SVG, track **gray-200 `#e4e7ec`**, stroke **brand-500**, sizes **20 / 28 / 36 / 40px**.
+
+**Links (`/links`, measured):** **14px, no underline** (default); color variants — default gray-500 `#667085` · brand
+`#465fff` · success `#12b76a` · error `#f04438`.
+
+**List (`/list`, measured):** `list-style:none`, flex column, **gap-based spacing (4–6px)**; items 14–16px. (Ordered/marker
+variants use standard markers.)
+
+**Ribbons (`/ribbons`, measured):** brand bg, white **14px / 500**, padding **6px 16px**; shapes `rounded-r-full` /
+rotated -45° corner. (Decorative — not a core Storybook primitive.)
+
+**Carousel (`/carousel`, measured):** nav dots **8px** `rounded-full`; nav arrows ~38px, bg gray-50, radius 8px; slide
+images rounded per usage.
+
+**Images (`/images`, measured):** `rounded-xl` (12px), optional 1px border gray-200.
+
+**Videos (`/videos`, measured):** aspect-ratio wrappers (16/9 · 4/3 · 1/1), **`rounded-lg` (8px), `overflow-hidden`**; the
+outer "video card" is `rounded-2xl` (16px) + 1px gray-200 border.
+
+### UI Elements sweep — full-section checklist (owner P0: complete pass, not point-fixes — ALL 22 PAGES)
+✅ Buttons · ✅ Buttons Group (gap 20px) · ✅ Popovers · ✅ Tooltips · ✅ Alerts · ✅ Cards · ✅ Dropdowns ·
+🟡 Modals (preview measured; trigger dialog to confirm shell) · ✅ Badge · ✅ Avatars · ✅ Tabs · ✅ Pagination ·
+✅ Notifications (→Toast) · ✅ Progress Bars · ✅ Spinners · ✅ Breadcrumb · ✅ List · ✅ Links · ✅ Ribbons ·
+✅ Carousel · ✅ Images · ✅ Videos → **UI Elements = 22/22 ✅.**
+
+**Tables + Forms (also in scope, owner 2026-07-02):**
+- **Basic Tables (`/basic-tables`, measured):** wrapper `rounded-xl` (12px) + **1px border gray-200 `#e4e7ec`** +
+  `overflow-hidden`, bg white. thead transparent bg, **border-b 1px gray-100 `#f2f4f7`**; th padding **12px 24px**; td
+  padding **16px 24px**; row dividers gray-100. Header/cell TEXT sits on an inner element (~12px gray-500 header / 14px
+  gray-700 cell — confirm the inner node). (§6b CRM variant = 24×12 both; Basic = 12×24 th / 16×24 td — two densities.)
+- **Data Tables (`/data-tables`):** = Basic table body + a toolbar (search input + "entries" Select) above and pagination
+  below — reuses the input/select/pagination chrome already measured. (Measure toolbar precisely during the table slice.)
+- **Form Layout (`/form-layout`, measured):** form CARD `rounded-2xl` (16px) + **1px border gray-200**, bg white; card
+  **header** title **16px / 500 / gray-800 `#1d2939`** with a **bottom divider**; header + body each padded (p-5/p-6);
+  field-to-field vertical gap via container `space-y` (≈20px — confirm precisely during the form slice).
+- ✅ Forms→Form Elements (input family — label mb 6px, field 44 / border-gray-300 / padding 10×16 / 14px / text gray-800).
+
+**Sweep status: COMPLETE — UI Elements 22/22 + Basic Tables + Form Elements + Form Layout all measured (orchestrator,
+in-browser).** Every one of the 20 Storybook primitives has a measured composition/chrome row above. Only precise
+sub-measurements deferred to their own correction slice: Data-Tables toolbar, exact form field-group gap, and the Modal
+shell radius/padding (needs a triggered dialog). This §6l is the source of truth for the re-audit + correction slices.
+**Each correction slice is BLOCKED until its row here is measured + cited. No primitive is fixed before its composition
+row exists.**
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

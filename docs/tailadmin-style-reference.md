@@ -50,6 +50,12 @@ Accent: theme-pink #ee46bc · theme-purple #7a5af8. `gray-dark` #1a2231. Primary
 ## 5. Shadow
 
 - `shadow-theme-xs` ≈ `0 1px 2px 0 rgba(0,0,0,0.05)` — subtle, used on inputs/controls.
+- 🔴 **`shadow-theme-lg`** (extracted 2026-07-02, Task 530, `demo_tailadmin_com.zip` `css/style.css` line 3728-3731,
+  literal Tailwind v4 `--tw-shadow` value — authoritative, not invented): **`0px 12px 16px -4px rgba(16, 24, 40,
+  0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)`**. Applied via `theme.shadows.lg` override in `theme.ts` (grep-
+  verified 2026-07-02: only `Popover`/`Menu` `defaultProps.shadow:'lg'` consume the `lg` key in `src/` — safe to
+  override globally, no sibling regression). Scoped to the desktop (`≥640`) anchored `Popover`/`DropdownMenu`/
+  `NavigationMenu` panels only — Modal/Drawer default to `shadow='xl'` (Mantine `ModalBase` default), unaffected.
 - Content cards: **NO shadow** (flat border). Shadow (`shadow-theme-lg`) only on dropdowns/popovers/menus.
 
 ## 6. Component conventions (real classes)

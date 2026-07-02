@@ -144,6 +144,15 @@ export const theme = createTheme({
     xl: '1.25rem',   // 20px — page heading
   },
 
+  // Shadow: TailAdmin §5 shadow-theme-lg (Task 530) — the ONLY overridden key. Consumed
+  // exclusively by Popover/Menu (DropdownMenu/NavigationMenu) desktop dropdown.shadow='lg'
+  // defaultProps below; no other component in src/ passes shadow="lg" (grep-verified), and
+  // Modal/Drawer default to Mantine's own 'xl' shadow scale, so this override cannot leak
+  // onto them or onto the <640 bottom-sheet Drawer.
+  shadows: {
+    lg: '0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)', // §5 shadow-theme-lg
+  },
+
   // Touch target: ≥44px (P0 mobile gate). 2.75rem = 44px.
   // Storybook proof viewport px→em reference (16px root):
   // 275px=17.1875em | 320px=20em | 390px=24.375em | 480px=30em | 560px=35em |
@@ -373,6 +382,9 @@ export const theme = createTheme({
     // container radius 12px (`rounded-xl`, measured live on /popovers + /modals) + 1px gray-200 border
     // + padding 12px + shadow-theme-lg. Dropdowns/Menu stay 16px (`rounded-2xl`) — intentionally
     // different container, per the Addendum. Menu items: 14px / gray-700 / padding ~10x12 / radius 8px.
+    // shadow:'lg' below now resolves to the CORRECT TailAdmin shadow-theme-lg value — Task 528 left this
+    // referencing Mantine's stock 'lg' shadow scale (wrong value, right key); Task 530 closed the gap by
+    // overriding theme.shadows.lg itself (see §5), so no change was needed here — single-source fix.
     Popover: {
       defaultProps: { radius: 'xl', shadow: 'lg' }, // §6l Addendum — 12px (was '2xl'/16px)
       styles: {

@@ -1,0 +1,393 @@
+{
+  "timestamp": "2026-07-02T20-47",
+  "source": "npm run screenshots:assert -- --mantine-only (Task 529 gate)",
+  "overlayCells": 48,
+  "overlayPass": 48,
+  "additionalCapture480px": "docs/sessions/assets/task530/{Popover,DropdownMenu,NavigationMenu}__{en,uk}__480.png (standalone script, 480 not in fixed MANTINE_VIEWPORTS set; mirrors Task 528 precedent)",
+  "matrix": [
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__sq__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__sq__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "sq",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__sq__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "sq",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__sq__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "en",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__en__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "en",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__en__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "en",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__en__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "en",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__en__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__uk__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__uk__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "uk",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__uk__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "uk",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__uk__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__it__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "it",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__it__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "it",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__it__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/DropdownMenu/Default",
+      "locale": "it",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-dropdownmenu--default__it__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__sq__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__sq__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "sq",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__sq__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "sq",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__sq__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "en",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__en__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "en",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__en__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "en",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__en__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "en",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__en__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__uk__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__uk__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "uk",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__uk__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "uk",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__uk__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__it__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "it",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__it__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "it",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__it__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/NavigationMenu/Default",
+      "locale": "it",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-navigationmenu--default__it__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__sq__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__sq__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "sq",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__sq__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "sq",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__sq__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "en",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__en__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "en",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__en__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "en",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__en__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "en",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__en__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__uk__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__uk__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "uk",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__uk__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "uk",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__uk__desktop-1024.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__it__mobile-320.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "it",
+      "viewport": "mobile-375",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__it__mobile-375.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "it",
+      "viewport": "mobile-390",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__it__mobile-390.png"
+    },
+    {
+      "story": "Mantine/Primitives/Popover/Default",
+      "locale": "it",
+      "viewport": "desktop-1024",
+      "pass": true,
+      "verdict": "pass",
+      "screenshot": "mantine-primitives-popover--default__it__desktop-1024.png"
+    }
+  ]
+}

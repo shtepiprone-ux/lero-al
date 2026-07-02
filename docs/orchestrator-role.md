@@ -220,6 +220,28 @@ a hard gate on BOTH sides of the loop:
 - **No more soft tasks.** If I hand off a UI kickoff without this gate, that is MY failure, not the executor's. Self-check
   every kickoff against this section before writing the file path to the owner.
 
+## TailAdmin conformance gate (OWNER P0 — 2026-07-02) — MANDATORY in every UI kickoff AND every review
+
+The owner has repeatedly (≥10×) rejected UI work that does not visually match the TailAdmin reference. This is now a hard
+gate on BOTH sides of the loop, equal in weight to the mobile full-width gate (agent-contract clause 16):
+
+- **Single source of truth:** `demo_tailadmin_com.zip` (repo root — `css/style.css` tokens + component class markup in its
+  HTML) + `docs/tailadmin-style-reference.md`. The extracted token set (verified 2026-07-02): grays `#f9fafb #f2f4f7 #e4e7ec
+  #d0d5dd #98a2b3 #667085 #475467 #344054 #1d2939 #101828`; Outfit; type `text-theme-sm` 14/20, `text-theme-xs` 12/18; radius
+  `lg` .5rem / `xl` .75rem / `2xl` 1rem; `shadow-theme-xs`≈`0 1px 2px rgba(0,0,0,.05)`; semantic success `#12b76a` / error
+  `#f04438` / warning `#f79009`; control chrome `h-11 rounded-lg border-gray-300 bg-transparent px-4 py-2.5 text-sm
+  shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3`. **Brand stays `#EC5447`** (project override of
+  TailAdmin's `#465fff`); everything else is TailAdmin.
+- **Every UI kickoff I write** MUST name the TailAdmin reference §-row(s) the primitive/surface must match, and — if no
+  authoritative row exists yet — require the task to EXTRACT it from the zip into a new `tailadmin-style-reference.md §6x` row
+  BEFORE implementing. "Style it like TailAdmin" without cited values is forbidden; spell out the exact tokens/classes.
+- **Every UI review I run** is BLOCKED from approval unless the session log contains **rendered proof side-by-side with the
+  zip reference** (the actual TailAdmin component vs the rendered Mantine primitive) at the canonical breakpoints × sq/en/uk/it,
+  and I have personally confirmed border color, radius, focus ring, shadow, font, and density match. `tsc=0`/`build=✅` is NOT
+  style proof and never closes a UI task. Invented color/px/radius/shadow, or a rendered mismatch = **REJECT, route back**.
+- **Self-check every UI kickoff against this section before writing the file path to the owner** — same discipline as the
+  mobile full-width gate.
+
 ## Review checklist (run on every returned task)
 
 - [ ] **🔴 File-integrity (agent-contract clause 14) — RE-RUN, do not trust the log:** every touched file has **0 NUL bytes** (`tr -cd '\000' < f | wc -c` = 0), no stray BOM, `.json` passes `JSON.parse`, `.mjs/.js` passes `node --check`, `.ts/.tsx` compiles, and no file is truncated mid-token. A NUL/unparseable/truncated touched file = **auto-reject, route back** — even if the log claims `tsc=0`/gate-green (that claim is then fabricated). This caught Task 395 (truncated gate script) and Task 397 ×2 (truncated baseline + NUL-corrupted email files).
@@ -234,6 +256,7 @@ a hard gate on BOTH sides of the loop:
 - [ ] Responsive coverage present for all required breakpoints.
 - [ ] **🔴 Mobile <640 full-width gate (OWNER P0):** every in-scope text/container surface is full-width at `max-sm` in the diff (Buttons `max-sm:w-full`; Dialog/Sheet popup full-bleed; Tabs/FilterBar/Select/Combobox/Phone/CTA/toolbars too); icon-only exemptions each documented; ≥44px touch targets; labels wrap. **A non-full-width text/container surface at <640 without a documented exemption = REJECT.**
 - [ ] **🔴 Rendered verification matrix present (OWNER P0, clause 12):** breakpoints × sq/en/uk/it with real per-cell evidence; uk@320/375/390 stress cells present. **No matrix, or tsc/build-only "proof" = REJECT, route back.**
+- [ ] **🔴 TailAdmin conformance (OWNER P0, clause 16):** the rendered primitive/surface visibly matches the `demo_tailadmin_com.zip` reference (border color, radius, focus ring, shadow, Outfit font, density) — proven side-by-side, not asserted; every value cited to a `tailadmin-style-reference.md` §-row; zero invented color/px/radius/shadow. **A rendered mismatch or an invented value = REJECT, route back.**
 - [ ] Canonical components only; no governance anti-patterns.
 - [ ] **Canonical-first respected (Task 426):** where a canonical primitive already provides the required behavior, the diff does NOT duplicate the class locally; closure is canonical-source proof (`file:line`) + rendered evidence. A duplicated class that diverges a consumer from the canonical single-source = route back.
 - [ ] **🔴 Always-verify-styles-vs-source-of-truth (owner P0, 2026-06-28, after the Task 495/507 disabled label+icon miss):** for ANY task touching an input/select/form primitive, every state in `docs/tailadmin-style-reference.md §6e` (resting / focus / error / **disabled — label + field + icon together**) is verified against the rendered output, not just the field, with rendered evidence at the canonical breakpoints × sq/en/uk/it. A disabled render where the label or trailing icon does NOT dim with the field = REJECT. If a needed state is not yet in §6e, it must be extracted from the source-of-truth component into §6e in the same change BEFORE approval — never inferred. `tsc=0`/build-green is never style proof.

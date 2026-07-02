@@ -818,20 +818,47 @@ Use the **Read tool** for file content and the **owner's NATIVE PowerShell** for
 integrity/`tsc` verdict.
 | `@mantine/form` scope | RESOLVED for Task 482 — installed and used in `MantineTwoColumnForm`. Future auth/cabinet forms will use it in Phase 3 migration | No |
 
-### §18.8 — KNOWN ISSUE (reported, NOT fixed): bottom-sheet body `flex:1` stretches to 90dvh regardless of content height (Task 520)
+### §18.8 — RESOLVED: bottom-sheet now sizes to content up to a 90dvh cap (Task 522, fixed at the Task 514 single source)
 
-`bottomSheetDrawerStyles` (`responsiveBottomSheet.tsx`) sets `content: { display:'flex', flexDirection:'column' }` +
-`body: { flex:1, overflowY:'auto' }` so that LONG content's scroll region fills the available space up to `90dvh`.
-The same mechanism has a side effect on SHORT content: the sheet still stretches to the full `90dvh` height even
-when the actual content ends far above that, leaving a large empty region below the content/footer. **Confirmed
-shared-source** (reproduces identically across all four foundation consumers at 275px width — `Modal` ≈574px,
-`Popover` ≈650px, `DropdownMenu` ≈573px, `NavigationMenu` ≈618px of empty space below content, measured via
-Playwright against a real `build-storybook` output). Per the Task 520 kickoff's explicit STOP-AND-ASK trigger
-("Any fix needing `responsiveBottomSheet.tsx` open/close/Drawer mechanics → STOP and ASK"), this was **reported,
-not fixed**, in Task 520 — fixing it requires changing the Task 514 single source's flex/height mechanics
-(e.g. sizing the sheet to content up to a `90dvh` cap instead of always filling it), which is out of scope for a
-consumer-level (Modal/Popover) task. Follow-up task needed; do not attempt a per-consumer workaround (would fork
-the foundation).
+**Root cause (confirmed by rendered DOM/CSS measurement, not guessed):** Mantine's `Drawer` resolves its `size`
+prop through `--drawer-size` → `getSize(size, 'drawer-size')`. `ResponsiveBottomSheet` passes `size="auto"`, which
+is not a recognized token, so `getSize` emits `var(--drawer-size-auto)` — a custom property that is never declared
+anywhere. For `position="bottom"`, Mantine's own `.mantine-Drawer-content` class rule is
+`height: var(--drawer-height, calc(100% - var(--drawer-offset) * 2))`, and `--drawer-height` itself resolves through
+the same unresolved `--drawer-size` chain. Because that chain is invalid, the browser falls back to the `calc(100%
+- offset*2)` fallback in the `height` declaration — i.e. **`height` always resolved to 100% of the full-screen
+overlay**, and only our own inline `maxHeight:'90dvh'` clamped it back down. The result: `content` was ALWAYS
+exactly `90dvh` regardless of content size, and `body`'s `flex:1` then stretched to fill that fixed 90dvh box,
+producing the large empty region below short content (`Modal` ≈574px, `Popover` ≈650px, `DropdownMenu` ≈573px,
+`NavigationMenu` ≈618px at 275px width, per the Task 520 measurement).
+
+**Fix (confined to `bottomSheetDrawerStyles`, Task 522):**
+```
+content: { ..., height: 'auto', maxHeight: '90dvh', display: 'flex', flexDirection: 'column' },
+body:    { flex: 1, minHeight: 0, overflowY: 'auto', padding: 0 },
+```
+- `content.height:'auto'` overrides the class's 100%-fallback height, restoring content-driven (shrink-to-fit)
+  sizing; `maxHeight:'90dvh'` still hard-caps it when content is taller than that.
+- `body.minHeight:0` overrides the flex-item default (`min-height:auto`, i.e. the content's own intrinsic
+  min-content size) which otherwise prevents `body` from shrinking below its natural height once `content` is
+  clamped at `90dvh` — without it, long content would overflow the sheet instead of scrolling internally.
+
+**Verified by rendered measurement (transient Playwright against a live Storybook instance, `Mantine/Primitives/*`
+stories, artifact removed after capture)** across all five foundation consumers (`MantineSelect`, `MantinePopover`,
+`MantineDropdownMenu`, `MantineNavigationMenu`, `MantineModal`) at 320/375/390 × sq/en/uk/it:
+- **Short content:** empty space below content dropped from the hundreds-of-px baseline above to **0px** beyond
+  the sheet's own designed padding (`SheetContent pb="md"` / row padding) on every consumer/locale/breakpoint
+  combination measured.
+- **Long/forced-overflow content:** `content` height correctly clamps at `90dvh` (confirmed exact, e.g. 117px at a
+  130px-tall viewport) and `body.scrollHeight > body.clientHeight` (internal scroll present) on every consumer.
+- **Boundary (~90dvh):** content height and the `90dvh` cap converge with sub-pixel difference, no double
+  scrollbar (`scrollHeight === clientHeight` at the fitting boundary).
+- **≥640 desktop:** no `.mantine-Drawer-content` renders at all (anchored/centered path only) — zero regression.
+- **Rapid re-open:** measured content height identical across two consecutive opens (no stale cached height).
+- **Task 521 Modal body↔footer 16px gap:** re-measured unchanged (16px) — this fix only touches `content`/`body`
+  sizing, not the `Stack gap="md"` composition.
+
+See `docs/sessions/2026-07-02-task522-bottom-sheet-content-height-fix.md` for the full rendered-proof matrix.
 
 ---
 
@@ -853,7 +880,7 @@ the foundation).
 | Export | Type | Purpose |
 |---|---|---|
 | `useResponsiveDropdown()` | Hook | Returns `{ isMobile, drawerOpened, openDrawer, closeDrawer }`. Single source of truth for mobile detection + Drawer state. |
-| `bottomSheetDrawerStyles` | Const | `styles` object for Mantine `<Drawer>` matching the P0 bottom-sheet treatment (top-only radius, ≤90dvh, internal scroll, inner padding 0). |
+| `bottomSheetDrawerStyles` | Const | `styles` object for Mantine `<Drawer>` matching the P0 bottom-sheet treatment (top-only radius, content-sized height up to a ≤90dvh cap — Task 522, internal scroll once capped, inner padding 0). |
 | `DragHandle` | Component | ONE definition of the centered 2.5rem × 0.25rem gray-3 swipe affordance. |
 | `ResponsiveBottomSheet` | Component | Canonical P0 full-width bottom-sheet wrapper: bottom-anchored Drawer with fixed chrome (DragHandle, optional title, ≤90dvh, returnFocus, backdrop+Esc). Props: `opened`, `onClose`, `title?`, `children`. |
 | `SheetContent` | Component | **(Task 520)** Canonical `px="md"` + `pb="md"` content gutter for arbitrary-content (blob, not row-list) consumers of `ResponsiveBottomSheet` — `MantineModal`, `MantinePopover`. The sheet `body` is `padding:0` by design so row-based consumers (`MantineSelect`/`MantineDropdownMenu`/`MantineNavigationMenu`) can render edge-to-edge ≥44px tap rows with their own per-row `px="md"`; a blob-content consumer wraps its `children` (and any `footer`) in `SheetContent` instead. Purely additive — does not change `ResponsiveBottomSheet`/`DragHandle`/`bottomSheetDrawerStyles`/`useResponsiveDropdown`. |
@@ -1122,7 +1149,7 @@ At `<640px`:
 - Body↔footer: a 16px VERTICAL `Stack gap="md"` gap (Task 521) — NOT zero-gap concatenation, NOT a phantom gap when `footer` is omitted
 - Footer buttons (when provided by caller): ≥44px, full-width, stacked, canonical `size="sm"`/14px text (Task 520 — no `size="lg"|"xl"` override; §6 Density Correction)
 - Backdrop tap + Esc close without firing any footer handler; focus returns to the trigger
-- **Known issue (§18.8, reported not fixed):** short content leaves empty space below the footer up to the 90dvh sheet floor — shared-source `flex:1` behavior, not Modal-specific
+- **Sizing (§18.8, RESOLVED — Task 522):** the sheet now sizes to its content up to the `90dvh` cap (short content ends the sheet just below the footer, no dead space); long content caps at `90dvh` and scrolls internally. Shared-source fix in `bottomSheetDrawerStyles` — applies to all five consumers.
 
 At `≥640px`:
 - Standard centered Mantine `Modal` — `title`, body, then a 16px `Stack gap="md"` vertical gap (Task 521) before `footer` (caller-composed row, e.g. `Flex justify="flex-end"`); X/backdrop/Esc close

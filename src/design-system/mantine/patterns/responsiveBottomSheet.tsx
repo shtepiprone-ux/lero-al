@@ -11,6 +11,13 @@ import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 export const bottomSheetDrawerStyles = {
   content: {
     borderRadius: 'var(--mantine-radius-lg) var(--mantine-radius-lg) 0 0',
+    // Drawer size="auto" leaves Mantine's --drawer-height/--drawer-size vars
+    // unresolved, so the class-level height falls back to 100% (Task 522
+    // diagnosis) and only maxHeight clamped it back down to 90dvh — meaning
+    // the sheet always rendered at exactly 90dvh regardless of content.
+    // Explicit height:'auto' restores content-driven sizing; maxHeight still
+    // caps long content at 90dvh.
+    height: 'auto',
     maxHeight: '90dvh',
     display: 'flex',
     flexDirection: 'column' as const,
@@ -20,7 +27,11 @@ export const bottomSheetDrawerStyles = {
   // centers across the whole sheet (Mantine's .mantine-Drawer-title is otherwise
   // content-width under the header's justify-content:space-between → handle drifts left).
   title: { width: '100%' },
-  body: { flex: 1, overflowY: 'auto' as const, padding: 0 },
+  // minHeight:0 overrides the flex-item default (min-height:auto, i.e.
+  // content's intrinsic min-content size), which otherwise prevents body from
+  // shrinking to the available space once `content` is clamped at 90dvh —
+  // without it, long content would overflow instead of scrolling internally.
+  body: { flex: 1, minHeight: 0, overflowY: 'auto' as const, padding: 0 },
   inner: { padding: 0 },
 }
 

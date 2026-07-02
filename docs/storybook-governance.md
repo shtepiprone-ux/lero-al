@@ -710,6 +710,154 @@ Full allowlist: `scripts/check-locale-leak.mjs` → `LEAK_ALLOWLIST` array.
 
 ---
 
+## §14.9 — Mantine/Primitives/* enforced rendered gate (Task 529, 2026-07-02)
+
+**Why.** `scripts/check-stories-rendered.mjs` (`npm run screenshots:assert`, §14.3/14.4) is the ENFORCED rendered
+gate, but until Task 529 its `ASSERT_STORIES` allowlist was hand-maintained and never included any
+`Mantine/Primitives/*` story. Task 527 shipped a hard runtime crash (Textarea `TextareaAutosize` autosize guard)
+and two visible chrome mismatches (overlay footer gap, Popover radius) while claiming "gates green" — the crash
+and mismatches were real, but nothing machine-enforced could have caught them: Mantine primitives weren't in
+`ASSERT_STORIES`, and the pre-existing "geometry-only" sweep (§14.4.2, runs on every OTHER indexed story) never
+opens overlay primitives, so overlay-only defects (footer gap, radius) could never surface regardless. Task 528
+proved its fixes with a throwaway standalone Playwright script — real proof, but never committed, never CI-wired,
+disposable. Task 529 closes this hole permanently: `Mantine/Primitives/*` coverage is now **auto-discovered** (not
+hand-maintained) and **CI-blocking**.
+
+### 14.9.1 Auto-discovery (never hand-maintained)
+
+`discoverMantinePrimitiveStories(indexData)` reads the already-parsed `storybook-static/index.json` and returns
+every entry with `type === 'story'` and a title starting with `Mantine/Primitives/` — the same title prefix every
+Mantine primitive story already uses (`Mantine/Primitives/Button`, `.../Modal`, etc.). A new Mantine primitive
+story is covered automatically the moment it exists; the allowlist can never silently drift again (the exact
+failure mode that let Task 527 slip). Two loud, non-zero-exit failure modes (never a silent zero-story pass),
+both proven via planted breaks (2026-07-02, reverted clean):
+- **Index unreadable** (missing/corrupt `index.json`): shares the same `try/catch` as the pre-existing
+  geometry-only enumeration (§14.4.2) — both abort together.
+- **Zero Mantine matches on a successfully-read index** (title-prefix drift, stale index): a dedicated check,
+  since a successful-but-empty `JSON.parse` would otherwise slip past the first guard silently.
+
+### 14.9.2 Coverage matrix
+
+21 stories (all current `Mantine/Primitives/*` — Avatar, Badge, Button, Card, Checkbox, Drawer, DropdownMenu,
+Label, Modal, NavigationMenu, PasswordInput, Popover, Radio, SegmentedControl, Select, Switch, Table, Tabs,
+TextInput, Textarea, Tooltip) × the 3 mandatory mobile stress widths (320/375/390) + one desktop width (1024,
+`MANTINE_VIEWPORTS`) × 4 locales (sq/en/uk/it) = **336 cells**, always run as **Phase 0** — unconditionally,
+including under `--fast` (unlike the pre-existing Phase 2 geometry-only sweep, which `--fast` skips). A new
+`--mantine-only` flag skips the pre-existing Phase 1 (`ASSERT_STORIES`) and Phase 2 (geometry-only) entirely for
+fast local iteration and for the anti-no-op planted-break proofs below — it does not change what those phases do
+when the flag is absent.
+
+### 14.9.3 Opened-overlay state (the actual D3-class defect surface)
+
+7 of the 21 (`Modal`, `Drawer`, `Popover`, `DropdownMenu`, `NavigationMenu`, `Select`, `Tooltip` —
+`MANTINE_OVERLAY_PRIMITIVES`) get a scripted trigger click BEFORE every render/anchor/style/geometry check runs,
+so those checks assess the OPENED DOM, not just the closed trigger — footer-gap/radius/crash-on-open defects
+(the exact Task 527/528 D3 class) only render once opened. Click selector:
+`#storybook-root button, #storybook-root input` — covers both trigger shapes actually observed: a real
+`<button>` (Modal/Drawer/Popover/DropdownMenu/NavigationMenu/Tooltip) and Mantine Select's combobox trigger,
+which renders as a plain `<input>` with no `<button>` and no `role="combobox"` in the installed Mantine version
+(confirmed via DOM inspection, not assumed — an earlier `button`-only selector produced 64 false-FAILs on
+Select). A failed/timed-out click is a hard FAILURE for the cell (`open-trigger-click-failed`), never a skip.
+
+### 14.9.4 Mantine-specific allowlist extension (random element IDs)
+
+Mantine's DOM elements carry auto-generated `mantine-XXXXX` IDs that are **non-deterministic across renders** —
+`geometry-integrity.mjs`'s pre-existing `GEOMETRY_ALLOWLIST` matched by exact `selector` string, which can never
+match a Mantine-ID'd element twice. Extended (backward-compatible — no existing entry used `selector`-less
+matching before) to also accept `{ storyId, failReason, reason }` entries with NO `selector`: allow ALL
+violations of that `failReason` for that one story (already scoped by the caller). Two entries added, both
+verified false positives (real, intentional TailAdmin/design patterns the geometry heuristic can't distinguish
+from a defect), not silenced regressions:
+- `mantine-primitives-passwordinput--default` / `element-overlap` — the reveal-toggle button is intentionally
+  overlaid inside the input box (eye-icon-in-field pattern).
+- `mantine-primitives-tabs--default` / `text-clipped` — the tab bar is an intentional horizontal-scroll
+  ("swipe on overflow") container; a tab clipped at the visible edge is reachable by scrolling. (A separate,
+  pre-existing `ambiguous-offscreen` bucket — §14.4.2 — ALSO fires for this story and is intentionally left
+  un-silenced: `verdict='ambiguous'` is non-blocking by design, correctly flagging a genuine UX judgment call —
+  is a horizontally-clipped tab without a visible scroll affordance actually fine? — for human triage rather
+  than either hard-failing or silently hiding it.)
+- `LOADER_ALLOWLIST` also extended: `mantine-primitives-button--default` intentionally demonstrates a
+  permanent `loading` Button variant (not a transient loading state).
+
+### 14.9.5 CI wiring (`.github/workflows/governance-pr.yml` — `locale-leak` job)
+
+Added as a step in the existing Playwright-enabled job (reuses its `build-storybook` + `playwright install
+chromium` — no new job, no duplicate build):
+
+```
+1. npm run build-storybook
+2. npm run screenshots:assert -- --mantine-only   ← Task 529 gate, blocking
+3. npm run check:locale-leak
+```
+
+**Deliberately scoped to `--mantine-only`, not the full `screenshots:assert`/`:fast`.** Running the full gate
+(Phase 0 + pre-existing Phase 1 `ASSERT_STORIES`) on this tree surfaces **149 pre-existing Phase-1 failures**
+across unrelated, non-Mantine admin stories (`AdminSidebar/MobileDrawerOpen`, `AdminSupportManager/Default`,
+`NotificationCenter/*`, `AdminReportsManager/*`, plus 6 `Planted/*` stories that are DESIGNED to fail as
+standing detector fixtures — §14.4.2) that predate Task 529 and are out of its scope to fix. Wiring the full
+gate in as CI-blocking would make every PR red for reasons unrelated to Mantine primitives, likely getting the
+step ignored/disabled rather than serving its purpose. **This 149-failure backlog is flagged here as a known
+gap, not fixed** — a candidate for a dedicated follow-up task, tracked in the Task 529 session log
+(`docs/sessions/2026-07-02-task529-*.md`).
+
+### 14.9.6 Anti-no-op proof (2026-07-02, both reverted clean)
+
+Per §14.4's proof rule ("a negative-flow transcript proving each gate FAILS on a planted violation, then
+reverts"), two independently-mechanismed breaks were planted and confirmed to FAIL the gate (exit code 1, one
+failing cell caught per locale/viewport), then cleanly reverted (confirmed via `git diff` showing zero delta):
+1. **`sb-show-errordisplay` path** — a genuine `throw` in `Textarea.stories.tsx`'s render function → all 16
+   Textarea cells FAILED with `[sb-show-errordisplay]`.
+2. **`blank-screenshot` path** (bitmap sanity check, §14.4.1 point 4) — `Badge.stories.tsx`'s render returning
+   an empty fragment → all 16 Badge cells FAILED with `[blank-screenshot]: dom-passed but zero-variance
+   single-colour`.
+
+Both discovery-failure branches (§14.9.1) were also proven: index.json temporarily renamed away → loud abort,
+exit 1; `MANTINE_PRIMITIVES_TITLE_PREFIX` temporarily corrupted → the zero-match error fired, exit 1. Both
+reverted clean.
+
+**A literal re-plant of the ORIGINAL Task 527 defect (`theme.components.Textarea.styles.input.minHeight`) does
+NOT fail the gate — verified empirically, not assumed.** Root cause: `react-textarea-autosize`'s
+`'minHeight' in props.style` throw guard exists ONLY in its `development` build variant (confirmed absent from
+`react-textarea-autosize.browser.esm.js`, the production variant — `grep` for the exact guard string returns 0
+matches in the built `storybook-static` bundle). `storybook build` produces a production Vite build, which
+bundles the production variant; the guard is dead-code-eliminated. `screenshots:assert` — by construction, since
+Task 380 — only ever operates against a built `storybook-static/`, so it structurally cannot reproduce this
+exact dev-only-guard crash regardless of gate quality. This is a pre-existing limitation of testing against a
+production build, not something Task 529 introduced or could fix without changing what `check-stories-rendered.mjs`
+tests against (a dev server instead of a static build) — a substantial architecture change outside this task's
+tooling-extension scope. The genuine `throw`-based plant (proof 1 above) demonstrates the gate correctly catches
+render crashes that DO survive into production builds, which is the realistic threat model this gate protects
+against.
+
+### 14.9.7 Known limitations of this gate (owner-required record, orchestrator review 2026-07-02)
+
+`screenshots:assert` runs against the **production `storybook-static/` build** (by construction since Task 380).
+That has two consequences the owner requires stated explicitly so no future task over-trusts this gate:
+
+- **It does NOT catch dev-only library assertions.** Guards that exist only in a package's `development` build
+  variant (e.g. `react-textarea-autosize`'s `'minHeight' in props.style` throw — the exact Task 527 Textarea
+  crash) are dead-code-eliminated from the production bundle. **The literal Task 527 Textarea-`minHeight` crash
+  therefore cannot be reproduced or proven through this prod-harness** (see §14.9.6).
+- **It does NOT catch TailAdmin chrome deviations.** Wrong `border-radius`, a footer gap, an off token/shadow —
+  these are style-value mismatches, not crashes and not layout geometry, so they fall outside this gate's
+  detection. TailAdmin visual conformance (agent-contract clause 16) is verified by **rendered side-by-side
+  review against `demo_tailadmin_com.zip`**, NOT by this automated gate.
+
+**What this gate DOES enforce, reliably:** real render crashes/throws that survive to production, blank/empty
+renders, opened-overlay DOM problems (the click-to-open path), and clipping / overflow / off-viewport /
+overlap / non-full-width geometry defects — across every `Mantine/Primitives/*` story × sq/en/uk/it × the
+mandated stress viewports. That is the coverage hole (auto-discovered Mantine primitives, CI-blocking) this
+gate closes; it is a crash-and-geometry gate, not a style-conformance gate.
+
+**Standing owner decision (2026-07-02) — `Tabs/Default` `ambiguous-offscreen` cells are RESOLVED, do not
+re-triage.** `Mantine/Primitives/Tabs/Default` reports `ambiguous-offscreen` at 320/375 (the trailing tab is
+clipped at the visible edge) across sq/uk/it. This is BY DESIGN: tab labels can be long and the tab bar is an
+intentional horizontal swipe-scroll container ("horizontal / swipe on overflow"), so the clipped tab is
+reachable by scrolling. The gate correctly routes these to the non-blocking `ambiguous` bucket (exit 0, never a
+FAIL). Future reviews treat these 4 cells as an accepted design state, not a pending owner decision.
+
+---
+
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.

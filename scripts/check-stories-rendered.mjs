@@ -69,6 +69,11 @@ const ROOT = resolve(__dirname, '..');
 const args = process.argv.slice(2);
 const FAST_MODE = args.includes('--fast');
 const CHECK_ONLY = args.includes('--check');
+// Task 529 — run ONLY the Mantine/Primitives/* enforced gate (Phase 0), skipping the
+// pre-existing ASSERT_STORIES (Phase 1) and geometry-only (Phase 2) sweeps entirely. Useful for
+// fast local iteration on the Mantine gate itself and for the anti-no-op planted-break proof —
+// does not change what Phase 1/2 do or how they're invoked without this flag (no regression).
+const MANTINE_ONLY = args.includes('--mantine-only');
 
 // ── Viewport matrix ───────────────────────────────────────────────────────────
 
@@ -209,7 +214,63 @@ const ASSERT_STORIES = [
 
 const LOADER_ALLOWLIST = new Set([
   'primitives-skeleton--listing-card-skeleton',
+  // Task 529 — Button/Default's story intentionally demonstrates a permanent `loading` Button
+  // variant side-by-side with the others (Button.stories.tsx: "loading — Mantine loader shown,
+  // height unchanged (44px)"), not a transient loading state — legitimately allowlisted, not a
+  // real defect.
+  'mantine-primitives-button--default',
 ]);
+
+// ── Task 529 — Mantine primitive stories, AUTO-DISCOVERED from the built Storybook index ──
+// (title prefix 'Mantine/Primitives/'), never hardcoded, so a new Mantine primitive story is
+// covered automatically and this allowlist can never silently drift. This is the exact hole
+// that let Task 527 ship a hard runtime crash (Textarea autosize) and two visible chrome
+// mismatches (footer gap, Popover radius) undetected: `Mantine/Primitives/*` stories were not
+// in ASSERT_STORIES, and Phase 2's "geometry-only" coverage (below) never opens overlays, so
+// footer/radius-class defects — which only render once an overlay is OPENED — could never be
+// caught by any prior mechanism (docs/sessions/2026-07-02-task528-*.md lines 108-117).
+const MANTINE_PRIMITIVES_TITLE_PREFIX = 'Mantine/Primitives/';
+
+// Overlay primitives whose defect class (footer gap, radius, crash-on-open) only manifests
+// once OPENED — asserted via a scripted trigger click before the render/anchor/style/geometry
+// checks run, so ALL of those checks assess the OPENED DOM (see captureCell's openTrigger
+// handling). Matched against the story title's last path segment (component name). Reuses the
+// exact click-then-assert approach Task 528's throwaway script used (see its session log).
+const MANTINE_OVERLAY_PRIMITIVES = new Set([
+  'Modal', 'Drawer', 'Popover', 'DropdownMenu', 'NavigationMenu', 'Select', 'Tooltip',
+]);
+
+// Minimum enforced viewport set for the Mantine-primitives gate (agent-contract clause 12
+// stress cells): the 3 mandatory mobile stress widths + one desktop width. Deliberately NOT
+// the full 14-viewport VIEWPORTS_FULL sweep — kept small enough that this phase can run
+// UNCONDITIONALLY (including under --fast), so the gate this task exists to add is never the
+// thing that gets skipped for speed. A full 14-viewport sweep remains available via the
+// existing Phase 1/2 mechanisms for any story explicitly added to ASSERT_STORIES.
+const MANTINE_VIEWPORTS = [
+  { name: 'mobile-320',   width:  320, height:  812 },
+  { name: 'mobile-375',   width:  375, height:  812 },
+  { name: 'mobile-390',   width:  390, height:  844 },
+  { name: 'desktop-1024', width: 1024, height:  768 },
+];
+
+/**
+ * Reads the already-parsed Storybook index and returns every `Mantine/Primitives/*` story,
+ * flagging the ones that need a scripted open-trigger click. Never hardcodes story IDs.
+ */
+function discoverMantinePrimitiveStories(indexData) {
+  return Object.values(indexData.entries)
+    .filter((e) => e.type === 'story' && (e.title ?? '').startsWith(MANTINE_PRIMITIVES_TITLE_PREFIX))
+    .map((e) => {
+      const componentName = e.title.slice(MANTINE_PRIMITIVES_TITLE_PREFIX.length);
+      return {
+        id: e.id,
+        label: `${e.title}/${e.name}`,
+        anchors: [],
+        mantineGate: true,
+        openTrigger: MANTINE_OVERLAY_PRIMITIVES.has(componentName),
+      };
+    });
+}
 
 // ── Tolerance for full-width assertion (px) ────────────────────────────────────
 
@@ -343,6 +404,18 @@ const HARD_FAIL_REASONS = new Set([
 // Each entry: { storyId, selector?, reason }. Matching violations are suppressed.
 const GEOMETRY_ALLOWLIST = [
   // Badge-on-avatar, drag-handle overlaps, etc. — add with documented reason.
+  // Task 529 — Mantine PasswordInput's reveal-toggle button is INTENTIONALLY positioned inside
+  // the input's own bounding box (the standard "eye icon inside the field" pattern); the
+  // geometry checker's element-overlap heuristic doesn't know this is by design. No `selector`
+  // (Mantine's `mantine-XXXXX` element IDs are random per render — see geometry-integrity.mjs
+  // doc note) — failReason-only entry, scoped to this one story.
+  { storyId: 'mantine-primitives-passwordinput--default', failReason: 'element-overlap', reason: 'reveal-toggle button is intentionally overlaid inside the input box (eye-icon-in-field pattern), not a layout defect' },
+  // Task 529 — Tabs/Default's tab bar is an intentional horizontal-scroll ("swipe on overflow",
+  // per the story's own label) container at narrow viewports — a tab clipped at the visible
+  // edge is reachable by scrolling, not a real text-clip defect. Matches the project's
+  // established swipe-scroll tab-bar convention (ScrollArea, ADR: Tabs/SegmentedControl always
+  // single row).
+  { storyId: 'mantine-primitives-tabs--default', failReason: 'text-clipped', reason: 'intentional horizontal swipe-scroll tab bar — clipped tab is reachable by scrolling, not a layout defect' },
 ];
 
 // ── Viewport range per story (V1-FINAL FP-CLASSES B/C) ──────────────────
@@ -597,6 +670,38 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
       return cell;
     }
 
+    // ── 1b2. Open-trigger click (Task 529) — for overlay primitives (story.openTrigger),
+    // click the trigger BEFORE every check below so render-failure, anchor, style, and
+    // geometry checks all assess the OPENED DOM, not just the closed trigger. This is what
+    // actually catches footer-gap/radius/crash-on-open defects — reuses the existing
+    // detection pipeline verbatim (no duplicated checks), just changes what DOM state it
+    // runs against. A failed/timed-out click is a hard FAILURE for the cell, never a skip.
+    // Selector covers BOTH trigger shapes seen across the 7 overlay primitives: a real
+    // `<button>` (Modal/Drawer/Popover/DropdownMenu/NavigationMenu/Tooltip's ActionIcon
+    // trigger) and Mantine Select's combobox trigger, which renders as a plain `<input>`
+    // (no `<button>`, no `role="combobox"` in this Mantine version — confirmed via DOM
+    // inspection, not assumed). `.first()` in DOM order picks the story's first trigger. ──
+    if (story.openTrigger) {
+      try {
+        const trigger = page.locator('#storybook-root button, #storybook-root input').first();
+        await trigger.click({ timeout: 5000 });
+        await page.waitForTimeout(500);
+      } catch (err) {
+        cell.assertions.renderCheck = {
+          pageErrors: [], consoleErrors: [], domFailed: true,
+          failReason: 'open-trigger-click-failed',
+          failDetail: String(err?.message ?? err).slice(0, 200),
+        };
+        cell.pass = false;
+        cell.verdict = 'fail';
+        try {
+          await page.screenshot({ path: screenshotPath, fullPage: false });
+          cell.visualContentCheck = await assertScreenshotHasMeaningfulPixels(screenshotPath);
+        } catch { /* best-effort screenshot on click failure */ }
+        return cell;
+      }
+    }
+
     // ── 1c. DOM render-failure detection (assertion c) ──
     const renderResult = await page.evaluate(() => {
       if (document.body.classList.contains('sb-show-errordisplay')) {
@@ -676,7 +781,7 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
         cell.verdict = 'fail';
         return cell;
       }
-    } else if (!LOADER_ALLOWLIST.has(story.id) && !story.geometryOnly) {
+    } else if (!LOADER_ALLOWLIST.has(story.id) && !story.geometryOnly && !story.mantineGate) {
       // No anchors declared for a non-allowlisted, non-geometry-only story = config error
       cell.assertions.renderCheck = {
         ...cell.assertions.renderCheck,
@@ -982,18 +1087,35 @@ async function runAssert() {
     }
 
     // ── Global story enumeration (Task 467 AC1) ──────────────────────
-    // Read all story IDs from the built Storybook index for geometry-only checks.
+    // Read all story IDs from the built Storybook index for geometry-only checks + the Task 529
+    // Mantine-primitives discovery (both share this one index read / error path — if the index
+    // is missing or malformed, BOTH mechanisms must fail loudly, never silently pass zero stories).
     const indexPath = join(storybookStaticDir, 'index.json');
     let geometryOnlyStories = [];
+    let mantineStories = [];
     try {
       const indexData = JSON.parse(await readFile(indexPath, 'utf8'));
       const assertIds = new Set(ASSERT_STORIES.map(s => s.id));
+      mantineStories = discoverMantinePrimitiveStories(indexData);
+      const mantineIds = new Set(mantineStories.map(s => s.id));
       geometryOnlyStories = Object.values(indexData.entries)
-        .filter(e => e.type === 'story' && !assertIds.has(e.id))
+        .filter(e => e.type === 'story' && !assertIds.has(e.id) && !mantineIds.has(e.id))
         .map(e => ({ id: e.id, label: `${e.title}/${e.name}`, anchors: [], geometryOnly: true }));
     } catch (err) {
       console.error(`❌ Cannot read ${indexPath} for global story enumeration: ${err.message}`);
-      console.error('   The geometry layer requires story enumeration from the built index — aborting.');
+      console.error('   The geometry layer + Task 529 Mantine-primitives gate require story enumeration from the built index — aborting.');
+      process.exitCode = 1;
+      return;
+    }
+
+    // Task 529 — discovery must never silently degrade to zero coverage. A successfully-parsed
+    // index that yields zero Mantine/Primitives/* matches (e.g. the title prefix drifted, or the
+    // index is stale/wrong) is a DIFFERENT failure mode than "index unreadable" above, and needs
+    // its own loud, non-zero-exit error — never a silent pass.
+    if (mantineStories.length === 0) {
+      console.error('❌ Task 529 gate: discovered ZERO "Mantine/Primitives/*" stories from the built index.');
+      console.error(`   Checked: ${indexPath} — filtering entries with type==='story' and title starting with "${MANTINE_PRIMITIVES_TITLE_PREFIX}".`);
+      console.error('   This is a hard error, not a skip — either the index is stale/wrong, or the title prefix no longer matches story titles.');
       process.exitCode = 1;
       return;
     }
@@ -1002,14 +1124,58 @@ async function runAssert() {
     const geometryViewports = VIEWPORTS_MOBILE;
     const totalAssertCells = ASSERT_STORIES.length * LOCALES.length * viewports.length;
     const totalGeometryCells = geometryOnlyStories.length * LOCALES.length * geometryViewports.length;
+    const totalMantineCells = mantineStories.length * LOCALES.length * MANTINE_VIEWPORTS.length;
+    console.log(`    Mantine/Primitives/* stories (Task 529 ENFORCED gate, always runs incl. --fast): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
     console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
     console.log('');
 
     const MAX_ATTEMPTS = 3;
     let flakyRecovered = 0;
 
+    // ── Phase 0: Mantine/Primitives/* enforced gate (Task 529) — full Layer 1+2+3, runs
+    // UNCONDITIONALLY (including --fast), auto-discovered, overlay stories opened via click. ──
+    process.stdout.write('  mantine: ');
+    for (const story of mantineStories) {
+      for (const locale of LOCALES) {
+        for (const viewport of MANTINE_VIEWPORTS) {
+          const storyUrl = `${baseUrl}/iframe.html?id=${story.id}&globals=locale:${locale}&viewMode=story`;
+          const filename = `${story.id}__${locale}__${viewport.name}.png`;
+          const screenshotPath = join(outputDir, filename);
+
+          let cell;
+          let attempt = 0;
+          for (;;) {
+            attempt++;
+            cell = await captureCell(browser, storyUrl, story, locale, viewport, filename, screenshotPath);
+            if (cell.pass || !isTransientFailure(cell) || attempt >= MAX_ATTEMPTS) break;
+            await sleep(300 * attempt);
+          }
+          cell.retryCount = attempt - 1;
+          cell.phase = 'mantine-gate';
+          if (!cell.pass && !cell.ambiguousOnly && attempt >= MAX_ATTEMPTS && cell.assertions?.styleIntegrity?.pass === false) {
+            cell.hardAfterRetries = true;
+            cell.assertions.renderCheck = {
+              ...cell.assertions.renderCheck,
+              failReason: cell.assertions.renderCheck?.failReason ?? 'unstyled-render',
+            };
+          }
+          if (cell.verdict === 'pass' && cell.retryCount > 0) flakyRecovered++;
+
+          if (cell.error) {
+            process.stdout.write('E');
+          } else {
+            const ch = { pass: '✓', fail: '✗', ambiguous: '?', 'out-of-range': 'R' }[cell.verdict] ?? '✗';
+            process.stdout.write(cell.retryCount > 0 && cell.verdict === 'pass' ? '~' : ch);
+          }
+
+          matrix.push(cell);
+        }
+      }
+    }
+    console.log('');
+
     // ── Phase 1: ASSERT_STORIES (full Layer 1 + 2 + 3, anchors required) ──
-    for (const story of ASSERT_STORIES) {
+    for (const story of MANTINE_ONLY ? [] : ASSERT_STORIES) {
       for (const locale of LOCALES) {
         for (const viewport of viewports) {
           const storyUrl = `${baseUrl}/iframe.html?id=${story.id}&globals=locale:${locale}&viewMode=story`;
@@ -1055,7 +1221,7 @@ async function runAssert() {
     }
 
     // ── Phase 2: Geometry-only stories (render-proof + geometry, no anchors) ──
-    if (geometryOnlyStories.length > 0 && !FAST_MODE) {
+    if (geometryOnlyStories.length > 0 && !FAST_MODE && !MANTINE_ONLY) {
       process.stdout.write('\n  geometry-only: ');
       for (const story of geometryOnlyStories) {
         for (const locale of LOCALES) {
@@ -1141,7 +1307,7 @@ async function runAssert() {
       '# Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)',
       '',
       `**Date:** ${new Date().toISOString().slice(0, 10)} | **Harness:** \`scripts/check-stories-rendered.mjs\` + \`scripts/geometry-integrity.mjs\` (Task 467 R1–R4/B1–B8)`,
-      `**Run mode:** ${FAST_MODE ? '--fast' : 'full'} (320/375/390 × sq/en/uk/it) | **Scope:** ${FAST_MODE ? 'ASSERT_STORIES (' + ASSERT_STORIES.length + ' stories, ' + totalAssertCells + ' cells)' : 'Global enumeration (' + (ASSERT_STORIES.length + geometryOnlyStories.length) + ' stories, ' + total + ' cells)'}`,
+      `**Run mode:** ${FAST_MODE ? '--fast' : 'full'} (320/375/390 × sq/en/uk/it) | **Scope:** ${FAST_MODE ? 'ASSERT_STORIES (' + ASSERT_STORIES.length + ' stories) + Mantine gate (' + mantineStories.length + ' stories), ' + (totalAssertCells + totalMantineCells) + ' cells' : 'Global enumeration (' + (ASSERT_STORIES.length + mantineStories.length + geometryOnlyStories.length) + ' stories, ' + total + ' cells)'}`,
       '',
       '> **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.',
       `> ${FAST_MODE ? 'Task 467 INCOMPLETE for full global inventory — pending owner NATIVE full run.' : 'Full global-enumeration run.'}`,

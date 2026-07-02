@@ -18,7 +18,13 @@ const TOLERANCE = 1; // px — sub-pixel rounding tolerance
 /**
  * @param {import('playwright').Page} page
  * @param {number} viewportWidth
- * @param {Array<{storyId: string, selector?: string, reason: string}>} allowlist
+ * @param {Array<{storyId: string, selector?: string, failReason?: string, reason: string}>} allowlist
+ *   Entries with a `selector` match that EXACT element (stable data-testid/data-slot/role
+ *   selectors only — `selectorFor()` prefers `el.id`, and Mantine's auto-generated
+ *   `mantine-XXXXX` IDs are non-deterministic across renders, so an exact-selector entry can
+ *   never match a Mantine-ID'd element). Entries with NO `selector` but a `failReason` allow
+ *   ALL violations of that failReason for the story (already scoped to one storyId by the
+ *   caller) — the only reliable mechanism for Mantine elements (Task 529).
  * @returns {Promise<{pass: boolean, ambiguousOnly: boolean, violations: Array<{failReason: string, selector: string, label: string, details: string}>, ambiguous: Array<{failReason: string, selector: string, label: string, details: string, reason: string}>}>}
  */
 export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []) {
@@ -421,9 +427,13 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
     return { violations, ambiguous };
   }, { vw: viewportWidth, tol: TOLERANCE });
 
-  // Apply allowlist — remove violations that match an allowlist entry
+  // Apply allowlist — remove violations matching an exact selector OR a failReason-only entry
+  // (Task 529 — see the failReason-only doc note above).
   const allowedSelectors = new Set(allowlist.map(a => a.selector).filter(Boolean));
-  const filteredViolations = result.violations.filter(v => !allowedSelectors.has(v.selector));
+  const allowedFailReasons = new Set(allowlist.filter(a => !a.selector && a.failReason).map(a => a.failReason));
+  const filteredViolations = result.violations.filter(
+    v => !allowedSelectors.has(v.selector) && !allowedFailReasons.has(v.failReason)
+  );
 
   const hasViolations = filteredViolations.length > 0;
   const hasAmbiguous = result.ambiguous.length > 0;

@@ -138,6 +138,25 @@ jobs:
       - name: Build Storybook (runs check:stories pre-gate)
         run: npm run build-storybook
 
+      - name: Rendered-proof gate (Task 529 — Mantine/Primitives/* enforced, auto-discovered)
+        # --mantine-only: blocks CI specifically on the Mantine/Primitives/* gate this task adds
+        # (21 stories, 336 cells @ 320/375/390/1024 x 4 locales). Deliberately does NOT also run
+        # the pre-existing ASSERT_STORIES/geometry-only phases here — running the full assert
+        # surfaced 149 pre-existing failures across unrelated admin stories (AdminSidebar,
+        # AdminSupportManager, NotificationCenter, AdminReportsManager, etc.) that predate this
+        # task and are out of its scope to fix; wiring the FULL gate in as blocking would make
+        # every PR red for reasons unrelated to Mantine primitives. See the Task 529 session log
+        # for the full breakdown — that pre-existing gap is flagged as a separate follow-up.
+        run: npm run screenshots:assert -- --mantine-only
+
+      - name: Upload rendered-assert report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-assert-report
+          path: .screenshots/rendered-assert/
+          retention-days: 7
+
       - name: Locale leak detection
         run: npm run check:locale-leak
 

@@ -1159,3 +1159,53 @@ At `≥640px`:
 `MantineDialogDrawerPattern.tsx` (Task 482) predates the Task 514 single-source extraction and inlines its own `<Drawer>` + drag-handle markup + bottom-sheet `styles` — it is NOT refactored onto `MantineModal`/`ResponsiveBottomSheet` in this task (separate follow-up). `MantineModal` is the new canonical primitive for future controlled-modal consumers; it does not replace or alter `MantineDialogDrawerPattern`'s existing behavior.
 
 NavigationMenu triggers are always text (section labels) — **no `iconOnlyTrigger` prop** exists on `MantineNavigationMenu`; unlike `MantinePopover`/`MantineDropdownMenu` there is no real icon-only nav-trigger case to exempt. Proof: `src/stories/mantine/primitives/NavigationMenu.stories.tsx` — two sections: `resting` · `disabled section`.
+
+---
+
+## §24 — Canonical responsive Drawer: `MantineDrawer` (Task 523)
+
+> **Decision 2026-07-02 (Task 523):** next overlay after Popover (513) + DropdownMenu (515) + NavigationMenu (518) +
+> Modal (519). Ports the legacy `src/components/ui/sheet.tsx` behavior onto the Task 514 single source. Same fully
+> **controlled** shape as `MantineModal` — the ONLY difference is the ≥640 desktop form: a **side** Mantine `Drawer`
+> (`side` prop, default `'right'`) instead of a centered `Modal`. `MantineDrawer` = ONE canonical Drawer — no "plain
+> Drawer vs bottom-sheet Drawer" choice.
+
+### §24.1 — Core mechanism
+
+| Export | Kind | Description |
+|---|---|---|
+| `MantineDrawer` | Component | Canonical P0-compliant responsive Drawer. Side Mantine `Drawer` (`side` prop, default `'right'`) at ≥640px; full-width bottom sheet at <640px. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` + `SheetContent` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as `MantineModal`/`MantineSelect`/`MantinePopover`/`MantineDropdownMenu`/`MantineNavigationMenu`, no duplicated DragHandle or Drawer block. |
+
+**API:** `opened: boolean`, `onClose: () => void`, `title?: ReactNode`, `children: ReactNode` (body), `footer?: ReactNode` (caller-composed actions region), `side?: 'left' | 'right'` (desktop anchor, default `'right'`, ignored <640), `size?: string` (desktop Drawer width token, default `'md'`, ignored <640).
+
+**How the controlled split works (identical shape to `MantineModal` (519) — the only new element is the `side` prop):**
+
+1. `useResponsiveDropdown()` (from `responsiveBottomSheet.tsx`) returns `isMobile`. Like `MantineModal`, `MantineDrawer` does NOT use the hook's own `drawerOpened`/`openDrawer`/`closeDrawer` — the caller's `opened`/`onClose` are passed straight through to whichever path renders, so there is exactly one source of truth for open state.
+2. At mobile (`isMobile=true`): renders `<ResponsiveBottomSheet opened={opened} onClose={onClose} title={title}>` with `children`/`footer` wrapped in `SheetContent` (§19.1, Task 520) for the 16px gutter, and — nested inside — a `<Stack gap="md">` around `children`/`footer` (matching `MantineModal`'s Task 521 body/footer vertical rhythm) so a provided `footer` never concatenates with zero gap. The `side` prop has **no effect** at <640 — the mobile form is always the same shared bottom sheet.
+3. At desktop (`isMobile=false`): renders a side Mantine `Drawer` (`position={side}`, `size={size}`) with `title`, then `children`/`footer` likewise wrapped in `<Stack gap="md">`. Standard Drawer X/backdrop/Esc close and `returnFocus` default apply.
+4. No `footer` provided → renders nothing extra (React skips `undefined`), body renders alone, no crash — proven by the `left-side drawer` and `long-content drawer` story sections (neither supplies a `footer`).
+5. The primitive does NOT impose a responsive stacked/row layout on `footer` — that is caller composition, identical to `MantineModal` (the story's `standard drawer` section wraps its footer Buttons in `Flex direction={{ base: 'column-reverse', sm: 'row' }}`).
+
+### §24.2 — SSR/hydration caveat
+
+Same as §20.2/§21.2/§22.2/§23.2: `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Desktop side-Drawer path renders on SSR + initial client render; mobile path mounts after hydration. Because the overlay is controlled by the caller's `opened` state (closed by default), no flash occurs regardless of which path is active at hydration.
+
+### §24.3 — Storybook proof location
+
+`src/stories/mantine/primitives/Drawer.stories.tsx` → `Default` — toolbar-driven. **Three sections (§8.2): standard drawer, right (closed/resting, local trigger, footer) · left-side drawer (closed/resting, local trigger, no footer, proves `side='left'` at ≥640 while <640 stays the SAME bottom sheet) · long-content drawer (closed/resting, local trigger, no footer, proves internal scroll ≤90dvh).** Because `MantineDrawer` is controlled, each section owns a local `useState` + a trigger `Button` — no `defaultOpened`. All strings via `storyT()` against `storybook.mantine.drawer_*` keys (sq/en/uk/it parity, uk = real Cyrillic long body). Open behavior + the ≥640 side-Drawer/<640 bottom-sheet split is verified by clicking a section's trigger and switching the toolbar viewport on that section.
+
+### §24.4 — P0 gate
+
+At `<640px`:
+- Drawer: full-width edge-to-edge bottom sheet via `ResponsiveBottomSheet` (NOT a side panel, NOT a centered card) — the `side` prop has NO effect
+- Sheet: top-only radius, centered drag handle (517), content-sized height up to the `90dvh` cap (§18.8/Task 522; long content scrolls internally, handle/title pinned)
+- Content: `children` + `footer` inset by ONE 16px `SheetContent` gutter (Task 520), plus a 16px vertical `Stack gap="md"` gap between body and footer (mirrors Task 521) — no zero-gap concatenation, no phantom gap when `footer` is omitted
+- Footer buttons (when provided by caller): ≥44px, full-width, stacked
+- Backdrop tap + Esc close without firing any footer handler; focus returns to the trigger
+
+At `≥640px`:
+- Side Mantine `Drawer` anchored per `side` (default `'right'`; `'left'` proven in the story) — `title`, body, 16px `Stack gap="md"` gap, then `footer` (caller-composed row); standard X/backdrop/Esc close; no drag handle
+
+### §24.5 — Relationship to legacy `sheet.tsx` and `MantineDialogDrawerPattern`
+
+`src/components/ui/sheet.tsx` (legacy shadcn/Base-UI Sheet) is **left in place, unchanged** — no product surface consumes `MantineDrawer` yet, so this is a primitive + story slice only (same class as 513/515/518/519); legacy removal is Phase 6, once zero consumers remain. `MantineDialogDrawerPattern.tsx` (Task 482) is likewise unchanged — it predates the Task 514 single-source extraction and is not refactored onto `MantineDrawer`/`ResponsiveBottomSheet` in this task (separate follow-up, same relationship as §23.5 documents for `MantineModal`).

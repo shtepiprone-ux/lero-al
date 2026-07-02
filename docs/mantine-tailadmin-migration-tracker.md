@@ -62,7 +62,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.14 | Avatar + AppImage | avatar.tsx, AppImage.tsx | §6b avatar | ✅ Task 491 |
 | P1.15 | Alert | alert.tsx | §6d (semantic-50 bg) | ⬜ |
 | P1.16 | Dialog / Modal (bottom-sheet <640) | dialog.tsx → MantineModal.tsx | §11 mobile gate | ✅ Task 519 |
-| P1.17 | Sheet / Drawer (bottom-sheet) | sheet.tsx | §11 | ⬜ |
+| P1.17 | Sheet / Drawer (bottom-sheet) | sheet.tsx → MantineDrawer.tsx | §11 | ✅ Task 523 |
 | P1.18 | Popover | popover.tsx → MantinePopover.tsx | §6d + P0 bottom-sheet <640 | ✅ Task 513 |
 | P1.19 | DropdownMenu | dropdown-menu.tsx → MantineDropdownMenu.tsx | §6d + P0 bottom-sheet <640 | ✅ Task 515 |
 | P1.20 | NavigationMenu | navigation-menu.tsx → MantineNavigationMenu.tsx | §6c/§6d + P0 bottom-sheet <640 | ✅ Task 518 |
@@ -113,7 +113,7 @@ Track via `grep -rl "@/components/ui/<name>" src`.
   P1.04 Textarea (496) · P1.05 Checkbox (497) · P1.06 Radio (498) · P1.07 Switch (499) · P1.30 PasswordInput (500) ·
   P1.28 Label (501). Plan: `tasks/Sprints/Sprint_38_MM_Phase1_FormControls.md`. Run order 493→501→494→496→500→495→497→498→499.
 - **Batch C (overlays), IN PROGRESS:** P1.18 Popover ✅ Task 513 · P1.19 DropdownMenu ✅ Task 515 · P1.20 NavigationMenu
-  ✅ Task 518 · P1.16 Modal ✅ Task 519 · **NEXT:** P1.17 Drawer · P1.22 Tooltip (P0 bottom-sheet <640). **Batch D (feedback/misc):**
+  ✅ Task 518 · P1.16 Modal ✅ Task 519 · P1.17 Drawer ✅ Task 523 · **NEXT:** P1.22 Tooltip (P0 bottom-sheet <640). **Batch D (feedback/misc):**
   P1.13 Pagination · P1.15 Alert · P1.21 Command · P1.23 Progress · P1.24 Skeleton · P1.25 Separator · P1.26 ScrollArea ·
   P1.27 Slider · P1.29 Toast.
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.

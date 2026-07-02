@@ -2194,7 +2194,15 @@
       "rb_long_label": "Dëshiroj të marr rekomandime të personalizuara të pronës dhe përditësime me email",
       "sw_label": "Aktiv",
       "sw_error": "Ju lutem aktivizoni të paktën një opsion",
-      "sw_long_label": "Dëshiroj të marr njoftime me email për listimet e reja të pronave që përputhen me kriteret e mia të kërkimit"
+      "sw_long_label": "Dëshiroj të marr njoftime me email për listimet e reja të pronave që përputhen me kriteret e mia të kërkimit",
+      "drawer_trigger_open": "Hap panelin",
+      "drawer_title": "Detajet e panelit",
+      "drawer_body": "Ky panel shfaq detaje shtesë krahas përmbajtjes kryesore pa u larguar nga faqja aktuale.",
+      "drawer_confirm": "Konfirmo",
+      "drawer_cancel": "Anulo",
+      "drawer_left_trigger": "Hap panelin nga e majta",
+      "drawer_long_trigger": "Hap përmbajtjen e gjatë",
+      "drawer_long_body": "Ky panel përmban një përmbajtje më të gjatë për të verifikuar që paneli lëviz brenda vetes në vend që të ndryshojë madhësinë e faqes. Titulli dhe doreza mbeten fikse në krye ndërsa ky tekst lëviz vetë.\n\nKur filtroni një listë të gjatë rezultatesh, ky panel ju lejon të shqyrtoni çdo opsion pa humbur vendin tuaj në faqen themelore. Zgjedhjet zbatohen vetëm kur konfirmoni, kështu që shfletimi i listës nuk ka efekte anësore.\n\nNëse lista e opsioneve bëhet shumë e gjatë, paneli mban titullin të dukshëm në mënyrë që ta dini gjithmonë çfarë po filtroni, edhe pas lëvizjes përtej rreshtave të parë.\n\nFaleminderit që merrni kohë të shqyrtoni me kujdes këto opsione."
     }
   },
   "ui": {

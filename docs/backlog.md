@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-02 — Backlog tidy (orchestrator governance).** Back-archived stranded completed tasks (426, 432, 437, Sprint 38 Batch B 496–499) into one ledger row and removed the duplicate completed-task paragraphs whose detail already lives in `backlog-archive.md` + `docs/sessions/`. No product code touched — docs-only. **Prior work session — Task 522 (§18.8 bottom-sheet content-height fix) ✅ APPROVED (code-verified on diff), commit emitted — pending owner native gate + rendered review** (2-property fix in `bottomSheetDrawerStyles`: `content.height:'auto'` + `body.minHeight:0`; §18.8→RESOLVED). Log: `docs/sessions/2026-07-02-task522-bottom-sheet-content-height-fix.md`. **Next free: 523.**
+**2026-07-02 — Task 523 (Batch C P1.17 Drawer/Sheet) ✅ APPROVED (code-verified on diff + owner rendered matrix), commit emitted — pending owner native gate.** New canonical `MantineDrawer` (side Mantine `Drawer` `left`/`right` ≥640 · shared `ResponsiveBottomSheet`+`SheetContent` bottom sheet <640, `side` ignored) mirroring `MantineModal` (519); `DragHandle`=1 match; `responsiveBottomSheet.tsx`/`MantineModal`/legacy `sheet.tsx` untouched. Rendered 320×sq/en/uk/it = full-width bottom sheet, 680 = side-right, drawer_* keys ×4 (2035→2043). Docs §24 + tracker P1.17 ✅. Orchestrator note: the mobile/desktop split is `≤640 sheet / >640 side drawer` (shared `max-width:40em` foundation, consistent with all Batch C siblings) — the 640px "tablet" boundary shows the sheet, as designed. Log: `docs/sessions/2026-07-02-task523-drawer-bottom-sheet.md`. **Next: P1.22 Tooltip (last Batch C overlay). Next free: 524.**
 
 ## Pending Action Items
 
@@ -20,11 +20,11 @@
 
 **🟢 Sprint 38 (MM Phase-1 Batch B — form controls) — COMPLETE.** All primitives done (Button/Label/TextInput/Textarea/error-border/PasswordInput/disabled-field+label+icon/Checkbox/Radio/Switch); 495 Select closed via 508. Remaining = owner-run commits + the two outstanding 499 Switch render cells (uk@375/390). Batch A (486–491) ✅ done. Tracker: `docs/mantine-tailadmin-migration-tracker.md`. Plan: `tasks/Sprints/Sprint_38_MM_Phase1_FormControls.md`.
 
-**🟡 Sprint 39 (MM overlay Batch C) — bottom-sheet foundation + overlays landed; owner commits pending.** 509/510 (canonical Select) · 513 (Popover) · 514 (single-source `ResponsiveBottomSheet`) · 515 (DropdownMenu) · 516 (overlay trigger width) · 517 (drag-handle centering) · 518 (NavigationMenu) · 519/520/521 (Modal thread, committed + pushed) · 522 (§18.8 content-height fix, approved). Next overlay work resumes at Task 523. Kickoffs under `tasks/Sprints/Sprint_39_*`.
+**🟡 Sprint 39 (MM overlay Batch C) — bottom-sheet foundation + overlays landed; owner commits pending.** 509/510 (canonical Select) · 513 (Popover) · 514 (single-source `ResponsiveBottomSheet`) · 515 (DropdownMenu) · 516 (overlay trigger width) · 517 (drag-handle centering) · 518 (NavigationMenu) · 519/520/521 (Modal thread, committed + pushed) · 522 (§18.8 content-height fix, approved) · 523 (`MantineDrawer`, implemented — see Last Session). Only remaining Batch C primitive: P1.22 Tooltip. Kickoffs under `tasks/Sprints/Sprint_39_*`.
 
 **⏸️ Task 463 (Epic BB — full admin report management) — ON HOLD until the Mantine primitive library (Epic MM) is complete.** Do NOT re-execute yet: it must be rebuilt on the finished primitives, not the legacy ones. Capability-gated any→any status override + reopen + close + hard-delete, delegable via Дозволи (`reports.status_override` + `reports.delete`). Prior legacy-primitive implementation sits in the working tree (`docs/sessions/2026-06-19-task-463-admin-report-full-management.md`). Kickoff: `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
 
-**Task numbering — last used: 522. Next free: 523.**
+**Task numbering — last used: 523 (implemented, awaiting review). Next free: 524.**
 
 **Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 453 (Epic KK.2 — remaining admin managers freshness). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger". Retired numbers (never reuse): 465 (uk→ua migration, cancelled), 466/467/469–481 (legacy-primitive layout work superseded by the Mantine migration).
 

@@ -2194,7 +2194,15 @@
       "rb_long_label": "I would like to receive personalized property recommendations and updates by email",
       "sw_label": "Active",
       "sw_error": "Please enable at least one option",
-      "sw_long_label": "I would like to receive email notifications about new property listings matching my search criteria"
+      "sw_long_label": "I would like to receive email notifications about new property listings matching my search criteria",
+      "drawer_trigger_open": "Open drawer",
+      "drawer_title": "Panel details",
+      "drawer_body": "This panel shows supplementary details alongside the main content without leaving the current page.",
+      "drawer_confirm": "Confirm",
+      "drawer_cancel": "Cancel",
+      "drawer_left_trigger": "Open left drawer",
+      "drawer_long_trigger": "Open long content",
+      "drawer_long_body": "This drawer contains a longer body to verify that the panel scrolls internally instead of resizing the page. The heading and drag handle stay pinned at the top while this text area scrolls on its own.\n\nWhen filtering a long list of results, this panel lets you review every option without losing your place in the underlying page. Selections are applied only when you confirm, so browsing the list has no side effects.\n\nIf the list of options grows very long, the panel keeps the header visible so you always know what you are filtering, even after scrolling past the first several rows.\n\nThank you for taking the time to review these options carefully."
     }
   },
   "ui": {

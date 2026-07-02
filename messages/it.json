@@ -2194,7 +2194,15 @@
       "rb_long_label": "Vorrei ricevere raccomandazioni di immobili personalizzate e aggiornamenti via email",
       "sw_label": "Attivo",
       "sw_error": "Abilita almeno un'opzione",
-      "sw_long_label": "Vorrei ricevere notifiche email sulle nuove inserzioni immobiliari corrispondenti ai miei criteri di ricerca"
+      "sw_long_label": "Vorrei ricevere notifiche email sulle nuove inserzioni immobiliari corrispondenti ai miei criteri di ricerca",
+      "drawer_trigger_open": "Apri pannello",
+      "drawer_title": "Dettagli del pannello",
+      "drawer_body": "Questo pannello mostra dettagli supplementari accanto al contenuto principale senza lasciare la pagina corrente.",
+      "drawer_confirm": "Conferma",
+      "drawer_cancel": "Annulla",
+      "drawer_left_trigger": "Apri pannello da sinistra",
+      "drawer_long_trigger": "Apri contenuto lungo",
+      "drawer_long_body": "Questo pannello contiene un contenuto più lungo per verificare che scorra internamente invece di ridimensionare la pagina. L'intestazione e la maniglia di trascinamento restano fisse in alto mentre questo testo scorre autonomamente.\n\nQuando si filtra un lungo elenco di risultati, questo pannello consente di esaminare ogni opzione senza perdere il proprio posto nella pagina sottostante. Le selezioni vengono applicate solo alla conferma, quindi la semplice consultazione dell'elenco non ha effetti collaterali.\n\nSe l'elenco delle opzioni diventa molto lungo, il pannello mantiene l'intestazione visibile in modo da sapere sempre cosa si sta filtrando, anche dopo aver scorso oltre le prime righe.\n\nGrazie per aver dedicato del tempo a esaminare attentamente queste opzioni."
     }
   },
   "ui": {

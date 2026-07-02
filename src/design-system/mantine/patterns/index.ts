@@ -57,3 +57,6 @@ export type { MantineNavigationMenuProps, NavMenuSection, NavMenuLink } from './
 
 export { MantineModal } from './MantineModal'
 export type { MantineModalProps } from './MantineModal'
+
+export { MantineDrawer } from './MantineDrawer'
+export type { MantineDrawerProps } from './MantineDrawer'

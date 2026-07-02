@@ -2202,7 +2202,13 @@
       "drawer_cancel": "Cancel",
       "drawer_left_trigger": "Open left drawer",
       "drawer_long_trigger": "Open long content",
-      "drawer_long_body": "This drawer contains a longer body to verify that the panel scrolls internally instead of resizing the page. The heading and drag handle stay pinned at the top while this text area scrolls on its own.\n\nWhen filtering a long list of results, this panel lets you review every option without losing your place in the underlying page. Selections are applied only when you confirm, so browsing the list has no side effects.\n\nIf the list of options grows very long, the panel keeps the header visible so you always know what you are filtering, even after scrolling past the first several rows.\n\nThank you for taking the time to review these options carefully."
+      "drawer_long_body": "This drawer contains a longer body to verify that the panel scrolls internally instead of resizing the page. The heading and drag handle stay pinned at the top while this text area scrolls on its own.\n\nWhen filtering a long list of results, this panel lets you review every option without losing your place in the underlying page. Selections are applied only when you confirm, so browsing the list has no side effects.\n\nIf the list of options grows very long, the panel keeps the header visible so you always know what you are filtering, even after scrolling past the first several rows.\n\nThank you for taking the time to review these options carefully.",
+      "tooltip_trigger_aria": "More information",
+      "tooltip_label": "This field is required for account verification.",
+      "tooltip_long_label": "This value is used across several parts of the platform, including search filters, notification preferences, and the public listing page, so please double-check it carefully before saving your changes.",
+      "tooltip_bottom_trigger_aria": "More information, shown below",
+      "tooltip_right_trigger_aria": "More information, shown on the right",
+      "tooltip_left_trigger_aria": "More information, shown on the left"
     }
   },
   "ui": {

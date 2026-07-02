@@ -2202,7 +2202,13 @@
       "drawer_cancel": "Anulo",
       "drawer_left_trigger": "Hap panelin nga e majta",
       "drawer_long_trigger": "Hap përmbajtjen e gjatë",
-      "drawer_long_body": "Ky panel përmban një përmbajtje më të gjatë për të verifikuar që paneli lëviz brenda vetes në vend që të ndryshojë madhësinë e faqes. Titulli dhe doreza mbeten fikse në krye ndërsa ky tekst lëviz vetë.\n\nKur filtroni një listë të gjatë rezultatesh, ky panel ju lejon të shqyrtoni çdo opsion pa humbur vendin tuaj në faqen themelore. Zgjedhjet zbatohen vetëm kur konfirmoni, kështu që shfletimi i listës nuk ka efekte anësore.\n\nNëse lista e opsioneve bëhet shumë e gjatë, paneli mban titullin të dukshëm në mënyrë që ta dini gjithmonë çfarë po filtroni, edhe pas lëvizjes përtej rreshtave të parë.\n\nFaleminderit që merrni kohë të shqyrtoni me kujdes këto opsione."
+      "drawer_long_body": "Ky panel përmban një përmbajtje më të gjatë për të verifikuar që paneli lëviz brenda vetes në vend që të ndryshojë madhësinë e faqes. Titulli dhe doreza mbeten fikse në krye ndërsa ky tekst lëviz vetë.\n\nKur filtroni një listë të gjatë rezultatesh, ky panel ju lejon të shqyrtoni çdo opsion pa humbur vendin tuaj në faqen themelore. Zgjedhjet zbatohen vetëm kur konfirmoni, kështu që shfletimi i listës nuk ka efekte anësore.\n\nNëse lista e opsioneve bëhet shumë e gjatë, paneli mban titullin të dukshëm në mënyrë që ta dini gjithmonë çfarë po filtroni, edhe pas lëvizjes përtej rreshtave të parë.\n\nFaleminderit që merrni kohë të shqyrtoni me kujdes këto opsione.",
+      "tooltip_trigger_aria": "Më shumë informacion",
+      "tooltip_label": "Kjo fushë kërkohet për verifikimin e llogarisë.",
+      "tooltip_long_label": "Kjo vlerë përdoret në disa pjesë të platformës, përfshirë filtrat e kërkimit, preferencat e njoftimeve dhe faqen publike të listimit, prandaj ju lutemi kontrolloni me kujdes përpara se të ruani ndryshimet.",
+      "tooltip_bottom_trigger_aria": "Më shumë informacion, shfaqur poshtë",
+      "tooltip_right_trigger_aria": "Më shumë informacion, shfaqur në të djathtë",
+      "tooltip_left_trigger_aria": "Më shumë informacion, shfaqur në të majtë"
     }
   },
   "ui": {

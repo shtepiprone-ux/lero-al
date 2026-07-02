@@ -1209,3 +1209,60 @@ At `≥640px`:
 ### §24.5 — Relationship to legacy `sheet.tsx` and `MantineDialogDrawerPattern`
 
 `src/components/ui/sheet.tsx` (legacy shadcn/Base-UI Sheet) is **left in place, unchanged** — no product surface consumes `MantineDrawer` yet, so this is a primitive + story slice only (same class as 513/515/518/519); legacy removal is Phase 6, once zero consumers remain. `MantineDialogDrawerPattern.tsx` (Task 482) is likewise unchanged — it predates the Task 514 single-source extraction and is not refactored onto `MantineDrawer`/`ResponsiveBottomSheet` in this task (separate follow-up, same relationship as §23.5 documents for `MantineModal`).
+
+---
+
+## §25 — Canonical responsive Tooltip: `MantineTooltip` (Task 524 — LAST Batch C overlay)
+
+> **Decision 2026-07-02 (Task 524):** the final Batch C overlay, after Popover (513) · DropdownMenu (515) ·
+> NavigationMenu (518) · Modal (519) · Drawer (523). Same foundation-consuming shape as `MantinePopover`
+> (self-managed disclosure, span-onClick → `openDrawer()` on mobile) — the only difference is the ≥640 desktop
+> form: a hover/focus Mantine `Tooltip` (chrome from `tailadmin-style-reference.md` §6k) instead of a
+> click-anchored `Popover`. `MantineTooltip` = ONE canonical Tooltip — no "plain Tooltip vs bottom-sheet Tooltip"
+> choice. There is no legacy `tooltip.tsx` and zero product consumers — Tooltip was the last "extract on use"
+> primitive per §6/§6d.
+
+### §25.1 — Core mechanism
+
+| Export | Kind | Description |
+|---|---|---|
+| `MantineTooltip` | Component | Canonical P0-compliant responsive Tooltip. Hover/focus Mantine `Tooltip` (§6k chrome) at ≥640px; tap-triggered full-width bottom sheet at <640px. Consumes `useResponsiveDropdown` + `ResponsiveBottomSheet` + `SheetContent` from `responsiveBottomSheet.tsx` (Task 514 single source) — same foundation as every other Batch C overlay, no duplicated DragHandle or Drawer block. |
+
+**API:** `label: ReactNode` (tooltip content), `children: ReactNode` (the trigger — an info affordance, e.g. an info icon), `position?: 'top'|'bottom'|'left'|'right'` (desktop anchor, default `'top'`, ignored <640), `title?: ReactNode` (optional heading shown only in the mobile sheet).
+
+**How the hover→tap-sheet split works (mirrors `MantinePopover`'s span-onClick wiring):**
+
+1. `useResponsiveDropdown()` (from `responsiveBottomSheet.tsx`) returns `isMobile` + Drawer `openDrawer`/`closeDrawer`/`drawerOpened`.
+2. At mobile (`isMobile=true`): `children` (the info-icon trigger) is wrapped in an `inline-block` span that captures the tap and calls `openDrawer()` — no Mantine `Tooltip` involved on this path (hover doesn't exist on touch). The mobile sheet renders via `<ResponsiveBottomSheet>` with `label` wrapped in `SheetContent` (§19.1a — label is blob content, not a row list).
+3. At desktop (`isMobile=false`): a Mantine `Tooltip` wraps `children` directly — Mantine's own hover/focus/blur event wiring (not overridden), so keyboard focus opens the tooltip the same as hover (the a11y path is never disabled).
+4. `position` only affects the desktop Mantine `Tooltip`'s anchor side; the mobile sheet ignores it entirely (always the same bottom sheet).
+
+### §25.2 — §6k chrome consumption (Task 426 zero-hardcode)
+
+The ≥640 `Tooltip` consumes `tailadmin-style-reference.md` §6k EXACTLY — extracted from the live TailAdmin demo (`demo.tailadmin.com/tooltips.html`; the supplied `demo_tailadmin_com.zip` has no generic UI tooltip, only 3rd-party chart/map tooltip CSS, so the live site is the cited source). Dark variant (default): `color="gray.8"` (bg `#1d2939`) + `c="white"` text, `fz="xs"` (12px) + `fw={500}`, `radius="lg"` (8px), `py="xs"` (8px) + `px="0.875rem"` (14px — no theme spacing token matches 14px exactly), `withArrow`, and an inline `boxShadow` set to the exact TailAdmin `shadow-md` formula (`0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1)` — Mantine's own default `md` shadow token differs numerically, so this one value is a cited raw exemption, marked `design-tokens-allow: rgba(` in `MantineTooltip.tsx`, not an invented value). The mobile bottom-sheet path is untouched — it keeps the canonical `bottomSheetDrawerStyles` chrome, not the §6k tooltip chrome (§6k only applies to the ≥640 anchored tooltip).
+
+**🔴 Wrap divergence (Task 526, owner rejection 2026-07-02):** §6k's `whitespace-nowrap` is correct only for TailAdmin's short demo labels — our long/localized (sq/en/uk/it) labels clipped/overflowed the viewport under `nowrap` (caught at `it@680` on rendered review). `MantineTooltip` overrides this ONE property: `multiline` + `maw="16.25rem"` (260px) so long content wraps within a sane bubble width instead of clipping; short labels still render compactly. Every other §6k value is unchanged. See `tailadmin-style-reference.md` §6k for the full note.
+
+### §25.3 — SSR/hydration caveat
+
+Same as §20.2/§21.2/§22.2/§23.2/§24.2: `isMobile=false` on first render (Mantine v8 `getInitialValueInEffect=true`). Desktop `Tooltip` path renders on SSR + initial client render (inert until hover/focus); mobile path mounts after hydration. Sheet always closed on SSR; no flash.
+
+### §25.4 — Storybook proof location
+
+`src/stories/mantine/primitives/Tooltip.stories.tsx` → `Default` — toolbar-driven. **Three sections (§8.2): standard info tooltip (info-icon trigger, short label, default `position="top"`) · long-uk label (same trigger shape, long real-Cyrillic label — proves the Task 526 wrap fix) · placement variants (Task 526 — a `Group` of four triggers covering `top`/`right`/`bottom`/`left`, each anchored on the correct side at ≥640 and each collapsing to the SAME bottom sheet at <640).** All strings via `storyT()` against `storybook.mantine.tooltip_*` keys (sq/en/uk/it parity, uk = real Cyrillic). Overlay opens by REAL interaction — hover/focus at ≥640, tap at <640 — no `defaultOpened`/baked-open.
+
+### §25.5 — P0 gate
+
+At `<640px`:
+- Tap opens the full-width edge-to-edge bottom sheet via `ResponsiveBottomSheet` (NOT an anchored mini-tooltip, NOT a centered card) — `position` has NO effect
+- Sheet: top-only radius, centered drag handle (517), content-sized height up to the `90dvh` cap (§18.8/Task 522); `label` inset by the `SheetContent` gutter (Task 520), wraps, no h-scroll at 320
+- Trigger: ≥44px touch target (caller-supplied, e.g. `ActionIcon mih/miw="2.75rem"`, same as the Popover/DropdownMenu icon-only exemption pattern)
+- Backdrop tap + Esc close; focus returns to the trigger
+
+At `≥640px`:
+- Anchored Mantine `Tooltip` with the §6k Dark chrome (gray-800 bg, white text, 12px/500, radius 8px, padding 8px 14px, `shadow-md`, arrow) — opens on hover AND keyboard focus, positioned per `position` (all four values proven in the story: top/right/bottom/left)
+- Long content WRAPS within `maw="16.25rem"` (Task 526) instead of clipping/overflowing the viewport — short labels stay compact
+
+### §25.6 — Relationship to legacy state
+
+There is no legacy `tooltip.tsx` to preserve or migrate — `MantineTooltip` is a wholly new primitive (no product consumers today, same "primitive + story slice" class as every other Batch C task). This closes out Batch C (P1.18–P1.22); the next migration wave is Batch D (Pagination, Alert, Command, Progress, Skeleton, Separator, ScrollArea, Slider, Toast).

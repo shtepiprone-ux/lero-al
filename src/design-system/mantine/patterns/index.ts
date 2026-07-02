@@ -60,3 +60,6 @@ export type { MantineModalProps } from './MantineModal'
 
 export { MantineDrawer } from './MantineDrawer'
 export type { MantineDrawerProps } from './MantineDrawer'
+
+export { MantineTooltip } from './MantineTooltip'
+export type { MantineTooltipProps } from './MantineTooltip'

@@ -352,6 +352,14 @@ bubble bg). White variant = bg-white / text gray-700 / 1px gray-200 border / `sh
 the shared `ResponsiveBottomSheet` (P0), so this chrome applies to the **≥640 anchored tooltip**; the mobile sheet keeps the
 canonical bottom-sheet chrome.
 
+> **🔴 Intentional divergence — wrap, not nowrap (Task 526, owner rejection 2026-07-02):** the `whitespace-nowrap` line
+> above is correct for TailAdmin's own SHORT demo labels, but our tooltips carry long, localized labels (sq/en/uk/it).
+> Owner rendered review caught the long label running off-screen (clipped) at `it@680` under `nowrap`. `MantineTooltip`
+> therefore overrides this ONE property: `multiline` + `maw="16.25rem"` (260px, chosen within a 240–320px range) so long
+> content WRAPS onto multiple lines within a sane bubble width instead of clipping/overflowing the viewport; short labels
+> still render compactly (no forced width). Every other §6k value (bg, text, radius, padding, shadow, arrow) is
+> unchanged.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

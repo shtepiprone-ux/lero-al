@@ -2202,7 +2202,13 @@
       "drawer_cancel": "Annulla",
       "drawer_left_trigger": "Apri pannello da sinistra",
       "drawer_long_trigger": "Apri contenuto lungo",
-      "drawer_long_body": "Questo pannello contiene un contenuto più lungo per verificare che scorra internamente invece di ridimensionare la pagina. L'intestazione e la maniglia di trascinamento restano fisse in alto mentre questo testo scorre autonomamente.\n\nQuando si filtra un lungo elenco di risultati, questo pannello consente di esaminare ogni opzione senza perdere il proprio posto nella pagina sottostante. Le selezioni vengono applicate solo alla conferma, quindi la semplice consultazione dell'elenco non ha effetti collaterali.\n\nSe l'elenco delle opzioni diventa molto lungo, il pannello mantiene l'intestazione visibile in modo da sapere sempre cosa si sta filtrando, anche dopo aver scorso oltre le prime righe.\n\nGrazie per aver dedicato del tempo a esaminare attentamente queste opzioni."
+      "drawer_long_body": "Questo pannello contiene un contenuto più lungo per verificare che scorra internamente invece di ridimensionare la pagina. L'intestazione e la maniglia di trascinamento restano fisse in alto mentre questo testo scorre autonomamente.\n\nQuando si filtra un lungo elenco di risultati, questo pannello consente di esaminare ogni opzione senza perdere il proprio posto nella pagina sottostante. Le selezioni vengono applicate solo alla conferma, quindi la semplice consultazione dell'elenco non ha effetti collaterali.\n\nSe l'elenco delle opzioni diventa molto lungo, il pannello mantiene l'intestazione visibile in modo da sapere sempre cosa si sta filtrando, anche dopo aver scorso oltre le prime righe.\n\nGrazie per aver dedicato del tempo a esaminare attentamente queste opzioni.",
+      "tooltip_trigger_aria": "Maggiori informazioni",
+      "tooltip_label": "Questo campo è obbligatorio per la verifica dell'account.",
+      "tooltip_long_label": "Questo valore viene utilizzato in diverse parti della piattaforma, inclusi i filtri di ricerca, le preferenze di notifica e la pagina pubblica dell'annuncio, quindi controllalo attentamente prima di salvare le modifiche.",
+      "tooltip_bottom_trigger_aria": "Maggiori informazioni, mostrate sotto",
+      "tooltip_right_trigger_aria": "Maggiori informazioni, mostrate a destra",
+      "tooltip_left_trigger_aria": "Maggiori informazioni, mostrate a sinistra"
     }
   },
   "ui": {

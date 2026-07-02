@@ -26,9 +26,11 @@
 
 **⏸️ Task 463 (Epic BB — full admin report management) — ON HOLD until the Mantine primitive library (Epic MM) is complete.** Do NOT re-execute yet: it must be rebuilt on the finished primitives, not the legacy ones. Capability-gated any→any status override + reopen + close + hard-delete, delegable via Дозволи (`reports.status_override` + `reports.delete`). Prior legacy-primitive implementation sits in the working tree (`docs/sessions/2026-06-19-task-463-admin-report-full-management.md`). Kickoff: `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
 
-**Task numbering — last used: 528 (kickoff written, unexecuted). Next free: 529.**
+**Task numbering — last used: 529 (kickoff written, unexecuted). Next free: 530.**
 
-**Task 528 ✅ APPROVED + commit emitted (2026-07-02) — detail in the archive ledger. Task 527 ❌ REJECTED, subsumed by 528's commit.**
+**🔴 Task 529 (Sprint 40 — enforced rendered gate for Mantine primitives) — READY, unexecuted.** Wire every `Mantine/Primitives/*` story into the ENFORCED `check-stories-rendered.mjs` (`screenshots:assert`) — auto-discover from the story index, assert × sq/en/uk/it at uk@320/375/390 + desktop, opened-overlay states via scripted click, blocking in CI. Anti-no-op proof mandatory (re-plant the 527 Textarea-`minHeight` crash → gate must FAIL → revert). Closes the coverage hole that let 527 slip (528 proved via a throwaway script). Tooling/governance only — NO product/theme/story-content changes. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_529_EnforcedRenderedGateMantinePrimitives.md`.
+
+**Task 528 ✅ APPROVED + committed `a0587f139` (2026-07-02) — detail in the archive ledger. Task 527 ❌ REJECTED, subsumed by 528's commit.**
 
 **Reserved/deferred:** 310 (Epic HH P4), 311 (Epic HH P5 — partially superseded), 313 (Epic HH P6 Verified Agents — blocked on owner DB-schema approval), 453 (Epic KK.2 — remaining admin managers freshness). Deferred (no task #): **I.3** listing-status helper API migration `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger". Retired numbers (never reuse): 465 (uk→ua migration, cancelled), 466/467/469–481 (legacy-primitive layout work superseded by the Mantine migration).
 

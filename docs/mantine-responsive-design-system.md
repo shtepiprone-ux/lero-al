@@ -315,7 +315,7 @@ The owner switches viewport through the Storybook toolbar. Locale proof is toolb
 Default story renders translated `storybook.mantine.*` strings for the active locale. Theme is
 Light-only — no Dark story exports exist or are required.
 
-### §8.1 — Mantine story page-gutter + content-column rule (Task 485 REWORK #2, 2026-06-25; **width-capped by Task 536, 2026-07-03**)
+### §8.1 — Mantine story page-gutter + content-column rule (Task 485 REWORK #2, 2026-06-25; **width-capped by Task 536, 2026-07-03; full-width owner override by Task 540, 2026-07-03**)
 
 `parameters.skipCanvas: true` bypasses the `withCanvas` decorator (`.container-wide py-6`) entirely,
 rendering the story full-bleed (zero horizontal + vertical gutter). **Full-bleed is reserved ONLY for
@@ -333,7 +333,7 @@ export const Default: Story = {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
       <MantineStoryShell>
-        {/* component here */}
+        {/* component here — default width="full" (Task 540) */}
       </MantineStoryShell>
     );
   },
@@ -342,14 +342,16 @@ export const Default: Story = {
 
 | Concern | Rule |
 |---|---|
-| `<640` (P0 mobile gate, unchanged) | Full-bleed edge-to-edge, `px="md"` (16px) / `py="md"` (16px) gutter only — byte-identical to the wrapper every story used before Task 536. No card chrome, no gray background. |
-| `≥640` (§6m, new) | Page background `gray.0` (`#f9fafb`); content capped to **1536px** (`--breakpoint-2xl`, zip-cited §6m) and centered (`mx="auto"`); demo wrapped in white card chrome (1px `gray.2` border, `2xl` radius/16px, no shadow — matches the existing §6 Card token). |
-| Why capped | TailAdmin's own pages (`/buttons`, `/alerts`, …) render inside a `mx-auto max-w-(--breakpoint-2xl)` content column, NOT edge-to-edge — every primitive story stretching full-viewport at ≥640 was the "rubber render" defect Task 536 fixes. |
-| Overlay primitives | Only the TRIGGER sits inside the shell; the popup/sheet itself renders via Mantine's own portal and is unaffected by the shell's `max-width` (verified rendered, no clipping). |
+| `<640` (P0 mobile gate, unchanged) | Full-bleed edge-to-edge, `px="md"` (16px) / `py="md"` (16px) gutter only — byte-identical to the wrapper every story used before Task 536, unchanged by Task 540. No card chrome, no gray background. |
+| `≥640`, `width="full"` (default — 21 of 23 primitive stories, **Task 540 owner override**, 2026-07-03) | Page background `gray.0` (`#f9fafb`); **NO max-width cap** — content spans the full viewport width minus a symmetric edge gutter (**16px `<768`, 24px `≥768`**, same `p-4 md:p-6` value as §6m, zero invented numbers); demo wrapped in the SAME white card chrome (1px `gray.2` border, `2xl` radius/16px, no shadow — unchanged §6 Card token). |
+| `≥640`, `width="constrained"` (**Table + Tabs ONLY**, Task 540 exemption) | Task 536's original behavior, unchanged: content capped to **1536px** (`--breakpoint-2xl`, zip-cited §6m) and centered (`mx="auto"`), same card chrome. `Table.stories.tsx` and `Tabs.stories.tsx` are the only two callers passing `width="constrained"`. |
+| Why full-width (Task 540) | Owner review of the rendered `Mantine/Primitives/*` stories rejected the Task 536 capped column: the story canvas must stress responsive behavior across the **whole viewport**, not TailAdmin's capped showcase column. This is a story-HARNESS-only override (analogous to the `#EC5447` brand-color override) — it does not change any product surface. Table/Tabs keep the capped column because tabular/tab-strip content benefits from a bounded reading width. Full record: `docs/tailadmin-style-reference.md` §6m. |
+| Overlay primitives | Only the TRIGGER sits inside the shell; the popup/sheet itself renders via Mantine's own portal and is unaffected by the shell's `max-width` (verified rendered, no clipping) in either `width` mode. |
 | Admin/table/card patterns (`Patterns/Mantine/*`, pre-Task-536 scope) | Unchanged — still use the bare `<Box px={{ base: 'md', sm: 'xl' }} py="md">` gutter (no content-column cap; those are full admin-surface layouts, not component showcases). |
 | Migration debt | `/admin/users/page.tsx` still uses Tailwind `p-6 max-w-10xl` — migrating to a Mantine admin shell with this responsive gutter is a separate follow-up task. |
 
-**Source of truth for the 1536px cap + gray/card chrome:** `docs/tailadmin-style-reference.md` §6m.
+**Source of truth for the 1536px cap (constrained mode) + gray/card chrome:** `docs/tailadmin-style-reference.md` §6m.
+**Source of truth for the full-width override + 16/24px gutter (full mode, default):** `docs/tailadmin-style-reference.md` §6m "Task 540 owner override" paragraph.
 
 ### §8.2 — One section per STATE, never per viewport; interactive overlays must actually open (owner P0 — 2026-06-30, after the Task 513 Popover rejection) 🔴
 

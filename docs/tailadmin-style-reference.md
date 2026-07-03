@@ -539,6 +539,28 @@ the `<640` full-bleed requirement (P0 mobile gate) is layered on top per Task 53
 edge-to-edge (canonical gutter `px={{base:'md',sm:'xl'}}`, per §8.1); `≥640` = capped to 1536px, centered, on
 gray-50 background, with the primitive demo rendered inside white card chrome as measured above.
 
+**🔴 Task 540 owner override (2026-07-03) — full-width above 640 for all primitive stories EXCEPT Table &
+Tabs.** The owner reviewed the rendered `Mantine/Primitives/*` stories against the Task 536 `1536px`-capped
+column above and rejected it on two points (owner, verbatim: *"всі Mantine Primitive Stories, окрім таблиць і
+табів"* — full-width for all primitive stories except tables and tabs):
+
+1. **The `1536px` cap is dropped at `≥640` for 21 of the 23 primitive stories** (`Table` and `Tabs` are the
+   ONLY exemption — they keep the `1536px` centered column exactly as measured above). The story canvas must
+   stress responsive behavior across the **whole viewport width**, not TailAdmin's capped showcase column.
+2. **A symmetric edge gutter replaces the (previously absent) space between the viewport edge and the card**
+   — **16px `<768`, 24px `≥768`**, reusing the SAME `p-4 md:p-6` value already cited above (content-column
+   wrapper padding) rather than inventing a new number.
+
+**This is an explicit, dated OWNER OVERRIDE of the row above — for the STORY-HARNESS layer ONLY.** It does
+**NOT** change any product surface; TailAdmin's own `/buttons`/`/alerts` pages and every product page in this
+app still follow the `1536px`-capped `mx-auto max-w-(--breakpoint-2xl)` column exactly as measured. The
+override is analogous to the brand-color (`#EC5447`) override of TailAdmin's `#465fff` — a deliberate,
+documented divergence, not an undetected deviation. The TailAdmin conformance gate (clause 16) must read this
+row as "full-width story harness = owner-approved override," not "deviation → reject." See `MantineStoryShell`
+(`src/stories/mantine/_MantineStoryShell.tsx`, `width` prop, Task 540) and §8.1 below for the implementation.
+Card chrome (`gray.2` border, `2xl` radius, no shadow) and the `gray.0` page background are UNCHANGED —
+only the max-width cap and the edge gutter changed.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

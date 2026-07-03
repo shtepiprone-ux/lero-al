@@ -144,7 +144,7 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
-      <MantineStoryShell>
+      <MantineStoryShell width="constrained">
         <MantineDataTableToCards
           {...makeArgs(l)}
           card={makeCardConfig(l)}

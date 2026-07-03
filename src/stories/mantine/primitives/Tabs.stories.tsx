@@ -20,7 +20,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, key)
 
     return (
-      <MantineStoryShell>
+      <MantineStoryShell width="constrained">
         <Stack gap="xl">
           {/* Tabs always in a single horizontal row — no wrap (owner P0).
               theme.components.Tabs.styles.list.flexWrap='nowrap' prevents multi-line.

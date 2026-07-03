@@ -58,7 +58,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.10 | Table (CRM card-wrapped) | table.tsx | §6b | ✅ Task 488 |
 | P1.11 | Tabs (brand, not stretched) | tabs.tsx | §6c | ✅ Task 489 |
 | P1.12 | SegmentedControl (filters) | — (new) | §6c | ✅ Task 490 |
-| P1.13 | Pagination (§6l chrome + `MantinePagination` single-line shed-to-fit) | pagination.tsx | §6l Pagination | ✅ Task 533 (chrome, APPROVED) + Task 535 (shed-to-fit + ≥44px mobile, APPROVED + COMMITTED `29607cb93`) — 2026-07-03 |
+| P1.13 | Pagination (§6l chrome + `MantinePagination` single-line shed-to-fit) | pagination.tsx | §6l Pagination | ✅ Task 533 (chrome, APPROVED + COMMITTED `a39877e3d`) + Task 535 (shed-to-fit + ≥44px mobile, APPROVED + COMMITTED `29607cb93`) — 2026-07-03 |
 | P1.14 | Avatar + AppImage | avatar.tsx, AppImage.tsx | §6b avatar | ✅ Task 491 |
 | P1.15 | Alert | alert.tsx | §6d (semantic-50 bg) | ✅ Task 532 |
 | P1.16 | Dialog / Modal (bottom-sheet <640) | dialog.tsx → MantineModal.tsx | §11 mobile gate | ✅ Task 519 |

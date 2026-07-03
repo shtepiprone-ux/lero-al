@@ -26,7 +26,9 @@
 
 **⏸️ Task 463 (Epic BB — full admin report management) — ON HOLD until the Mantine primitive library (Epic MM) is complete.** Do NOT re-execute yet: it must be rebuilt on the finished primitives, not the legacy ones. Capability-gated any→any status override + reopen + close + hard-delete, delegable via Дозволи (`reports.status_override` + `reports.delete`). Prior legacy-primitive implementation sits in the working tree (`docs/sessions/2026-06-19-task-463-admin-report-full-management.md`). Kickoff: `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
 
-**Task numbering — last used: 531 (executed, pending orchestrator review). Next free: 532.**
+**Task 532 (Sprint 40 · Batch D · P1.15 Alert → TailAdmin conformance) — KICKOFF WRITTEN, awaiting execution.** First Batch D (feedback/misc) slice: Mantine `Alert` primitive → §6l Alerts chrome (radius `xl`/12px, 1px border semantic-500, bg semantic-50, title 14/600/gray-8, body 14/gray-5) + new `blueLight` scale (§4) for the info variant + `Mantine/Primitives/Alert` story. Primitive-only — the 5 legacy `@/components/ui/alert` consumers are NOT migrated (Phase 4/5). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_532_AlertConformance.md`.
+
+**Task numbering — last used: 532 (kickoff written, awaiting execution). Next free: 533.**
 
 **🟢 Task 529 (Sprint 40 — enforced rendered gate for Mantine primitives) — ✅ APPROVED + committed.** All 6 ACs met; native gate green (332/336 PASS, 0 FAIL, exit 0). AC #5 closed via owner-accepted substitute plants (real-throw + blank-fragment) with the prod-harness limitation explicitly recorded (governance §14.9.7 + session log): the gate cannot prove the literal 527 Textarea-minHeight crash (dev-only library guard) and does not catch TailAdmin chrome deviations — it is a crash-and-geometry gate. 149 legacy admin FAILs NOT triaged (legacy stories being replaced by Mantine; `--mantine-only` CI scope correct). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_529_EnforcedRenderedGateMantinePrimitives.md`. Session: `docs/sessions/2026-07-02-task529-enforced-rendered-gate-mantine-primitives.md`.
 

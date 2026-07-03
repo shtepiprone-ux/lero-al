@@ -49,7 +49,13 @@ Accent: theme-pink #ee46bc · theme-purple #7a5af8. `gray-dark` #1a2231. Primary
 
 ## 5. Shadow
 
-- `shadow-theme-xs` ≈ `0 1px 2px 0 rgba(0,0,0,0.05)` — subtle, used on inputs/controls.
+- 🔴 **`shadow-theme-xs`** (corrected 2026-07-03, Task 531, `demo_tailadmin_com.zip` `css/style.css` line 3743-3744,
+  literal Tailwind v4 `--tw-shadow` value — authoritative, not approximated): **`0px 1px 2px 0px rgba(16, 24, 40,
+  0.05)`** — subtle, gray-900-tinted (NOT pure black), used on inputs/controls. Applied via `theme.shadows.xs`
+  override in `theme.ts` (grep-verified 2026-07-03: input family via `input-chrome.css` resting box-shadow,
+  Button secondary/outline `boxShadow`, `SegmentedControl` auto-resolved `--sc-shadow`, and the two
+  `Paper shadow="xs"` pattern consumers — `MantineFormSectionStack`/`MantineNotificationPattern` — all consume
+  `var(--mantine-shadow-xs)`; none regress, no diverging siblings).
 - 🔴 **`shadow-theme-lg`** (extracted 2026-07-02, Task 530, `demo_tailadmin_com.zip` `css/style.css` line 3728-3731,
   literal Tailwind v4 `--tw-shadow` value — authoritative, not invented): **`0px 12px 16px -4px rgba(16, 24, 40,
   0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)`**. Applied via `theme.shadows.lg` override in `theme.ts` (grep-

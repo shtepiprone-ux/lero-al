@@ -144,12 +144,18 @@ export const theme = createTheme({
     xl: '1.25rem',   // 20px — page heading
   },
 
-  // Shadow: TailAdmin §5 shadow-theme-lg (Task 530) — the ONLY overridden key. Consumed
-  // exclusively by Popover/Menu (DropdownMenu/NavigationMenu) desktop dropdown.shadow='lg'
-  // defaultProps below; no other component in src/ passes shadow="lg" (grep-verified), and
-  // Modal/Drawer default to Mantine's own 'xl' shadow scale, so this override cannot leak
-  // onto them or onto the <640 bottom-sheet Drawer.
+  // Shadow: TailAdmin §5 shadow-theme-lg (Task 530) + shadow-theme-xs (Task 531) — the two
+  // overridden keys. `lg` is consumed exclusively by Popover/Menu (DropdownMenu/NavigationMenu)
+  // desktop dropdown.shadow='lg' defaultProps below; no other component in src/ passes
+  // shadow="lg" (grep-verified), and Modal/Drawer default to Mantine's own 'xl' shadow scale, so
+  // this override cannot leak onto them or onto the <640 bottom-sheet Drawer.
+  // `xs` is consumed via var(--mantine-shadow-xs) by: input-chrome.css resting box-shadow
+  // (TextInput/Textarea/PasswordInput/Select), Button outline/default boxShadow (below),
+  // SegmentedControl auto-resolved --sc-shadow, and the two Paper shadow="xs" pattern consumers
+  // (MantineFormSectionStack/MantineNotificationPattern) — grep-verified 2026-07-03, all four
+  // groups confirmed to want TailAdmin's subtle xs tint, no diverging siblings.
   shadows: {
+    xs: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)', // §5 shadow-theme-xs (Task 531)
     lg: '0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)', // §5 shadow-theme-lg
   },
 

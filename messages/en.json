@@ -2221,7 +2221,10 @@
       "alert_iconless_title": "Maintenance notice",
       "alert_iconless_msg": "The site will be briefly unavailable tonight for scheduled maintenance.",
       "alert_long_title": "Your listing requires additional verification before it can be published on the marketplace",
-      "alert_long_msg": "We reviewed your submitted documents and found that one or more required fields are missing or unclear. Please revisit your listing, update the requested information, and resubmit it for review so we can publish it as soon as possible."
+      "alert_long_msg": "We reviewed your submitted documents and found that one or more required fields are missing or unclear. Please revisit your listing, update the requested information, and resubmit it for review so we can publish it as soon as possible.",
+      "pagination_aria_prev": "Previous page",
+      "pagination_aria_next": "Next page",
+      "pagination_aria_page": "Go to page {page}"
     }
   },
   "ui": {

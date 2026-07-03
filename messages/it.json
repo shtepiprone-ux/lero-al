@@ -2221,7 +2221,10 @@
       "alert_iconless_title": "Avviso di manutenzione",
       "alert_iconless_msg": "Il sito sarà temporaneamente non disponibile stasera per manutenzione programmata.",
       "alert_long_title": "Il tuo annuncio richiede una verifica aggiuntiva prima di poter essere pubblicato sul marketplace",
-      "alert_long_msg": "Abbiamo esaminato i documenti che hai inviato e abbiamo riscontrato che uno o più campi obbligatori mancano o non sono chiari. Rivedi il tuo annuncio, aggiorna le informazioni richieste e inviale nuovamente per la revisione in modo da poterlo pubblicare il prima possibile."
+      "alert_long_msg": "Abbiamo esaminato i documenti che hai inviato e abbiamo riscontrato che uno o più campi obbligatori mancano o non sono chiari. Rivedi il tuo annuncio, aggiorna le informazioni richieste e inviale nuovamente per la revisione in modo da poterlo pubblicare il prima possibile.",
+      "pagination_aria_prev": "Pagina precedente",
+      "pagination_aria_next": "Pagina successiva",
+      "pagination_aria_page": "Vai alla pagina {page}"
     }
   },
   "ui": {

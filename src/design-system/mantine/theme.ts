@@ -527,5 +527,38 @@ export const theme = createTheme({
     Notification: {
       defaultProps: { radius: 'lg' },
     },
+    // Pagination: §6l "Pagination" chrome (Task 533) — SIZE-AGNOSTIC. The existing consumer
+    // (MantineAdminSurfacePattern.tsx) passes size='sm'/'md' responsively; this block must NOT
+    // hard-pin control width/height (that would override the consumer's mobile-compact intent).
+    // defaultProps: color='brand' (active fill — Mantine's own --pagination-active-bg resolves
+    // getThemeColor('brand', theme) = brand-7 #EC5447, verified via PaginationRoot.mjs source +
+    // rendered proof, no override needed), radius='lg' (8px, §6l), gap='xs' (8px, §6l item gap —
+    // Mantine's own stock default is a bare `gap:8` literal; 'xs' makes it a tracked token instead
+    // of a magic number, same numeric value).
+    // Resting/hover/border chrome lives in `pagination-chrome.css` (§18: state-dependent CSS
+    // cannot live in `theme.styles` — a static styles object/callback would apply identically to
+    // the active AND inactive control, since Mantine resolves per-control `data-active` at RENDER
+    // time, not from Pagination's own top-level props; an inline override here would beat the
+    // CSS-module `[data-active]` rule via specificity and break the active fill). All chrome rules
+    // there are scoped with `:not([data-active])` so they can never fight the active state
+    // regardless of stylesheet load order.
+    Pagination: {
+      defaultProps: { color: 'brand', radius: 'lg', gap: 'xs' },
+    },
+    // Edge-control (Prev/Next) border (§6l — 1px gray-300, white bg): Mantine gives Prev/Next/First/
+    // Last the SAME `.mantine-Pagination-control` class as number controls, with no built-in
+    // `data-edge` attribute to distinguish them (STOP-and-ASK #1 in the Task 533 kickoff). Resolved
+    // WITHOUT a fragile structural `:first-of-type` selector: `PaginationNext`/`PaginationPrevious`
+    // are independently addressable Mantine sub-components (`useProps("PaginationNext", …)` —
+    // confirmed in PaginationEdges.mjs/use-props.mjs source, 2026-07-03), so a `defaultProps.
+    // className` here is merged onto the rendered button (PaginationControl.mjs passes `className`
+    // through to `getStyles("control", { className, … })`) — a STABLE, explicit selector, not a
+    // structural guess. `withEdges`/First/Last are not used by the current consumer — not themed.
+    PaginationNext: {
+      defaultProps: { className: 'mantine-Pagination-edgeControl' },
+    },
+    PaginationPrevious: {
+      defaultProps: { className: 'mantine-Pagination-edgeControl' },
+    },
   },
 })

@@ -2221,7 +2221,10 @@
       "alert_iconless_title": "Njoftim mirëmbajtjeje",
       "alert_iconless_msg": "Faqja do të jetë përkohësisht e paarritshme sonte për mirëmbajtje të planifikuar.",
       "alert_long_title": "Shpallja juaj kërkon verifikim shtesë përpara se të mund të publikohet në treg",
-      "alert_long_msg": "Rishikuam dokumentet e dorëzuara nga ju dhe zbuluam që një ose më shumë fusha të kërkuara mungojnë ose nuk janë të qarta. Ju lutemi rishikoni shpalljen tuaj, përditësoni informacionin e kërkuar dhe ridorëzojeni për shqyrtim që ta publikojmë sa më shpejt të jetë e mundur."
+      "alert_long_msg": "Rishikuam dokumentet e dorëzuara nga ju dhe zbuluam që një ose më shumë fusha të kërkuara mungojnë ose nuk janë të qarta. Ju lutemi rishikoni shpalljen tuaj, përditësoni informacionin e kërkuar dhe ridorëzojeni për shqyrtim që ta publikojmë sa më shpejt të jetë e mundur.",
+      "pagination_aria_prev": "Faqja e mëparshme",
+      "pagination_aria_next": "Faqja tjetër",
+      "pagination_aria_page": "Shko te faqja {page}"
     }
   },
   "ui": {

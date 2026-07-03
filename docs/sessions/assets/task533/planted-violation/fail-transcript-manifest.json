@@ -1,0 +1,910 @@
+[
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "sq",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-pagination--default__sq__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": false,
+        "ambiguousOnly": false,
+        "violations": [
+          {
+            "failReason": "offscreen-control",
+            "selector": "button",
+            "label": "Faqja tjetër",
+            "details": "right=328, viewportWidth=320"
+          }
+        ],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.261,
+        "variance": 357.69
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "sq",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-pagination--default__sq__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.2466,
+        "variance": 298.17
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "sq",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-pagination--default__sq__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.2281,
+        "variance": 274.63
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "sq",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-pagination--default__sq__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.1549,
+        "variance": 87.45
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "en",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-pagination--default__en__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": false,
+        "ambiguousOnly": false,
+        "violations": [
+          {
+            "failReason": "offscreen-control",
+            "selector": "button",
+            "label": "Next page",
+            "details": "right=328, viewportWidth=320"
+          }
+        ],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.261,
+        "variance": 357.69
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "en",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-pagination--default__en__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.2466,
+        "variance": 298.17
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "en",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-pagination--default__en__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.2281,
+        "variance": 274.63
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "en",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-pagination--default__en__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.1549,
+        "variance": 87.45
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "uk",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-pagination--default__uk__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": false,
+        "ambiguousOnly": false,
+        "violations": [
+          {
+            "failReason": "offscreen-control",
+            "selector": "button",
+            "label": "Наступна сторінка",
+            "details": "right=328, viewportWidth=320"
+          }
+        ],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.261,
+        "variance": 357.69
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "uk",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-pagination--default__uk__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.2466,
+        "variance": 298.17
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "uk",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-pagination--default__uk__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.2281,
+        "variance": 274.63
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "uk",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-pagination--default__uk__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.1549,
+        "variance": 87.45
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "it",
+    "viewport": "mobile-320",
+    "width": 320,
+    "screenshot": "mantine-primitives-pagination--default__it__mobile-320.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": false,
+        "ambiguousOnly": false,
+        "violations": [
+          {
+            "failReason": "offscreen-control",
+            "selector": "button",
+            "label": "Pagina successiva",
+            "details": "right=328, viewportWidth=320"
+          }
+        ],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 320,
+        "height": 812,
+        "nonBackgroundRatio": 0.261,
+        "variance": 357.69
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "it",
+    "viewport": "mobile-375",
+    "width": 375,
+    "screenshot": "mantine-primitives-pagination--default__it__mobile-375.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 375,
+        "height": 812,
+        "nonBackgroundRatio": 0.2466,
+        "variance": 298.17
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "it",
+    "viewport": "mobile-390",
+    "width": 390,
+    "screenshot": "mantine-primitives-pagination--default__it__mobile-390.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": true,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 390,
+        "height": 844,
+        "nonBackgroundRatio": 0.2281,
+        "variance": 274.63
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  },
+  {
+    "story": "Mantine/Primitives/Pagination/Default",
+    "storyId": "mantine-primitives-pagination--default",
+    "locale": "it",
+    "viewport": "desktop-1024",
+    "width": 1024,
+    "screenshot": "mantine-primitives-pagination--default__it__desktop-1024.png",
+    "assertions": {
+      "renderCheck": {
+        "pageErrors": [],
+        "consoleErrors": [],
+        "domFailed": false,
+        "failReason": null,
+        "failDetail": ""
+      },
+      "styleIntegrity": {
+        "pass": true,
+        "failReason": null,
+        "signals": {
+          "bodyMargin": "0px",
+          "sheetsWithRules": true,
+          "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+          "controlThemed": "not-applicable"
+        }
+      },
+      "noHorizontalOverflow": false,
+      "fullWidthControlsAtMobile": null,
+      "fullWidthButtonsAtMobile": null,
+      "popupBottomSheetAtMobile": null,
+      "visualIntegrity": {
+        "pass": true,
+        "ambiguousOnly": false,
+        "violations": [],
+        "ambiguous": []
+      }
+    },
+    "anchorsExpected": [],
+    "anchorsFound": [],
+    "visualContentCheck": {
+      "pass": true,
+      "failReason": null,
+      "failDetail": "",
+      "metrics": {
+        "width": 1024,
+        "height": 768,
+        "nonBackgroundRatio": 0.1549,
+        "variance": 87.45
+      }
+    },
+    "pass": false,
+    "error": null,
+    "verdict": "fail",
+    "retryCount": 0,
+    "phase": "mantine-gate"
+  }
+]

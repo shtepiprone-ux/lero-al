@@ -11,6 +11,7 @@ import { ModalsProvider } from '@mantine/modals';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '../src/design-system/mantine/input-chrome.css';
+import '../src/design-system/mantine/pagination-chrome.css';
 import '../src/app/globals.css';
 
 // ── Mantine theme ─────────────────────────────────────────────────────────────

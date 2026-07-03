@@ -2224,7 +2224,21 @@
       "alert_long_msg": "Ми перевірили надіслані вами документи та виявили, що одне або кілька обов'язкових полів відсутні або незрозумілі. Будь ласка, поверніться до свого оголошення, оновіть запитану інформацію та надішліть її на повторну перевірку, щоб ми могли опублікувати її якомога швидше.",
       "pagination_aria_prev": "Попередня сторінка",
       "pagination_aria_next": "Наступна сторінка",
-      "pagination_aria_page": "Перейти на сторінку {page}"
+      "pagination_aria_page": "Перейти на сторінку {page}",
+      "combobox_placeholder": "Пошук міста...",
+      "combobox_search_placeholder": "Пошук...",
+      "combobox_clear_label": "Усі міста",
+      "combobox_no_results": "Нічого не знайдено",
+      "combobox_error": "Будь ласка, оберіть місто",
+      "combobox_trigger_aria": "Обрати місто",
+      "combobox_sheet_title": "Оберіть місто",
+      "combobox_option_tirana": "Тирана",
+      "combobox_option_durres": "Дуррес",
+      "combobox_option_vlore": "Влера",
+      "combobox_option_shkoder": "Шкодер",
+      "combobox_option_saranda": "Саранда",
+      "combobox_option_saranda_desc": "Прибережне",
+      "combobox_option_long": "Довгострокова оренда нерухомості поблизу історичного центру міста з чудовим сполученням громадського транспорту"
     }
   },
   "ui": {

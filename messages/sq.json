@@ -2224,7 +2224,21 @@
       "alert_long_msg": "Rishikuam dokumentet e dorëzuara nga ju dhe zbuluam që një ose më shumë fusha të kërkuara mungojnë ose nuk janë të qarta. Ju lutemi rishikoni shpalljen tuaj, përditësoni informacionin e kërkuar dhe ridorëzojeni për shqyrtim që ta publikojmë sa më shpejt të jetë e mundur.",
       "pagination_aria_prev": "Faqja e mëparshme",
       "pagination_aria_next": "Faqja tjetër",
-      "pagination_aria_page": "Shko te faqja {page}"
+      "pagination_aria_page": "Shko te faqja {page}",
+      "combobox_placeholder": "Kërko qytetin...",
+      "combobox_search_placeholder": "Kërko...",
+      "combobox_clear_label": "Të gjitha qytetet",
+      "combobox_no_results": "Nuk u gjetën rezultate",
+      "combobox_error": "Ju lutemi zgjidhni një qytet",
+      "combobox_trigger_aria": "Zgjidh një qytet",
+      "combobox_sheet_title": "Zgjidh një qytet",
+      "combobox_option_tirana": "Tiranë",
+      "combobox_option_durres": "Durrës",
+      "combobox_option_vlore": "Vlorë",
+      "combobox_option_shkoder": "Shkodër",
+      "combobox_option_saranda": "Sarandë",
+      "combobox_option_saranda_desc": "Bregdetare",
+      "combobox_option_long": "Prona me qira afatgjatë pranë qendrës historike të qytetit me lidhje të shkëlqyera transporti publik"
     }
   },
   "ui": {

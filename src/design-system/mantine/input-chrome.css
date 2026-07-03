@@ -69,6 +69,38 @@
   box-shadow: none;
 }
 
+/* Combobox in-dropdown search field (Task 537 / MantineCombobox, `variant="button"` + `searchable`) —
+   Mantine's own default is a bottom-border-only divider row (border-width: 0 0 1px), not a standalone
+   §6e input box. STOP-and-ASK #4 (Task 537 kickoff) resolved to reuse §6d/§6e input chrome VERBATIM
+   here (no new §6x extraction needed — not a new value, an additional selector on existing tokens):
+   full border, shadow-xs resting, brand-3 focus ring, gray-4 placeholder — same as TextInput/Select. */
+.mantine-Combobox-search {
+  border: 1px solid var(--mantine-color-gray-3);      /* §6e resting border — gray-300 */
+  border-radius: var(--mantine-radius-lg);            /* §6d/§6e radius — 8px */
+  box-shadow: var(--mantine-shadow-xs);                /* §5 resting subtle shadow */
+}
+.mantine-Combobox-search::placeholder {
+  color: var(--mantine-color-gray-4);                 /* §6 placeholder — gray-400 */
+}
+.mantine-Combobox-search:focus {
+  border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+}
+.mantine-Combobox-search {
+  padding: 0.625rem 1rem;             /* §6l 10px vertical / 16px horizontal — no icon sections, unconditional */
+  color: var(--mantine-color-gray-8); /* §6l/§6e text — gray-800 */
+}
+
+/* Combobox option selected state (Task 537 §8: "selected = brand tint + check in brand-7") —
+   `active` prop on Combobox.Option maps to [data-combobox-active]; Mantine ships no default
+   background for it. Matches legacy Combobox.tsx's exact selected-row treatment verbatim
+   (`bg-primary/10 text-primary` — brand @10% tint background + brand text). State-selector CSS,
+   not theme.ts inline styles (§18 cascade rule — inline styles can't express [data-*] selectors). */
+.mantine-Combobox-option[data-combobox-active] {
+  background-color: color-mix(in srgb, var(--mantine-color-brand-7) 10%, transparent);
+  color: var(--mantine-color-brand-7);
+}
+
 /* Field padding — §6l Form Elements: 10px 16px (py-2.5 px-4). Task 527 fix #2/#5.
    Vertical (10px) is always safe to set. Horizontal is guarded with :not([data-with-*-section])
    so consumers with left/right section icons keep Mantine's icon-reserving padding untouched —

@@ -2224,7 +2224,21 @@
       "alert_long_msg": "Abbiamo esaminato i documenti che hai inviato e abbiamo riscontrato che uno o più campi obbligatori mancano o non sono chiari. Rivedi il tuo annuncio, aggiorna le informazioni richieste e inviale nuovamente per la revisione in modo da poterlo pubblicare il prima possibile.",
       "pagination_aria_prev": "Pagina precedente",
       "pagination_aria_next": "Pagina successiva",
-      "pagination_aria_page": "Vai alla pagina {page}"
+      "pagination_aria_page": "Vai alla pagina {page}",
+      "combobox_placeholder": "Cerca città...",
+      "combobox_search_placeholder": "Cerca...",
+      "combobox_clear_label": "Tutte le città",
+      "combobox_no_results": "Nessun risultato trovato",
+      "combobox_error": "Seleziona una città",
+      "combobox_trigger_aria": "Scegli una città",
+      "combobox_sheet_title": "Scegli una città",
+      "combobox_option_tirana": "Tirana",
+      "combobox_option_durres": "Durazzo",
+      "combobox_option_vlore": "Valona",
+      "combobox_option_shkoder": "Scutari",
+      "combobox_option_saranda": "Saranda",
+      "combobox_option_saranda_desc": "Costiera",
+      "combobox_option_long": "Immobili in affitto a lungo termine vicino al centro storico della città con eccellenti collegamenti di trasporto pubblico"
     }
   },
   "ui": {

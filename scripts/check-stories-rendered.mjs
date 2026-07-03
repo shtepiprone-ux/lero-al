@@ -237,7 +237,7 @@ const MANTINE_PRIMITIVES_TITLE_PREFIX = 'Mantine/Primitives/';
 // handling). Matched against the story title's last path segment (component name). Reuses the
 // exact click-then-assert approach Task 528's throwaway script used (see its session log).
 const MANTINE_OVERLAY_PRIMITIVES = new Set([
-  'Modal', 'Drawer', 'Popover', 'DropdownMenu', 'NavigationMenu', 'Select', 'Tooltip',
+  'Modal', 'Drawer', 'Popover', 'DropdownMenu', 'NavigationMenu', 'Select', 'Tooltip', 'Combobox',
 ]);
 
 // Minimum enforced viewport set for the Mantine-primitives gate (agent-contract clause 12

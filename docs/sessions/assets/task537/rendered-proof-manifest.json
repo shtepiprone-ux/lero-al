@@ -1,0 +1,906 @@
+{
+  "timestamp": "2026-07-03T18-02",
+  "summary": {
+    "total": 384,
+    "passed": 381,
+    "failed": 0,
+    "outOfRange": 0,
+    "ambiguousOnly": 3,
+    "loaderOnly": 0,
+    "blankCanvas": 0,
+    "emptyCanvas": 0,
+    "blankScreenshot": 0,
+    "anchorMissing": 0,
+    "textClipped": 0,
+    "selfClipped": 0,
+    "offscreenControl": 0,
+    "outsideContainer": 0,
+    "elementOverlap": 0,
+    "bottomsheetOverflow": 0,
+    "ambiguousOverlap": 3,
+    "unstyledRender": 0
+  },
+  "comboboxCells": 16,
+  "matrix": [
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-combobox--default__sq__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.5497,
+          "variance": 5885.56
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-combobox--default__sq__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.5727,
+          "variance": 5903.48
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "sq",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-combobox--default__sq__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.5942,
+          "variance": 5930.02
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "sq",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-combobox--default__sq__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.5543,
+          "variance": 66.25
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "en",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-combobox--default__en__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.5363,
+          "variance": 5914.64
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "en",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-combobox--default__en__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.5601,
+          "variance": 5930.92
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "en",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-combobox--default__en__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.5844,
+          "variance": 5956.63
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "en",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-combobox--default__en__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.5493,
+          "variance": 61.24
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-combobox--default__uk__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.5347,
+          "variance": 5769.82
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-combobox--default__uk__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.5721,
+          "variance": 5845.27
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "uk",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-combobox--default__uk__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.5768,
+          "variance": 5874.54
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "uk",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-combobox--default__uk__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.562,
+          "variance": 67.78
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-combobox--default__it__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.5495,
+          "variance": 5876.01
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "it",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-combobox--default__it__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.5651,
+          "variance": 5857.04
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "it",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-combobox--default__it__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.5704,
+          "variance": 5886.8
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Combobox/Default",
+      "storyId": "mantine-primitives-combobox--default",
+      "locale": "it",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-combobox--default__it__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.5559,
+          "variance": 65.21
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    }
+  ]
+}

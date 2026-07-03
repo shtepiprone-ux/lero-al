@@ -2224,7 +2224,21 @@
       "alert_long_msg": "We reviewed your submitted documents and found that one or more required fields are missing or unclear. Please revisit your listing, update the requested information, and resubmit it for review so we can publish it as soon as possible.",
       "pagination_aria_prev": "Previous page",
       "pagination_aria_next": "Next page",
-      "pagination_aria_page": "Go to page {page}"
+      "pagination_aria_page": "Go to page {page}",
+      "combobox_placeholder": "Search city...",
+      "combobox_search_placeholder": "Search...",
+      "combobox_clear_label": "All cities",
+      "combobox_no_results": "No results found",
+      "combobox_error": "Please select a city",
+      "combobox_trigger_aria": "Choose a city",
+      "combobox_sheet_title": "Select a city",
+      "combobox_option_tirana": "Tirana",
+      "combobox_option_durres": "Durrës",
+      "combobox_option_vlore": "Vlorë",
+      "combobox_option_shkoder": "Shkodër",
+      "combobox_option_saranda": "Sarandë",
+      "combobox_option_saranda_desc": "Coastal",
+      "combobox_option_long": "Long-term rental properties near the historic city center with excellent public transport links"
     }
   },
   "ui": {

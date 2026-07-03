@@ -432,6 +432,28 @@ export const theme = createTheme({
         },
       },
     },
+    // Combobox (MantineCombobox desktop dropdown, Task 537 / P1.21) — semantically a "dropdown/menu"
+    // item list (search + select rows), NOT a content-card Popover, so it mirrors the Menu block
+    // above exactly (§6l "Dropdowns/menus" row: container 16px/`rounded-2xl`, 1px gray-200 border,
+    // 12px padding, shadow-theme-lg; items 14px/gray-700/padding~10x12/radius-lg=8px) rather than
+    // inheriting Popover's 12px `xl` radius through Mantine's low-level Combobox↔Popover component
+    // chain (verified live: without this block the dropdown rendered at 12px, the Popover value —
+    // an unintentional accidental inheritance, not a deliberate choice).
+    Combobox: {
+      defaultProps: { radius: '2xl', shadow: 'lg' },
+      styles: {
+        dropdown: {
+          border: '1px solid var(--mantine-color-gray-2)',
+          padding: '0.75rem', // §6l 12px
+        },
+        option: {
+          fontSize: 'var(--mantine-font-size-sm)',     // §6l 14px
+          color: 'var(--mantine-color-gray-7)',         // §6l gray-700
+          padding: '0.625rem 0.75rem',                  // §6l ~10x12
+          borderRadius: 'var(--mantine-radius-lg)',     // §6l 8px
+        },
+      },
+    },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
     // §6b style justification (Task 488):

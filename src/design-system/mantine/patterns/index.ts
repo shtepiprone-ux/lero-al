@@ -66,3 +66,6 @@ export type { MantineTooltipProps } from './MantineTooltip'
 
 export { MantinePagination } from './MantinePagination'
 export type { MantinePaginationProps } from './MantinePagination'
+
+export { MantineCombobox } from './MantineCombobox'
+export type { MantineComboboxProps, MantineComboboxOption } from './MantineCombobox'

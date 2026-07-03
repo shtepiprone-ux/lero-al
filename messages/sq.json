@@ -2208,7 +2208,20 @@
       "tooltip_long_label": "Kjo vlerë përdoret në disa pjesë të platformës, përfshirë filtrat e kërkimit, preferencat e njoftimeve dhe faqen publike të listimit, prandaj ju lutemi kontrolloni me kujdes përpara se të ruani ndryshimet.",
       "tooltip_bottom_trigger_aria": "Më shumë informacion, shfaqur poshtë",
       "tooltip_right_trigger_aria": "Më shumë informacion, shfaqur në të djathtë",
-      "tooltip_left_trigger_aria": "Më shumë informacion, shfaqur në të majtë"
+      "tooltip_left_trigger_aria": "Më shumë informacion, shfaqur në të majtë",
+      "alert_success_title": "Pagesa u krye me sukses",
+      "alert_success_msg": "Abonimi juaj është rinovuar dhe tani është aktiv.",
+      "alert_warning_title": "Hapësira e ruajtjes pothuajse plot",
+      "alert_warning_msg": "Jeni afër limitit të ruajtjes së fotove të shpalljeve tuaja.",
+      "alert_error_title": "Ngarkimi dështoi",
+      "alert_error_msg": "Skedari nuk mund të ngarkohej. Ju lutemi provoni përsëri.",
+      "alert_info_title": "Veçori e re e disponueshme",
+      "alert_info_msg": "Tani mund të ruani kërkimet dhe të njoftoheni për përputhje të reja.",
+      "alert_close_aria": "Mbyll këtë mesazh",
+      "alert_iconless_title": "Njoftim mirëmbajtjeje",
+      "alert_iconless_msg": "Faqja do të jetë përkohësisht e paarritshme sonte për mirëmbajtje të planifikuar.",
+      "alert_long_title": "Shpallja juaj kërkon verifikim shtesë përpara se të mund të publikohet në treg",
+      "alert_long_msg": "Rishikuam dokumentet e dorëzuara nga ju dhe zbuluam që një ose më shumë fusha të kërkuara mungojnë ose nuk janë të qarta. Ju lutemi rishikoni shpalljen tuaj, përditësoni informacionin e kërkuar dhe ridorëzojeni për shqyrtim që ta publikojmë sa më shpejt të jetë e mundur."
     }
   },
   "ui": {

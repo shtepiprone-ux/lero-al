@@ -2208,7 +2208,20 @@
       "tooltip_long_label": "This value is used across several parts of the platform, including search filters, notification preferences, and the public listing page, so please double-check it carefully before saving your changes.",
       "tooltip_bottom_trigger_aria": "More information, shown below",
       "tooltip_right_trigger_aria": "More information, shown on the right",
-      "tooltip_left_trigger_aria": "More information, shown on the left"
+      "tooltip_left_trigger_aria": "More information, shown on the left",
+      "alert_success_title": "Payment successful",
+      "alert_success_msg": "Your subscription has been renewed and is now active.",
+      "alert_warning_title": "Storage almost full",
+      "alert_warning_msg": "You are close to your listing photo storage limit.",
+      "alert_error_title": "Upload failed",
+      "alert_error_msg": "The file could not be uploaded. Please try again.",
+      "alert_info_title": "New feature available",
+      "alert_info_msg": "You can now save searches and get notified of new matches.",
+      "alert_close_aria": "Dismiss this message",
+      "alert_iconless_title": "Maintenance notice",
+      "alert_iconless_msg": "The site will be briefly unavailable tonight for scheduled maintenance.",
+      "alert_long_title": "Your listing requires additional verification before it can be published on the marketplace",
+      "alert_long_msg": "We reviewed your submitted documents and found that one or more required fields are missing or unclear. Please revisit your listing, update the requested information, and resubmit it for review so we can publish it as soon as possible."
     }
   },
   "ui": {

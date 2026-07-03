@@ -2208,7 +2208,20 @@
       "tooltip_long_label": "Questo valore viene utilizzato in diverse parti della piattaforma, inclusi i filtri di ricerca, le preferenze di notifica e la pagina pubblica dell'annuncio, quindi controllalo attentamente prima di salvare le modifiche.",
       "tooltip_bottom_trigger_aria": "Maggiori informazioni, mostrate sotto",
       "tooltip_right_trigger_aria": "Maggiori informazioni, mostrate a destra",
-      "tooltip_left_trigger_aria": "Maggiori informazioni, mostrate a sinistra"
+      "tooltip_left_trigger_aria": "Maggiori informazioni, mostrate a sinistra",
+      "alert_success_title": "Pagamento riuscito",
+      "alert_success_msg": "Il tuo abbonamento è stato rinnovato ed è ora attivo.",
+      "alert_warning_title": "Spazio di archiviazione quasi esaurito",
+      "alert_warning_msg": "Ti stai avvicinando al limite di archiviazione delle foto dei tuoi annunci.",
+      "alert_error_title": "Caricamento non riuscito",
+      "alert_error_msg": "Impossibile caricare il file. Riprova.",
+      "alert_info_title": "Nuova funzionalità disponibile",
+      "alert_info_msg": "Ora puoi salvare le ricerche e ricevere notifiche per nuove corrispondenze.",
+      "alert_close_aria": "Chiudi questo messaggio",
+      "alert_iconless_title": "Avviso di manutenzione",
+      "alert_iconless_msg": "Il sito sarà temporaneamente non disponibile stasera per manutenzione programmata.",
+      "alert_long_title": "Il tuo annuncio richiede una verifica aggiuntiva prima di poter essere pubblicato sul marketplace",
+      "alert_long_msg": "Abbiamo esaminato i documenti che hai inviato e abbiamo riscontrato che uno o più campi obbligatori mancano o non sono chiari. Rivedi il tuo annuncio, aggiorna le informazioni richieste e inviale nuovamente per la revisione in modo da poterlo pubblicare il prima possibile."
     }
   },
   "ui": {

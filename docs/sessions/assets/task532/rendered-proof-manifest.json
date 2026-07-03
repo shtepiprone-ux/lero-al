@@ -1,0 +1,890 @@
+{
+  "timestamp": "2026-07-03T07-06",
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0
+  },
+  "matrix": [
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "sq",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-alert--default__sq__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.8636,
+          "variance": 397.53
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "sq",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-alert--default__sq__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.8902,
+          "variance": 346.89
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "sq",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-alert--default__sq__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.893,
+          "variance": 328.94
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "sq",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-alert--default__sq__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.9347,
+          "variance": 93.02
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "en",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-alert--default__en__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.8628,
+          "variance": 373.37
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "en",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-alert--default__en__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.8902,
+          "variance": 304.67
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "en",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-alert--default__en__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.893,
+          "variance": 287.55
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "en",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-alert--default__en__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.9347,
+          "variance": 81.5
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "uk",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-alert--default__uk__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.8697,
+          "variance": 421.86
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "uk",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-alert--default__uk__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.8883,
+          "variance": 384.23
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "uk",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-alert--default__uk__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.8936,
+          "variance": 376.69
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "uk",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-alert--default__uk__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.9347,
+          "variance": 105.27
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "it",
+      "viewport": "mobile-320",
+      "width": 320,
+      "screenshot": "mantine-primitives-alert--default__it__mobile-320.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 320,
+          "height": 812,
+          "nonBackgroundRatio": 0.8674,
+          "variance": 383.82
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "it",
+      "viewport": "mobile-375",
+      "width": 375,
+      "screenshot": "mantine-primitives-alert--default__it__mobile-375.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 375,
+          "height": 812,
+          "nonBackgroundRatio": 0.8877,
+          "variance": 356.08
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "it",
+      "viewport": "mobile-390",
+      "width": 390,
+      "screenshot": "mantine-primitives-alert--default__it__mobile-390.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": true,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 390,
+          "height": 844,
+          "nonBackgroundRatio": 0.8914,
+          "variance": 327.56
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    },
+    {
+      "story": "Mantine/Primitives/Alert/Default",
+      "storyId": "mantine-primitives-alert--default",
+      "locale": "it",
+      "viewport": "desktop-1024",
+      "width": 1024,
+      "screenshot": "mantine-primitives-alert--default__it__desktop-1024.png",
+      "assertions": {
+        "renderCheck": {
+          "pageErrors": [],
+          "consoleErrors": [],
+          "domFailed": false,
+          "failReason": null,
+          "failDetail": ""
+        },
+        "styleIntegrity": {
+          "pass": true,
+          "failReason": null,
+          "signals": {
+            "bodyMargin": "0px",
+            "sheetsWithRules": true,
+            "fontFamily": "\"Open Sans\", system-ui, -apple-system, sans-serif",
+            "controlThemed": "not-applicable"
+          }
+        },
+        "noHorizontalOverflow": true,
+        "fullWidthControlsAtMobile": null,
+        "fullWidthButtonsAtMobile": null,
+        "popupBottomSheetAtMobile": null,
+        "visualIntegrity": {
+          "pass": true,
+          "ambiguousOnly": false,
+          "violations": [],
+          "ambiguous": []
+        }
+      },
+      "anchorsExpected": [],
+      "anchorsFound": [],
+      "visualContentCheck": {
+        "pass": true,
+        "failReason": null,
+        "failDetail": "",
+        "metrics": {
+          "width": 1024,
+          "height": 768,
+          "nonBackgroundRatio": 0.9347,
+          "variance": 91.43
+        }
+      },
+      "pass": true,
+      "error": null,
+      "verdict": "pass",
+      "retryCount": 0,
+      "phase": "mantine-gate"
+    }
+  ]
+}

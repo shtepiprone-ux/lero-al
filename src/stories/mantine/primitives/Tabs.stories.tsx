@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Box, ScrollArea, Stack, Tabs, Text } from '@mantine/core'
+import { ScrollArea, Stack, Tabs, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Tabs',
@@ -19,7 +20,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, key)
 
     return (
-      <Box p="xl">
+      <MantineStoryShell>
         <Stack gap="xl">
           {/* Tabs always in a single horizontal row — no wrap (owner P0).
               theme.components.Tabs.styles.list.flexWrap='nowrap' prevents multi-line.
@@ -62,7 +63,7 @@ export const Default: Story = {
             </Tabs>
           </Stack>
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

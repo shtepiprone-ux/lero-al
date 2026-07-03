@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Badge, Box, Group, Stack, Text } from '@mantine/core'
+import { Badge, Group, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Badge',
@@ -19,7 +20,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, key)
 
     return (
-      <Box p="xl">
+      <MantineStoryShell>
         <Stack gap="lg">
           {/* Semantic status variants */}
           <Stack gap="xs">
@@ -58,7 +59,7 @@ export const Default: Story = {
             </Group>
           </Stack>
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

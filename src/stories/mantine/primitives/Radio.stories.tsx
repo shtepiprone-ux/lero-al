@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Radio, Stack, Text } from '@mantine/core'
+import { Radio, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Radio',
@@ -15,7 +16,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* 1 — unchecked: gray-3 border / 16px circle / label gray-7 / ≥44px tap row */}
@@ -75,7 +76,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

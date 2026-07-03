@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Stack, Text, Textarea } from '@mantine/core'
+import { Stack, Text, Textarea } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Textarea',
@@ -19,7 +20,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* ── basic — resting chrome + description below (inputWrapperOrder) ── */}
@@ -78,7 +79,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

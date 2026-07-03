@@ -315,23 +315,26 @@ The owner switches viewport through the Storybook toolbar. Locale proof is toolb
 Default story renders translated `storybook.mantine.*` strings for the active locale. Theme is
 Light-only — no Dark story exports exist or are required.
 
-### §8.1 — Mantine story page-gutter rule (Task 485 REWORK #2 — owner decision 2026-06-25)
+### §8.1 — Mantine story page-gutter + content-column rule (Task 485 REWORK #2, 2026-06-25; **width-capped by Task 536, 2026-07-03**)
 
 `parameters.skipCanvas: true` bypasses the `withCanvas` decorator (`.container-wide py-6`) entirely,
 rendering the story full-bleed (zero horizontal + vertical gutter). **Full-bleed is reserved ONLY for
-bottom-sheet popup stories.** Page-content stories (admin tables, card lists, form sections) MUST render
-inside an explicit responsive gutter container.
+bottom-sheet popup stories.** Page-content stories (admin tables, card lists, form sections, and — since
+Task 536 — every `Mantine/Primitives/*` primitive story) MUST render inside the shared content shell.
 
-**Required gutter wrapper for all admin/table/card Mantine stories:**
+**🔴 Required wrapper for ALL 23 `Mantine/Primitives/*` stories (Task 536) — `MantineStoryShell`, single
+source, `src/stories/mantine/_MantineStoryShell.tsx`:**
 
 ```tsx
+import { MantineStoryShell } from '../_MantineStoryShell'
+
 export const Default: Story = {
   render: (args, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         {/* component here */}
-      </Box>
+      </MantineStoryShell>
     );
   },
 };
@@ -339,10 +342,14 @@ export const Default: Story = {
 
 | Concern | Rule |
 |---|---|
-| Gutter token | `px={{ base: 'md', sm: 'xl' }}` — 16px mobile / 24px desktop (owner-decided 2026-06-25). `py="md"` (16px). All theme tokens; no raw px. |
-| Why responsive | Mirrors the canonical admin page gutter. On mobile the card renders inset from the viewport edge (not full-bleed). On desktop the wider xl gutter matches the admin shell spacing. |
-| Out of scope | Full-bleed bottom-sheet popup stories (`Drawer`, dialog-only). Non-admin wide-layout stories may use a different token (decide per case). |
+| `<640` (P0 mobile gate, unchanged) | Full-bleed edge-to-edge, `px="md"` (16px) / `py="md"` (16px) gutter only — byte-identical to the wrapper every story used before Task 536. No card chrome, no gray background. |
+| `≥640` (§6m, new) | Page background `gray.0` (`#f9fafb`); content capped to **1536px** (`--breakpoint-2xl`, zip-cited §6m) and centered (`mx="auto"`); demo wrapped in white card chrome (1px `gray.2` border, `2xl` radius/16px, no shadow — matches the existing §6 Card token). |
+| Why capped | TailAdmin's own pages (`/buttons`, `/alerts`, …) render inside a `mx-auto max-w-(--breakpoint-2xl)` content column, NOT edge-to-edge — every primitive story stretching full-viewport at ≥640 was the "rubber render" defect Task 536 fixes. |
+| Overlay primitives | Only the TRIGGER sits inside the shell; the popup/sheet itself renders via Mantine's own portal and is unaffected by the shell's `max-width` (verified rendered, no clipping). |
+| Admin/table/card patterns (`Patterns/Mantine/*`, pre-Task-536 scope) | Unchanged — still use the bare `<Box px={{ base: 'md', sm: 'xl' }} py="md">` gutter (no content-column cap; those are full admin-surface layouts, not component showcases). |
 | Migration debt | `/admin/users/page.tsx` still uses Tailwind `p-6 max-w-10xl` — migrating to a Mantine admin shell with this responsive gutter is a separate follow-up task. |
+
+**Source of truth for the 1536px cap + gray/card chrome:** `docs/tailadmin-style-reference.md` §6m.
 
 ### §8.2 — One section per STATE, never per viewport; interactive overlays must actually open (owner P0 — 2026-06-30, after the Task 513 Popover rejection) 🔴
 

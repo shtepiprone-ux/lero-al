@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Box, ScrollArea, SegmentedControl, Stack, Text, useMatches } from '@mantine/core'
+import { ScrollArea, SegmentedControl, Stack, Text, useMatches } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/SegmentedControl',
@@ -29,7 +30,7 @@ export const Default: Story = {
     const mobileMinWidth = useMatches({ base: '100%', sm: 'auto' })
 
     return (
-      <Box p="xl">
+      <MantineStoryShell>
         <Stack gap="xl">
           {/* Section 1: Role filter — long uk labels ("Адміністратор"/"Заблокований").
               At <640 with labels fitting: stretches to full width.
@@ -71,7 +72,7 @@ export const Default: Story = {
             </ScrollArea>
           </Stack>
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

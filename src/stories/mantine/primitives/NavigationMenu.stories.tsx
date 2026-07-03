@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Stack, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { MantineNavigationMenu } from '@/design-system/mantine/patterns'
 import type { NavMenuSection } from '@/design-system/mantine/patterns'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/NavigationMenu',
@@ -47,7 +48,7 @@ export const Default: Story = {
     ]
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* 1 — resting: click a section trigger to open its links panel
@@ -70,7 +71,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

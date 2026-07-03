@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Box, Button, Card, Paper, Stack, Text } from '@mantine/core'
+import { Button, Card, Paper, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Card',
@@ -19,7 +20,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, key)
 
     return (
-      <Box p="xl">
+      <MantineStoryShell>
         <Stack gap="xl">
           {/* Section 1: Content Card — radius-16, 20px padding, gray-1 border, flat (no shadow) */}
           <Stack gap="xs">
@@ -73,7 +74,7 @@ export const Default: Story = {
             </Card>
           </Stack>
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

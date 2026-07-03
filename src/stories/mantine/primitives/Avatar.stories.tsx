@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Avatar, Box, Group, Stack, Text } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Avatar',
@@ -19,7 +20,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, key)
 
     return (
-      <Box p="xl">
+      <MantineStoryShell>
         <Stack gap="xl">
           {/* Section 1: Image avatar — 40px and 44px, photo cropped to circle */}
           <Stack gap="xs">
@@ -122,7 +123,7 @@ export const Default: Story = {
             </Box>
           </Stack>
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

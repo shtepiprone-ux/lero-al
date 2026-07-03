@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Stack, Group, Text, ActionIcon } from '@mantine/core'
+import { Stack, Group, Text, ActionIcon } from '@mantine/core'
 import { Info } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantineTooltip } from '@/design-system/mantine/patterns'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Tooltip',
@@ -17,7 +18,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* 1 — standard info tooltip: hover/focus ≥640 anchored §6k tooltip; tap <640
@@ -115,7 +116,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

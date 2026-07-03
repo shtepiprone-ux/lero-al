@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Box, Stack, Text } from '@mantine/core'
+import { Stack, Text } from '@mantine/core'
 import { MantinePagination } from '@/design-system/mantine/patterns'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Pagination',
@@ -24,7 +25,7 @@ export const Default: Story = {
     const getPageAriaLabel = (page: number) => t('pagination_aria_page').replace('{page}', String(page))
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* ── default cluster — moderate total, inactive + active + prev/next + dots ── */}
@@ -120,7 +121,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

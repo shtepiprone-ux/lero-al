@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useState } from 'react'
-import { Box, Stack, Text, Button, Flex } from '@mantine/core'
+import { Stack, Text, Button, Flex } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { MantineModal } from '@/design-system/mantine/patterns'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Modal',
@@ -95,12 +96,12 @@ export const Default: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
           <ModalStandardSection locale={locale} />
           <ModalLongSection locale={locale} />
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

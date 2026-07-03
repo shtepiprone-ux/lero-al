@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Badge, Avatar, ActionIcon, Group, Text } from '@mantine/core'
+import { Badge, Avatar, ActionIcon, Group, Text } from '@mantine/core'
 import { ShieldOff, ChevronRight } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantineDataTableToCards, type CardConfig } from '@/design-system/mantine/patterns'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta<typeof MantineDataTableToCards> = {
   title: 'Mantine/Primitives/Table',
@@ -143,13 +144,13 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en'
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <MantineDataTableToCards
           {...makeArgs(l)}
           card={makeCardConfig(l)}
           emptyLabel={storyT(l, 'storybook.mantine.empty_title')}
         />
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

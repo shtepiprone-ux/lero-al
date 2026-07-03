@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Stack, Text, Button, ActionIcon } from '@mantine/core'
+import { Stack, Text, Button, ActionIcon } from '@mantine/core'
 import { MoreVertical } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantinePopover } from '@/design-system/mantine/patterns'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Popover',
@@ -28,7 +29,7 @@ export const Default: Story = {
     )
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* 1 — trigger (closed/resting): click trigger to open
@@ -84,7 +85,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

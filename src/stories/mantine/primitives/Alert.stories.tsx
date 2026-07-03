@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { Alert, Box, Stack, Text } from '@mantine/core'
+import { Alert, Stack, Text } from '@mantine/core'
 import { CircleCheck, TriangleAlert, CircleX, Info } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/Alert',
@@ -20,7 +21,7 @@ export const Default: Story = {
     const t = (key: string) => storyT(locale, `storybook.mantine.${key}`)
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
 
           {/* ── four semantic variants — §6l Alerts chrome ── */}
@@ -82,7 +83,7 @@ export const Default: Story = {
           </Stack>
 
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

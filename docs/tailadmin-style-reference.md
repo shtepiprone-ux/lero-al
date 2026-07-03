@@ -505,6 +505,40 @@ shell radius/padding (needs a triggered dialog). This §6l is the source of trut
 **Each correction slice is BLOCKED until its row here is measured + cited. No primitive is fixed before its composition
 row exists.**
 
+## 6m. Page content column — the showcase-page shell (Task 536, measured live + zip-cited, 2026-07-03)
+
+> **Why this exists.** Every Mantine primitive story rendered `skipCanvas`+`fullscreen` + a bare `<Box p="xl">` —
+> padding but no width cap, so at ≥640 the primitive stretches edge-to-edge. TailAdmin's own pages (e.g.
+> `/buttons`, `/alerts`) do NOT do this: the page content sits in a **centered, width-capped column** on a
+> gray page background. This row is the extracted, cited source of truth for that shell.
+
+**Extraction method:** the zip has no dedicated "UI Elements showcase" page (only full dashboard routes), so
+the column was measured on the LIVE site (`demo.tailadmin.com/buttons`, `/alerts`) at 1920px and 2560px
+viewports via `getComputedStyle`/`getBoundingClientRect`, then cross-checked against the zip's own
+`css/style.css` custom-property definitions (not invented — every number below traces to one of the two).
+
+- **Content-column wrapper (inside `<main>`):** class `mx-auto max-w-(--breakpoint-2xl) p-4 pb-20 md:p-6 md:pb-6`.
+  - **Max-width = `var(--breakpoint-2xl)` = `1536px`** — confirmed in the zip (`css/style.css`:
+    `--breakpoint-2xl: 1536px;`) AND measured live (wrapper `getBoundingClientRect().width` = exactly 1536 at
+    both 1920px and 2560px viewports — i.e. the wrapper stops growing past 1536, centered via `mx-auto` with
+    gray page background showing on both sides above that width).
+  - **Padding:** `16px` (`p-4`) below `md` (768px), `24px` (`md:p-6`) at ≥768px; bottom padding `80px`
+    (`pb-20`) below `md`, `24px` (`md:pb-6`) at ≥768px (dashboard-specific bottom pad, NOT required for the
+    Storybook shell — cited for completeness).
+  - **Below 1536px** (i.e. at every viewport this project's canonical breakpoints actually test, 320→1440) the
+    wrapper is NOT capped — it fills 100% of its parent (`mx-auto` + `max-width` only constrain ABOVE the cap).
+- **Page background:** `rgb(249, 250, 251)` = **gray-50 `#f9fafb`** (matches `--color-gray-50` in the zip, §4).
+- **Card chrome inside the column** (reconciles with, does not diverge from, the existing §6 Card row): bg
+  **white**, **1px border gray-200 `#e4e7ec`**, radius **16px (`rounded-2xl`)**, **no shadow** — byte-identical
+  to §6's existing `Card`/`Paper` row and §5's "Content cards: NO shadow" line. No new chrome value invented;
+  this row only adds the OUTER page/column layer that was previously undocumented.
+
+**Application to the Storybook shell (`_MantineStoryShell`):** the shell reproduces the wrapper class
+(`mx-auto`, capped `1536px` at ≥640, responsive padding) and the gray page background at the STORY level —
+the `<640` full-bleed requirement (P0 mobile gate) is layered on top per Task 536's Rule: `<640` = full-bleed
+edge-to-edge (canonical gutter `px={{base:'md',sm:'xl'}}`, per §8.1); `≥640` = capped to 1536px, centered, on
+gray-50 background, with the primitive demo rendered inside white card chrome as measured above.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

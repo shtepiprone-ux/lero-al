@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Box, Group, PasswordInput, Stack, Text } from '@mantine/core'
+import { Group, PasswordInput, Stack, Text } from '@mantine/core'
 import { Check, X } from 'lucide-react'
 import { checkPasswordRules } from '@/lib/passwordRules'
 import { storyT } from '../../_storyI18n'
+import { MantineStoryShell } from '../_MantineStoryShell'
 
 const meta: Meta = {
   title: 'Mantine/Primitives/PasswordInput',
@@ -30,7 +31,7 @@ export const Default: Story = {
     ]
 
     return (
-      <Box px={{ base: 'md', sm: 'xl' }} py="md">
+      <MantineStoryShell>
         <Stack gap="xl">
           {/* 1 — basic: gray-2 border / shadow-xs / brand :focus-within / reveal toggle */}
           <Stack gap="xs">
@@ -98,7 +99,7 @@ export const Default: Story = {
             />
           </Stack>
         </Stack>
-      </Box>
+      </MantineStoryShell>
     )
   },
 }

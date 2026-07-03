@@ -63,3 +63,6 @@ export type { MantineDrawerProps } from './MantineDrawer'
 
 export { MantineTooltip } from './MantineTooltip'
 export type { MantineTooltipProps } from './MantineTooltip'
+
+export { MantinePagination } from './MantinePagination'
+export type { MantinePaginationProps } from './MantinePagination'

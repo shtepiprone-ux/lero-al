@@ -1,8 +1,9 @@
 'use client'
 
-import { Stack, Group, TextInput, Button, Badge, Text, ActionIcon, Pagination } from '@mantine/core'
+import { Stack, Group, TextInput, Button, Badge, Text, ActionIcon } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 import { MantineDataTableToCards, type TableColumn, type TableRow, type CardConfig } from './MantineDataTableToCards'
+import { MantinePagination } from './MantinePagination'
 
 export interface AdminFilter {
   key: string
@@ -110,7 +111,7 @@ export function MantineAdminSurfacePattern<R extends { id: string } = TableRow>(
 
       {totalPages > 1 && (
         <Group justify={isMobile ? 'center' : 'flex-end'}>
-          <Pagination
+          <MantinePagination
             total={totalPages}
             value={currentPage}
             onChange={onPageChange}

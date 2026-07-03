@@ -1,0 +1,49 @@
+/* Task 533 — Pagination §6l chrome via stylesheet so the hover/active cascade works (§18: state-
+   dependent CSS cannot live in theme.components.Pagination.styles — see the comment in theme.ts).
+   Mantine's own [data-active] rule + --pagination-active-bg/-color vars (color="brand" → brand-7
+   #EC5447 bg + white text, verified rendered) is NOT overridden by anything below — every rule here
+   is scoped with :not([data-active]) so it can never fight the active-state rule regardless of
+   stylesheet load order. Edge (Prev/Next) rules are explicitly excluded from the plain-number rules
+   below (:not(.mantine-Pagination-edgeControl)) rather than relying on source order, because
+   .mantine-Pagination-control:not([data-active]) has HIGHER specificity (0,2,0) than
+   .mantine-Pagination-edgeControl alone (0,1,0) and would otherwise always win regardless of which
+   rule is declared later (verified via rendered proof: without the :not() exclusion, edge controls
+   rendered transparent/borderless instead of white/gray-300-bordered). */
+
+.mantine-Pagination-control:not([data-active]):not(.mantine-Pagination-edgeControl) {
+  background-color: transparent;                 /* §6l inactive numbers — transparent */
+  color: var(--mantine-color-gray-7);             /* §6l inactive numbers — gray-700 */
+  font-size: var(--mantine-font-size-sm);         /* §6l — 14px */
+  border: none;                                    /* §6l inactive numbers — borderless */
+}
+
+.mantine-Pagination-control:hover:not([data-active]):not([data-disabled]):not(.mantine-Pagination-edgeControl) {
+  background-color: var(--mantine-color-gray-0);  /* §6l hover — gray-50 */
+}
+
+/* Prev/Next edge controls (className injected via theme.ts PaginationNext/PaginationPrevious
+   defaultProps — see theme.ts comment). White bg + 1px gray-300 border + gray-700 text, per §6l.
+   No hover override — §6l cites hover only for inactive number controls, not prev/next; not invented. */
+.mantine-Pagination-edgeControl {
+  background-color: var(--mantine-color-white);
+  color: var(--mantine-color-gray-7);
+  font-size: var(--mantine-font-size-sm);
+  border: 1px solid var(--mantine-color-gray-3);   /* §6l — 1px gray-300 */
+}
+
+/* Task 535 Rule 5 — ≥44px mobile tap target. Below 640px EVERY Pagination control (number,
+   edge, and the dots slot's own box) gets a 44px floor regardless of the consumer's `size`
+   prop (mobile-only floor; desktop stays size-agnostic — MantineAdminSurfacePattern's
+   size={isMobile?'sm':'md'} is untouched by this rule since it only applies <640). This is a
+   CSS media query, not a theme.ts `size` override, per §18 (state/breakpoint-dependent rules
+   live in a stylesheet). MantinePagination's shed-to-fit measurement (Rule 2) reads this
+   control's REAL rendered width via a live hidden probe, so the larger 44px mobile size feeds
+   into the shed budget automatically — verified rendered, not assumed. */
+@media (max-width: 639.98px) {
+  .mantine-Pagination-control,
+  .mantine-Pagination-edgeControl,
+  .mantine-Pagination-dots {
+    min-width: 2.75rem;   /* 44px */
+    min-height: 2.75rem;  /* 44px */
+  }
+}

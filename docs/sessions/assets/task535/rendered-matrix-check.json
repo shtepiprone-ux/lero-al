@@ -1,0 +1,1094 @@
+[
+  {
+    "width": 320,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 375,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 768,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 2560,
+    "locale": "sq",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 2560,
+    "locale": "en",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 2560,
+    "locale": "uk",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  },
+  {
+    "width": 2560,
+    "locale": "it",
+    "hScroll": false,
+    "anyRowOverflow": false,
+    "consoleErrors": 0,
+    "rowChecks": [
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      },
+      {
+        "flexWrap": "nowrap",
+        "overflow": "hidden",
+        "overflowsRow": false
+      }
+    ]
+  }
+]

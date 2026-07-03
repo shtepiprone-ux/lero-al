@@ -58,9 +58,9 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.10 | Table (CRM card-wrapped) | table.tsx | §6b | ✅ Task 488 |
 | P1.11 | Tabs (brand, not stretched) | tabs.tsx | §6c | ✅ Task 489 |
 | P1.12 | SegmentedControl (filters) | — (new) | §6c | ✅ Task 490 |
-| P1.13 | Pagination | pagination.tsx | §6l Pagination | 🟡 Task 533 (kickoff written) |
+| P1.13 | Pagination (§6l chrome + `MantinePagination` single-line shed-to-fit) | pagination.tsx | §6l Pagination | 🟢 Task 533 (chrome, pending its own review) + Task 535 (shed-to-fit + ≥44px mobile) ✅ APPROVED 2026-07-03 (535 native-verified) |
 | P1.14 | Avatar + AppImage | avatar.tsx, AppImage.tsx | §6b avatar | ✅ Task 491 |
-| P1.15 | Alert | alert.tsx | §6d (semantic-50 bg) | ⬜ |
+| P1.15 | Alert | alert.tsx | §6d (semantic-50 bg) | ✅ Task 532 |
 | P1.16 | Dialog / Modal (bottom-sheet <640) | dialog.tsx → MantineModal.tsx | §11 mobile gate | ✅ Task 519 |
 | P1.17 | Sheet / Drawer (bottom-sheet) | sheet.tsx → MantineDrawer.tsx | §11 | ✅ Task 523 |
 | P1.18 | Popover | popover.tsx → MantinePopover.tsx | §6d + P0 bottom-sheet <640 | ✅ Task 513 |
@@ -114,7 +114,7 @@ Track via `grep -rl "@/components/ui/<name>" src`.
   P1.28 Label (501). Plan: `tasks/Sprints/Sprint_38_MM_Phase1_FormControls.md`. Run order 493→501→494→496→500→495→497→498→499.
 - **Batch C (overlays) — ✅ COMPLETE:** P1.18 Popover ✅ Task 513 · P1.19 DropdownMenu ✅ Task 515 · P1.20 NavigationMenu
   ✅ Task 518 · P1.16 Modal ✅ Task 519 · P1.17 Drawer ✅ Task 523 · P1.22 Tooltip ✅ Task 524. **Batch D (feedback/misc) — IN PROGRESS:**
-  P1.15 Alert ✅ Task 532 · P1.13 Pagination 🟡 Task 533 (kickoff written). Remaining ⬜: P1.21 Command · P1.23 Progress ·
+  P1.15 Alert ✅ Task 532 · P1.13 Pagination ✅ Task 533 (chrome) + Task 535 (single-line shed-to-fit, ≥44px mobile — supersedes Task 534). Remaining ⬜: P1.21 Command · P1.23 Progress ·
   P1.24 Skeleton · P1.25 Separator · P1.26 ScrollArea · P1.27 Slider · P1.29 Toast.
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
 

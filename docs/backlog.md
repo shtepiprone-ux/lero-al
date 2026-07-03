@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 538. Next free: 539.**
+**Task numbering — last used: 539. Next free: 540.**
+
+**🖊 Task 539 (Sprint 40 / Epic MM P1.23 — canonical `MantineProgress` progress bar) — KICKOFF WRITTEN, pending Sonnet execution.** New Mantine primitive on Mantine `Progress`, TailAdmin §6 Progress row (track gray-200 / brand fill / pill / 8·12·16·20 heights); optional label+value row above the bar; parity with legacy `progress.tsx` (zero current consumers). **Primitive + story ONLY — zero consumer migration** (Phase 2); non-overlay (no bottom sheet, popup rule N/A). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_539_MantineProgressPrimitive.md`.
 
 **🖊 Task 538 (Sprint 40 / Epic MM — harden rendered gate for in-`ResponsiveBottomSheet` overflow) — OPEN, not yet kicked off.** Task 537's planted-violation work confirmed `scripts/geometry-integrity.mjs`'s `offscreen-control` check downgrades any element inside an `overflow-x:auto` ancestor away from a hard FAIL, so real clip/overflow defects INSIDE any `ResponsiveBottomSheet`/Drawer bottom sheet are invisible to the gate (mobile-sheet full-width currently proven only via native Playwright measurement). Every overlay primitive on the Task 514 foundation (`MantineSelect`, `MantineCombobox`, …) shares the blind spot. Scope: teach the gate to still hard-FAIL true clip/overflow inside a known bottom-sheet body while keeping legitimate internal vertical scroll. Gate-tooling only — no product code, no consumer migration.
 

@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 536 (APPROVED, pending owner commit-run). Next free: 537.**
+**Task numbering — last used: 537 (kickoff written, pending Sonnet execution). Next free: 538.**
+
+**🖊 Task 537 (Sprint 40 / Epic MM P1.21 — canonical `MantineCombobox` searchable-combobox base) — KICKOFF WRITTEN, pending Sonnet execution.** New Mantine primitive at behavioral parity with legacy `src/components/shared/Combobox.tsx` (2 variants, filter, clear-item, error/disabled, desktop anchored + `<640` bottom-sheet via the Task 514 foundation), TailAdmin-styled (§6d/§6e/§6i/§6l, extract §6x for in-dropdown search chrome if missing), + `Mantine/Primitives/Combobox` story (uses `MantineStoryShell`). **Primitive + story ONLY — zero consumer migration** (Phase 2). Note: audit-driven corrections for all 20 audited primitives are complete; this begins Batch D's ⬜ new primitives. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_537_MantineComboboxSearchablePrimitive.md`.
 
 **🟢 Task 529 (Sprint 40 — enforced rendered gate for Mantine primitives) — ✅ APPROVED + committed.** All 6 ACs met; native gate green (332/336 PASS, 0 FAIL, exit 0). AC #5 closed via owner-accepted substitute plants (real-throw + blank-fragment) with the prod-harness limitation explicitly recorded (governance §14.9.7 + session log): the gate cannot prove the literal 527 Textarea-minHeight crash (dev-only library guard) and does not catch TailAdmin chrome deviations — it is a crash-and-geometry gate. 149 legacy admin FAILs NOT triaged (legacy stories being replaced by Mantine; `--mantine-only` CI scope correct). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_529_EnforcedRenderedGateMantinePrimitives.md`. Session: `docs/sessions/2026-07-02-task529-enforced-rendered-gate-mantine-primitives.md`.
 

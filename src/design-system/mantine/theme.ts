@@ -1,4 +1,4 @@
-import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps } from '@mantine/core'
+import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps } from '@mantine/core'
 
 // Brand color scale derived from globals.css oklch palette (EC5447 primary)
 // Mapped to hex approximations for Mantine's 10-shade color array.
@@ -70,11 +70,28 @@ const red: MantineColorsTuple = [
   '#7a271a', // 9
 ]
 
+// TailAdmin blue-light (Task 532 §4 — Alert "info" variant). The zip ships only 5 stops
+// (--color-blue-light-50/300/400/500/600); Alert consumes ONLY index 0 (bg) and 5 (border/icon).
+// Unused slots are placeholder-filled with the nearest §4 stop (NOT interpolated, NOT presented
+// as authoritative TailAdmin values) purely to satisfy Mantine's fixed 10-tuple type.
+const blueLight: MantineColorsTuple = [
+  '#f0f9ff', // 0 — blue-light-50  (§4 AUTHORITATIVE — Alert info bg)
+  '#f0f9ff', // 1 — UNUSED (no TailAdmin stop; placeholder = nearest §4 stop, not consumed)
+  '#7cd4fd', // 2 — UNUSED (placeholder = nearest §4 stop, not consumed)
+  '#7cd4fd', // 3 — blue-light-300 (§4 AUTHORITATIVE)
+  '#36bffa', // 4 — blue-light-400 (§4 AUTHORITATIVE)
+  '#0ba5ec', // 5 — blue-light-500 (§4 AUTHORITATIVE — Alert info border/icon)
+  '#0086c9', // 6 — blue-light-600 (§4 AUTHORITATIVE)
+  '#0086c9', // 7 — UNUSED (placeholder = nearest §4 stop, not consumed)
+  '#0086c9', // 8 — UNUSED (placeholder = nearest §4 stop, not consumed)
+  '#0086c9', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
+]
+
 export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red },
+  colors: { brand, gray, green, yellow, red, blueLight },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.
@@ -468,8 +485,44 @@ export const theme = createTheme({
         list: { flexWrap: 'nowrap' },
       },
     },
+    // Alert: §6l "Alerts" chrome (Task 532) — container radius 12px (`rounded-xl`), 1px border
+    // semantic-500, bg semantic-50, padding 16px; title (the `label` slot — the text span, NOT the
+    // `title` row div, per Alert.mjs DOM structure confirmed 2026-07-03) 14/600/gray-8/mb-4;
+    // message 14/gray-5/lh-20; icon color semantic-500. Variant mapping (§4/§6l): success→green,
+    // warning→yellow, error→red, info→blueLight. `props.color` styles callback (same pattern as
+    // Button/Badge) so color resolution isn't frozen. `root` sets border/bg/radius/padding INLINE —
+    // wins over Mantine's `variant="light"` auto-computed `--alert-bg`/`--alert-bd` (confirmed via
+    // rendered proof: inline style beats the CSS-module `:where()` rule, no scoped stylesheet
+    // needed, same mechanism already proven for Button/Badge/Card in this file).
     Alert: {
-      defaultProps: { radius: 'lg' },
+      defaultProps: { radius: 'xl', variant: 'light' }, // §6l — 12px (was 'lg'/8px)
+      styles: (_theme: MantineTheme, props: AlertProps) => {
+        const color = props.color ?? 'brand'
+        return {
+          root: {
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            borderColor: `var(--mantine-color-${color}-5)`,     // §6l semantic-500
+            backgroundColor: `var(--mantine-color-${color}-0)`, // §6l semantic-50
+            borderRadius: 'var(--mantine-radius-xl)',           // §6l 12px
+            padding: 'var(--mantine-spacing-md)',                // §6l 16px
+          },
+          label: {
+            fontSize: 'var(--mantine-font-size-sm)', // §6l 14px
+            fontWeight: 600,                          // §6l
+            color: 'var(--mantine-color-gray-8)',     // §6l gray-800
+            marginBottom: '0.25rem',                  // §6l 4px title→body gap
+          },
+          message: {
+            fontSize: 'var(--mantine-font-size-sm)', // §6l 14px
+            color: 'var(--mantine-color-gray-5)',     // §6l gray-500
+            lineHeight: '1.25rem',                    // §6l 20px
+          },
+          icon: {
+            color: `var(--mantine-color-${color}-5)`, // §6l semantic-500
+          },
+        }
+      },
     },
     Notification: {
       defaultProps: { radius: 'lg' },

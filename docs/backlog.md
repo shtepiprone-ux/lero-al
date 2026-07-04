@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-04 — Tasks 539 + 542 — ✅ ORCHESTRATOR REVIEWED + APPROVED; commit commands emitted, pending owner PowerShell run.** Diff verified against real files: `input-chrome.css` Tabs block gone / SegmentedControl intact; `LOADER_ALLOWLIST` entry narrow + Button-precedent-identical, Progress primitive untouched; §14.9.8 documented; native gate 397/400, 0 FAIL, 3 AMBIGUOUS (known Tabs-swipe → Task 541). Task 539 lands as ONE coupled `theme.ts` commit (Progress Scope A — owner manual-QA confirmed correct; SegmentedControl Scope B — §6c verified); Scope C Tabs text-color reverted, redesign owned by Task 541. Sessions: `docs/sessions/2026-07-04-task542-progress-gate-tabs-revert.md`, `...task539-segmentedcontrol-tabs-conformance-audit.md`.
+**2026-07-04 — Sprint 40 review thread.** Tasks **539 + 542 ✅ COMMITTED** (`797a4af94` Progress+SegmentedControl · `b5c1f8499` gate-exemption+Tabs-revert · `75ca826bd` governance/backlog). **Task 543 ✅ APPROVED** (owner manual-QA: Tabs/Table constrained-mode edge gutter fixed, no Table clip), commit emitted pending owner run — `_MantineStoryShell` §6m outer gutter now applies in both modes. **Task 541 (segmented/pill Tabs) IN PROGRESS** — pill chrome applied, but the horizontal swipe-on-overflow is BROKEN: `input-chrome.css .mantine-Tabs-list{width:100%}` pins the gray track to the viewport so only the inner tabs scroll, not the whole bar; correction (→ `width:fit-content; min-width:100%`) routed to Sonnet in the kickoff. Sessions: `...task543-story-shell-constrained-edge-gutter.md`, `...task542-progress-gate-tabs-revert.md`, `...task539-segmentedcontrol-tabs-conformance-audit.md`.
 
 ## Pending Action Items
 
@@ -28,7 +28,7 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 542. Next free: 543.**
+**Task numbering — last used: 543. Next free: 544.**
 
 **🖊 Task 538 (Sprint 40 / Epic MM — harden rendered gate for in-`ResponsiveBottomSheet` overflow) — OPEN, not yet kicked off.** Task 537's planted-violation work confirmed `scripts/geometry-integrity.mjs`'s `offscreen-control` check downgrades any element inside an `overflow-x:auto` ancestor away from a hard FAIL, so real clip/overflow defects INSIDE any `ResponsiveBottomSheet`/Drawer bottom sheet are invisible to the gate (mobile-sheet full-width currently proven only via native Playwright measurement). Every overlay primitive on the Task 514 foundation (`MantineSelect`, `MantineCombobox`, …) shares the blind spot. Scope: teach the gate to still hard-FAIL true clip/overflow inside a known bottom-sheet body while keeping legitimate internal vertical scroll. Gate-tooling only — no product code, no consumer migration.
 

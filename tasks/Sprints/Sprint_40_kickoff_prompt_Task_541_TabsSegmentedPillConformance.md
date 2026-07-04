@@ -10,6 +10,42 @@
 > **Owner decision (2026-07-04):** *"переробити Tabs на стиль як у TailAdmin, щоб нічого взагалі не відрізнялось"* —
 > convert Tabs to the segmented/pill look so nothing differs from TailAdmin.
 
+## 🔴🔴 CORRECTION (2026-07-04, owner-observed defect — FIX THIS, the pill chrome is otherwise applied)
+
+The segmented/pill chrome is now rendering, but the **horizontal swipe-on-overflow is broken** and the owner rejected
+it. Root cause (orchestrator-confirmed against `input-chrome.css`):
+
+```css
+.mantine-Tabs-list { width: 100%; }              /* <640 — BUG */
+@media (min-width: 640px) { .mantine-Tabs-list { width: fit-content; } }
+```
+
+At `<640` the gray track is pinned to `width:100%` (= the ScrollArea viewport width), so it does NOT grow to its
+content. When the labels overflow (e.g. uk at 320: "Огляд / Деталі / Журнал активності"), the whole gray bar scrolls
+but at a FIXED width — the last tab spills past the track and clips, because the track never became wide enough to
+contain all three pills. The owner's exact words: *"скролиться і сіра частина, але вона схоже захардкоджена, бо її
+ширина не змінюється."*
+
+**Required fix (make the track grow to content; stay full-width only when it fits):**
+
+```css
+.mantine-Tabs-list {
+  width: fit-content;
+  min-width: 100%;   /* <640: full-width when labels fit; grows to content so the WHOLE gray track (all pills,
+                        both rounded ends) scrolls as one unit when labels overflow */
+}
+@media (min-width: 640px) {
+  .mantine-Tabs-list {
+    min-width: 0;    /* §6c ≥640 — content-width, NOT stretched */
+  }
+}
+```
+
+`width:fit-content` + `min-width:100%` = `max(content, viewport)`: full-width bar when it fits (mobile gate), and a
+content-width bar that scrolls whole (gray background + all pills + both rounded ends move together) when it overflows.
+Verify at uk/sq/it@320 that after swiping right, the last pill is fully inside the gray track (no clip, no bare-tab
+outside the track). Do NOT reintroduce `width:100%` at `<640`.
+
 ## 🔴 Step 0 (do FIRST) — revert the premature Task 539 Tabs text-color rules
 
 Task 539 added a stop-gap text-color fix to the **underline** Tabs (inactive `gray-5` / active `brand-7`) in

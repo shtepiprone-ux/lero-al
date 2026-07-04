@@ -11,16 +11,16 @@
 | Counter | Count |
 |---------|-------|
 | Total cells | 400 |
-| PASS (clean, verdict=pass) | 397 |
+| PASS (clean, verdict=pass) | 398 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
-| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 3 |
+| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 2 |
 | text-clipped | 0 |
 | offscreen-control | 0 |
 | outside-container | 0 |
 | element-overlap | 0 |
 | bottomsheet-overflow | 0 |
-| ambiguous-overlap | 3 |
+| ambiguous-overlap | 2 |
 | unstyled-render | 0 |
 
 ---
@@ -37,9 +37,8 @@
 
 | Story ID | Locale | Viewport | Screenshot | Fail Reason | Selector | Label | Reason |
 |---|---|---|---|---|---|---|---|
-| `mantine-primitives-tabs--default` | sq | mobile-320 | `mantine-primitives-tabs--default__sq__mobile-320.png` | ambiguous-offscreen | #mantine-3fn15fosk-tab-activity | Regjistri i aktivitetit | element reachable by horizontal scrolling (carousel/scroll-tabs) |
-| `mantine-primitives-tabs--default` | uk | mobile-320 | `mantine-primitives-tabs--default__uk__mobile-320.png` | ambiguous-offscreen | #mantine-nn51rkn8i-tab-activity | Журнал активності | element reachable by horizontal scrolling (carousel/scroll-tabs) |
-| `mantine-primitives-tabs--default` | it | mobile-320 | `mantine-primitives-tabs--default__it__mobile-320.png` | ambiguous-offscreen | #mantine-v1qop0ti1-tab-activity | Registro attività | element reachable by horizontal scrolling (carousel/scroll-tabs) |
+| `mantine-primitives-tabs--default` | sq | mobile-320 | `mantine-primitives-tabs--default__sq__mobile-320.png` | ambiguous-offscreen | #mantine-89a8eh88d-tab-activity | Regjistri i aktivitetit | element reachable by horizontal scrolling (carousel/scroll-tabs) |
+| `mantine-primitives-tabs--default` | it | mobile-320 | `mantine-primitives-tabs--default__it__mobile-320.png` | ambiguous-offscreen | #mantine-02k3gt7za-tab-activity | Registro attività | element reachable by horizontal scrolling (carousel/scroll-tabs) |
 
 ---
 
@@ -72,4 +71,4 @@
 
 - **Harness-generated:** all rows above are emitted from the manifest, not hand-written.
 - **Authoritative full run** = owner NATIVE on committed tree.
-- **Run timestamp:** 2026-07-04T13-17
+- **Run timestamp:** 2026-07-04T15-49

@@ -25,12 +25,14 @@ export const Default: Story = {
           {/* Tabs always in a single horizontal row — no wrap (owner P0).
               theme.components.Tabs.styles.list.flexWrap='nowrap' prevents multi-line.
               ScrollArea scrollbarSize={0}: custom Mantine scrollbar rendered at 0px —
-              no visible scrollbar track in any browser; touch/swipe still works. */}
+              no visible scrollbar track in any browser; touch/swipe still works.
+              variant='pills' + segmented/pill chrome come from theme.ts defaultProps +
+              input-chrome.css (Task 541) — no per-story color/variant override. */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
               horizontal / swipe on overflow
             </Text>
-            <Tabs defaultValue="overview" color="brand">
+            <Tabs defaultValue="overview">
               <ScrollArea type="auto" scrollbars="x" scrollbarSize={0}>
                 <Tabs.List>
                   <Tabs.Tab value="overview">

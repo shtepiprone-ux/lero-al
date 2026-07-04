@@ -327,3 +327,56 @@
 .mantine-SegmentedControl-label::before {
   border-radius: var(--mantine-radius-md);
 }
+
+/* ── Tabs — §6c/§6l segmented/pill chrome (Task 541). Converts Mantine's Tabs from the default
+   underline variant to the segmented/pill look — TailAdmin's canonical tab bar (§6c line 108-123:
+   "TailAdmin's saved build uses NO underline (border-b-2) tabs ... Two-/multi-way switches are
+   segment toggles"; §6l line 430-433, measured: "NOT underline border-b-2 tabs"). Supersedes the
+   Task 539 Scope-C stopgap (reverted by Task 542) which only recolored the underline variant's text —
+   this redesign changes the whole chrome mechanism, not just text color.
+   State-dependent colors MUST live here, not in theme.ts's inline `styles` (§18.1: inline `style`
+   cannot express [data-active]/:hover, and setting `color` inline would freeze it, unoverridable by
+   any external rule). These rules also beat Mantine's OWN pills-variant active rule
+   (`.m_c3381914[data-active][data-active] { --tab-bg: var(--tabs-color); --tab-color: ...; }`,
+   confirmed via node_modules/@mantine/core/styles/Tabs.css): that rule only sets the `--tab-bg`/
+   `--tab-color` CUSTOM PROPERTIES, while the actual `background-color`/`color` PROPERTIES are read
+   from those variables by a single lower-specificity base rule (`.m_c3381914 { background-color:
+   var(--tab-bg); color: var(--tab-color); }`). Setting `background-color`/`color` DIRECTLY here at
+   higher specificity than that base rule wins regardless of what the variables resolve to (and
+   regardless of `color` prop / hover), so the active pill can never be tinted brand-colored. */
+.mantine-Tabs-tab {
+  color: var(--mantine-color-gray-5); /* §6c inactive resting — text-gray-500 */
+}
+@media (hover: hover) {
+  .mantine-Tabs-tab:not([data-active]):not([data-disabled]):hover {
+    color: var(--mantine-color-gray-7); /* §6c hover:text-gray-700 (inactive only) */
+  }
+}
+.mantine-Tabs-tab[data-active] {
+  background-color: var(--mantine-color-white); /* §6c active — bg-white pill */
+  color: var(--mantine-color-gray-9);             /* §6c active — text-gray-900 */
+  box-shadow: var(--mantine-shadow-xs);            /* §6c active — shadow-theme-xs */
+}
+
+/* Container width — mobile <640 full-width gate (clause 11) vs §6c desktop content-width.
+   Mantine's Tabs.List renders `display:flex` (block-level, NOT inline-flex), so WITHOUT this rule
+   it stretches to its parent's full width at every viewport (Stack's default `align-items:stretch`
+   compounds this) — the opposite of §6c's "content-width on desktop, NOT stretched; full-width only
+   <640". `width` is breakpoint-dependent, which theme.ts's flat inline `styles.list` (a single
+   static value) cannot express — a real `@media` rule is required, same reasoning as the
+   [data-active] rules above but for a different limitation of the inline-styles API.
+   `width:fit-content` + `min-width:100%` = `max(content, viewport)` (Task 541 correction,
+   2026-07-04, owner-observed): a flat `width:100%` pins the track to the ScrollArea viewport width
+   even when the labels overflow it, so the track never grows to contain all three pills and the
+   last pill clips past the track edge when swiped. `min-width:100%` keeps the full-width mobile
+   gate when content fits, while `width:fit-content` lets the track grow past 100% to its content so
+   the WHOLE gray track (background + all pills + both rounded ends) scrolls as one unit on overflow. */
+.mantine-Tabs-list {
+  width: fit-content;
+  min-width: 100%; /* <640 — full-width when labels fit; grows to content on overflow */
+}
+@media (min-width: 640px) {
+  .mantine-Tabs-list {
+    min-width: 0; /* §6c ≥640 — content-width, NOT stretched */
+  }
+}

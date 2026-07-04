@@ -534,18 +534,40 @@ export const theme = createTheme({
         },
       },
     },
-    // Tabs: brand active indicator (§6c). color:'brand' is redundant with primaryColor but
-    // explicit for single-source self-documentation. Font-size 14px is already Mantine's
-    // default (var(--mantine-font-size-sm)). fw=500 + ≥44px mih via styles.tab.
-    // list.flexWrap:'nowrap' → tabs always stay in a single horizontal row (owner P0 —
-    // never wrap to a second line; consumers wrap Tabs.List in Box overflowX="auto").
-    // Inactive/active text-color exact §6c match (inactive gray.5 / active brand text)
-    // requires CSS [data-active] selector — beyond trivial styles block; deferred.
+    // Tabs: converted from Mantine's default UNDERLINE variant to the TailAdmin segmented/pill
+    // look (Task 541 — §6c line 108-123 + §6l line 430-433, both measured: "NOT underline
+    // (border-b-2) tabs"). variant:'pills' switches the base mechanism; radius:'md' (6px) sets the
+    // PER-ITEM radius via Mantine's own --tabs-radius var, which the pills module CSS applies
+    // unconditionally to every .mantine-Tabs-tab (active or not) — safe as a flat default, no state
+    // dependency, so it belongs here rather than input-chrome.css.
+    // `color` REMOVED (was 'brand'): under variant='pills', Mantine's OWN active-tab rule reads
+    // `--tab-bg: var(--tabs-color)` (driven by `color`), which would fill the active pill
+    // brand-colored, not white — exactly what §6c forbids. The input-chrome.css [data-active] rule
+    // sets `background-color`/`color` DIRECTLY (not via those variables) at higher specificity than
+    // Mantine's var-reading base rule, so it wins regardless of `color` — the prop became dead and
+    // was removed rather than left as a misleading no-op.
+    // list.* = §6c container chrome (bg-gray-100/border-gray-200/rounded-lg/p-1/gap-1) — flat,
+    // state-independent (applies whether any tab is active or not), safe for inline theme.styles.
+    // list.flexWrap:'nowrap' → tabs always stay in a single horizontal row (owner P0 — never wrap;
+    // consumers wrap Tabs.List in ScrollArea for swipe-scroll on overflow).
+    // tab.paddingInline = §6c item padding (px-3, 12px) — also flat, applies both states.
+    // Active-pill background/color/shadow and inactive/hover text-color are NOT set here — Mantine's
+    // `styles` API renders as an inline `style` attribute, which cannot express [data-active]/:hover
+    // (§18.1), and setting `color` here would freeze it (inline style always beats external CSS),
+    // making it unoverridable by any stylesheet rule. All color/background state logic lives in
+    // input-chrome.css instead, exactly as SegmentedControl's Task 539 rules do.
     Tabs: {
-      defaultProps: { color: 'brand' },
+      defaultProps: { variant: 'pills', radius: 'md' },
       styles: {
-        tab: { fontWeight: 500, minHeight: '2.75rem' },
-        list: { flexWrap: 'nowrap' },
+        tab: { fontWeight: 500, minHeight: '2.75rem', paddingInline: '0.75rem' }, // §6c px-3 — 12px
+        list: {
+          backgroundColor: 'var(--mantine-color-gray-1)', // §6c bg-gray-100 track
+          border: '1px solid var(--mantine-color-gray-2)', // §6c border-gray-200
+          borderRadius: 'var(--mantine-radius-lg)',         // §6c rounded-lg — 8px
+          padding: '0.25rem',                                // §6c p-1 — 4px
+          gap: '0.25rem',                                    // §6c gap-1 — 4px
+          flexWrap: 'nowrap',
+        },
       },
     },
     // Alert: §6l "Alerts" chrome (Task 532) — container radius 12px (`rounded-xl`), 1px border

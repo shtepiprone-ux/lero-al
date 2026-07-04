@@ -1,0 +1,15 @@
+/* Task 544 — Skeleton §6n chrome via stylesheet, not theme.ts.
+   Mantine's own Skeleton hardcodes its pulse color to `--mantine-color-gray-3` inside
+   `::before`/`::after` pseudo-elements in its own stylesheet (@mantine/core/styles.css) — not exposed
+   via any component `vars` resolver, and pseudo-elements cannot be targeted by React inline `styles`.
+   §6n cites gray-200 (`--mantine-color-gray-2`, the same token as the Progress track — §6 Progress row),
+   one shade lighter than Mantine's own gray-3 default, so a scoped override is the only mechanism,
+   mirroring input-chrome.css/pagination-chrome.css (§18: state/pseudo-element-dependent CSS cannot live
+   in theme.ts).
+   Radius needs NO override here — global `defaultRadius:'lg'` (theme.ts) already resolves
+   `--mantine-radius-default` to 8px, which is what a non-circle Skeleton already renders at with zero
+   config (see §6n). */
+
+.mantine-Skeleton-root::after {
+  background-color: var(--mantine-color-gray-2); /* §6n — gray-200 #e4e7ec, same token as Progress track */
+}

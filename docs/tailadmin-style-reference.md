@@ -561,6 +561,48 @@ row as "full-width story harness = owner-approved override," not "deviation → 
 Card chrome (`gray.2` border, `2xl` radius, no shadow) and the `gray.0` page background are UNCHANGED —
 only the max-width cap and the edge gutter changed.
 
+## 6n. Skeleton / loading-placeholder — NO dedicated component exists (Task 544, checked 2026-07-04)
+
+> **Step 0 extraction result: negative.** TailAdmin has no skeleton/shimmer/loading-placeholder component
+> anywhere this project can reach it. Exhaustively checked, both sources:
+> - **Offline zip (`demo_tailadmin_com.zip`):** `css/style.css` has no `skeleton`/`shimmer` class and no
+>   opacity-pulse `@keyframes` (the only "pulse" hit is an unrelated Dropzone-widget `scale` pulse, a
+>   third-party file-upload plugin animation, not a design-system token). Zero `animate-pulse` usage
+>   across all 19 bundled HTML pages (`grep -io animate-pulse` on every `html/*.html` = no matches).
+>   `js/bundle.js` contains the literal string "skeleton" exactly once, inside a third-party FullCalendar
+>   library comment ("date range with a rendered skeleton") — unrelated to loading UI.
+> - **Live site (`demo.tailadmin.com`, same domain as every other "measured" row above):** `/skeleton`,
+>   `/loaders`, `/loader`, `/loading`, `/placeholder`, `/placeholders`, `/empty-state` all **404**.
+>   `/spinners` (linked from the nav) returns 200 but contains a fundamentally different pattern — rotating
+>   spinner icons, zero skeleton/shimmer/pulse markup — not a "closest loading placeholder" in the sense
+>   Step 0 means (a spinner is a distinct UI idiom from a gray-block content placeholder).
+>
+> **Decision (clause 16 fallback — reuse already-cited tokens for the closest semantic analog, invent
+> nothing new):**
+> - **Base color = gray-200 `#e4e7ec`** — the SAME already-measured, already-cited token as the Progress
+>   track (line 439 above), since a Progress track and a Skeleton placeholder are the same semantic
+>   surface: a neutral, static "not-yet-content" gray fill. Reused, not invented.
+> - **Radius = 8px (`rounded-lg`)** for line/block skeletons — the SAME generic component radius already
+>   cited for Input/Select/Textarea/Pagination/Tabs (§6/§6l), i.e. TailAdmin's default control radius, NOT
+>   the Progress pill radius (that pill is specific to the progress-fill idiom, not a generic rectangle).
+>   **Circle skeletons = full round** — a geometric certainty (100% border-radius on an equal-side box),
+>   not a design choice, so not "inventing" a value.
+> - **Animation = Mantine's own default, UNCHANGED (zero-override)** — 1500ms linear infinite opacity
+>   pulse (`@keyframes` in `@mantine/core/styles.css`, confirmed in the shipped stylesheet, not assumed).
+>   TailAdmin has zero cited animation timing for any loading state to conform to (see above), so keeping
+>   Mantine's conventional, industry-standard skeleton-pulse timing is the correct "nothing to override"
+>   outcome — same category of decision as Progress's zero-override for track/fill color mechanics.
+
+**Implementation:** `theme.ts` needs no radius override (global `defaultRadius:'lg'` already resolves
+Mantine's `--mantine-radius-default` to 8px, so a non-circle `<Skeleton>` is already correct with zero
+config). The base-color divergence (Mantine's own default pulse color is `gray-3`/`#d0d5dd`, one shade off
+the target `gray-2`/`#e4e7ec`) is NOT overridable via `theme.components.Skeleton` — Mantine hardcodes the
+pulse color to `--mantine-color-gray-3` inside its own stylesheet's `::before`/`::after` pseudo-elements,
+which no `vars` resolver or `styles` prop can target (pseudo-elements aren't reachable via React inline
+styles). Fixed via a scoped stylesheet rule (`skeleton-chrome.css`, same mechanism as
+`input-chrome.css`/`pagination-chrome.css`): `.mantine-Skeleton-root::after { background-color:
+var(--mantine-color-gray-2); }`.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

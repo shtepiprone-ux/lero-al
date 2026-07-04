@@ -974,6 +974,57 @@ untouched.
 
 ---
 
+### §14.9.10 — `Skeleton/Default` does NOT need a `LOADER_ALLOWLIST` entry (Task 544, 2026-07-04)
+
+**Why this record exists.** The Task 544 kickoff assumed a Mantine `Skeleton` story would trip
+`waitForStoryReady`'s loader heuristic "exactly like Progress" (Task 542, §14.9.8) and required adding
+`mantine-primitives-skeleton--default` to `LOADER_ALLOWLIST`. Verified empirically instead of assumed —
+**not needed.**
+
+**Verification:** on the real, built `Mantine/Primitives/Skeleton/Default` story, none of the 6
+`loaderPresent` signals in `waitForStoryReady` (`scripts/check-stories-rendered.mjs`) fire:
+```
+hasSpinner: false, hasSkeletonSlot: false, hasProgressbar: false,
+hasAriaBusy: false, hasDataLoading: false — 9 real .mantine-Skeleton-root elements present
+```
+Root cause (confirmed against `@mantine/core`'s compiled `Skeleton.mjs`, not assumed): Mantine's `<Skeleton>`
+renders as a plain `Box` with `mod={[{visible, animate}]}` (→ `data-visible`/`data-animate` boolean
+attributes) and no `data-slot`, `role`, or `aria-busy` attribute at all — none of the loader signals
+(`.animate-spin`, `[data-slot="skeleton"]`, `[role="progressbar"]`, `[aria-busy="true"]`,
+`[data-loading="true"]`, exact-match loading text) can ever match it. This is unlike Progress, whose
+`role="progressbar"` is unconditional and permanent (the actual reason Progress needed the exemption).
+
+**Result:** the native gate confirms it — `Mantine/Primitives/Skeleton/Default` × 4 locales × 4 viewports
+(16 cells) all PASS cleanly with zero `LOADER_ALLOWLIST` entry, in the same full run that also proves AC5's
+planted-violation transcript (see the Task 544 session log). `LOADER_ALLOWLIST` is UNCHANGED by this task —
+adding an unneeded entry would violate the "narrow, only-when-actually-needed" discipline this allowlist
+exists to enforce (§14.9.4/§14.9.6/§14.9.8 precedent).
+
+### §14.9.11 — `Skeleton/Default` dev-annotation labels: ACCEPTED clause-13(a) exemption (owner decision, 2026-07-04)
+
+**What.** `src/stories/mantine/primitives/Skeleton.stories.tsx` renders its six `<Text size="xs" c="gray.5">`
+caption labels ("text lines — §6n gray-200 pulse…", "block — a media/card placeholder…", "circle — avatar
+placeholder…", "composite — card row…", "visible=false — passthrough…", "real content — not a placeholder")
+as **raw English literals**, not via `storyT`. This diverges from the other 25 Mantine primitive stories,
+which localise every caption with `storyT` + `context.globals.locale` parity across `sq/en/uk/it`.
+
+**Decision (owner, 2026-07-04, during the Task 544 orchestrator review).** These captions are **developer
+scaffolding** — technical annotations carrying `§`-refs, px values, and prop names (`visible=false`) that
+describe *what each skeleton demonstrates*, not product copy. The owner **explicitly accepts them as an
+un-localised dev-annotation exemption** rather than routing a Task 545 to localise them. This is a conscious,
+reviewed decision — NOT the Check-10 blind spot being exploited unknowingly.
+
+**Recorded gate limitation (so this cannot recur silently).** `check-stories.mjs` Check 10 does not flag these
+labels because its JSX-text detectors require either `>text<` on one line (form f) or a line starting `[A-Z]`
+with no punctuation (form h); every Skeleton caption starts lowercase and carries punctuation/`§`, so all six
+fall outside Check 10's current reach. This exemption is therefore **scoped exactly to these dev-annotation
+captions in this one story**. Any NEW user-facing string in a story — and any product-copy string anywhere —
+still MUST use `storyT` with full four-locale parity (clause 13(a) is otherwise unchanged). If a future task
+adds a *product* string to a Mantine story and relies on this blind spot, that is a violation, not an
+exemption.
+
+---
+
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.

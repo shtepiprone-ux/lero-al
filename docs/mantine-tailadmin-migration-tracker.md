@@ -69,7 +69,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.21 | Command / Combobox base | command.tsx | §6d | 🟡 Task 537 — `MantineCombobox` primitive + `Mantine/Primitives/Combobox` story COMPLETE (built on Mantine's low-level `Combobox` primitive per owner-confirmed STOP-and-ASK; §6d/§6e/§6l chrome; new `theme.ts` `Combobox` block fixes an accidental 12px-Popover-radius inheritance → correct 16px/Dropdowns chrome). Primitive + story ONLY — **zero consumer migration** (LocationCombobox/PropertyTypeCombobox/YearCombobox/PhoneField/HeroSearch/FiltersPanel/admin managers still on legacy `Combobox.tsx`, deferred to Phase 2). — 2026-07-03 |
 | P1.22 | Tooltip | (in ui) → MantineTooltip.tsx | §6k (extracted from live demo) | ✅ Task 524 |
 | P1.23 | Progress | progress.tsx | §6 | 🟡 Task 539 — `MantineProgress` primitive + `Mantine/Primitives/Progress` story COMPLETE. Zero-override track/fill (Mantine's own defaults already resolve to gray-2/`#e4e7ec` + `theme.primaryColor`/'brand'); `theme.ts` `Progress` block sets `radius:'pill'` + 8/12/16/20px size scale + a `styles.section` fix for Mantine's own single-section square-end bug. Legacy `progress.tsx` has **zero current consumers** (verified via grep) — nothing to migrate in any phase; primitive now exists for future use. — 2026-07-03 |
-| P1.24 | Skeleton | skeleton.tsx | §5/§6 | ⬜ |
+| P1.24 | Skeleton | skeleton.tsx | §5/§6/§6n | 🟡 Task 544 (primitive + story, zero consumer migration — see P1.24 row) |
 | P1.25 | Separator | separator.tsx | §6 | ⬜ |
 | P1.26 | ScrollArea | scroll-area.tsx | §6 | ⬜ |
 | P1.27 | Slider | slider.tsx | §6 | ⬜ |

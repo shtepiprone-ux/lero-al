@@ -495,6 +495,22 @@ export const theme = createTheme({
         },
       },
     },
+    // Skeleton (Task 544 / P1.24) — §6n row: TailAdmin has NO dedicated skeleton/loading-placeholder
+    // component (zip + live `demo.tailadmin.com` both checked, see §6n) — every value below reuses an
+    // already-cited token for the closest semantic analog, nothing invented.
+    // NO `theme.components.Skeleton` block needed:
+    //   - radius: global `defaultRadius:'lg'` (above) already resolves `--mantine-radius-default` to 8px
+    //     — a non-circle `<Skeleton>` renders at 8px (§6n: same generic control radius as Input/Pagination/
+    //     Tabs) with zero config. `circle` prop already gives a true round shape (Mantine's own CSS sets
+    //     `--skeleton-radius:1000px` when `circle`) — a geometric certainty, not a value to override.
+    //   - animate/visible: Mantine's own defaults (`animate:true`, `visible:true`) already match — no
+    //     divergence to fix.
+    //   - base color (the one real divergence — Mantine's own pulse defaults to gray-3/`#d0d5dd`, §6n
+    //     wants gray-2/`#e4e7ec`, the same token as the Progress track) is NOT fixable here: Mantine
+    //     hardcodes that color to `--mantine-color-gray-3` inside `::before`/`::after` pseudo-elements in
+    //     its own stylesheet, which no `vars` resolver or `styles` prop can reach (pseudo-elements aren't
+    //     targetable via React inline styles). Fixed via `skeleton-chrome.css` instead (§18 precedent —
+    //     same mechanism as `input-chrome.css`/`pagination-chrome.css`).
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
     // §6b style justification (Task 488):

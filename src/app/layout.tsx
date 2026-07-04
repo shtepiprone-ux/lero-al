@@ -7,6 +7,7 @@ import '@mantine/core/styles.css'
 import '@mantine/notifications/styles.css'
 import '@/design-system/mantine/input-chrome.css'
 import '@/design-system/mantine/pagination-chrome.css'
+import '@/design-system/mantine/skeleton-chrome.css'
 import './globals.css'
 import { MantineRootProvider } from '@/design-system/mantine/MantineRootProvider'
 

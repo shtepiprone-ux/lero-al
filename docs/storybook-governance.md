@@ -882,6 +882,96 @@ heuristic — `hasProgressbar` still fires `loader-only` for every other, non-al
 block, `MantineProgress.tsx`, and `Progress.stories.tsx` are byte-identical before/after this task
 (grep-proven in the Task 542 session log).
 
+### §14.9.9 — Bottom-sheet horizontal-overflow blind spot closed (Task 538, 2026-07-04)
+
+**Why.** `checkGeometryIntegrity`'s `offscreen-control` check (Check 2) downgraded ANY element whose bounding
+rect escaped the viewport horizontally to `ambiguous-offscreen` — instead of a hard `violation` — whenever
+`hasHorizontalScrollAncestor(el)` found *any* ancestor with computed `overflow-x: auto|scroll`. That is correct
+for a genuine horizontal-swipe surface (SegmentedControl/Tabs `ScrollArea scrollbars="x"`, Tasks 529–542), but
+it silently swallowed real defects inside a `ResponsiveBottomSheet`/Drawer bottom-sheet body.
+
+**Root cause (confirmed against `@mantine/core`'s compiled source, not guessed):** `bottomSheetDrawerStyles.body`
+(`responsiveBottomSheet.tsx`) sets only `overflowY: 'auto'` (≤90dvh internal scroll). Per the CSS Overflow spec's
+x/y computed-value coupling rule, a browser forces the *other* axis's `visible` to `auto` once one axis is
+non-`visible` — so `getComputedStyle(sheetBody).overflowX` reports `auto` too, purely as a side-effect of the
+sheet's own legitimate vertical scroll, with no horizontal scrollbar ever rendered. `hasHorizontalScrollAncestor`
+walked up from any control inside the sheet, hit this incidental `overflow-x:auto`, and downgraded a true
+horizontal clip/offscreen defect to the non-blocking `ambiguous` bucket — invisible to the gate.
+
+**Fix (`scripts/geometry-integrity.mjs`, `hasHorizontalScrollAncestor` + new `isInsideBottomSheetBody` helper):**
+1. Anything inside a bottom-sheet body (`el.closest('.mantine-Drawer-body')` — Mantine's default
+   `withStaticClasses` prefix, `useStyles({name:"Drawer"})` → static class `mantine-Drawer-body`, confirmed
+   rendered on every `ResponsiveBottomSheet`/`MantineDrawer` bottom-sheet Drawer body regardless of
+   `withStaticClasses` never being disabled anywhere in this app's `MantineProvider`/Storybook `preview.tsx`)
+   never gets the ambiguous downgrade — a horizontal offscreen/clip there is now always a hard `violation`.
+2. Outside a bottom sheet, the downgrade now requires the overflow-x ancestor to carry
+   `data-scrollbars="x"` or `="xy"` — the exact attribute Mantine's `ScrollAreaViewport` renders only when
+   `scrollbars="x"`/`"xy"` is passed (confirmed in `@mantine/core/esm/components/ScrollArea/ScrollArea.mjs`),
+   i.e. the real SegmentedControl/Tabs swipe pattern — not merely "some ancestor happens to compute
+   `overflow-x:auto`".
+
+**Second, deeper blind spot found while proving AC1 (candidate discovery, not just the downgrade logic).**
+The fix above only matters if the overflowing element is a `candidate` at all. It wasn't: every Mantine
+overlay (`Drawer`/`Select`/`Combobox`/`DropdownMenu`/`NavigationMenu`/`Popover`/`Modal`) renders its opened
+content via a React portal appended OUTSIDE `#storybook-root`, and `checkGeometryIntegrity`'s discovery
+(`INTERACTIVE_SELECTOR`) is `#storybook-root`-scoped; `PORTAL_SELECTOR` only matches legacy shadcn `data-slot`
+names Mantine never renders. Proven empirically on a real, opened `Mantine/Primitives/Select/Default` mobile
+sheet: `document.querySelectorAll('#storybook-root button').length === 0` although 7 real buttons existed.
+So bottom-sheet content wasn't downgraded to `ambiguous` — it was **totally invisible** to Checks 1–4, and
+AC1's planted-violation proof was impossible without also fixing this.
+
+**Fix 2 — narrow candidate widening:** a new `BOTTOM_SHEET_BODY_SELECTOR` (`.mantine-Drawer-body button,
+[role="button"], [role="option"], [role="menuitem"], a[href], input`) is unioned into `candidates` alongside
+`INTERACTIVE_SELECTOR`/`PORTAL_SELECTOR`. Deliberately scoped to the bottom-sheet body only — tooltips, desktop
+dropdowns, and non-sheet overlay chrome are untouched, per owner direction (narrow window, not a general
+Mantine-portal sweep).
+
+**Third finding — a false-positive this widening exposed (Check 4, element-overlap).** Running the full native
+gate after the widening surfaced 16 NEW FAILs, all one class, not product defects:
+- `Mantine/Primitives/Combobox/Default` (12 cells, sq/en/uk/it × 320/375/390): the story stacks 7 demo
+  sections down the page; only the first section's sheet is opened (scripted click), but sections 2–7's own
+  search `<input>` elements remain mounted in the page underneath. Rect proof (en@320): the 4th section's input
+  sits at `[16,486,304,530]`; the opened sheet's "All cities" option row sits at `[0,464,320,508]` — same
+  screen coordinates, because the opened sheet visually covers the rest of the page. Reproduced
+  byte-identical across 4 repeat runs (not flaky, not an animation-timing race).
+- `Mantine/Primitives/Drawer/Default` (4 cells, desktop-1024): the story's own "Open drawer" trigger is a
+  full-bleed `[49,93,975,137]` button; the opened side-Drawer's Cancel/Confirm footer (confirmed
+  `el.closest('.mantine-Drawer-body')` truthy) sits at `[822,116,904,160]` / `[916,116,1008,160]` — inside the
+  trigger's own footprint, because the panel is drawn over it.
+
+Both are the same mechanism: DOM-visible background page content sitting behind an opened overlay's opaque
+backdrop, now paired for the first time against the overlay's own (newly-discovered) content by the
+pre-existing Check 4 pairwise-overlap loop. A human never perceives any collision — the backdrop covers the
+background element completely.
+
+**Fix 3 — targeted `ambiguous` exemption, not a silent skip, not a story edit (owner-directed, Option 1 of 2
+offered):** a new `isInsideOverlayBody(el)` helper (`el.closest('.mantine-Drawer-body')`, shared with Fix 1's
+`hasHorizontalScrollAncestor`) gates a new branch in Check 4: when `isInsideOverlayBody(a) !== isInsideOverlayBody(b)`
+(one side of the pair is inside the opened overlay body, the other is not), the pair downgrades to
+`ambiguous-overlap` (reason: "background page content behind an opened overlay's backdrop") instead of a hard
+`violation` — generalizing the pre-existing same-parent `isAbsoluteOverOwnTrigger` popup-over-trigger exemption
+to the portal case. A pair entirely on ONE side of the boundary (both inside the overlay, or both outside) is
+unaffected and still hard-FAILs as a real collision. The Combobox/Drawer stories themselves are untouched —
+the section-stacking/full-bleed-trigger is a story-authoring artifact, correctly absorbed at the gate layer.
+
+**Verification (native `screenshots:assert -- --mantine-only`, full runs):**
+- Pre-widening (Fix 1 only): 398/400 PASS, 0 FAIL, 2 AMBIGUOUS (pre-existing Tabs swipe, unrelated) — no
+  regression from Fix 1 alone.
+- Post-widening (Fix 1+2, before Fix 3): 382/400 PASS, **16 FAIL** (`element-overlap`, the false-positive class
+  above) + 2 AMBIGUOUS (Tabs, unchanged) — confirms AC1 was previously unprovable, surfaces the new blind spot.
+- Post-exemption (Fix 1+2+3, final): 382/400 PASS, **0 FAIL**, 18 AMBIGUOUS (16 newly-classified
+  `ambiguous-overlap` + the same 2 pre-existing Tabs `ambiguous-offscreen`) — back to a clean gate, all 3 fixes
+  co-resident.
+- Planted-violation proof (throwaway script, disposable, never committed): an element pushed to
+  `rect.right=410` (viewportWidth 320) inside a real, opened `Mantine/Primitives/Select/Default` bottom sheet
+  (`.mantine-Drawer-body` confirmed present) → hard `offscreen-control` violation, NOT ambiguous. Re-verified
+  unchanged after Fix 3.
+
+**Scope:** gate-tooling only. No product/consumer/story/theme change (grep-proven — diff touches
+`scripts/geometry-integrity.mjs` + this doc + the session log only). `bottomsheet-overflow` (Check 5, the
+pre-existing `[data-slot="dialog-content"/"sheet-content"]` legacy-Sheet check) and all other buckets are
+untouched.
+
 ---
 
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)

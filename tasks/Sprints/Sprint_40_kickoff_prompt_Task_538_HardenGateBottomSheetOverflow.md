@@ -66,6 +66,58 @@ The horizontal-scroll-ancestor downgrade must be **scoped to genuine horizontal-
   `check:file-integrity` green.
 - No product/theme/story diff (grep-prove the diff is `scripts/**` + docs only).
 
+## 🔴 SCOPE EXPANSION (2026-07-04 — Sonnet finding + orchestrator decision)
+
+Sonnet correctly STOP-and-ASKed: the Layer-1 downgrade fix above is right (marker `.mantine-Drawer-body`; swipe surfaces
+keyed on `data-scrollbars="x"/"xy"`; root cause = `overflow-y:auto` forcing `overflow-x` to compute `auto`), but it is
+**inert and unprovable on its own** because there is a SECOND, deeper blind spot: `checkGeometryIntegrity`'s candidate
+discovery (`INTERACTIVE_SELECTOR`) is scoped to `#storybook-root`, while Mantine Drawer/Select/etc. render their
+bottom-sheet content via a **React portal appended OUTSIDE `#storybook-root`**. Proven: on an opened
+`Mantine/Primitives/Select/Default` mobile sheet, `document.querySelectorAll('#storybook-root button').length === 0`
+though 7 real buttons exist. So bottom-sheet content is not downgraded — it is **totally invisible**, and AC1's
+planted-violation hard-FAIL cannot be produced.
+
+**Decision (orchestrator): proceed — widen candidate discovery, NARROWLY, in this task.** Rationale: without it Task 538
+delivers an unprovable inert change and we'd need the widening task anyway; folding it in is the minimal change that makes
+538's stated goal real. Still gate-tooling only — no product code.
+
+**Constraints on the widening (keep the blast radius small):**
+1. **Scope the new selector to `.mantine-Drawer-body` ONLY** (the bottom-sheet body) — do NOT globally discover all
+   portaled content (tooltips, desktop dropdowns, modals). Include `button`, `[role="button"]`, `[role="option"]`,
+   `[role="menuitem"]`, `a[href]`, `input` under `.mantine-Drawer-body`. This exposes exactly the bottom-sheet content
+   538 cares about and nothing else.
+2. **Only HORIZONTAL clip/offscreen inside the sheet hard-FAILs.** The bottom sheet's LEGITIMATE vertical scroll —
+   content below the fold reachable by vertical scrolling (`overflow-y:auto`, ≤90dvh) — must stay CLEAN (no false FAIL);
+   this is the vertical analog of the accepted horizontal-swipe downgrade. A long `Select` option list scrolling
+   vertically must NOT flood the gate with offscreen violations.
+3. **Genuine swipe carousels (Tabs/SegmentedControl) are unaffected** — they are not `.mantine-Drawer-body` content, so
+   the narrow scoping leaves their accepted-ambiguous cells untouched.
+4. **🛑 GUARD — do NOT balloon into product fixes.** After widening, run the full native `screenshots:assert
+   -- --mantine-only`. If it surfaces NEW findings on REAL (non-planted) overlay bottom-sheet stories
+   (Select/Combobox/DropdownMenu/NavigationMenu/Drawer/Modal): **STOP and report them to the orchestrator — do NOT
+   "fix" any product story, and do NOT silently allowlist/exempt them.** The orchestrator triages each: a real product
+   defect → a separate product follow-up task; a genuine gate false-positive → a documented exemption. Only the planted
+   overflow (the intended test) should hard-FAIL by your hand this task; incidental newly-visible findings are surfaced,
+   not resolved here.
+
+### Second finding + decision (2026-07-04 — element-overlap false-positive)
+
+The widened discovery surfaced 16 new FAILs (Combobox/Default ×12, Drawer/Default ×4), ALL one benign false-positive
+class: Check 4 (element-overlap) now pairs an opened overlay's own content against BACKGROUND page elements sitting
+BEHIND the overlay's opaque backdrop (Combobox/Default stacks 7 sections → 6 closed sections' inputs sit under the opened
+sheet; Drawer/Default's full-bleed trigger sits under the opened panel's footer). DOM says they overlap; a human never
+sees it (the backdrop covers them). Reproducible byte-identical ×4 — not flaky, not a product defect. **Decision: add the
+targeted exemption (Option 1) — downgrade to `ambiguous`, NOT a hard FAIL, NOT a silent skip.** This is the generalization
+of the check's EXISTING `popup-over-trigger → ambiguous` rule. Requirements:
+- Fire ONLY across the overlay boundary: `isInsideOverlayBody(a) !== isInsideOverlayBody(b)` → `ambiguous` (reason:
+  "background page content behind an opened overlay's backdrop"). 
+- **A real collision where BOTH elements are inside the overlay body still hard-FAILs** (do not over-exempt); two
+  background elements (both outside) still hard-FAIL as normal.
+- Document this class in `docs/storybook-governance.md` §14.9.x with the two rect proofs. Do NOT change the Combobox/Drawer
+  stories (the stacking is a story artifact, correctly handled at the gate layer, not by editing product stories).
+- Net result target: `screenshots:assert -- --mantine-only` back to 0 FAIL, with the planted overflow still the one
+  intended hard-FAIL in its transcript, and these 16 as documented `ambiguous`/benign.
+
 ## Acceptance criteria
 
 1. Horizontal clip/offscreen inside a `ResponsiveBottomSheet`/Drawer bottom-sheet body = hard `violation` (proven by a

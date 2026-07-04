@@ -60,9 +60,29 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
       '[data-slot="dropdown-menu-content"] [role="menuitem"]',
     ].join(', ');
 
+    // Task 538: Mantine overlay primitives (Select/Combobox/DropdownMenu/NavigationMenu/
+    // Popover/Modal/Drawer — every `ResponsiveBottomSheet` consumer) render their opened
+    // content via a React portal appended OUTSIDE `#storybook-root`, so neither
+    // INTERACTIVE_SELECTOR (root-scoped) nor PORTAL_SELECTOR (legacy shadcn `data-slot`
+    // names Mantine never renders) ever discovers it — confirmed empirically:
+    // `#storybook-root button` returns 0 matches on an opened Mantine bottom sheet that has
+    // 7 real buttons. Deliberately narrow: scoped ONLY to the bottom-sheet body itself
+    // (`.mantine-Drawer-body`, the same Task 514 single-source marker used by
+    // `hasHorizontalScrollAncestor` below), not a general Mantine-portal sweep — tooltips,
+    // desktop dropdowns, and non-sheet overlay chrome are intentionally untouched.
+    const BOTTOM_SHEET_BODY_SELECTOR = [
+      '.mantine-Drawer-body button',
+      '.mantine-Drawer-body [role="button"]',
+      '.mantine-Drawer-body [role="option"]',
+      '.mantine-Drawer-body [role="menuitem"]',
+      '.mantine-Drawer-body a[href]',
+      '.mantine-Drawer-body input',
+    ].join(', ');
+
     const allCandidates = [
       ...document.querySelectorAll(INTERACTIVE_SELECTOR),
       ...document.querySelectorAll(PORTAL_SELECTOR),
+      ...document.querySelectorAll(BOTTOM_SHEET_BODY_SELECTOR),
     ];
 
     const seen = new Set();
@@ -125,11 +145,35 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
     }
 
     // ── Scrollable ancestor check (R1: for offscreen ambiguous) ──
+    // Task 538: a `ResponsiveBottomSheet`/Drawer bottom-sheet body (single-source marker:
+    // the static `.mantine-Drawer-body` class — Mantine's default `withStaticClassNames`
+    // prefix, confirmed rendered by every Batch C overlay built on the Task 514 foundation)
+    // sets ONLY `overflow-y: auto` (`bottomSheetDrawerStyles.body`). Per the CSS Overflow
+    // spec's x/y computed-value coupling rule, a browser forces the *other* axis's
+    // `visible` to `auto` once one axis is non-visible — so the sheet body's own vertical
+    // scroll makes `getComputedStyle(...).overflowX` report `auto` too, even though the
+    // sheet must never scroll horizontally. That falsely satisfied the old check below and
+    // downgraded a real horizontal clip/offscreen defect inside a bottom sheet to
+    // `ambiguous`. Fixed by (1) never granting the downgrade to anything inside a
+    // bottom-sheet body, and (2) requiring the overflow-x ancestor to be a genuine
+    // Mantine `ScrollArea` horizontal-swipe viewport (`data-scrollbars="x"|"xy"`, the
+    // exact attribute `ScrollAreaViewport` renders for `scrollbars="x"` — the
+    // SegmentedControl/Tabs swipe pattern), not merely "some ancestor has overflow-x auto".
+    // Shared with Check 4's cross-overlay-boundary exemption below (same `.mantine-Drawer-body`
+    // single-source marker — one helper, two consumers).
+    function isInsideOverlayBody(el) {
+      return !!el.closest('.mantine-Drawer-body');
+    }
+
     function hasHorizontalScrollAncestor(el) {
+      if (isInsideOverlayBody(el)) return false;
       let parent = el.parentElement;
       while (parent && parent !== document.body && parent !== document.documentElement) {
         const cs = window.getComputedStyle(parent);
-        if (/auto|scroll/.test(cs.overflowX)) return true;
+        if (/auto|scroll/.test(cs.overflowX)) {
+          const scrollbars = parent.getAttribute('data-scrollbars');
+          if (scrollbars === 'x' || scrollbars === 'xy') return true;
+        }
         parent = parent.parentElement;
       }
       return false;
@@ -377,6 +421,25 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
             label: `"${labelFor(a)}" ↔ "${labelFor(b)}"`,
             details: `a=[${Math.round(aRect.left)},${Math.round(aRect.top)},${Math.round(aRect.right)},${Math.round(aRect.bottom)}] b=[${Math.round(bRect.left)},${Math.round(bRect.top)},${Math.round(bRect.right)},${Math.round(bRect.bottom)}]`,
             reason: 'library-internal or position:absolute/fixed over own trigger/anchor',
+          });
+          continue;
+        }
+
+        // Task 538: a pair straddling the opened-overlay boundary — one element inside
+        // `.mantine-Drawer-body`, the other not — is background page content sitting behind
+        // the overlay's opaque backdrop (e.g. a sibling demo section's own trigger/input, or
+        // the story's own trigger button), not a real collision a user could ever perceive.
+        // Generalizes the same-parent `isAbsoluteOverOwnTrigger` popup-over-trigger exemption
+        // to the portal case now reachable since Check 4 gained overlay-body candidates
+        // (BOTTOM_SHEET_BODY_SELECTOR above). A pair fully on ONE side of the boundary (both
+        // inside, or both outside) is unaffected — still a hard `element-overlap` violation.
+        if (isInsideOverlayBody(a) !== isInsideOverlayBody(b)) {
+          ambiguous.push({
+            failReason: 'ambiguous-overlap',
+            selector: `${selectorFor(a)} ↔ ${selectorFor(b)}`,
+            label: `"${labelFor(a)}" ↔ "${labelFor(b)}"`,
+            details: `a=[${Math.round(aRect.left)},${Math.round(aRect.top)},${Math.round(aRect.right)},${Math.round(aRect.bottom)}] b=[${Math.round(bRect.left)},${Math.round(bRect.top)},${Math.round(bRect.right)},${Math.round(bRect.bottom)}]`,
+            reason: "background page content behind an opened overlay's backdrop",
           });
           continue;
         }

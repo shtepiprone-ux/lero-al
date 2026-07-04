@@ -219,6 +219,15 @@ const LOADER_ALLOWLIST = new Set([
   // height unchanged (44px)"), not a transient loading state — legitimately allowlisted, not a
   // real defect.
   'mantine-primitives-button--default',
+  // Task 542 — Progress/Default renders multiple determinate `<Progress>` bars, each carrying
+  // `role="progressbar"` permanently (Mantine's ProgressSection, not a transient loader) — the
+  // `hasProgressbar` signal below can never resolve to `loaderPresent: false` for this story, so
+  // every cell timed out `[loader-only]` even though the bar is fully rendered and static.
+  // Owner manually rendered Mantine/Primitives/Progress/Default across en/uk/sq/it@320 + en/uk@375
+  // + uk@480 + uk@1280 (2026-07-04) and confirmed correct §6 chrome (gray-200 track, brand fill,
+  // sm/md/lg/xl heights, all determinate values incl. clamped out-of-range, long-label wrap with
+  // no clip/h-scroll at 320) — see docs/storybook-governance.md §14.9.8.
+  'mantine-primitives-progress--default',
 ]);
 
 // ── Task 529 — Mantine primitive stories, AUTO-DISCOVERED from the built Storybook index ──

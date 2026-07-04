@@ -856,6 +856,32 @@ intentional horizontal swipe-scroll container ("horizontal / swipe on overflow")
 reachable by scrolling. The gate correctly routes these to the non-blocking `ambiguous` bucket (exit 0, never a
 FAIL). Future reviews treat these 4 cells as an accepted design state, not a pending owner decision.
 
+### §14.9.8 — `Progress/Default` loader-heuristic false-positive (Task 542, 2026-07-04)
+
+**Why.** Task 539 shipped `Mantine/Primitives/Progress` (`MantineProgress.tsx` + `theme.ts` Progress block).
+The native `screenshots:assert -- --mantine-only` run then showed 16/16 `Progress/Default` cells
+(sq/en/uk/it × 320/375/390/1024) FAIL `[loader-only]`. **Root cause confirmed (not the primitive):**
+`waitForStoryReady`'s readiness detector treats `root.querySelector('[role="progressbar"]') !== null` as
+`loaderPresent`, which is correct for a TRANSIENT loading spinner but is permanently true for `Progress` —
+Mantine's `ProgressSection` renders `role="progressbar"` unconditionally on every determinate bar, for the
+entire life of the story. The story never reaches `loaderPresent: false`, so every cell times out at the
+15s readiness deadline and hard-FAILs `[loader-only]`, regardless of whether the bar itself is rendered
+correctly.
+
+**Owner manual-QA (2026-07-04):** owner personally rendered `Mantine/Primitives/Progress/Default` across
+en/uk/sq/it@320, en/uk@375, uk@480, uk@1280 and confirmed correct §6 chrome — gray-200 pill track, brand
+fill, sm/md/lg/xl = 8/12/16/20px, all determinate values (0/20/45/72/80/100/clamped-150/-30) render
+correctly, and the long sq/uk/it label wraps in the label row with no clip and no horizontal scroll at 320.
+
+**Fix (gate-tooling only, scoped to this one story, primitive UNCHANGED):** `mantine-primitives-progress--default`
+added to `LOADER_ALLOWLIST` in `scripts/check-stories-rendered.mjs` — the same mechanism and precedent as
+the pre-existing `mantine-primitives-button--default` entry (§14.9.4/14.9.6), which allowlists a different
+permanent (non-transient) visual state on a per-story basis. This does NOT weaken the global loader/spinner
+heuristic — `hasProgressbar` still fires `loader-only` for every other, non-allowlisted story; only
+`Progress/Default`'s specific, permanent, by-design `role="progressbar"` is exempted. `theme.ts`'s Progress
+block, `MantineProgress.tsx`, and `Progress.stories.tsx` are byte-identical before/after this task
+(grep-proven in the Task 542 session log).
+
 ---
 
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)

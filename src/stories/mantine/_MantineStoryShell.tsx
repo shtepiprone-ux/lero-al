@@ -28,8 +28,9 @@ export interface MantineStoryShellProps {
  * chrome — `1px solid` `gray.2` border (`#e4e7ec`), `2xl` radius (16px), no shadow — byte-
  * identical to the existing §6 Card/Paper token, nothing invented.
  *
- * `≥640`, `width="constrained"` (Table + Tabs ONLY, Task 540 exemption): Task 536's original
- * `1536px` centered (`mx="auto"`) column, unchanged.
+ * `≥640`, `width="constrained"` (Table + Tabs ONLY, Task 540 exemption): Task 536's `1536px` centered
+ * (`mx="auto"`) column — PLUS the same §6m outer edge gutter as `full` (Task 543 fix: constrained
+ * previously had 0px edge below the 1536 cap, so Tabs/Table touched the screen edges at e.g. 773px).
  *
  * Overlay primitives (Drawer/Modal/Popover/DropdownMenu/NavigationMenu/Select/Tooltip): only the
  * TRIGGER sits inside this shell. The popup/sheet itself renders via a portal (Mantine's own
@@ -43,7 +44,11 @@ export function MantineStoryShell({ children, width = 'full' }: MantineStoryShel
       <Box
         maw={isConstrained ? { base: '100%', sm: 1536 } : undefined}
         mx={isConstrained ? 'auto' : undefined}
-        px={isConstrained ? undefined : { base: 0, sm: 'md', md: 'xl' }}
+        // Task 543 (2026-07-04): the §6m outer gutter (16px `sm` / 24px `md`, `p-4 md:p-6`) applies in
+        // BOTH modes. Previously `constrained` passed `undefined` here, so below the 1536 cap (e.g. 773px)
+        // the Table + Tabs cards touched the screen edges at 0px while every `full` story had the gutter.
+        // maw/mx stay constrained-only (cap + centering); `<640` base:0 full-bleed is unchanged.
+        px={{ base: 0, sm: 'md', md: 'xl' }}
         py={{ base: 'md', sm: 'xl' }}
       >
         <Box

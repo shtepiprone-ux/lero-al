@@ -1,4 +1,4 @@
-import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps } from '@mantine/core'
+import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps } from '@mantine/core'
 
 // Brand color scale derived from globals.css oklch palette (EC5447 primary)
 // Mapped to hex approximations for Mantine's 10-shade color array.
@@ -315,20 +315,29 @@ export const theme = createTheme({
     // fullWidth NOT set → content-width on desktop; swipe-scroll via ScrollArea <640 (owner P0, Task 489 precedent).
     // Already matches §6c: track bg gray-1 ✅ | active pill white ✅ | shadow-theme-xs ✅ | fw=500 ✅ | 14px ✅.
     // Added here: border-gray-2 (Mantine has no border by default) | active text gray-9 (--sc-label-color) |
-    //             ≥44px label touch-target (2.75rem exemption — same as Button/Tabs).
-    // Deferred: inactive label gray.7 vs §6c gray.5 | hover black vs §6c gray.7 —
-    //   require [data-active]:not CSS selectors beyond trivial styles block (same boundary as Task 489 Tabs).
+    //             ≥44px label touch-target (2.75rem exemption — same as Button/Tabs) |
+    //             item radius rounded-md/6px (indicator + label, distinct from container's lg/8px, §6c) |
+    //             item horizontal padding 12px (px-3, §6c — vertical stays via minHeight+flex touch exemption).
+    // Task 539 (Scope B, 2026-07-04) CLOSED the Task 489-era deferral: inactive label gray.5 + hover
+    // gray.7 (both §6c) now live in input-chrome.css as stable-class [data-active]-scoped CSS rules —
+    // Mantine's own default (:where() zero-specificity gray-7 resting / black hover) is beaten by our
+    // higher-specificity class + :not() selectors. See input-chrome.css "SegmentedControl" section.
     SegmentedControl: {
       defaultProps: { radius: 'lg', size: 'sm' },
       styles: {
         root: {
           border: '1px solid var(--mantine-color-gray-2)',
         },
+        indicator: {
+          borderRadius: 'var(--mantine-radius-md)', // §6c item radius — 6px (rounded-md), distinct from container's 8px
+        },
         label: {
           minHeight: '2.75rem',     // ≥44px touch target (rem exemption — same as Button/Tabs)
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          borderRadius: 'var(--mantine-radius-md)', // §6c item radius — 6px (rounded-md)
+          paddingInline: '0.75rem', // §6c item padding — px-3 = 12px
           '--sc-label-color': 'var(--mantine-color-gray-9)', // §6c active text = gray-900
         },
       },
@@ -451,6 +460,38 @@ export const theme = createTheme({
           color: 'var(--mantine-color-gray-7)',         // §6l gray-700
           padding: '0.625rem 0.75rem',                  // §6l ~10x12
           borderRadius: 'var(--mantine-radius-lg)',     // §6l 8px
+        },
+      },
+    },
+    // Progress (MantineProgress, Task 539 / P1.23) — §6 Progress row: track gray-200/#e4e7ec, fill
+    // brand, `rounded-full` (pill), heights 8/12/16/20px (sm/md/lg/xl). Track color and fill color
+    // need NO override — Mantine's own defaults already resolve to `--mantine-color-gray-2` (#e4e7ec)
+    // and `theme.primaryColor` ('brand') respectively (verified against the shipped
+    // `@mantine/core/styles/Progress.css`, not assumed). Only radius (global default is `lg`/8px, not
+    // a pill) and the size→height scale (Mantine's own default sm/md/lg/xl = 5/8/12/16px, not the §6
+    // 8/12/16/20 scale) need an explicit override.
+    //
+    // `styles.section` — Mantine's own CSS only rounds the START side of a section that matches BOTH
+    // `:first-of-type`/`:last-of-type` (single-section case, which this primitive always is): its
+    // `:first-of-type` rule (`border-radius:0` then re-adds only the two START corners) is later in
+    // source order than `:last-of-type` and wins at equal specificity, so the END corners stay square
+    // (verified via getComputedStyle: 9999px/0/0/9999px — left rounded, right square). §6 requires a
+    // full pill/capsule fill regardless of value, so both ends are forced round here.
+    Progress: {
+      defaultProps: { radius: 'pill' },
+      vars: (_theme: MantineTheme, props: ProgressProps) => {
+        const SIZE_PX: Record<string, string> = {
+          sm: '0.5rem',  // §6 8px
+          md: '0.75rem', // §6 12px
+          lg: '1rem',    // §6 16px
+          xl: '1.25rem', // §6 20px
+        }
+        const size = typeof props.size === 'string' ? props.size : 'md'
+        return { root: { '--progress-size': SIZE_PX[size] ?? SIZE_PX.md } }
+      },
+      styles: {
+        section: {
+          borderRadius: 'var(--progress-radius)',
         },
       },
     },

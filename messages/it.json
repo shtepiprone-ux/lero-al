@@ -2238,7 +2238,10 @@
       "combobox_option_shkoder": "Scutari",
       "combobox_option_saranda": "Saranda",
       "combobox_option_saranda_desc": "Costiera",
-      "combobox_option_long": "Immobili in affitto a lungo termine vicino al centro storico della città con eccellenti collegamenti di trasporto pubblico"
+      "combobox_option_long": "Immobili in affitto a lungo termine vicino al centro storico della città con eccellenti collegamenti di trasporto pubblico",
+      "progress_label_storage": "Spazio utilizzato",
+      "progress_label_upload": "Caricamento foto annuncio",
+      "progress_label_long": "Avanzamento annuale della verifica e conformità per gli annunci immobiliari"
     }
   },
   "ui": {

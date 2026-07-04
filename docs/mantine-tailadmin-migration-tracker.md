@@ -68,7 +68,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.20 | NavigationMenu | navigation-menu.tsx → MantineNavigationMenu.tsx | §6c/§6d + P0 bottom-sheet <640 | ✅ Task 518 |
 | P1.21 | Command / Combobox base | command.tsx | §6d | 🟡 Task 537 — `MantineCombobox` primitive + `Mantine/Primitives/Combobox` story COMPLETE (built on Mantine's low-level `Combobox` primitive per owner-confirmed STOP-and-ASK; §6d/§6e/§6l chrome; new `theme.ts` `Combobox` block fixes an accidental 12px-Popover-radius inheritance → correct 16px/Dropdowns chrome). Primitive + story ONLY — **zero consumer migration** (LocationCombobox/PropertyTypeCombobox/YearCombobox/PhoneField/HeroSearch/FiltersPanel/admin managers still on legacy `Combobox.tsx`, deferred to Phase 2). — 2026-07-03 |
 | P1.22 | Tooltip | (in ui) → MantineTooltip.tsx | §6k (extracted from live demo) | ✅ Task 524 |
-| P1.23 | Progress | progress.tsx | §6 | ⬜ |
+| P1.23 | Progress | progress.tsx | §6 | 🟡 Task 539 — `MantineProgress` primitive + `Mantine/Primitives/Progress` story COMPLETE. Zero-override track/fill (Mantine's own defaults already resolve to gray-2/`#e4e7ec` + `theme.primaryColor`/'brand'); `theme.ts` `Progress` block sets `radius:'pill'` + 8/12/16/20px size scale + a `styles.section` fix for Mantine's own single-section square-end bug. Legacy `progress.tsx` has **zero current consumers** (verified via grep) — nothing to migrate in any phase; primitive now exists for future use. — 2026-07-03 |
 | P1.24 | Skeleton | skeleton.tsx | §5/§6 | ⬜ |
 | P1.25 | Separator | separator.tsx | §6 | ⬜ |
 | P1.26 | ScrollArea | scroll-area.tsx | §6 | ⬜ |
@@ -114,7 +114,7 @@ Track via `grep -rl "@/components/ui/<name>" src`.
   P1.28 Label (501). Plan: `tasks/Sprints/Sprint_38_MM_Phase1_FormControls.md`. Run order 493→501→494→496→500→495→497→498→499.
 - **Batch C (overlays) — ✅ COMPLETE:** P1.18 Popover ✅ Task 513 · P1.19 DropdownMenu ✅ Task 515 · P1.20 NavigationMenu
   ✅ Task 518 · P1.16 Modal ✅ Task 519 · P1.17 Drawer ✅ Task 523 · P1.22 Tooltip ✅ Task 524. **Batch D (feedback/misc) — IN PROGRESS:**
-  P1.15 Alert ✅ Task 532 · P1.13 Pagination ✅ Task 533 (chrome) + Task 535 (single-line shed-to-fit, ≥44px mobile — supersedes Task 534) · P1.21 Command/Combobox 🟡 Task 537 (primitive + story, zero consumer migration — see P1.21 row). Remaining ⬜: P1.23 Progress ·
+  P1.15 Alert ✅ Task 532 · P1.13 Pagination ✅ Task 533 (chrome) + Task 535 (single-line shed-to-fit, ≥44px mobile — supersedes Task 534) · P1.21 Command/Combobox 🟡 Task 537 (primitive + story, zero consumer migration — see P1.21 row) · P1.23 Progress 🟡 Task 539 (primitive + story, zero consumer migration — see P1.23 row). Remaining ⬜:
   P1.24 Skeleton · P1.25 Separator · P1.26 ScrollArea · P1.27 Slider · P1.29 Toast.
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
 

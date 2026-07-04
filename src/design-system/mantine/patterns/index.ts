@@ -69,3 +69,6 @@ export type { MantinePaginationProps } from './MantinePagination'
 
 export { MantineCombobox } from './MantineCombobox'
 export type { MantineComboboxProps, MantineComboboxOption } from './MantineCombobox'
+
+export { MantineProgress } from './MantineProgress'
+export type { MantineProgressProps } from './MantineProgress'

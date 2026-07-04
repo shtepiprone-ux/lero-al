@@ -307,3 +307,23 @@
 .mantine-SegmentedControl-label[data-active] {
   color: var(--mantine-color-gray-9);
 }
+
+/* ── SegmentedControl — §6c inactive/hover label chrome (Task 539 Scope B, closes the Task 489-era
+   deferral). Mantine's own default CSS sets inactive resting = gray-7 and hover = black, both via
+   :where() (0 specificity) selectors on the hashed class — cannot be overridden inline (§18.1: inline
+   `theme.styles` cannot express state selectors), so both are fixed here with real class + :not()
+   selectors, which win on specificity + source order (this file loads after @mantine/core/styles.css). */
+.mantine-SegmentedControl-label:not([data-active]) {
+  color: var(--mantine-color-gray-5); /* §6c inactive — gray-500 #667085 */
+}
+@media (hover: hover) {
+  .mantine-SegmentedControl-label:not([data-active]):not([data-disabled]):not([data-read-only]):hover {
+    color: var(--mantine-color-gray-7); /* §6c hover (inactive only) — gray-700 #344054 */
+  }
+}
+/* Item radius (§6c rounded-md/6px) also applies to the ::before fallback pseudo painted before the
+   FloatingIndicator's JS measurement initializes (theme.ts's inline styles.label/indicator cover the
+   label element + the moving indicator span, but a ::before pseudo cannot be targeted inline). */
+.mantine-SegmentedControl-label::before {
+  border-radius: var(--mantine-radius-md);
+}

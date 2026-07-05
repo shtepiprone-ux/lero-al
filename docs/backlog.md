@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 546. Next free: 547.**
+**Task numbering — last used: 547. Next free: 548.**
+
+**🟡 Task 547 (Sprint 40 / Epic MM — harness hygiene) — OPEN, kickoff written.** Make the git-tracked visual-defect inventory report deterministic so it stops perpetually dirtying the tree (owner flagged 2026-07-05). Root cause: `scripts/check-stories-rendered.mjs` writes a run-specific `**Date:**` (`:1318`) + raw random `#mantine-<id>` selectors (`:1361/:1371`) into the committed `.md`. Fix = drop the date + normalize `#mantine-<random>` → `#mantine-<id>`; two identical runs must yield a byte-identical report. Serialization-only, no verdict-logic change. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_547_DeterministicVisualDefectInventory.md`.
 
 **🟢 Task 538 (Sprint 40 / Epic MM — harden rendered gate for in-`ResponsiveBottomSheet` overflow) — ✅ APPROVED, commit emitted pending owner run.** See Last Session above. Kickoff (with the full scope-expansion decision trail appended): `tasks/Sprints/Sprint_40_kickoff_prompt_Task_538_HardenGateBottomSheetOverflow.md`. Session: `docs/sessions/2026-07-04-task538-harden-gate-bottomsheet-overflow.md`.
 

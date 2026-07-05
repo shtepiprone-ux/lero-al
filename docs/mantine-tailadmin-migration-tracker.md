@@ -72,7 +72,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.24 | Skeleton | skeleton.tsx | §5/§6/§6n | 🟡 Task 544 (primitive + story, zero consumer migration — see P1.24 row) |
 | P1.25 | Separator | separator.tsx | §6/§6o | 🟡 Task 545 (primitive + story, zero consumer migration — see P1.25 row) |
 | P1.26 | ScrollArea | scroll-area.tsx | §6/§6p | 🟡 Task 546 (primitive + story, zero consumer migration — see P1.26 row) |
-| P1.27 | Slider | slider.tsx | §6 | ⬜ |
+| P1.27 | Slider | slider.tsx | §6/§6q | 🟡 Task 548 (primitive + story, zero consumer migration — see P1.27 row) |
 | P1.28 | Label | label.tsx | §6 Label | 🟡 Sprint 38 (T501) |
 | P1.29 | Toast (sonner) | sonner.tsx | §5 shadow | ⬜ |
 | P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | 🟡 Sprint 38 (T500) |
@@ -115,7 +115,8 @@ Track via `grep -rl "@/components/ui/<name>" src`.
 - **Batch C (overlays) — ✅ COMPLETE:** P1.18 Popover ✅ Task 513 · P1.19 DropdownMenu ✅ Task 515 · P1.20 NavigationMenu
   ✅ Task 518 · P1.16 Modal ✅ Task 519 · P1.17 Drawer ✅ Task 523 · P1.22 Tooltip ✅ Task 524. **Batch D (feedback/misc) — IN PROGRESS:**
   P1.15 Alert ✅ Task 532 · P1.13 Pagination ✅ Task 533 (chrome) + Task 535 (single-line shed-to-fit, ≥44px mobile — supersedes Task 534) · P1.21 Command/Combobox 🟡 Task 537 (primitive + story, zero consumer migration — see P1.21 row) · P1.23 Progress 🟡 Task 539 (primitive + story, zero consumer migration — see P1.23 row). Remaining ⬜:
-  P1.24 Skeleton · P1.25 Separator · P1.26 ScrollArea · P1.27 Slider · P1.29 Toast.
+  P1.24 Skeleton ✅ Task 544 · P1.25 Separator ✅ Task 545 · P1.26 ScrollArea ✅ Task 546 · P1.27 Slider ✅ Task 548
+  (primitive + story, zero consumer migration — see P1.27 row). Remaining ⬜: P1.29 Toast.
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
 
 ## Audit status (Task 525 — rendered conformance audit vs `demo_tailadmin_com.zip`, 2026-07-02)

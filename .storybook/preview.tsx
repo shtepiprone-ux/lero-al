@@ -14,6 +14,7 @@ import '../src/design-system/mantine/input-chrome.css';
 import '../src/design-system/mantine/pagination-chrome.css';
 import '../src/design-system/mantine/skeleton-chrome.css';
 import '../src/design-system/mantine/scrollarea-chrome.css';
+import '../src/design-system/mantine/slider-chrome.css';
 import '../src/app/globals.css';
 
 // ── Mantine theme ─────────────────────────────────────────────────────────────

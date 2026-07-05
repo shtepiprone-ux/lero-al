@@ -2252,7 +2252,10 @@
       "scrollarea_horizontal_caption": "Photo gallery",
       "scrollarea_horizontal_item": "Photo",
       "scrollarea_empty_caption": "Short list — no scrollbar",
-      "scrollarea_empty_content": "Two bedrooms, one bathroom"
+      "scrollarea_empty_content": "Two bedrooms, one bathroom",
+      "slider_single_caption": "Search radius (km)",
+      "slider_range_caption": "Price range ($)",
+      "slider_disabled_caption": "Minimum stay (nights) — locked"
     }
   },
   "ui": {

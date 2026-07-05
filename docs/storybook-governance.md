@@ -1144,6 +1144,38 @@ flow — but this task only touched the inventory `.md` emission tail (~`:1314`�
 verdict/counting logic the registry's row actually describes (untouched, per the identical totals above).
 No registered flow's *behavior* changed — confirmed, not assumed.
 
+### §14.9.16 — `Slider/Default` does NOT need a `LOADER_ALLOWLIST` entry (Task 548, 2026-07-05)
+
+**Why this record exists.** Following the §14.9.10/§14.9.12/§14.9.14 precedent (verify, don't assume — a
+slider's DOM shape is different again from a scroll container, an `<hr>`, or a skeleton block), the Task 548
+kickoff required empirical re-verification rather than copying any prior finding forward.
+
+**Verification:** the native `screenshots:assert --mantine-only` gate ran the new
+`Mantine/Primitives/Slider/Default` story through the full 16-cell matrix (4 locales × {mobile-320/375/390,
+desktop-1024}) with `LOADER_ALLOWLIST` left UNCHANGED, and every cell resolved `verdict: "pass"` with
+`loaderOnly: 0` in the run summary — no cell ever stalled on a loader signal requiring an allowlist entry.
+Mantine's `<Slider>`/`<RangeSlider>` render as plain `Box` root/track/thumb parts with no `role="status"`,
+`aria-busy`, or `data-loading` attribute anywhere in the tree — no `waitForStoryReady` loader signal can ever
+match them.
+
+**Rendered proof (Playwright against the built story, `getComputedStyle`, confirms the §6q mechanism
+decisions in the same pass):**
+```
+single   — trackBg: #f2f4f7 (gray-100, §6q) | radius: 9999px (pill, defaultProps override)
+           | thumbSize: 12px | thumbBorderColor: rgb(236,84,71) (#EC5447 brand, zero-override)
+           | barBg (filled): rgb(236,84,71) (brand, zero-override)
+range    — trackBg: #f2f4f7 (gray-100, §6q) | radius: 1000px (RangeSlider zero-override — confirms no
+           override needed) | thumbSize: 12px | barBg: rgb(236,84,71) (brand)
+disabled — trackContainer opacity: 0.5 (whole-control dim, slider-chrome.css) | thumb display: "flex"
+           (restored from Mantine's own display:none default — the thumb dims instead of vanishing) |
+           barBg: rgb(102,112,133) (#667085, gray-500 — Mantine's own disabled-color swap, dimmed further
+           by the parent opacity, never stacked)
+```
+
+**Result:** `LOADER_ALLOWLIST` is UNCHANGED by this task. Native gate confirms —
+`Mantine/Primitives/Slider/Default` × 4 locales × 4 viewports (16 cells) all PASS cleanly with zero allowlist
+entry, in the same run that also proves AC5's planted-violation transcript (see the Task 548 session log).
+
 ---
 
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)

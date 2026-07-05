@@ -702,6 +702,100 @@ default `variant` fallback when unset) already match §6o exactly — zero-overr
 >   the `input-chrome.css` Switch-track / SegmentedControl-label overrides). Project is light-only, so no
 >   dark-mode branch is needed.
 
+## 6q. Slider / RangeSlider — NO dedicated component exists (Task 548, extracted 2026-07-05)
+
+> **Step 0 extraction result: negative (honest fallback, expected per kickoff).** `demo_tailadmin_com.zip`
+> has NO slider/range-input component anywhere this project can reach it:
+> - `css/style.css` (11,286 lines, fully extracted): zero hits for `slider`, `range-slider`, `noUiSlider`,
+>   `irs-`, or any `type="range"` styling block. `grep -iE "slider|range|noui"` across the WHOLE zip archive
+>   (every path, not just the stylesheet) returns **zero matches**.
+> - No bundled HTML page (19 pages) contains a `<input type="range">` or a range/slider widget of any kind.
+>
+> **Decision (clause 16 fallback — reuse already-cited tokens for the closest semantic analog, invent
+> nothing new, exactly as §6n Skeleton / §6o Divider did for their honest-negatives):**
+> - **Filled track / thumb accent = brand.** The legacy `src/components/ui/slider.tsx` uses `bg-primary`
+>   (indicator) + `border-ring` (thumb) — both already resolve to this project's brand token (`--ring:
+>   var(--brand-700)` = `#EC5447`, `globals.css`). No new value to cite.
+> - **Empty (unfilled) track = gray-100 `#f2f4f7`** — the gray token nearest the legacy `bg-muted`
+>   (`--muted: var(--neutral-100)` = `#F5F5F5`) by RGB distance among the three candidates already anchored
+>   in this doc: gray-100 `#f2f4f7` (Δ≈3.7) vs. gray-200 `#e4e7ec` (Δ≈23.8) vs. gray-300 `#d0d5dd` (Δ≈54.5) —
+>   gray-100 is the closest by a wide margin, per the kickoff's explicit "nearest to legacy `bg-muted`"
+>   instruction (a different rule than Progress's/§6p's gray-200, because THAT token traces to a real
+>   zip-cited value — this one has no zip value to trace to, so it falls back to the legacy CSS variable
+>   instead).
+> - **Track thickness = 4px, thumb = 12px.** Legacy `data-horizontal:h-1` (4px) track + `size-3` (12px) thumb
+>   map EXACTLY onto Mantine's own built-in `size="xs"` preset (`--slider-size-xs: 4px`, compiled
+>   `Slider.css`) + an explicit `thumbSize: 12` prop — both cited existing values, nothing invented.
+> - **Radius = pill (`rounded-full`)** — legacy's `rounded-full` on both track and thumb.
+> - **Thumb focus ring = the §6e brand-colored control-chrome convention** (a brand-colored focus indicator
+>   on the interactive control) — satisfied by Mantine's own global focus mechanism (see Mechanism below),
+>   not a new value.
+> - **Disabled = the §6e whole-control dim** (track AND thumb together, ONE uniform opacity, never two
+>   stacked opacities) — the legacy contract's `disabled:opacity-50`.
+>
+> **🔴 Mechanism (resolved against Mantine's compiled `Slider.mjs`/`RangeSlider.mjs`/`Slider.css` — not
+> assumed, per the §6o Divider "check each component individually" lesson):**
+> - **Filled track / thumb accent (brand) — ZERO-OVERRIDE.** `Slider.mjs`'s own `varsResolver` sets
+>   `--slider-color: color ? getThemeColor(color, theme) : undefined`; when no `color` prop is passed, the
+>   compiled stylesheet's own fallback (`--slider-color: var(--mantine-primary-color-filled)`, `Slider.css`)
+>   already resolves to `theme.primaryColor` (`'brand'`, `primaryShade: 7` = `#EC5447`) — this is both the
+>   thumb's border/text color AND the filled-bar background color out of the box. No override needed.
+> - **Track thickness / thumb size — reachable via real props.** `size: 'xs'` sets `--slider-size` to the
+>   compiled `--slider-size-xs: 4px` (both Slider and RangeSlider share the identical `varsResolver`
+>   shape); `thumbSize: 12` sets `--slider-thumb-size` directly (`rem(thumbSize)`) instead of the
+>   size-derived default (`calc(var(--slider-size) * 2)`).
+> - **Radius — Slider needs an explicit override; RangeSlider does NOT.** `Slider`'s OWN component
+>   `defaultProps` set `radius: "xl"` (not `undefined`), so its `varsResolver` always computes
+>   `--slider-radius: getRadius("xl")` = `var(--mantine-radius-xl)` — which THIS project's `theme.radius.xl`
+>   overrides to `0.75rem`/12px (§5), i.e. a non-pill corner, not a pill. `RangeSlider`'s OWN `defaultProps`
+>   do **not** set `radius` at all, so its `varsResolver` leaves `--slider-radius` unset and the compiled
+>   stylesheet's base rule (`--slider-radius: 1000px`) applies untouched — already a full pill, ZERO-OVERRIDE.
+>   Fix: `theme.components.Slider.defaultProps.radius = 'pill'` (only `Slider`, not `RangeSlider`) — the SAME
+>   `--slider-radius` variable also drives the thumb's `border-radius`, so one lever fixes both parts.
+> - **Empty track color — NOT part of Slider's/RangeSlider's own `varsResolver`.** The compiled stylesheet
+>   sets `--slider-track-bg` via a plain color-scheme-scoped rule (`[data-mantine-color-scheme='light']
+>   .mantine-Slider-root { --slider-track-bg: var(--mantine-color-gray-2); }`), a CSS custom property NOT
+>   exposed through `size`/`color`/`radius`/`thumbSize`. Still theme-reachable: `theme.components.Slider.vars`
+>   (and `.RangeSlider.vars`) MERGE with the component's own internal `varsResolver` (confirmed via
+>   `resolve-vars.mjs`: `mergeVars([internalVarsResolver(...), theme.components[name]?.vars(...), instance
+>   vars prop])` — additive, not a replacement), so adding `root: { '--slider-track-bg':
+>   'var(--mantine-color-gray-1)' }` there renders as part of the SAME inline `style` attribute Mantine
+>   already puts on root, which wins over the external stylesheet rule regardless of selector specificity
+>   (same mechanism Progress already relies on for `--progress-size`). No `slider-chrome.css` needed for
+>   this value.
+> - **Focus ring — ZERO-OVERRIDE.** The thumb is rendered via `getStyles("thumb", { focusable: true })`,
+>   which (per `get-global-class-names.mjs`) appends Mantine's shared `mantine-focus-auto` class whenever
+>   `theme.focusRing` is `'auto'` (the default, unset in this theme). That class's own rule
+>   (`.mantine-focus-auto:focus-visible { outline: 2px solid var(--mantine-primary-color-filled); ... }`,
+>   `@mantine/core/styles.css`) already renders a brand-colored ring on focus — satisfies the "brand focus
+>   indicator" intent with zero override (the exact technique — a CSS `outline` vs. the input primitives'
+>   box-shadow `ring` — differs, but no other primitive in `theme.ts` overrides Mantine's own focus mechanism
+>   either, so this is consistent with existing practice, not a new exception).
+> - **🔴 Disabled — genuine divergence, fixed via `slider-chrome.css` (state-dependent, unreachable via
+>   `vars`/`defaultProps`, same category as §6n Skeleton's pseudo-element color).** Verified against compiled
+>   `Slider.css`: (1) Mantine tags `trackContainer`/`track`/`bar`/`thumb` with `data-disabled` INDEPENDENTLY
+>   (no single ancestor toggle exists — the root element itself never receives a `disabled`/`data-disabled`
+>   attribute, confirmed in `SliderRoot.mjs`, which destructures and discards the `disabled` prop entirely);
+>   (2) the compiled rule `.mantine-Slider-thumb:where([data-disabled]) { display: none; }` makes the disabled
+>   thumb **vanish completely** rather than dim — both diverge from §6e's "dim the WHOLE control to ONE
+>   uniform opacity, track AND thumb together" rule (a vanished thumb can't be verified as "dimmed", and
+>   independently-tagged parts risk the "stacking two opacities" failure §6e/§6f/§6g/§6h warn against). Fixed
+>   by applying `opacity: 0.5` to ONLY the outermost disabled-tagged part (`trackContainer` — `track`/`bar`/
+>   `thumb` are all its DOM descendants, so the dim cascades ONCE, never stacked) and restoring the thumb's
+>   `display` so it stays visible-but-dimmed instead of disappearing. Targets the static
+>   `.mantine-Slider-trackContainer` / `.mantine-Slider-thumb` / `.mantine-RangeSlider-trackContainer` /
+>   `.mantine-RangeSlider-thumb` classes Mantine always emits (`getStaticClassNames`, confirmed default-on,
+>   same mechanism as `scrollarea-chrome.css`/`skeleton-chrome.css`).
+>
+> **Marks — not implemented.** No §6q mark chrome exists to cite (the zip has no slider/range component at
+> all, let alone one with tick marks) — per the kickoff's own conditional ("optional, only if §6q defines
+> mark chrome"), the story ships single + range + disabled states only, no marks variant.
+>
+> **Horizontal-only confirmed acceptable.** `grep -rl "@/components/ui/slider" src` → **zero consumers** of
+> the legacy component (verified at kickoff time and re-confirmed here) — no consumer needs the legacy's
+> vertical mode, so Mantine's horizontal-only `Slider`/`RangeSlider` is a strict-enough superset. No
+> STOP-AND-ASK trigger.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

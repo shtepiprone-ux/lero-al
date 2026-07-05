@@ -2252,7 +2252,10 @@
       "scrollarea_horizontal_caption": "Galeria e fotove",
       "scrollarea_horizontal_item": "Foto",
       "scrollarea_empty_caption": "Listë e shkurtër — pa shirit rrëshqitjeje",
-      "scrollarea_empty_content": "Dy dhoma gjumi, një banjë"
+      "scrollarea_empty_content": "Dy dhoma gjumi, një banjë",
+      "slider_single_caption": "Rrezja e kërkimit (km)",
+      "slider_range_caption": "Diapazoni i çmimit ($)",
+      "slider_disabled_caption": "Qëndrimi minimal (netë) — i kyçur"
     }
   },
   "ui": {

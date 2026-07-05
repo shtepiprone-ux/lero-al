@@ -2252,7 +2252,10 @@
       "scrollarea_horizontal_caption": "Galleria fotografica",
       "scrollarea_horizontal_item": "Foto",
       "scrollarea_empty_caption": "Elenco breve — nessuna barra di scorrimento",
-      "scrollarea_empty_content": "Due camere da letto, un bagno"
+      "scrollarea_empty_content": "Due camere da letto, un bagno",
+      "slider_single_caption": "Raggio di ricerca (km)",
+      "slider_range_caption": "Fascia di prezzo ($)",
+      "slider_disabled_caption": "Soggiorno minimo (notti) — bloccato"
     }
   },
   "ui": {

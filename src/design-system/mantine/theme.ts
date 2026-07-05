@@ -548,6 +548,51 @@ export const theme = createTheme({
     ScrollArea: {
       defaultProps: { scrollbarSize: 6 },
     },
+    // Slider / RangeSlider (Task 548 / P1.27) — §6q row: NO dedicated slider/range component exists in
+    // the TailAdmin zip (grep-confirmed across the whole archive, honest-negative fallback per §6q) —
+    // every value below reuses an already-cited token/shape for the closest legacy/§6e analog, nothing
+    // invented:
+    // - filled track / thumb accent = brand — ZERO-OVERRIDE. Mantine's own light-mode default already
+    //   resolves `--slider-color` to `--mantine-primary-color-filled` (brand-7 #EC5447, verified against
+    //   compiled Slider.css) — matches the legacy `bg-primary` fill + `border-ring` thumb (both already
+    //   brand via this project's `--ring`/primaryColor).
+    // - empty track = gray-100 (`#f2f4f7`) — the gray token nearest the legacy `bg-muted` (`#F5F5F5`) by
+    //   color distance (§6q honest-negative instruction — a different token than §6p's zip-cited gray-200,
+    //   because THIS value has no zip source to trace to). `--slider-track-bg` is NOT part of Slider's own
+    //   varsResolver (only size/color/radius/thumbSize are) — added via an EXTRA `vars` entry here, which
+    //   MERGES with (does not replace) the component's internal resolver and still renders as an inline
+    //   style on root, beating the compiled stylesheet's color-scheme-scoped rule (same mechanism Progress
+    //   uses for `--progress-size`) — no `slider-chrome.css` needed for this value.
+    // - track thickness = 4px / thumb = 12px — legacy `h-1`/`w-1` track + `size-3` thumb map EXACTLY onto
+    //   Mantine's own built-in `size="xs"` preset (`--slider-size-xs: 4px`) + an explicit `thumbSize: 12` —
+    //   no invented pixel value, both are cited existing tokens/props.
+    // - radius = pill — legacy `rounded-full`. `Slider`'s OWN defaultProps set `radius:"xl"`, which (after
+    //   this project's `theme.radius.xl` override to 12px, §5) resolves to a non-pill 12px corner — a real
+    //   divergence, fixed by overriding to `radius:'pill'` (9999px, same lever as Progress/Badge/Avatar).
+    //   `RangeSlider`'s OWN defaultProps do NOT set `radius` at all, so it already falls back to the
+    //   compiled stylesheet's `1000px` default — ZERO-OVERRIDE for RangeSlider (left unset, not redundantly
+    //   restated).
+    // - focus ring = Mantine's own global `mantine-focus-auto` mechanism (thumb renders with
+    //   `getStyles("thumb", {focusable:true})`) — a 2px solid `--mantine-primary-color-filled` (brand)
+    //   outline on `:focus-visible` — ZERO-OVERRIDE: already brand-colored, matching §6e's focus-ring
+    //   brand intent (the technique — outline vs. the input primitives' box-shadow ring — differs, but no
+    //   other primitive in this file overrides Mantine's own focus mechanism either).
+    // - disabled — §6e requires the WHOLE control (track AND thumb) to dim to ONE uniform opacity. Mantine's
+    //   own compiled CSS instead (a) tags trackContainer/track/bar/thumb each independently with
+    //   `data-disabled` (no single ancestor toggle exists — root never receives it) and (b) sets the THUMB
+    //   to `display:none` entirely rather than dimming it (verified against compiled Slider.css) — both
+    //   diverge from §6e. Neither is reachable via `vars`/`defaultProps` (state-dependent structural CSS),
+    //   fixed via `slider-chrome.css`: opacity 0.5 on the outermost disabled-tagged part (`trackContainer` —
+    //   track/bar/thumb are its descendants, so the dim applies ONCE, never stacked) + restoring the
+    //   thumb's `display` so it dims instead of vanishing.
+    Slider: {
+      defaultProps: { size: 'xs', thumbSize: 12, radius: 'pill' },
+      vars: () => ({ root: { '--slider-track-bg': 'var(--mantine-color-gray-1)' } }),
+    },
+    RangeSlider: {
+      defaultProps: { size: 'xs', thumbSize: 12 },
+      vars: () => ({ root: { '--slider-track-bg': 'var(--mantine-color-gray-1)' } }),
+    },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
     // §6b style justification (Task 488):

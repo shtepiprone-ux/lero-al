@@ -9,6 +9,7 @@ import '@/design-system/mantine/input-chrome.css'
 import '@/design-system/mantine/pagination-chrome.css'
 import '@/design-system/mantine/skeleton-chrome.css'
 import '@/design-system/mantine/scrollarea-chrome.css'
+import '@/design-system/mantine/slider-chrome.css'
 import './globals.css'
 import { MantineRootProvider } from '@/design-system/mantine/MantineRootProvider'
 

@@ -2252,7 +2252,10 @@
       "scrollarea_horizontal_caption": "Фотогалерея",
       "scrollarea_horizontal_item": "Фото",
       "scrollarea_empty_caption": "Короткий список — без смуги прокрутки",
-      "scrollarea_empty_content": "Дві спальні, одна ванна кімната"
+      "scrollarea_empty_content": "Дві спальні, одна ванна кімната",
+      "slider_single_caption": "Радіус пошуку (км)",
+      "slider_range_caption": "Діапазон цін ($)",
+      "slider_disabled_caption": "Мінімальний термін проживання (ночей) — заблоковано"
     }
   },
   "ui": {

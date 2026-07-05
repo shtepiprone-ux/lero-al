@@ -1095,6 +1095,55 @@ trackBg: rgba(0, 0, 0, 0)                        (transparent at rest, zero-over
 allowlist entry, in the same run that also proves AC5's planted-violation transcript (see the Task 546
 session log).
 
+### §14.9.15 — Deterministic visual-defect inventory serialization (Task 547, 2026-07-05)
+
+**Why this record exists.** `docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md`
+is a harness-generated, git-tracked report (emitted by `scripts/check-stories-rendered.mjs`, ~`:1314`–`:1440`).
+It showed up as `modified` after **every** `screenshots:assert` run even with zero real defect change, because
+the emitter wrote THREE volatile, run-specific fields into the committed `.md`:
+
+1. `**Date:** ${new Date().toISOString()...}` in the header (`:1318`) — today's date, every run.
+2. Raw Mantine auto-generated element IDs (`#mantine-<random>`) in the Bucket-1/Bucket-2 selector columns
+   (`:1361`/`:1371` at kickoff time) — `useId()` produces a fresh random suffix on every fresh page load
+   (documented at `:419`'s `GEOMETRY_ALLOWLIST` comment), so the string churns with zero semantic change.
+3. **Found during implementation, not cited in the kickoff:** a literal `- **Run timestamp:** ${timestamp}`
+   line in the Notes section (the SAME per-run `timestamp` that names the `.screenshots/rendered-assert/<ts>/`
+   output directory) — this would have defeated the determinism fix on its own, since it differs on every
+   run by construction. Fixed under the identical rationale as #1 (the manifest, gitignored, already records
+   the real timestamp; the committed `.md` doesn't need its own copy).
+
+**Fix.** (1) dropped the date, kept a static provenance line pointing at the manifest. (2) added one
+`stableSelector(s)` helper (`String(s ?? '').replace(/#mantine-[a-z0-9]+/gi, '#mantine-<id>')`), applied at
+all three selector-interpolation sites in the emission block (the two cited + one more inside the Bucket-1
+`reasons` array that the kickoff's "and any other selector interpolation in this block" wording anticipated).
+(3) removed the literal timestamp from the Notes section, replaced with a pointer to the manifest.
+
+**Verified — two-pass determinism proof, run natively (not assumed):**
+- Run 1 → Run 2 (same build, no source change): the ONLY diff was one pre-existing, unrelated transient
+  capture flake (`Alert/Default` sq mobile-375, `blank-canvas`) present in run 1 and cleared in run 2 — zero
+  date churn, zero raw-id churn. Not a Task 547 regression (a headless-capture timing flake in the existing
+  harness, unconnected to report serialization).
+- Run 2 → Run 3 (no flake this time): **byte-identical, empty diff** — the clean two-pass proof.
+- **Real (non-synthetic) ID-normalization evidence:** every run's Bucket-2 `ambiguous-overlap` section
+  naturally contains multiple `#mantine-<random>` selectors from the `Combobox`/`Drawer` stories (e.g.
+  `#mantine-y2swdk7op ↔ #mantine-qdl71c97h`, a different literal id every run since Mantine regenerates them
+  per page load) — these normalized to `#mantine-<id>` identically across all 3 runs, which is exactly the
+  bug this task fixes, exercised by real production stories rather than a hand-crafted fixture.
+- **Not-frozen proof:** planted a temporary 900px-wide `<div>` in `ScrollArea.stories.tsx` (Task 546's own
+  planted-violation mechanism) → the inventory correctly gained 12 new Bucket-1 rows (PASS 430→417/418, FAIL
+  0→12/13 depending on run) with NO date churn; reverted → **byte-identical** to the pre-plant baseline.
+  (Horizontal-overflow failures carry an empty selector by design — `noHorizontalOverflow` is a top-level
+  assertion, not a `visualIntegrity.violations` entry — so this specific plant proves row-churn-on-real-defect
+  rather than id-normalization; the id-normalization proof above already covers that case with real data.)
+
+**Result:** report stays git-clean between identical runs; still updates correctly on real regressions.
+Gate verdict/counting logic untouched — confirmed via identical PASS/FAIL/AMBIGUOUS totals modulo the planted
+cells and the one unrelated flake. `docs/critical-flow-registry.md` DOES cite `scripts/check-stories-rendered.mjs`
+(P0 "Storybook rendered-proof gate", Task 464/467 row) since it's the harness implementing that registered
+flow — but this task only touched the inventory `.md` emission tail (~`:1314`–`:1440`), never the
+verdict/counting logic the registry's row actually describes (untouched, per the identical totals above).
+No registered flow's *behavior* changed — confirmed, not assumed.
+
 ---
 
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)

@@ -1310,12 +1310,20 @@ async function runAssert() {
     const manifestPath = join(outputDir, 'manifest.json');
     writeFileSync(manifestPath, JSON.stringify({ timestamp, summary, matrix }, null, 2), 'utf8');
 
+    // ── Task 547 — stable selector normalization ────────────────────────
+    // Mantine's useId() produces a fresh random suffix on every Storybook build (see the
+    // GEOMETRY_ALLOWLIST doc note above, ~:419), so raw `#mantine-<random>` ids would otherwise
+    // churn the committed inventory .md on every identical rerun with zero semantic change.
+    // Anchored on the leading `#` so it only ever matches element-id selectors — storyId values
+    // (`mantine-primitives-combobox--default`) and non-Mantine selectors/labels never match.
+    const stableSelector = (s) => String(s ?? '').replace(/#mantine-[a-z0-9]+/gi, '#mantine-<id>');
+
     // ── Generate per-cell inventory markdown from manifest ─────────────
     const inventoryPath = join(ROOT, 'docs', 'governance-reports', '2026-06-19-task467-storybook-visual-defect-inventory.md');
     const inventoryLines = [
       '# Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)',
       '',
-      `**Date:** ${new Date().toISOString().slice(0, 10)} | **Harness:** \`scripts/check-stories-rendered.mjs\` + \`scripts/geometry-integrity.mjs\` (Task 467 R1–R4/B1–B8)`,
+      `**Harness:** \`scripts/check-stories-rendered.mjs\` + \`scripts/geometry-integrity.mjs\` (Task 467 R1–R4/B1–B8) — run timestamp recorded in \`.screenshots/rendered-assert/<ts>/manifest.json\``,
       `**Run mode:** ${FAST_MODE ? '--fast' : 'full'} (320/375/390 × sq/en/uk/it) | **Scope:** ${FAST_MODE ? 'ASSERT_STORIES (' + ASSERT_STORIES.length + ' stories) + Mantine gate (' + mantineStories.length + ' stories), ' + (totalAssertCells + totalMantineCells) + ' cells' : 'Global enumeration (' + (ASSERT_STORIES.length + mantineStories.length + geometryOnlyStories.length) + ' stories, ' + total + ' cells)'}`,
       '',
       '> **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.',
@@ -1354,11 +1362,11 @@ async function runAssert() {
       if (rc?.failReason) reasons.push(rc.failReason);
       if (c.assertions?.styleIntegrity?.pass === false) reasons.push('unstyled-render');
       for (const v of (c.assertions?.visualIntegrity?.violations ?? [])) {
-        reasons.push(`${v.failReason}: ${v.selector}`);
+        reasons.push(`${v.failReason}: ${stableSelector(v.selector)}`);
       }
       const reasonStr = reasons.join('; ') || '(render/visual)';
       const firstViolation = c.assertions?.visualIntegrity?.violations?.[0];
-      inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${reasonStr} | ${firstViolation?.selector ?? ''} | ${firstViolation?.label ?? ''} |`);
+      inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${reasonStr} | ${stableSelector(firstViolation?.selector)} | ${firstViolation?.label ?? ''} |`);
     }
     if (hardCells.length === 0) inventoryLines.push('| *(none)* | | | | | | |');
 
@@ -1368,7 +1376,7 @@ async function runAssert() {
     const ambiguousCells = matrix.filter(c => c.verdict === 'ambiguous' && !c.storyId?.startsWith('planted-'));
     for (const c of ambiguousCells) {
       for (const a of (c.assertions?.visualIntegrity?.ambiguous ?? [])) {
-        inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${a.failReason} | ${a.selector} | ${a.label} | ${a.reason ?? ''} |`);
+        inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${a.failReason} | ${stableSelector(a.selector)} | ${a.label} | ${a.reason ?? ''} |`);
       }
     }
     if (ambiguousCells.length === 0) inventoryLines.push('| *(none)* | | | | | | | |');
@@ -1423,7 +1431,10 @@ async function runAssert() {
       '## Notes', '',
       '- **Harness-generated:** all rows above are emitted from the manifest, not hand-written.',
       '- **Authoritative full run** = owner NATIVE on committed tree.',
-      `- **Run timestamp:** ${timestamp}`,
+      // Task 547: the literal per-run `timestamp` (feeds the `.screenshots/rendered-assert/<ts>/`
+      // directory name) is itself volatile — printing it here would defeat determinism the same
+      // way the old header date did. The manifest already records it (gitignored); no duplication.
+      '- **Run timestamp:** recorded per-run in `.screenshots/rendered-assert/<ts>/manifest.json` (gitignored) — not duplicated here so the committed report stays byte-identical across identical runs.',
     );
 
     writeFileSync(inventoryPath, inventoryLines.join('\n') + '\n', 'utf8');

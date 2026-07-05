@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 547. Next free: 548.**
+**Task numbering — last used: 548. Next free: 549.**
+
+**🟦 Task 548 (Sprint 40 / Epic MM Phase-1 · P1.27 Slider) — OPEN, kickoff written, awaiting Sonnet.** Mantine `Slider`/`RangeSlider` primitive + `Mantine/Primitives/Slider` story, zero consumer migration (legacy `slider.tsx` has zero importers). Step 0 extracts a NEW `tailadmin-style-reference.md §6q` row (honest-negative fallback expected — zip has no slider markup); loader-allowlist re-verify → `storybook-governance.md §14.9.16`. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_548_SliderPrimitiveTailAdmin.md`. **After 548: P1.29 Toast — last Phase-1 primitive.**
 
 **🟢 Task 547 (Sprint 40 / Epic MM — harness hygiene) — ✅ APPROVED, commit emitted, pending owner native run.** Determinism proven at byte level (two runs → identical hash). See Last Session above. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_547_DeterministicVisualDefectInventory.md`. Session: `docs/sessions/2026-07-05-task547-deterministic-visual-defect-inventory.md`.
 

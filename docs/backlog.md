@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 550. Next free: 551.**
+**Task numbering — last used: 551. Next free: 552.**
+
+**🟢 Task 551 (Sprint 41 / Epic MM Phase-2 Slice 1 · PropertyTypeCombobox → MantineCombobox) — 📝 KICKOFF WRITTEN, OPEN.** First Phase-2 composite migration; swaps PropertyTypeCombobox's internal legacy `Combobox` → canonical `MantineCombobox` (Task 537, its first product consumer), preserving the composite's public API 1:1 so HeroSearch + ListingFormShellView are untouched. **Carries STOP-AND-ASK #1 (owner decision needed before Sonnet runs):** `MantineCombobox` has no trigger-width control (hardcoded `w={base:100%,sm:auto}`) — can't reproduce hero `sm:w-48` / form `w-full` desktop widths. Option A (recommended): add a backward-compatible `triggerWidth`/`fullWidth` prop, default unchanged. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_551_PropertyTypeComboboxMantineMigration.md`. **Audit Task 525 correction queue fully closed (verified 2026-07-05); Phase-1 primitives complete → Phase 2 begins here.**
 
 **🟢 Task 550 (Sprint 40 / Epic MM Phase-1 · zip-absent primitive correction — Toast §6r-LIVE · Slider §6q · Skeleton §6n-LIVE) — ✅ DIFF-LEVEL REVIEW PASS, commit emitted, pending owner NATIVE gate + run.** See Last Session above. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_550_ZipAbsentPrimitivesLiveReferenceReverify.md`. Session: `docs/sessions/2026-07-05-task550-zip-absent-primitives-live-reference-reverify.md`. **Closes the Phase-1 primitive slice.**
 

@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 548. Next free: 549.**
+**Task numbering — last used: 549. Next free: 550.**
+
+**🟠 Task 549 (Sprint 40 / Epic MM Phase-1 · P1.29 Toast — LAST Phase-1 primitive) — KICKOFF READY, not yet executed.** Themes the Mantine `Notification` primitive (`@mantine/notifications`, already mounted) to the TailAdmin compact-toast look; formalizes §6r from existing measured prose; semantic accent via the §6l Alert mechanism (not raw green/red/blue/yellow); static/determinate `Mantine/Primitives/Notification` story. **Zero consumer migration** — the 36 Sonner `toast()` consumers + `sonner.tsx` + `<Toaster>` stay untouched (Phase 2); live `<Notifications/>` portal position unchanged (mobile re-anchor = noted follow-up). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_549_ToastNotificationPrimitiveTailAdmin.md`. **Closing 549 completes the Phase-1 primitive slice.**
 
 **🟢 Task 548 (Sprint 40 / Epic MM Phase-1 · P1.27 Slider) — IMPLEMENTED, HELD for orchestrator review.** See Last Session above. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_548_SliderPrimitiveTailAdmin.md`. Session: `docs/sessions/2026-07-05-task548-slider-primitive-tailadmin.md`. **After 548: P1.29 Toast — last Phase-1 primitive.**
 

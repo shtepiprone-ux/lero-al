@@ -57,10 +57,25 @@ Implement these fixes against §6r-LIVE (each is a measured divergence from the 
 
 Title 16px/400/#1D2939 (single-line, no separate body in the demo); close button 24px/#98A2B3 (gray-400); Outfit.
 
-> **Slider (§6q) / Skeleton (§6n):** the orchestrator has NOT yet confirmed whether TailAdmin ships these at all (an
-> earlier absence claim proved wrong for Toast, so no absence is asserted without a verified capture). **Do NOT start the
-> Slider/Skeleton sub-tasks until the orchestrator posts a §6q/§6n live capture OR an explicit verified "no reference
-> exists → token-consistency only" ruling.** Toast is unblocked now; Slider/Skeleton are blocked on that capture.
+## 🔴 Skeleton (§6n-LIVE) — captured reference + required fixes (orchestrator, 2026-07-05)
+
+Reference captured live at `demo.tailadmin.com/layout-one` (Layouts dashboards — the placeholder cards), recorded in
+`docs/tailadmin-style-reference.md` (Verified capture results → Skeleton). The TailAdmin skeleton placeholder is:
+`class="h-40 rounded-xl border border-gray-200 bg-gray-50"` →
+
+1. **fill `bg-gray-50` (`#F9FAFB`)** · **1px `border-gray-200` (`#E4E7EC`)** · **radius `rounded-xl` (12px)** · **no shadow**.
+2. **Animation — OWNER RULED (2026-07-05): KEEP Mantine's shimmer/pulse**, applied over the captured TailAdmin tokens
+   (gray-50 fill, gray-200 border, 12px radius). Do NOT disable the animation. (TailAdmin's own placeholder is static, but
+   the owner chose to retain the Mantine shimmer with TA token chrome.)
+3. Cite every value to the §6n-LIVE capture; zero invented values.
+
+> **Slider (§6q):** the orchestrator checked the FULL TailAdmin component menu (UI Elements + Forms) and the Form Elements
+> page — **no value/range slider component was found anywhere** (Carousel is an image slider; Form Elements has no range).
+> Unlike Skeleton (which lived on Layouts), no page hosts a TailAdmin slider. **Ruling — OWNER ACCEPTED (2026-07-05):
+> token-consistency only** — the §6q Slider is judged on TailAdmin tokens (brand-500 `#EC5447` fill/thumb, gray-100
+> `#F2F4F7` track, pill radius), which the current impl already uses; no component-match is possible or required. Task 550
+> just confirms the current §6q impl uses those exact tokens with rendered proof — no pixel change expected unless it
+> diverges. All three (Toast, Skeleton, Slider) are now unblocked.
 
 ## Required after-behavior (per primitive)
 

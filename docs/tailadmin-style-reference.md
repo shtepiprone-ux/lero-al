@@ -806,6 +806,33 @@ default `variant` fallback when unset) already match §6o exactly — zero-overr
 > capture (Task 550), the values below are treated as UNVERIFIED and the primitive is HELD, not approved. The
 > crash-and-geometry rendered gate (Task 529) does not check this. Full rule: `docs/agent-contract.md` clause 16a.
 
+## Verified orchestrator capture results (2026-07-05) — the three zip-absent primitives
+
+Method: read the full TailAdmin component menu on `demo.tailadmin.com` (UI Elements = Alerts, Avatars, Badge, Breadcrumb,
+Buttons, Buttons Group, Cards, Carousel, Dropdowns, Images, Links, Modals, **Notifications**, Pagination, Popovers,
+Progress Bars, Ribbons, Spinners, Tabs, Tooltips, Videos; Forms = Form Elements, Form Layout) + inspected each relevant
+page's DOM.
+
+- **Toast → EXISTS.** UI Elements → Notifications → "Toast Notification". Live-captured — see **§6r-LIVE** below. This is
+  the real fix for Task 549.
+- **Slider → VERIFIED ABSENT.** No Slider in UI Elements (Carousel is an *image* slider, not a value/range control); Form
+  Elements has no range widget (`input[type=range]`=0, `[role=slider]`=0, sections = inputs/select/textarea/input-states/
+  input-group/file/checkbox/radio/toggle/dropzone). No TailAdmin range-slider artifact exists in the zip OR live.
+  **Conformance ruling — OWNER ACCEPTED (2026-07-05), clause 16a token-consistency carve-out: judge the Slider primitive on TailAdmin TOKEN scale only**
+  — brand-500 `#EC5447` filled track + thumb, gray track from the §1b gray ramp (`gray-100 #F2F4F7`), pill radius. No
+  invented pixel values; the current §6q impl (brand fill/thumb, gray-100 track, `size='xs'`, `thumbSize=12`, pill) is
+  already token-consistent — Task 550 confirms it with rendered proof, no component-match is possible or required.
+- **Skeleton → EXISTS** (found on the **Layouts** dashboards, e.g. `demo.tailadmin.com/layout-one`, per owner pointer —
+  an earlier "verified absent" note was WRONG). The placeholder cards are **static** (no `animate-pulse`, which is why a
+  first probe missed them). Live-captured element:
+  `class="h-40 rounded-xl border border-gray-200 bg-gray-50"` →
+  - **background `rgb(249,250,251)` = `#F9FAFB` (gray-50)** · **border `1px solid rgb(228,231,236)` = `#E4E7EC` (gray-200)**
+  - **border-radius `12px` (`rounded-xl`)** · **box-shadow none** · **animation none** (static placeholder — NOT a shimmer).
+  So the TailAdmin skeleton is a **static gray-50 box with a 1px gray-200 border, 12px radius, no animation.** Task 550
+  fix: the §6n Skeleton primitive renders these tokens (gray-50 fill, gray-200 border, 12px radius). **Animation — OWNER
+  RULED (2026-07-05): KEEP Mantine's shimmer** over the TA token chrome (TailAdmin's own is static; owner chose to retain
+  the shimmer).
+
 ## 6r-LIVE. Orchestrator live capture (2026-07-05) — AUTHORITATIVE, supersedes the prose values below
 
 > **Provenance:** captured by the orchestrator in Chrome via `getComputedStyle` on **`demo.tailadmin.com/notifications`**

@@ -19,10 +19,10 @@ export const Default: Story = {
       <MantineStoryShell>
         <Stack gap="xl">
 
-          {/* 1 — text-line skeleton: §6n gray-200, 8px radius, decreasing widths (paragraph shape) */}
+          {/* 1 — text-line skeleton: §6n-LIVE gray-50 fill + gray-200 border, 12px radius, decreasing widths (paragraph shape) */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              text lines — §6n gray-200 pulse, 8px radius (zero-override), full-width at &lt;640
+              text lines — §6n-LIVE gray-50 pulse + gray-200 border, 12px radius, full-width at &lt;640
             </Text>
             <Stack gap="sm">
               <Skeleton height={12} width="100%" />

@@ -69,12 +69,12 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.21 | Command / Combobox base | command.tsx | §6d | 🟡 Task 537 — `MantineCombobox` primitive + `Mantine/Primitives/Combobox` story COMPLETE (built on Mantine's low-level `Combobox` primitive per owner-confirmed STOP-and-ASK; §6d/§6e/§6l chrome; new `theme.ts` `Combobox` block fixes an accidental 12px-Popover-radius inheritance → correct 16px/Dropdowns chrome). Primitive + story ONLY — **zero consumer migration** (LocationCombobox/PropertyTypeCombobox/YearCombobox/PhoneField/HeroSearch/FiltersPanel/admin managers still on legacy `Combobox.tsx`, deferred to Phase 2). — 2026-07-03 |
 | P1.22 | Tooltip | (in ui) → MantineTooltip.tsx | §6k (extracted from live demo) | ✅ Task 524 |
 | P1.23 | Progress | progress.tsx | §6 | 🟡 Task 539 — `MantineProgress` primitive + `Mantine/Primitives/Progress` story COMPLETE. Zero-override track/fill (Mantine's own defaults already resolve to gray-2/`#e4e7ec` + `theme.primaryColor`/'brand'); `theme.ts` `Progress` block sets `radius:'pill'` + 8/12/16/20px size scale + a `styles.section` fix for Mantine's own single-section square-end bug. Legacy `progress.tsx` has **zero current consumers** (verified via grep) — nothing to migrate in any phase; primitive now exists for future use. — 2026-07-03 |
-| P1.24 | Skeleton | skeleton.tsx | §5/§6/§6n | 🟡 Task 544 (primitive + story, zero consumer migration — see P1.24 row) |
+| P1.24 | Skeleton | skeleton.tsx | §5/§6/§6n | 🟡 Task 544 + Task 550 correction (§6n-LIVE: gray-50 fill/gray-200 border/12px radius, shimmer kept per owner ruling — see P1.24 row) |
 | P1.25 | Separator | separator.tsx | §6/§6o | 🟡 Task 545 (primitive + story, zero consumer migration — see P1.25 row) |
 | P1.26 | ScrollArea | scroll-area.tsx | §6/§6p | 🟡 Task 546 (primitive + story, zero consumer migration — see P1.26 row) |
-| P1.27 | Slider | slider.tsx | §6/§6q | 🟡 Task 548 (primitive + story, zero consumer migration — see P1.27 row) |
+| P1.27 | Slider | slider.tsx | §6/§6q | 🟡 Task 548 + Task 550 confirmation (token-consistency ruling, zero pixel change — see P1.27 row) |
 | P1.28 | Label | label.tsx | §6 Label | 🟡 Sprint 38 (T501) |
-| P1.29 | Toast (sonner) | sonner.tsx | §5 shadow | ⬜ |
+| P1.29 | Toast (sonner) | sonner.tsx | §6r-LIVE | 🟡 Task 549 + Task 550 correction (§6r-LIVE: bottom-border accent, shadow-theme-sm, 40×40 icon badge, 16px/400 title, 24px close button — see P1.29 row). **This closes Phase-1.** |
 | P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | 🟡 Sprint 38 (T500) |
 
 ## PHASE 2 — Shared composites (21) — after the primitives they use are ✅
@@ -115,8 +115,8 @@ Track via `grep -rl "@/components/ui/<name>" src`.
 - **Batch C (overlays) — ✅ COMPLETE:** P1.18 Popover ✅ Task 513 · P1.19 DropdownMenu ✅ Task 515 · P1.20 NavigationMenu
   ✅ Task 518 · P1.16 Modal ✅ Task 519 · P1.17 Drawer ✅ Task 523 · P1.22 Tooltip ✅ Task 524. **Batch D (feedback/misc) — IN PROGRESS:**
   P1.15 Alert ✅ Task 532 · P1.13 Pagination ✅ Task 533 (chrome) + Task 535 (single-line shed-to-fit, ≥44px mobile — supersedes Task 534) · P1.21 Command/Combobox 🟡 Task 537 (primitive + story, zero consumer migration — see P1.21 row) · P1.23 Progress 🟡 Task 539 (primitive + story, zero consumer migration — see P1.23 row). Remaining ⬜:
-  P1.24 Skeleton ✅ Task 544 · P1.25 Separator ✅ Task 545 · P1.26 ScrollArea ✅ Task 546 · P1.27 Slider ✅ Task 548
-  (primitive + story, zero consumer migration — see P1.27 row). Remaining ⬜: P1.29 Toast.
+  P1.24 Skeleton ✅ Task 544+550 · P1.25 Separator ✅ Task 545 · P1.26 ScrollArea ✅ Task 546 · P1.27 Slider ✅
+  Task 548+550 · P1.29 Toast ✅ Task 549+550. **Phase-1 primitive slice is COMPLETE** (all 30 P1.* rows ✅/🟡).
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
 
 ## Audit status (Task 525 — rendered conformance audit vs `demo_tailadmin_com.zip`, 2026-07-02)

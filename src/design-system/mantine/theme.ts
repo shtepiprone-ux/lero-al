@@ -1,4 +1,4 @@
-import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps } from '@mantine/core'
+import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
 
 // Brand color scale derived from globals.css oklch palette (EC5447 primary)
 // Mapped to hex approximations for Mantine's 10-shade color array.
@@ -495,22 +495,36 @@ export const theme = createTheme({
         },
       },
     },
-    // Skeleton (Task 544 / P1.24) — §6n row: TailAdmin has NO dedicated skeleton/loading-placeholder
-    // component (zip + live `demo.tailadmin.com` both checked, see §6n) — every value below reuses an
-    // already-cited token for the closest semantic analog, nothing invented.
-    // NO `theme.components.Skeleton` block needed:
-    //   - radius: global `defaultRadius:'lg'` (above) already resolves `--mantine-radius-default` to 8px
-    //     — a non-circle `<Skeleton>` renders at 8px (§6n: same generic control radius as Input/Pagination/
-    //     Tabs) with zero config. `circle` prop already gives a true round shape (Mantine's own CSS sets
-    //     `--skeleton-radius:1000px` when `circle`) — a geometric certainty, not a value to override.
-    //   - animate/visible: Mantine's own defaults (`animate:true`, `visible:true`) already match — no
-    //     divergence to fix.
-    //   - base color (the one real divergence — Mantine's own pulse defaults to gray-3/`#d0d5dd`, §6n
-    //     wants gray-2/`#e4e7ec`, the same token as the Progress track) is NOT fixable here: Mantine
-    //     hardcodes that color to `--mantine-color-gray-3` inside `::before`/`::after` pseudo-elements in
-    //     its own stylesheet, which no `vars` resolver or `styles` prop can reach (pseudo-elements aren't
-    //     targetable via React inline styles). Fixed via `skeleton-chrome.css` instead (§18 precedent —
-    //     same mechanism as `input-chrome.css`/`pagination-chrome.css`).
+    // Skeleton (Task 550 correction — §6n-LIVE, supersedes Task 544's zero-override closure) —
+    // the owner rejected Task 544's "no dedicated component / reuse Progress's gray-200 token"
+    // closure under clause 16a: TailAdmin DOES have a skeleton placeholder — live-captured by the
+    // orchestrator on the Layouts dashboards (`demo.tailadmin.com/layout-one`), an earlier "verified
+    // absent" note was wrong (the placeholders are STATIC, no `animate-pulse`, which is why the first
+    // probe missed them). Captured element: `class="h-40 rounded-xl border border-gray-200 bg-gray-50"`.
+    // Real, capture-verified divergences fixed here:
+    // - fill = gray-50 (index 0, `#F9FAFB`) — was gray-200 (index 2), Task 544's Progress-track reuse
+    //   was the wrong analog. Still only fixable via `skeleton-chrome.css` (pseudo-element `::after`,
+    //   unreachable via `vars`/`styles` — unchanged mechanism from Task 544, only the color changed).
+    // - border = 1px solid gray-200 (index 2, `#E4E7EC`) — a NEW divergence Task 544 never had (no
+    //   border existed before). Mantine's Skeleton has no border property at all in its own compiled
+    //   CSS — a genuinely NEW rule, not fighting any existing one, so a plain `styles.root.border` is
+    //   sufficient (reachable, no chrome CSS needed for this value).
+    // - radius = 12px (`rounded-xl`) — was 8px (global `defaultRadius:'lg'` fallback). `radius` IS
+    //   exposed via Skeleton's own `varsResolver` (`--skeleton-radius: getRadius(radius)` when set) —
+    //   `defaultProps.radius:'xl'` resolves this directly, zero chrome CSS needed.
+    // - animation — OWNER RULED (2026-07-05): KEEP Mantine's own shimmer/pulse (`animate:true` default)
+    //   applied OVER these corrected tokens. TailAdmin's own placeholder is static, but the owner chose
+    //   to retain Mantine's shimmer rather than match the live capture's stillness — an explicit,
+    //   documented deviation, not an oversight.
+    // `circle` still gives a true round shape via Mantine's own `--skeleton-radius:1000px` geometric
+    // certainty, unaffected by the `radius:'xl'` default (the ternary in Skeleton's own varsResolver
+    // only applies the `radius` prop when `circle` is false).
+    Skeleton: {
+      defaultProps: { radius: 'xl' },
+      styles: {
+        root: { border: '1px solid var(--mantine-color-gray-2)' }, // §6n-LIVE gray-200 border
+      },
+    },
     // Divider (Task 545 / P1.25) — §6o row: zip-cited `<hr class="my-1 border-gray-200 ...">` (dropdown
     // menu item separator) + `w-px bg-gray-200` (vertical toolbar divider) — both orientations share ONE
     // color token, gray-200/`#e4e7ec`. Mantine's own `--divider-color` defaults to
@@ -592,6 +606,69 @@ export const theme = createTheme({
     RangeSlider: {
       defaultProps: { size: 'xs', thumbSize: 12 },
       vars: () => ({ root: { '--slider-track-bg': 'var(--mantine-color-gray-1)' } }),
+    },
+    // Notification (Task 550 correction — §6r-LIVE, supersedes Task 549's §6r) — Toast is a
+    // real TailAdmin component (UI Elements → Notifications → "Toast Notification"), live-captured
+    // by the orchestrator (clause 16a) — Task 549's "formalize prior prose + zero-override" closure
+    // was REJECTED because it rendered as stock Mantine, not TailAdmin. Real, capture-verified
+    // divergences fixed here (each cited to §6r-LIVE, zero invented values):
+    // - accent = a 4px BOTTOM border (`border-b-4 border-{semantic}-500`), NOT Mantine's own left
+    //   `::before` bar / circular icon badge. `props.color` styles callback (same pattern as Alert/
+    //   Badge) sets `borderBottom` directly using the semantic-500 index (index 5 in every §1b
+    //   color tuple) — the OLD left bar is permanently hidden in `notification-chrome.css` (a
+    //   pseudo-element, unreachable via `styles`).
+    // - shadow = `shadow-theme-sm` (`0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06)`,
+    //   §6r-LIVE literal, cited — NOT the `shadow-lg` Task 549 wrongly relied on). Set as a literal
+    //   inline `boxShadow`, NOT routed through `theme.shadows.sm`: 4 existing pattern consumers
+    //   (`MantineCardGrid`/`MantineAuthFormPattern`/`MantineListingDetailPattern`/
+    //   `MantineListingCardPattern`) already pass `shadow="sm"` on `Paper`/`Card` and currently
+    //   resolve to Mantine's own stock `sm` shadow — overriding `theme.shadows.sm` globally would
+    //   silently reshade all four, outside this task's scope (no shared token/consumer regression
+    //   allowed). The literal value lives here, scoped to `Notification` only.
+    // - icon badge = 40×40 (`h-10 w-10`) `rounded-lg` (8px, NOT a 28px circle), background =
+    //   semantic-50 (index 0), glyph color = semantic-600 (index 6, inherited via `currentColor` by
+    //   the lucide icon passed as the `icon` prop — lucide icons default to `stroke="currentColor"`).
+    //   All three indices (0/5/6) are the SAME §1b semantic tuples Alert/Badge/Progress already use —
+    //   zero new colors invented, only re-indexed.
+    // - title = 16px/gray-800 (index 8) — was Mantine's own 14px/500/gray-900 default. Weight is 600
+    //   (owner override 2026-07-05 — §6r-LIVE captured 400, owner requested 600 for stronger emphasis).
+    // - close button = 24px (via `closeButtonProps`, scoped to Notification only — NOT a global
+    //   `theme.components.CloseButton` override, which would leak into Modal/Drawer's own close
+    //   button). Color gray-400 (index 4) is fixed in `notification-chrome.css` instead (see below).
+    // - radius 6px (`defaultProps.radius:'md'`) and the responsive max-width (`notification-chrome.css`,
+    //   a real `@media` breakpoint unreachable via `styles`) were ALREADY correct per §6r-LIVE — kept
+    //   unchanged from Task 549.
+    Notification: {
+      defaultProps: {
+        radius: 'md',
+        // size/iconSize only — color is NOT settable here: Notification.mjs spreads
+        // `...closeButtonProps` BEFORE its own `...getStyles("closeButton")` call, so any
+        // `style`/`className` passed here is overwritten by that later spread (verified via
+        // rendered proof — a `style.color` here had zero effect). Color is fixed in
+        // `notification-chrome.css` via the static `.mantine-Notification-closeButton` class instead.
+        closeButtonProps: { size: 24, iconSize: 16 },
+      },
+      styles: (_theme: MantineTheme, props: NotificationProps) => {
+        const color = props.color ?? 'gray'
+        return {
+          root: {
+            borderBottom: `4px solid var(--mantine-color-${color}-5)`, // §6r-LIVE accent
+            boxShadow: '0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06)', // §6r-LIVE shadow-theme-sm
+          },
+          icon: {
+            width: '2.5rem',   // §6r-LIVE 40px
+            height: '2.5rem',  // §6r-LIVE 40px
+            borderRadius: 'var(--mantine-radius-lg)', // §6r-LIVE 8px (rounded-lg, not a circle)
+            backgroundColor: `var(--mantine-color-${color}-0)`, // §6r-LIVE semantic-50 tint
+            color: `var(--mantine-color-${color}-6)`, // §6r-LIVE semantic-600 glyph (currentColor)
+          },
+          title: {
+            fontSize: '1rem',                      // §6r-LIVE 16px
+            fontWeight: 600,                        // owner override 2026-07-05 (§6r-LIVE captured 400; owner requested 600 for stronger title emphasis)
+            color: 'var(--mantine-color-gray-8)',   // §6r-LIVE #1D2939 = gray-800
+          },
+        }
+      },
     },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
@@ -706,9 +783,6 @@ export const theme = createTheme({
           },
         }
       },
-    },
-    Notification: {
-      defaultProps: { radius: 'lg' },
     },
     // Pagination: §6l "Pagination" chrome (Task 533) — SIZE-AGNOSTIC. The existing consumer
     // (MantineAdminSurfacePattern.tsx) passes size='sm'/'md' responsively; this block must NOT

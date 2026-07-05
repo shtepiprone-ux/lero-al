@@ -563,6 +563,20 @@ only the max-width cap and the edge gutter changed.
 
 ## 6n. Skeleton / loading-placeholder — NO dedicated component exists (Task 544, checked 2026-07-04)
 
+> **Task 550 correction (2026-07-05, clause 16a): the "no dedicated component" conclusion below was
+> WRONG.** The orchestrator found the real TailAdmin skeleton on the **Layouts** dashboards (e.g.
+> `demo.tailadmin.com/layout-one`) — static placeholder cards with no `animate-pulse`, which is why the
+> original zip+live probe (documented below) missed them (it searched for pulse/shimmer *animation*
+> classes, not static placeholder markup). Live-captured element:
+> `class="h-40 rounded-xl border border-gray-200 bg-gray-50"` → **fill `gray-50` (`#F9FAFB`)**, **1px
+> `gray-200` (`#E4E7EC`) border**, **`rounded-xl` (12px) radius**, **no shadow**, **no animation**
+> (static). Fixed in `theme.ts`/`skeleton-chrome.css`: fill corrected from the wrong Progress-track
+> reuse (gray-200) to the real gray-50; a border ADDED (none existed before); radius corrected from 8px
+> (global default) to 12px (`defaultProps.radius:'xl'`). **Animation — OWNER RULED: KEEP Mantine's own
+> shimmer** over these corrected tokens (TailAdmin's own is static; the owner chose to retain Mantine's
+> shimmer as a deliberate UX enhancement, not an oversight). The prose below is retained for history
+> only — do not re-implement its gray-200/8px/no-border conclusions.
+
 > **Step 0 extraction result: negative.** TailAdmin has no skeleton/shimmer/loading-placeholder component
 > anywhere this project can reach it. Exhaustively checked, both sources:
 > - **Offline zip (`demo_tailadmin_com.zip`):** `css/style.css` has no `skeleton`/`shimmer` class and no
@@ -703,6 +717,17 @@ default `variant` fallback when unset) already match §6o exactly — zero-overr
 >   dark-mode branch is needed.
 
 ## 6q. Slider / RangeSlider — NO dedicated component exists (Task 548, extracted 2026-07-05)
+
+> **Task 550 confirmation (2026-07-05, clause 16a):** the orchestrator re-checked the FULL TailAdmin
+> component menu (UI Elements + Forms) on `demo.tailadmin.com` live — **no value/range slider exists
+> anywhere** (Carousel is an image slider; Form Elements has no range widget: `input[type=range]`=0,
+> `[role=slider]`=0). **Ruling — OWNER ACCEPTED: token-consistency only.** Unlike Toast/Skeleton (which
+> DO exist live and needed re-grounding), there is no live capture to re-ground Slider on — the §6q
+> honest-negative below stands, judged only on whether it uses real TailAdmin tokens (not on
+> component-shape parity, which is impossible with no reference component). Re-verified via rendered
+> `getComputedStyle` against the built story: `--slider-track-bg: #f2f4f7` (gray-100 ✓), `--slider-radius:
+> 9999px`/`1000px` (pill ✓), fill/thumb border `rgb(236,84,71)` = `#EC5447` (brand ✓), thumb `12px` ✓ — all
+> four tokens unchanged from Task 548, zero pixel change required.
 
 > **Step 0 extraction result: negative (honest fallback, expected per kickoff).** `demo_tailadmin_com.zip`
 > has NO slider/range-input component anywhere this project can reach it:
@@ -855,6 +880,11 @@ page's DOM.
 > - **close button** `24×24`, color `#98A2B3` (gray-400).
 > - font-family **Outfit**.
 >
+> **🔴 Owner override (2026-07-05, post-Task-550 review): title weight = 600, NOT the captured 400.** The
+> owner requested stronger title emphasis than the live capture shows — implemented in `theme.ts` as an
+> explicit, documented deviation from this citation (same category as Skeleton's "keep the shimmer" ruling
+> above — an owner preference overriding the literal capture, not an error in the capture itself).
+>
 > **Real divergences of the current Mantine Notification vs this capture (each must be fixed in Task 550):**
 > 1. accent — Mantine renders a left `::before` bar / circular badge → must become a **4px bottom border** in semantic-500.
 > 2. shadow — remove the `shadow-lg` reliance → **`shadow-theme-sm`** (this project's `shadows.sm`).
@@ -864,6 +894,12 @@ page's DOM.
 > **The prose section below is retained only for history — do NOT implement from it; implement from this §6r-LIVE block.**
 
 ## 6r. Notification / Toast — formalized from §6l live-measured prose (Task 549, 2026-07-05) — SUPERSEDED, see §6r-LIVE above
+
+> **Task 550 confirms:** every value below is now inert history — `theme.components.Notification` implements
+> exclusively against §6r-LIVE (the 4px bottom-border accent, `shadow-theme-sm`, the 40×40 `rounded-lg`
+> semantic-tint icon badge, 16px/400 title, 24px close button). The "zero-override" claims below (left-bar
+> accent, `shadow-lg`, 28px circular badge, 14px/500 title) were the exact rendering-as-stock-Mantine defects
+> clause 16a rejected — do not resurrect them.
 
 > **Step 0 re-check result: honest-negative on the offline zip (expected — this row was ALREADY live-measured,
 > not zip-cited).** The §6l "UI Elements sweep" line (originally recorded 2026-07-02) reads: **"Notifications /

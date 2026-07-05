@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 551. Next free: 552.**
+**Task numbering — last used: 552. Next free: 553.**
+
+**🟡 Task 552 (Sprint 41 / Epic MM Phase-2 Slice 2 · YearCombobox → MantineCombobox) — OPEN, kickoff written, HELD for Sonnet.** Second Phase-2 composite; first `variant="input"` typeahead + first `portal` consumer. Two STOP-AND-ASKs for the owner before code: #1 numeric type-to-commit (`onInputChange` + `inputMode` on `MantineCombobox`, Option A recommended) · #2 `portal` (recommended: keep as a documented no-op since Mantine always portals — prove un-clipped in the two filter pairs). Reuses the 551 wrapper-`<div>` + `triggerWidth` recipe; all six render sites (YearComboboxField, StepDetails, FiltersPanel ×2, ListingsFilters ×2) must stay empty-diff. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_552_YearComboboxMantineMigration.md`.
 
 **🟢 Task 551 (Sprint 41 / Epic MM Phase-2 Slice 1 · PropertyTypeCombobox → MantineCombobox) — ✅ APPROVED, owner NATIVE gate GREEN (462/480, 0 FAIL), commit emitted, pending owner run.** See Last Session above for full detail. STOP-AND-ASK #1 resolved (owner, Option A). Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_551_PropertyTypeComboboxMantineMigration.md`. Session: `docs/sessions/2026-07-05-task551-propertytypecombobox-mantine-migration.md`. **First Phase-2 slice done — next: Year/Location Combobox (harder, async/typeahead).**
 

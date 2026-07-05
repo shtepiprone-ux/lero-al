@@ -63,6 +63,20 @@ Every single value matches the §6r-LIVE citation exactly, byte-for-byte.
 **Loader-allowlist:** re-verified empirically (story changed) — `loaderOnly: 0` across all 16 cells in the
 native gate. `LOADER_ALLOWLIST` UNCHANGED.
 
+### Post-review addendum (2026-07-05): title weight owner override
+
+After the orchestrator's diff-level review pass (commit emitted, pending owner native run), the owner
+requested the Notification title weight be **600, not the §6r-LIVE captured 400** — stronger emphasis than
+the live capture shows. Applied as an explicit, documented deviation from the citation (same category as
+Skeleton's "keep the shimmer" ruling): `theme.ts` `Notification.styles.title.fontWeight` changed `400 → 600`;
+`docs/tailadmin-style-reference.md` §6r-LIVE gained an owner-override note directly below the original
+capture line (the capture record itself is untouched — still shows the real measured `400`). Rendered proof
+re-verified: all 5 story states now compute `font-weight: 600` (was `400`). Re-ran `tsc`, `check:design-tokens
+--strict`, `check:file-integrity`, `build-storybook`, `screenshots:assert -- --mantine-only` — all green,
+**462/480 PASS, 0 FAIL, 18 AMBIGUOUS** (identical to the pre-change baseline; only the title weight changed,
+no new FAIL/ambiguous cell). The rendered-proof block above (line 58) is now superseded on this one field —
+`title 16px/600/rgb(29,41,57)=#1D2939` is current; everything else in that block is unchanged.
+
 ## 2. Slider (§6q) — confirmed, zero pixel change
 
 The orchestrator's full live component-menu sweep confirms **no value/range slider exists anywhere on

@@ -28,13 +28,15 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 545. Next free: 546.**
+**Task numbering — last used: 546. Next free: 547.**
 
 **🟢 Task 538 (Sprint 40 / Epic MM — harden rendered gate for in-`ResponsiveBottomSheet` overflow) — ✅ APPROVED, commit emitted pending owner run.** See Last Session above. Kickoff (with the full scope-expansion decision trail appended): `tasks/Sprints/Sprint_40_kickoff_prompt_Task_538_HardenGateBottomSheetOverflow.md`. Session: `docs/sessions/2026-07-04-task538-harden-gate-bottomsheet-overflow.md`.
 
 **🟢 Task 544 (Sprint 40 / Epic MM Phase-1 · P1.24 Skeleton) — ✅ APPROVED, commit emitted (pending owner native run).** Dev-annotation caption exemption recorded §14.9.11. See Last Session above. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_544_SkeletonPrimitiveTailAdmin.md`. Session: `docs/sessions/2026-07-04-task544-skeleton-primitive-tailadmin.md`.
 
-**🟢 Task 545 (Sprint 40 / Epic MM Phase-1 · P1.25 Separator) — ✅ APPROVED (diff-level), commit emitted, pending owner native gate + run.** See Last Session above. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_545_SeparatorPrimitiveTailAdmin.md`. Session: `docs/sessions/2026-07-04-task545-separator-primitive-tailadmin.md`. **Remaining Phase-1 primitives:** P1.26 ScrollArea · P1.27 Slider · P1.29 Toast.
+**🟢 Task 545 (Sprint 40 / Epic MM Phase-1 · P1.25 Separator) — ✅ APPROVED (diff-level), commit emitted, pending owner native gate + run.** See Last Session above. Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_545_SeparatorPrimitiveTailAdmin.md`. Session: `docs/sessions/2026-07-04-task545-separator-primitive-tailadmin.md`.
+
+**🟠 Task 546 (Sprint 40 / Epic MM Phase-1 · P1.26 ScrollArea) — 📝 KICKED OFF, OPEN for Sonnet execution.** Canonical Mantine `ScrollArea` primitive + `Mantine/Primitives/ScrollArea` story, primitive+story only, zero-consumer (legacy `scroll-area.tsx` has zero importers, confirmed). Step 0 must extract a new §6p scrollbar row from the zip (thumb color/thickness/radius) AND resolve the native-`::-webkit-scrollbar`-vs-Mantine-overlay-scrollbar mechanism. Two landmines flagged in the kickoff: (1) `globals.css` global native-scrollbar rule is OUT OF SCOPE — style Mantine's overlay scrollbar only; (2) the horizontal-scroll demo must stay contained so it does not leak into document h-scroll (gate hard-FAILs on that). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_546_ScrollAreaPrimitiveTailAdmin.md`. **Remaining Phase-1 primitives after 546:** P1.27 Slider · P1.29 Toast.
 
 **🟢 Task 529 (Sprint 40 — enforced rendered gate for Mantine primitives) — ✅ APPROVED + committed.** All 6 ACs met; native gate green (332/336 PASS, 0 FAIL, exit 0). AC #5 closed via owner-accepted substitute plants (real-throw + blank-fragment) with the prod-harness limitation explicitly recorded (governance §14.9.7 + session log): the gate cannot prove the literal 527 Textarea-minHeight crash (dev-only library guard) and does not catch TailAdmin chrome deviations — it is a crash-and-geometry gate. 149 legacy admin FAILs NOT triaged (legacy stories being replaced by Mantine; `--mantine-only` CI scope correct). Kickoff: `tasks/Sprints/Sprint_40_kickoff_prompt_Task_529_EnforcedRenderedGateMantinePrimitives.md`. Session: `docs/sessions/2026-07-02-task529-enforced-rendered-gate-mantine-primitives.md`.
 

@@ -796,6 +796,139 @@ default `variant` fallback when unset) already match §6o exactly — zero-overr
 > vertical mode, so Mantine's horizontal-only `Slider`/`RangeSlider` is a strict-enough superset. No
 > STOP-AND-ASK trigger.
 
+> ## 🔴 Honest-negative rows require live-capture provenance (owner P0, 2026-07-05, Variant A — agent-contract clause 16a)
+> **This §6r row (and the other zip-honest-negative rows §6n Skeleton, §6q Slider) is NOT yet approvable as written.**
+> The owner rejected closing zip-absent primitives on "formalize prior prose + Mantine zero-override defaults." When the
+> zip has zero reference markup, the row MUST instead carry a **live capture from `demo.tailadmin.com`** — a rendered
+> screenshot + `getComputedStyle` of the real element at the canonical breakpoints — recorded WITH provenance (exact URL,
+> capture date, method, measured selector). Every value below, **including every "zero-override" decision**, must then be
+> positively verified against that live capture and proven rendered side-by-side. Until this row is re-grounded on a live
+> capture (Task 550), the values below are treated as UNVERIFIED and the primitive is HELD, not approved. The
+> crash-and-geometry rendered gate (Task 529) does not check this. Full rule: `docs/agent-contract.md` clause 16a.
+
+## 6r-LIVE. Orchestrator live capture (2026-07-05) — AUTHORITATIVE, supersedes the prose values below
+
+> **Provenance:** captured by the orchestrator in Chrome via `getComputedStyle` on **`demo.tailadmin.com/notifications`**
+> (UI Elements → Notifications → "Toast Notification" / "Success Notification"), Success variant, 2026-07-05. Screenshot
+> on file. **Correction:** an earlier orchestrator note claimed "TailAdmin ships no toast" — that was WRONG; the Toast
+> Notification section exists under UI Elements. This block is the corrected, real capture.
+>
+> **The TailAdmin compact toast — measured element** (Success variant):
+> `class="flex items-center justify-between gap-3 w-full sm:max-w-[340px] rounded-md border-b-4 border-success-500 bg-white p-3 shadow-theme-sm"`
+> - **background** white · **radius `6px` (`rounded-md`)** · **padding `12px` (`p-3`)** · **gap `12px` (`gap-3`)**
+> - **🔴 accent = a 4px BOTTOM border** `border-b-4 border-success-500` (`#12B76A`) — **NOT a left bar, NOT a circular
+>   badge.** (The old prose §6r said "left accent" — WRONG.)
+> - **shadow = `shadow-theme-sm`** = `0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06)` — **NOT `shadow-lg`.**
+>   (The old prose/theme said `shadow-lg` — WRONG.)
+> - **width `w-full` below `sm`, capped `sm:max-w-[340px]`** (measured 340px) — exactly the mobile-full-width / desktop-cap
+>   pattern clause 11 wants; the border is at 40em=640px `sm`.
+> - **icon badge = `h-10 w-10` (40×40) `rounded-lg` (8px) tinted `bg-success-50` (`#ECFDF3`) with a 24px `text-success-600`
+>   (`#039855`) glyph** — a 40px rounded-square tinted badge. **NOT Mantine's 28px circular solid-fill badge.**
+> - **title** `16px` / `400` / `#1D2939` (demo shows a single-line title, no separate body row).
+> - **close button** `24×24`, color `#98A2B3` (gray-400).
+> - font-family **Outfit**.
+>
+> **Real divergences of the current Mantine Notification vs this capture (each must be fixed in Task 550):**
+> 1. accent — Mantine renders a left `::before` bar / circular badge → must become a **4px bottom border** in semantic-500.
+> 2. shadow — remove the `shadow-lg` reliance → **`shadow-theme-sm`** (this project's `shadows.sm`).
+> 3. icon — Mantine's 28px circular solid badge → **40×40 `rounded-lg` `bg-{semantic}-50` tinted badge, 24px `{semantic}-600` glyph**.
+> 4. radius 6px ✅ already (`radius:'md'`); max-width 340px + `w-full` ✅ already (`notification-chrome.css`).
+>
+> **The prose section below is retained only for history — do NOT implement from it; implement from this §6r-LIVE block.**
+
+## 6r. Notification / Toast — formalized from §6l live-measured prose (Task 549, 2026-07-05) — SUPERSEDED, see §6r-LIVE above
+
+> **Step 0 re-check result: honest-negative on the offline zip (expected — this row was ALREADY live-measured,
+> not zip-cited).** The §6l "UI Elements sweep" line (originally recorded 2026-07-02) reads: **"Notifications /
+> Toast (`/notifications`, measured): notification card `rounded-xl` (12px), 1px border gray-200, bg white,
+> padding 20px (p-5), body 14px/gray-500. Compact toast: white bg, `rounded-md` (6px), padding 12px (p-3),
+> `gap-3`, semantic left accent (success `#12b76a` / info `#0ba5ec` / warning `#f79009` / error), max-width
+> ~340px."** That value was measured live on `demo.tailadmin.com/notifications` (same methodology as §6k
+> Tooltip and the rest of §6l), NOT extracted from `demo_tailadmin_com.zip`. Re-confirming against the zip per
+> this task's Step 0 instruction: a full-archive case-insensitive search (`html/*.html` + `css/style.css` +
+> `js/bundle.js`, all 23 files) for `notification`/`toast` returns **exactly one hit** — `.swiper-notification`
+> (an unrelated Swiper carousel accessibility live-region class, `css/style.css:9849`) — confirming the zip
+> genuinely has zero notification/toast markup of its own, exactly like §6n Skeleton / §6q Slider. The
+> already-live-measured §6l values remain the authoritative source (no new value invented; this section
+> **formalizes** them into a numbered row, per the kickoff instruction).
+
+**Card chrome (compact toast — the transient variant this primitive targets):**
+- **Background = white**, **radius = 6px (`rounded-md`)**, **padding = 12px (`p-3`)**, **`gap-3`** (12px item
+  gap), **max-width ≈ 340px** — all cited from the §6l measured line above.
+- **Shadow = §5 `shadow-theme-lg`.** The tracker's "ref §5 shadow" resolves to `lg`, not `xs`, by the same
+  floating-elevated-surface categorization already used for Popover/Menu/Combobox (§6l Addendum, Task
+  528/530): a toast is a floating overlay above page content, the same category as a dropdown panel, not a
+  resting form control (which is where `shadow-theme-xs` applies). **ZERO-OVERRIDE** — Mantine's own compiled
+  `Notification.css` already hardcodes `box-shadow: var(--mantine-shadow-lg)`, and this project's
+  `theme.shadows.lg` was already corrected to the real `shadow-theme-lg` value project-wide (Task 530) — no
+  new override needed here, the fix already exists upstream.
+- **Border** — the compact toast has no border cited in the §6l line (only the full `/notifications` card row
+  cites a 1px gray-200 border); the compact/transient variant is borderless. Matches Mantine's own default
+  (`withBorder` defaults to `false`/unset) — **zero-override**.
+
+**Semantic left accent** — the 4px-wide colored bar/badge per variant, mapped to the already-cited §1b
+semantic tokens via the **same `props.color` mechanism the approved Alert primitive uses (§6l Addendum, Task
+532)**: success → green (`#12b76a`), warning → yellow (`#f79009`), error → red (`#f04438`), info → blueLight
+(`#0ba5ec`, index 5). **Do NOT use raw `green`/`red`/`blue`/`yellow` Mantine palette names** — the existing
+`MantineNotificationPattern.tsx` demo does this (`VARIANT_COLORS: {success:'green', error:'red', info:'blue',
+warning:'yellow'}`), which is a **pre-existing conformance gap, noted here, NOT fixed in this slice** (it's a
+`Patterns/` layer surface, explicitly out of scope — see kickoff). The new `Mantine/Primitives/Notification`
+story uses the correct §1b-cited color keys directly (`'green'`/`'blueLight'`/`'yellow'`/`'red'`, i.e. this
+project's own theme color array names, which — unlike the demo pattern's literal stock-Mantine names — already
+resolve to the exact §1b hex values because `theme.colors` remaps those keys to the TailAdmin tuples).
+
+**🔴 Icon + accent-bar mechanism (resolved against Mantine's compiled `Notification.mjs`/`Notification.css` —
+not assumed):** Mantine's `Notification` renders the left-accent bar via a `::before` pseudo-element
+(`background-color: var(--notification-color)`, 6px wide) **only when no `icon` prop is passed** — its own
+compiled rule explicitly hides it when an icon is present:
+`.mantine-Notification-root:where([data-with-icon])::before { display: none; }`. When an icon IS passed, it
+renders instead as a 28×28 circular badge (`getStyles("icon")` → class `icon`) filled with the SAME
+`--notification-color` variable and a white glyph — i.e. Mantine's own icon badge is ALREADY semantically
+colored via the identical color mechanism as the bar, satisfying the kickoff's "icon color = semantic-500"
+intent with **zero extra styling** (the badge's fill IS the semantic-500 token, by construction). The kickoff
+asks for BOTH the left accent AND an icon shown together on each story state (parity with the legacy
+`sonner.tsx` icon set — `CircleCheck`/`Info`/`TriangleAlert`/`OctagonX`), which conflicts with Mantine's own
+mutual-exclusivity rule above. Resolved via a scoped `notification-chrome.css` override that restores the
+`::before` bar's visibility even when `data-with-icon` is set — this does NOT invent any new color/size (the
+bar's color/width/radius are already the exact §6r-cited values, driven by the same `--notification-color`
+variable the icon badge already uses), it only un-suppresses an already-correct rule Mantine hides for its own
+aesthetic default. Same category of fix as §6q Slider's disabled-thumb `display:none` override — a proven,
+compiled-source-verified divergence, not an invented value.
+
+**Text** — title: 14px / 500 weight / gray-900 (Mantine's own default, matches the general dark-heading
+convention used elsewhere in this doc) — **zero-override**. Message: 14px / gray-500-equivalent when a title
+is present (Mantine's own `data-with-title` rule sets the description to a dimmed tone) — **zero-override**,
+matches the §6l "body 14px/gray-500" citation for the full card row, reused here for the compact toast (same
+semantic role: secondary/supporting text).
+
+**Close button** — `withCloseButton` defaults to `true`; Mantine renders it via `CloseButton` with no explicit
+`size` prop, defaulting to `size='md'` → 28px (`--cb-size-md`), below the 44px touch-target minimum. **Compact-
+control mobile exemption (clause 11)**, documented explicitly: an icon-only dismiss "×" on a transient,
+auto-dismissing toast is the same exemption class as the Slider thumb (§6q) — not upsized to 44px in this
+slice (no zip/live citation for a larger close-button size; upsizing would be an invented value). Color =
+`gray` (Mantine's own default for `CloseButton` in this context) — matches the §6e icon-convention gray tone,
+zero-override.
+
+**🔴 Responsive max-width mechanism (resolve in Step 0, `storybook-governance.md §14.9.17`):** the `≥640` cap
+(≈340px) and the `<640` full-width requirement (clause 11) is a real **CSS media-query breakpoint**, which
+`theme.components.Notification.styles` (a plain JS style object/callback) cannot express — Mantine's
+`styles`/`vars` API produces inline styles or static CSS-var declarations, neither of which support
+`@media` queries. This is NOT reachable via `theme` alone; a scoped `notification-chrome.css` rule is the
+correct (not a workaround) mechanism, exactly as `mantine-responsive-design-system.md` §18 describes for any
+value that is genuinely a breakpoint-conditional rule:
+```css
+.mantine-Notification-root { max-width: 100%; }
+@media (min-width: 40em) { .mantine-Notification-root { max-width: 340px; } }
+```
+(`40em` = 640px, matching this project's `sm` breakpoint token, §5/theme.ts.)
+
+**Mechanism summary:** `theme.components.Notification.defaultProps.radius = 'md'` (6px) is the only
+`defaultProps` override needed (radius default is `getRadius(radius)`, and Mantine's global fallback resolves
+to `--mantine-radius-default` = this project's `lg`/8px, one step off §6r's 6px). Shadow, body/title text,
+border, and icon-badge coloring are all **zero-override**. The accent+icon conflict and the responsive
+max-width both require `notification-chrome.css` (state-dependent/media-query CSS, unreachable via
+`vars`/`styles`) — wired into both `layout.tsx` and `.storybook/preview.tsx` after `slider-chrome.css`.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

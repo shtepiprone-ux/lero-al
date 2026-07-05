@@ -2255,7 +2255,17 @@
       "scrollarea_empty_content": "Дві спальні, одна ванна кімната",
       "slider_single_caption": "Радіус пошуку (км)",
       "slider_range_caption": "Діапазон цін ($)",
-      "slider_disabled_caption": "Мінімальний термін проживання (ночей) — заблоковано"
+      "slider_disabled_caption": "Мінімальний термін проживання (ночей) — заблоковано",
+      "notification_success_title": "Оголошення опубліковано",
+      "notification_success_message": "Ваше оголошення про нерухомість тепер активне та видиме покупцям.",
+      "notification_info_title": "Отримано новий запит",
+      "notification_info_message": "Покупець запитав додаткову інформацію про ваше оголошення.",
+      "notification_warning_title": "Верифікація скоро закінчується",
+      "notification_warning_message": "Верифікація вашого агента закінчується через 3 дні — поновіть, щоб зберегти значок.",
+      "notification_error_title": "Завантаження не вдалося",
+      "notification_error_message": "Одне з фото вашого оголошення не вдалося завантажити. Спробуйте ще раз.",
+      "notification_neutral_title": "Чернетку збережено",
+      "notification_neutral_message": "Чернетку вашого оголошення збережено автоматично."
     }
   },
   "ui": {

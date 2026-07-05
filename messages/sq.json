@@ -2255,7 +2255,17 @@
       "scrollarea_empty_content": "Dy dhoma gjumi, një banjë",
       "slider_single_caption": "Rrezja e kërkimit (km)",
       "slider_range_caption": "Diapazoni i çmimit ($)",
-      "slider_disabled_caption": "Qëndrimi minimal (netë) — i kyçur"
+      "slider_disabled_caption": "Qëndrimi minimal (netë) — i kyçur",
+      "notification_success_title": "Shpallja u publikua",
+      "notification_success_message": "Shpallja juaj e pronës tani është aktive dhe e dukshme për blerësit.",
+      "notification_info_title": "U mor një kërkesë e re",
+      "notification_info_message": "Një blerës ka kërkuar më shumë informacion rreth shpalljes suaj.",
+      "notification_warning_title": "Verifikimi po skadon së shpejti",
+      "notification_warning_message": "Verifikimi juaj si agjent skadon për 3 ditë — rinovojeni për ta ruajtur distinktivin.",
+      "notification_error_title": "Ngarkimi dështoi",
+      "notification_error_message": "Njëra nga fotot e shpalljes suaj nuk u ngarkua dot. Ju lutemi provoni përsëri.",
+      "notification_neutral_title": "Skica u ruajt",
+      "notification_neutral_message": "Skica e shpalljes suaj u ruajt automatikisht."
     }
   },
   "ui": {

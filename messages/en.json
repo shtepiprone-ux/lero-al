@@ -2255,7 +2255,17 @@
       "scrollarea_empty_content": "Two bedrooms, one bathroom",
       "slider_single_caption": "Search radius (km)",
       "slider_range_caption": "Price range ($)",
-      "slider_disabled_caption": "Minimum stay (nights) — locked"
+      "slider_disabled_caption": "Minimum stay (nights) — locked",
+      "notification_success_title": "Listing published",
+      "notification_success_message": "Your property listing is now live and visible to buyers.",
+      "notification_info_title": "New inquiry received",
+      "notification_info_message": "A buyer has requested more information about your listing.",
+      "notification_warning_title": "Verification expiring soon",
+      "notification_warning_message": "Your agent verification expires in 3 days — renew to keep your badge.",
+      "notification_error_title": "Upload failed",
+      "notification_error_message": "One of your listing photos could not be uploaded. Please try again.",
+      "notification_neutral_title": "Draft saved",
+      "notification_neutral_message": "Your listing draft was saved automatically."
     }
   },
   "ui": {

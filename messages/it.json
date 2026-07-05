@@ -2255,7 +2255,17 @@
       "scrollarea_empty_content": "Due camere da letto, un bagno",
       "slider_single_caption": "Raggio di ricerca (km)",
       "slider_range_caption": "Fascia di prezzo ($)",
-      "slider_disabled_caption": "Soggiorno minimo (notti) — bloccato"
+      "slider_disabled_caption": "Soggiorno minimo (notti) — bloccato",
+      "notification_success_title": "Annuncio pubblicato",
+      "notification_success_message": "Il tuo annuncio immobiliare è ora attivo e visibile agli acquirenti.",
+      "notification_info_title": "Nuova richiesta ricevuta",
+      "notification_info_message": "Un acquirente ha richiesto maggiori informazioni sul tuo annuncio.",
+      "notification_warning_title": "La verifica sta per scadere",
+      "notification_warning_message": "La verifica del tuo agente scade tra 3 giorni — rinnovala per mantenere il badge.",
+      "notification_error_title": "Caricamento non riuscito",
+      "notification_error_message": "Una delle foto del tuo annuncio non è stata caricata. Riprova.",
+      "notification_neutral_title": "Bozza salvata",
+      "notification_neutral_message": "La bozza del tuo annuncio è stata salvata automaticamente."
     }
   },
   "ui": {

@@ -523,6 +523,31 @@ export const theme = createTheme({
     Divider: {
       defaultProps: { color: 'gray.2' },
     },
+    // ScrollArea (Task 546 / P1.26) — §6p row: zip-cited `.custom-scrollbar` utility
+    // (`&::-webkit-scrollbar{width/height:6px}` + `&::-webkit-scrollbar-thumb{border-radius:infinity;
+    // background-color:var(--color-gray-200)}`) — TailAdmin styles the NATIVE `::-webkit-scrollbar`;
+    // Mantine's ScrollArea hides the native scrollbar entirely and renders its OWN overlay scrollbar DOM,
+    // so this maps the same thickness/color/radius onto Mantine's overlay mechanism instead (see §6p for
+    // the full native-vs-overlay reconciliation).
+    // - scrollbarSize:6 → reachable real prop; ScrollArea.mjs's own varsResolver sets
+    //   `--scrollarea-scrollbar-size: rem(scrollbarSize)` (Mantine default 12px) — resolves §6p's 6px.
+    // - radius: ZERO-OVERRIDE — ScrollArea.module.css's own thumb rule reads
+    //   `border-radius: var(--scrollarea-scrollbar-size)`, i.e. the SAME value as thickness; at 6px this
+    //   already clamps to a full pill (radius > half the bar's own 6px thickness) — a geometric certainty,
+    //   not a value to invent, same category as §6n Skeleton's circle zero-override.
+    // - track: ZERO-OVERRIDE — the module's own scrollbar-track rule is already `background-color:
+    //   transparent` at rest (Mantine adds a gray-0/dark-8 hover-only tint, a UX affordance §6p has no
+    //   token to override, kept as-is).
+    // - thumb color: NOT reachable via vars/defaultProps — hardcoded as a plain rule on the compiled
+    //   module class (`:where([data-mantine-color-scheme='light']) .m_d8b5e363{background-color:
+    //   rgba(0,0,0,.4)}`), the same "hardcoded on the component's own stylesheet" category as §6n Skeleton's
+    //   pulse color — fixed via `scrollarea-chrome.css` (§18 precedent, same mechanism as
+    //   `skeleton-chrome.css`), targeting the static `.mantine-ScrollArea-thumb` class Mantine always
+    //   emits. Project is light-only (MantineRootProvider.tsx `defaultColorScheme="light"`) — no dark-mode
+    //   branch needed.
+    ScrollArea: {
+      defaultProps: { scrollbarSize: 6 },
+    },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
     // §6b style justification (Task 488):

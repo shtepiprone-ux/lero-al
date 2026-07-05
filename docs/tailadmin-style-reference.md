@@ -644,6 +644,64 @@ root), not a pseudo-element — `Divider.mjs`'s own `varsResolver` already sets 
 (`--divider-size-xs` = `0.0625rem` = 1px, the default `size`) and style (`border-top: ... solid ...`, the
 default `variant` fallback when unset) already match §6o exactly — zero-override for both.
 
+## 6p. ScrollArea / scrollbar chrome — zip-cited `.custom-scrollbar` utility (Task 546, extracted 2026-07-05)
+
+> **Step 0 extraction result: positive — the `.custom-scrollbar` utility class found in `css/style.css`**,
+> applied across 58 occurrences in the bundled HTML (dropdown lists, table `overflow-x-auto` wrappers, the
+> image-generator chat/message pane), styling the **native** `::-webkit-scrollbar` pseudo-elements:
+> ```css
+> .custom-scrollbar {
+>   &::-webkit-scrollbar { width: calc(var(--spacing) * 1.5); height: calc(var(--spacing) * 1.5); }
+>   &::-webkit-scrollbar-track { border-radius: calc(infinity * 1px); }
+>   &::-webkit-scrollbar-thumb { border-radius: calc(infinity * 1px); background-color: var(--color-gray-200); }
+> }
+> .dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #344054; }
+> ```
+> - **Thickness = 6px** — `--spacing: 0.25rem` (confirmed, `css/style.css` `:root`), so
+>   `calc(var(--spacing) * 1.5)` = `0.375rem` = **6px** for both width (vertical) and height (horizontal).
+> - **Thumb color = gray-200 `#e4e7ec`** — `var(--color-gray-200)`, same token already cited for §6o
+>   Divider/Separator (`--color-gray-200: #e4e7ec`, confirmed). Dark-mode thumb = `#344054` (= gray-700,
+>   `--color-gray-700: #344054`, confirmed) — **N/A for this project**: `MantineRootProvider.tsx` is
+>   light-only (`defaultColorScheme="light"`, owner requirement, no theme toggle), so the dark rule never
+>   applies; only the light gray-200 value is implemented.
+> - **Track = transparent** — the `::-webkit-scrollbar-track` rule sets ONLY `border-radius`, no
+>   `background-color` — confirmed transparent (no track fill token to cite).
+> - **Radius = fully rounded** (`border-radius: calc(infinity * 1px)`, Tailwind's "infinity" radius utility
+>   = a value large enough to always resolve to a full pill/circle regardless of element size) for both
+>   track and thumb.
+>
+> **🔴 Mechanism reconciliation (native vs. overlay, resolved per the kickoff's explicit instruction):**
+> TailAdmin's `.custom-scrollbar` styles the **native** browser `::-webkit-scrollbar` pseudo-elements — a
+> mechanism Mantine's `ScrollArea` does NOT use at all (its viewport sets `scrollbar-width: none` +
+> `::-webkit-scrollbar { display: none }`, hiding the native scrollbar entirely and rendering its OWN
+> overlay scrollbar DOM instead — `ScrollArea.module.css`, confirmed). This task maps the SAME thickness/
+> color/radius values onto Mantine's overlay scrollbar/thumb (`.mantine-ScrollArea-scrollbar` /
+> `.mantine-ScrollArea-thumb`), verified per-part against the compiled source (not assumed, per the §6o
+> Divider lesson — check each component individually):
+> - **Thickness** — reachable via the real `scrollbarSize` prop: `ScrollArea.mjs`'s own `varsResolver` sets
+>   `--scrollarea-scrollbar-size: rem(scrollbarSize)` (default Mantine value: `12px`). `defaultProps:
+>   { scrollbarSize: 6 }` in `theme.ts` resolves this to the §6p 6px value — no `vars`/CSS override needed.
+> - **Radius — ZERO-OVERRIDE.** `ScrollArea.module.css`'s own thumb rule reads
+>   `border-radius: var(--scrollarea-scrollbar-size)` — i.e. it ALREADY uses the exact same value as the
+>   thickness. At `scrollbarSize: 6`, a 6px radius on a 6px-thin bar exceeds half the bar's own thickness
+>   (3px), so the browser clamps it to a full pill automatically — a geometric certainty once thickness is
+>   set, not a separate value to invent (same category as §6n Skeleton's circle-radius zero-override).
+> - **Track — ZERO-OVERRIDE.** `ScrollArea.module.css`'s own scrollbar-track rule (`.m_c44ba933`) already
+>   sets `background-color: transparent` at rest, matching §6p exactly (Mantine adds a light `gray-0`/
+>   `dark-8` tint ONLY on hover, a UX affordance TailAdmin's static zip markup has no equivalent state for —
+>   kept, not a divergence to fix, since §6p cites no hover-track token to override it with).
+> - **Thumb color — NOT reachable via `vars`/`defaultProps`.** Unlike Divider (§6o), the thumb color is
+>   hardcoded as a plain CSS rule on the compiled module class (`:where([data-mantine-color-scheme='light'])
+>   .m_d8b5e363 { background-color: rgba(0,0,0,.4); }`, `ScrollArea.module.css`) — not a CSS custom property
+>   any `vars` resolver can reach, the same "hardcoded on the component's own stylesheet" category as §6n
+>   Skeleton's pulse color. Fixed via a scoped `scrollarea-chrome.css` (same mechanism as
+>   `skeleton-chrome.css`), targeting the static `.mantine-ScrollArea-thumb` class Mantine always emits
+>   (`getStaticClassNames`, confirmed default-on, same mechanism already relied on by `input-chrome.css`/
+>   `skeleton-chrome.css`) — this file loads after `@mantine/core/styles.css` in both `layout.tsx` and
+>   `.storybook/preview.tsx`, so equal-specificity source order resolves in its favor (same proven pattern as
+>   the `input-chrome.css` Switch-track / SegmentedControl-label overrides). Project is light-only, so no
+>   dark-mode branch is needed.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

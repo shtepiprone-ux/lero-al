@@ -2246,7 +2246,13 @@
       "separator_content_details": "Kontaktoni agjentin për të caktuar një vizitë",
       "separator_item_left": "Fotot",
       "separator_item_right": "Plani i katit",
-      "separator_content_long": "Raport i detajuar inspektimi për pajtueshmërinë dhe sigurinë e pronave me qira afatgjatë pranë qendrës historike të qytetit"
+      "separator_content_long": "Raport i detajuar inspektimi për pajtueshmërinë dhe sigurinë e pronave me qira afatgjatë pranë qendrës historike të qytetit",
+      "scrollarea_vertical_caption": "Karakteristikat e pronës",
+      "scrollarea_vertical_item": "Karakteristikë",
+      "scrollarea_horizontal_caption": "Galeria e fotove",
+      "scrollarea_horizontal_item": "Foto",
+      "scrollarea_empty_caption": "Listë e shkurtër — pa shirit rrëshqitjeje",
+      "scrollarea_empty_content": "Dy dhoma gjumi, një banjë"
     }
   },
   "ui": {

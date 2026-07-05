@@ -2246,7 +2246,13 @@
       "separator_content_details": "Зв'яжіться з агентом, щоб призначити перегляд",
       "separator_item_left": "Фото",
       "separator_item_right": "План поверху",
-      "separator_content_long": "Детальний звіт про перевірку відповідності та безпеки для довгострокової оренди нерухомості поблизу історичного центру міста"
+      "separator_content_long": "Детальний звіт про перевірку відповідності та безпеки для довгострокової оренди нерухомості поблизу історичного центру міста",
+      "scrollarea_vertical_caption": "Характеристики нерухомості",
+      "scrollarea_vertical_item": "Характеристика",
+      "scrollarea_horizontal_caption": "Фотогалерея",
+      "scrollarea_horizontal_item": "Фото",
+      "scrollarea_empty_caption": "Короткий список — без смуги прокрутки",
+      "scrollarea_empty_content": "Дві спальні, одна ванна кімната"
     }
   },
   "ui": {

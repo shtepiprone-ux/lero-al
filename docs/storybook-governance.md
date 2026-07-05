@@ -1065,6 +1065,36 @@ on whether the underlying CSS reads a component `vars` custom property (yes → 
 hardcodes the value inside a pseudo-element (no → scoped stylesheet). Check the compiled source per
 component; do not generalize from one primitive to the next.
 
+### §14.9.14 — `ScrollArea/Default` does NOT need a `LOADER_ALLOWLIST` entry (Task 546, 2026-07-05)
+
+**Why this record exists.** Following the §14.9.10/§14.9.12 precedent (verify, don't assume), the Task 546
+kickoff itself required empirical verification rather than copying the Skeleton/Separator findings forward
+— a static scroll container is a different DOM shape again (real overlay-scrollbar chrome, not a Box/hr).
+
+**Verification:** on the real, built `Mantine/Primitives/ScrollArea/Default` story (via Playwright against
+the served `storybook-static` build, replicating `waitForStoryReady`'s exact signal checks), none of the 6
+`loaderPresent` signals fire:
+```
+hasSpinner: false, hasSkeleton: false, hasProgressbar: false,
+hasAriaBusy: false, hasDataLoading: false, hasLoadingText: false (textOnly = Mantine CSS-var dump, no match)
+```
+Mantine's `<ScrollArea>` renders as a plain `Box` root + viewport + scrollbar/thumb/corner sub-parts with no
+`role`, `aria-busy`, or `data-slot`/`data-loading` attribute anywhere in the tree — no loader signal can ever
+match it.
+
+**Rendered proof (same Playwright pass, also confirms the §6p mechanism decision):**
+```
+thumbCount: 2, thumbColor: rgb(228, 231, 236)   (#e4e7ec, gray-200 — matches §6p exactly)
+thumbRadius: 6px, scrollbarWidth: 6px            (radius == thickness → clamps to a full pill, zero-override)
+trackBg: rgba(0, 0, 0, 0)                        (transparent at rest, zero-override)
+--scrollarea-scrollbar-size: calc(0.375rem * 1)  (6px, from theme.ts defaultProps.scrollbarSize=6)
+```
+
+**Result:** `LOADER_ALLOWLIST` is UNCHANGED by this task. Native gate confirms —
+`Mantine/Primitives/ScrollArea/Default` × 4 locales × 4 viewports (16 cells) all PASS cleanly with zero
+allowlist entry, in the same run that also proves AC5's planted-violation transcript (see the Task 546
+session log).
+
 ---
 
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)

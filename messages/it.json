@@ -2246,7 +2246,13 @@
       "separator_content_details": "Contatta l'agente per fissare una visita",
       "separator_item_left": "Foto",
       "separator_item_right": "Planimetria",
-      "separator_content_long": "Rapporto dettagliato di ispezione per la conformità e la sicurezza degli immobili in affitto a lungo termine vicino al centro storico della città"
+      "separator_content_long": "Rapporto dettagliato di ispezione per la conformità e la sicurezza degli immobili in affitto a lungo termine vicino al centro storico della città",
+      "scrollarea_vertical_caption": "Caratteristiche dell'immobile",
+      "scrollarea_vertical_item": "Caratteristica",
+      "scrollarea_horizontal_caption": "Galleria fotografica",
+      "scrollarea_horizontal_item": "Foto",
+      "scrollarea_empty_caption": "Elenco breve — nessuna barra di scorrimento",
+      "scrollarea_empty_content": "Due camere da letto, un bagno"
     }
   },
   "ui": {

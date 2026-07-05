@@ -1,0 +1,11 @@
+/* Task 546 — ScrollArea §6p thumb chrome via stylesheet, not theme.ts.
+   Mantine hardcodes the ScrollArea thumb color to rgba(0,0,0,.4) via a plain CSS rule on its own
+   compiled module class (`ScrollArea.module.css`), not a CSS custom property — no `vars`/`styles`
+   prop can reach it (same "hardcoded, not var-driven" category as `skeleton-chrome.css`'s pulse
+   color). §6p cites TailAdmin's `.custom-scrollbar::-webkit-scrollbar-thumb` = gray-200
+   (`var(--color-gray-200)` / `#e4e7ec`). Project is light-only (`defaultColorScheme="light"`,
+   MantineRootProvider.tsx) — no dark-mode branch needed, this one rule covers every scheme the
+   app actually renders. */
+.mantine-ScrollArea-thumb {
+  background-color: var(--mantine-color-gray-2); /* §6p thumb — gray-200 #e4e7ec */
+}

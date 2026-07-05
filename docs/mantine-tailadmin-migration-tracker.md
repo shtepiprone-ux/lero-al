@@ -71,7 +71,7 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.23 | Progress | progress.tsx | §6 | 🟡 Task 539 — `MantineProgress` primitive + `Mantine/Primitives/Progress` story COMPLETE. Zero-override track/fill (Mantine's own defaults already resolve to gray-2/`#e4e7ec` + `theme.primaryColor`/'brand'); `theme.ts` `Progress` block sets `radius:'pill'` + 8/12/16/20px size scale + a `styles.section` fix for Mantine's own single-section square-end bug. Legacy `progress.tsx` has **zero current consumers** (verified via grep) — nothing to migrate in any phase; primitive now exists for future use. — 2026-07-03 |
 | P1.24 | Skeleton | skeleton.tsx | §5/§6/§6n | 🟡 Task 544 (primitive + story, zero consumer migration — see P1.24 row) |
 | P1.25 | Separator | separator.tsx | §6/§6o | 🟡 Task 545 (primitive + story, zero consumer migration — see P1.25 row) |
-| P1.26 | ScrollArea | scroll-area.tsx | §6 | ⬜ |
+| P1.26 | ScrollArea | scroll-area.tsx | §6/§6p | 🟡 Task 546 (primitive + story, zero consumer migration — see P1.26 row) |
 | P1.27 | Slider | slider.tsx | §6 | ⬜ |
 | P1.28 | Label | label.tsx | §6 Label | 🟡 Sprint 38 (T501) |
 | P1.29 | Toast (sonner) | sonner.tsx | §5 shadow | ⬜ |

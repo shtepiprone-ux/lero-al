@@ -36,9 +36,10 @@
   `<MantineCombobox variant="input" …>` (`@/design-system/mantine/patterns`). Its **own public props
   (`value?: number`, `onChange`, `placeholder?`, `className?`, `portal?`) stay byte-identical** so all six render
   sites are untouched.
-- The `MantineCombobox` primitive **only** to add the numeric-typeahead capability resolved in STOP-AND-ASK #1
-  (if — and only if — the owner picks Option A) and to formally confirm the `portal` resolution in STOP-AND-ASK #2.
-  Story + primitive smoke test updated accordingly.
+- The `MantineCombobox` primitive to add: (a) the numeric-typeahead capability resolved in STOP-AND-ASK #1 (if the
+  owner picks Option A); (b) the `portal` resolution confirmed in STOP-AND-ASK #2; and (c) the desktop dropdown
+  max-height/scroll cap authorized in STOP-AND-ASK #3 (220px + `overflow-y:auto`, single-sourced to `MantineSelect`).
+  Story + primitive smoke tests updated accordingly.
 - The `Mantine/Primitives/Combobox` story only if the numeric props are added (demonstrate them as a new block).
 - Session log + `docs/mantine-tailadmin-migration-tracker.md` (Phase-2 pointer) + `docs/backlog.md`.
 
@@ -135,6 +136,36 @@ clipped by the grid/accordion/overflow container. If — and only if — the ren
 whether to add a real `portal`/`withinPortal` passthrough. Do not silently drop or silently honor `portal` without the
 rendered proof.
 
+## 🔴 Scope expansion — STOP-AND-ASK #3: desktop dropdown has no max-height/scroll cap (orchestrator-authorized, 2026-07-05)
+
+**Discovered by Sonnet mid-execution while proving STOP-AND-ASK #2.** A THIRD, unanticipated primitive gap:
+`MantineCombobox`'s desktop `Combobox.Options`/`Combobox.Dropdown` has **no max-height and no internal scroll cap**
+(confirmed in `theme.ts` — no `mah`/overflow styling for the low-level `Combobox`). The sibling `MantineSelect` never
+hit this because it is built on Mantine's HIGH-LEVEL `<Select>`, which ships a built-in `maxDropdownHeight` default
+(220px) with internal scroll; `MantineCombobox` is built on the LOW-LEVEL `Combobox` primitive, which has no such
+default. `YearCombobox` is the first consumer with a genuinely long list (~82 years), so on desktop the dropdown
+renders as one giant unclamped column running off-viewport instead of an internally-scrolled box.
+
+**Orchestrator ruling (authorized in-scope for Task 552 — this is a defect this slice is the first to surface, NOT
+scope creep; an unclamped 82-item column fails the clause 12 rendered gate and clause 16 conformance on its own, so
+deferring would ship a non-approvable surface):**
+
+- **Fix it in this task.** Cap `MantineCombobox`'s desktop `Combobox.Options` to match the ALREADY-APPROVED sibling
+  `MantineSelect`: **Mantine `<Select>`'s `maxDropdownHeight` default (220px) + `overflow-y:auto`.**
+- **🔴 Source-of-truth basis (clause 16 / clause 16a):** the value is single-sourced/cited to **`MantineSelect`
+  canonical-first (ai-behavior Note 14)** — NOT to the legacy `Combobox.tsx`'s `max-h-56`/224px. Reusing a legacy
+  Tailwind class or "formalizing a prior value" is the exact anti-pattern clause 16a forbids. Verify the pixel by
+  rendering a LONG `MantineSelect` story, measure its capped/scrolled dropdown, and match it; prove the
+  `MantineCombobox` dropdown **side-by-side** with that `MantineSelect` render.
+- **Do NOT double-apply on mobile.** The mobile bottom sheet already caps at ≤90dvh (`responsiveBottomSheet.tsx`) —
+  leave it untouched; this cap is desktop-`Combobox.Options`-only.
+- **Proof required:** a primitive smoke assertion that the desktop options container carries the 220px cap +
+  `overflow-y:auto`, plus a planted-violation transcript (remove the cap → the assertion FAILS; revert byte-identical).
+  Rendered evidence at 320/375/390 × sq/en/uk/it showing the desktop dropdown is internally scrolled (not off-viewport)
+  and the mobile sheet still scrolls at ≤90dvh.
+- **Append the scope-expansion decision trail** (this section + Sonnet's discovery note) is already recorded here; keep
+  the session log's Files-Changed table + AC audit consistent with it.
+
 ## Mobile <640 full-width gate (clause 11) — MANDATORY
 
 - The trigger renders **full-width edge-to-edge below 640px** on all six surfaces (`MantineCombobox` base `w:'100%'`
@@ -212,6 +243,9 @@ density). Any divergence = the migration wired something wrong → fix, do not i
    (a)/(b)/(e), file:line + rendered cell).
 3. STOP-AND-ASK #2 (`portal`) resolved with the owner; both filter pairs proven un-clipped with rendered evidence at
    desktop + `<640` (Negative flow (f)).
+3a. STOP-AND-ASK #3 (desktop dropdown cap) implemented: `Combobox.Options` capped at 220px + `overflow-y:auto`,
+   single-sourced/cited to `MantineSelect` canonical-first (NOT legacy `max-h-56`), proven side-by-side with a long
+   `MantineSelect` render; primitive smoke assertion + planted-violation transcript present; mobile ≤90dvh untouched.
 4. `noResultsLabel` + `triggerAriaLabel` (+ optional `sheetTitle`) supplied from i18n with sq/en/uk/it parity; zero
    hardcoded strings (confirm any reused/added key exists in all four locales).
 5. All six consumers unchanged (empty diff for `YearComboboxField.tsx` + `StepDetails.tsx` + `FiltersPanel.tsx` +

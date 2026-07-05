@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 552. Next free: 553.**
+**Task numbering — last used: 553. Next free: 554.**
+
+**🟠 Task 553 (Sprint 41 / Epic MM Phase-2 Slice 3 · LocationCombobox → MantineCombobox — FULL incl. add-location sub-flow) — 📝 KICKOFF WRITTEN, awaiting Sonnet.** Largest composite: 11 render sites + Hero `onKeyDown` Enter-to-search + admin add-location sub-panel. **Owner decisions (2026-07-05):** (1) FULL migration incl. sub-flow (nested region combobox + raw button/Input/Buttons → canonical Mantine; legacy import removed entirely); (2) standardize the compact filter-bar field to h-11 (drop `size="sm"`, `size` prop removed from public API — one authorized `ListingsFilterBar` edit; temporary h-11-vs-legacy-h-9 sibling mismatch accepted). Two STOP-AND-ASKs carried in the kickoff (#1 `onKeyDown` passthrough + Enter-vs-select conflict; #2 text-link toggle chrome §-row). Clause 15: adds a new add-location critical-flow row + RTL sub-panel smoke. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_553_LocationComboboxMantineMigration.md`. **After this: DatePicker / PhoneField slices.**
 
 **🟢 Task 552 (Sprint 41 / Epic MM Phase-2 Slice 2 · YearCombobox → MantineCombobox) — ✅ DIFF-LEVEL REVIEW PASS, commit emitted, pending owner NATIVE gate + run.** See Last Session above. 220px scroll cap verified canonical-first: orchestrator corroborated it is Mantine `<Select>`'s built-in default (`OptionsDropdown.mjs:114 ?? 220`), not legacy 224px (clause 16a). Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_552_YearComboboxMantineMigration.md`. Session: `docs/sessions/2026-07-05-task552-yearcombobox-mantine-migration.md`. **Next: LocationCombobox.**
 

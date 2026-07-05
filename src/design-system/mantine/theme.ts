@@ -511,6 +511,18 @@ export const theme = createTheme({
     //     its own stylesheet, which no `vars` resolver or `styles` prop can reach (pseudo-elements aren't
     //     targetable via React inline styles). Fixed via `skeleton-chrome.css` instead (§18 precedent —
     //     same mechanism as `input-chrome.css`/`pagination-chrome.css`).
+    // Divider (Task 545 / P1.25) — §6o row: zip-cited `<hr class="my-1 border-gray-200 ...">` (dropdown
+    // menu item separator) + `w-px bg-gray-200` (vertical toolbar divider) — both orientations share ONE
+    // color token, gray-200/`#e4e7ec`. Mantine's own `--divider-color` defaults to
+    // `--mantine-color-gray-3` (one shade off) via a NORMAL element style (`border-top`/`border-inline-
+    // start` on the component's own root), not a pseudo-element like Skeleton — so `defaultProps.color`
+    // alone is sufficient (`Divider.mjs`'s own `varsResolver` sets `--divider-color` from the `color` prop
+    // via `getThemeColor`). Thickness (`--divider-size-xs` = 1px, the default `size`) and style
+    // (`border-style` falls back to `solid` when `variant` is unset) already match §6o with zero config —
+    // only color needs setting.
+    Divider: {
+      defaultProps: { color: 'gray.2' },
+    },
     // Table: TailAdmin CRM card-wrapped table (§6b) → px-6 py-3 = 24×12 → horizontalSpacing=xl(24) / verticalSpacing=sm(12).
     // Header: 12px text, fw=500, gray-500; NOT uppercase. Row dividers + hover per §6b.
     // §6b style justification (Task 488):

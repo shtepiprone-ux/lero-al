@@ -2241,7 +2241,12 @@
       "combobox_option_long": "Long-term rental properties near the historic city center with excellent public transport links",
       "progress_label_storage": "Storage used",
       "progress_label_upload": "Uploading listing photos",
-      "progress_label_long": "Annual verification and compliance review progress for property listings"
+      "progress_label_long": "Annual verification and compliance review progress for property listings",
+      "separator_content_intro": "Listing overview",
+      "separator_content_details": "Contact the agent to schedule a viewing",
+      "separator_item_left": "Photos",
+      "separator_item_right": "Floor plan",
+      "separator_content_long": "Detailed compliance and safety inspection report for long-term rental properties near the historic city center"
     }
   },
   "ui": {

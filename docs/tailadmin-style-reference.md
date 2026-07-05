@@ -603,6 +603,47 @@ styles). Fixed via a scoped stylesheet rule (`skeleton-chrome.css`, same mechani
 `input-chrome.css`/`pagination-chrome.css`): `.mantine-Skeleton-root::after { background-color:
 var(--mantine-color-gray-2); }`.
 
+## 6o. Divider / Separator — zip-cited, `<hr>` markup found (Task 545, extracted 2026-07-04)
+
+> **Step 0 extraction result: positive — real `<hr>` markup found in the zip**, resolving the kickoff's
+> gray-100-vs-gray-200 ambiguity in favor of **gray-200**.
+>
+> **Horizontal (`<hr>`, `html/image-generator.html` + `text-generator.html`/`video-generator.html`/
+> `code-generator.html`, 10–13 occurrences each — a dropdown menu's between-item divider):**
+> `<hr class="my-1 border-gray-200 dark:border-white/10"/>`
+> - **Color = gray-200 `#e4e7ec`** — `.border-gray-200 { border-color: var(--color-gray-200); }` +
+>   `--color-gray-200: #e4e7ec;` (both confirmed, `css/style.css`). NOT gray-100 (the table/card row-divider
+>   token is a different, lower-contrast use case — confirmed these are genuinely two different tokens
+>   for two different surfaces, not one value cited two ways).
+> - **Thickness = 1px** — Tailwind's preflight `hr` reset: `hr { height:0; color:inherit;
+>   border-top-width:1px; }` (`css/style.css`, no explicit border-width utility on the element itself).
+> - **Style = solid** — Tailwind's universal preflight `*, ::before, ::after, ::backdrop { border: 0 solid;
+>   ... }` (`css/style.css`) sets `border-style:solid` globally; no `border-dashed`/`border-dotted` utility
+>   is present on the `<hr>` class list. No dashed/dotted default, confirmed.
+> - **Spacing = `my-1`** (4px vertical margin, Tailwind's `0.25rem` spacing unit) — cited for completeness,
+>   not required by the primitive itself (the story controls its own spacing via `Stack`/`Group` gap).
+>
+> **Vertical (`w-px bg-gray-200`, `html/index.html`/`html/saas.html`/`html/invoices.html` toolbar/sidebar
+> dividers):** `class="h-7 w-px bg-gray-200 dark:bg-gray-800"` — same **gray-200** token, applied as a filled
+> 1px bar (`background-color`) rather than a bordered line, since a vertical divider has no natural "border
+> side" the way a horizontal `<hr>` does. Functionally identical: a 1px gray-200 line. Confirms both
+> orientations share ONE color token — nothing invented per-orientation.
+>
+> **Labeled divider — NOT found.** All 10 `<hr>` occurrences checked (their surrounding markup) are plain
+> `<li>`-to-`<li>` dropdown-menu separators with no adjacent label/text (no "OR"-style auth-form divider
+> pattern anywhere in the 19 bundled pages). The Separator story therefore ships horizontal + vertical
+> states only — no labeled variant (honest negative, same pattern as §6n's "not found" sections).
+
+**Implementation (verified against `@mantine/core`'s compiled source, not assumed):** Mantine's own
+`--divider-color` CSS custom property defaults to `var(--mantine-color-gray-3)` (`@mantine/core/styles.css`)
+— one shade off the §6o target `gray-2`/`#e4e7ec` (the same one-shade gap as Skeleton's §6n divergence), but
+UNLIKE Skeleton this is a normal element style (`border-top`/`border-inline-start` on the component's own
+root), not a pseudo-element — `Divider.mjs`'s own `varsResolver` already sets `--divider-color` from the
+`color` PROP (`getThemeColor(color, theme)`) when one is passed. So `theme.components.Divider.defaultProps
+= { color: 'gray.2' }` alone is sufficient — no `vars` override, no `-chrome.css` file needed. Thickness
+(`--divider-size-xs` = `0.0625rem` = 1px, the default `size`) and style (`border-top: ... solid ...`, the
+default `variant` fallback when unset) already match §6o exactly — zero-override for both.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

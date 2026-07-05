@@ -1025,6 +1025,48 @@ exemption.
 
 ---
 
+### §14.9.12 — `Separator/Default` does NOT need a `LOADER_ALLOWLIST` entry (Task 545, 2026-07-04)
+
+**Why this record exists.** Following the Task 544 §14.9.10 precedent (verify, don't assume), the Task 545
+kickoff itself required empirical verification rather than copying the Skeleton finding forward.
+
+**Verification:** on the real, built `Mantine/Primitives/Separator/Default` story, none of the 6
+`loaderPresent` signals in `waitForStoryReady` fire:
+```
+hasSpinner: false, hasSkeletonSlot: false, hasProgressbar: false,
+hasAriaBusy: false, hasDataLoading: false
+```
+Mantine's `<Divider>` renders as a static `Box` with `role="separator"` and `mod={[{orientation,
+"with-label"}]}` (→ `data-orientation`/`data-with-label` attributes only) — no `data-slot`, no
+`aria-busy`, no spinner class. Even less surface area than Skeleton for a loader signal to accidentally
+match.
+
+**Result:** `LOADER_ALLOWLIST` is UNCHANGED by this task. Native gate confirms —
+`Mantine/Primitives/Separator/Default` × 4 locales × 4 viewports (16 cells) all PASS cleanly with zero
+allowlist entry, in the same run that also proves AC5's planted-violation transcript (see the Task 545
+session log).
+
+### §14.9.13 — `Divider` color override reachable via `defaultProps` (Task 545, contrast with §6n Skeleton)
+
+**Why this record exists.** §6n (Skeleton) documented that Mantine hardcodes its pulse color to a
+pseudo-element, unreachable via `theme.components` — requiring a scoped `-chrome.css` file. Task 545's
+kickoff explicitly asked to verify per-component whether the SAME limitation applies to `Divider`, rather
+than assuming a `-chrome.css` file is always needed for "one shade off" color divergences.
+
+**Verified (against `@mantine/core`'s compiled `Divider.mjs` + `styles.css`, not assumed): it does NOT.**
+`Divider`'s border color is a normal element style (`border-top`/`border-inline-start` on the component's
+own root), and the component's own `varsResolver` already reads the `color` PROP
+(`--divider-color: color ? getThemeColor(color, theme) : undefined`). So
+`theme.components.Divider.defaultProps = { color: 'gray.2' }` alone resolves the divergence — confirmed via
+rendered `getComputedStyle`: `borderTopColor`/`borderInlineStartColor` = `rgb(228, 231, 236)` (`#e4e7ec`,
+gray-200) on both orientations. No `divider-chrome.css` file was created. This is the general lesson the
+kickoff wanted recorded: whether a color override needs a stylesheet or a plain `defaultProps` entry depends
+on whether the underlying CSS reads a component `vars` custom property (yes → `defaultProps`/`vars`) or
+hardcodes the value inside a pseudo-element (no → scoped stylesheet). Check the compiled source per
+component; do not generalize from one primitive to the next.
+
+---
+
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.

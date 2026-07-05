@@ -2241,7 +2241,12 @@
       "combobox_option_long": "Prona me qira afatgjatë pranë qendrës historike të qytetit me lidhje të shkëlqyera transporti publik",
       "progress_label_storage": "Hapësira e përdorur",
       "progress_label_upload": "Duke ngarkuar fotot e listimit",
-      "progress_label_long": "Progresi vjetor i verifikimit dhe rishikimit të pajtueshmërisë për listimet e pronave"
+      "progress_label_long": "Progresi vjetor i verifikimit dhe rishikimit të pajtueshmërisë për listimet e pronave",
+      "separator_content_intro": "Përmbledhje e listimit",
+      "separator_content_details": "Kontaktoni agjentin për të caktuar një vizitë",
+      "separator_item_left": "Fotot",
+      "separator_item_right": "Plani i katit",
+      "separator_content_long": "Raport i detajuar inspektimi për pajtueshmërinë dhe sigurinë e pronave me qira afatgjatë pranë qendrës historike të qytetit"
     }
   },
   "ui": {

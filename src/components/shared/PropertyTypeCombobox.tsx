@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Home } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PROPERTY_TYPES } from '@/modules/listings/constants'
-import { Combobox } from '@/components/shared/Combobox'
+import { MantineCombobox } from '@/design-system/mantine/patterns'
 
 interface Props {
   value: string
@@ -33,14 +33,19 @@ export function PropertyTypeCombobox({
   }, [showAllOption, t, tl])
 
   return (
-    <Combobox
-      options={options}
-      value={value}
-      onChange={onChange}
-      variant="button"
-      placeholder={placeholder ?? t('all_types')}
-      icon={<Home className="h-4 w-4" />}
-      className={cn('property-type-combobox', className ?? 'sm:w-48 shrink-0')}
-    />
+    <div className={cn('property-type-combobox', className ?? 'sm:w-48 shrink-0')}>
+      <MantineCombobox
+        options={options}
+        value={value}
+        onChange={onChange}
+        variant="button"
+        placeholder={placeholder ?? t('all_types')}
+        icon={<Home className="h-4 w-4" />}
+        triggerWidth={{ base: '100%', sm: '100%' }}
+        noResultsLabel={t('no_results')}
+        triggerAriaLabel={t('property_type')}
+        sheetTitle={t('property_type')}
+      />
+    </div>
   )
 }

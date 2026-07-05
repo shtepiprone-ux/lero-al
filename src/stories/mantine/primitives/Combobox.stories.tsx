@@ -158,6 +158,25 @@ export const Default: Story = {
               sheetTitle={t('combobox_sheet_title')}
             />
           </Stack>
+
+          {/* 8 — triggerWidth override (Task 551): trigger fills its wrapper on desktop too, not
+              just content-width `sm:auto` (the default). Mobile stays full-width either way. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              triggerWidth override — `{'{ base: \'100%\', sm: \'100%\' }'}` keeps the trigger at
+              the wrapper&apos;s full width on desktop too (default, when the prop is omitted, is
+              content-width `sm:auto` — see block 3 above)
+            </Text>
+            <ControlledInput
+              options={options}
+              variant="button"
+              placeholder={t('combobox_placeholder')}
+              triggerAriaLabel={t('combobox_trigger_aria')}
+              noResultsLabel={t('combobox_no_results')}
+              sheetTitle={t('combobox_sheet_title')}
+              triggerWidth={{ base: '100%', sm: '100%' }}
+            />
+          </Stack>
         </Stack>
       </MantineStoryShell>
     )

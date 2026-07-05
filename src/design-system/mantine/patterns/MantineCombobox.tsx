@@ -10,6 +10,7 @@ import {
   TextInput,
   UnstyledButton,
   useCombobox,
+  type TextInputProps,
 } from '@mantine/core'
 import { normalizeSearch } from '@/lib/utils'
 import { useResponsiveDropdown, ResponsiveBottomSheet } from './responsiveBottomSheet'
@@ -53,6 +54,13 @@ export interface MantineComboboxProps {
   triggerAriaLabel?: string
   /** Optional title shown at the top of the mobile bottom sheet. */
   sheetTitle?: ReactNode
+  /**
+   * Override the trigger's width (defaults to `{ base: '100%', sm: 'auto' }` — full-width `<640`,
+   * content-width on desktop, per clause 11). Pass a fixed value or a responsive object, e.g.
+   * `{ base: '100%', sm: '100%' }` to keep the trigger at the width of its wrapper on desktop too
+   * (Task 551). Omit to keep the existing default — this prop changes nothing when absent.
+   */
+  triggerWidth?: TextInputProps['w']
 }
 
 function CheckIcon() {
@@ -146,6 +154,7 @@ export function MantineCombobox({
   noResultsLabel,
   triggerAriaLabel,
   sheetTitle,
+  triggerWidth,
 }: MantineComboboxProps) {
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
@@ -207,7 +216,7 @@ export function MantineCombobox({
     error,
     leftSection: icon,
     rightSection: <Combobox.Chevron />,
-    w: { base: '100%', sm: 'auto' } as const,
+    w: triggerWidth ?? ({ base: '100%', sm: 'auto' } as const),
     radius: 'lg' as const,
   }
 

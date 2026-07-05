@@ -223,6 +223,34 @@ density). Any divergence = the migration wired something wrong → fix, do not i
   reaches the trigger input; (3) with BOTH absent, on-type behavior is byte-identical to today. Planted-violation:
   break the `onInputChange`-present suppression (or the default) → the relevant assertion FAILS; revert byte-identical.
 
+## Scope-expansion trail (owner-approved addendum, 2026-07-05)
+
+While rendering the mandatory STOP-AND-ASK #2 un-clipped proof (desktop, both filter pairs), a THIRD,
+unanticipated primitive gap surfaced: `MantineCombobox`'s desktop `Combobox.Options` carried no max-height/
+scroll cap at all (`theme.ts` confirmed — no `mah`/overflow styling exists for it). `YearCombobox` is the
+first consumer with a genuinely long list (~82 years), so its desktop dropdown rendered as one giant
+unclamped column extending far past the viewport instead of an internally-scrolled box. This is a real
+defect surfaced by this task's own required rendered proof, not a hypothetical — flagged to the owner before
+fixing (not silently patched, not silently ignored).
+
+**Owner ruling:** fix now (in-scope defect, not scope creep). Cap `Combobox.Options` to match the
+**canonical sibling primitive `MantineSelect`** (Mantine's own `<Select>`, whose built-in `maxDropdownHeight`
+default was empirically measured — NOT assumed from docs/memory, NOT cited to the legacy `Combobox.tsx`'s
+unrelated 224px `max-h-56`) via a rendered `getComputedStyle` proof against a temporary long-list
+`MantineSelect` story (added, measured, then reverted byte-identical — confirmed via `git diff --stat`
+empty on `Select.stories.tsx`). Measured value: **220px**, `overflow-y: auto` (Mantine's `Select`
+`maxDropdownHeight` default). Applied as `<Combobox.Options mah={220} style={{ overflowY: 'auto' }}>` with
+an inline citation comment. Mobile `ResponsiveBottomSheet`'s own `≤90dvh` cap is untouched (no double cap).
+
+**Verification:** (1) side-by-side rendered proof — `MantineSelect`'s long-list dropdown measured at 220px/
+`overflow-y:auto` via Playwright `getComputedStyle`, screenshot showing ~7 visible rows out of 80; (2) the
+SAME measurement re-run against the live `YearCombobox` in `FiltersPanel` (Hero) post-fix — `maxHeight:
+"220px"`, `overflowY: "auto"`, `rectHeight: 220`, 82 children — byte-for-byte matching the Select
+measurement; screenshot confirms only ~5 years visible (2031–2027) instead of the pre-fix unclamped column.
+(3) New primitive smoke test (`MantineCombobox — desktop options scroll cap`) + planted-violation transcript
+(removing `mah`/`overflowY` → assertion FAILs with the raw CSS-var style string, no `max-height` present).
+(4) `screenshots:assert --mantine-only` re-run after the fix (see Gates below) — zero new FAIL/AMBIGUOUS.
+
 ## Gates to close (HELD until green)
 
 - `npm run screenshots:assert -- --mantine-only` — all cells resolved, uk@320/375/390 clean, no document h-scroll, no

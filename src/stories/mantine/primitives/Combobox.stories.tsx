@@ -20,6 +20,31 @@ function ControlledInput({ options, ...rest }: { options: MantineComboboxOption[
   return <MantineCombobox options={options} value={value} onChange={setValue} {...rest} />
 }
 
+// Numeric typeahead demo (Task 552, block 9): `onInputChange` + `inputMode="numeric"` — typing a
+// full valid year live-commits it (mirrors `YearCombobox`'s own sanitize/validate logic), not just
+// selecting from the dropdown/sheet.
+function NumericTypeaheadDemo({ options, ...rest }: { options: MantineComboboxOption[] } & Omit<
+  Parameters<typeof MantineCombobox>[0],
+  'options' | 'value' | 'onChange' | 'onInputChange' | 'inputMode' | 'variant'
+>) {
+  const [value, setValue] = useState('')
+  return (
+    <MantineCombobox
+      options={options}
+      value={value}
+      onChange={setValue}
+      onInputChange={(raw) => {
+        const digits = raw.replace(/\D/g, '').slice(0, 4)
+        const match = options.find((o) => o.value === digits)
+        setValue(match ? match.value : '')
+      }}
+      inputMode="numeric"
+      variant="input"
+      {...rest}
+    />
+  )
+}
+
 export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
@@ -175,6 +200,27 @@ export const Default: Story = {
               noResultsLabel={t('combobox_no_results')}
               sheetTitle={t('combobox_sheet_title')}
               triggerWidth={{ base: '100%', sm: '100%' }}
+            />
+          </Stack>
+
+          {/* 9 — numeric typeahead (Task 552): onInputChange + inputMode="numeric" — typing a full
+              valid year live-commits it (YearCombobox's contract), on BOTH the desktop trigger and
+              the mobile sheet's own search field. Absent onInputChange, behavior is byte-identical
+              to block 1 (see the primitive smoke test for that proof). */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              numeric typeahead — `onInputChange` + `inputMode=&quot;numeric&quot;`; typing a full
+              valid year live-commits it without opening the dropdown/sheet (mobile keypad is
+              numeric); selecting from the list still works
+            </Text>
+            <NumericTypeaheadDemo
+              options={Array.from({ length: 9 }, (_, i) => {
+                const y = 2018 + i
+                return { value: String(y), label: String(y) }
+              })}
+              placeholder={t('combobox_numeric_placeholder')}
+              noResultsLabel={t('combobox_no_results')}
+              sheetTitle={t('combobox_sheet_title')}
             />
           </Stack>
         </Stack>

@@ -20,7 +20,7 @@
 
 import React from 'react'
 import { describe, it, expect, vi, beforeAll } from 'vitest'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { MantineCombobox } from '../MantineCombobox'
@@ -89,5 +89,102 @@ describe('MantineCombobox — triggerWidth prop (Task 551)', () => {
     expect(rule).not.toContain('width:auto')
     // Both the base rule and the sm media rule resolve to 100% — the override reached the trigger.
     expect(rule.match(/width:100%/g)?.length).toBe(2)
+  })
+})
+
+/**
+ * `inputMode` + `onInputChange` (Task 552 STOP-and-ASK #1, Option A). jsdom's `useMediaQuery`
+ * always resolves `isMobile=false` here (stubbed `matchMedia` never matches), so these assertions
+ * exercise the desktop `variant="input"` trigger — the mobile sheet's own search field wires the
+ * identical `onInputChange?.(raw)` call (verified via rendered evidence, `check:` gates, and
+ * `check:mojibake`/`tsc` — not re-provable in jsdom without a real viewport).
+ */
+describe('MantineCombobox — inputMode + onInputChange (Task 552)', () => {
+  it('onInputChange present: fires with the raw typed value AND suppresses the internal onChange("") on keystroke', () => {
+    const onChange = vi.fn()
+    const onInputChange = vi.fn()
+    const { container } = render(
+      withProvider(
+        <MantineCombobox
+          options={[{ value: '2024', label: '2024' }]}
+          value=""
+          onChange={onChange}
+          variant="input"
+          noResultsLabel="none"
+          onInputChange={onInputChange}
+        />,
+      ),
+    )
+    const input = container.querySelector('input')!
+    fireEvent.change(input, { target: { value: '2024' } })
+    expect(onInputChange).toHaveBeenCalledWith('2024')
+    expect(onChange).not.toHaveBeenCalled()
+  })
+
+  it('onInputChange absent: on-type behavior is byte-identical to today — onChange("") still fires on keystroke', () => {
+    const onChange = vi.fn()
+    const { container } = render(
+      withProvider(
+        <MantineCombobox
+          options={[{ value: '2024', label: '2024' }]}
+          value=""
+          onChange={onChange}
+          variant="input"
+          noResultsLabel="none"
+        />,
+      ),
+    )
+    const input = container.querySelector('input')!
+    fireEvent.change(input, { target: { value: '2024' } })
+    expect(onChange).toHaveBeenCalledWith('')
+  })
+
+  it('inputMode reaches the desktop trigger input', () => {
+    const { container } = render(
+      withProvider(
+        <MantineCombobox
+          options={[]}
+          value=""
+          onChange={() => {}}
+          variant="input"
+          noResultsLabel="none"
+          inputMode="numeric"
+        />,
+      ),
+    )
+    const input = container.querySelector('input')!
+    expect(input.getAttribute('inputmode')).toBe('numeric')
+  })
+})
+
+/**
+ * Desktop `Combobox.Options` scroll cap (Task 552, discovered while proving STOP-and-ASK #2):
+ * long lists (e.g. YearCombobox's ~80 years) rendered unbounded without this. Capped at 220px +
+ * `overflow-y:auto` to match `MantineSelect`'s own built-in `maxDropdownHeight` default — value
+ * empirically measured via a rendered long-list `getComputedStyle` proof against the live
+ * `MantineSelect` story (220px), not invented and not the legacy `Combobox.tsx`'s unrelated 224px.
+ */
+describe('MantineCombobox — desktop options scroll cap (Task 552)', () => {
+  it('caps Combobox.Options at 220px with overflow-y:auto, matching MantineSelect', () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantineCombobox
+          options={Array.from({ length: 40 }, (_, i) => ({ value: String(i), label: String(i) }))}
+          value=""
+          onChange={() => {}}
+          variant="input"
+          noResultsLabel="none"
+        />,
+      ),
+    )
+    const input = baseElement.querySelector('input')!
+    fireEvent.focus(input)
+    // Combobox.Dropdown portals to document.body — query baseElement, not the RTL container.
+    const optionsEl = baseElement.querySelector('.mantine-Combobox-options') as HTMLElement
+    expect(optionsEl).toBeTruthy()
+    const style = optionsEl.getAttribute('style') ?? ''
+    expect(style).toContain('max-height')
+    expect(style).toMatch(/13\.75rem/) // 220px / 16 = 13.75rem (Mantine's rem() conversion)
+    expect(getComputedStyle(optionsEl).overflowY).toBe('auto')
   })
 })

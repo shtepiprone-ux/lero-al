@@ -2239,6 +2239,7 @@
       "combobox_option_saranda": "Sarandë",
       "combobox_option_saranda_desc": "Bregdetare",
       "combobox_option_long": "Prona me qira afatgjatë pranë qendrës historike të qytetit me lidhje të shkëlqyera transporti publik",
+      "combobox_numeric_placeholder": "Shkruani një vit (p.sh. 2024)...",
       "progress_label_storage": "Hapësira e përdorur",
       "progress_label_upload": "Duke ngarkuar fotot e listimit",
       "progress_label_long": "Progresi vjetor i verifikimit dhe rishikimit të pajtueshmërisë për listimet e pronave",

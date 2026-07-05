@@ -61,6 +61,20 @@ export interface MantineComboboxProps {
    * (Task 551). Omit to keep the existing default — this prop changes nothing when absent.
    */
   triggerWidth?: TextInputProps['w']
+  /**
+   * `variant="input"` only: `inputMode` passed to BOTH the desktop trigger `<TextInput>` and the
+   * mobile sheet's own search field (e.g. `"numeric"` for numeric-typeahead consumers). Default
+   * `undefined` — this prop changes nothing when absent (Task 552).
+   */
+  inputMode?: TextInputProps['inputMode']
+  /**
+   * `variant="input"` only: fired with the raw typed value on every keystroke, from BOTH the
+   * desktop trigger and the mobile sheet's own search field. When provided, the primitive does
+   * NOT fire its own `onChange('')` on keystroke — the consumer becomes the single source of
+   * on-type commits (internal `search`/filtering still updates as usual, and selecting an option
+   * still commits normally). Absent → byte-identical to today (Task 552).
+   */
+  onInputChange?: (raw: string) => void
 }
 
 function CheckIcon() {
@@ -155,6 +169,8 @@ export function MantineCombobox({
   triggerAriaLabel,
   sheetTitle,
   triggerWidth,
+  inputMode,
+  onInputChange,
 }: MantineComboboxProps) {
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
@@ -229,11 +245,14 @@ export function MantineCombobox({
               {...triggerCommonProps}
               value={selected ? selected.label : search}
               onChange={(e) => {
-                setSearch(e.currentTarget.value)
-                onChange('')
+                const raw = e.currentTarget.value
+                setSearch(raw)
+                if (!onInputChange) onChange('')
                 combobox.openDropdown()
                 combobox.updateSelectedOptionIndex()
+                onInputChange?.(raw)
               }}
+              inputMode={inputMode}
               onClick={() => {
                 if (disabled) return
                 if (isMobile) openDrawer()
@@ -270,7 +289,13 @@ export function MantineCombobox({
                 placeholder={searchPlaceholder}
               />
             )}
-            <Combobox.Options>
+            {/* Desktop scroll cap (Task 552): long lists (e.g. YearCombobox's ~80 years) render
+                unbounded without this — `Combobox.Options` carries no default max-height, unlike
+                `MantineSelect` (Mantine's own `<Select>`, whose built-in `maxDropdownHeight`
+                resolves to 220px, empirically measured via a rendered long-list `getComputedStyle`
+                proof, NOT the legacy `Combobox.tsx`'s unrelated 224px `max-h-56`). Matches the
+                sibling canonical primitive rather than inventing a new value. */}
+            <Combobox.Options mah={220} style={{ overflowY: 'auto' }}>
               {clearLabel && (
                 <Combobox.Option value="" key="__clear__" active={value === ''}>
                   <Group justify="space-between" wrap="nowrap" gap="sm">
@@ -302,9 +327,14 @@ export function MantineCombobox({
               <Box px="md" pb="sm">
                 <TextInput
                   value={sheetSearch}
-                  onChange={(e) => setSheetSearch(e.currentTarget.value)}
+                  onChange={(e) => {
+                    const raw = e.currentTarget.value
+                    setSheetSearch(raw)
+                    if (variant === 'input') onInputChange?.(raw)
+                  }}
                   placeholder={searchPlaceholder ?? placeholder}
                   radius="lg"
+                  inputMode={variant === 'input' ? inputMode : undefined}
                 />
               </Box>
             )}

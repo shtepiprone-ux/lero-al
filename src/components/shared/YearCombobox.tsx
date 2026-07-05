@@ -1,9 +1,10 @@
 'use client'
 
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 import { Calendar } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Combobox } from '@/components/shared/Combobox'
+import { MantineCombobox } from '@/design-system/mantine/patterns'
 import { MIN_PROPERTY_YEAR } from '@/modules/listings/constants'
 
 const MAX_YEAR = new Date().getFullYear() + 5
@@ -18,11 +19,19 @@ interface Props {
   onChange: (year: number | undefined) => void
   placeholder?: string
   className?: string
-  /** Render dropdown via portal into document.body. Use inside overflow:hidden/auto containers. */
+  /**
+   * Documented no-op (STOP-AND-ASK #2, Task 552): `MantineCombobox`'s dropdown/sheet always
+   * renders via a portal (`Combobox.Dropdown`'s `withinPortal` defaults `true`; the mobile path is
+   * a portaled bottom sheet), so it never clips inside an `overflow:hidden/auto` container
+   * regardless of this flag. Kept on the public API only so every existing call site (four of the
+   * six render this with `portal`) stays byte-identical.
+   */
   portal?: boolean
 }
 
-export function YearCombobox({ value, onChange, placeholder, className, portal = false }: Props) {
+export function YearCombobox({ value, onChange, placeholder, className }: Props) {
+  const t = useTranslations('common')
+
   const options = useMemo(
     () => YEAR_OPTIONS.map(y => ({ value: String(y), label: String(y) })),
     [],
@@ -37,16 +46,20 @@ export function YearCombobox({ value, onChange, placeholder, className, portal =
   }
 
   return (
-    <Combobox
-      options={options}
-      value={value != null ? String(value) : ''}
-      onChange={v => onChange(v ? parseInt(v, 10) : undefined)}
-      onInputChange={handleInputChange}
-      inputMode="numeric"
-      icon={<Calendar className="h-4 w-4" />}
-      placeholder={placeholder}
-      className={cn('year-combobox', className)}
-      portal={portal}
-    />
+    <div className={cn('year-combobox', className)}>
+      <MantineCombobox
+        options={options}
+        value={value != null ? String(value) : ''}
+        onChange={v => onChange(v ? parseInt(v, 10) : undefined)}
+        onInputChange={handleInputChange}
+        inputMode="numeric"
+        icon={<Calendar className="h-4 w-4" />}
+        placeholder={placeholder}
+        triggerWidth={{ base: '100%', sm: '100%' }}
+        noResultsLabel={t('no_results')}
+        triggerAriaLabel={placeholder}
+        sheetTitle={placeholder}
+      />
+    </div>
   )
 }

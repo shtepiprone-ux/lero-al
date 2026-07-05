@@ -78,10 +78,10 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | 🟡 Sprint 38 (T500) |
 
 ## PHASE 2 — Shared composites (21) — after the primitives they use are ✅
-Combobox · ~~PropertyTypeCombobox~~ ✅ Task 551 · LocationCombobox · YearCombobox · DatePicker · PhoneField ·
-AvatarCropModal · FilterMultiToggle · FilterRangeInputs · FilterRoomsRow · FilterToggleGroup · FiltersPanel ·
-HeroSearch · HeroSearchClient · LocaleSwitcher · Map · MapWrapper · RelativeTime · (PerfDevOverlay/
-WebVitalsReporter/PerformanceStoreInit = ➖ non-visual).
+Combobox · ~~PropertyTypeCombobox~~ ✅ Task 551 · LocationCombobox · ~~YearCombobox~~ ✅ Task 552 · DatePicker ·
+PhoneField · AvatarCropModal · FilterMultiToggle · FilterRangeInputs · FilterRoomsRow · FilterToggleGroup ·
+FiltersPanel · HeroSearch · HeroSearchClient · LocaleSwitcher · Map · MapWrapper · RelativeTime ·
+(PerfDevOverlay/WebVitalsReporter/PerformanceStoreInit = ➖ non-visual).
 
 **Slice 1 — Task 551 (PropertyTypeCombobox, ✅ done):** first product consumer of `MantineCombobox`
 (Task 537). STOP-and-ASK #1 resolved (owner, 2026-07-05, Option A): added an optional `triggerWidth?`
@@ -92,6 +92,18 @@ the legacy component's `className` targeted (`sm:w-48 shrink-0` hero / `w-full` 
 width now comes from the wrapper (192px hero / full form), mobile `<640` stays full-width via the trigger's
 own base value. Both consumers (`HeroSearch.tsx`, `ListingFormShellView.tsx`) byte-identical (empty diff).
 Reused existing `common.no_results` / `common.property_type` i18n keys — no new locale keys needed.
+
+**Slice 2 — Task 552 (YearCombobox, ✅ done):** first `variant="input"`/typeahead product consumer AND
+first `portal`-passing consumer. STOP-and-ASK #1 resolved (owner, 2026-07-05, Option A): added
+`inputMode?`/`onInputChange?` to `MantineCombobox`, threaded onto BOTH the desktop trigger and the
+mobile sheet's own search field; when `onInputChange` is provided the primitive suppresses its own
+`onChange('')` on keystroke (owner-flagged load-bearing rule, planted-violation-proven). STOP-and-ASK #2
+(`portal`) resolved per the orchestrator's pre-authorized default — kept on `YearCombobox`'s public API
+as a documented no-op (Mantine's `Combobox.Dropdown`/mobile sheet always portal), confirmed via live
+Playwright rendered proof on BOTH real filter surfaces (`FiltersPanel` + `ListingsFilters`, desktop +
+mobile) showing zero clipping inside their `overflow`/accordion/Sheet containers. All six render sites
+(`YearComboboxField`, `StepDetails`, `FiltersPanel` ×2, `ListingsFilters` ×2) byte-identical (empty diff).
+One new story-only i18n key (`combobox_numeric_placeholder`) — zero new product-code keys.
 
 ## PHASE 3 — Layout (7)
 Header · Footer · FilterBar · MobileBottomNav · PageHeader · PageShell · Section.
@@ -128,9 +140,10 @@ Track via `grep -rl "@/components/ui/<name>" src`.
   P1.24 Skeleton ✅ Task 544+550 · P1.25 Separator ✅ Task 545 · P1.26 ScrollArea ✅ Task 546 · P1.27 Slider ✅
   Task 548+550 · P1.29 Toast ✅ Task 549+550. **Phase-1 primitive slice is COMPLETE** (all 30 P1.* rows ✅/🟡).
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
-- **PHASE 2 begins — Slice 1 (Task 551, PropertyTypeCombobox) done**, see the PHASE 2 section above for
-  the STOP-and-ASK #1 resolution (`MantineCombobox` gained `triggerWidth`). Next Phase-2 slices: Year/Location
-  Combobox (harder — async/typeahead), then the remaining composites.
+- **PHASE 2 — Slice 1 (Task 551, PropertyTypeCombobox) ✅ · Slice 2 (Task 552, YearCombobox) ✅** — see the
+  PHASE 2 section above (`MantineCombobox` gained `triggerWidth`, then `inputMode`/`onInputChange`). Next
+  Phase-2 slice: LocationCombobox (larger — carries an admin add-location sub-flow), then the remaining
+  composites.
 
 ## Audit status (Task 525 — rendered conformance audit vs `demo_tailadmin_com.zip`, 2026-07-02)
 

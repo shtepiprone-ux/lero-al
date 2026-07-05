@@ -2239,6 +2239,7 @@
       "combobox_option_saranda": "Sarandë",
       "combobox_option_saranda_desc": "Coastal",
       "combobox_option_long": "Long-term rental properties near the historic city center with excellent public transport links",
+      "combobox_numeric_placeholder": "Type a year (e.g. 2024)...",
       "progress_label_storage": "Storage used",
       "progress_label_upload": "Uploading listing photos",
       "progress_label_long": "Annual verification and compliance review progress for property listings",

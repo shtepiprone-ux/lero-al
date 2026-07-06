@@ -45,6 +45,33 @@ function NumericTypeaheadDemo({ options, ...rest }: { options: MantineComboboxOp
   )
 }
 
+// Enter-to-search demo (Task 553, block 10): `onKeyDown` reaches ONLY the desktop trigger (never
+// the mobile sheet's search field, where Enter should filter/commit, not navigate away) — mirrors
+// HeroSearch/LocationCombobox's Enter-runs-search contract.
+function EnterKeyDemo({ options, firedLabel, ...rest }: { options: MantineComboboxOption[]; firedLabel: string } & Omit<
+  Parameters<typeof MantineCombobox>[0],
+  'options' | 'value' | 'onChange' | 'onKeyDown'
+>) {
+  const [value, setValue] = useState('')
+  const [fired, setFired] = useState(false)
+  return (
+    <Stack gap="xs">
+      <MantineCombobox
+        options={options}
+        value={value}
+        onChange={setValue}
+        onKeyDown={(e) => { if (e.key === 'Enter') setFired(true) }}
+        {...rest}
+      />
+      {fired && (
+        <Text size="xs" c="brand.7" fw={500}>
+          {firedLabel}
+        </Text>
+      )}
+    </Stack>
+  )
+}
+
 export const Default: Story = {
   render: (_args, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
@@ -221,6 +248,24 @@ export const Default: Story = {
               placeholder={t('combobox_numeric_placeholder')}
               noResultsLabel={t('combobox_no_results')}
               sheetTitle={t('combobox_sheet_title')}
+            />
+          </Stack>
+
+          {/* 10 — onKeyDown Enter-to-search (Task 553): reaches the DESKTOP trigger only — press
+              Enter in the field below to see the "fired" indicator; the mobile sheet's own search
+              field does not get this handler (Enter there filters/commits, never navigates). */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              onKeyDown Enter-to-search — desktop trigger only; press Enter to fire (mirrors
+              HeroSearch/LocationCombobox); the mobile sheet&apos;s search field is untouched
+            </Text>
+            <EnterKeyDemo
+              options={options}
+              variant="input"
+              placeholder={t('combobox_placeholder')}
+              noResultsLabel={t('combobox_no_results')}
+              sheetTitle={t('combobox_sheet_title')}
+              firedLabel={t('combobox_enter_search_fired')}
             />
           </Stack>
         </Stack>

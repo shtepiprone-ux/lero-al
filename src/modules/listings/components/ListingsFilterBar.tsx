@@ -81,7 +81,6 @@ export function ListingsFilterBar({ locations, onFiltersOpen }: Props) {
         value={locationId}
         onChange={id => updateParams({ location_id: id ?? null })}
         placeholder={tc('all_locations')}
-        size="sm"
         className="w-52 shrink-0"
         portal
       />

@@ -78,10 +78,10 @@ One slice per primitive: theme defaults + thin wrapper (if needed) + story + ren
 | P1.30 | PasswordInput + RequirementsHint | PasswordInput.tsx, PasswordRequirementsHint.tsx | §6 Input | 🟡 Sprint 38 (T500) |
 
 ## PHASE 2 — Shared composites (21) — after the primitives they use are ✅
-Combobox · ~~PropertyTypeCombobox~~ ✅ Task 551 · LocationCombobox · ~~YearCombobox~~ ✅ Task 552 · DatePicker ·
-PhoneField · AvatarCropModal · FilterMultiToggle · FilterRangeInputs · FilterRoomsRow · FilterToggleGroup ·
-FiltersPanel · HeroSearch · HeroSearchClient · LocaleSwitcher · Map · MapWrapper · RelativeTime ·
-(PerfDevOverlay/WebVitalsReporter/PerformanceStoreInit = ➖ non-visual).
+Combobox · ~~PropertyTypeCombobox~~ ✅ Task 551 · ~~LocationCombobox~~ ✅ Task 553 · ~~YearCombobox~~ ✅ Task 552 ·
+DatePicker · PhoneField · AvatarCropModal · FilterMultiToggle · FilterRangeInputs · FilterRoomsRow ·
+FilterToggleGroup · FiltersPanel · HeroSearch · HeroSearchClient · LocaleSwitcher · Map · MapWrapper ·
+RelativeTime · (PerfDevOverlay/WebVitalsReporter/PerformanceStoreInit = ➖ non-visual).
 
 **Slice 1 — Task 551 (PropertyTypeCombobox, ✅ done):** first product consumer of `MantineCombobox`
 (Task 537). STOP-and-ASK #1 resolved (owner, 2026-07-05, Option A): added an optional `triggerWidth?`
@@ -104,6 +104,59 @@ Playwright rendered proof on BOTH real filter surfaces (`FiltersPanel` + `Listin
 mobile) showing zero clipping inside their `overflow`/accordion/Sheet containers. All six render sites
 (`YearComboboxField`, `StepDetails`, `FiltersPanel` ×2, `ListingsFilters` ×2) byte-identical (empty diff).
 One new story-only i18n key (`combobox_numeric_placeholder`) — zero new product-code keys.
+
+**Slice 3 — Task 553 (LocationCombobox, ✅ done — FULL migration incl. admin add-location sub-panel):**
+the LARGEST composite (11 render sites) + its admin add-location sub-flow. STOP-and-ASK #1 resolved
+(owner, 2026-07-05, Option A, desktop-only): added `onKeyDown?` to `MantineCombobox`, threaded ONLY onto
+the desktop `variant="input"` trigger (never the mobile sheet's search field). Rendered proof on the real
+Hero page: Enter with no keyboard-highlighted option AND Enter after `ArrowDown` both cleanly fire exactly
+one `router.push` to `/listings` — no double-navigation, no swallow, no thrown error (this primitive has
+no keyboard-select mechanism at all, so "select-then-search" reduces to "search on the currently-committed
+value" in both cases — a pre-existing primitive characteristic, not something this task introduced).
+STOP-and-ASK #2 (the "+ add location" toggle) resolved: no authoritative chrome row existed, so a new
+`tailadmin-style-reference.md` **§6s** row was extracted from the zip — `Anchor component="button"`,
+`text-theme-xs`/12px + `font-medium` + `hover`-only underline (cited `html/invoices.html:1647`), recolored
+to `brand.7` per the zip's own `text-brand-500` active-state convention (`html/ai-settings.html:2519,2523`,
+`html/crm.html:3081` — mapped Tailwind `brand-500` → this project's Mantine `brand.7`, the same shade
+`MantineCombobox`'s own active-option text/CheckIcon already uses), `mih="2.75rem"` touch target. Owner
+confirmed the citation before it was written. The sub-panel's region combobox, text field, and Add/Cancel
+buttons are now canonical themed Mantine primitives (`MantineCombobox variant="button"`, `TextInput`,
+`Button`); the add-failure path now surfaces a localized generic error (previously silently swallowed —
+Negative flow (h) improvement) instead of leaking the raw error CODE. `size` prop removed from the public
+API (owner decision 2, filter-bar density standardized to h-11) — the ONE authorized consumer edit is
+`ListingsFilterBar.tsx` (`size="sm"` removed); all other 10 render sites are byte-identical (empty diff).
+**Third-finding-style discovery re-confirmed, not re-triggered:** the desktop `Combobox.Options` 220px
+scroll cap from Task 552 applies here too (same shared primitive) — verified live on the real
+`ListingsFilters` Sheet+Accordion-nested location field (portal-escapes the Sheet's `overflow-y-auto`,
+matching the Task 552 mechanism exactly). New critical-flow-registry.md row + RTL sub-panel smoke (4
+tests, 1 planted-violation). Known accepted temporary inconsistency (owner-flagged, not fixed here):
+`ListingsFilterBar`'s sibling property-type control stays legacy h-9 until its own later slice.
+
+**Task 554 (✅ done) — closes Task 553's rendered-evidence gap:** the add-location sub-panel had no
+persisted, machine-produced rendered matrix (Task 553's only proof was a temp story, created and
+deleted). Added `Mantine/Primitives/LocationComboboxSubPanel` (title chosen for gate-enforcement —
+`--mantine-only` only gives standing enforcement to `Mantine/Primitives/*`-titled stories, a real
+gap found + owner-resolved mid-task, see the session log). Story-file-only `useLayoutEffect` click
+opens the real toggle deterministically (the harness's generic overlay-open click would have hit
+`LocationCombobox`'s own main-field input instead, verified via DOM dump) — zero
+`check-stories-rendered.mjs` edit needed. 3-attempt planted-violation discipline (2 honest no-ops,
+1 real 12-cell catch) proves the gate is load-bearing. Final: 478/496 PASS, 0 FAIL, 18 pre-existing
+AMBIGUOUS, zero new. Zero product-code change.
+
+**Task 555 (✅ done) — fixes two owner-caught, geometry-gate-invisible defects (see
+`docs/mantine-responsive-design-system.md` **§18.9**, the new IRON RULE written after this exact
+miss):** **D1** — `LocationCombobox`'s `MapPin` icon overlapped the placeholder text. Root cause
+(DevTools, not guessed): `input-chrome.css`'s `:not([data-with-left-section])` guard checked the
+attribute on the `<input>` element, but Mantine renders it on the ANCESTOR `.mantine-*-wrapper` —
+the guard always matched (the input never carries the attribute either way), making the override
+unconditional. Fixed at the canonical source (moved the guard to the wrapper); regression-swept
+and confirmed fixed on `PropertyTypeCombobox`, `YearCombobox`, and `AdminUsersTable`'s search field
+too (all were ALSO silently broken by the same bug, unrelated to `LocationCombobox` specifically).
+**D2** — the sub-panel's region picker had no `placeholder`; added, reusing the existing
+`common.region` key (zero new i18n keys). Per §18.9, the `screenshots:assert` PASS count is
+UNCHANGED by this fix (478/496, same as before — the geometry gate cannot see either defect
+class) — the actual proof is a human-inspected rendered screenshot set at 6 breakpoint/locale
+combinations across the 4 affected consumers.
 
 ## PHASE 3 — Layout (7)
 Header · Footer · FilterBar · MobileBottomNav · PageHeader · PageShell · Section.
@@ -140,10 +193,13 @@ Track via `grep -rl "@/components/ui/<name>" src`.
   P1.24 Skeleton ✅ Task 544+550 · P1.25 Separator ✅ Task 545 · P1.26 ScrollArea ✅ Task 546 · P1.27 Slider ✅
   Task 548+550 · P1.29 Toast ✅ Task 549+550. **Phase-1 primitive slice is COMPLETE** (all 30 P1.* rows ✅/🟡).
 - Each slice ships one component with the DoD gate above; ~5–8 slices per sprint to stay balanced.
-- **PHASE 2 — Slice 1 (Task 551, PropertyTypeCombobox) ✅ · Slice 2 (Task 552, YearCombobox) ✅** — see the
-  PHASE 2 section above (`MantineCombobox` gained `triggerWidth`, then `inputMode`/`onInputChange`). Next
-  Phase-2 slice: LocationCombobox (larger — carries an admin add-location sub-flow), then the remaining
-  composites.
+- **PHASE 2 — Slice 1 (Task 551, PropertyTypeCombobox) ✅ · Slice 2 (Task 552, YearCombobox) ✅ · Slice 3
+  (Task 553, LocationCombobox incl. admin add-location sub-panel) ✅** — see the PHASE 2 section above
+  (`MantineCombobox` gained `triggerWidth`, `inputMode`/`onInputChange`, the desktop options scroll cap,
+  and `onKeyDown`). All three "*Combobox" shared composites are now migrated. Legacy `Combobox.tsx` still
+  has other consumers (`PhoneField`, `Header`, admin managers, `AuthSheet`, etc. — separate later slices).
+  Next Phase-2 slice: DatePicker, PhoneField, or FiltersPanel/HeroSearch themselves (the composites that
+  wrap the now-migrated Comboboxes).
 
 ## Audit status (Task 525 — rendered conformance audit vs `demo_tailadmin_com.zip`, 2026-07-02)
 

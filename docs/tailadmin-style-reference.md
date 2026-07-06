@@ -992,6 +992,38 @@ border, and icon-badge coloring are all **zero-override**. The accent+icon confl
 max-width both require `notification-chrome.css` (state-dependent/media-query CSS, unreachable via
 `vars`/`styles`) — wired into both `layout.tsx` and `.storybook/preview.tsx` after `slider-chrome.css`.
 
+## 6s. Text-link toggle (compact, brand-colored action link) — extracted from the zip (Task 553, 2026-07-05)
+
+> **Step 0 result: no exact "+ add nested item" pattern exists in `demo_tailadmin_com.zip`** — a full-archive
+> search (`html/*.html`) for "add option"/"add variant"/"add another"/"add field"/"add row" returns zero hits;
+> TailAdmin's own demo pages have no inline-create-nested-item UI to cite. This row extracts the closest real
+> primitive instead: a compact, brand-colored, underline-on-hover text link used as an inline action affordance
+> (not navigation) — composed from TWO already-cited zip sources, not invented:
+
+- **Structure/size/hover (cited: `html/invoices.html:1647`)** —
+  `<p class="text-theme-xs font-medium text-gray-700 group-hover:underline …">` — the invoice-number cell link.
+  Gives: **12px (`text-theme-xs`)**, **font-weight 500 (`font-medium`)**, **underline on hover only** (not
+  resting). This is the correct SIZE citation — `text-sm`/14px is NOT cited anywhere for this affordance; the
+  legacy `LocationCombobox` toggle this row replaces was also `text-xs` (12px), consistent with this citation.
+- **Brand color (cited: `html/ai-settings.html:2519,2523` + `html/crm.html:3081`)** — `text-brand-500` is the
+  zip's own "selected/active" state color convention (ai-settings.html's selected nav-item text/icon; crm.html's
+  accent badge text). Mapped to this project's Mantine scale: **`brand.7`** — the SAME shade the sibling
+  `MantineCombobox` primitive already uses for its active-option text and `CheckIcon` (§6l), keeping this toggle
+  visually consistent with the primitive it sits next to (Tailwind `brand-500` → this project's Mantine
+  `brand.7`, per the existing brand-scale mapping used throughout `theme.ts`).
+- **Touch target (clause 11, existing exemption)** — `mih="2.75rem"` (44px), the SAME sole exemption pattern
+  already used for compact rows elsewhere in this doc (Combobox mobile-sheet option rows, §6l) — the link's
+  visible text/icon stays compact/inline-sized, but its clickable area meets the ≥44px mobile gate via padding,
+  not by inflating the text itself.
+- **Component** — Mantine `Anchor` with `component="button"` (this is an in-page ACTION — toggling a panel open/
+  closed — not page navigation, so `component="button"` is required for correct keyboard/role semantics; a bare
+  `<a href="#">` would be wrong here). `Anchor` has no themed `defaultProps` override in `theme.ts` — this row's
+  values are applied inline at the call site (`fz`, `fw`, `c`, `mih`), matching the "compact, one-off control"
+  precedent (not a component-level default, since no other consumer of `Anchor` exists yet in this codebase).
+
+**Result:** `<Anchor component="button" fz="var(--mantine-font-size-xs)" fw={500} c="brand.7" mih="2.75rem" …>` —
+zero invented pixel/color values, both citations traceable to the zip line numbers above.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

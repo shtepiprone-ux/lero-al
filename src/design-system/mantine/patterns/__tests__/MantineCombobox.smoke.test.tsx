@@ -188,3 +188,45 @@ describe('MantineCombobox — desktop options scroll cap (Task 552)', () => {
     expect(getComputedStyle(optionsEl).overflowY).toBe('auto')
   })
 })
+
+/**
+ * `onKeyDown` passthrough (Task 553 STOP-and-ASK #1, Option A) — desktop trigger ONLY (never the
+ * mobile sheet's search field, where Enter should filter/commit a location, not navigate away).
+ */
+describe('MantineCombobox — onKeyDown passthrough (Task 553)', () => {
+  it('onKeyDown reaches the desktop trigger input and fires on Enter', () => {
+    const onKeyDown = vi.fn()
+    const { container } = render(
+      withProvider(
+        <MantineCombobox
+          options={[]}
+          value=""
+          onChange={() => {}}
+          variant="input"
+          noResultsLabel="none"
+          onKeyDown={onKeyDown}
+        />,
+      ),
+    )
+    const input = container.querySelector('input')!
+    fireEvent.keyDown(input, { key: 'Enter' })
+    expect(onKeyDown).toHaveBeenCalledTimes(1)
+    expect(onKeyDown.mock.calls[0][0].key).toBe('Enter')
+  })
+
+  it('onKeyDown absent: no error, byte-identical to today', () => {
+    const { container } = render(
+      withProvider(
+        <MantineCombobox
+          options={[]}
+          value=""
+          onChange={() => {}}
+          variant="input"
+          noResultsLabel="none"
+        />,
+      ),
+    )
+    const input = container.querySelector('input')!
+    expect(() => fireEvent.keyDown(input, { key: 'Enter' })).not.toThrow()
+  })
+})

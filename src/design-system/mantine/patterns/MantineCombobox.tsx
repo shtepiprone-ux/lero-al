@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useEffect, useMemo, useState, type KeyboardEventHandler, type ReactNode } from 'react'
 import {
   Box,
   Combobox,
@@ -75,6 +75,13 @@ export interface MantineComboboxProps {
    * still commits normally). Absent → byte-identical to today (Task 552).
    */
   onInputChange?: (raw: string) => void
+  /**
+   * `variant="input"` only: passed to the DESKTOP trigger `<TextInput>` only (never the mobile
+   * sheet's search field, where Enter should filter/commit a location, not navigate away). Fires
+   * after the primitive's own keystroke handling. Use for e.g. Enter-to-search passthroughs
+   * (Task 553). Default `undefined` — this prop changes nothing when absent.
+   */
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>
 }
 
 function CheckIcon() {
@@ -171,6 +178,7 @@ export function MantineCombobox({
   triggerWidth,
   inputMode,
   onInputChange,
+  onKeyDown,
 }: MantineComboboxProps) {
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
@@ -262,6 +270,7 @@ export function MantineCombobox({
                 if (!isMobile) combobox.openDropdown()
               }}
               onBlur={() => combobox.closeDropdown()}
+              onKeyDown={onKeyDown}
               readOnly={isMobile}
             />
           ) : (

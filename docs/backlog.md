@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 555. Next free: 556.**
+**Task numbering — last used: 556. Next free: 557.**
+
+**🟠 Task 556 (Sprint 41 / Epic MM Phase-2 · PhoneField → Mantine/TailAdmin migration) — 📝 KICKOFF WRITTEN, not yet executed.** Migrates the legacy `PhoneField` composite (`@/components/shared/Combobox` + `@/components/ui/input` + `@/components/ui/label`) to `MantineCombobox` (country/dial-code, `variant="button" searchable` — option shape already matches `MantineComboboxOption`) + Mantine `TextInput` (national) + canonical Mantine label. Presentational swap only; all phone logic (`parsePhoneValue`/paste/E.164) byte-identical. **Two STOP-AND-ASKs for the owner:** (#1) `size="sm"` admin density vs the Task-553 h-11 standardization (MantineCombobox has no `size`); (#2) desktop dropdown min-width for the compact country trigger (`dropdownMinWidth={240}` legacy — add the prop to `MantineCombobox` or prove default adequate). Consumers: AuthSheet/ProfileTab (default) + AdminUserProfile/AdminUserCreate (`size="sm"`). Adds a phone critical-flow-registry row + PhoneField smoke. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_556_PhoneFieldMantineMigration.md`. **Next composite after this: FiltersPanel/HeroSearch.**
 
 **🟢 Sprint 41 (MM Phase-2 Combobox family) — 551 ✅ APPROVED (native gate green) · 552 ✅ diff-pass · 553 ✅ diff-pass · 554 ❌ REJECTED (owner-caught D1/D2) · 555 ✅ APPROVED (D1/D2 fixed, commit emitted).** Full detail for 551–554 in [`backlog-archive.md`](backlog-archive.md); 555 in Last Session above. **Phase-2 Combobox family (PropertyType/Year/Location) now fully migrated + icon/placeholder-correct — next: DatePicker/PhoneField or FiltersPanel/HeroSearch themselves.** Kickoffs: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_55{1,2,3,4,5}_*.md`.
 

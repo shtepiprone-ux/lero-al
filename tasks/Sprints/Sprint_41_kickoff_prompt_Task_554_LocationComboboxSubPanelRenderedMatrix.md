@@ -23,35 +23,57 @@ changes — story + gate only.**
   (`title`, `parameters:{ skipCanvas:true, layout:'fullscreen' }`, `storyT` i18n, `MantineStoryShell`,
   single `Default` export, toolbar-driven viewport/locale) and `src/stories/_storyI18n.ts` / `_MantineStoryShell`.
 
+## 🔴 Gate-phase decision (orchestrator ruling, 2026-07-05) — READ BEFORE STARTING
+
+The gate has THREE phases (`scripts/check-stories-rendered.mjs`): **Phase 0** = `Mantine/Primitives/*`
+auto-discovery, runs UNCONDITIONALLY incl. `--mantine-only`/`--fast`, full Layer 1+2+3, **opens overlay stories
+via a scripted trigger click** (lines 243-246, 682-686); **Phase 1** = `ASSERT_STORIES`, **skipped under
+`--mantine-only`** (line 1187); **Phase 2** = geometry-only auto-discovery, **skipped under `--mantine-only`**
+and **never opens overlays** (lines 238-239). The recurring gate the owner runs every Mantine slice is
+`screenshots:assert -- --mantine-only` (Phase 0 only). Therefore a story that lands in Phase 1 or Phase 2 gets
+**zero standing enforcement** — a one-time local artifact only. **This task MUST route the sub-panel proof into
+Phase 0**, opened via the existing overlay-openTrigger mechanism, so it is machine-produced, opened, full-chrome
++ geometry, AND permanently enforced under the same `--mantine-only` command. (Orchestrator-authorized scope
+expansion: the minimal single-story script touch needed to include this ONE composite in Phase-0 overlay-open
+handling — see Scope item 2.)
+
 ## Scope (do EXACTLY this — nothing else)
 
-1. **Add ONE persisted story** that renders `LocationCombobox` **with the add-location sub-panel present AND
-   visibly OPEN**, so the `screenshots:assert` harness captures the toggle, the `TextInput`, the region trigger,
-   and the Add/Cancel buttons in one frame at every breakpoint × locale.
+1. **Add ONE persisted `Default` story** that renders `LocationCombobox` **with the add-location sub-panel
+   present AND opened by the Phase-0 overlay-trigger click**, so the harness captures the toggle, the
+   `TextInput`, the region trigger, and the Add/Cancel buttons in one frame at every breakpoint × locale.
    - Props that make the sub-panel render: pass `regions` + `onAddLocation` (a no-op stub returning a resolved
      `{ id }` is fine — this is a render proof, not an interaction test; the interaction is already covered by
      `LocationCombobox.smoke.test.tsx`).
-   - The panel must be **OPEN in the captured frame**. `LocationCombobox` opens the panel only via internal
-     `showAdd` state (clicking "+ add_location"); there is no prop to force it open. Choose the cleanest
-     mechanism that fits the harness: (a) a Storybook `play` function that clicks the toggle, IF the
-     `screenshots:assert` pipeline captures post-`play` state; or (b) a thin **story-file-only** wrapper that
-     renders the sub-panel open. **Do NOT add a force-open prop to the product `LocationCombobox` component** —
-     that is product-code scope creep. **If neither (a) nor (b) is achievable cleanly without touching product
-     code, STOP and ASK the orchestrator — do not invent a component API.**
-   - Location & naming: follow the existing Mantine story convention. Because `LocationCombobox` is a shared
-     composite (not a `design-system/mantine/primitives` primitive), place it under the composites story area if
-     one exists; otherwise mirror the primitives folder convention and note the placement in the session log.
-     `title` e.g. `Mantine/Composites/LocationCombobox` (confirm against the existing title taxonomy; match it).
+   - The panel must be **OPEN in the captured frame.** Preferred mechanism: register the story in Phase-0's
+     overlay-open set so the harness clicks "+ add_location" before running its checks (matching the
+     Menu/Select/Popover open-on-click precedent). **Do NOT add a force-open prop to the product
+     `LocationCombobox` component.** If a story-file-only open (e.g. an in-wrapper mount effect) renders the
+     panel open more cleanly than the openTrigger click, that is acceptable too — but it MUST still be a
+     Phase-0-discovered story so it runs under `--mantine-only`. If neither is achievable without a product-code
+     change or without pulling unrelated stories into the enforced gate, **STOP and ASK the orchestrator.**
+   - **Title for Phase-0 discovery:** the story title MUST start with `Mantine/Primitives/` so Phase-0's
+     title-prefix auto-discovery covers it (e.g. `Mantine/Primitives/LocationComboboxSubPanel`). This is a
+     display-grouping title only; note in the session log that it is a composite proven in the primitives gate
+     for enforcement reasons (confirm no existing title-taxonomy rule forbids it — if one does, STOP and ASK).
    - **Zero hardcode:** every visible string + `aria-label` via `storyT`/`t()` against `storybook.mantine.*`
      with full sq/en/uk/it parity. NO raw literals, NO `parameters.layout:'centered'|'padded'`, NO story export
      named `/Ukrainian/`, NO `globals:{locale:'uk'}` pin, NO raw `<button>/<input>`. `Default` export only;
      locale/viewport come from the toolbar (one `LocaleStress` at most, per §8/§14).
 
-2. **Run `npm run screenshots:assert -- --mantine-only`** and capture the sub-panel story cells into the
-   manifest. The story must PASS the gate (no h-scroll at 320; full-width text/container controls at <640).
+2. **Minimal, single-story script touch (orchestrator-authorized):** add ONLY what is required to include this
+   one story in Phase-0 overlay-open handling (e.g. its component-name in the overlay-open set). Do NOT broaden
+   Phase-0 discovery to a new prefix, do NOT add unrelated stories, do NOT alter Phase 1/2 behavior. Paste the
+   exact diff of the script touch in the session log with a one-line rationale.
 
-3. **No changes to** `LocationCombobox.tsx`, `MantineCombobox.tsx`, any consumer, `messages/*` (beyond adding
-   any NEW `storybook.mantine.*` story-only keys this story needs, in all 4 locales), or the registry.
+3. **Run `npm run screenshots:assert -- --mantine-only`** — the SAME command the owner runs every slice — and
+   confirm the sub-panel story appears in Phase 0 (opened), captured into the manifest, PASSING (no h-scroll at
+   320; full-width text/container controls at <640; toggle exemption noted). Paste the Phase-0 line showing the
+   story count incremented and its cells green.
+
+4. **No changes to** `LocationCombobox.tsx`, `MantineCombobox.tsx`, any consumer, `messages/*` (beyond adding
+   any NEW `storybook.mantine.*` story-only keys this story needs, in all 4 locales), the registry, or Phase 1/2
+   of the gate script.
 
 ## Mobile <640 full-width gate (OWNER P0, clause 11) — what the screenshots MUST prove
 
@@ -99,9 +121,10 @@ Post-condition: `check:stories` + `check:i18n` green; the manifest path is recor
 1. One persisted `Default` story renders `LocationCombobox` with the sub-panel **open**; product code untouched
    (verify: story-file diff only + `git diff --stat` shows no `LocationCombobox.tsx`/`MantineCombobox.tsx`
    change). → Positive flow step 1.
-2. `screenshots:assert --mantine-only` PASSES with the sub-panel cells present; manifest path + a per-cell
-   matrix (14 breakpoints × sq/en/uk/it, **uk@320/375/390 mandatory**) pasted into the session log with real
-   evidence (full-width fields/buttons <640, toggle exemption noted, no h-scroll@320). → step 2–3.
+2. `screenshots:assert -- --mantine-only` PASSES with the sub-panel captured in **Phase 0, opened**; manifest
+   path + the Phase-0 per-cell matrix (Phase-0 viewports **320/375/390/1024 × sq/en/uk/it**, uk@320/375/390
+   mandatory) pasted into the session log with real evidence (full-width fields/buttons <640, toggle exemption
+   noted, no h-scroll@320). The Phase-0 story-count line must show the increment. → step 2–3.
 3. Planted-violation transcript proves the gate actually catches a closed/non-full-width sub-panel; reverted. →
    Negative flow branch 1.
 4. Zero hardcode: `check:stories` green; any new `storybook.mantine.*` key has sq/en/uk/it parity

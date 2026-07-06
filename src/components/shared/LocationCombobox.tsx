@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import type { KeyboardEventHandler } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { MapPin, Loader2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Combobox } from '@/components/shared/Combobox'
+import { MapPin } from 'lucide-react'
+import { Anchor, Button, TextInput, Text } from '@mantine/core'
+import { MantineCombobox } from '@/design-system/mantine/patterns'
 import { cn, capitalize, normalizeSearch } from '@/lib/utils'
 
 export interface LocationOption {
@@ -45,15 +45,19 @@ interface Props {
   regions?: RegionOption[]
   /** Admin callback to persist a new city; receives name + region_id, returns the new id */
   onAddLocation?: (data: { name_al: string; region_id: number }) => Promise<{ id?: number; error?: string }>
-  /** Render dropdown via portal into document.body. Use inside overflow:hidden/auto containers. */
+  /**
+   * Documented no-op (Task 552/553 pattern): `MantineCombobox`'s dropdown/sheet always renders
+   * via a portal (`Combobox.Dropdown`'s `withinPortal` defaults `true`; the mobile path is a
+   * portaled bottom sheet), so it never clips inside an `overflow:hidden/auto` container
+   * regardless of this flag. Kept on the public API only so every existing call site stays
+   * byte-identical.
+   */
   portal?: boolean
-  /** Control height — passed through to Combobox. 'default' = h-11 | 'sm' = h-9 | 'xs' = h-8 */
-  size?: 'default' | 'sm' | 'xs'
 }
 
 export function LocationCombobox({
   locations, value, onChange, onKeyDown, placeholder, className, error,
-  regions, onAddLocation, portal = false, size,
+  regions, onAddLocation,
 }: Props) {
   const tc = useTranslations('common')
   const locale = useLocale()
@@ -61,6 +65,7 @@ export function LocationCombobox({
   const [addName, setAddName] = useState('')
   const [addRegionId, setAddRegionId] = useState<number | null>(null)
   const [adding, setAdding] = useState(false)
+  const [addError, setAddError] = useState<string | null>(null)
 
   const options = useMemo(() => locations.map(l => {
     const label = resolveLocationLabel(l, locale)
@@ -79,9 +84,15 @@ export function LocationCombobox({
     return { value: String(l.id), label, description }
   }), [locations, locale])
 
+  const regionOptions = useMemo(
+    () => (regions ?? []).map(r => ({ value: r.id.toString(), label: resolveLocationLabel(r, locale) })),
+    [regions, locale],
+  )
+
   async function handleAdd() {
     if (!addName.trim() || !addRegionId || !onAddLocation) return
     setAdding(true)
+    setAddError(null)
     const result = await onAddLocation({ name_al: addName.trim(), region_id: addRegionId })
     setAdding(false)
     if (result.id) {
@@ -89,61 +100,88 @@ export function LocationCombobox({
       setShowAdd(false)
       setAddName('')
       setAddRegionId(null)
+    } else {
+      // `result.error` is a raw error CODE (e.g. "add_failed"), never a localized user-facing
+      // string — surface the generic localized message instead of leaking the code.
+      setAddError(tc('error_generic'))
     }
   }
 
   const canAdd = !!(regions && regions.length > 0 && onAddLocation)
+  const resolvedPlaceholder = placeholder ?? tc('all_locations')
 
   return (
     <div className={cn('location-combobox', className)}>
-      <Combobox
+      <MantineCombobox
         options={options}
         value={value}
         onChange={v => onChange(v || null)}
+        variant="input"
         clearLabel={tc('all_locations')}
         icon={<MapPin className="h-4 w-4" />}
-        placeholder={placeholder ?? tc('all_locations')}
-        portal={portal}
+        placeholder={resolvedPlaceholder}
         error={error}
-        size={size}
-        onKeyDown={onKeyDown as React.KeyboardEventHandler<HTMLInputElement> | undefined}
+        onKeyDown={onKeyDown as KeyboardEventHandler<HTMLInputElement> | undefined}
+        triggerWidth={{ base: '100%', sm: '100%' }}
+        noResultsLabel={tc('no_results')}
+        triggerAriaLabel={resolvedPlaceholder}
+        sheetTitle={resolvedPlaceholder}
       />
 
       {canAdd && (
         <>
-          <button
+          {/* §6s text-link toggle (Task 553): brand.7 (Tailwind text-brand-500 mapping), 12px
+              (text-theme-xs, cited invoices.html:1647), font-medium, mih=44px touch target while
+              staying visually compact. `underline="hover"` is Mantine's own Anchor default
+              (zero-override) — resting = no underline, hover = underline, matching the citation. */}
+          <Anchor
+            component="button"
             type="button"
-            className="text-xs text-primary hover:underline w-fit mt-1"
+            fz="xs"
+            fw={500}
+            c="brand.7"
+            mih="2.75rem"
+            style={{ width: 'fit-content' }}
             onClick={() => setShowAdd(v => !v)}
           >
             + {tc('add_location')}
-          </button>
+          </Anchor>
           {showAdd && (
             <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30 mt-1">
-              <p className="text-xs font-semibold">{tc('new_location')}</p>
-              <Input
+              <Text size="xs" fw={600}>{tc('new_location')}</Text>
+              <TextInput
                 value={addName}
-                onChange={e => setAddName(e.target.value)}
+                onChange={e => setAddName(e.currentTarget.value)}
                 placeholder={tc('location_name_hint')}
-                className="h-9 rounded-xl text-sm"
+                radius="lg"
               />
-              <Combobox
-                options={regions!.map(r => ({ value: r.id.toString(), label: resolveLocationLabel(r, locale) }))}
+              <MantineCombobox
+                options={regionOptions}
                 value={addRegionId?.toString() ?? ''}
                 onChange={v => setAddRegionId(v ? Number(v) : null)}
                 variant="button"
-                size="sm"
+                placeholder={tc('region')}
+                triggerWidth={{ base: '100%', sm: '100%' }}
+                noResultsLabel={tc('no_results')}
+                triggerAriaLabel={tc('region')}
+                sheetTitle={tc('region')}
               />
+              {addError && (
+                <Text size="xs" c="red.6">{addError}</Text>
+              )}
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button
-                  type="button" size="sm" className="h-8 rounded-xl"
-                  onClick={handleAdd} disabled={adding || !addName.trim() || !addRegionId}
+                  type="button"
+                  onClick={handleAdd}
+                  disabled={!addName.trim() || !addRegionId}
+                  loading={adding}
                 >
-                  {adding ? <Loader2 className="h-3 w-3 animate-spin" /> : tc('add')}
+                  {tc('add')}
                 </Button>
                 <Button
-                  type="button" variant="ghost" size="sm" className="h-8 rounded-xl"
-                  onClick={() => setShowAdd(false)}
+                  type="button"
+                  variant="default"
+                  onClick={() => { setShowAdd(false); setAddError(null) }}
                 >
                   {tc('cancel')}
                 </Button>

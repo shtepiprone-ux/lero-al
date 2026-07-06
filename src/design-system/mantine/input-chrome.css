@@ -105,7 +105,16 @@
    Vertical (10px) is always safe to set. Horizontal is guarded with :not([data-with-*-section])
    so consumers with left/right section icons keep Mantine's icon-reserving padding untouched —
    e.g. Select's built-in chevron always carries [data-with-right-section], so this override
-   never applies to Select's end-padding (would overlap the chevron otherwise). */
+   never applies to Select's end-padding (would overlap the chevron otherwise).
+   🔴 Task 555 fix (D1, §18.9): the guard MUST be checked on the WRAPPER, not the `<input>` itself —
+   Mantine renders `data-with-left-section`/`data-with-right-section` on `.mantine-*-wrapper`
+   (confirmed via DevTools: the `<input>` element NEVER carries this attribute in this Mantine
+   version), so a `:not([data-with-left-section])` selector written directly on `.mantine-TextInput-input`
+   ALWAYS matches (the input itself never has the attribute either way) — the guard was a no-op,
+   unconditionally applying 16px start-padding and clobbering Mantine's own icon-reserved space,
+   which is what caused the icon/text overlap (`MapPin`/`Home`/`Calendar` leftSection consumers:
+   LocationCombobox, PropertyTypeCombobox, YearCombobox — all confirmed broken pre-fix, see the
+   Task 555 session log regression sweep). Fixed by moving the guard to the ancestor wrapper. */
 .mantine-TextInput-input,
 .mantine-Textarea-input,
 .mantine-Select-input {
@@ -113,14 +122,14 @@
   padding-bottom: 0.625rem; /* §6l 10px */
   color: var(--mantine-color-gray-8); /* §6l/§6e text — gray-800; Select was missing this (audit: black resting text) */
 }
-.mantine-TextInput-input:not([data-with-left-section]),
+.mantine-TextInput-wrapper:not([data-with-left-section]) .mantine-TextInput-input,
 .mantine-Textarea-input,
-.mantine-Select-input:not([data-with-left-section]) {
+.mantine-Select-wrapper:not([data-with-left-section]) .mantine-Select-input {
   padding-inline-start: 1rem; /* §6l 16px */
 }
-.mantine-TextInput-input:not([data-with-right-section]),
+.mantine-TextInput-wrapper:not([data-with-right-section]) .mantine-TextInput-input,
 .mantine-Textarea-input,
-.mantine-Select-input:not([data-with-right-section]) {
+.mantine-Select-wrapper:not([data-with-right-section]) .mantine-Select-input {
   padding-inline-end: 1rem; /* §6l 16px */
 }
 /* PasswordInput — text lives on the absolutely-positioned innerInput (vertical centering via

@@ -82,6 +82,13 @@ export interface MantineComboboxProps {
    * (Task 553). Default `undefined` — this prop changes nothing when absent.
    */
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
+  /**
+   * Minimum pixel width for the DESKTOP anchored dropdown only (the mobile path is already a
+   * full-width bottom sheet, unaffected). Use when the trigger is much narrower than its dropdown
+   * content (e.g. a compact fixed-width `variant="button"` trigger with long localized option
+   * rows — Task 556). Default `undefined` — this prop changes nothing when absent.
+   */
+  dropdownMinWidth?: number
 }
 
 function CheckIcon() {
@@ -157,8 +164,9 @@ function filterOptions(options: MantineComboboxOption[], query: string): Mantine
  * tables) is DEFERRED to the Phase-2 task that first needs it (Task 537 STOP-and-ASK #2,
  * owner-pre-authorized default path) — Mantine's `Combobox` already renders its dropdown via a
  * `Popover`/portal by default (`withinPortal` defaults `true`), so this primitive does not clip
- * inside a scroll container out of the box; a `dropdownMinWidth`-equivalent prop is not needed
- * yet either (no current consumer requires it — will be added when a Phase-2 consumer does).
+ * inside a scroll container out of the box. `dropdownMinWidth` (Task 556 STOP-and-ASK #2, owner
+ * Option A) covers the first Phase-2 consumer that needs it — a compact fixed-width trigger
+ * (`PhoneField`'s country selector) whose dropdown content is wider than the trigger itself.
  */
 export function MantineCombobox({
   options,
@@ -179,6 +187,7 @@ export function MantineCombobox({
   inputMode,
   onInputChange,
   onKeyDown,
+  dropdownMinWidth,
 }: MantineComboboxProps) {
   const { isMobile, drawerOpened, openDrawer, closeDrawer } = useResponsiveDropdown()
   const combobox = useCombobox({
@@ -290,7 +299,7 @@ export function MantineCombobox({
         </Combobox.Target>
 
         {!isMobile && (
-          <Combobox.Dropdown>
+          <Combobox.Dropdown style={dropdownMinWidth ? { minWidth: dropdownMinWidth } : undefined}>
             {variant === 'button' && searchable && (
               <Combobox.Search
                 value={search}

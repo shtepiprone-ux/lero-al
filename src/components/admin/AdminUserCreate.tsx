@@ -240,7 +240,6 @@ export function AdminUserCreate({ cities, regions }: Props) {
                 value={phoneState.e164}
                 onChange={v => { setPhoneState(v); setValue('phone', v.e164, { shouldDirty: true }) }}
                 error={errors.phone?.message}
-                size="sm"
               />
             </div>
 
@@ -258,7 +257,6 @@ export function AdminUserCreate({ cities, regions }: Props) {
                   value={whatsappState.e164}
                   onChange={v => { setWhatsappState(v); setValue('whatsapp', v.e164, { shouldDirty: true }) }}
                   error={errors.whatsapp?.message}
-                  size="sm"
                 />
               )}
             </div>

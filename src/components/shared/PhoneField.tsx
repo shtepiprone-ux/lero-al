@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * PhoneField — shared two-field phone input (dial-code Combobox + national Input).
+ * PhoneField — shared two-field phone input (dial-code MantineCombobox + national TextInput).
  *
  * Single canonical implementation used by AuthSheet, RegisterForm, AdminUserCreate,
  * AdminUserProfile, and ProfileTab/cabinet. Replaces four local copies.
@@ -10,18 +10,19 @@
  * @/lib/phone before submitting to get country-aware validation and the
  * normalized E.164 value.
  *
- * Mobile (<640px): dial-code Combobox and national Input stack full-width (P0).
- * Desktop (≥640px): Combobox fixed width, Input fills remaining space.
+ * Always an inline row at every breakpoint: [compact country trigger] [national input flex-1].
+ * The row itself is full-width (clause 11); the country trigger is the ONE documented compact
+ * exemption (a fixed-width dial-code button, not a text field) via `triggerWidth` below. The
+ * dropdown/sheet is a full-width bottom sheet `<640` (MantineCombobox default).
  *
- * Task 158 / Sprint 4 · Task 375 (multi-country, trunk prefix, paste, mobile full-width)
+ * Task 158 / Sprint 4 · Task 375 (multi-country, trunk prefix, paste, mobile full-width) ·
+ * Task 556 (Mantine/TailAdmin migration — presentational swap only, all phone LOGIC unchanged)
  */
 
 import { useState, useMemo } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { cn } from '@/lib/utils'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Combobox } from '@/components/shared/Combobox'
+import { InputLabel, TextInput } from '@mantine/core'
+import { MantineCombobox } from '@/design-system/mantine/patterns'
 import {
   COUNTRY_CODES,
   parsePhoneValue,
@@ -44,9 +45,13 @@ interface PhoneFieldProps {
   onChange: (v: PhoneFieldValue) => void
   label?: string
   error?: string
-  /** 'default' → h-11 Combobox (cabinet/registration); 'sm' → h-10 (admin forms). */
-  size?: 'default' | 'sm'
-  /** Render Combobox dropdown via portal — use inside Sheet/Dialog/Table overflow contexts. */
+  /**
+   * Documented no-op (Task 556, STOP-AND-ASK precedent from Task 552's `YearCombobox`):
+   * `MantineCombobox`'s dropdown/sheet always renders via a portal (`Combobox.Dropdown`'s
+   * `withinPortal` defaults `true`; the mobile path is a portaled bottom sheet), so it never
+   * clips inside an `overflow:hidden/auto` container regardless of this flag. Kept on the public
+   * API only so every existing call site stays byte-identical.
+   */
   portal?: boolean
   /** Called with a localized error key when paste is rejected (mismatch/unsupported country). */
   onPasteError?: (errorKey: string) => void
@@ -57,11 +62,10 @@ export function PhoneField({
   onChange,
   label,
   error,
-  size = 'default',
-  portal = false,
   onPasteError,
 }: PhoneFieldProps) {
   const t = useTranslations('phone')
+  const tc = useTranslations('common')
   const locale = useLocale()
   const parsed = parsePhoneValue(value)
   const [dialCode, setDialCode] = useState(parsed.dialCode)
@@ -121,10 +125,6 @@ export function PhoneField({
     // Otherwise let the default paste + handleNationalChange handle it
   }
 
-  // Country selector: compact at all sizes — the PhoneField CONTAINER is full-width,
-  // but within it the country code is always a compact fixed-width button.
-  const countryClass = size === 'sm' ? 'w-24 shrink-0 pr-8' : 'w-28 shrink-0 pr-8'
-
   // Country options:
   //  label        → compact trigger text: "🇦🇱 +355"
   //  dropdownLabel → localized name shown in dropdown items: "🇦🇱 Shqipëri" (sq) / "🇦🇱 Албанія" (uk)
@@ -140,39 +140,38 @@ export function PhoneField({
     })),
     [locale]
   )
-  // sm: override Input's canonical h-11 to compact h-9 (matches Combobox sm)
-  const inputClass = size === 'sm' ? 'h-9 rounded-xl' : undefined
 
   return (
     <div className="flex flex-col gap-1.5">
-      {label && <Label>{label}</Label>}
+      {label && <InputLabel>{label}</InputLabel>}
       {/* Always inline row: [compact country selector] [national input flex-1]
-          The PhoneField container inherits its parent's full width. */}
+          The PhoneField container inherits its parent's full width (clause 11) — the
+          country trigger is the ONE documented compact exemption (Task 556). */}
       <div className="flex flex-row gap-2">
-        <Combobox
+        <MantineCombobox
           options={countryOptions}
           value={dialCode}
           onChange={handleCountryChange}
           variant="button"
           searchable
           searchPlaceholder={t('search_placeholder')}
-          size={size === 'sm' ? 'sm' : 'default'}
-          className={countryClass}
-          triggerClassName={countryClass}
-          portal={portal}
+          noResultsLabel={tc('no_results')}
+          triggerAriaLabel={t('country')}
+          sheetTitle={t('country')}
+          triggerWidth={{ base: '7rem', sm: '7rem' }} // design-tokens-allow: : '7rem' — owner-specified (Task 556 STOP-AND-ASK #1), matches the legacy w-28 compact country-trigger width (112px = 7rem) verbatim
           dropdownMinWidth={240}
         />
-        <Input
+        <TextInput
           type="tel"
           value={national}
           onChange={handleNationalChange}
           onPaste={handlePaste}
           placeholder={getPhonePlaceholder(iso2)}
           autoComplete="tel"
-          className={cn('flex-1 min-w-0', inputClass)}
+          error={error}
+          style={{ flex: 1, minWidth: 0 }}
         />
       </div>
-      {error && <p className="text-xs text-destructive mt-1 break-words">{error}</p>}
     </div>
   )
 }

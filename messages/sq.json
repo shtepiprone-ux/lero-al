@@ -379,7 +379,8 @@
     "session_recovery_message": "Sesioni juaj duhet të rivendoset. Ju lutemi hyni përsëri për të vazhduar."
   },
   "phone": {
-    "search_placeholder": "Kërko vendin ose kodin"
+    "search_placeholder": "Kërko vendin ose kodin",
+    "country": "Vendi"
   },
   "common": {
     "search": "Kërko",

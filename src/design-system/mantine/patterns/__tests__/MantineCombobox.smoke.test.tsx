@@ -230,3 +230,50 @@ describe('MantineCombobox — onKeyDown passthrough (Task 553)', () => {
     expect(() => fireEvent.keyDown(input, { key: 'Enter' })).not.toThrow()
   })
 })
+
+/**
+ * `dropdownMinWidth` (Task 556 STOP-and-ASK #2, Option A) — desktop `Combobox.Dropdown` only (the
+ * mobile bottom sheet is already full-width, unaffected).
+ */
+describe('MantineCombobox — dropdownMinWidth (Task 556)', () => {
+  it('dropdownMinWidth reaches the desktop Combobox.Dropdown', () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantineCombobox
+          options={[{ value: 'a', label: 'a' }]}
+          value=""
+          onChange={() => {}}
+          variant="button"
+          noResultsLabel="none"
+          triggerAriaLabel="probe"
+          dropdownMinWidth={240}
+        />,
+      ),
+    )
+    const trigger = baseElement.querySelector('input')!
+    fireEvent.click(trigger)
+    const dropdown = baseElement.querySelector('.mantine-Combobox-dropdown') as HTMLElement
+    expect(dropdown).toBeTruthy()
+    expect(dropdown.style.minWidth).toBe('240px')
+  })
+
+  it('dropdownMinWidth absent: no min-width style, byte-identical to today', () => {
+    const { baseElement } = render(
+      withProvider(
+        <MantineCombobox
+          options={[{ value: 'a', label: 'a' }]}
+          value=""
+          onChange={() => {}}
+          variant="button"
+          noResultsLabel="none"
+          triggerAriaLabel="probe"
+        />,
+      ),
+    )
+    const trigger = baseElement.querySelector('input')!
+    fireEvent.click(trigger)
+    const dropdown = baseElement.querySelector('.mantine-Combobox-dropdown') as HTMLElement
+    expect(dropdown).toBeTruthy()
+    expect(dropdown.style.minWidth).toBe('')
+  })
+})

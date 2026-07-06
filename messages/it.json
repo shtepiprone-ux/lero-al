@@ -379,7 +379,8 @@
     "session_recovery_message": "La tua sessione deve essere ripristinata. Effettua nuovamente l'accesso per continuare."
   },
   "phone": {
-    "search_placeholder": "Cerca paese o codice"
+    "search_placeholder": "Cerca paese o codice",
+    "country": "Paese"
   },
   "common": {
     "search": "Cerca",

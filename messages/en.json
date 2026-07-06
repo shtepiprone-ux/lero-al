@@ -379,7 +379,8 @@
     "session_recovery_message": "Your session needs to be restored. Please sign in again to continue."
   },
   "phone": {
-    "search_placeholder": "Search country or code"
+    "search_placeholder": "Search country or code",
+    "country": "Country"
   },
   "common": {
     "search": "Search",

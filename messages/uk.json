@@ -379,7 +379,8 @@
     "session_recovery_message": "Потрібно відновити вашу сесію. Увійдіть ще раз, щоб продовжити."
   },
   "phone": {
-    "search_placeholder": "Шукати країну або код"
+    "search_placeholder": "Шукати країну або код",
+    "country": "Країна"
   },
   "common": {
     "search": "Пошук",

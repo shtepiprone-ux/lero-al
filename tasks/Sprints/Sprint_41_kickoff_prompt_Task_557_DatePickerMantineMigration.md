@@ -67,7 +67,7 @@ uses on its Forms/Form-Elements page. So:
 - **The CALENDAR BODY** maps to the NEW **`docs/tailadmin-style-reference.md §6t`** row (orchestrator-extracted
   from the zip, 2026-07-06 — markup + CSS cited). It gives every value Sonnet needs: container chrome, month-nav
   (28px inset, chevron, hover stroke brand), weekday header (gray-500, bolder, ~12px, 24/16px margins), and the
-  full day-cell state matrix — resting (pill radius 150px, 39px desktop / ≥44px `<640`, gray-700 text), hover
+  full day-cell state matrix — resting (pill radius 150px, **39px on ALL breakpoints incl. mobile per owner override**, gray-700 text), hover
   (`gray-200`), **selected (brand `#EC5447`** — flatpickr's default `#569ff7` mapped to lero brand, single-select),
   today (gray-400 border — see STOP-AND-ASK #3), out-of-month (gray-400), disabled (very-light gray, non-interactive).
 - **Clause 16a does NOT apply** (that clause is for zip-ABSENT primitives). No live capture, no provenance block
@@ -76,10 +76,10 @@ uses on its Forms/Form-Elements page. So:
 
 ## STOP-AND-ASK — resolve BEFORE inventing scope
 
-The architecture is already decided (Mantine-core rebuild). Three smaller points may still need an owner ruling — **STOP and ask, do NOT guess:**
-1. **Trigger chrome conversion:** confirm the trigger moves from the legacy filled `bg-muted rounded-xl` to the standard bordered `§6d/§6e` input chrome (recommended — consistent with every migrated field). If the owner wants to preserve a filled look, that would need its own extraction. **Default expectation: adopt §6d/§6e.**
-2. **Day-cell mobile size:** `§6t` gives the TailAdmin desktop cell as **39px** (`max-width:39px; height:39px`), which is **below the 44px mobile touch minimum (clause 11).** On `<640` the calendar becomes a full-width bottom sheet and day cells MUST be ≥44px touch targets; desktop `≥640` keeps the §6t 39px. **Default expectation: 39px desktop → ≥44px `<640`.** (No conflict — the §6t value is a max-width cap on desktop only.)
-3. **Today marker:** `§6t` shows TailAdmin marks *today* with a **gray-400 border** (`#959ea9`→`gray-400`), whereas the existing DatePicker uses a **brand ring** (`ring-primary/40`). **Default expectation: adopt the §6t gray-400 today border** for TailAdmin conformance. If the owner prefers to keep the brand today-ring, that is an explicit owner override recorded in `§6t` — STOP and ask, do not silently pick.
+The architecture is already decided (Mantine-core rebuild). **All three points were RESOLVED by the owner on 2026-07-06 — implement exactly as below, do NOT re-ask:**
+1. **Trigger chrome — ✅ RESOLVED: adopt the `§6d/§6e` bordered TailAdmin input chrome.** Owner: "take all necessary styles from the TailAdmin DatePicker." That resolves to §6d/§6e (`h-11`, full-width, `rounded-lg`, `shadow-theme-xs`, brand focus ring, `text-theme-sm`/`font-medium`/`text-gray-700`, calendar icon `leftSection`, clear-X `rightSection`) — the same chrome PhoneField and every other migrated field use. Drop the legacy filled `bg-muted rounded-xl`. (The zip's dashboard datepicker input is `h-10 max-w-11` — that is the compact collapsing-header instance, NOT the form-field size; use `h-11` per §6t's trigger note.)
+2. **Day-cell size — ✅ RESOLVED: 39px on ALL breakpoints, INCLUDING the `<640` bottom sheet.** Owner: "on mobile the Date Picker must be a bottom sheet with 39px date cells." This is an **explicit owner override of the clause-11 ≥44px touch minimum for the calendar day cells** (documented in `§6t` → Owner overrides). Day cells = §6t **39px** everywhere; do NOT enlarge them to 44px on mobile. The nav arrows + Today shortcut are NOT covered by this exemption → they still meet ≥44px on mobile.
+3. **Today marker — ✅ RESOLVED: the `§6t` gray-400 border** (not the legacy brand ring).
 
 Anything else ambiguous (e.g. a consumer that unexpectedly needs a prop) → STOP and ask; do not invent.
 
@@ -87,7 +87,7 @@ Anything else ambiguous (e.g. a consumer that unexpectedly needs a prop) → STO
 
 - **Trigger** is already `w-full` → stays full-width at every breakpoint (§6d/§6e field). ✅
 - **Calendar** → MUST render as a **full-width bottom sheet `<640`** via `MantinePopover` (edge-to-edge, top-only radius, drag-handle bar, ≤`90dvh` internal scroll, backdrop-tap + Esc close, focus returns to trigger). The legacy fixed `w-[272px]` is **desktop-anchored only**; inside the sheet the calendar fills the width and the 7-column grid expands.
-- **Touch targets ≥44px at `<640`:** day cells, both nav arrows, and the Today shortcut. Long `sq/en/uk/it` month labels wrap / never clip; **no horizontal scroll at 320** in any locale.
+- **Touch targets ≥44px at `<640`:** both nav arrows and the Today shortcut. **Day cells are the documented EXEMPTION — they stay §6t 39px on mobile per the owner's 2026-07-06 override (STOP-AND-ASK #2), NOT ≥44px.** Long `sq/en/uk/it` month labels wrap / never clip; **no horizontal scroll at 320** in any locale.
 - Desktop `≥640` keeps the anchored popover (position `bottom-start`, the `§6t` desktop width).
 
 ## TailAdmin conformance (clause 16 + 16a)
@@ -119,14 +119,14 @@ Actor: user picking a date (listings date filter / admin suspend-until). 1) Trig
 
 - Add ONE persisted story rendering the **REAL `DatePicker`**, titled under **`Mantine/Primitives/DatePicker`** (Task 554 precedent — `--mantine-only` gives standing enforcement only to `Mantine/Primitives/*`). `skipCanvas:true`, `layout:'fullscreen'`, toolbar-driven locale/viewport, `storyT`-driven strings with full `sq/en/uk/it` parity. Render: default (empty), selected, `maxDate`-bounded, and the **calendar forced-open** (so the assert harness captures the calendar body, per the Task 554 open-overlay pattern).
 - `screenshots:assert -- --mantine-only` green (paste the Phase-0 count line, before/after — story count +1, cells +N).
-- 🔴 **§18.9 human-visual proof (the geometry gate is BLIND to overlap/placeholder/touch-size):** paste human-inspected screenshots at **uk@320/375/390 (mandatory) + sq@320 + it@320 + en@1280** proving: trigger calendar-icon ↔ text gap (no overlap) + clear-X ↔ text gap; calendar renders as a **full-width bottom sheet <640** (not a 272px centered card); **day cells ≥44px touch at <640**; selected-day (`#EC5447`) + today markers visible; month label not clipped; no h-scroll at 320. A green PASS count is NOT the verdict for this task.
+- 🔴 **§18.9 human-visual proof (the geometry gate is BLIND to overlap/placeholder/touch-size):** paste human-inspected screenshots at **uk@320/375/390 (mandatory) + sq@320 + it@320 + en@1280** proving: trigger calendar-icon ↔ text gap (no overlap) + clear-X ↔ text gap; calendar renders as a **full-width bottom sheet <640** (not a 272px centered card); **day cells = §6t 39px at <640 (owner override — NOT ≥44px); nav arrows + Today shortcut ≥44px**; selected-day (`#EC5447`) + today gray-400 border visible; month label not clipped; no h-scroll at 320. A green PASS count is NOT the verdict for this task.
 
 ## Acceptance criteria (each verifiable in the diff + rendered evidence)
 
 1. `DatePicker` renders through `MantinePopover` (calendar overlay) + Mantine `Button` (nav/Today) + Mantine `UnstyledButton` themed day cells + a `§6d/§6e` trigger field — **zero** legacy `@/components/ui/popover` / `@/components/ui/button` imports and **zero raw `<button>`** remain in the file. Public Props API unchanged (`value`/`onChange`/`placeholder`/`className`/`maxDate`); all 5 consumer call sites compile + render unchanged (list any that needed edits — expected: none).
 2. All date LOGIC (`date-fns` calls, `weekStartsOn:1`, `parseISO`/`isValid`/`format`, `maxDate` disabling) byte-identical; behavior preserved end-to-end (positive + every negative branch has a verifiable line).
-3. Trigger = `§6d/§6e` chrome; calendar body = the captured `§6t` reference; §15 control-height on the trigger proven; **zero invented values** (STOP-AND-ASK #1 + #2 resolved by the owner and cited).
-4. Mobile `<640`: trigger full-width; calendar = full-width bottom sheet; day cells + nav arrows + Today shortcut ≥44px touch; no h-scroll at 320 × `sq/en/uk/it`.
+3. Trigger = `§6d/§6e` chrome; calendar body = the zip-cited `§6t` reference; today marker = §6t gray-400 border; §15 control-height on the trigger proven; **zero invented values** (STOP-AND-ASK #1/#2/#3 all owner-resolved 2026-07-06 and cited).
+4. Mobile `<640`: trigger full-width; calendar = full-width bottom sheet; **day cells = §6t 39px (owner override, documented exemption)**; nav arrows + Today shortcut ≥44px touch; no h-scroll at 320 × `sq/en/uk/it`.
 5. TailAdmin `§6d/§6e` (trigger) + `§6t` (calendar) matched rendered side-by-side; §18.9 icon/placeholder/touch checks pass; every calendar-body value traces to the zip-cited `§6t` row (no invented values; clause 16a N/A — reference is zip-present, not an honest-negative).
 6. Registry row added/extended + baseline recorded + DatePicker RTL smoke (with planted-violation FAIL transcript).
 7. i18n: reuse the existing `common.select_date` / `common.aria_clear` / `common.period_today` keys — **zero new keys expected** (state it if one is genuinely needed, with full `sq/en/uk/it` parity); `check:i18n` green; all 4 locales confirmed at runtime.

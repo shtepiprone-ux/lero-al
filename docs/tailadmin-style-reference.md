@@ -1067,12 +1067,33 @@ arrow** (`.arrowTop:before/after {display:none}`). In lero the container chrome 
 
 | State | Zip flatpickr value (cited) | lero mapping |
 |---|---|---|
-| **resting** | `border:1px solid transparent`; `border-radius:150px` (full pill); `color:#393939`; `font-weight:400`; `max-width:39px; height:39px; line-height:39px`; `width:14.2857%` (1/7) | pill radius (`rounded-full`); text `gray-700`; **39px desktop**, **≥44px touch `<640`** (clause 11) |
+| **resting** | `border:1px solid transparent`; `border-radius:150px` (full pill); `color:#393939`; `font-weight:400`; `max-width:39px; height:39px; line-height:39px`; `width:14.2857%` (1/7) | pill radius (`rounded-full`); text `gray-700`; **39px on ALL breakpoints incl. the `<640` bottom sheet** — see the owner override note below |
 | **hover / focus** | `background:#e6e6e6; border-color:#e6e6e6` | bg `gray-200 #e4e7ec` (one shade off the raw `#e6e6e6`, per §6n/§6o mapping) |
 | **selected** | base `background:#569ff7; color:#fff; border-color:#569ff7` (flatpickr default; range shadow overridden to brand `#465fff`) | **brand `#EC5447`** fill + white text + brand border (single-select; brand-mapped per note above) |
 | **today** (not selected) | `border-color:#959ea9` (→ `gray-400 #98a2b3`); `today:hover` → `background:#959ea9; color:#fff` | TailAdmin marks today with a **gray-400 border**, NOT a brand ring. ⚠️ The existing DatePicker uses `ring-primary/40` (brand). **Decision for the kickoff:** adopt the §6t gray-400 today border for conformance, unless the owner elects to keep the brand ring — STOP-AND-ASK, do not silently pick. |
 | **out-of-month** (`prevMonthDay`/`nextMonthDay`) | TailAdmin override `color: var(--color-gray-400) !important` (`#98a2b3`) | `gray-400`. (lero's current grid hides/dim-disables out-of-month via `!inMonth` → keep its behavior; if shown, use gray-400.) |
 | **disabled** (future / `maxDate`) | `color: rgba(57,57,57,.1)`; `background:transparent`; `cursor:not-allowed` | very-light gray, non-interactive — preserves lero's `opacity-20 pointer-events-none` intent |
+
+**Trigger input** (`input.datepicker.flatpickr-input`, cited from `index.html`): the real TailAdmin date-picker
+input is `text-theme-sm shadow-theme-xs rounded-lg border border-gray-200 bg-white py-2.5 font-medium
+text-gray-700` with a left calendar icon (`pl-[34px]`) and `placeholder="Select dates"`, `focus:ring-0
+focus:outline-hidden`. (The dashboard instance is a compact collapsing header variant — `h-10 max-w-11
+xl:max-w-fit` — so its `h-10`/`max-w-11` are the header gimmick, NOT the form-field size.) **lero's DatePicker
+trigger = the §6d/§6e form-field chrome** (`h-11`, full-width, `rounded-lg`, `shadow-theme-xs`, brand focus ring,
+`text-theme-sm` value/placeholder, `font-medium`, `text-gray-700`), with the calendar icon as `leftSection` and
+the clear-X as `rightSection`. This is the same chrome every other migrated field (PhoneField etc.) already uses —
+i.e. "take the TailAdmin styles" resolves to §6d/§6e here, not to the compact header instance's `h-10`.
+
+> **🔴 Owner overrides (2026-07-06, Task 557 STOP-AND-ASK):**
+> 1. **Trigger:** adopt the §6d/§6e bordered TailAdmin input chrome (above) — NOT the legacy filled `bg-muted
+>    rounded-xl`. ("У тебе є стиль Date Picker з TailAdmin. Візьми всі необхідні стилі звідти.")
+> 2. **Day-cell size = 39px on the mobile bottom sheet TOO** (not enlarged to ≥44px). This is an EXPLICIT owner
+>    override of the clause-11 ≥44px touch minimum for the calendar day cells specifically — the calendar renders
+>    as a full-width bottom sheet `<640`, but each day cell stays the §6t **39px** TailAdmin size. ("на мобільних
+>    екранах Date Picker має бути bottom sheet з ячейками дат розміром 39px".) **Reviewers: do NOT reject the day
+>    cells for being <44px on mobile — this is the authorized, documented exemption.** The nav arrows + Today
+>    shortcut are NOT covered by this exemption and still meet ≥44px on mobile.
+> 3. **Today marker = the §6t gray-400 border** (not the legacy brand ring).
 
 **What lero does NOT take from flatpickr:** range mode (`startRange`/`endRange`/`inRange` connector shadows), the
 time picker (`.flatpickr-time`), the week numbers (`.flatpickr-weekwrapper`), and the year `numInput` spinner —

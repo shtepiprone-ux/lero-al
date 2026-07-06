@@ -869,6 +869,19 @@ stories, artifact removed after capture)** across all five foundation consumers 
 
 See `docs/sessions/2026-07-02-task522-bottom-sheet-content-height-fix.md` for the full rendered-proof matrix.
 
+### §18.9 — 🔴 IRON RULE: internal component spacing MUST be visually verified — the geometry gate is BLIND to it (owner P0, 2026-07-06, after the Task 553/554 icon-overlap miss)
+
+**What happened.** Task 553 migrated `LocationCombobox` onto `MantineCombobox` and passed its `MapPin` as `leftSection`. Task 554 added a persisted `screenshots:assert` matrix and it reported **478/496 PASS** — yet the rendered field showed the icon sitting **on top of** the placeholder text ("◉ll cities"/"◉сі міста", first character occluded) at every breakpoint × locale, and the region picker rendered with **no placeholder at all**. Both the executor and the reviewer missed it because `screenshots:assert` only checks **geometry** (full-width `<640`, no horizontal overflow) — it is **structurally blind** to icon/text overlap, internal padding, and empty placeholders (the same crash-and-geometry limitation recorded for Task 529). A green matrix is therefore **NOT** proof the component's internals are correct.
+
+**The rule (non-negotiable, applies to every component/story from now on):**
+
+1. **Reserve section padding — never clobber it.** Any input-like trigger (`TextInput`/`Select`/`MantineCombobox`/PasswordInput/search field) that carries a `leftSection` or `rightSection` icon MUST render its text with a **visible gap** from the icon — the icon must NEVER overlap or touch the text/placeholder. Mantine reserves this padding automatically via `data-with-left-section`/`data-with-right-section`; an **unconditional `padding`/`padding-inline-*` shorthand in `input-chrome.css` (or `theme.styles`) that ignores the `:not([data-with-*-section])` guard is forbidden** — it defeats the reservation and causes exactly this overlap. Any new padding rule on an input class MUST carry the `:not([data-with-…-section])` guard (see the existing guarded block, `input-chrome.css:116–124`).
+2. **Every select/combobox trigger MUST have a placeholder** (or a persistent visible label) so it is never a blank box + chevron. A trigger whose value can be empty and that shows nothing is a defect.
+3. **Internal-spacing states are part of the rendered proof.** For ANY story/task touching a component with icons, sections, adornments, or composed sub-fields, the session log MUST include a **human-inspected side-by-side** of the actual render (icon↔text gap present? placeholder present? no clipping/overlap of internal elements?) at `uk@320` + one desktop width — NOT just the geometry-gate PASS count. `screenshots:assert` green is a baseline, never internal-chrome proof.
+4. **Reviewer duty.** The orchestrator MUST open the actual rendered screenshots and eyeball internal spacing/overlap/placeholder **before** any verdict. Approving from the matrix PASS count without looking at the pixels is a review failure (this is what happened on the Task 554 first pass). Cross-ref `docs/orchestrator-role.md` → "Review checklist" (internal-spacing/chrome visual row).
+
+Ideally the gate gains a mechanical icon-overlap/placeholder assertion (candidate follow-up), but until it does, **rule 3 + rule 4 (human visual verification) are mandatory and are the verdict** — the geometry gate is not.
+
 ---
 
 ## §19 — Canonical responsive Select: `MantineSelect` (Tasks 509 + 510)

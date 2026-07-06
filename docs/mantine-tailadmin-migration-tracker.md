@@ -158,6 +158,22 @@ UNCHANGED by this fix (478/496, same as before — the geometry gate cannot see 
 class) — the actual proof is a human-inspected rendered screenshot set at 6 breakpoint/locale
 combinations across the 4 affected consumers.
 
+**Task 556 (✅ done) — `PhoneField` → Mantine/TailAdmin migration** (Phase-2 composite, next after
+the Combobox family): legacy `Combobox`/`Input`/`Label` → `MantineCombobox`/Mantine
+`TextInput`/`InputLabel`, presentational swap only (all phone LOGIC byte-identical, `phone.test.ts`
+56/56 unaffected). **STOP #1 (owner: Option A)** — dropped `size` entirely, standardized to h-11
+(consistent with the Task 553 `LocationCombobox` precedent); compact country trigger via
+`triggerWidth={{base:'7rem',sm:'7rem'}}` (7rem = legacy `w-28`, owner-cited); 4 admin call sites
+(`AdminUserProfile`/`AdminUserCreate` × phone+whatsapp) had `size="sm"` removed. **STOP #2 (owner:
+Option A)** — added `dropdownMinWidth?: number` to `MantineCombobox` (desktop dropdown only,
+default `undefined` = byte-identical when absent); `PhoneField` passes the legacy `240` value
+verbatim. Persisted `Mantine/Primitives/PhoneField` story (default + error states); rendered gate
+494/512 PASS, 0 FAIL, 18 pre-existing AMBIGUOUS (+16 new clean cells). §18.9 human-visual proof at
+6 breakpoint/locale combos + a live `AuthSheet` check confirming the country dropdown does NOT clip
+inside the registration Sheet overlay (portal-by-default). New critical-flow-registry.md row
+("Phone entry") + 3 RTL smoke tests + 2 planted-violation transcripts (dropdownMinWidth prop +
+PhoneField wiring).
+
 ## PHASE 3 — Layout (7)
 Header · Footer · FilterBar · MobileBottomNav · PageHeader · PageShell · Section.
 

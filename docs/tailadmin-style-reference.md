@@ -1024,6 +1024,60 @@ max-width both require `notification-chrome.css` (state-dependent/media-query CS
 **Result:** `<Anchor component="button" fz="var(--mantine-font-size-xs)" fw={500} c="brand.7" mih="2.75rem" …>` —
 zero invented pixel/color values, both citations traceable to the zip line numbers above.
 
+## 6t. Date-picker calendar body (flatpickr) — ZIP-CITED, markup + CSS present (Task 557, extracted 2026-07-06)
+
+> **Step 0 result — NOT an honest-negative. The zip HAS the calendar.** The earlier Task-557 draft asserted
+> `demo_tailadmin_com.zip` contained "zero date-input/calendar-picker markup (only `images/calendar.svg`)". That
+> was WRONG. The dashboard (`index.html`, and also `html/index.html`, `html/sales.html`) renders the full
+> **flatpickr** date-picker — the SAME flatpickr component TailAdmin uses on its Forms/Form-Elements page — with a
+> statically-rendered `.flatpickr-calendar` (month nav + weekday header + 6×7 day grid incl. `selected`,
+> `prevMonthDay`, `nextMonthDay` states), and `css/style.css` carries the complete flatpickr stylesheet
+> (base `flatpickr.min.css` + TailAdmin overrides). **No live capture is needed — this row is extracted from the
+> zip.** (The owner correctly pointed to the Dashboard/Forms date picker.)
+
+**Markup source:** `index.html` → `.flatpickr-calendar.rangeMode.animate.static.flatpickr-right`.
+**CSS source:** `css/style.css` → the flatpickr block (base) + the TailAdmin override rules at the tail of that block.
+
+**Note on brand color:** TailAdmin's own flatpickr build left flatpickr's DEFAULT blue `#569ff7` for the
+selected day and only re-themed the range-connector shadow to its brand `#465fff`. Because lero's brand is
+`#EC5447` (the project's standing override of TailAdmin `#465fff` — see §1 + clause 16), and lero's `DatePicker`
+is **single-select** (no range), the selected day maps to **brand `#EC5447`**, consistent with the existing
+hand-rolled DatePicker's `bg-primary` selected fill. Every other value below is the zip's literal flatpickr value,
+mapped to the nearest project token where flatpickr shipped a raw hex (the same one-shade-token-mapping discipline
+used in §6n/§6o).
+
+**Calendar container** (`.flatpickr-calendar`, cited): `background:#fff`; `border-radius:5px`; `font-size:14px;
+line-height:24px`; multi-edge hairline + drop shadow `1px 0 0 #e6e6e6,-1px 0 0 #e6e6e6,0 1px 0 #e6e6e6,
+0 -1px 0 #e6e6e6,0 3px 13px rgba(0,0,0,.08)`; width ≈`307.875px` desktop. TailAdmin override **removes the popover
+arrow** (`.arrowTop:before/after {display:none}`). In lero the container chrome is supplied by `MantinePopover`
+(§6j) / the `<640` bottom sheet (§6i mechanism); this row governs the calendar BODY inside it.
+
+**Month nav** (`.flatpickr-months`, cited):
+- Prev/Next: `cursor:pointer`; TailAdmin override `padding:0`; positioned `left/right: calc(var(--spacing)*7)` = **28px**;
+  chevron **SVG**, hover `stroke: var(--color-brand-500)` (→ lero brand `#EC5447`); base svg 14×14. Nav row height `34px`.
+- Current-month label (`.flatpickr-current-month` / `span.cur-month`): `font-weight:700`, `font-size:135%`, centered.
+  lero keeps its `Intl.DateTimeFormat(locale,{month:'long',year:'numeric'})` `capitalize font-semibold` label.
+
+**Weekday header** (`span.flatpickr-weekday` + `.flatpickr-weekdays` override, cited): color `rgba(0,0,0,.54)`
+(→ `gray-500 #667085`), `font-weight:bolder`, `font-size:90%` (≈12px → `text-theme-xs`); TailAdmin override
+`margin-top: calc(var(--spacing)*6)` = **24px**, `margin-bottom: calc(var(--spacing)*4)` = **16px**, `height:auto`.
+(lero stays **Monday-first**, `weekStartsOn:1` — a locale/product rule, not a TailAdmin change.)
+
+**Day cell** (`.flatpickr-day`, cited) — state matrix:
+
+| State | Zip flatpickr value (cited) | lero mapping |
+|---|---|---|
+| **resting** | `border:1px solid transparent`; `border-radius:150px` (full pill); `color:#393939`; `font-weight:400`; `max-width:39px; height:39px; line-height:39px`; `width:14.2857%` (1/7) | pill radius (`rounded-full`); text `gray-700`; **39px desktop**, **≥44px touch `<640`** (clause 11) |
+| **hover / focus** | `background:#e6e6e6; border-color:#e6e6e6` | bg `gray-200 #e4e7ec` (one shade off the raw `#e6e6e6`, per §6n/§6o mapping) |
+| **selected** | base `background:#569ff7; color:#fff; border-color:#569ff7` (flatpickr default; range shadow overridden to brand `#465fff`) | **brand `#EC5447`** fill + white text + brand border (single-select; brand-mapped per note above) |
+| **today** (not selected) | `border-color:#959ea9` (→ `gray-400 #98a2b3`); `today:hover` → `background:#959ea9; color:#fff` | TailAdmin marks today with a **gray-400 border**, NOT a brand ring. ⚠️ The existing DatePicker uses `ring-primary/40` (brand). **Decision for the kickoff:** adopt the §6t gray-400 today border for conformance, unless the owner elects to keep the brand ring — STOP-AND-ASK, do not silently pick. |
+| **out-of-month** (`prevMonthDay`/`nextMonthDay`) | TailAdmin override `color: var(--color-gray-400) !important` (`#98a2b3`) | `gray-400`. (lero's current grid hides/dim-disables out-of-month via `!inMonth` → keep its behavior; if shown, use gray-400.) |
+| **disabled** (future / `maxDate`) | `color: rgba(57,57,57,.1)`; `background:transparent`; `cursor:not-allowed` | very-light gray, non-interactive — preserves lero's `opacity-20 pointer-events-none` intent |
+
+**What lero does NOT take from flatpickr:** range mode (`startRange`/`endRange`/`inRange` connector shadows), the
+time picker (`.flatpickr-time`), the week numbers (`.flatpickr-weekwrapper`), and the year `numInput` spinner —
+lero's DatePicker is single-date, no time, Monday-first. Those flatpickr sub-parts are out of scope (do not port).
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

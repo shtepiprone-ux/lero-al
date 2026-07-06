@@ -12,12 +12,15 @@ primitives, **preserving 100% of the date logic and the public Props API.**
 > raw day `<button>`s → Mantine `UnstyledButton` themed cells. **Do NOT add `@mantine/dates`** (it is not
 > installed, and it would still need the project's own bottom sheet — no saving). `date-fns@4` stays.
 
-> **🔴🔴 ORCHESTRATOR PRE-REQ — clause 16a live-capture is NOT YET DONE (blocks hand-off).** The calendar
-> BODY has no TailAdmin reference in the zip (see "Clause 16a" below). The orchestrator MUST live-capture it
-> into a new `tailadmin-style-reference.md §6x` row **before Sonnet starts.** As of this draft the capture is
-> **PENDING** (blocked on a connected Chrome extension). **Sonnet: if the `§6x` calendar row is absent or
-> lacks capture provenance when you open this file, STOP and ask the orchestrator — do NOT invent day-cell
-> values and do NOT browse TailAdmin yourself.**
+> **✅ ORCHESTRATOR PRE-REQ RESOLVED (2026-07-06) — the calendar reference IS in the zip; NO live capture needed.**
+> The earlier "honest-negative / clause-16a live-capture" premise was WRONG. `demo_tailadmin_com.zip` DOES contain
+> the TailAdmin date-picker calendar: the dashboard (`index.html`, also `html/index.html`, `html/sales.html`)
+> renders the full **flatpickr** calendar body (the same flatpickr used on TailAdmin's Forms/Form-Elements page),
+> and `css/style.css` carries its complete stylesheet. The orchestrator extracted it into the authoritative
+> **`docs/tailadmin-style-reference.md §6t`** row (markup + CSS cited, zip-sourced — 2026-07-06). **Sonnet:
+> implement the calendar body against `§6t`. Do NOT browse TailAdmin and do NOT invent values — every value
+> traces to `§6t` (calendar) or `§6d/§6e` (trigger).** One decision is deferred to STOP-AND-ASK #3 below
+> (today-marker: §6t gray-400 border vs the existing brand ring).
 
 ## Current state (read before touching — `src/components/shared/DatePicker.tsx`, 187 lines)
 
@@ -45,22 +48,38 @@ A hand-rolled calendar in a popover. Two visual parts:
 
 - `docs/agent-contract.md` (clauses 1–16, esp. **3, 4, 5, 11, 12, 16, 16a**) + `docs/backlog.md` + `docs/critical-flow-registry.md` (**scan for a listings-date-filter / date-entry row; if none exists, ADD one** — see Regression coverage).
 - 🔴 `docs/mantine-responsive-design-system.md` — **§7 (mobile gate) + §12 (canonical patterns) + §15 (control-height) + §16 (gates) + §18 (theming/CSS pitfalls, `input-chrome.css`) + §18.9 (icon/placeholder/overlap IRON RULE — the calendar icon + clear-X on the trigger, and day-cell touch size, live here)**.
-- 🔴 `docs/tailadmin-style-reference.md` — **§6d/§6e (the TRIGGER inherits this input chrome VERBATIM) + the NEW `§6x` calendar-body row (orchestrator live-capture — see below) + §6 label tokens**.
+- 🔴 `docs/tailadmin-style-reference.md` — **§6d/§6e (the TRIGGER inherits this input chrome VERBATIM) + the NEW `§6t` calendar-body row (zip-cited flatpickr, orchestrator-extracted 2026-07-06 — see below) + §6 label tokens**.
 - `docs/ui-rules.md` (§15 control-height alignment, §17 UI pre-flight), `docs/component-rules.md` (no raw `<button>` — day cells → Mantine `UnstyledButton`/`Button`), `docs/qa-rules.md`.
 - Reference: `src/design-system/mantine/patterns/MantinePopover.tsx` (target overlay primitive — `trigger`+`children`+`title`+`position`/`width`/`offset`, desktop-anchored ≥640 / full-width bottom sheet <640 via `responsiveBottomSheet`, Task 513/514) and the Task 556 session log (the established presentational-swap pattern).
 
-## 🔴 Clause 16a — HONEST-NEGATIVE ON THE ZIP → orchestrator live-capture REQUIRED before hand-off
+## ✅ Clause 16 — ZIP-CITED reference exists (§6t); clause-16a live-capture NOT applicable
 
-`demo_tailadmin_com.zip` contains **zero date-input / calendar-picker markup** — only `images/calendar.svg`, and its calendar *page* uses third-party **FullCalendar** (a month-view event calendar, not a date input). So:
-- **The TRIGGER needs no new row** — it maps to the EXISTING `§6d/§6e` input chrome (border `gray-300`, `rounded-lg`, `h-11`, `bg-transparent`, `shadow-theme-xs`, `focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3`) via the existing `input-chrome.css` rules, with the calendar icon as a `leftSection` and the clear-X as a `rightSection`. **This replaces the legacy filled `rounded-xl bg-muted` look with the standard bordered §6d/§6e field** — the same conversion every other migrated field got (required after-behavior, not a fork).
-- **The CALENDAR BODY is the honest-negative** — day-cell selected/today/hover/disabled states, the nav arrows, the weekday header, the month label, and the day-cell size/spacing have NO authoritative reference. Per clause 16a the **orchestrator** captures TailAdmin's date-input (flatpickr) calendar from the running `demo.tailadmin.com` **Form Elements** page (rendered screenshot + `getComputedStyle` of the real `.flatpickr-calendar` / day / selected-day / today / disabled elements at the canonical breakpoints) and records the measured values WITH provenance (URL, capture date, method, selector) into a new `tailadmin-style-reference.md §6x` row. **Sonnet implements against that captured `§6x` row and never browses TailAdmin.** Brand stays `#EC5447` (selected-day fill).
-- **STATUS: PENDING — orchestrator to capture once a Chrome extension is connected.** Until the `§6x` row exists with provenance, this kickoff is NOT ready to execute (clause 16a).
+`demo_tailadmin_com.zip` **DOES contain** the date-picker calendar. The earlier claim of "zero calendar markup"
+was wrong: the dashboard `index.html` (+ `html/index.html`, `html/sales.html`) renders the full **flatpickr**
+`.flatpickr-calendar` (month nav, weekday header, 6×7 day grid with `selected`/`prevMonthDay`/`nextMonthDay`
+states) and `css/style.css` carries the complete flatpickr stylesheet. This is the SAME flatpickr picker TailAdmin
+uses on its Forms/Form-Elements page. So:
+- **The TRIGGER** maps to the EXISTING `§6d/§6e` input chrome (border `gray-300`, `rounded-lg`, `h-11`,
+  `bg-transparent`, `shadow-theme-xs`, `focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3`) via the
+  existing `input-chrome.css` rules, with the calendar icon as a `leftSection` and the clear-X as a `rightSection`.
+  **This replaces the legacy filled `rounded-xl bg-muted` look with the standard bordered §6d/§6e field** — the
+  same conversion every other migrated field got (required after-behavior, not a fork).
+- **The CALENDAR BODY** maps to the NEW **`docs/tailadmin-style-reference.md §6t`** row (orchestrator-extracted
+  from the zip, 2026-07-06 — markup + CSS cited). It gives every value Sonnet needs: container chrome, month-nav
+  (28px inset, chevron, hover stroke brand), weekday header (gray-500, bolder, ~12px, 24/16px margins), and the
+  full day-cell state matrix — resting (pill radius 150px, 39px desktop / ≥44px `<640`, gray-700 text), hover
+  (`gray-200`), **selected (brand `#EC5447`** — flatpickr's default `#569ff7` mapped to lero brand, single-select),
+  today (gray-400 border — see STOP-AND-ASK #3), out-of-month (gray-400), disabled (very-light gray, non-interactive).
+- **Clause 16a does NOT apply** (that clause is for zip-ABSENT primitives). No live capture, no provenance block
+  required — `§6t` is a normal zip-cited row like §6o/§6p/§6s. **Sonnet implements against `§6t` and never browses
+  TailAdmin.** Brand `#EC5447` = selected-day fill.
 
 ## STOP-AND-ASK — resolve BEFORE inventing scope
 
-The architecture is already decided (Mantine-core rebuild). Two smaller points may still need an owner ruling — **STOP and ask, do NOT guess:**
-1. **Trigger chrome conversion:** confirm the trigger moves from the legacy filled `bg-muted rounded-xl` to the standard bordered `§6d/§6e` input chrome (recommended — consistent with every migrated field). If the owner wants to preserve a filled look, that would need its own `§6x` extraction. **Default expectation: adopt §6d/§6e.**
-2. **Day-cell mobile size:** current cells are `h-8` (32px) — **below the 44px mobile touch minimum (clause 11).** On `<640` the calendar becomes a full-width bottom sheet and day cells MUST be ≥44px touch targets (desktop may stay compact per the `§6x` capture). Confirm the `§6x` capture's desktop cell size, then enlarge to ≥44px at `<640`. If the capture shows TailAdmin uses a fixed cell size that conflicts with ≥44px on mobile, STOP and ask.
+The architecture is already decided (Mantine-core rebuild). Three smaller points may still need an owner ruling — **STOP and ask, do NOT guess:**
+1. **Trigger chrome conversion:** confirm the trigger moves from the legacy filled `bg-muted rounded-xl` to the standard bordered `§6d/§6e` input chrome (recommended — consistent with every migrated field). If the owner wants to preserve a filled look, that would need its own extraction. **Default expectation: adopt §6d/§6e.**
+2. **Day-cell mobile size:** `§6t` gives the TailAdmin desktop cell as **39px** (`max-width:39px; height:39px`), which is **below the 44px mobile touch minimum (clause 11).** On `<640` the calendar becomes a full-width bottom sheet and day cells MUST be ≥44px touch targets; desktop `≥640` keeps the §6t 39px. **Default expectation: 39px desktop → ≥44px `<640`.** (No conflict — the §6t value is a max-width cap on desktop only.)
+3. **Today marker:** `§6t` shows TailAdmin marks *today* with a **gray-400 border** (`#959ea9`→`gray-400`), whereas the existing DatePicker uses a **brand ring** (`ring-primary/40`). **Default expectation: adopt the §6t gray-400 today border** for TailAdmin conformance. If the owner prefers to keep the brand today-ring, that is an explicit owner override recorded in `§6t` — STOP and ask, do not silently pick.
 
 Anything else ambiguous (e.g. a consumer that unexpectedly needs a prop) → STOP and ask; do not invent.
 
@@ -69,12 +88,12 @@ Anything else ambiguous (e.g. a consumer that unexpectedly needs a prop) → STO
 - **Trigger** is already `w-full` → stays full-width at every breakpoint (§6d/§6e field). ✅
 - **Calendar** → MUST render as a **full-width bottom sheet `<640`** via `MantinePopover` (edge-to-edge, top-only radius, drag-handle bar, ≤`90dvh` internal scroll, backdrop-tap + Esc close, focus returns to trigger). The legacy fixed `w-[272px]` is **desktop-anchored only**; inside the sheet the calendar fills the width and the 7-column grid expands.
 - **Touch targets ≥44px at `<640`:** day cells, both nav arrows, and the Today shortcut. Long `sq/en/uk/it` month labels wrap / never clip; **no horizontal scroll at 320** in any locale.
-- Desktop `≥640` keeps the anchored popover (position `bottom-start`, the `§6x` desktop width).
+- Desktop `≥640` keeps the anchored popover (position `bottom-start`, the `§6t` desktop width).
 
 ## TailAdmin conformance (clause 16 + 16a)
 
 - **Trigger** → `§6d/§6e` resting/focus/error/disabled chrome VERBATIM (existing `input-chrome.css`); calendar icon `leftSection`, clear-X `rightSection` — **§18.9: neither icon overlaps the text/placeholder (visible gap), the trigger is never a blank box.**
-- **Calendar body** → the NEW `§6x` captured row (selected-day `#EC5447` fill, today marker, hover, disabled, nav arrows, weekday header, month label, cell size/spacing). **Zero invented values** — every value traces to `§6x` (calendar) or an existing `§6` row (trigger). Rendered side-by-side vs the `§6x` capture at every breakpoint × locale is the only style proof; `tsc=0`/gate-green is NOT style proof.
+- **Calendar body** → the NEW `§6t` captured row (selected-day `#EC5447` fill, today marker, hover, disabled, nav arrows, weekday header, month label, cell size/spacing). **Zero invented values** — every value traces to `§6t` (calendar) or an existing `§6` row (trigger). Rendered side-by-side vs the `§6t` capture at every breakpoint × locale is the only style proof; `tsc=0`/gate-green is NOT style proof.
 
 ## Positive flow (happy path)
 
@@ -106,9 +125,9 @@ Actor: user picking a date (listings date filter / admin suspend-until). 1) Trig
 
 1. `DatePicker` renders through `MantinePopover` (calendar overlay) + Mantine `Button` (nav/Today) + Mantine `UnstyledButton` themed day cells + a `§6d/§6e` trigger field — **zero** legacy `@/components/ui/popover` / `@/components/ui/button` imports and **zero raw `<button>`** remain in the file. Public Props API unchanged (`value`/`onChange`/`placeholder`/`className`/`maxDate`); all 5 consumer call sites compile + render unchanged (list any that needed edits — expected: none).
 2. All date LOGIC (`date-fns` calls, `weekStartsOn:1`, `parseISO`/`isValid`/`format`, `maxDate` disabling) byte-identical; behavior preserved end-to-end (positive + every negative branch has a verifiable line).
-3. Trigger = `§6d/§6e` chrome; calendar body = the captured `§6x` reference; §15 control-height on the trigger proven; **zero invented values** (STOP-AND-ASK #1 + #2 resolved by the owner and cited).
+3. Trigger = `§6d/§6e` chrome; calendar body = the captured `§6t` reference; §15 control-height on the trigger proven; **zero invented values** (STOP-AND-ASK #1 + #2 resolved by the owner and cited).
 4. Mobile `<640`: trigger full-width; calendar = full-width bottom sheet; day cells + nav arrows + Today shortcut ≥44px touch; no h-scroll at 320 × `sq/en/uk/it`.
-5. TailAdmin `§6d/§6e` (trigger) + `§6x` (calendar) matched rendered side-by-side; §18.9 icon/placeholder/touch checks pass; clause 16a `§6x` row carries live-capture provenance.
+5. TailAdmin `§6d/§6e` (trigger) + `§6t` (calendar) matched rendered side-by-side; §18.9 icon/placeholder/touch checks pass; every calendar-body value traces to the zip-cited `§6t` row (no invented values; clause 16a N/A — reference is zip-present, not an honest-negative).
 6. Registry row added/extended + baseline recorded + DatePicker RTL smoke (with planted-violation FAIL transcript).
 7. i18n: reuse the existing `common.select_date` / `common.aria_clear` / `common.period_today` keys — **zero new keys expected** (state it if one is genuinely needed, with full `sq/en/uk/it` parity); `check:i18n` green; all 4 locales confirmed at runtime.
 8. Gates: `tsc=0`, `check:stories`, `check:i18n`, `check:design-tokens -- --strict`, `check:mojibake`, `check:file-integrity` all green; `screenshots:assert -- --mantine-only` green; §18.9 human-visual set pasted; Files-Changed table present. **Do NOT run git — HELD for orchestrator review.**

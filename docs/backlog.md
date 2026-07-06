@@ -28,7 +28,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 556. Next free: 557.**
+**Task numbering — last used: 557. Next free: 558.**
+
+**🟡 Task 557 (Sprint 41 / Epic MM Phase-2 · DatePicker → Mantine/TailAdmin migration) — 📝 KICKOFF DRAFTED, NOT yet ready to execute.** Owner chose the Mantine-core rebuild (keep hand-rolled calendar + `date-fns`; legacy `ui/popover`→`MantinePopover`, `ui/button`→Mantine `Button`, raw day `<button>`→`UnstyledButton`; trigger→§6d/§6e; no new dependency). 5 consumer call sites (`FiltersPanel` ×2, `ListingsFilters` ×2, `AdminUserProfile` ×1), public API stable. **🔴 BLOCKED on orchestrator clause-16a live-capture:** the zip has NO date-picker/calendar markup → the calendar-body `§6x` row must be live-captured from `demo.tailadmin.com` (needs a connected Chrome extension) before hand-off; the trigger reuses existing §6d/§6e. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_557_DatePickerMantineMigration.md`.
 
 **🟢 Task 556 (Sprint 41 / Epic MM Phase-2 · PhoneField → Mantine/TailAdmin migration) — ✅ APPROVED (orchestrator review 2026-07-06) + ✅ COMMITTED `7e8d25c59`.** See Last Session above for full detail (both STOP-AND-ASKs owner-resolved and implemented, 4 admin consumer edits, new `dropdownMinWidth` primitive prop, persisted story, registry row, §18.9 human-visual proof incl. live AuthSheet no-clip check). Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_556_PhoneFieldMantineMigration.md`. Session: `docs/sessions/2026-07-06-task556-phonefield-mantine-migration.md`. **Next composite: DatePicker or FiltersPanel/HeroSearch themselves.**
 

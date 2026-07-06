@@ -32,7 +32,9 @@
 
 **Task 534 — SUPERSEDED + CLOSED by 535** (kickoff `..._Task_534_PaginationMobileTapTarget.md` retained for history; its ≥44px requirement was implemented as Rule 5 of Task 535's `MantinePagination`; 534 was never executed standalone).
 
-**Task numbering — last used: 554. Next free: 555.**
+**Task numbering — last used: 555. Next free: 556.**
+
+**🔴 Task 555 (Sprint 41 / Epic MM Phase-2 · fix LocationCombobox D1 icon/text overlap + D2 missing region placeholder) — OPEN, kickoff ready for Sonnet.** Fixes the two owner-caught render defects at the CANONICAL source (`MantineCombobox`/`input-chrome.css`, not a one-off) + proves internal spacing per the new IRON RULE `docs/mantine-responsive-design-system.md §18.9`. Blocks Task 553/554 closure. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_555_LocationComboboxIconOverlapAndRegionPlaceholderFix.md`.
 
 **🟢 Task 553 (Sprint 41 / Epic MM Phase-2 Slice 3 · LocationCombobox → MantineCombobox — FULL incl. add-location sub-flow) — ✅ DIFF-LEVEL REVIEW PASS (orchestrator, 2026-07-05), HELD pending Task 554 + owner native gate.** Diff verified against real files: `onKeyDown` desktop-trigger-only (STOP-1 Option A), §6s toggle chrome cited+owner-confirmed (STOP-2), `size` removed with all 11 sites confirmed size-free (only `ListingsFilterBar` edited), `common.region`/`common.error_generic` 4-locale parity, add-failure surfaces localized error, registry row + 4 RTL sub-panel tests + 2 primitive onKeyDown tests present. **BLOCKING gap:** the NEW add-location sub-panel has no persisted machine-produced rendered matrix (temp story was deleted) → **follow-up Task 554 opened** (owner decision). No commit emitted until 554 green + owner native gate. Kickoff: `tasks/Sprints/Sprint_41_kickoff_prompt_Task_553_LocationComboboxMantineMigration.md`. Session: `docs/sessions/2026-07-05-task553-locationcombobox-mantine-migration.md`.
 

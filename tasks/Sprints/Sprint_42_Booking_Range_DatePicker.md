@@ -36,6 +36,21 @@ Owner referenced M3 "Docked date picker" (m3.material.io) + react.setproduct.com
   new `@mantine/dates` dependency; UI = TailAdmin (§6t/§6d/§6e/§6c).
 - **Desktop navigation = single header with prev/next arrows + month/year dropdowns** (decision #3 above, UPDATED).
 
+## Owner rejection of Task 558 → Task 561 fixes (2026-07-08, round 2)
+
+Owner tested the Task 558 render at 320px and REJECTED it. Six defects (all verified in the real diff), routed back
+to Sonnet as **Task 561** (`Sprint_42_kickoff_prompt_Task_561_RangeDatePickerFixes.md`):
+1. Duplicate month/year label in the mobile sheet header (sticky top label + per-section label) — remove the top one.
+2. Weekday row sits above the month/year title — move it UNDER each month section's title.
+3. Confirm/Apply disabled for a single date — must be enabled once `from` is staged.
+4. No year selection on mobile — add a fixed-header month + year dropdown (like desktop).
+5. Past dates unreachable + no context switch — new `disablePastDates?: boolean` prop (rental blocks past, search
+   allows past); mobile window must extend into the past when allowed.
+6. Mobile Confirm CTA must be pinned to the bottom (must not scroll with the month list).
+
+Owner decisions (AskUserQuestion, 2026-07-08): D1 single date → single-day range `{from, to:from}`; D2 mobile nav =
+fixed-header month + year dropdowns; D3 weekday row under EACH month title; D4 Confirm pinned at the bottom.
+
 ## ⚠️ Open confirmation before/at T-a review
 
 - **Sticky month-name header interpretation** (mobile): a header that reflects the month currently scrolled into
@@ -49,14 +64,16 @@ Owner referenced M3 "Docked date picker" (m3.material.io) + react.setproduct.com
 
 | # | Task | Type | Status |
 |---|------|------|--------|
-| **558** | `RangeDatePicker` component (desktop two-month + mobile Booking scrolling sheet) | UI / component | KICKOFF DRAFTED |
-| **559** | Listings filters → `RangeDatePicker` integration (`FiltersPanel` + `ListingsFilters`) | UI / consumer wiring | KICKOFF DRAFTED |
+| **558** | `RangeDatePicker` component (desktop two-month + mobile Booking scrolling sheet) | UI / component | ❌ REJECTED by owner (2026-07-08) → fixes in Task 561 |
+| **561** | `RangeDatePicker` owner-rejection fixes (dup header, weekday placement, single-date enable, mobile year dropdown, `disablePastDates`, pinned Confirm) | UI / component | KICKOFF DRAFTED — hand to Sonnet |
+| **559** | Listings filters → `RangeDatePicker` integration (`FiltersPanel` + `ListingsFilters`) | UI / consumer wiring | KICKOFF DRAFTED — after 561 approved (will pass `disablePastDates` per surface) |
 | **560** | Admin suspension as a period (DB migration + RLS + server action + admin UI) | Schema / RLS / server action | DEFERRED — plan later |
 
-**Dependency:** 559 depends on 558 (needs the component). 560 is independent and deferred. Hand 558 to Sonnet
-first; 559 after 558 is approved.
+**Dependency:** 561 fixes 558 (same component). 559 depends on 561 being approved (it needs the fixed component +
+the `disablePastDates` prop). 560 is independent and deferred. Hand **561 to Sonnet next**; 559 after 561 is approved.
 
 Kickoffs:
-- `tasks/Sprints/Sprint_42_kickoff_prompt_Task_558_RangeDatePickerComponent.md`
+- `tasks/Sprints/Sprint_42_kickoff_prompt_Task_558_RangeDatePickerComponent.md` (original — REJECTED, retained for history)
+- `tasks/Sprints/Sprint_42_kickoff_prompt_Task_561_RangeDatePickerFixes.md` (active — fixes the 6 rejection points)
 - `tasks/Sprints/Sprint_42_kickoff_prompt_Task_559_ListingsFiltersRangeIntegration.md`
 - Task 560 — deferred; a stub row here until its schema semantics are defined with the owner.

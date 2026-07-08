@@ -34,7 +34,7 @@ import {
   subMonths,
 } from 'date-fns'
 import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import { MantinePopover } from './MantinePopover'
 import { MantineCombobox } from './MantineCombobox'
 
@@ -139,7 +139,7 @@ function computeMonthOptions(
   year: number,
   minDate: Date | undefined,
   maxDate: Date | undefined,
-  monthFormatter: Intl.DateTimeFormat,
+  months: string[],
   fallbackMonth: number,
 ): { value: string; label: string }[] {
   const arr: { value: string; label: string }[] = []
@@ -147,13 +147,10 @@ function computeMonthOptions(
     const candidate = new Date(year, m, 1)
     if (minDate && isBefore(endOfMonth(candidate), startOfMonth(minDate))) continue
     if (maxDate && isAfter(startOfMonth(candidate), endOfMonth(maxDate))) continue
-    arr.push({ value: String(m), label: capitalizeFirst(monthFormatter.format(candidate)) })
+    arr.push({ value: String(m), label: capitalizeFirst(months[m]) })
   }
   if (arr.length === 0) {
-    arr.push({
-      value: String(fallbackMonth),
-      label: capitalizeFirst(monthFormatter.format(new Date(year, fallbackMonth, 1))),
-    })
+    arr.push({ value: String(fallbackMonth), label: capitalizeFirst(months[fallbackMonth]) })
   }
   return arr
 }
@@ -177,14 +174,45 @@ function pickDay(staged: StagedRange, day: Date): StagedRange {
   return { from: staged.from, to: day }
 }
 
-function useWeekdayLabels(locale: string): string[] {
+// Task 562: calendar month/weekday names come from `messages/*.json` `common.calendar_*`, NOT
+// `Intl.DateTimeFormat(locale, {month:'long'|'weekday':'short'})`. Root cause (verified directly,
+// not assumed): Node's ICU has full `sq` data (`Intl.DateTimeFormat('sq',{month:'long'})` →
+// "korrik"), but Chromium's bundled ICU does not (`Intl.DateTimeFormat.supportedLocalesOf(['sq'])`
+// → `[]` in the browser) — `sq` silently fell back to English on the client, the only runtime that
+// actually renders this popover (it opens on click, never during SSR). Rather than branch on
+// per-browser ICU support, every locale's calendar strings are now static data (same
+// "explicit locale in, fixed formatting out" discipline as `src/lib/formatters.ts`), byte-identical
+// across every runtime by construction — verified against the previously-correct `Intl` output for
+// en/it/uk so their rendering is unchanged; only `sq` output actually changes (fixed).
+interface CalendarLocaleData {
+  months: string[]
+  monthsShort: string[]
+  weekdaysShort: string[]
+  monthYearSuffix: string
+  summaryOrder: 'day_month' | 'month_day'
+}
+
+function useCalendarLocaleData(t: TFunc): CalendarLocaleData {
   return useMemo(
-    () =>
-      Array.from({ length: 7 }, (_, i) =>
-        new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(new Date(2024, 0, 1 + i)), // 2024-01-01 = Monday
-      ),
-    [locale],
+    () => ({
+      months: t.raw('calendar_months') as string[],
+      monthsShort: t.raw('calendar_months_short') as string[],
+      weekdaysShort: t.raw('calendar_weekdays_short') as string[],
+      monthYearSuffix: t.raw('calendar_month_year_suffix') as string,
+      summaryOrder: t.raw('calendar_summary_order') as 'day_month' | 'month_day',
+    }),
+    [t],
   )
+}
+
+function formatMonthYearLabel(month: Date, cal: CalendarLocaleData): string {
+  return `${capitalizeFirst(cal.months[month.getMonth()])} ${month.getFullYear()}${cal.monthYearSuffix}`
+}
+
+function formatSummaryDate(d: Date, cal: CalendarLocaleData): string {
+  const day = d.getDate()
+  const mon = cal.monthsShort[d.getMonth()]
+  return cal.summaryOrder === 'month_day' ? `${mon} ${day}` : `${day} ${mon}`
 }
 
 // ── Day cell ─────────────────────────────────────────────────────────────────
@@ -339,8 +367,7 @@ function DesktopBody({
   setAnchorMonth,
   minDate,
   maxDate,
-  weekdays,
-  locale,
+  cal,
   t,
   onApply,
   onCancel,
@@ -351,25 +378,19 @@ function DesktopBody({
   setAnchorMonth: (next: Date) => void
   minDate?: Date
   maxDate?: Date
-  weekdays: string[]
-  locale: string
+  cal: CalendarLocaleData
   t: TFunc
   onApply: () => void
   onCancel: () => void
 }) {
   const rightMonth = addMonths(anchorMonth, 1)
-  const monthFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { month: 'long' }), [locale])
-  const monthYearFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }),
-    [locale],
-  )
 
   const yearOptions = useMemo(() => computeYearOptions(minDate, maxDate), [minDate, maxDate])
 
   // Month dropdown trivially bounded by minDate/maxDate's own month (clause 16 Negative flow).
   const monthOptions = useMemo(
-    () => computeMonthOptions(anchorMonth.getFullYear(), minDate, maxDate, monthFormatter, anchorMonth.getMonth()),
-    [anchorMonth, minDate, maxDate, monthFormatter],
+    () => computeMonthOptions(anchorMonth.getFullYear(), minDate, maxDate, cal.months, anchorMonth.getMonth()),
+    [anchorMonth, minDate, maxDate, cal.months],
   )
 
   function setLeftMonth(next: Date) {
@@ -450,7 +471,7 @@ function DesktopBody({
             />
           </Group>
           <Text c="gray.5" fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>
-            {capitalizeFirst(monthYearFormatter.format(rightMonth))}
+            {formatMonthYearLabel(rightMonth, cal)}
           </Text>
           <ActionIcon
             variant="default"
@@ -468,7 +489,7 @@ function DesktopBody({
             staged={staged}
             minDate={minDate}
             maxDate={maxDate}
-            weekdays={weekdays}
+            weekdays={cal.weekdaysShort}
             onSelect={(d) => setStaged(pickDay(staged, d))}
           />
           <MonthGrid
@@ -476,7 +497,7 @@ function DesktopBody({
             staged={staged}
             minDate={minDate}
             maxDate={maxDate}
-            weekdays={weekdays}
+            weekdays={cal.weekdaysShort}
             onSelect={(d) => setStaged(pickDay(staged, d))}
           />
         </Group>
@@ -496,8 +517,7 @@ function MobileBody({
   anchorMonth,
   minDate,
   maxDate,
-  weekdays,
-  locale,
+  cal,
   t,
   onConfirm,
 }: {
@@ -506,20 +526,10 @@ function MobileBody({
   anchorMonth: Date
   minDate?: Date
   maxDate?: Date
-  weekdays: string[]
-  locale: string
+  cal: CalendarLocaleData
   t: TFunc
   onConfirm: () => void
 }) {
-  const monthFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { month: 'long' }), [locale])
-  const monthYearFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }),
-    [locale],
-  )
-  const summaryFormatter = useMemo(
-    () => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' }),
-    [locale],
-  )
 
   // Window bounds (Task 561 point 5 / D2): reaches PAST months via minDate (already the
   // disablePastDates-clamped effective bound by the time it reaches here) instead of the old
@@ -578,13 +588,13 @@ function MobileBody({
   const visibleMonth = months[visibleMonthIdx] ?? anchorMonth
   const yearOptions = useMemo(() => computeYearOptions(minDate, maxDate), [minDate, maxDate])
   const monthOptions = useMemo(
-    () => computeMonthOptions(visibleMonth.getFullYear(), minDate, maxDate, monthFormatter, visibleMonth.getMonth()),
-    [visibleMonth, minDate, maxDate, monthFormatter],
+    () => computeMonthOptions(visibleMonth.getFullYear(), minDate, maxDate, cal.months, visibleMonth.getMonth()),
+    [visibleMonth, minDate, maxDate, cal.months],
   )
 
   function handleYearChange(v: string) {
     const year = Number(v)
-    const opts = computeMonthOptions(year, minDate, maxDate, monthFormatter, visibleMonth.getMonth())
+    const opts = computeMonthOptions(year, minDate, maxDate, cal.months, visibleMonth.getMonth())
     const validMonths = opts.map((o) => Number(o.value))
     const month = validMonths.includes(visibleMonth.getMonth()) ? visibleMonth.getMonth() : validMonths[0]
     jumpTo(new Date(year, month, 1))
@@ -593,8 +603,8 @@ function MobileBody({
   // Task 561 D1: single-day summary collapses to one date instead of "X – …".
   const rangeSummary = staged.from
     ? staged.to && !isSameDay(staged.from, staged.to)
-      ? `${summaryFormatter.format(staged.from)} – ${summaryFormatter.format(staged.to)}`
-      : summaryFormatter.format(staged.from)
+      ? `${formatSummaryDate(staged.from, cal)} – ${formatSummaryDate(staged.to, cal)}`
+      : formatSummaryDate(staged.from, cal)
     : t('select_range')
 
   return (
@@ -642,14 +652,14 @@ function MobileBody({
             >
               {/* D3: Title → weekday row (inside MonthGrid) → day grid, in this order, per section. */}
               <Text fw={600} size="sm" c="gray.8" mb={8} ta="center">
-                {capitalizeFirst(monthYearFormatter.format(m))}
+                {formatMonthYearLabel(m, cal)}
               </Text>
               <MonthGrid
                 month={m}
                 staged={staged}
                 minDate={minDate}
                 maxDate={maxDate}
-                weekdays={weekdays}
+                weekdays={cal.weekdaysShort}
                 onSelect={(d) => setStaged(pickDay(staged, d))}
               />
             </Box>
@@ -693,9 +703,8 @@ function RangeCalendarBody({
   close: () => void
   isMobile: boolean
 }) {
-  const locale = useLocale()
   const t = useTranslations('common')
-  const weekdays = useWeekdayLabels(locale)
+  const cal = useCalendarLocaleData(t)
 
   const initialFrom = parseRangeDate(value.from)
   const initialTo = parseRangeDate(value.to)
@@ -720,8 +729,7 @@ function RangeCalendarBody({
         anchorMonth={anchorMonth}
         minDate={minDate}
         maxDate={maxDate}
-        weekdays={weekdays}
-        locale={locale}
+        cal={cal}
         t={t}
         onConfirm={commit}
       />
@@ -736,8 +744,7 @@ function RangeCalendarBody({
       setAnchorMonth={setAnchorMonth}
       minDate={minDate}
       maxDate={maxDate}
-      weekdays={weekdays}
-      locale={locale}
+      cal={cal}
       t={t}
       onApply={commit}
       onCancel={close}

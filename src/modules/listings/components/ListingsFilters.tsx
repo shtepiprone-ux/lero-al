@@ -11,7 +11,7 @@ import {
 } from '@/modules/listings/constants'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
-import { DatePicker } from '@/components/shared/DatePicker'
+import { RangeDatePicker } from '@/design-system/mantine/patterns'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
@@ -326,28 +326,13 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
           </AccordionSection>
         )}
 
-        {/* Posting period — custom date pickers */}
+        {/* Posting period — range date picker (Task 559) */}
         <AccordionSection title={tc('period')} open={sections.period} onToggle={() => toggle('period')}>
-          <div className="flex flex-col gap-2">
-            <div>
-              <span className="text-xs text-muted-foreground mb-1.5 block">{tc('date_from')}</span>
-              <DatePicker
-                value={get('date_from') || undefined}
-                onChange={v => updateParams({ date_from: v ?? null })}
-                placeholder={tc('select_date')}
-                maxDate={today}
-              />
-            </div>
-            <div>
-              <span className="text-xs text-muted-foreground mb-1.5 block">{tc('date_to')}</span>
-              <DatePicker
-                value={get('date_to') || undefined}
-                onChange={v => updateParams({ date_to: v ?? null })}
-                placeholder={tc('select_date')}
-                maxDate={today}
-              />
-            </div>
-          </div>
+          <RangeDatePicker
+            value={{ from: get('date_from') || undefined, to: get('date_to') || undefined }}
+            onChange={next => updateParams({ date_from: next.from ?? null, date_to: next.to ?? null })}
+            maxDate={today}
+          />
         </AccordionSection>
 
         {/* Search by ID */}

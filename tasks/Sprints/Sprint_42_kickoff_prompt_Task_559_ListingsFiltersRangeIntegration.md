@@ -122,3 +122,23 @@ BOTH `FiltersPanel` and `ListingsFilters` — **uk@375, uk@390 (mandatory stress
 no h-scroll at 320, the `<640` bottom sheet full-width, section title wraps (no clip) at long `sq`/`it`, §18.9
 icon↔text gap clean. Paste the completed matrix into the session log, then re-submit for a fresh diff-less evidence
 review. No new task number — this is a Task 559 evidence completion (kickoff edited per the prompt-hand-off rule).
+
+---
+
+## ✅ Evidence completion — 2026-07-08 (same day, no wiring change)
+
+Captured the full requested matrix via the real dev server (`npm run dev` + Playwright, temp probe script removed
+afterward, dev server stopped): **uk@320/375/390 + sq@320/1440 + it@320/1440 + en@1440, on BOTH `FiltersPanel` and
+`ListingsFilters`** — 24 screenshots (closed + open state × 12 surface/locale/width combinations). Every cell:
+trigger full-width `<640`, no h-scroll, no clipped text, §18.9 icon↔text gap intact, picker opens correctly from
+the new mounting location. The specific flagged risk — **`sq`'s "PERIUDHA E POSTIMIT" wrapping inside
+`ListingsFilters`' narrower `AccordionSection` column** (vs. `FiltersPanel`'s full-width `SectionHeader`, where it
+fits on one line) — wraps cleanly to two lines with no clip/h-scroll. Full matrix + a table of what was checked per
+cell is in the session log's "Rendered evidence → Round 2" section:
+`docs/sessions/2026-07-08-task559-listings-filters-range-integration.md`. Two out-of-scope, pre-existing,
+unrelated observations were noted (NOT fixed, NOT this task's files): (1) `RangeDatePicker`'s calendar body renders
+month/weekday names in English at `sq`/`it` even in the real app, not just Storybook — confirms the existing Task
+562 candidate; (2) a `ListingCard`/`PriceBlock` number-formatting hydration mismatch + a `Tabs` `id` mismatch, both
+reproducing on a plain `/sq/listings` or `/it/listings` load with the filters panel untouched. **Wiring diff is
+byte-identical to the approved round-1 diff** (confirmed via `git diff` on the two product files). Git NOT run —
+re-submitted for orchestrator re-review.

@@ -14,7 +14,7 @@ import {
 } from '@/modules/listings/constants'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { YearCombobox } from '@/components/shared/YearCombobox'
-import { DatePicker } from '@/components/shared/DatePicker'
+import { RangeDatePicker } from '@/design-system/mantine/patterns'
 import { FilterRangeInputs } from '@/components/shared/FilterRangeInputs'
 import { FilterMultiToggle } from '@/components/shared/FilterMultiToggle'
 import { FilterRoomsRow } from '@/components/shared/FilterRoomsRow'
@@ -362,29 +362,14 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
               </div>
             )}
 
-            {/* Posting period — custom date pickers */}
+            {/* Posting period — range date picker (Task 559) */}
             <div className="px-5 py-5">
               <SectionHeader>{t('period')}</SectionHeader>
-              <div className="flex flex-col gap-2">
-                <div>
-                  <span className="text-xs text-muted-foreground mb-1.5 block">{t('date_from')}</span>
-                  <DatePicker
-                    value={local.date_from}
-                    onChange={v => update({ date_from: v })}
-                    placeholder={t('select_date')}
-                    maxDate={today}
-                  />
-                </div>
-                <div>
-                  <span className="text-xs text-muted-foreground mb-1.5 block">{t('date_to')}</span>
-                  <DatePicker
-                    value={local.date_to}
-                    onChange={v => update({ date_to: v })}
-                    placeholder={t('select_date')}
-                    maxDate={today}
-                  />
-                </div>
-              </div>
+              <RangeDatePicker
+                value={{ from: local.date_from, to: local.date_to }}
+                onChange={next => update({ date_from: next.from, date_to: next.to })}
+                maxDate={today}
+              />
             </div>
 
             {/* Search by ID */}

@@ -87,3 +87,38 @@ those stories; otherwise app-route rendered evidence.
 
 `RangeDatePicker` internals (Task 558); admin suspension (Task 560); changing the backend listings query contract or
 the `date_from`/`date_to` param names; other filter controls on these surfaces.
+
+---
+
+## 🔴 ORCHESTRATOR REVIEW — 2026-07-08 — CHANGES REQUESTED (not approved, held; git NOT emitted)
+
+**Diff reviewed against the real files (Read tool), not the report. The wiring is CORRECT on the merits** — I
+verified every point below directly:
+
+- Both surfaces now render ONE `RangeDatePicker`; the two legacy `DatePicker` (`date_from`/`date_to`) instances are
+  gone; no raw `<button>`/`<select>` introduced. ✅ (AC 1)
+- Atomic write confirmed in the diff: `FiltersPanel` → `onChange={next => update({date_from: next.from, date_to:
+  next.to})}` (one merge); `ListingsFilters` → `onChange={next => updateParams({date_from: next.from ?? null,
+  date_to: next.to ?? null})}` (one `router.push`). `{from,to}` ↔ params is lossless (both ISO `yyyy-MM-dd`); clear
+  (trigger X → `onChange({undefined,undefined})`) removes both. ✅ (AC 2)
+- Deep-link hydration paths present; SSR/CSR authority untouched. ✅ (AC 3)
+- `maxDate={today}` preserved on both; `disablePastDates` correctly NOT passed (listings-search context). ✅
+- i18n: no new strings; `common.period` present in all four locales at line 435 (verified), `RangeDatePicker`'s own
+  keys parity-checked. ✅ (AC 6)
+- Regression: 6/6 RTL tests mount the REAL components + planted-violation transcript; registry row extended. ✅ (AC 5)
+- Scope clean (3 files + 1 test + registry + backlog); no orchestrator-authored product code.
+
+**BLOCKER — AC 4 / clause 12 / clause 13 rendered-evidence gate is NOT satisfied.** This kickoff mandated a rendered
+matrix for BOTH surfaces at "canonical breakpoints × sq/en/uk/it (uk@320/375/390 mandatory)". The session log
+delivered only **uk@320 + en@1440** and argues the rest by inheritance from Task 558/561. Inheritance-by-argument is
+exactly the "primitive is class-correct on paper" shortcut the owner rejected in Sprint 32 — the reflow of the picker
+*inside* these two filter containers (long `sq`/`it` section titles — "Periudha e postimit" / "Periodo di
+pubblicazione" — in the `SectionHeader` / `AccordionSection`, accordion open-state at 375/390) is a genuinely new,
+unproven question. `tsc=0`/gates-green is not style/render proof.
+
+**To close (evidence-only — do NOT change the wiring, it is approved as-is):** capture the missing rendered cells for
+BOTH `FiltersPanel` and `ListingsFilters` — **uk@375, uk@390 (mandatory stress cells), and sq + it at ≥1 mobile
+(320/375) and ≥1 desktop width** — via the real dev server, confirming: picker trigger full-width `<640`, no clip /
+no h-scroll at 320, the `<640` bottom sheet full-width, section title wraps (no clip) at long `sq`/`it`, §18.9
+icon↔text gap clean. Paste the completed matrix into the session log, then re-submit for a fresh diff-less evidence
+review. No new task number — this is a Task 559 evidence completion (kickoff edited per the prompt-hand-off rule).

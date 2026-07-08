@@ -1094,6 +1094,18 @@ i.e. "take the TailAdmin styles" resolves to §6d/§6e here, not to the compact 
 >    cells for being <44px on mobile — this is the authorized, documented exemption.** The nav arrows + Today
 >    shortcut are NOT covered by this exemption and still meet ≥44px on mobile.
 > 3. **Today marker = the §6t gray-400 border** (not the legacy brand ring).
+>
+> **🔴 Consumers/overrides — `RangeDatePicker` mobile navigation (2026-07-08, Task 561 owner rejection of the
+> Task 558 render):** the range picker's `<640` mobile sheet does **NOT** follow Booking.com's pure forward-scroll
+> (no chrome) model that Task 558 shipped. The owner rejected that render and locked a **fixed (non-scrolling)
+> header carrying a month dropdown + a year dropdown** (§6c dropdown/select chrome — the SAME chrome the desktop
+> two-month header already uses) above the scrolling month list. This is an explicit owner override of the plain
+> Booking scrolling-sheet layout: it is the mechanism for (a) reaching months in EITHER direction (past or future,
+> not forward-only) and (b) jumping directly to a year without a long scroll. Each scrolling section still shows
+> `Month YYYY` title → Monday-first weekday row → 39px day grid (§6t day-cell chrome unchanged); the summary +
+> Confirm bar stays a fixed, non-scrolling sibling below the list. Day-cell 39px/touch-target/color values above
+> are unaffected — only the mobile NAVIGATION chrome (fixed header + dropdowns) is new, and it traces to the same
+> §6c row the desktop nav already uses, not an invented value.
 
 **What lero does NOT take from flatpickr:** range mode (`startRange`/`endRange`/`inRange` connector shadows), the
 time picker (`.flatpickr-time`), the week numbers (`.flatpickr-weekwrapper`), and the year `numInput` spinner —

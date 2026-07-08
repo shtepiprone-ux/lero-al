@@ -72,3 +72,6 @@ export type { MantineComboboxProps, MantineComboboxOption } from './MantineCombo
 
 export { MantineProgress } from './MantineProgress'
 export type { MantineProgressProps } from './MantineProgress'
+
+export { RangeDatePicker } from './RangeDatePicker'
+export type { RangeDatePickerProps, DateRange } from './RangeDatePicker'

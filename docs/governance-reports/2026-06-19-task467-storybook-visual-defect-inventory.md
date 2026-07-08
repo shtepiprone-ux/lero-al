@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (282 stories, 512 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (283 stories, 528 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,17 +10,17 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 512 |
-| PASS (clean, verdict=pass) | 494 |
+| Total cells | 528 |
+| PASS (clean, verdict=pass) | 498 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
-| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 18 |
+| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 30 |
 | text-clipped | 0 |
 | offscreen-control | 0 |
 | outside-container | 0 |
 | element-overlap | 0 |
 | bottomsheet-overflow | 0 |
-| ambiguous-overlap | 18 |
+| ambiguous-overlap | 30 |
 | unstyled-render | 0 |
 
 ---
@@ -112,6 +112,30 @@
 | `mantine-primitives-drawer--default` | uk | desktop-1024 | `mantine-primitives-drawer--default__uk__desktop-1024.png` | ambiguous-overlap | button("Відкрити панель") ↔ button("Підтвердити") | "Відкрити панель" ↔ "Підтвердити" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-drawer--default` | it | desktop-1024 | `mantine-primitives-drawer--default__it__desktop-1024.png` | ambiguous-overlap | button("Apri pannello") ↔ button("Annulla") | "Apri pannello" ↔ "Annulla" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-drawer--default` | it | desktop-1024 | `mantine-primitives-drawer--default__it__desktop-1024.png` | ambiguous-overlap | button("Apri pannello") ↔ button("Conferma") | "Apri pannello" ↔ "Conferma" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Viti" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | sq | mobile-375 | `mantine-primitives-rangedatepicker--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | sq | mobile-375 | `mantine-primitives-rangedatepicker--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Viti" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | sq | mobile-390 | `mantine-primitives-rangedatepicker--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | sq | mobile-390 | `mantine-primitives-rangedatepicker--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Viti" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | en | mobile-320 | `mantine-primitives-rangedatepicker--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Month" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | en | mobile-320 | `mantine-primitives-rangedatepicker--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Year" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | en | mobile-375 | `mantine-primitives-rangedatepicker--default__en__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Month" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | en | mobile-375 | `mantine-primitives-rangedatepicker--default__en__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Year" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | en | mobile-390 | `mantine-primitives-rangedatepicker--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Month" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | en | mobile-390 | `mantine-primitives-rangedatepicker--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Year" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | uk | mobile-320 | `mantine-primitives-rangedatepicker--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Місяць" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | uk | mobile-320 | `mantine-primitives-rangedatepicker--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Рік" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | uk | mobile-375 | `mantine-primitives-rangedatepicker--default__uk__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Місяць" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | uk | mobile-375 | `mantine-primitives-rangedatepicker--default__uk__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Рік" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | uk | mobile-390 | `mantine-primitives-rangedatepicker--default__uk__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Місяць" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | uk | mobile-390 | `mantine-primitives-rangedatepicker--default__uk__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Рік" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | it | mobile-320 | `mantine-primitives-rangedatepicker--default__it__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Mese" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | it | mobile-320 | `mantine-primitives-rangedatepicker--default__it__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Anno" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | it | mobile-375 | `mantine-primitives-rangedatepicker--default__it__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Mese" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | it | mobile-375 | `mantine-primitives-rangedatepicker--default__it__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Anno" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | it | mobile-390 | `mantine-primitives-rangedatepicker--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Mese" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-rangedatepicker--default` | it | mobile-390 | `mantine-primitives-rangedatepicker--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Anno" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-tabs--default` | sq | mobile-320 | `mantine-primitives-tabs--default__sq__mobile-320.png` | ambiguous-offscreen | #mantine-<id>-tab-activity | Regjistri i aktivitetit | element reachable by horizontal scrolling (carousel/scroll-tabs) |
 | `mantine-primitives-tabs--default` | it | mobile-320 | `mantine-primitives-tabs--default__it__mobile-320.png` | ambiguous-offscreen | #mantine-<id>-tab-activity | Registro attività | element reachable by horizontal scrolling (carousel/scroll-tabs) |
 

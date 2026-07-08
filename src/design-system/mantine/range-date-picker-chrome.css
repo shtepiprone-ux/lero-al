@@ -1,0 +1,9 @@
+/* Task 558 — RangeDatePicker day-cell hover chrome (§6t "hover / focus" row: bg gray-200).
+   State selectors (:hover) cannot be expressed via `theme.styles` (inline, no cascade — §18
+   precedent, same reason input-chrome.css/slider-chrome.css exist as separate stylesheets
+   instead of theme.ts inline styles). Resting/selected/inRange/today/disabled colors are all
+   applied inline per-cell (data-driven, not state-driven), so only :hover needs a stylesheet rule. */
+
+.range-day-cell:hover:not(:disabled):not([data-boundary='true']) {
+  background-color: var(--mantine-color-gray-2);
+}

@@ -419,6 +419,16 @@ const GEOMETRY_ALLOWLIST = [
   // (Mantine's `mantine-XXXXX` element IDs are random per render — see geometry-integrity.mjs
   // doc note) — failReason-only entry, scoped to this one story.
   { storyId: 'mantine-primitives-passwordinput--default', failReason: 'element-overlap', reason: 'reveal-toggle button is intentionally overlaid inside the input box (eye-icon-in-field pattern), not a layout defect' },
+  // Task 561 — RangeDatePicker's trigger clear-X `ActionIcon` is the SAME "icon overlaid inside
+  // the input box" pattern as PasswordInput's reveal-toggle above (rendered via the readOnly
+  // TextInput's `rightSection`, Mantine's standard icon-in-field mechanism) — the geometry
+  // checker's heuristic flags the input's own (empty-`textContent`, since `<input>` elements never
+  // have child text nodes) bounding box as "overlapping" its rightSection button, which is
+  // expected containment, not a defect. Visually confirmed clean via a targeted Playwright probe
+  // (desktop 1024 + mobile 320 uk/sq/en, see the Task 561 session log's Rendered evidence): the
+  // clear-X sits with a clear visible gap from the date text/placeholder, never touching or
+  // occluding it (§18.9 iron rule) — the SAME rendered proof PasswordInput's exemption above relied on.
+  { storyId: 'mantine-primitives-rangedatepicker--default', failReason: 'element-overlap', reason: 'trigger clear-X ActionIcon is intentionally overlaid inside the input box (icon-in-field pattern, same as PasswordInput above), not a layout defect' },
   // Task 529 — Tabs/Default's tab bar is an intentional horizontal-scroll ("swipe on overflow",
   // per the story's own label) container at narrow viewports — a tab clipped at the visible
   // edge is reachable by scrolling, not a real text-clip defect. Matches the project's

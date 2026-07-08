@@ -13,8 +13,11 @@ tasks build on — it is NOT executed standalone.
    **vertically-scrolling multi-month** list with a **sticky month-name header** (replaces Booking's
    "Calendar / I'm flexible" tabs — owner: "замість Calendar і I'm flexible треба вставити назву місяця"),
    **no** ±day flexibility chips, bottom range summary + **full-width Confirm CTA** ("Select dates").
-3. **Desktop** = owner reference (2026-07-06): **two-month side-by-side** ("From" / "To"), each month navigated by
-   a **month dropdown + year dropdown** (not arrows), start/end filled brand, in-between `inRange` light-tint fill
+3. **Desktop** = owner reference (2026-07-06, **navigation model UPDATED 2026-07-08** per the M3-docked/setproduct
+   screenshots): **two-month side-by-side** rendered as a CONSECUTIVE pair (right = left+1), navigated by a **single
+   shared header**: prev/next **arrows** shift the pair by one month, PLUS a clickable **month dropdown + year
+   dropdown** (§6c chrome) that re-anchor the left month; the right month shows a gray "Month, YYYY" label (per the
+   screenshot). NOT per-month From/To dropdowns. Start/end filled brand, in-between `inRange` light-tint fill
    spanning both months, a top **range-summary field** + **"Clear filters"** link + **"Cancel" / "Apply"** buttons.
 4. **Week start = Monday-first** on both breakpoints (`weekStartsOn:1`).
 5. **Cell chrome** = the zip-cited `tailadmin-style-reference.md §6t` day-cell states (selected brand `#EC5447`,
@@ -24,12 +27,23 @@ tasks build on — it is NOT executed standalone.
    kickoff) and used by the component.
 7. **Admin suspension = a SEPARATE task (Task 560)** — deferred; it is a DB/RLS/server-action data-model change.
 
+## Owner decisions re-confirmed / added (2026-07-08, AskUserQuestion)
+
+Owner referenced M3 "Docked date picker" (m3.material.io) + react.setproduct.com date-picker screenshots and confirmed:
+- **NO presets** (Today / Last 7 Days / … / Custom sidebar visible in the screenshots) — stays OUT OF SCOPE.
+- **Mobile = Booking scrolling sheet** (unchanged from 2026-07-06) — bottom sheet, NOT a docked calendar in a sheet.
+- **Behavior = Mantine DatePicker patterns, implementation = hand-rolled + `date-fns`** (unchanged from 557) — no
+  new `@mantine/dates` dependency; UI = TailAdmin (§6t/§6d/§6e/§6c).
+- **Desktop navigation = single header with prev/next arrows + month/year dropdowns** (decision #3 above, UPDATED).
+
 ## ⚠️ Open confirmation before/at T-a review
 
 - **Sticky month-name header interpretation** (mobile): a header that reflects the month currently scrolled into
   view. Confirm with the owner at first rendered evidence.
 - **Owner "має бути ось так" image** for mobile was not received on the orchestrator side — the mobile spec here is
-  reconstructed from the Booking.com screenshot + the tab→month-name instruction. Re-confirm at first render.
+  reconstructed from the Booking.com screenshot + the tab→month-name instruction. **Owner re-confirmed the Booking
+  scrolling model for mobile on 2026-07-08** (chose it over the docked-in-sheet alternative); still visually
+  re-confirm the sticky-header interpretation at first render.
 
 ## Tasks
 

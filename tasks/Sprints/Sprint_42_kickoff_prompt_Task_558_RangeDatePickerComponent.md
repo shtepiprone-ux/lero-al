@@ -51,10 +51,13 @@ Anchored panel via `MantinePopover` (`fullWidthTrigger` for the trigger). Panel 
   only display of the *staged* range), a **"Clear filters"** text link (§6s text-link — resets staged range), and
   **"Cancel"** (ghost) + **"Apply"** (primary brand) buttons. Apply commits `onChange(staged)` + `close()`; Cancel
   discards staged + `close()`.
-- **Two months side-by-side:** left "From" month, right "To" month (labels `From`/`To`). Each month header = a
-  **month dropdown** + a **year dropdown** (`MantineCombobox`/`Select`, §6c chrome) — NOT prev/next arrows. Changing
-  either re-renders that month's grid. Default: From = month of `value.from ?? today`, To = the following month
-  (or month of `value.to`).
+- **Two months side-by-side — CONSECUTIVE pair (right = left+1), single shared header (owner decision 2026-07-08,
+  M3-docked/setproduct reference — replaces the earlier per-month From/To dropdowns):** the header carries (a) a
+  **prev arrow** (icon button, §6 button chrome) that shifts the PAIR back one month, (b) a **month dropdown** +
+  **year dropdown** (`MantineCombobox`/`Select`, §6c chrome) that re-anchor the LEFT month (right month follows as
+  left+1), (c) a **gray "Month, YYYY" text label** for the right month (non-interactive, §6t weekday-gray styling),
+  and (d) a **next arrow** that shifts the pair forward one month. No `From`/`To` labels. Default anchor: month of
+  `value.from ?? today`.
 - **Weekday header** per month: Monday-first (`Mo Tu We Th Fr Sa Su`), §6t weekday styling (gray-500, ~12px, bolder).
 - **Day grid** per month: §6t day cells (39px, pill radius). States: resting, hover (gray-200), **start/end = brand
   `#EC5447` fill**, **inRange = light brand tint** (`brand`/10-ish per §6t inRange), today = gray-400 border,
@@ -107,7 +110,8 @@ Click → desktop two-month panel (≥640) / mobile scrolling sheet (<640) opens
   a single-day range (`from===to`). Pick ONE, implement it, cite it. Do NOT emit a half range silently.
 - **End before start** → swap so `from ≤ to` (never emit inverted).
 - **`maxDate`/`minDate`** → out-of-bounds days disabled (not selectable, not stageable); month/year dropdowns do not
-  offer out-of-bounds months where trivially bounded.
+  offer out-of-bounds months where trivially bounded; **prev/next arrows disable** when the shifted pair would fall
+  entirely out of bounds (no wrap-around, no empty month).
 - **Invalid incoming `value`** (unparseable) → guard → treated as empty; placeholder shown; no crash.
 - **Locale switch (sq/en/uk/it)** → weekday labels, month names (dropdowns + section labels), summary, and CTA label
   reflect the active locale at runtime.
@@ -132,16 +136,17 @@ bounded, and forced-open on BOTH the desktop two-month panel and the mobile scro
 pattern). `screenshots:assert -- --mantine-only` green (paste before/after count). 🔴 §18.9 human-visual proof at
 **uk@320/375/390 + sq@320 + it@320 + en@1280 + en@1440** showing: mobile scrolling sheet with sticky month header +
 Monday-first pinned weekday header + 39px cells + range fill across a month boundary + full-width Confirm; desktop
-two-month side-by-side with month/year dropdowns + range summary + Clear/Cancel/Apply + inRange fill spanning both
-months; no clip, no h-scroll at 320.
+two-month consecutive pair with the shared header (arrows + month/year dropdowns + gray right-month label) + range
+summary + Clear/Cancel/Apply + inRange fill spanning both months; no clip, no h-scroll at 320.
 
 ## Acceptance criteria (each verifiable in diff + rendered evidence)
 
 1. New `RangeDatePicker` with the `{from,to}` API; renders via `MantinePopover` (`fullWidthTrigger`+`close()`) +
    Mantine `Button`/`UnstyledButton` + `MantineCombobox`/`Select` (month/year); **zero raw `<button>`/`<select>`**.
-2. Desktop = two-month side-by-side + month/year dropdowns + range summary + Clear/Cancel/Apply; Apply commits, Cancel
-   discards. Mobile = Booking scrolling sheet + sticky month header + pinned Monday-first weekday header + Confirm CTA;
-   day-tap stages, only Confirm commits.
+2. Desktop = two-month CONSECUTIVE pair + single shared header (prev/next arrows shifting the pair + month/year
+   dropdowns anchoring the left month + gray right-month label) + range summary + Clear/Cancel/Apply; Apply commits,
+   Cancel discards. Mobile = Booking scrolling sheet + sticky month header + pinned Monday-first weekday header +
+   Confirm CTA; day-tap stages, only Confirm commits.
 3. Monday-first everywhere; range selection with start/end (`#EC5447`) + inRange fill spanning month boundaries;
    today gray-400; disabled per §6t; all VISUAL values trace to §6t/§6d/§6e/§6c/§6s (zero invented).
 4. Mobile `<640`: trigger full-width; sheet edge-to-edge; day cells §6t 39px (documented exemption); CTA + dropdowns
@@ -156,4 +161,6 @@ months; no clip, no h-scroll at 320.
 ## Out of scope
 
 Wiring the listings filters (Task 559); the admin suspension range + its schema (Task 560); ±day flexibility chips;
-time-of-day; presets; redesigning `MantinePopover`/`responsiveBottomSheet` (the two additive props are allowed).
+time-of-day; presets (Today/Last 7 Days/…/Custom sidebar — owner re-confirmed OUT 2026-07-08 despite it appearing in
+the reference screenshots); a `@mantine/dates` dependency (owner re-confirmed hand-rolled + `date-fns` 2026-07-08);
+redesigning `MantinePopover`/`responsiveBottomSheet` (the two additive props are allowed).

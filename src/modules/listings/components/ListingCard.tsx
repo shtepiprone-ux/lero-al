@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
-import { formatPrice, formatListingDate } from '@/lib/formatters'
+import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
 import { MapPin, Camera, Maximize2, Copy, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
@@ -160,9 +160,10 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const displayPriceOld = listing.price_old
     ? (showConversion ? convertPriceMulti(listing.price_old, listing.currency, displayCurrency!, effectiveRates) : listing.price_old)
     : null
-  // Original price shown below converted price when currency differs
+  // Original price shown below converted price when currency differs.
+  // Always 'en' grouping (deterministic, hydration-safe — see formatters.ts).
   const originalPriceStr = showConversion
-    ? `${new Intl.NumberFormat('en').format(Math.round(listing.price))} ${listing.currency}`
+    ? `${formatCount(listing.price, 'en')} ${listing.currency}`
     : null
   const pricePerSqm = listing.area_gross && listing.area_gross > 0
     ? Math.round(displayPrice / listing.area_gross)

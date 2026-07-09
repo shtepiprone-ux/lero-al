@@ -10,15 +10,54 @@ export function normalizeCurrencyCode(code: string): string {
 }
 
 /**
+ * Per-locale digit-grouping data (separator + minimum leading-group digit count before
+ * grouping applies), extracted from Node's full-ICU `Intl.NumberFormat` output — the
+ * authoritative reference, since the Node server always has complete CLDR data.
+ *
+ * NOT sourced from a live `Intl.NumberFormat` call at render time: some browsers'
+ * bundled ICU lacks locale data entirely for less-common locales (confirmed for `sq` —
+ * `Intl.NumberFormat.supportedLocalesOf(['sq'])` → `[]` in Chromium — same class of gap
+ * as Task 562's calendar-name fix), which silently falls back to a different grouping
+ * (comma) than the server produces (space), causing a hydration mismatch. Grouping is
+ * computed manually from this static table instead, so output is identical on every
+ * runtime regardless of that runtime's own ICU completeness.
+ */
+const NUMBER_GROUPING: Record<string, { separator: string; minimumGroupingDigits: number }> = {
+  en: { separator: ',', minimumGroupingDigits: 1 },
+  uk: { separator: ' ', minimumGroupingDigits: 1 },
+  sq: { separator: ' ', minimumGroupingDigits: 2 },
+  it: { separator: '.', minimumGroupingDigits: 2 },
+}
+
+/**
+ * Groups an integer's digits per-locale without depending on `Intl.NumberFormat` (see
+ * `NUMBER_GROUPING`). Mirrors real CLDR behavior for `sq`/`it`, which omit grouping
+ * entirely below a 5-digit threshold (e.g. `4500`, never `4.500`/`4 500`) but group
+ * normally at/above it — verified against Node's `Intl.NumberFormat` output.
+ */
+function groupDigits(value: number, locale: string): string {
+  const negative = value < 0
+  const digits = Math.abs(value).toString()
+  const { separator, minimumGroupingDigits } = NUMBER_GROUPING[locale] ?? NUMBER_GROUPING.en
+  let grouped = digits
+  if (digits.length >= 3 + minimumGroupingDigits) {
+    const leadLen = digits.length % 3 || 3
+    const parts = [digits.slice(0, leadLen)]
+    for (let i = leadLen; i < digits.length; i += 3) parts.push(digits.slice(i, i + 3))
+    grouped = parts.join(separator)
+  }
+  return negative ? `-${grouped}` : grouped
+}
+
+/**
  * Formats a price for display. Always requires an explicit locale so
- * server-side and client-side rendering produce identical output (hydration-safe).
+ * server-side and client-side rendering produce identical output (hydration-safe,
+ * independent of the runtime's own ICU locale-data completeness — see `NUMBER_GROUPING`).
  *
  * Use the route locale from params (server) or useLocale() (client).
  */
 export function formatPrice(price: number, currency: string, locale: string): string {
-  const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(
-    Math.round(price),
-  )
+  const formatted = groupDigits(Math.round(price), locale)
   return currency ? `${formatted} ${normalizeCurrencyCode(currency)}` : formatted
 }
 
@@ -26,7 +65,7 @@ export function formatPrice(price: number, currency: string, locale: string): st
  * Formats a plain count (e.g. stats). Requires explicit locale for the same reason.
  */
 export function formatCount(value: number, locale: string): string {
-  return new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(Math.round(value))
+  return groupDigits(Math.round(value), locale)
 }
 
 /**

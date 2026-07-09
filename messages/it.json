@@ -1938,6 +1938,12 @@
       "section_title": "Risultati di ricerca",
       "search_ph": "Cerca annunci…"
     },
+    "filtercontrols": {
+      "price_min": "Min",
+      "price_max": "Max",
+      "condition_new_build": "Nuova costruzione",
+      "condition_good": "Buone condizioni"
+    },
     "pageheader": {
       "avail": "Annunci Disponibili",
       "browse": "Cerca proprietà in Albania.",

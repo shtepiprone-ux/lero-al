@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@mantine/core'
 import { cn } from '@/lib/utils'
 
 interface FilterMultiToggleProps {
@@ -21,9 +21,8 @@ export function FilterMultiToggle({
         <Button
           key={opt.value}
           type="button"
-          variant={selected.includes(opt.value) ? 'default' : 'outline'}
-          size="sm"
-          className="min-h-11 h-auto px-3 py-2 text-xs rounded-xl whitespace-normal leading-snug text-left justify-start"
+          variant={selected.includes(opt.value) ? 'filled' : 'default'}
+          className="justify-start text-left"
           onClick={() => onToggle(opt.value)}
         >
           {getLabel(opt.labelKey)}

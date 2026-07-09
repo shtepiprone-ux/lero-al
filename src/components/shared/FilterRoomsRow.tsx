@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@mantine/core'
 import { ROOMS_OPTIONS } from '@/modules/listings/constants'
 
 interface FilterRoomsRowProps {
@@ -18,9 +18,8 @@ export function FilterRoomsRow({ selected, onToggle }: FilterRoomsRowProps) {
           <Button
             key={opt}
             type="button"
-            variant={selected.includes(strVal) ? 'default' : 'outline'}
-            size="icon-xl"
-            className="text-xs rounded-xl shrink-0"
+            variant={selected.includes(strVal) ? 'filled' : 'default'}
+            className="shrink-0"
             onClick={() => onToggle(strVal)}
           >
             {opt === 5 ? '5+' : opt}

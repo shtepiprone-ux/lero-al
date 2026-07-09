@@ -1938,6 +1938,12 @@
       "section_title": "Search results",
       "search_ph": "Search listings…"
     },
+    "filtercontrols": {
+      "price_min": "Min",
+      "price_max": "Max",
+      "condition_new_build": "New build",
+      "condition_good": "Good condition"
+    },
     "pageheader": {
       "avail": "Available Listings",
       "browse": "Browse properties for rent and sale across Albania.",

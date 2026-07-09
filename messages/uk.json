@@ -1938,6 +1938,12 @@
       "section_title": "Результати пошуку",
       "search_ph": "Пошук оголошень…"
     },
+    "filtercontrols": {
+      "price_min": "Мін",
+      "price_max": "Макс",
+      "condition_new_build": "Нова будівля",
+      "condition_good": "Хороший стан"
+    },
     "pageheader": {
       "avail": "Доступні оголошення",
       "browse": "Перегляньте нерухомість в Албанії.",

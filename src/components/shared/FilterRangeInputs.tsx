@@ -1,6 +1,6 @@
 'use client'
 
-import { Input } from '@/components/ui/input'
+import { TextInput } from '@mantine/core'
 
 interface FilterRangeInputsProps {
   minValue: string
@@ -20,21 +20,21 @@ export function FilterRangeInputs({
 }: FilterRangeInputsProps) {
   return (
     <div className="flex gap-2">
-      <Input
+      <TextInput
         type={type}
         min={min}
         placeholder={minPlaceholder}
         value={minValue}
-        onChange={e => onMinChange(e.target.value)}
-        className="h-10 rounded-xl"
+        onChange={e => onMinChange(e.currentTarget.value)}
+        className="flex-1 min-w-0"
       />
-      <Input
+      <TextInput
         type={type}
         min={min}
         placeholder={maxPlaceholder}
         value={maxValue}
-        onChange={e => onMaxChange(e.target.value)}
-        className="h-10 rounded-xl"
+        onChange={e => onMaxChange(e.currentTarget.value)}
+        className="flex-1 min-w-0"
       />
     </div>
   )

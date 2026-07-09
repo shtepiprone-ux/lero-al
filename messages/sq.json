@@ -1938,6 +1938,12 @@
       "section_title": "Rezultate të kërkimit",
       "search_ph": "Kërko njoftimet…"
     },
+    "filtercontrols": {
+      "price_min": "Min",
+      "price_max": "Maks",
+      "condition_new_build": "Ndërtim i ri",
+      "condition_good": "Gjendje e mirë"
+    },
     "pageheader": {
       "avail": "Njoftime të Disponueshme",
       "browse": "Kërkoni prona në Shqipëri.",

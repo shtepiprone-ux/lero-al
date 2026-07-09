@@ -6,6 +6,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { enUS, it, uk, sq } from 'date-fns/locale'
 import type { Locale as DfLocale } from 'date-fns'
 import { cn } from '@/lib/utils'
+import { formatCount } from '@/lib/formatters'
 
 const DF_LOCALE_MAP: Record<string, DfLocale> = { sq, en: enUS, uk, it }
 import { markNotificationRead } from '@/modules/notifications/lib/mutations'
@@ -64,8 +65,9 @@ function resolveTitleParams(templateId: string, params: Record<string, unknown>)
 }
 
 /**
- * Resolve the `price_change` body: formats `oldPrice`/`newPrice` with
- * `Intl.NumberFormat(viewerLocale)` (Owner decision 3, Task 319). Returns
+ * Resolve the `price_change` body: formats `oldPrice`/`newPrice` with the deterministic,
+ * hydration-safe `formatCount(viewerLocale)` (Owner decision 3, Task 319; routed through
+ * Task 563's ICU-independent formatter, not a raw `Intl.NumberFormat` call). Returns
  * `null` (→ sq-fallback body) if the numeric params are missing/malformed.
  */
 function resolvePriceChangeBody(
@@ -81,10 +83,9 @@ function resolvePriceChangeBody(
   ) {
     return null
   }
-  const fmt = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 })
   return safeT(t, 'price_change_body', {
-    oldPrice: `${fmt.format(oldPrice)} ${currency}`,
-    newPrice: `${fmt.format(newPrice)} ${currency}`,
+    oldPrice: `${formatCount(oldPrice, locale)} ${currency}`,
+    newPrice: `${formatCount(newPrice, locale)} ${currency}`,
   })
 }
 

@@ -1,3 +1,8 @@
+import enMessages from '../../messages/en.json'
+import ukMessages from '../../messages/uk.json'
+import sqMessages from '../../messages/sq.json'
+import itMessages from '../../messages/it.json'
+
 /**
  * Returns a currency code for display as-is.
  *
@@ -68,9 +73,54 @@ export function formatCount(value: number, locale: string): string {
   return groupDigits(Math.round(value), locale)
 }
 
+function pad2(n: number): string {
+  return String(n).padStart(2, '0')
+}
+
 /**
- * Formats an ISO date string as a locale-aware absolute calendar date (DD.MM.YYYY style).
- * Requires explicit locale for SSR/client parity (no hydration mismatch).
+ * Per-locale numeric date/time layout, extracted from Node's full-ICU `Intl.DateTimeFormat`
+ * output (authoritative reference) — same rationale as `NUMBER_GROUPING` (Task 563): some
+ * browsers' bundled ICU lacks locale data entirely for `sq` (`Intl.DateTimeFormat
+ * .supportedLocalesOf(['sq'])` → `[]` in Chromium), silently falling back to a different
+ * locale and diverging from the server's output. `formatDate`/`formatDateTime` compose the
+ * string manually from `Date` parts instead of calling `Intl.DateTimeFormat` at render time.
+ */
+const DATE_FORMAT: Record<string, {
+  order: 'dmy' | 'mdy'
+  separator: string
+  hour12: boolean
+  dayPeriod?: [am: string, pm: string]
+}> = {
+  en: { order: 'mdy', separator: '/', hour12: true, dayPeriod: ['AM', 'PM'] },
+  uk: { order: 'dmy', separator: '.', hour12: false },
+  sq: { order: 'dmy', separator: '.', hour12: true, dayPeriod: ['p.d.', 'm.d.'] },
+  it: { order: 'dmy', separator: '/', hour12: false },
+}
+
+function composeDateParts(day: number, month: number, year: number, locale: string): string {
+  const { order, separator } = DATE_FORMAT[locale] ?? DATE_FORMAT.en
+  const d = pad2(day)
+  const m = pad2(month)
+  const y = String(year)
+  return (order === 'mdy' ? [m, d, y] : [d, m, y]).join(separator)
+}
+
+function composeTimeParts(hours: number, minutes: number, locale: string): string {
+  const cfg = DATE_FORMAT[locale] ?? DATE_FORMAT.en
+  const mm = pad2(minutes)
+  if (!cfg.hour12) return `${pad2(hours)}:${mm}`
+  const period = hours < 12 ? cfg.dayPeriod![0] : cfg.dayPeriod![1]
+  const displayHour = hours % 12 === 0 ? 12 : hours % 12
+  return `${pad2(displayHour)}:${mm} ${period}`
+}
+
+/**
+ * Formats an ISO date string as a locale-aware absolute calendar date (numeric, locale order —
+ * e.g. `en`: MM/DD/YYYY, `sq`/`uk`: DD.MM.YYYY, `it`: DD/MM/YYYY — see `DATE_FORMAT`).
+ * Uses the runtime's local system timezone (unchanged prior behavior — no timezone pin here;
+ * see `formatDateTime` for the UTC-pinned variant). Requires explicit locale for SSR/client
+ * parity — output is composed from `Date` parts, not a live `Intl.DateTimeFormat` call, so it
+ * cannot diverge between a runtime with complete locale data and one without (see `DATE_FORMAT`).
  * Returns '—' on null, undefined, or invalid input.
  */
 export function formatDate(dateStr: string | null | undefined, locale: string): string {
@@ -78,7 +128,7 @@ export function formatDate(dateStr: string | null | undefined, locale: string): 
   try {
     const d = new Date(dateStr)
     if (isNaN(d.getTime())) return '—'
-    return new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(d)
+    return composeDateParts(d.getDate(), d.getMonth() + 1, d.getFullYear(), locale)
   } catch {
     return '—'
   }
@@ -88,7 +138,8 @@ export function formatDate(dateStr: string | null | undefined, locale: string): 
  * Formats an ISO datetime string as a locale-aware absolute date+time (day/month/year hour:minute).
  * Uses an explicit fixed timezone (UTC) so the Node.js server and the browser always produce
  * byte-identical text, preventing SSR/CSR hydration mismatches caused by Intl locale or timezone
- * divergence between runtimes.
+ * divergence between runtimes. Composed from `Date` UTC parts (see `DATE_FORMAT`), not a live
+ * `Intl.DateTimeFormat` call, so it also cannot diverge due to a runtime's ICU completeness.
  * Returns '—' on null, undefined, or invalid input.
  */
 export function formatDateTime(dateStr: string | null | undefined, locale: string): string {
@@ -96,23 +147,32 @@ export function formatDateTime(dateStr: string | null | undefined, locale: strin
   try {
     const d = new Date(dateStr)
     if (isNaN(d.getTime())) return '—'
-    return new Intl.DateTimeFormat(locale, {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZone: 'UTC',
-    }).format(d)
+    const datePart = composeDateParts(d.getUTCDate(), d.getUTCMonth() + 1, d.getUTCFullYear(), locale)
+    const timePart = composeTimeParts(d.getUTCHours(), d.getUTCMinutes(), locale)
+    return `${datePart}, ${timePart}`
   } catch {
     return '—'
   }
 }
 
+/** `common.calendar_*` data (Task 562) reused here — do not duplicate; keyed by locale. */
+const CALENDAR_MESSAGES: Record<string, {
+  common: {
+    calendar_months_short: string[]
+    calendar_month_year_suffix: string
+    calendar_summary_order: string
+  }
+}> = { en: enMessages, uk: ukMessages, sq: sqMessages, it: itMessages } as never
+
 /**
  * Compact localized listing-card date that always includes the year.
- * e.g. en:"Jan 15, 2026" · uk:"15 січ. 2026" · it:"15 gen 2026" · sq:localized
- * Requires explicit locale for SSR/client parity (no hydration mismatch).
+ * e.g. en:"Jun 15, 2026" · uk:"15 черв. 2026 р." · it:"15 giu 2026" · sq:"15 qer 2026"
+ * Composed from `common.calendar_months_short`/`calendar_month_year_suffix`/
+ * `calendar_summary_order` (the same static i18n data Task 562 added for the
+ * `RangeDatePicker` calendar body) instead of a live `Intl.DateTimeFormat` call — some
+ * browsers' bundled ICU lacks locale data entirely for `sq`, which would otherwise render
+ * an English month name on the client while the server (full ICU) renders Albanian.
+ * Uses the runtime's local system timezone (unchanged prior behavior).
  * Returns '—' on null, undefined, or invalid input.
  */
 export function formatListingDate(dateStr: string | null | undefined, locale: string): string {
@@ -120,7 +180,14 @@ export function formatListingDate(dateStr: string | null | undefined, locale: st
   try {
     const d = new Date(dateStr)
     if (isNaN(d.getTime())) return '—'
-    return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' }).format(d)
+    const { calendar_months_short, calendar_month_year_suffix, calendar_summary_order } =
+      (CALENDAR_MESSAGES[locale] ?? CALENDAR_MESSAGES.en).common
+    const day = d.getDate()
+    const month = calendar_months_short[d.getMonth()]
+    const year = d.getFullYear()
+    return calendar_summary_order === 'month_day'
+      ? `${month} ${day}, ${year}`
+      : `${day} ${month} ${year}${calendar_month_year_suffix}`
   } catch {
     return '—'
   }

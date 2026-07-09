@@ -5,7 +5,7 @@ import type { Locale } from 'date-fns'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { getArchivedNoindexDays, getSetting } from '@/modules/admin/lib/settings'
-import { formatPrice } from '@/lib/formatters'
+import { formatPrice, formatCount } from '@/lib/formatters'
 import { getDetailFeatures, getDetailAttributes } from '@/modules/listings/domain/presentationEngine'
 import { isListingArchived } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
@@ -88,7 +88,7 @@ export async function generateMetadata({ params }: Props) {
 
   // Build description snippet: price · location · text
   const locationName = Array.isArray(data.location) ? data.location[0]?.name_al : (data.location as { name_al: string } | null)?.name_al
-  const priceStr = data.price ? `${new Intl.NumberFormat('en').format(Math.round(data.price))} ${data.currency}` : ''
+  const priceStr = data.price ? `${formatCount(data.price, 'en')} ${data.currency}` : ''
   const descriptionParts = [priceStr, locationName].filter(Boolean)
   const rawDescription = safeText(data.description, 200)
   const descriptionBody = rawDescription

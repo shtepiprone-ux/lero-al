@@ -2138,6 +2138,7 @@
       "seg_demo_status_active": "Attivo",
       "seg_demo_status_pending": "In attesa",
       "seg_demo_status_sold": "Venduto",
+      "count_button_label": "Applica filtri",
       "button_variant_filled": "Pieno",
       "button_variant_default": "Predefinito",
       "button_variant_subtle": "Sottile",

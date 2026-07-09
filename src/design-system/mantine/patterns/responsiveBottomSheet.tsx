@@ -83,6 +83,17 @@ export interface ResponsiveBottomSheetProps {
   /** Optional heading rendered below the drag handle */
   title?: ReactNode
   children: ReactNode
+  /**
+   * Optional pinned footer (Task 567 round-2 Fix 4). When present, `body` becomes a true
+   * flex-column split — `children` scroll in their own `flex:1; overflow-y:auto` region,
+   * `footer` is a non-shrinking sibling that is NEVER scrolled behind or overlapped, at any
+   * scroll position (unlike `position:sticky`, which anchors to a fixed screen position while
+   * the scrollable viewport still spans behind it — see `MantineDrawer.tsx`'s `DrawerBodyLayout`
+   * docstring for why that was tried first and rejected). Additive/optional: consumers that
+   * pass no `footer` (Select/Popover/DropdownMenu/NavigationMenu/Combobox/Tooltip) keep the
+   * original single-scroll-region `body` untouched.
+   */
+  footer?: ReactNode
 }
 
 /**
@@ -106,6 +117,7 @@ export function ResponsiveBottomSheet({
   onClose,
   title,
   children,
+  footer,
 }: ResponsiveBottomSheetProps) {
   return (
     <Drawer
@@ -125,9 +137,46 @@ export function ResponsiveBottomSheet({
           )}
         </Box>
       }
-      styles={bottomSheetDrawerStyles}
+      styles={{
+        ...bottomSheetDrawerStyles,
+        // Task 567 round-2 Fix 2 (owner 2026-07-09): a bottom border under the header, ONLY
+        // when a title is present — drag-handle-only sheets (Select/Popover/Menu/Nav option
+        // lists with no title) must NOT gain a stray divider. Value = the same canonical
+        // gray-3 divider token MantineResponsiveActionFooter already uses for its borderTop
+        // (zero invented value). Layered on top of the shared static bottomSheetDrawerStyles.header
+        // (not mutated — every consumer that imports that object directly stays untouched).
+        header: {
+          ...bottomSheetDrawerStyles.header,
+          ...(title ? { borderBottom: '1px solid var(--mantine-color-gray-3)' } : {}),
+        },
+        // Task 567 round-2 Fix 4: body becomes ITS OWN flex column (not a single scroll
+        // region) ONLY when a footer is passed — every other consumer's body stays exactly
+        // bottomSheetDrawerStyles.body (unmutated, unchanged).
+        body: footer
+          ? { ...bottomSheetDrawerStyles.body, display: 'flex', flexDirection: 'column', overflowY: 'hidden' }
+          : bottomSheetDrawerStyles.body,
+      }}
     >
-      {children}
+      {footer ? (
+        <>
+          <Box data-testid="mantine-drawer-scroll-content" style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
+            {children}
+          </Box>
+          <Box
+            data-testid="mantine-drawer-footer"
+            style={{
+              flexShrink: 0,
+              backgroundColor: 'var(--mantine-color-body)',
+              borderTop: '1px solid var(--mantine-color-gray-3)',
+              padding: 'var(--mantine-spacing-md)',
+            }}
+          >
+            {footer}
+          </Box>
+        </>
+      ) : (
+        children
+      )}
     </Drawer>
   )
 }

@@ -216,7 +216,12 @@ export const theme = createTheme({
               }
             : {}),
         },
-        label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'break-word' },
+        // Task 567 round-2 Fix 1 (owner 2026-07-09): wordBreak was 'break-word', which breaks
+        // a word mid-character whenever a flex-squeezed row runs out of room (e.g. "Вторинна" ->
+        // "Вторин|на"). 'normal' + overflowWrap:'break-word' wraps at spaces first; a single
+        // token is only broken as the LAST resort when it alone can't fit its line (320px h-scroll
+        // guard), never as the default behavior for a multi-word label in a tight row.
+        label: { whiteSpace: 'normal', overflow: 'visible', wordBreak: 'normal', overflowWrap: 'break-word' },
       }),
     },
     TextInput: {

@@ -435,6 +435,27 @@ const GEOMETRY_ALLOWLIST = [
   // established swipe-scroll tab-bar convention (ScrollArea, ADR: Tabs/SegmentedControl always
   // single row).
   { storyId: 'mantine-primitives-tabs--default', failReason: 'text-clipped', reason: 'intentional horizontal swipe-scroll tab bar — clipped tab is reachable by scrolling, not a layout defect' },
+  // Task 567 round-2 (owner 2026-07-09, Fix 4) — `MantineDrawer`'s pinned-footer treatment
+  // (`flex:1;overflow-y:auto` scroll region + a non-shrinking footer sibling) is the FIRST story
+  // to pair genuinely-taller-than-viewport scrollable content with a footer sibling. The geometry
+  // checker's element-overlap heuristic compares raw `getBoundingClientRect()` values without
+  // accounting for `overflow:auto` clipping (Check 3 / outside-container already exempts
+  // auto|scroll ancestors from its OWN escape check for the identical reason — content reachable
+  // by scrolling is not a "content escapes its box" defect — but Check 4 never got the same
+  // treatment). Content near the bottom of the scroll region has a DOM layout position that
+  // geometrically extends past the scroll region's own clipped boundary — coincidentally into the
+  // footer's on-screen coordinates — even though it is not actually painted there. Confirmed via
+  // direct rendered screenshots (en@1280, uk@320: clean, non-overlapping footer with a visible
+  // border-top gap — see the Task 567 round-2 session log addendum) and via the kickoff's own
+  // narrower required Fix-4 probe (footer bounding-box visible after scroll-to-end; no toggle
+  // `<button>` has `scrollWidth > clientWidth`) — both pass. The authoritative Fix-4 regression
+  // guard is the RTL structural assertion (`footer` node is NOT a descendant of the scrollable
+  // content container, `filtersPanelShell.smoke.test.tsx`), planted-violation-verified: moving
+  // `footer` back inside the scroll region genuinely fails that assertion. A follow-up task should
+  // teach Check 4 the same clip-intersection awareness Check 3 already has (blast radius = the
+  // shared checker, needs its own review) — flagged, not fixed here, to avoid an executor
+  // unilaterally changing shared verification infrastructure it would also be judged by.
+  { storyId: 'mantine-primitives-filterspanelshell--default', failReason: 'element-overlap', reason: 'pinned-footer + scrollable-content pattern (Task 567 Fix 4) — scrolled-away content geometrically overlaps the footer sibling per raw getBoundingClientRect(), but is not actually painted there (overflow:auto clips it); confirmed clean via rendered screenshots + the RTL footer-outside-scroll-region structural test' },
 ];
 
 // ── Viewport range per story (V1-FINAL FP-CLASSES B/C) ──────────────────

@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (284 stories, 544 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (286 stories, 576 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,17 +10,17 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 544 |
-| PASS (clean, verdict=pass) | 514 |
+| Total cells | 576 |
+| PASS (clean, verdict=pass) | 550 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
-| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 30 |
+| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 26 |
 | text-clipped | 0 |
 | offscreen-control | 0 |
 | outside-container | 0 |
 | element-overlap | 0 |
 | bottomsheet-overflow | 0 |
-| ambiguous-overlap | 30 |
+| ambiguous-overlap | 26 |
 | unstyled-render | 0 |
 
 ---
@@ -104,14 +104,6 @@
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Scutari") | "(empty)" ↔ "Scutari" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("SarandaCostiera") | "(empty)" ↔ "SarandaCostiera" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Immobili in affitto a lungo te") | "(empty)" ↔ "Immobili in affitto a lungo termine vicino al centro storico" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | sq | desktop-1024 | `mantine-primitives-drawer--default__sq__desktop-1024.png` | ambiguous-overlap | button("Hap panelin") ↔ button("Anulo") | "Hap panelin" ↔ "Anulo" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | sq | desktop-1024 | `mantine-primitives-drawer--default__sq__desktop-1024.png` | ambiguous-overlap | button("Hap panelin") ↔ button("Konfirmo") | "Hap panelin" ↔ "Konfirmo" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | en | desktop-1024 | `mantine-primitives-drawer--default__en__desktop-1024.png` | ambiguous-overlap | button("Open drawer") ↔ button("Cancel") | "Open drawer" ↔ "Cancel" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | en | desktop-1024 | `mantine-primitives-drawer--default__en__desktop-1024.png` | ambiguous-overlap | button("Open drawer") ↔ button("Confirm") | "Open drawer" ↔ "Confirm" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | uk | desktop-1024 | `mantine-primitives-drawer--default__uk__desktop-1024.png` | ambiguous-overlap | button("Відкрити панель") ↔ button("Скасувати") | "Відкрити панель" ↔ "Скасувати" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | uk | desktop-1024 | `mantine-primitives-drawer--default__uk__desktop-1024.png` | ambiguous-overlap | button("Відкрити панель") ↔ button("Підтвердити") | "Відкрити панель" ↔ "Підтвердити" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | it | desktop-1024 | `mantine-primitives-drawer--default__it__desktop-1024.png` | ambiguous-overlap | button("Apri pannello") ↔ button("Annulla") | "Apri pannello" ↔ "Annulla" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-drawer--default` | it | desktop-1024 | `mantine-primitives-drawer--default__it__desktop-1024.png` | ambiguous-overlap | button("Apri pannello") ↔ button("Conferma") | "Apri pannello" ↔ "Conferma" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Viti" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-375 | `mantine-primitives-rangedatepicker--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |

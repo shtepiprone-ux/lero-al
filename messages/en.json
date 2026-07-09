@@ -2138,6 +2138,7 @@
       "seg_demo_status_active": "Active",
       "seg_demo_status_pending": "Pending",
       "seg_demo_status_sold": "Sold",
+      "count_button_label": "Apply filters",
       "button_variant_filled": "Filled",
       "button_variant_default": "Default",
       "button_variant_subtle": "Subtle",

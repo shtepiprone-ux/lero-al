@@ -2138,6 +2138,7 @@
       "seg_demo_status_active": "Aktiv",
       "seg_demo_status_pending": "Në pritje",
       "seg_demo_status_sold": "Shitur",
+      "count_button_label": "Apliko filtrat",
       "button_variant_filled": "I mbushur",
       "button_variant_default": "Parazgjedhja",
       "button_variant_subtle": "I qetë",

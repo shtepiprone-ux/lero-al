@@ -2138,6 +2138,7 @@
       "seg_demo_status_active": "Активний",
       "seg_demo_status_pending": "Очікує",
       "seg_demo_status_sold": "Продано",
+      "count_button_label": "Застосувати фільтри",
       "button_variant_filled": "Заповнений",
       "button_variant_default": "Стандартний",
       "button_variant_subtle": "Прозорий",

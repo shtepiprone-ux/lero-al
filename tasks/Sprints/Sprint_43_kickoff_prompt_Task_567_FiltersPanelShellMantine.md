@@ -101,12 +101,22 @@ button primitive of this type is missing."
   mechanism that spaces a `leftSection` icon, which is precisely what the owner asked for). When `count` is 0
   / undefined, render NO `rightSection` (unless the caller passed one).
 - Badge chrome from `tailadmin-style-reference.md` §-row "Status badge" (line ~74):
-  `text-theme-xs rounded-full … font-medium` → Mantine `Badge size="sm"` circular/pill. On the **filled brand**
-  Apply button the count must stay legible — pick the §-cited badge treatment that reads on brand fill (e.g. a
-  white/`brand.0` chip with `brand.7` text, or the inverse). **Prove legibility side-by-side vs the reference;
-  if no clean §-row gives a legible on-brand count chip, STOP and ASK — do NOT invent a color.** Because the
-  count now lives in `rightSection` (a normal flow child), Button's `overflow:hidden` no longer clips it — the
-  round-1 absolute-badge hack (and its clipping bug) is fully removed.
+  `text-theme-xs rounded-full … font-medium` → Mantine `Badge size="sm"` circular/pill.
+- **🔴 The count chip must ALWAYS visibly contrast with its host button — VARIANT-AWARE background (owner
+  correction 2026-07-09):** the round-2 render shipped a WHITE chip on the WHITE/`default` (bordered) button
+  → invisible white-on-white (UX defect). Required:
+  - **On a `default`/bordered/`light` (light-surface) host button →** the count chip uses the **canonical GRAY
+    background** from the §-cited gray ramp: `var(--mantine-color-gray-2)` (`#e4e7ec`) fill + `gray-7`
+    (`#344054`) text. A distinct gray pill the user can read as a counter. (This is the owner's explicit ask.)
+  - **On the `filled` brand host button (the real `FiltersPanel` Apply) →** keep the light pill the owner
+    approved (white / `brand.0` fill + `brand.7` text) — a gray chip on brand red is too low-contrast.
+  - Drive this off the Button `variant` prop inside `MantineCountButton` (filled → light pill; else → gray
+    canonical pill). **Zero invented hex — every value from the §-cited gray ramp / brand token.** Prove BOTH
+    host variants side-by-side vs the reference. If the owner later wants a single uniform gray chip on every
+    variant, that's a one-line switch — but default is variant-aware per this correction.
+- Because the count now lives in `rightSection` (a normal flow child), Button's `overflow:hidden` no longer
+  clips it — the round-1 absolute-badge hack (and its clipping bug) is structurally removed (see the overlap
+  ruling in the session thread).
 - **`FiltersPanel` Apply button** (supersedes original §6 Apply markup): replace the
   `<div className="relative"><Button …/>{activeCount>0 && <span className="absolute …">}` block with
   `<MantineCountButton fullWidth count={activeCount} onClick={handleApply}>{t('apply_filters')}</MantineCountButton>`.

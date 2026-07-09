@@ -447,6 +447,7 @@
     "select_date": "Zgjidhni datën",
     "select_range": "Zgjidhni datat",
     "calendar_months": ["janar", "shkurt", "mars", "prill", "maj", "qershor", "korrik", "gusht", "shtator", "tetor", "nëntor", "dhjetor"],
+    "calendar_months_formatting": ["janar", "shkurt", "mars", "prill", "maj", "qershor", "korrik", "gusht", "shtator", "tetor", "nëntor", "dhjetor"],
     "calendar_months_short": ["jan", "shk", "mar", "pri", "maj", "qer", "korr", "gush", "sht", "tet", "nën", "dhj"],
     "calendar_weekdays_short": ["hën", "mar", "mër", "enj", "pre", "sht", "die"],
     "calendar_month_year_suffix": "",

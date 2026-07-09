@@ -10,7 +10,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 interface Props {
   value?: string          // ISO "yyyy-MM-dd"
@@ -20,9 +20,39 @@ interface Props {
   maxDate?: Date          // upper bound — days after this are disabled
 }
 
+/**
+ * Static per-locale calendar strings (`common.calendar_*`, Task 562/564/565) instead of a
+ * live `Intl.DateTimeFormat(locale, ...)` call — some browsers' bundled ICU lacks locale data
+ * entirely for `sq` (`Intl.DateTimeFormat.supportedLocalesOf(['sq'])` → `[]` in Chromium),
+ * which would otherwise silently fall back to a different locale on the client while the
+ * server (full ICU) renders correctly, causing a hydration mismatch. Mirrors
+ * `RangeDatePicker.tsx`'s `useCalendarLocaleData` shape — data reused, not duplicated
+ * (lives only in `messages/*.json`).
+ */
+interface CalendarLocaleData {
+  monthsNominative: string[]
+  monthsFormatting: string[]
+  weekdaysShort: string[]
+  monthYearSuffix: string
+  summaryOrder: 'day_month' | 'month_day'
+}
+
+function useCalendarLocaleData(t: ReturnType<typeof useTranslations<'common'>>): CalendarLocaleData {
+  return useMemo(
+    () => ({
+      monthsNominative: t.raw('calendar_months') as string[],
+      monthsFormatting: t.raw('calendar_months_formatting') as string[],
+      weekdaysShort: t.raw('calendar_weekdays_short') as string[],
+      monthYearSuffix: t.raw('calendar_month_year_suffix') as string,
+      summaryOrder: t.raw('calendar_summary_order') as 'day_month' | 'month_day',
+    }),
+    [t],
+  )
+}
+
 export function DatePicker({ value, onChange, placeholder, className, maxDate }: Props) {
-  const locale = useLocale()
   const t = useTranslations('common')
+  const cal = useCalendarLocaleData(t)
 
   const [open, setOpen] = useState(false)
 
@@ -40,16 +70,17 @@ export function DatePicker({ value, onChange, placeholder, className, maxDate }:
     return eachDayOfInterval({ start, end })
   }, [viewMonth])
 
-  // Locale-aware weekday labels Mon–Sun
-  const weekdays = useMemo(() =>
-    Array.from({ length: 7 }, (_, i) =>
-      new Intl.DateTimeFormat(locale, { weekday: 'short' })
-        .format(new Date(2024, 0, 1 + i)) // 2024-01-01 = Monday
-    ), [locale])
+  // Locale-aware weekday labels Mon–Sun (static data — see CalendarLocaleData)
+  const weekdays = cal.weekdaysShort
 
-  const monthLabel = useMemo(() =>
-    new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(viewMonth),
-    [viewMonth, locale])
+  const monthLabel = `${cal.monthsNominative[viewMonth.getMonth()]} ${viewMonth.getFullYear()}${cal.monthYearSuffix}`
+
+  const todayLabel = useMemo(() => {
+    const now = new Date()
+    const day = now.getDate()
+    const month = cal.monthsFormatting[now.getMonth()]
+    return cal.summaryOrder === 'month_day' ? `${month} ${day}` : `${day} ${month}`
+  }, [cal])
 
   function selectDay(day: Date) {
     onChange(format(day, 'yyyy-MM-dd'))
@@ -175,7 +206,7 @@ export function DatePicker({ value, onChange, placeholder, className, maxDate }:
               className="w-full h-8 text-xs text-muted-foreground hover:text-foreground"
               onClick={goToday}
             >
-              {t('period_today')} — {new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long' }).format(new Date())}
+              {t('period_today')} — {todayLabel}
             </Button>
           </div>
 

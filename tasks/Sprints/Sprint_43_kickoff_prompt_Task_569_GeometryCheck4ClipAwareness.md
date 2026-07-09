@@ -56,8 +56,15 @@ it unnecessary and remove it.
 2. `FiltersPanelShell` passes 16/16 with the `GEOMETRY_ALLOWLIST` entry REMOVED.
 3. `Planted/OverlappingActions` + `Planted/AmbiguousOverlap` behavior unchanged (baseline recorded → still
    matches after).
-4. `screenshots:assert -- --mantine-only` green; no new AMBIGUOUS/FAIL vs the Task 567 baseline
-   (550 PASS / 0 FAIL / 26 AMBIGUOUS) except the intended FiltersPanelShell path change.
+4. **🔴 Run the FULL `npm run screenshots:assert` (NOT `--mantine-only`).** This task changes the SHARED
+   Check-4 algorithm, which evaluates overlap for every story; `--mantine-only` runs only Phase 0
+   (`Mantine/Primitives/*`) and SKIPS Phase 1 (`ASSERT_STORIES`) where the `Planted/OverlappingActions` +
+   `Planted/AmbiguousOverlap` guards live — the exact stories that prove the check still catches real
+   overlaps. Record the full-run baseline BEFORE the change, then prove AFTER: (a) the two `Planted/*` overlap
+   stories STILL FAIL, (b) no other story's overlap verdict flips vs baseline (legacy included), (c)
+   `FiltersPanelShell` passes with its `GEOMETRY_ALLOWLIST` entry removed. Pre-existing unrelated legacy
+   Phase-1/2 failures that reproduce identically before AND after the change are noise, not a regression —
+   diff against the recorded baseline, don't count raw totals.
 5. `docs/storybook-governance.md` (§ geometry checks) documents the Check-4 clip-awareness + why the entry
    was removed. Files-Changed table + session log. **Do NOT run git — HELD for orchestrator review.**
 

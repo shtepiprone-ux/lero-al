@@ -25,6 +25,25 @@
 - Duplication audit is a required pre-condition — skipping it is a rule violation.
 - Document the audit result: either "reused `ComponentName`" or "no suitable component found because [reason]".
 
+### Container / Presentational Primitive Split (MANDATORY — OWNER P0, 2026-07-10)
+- **Every component that consumes hooks, React context, or fetches data MUST separate its UI into its own
+  prop-driven presentational primitive.** The "smart" **container** owns the hooks, state, data-fetching, and
+  handlers; the **presentational primitive** (e.g. `FooView`) receives everything via props and renders JSX
+  only — no data-fetching hooks, no network, no router, no Supabase client.
+- **Why (non-negotiable):** the presentational primitive can be rendered in Storybook and unit-tested with
+  fixture props — with **NO hook/network mocking, NO Storybook module aliases, NO live Supabase.** This is the
+  pattern `FiltersPanel` already follows; `HeroSearch` violated it and forced a hook-mocking dilemma
+  (Task 568). **This must never recur:** if a story or test has to mock a data/network hook, the split was
+  skipped → the task is incomplete, route it back.
+- **Boundary:** the container's PUBLIC API (what pages/consumers import) stays unchanged — the split is
+  INTERNAL: extract `FooView`, and the container renders `<FooView … />`. `useTranslations`/`useFormatter`
+  (i18n, provided by the global Storybook decorator) MAY live in the presentational primitive — they are not
+  data-fetching. `useLocations`/`useRouter`/`createClient`/any Supabase or network hook MUST stay in the
+  container.
+- **Story + test target the presentational primitive** with deterministic, locale-safe fixture props.
+- Enforced on every UI kickoff and every review (see `docs/orchestrator-role.md` → "Presentational-primitive
+  split gate"). A new "smart" component shipped without its presentational primitive is a task failure.
+
 ### CSS & Design System Rules (MANDATORY)
 - Use only semantic design tokens defined in `globals.css`; never use raw color values or arbitrary Tailwind color utilities in components.
 - If a required token does not exist, add it to `globals.css` first, then use the new semantic token in components.

@@ -243,6 +243,23 @@ gate on BOTH sides of the loop, equal in weight to the mobile full-width gate (a
 - **Self-check every UI kickoff against this section before writing the file path to the owner** — same discipline as the
   mobile full-width gate.
 
+## Presentational-primitive split gate (OWNER P0 — 2026-07-10) — MANDATORY in every UI kickoff AND review
+
+The owner requires that **every component consuming hooks/context/data has its own prop-driven presentational
+primitive** (container/presentational split) so it stories and unit-tests with fixtures — WITHOUT mocking
+hooks, Storybook module aliases, or live Supabase. `HeroSearch` (Task 568) violated this and forced a
+hook-mock dilemma; it must never recur. Full rule: `docs/component-rules.md` → "Container / Presentational
+Primitive Split".
+
+- **Every UI kickoff I write** for a "smart" component (one that uses `useLocations`/`useRouter`/`createClient`/
+  any data/network hook or context) MUST require extracting a presentational primitive (`FooView`, data via
+  props) with the container kept thin and its public API unchanged, and MUST target the story/test at that
+  primitive with deterministic fixtures. If the kickoff instead reaches for a hook mock / `.storybook` alias,
+  that is MY failure — self-check before writing the file path.
+- **Every review I run** BLOCKS approval if a new/edited smart component ships without its presentational
+  primitive, OR if its story/test mocks a data/network hook (that mock is the tell the split was skipped) —
+  route it back as a follow-up.
+
 ## Review checklist (run on every returned task)
 
 - [ ] **🔴 File-integrity (agent-contract clause 14) — RE-RUN, do not trust the log:** every touched file has **0 NUL bytes** (`tr -cd '\000' < f | wc -c` = 0), no stray BOM, `.json` passes `JSON.parse`, `.mjs/.js` passes `node --check`, `.ts/.tsx` compiles, and no file is truncated mid-token. A NUL/unparseable/truncated touched file = **auto-reject, route back** — even if the log claims `tsc=0`/gate-green (that claim is then fabricated). This caught Task 395 (truncated gate script) and Task 397 ×2 (truncated baseline + NUL-corrupted email files).
@@ -259,6 +276,10 @@ gate on BOTH sides of the loop, equal in weight to the mobile full-width gate (a
 - [ ] **🔴 Rendered verification matrix present (OWNER P0, clause 12):** breakpoints × sq/en/uk/it with real per-cell evidence; uk@320/375/390 stress cells present. **No matrix, or tsc/build-only "proof" = REJECT, route back.**
 - [ ] **🔴 TailAdmin conformance (OWNER P0, clause 16):** the rendered primitive/surface visibly matches the `demo_tailadmin_com.zip` reference (border color, radius, focus ring, shadow, Outfit font, density) — proven side-by-side, not asserted; every value cited to a `tailadmin-style-reference.md` §-row; zero invented color/px/radius/shadow. **A rendered mismatch or an invented value = REJECT, route back.**
 - [ ] Canonical components only; no governance anti-patterns.
+- [ ] **🔴 Presentational-primitive split (OWNER P0):** any new/edited component using a data/network hook or
+      context has its own prop-driven presentational primitive (`FooView`); story + test target that primitive
+      with fixtures — NO hook mock / `.storybook` alias / live Supabase. A data-hook mock in a story/test = the
+      split was skipped → route back.
 - [ ] **Canonical-first respected (Task 426):** where a canonical primitive already provides the required behavior, the diff does NOT duplicate the class locally; closure is canonical-source proof (`file:line`) + rendered evidence. A duplicated class that diverges a consumer from the canonical single-source = route back.
 - [ ] **🔴 Always-verify-styles-vs-source-of-truth (owner P0, 2026-06-28, after the Task 495/507 disabled label+icon miss):** for ANY task touching an input/select/form primitive, every state in `docs/tailadmin-style-reference.md §6e` (resting / focus / error / **disabled — label + field + icon together**) is verified against the rendered output, not just the field, with rendered evidence at the canonical breakpoints × sq/en/uk/it. A disabled render where the label or trailing icon does NOT dim with the field = REJECT. If a needed state is not yet in §6e, it must be extracted from the source-of-truth component into §6e in the same change BEFORE approval — never inferred. `tsc=0`/build-green is never style proof.
 - [ ] **🔴 Internal-spacing / chrome visual check (OWNER P0, 2026-07-06, after the Task 553/554 icon-overlap miss — `mantine-responsive-design-system.md §18.9`):** for ANY component with an icon `leftSection`/`rightSection`, adornment, or composed sub-field, I have PERSONALLY OPENED the actual rendered screenshots and confirmed by eye at `uk@320` + one desktop width: (a) the icon does NOT overlap/touch the text or placeholder (visible gap present), (b) every select/combobox trigger has a visible placeholder or label (no blank box + chevron), (c) no internal element clips. **`screenshots:assert` is a GEOMETRY gate (full-width / no-h-scroll) and is BLIND to overlap, internal padding, and empty placeholders — a green matrix is NOT internal-chrome proof (same limit as Task 529). Approving from the PASS count without looking at the pixels is a REVIEW FAILURE.** No visual internal-spacing evidence in the log = route back.

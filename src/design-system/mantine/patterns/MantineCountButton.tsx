@@ -2,12 +2,23 @@
 
 import type { ButtonProps } from '@mantine/core'
 import { Button, Badge } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 
 export interface MantineCountButtonProps extends ButtonProps {
   /** Active-count shown inline in the Button's `rightSection`. 0/undefined renders no badge. */
   count?: number
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
+  /**
+   * Task 571 — viewport width in px BELOW which the button collapses to icon + count only
+   * (the label/`children` is hidden; `leftSection` and the count badge stay). `undefined`
+   * (default) = never collapses — render is byte-identical to the pre-Task-571 primitive.
+   *
+   * **Consumers that set this prop MUST also pass `aria-label`.** Once the label is hidden the
+   * accessible name comes ONLY from `aria-label` — a collapsing instance without one ships a
+   * nameless icon button (agent-contract clause 11 a11y requirement).
+   */
+  iconOnlyBelow?: number
 }
 
 /**
@@ -36,8 +47,35 @@ export interface MantineCountButtonProps extends ButtonProps {
  *   gray ramp (`docs/tailadmin-style-reference.md` row 41): `--mantine-color-gray-2` (`#e4e7ec`)
  *   fill + `--mantine-color-gray-7` (`#344054`) text — zero invented hex, both are existing
  *   Mantine theme CSS custom properties.
+ *
+ * **`iconOnlyBelow` (Task 571):** an optional component-scoped collapse — below the given px
+ * width the label (`children`) hides, `leftSection` + the count badge stay. Threshold is
+ * implemented via `useMediaQuery` (`@mantine/hooks`, already a project dependency) — the SAME
+ * SSR-safe mechanism already used by `MantineDialogDrawerPattern`, `responsiveBottomSheet`,
+ * `MantineAdminSurfacePattern`, `MantineDataTableToCards`, `RangeDatePicker`, and
+ * `AdminUsersTable` (all `useMediaQuery('(max-width: 40em)')` with the hook's own
+ * `getInitialValueInEffect: true` default, made explicit here). SSR + the client's first render
+ * both resolve to the `initialValue` (`false` below) — so the server-rendered markup and the
+ * client's pre-hydration markup are byte-identical (label visible), then the effect resolves the
+ * real `matchMedia` result and the label collapses if the viewport is genuinely below the
+ * threshold. This is not a hydration MISMATCH (React never warns) — the only user-visible effect
+ * is a single post-hydration collapse frame on an already-narrow viewport, the same accepted
+ * trade-off every sibling consumer above already ships. `useMediaQuery` is called
+ * unconditionally (Rules of Hooks) with a query that can never match when `iconOnlyBelow` is
+ * unset (`(max-width: 0px)` — no real viewport is ever ≤0px), which is what makes the unset-prop
+ * render byte-identical to the pre-Task-571 primitive. No global Tailwind `screen` or Mantine
+ * theme breakpoint is added — the threshold is a plain px number scoped to this one instance.
+ *
+ * Compact collapsed padding reuses the existing `xs` spacing token (`theme.spacing.xs` = 8px,
+ * `docs/mantine-responsive-design-system.md` §6.1 spacing scale) via the Button's own `px` Box
+ * style prop — no invented px value. `leftSection`/the count badge are Mantine's own
+ * `[data-with-left-section]`/`[data-with-right-section]` flex children (§18.9-verified: they are
+ * never absolutely positioned, so they cannot overlap the — now hidden — label in the collapsed
+ * state, and Mantine's own `.inner` flex gap keeps them apart from each other).
  */
-export function MantineCountButton({ count, rightSection, children, variant, ...props }: MantineCountButtonProps) {
+export function MantineCountButton({
+  count, rightSection, children, variant, iconOnlyBelow, px, ...props
+}: MantineCountButtonProps) {
   const isFilledHost = variant === undefined || variant === 'filled'
   const countBadge = count && count > 0
     ? isFilledHost
@@ -52,9 +90,22 @@ export function MantineCountButton({ count, rightSection, children, variant, ...
         )
     : undefined
 
+  // See the `iconOnlyBelow` doc block above for the full SSR-safety rationale.
+  const belowThreshold = useMediaQuery(
+    iconOnlyBelow != null ? `(max-width: ${iconOnlyBelow - 1}px)` : '(max-width: 0px)',
+    false,
+    { getInitialValueInEffect: true },
+  )
+  const collapsed = iconOnlyBelow != null && belowThreshold
+
   return (
-    <Button {...props} variant={variant} rightSection={rightSection ?? countBadge}>
-      {children}
+    <Button
+      {...props}
+      variant={variant}
+      rightSection={rightSection ?? countBadge}
+      px={collapsed ? 'xs' : px}
+    >
+      {collapsed ? null : children}
     </Button>
   )
 }

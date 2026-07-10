@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Stack, Text } from '@mantine/core'
+import { SlidersHorizontal } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantineCountButton } from '@/design-system/mantine/patterns'
 import { MantineStoryShell } from '../_MantineStoryShell'
@@ -51,6 +52,23 @@ export const Default: Story = {
               with count — default (bordered) variant, count inline
             </Text>
             <MantineCountButton variant="default" count={7} onClick={() => {}}>
+              {t('count_button_label')}
+            </MantineCountButton>
+          </Stack>
+
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              icon + label + count, with iconOnlyBelow=860 — narrow the toolbar viewport below
+              860px to see the label collapse: leftSection icon and the count badge stay, only
+              the label hides, touch target stays ≥44px (Task 571)
+            </Text>
+            <MantineCountButton
+              leftSection={<SlidersHorizontal className="h-4 w-4" />}
+              count={3}
+              iconOnlyBelow={860}
+              aria-label={t('count_button_label')}
+              onClick={() => {}}
+            >
               {t('count_button_label')}
             </MantineCountButton>
           </Stack>

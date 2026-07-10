@@ -17,14 +17,40 @@
  * absolute corner `<span>` pattern (rendering the count as an absolutely-positioned child
  * instead of via `rightSection`) makes assertion 4 FAIL — `position` resolves to `'absolute'`
  * instead of `'static'`/`'relative'`.
+ *
+ * **Task 571 addition — `iconOnlyBelow` collapse prop.** Covers:
+ *   5. `iconOnlyBelow` UNSET → the label renders regardless of what the media query resolves to
+ *      (byte-identical-render guard — proves the `iconOnlyBelow != null &&` gate, not just that
+ *      the never-matching query "happens" not to match).
+ *   6. `iconOnlyBelow` SET + below threshold → label hidden, `leftSection` icon + count badge +
+ *      `aria-label` (accessible name) all survive.
+ *   7. `iconOnlyBelow` SET + at/above threshold → full label + icon + count (unchanged look).
+ *   8. Touch target stays ≥44px (`minHeight: 2.75rem`) in the collapsed state.
+ *
+ * `@mantine/hooks`'s `useMediaQuery` is mocked at the module level (`mockUseMediaQuery`) so each
+ * test can force "below threshold" (`true`) / "at-or-above threshold" (`false`) deterministically,
+ * independent of jsdom's `matchMedia` stub.
+ *
+ * Planted-violation (Task 571, documented, verified once and reverted): removing the
+ * `iconOnlyBelow != null &&` guard (collapsing whenever the mocked query resolves `true`, even
+ * with `iconOnlyBelow` unset) makes test 5 FAIL — the label that must always render is hidden.
  */
 
 import React from 'react'
-import { describe, it, expect, vi, beforeAll } from 'vitest'
+import { describe, it, expect, vi, beforeAll, beforeEach } from 'vitest'
 import { render, fireEvent, screen } from '@testing-library/react'
 import { MantineProvider } from '@mantine/core'
 import { theme } from '@/design-system/mantine/theme'
 import { MantineCountButton } from '../MantineCountButton'
+
+const mockUseMediaQuery = vi.fn().mockReturnValue(false)
+vi.mock('@mantine/hooks', () => ({
+  useMediaQuery: (...args: unknown[]) => mockUseMediaQuery(...args),
+}))
+
+beforeEach(() => {
+  mockUseMediaQuery.mockReturnValue(false)
+})
 
 beforeAll(() => {
   vi.stubGlobal(
@@ -103,5 +129,103 @@ describe('MantineCountButton — variant-aware chip background (owner correction
     expect(badgeRoot).toBeTruthy()
     expect(badgeRoot.style.backgroundColor).toBe('var(--mantine-color-gray-2)')
     expect(badgeRoot.style.color).toBe('var(--mantine-color-gray-7)')
+  })
+})
+
+describe('MantineCountButton — iconOnlyBelow collapse (Task 571)', () => {
+  it('iconOnlyBelow UNSET renders the label even if the media query resolves true (byte-identical-render guard)', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton count={2} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+  })
+
+  it('iconOnlyBelow SET + below threshold hides the label but keeps leftSection icon + count badge + aria-label', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton
+          count={2}
+          iconOnlyBelow={860}
+          leftSection={<span data-testid="icon">icon</span>}
+          aria-label="Advanced filters"
+        >
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    // label hidden
+    expect(screen.queryByText('Advanced filters')).not.toBeInTheDocument()
+    // leftSection icon kept
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+    // accessible name survives via aria-label (button is reachable by its former label text via role+name)
+    const button = screen.getByRole('button', { name: 'Advanced filters' })
+    // count badge kept, inside the same button
+    expect(button).toHaveTextContent('2')
+  })
+
+  it('iconOnlyBelow SET + at/above threshold keeps the full label + icon + count (unchanged look)', () => {
+    mockUseMediaQuery.mockReturnValue(false)
+    render(
+      withProvider(
+        <MantineCountButton
+          count={2}
+          iconOnlyBelow={860}
+          leftSection={<span data-testid="icon">icon</span>}
+          aria-label="Advanced filters"
+        >
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    expect(screen.getByText('Advanced filters')).toBeInTheDocument()
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Advanced filters' })).toHaveTextContent('2')
+  })
+
+  it('count = 0 in the collapsed state renders no badge in either state (icon-only, no empty pill)', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton count={0} iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    const button = screen.getByRole('button', { name: 'Advanced filters' })
+    expect(button.querySelector('.mantine-Badge-root')).toBeNull()
+  })
+
+  it('touch target stays >=44px (2.75rem) in the collapsed state', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    render(
+      withProvider(
+        <MantineCountButton iconOnlyBelow={860} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    const button = screen.getByRole('button', { name: 'Advanced filters' })
+    expect(button.style.minHeight).toBe('2.75rem')
+  })
+
+  it('onClick still fires normally when collapsed', () => {
+    mockUseMediaQuery.mockReturnValue(true)
+    const onClick = vi.fn()
+    render(
+      withProvider(
+        <MantineCountButton iconOnlyBelow={860} onClick={onClick} leftSection={<span data-testid="icon">icon</span>} aria-label="Advanced filters">
+          Advanced filters
+        </MantineCountButton>,
+      ),
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Advanced filters' }))
+    expect(onClick).toHaveBeenCalled()
   })
 })

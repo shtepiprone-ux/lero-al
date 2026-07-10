@@ -1,5 +1,5 @@
 /**
- * HeroSearch → Mantine Button migration smoke (Task 568).
+ * HeroSearch → Mantine Button migration smoke (Task 568) + MantineCountButton adoption (Task 571).
  *
  * `HeroSearch.tsx` was split into a thin container (hooks/state/URL-building, unchanged) and a
  * prop-driven `HeroSearchView.tsx` (JSX + the 4 migrated `@mantine/core` Buttons — Task 568 item
@@ -7,6 +7,15 @@
  * + FiltersPanel's own external data hooks are mocked — same as `filtersRangeDatePicker.smoke.test.tsx`)
  * to prove the container→view wiring and the `handleSearch` URL-param contract are byte-identical
  * to the pre-migration component.
+ *
+ * **Task 571 addition:** the filters button is now the canonical `MantineCountButton` (was a raw
+ * `Button` + hand-rolled absolute corner `<span>` badge). Covers:
+ *   - the count badge now renders INSIDE the button (via `rightSection`, a normal-flow descendant)
+ *     instead of as a sibling in a `relative` wrapper — the round-1 DOM shape Task 568 shipped.
+ *   - the `iconOnlyBelow={860}` collapse mechanism is genuinely wired: forcing the real
+ *     `@mantine/hooks` `useMediaQuery` (via a scoped override, all other `@mantine/hooks` exports
+ *     stay real) to resolve "below threshold" hides the label while the `aria-label` accessible
+ *     name and the leftSection icon survive.
  *
  * Registry: docs/critical-flow-registry.md → "Listings filter controls" row, extended for HeroSearch.
  */
@@ -31,6 +40,20 @@ const mockRouterPush = vi.fn()
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockRouterPush }),
 }))
+
+// Task 571: scoped `useMediaQuery` override — `null` (default) delegates to the REAL hook (every
+// other `@mantine/hooks` export, e.g. `useDisclosure`/`useId` consumed internally by Mantine's own
+// Drawer/Combobox, stays completely real). Only the one dedicated collapse test below flips this to
+// force "below threshold", proving `MantineCountButton`'s `iconOnlyBelow={860}` wiring is real.
+const mediaQueryOverride: { current: boolean | null } = { current: null }
+vi.mock('@mantine/hooks', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@mantine/hooks')>()
+  return {
+    ...actual,
+    useMediaQuery: (...args: Parameters<typeof actual.useMediaQuery>) =>
+      mediaQueryOverride.current !== null ? mediaQueryOverride.current : actual.useMediaQuery(...args),
+  }
+})
 
 // FiltersPanel's own external data hooks (unrelated to this task's scope) — same mocks as
 // filtersRangeDatePicker.smoke.test.tsx so the REAL FiltersPanel mounts cleanly under HeroSearch.
@@ -82,6 +105,7 @@ beforeAll(() => {
 afterEach(() => {
   cleanup()
   mockRouterPush.mockClear()
+  mediaQueryOverride.current = null
 })
 
 describe('HeroSearch — Mantine Button migration (Task 568)', () => {
@@ -105,18 +129,35 @@ describe('HeroSearch — Mantine Button migration (Task 568)', () => {
     expect(screen.getByPlaceholderText('e.g. 12345')).toBeInTheDocument()
   })
 
-  it('the active-count corner badge is absent with no filters, and shows the count after Apply', async () => {
+  it('the active count badge is absent with no filters, and shows the count inline in the button after Apply (Task 571: MantineCountButton rightSection badge)', async () => {
     render(withProviders(<HeroSearch />))
     const filtersButton = screen.getByLabelText('Advanced filters')
-    // The badge is a sibling of the Button (not a descendant) — it lives in the shared
-    // `relative` wrapper div so it isn't clipped by the Button's own `overflow:hidden` root.
-    const filtersWrapper = filtersButton.parentElement as HTMLElement
-    expect(within(filtersWrapper).queryByText('1')).not.toBeInTheDocument()
+    // Task 571: the count now renders INSIDE the button via `rightSection` — a normal-flow
+    // DESCENDANT of the button (MantineCountButton), not a sibling in a `relative` wrapper (the
+    // Task 568 round-1 DOM shape this task replaces).
+    expect(within(filtersButton).queryByText('1')).not.toBeInTheDocument()
 
     fireEvent.click(filtersButton)
     fireEvent.change(screen.getByPlaceholderText('e.g. 12345'), { target: { value: '12345' } })
     fireEvent.click(screen.getByRole('button', { name: /Apply filters/ }))
 
-    expect(await within(filtersWrapper).findByText('1')).toBeInTheDocument()
+    expect(await within(filtersButton).findByText('1')).toBeInTheDocument()
+  })
+
+  it('the filters button collapses to icon+count below the iconOnlyBelow=860 threshold, keeping the aria-label accessible name (Task 571)', () => {
+    mediaQueryOverride.current = true // force "below threshold" on the real useMediaQuery hook
+    render(withProviders(<HeroSearch />))
+
+    // label ("Advanced filters" text) is hidden in the collapsed state
+    expect(screen.queryByText('Advanced filters')).not.toBeInTheDocument()
+
+    // the button is still reachable by its aria-label accessible name (icon-only exemption,
+    // agent-contract clause 11 — the ONLY permitted <640/<860 non-full-width control here)
+    const filtersButton = screen.getByRole('button', { name: 'Advanced filters' })
+    expect(filtersButton).toBeInTheDocument()
+
+    // clicking still opens FiltersPanel in the collapsed state
+    fireEvent.click(filtersButton)
+    expect(screen.getByPlaceholderText('e.g. 12345')).toBeInTheDocument()
   })
 })

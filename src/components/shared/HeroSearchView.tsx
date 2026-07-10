@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { Button } from '@mantine/core'
+import { MantineCountButton } from '@/design-system/mantine/patterns'
 import { cn } from '@/lib/utils'
 import { FiltersPanel } from '@/components/shared/FiltersPanel'
 import type { FilterValues } from '@/modules/listings/domain/filterEngine'
@@ -93,29 +94,21 @@ export function HeroSearchView({
 
             {/* Action buttons */}
             <div className="flex gap-2">
-              {/* Mantine `Button`'s own root has `overflow:hidden` (ripple/rounded-corner
-                  clipping) — an absolute corner badge as a DIRECT child gets cut off at the
-                  button edge (verified via rendered screenshot; same root cause Task 567 hit
-                  and fixed for its OWN Apply badge). The badge markup itself is unchanged
-                  (preserved verbatim per the kickoff) — only its DOM position moves to a
-                  sibling of the Button, inside a `relative` wrapper, so it overlaps the corner
-                  without being clipped by the Button's internal box. */}
-              <div className="relative max-sm:w-auto">
-                <Button
-                  variant={activeFiltersCount > 0 ? 'filled' : 'default'}
-                  className="px-3 w-full"
-                  onClick={onOpenFilters}
-                  aria-label={t('advanced_filters')}
-                  leftSection={<SlidersHorizontal className="h-4 w-4" />}
-                >
-                  <span className="hidden sm:inline">{t('advanced_filters')}</span>
-                </Button>
-                {activeFiltersCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-bold pointer-events-none">
-                    {activeFiltersCount}
-                  </span>
-                )}
-              </div>
+              {/* Task 571: canonical MantineCountButton — owns both the label-collapse (icon-only
+                  <860px, so the location combobox stops losing width to the full label) and the
+                  active-count badge (inline rightSection pill, same look as the CountButton story's
+                  filled+count example). Replaces the round-1 raw Button + absolute corner <span>
+                  badge + relative wrapper entirely — no more Button overflow:hidden clipping risk. */}
+              <MantineCountButton
+                variant={activeFiltersCount > 0 ? 'filled' : 'default'}
+                count={activeFiltersCount}
+                iconOnlyBelow={860}
+                onClick={onOpenFilters}
+                aria-label={t('advanced_filters')}
+                leftSection={<SlidersHorizontal className="h-4 w-4" />}
+              >
+                {t('advanced_filters')}
+              </MantineCountButton>
 
               <Button
                 variant="filled"

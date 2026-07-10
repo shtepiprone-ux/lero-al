@@ -107,7 +107,7 @@ export function HeroSearchView({
                 badge + relative wrapper entirely — no more Button overflow:hidden clipping risk.
                 Task 572: `shrink-0` keeps it content-width and on row 1 in every band. */}
             <MantineCountButton
-              variant={activeFiltersCount > 0 ? 'filled' : 'default'}
+              variant="default"
               count={activeFiltersCount}
               iconOnlyBelow={860}
               onClick={onOpenFilters}

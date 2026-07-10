@@ -72,6 +72,21 @@ export const Default: Story = {
               {t('count_button_label')}
             </MantineCountButton>
           </Stack>
+
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              secondary outline filter button — default (bordered/white) variant + filter icon in
+              leftSection + count inline in rightSection (the HeroSearch filters trigger)
+            </Text>
+            <MantineCountButton
+              variant="default"
+              leftSection={<SlidersHorizontal className="h-4 w-4" />}
+              count={2}
+              onClick={() => {}}
+            >
+              {t('count_button_label')}
+            </MantineCountButton>
+          </Stack>
         </Stack>
       </MantineStoryShell>
     )

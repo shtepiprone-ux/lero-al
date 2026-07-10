@@ -88,7 +88,12 @@ export function HeroSearch() {
               variant="ghost"
               onClick={() => setListingType(type)}
               className={cn(
-                'px-6 py-2.5 h-auto text-sm font-medium rounded-t-xl rounded-b-none border border-b-0',
+                // At <640 each tab is flex-1 (50/50) so the two tabs TOGETHER fill the full row
+                // width (P0 mobile full-width) WITHOUT overflow — the canonical Button's default
+                // size carries max-sm:w-full, and two 100%-wide tabs in one flex row = 200% →
+                // horizontal overflow (dead space right). flex-1 (flex-basis:0 + grow) overrides
+                // that to 50/50; min-w-0 lets long uk/it labels wrap and never forces overflow.
+                'px-6 py-2.5 h-auto text-sm font-medium rounded-t-xl rounded-b-none border border-b-0 max-sm:flex-1 max-sm:min-w-0',
                 listingType === type
                   ? 'bg-background text-foreground border-border hover:bg-background'
                   : 'bg-primary-foreground/15 text-primary-foreground/80 hover:text-primary-foreground border-transparent hover:bg-primary-foreground/25'

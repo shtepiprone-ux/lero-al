@@ -36,18 +36,37 @@ countActiveFilterValues(filters)`; `handleSearch(override?)` builds `URLSearchPa
 
 ## Required after-behavior (spell it out — no invention)
 
-### 1. Sale/rent tabs → Mantine `Button` (bespoke hero chrome preserved VERBATIM)
+### 1. Sale/rent tabs → Mantine `Button` (full-width 50/50 strip on mobile; joined inner corners)
+- 🔴 **OWNER-CONFIRMED DESIGN + LIVE-BUG CONTEXT (2026-07-10).** On mobile (<640) the two tabs MUST be
+  **full-width, each `flex-1` (50/50), together filling the full card row.** The original overflow bug (each tab
+  inherited the canonical Button's `max-sm:w-full` → two 100%-wide tabs in one `flex` row = 200% → horizontal
+  overflow → dead space right) was hotfixed in **Task 570** (`max-sm:flex-1 max-sm:min-w-0` on the tab
+  className). **PRESERVE that behavior** — do NOT reintroduce plain `max-sm:w-full` on the tabs. Each tab = 50%
+  via `flex-1`; **zero `scrollWidth > clientWidth` at 320/375/390** in every locale is a hard gate.
+- 🔴 **Tab-strip visual (owner spec 2026-07-10) — the polish Task 570 deliberately left for this task:**
+  - **Joined inner corners:** where the two tabs meet, remove the radius — LEFT tab (`sale`) drops its
+    top-RIGHT radius, RIGHT tab (`rent`) drops its top-LEFT radius; only the OUTER top corners stay rounded
+    (left tab `rounded-tl`, right tab `rounded-tr`). The strip reads as ONE segmented control, not two pills.
+  - **Inactive-tab background:** the inactive tab's translucent fill (`bg-primary-foreground/15`) must NOT show a
+    hard cut-off rectangle at its bottom edge — it must sit flush against the card top (the owner rejected the
+    current clipped look). Reconcile with the search-card container radius: the card's `rounded-tr-2xl` conflicts
+    with a full-width right tab — square the card's top corners (or otherwise align) so the full-width strip sits
+    flush.
+  - **Desktop vs mobile:** mobile = full-width 50/50 (owner-confirmed). Desktop currently = content-width chips
+    at top-left. **STOP and ASK the owner whether desktop should also go full-width 50/50 or keep the
+    content-width look** before changing the ≥640 appearance.
+  - Prove the junction (no cut-off inactive bg; correct joined-inner / rounded-outer corners; flush card top) in
+    the §18.9 human-visual set at uk@320/375/390 + sq@320 + it@320.
 - Replace `ui/button variant="ghost"` with `@mantine/core` `Button variant="subtle"` (or `unstyled` if
-  `subtle` injects padding/hover that fights the bespoke className — pick whichever renders the tab look with
-  ZERO visual change) carrying the **existing tab className verbatim**. These tabs are **hero-gradient chrome,
-  NOT §6a surface buttons** — they intentionally use hero-relative tokens (`primary-foreground/*`). Do NOT
-  restyle them to §6a and do NOT invent replacement colors: keep the exact classes so the rendered tab strip
-  is pixel-identical to today. `onClick`/`setListingType` unchanged; the active `listingType===type`
-  branching unchanged. **If `variant="subtle"`/`unstyled` cannot reproduce the exact look without class
-  surgery → STOP and ASK** (do not guess a SegmentedControl/Tabs rewrite — the sprint owner-decision froze
-  these as Button toggles, no SegmentedControl).
-- ≥44px touch height; labels (`Продаж`/`Оренда`, `Në shitje`/`Me qira`, …) wrap, never clip; the two-tab
-  strip must not h-scroll at 320 in any locale.
+  `subtle` injects padding/hover that fights the bespoke className). These tabs are **hero-gradient chrome, NOT
+  §6a surface buttons** — they intentionally use hero-relative tokens (`primary-foreground/*`, active
+  `bg-background`). Do NOT restyle them to §6a and do NOT invent replacement colors: keep the hero color
+  treatment, and apply the width (50/50 mobile) + joined-corner + inactive-bg spec above. `onClick`/
+  `setListingType` + the active `listingType===type` branching unchanged. **If `variant="subtle"`/`unstyled`
+  cannot reproduce the look without class surgery → STOP and ASK** (do not guess a SegmentedControl/Tabs
+  rewrite — the sprint owner-decision froze these as Button toggles, no SegmentedControl).
+- ≥44px touch height; both tab labels (`Продаж`/`Оренда`, `Në shitje`/`Me qira`, …) render side-by-side, each
+  in its 50% half, and wrap, never clip; **ANY horizontal overflow at 320 (in any locale) = task failure.**
 
 ### 2. Filters button → Mantine `Button` (§6a) + preserved corner badge
 - `Button` with `variant` = **filled brand** when `activeFiltersCount>0` / **`variant="default"` (§6a

@@ -36,7 +36,7 @@ Already migrated — DO NOT touch: `LocationCombobox`, `YearCombobox`, `Property
 |---|---|---|---|
 | **566** | 3 leaf sub-components → Mantine: `FilterRangeInputs` (→ Mantine `TextInput` §6e), `FilterMultiToggle` + `FilterRoomsRow` (→ Mantine `Button` toggles §6a) | — | `Sprint_43_kickoff_prompt_Task_566_FilterLeafComponentsMantine.md` |
 | **567** | `FiltersPanel` shell: `ui/sheet` → `MantineDrawer`; close-X → Mantine `ActionIcon`/`Button`; property-type + market-type toggle grids → Mantine `Button`; listing-id `ui/input` → Mantine `TextInput`; Apply/Reset footer → Mantine `Button`. Consumes the 566 leaf components unchanged. | 566 | *(authored after 566 approved)* |
-| **568** | `HeroSearch`: sale/rent tabs, filters button (+ active-count badge), search button → Mantine `Button`; card/tab layout keeps its structure; mobile <640 full-width per clause 11. | 567 | *(authored after 567 approved)* |
+| **568** | `HeroSearch`: sale/rent tabs, filters button (+ active-count badge), search button → Mantine `Button`; card/tab layout keeps its structure; mobile <640 full-width per clause 11. | 567 | `Sprint_43_kickoff_prompt_Task_568_HeroSearchMantine.md` ✅ authored 2026-07-10 |
 
 **Order matters:** 566 first (leaf components are consumed by 567's shell); 567 before 568 (HeroSearch mounts
 FiltersPanel). Each task is held for orchestrator diff + rendered review before the next is handed off.

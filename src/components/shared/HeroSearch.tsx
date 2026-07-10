@@ -2,22 +2,16 @@
 
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { useTranslations, useLocale } from 'next-intl'
-import { Search, SlidersHorizontal } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { useLocale } from 'next-intl'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
-import { FiltersPanel } from '@/components/shared/FiltersPanel'
 import { countActiveFilterValues } from '@/modules/listings/domain/filterEngine'
 import type { FilterValues } from '@/modules/listings/domain/filterEngine'
-import { LocationCombobox } from '@/components/shared/LocationCombobox'
-import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import type { ListingType } from '@/types/database'
+import { HeroSearchView } from '@/components/shared/HeroSearchView'
 
+// Task 568 item 0: thin container — owns hooks/state/URL-building; all JSX + the migrated
+// Mantine Buttons live in the prop-driven `HeroSearchView` presentational component.
 export function HeroSearch() {
-  const t = useTranslations('common')
-  const tl = useTranslations('listing')
-  const th = useTranslations('home')
   const locale = useLocale()
   const router = useRouter()
 
@@ -78,89 +72,22 @@ export function HeroSearch() {
   }
 
   return (
-    <>
-      <div className="hero-search w-full max-w-3xl mx-auto">
-        {/* Listing type tabs */}
-        <div className="flex mb-0">
-          {(['sale', 'rent'] as ListingType[]).map(type => (
-            <Button
-              key={type}
-              variant="ghost"
-              onClick={() => setListingType(type)}
-              className={cn(
-                // At <640 each tab is flex-1 (50/50) so the two tabs TOGETHER fill the full row
-                // width (P0 mobile full-width) WITHOUT overflow — the canonical Button's default
-                // size carries max-sm:w-full, and two 100%-wide tabs in one flex row = 200% →
-                // horizontal overflow (dead space right). flex-1 (flex-basis:0 + grow) overrides
-                // that to 50/50; min-w-0 lets long uk/it labels wrap and never forces overflow.
-                'px-6 py-2.5 h-auto text-sm font-medium rounded-t-xl rounded-b-none border border-b-0 max-sm:flex-1 max-sm:min-w-0',
-                listingType === type
-                  ? 'bg-background text-foreground border-border hover:bg-background'
-                  : 'bg-primary-foreground/15 text-primary-foreground/80 hover:text-primary-foreground border-transparent hover:bg-primary-foreground/25'
-              )}
-            >
-              {tl(type)}
-            </Button>
-          ))}
-        </div>
-
-        {/* Search bar */}
-        <div className="bg-background rounded-b-2xl rounded-tr-2xl border shadow-xl p-3">
-          <div className="flex flex-col sm:flex-row gap-2">
-
-            <PropertyTypeCombobox
-              value={propertyType}
-              onChange={setPropertyType}
-            />
-
-            <LocationCombobox
-              locations={cityRegionLocs}
-              value={locationId}
-              onChange={id => setLocationId(id ?? '')}
-              onKeyDown={handleKeyDown}
-              placeholder={th('hero_placeholder_location')}
-              className="flex-1"
-            />
-
-            {/* Action buttons */}
-            <div className="flex gap-2">
-              <Button
-                variant={activeFiltersCount > 0 ? 'default' : 'outline'}
-                size="xl"
-                className="px-3 relative max-sm:w-auto"
-                onClick={() => setFiltersOpen(true)}
-                aria-label={t('advanced_filters')}
-              >
-                <SlidersHorizontal className="h-4 w-4" />
-                <span className="hidden sm:inline">{t('advanced_filters')}</span>
-                {activeFiltersCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 h-5 w-5 rounded-full bg-primary text-primary-foreground text-2xs flex items-center justify-center font-bold">
-                    {activeFiltersCount}
-                  </span>
-                )}
-              </Button>
-
-              <Button
-                size="xl"
-                onClick={() => handleSearch()}
-                className="px-6 font-semibold flex-1"
-              >
-                <Search className="h-4 w-4" />
-                <span>{t('search')}</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <FiltersPanel
-        open={filtersOpen}
-        onClose={() => setFiltersOpen(false)}
-        values={filters}
-        onChange={setFilters}
-        onApply={handleSearch}
-        locations={cityRegionLocs}
-      />
-    </>
+    <HeroSearchView
+      locations={cityRegionLocs}
+      listingType={listingType}
+      onListingTypeChange={setListingType}
+      propertyType={propertyType}
+      onPropertyTypeChange={setPropertyType}
+      locationId={locationId}
+      onLocationChange={id => setLocationId(id ?? '')}
+      filters={filters}
+      onFiltersChange={setFilters}
+      activeFiltersCount={activeFiltersCount}
+      filtersOpen={filtersOpen}
+      onOpenFilters={() => setFiltersOpen(true)}
+      onCloseFilters={() => setFiltersOpen(false)}
+      onSearch={handleSearch}
+      onLocationKeyDown={handleKeyDown}
+    />
   )
 }

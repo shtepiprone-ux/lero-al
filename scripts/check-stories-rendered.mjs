@@ -20,6 +20,11 @@
  *       sheet-content except data-side="left", select-content, popover-content,
  *       dropdown-menu-content, navigation-menu-popup) is edge-to-edge full-width and
  *       bottom-anchored (bottom-sheet contract, design-system.md §26.2; Task 421 Slice 6).
+ *   (f) HeroSearch-only, 640<=width<768-only: the 4 search-bar controls (type/location/
+ *       filters/Search) are read via getBoundingClientRect().top and the Search button's top
+ *       must be strictly greater than the Location field's top (Search wrapped to row 2), so
+ *       the Location combobox is never crushed in that band (Task 573, persists Task 572's fix
+ *       — see MANTINE_STORY_EXTRA_VIEWPORTS and docs/storybook-governance.md).
  *
  * Output:
  *   .screenshots/rendered-assert/<timestamp>/
@@ -269,6 +274,28 @@ const MANTINE_VIEWPORTS = [
   { name: 'desktop-1024', width: 1024, height:  768 },
 ];
 
+// ── Task 573 — per-story extra viewport for the Mantine gate (surgical, NOT global) ──
+// Keyed by the SAME `componentName` discoverMantinePrimitiveStories() derives from the story
+// title suffix — never a hardcoded story id (matches this file's existing no-hardcode
+// discipline, see the Task 529 doc note above `MANTINE_PRIMITIVES_TITLE_PREFIX`). For each
+// discovered Mantine story, the effective viewport list is `MANTINE_VIEWPORTS` concatenated
+// with `MANTINE_STORY_EXTRA_VIEWPORTS[componentName] ?? []` — only the named component(s) gain
+// extra cells; every other Mantine primitive story is byte-identical (still exactly
+// 320/375/390/1024 × 4 locales).
+//
+// Why HeroSearch needs this: Task 572 fixed HeroSearch's Search button wrapping to its own row
+// in the 640–767px band so the Location combobox isn't crushed illegible (~720px). The standing
+// MANTINE_VIEWPORTS sample (320/375/390/1024) never lands inside that band, so Task 572's ONLY
+// rendered proof was a one-off, non-persisted Playwright script (see
+// docs/critical-flow-registry.md row 49) — a future edit that silently drops `sm:basis-full`
+// from the Search button would pass every standing gate. `band-700` persists that coverage.
+// Do NOT add 700 to `MANTINE_VIEWPORTS` itself — that would inject an unvetted width into every
+// other Mantine primitive story (~37 of them), risking new AMBIGUOUS/FAIL noise unrelated to
+// HeroSearch and slowing every run.
+const MANTINE_STORY_EXTRA_VIEWPORTS = {
+  HeroSearch: [{ name: 'band-700', width: 700, height: 812 }],
+};
+
 /**
  * Reads the already-parsed Storybook index and returns every `Mantine/Primitives/*` story,
  * flagging the ones that need a scripted open-trigger click. Never hardcodes story IDs.
@@ -284,6 +311,9 @@ function discoverMantinePrimitiveStories(indexData) {
         anchors: [],
         mantineGate: true,
         openTrigger: MANTINE_OVERLAY_PRIMITIVES.has(componentName),
+        // Task 573 — carried through so captureCell can gate the HeroSearch-only in-band
+        // row-structure assertion off the SAME discovered name (never a hardcoded story id).
+        componentName,
       };
     });
 }
@@ -495,6 +525,9 @@ function isTransientFailure(cell) {
   if (cell.assertions.fullWidthButtonsAtMobile === false) return false;
   if (cell.assertions.popupBottomSheetAtMobile === false) return false;
   if (cell.assertions.visualIntegrity?.pass === false) return false;
+  // Task 573 — HeroSearch in-band row-structure regression is a real, non-transient layout
+  // defect (mirrors fullWidthControlsAtMobile above); never retried into a false pass.
+  if (cell.assertions.heroSearchWrapInBand === false) return false;
 
   if (rc.failReason === 'blank-canvas') return true;
   if (rc.failReason === 'sb-show-errordisplay' && TRANSIENT_FETCH_PATTERN.test(rc.failDetail || '')) return true;
@@ -1013,6 +1046,48 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     cell.assertions.popupBottomSheetAtMobile = viewport.width < 640 ? (checkedAnyPopup ? popupBottomSheetOk : null) : null;
     if (failingPopups.length > 0) cell.assertions.failingPopupSlots = failingPopups;
 
+    // ── Assertion (f): HeroSearch-only row-structure assertion in the 640–767 in-band viewport
+    // (Task 573). Gated on the SAME discovered `componentName` discoverMantinePrimitiveStories()
+    // attaches — never a hardcoded story id — and ONLY runs for 640<=width<768, so it has zero
+    // effect on any other story and on HeroSearch cells outside this band. A cell that only
+    // checked "no horizontal overflow" would NOT catch a regression here: Task 572's fix wraps
+    // the Search button to its own row so the Location combobox isn't crushed, but a REGRESSED
+    // single-row layout has no overflow either — this reads the 4 search-bar control tops
+    // directly (the same DOM shape Task 572's one-off proof script read: PropertyType/
+    // LocationCombobox/MantineCountButton/Search Button are the 4 direct children of the
+    // `.flex.flex-wrap` container inside the `.bg-background` search-bar card — see
+    // HeroSearchView.tsx) and asserts Search sits on a strictly LOWER row than Location.
+    // `null` = not applicable (wrong story / wrong band / controls not yet found — the latter is
+    // deliberately non-committal so a transient late-render never masquerades as a layout defect;
+    // this cell already passed the style-integrity retry gate above by the time we reach here).
+    let heroSearchWrapInBand = null;
+    if (story.componentName === 'HeroSearch' && viewport.width >= 640 && viewport.width < 768) {
+      heroSearchWrapInBand = await page.evaluate(() => {
+        // `.bg-background` alone is AMBIGUOUS inside Storybook: `withTheme` (.storybook/preview.tsx)
+        // wraps EVERY story (Mantine included — it does not check skipCanvas) in an outer
+        // `<div class="min-h-screen bg-background text-foreground">`, which `document.querySelector`
+        // would match FIRST, before ever reaching the real search-bar card nested inside it. Narrow
+        // to the element that ALSO carries the search-bar card's other literal classes
+        // (`border` + `shadow-xl`, from HeroSearchView.tsx's
+        // `"bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3"`) so this can never
+        // resolve to the outer theme wrapper.
+        const card = Array.from(document.querySelectorAll('#storybook-root .bg-background'))
+          .find((el) => el.classList.contains('border') && el.classList.contains('shadow-xl'));
+        const container = card?.querySelector(':scope > .flex.flex-wrap');
+        if (!container) return null;
+        const controls = Array.from(container.children).filter((el) => {
+          const r = el.getBoundingClientRect();
+          return r.width > 0 && r.height > 0;
+        });
+        if (controls.length !== 4) return null; // late/partial render — not a layout verdict
+        // Order matches HeroSearchView.tsx: [type, location, filters, Search]
+        const locationTop = controls[1].getBoundingClientRect().top;
+        const searchTop = controls[3].getBoundingClientRect().top;
+        return searchTop > locationTop + 1; // Search strictly on a lower row than Location
+      });
+    }
+    cell.assertions.heroSearchWrapInBand = heroSearchWrapInBand;
+
     // ════════════════════════════════════════════════════════════════
     // LAYER 3: Geometry / visual integrity (Task 467)
     // ════════════════════════════════════════════════════════════════
@@ -1026,7 +1101,7 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     };
     const geometryHardFail = geometryResult.violations.length > 0;
 
-    const hardPass = noOverflow && !geometryHardFail &&
+    const hardPass = noOverflow && !geometryHardFail && heroSearchWrapInBand !== false &&
       (viewport.width >= 640 || (fullWidthOk && fullWidthButtonsOk && popupBottomSheetOk));
     if (hardPass && geometryResult.ambiguousOnly) {
       cell.pass = false;
@@ -1156,8 +1231,15 @@ async function runAssert() {
     const geometryViewports = VIEWPORTS_MOBILE;
     const totalAssertCells = ASSERT_STORIES.length * LOCALES.length * viewports.length;
     const totalGeometryCells = geometryOnlyStories.length * LOCALES.length * geometryViewports.length;
-    const totalMantineCells = mantineStories.length * LOCALES.length * MANTINE_VIEWPORTS.length;
-    console.log(`    Mantine/Primitives/* stories (Task 529 ENFORCED gate, always runs incl. --fast): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
+    // Task 573 — each story's effective viewport list is MANTINE_VIEWPORTS plus its own
+    // MANTINE_STORY_EXTRA_VIEWPORTS entry (if any); summed per-story so only the named
+    // component(s) (currently HeroSearch, +1 viewport) contribute extra cells to the total.
+    const extraMantineCellCount = mantineStories.reduce(
+      (sum, s) => sum + (MANTINE_STORY_EXTRA_VIEWPORTS[s.componentName]?.length ?? 0) * LOCALES.length,
+      0
+    );
+    const totalMantineCells = mantineStories.length * LOCALES.length * MANTINE_VIEWPORTS.length + extraMantineCellCount;
+    console.log(`    Mantine/Primitives/* stories (Task 529 ENFORCED gate, always runs incl. --fast): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
     console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
     console.log('');
 
@@ -1168,8 +1250,14 @@ async function runAssert() {
     // UNCONDITIONALLY (including --fast), auto-discovered, overlay stories opened via click. ──
     process.stdout.write('  mantine: ');
     for (const story of mantineStories) {
+      // Task 573 — union MANTINE_VIEWPORTS with this story's own extra-viewport entry (if any).
+      // Non-HeroSearch stories get `?? []` → byte-identical to MANTINE_VIEWPORTS, unchanged.
+      const effectiveViewports = [
+        ...MANTINE_VIEWPORTS,
+        ...(MANTINE_STORY_EXTRA_VIEWPORTS[story.componentName] ?? []),
+      ];
       for (const locale of LOCALES) {
-        for (const viewport of MANTINE_VIEWPORTS) {
+        for (const viewport of effectiveViewports) {
           const storyUrl = `${baseUrl}/iframe.html?id=${story.id}&globals=locale:${locale}&viewMode=story`;
           const filename = `${story.id}__${locale}__${viewport.name}.png`;
           const screenshotPath = join(outputDir, filename);
@@ -1504,6 +1592,7 @@ async function runAssert() {
           if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ form control not full-width at <640');
           if (cell.assertions.fullWidthButtonsAtMobile === false) console.error(`    ✗ text button not full-width at <640: ${(cell.assertions.failingButtonLabels ?? []).join(', ')}`);
           if (cell.assertions.popupBottomSheetAtMobile === false) console.error(`    ✗ popup not bottom-sheet at <640: ${(cell.assertions.failingPopupSlots ?? []).join(', ')}`);
+          if (cell.assertions.heroSearchWrapInBand === false) console.error('    ✗ HeroSearch: Search button did not wrap to row 2 in the 640-767 band (Task 573)');
           if (cell.assertions.styleIntegrity?.pass === false) {
             const s = cell.assertions.styleIntegrity.signals;
             console.error(`    ✗ style [unstyled-render]: bodyMargin=${s.bodyMargin}, sheets=${s.sheetsWithRules}, font=${(s.fontFamily ?? '').slice(0, 30)}, ctrl=${s.controlThemed}`);

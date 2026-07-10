@@ -1178,6 +1178,66 @@ entry, in the same run that also proves AC5's planted-violation transcript (see 
 
 ---
 
+### §14.9.17 — Per-story extra viewport + per-story assertion mechanism (Task 573, 2026-07-10)
+
+**Why.** Task 572 fixed a real bug — HeroSearch's Search button now wraps to its own row in the 640–767px band
+so the Location combobox isn't crushed illegible (~720px). Its ONLY rendered proof for that exact band was a
+one-off, non-persisted Playwright script: the standing `MANTINE_VIEWPORTS` sample (320/375/390/1024, §14.9.2)
+never lands inside 640–767, so a future edit that silently drops `sm:basis-full` from the Search button would
+pass every existing gate and re-introduce the crushed-Location bug undetected. Task 573 closes that hole with
+two new, reusable, SURGICAL mechanisms in `scripts/check-stories-rendered.mjs` — surgical meaning they change
+behavior for exactly the ONE named component, never the other ~37 Mantine primitive stories.
+
+**Mechanism 1 — `MANTINE_STORY_EXTRA_VIEWPORTS` (per-story extra viewport, not a global width).**
+```js
+const MANTINE_STORY_EXTRA_VIEWPORTS = {
+  HeroSearch: [{ name: 'band-700', width: 700, height: 812 }],
+};
+```
+Keyed by the SAME `componentName` `discoverMantinePrimitiveStories()` already derives from the story title
+suffix (`Mantine/Primitives/<componentName>`) — never a hardcoded story id, matching this file's existing
+no-hardcode discipline (§14.9.1). `discoverMantinePrimitiveStories()` now carries `componentName` through onto
+every discovered story object so the main loop and `captureCell` can read it. For each discovered Mantine
+story, the effective viewport list is `[...MANTINE_VIEWPORTS, ...(MANTINE_STORY_EXTRA_VIEWPORTS[componentName]
+?? [])]` — a story with no map entry (i.e. every OTHER Mantine primitive) gets `?? []`, so its cell count and
+behavior are byte-identical to before this task. `MANTINE_VIEWPORTS` itself is unchanged — adding 700 there
+would have injected an unvetted width into all ~37 Mantine primitive stories, risking new AMBIGUOUS/FAIL noise
+unrelated to HeroSearch and slowing every run for no benefit to any other component.
+
+**Mechanism 2 — a per-story, per-band DOM assertion, gated the same way.**
+A 700px screenshot cell that only re-ran the existing no-h-overflow/full-width checks would NOT have caught the
+Task 572 regression class: a crushed single-row layout has no horizontal overflow either — the bug is a row-
+structure defect, not an overflow defect. `captureCell` gained a new assertion (f), gated on
+`story.componentName === 'HeroSearch' && 640 <= viewport.width < 768`: it reads the 4 search-bar controls
+(direct children of the `.flex.flex-wrap` container inside the `.bg-background` card — `HeroSearchView.tsx`'s
+`[type, location, filters, Search]` order) via `getBoundingClientRect().top` and asserts the Search button's
+top is strictly below the Location field's top (Search wrapped to row 2). Result is recorded as
+`cell.assertions.heroSearchWrapInBand` (`true`/`false`/`null` — `null` = not applicable: wrong story, wrong
+band, or the 4 controls weren't all found, which defers to the existing style-integrity/transient-retry path
+rather than emitting a false hard FAIL on a capture miss). `heroSearchWrapInBand === false` is wired into
+`isTransientFailure()` alongside the pre-existing `fullWidthControlsAtMobile`/`fullWidthButtonsAtMobile`/
+`popupBottomSheetAtMobile`/`visualIntegrity.pass` guards (the file's existing "never transient" list — this IS
+the equivalent of `HARD_FAIL_REASONS` for assertions that live on `cell.assertions` rather than
+`renderCheck.failReason`) — a real row-structure regression can never be retried into a false pass — and into
+`hardPass` alongside `noOverflow`/`!geometryHardFail`, so a `false` result hard-fails the cell outright.
+
+**Reusable pattern for future primitives.** A future task adding a narrow-band or component-specific rendered
+guard should (1) add one entry to `MANTINE_STORY_EXTRA_VIEWPORTS` keyed by the discovered `componentName`, and
+(2) add one `story.componentName === '<Name>'`-gated block inside `captureCell`, wiring its boolean result into
+`isTransientFailure()`'s explicit guard list and into `hardPass` — exactly the two additions Task 573 made.
+Do NOT invent a second per-story-viewport map or a parallel gate/test-runner; extend these two mechanisms.
+
+**Result (native `screenshots:assert -- --mantine-only`):** `HeroSearch` grew from 16/16 to 20/20 PASS (16
+pre-existing 320/375/390/1024 cells + 4 new 700px cells, one per locale); every other Mantine primitive story's
+cell count is unchanged. Planted-violation proof (temporarily dropping `sm:basis-full` from the Search button
+in a local, reverted-before-completion copy of `HeroSearchView.tsx`): the 4 new 700px cells' `heroSearchWrapInBand`
+assertion genuinely FAILed (Search top == Location top, single row), reported as a hard, non-transient FAIL,
+non-zero FAIL count in the run; reverted → back to 20/20 PASS. See the Task 573 session log for the full
+before/planted-FAIL/after transcripts and `docs/critical-flow-registry.md` row 49 for the persisted-gate note
+that replaces the retired Task-572 one-off script as this band's authoritative proof.
+
+---
+
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.

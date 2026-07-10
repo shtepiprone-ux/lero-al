@@ -76,11 +76,19 @@ export function HeroSearchView({
             entire top edge, incl. top-right); desktop keeps its original rounded-tr-2xl since
             the tabs stay content-width chips at top-left there (owner-confirmed, unchanged). */}
         <div className="bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3">
-          <div className="flex flex-col sm:flex-row gap-2">
+          {/* Task 572: flattened into ONE flex-wrap container (no more separate action-buttons
+              <div> grouping filters+Search) so each control's own flex-basis decides its row
+              placement per breakpoint. <640 and >=768 render byte-identical to before; the NEW
+              640-767 (`sm`) band wraps Search alone to a second row so Location regains width
+              (was crushed illegible at ~720px — owner-reported). See "Why these exact classes" in
+              the Task 572 kickoff — do NOT swap any basis/grow/shrink utility for the `flex-1`
+              shorthand, it fights the sm:/md: flex-basis overrides. */}
+          <div className="flex flex-wrap md:flex-nowrap gap-2">
 
             <PropertyTypeCombobox
               value={propertyType}
               onChange={onPropertyTypeChange}
+              className="basis-full sm:basis-auto sm:w-48 shrink-0"
             />
 
             <LocationCombobox
@@ -89,36 +97,35 @@ export function HeroSearchView({
               onChange={onLocationChange}
               onKeyDown={onLocationKeyDown}
               placeholder={th('hero_placeholder_location')}
-              className="flex-1"
+              className="basis-full sm:basis-0 grow min-w-0"
             />
 
-            {/* Action buttons */}
-            <div className="flex gap-2">
-              {/* Task 571: canonical MantineCountButton — owns both the label-collapse (icon-only
-                  <860px, so the location combobox stops losing width to the full label) and the
-                  active-count badge (inline rightSection pill, same look as the CountButton story's
-                  filled+count example). Replaces the round-1 raw Button + absolute corner <span>
-                  badge + relative wrapper entirely — no more Button overflow:hidden clipping risk. */}
-              <MantineCountButton
-                variant={activeFiltersCount > 0 ? 'filled' : 'default'}
-                count={activeFiltersCount}
-                iconOnlyBelow={860}
-                onClick={onOpenFilters}
-                aria-label={t('advanced_filters')}
-                leftSection={<SlidersHorizontal className="h-4 w-4" />}
-              >
-                {t('advanced_filters')}
-              </MantineCountButton>
+            {/* Task 571: canonical MantineCountButton — owns both the label-collapse (icon-only
+                <860px, so the location combobox stops losing width to the full label) and the
+                active-count badge (inline rightSection pill, same look as the CountButton story's
+                filled+count example). Replaces the round-1 raw Button + absolute corner <span>
+                badge + relative wrapper entirely — no more Button overflow:hidden clipping risk.
+                Task 572: `shrink-0` keeps it content-width and on row 1 in every band. */}
+            <MantineCountButton
+              variant={activeFiltersCount > 0 ? 'filled' : 'default'}
+              count={activeFiltersCount}
+              iconOnlyBelow={860}
+              onClick={onOpenFilters}
+              aria-label={t('advanced_filters')}
+              leftSection={<SlidersHorizontal className="h-4 w-4" />}
+              className="shrink-0"
+            >
+              {t('advanced_filters')}
+            </MantineCountButton>
 
-              <Button
-                variant="filled"
-                onClick={() => onSearch()}
-                className="px-6 font-semibold flex-1"
-                leftSection={<Search className="h-4 w-4" />}
-              >
-                {t('search')}
-              </Button>
-            </div>
+            <Button
+              variant="filled"
+              onClick={() => onSearch()}
+              className="px-6 font-semibold grow shrink basis-0 sm:basis-full md:grow-0 md:basis-auto"
+              leftSection={<Search className="h-4 w-4" />}
+            >
+              {t('search')}
+            </Button>
           </div>
         </div>
       </div>

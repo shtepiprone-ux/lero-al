@@ -160,4 +160,26 @@ describe('HeroSearch — Mantine Button migration (Task 568)', () => {
     fireEvent.click(filtersButton)
     expect(screen.getByPlaceholderText('e.g. 12345')).toBeInTheDocument()
   })
+
+  it('Task 572: the 4 controls (type, location, filters, Search) are direct children of ONE flex-wrap container, not nested in a separate action <div>', () => {
+    // Layout wrapping itself is not assertable in jsdom (no layout engine — the AUTHORITATIVE
+    // proof for the 640-767 Search-wrap behavior is the rendered PNG matrix). This test instead
+    // proves the STRUCTURAL precondition the fix depends on: pre-Task-572, filters+Search were
+    // nested inside their own `<div className="flex gap-2">`, one level deeper than type/location
+    // — that extra nesting is exactly what forced them to move together as a pair. Flattening all
+    // 4 into direct siblings of one `flex flex-wrap md:flex-nowrap` container is what lets Search
+    // wrap alone while filters stays on row 1.
+    render(withProviders(<HeroSearch />))
+    const searchButton = screen.getByRole('button', { name: 'Search' })
+    const filtersButton = screen.getByLabelText('Advanced filters')
+
+    const container = searchButton.parentElement
+    expect(container).not.toBeNull()
+    expect(container).toHaveClass('flex', 'flex-wrap', 'gap-2')
+
+    // filters and Search are DIRECT SIBLINGS of the same container — no intermediate wrapper.
+    expect(filtersButton.parentElement).toBe(container)
+    // exactly 4 direct children: [type-combobox-wrapper, location-combobox-wrapper, filters, Search]
+    expect(container?.children.length).toBe(4)
+  })
 })

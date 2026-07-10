@@ -130,18 +130,57 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
     }
 
     // ── Clipping ancestor walk ────────────────────────────────────
+    // Task 569: shared predicate — an ancestor whose computed overflow can clip a
+    // descendant's paint (hidden/clip = hard clip, auto/scroll = clips whatever is
+    // scrolled out of the current viewport). Both `findClippingAncestor` (Check 3,
+    // nearest ancestor only) and `getVisibleClippedRect` (Check 4, walks the full
+    // ancestor chain) share this ONE test — do not duplicate the regex.
+    function isClippingAncestor(el) {
+      const cs = window.getComputedStyle(el);
+      const ov = cs.overflow + ' ' + cs.overflowX + ' ' + cs.overflowY;
+      return /hidden|clip|auto|scroll/.test(ov);
+    }
+
     function findClippingAncestor(el) {
       let parent = el.parentElement;
       while (parent && parent !== document.body && parent !== document.documentElement) {
-        const cs = window.getComputedStyle(parent);
-        const ov = cs.overflow + ' ' + cs.overflowX + ' ' + cs.overflowY;
-        if (/hidden|clip|auto|scroll/.test(ov)) {
+        if (isClippingAncestor(parent)) {
           const prect = parent.getBoundingClientRect();
           if (prect.width > 0 && prect.height > 0) return parent;
         }
         parent = parent.parentElement;
       }
       return null;
+    }
+
+    // Task 569 (Check 4 clip-awareness): an element inside an `overflow:auto|scroll`
+    // ancestor taller/wider than itself can have scrolled-away content whose raw
+    // `getBoundingClientRect()` still geometrically extends past the ancestor's own
+    // clipped viewport — those pixels are never painted there. Returns the element's
+    // rect intersected against EVERY clipping ancestor in its chain (progressively
+    // narrowing it), or `null` if the intersection collapses to nothing (the element
+    // is entirely clipped away at the current scroll position — not painted at all,
+    // so it cannot visually overlap anything). An element with no clipping ancestor
+    // (or one that doesn't clip it at all) gets its full, unmodified rect back —
+    // this must never make a genuine, fully-painted overlap disappear.
+    function getVisibleClippedRect(el) {
+      let rect = el.getBoundingClientRect();
+      let parent = el.parentElement;
+      while (parent && parent !== document.body && parent !== document.documentElement) {
+        if (isClippingAncestor(parent)) {
+          const prect = parent.getBoundingClientRect();
+          if (prect.width > 0 && prect.height > 0) {
+            const left = Math.max(rect.left, prect.left);
+            const top = Math.max(rect.top, prect.top);
+            const right = Math.min(rect.right, prect.right);
+            const bottom = Math.min(rect.bottom, prect.bottom);
+            if (right <= left + tol || bottom <= top + tol) return null;
+            rect = { left, top, right, bottom };
+          }
+        }
+        parent = parent.parentElement;
+      }
+      return rect;
     }
 
     // ── Scrollable ancestor check (R1: for offscreen ambiguous) ──
@@ -405,6 +444,18 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
         const bRect = b.getBoundingClientRect();
 
         if (!rectsOverlap(aRect, bRect)) continue;
+
+        // Task 569: the raw rects above can overlap on paper while one element is
+        // actually scrolled out of view inside its own `overflow:auto`/`scroll`
+        // ancestor (see `getVisibleClippedRect` above — the SAME false-positive class
+        // Check 3/outside-container already exempts for the identical reason). Clip
+        // both rects against their own ancestor chain and re-check before treating
+        // this as a real (or even ambiguous) collision. An element that is NOT
+        // clipped (or whose clip still leaves the overlap intact) is unaffected —
+        // this must never suppress a genuine, fully-painted overlap.
+        const aVisibleRect = getVisibleClippedRect(a);
+        const bVisibleRect = getVisibleClippedRect(b);
+        if (!aVisibleRect || !bVisibleRect || !rectsOverlap(aVisibleRect, bVisibleRect)) continue;
 
         // Algorithmic exclusions
         if (isAncestorOf(a, b) || isAncestorOf(b, a)) continue;

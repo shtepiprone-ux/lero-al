@@ -376,3 +376,90 @@ export const LargeRangeGuard: Story = {
   ),
   globals: { viewport: { value: 'mobile320', isRotated: false } },
 }
+
+// ── 14. Scroll-clipped overlap (Task 569 — element-overlap clip-awareness) ──
+// A `flex:1; overflow-y:auto` scroll region (fixed height, shorter than its
+// content) followed by a sibling "footer" positioned right below it — the
+// SAME shape as `MantineDrawer`'s pinned-footer pattern (Task 567 Fix 4).
+// The last row inside the scroll region is tall enough that its raw
+// `getBoundingClientRect()` extends past the scroll region's own clipped
+// boundary, geometrically into the footer's on-screen coordinates — but
+// `overflow-y:auto` clips it so nothing is actually painted there.
+// Expected: PASS (clip-aware Check 4) — the pre-Task-569 checker FAILed this
+// with `element-overlap` (verified false-positive, root-caused via a live
+// Playwright DOM probe in the Task 567 round-2 session log).
+export const ScrollClippedOverlap: Story = {
+  render: () => (
+    <PlantedWrapper>
+      <div style={{ display: 'flex', flexDirection: 'column', width: 200 }}>
+        <div
+          data-testid="planted-scroll-region"
+          style={{ height: 60, overflowY: 'auto' }}
+        >
+          {[1, 2, 3, 4].map((n) => (
+            <div
+              key={n}
+              role="button"
+              tabIndex={0}
+              data-testid={`planted-scroll-row-${n}`}
+              style={{ height: 40, padding: 8, cursor: 'pointer' }}
+            >
+              {`Row ${n} #569`}
+            </div>
+          ))}
+        </div>
+        <div
+          role="button"
+          tabIndex={0}
+          data-testid="planted-scroll-footer"
+          style={{ height: 36, padding: 8, cursor: 'pointer', borderTop: '1px solid #ccc' }}
+        >
+          {'Footer #569'}
+        </div>
+      </div>
+    </PlantedWrapper>
+  ),
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+// ── 15. Scroll-visible genuine overlap (Task 569 — clip-awareness must NOT
+// weaken the real check) ─────────────────────────────────────────────────
+// Two interactive elements BOTH fully inside a scrollable container's
+// visible viewport (neither exceeds the container's clipped boundary) —
+// forced to overlap at the same coordinates via `position:absolute`. The
+// scrollable ancestor exists (so a naive "any scroll ancestor → exempt"
+// fix would wrongly suppress this), but neither element is actually
+// clipped away — this must still be a hard FAIL.
+// Expected: FAIL (element-overlap) — proves the clip-aware exemption only
+// triggers when the overlapping pixels are genuinely clipped, not merely
+// "inside something scrollable".
+export const ScrollVisibleOverlap: Story = {
+  render: () => (
+    <PlantedWrapper>
+      <div
+        data-testid="planted-scroll-visible-region"
+        style={{ height: 100, overflowY: 'auto', position: 'relative' }}
+      >
+        <div style={{ position: 'relative', width: 200, height: 50 }}>
+          <div
+            role="button"
+            tabIndex={0}
+            data-testid="planted-scroll-visible-a"
+            style={{ position: 'absolute', left: 0, top: 0, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+          >
+            {'Visible-A #569'}
+          </div>
+          <div
+            role="button"
+            tabIndex={0}
+            data-testid="planted-scroll-visible-b"
+            style={{ position: 'absolute', left: 50, top: 0, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+          >
+            {'Visible-B #569'}
+          </div>
+        </div>
+      </div>
+    </PlantedWrapper>
+  ),
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}

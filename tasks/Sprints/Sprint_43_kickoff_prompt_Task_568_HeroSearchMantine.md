@@ -36,6 +36,32 @@ countActiveFilterValues(filters)`; `handleSearch(override?)` builds `URLSearchPa
 
 ## Required after-behavior (spell it out — no invention)
 
+### 0. Split into container (`HeroSearch`) + presentational primitive (`HeroSearchView`) — DO THIS FIRST
+🔴 **Owner decision (2026-07-10):** make the UI a prop-driven presentational component so it stories/tests
+cleanly (the `FiltersPanel` precedent), instead of mocking hooks. This SUPERSEDES the earlier `useLocations`
+Vite-alias plan — no hook mock is needed once the view is prop-driven.
+- Extract `src/components/shared/HeroSearchView.tsx` — a **pure presentational** component rendering ALL the
+  current JSX (sale/rent tabs, PropertyType/Location Comboboxes, filters + search buttons, and the
+  `FiltersPanel` mount). It owns **NO hooks and NO data fetching**; everything arrives via props (type each to
+  the CURRENT values — invent no new behavior):
+  - `locations` (city/region list for LocationCombobox + forwarded to FiltersPanel)
+  - `listingType` + `onListingTypeChange(type)`
+  - `propertyType` + `onPropertyTypeChange(value)`
+  - `locationId` + `onLocationChange(id)`
+  - `filters` + `onFiltersChange(values)`
+  - `activeFiltersCount: number`
+  - `filtersOpen: boolean` + `onOpenFilters()` + `onCloseFilters()`
+  - `onSearch(override?)` + `onLocationKeyDown(e)` (Enter → search)
+  - `t`/`tl`/`th` labels may be resolved inside the view via `useTranslations` (i18n is not data-fetching and
+    works in Storybook via the global decorator) OR passed in — pick one and be consistent; `useTranslations`
+    inside the view is acceptable (it is NOT the thing that needs mocking).
+- `HeroSearch.tsx` becomes the thin **CONTAINER**: keeps `useLocale`/`useRouter`/`useLocations`, the `useState`
+  set, `cityRegionLocs` memo, `countActiveFilterValues`, `handleSearch` (router.push URL-building — **byte-
+  identical**), `handleKeyDown` — and renders `<HeroSearchView … />`. **`HeroSearch`'s public API stays
+  no-props; `HeroSearchClient.tsx` + `src/app/[locale]/page.tsx` are UNCHANGED** (grep-confirm).
+- The Mantine `Button` migration (items 1–3) happens INSIDE `HeroSearchView`. **Task 570's `max-sm:flex-1
+  max-sm:min-w-0` tab fix must survive the move.**
+
 ### 1. Sale/rent tabs → Mantine `Button` (full-width 50/50 strip on mobile; joined inner corners)
 - 🔴 **OWNER-CONFIRMED DESIGN + LIVE-BUG CONTEXT (2026-07-10).** On mobile (<640) the two tabs MUST be
   **full-width, each `flex-1` (50/50), together filling the full card row.** The original overflow bug (each tab
@@ -179,8 +205,14 @@ Actor: visitor on the homepage hero.
   `Mantine/Primitives/*`). Render the **REAL `HeroSearch`** with `useLocations` mocked to a fixture city/region
   set (so the Comboboxes populate) and `router.push` a no-op in the Storybook nextjs router. `skipCanvas:true`,
   `layout:'fullscreen'`, toolbar-driven locale/viewport; any NEW fixture string via `storyT` with full
-  sq/en/uk/it parity (governance §14.2). **If mounting `HeroSearch` in Storybook needs hook mocking the
-  harness cannot provide → STOP and ASK** before inventing a wrapper.
+  sq/en/uk/it parity (governance §14.2).
+- 🔴 **Story renders the `HeroSearchView` primitive with fixture props — NO hook mock (owner decision
+  2026-07-10, supersedes the earlier Vite-alias plan).** Because item 0 extracts a prop-driven `HeroSearchView`,
+  the persisted `Mantine/Primitives/HeroSearch` story renders **`HeroSearchView` directly** with a deterministic
+  fixture `locations` list (real Albanian names in the §14.7 allowlist — Tirana, Durrës, Vlorë, Shkodër, …),
+  seeded state, and no-op callbacks — exactly the `FiltersPanelShell` precedent. **No `useLocations`/`useRouter`
+  mocking, no `.storybook` Vite alias, no live Supabase** (governance §9). Any NEW fixture string via `storyT`
+  with full sq/en/uk/it parity (§14.2).
 - `screenshots:assert -- --mantine-only` green (paste the Phase-0 count line before/after — story count +1).
 - 🔴 **§18.9 human-visual set** (the geometry gate is BLIND to overlap/clip/touch-size — Task 553/569): human-
   inspected screenshots at **uk@320/375/390 (mandatory) + sq@320 + it@320 + en@1280** proving: the sale/rent
@@ -190,12 +222,14 @@ Actor: visitor on the homepage hero.
   clipped; **no h-scroll at 320** in any locale.
 
 ## Acceptance criteria (each verifiable in the diff + rendered evidence)
-1. `HeroSearch.tsx` imports **zero** `@/components/ui/button`; the four Buttons use `@mantine/core` `Button`.
-   No raw `<button>`. No props/signature change; `HeroSearchClient.tsx` untouched; zero consumer edits
-   (grep-confirm `src/app/[locale]/page.tsx` still just renders `HeroSearchClient`).
-2. `handleSearch` URL-param serialization, `handleKeyDown`, `listingType`/`filters`/`filtersOpen` state,
-   `countActiveFilterValues`, and the `FiltersPanel` wiring are **byte-identical** (diff shows only the Button
-   JSX + import swap).
+1. Container/view split done: `HeroSearchView.tsx` (**new**, prop-driven, holds the JSX + the four migrated
+   Buttons) + `HeroSearch.tsx` (thin container, owns the hooks/state). Neither imports `@/components/ui/button`;
+   the four Buttons use `@mantine/core` `Button`. No raw `<button>`. `HeroSearch` public API stays no-props;
+   `HeroSearchClient.tsx` + `src/app/[locale]/page.tsx` untouched (grep-confirm).
+2. Logic MOVED, not changed: `handleSearch` URL-param serialization, `handleKeyDown`, `listingType`/`filters`/
+   `filtersOpen` state, `countActiveFilterValues`, and the `FiltersPanel` wiring are **byte-identical** (they
+   live in the container now; the view calls them via props). Task 570's `max-sm:flex-1 max-sm:min-w-0` tab fix
+   is preserved in the view.
 3. Sale/rent tabs → Mantine `Button` with the bespoke hero className preserved verbatim; visually pixel-
    identical (before/after proof); `setListingType` unchanged; documented tab-strip compact exemption.
 4. Filters button → Mantine `Button` (filled brand when active / `variant="default"` §6a when idle); no banned
@@ -228,8 +262,12 @@ Actor: visitor on the homepage hero.
   states.
 
 ## Files expected to change
-`src/components/shared/HeroSearch.tsx` · `src/stories/mantine/primitives/HeroSearch.stories.tsx` (**new**) ·
-`src/components/shared/__tests__/heroSearch.smoke.test.tsx` (**new**) · `docs/critical-flow-registry.md`
-(extend the existing row) · `messages/{en,uk,sq,it}.json` (**only** if a new story-fixture string is
-required — full 4-locale parity) · `docs/backlog.md` · new
-`docs/sessions/2026-07-…-task568-herosearch-mantine.md`.
+`src/components/shared/HeroSearch.tsx` (→ thin container) · `src/components/shared/HeroSearchView.tsx`
+(**new** — presentational primitive with the 4 migrated Mantine Buttons) ·
+`src/stories/mantine/primitives/HeroSearch.stories.tsx` (**new** — renders `HeroSearchView` with fixture props) ·
+`src/components/shared/__tests__/heroSearch.smoke.test.tsx` (**new** — test `HeroSearchView` with props, or the
+container with mocked hooks) · `docs/critical-flow-registry.md` (extend the existing row) ·
+`messages/{en,uk,sq,it}.json` (**only** if a new story-fixture string is required — full 4-locale parity) ·
+`docs/backlog.md` · new `docs/sessions/2026-07-…-task568-herosearch-mantine.md`.
+**NOT** `.storybook/main.ts` / `.storybook/mocks/*` (the alias plan is superseded), **NOT**
+`HeroSearchClient.tsx` / `src/app/[locale]/page.tsx` (public API frozen).

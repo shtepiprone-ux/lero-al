@@ -2189,6 +2189,11 @@
       "dm_item_archive": "Archive this record",
       "dm_item_delete": "Delete",
       "dm_icononly_aria": "Open item options",
+      "dm_locale_caption": "locale-switcher abbreviation trigger — Globe + 2-letter abbreviation (SQ/EN/UA/IT), items = abbreviation + language name",
+      "dm_locale_name_sq": "Albanian",
+      "dm_locale_name_en": "English",
+      "dm_locale_name_uk": "Ukrainian",
+      "dm_locale_name_it": "Italian",
       "pop_icononly_aria": "Open property info",
       "nav_aria_label": "Site navigation",
       "nav_sec_products": "Products",
@@ -2291,7 +2296,10 @@
       "notification_error_title": "Upload failed",
       "notification_error_message": "One of your listing photos could not be uploaded. Please try again.",
       "notification_neutral_title": "Draft saved",
-      "notification_neutral_message": "Your listing draft was saved automatically."
+      "notification_neutral_message": "Your listing draft was saved automatically.",
+      "header_actions_guest_caption": "Guest — Favorites opens the auth sheet (login); Login/Register visible at md+",
+      "header_actions_authed_caption": "Authenticated — Favorites links to /favorites; notification bell passed as a slot; no Login/Register",
+      "header_actions_bell_slot_aria": "Notifications (placeholder slot)"
     }
   },
   "ui": {

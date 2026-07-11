@@ -4,23 +4,21 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, ChevronDown, User, ListPlus, Heart, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
+import { Menu, ChevronDown, User, ListPlus, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Button as MantineButton, ActionIcon, Avatar } from '@mantine/core'
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { cn } from '@/lib/utils'
+  MantineDropdownMenu,
+  MantineDrawer,
+  MantineCombobox,
+  type DropdownMenuItemDef,
+  type MantineComboboxOption,
+} from '@/design-system/mantine/patterns'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
 import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
-import { Combobox, type ComboboxOption } from '@/components/shared/Combobox'
+import { HeaderActions } from '@/components/layout/HeaderActions'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
 
@@ -28,10 +26,6 @@ const NotificationBell = dynamic(
   () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
   { ssr: false },
 )
-
-// Shared override applied to every header icon-action button (variant="ghost" size="icon").
-// Keeps Favorites, Notifications, and Hamburger visually identical.
-const ICON_BTN = 'rounded-xl'
 
 // ── NavLinks ──────────────────────────────────────────────────────────────────
 //
@@ -80,9 +74,9 @@ export function Header() {
     it: t('lang_it'),
   }
 
-  const localeOptions: ComboboxOption[] = LOCALES.map(loc => ({
+  const localeOptions: MantineComboboxOption[] = LOCALES.map(loc => ({
     value: loc.code,
-    label: `${loc.flag} ${loc.code.toUpperCase()}`,
+    label: loc.abbr,
     description: langLabels[loc.code],
   }))
 
@@ -119,9 +113,23 @@ export function Header() {
     signOut(() => router.push(`/${locale}`))
   }
 
-  const userInitials = user?.name
-    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
-    : '?'
+  const userMenuItems: DropdownMenuItemDef[] = user
+    ? [
+        { label: t('profile'), icon: <User size={16} />, onClick: () => router.push(`/${locale}/cabinet`) },
+        { label: t('my_listings'), icon: <LayoutList size={16} />, onClick: () => router.push(`/${locale}/cabinet?tab=listings`) },
+        { label: t('add_listing'), icon: <ListPlus size={16} />, onClick: () => router.push(`/${locale}/listings/create`), separator: true },
+        ...(user.role === 'admin' || user.role === 'moderator'
+          ? [{
+              label: <span style={{ fontWeight: 500 }}>{t('admin_dashboard')}</span>,
+              icon: <LayoutDashboard size={16} />,
+              color: 'brand',
+              onClick: () => window.open('/admin', '_blank', 'noopener,noreferrer'),
+              separator: true,
+            }]
+          : []),
+        { label: t('logout'), icon: <LogOut size={16} />, color: 'red', onClick: handleLogout, separator: true },
+      ]
+    : []
 
   return (
     <header className="site-header sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -142,211 +150,159 @@ export function Header() {
           {/* Language switcher */}
           <LocaleSwitcher onSwitch={switchLocale} className="hidden sm:flex" />
 
-          {/* Favorites — visible beside language selector on sm+ */}
-          {user ? (
-            <Link
-              href={`/${locale}/favorites`}
-              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), ICON_BTN, 'hidden sm:flex')}
-              aria-label={t('favorites')}
-            >
-              <Heart className="size-5" />
-            </Link>
-          ) : (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => openAuthSheet('login')}
-              className={cn(ICON_BTN, 'hidden sm:flex')}
-              aria-label={t('favorites')}
-            >
-              <Heart className="size-5" />
-            </Button>
-          )}
-
-          {/* Mobile locale switcher — canonical Combobox visible at 320–639px */}
-          <Combobox
-            variant="button"
-            size="default"
-            options={localeOptions}
-            value={locale}
-            onChange={switchLocale}
-            className="w-24 sm:hidden"
-            portal
-          />
-
-          {/* Notification bell — authenticated users only */}
-          {user && <NotificationBell />}
-
-          {/* Auth / user menu — desktop */}
-          <div className="hidden md:flex items-center gap-2">
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'gap-2 px-2')}
-                >
-                  <Avatar className="h-7 w-7">
-                    <AvatarImage src={user.avatar_url ?? undefined} />
-                    <AvatarFallback className="text-xs">{userInitials}</AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm max-w-30 truncate">{user.name}</span>
-                  <ChevronDown className="h-3 w-3 opacity-60" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem>
-                    <Link href={`/${locale}/cabinet`} className="flex items-center gap-2 w-full">
-                      <User className="h-4 w-4" />
-                      {t('profile')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Link href={`/${locale}/cabinet?tab=listings`} className="flex items-center gap-2 w-full">
-                      <LayoutList className="h-4 w-4" />
-                      {t('my_listings')}
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Link href={`/${locale}/listings/create`} className="flex items-center gap-2 w-full">
-                      <ListPlus className="h-4 w-4" />
-                      {t('add_listing')}
-                    </Link>
-                  </DropdownMenuItem>
-                  {(user.role === 'admin' || user.role === 'moderator') && (
-                    <>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <Link href="/admin" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 w-full text-primary font-medium">
-                          <LayoutDashboard className="h-4 w-4" />
-                          {t('admin_dashboard')}
-                        </Link>
-                      </DropdownMenuItem>
-                    </>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 text-destructive cursor-pointer">
-                    <LogOut className="h-4 w-4" />
-                    {t('logout')}
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <>
-                <Button variant="ghost" size="sm" onClick={() => openAuthSheet('login')}>
-                  {t('login')}
-                </Button>
-                <Button size="sm" onClick={() => openAuthSheet('register')}>
-                  {t('register')}
-                </Button>
-              </>
-            )}
+          {/* Mobile locale switcher — canonical MantineCombobox visible at 320–639px.
+              Compact w-24-equivalent trigger (triggerWidth override) — documented icon/compact
+              exemption alongside the hamburger below (clause 11): this is an inline header
+              control sitting next to other compact icon controls, not a full-row filter. */}
+          <div className="sm:hidden">
+            <MantineCombobox
+              variant="button"
+              options={localeOptions}
+              value={locale}
+              onChange={switchLocale}
+              triggerWidth="6rem"
+              triggerAriaLabel={tc('language')}
+              noResultsLabel={tc('no_results')}
+            />
           </div>
 
-          {/* Mobile hamburger */}
-          <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-            <SheetTrigger
-              className={cn(buttonVariants({ variant: 'ghost', size: 'icon' }), ICON_BTN, 'md:hidden')}
-              aria-label={tc('aria_open_menu')}
-            >
-              <Menu className="h-5 w-5" />
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full max-w-xs">
-              <div className="flex flex-col gap-6 pt-6 px-4">
-                {/* Mobile user info */}
+          {/* Favorites + notification-bell slot + guest login/register — HeaderActions primitive
+              (Task 575). NotificationBell stays container-owned (own hooks, dynamic ssr:false)
+              and is passed as a slot — never hook-called inside the primitive. */}
+          <HeaderActions
+            isAuthenticated={!!user}
+            favoritesHref={`/${locale}/favorites`}
+            onOpenAuth={openAuthSheet}
+            notificationSlot={user ? <NotificationBell /> : undefined}
+          />
+
+          {/* User menu — desktop, authenticated only (guest login/register live in HeaderActions) */}
+          {user && (
+            <div className="hidden md:flex items-center gap-2">
+              <MantineDropdownMenu
+                trigger={
+                  <MantineButton
+                    variant="default"
+                    leftSection={
+                      <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={28} />
+                    }
+                    rightSection={<ChevronDown size={12} />}
+                  >
+                    <span className="max-w-30 truncate">{user.name}</span>
+                  </MantineButton>
+                }
+                items={userMenuItems}
+              />
+            </div>
+          )}
+
+          {/* Mobile hamburger — icon-only trigger (clause-11 documented exemption), mirrors the
+              canonical icon-only ActionIcon reference in DropdownMenu.stories.tsx block 3
+              (variant="default", 2.75rem/44px min touch target) */}
+          <ActionIcon
+            variant="default"
+            aria-label={tc('aria_open_menu')}
+            className="md:hidden"
+            mih="2.75rem"
+            miw="2.75rem"
+            onClick={() => setMobileOpen(true)}
+          >
+            <Menu className="h-5 w-5" />
+          </ActionIcon>
+          <MantineDrawer opened={mobileOpen} onClose={() => setMobileOpen(false)} side="right" size="xs">
+            <div className="flex flex-col gap-6">
+              {/* Mobile user info */}
+              {user && (
+                <div className="flex items-center gap-3 pb-4 border-b">
+                  <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={40} />
+                  <div>
+                    <p className="font-medium text-sm">{user.name}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Mobile nav links */}
+              <nav className="flex flex-col gap-4">
+                <NavLinks onNavigate={() => setMobileOpen(false)} />
                 {user && (
-                  <div className="flex items-center gap-3 pb-4 border-b">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={user.avatar_url ?? undefined} />
-                      <AvatarFallback>{userInitials}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-medium text-sm">{user.name}</p>
-                    </div>
-                  </div>
+                  <>
+                    <Link
+                      href={`/${locale}/cabinet`}
+                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {t('profile')}
+                    </Link>
+                    <Link
+                      href={`/${locale}/cabinet?tab=listings`}
+                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {t('my_listings')}
+                    </Link>
+                    <Link
+                      href={`/${locale}/favorites`}
+                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {t('favorites')}
+                    </Link>
+                    <Link
+                      href={`/${locale}/listings/create`}
+                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {t('add_listing')}
+                    </Link>
+                  </>
                 )}
+              </nav>
 
-                {/* Mobile nav links */}
-                <nav className="flex flex-col gap-4">
-                  <NavLinks onNavigate={() => setMobileOpen(false)} />
-                  {user && (
-                    <>
-                      <Link
-                        href={`/${locale}/cabinet`}
-                        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {t('profile')}
-                      </Link>
-                      <Link
-                        href={`/${locale}/cabinet?tab=listings`}
-                        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {t('my_listings')}
-                      </Link>
-                      <Link
-                        href={`/${locale}/favorites`}
-                        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {t('favorites')}
-                      </Link>
-                      <Link
-                        href={`/${locale}/listings/create`}
-                        className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {t('add_listing')}
-                      </Link>
-                    </>
-                  )}
-                </nav>
+              {/* Mobile auth buttons */}
+              {!user && (
+                <div className="border-t pt-4 flex flex-col gap-2">
+                  <Button
+                    variant="outline"
+                    size="xl"
+                    className="w-full"
+                    onClick={() => { setMobileOpen(false); openAuthSheet('login') }}
+                  >
+                    {t('login')}
+                  </Button>
+                  <Button
+                    size="xl"
+                    className="w-full"
+                    onClick={() => { setMobileOpen(false); openAuthSheet('register') }}
+                  >
+                    {t('register')}
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="xl"
+                    className="w-full"
+                    onClick={() => { setMobileOpen(false); openAuthSheet('register-agent') }}
+                  >
+                    {t('register_agent')}
+                  </Button>
+                </div>
+              )}
 
-                {/* Mobile auth buttons */}
-                {!user && (
-                  <div className="border-t pt-4 flex flex-col gap-2">
-                    <Button
-                      variant="outline"
-                      size="xl"
-                      className="w-full"
-                      onClick={() => { setMobileOpen(false); openAuthSheet('login') }}
-                    >
-                      {t('login')}
-                    </Button>
-                    <Button
-                      size="xl"
-                      className="w-full"
-                      onClick={() => { setMobileOpen(false); openAuthSheet('register') }}
-                    >
-                      {t('register')}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="xl"
-                      className="w-full"
-                      onClick={() => { setMobileOpen(false); openAuthSheet('register-agent') }}
-                    >
-                      {t('register_agent')}
-                    </Button>
-                  </div>
-                )}
-
-                {/* Mobile logout */}
-                {user && (
-                  <div className="border-t pt-4">
-                    <Button
-                      variant="ghost"
-                      size="xl"
-                      onClick={() => { handleLogout(); setMobileOpen(false) }}
-                      className="w-full justify-start text-destructive hover:text-destructive/80 hover:bg-destructive/5"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      {t('logout')}
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </SheetContent>
-          </Sheet>
+              {/* Mobile logout */}
+              {user && (
+                <div className="border-t pt-4">
+                  <Button
+                    variant="ghost"
+                    size="xl"
+                    onClick={() => { handleLogout(); setMobileOpen(false) }}
+                    className="w-full justify-start text-destructive hover:text-destructive/80 hover:bg-destructive/5"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    {t('logout')}
+                  </Button>
+                </div>
+              )}
+            </div>
+          </MantineDrawer>
         </div>
       </div>
 

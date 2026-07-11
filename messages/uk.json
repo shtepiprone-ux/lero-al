@@ -2189,6 +2189,11 @@
       "dm_item_archive": "Архівувати цей запис для подальшого використання",
       "dm_item_delete": "Видалити",
       "dm_icononly_aria": "Відкрити параметри елемента",
+      "dm_locale_caption": "тригер-скорочення перемикача мови — Globe + 2-літерне скорочення (SQ/EN/UA/IT), пункти = скорочення + назва мови",
+      "dm_locale_name_sq": "Албанська",
+      "dm_locale_name_en": "Англійська",
+      "dm_locale_name_uk": "Українська",
+      "dm_locale_name_it": "Італійська",
       "pop_icononly_aria": "Відкрити інформацію про нерухомість",
       "modal_trigger_open": "Відкрити вікно",
       "modal_title": "Підтвердити дію",
@@ -2291,7 +2296,10 @@
       "notification_error_title": "Завантаження не вдалося",
       "notification_error_message": "Одне з фото вашого оголошення не вдалося завантажити. Спробуйте ще раз.",
       "notification_neutral_title": "Чернетку збережено",
-      "notification_neutral_message": "Чернетку вашого оголошення збережено автоматично."
+      "notification_neutral_message": "Чернетку вашого оголошення збережено автоматично.",
+      "header_actions_guest_caption": "Гість — «Обране» відкриває аркуш автентифікації (вхід); Вхід/Реєстрація видно від md+",
+      "header_actions_authed_caption": "Авторизований — «Обране» веде на /favorites; дзвіночок сповіщень передається як слот; без Входу/Реєстрації",
+      "header_actions_bell_slot_aria": "Сповіщення (заповнювач слота)"
     }
   },
   "ui": {

@@ -2189,6 +2189,11 @@
       "dm_item_archive": "Arkivoni këtë rekord",
       "dm_item_delete": "Fshij",
       "dm_icononly_aria": "Hap opsionet e artikullit",
+      "dm_locale_caption": "shkas i shkurtimit të çelësit të gjuhës — Globe + shkurtim 2-shkronjësh (SQ/EN/UA/IT), artikujt = shkurtim + emri i gjuhës",
+      "dm_locale_name_sq": "Shqip",
+      "dm_locale_name_en": "Anglisht",
+      "dm_locale_name_uk": "Ukrainisht",
+      "dm_locale_name_it": "Italisht",
       "pop_icononly_aria": "Hap informacionin e pronës",
       "modal_trigger_open": "Hap dialogun",
       "modal_title": "Konfirmo veprimin",
@@ -2291,7 +2296,10 @@
       "notification_error_title": "Ngarkimi dështoi",
       "notification_error_message": "Njëra nga fotot e shpalljes suaj nuk u ngarkua dot. Ju lutemi provoni përsëri.",
       "notification_neutral_title": "Skica u ruajt",
-      "notification_neutral_message": "Skica e shpalljes suaj u ruajt automatikisht."
+      "notification_neutral_message": "Skica e shpalljes suaj u ruajt automatikisht.",
+      "header_actions_guest_caption": "Vizitor — Favoritet hap fletën e identifikimit (login); Hyrja/Regjistrimi shfaqen te md+",
+      "header_actions_authed_caption": "I identifikuar — Favoritet çon te /favorites; zilja e njoftimeve kalohet si slot; pa Hyrje/Regjistrim",
+      "header_actions_bell_slot_aria": "Njoftimet (slot placeholder)"
     }
   },
   "ui": {

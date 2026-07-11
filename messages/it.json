@@ -2189,6 +2189,11 @@
       "dm_item_archive": "Archivia questo record",
       "dm_item_delete": "Elimina",
       "dm_icononly_aria": "Apri opzioni elemento",
+      "dm_locale_caption": "trigger abbreviazione del selettore lingua — Globe + abbreviazione di 2 lettere (SQ/EN/UA/IT), voci = abbreviazione + nome della lingua",
+      "dm_locale_name_sq": "Albanese",
+      "dm_locale_name_en": "Inglese",
+      "dm_locale_name_uk": "Ucraino",
+      "dm_locale_name_it": "Italiano",
       "pop_icononly_aria": "Apri info proprietà",
       "modal_trigger_open": "Apri finestra",
       "modal_title": "Conferma azione",
@@ -2291,7 +2296,10 @@
       "notification_error_title": "Caricamento non riuscito",
       "notification_error_message": "Una delle foto del tuo annuncio non è stata caricata. Riprova.",
       "notification_neutral_title": "Bozza salvata",
-      "notification_neutral_message": "La bozza del tuo annuncio è stata salvata automaticamente."
+      "notification_neutral_message": "La bozza del tuo annuncio è stata salvata automaticamente.",
+      "header_actions_guest_caption": "Ospite — Preferiti apre il foglio di autenticazione (login); Login/Registrati visibili da md+",
+      "header_actions_authed_caption": "Autenticato — Preferiti porta a /favorites; la campanella notifiche passata come slot; senza Login/Registrati",
+      "header_actions_bell_slot_aria": "Notifiche (slot segnaposto)"
     }
   },
   "ui": {

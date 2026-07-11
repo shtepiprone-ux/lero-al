@@ -1,21 +1,15 @@
 'use client'
 
-import { Globe, ChevronDown, Loader2 } from 'lucide-react'
+import { ChevronDown, Loader2 } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Button } from '@mantine/core'
+import { MantineDropdownMenu, type DropdownMenuItemDef } from '@/design-system/mantine/patterns'
 
 export const LOCALES = [
-  { code: 'sq', flag: '🇦🇱' },
-  { code: 'en', flag: '🇬🇧' },
-  { code: 'uk', flag: '🇺🇦' },
-  { code: 'it', flag: '🇮🇹' },
+  { code: 'sq', abbr: 'SQ' },
+  { code: 'en', abbr: 'EN' },
+  { code: 'uk', abbr: 'UA' },
+  { code: 'it', abbr: 'IT' },
 ] as const
 
 export type LocaleCode = typeof LOCALES[number]['code']
@@ -24,21 +18,14 @@ interface LocaleSwitcherProps {
   onSwitch: (locale: string) => void
   isPending?: boolean
   showLabel?: boolean
-  align?: 'start' | 'center' | 'end'
-  side?: 'top' | 'right' | 'bottom' | 'left'
   className?: string
-  /** Render the menu open on mount (Storybook/QA evidence only — not for app usage). */
-  defaultOpen?: boolean
 }
 
 export function LocaleSwitcher({
   onSwitch,
   isPending = false,
   showLabel = false,
-  align = 'end',
-  side = 'bottom',
   className,
-  defaultOpen,
 }: LocaleSwitcherProps) {
   const currentLocale = useLocale()
   const t = useTranslations('nav')
@@ -51,38 +38,27 @@ export function LocaleSwitcher({
     it: t('lang_it'),
   }
 
+  const items: DropdownMenuItemDef[] = LOCALES.map(loc => ({
+    label: currentLocale === loc.code
+      ? <span style={{ fontWeight: 600 }}>{loc.abbr} {langLabels[loc.code]}</span>
+      : <>{loc.abbr} {langLabels[loc.code]}</>,
+    onClick: () => onSwitch(loc.code),
+  }))
+
   return (
-    <DropdownMenu defaultOpen={defaultOpen}>
-      <DropdownMenuTrigger
-        disabled={isPending}
-        className={cn(
-          buttonVariants({ variant: 'ghost', size: 'sm' }),
-          'gap-1 px-2',
-          className,
-        )}
-      >
-        <Globe className="h-4 w-4 shrink-0" />
-        <span className="text-sm">{current?.flag}</span>
-        {showLabel && (
-          <span className="text-sm flex-1 text-left truncate">{langLabels[currentLocale as LocaleCode]}</span>
-        )}
-        {isPending
-          ? <Loader2 className="h-3 w-3 animate-spin opacity-60 shrink-0" />
-          : <ChevronDown className="h-3 w-3 opacity-60 shrink-0" />
-        }
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align={align} side={side} className="w-44">
-        {LOCALES.map(loc => (
-          <DropdownMenuItem
-            key={loc.code}
-            onClick={() => onSwitch(loc.code)}
-            className={currentLocale === loc.code ? 'font-semibold' : ''}
-          >
-            <span className="mr-2">{loc.flag}</span>
-            {langLabels[loc.code]}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <MantineDropdownMenu
+      trigger={
+        <Button
+          variant="default"
+          className={className}
+          disabled={isPending}
+          rightSection={isPending ? <Loader2 size={12} className="animate-spin" /> : <ChevronDown size={12} />}
+        >
+          {current?.abbr}
+          {showLabel && ` ${langLabels[currentLocale as LocaleCode]}`}
+        </Button>
+      }
+      items={items}
+    />
   )
 }

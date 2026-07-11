@@ -240,6 +240,16 @@ const LOADER_ALLOWLIST = new Set([
   // sm/md/lg/xl heights, all determinate values incl. clamped out-of-range, long-label wrap with
   // no clip/h-scroll at 320) — see docs/storybook-governance.md §14.9.8.
   'mantine-primitives-progress--default',
+  // Task 576 — LocaleSwitcher/Default stacks 3 fixtures (default/showLabel/isPending) in one
+  // story; the `isPending` fixture permanently renders the trigger `disabled` with a spinner
+  // (`Loader2 animate-spin`, same as `AdminLocaleSwitcher` mid-`router.refresh()`) — an
+  // intentional static state demonstrated side-by-side, not a transient loading state. Same
+  // class of false-positive as the Button/Progress entries above (readiness check can never
+  // see `loaderPresent:false` for this story since the spinner never unmounts). Manually
+  // verified via rendered screenshots at 320/375/390/1024 × sq/en/uk/it before allowlisting:
+  // all 3 stacked fixtures render correctly (default trigger, showLabel trigger with full
+  // language name, disabled+spinner trigger), no clip/overflow, correct §6 chrome.
+  'mantine-primitives-localeswitcher--default',
 ]);
 
 // ── Task 529 — Mantine primitive stories, AUTO-DISCOVERED from the built Storybook index ──

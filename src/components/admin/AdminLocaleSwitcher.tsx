@@ -6,12 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 
-interface AdminLocaleSwitcherProps {
-  /** Render the menu open on mount (Storybook/QA evidence only — not for app usage). */
-  defaultOpen?: boolean
-}
-
-export function AdminLocaleSwitcher({ defaultOpen }: AdminLocaleSwitcherProps = {}) {
+export function AdminLocaleSwitcher() {
   const currentLocale = useLocale()
   const router = useRouter()
   const t = useTranslations('admin.sidebar')
@@ -35,10 +30,7 @@ export function AdminLocaleSwitcher({ defaultOpen }: AdminLocaleSwitcherProps = 
           onSwitch={handleSwitch}
           isPending={isPending}
           showLabel
-          align="start"
-          side="top"
           className="w-full justify-start gap-1.5"
-          defaultOpen={defaultOpen}
         />
       </div>
     </div>

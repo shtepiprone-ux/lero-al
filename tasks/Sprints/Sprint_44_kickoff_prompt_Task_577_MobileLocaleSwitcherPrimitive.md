@@ -1,54 +1,74 @@
-# Task 577 — `MobileLocaleSwitcher` presentational primitive (<640 combobox)
+# Task 577 — Header: use the ONE canonical adaptive `LocaleSwitcher` at all breakpoints (delete the redundant mobile combobox)
 
 **Sprint:** 44 (Header → Mantine + presentational split — Epic MM Phase-2). **Executor:** Sonnet 4.6.
-**Type:** UI / presentational-primitive extraction (NOT a redesign, NO behavior change).
-**Depends on:** Task 576 landed. **Plan + shared gates/STOP-AND-ASK:** `tasks/Sprints/Sprint_44_Header_Mantine_Primitives.md`.
-**Sprint ordering:** touches `Header.tsx` — execute in number order, rebase on the prior.
+**Type:** UI / dedup — remove a redundant parallel implementation. **NO new UI, NO redesign.**
+**Depends on:** Task 576 landed + **Task 581 landed** (globe removed from `LocaleSwitcher`). Rebase on 581 so the
+rendered proof is on the no-globe switcher. **Plan + shared gates/STOP-AND-ASK:** `tasks/Sprints/Sprint_44_Header_Mantine_Primitives.md`.
 
-## Why
+## Why (owner decision, 2026-07-11)
 
-The `<640` mobile locale switcher (a compact `MantineCombobox`, `Header.tsx` ~178–192, wrapped `sm:hidden`) is
-inline in the Header. Extract it into a small prop-driven primitive with its own Mantine story so it renders/tests
-on fixtures.
+The header currently ships **two** locale switchers: the canonical `LocaleSwitcher` (`MantineDropdownMenu`) shown
+only `≥640` (`hidden sm:flex`), and a **separate** inline `MantineCombobox` shown only `320–639` (`sm:hidden`). The
+canonical `LocaleSwitcher` is ALREADY adaptive — on `<640` its `MantineDropdownMenu` renders as a full-width bottom
+sheet — so the second implementation is redundant. **Use the one canonical adaptive `LocaleSwitcher` everywhere and
+delete the mobile combobox.** This supersedes the earlier "extract a `MobileLocaleSwitcher` primitive" plan for 577
+(there is no second component to extract — there will be one switcher).
 
 ## Files in scope
 
-- `src/components/layout/MobileLocaleSwitcher.tsx` — **NEW** prop-driven primitive.
-- `src/stories/mantine/primitives/MobileLocaleSwitcher.stories.tsx` — **NEW canonical Mantine story** (per the plan's
-  🔴 Canonical Mantine story location gate): title `Mantine/Primitives/MobileLocaleSwitcher`, `MantineStoryShell`,
-  single `Default`, `import { MobileLocaleSwitcher } from '@/components/layout/MobileLocaleSwitcher'`. **NOT** co-located.
-- `src/components/layout/Header.tsx` — consume `<MobileLocaleSwitcher value={locale} onChange={switchLocale} />` in
-  place of the inline `<div className="sm:hidden"><MantineCombobox …/></div>`.
+- `src/components/layout/Header.tsx` — the ONLY file:
+  1. Remove `className="hidden sm:flex"` from the `<LocaleSwitcher onSwitch={switchLocale} … />` at line ~151 so it
+     renders at **all** breakpoints. (Pass no `className`, or whatever the desktop default already is — do not add new
+     styling.)
+  2. **Delete** the entire `{/* Mobile locale switcher … */}` block (the `<div className="sm:hidden"><MantineCombobox
+     …/></div>`, ~lines 153–167) including its comment.
+  3. Delete the now-unused `localeOptions` array (~lines 77–81) and remove `MantineCombobox` /
+     `MantineComboboxOption` from the `@/design-system/mantine/patterns` import **only if** nothing else in the file
+     still uses them (grep first — if another usage exists, keep the import and STOP-AND-ASK, do not touch that usage).
+  4. Remove any variable left unused by the deletion (e.g. `noResultsLabel`/`tc('no_results')` if `tc` becomes unused
+     — verify `tc` isn't used elsewhere before removing the `useTranslations('common')` line).
 
-**MUST NOT touch:** `MantineCombobox` (consume as-is), `LOCALES` shape, routing/`switchLocale`, any other file.
+**MUST NOT touch:** `LocaleSwitcher.tsx` (consume as-is, post-581), `MantineCombobox.tsx`, `MantineDropdownMenu.tsx`,
+`AdminLocaleSwitcher.tsx`, routing/`switchLocale`, `LOCALES`, any locale JSON, any other file.
 
-## Current behavior to PRESERVE
+## Current behavior to PRESERVE / required after-behavior
 
-- Compact `variant="button"` trigger at ~`6rem` (was `w-24`), `sm:hidden` (visible 320–639 only — icon/compact
-  exemption, clause 11, documented), options = the 4 `LOCALES` as `{ value: code, label: abbr, description:
-  langLabel }`, `value=locale`, `onChange=switchLocale`. `uk` shows `UA` (post-574). Full-width bottom sheet at <640.
+- **≥640:** identical to today — the `LocaleSwitcher` dropdown (no globe, per 581; chevron + spinner kept).
+- **<640 (NEW):** the SAME `LocaleSwitcher` now renders here too. Its compact `EN ⌄` trigger sits inline next to the
+  hamburger/other compact header controls (documented icon/compact-trigger exemption, clause 11 — unchanged from how
+  the old combobox trigger was exempted). On open it is a **full-width bottom sheet** (drag handle, ≤90dvh scroll,
+  closes on backdrop tap + Esc, focus returns to trigger) — the `MantineDropdownMenu` mobile behavior already proven
+  in the `Mantine/Primitives/LocaleSwitcher` story.
+- Locale switch still calls `switchLocale` → `setAdminLocale` + `router.push` — unchanged. `uk` still shows `UA`.
 
-## Primitive API
+## Positive / Negative flow
 
-`MobileLocaleSwitcher({ value, onChange }: { value: string; onChange: (code: string) => void })`. It builds the
-options internally from `LOCALES` + `langLabels` (`useTranslations`/`useLocale` are Storybook-provided — allowed),
-consumes `MantineCombobox` with the compact trigger, and keeps the `sm:hidden` visibility on a plain wrapper (NOT a
-Tailwind display utility on a Mantine root).
+- **Positive:** at 320 and at 1280, click the (single) switcher → list SQ/EN/UA/IT → select another → route swaps,
+  UI re-renders in the new locale, sheet/menu closes, focus returns.
+- **Negative:** Esc / backdrop tap / re-click closes with no change; pending disables + shows spinner; selecting the
+  current locale is a no-op; no horizontal scroll at 320 in any of sq/en/uk/it; no duplicate switcher visible at any
+  breakpoint (exactly ONE language control per breakpoint — the Task-574 human-eye cell).
 
-## Story fixtures
+## Gates
 
-Single `Default`: the compact trigger, plus the OPEN full-width bottom sheet at `@320` (via interaction).
-
-## Gates + STOP-AND-ASK
-
-Apply the plan's **Per-task gates** (incl. the 🔴 Canonical Mantine story location gate) + **Standing STOP-AND-ASK**.
-Story location is RESOLVED (canonical `src/stories/mantine/primitives/`, `Mantine/Primitives/*`) — no longer an ask.
+Apply the plan's **Per-task gates**. Specifically:
+- **Rendered matrix (clause 12):** 320·375·390·768·1280·1440·2560 × sq/en/uk/it, uk@320/375/390 mandatory. Prove: at
+  `<640` the ONE switcher opens as a full-width bottom sheet; at `≥640` the dropdown is unchanged; **exactly one**
+  language switcher visible at every breakpoint (no leftover combobox). Machine `screenshots:assert -- --mantine-only`
+  green + the Task-574 one-switcher-per-breakpoint human-eye cell.
+- **Mobile <640 full-width (clause 11):** the popup is full-width bottom sheet; the compact trigger exemption is
+  documented (same as the removed combobox had).
+- **TailAdmin (clause 16):** unchanged — no style drift, no invented values.
+- **Locale parity:** N/A (no string keys added/changed). If the `no_results`/`language` combobox keys become fully
+  unused after deletion, DO NOT delete them from the JSON in this task (out of scope) — just note it for a later sweep.
+- **File-integrity (clause 14)** clean; `tsc=0`/lint/`check:stories`/`check:i18n` green.
 
 ## Acceptance criteria
 
-1. `MobileLocaleSwitcher.tsx` prop-driven; consumes `MantineCombobox`; compact `sm:hidden` trigger; options incl. `uk→UA`. *(diff)*
-2. `Header.tsx` renders `<MobileLocaleSwitcher/>`; inline combobox JSX removed; behavior unchanged. *(diff)*
-3. `src/stories/mantine/primitives/MobileLocaleSwitcher.stories.tsx` (title `Mantine/Primitives/MobileLocaleSwitcher`,
-   `MantineStoryShell`, single `Default`) renders trigger + open sheet from fixtures, no hook mock, and appears in the
-   standing `--mantine-only` auto-discovery sweep. *(diff + render)*
-4. Rendered matrix (<640 full-width) + TailAdmin present; `tsc=0`/lint/`check:stories`/`screenshots:assert` green; file-integrity clean. *(transcripts)*
+1. `Header.tsx` renders a single `<LocaleSwitcher>` with no `hidden sm:flex`; the `sm:hidden` `MantineCombobox` block
+   + `localeOptions` are deleted; no unused import/var remains. *(diff)*
+2. At every breakpoint exactly ONE language switcher renders; `<640` it is a full-width bottom sheet, `≥640` the
+   unchanged dropdown. *(render matrix + human-eye cell)*
+3. Locale switching + `uk→UA` + pending/disabled behavior unchanged. *(render)*
+4. `tsc=0`/lint/`check:stories`/`check:i18n`/`screenshots:assert` green; file-integrity clean; Files-Changed table +
+   AC self-audit in the session log; NO `git add`/`git commit` emitted by Sonnet. *(transcripts)*

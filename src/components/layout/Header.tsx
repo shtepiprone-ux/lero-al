@@ -11,13 +11,11 @@ import { Button as MantineButton, ActionIcon, Avatar } from '@mantine/core'
 import {
   MantineDropdownMenu,
   MantineDrawer,
-  MantineCombobox,
   type DropdownMenuItemDef,
-  type MantineComboboxOption,
 } from '@/design-system/mantine/patterns'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
-import { LocaleSwitcher, LOCALES, type LocaleCode } from '@/components/shared/LocaleSwitcher'
+import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 import { HeaderActions } from '@/components/layout/HeaderActions'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
@@ -66,19 +64,6 @@ export function Header() {
   const tc = useTranslations('common')
   const locale = useLocale()
   const router = useRouter()
-
-  const langLabels: Record<LocaleCode, string> = {
-    sq: t('lang_sq'),
-    en: t('lang_en'),
-    uk: t('lang_uk'),
-    it: t('lang_it'),
-  }
-
-  const localeOptions: MantineComboboxOption[] = LOCALES.map(loc => ({
-    value: loc.code,
-    label: loc.abbr,
-    description: langLabels[loc.code],
-  }))
 
   const { user, signOut } = useUser()
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -147,24 +132,13 @@ export function Header() {
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          {/* Language switcher */}
-          <LocaleSwitcher onSwitch={switchLocale} className="hidden sm:flex" />
-
-          {/* Mobile locale switcher — canonical MantineCombobox visible at 320–639px.
-              Compact w-24-equivalent trigger (triggerWidth override) — documented icon/compact
-              exemption alongside the hamburger below (clause 11): this is an inline header
-              control sitting next to other compact icon controls, not a full-row filter. */}
-          <div className="sm:hidden">
-            <MantineCombobox
-              variant="button"
-              options={localeOptions}
-              value={locale}
-              onChange={switchLocale}
-              triggerWidth="6rem"
-              triggerAriaLabel={tc('language')}
-              noResultsLabel={tc('no_results')}
-            />
-          </div>
+          {/* Language switcher — the ONE canonical adaptive LocaleSwitcher at all breakpoints
+              (Task 577): its MantineDropdownMenu is already adaptive (anchored menu ≥640,
+              full-width bottom sheet <640), so the previous separate mobile combobox was a
+              redundant parallel implementation — deleted. Compact `EN ⌄` trigger sits inline
+              next to the other compact header controls (documented icon/compact exemption,
+              clause 11 — unchanged from how the removed combobox trigger was exempted). */}
+          <LocaleSwitcher onSwitch={switchLocale} />
 
           {/* Favorites + notification-bell slot + guest login/register — HeaderActions primitive
               (Task 575). NotificationBell stays container-owned (own hooks, dynamic ssr:false)

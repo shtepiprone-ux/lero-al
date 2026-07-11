@@ -2299,7 +2299,10 @@
       "notification_neutral_message": "Skica e shpalljes suaj u ruajt automatikisht.",
       "header_actions_guest_caption": "Vizitor — Favoritet hap fletën e identifikimit (login); Hyrja/Regjistrimi shfaqen te md+",
       "header_actions_authed_caption": "I identifikuar — Favoritet çon te /favorites; zilja e njoftimeve kalohet si slot; pa Hyrje/Regjistrim",
-      "header_actions_bell_slot_aria": "Njoftimet (slot placeholder)"
+      "header_actions_bell_slot_aria": "Njoftimet (slot placeholder)",
+      "locale_switcher_default_caption": "Parazgjedhje — klikoni për të ndryshuar gjuhën (menu ≥640, fletë e poshtme <640)",
+      "locale_switcher_showlabel_caption": "showLabel — shkaktari përfshin emrin e plotë të gjuhës krahas shkurtimit",
+      "locale_switcher_pending_caption": "isPending — shkaktari çaktivizohet me një rrotullues ndërsa ndryshimi është në proces"
     }
   },
   "ui": {

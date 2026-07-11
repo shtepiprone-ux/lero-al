@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Stack, Text, Button, ActionIcon } from '@mantine/core'
-import { MoreVertical } from 'lucide-react'
+import { MoreVertical, Globe, ChevronDown } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantineDropdownMenu } from '@/design-system/mantine/patterns'
 import type { DropdownMenuItemDef } from '@/design-system/mantine/patterns'
@@ -75,6 +75,30 @@ export const Default: Story = {
               title={t('dm_title')}
               items={items}
               iconOnlyTrigger
+            />
+          </Stack>
+
+          {/* 4 — locale-switcher abbreviation trigger (Task 574 §0, owner 2026-07-11): the exact
+              trigger construction the Header's LocaleSwitcher will consume. COPIED from example 1's
+              Button-trigger + storyT + caption construction — zero invented className/style/size/color.
+              Globe/ChevronDown live in Mantine's own leftSection/rightSection slots; the abbreviation
+              is the Button's plain children. variant="default" chrome IS the entire styling. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('dm_locale_caption')}
+            </Text>
+            <MantineDropdownMenu
+              trigger={
+                <Button variant="default" leftSection={<Globe size={16} />} rightSection={<ChevronDown size={16} />}>
+                  SQ
+                </Button>
+              }
+              items={[
+                { label: `SQ ${t('dm_locale_name_sq')}`, onClick: () => {} },
+                { label: `EN ${t('dm_locale_name_en')}`, onClick: () => {} },
+                { label: `UA ${t('dm_locale_name_uk')}`, onClick: () => {} },
+                { label: `IT ${t('dm_locale_name_it')}`, onClick: () => {} },
+              ]}
             />
           </Stack>
 

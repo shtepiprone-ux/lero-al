@@ -2299,7 +2299,10 @@
       "notification_neutral_message": "Чернетку вашого оголошення збережено автоматично.",
       "header_actions_guest_caption": "Гість — «Обране» відкриває аркуш автентифікації (вхід); Вхід/Реєстрація видно від md+",
       "header_actions_authed_caption": "Авторизований — «Обране» веде на /favorites; дзвіночок сповіщень передається як слот; без Входу/Реєстрації",
-      "header_actions_bell_slot_aria": "Сповіщення (заповнювач слота)"
+      "header_actions_bell_slot_aria": "Сповіщення (заповнювач слота)",
+      "locale_switcher_default_caption": "За замовчуванням — натисніть, щоб змінити мову (меню ≥640, нижній аркуш <640)",
+      "locale_switcher_showlabel_caption": "showLabel — тригер містить повну назву мови поруч зі скороченням",
+      "locale_switcher_pending_caption": "isPending — тригер вимкнено зі спінером, доки перемикання виконується"
     }
   },
   "ui": {

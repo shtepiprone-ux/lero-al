@@ -2299,7 +2299,10 @@
       "notification_neutral_message": "La bozza del tuo annuncio è stata salvata automaticamente.",
       "header_actions_guest_caption": "Ospite — Preferiti apre il foglio di autenticazione (login); Login/Registrati visibili da md+",
       "header_actions_authed_caption": "Autenticato — Preferiti porta a /favorites; la campanella notifiche passata come slot; senza Login/Registrati",
-      "header_actions_bell_slot_aria": "Notifiche (slot segnaposto)"
+      "header_actions_bell_slot_aria": "Notifiche (slot segnaposto)",
+      "locale_switcher_default_caption": "Predefinito — clic per cambiare lingua (menu ≥640, foglio inferiore <640)",
+      "locale_switcher_showlabel_caption": "showLabel — il trigger include il nome completo della lingua accanto all'abbreviazione",
+      "locale_switcher_pending_caption": "isPending — il trigger è disabilitato con uno spinner mentre il cambio è in corso"
     }
   },
   "ui": {

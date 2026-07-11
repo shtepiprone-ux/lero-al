@@ -2299,7 +2299,10 @@
       "notification_neutral_message": "Your listing draft was saved automatically.",
       "header_actions_guest_caption": "Guest — Favorites opens the auth sheet (login); Login/Register visible at md+",
       "header_actions_authed_caption": "Authenticated — Favorites links to /favorites; notification bell passed as a slot; no Login/Register",
-      "header_actions_bell_slot_aria": "Notifications (placeholder slot)"
+      "header_actions_bell_slot_aria": "Notifications (placeholder slot)",
+      "locale_switcher_default_caption": "Default — click to switch locale (menu ≥640, bottom sheet <640)",
+      "locale_switcher_showlabel_caption": "showLabel — trigger includes the full language name alongside the abbreviation",
+      "locale_switcher_pending_caption": "isPending — trigger disabled with a spinner while the switch is in flight"
     }
   },
   "ui": {

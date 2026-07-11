@@ -5,6 +5,45 @@
 **Depends on:** the already-landed canonical overlays — `MantineDropdownMenu` (Task 515), `MantineDrawer`
 (Task 523), `MantineCombobox` (Task 537), all on `HEAD`. No task blocks this one.
 
+## 🔴 CORRECTION ROUND 1 (orchestrator review, 2026-07-11) — ❌ REJECTED, fix before re-review
+
+The migration is functionally close but ships a **P0 responsive-visibility regression** (owner-caught by eye at
+576px: TWO language switchers visible in the header at once). Do NOT commit / do NOT mark complete until the
+below is fixed and re-proven.
+
+**Root cause — Tailwind display utilities do NOT work on Mantine component roots.** `hidden` / `sm:flex` /
+`md:hidden` etc. are silently overridden because Mantine sets `display` on its own root class (e.g.
+`.mantine-Button-root`) and wins the cascade. Two concrete defects from this one cause:
+
+1. `Header.tsx:155` — `<LocaleSwitcher … className="hidden sm:flex" />` forwards that class onto the Mantine
+   `Button` (`LocaleSwitcher.tsx:65`), so the desktop switcher is **NOT hidden below 640** and renders
+   simultaneously with the mobile `MantineCombobox` (`Header.tsx:182`, correctly wrapped in a plain
+   `<div className="sm:hidden">`). → two language switchers at <640. **This is the visible defect.**
+2. `Header.tsx:229–238` — the hamburger `ActionIcon className="md:hidden"` (also Mantine) → **not hidden at ≥768**;
+   the hamburger almost certainly also shows on desktop (same mechanism, not visible in the 576px screenshot).
+
+**Required fixes:**
+- Move responsive visibility OFF Mantine roots. Gate the desktop `LocaleSwitcher` on a **plain wrapper**
+  `<div className="hidden sm:flex"><LocaleSwitcher onSwitch={switchLocale} /></div>` (mirror the WORKING mobile
+  combobox wrapper at `:182`) — OR use the Mantine-native, SSR-safe `visibleFrom="sm"` on a Mantine wrapper.
+  Remove the visibility `className` from the inner trigger `Button`.
+- Hamburger: replace `className="md:hidden"` with Mantine **`hiddenFrom="md"`** (or wrap the `ActionIcon` in a
+  plain `<div className="md:hidden">`).
+- **Audit the ENTIRE diff:** NO Tailwind `hidden` / `*:flex` / `*:hidden` / `*:block` / `*:grid` on ANY Mantine
+  component root anywhere. Where responsive visibility is needed on a Mantine element, use `visibleFrom` /
+  `hiddenFrom` or a plain wrapper element. Plain (non-Mantine) elements like the CVA `buttonVariants` Favorites
+  button are fine — they already work.
+- **Re-capture the clause-12 matrix so it POSITIVELY proves mutual exclusivity:** <640 = ONLY the
+  `MantineCombobox` visible (no globe `LocaleSwitcher`); 640–767 = `LocaleSwitcher` + hamburger (intended);
+  ≥768 = desktop user menu, NO hamburger. uk@320/375/390 mandatory. The prior matrix marked these cells PASS
+  **falsely** — `screenshots:assert` is geometry-only and blind to "two controls both visible", so ADD an
+  explicit human-eye cell asserting "exactly ONE language switcher visible per breakpoint".
+- **Encode the lesson (docs):** add a short note to `docs/mantine-responsive-design-system.md` (§7 mobile gate
+  or §18 pitfalls): *"Tailwind display utilities (`hidden`/`*:flex`/`*:hidden`) are silently ignored on Mantine
+  component roots — Mantine sets `display` itself. Use `visibleFrom`/`hiddenFrom` or a plain wrapper element."*
+
+Re-review will re-check the diff line-by-line + the re-captured matrix before any approval/commit.
+
 ## Why this exists
 
 `src/components/layout/Header.tsx` and `src/components/shared/LocaleSwitcher.tsx` still render **base-UI**

@@ -2304,7 +2304,8 @@
       "locale_switcher_showlabel_caption": "showLabel — il trigger include il nome completo della lingua accanto all'abbreviazione",
       "locale_switcher_pending_caption": "isPending — il trigger è disabilitato con uno spinner mentre il cambio è in corso",
       "user_menu_regular_caption": "Utente normale — Profilo, I miei annunci, Aggiungi annuncio, Esci (nessuna voce pannello admin)",
-      "user_menu_admin_caption": "Utente admin/moderatore — voce pannello admin presente (si apre in una nuova scheda), Esci distruttivo"
+      "user_menu_admin_caption": "Utente admin/moderatore — voce pannello admin presente (si apre in una nuova scheda), Esci distruttivo",
+      "mobile_nav_drawer_caption": "Autenticato — intestazione utente, navigazione completa, Esci distruttivo; ogni azione chiude il cassetto. Visualizzato aperto direttamente (nessun trigger in questo primitivo). Lo stato disconnesso (navigazione + Accedi/Registrati/Registrati come agente) è verificato tramite ispezione del codice — non visualizzato come una seconda sovrapposizione aperta, per evitare di sovrapporre due fogli a larghezza intera."
     }
   },
   "ui": {

@@ -4,19 +4,16 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, ChevronDown, User, ListPlus, LogOut, LayoutList, LayoutDashboard } from 'lucide-react'
+import { Menu, LogOut } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { Button } from '@/components/ui/button'
-import { Button as MantineButton, ActionIcon, Avatar } from '@mantine/core'
-import {
-  MantineDropdownMenu,
-  MantineDrawer,
-  type DropdownMenuItemDef,
-} from '@/design-system/mantine/patterns'
+import { ActionIcon, Avatar } from '@mantine/core'
+import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
 import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 import { HeaderActions } from '@/components/layout/HeaderActions'
+import { UserMenu } from '@/components/layout/UserMenu'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
 
@@ -98,24 +95,6 @@ export function Header() {
     signOut(() => router.push(`/${locale}`))
   }
 
-  const userMenuItems: DropdownMenuItemDef[] = user
-    ? [
-        { label: t('profile'), icon: <User size={16} />, onClick: () => router.push(`/${locale}/cabinet`) },
-        { label: t('my_listings'), icon: <LayoutList size={16} />, onClick: () => router.push(`/${locale}/cabinet?tab=listings`) },
-        { label: t('add_listing'), icon: <ListPlus size={16} />, onClick: () => router.push(`/${locale}/listings/create`), separator: true },
-        ...(user.role === 'admin' || user.role === 'moderator'
-          ? [{
-              label: <span style={{ fontWeight: 500 }}>{t('admin_dashboard')}</span>,
-              icon: <LayoutDashboard size={16} />,
-              color: 'brand',
-              onClick: () => window.open('/admin', '_blank', 'noopener,noreferrer'),
-              separator: true,
-            }]
-          : []),
-        { label: t('logout'), icon: <LogOut size={16} />, color: 'red', onClick: handleLogout, separator: true },
-      ]
-    : []
-
   return (
     <header className="site-header sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container-wide flex h-16 items-center justify-between py-0">
@@ -153,19 +132,12 @@ export function Header() {
           {/* User menu — desktop, authenticated only (guest login/register live in HeaderActions) */}
           {user && (
             <div className="hidden md:flex items-center gap-2">
-              <MantineDropdownMenu
-                trigger={
-                  <MantineButton
-                    variant="default"
-                    leftSection={
-                      <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={28} />
-                    }
-                    rightSection={<ChevronDown size={12} />}
-                  >
-                    <span className="max-w-30 truncate">{user.name}</span>
-                  </MantineButton>
-                }
-                items={userMenuItems}
+              <UserMenu
+                user={user}
+                locale={locale}
+                onNavigate={(path) => router.push(path)}
+                onOpenAdmin={() => window.open('/admin', '_blank', 'noopener,noreferrer')}
+                onLogout={handleLogout}
               />
             </div>
           )}

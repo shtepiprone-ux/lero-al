@@ -2302,7 +2302,9 @@
       "header_actions_bell_slot_aria": "Notifiche (slot segnaposto)",
       "locale_switcher_default_caption": "Predefinito — clic per cambiare lingua (menu ≥640, foglio inferiore <640)",
       "locale_switcher_showlabel_caption": "showLabel — il trigger include il nome completo della lingua accanto all'abbreviazione",
-      "locale_switcher_pending_caption": "isPending — il trigger è disabilitato con uno spinner mentre il cambio è in corso"
+      "locale_switcher_pending_caption": "isPending — il trigger è disabilitato con uno spinner mentre il cambio è in corso",
+      "user_menu_regular_caption": "Utente normale — Profilo, I miei annunci, Aggiungi annuncio, Esci (nessuna voce pannello admin)",
+      "user_menu_admin_caption": "Utente admin/moderatore — voce pannello admin presente (si apre in una nuova scheda), Esci distruttivo"
     }
   },
   "ui": {

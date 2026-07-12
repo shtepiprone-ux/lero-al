@@ -2302,7 +2302,9 @@
       "header_actions_bell_slot_aria": "Njoftimet (slot placeholder)",
       "locale_switcher_default_caption": "Parazgjedhje — klikoni për të ndryshuar gjuhën (menu ≥640, fletë e poshtme <640)",
       "locale_switcher_showlabel_caption": "showLabel — shkaktari përfshin emrin e plotë të gjuhës krahas shkurtimit",
-      "locale_switcher_pending_caption": "isPending — shkaktari çaktivizohet me një rrotullues ndërsa ndryshimi është në proces"
+      "locale_switcher_pending_caption": "isPending — shkaktari çaktivizohet me një rrotullues ndërsa ndryshimi është në proces",
+      "user_menu_regular_caption": "Përdorues i rregullt — Profili, Shpalljet e mia, Shto shpallje, Dilni (pa artikullin e panelit të administrimit)",
+      "user_menu_admin_caption": "Përdorues admin/moderator — artikulli i panelit të administrimit i pranishëm (hapet në skedë të re), Dilni destruktive"
     }
   },
   "ui": {

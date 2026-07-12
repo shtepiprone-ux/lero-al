@@ -4,16 +4,15 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, LogOut } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { useUser } from '@/modules/auth/hooks/useUser'
-import { Button } from '@/components/ui/button'
-import { ActionIcon, Avatar } from '@mantine/core'
-import { MantineDrawer } from '@/design-system/mantine/patterns'
+import { ActionIcon } from '@mantine/core'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
 import dynamic from 'next/dynamic'
 import { LocaleSwitcher } from '@/components/shared/LocaleSwitcher'
 import { HeaderActions } from '@/components/layout/HeaderActions'
 import { UserMenu } from '@/components/layout/UserMenu'
+import { MobileNavDrawer } from '@/components/layout/MobileNavDrawer'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
 
@@ -57,7 +56,6 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 }
 
 export function Header() {
-  const t = useTranslations('nav')
   const tc = useTranslations('common')
   const locale = useLocale()
   const router = useRouter()
@@ -148,107 +146,22 @@ export function Header() {
           <ActionIcon
             variant="default"
             aria-label={tc('aria_open_menu')}
-            className="md:hidden"
+            hiddenFrom="md"
             mih="2.75rem"
             miw="2.75rem"
             onClick={() => setMobileOpen(true)}
           >
             <Menu className="h-5 w-5" />
           </ActionIcon>
-          <MantineDrawer opened={mobileOpen} onClose={() => setMobileOpen(false)} side="right" size="xs">
-            <div className="flex flex-col gap-6">
-              {/* Mobile user info */}
-              {user && (
-                <div className="flex items-center gap-3 pb-4 border-b">
-                  <Avatar src={user.avatar_url ?? undefined} name={user.name ?? undefined} color="brand" size={40} />
-                  <div>
-                    <p className="font-medium text-sm">{user.name}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Mobile nav links */}
-              <nav className="flex flex-col gap-4">
-                <NavLinks onNavigate={() => setMobileOpen(false)} />
-                {user && (
-                  <>
-                    <Link
-                      href={`/${locale}/cabinet`}
-                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {t('profile')}
-                    </Link>
-                    <Link
-                      href={`/${locale}/cabinet?tab=listings`}
-                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {t('my_listings')}
-                    </Link>
-                    <Link
-                      href={`/${locale}/favorites`}
-                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {t('favorites')}
-                    </Link>
-                    <Link
-                      href={`/${locale}/listings/create`}
-                      className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {t('add_listing')}
-                    </Link>
-                  </>
-                )}
-              </nav>
-
-              {/* Mobile auth buttons */}
-              {!user && (
-                <div className="border-t pt-4 flex flex-col gap-2">
-                  <Button
-                    variant="outline"
-                    size="xl"
-                    className="w-full"
-                    onClick={() => { setMobileOpen(false); openAuthSheet('login') }}
-                  >
-                    {t('login')}
-                  </Button>
-                  <Button
-                    size="xl"
-                    className="w-full"
-                    onClick={() => { setMobileOpen(false); openAuthSheet('register') }}
-                  >
-                    {t('register')}
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="xl"
-                    className="w-full"
-                    onClick={() => { setMobileOpen(false); openAuthSheet('register-agent') }}
-                  >
-                    {t('register_agent')}
-                  </Button>
-                </div>
-              )}
-
-              {/* Mobile logout */}
-              {user && (
-                <div className="border-t pt-4">
-                  <Button
-                    variant="ghost"
-                    size="xl"
-                    onClick={() => { handleLogout(); setMobileOpen(false) }}
-                    className="w-full justify-start text-destructive hover:text-destructive/80 hover:bg-destructive/5"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    {t('logout')}
-                  </Button>
-                </div>
-              )}
-            </div>
-          </MantineDrawer>
+          <MobileNavDrawer
+            opened={mobileOpen}
+            onClose={() => setMobileOpen(false)}
+            user={user}
+            locale={locale}
+            onNavigate={(path) => router.push(path)}
+            onOpenAuth={openAuthSheet}
+            onLogout={handleLogout}
+          />
         </div>
       </div>
 

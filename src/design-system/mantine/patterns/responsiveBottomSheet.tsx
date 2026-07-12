@@ -145,16 +145,36 @@ export function ResponsiveBottomSheet({
         // gray-3 divider token MantineResponsiveActionFooter already uses for its borderTop
         // (zero invented value). Layered on top of the shared static bottomSheetDrawerStyles.header
         // (not mutated — every consumer that imports that object directly stays untouched).
+        //
+        // Task 584 (owner-reported 2026-07-11): the title rendered flush against this divider
+        // because bottomSheetDrawerStyles.header's paddingBottom:0 stayed 0 even with the
+        // divider added. `var(--mantine-spacing-md)` (16px) restores the same rhythm unit
+        // already reused everywhere else in this file (footer Box padding, SheetContent's
+        // `pb="md"` gutter) and matches Mantine's own default ModalBase header padding (top
+        // AND bottom both `var(--mantine-spacing-md)` by default — see .m_b5489c3c in
+        // @mantine/core/styles/ModalBase.css), so top/bottom stay symmetric. Title-less sheets
+        // are untouched — this only applies inside the same `title ?` branch as the divider.
         header: {
           ...bottomSheetDrawerStyles.header,
-          ...(title ? { borderBottom: '1px solid var(--mantine-color-gray-3)' } : {}),
+          ...(title ? { borderBottom: '1px solid var(--mantine-color-gray-3)', paddingBottom: 'var(--mantine-spacing-md)' } : {}),
         },
         // Task 567 round-2 Fix 4: body becomes ITS OWN flex column (not a single scroll
         // region) ONLY when a footer is passed — every other consumer's body stays exactly
         // bottomSheetDrawerStyles.body (unmutated, unchanged).
-        body: footer
-          ? { ...bottomSheetDrawerStyles.body, display: 'flex', flexDirection: 'column', overflowY: 'hidden' }
-          : bottomSheetDrawerStyles.body,
+        //
+        // Task 584 (owner-reported 2026-07-11, re-scoped): bottomSheetDrawerStyles.body's
+        // padding:0 left the divider→content gap at 0px on titled sheets (the primary
+        // defect — row-based consumers' first row and SheetContent's blob both touched the
+        // divider). `var(--mantine-spacing-md)` (16px) is the same rhythm unit as the header
+        // paddingBottom above, restoring a balanced gap on both sides of the divider. Only
+        // the TOP is overridden — padding-left/right stay 0 so row-based consumers keep
+        // full-width edge-to-edge rows. Title-less sheets are untouched (padding:0 unchanged).
+        body: {
+          ...(footer
+            ? { ...bottomSheetDrawerStyles.body, display: 'flex', flexDirection: 'column', overflowY: 'hidden' }
+            : bottomSheetDrawerStyles.body),
+          ...(title ? { paddingTop: 'var(--mantine-spacing-md)' } : {}),
+        },
       }}
     >
       {footer ? (

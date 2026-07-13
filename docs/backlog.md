@@ -7,16 +7,15 @@
 
 ## Last Session
 
-**2026-07-12 — Task 580 (`Header` thin-container audit) ✅ APPROVED (orchestrator source+diff review).**
-Confirm-only, **no product code changed**. Independently verified: `Header.tsx` genuinely thin (every import
-used, no residual overlay/dropdown/drawer JSX — only shell+Logo+NavLinks+hamburger trigger + composition);
-`grep MobileLocaleSwitcher src/` = **0**; all 4 primitives (`HeaderActions`/`LocaleSwitcher`/`UserMenu`/
-`MobileNavDrawer`) hook-free + prop-driven, each with a canonical `Mantine/Primitives/*` story (all 4 titles
-grep-confirmed). Sonnet correctly **flagged** (not silently followed) the stale "five primitives"/`MobileLocaleSwitcher`
-kickoff wording — the correct current composition is four (Task 577 dedup). Gate numbers (660/634/0/26, test:auth
-28/28) are Sonnet's sandbox claims → owner native gate is the verdict; with zero product-code change the baseline
-is byte-identical, so approval stands pending the native run. Commit emitted. **Sprint 44 Header decomposition
-(574–580) fully closed.** **Next:** 583 (Favorites heart all breakpoints) — kickoff ready.
+**2026-07-12 — Task 583 (Favorites icon at all breakpoints) executed (Sonnet).** Removed `visibleFrom="sm"`
+from both Favorites `ActionIcon` branches in `HeaderActions.tsx` — single-file, no redesign. Live dev-server
+rendered check (real app, port 3002): 28/28 cells (7 breakpoints × 4 locales) → heart visible, exactly 1
+instance, 0 h-scroll, 0 console errors; guest-heart-click → login sheet confirmed at 320 (screenshot) + 1280.
+`uk@320`/`sq@320`/`it@390`/`en@1280` screenshots personally reviewed — clean gaps, no overlap/clip.
+`tsc=0`/eslint clean/`check:i18n` 2142×4 (unchanged)/`check:stories` 115 files 0 viol/`check:file-integrity`
+clean/`screenshots:assert --mantine-only` 660/634/0/26 (`HeaderActions` 16/16 pass, byte-identical baseline,
+zero regression). Session: `docs/sessions/2026-07-12-task583-favorites-icon-all-breakpoints.md`. **Next:**
+awaiting orchestrator review; no other Sprint 44 tasks remain open.
 
 ## Pending Action Items
 
@@ -25,7 +24,7 @@ is byte-identical, so approval stands pending the native run. Commit emitted. **
 | 🔐 Re-verify HIBP "Prevent use of leaked passwords" availability on Free tier (Supabase Auth → Sign In/Providers → Password Security). Owner flagged 2026-05-28 as Pro-only. If a Free-tier toggle is now available → enable; if not → enable at Pro upgrade. | Owner | Supabase Security Advisor `auth_leaked_password_protection` WARN. Documented in `docs/integrations.md` → "Supabase Auth Configuration". |
 | 🧾 Run all pending emitted commits in PowerShell (single-writer). ✅-APPROVED-but-uncommitted tasks awaiting the owner's run + native gate: Sprint 39 overlay Batch C (513–517, 522), Sprint 38 form-control commits (494/496/497/498/499/500/505/507/508), Epic II (316–323), Epic BB (243/430/458/459/460/461/462 + Supabase SQL applies), Epic DD (246/432), Epic LV (454/456/457), plus 238/425/426/427/434/437/442/443/444/448. Per-task detail + Files-Changed tables live in the archive ledger + session logs. | Owner | Commit-emission policy below; nothing here needs new orchestrator work. |
 
-## Next Immediate Tasks
+**🟢 Task 583 (Sprint 44 — Favorites icon all breakpoints) — EXECUTED, awaiting orchestrator review.** `HeaderActions.tsx` Favorites heart no longer hidden below 640px. See Last Session for full detail. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_583_FavoritesIconAllBreakpoints.md`. Session: `docs/sessions/2026-07-12-task583-favorites-icon-all-breakpoints.md`.
 
 **🟢 Task 580 (Sprint 44 — `Header` thin-container audit) — ✅ APPROVED (orchestrator source+diff review 2026-07-12), commit emitted, pending owner native gate + run.** Confirm-only: no product code changed; independently verified `Header.tsx` thin, `MobileLocaleSwitcher` grep=0, all 4 primitives hook-free + prop-driven with canonical stories. See Last Session for full detail. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_580_HeaderThinContainer.md`. Session: `docs/sessions/2026-07-12-task580-header-thin-container-audit.md`.
 
@@ -36,8 +35,6 @@ is byte-identical, so approval stands pending the native run. Commit emitted. **
 **Tasks 578 + 585 (Sprint 44 — `UserMenu` primitive + desktop single-open story) — ✅ APPROVED 2026-07-12, combined commit emitted, pending owner native gate + run.** Detail archived. Kickoffs: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_578_UserMenuPrimitive.md`, `..._Task_585_UserMenuStoryDesktopSingleOpen.md`.
 
 **Task 584 (bottom-sheet divider spacing) — ✅ APPROVED + COMMITTED `e486d8d88` (2026-07-12), native gate green.** Detail archived. Kickoff: `tasks/Sprints/Sprint_39_kickoff_prompt_Task_584_BottomSheetHeaderTitleDividerSpacing.md`.
-
-**🟢 Task 583 (Sprint 44 — owner decision 2026-07-11) — KICKOFF READY, not started.** Favorites heart currently hidden <640 (`visibleFrom="sm"` in `HeaderActions.tsx`) — owner wants it visible at all breakpoints (guest → login sheet, authed → `/favorites`). Single-file `HeaderActions.tsx` change; icon-only clause-11 exemption; 320px 3-compact-control layout must stay clip/overflow-free. Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_583_FavoritesIconAllBreakpoints.md`.
 
 **🟢 Sprint 38 (MM Phase-1 Batch B — form controls) — COMPLETE.** All primitives done (Button/Label/TextInput/Textarea/error-border/PasswordInput/disabled-field+label+icon/Checkbox/Radio/Switch); 495 Select closed via 508. Remaining = owner-run commits + the two outstanding 499 Switch render cells (uk@375/390). Batch A (486–491) ✅ done. Tracker: `docs/mantine-tailadmin-migration-tracker.md`. Plan: `tasks/Sprints/Sprint_38_MM_Phase1_FormControls.md`.
 

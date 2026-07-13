@@ -19,14 +19,14 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
 
   return (
     <>
-      {/* Favorites — visible sm+ (icon-only, clause-11 exempt), mirrors the hamburger's
-          canonical icon-only ActionIcon reference (variant + 2.75rem/44px min touch target). */}
+      {/* Favorites — visible at ALL breakpoints (owner decision 2026-07-11, Task 583; icon-only,
+          clause-11 exempt), mirrors the hamburger's canonical icon-only ActionIcon reference
+          (variant + 2.75rem/44px min touch target). */}
       {isAuthenticated ? (
         <ActionIcon
           component={Link}
           href={favoritesHref}
           variant="subtle"
-          visibleFrom="sm"
           mih="2.75rem"
           miw="2.75rem"
           aria-label={t('favorites')}
@@ -36,7 +36,6 @@ export function HeaderActions({ isAuthenticated, favoritesHref, onOpenAuth, noti
       ) : (
         <ActionIcon
           variant="subtle"
-          visibleFrom="sm"
           mih="2.75rem"
           miw="2.75rem"
           aria-label={t('favorites')}

@@ -192,14 +192,55 @@ export const theme = createTheme({
     // default), NOT Mantine's 16px md. Heights pinned to 44px (TailAdmin h-11) for touch.
     Button: {
       defaultProps: { radius: 'lg', size: 'sm' }, // 14px text (TailAdmin text-sm)
+      // Task 587 — §6a-link resting text = gray-700 by default for variant="transparent" when no
+      // explicit `color` prop is passed (Logout passes color="red" and must keep winning via
+      // Mantine's own variantColorResolver). This MUST live in `vars`, NOT `styles`: Mantine's
+      // getStyle() merge order applies `styles` (theme + instance) BEFORE `vars` (the component's
+      // own built-in --button-color from variantColorResolver, which is always non-empty) — so a
+      // `styles`-level override of a CSS var the built-in resolver also sets is silently discarded
+      // (verified empirically via an isolated render probe: a `styles`-level attempt resolved to
+      // `--mantine-color-brand-light-color`, not gray-7). `vars` participates in the SAME merge
+      // stage as the built-in resolver and is applied after it (same technique as the Progress/
+      // Slider `vars` overrides above), so it wins.
+      //
+      // Task 589 — the `outline`/`default` §6l "secondary" chrome (Task 527 fix #6) was ALSO a
+      // `styles`-level override and hit the SAME precedence bug: a fresh isolated-render probe
+      // (before this task's edit) proved --button-bg/--button-color/--button-bd/--button-padding-x
+      // were ALL silently discarded — `outline` was rendering Mantine's stock BRAND-colored
+      // border+text (var(--mantine-color-brand-outline)), not the intended neutral gray-700/
+      // white/gray-2 look; only `box-shadow` (a real CSS property, not a resolver var) took effect.
+      // Relocated here for the same reason as the transparent branch above. Gated on
+      // `color === undefined` so an explicit `color` prop (e.g. `variant="outline" color="red"`
+      // destructive actions) still resolves via Mantine's own variantColorResolver, unfrozen.
+      // Hover: `--button-hover` is the var Mantine's own compiled `:hover` rule reads
+      // (`background-color: var(--button-hover, ...)` — verified via `node_modules/@mantine/core/
+      // styles.css`), so setting it via `vars` is legal per §18 (state selectors can't live in
+      // inline styles/vars, but a var THEY read can) — gray-0 (#f9fafb) = §6l `hover:bg-gray-50`.
+      // Note: neutral `default` and neutral `outline` now render identically (both = §6l
+      // "secondary/outline" — a single reference row), which is intended, not a bug.
+      vars: (_theme: MantineTheme, props: ButtonProps) => ({
+        root: {
+          ...(props.variant === 'transparent' && props.color === undefined
+            ? { '--button-color': 'var(--mantine-color-gray-7)' }
+            : {}),
+          ...((props.variant === 'outline' || props.variant === 'default') && props.color === undefined
+            ? {
+                '--button-bg': 'var(--mantine-color-white)',
+                '--button-color': 'var(--mantine-color-gray-7)',
+                '--button-bd': '1px solid var(--mantine-color-gray-2)',
+                '--button-padding-x': '1rem', // §6l 16px (px-4)
+                '--button-hover': 'var(--mantine-color-gray-0)', // §6l hover:bg-gray-50
+              }
+            : {}),
+        },
+      }),
       // rem exemption: minHeight is touch-target, not spacing. fontWeight=500 = TailAdmin font-medium.
       // height:'auto' lets root grow beyond minHeight when label wraps (minHeight still guarantees 44px).
       // label fix: Mantine ships white-space:nowrap on .mantine-Button-label — clips long labels (Task 502).
-      // outline/default variant (Task 527 fix #6, §6l Buttons secondary): bg white, text gray-700,
-      // border gray-200, shadow-theme-xs, padding 12x16. Overridden as CSS custom properties
-      // (--button-bg/--button-color/--button-bd/--button-padding-x), NOT literal background/color,
-      // so Mantine's own :hover rule (which reads the same vars) keeps working — a literal inline
-      // backgroundColor would permanently block the :hover pseudo-class from ever repainting.
+      // outline/default variant (Task 527 fix #6, §6l Buttons secondary) — box-shadow only; the
+      // --button-bg/--button-color/--button-bd/--button-padding-x lines moved to `vars` above
+      // (Task 589, precedence fix). box-shadow is a real CSS property (not a resolver var), so it
+      // already applies correctly at the `styles` merge stage — no relocation needed.
       // Filled/primary variant is untouched (left to Mantine's variantColorResolver).
       styles: (_theme: MantineTheme, props: ButtonProps) => ({
         root: {
@@ -207,13 +248,7 @@ export const theme = createTheme({
           fontWeight: '500',
           height: 'auto',
           ...(props.variant === 'outline' || props.variant === 'default'
-            ? {
-                '--button-bg': 'var(--mantine-color-white)',
-                '--button-color': 'var(--mantine-color-gray-7)',
-                '--button-bd': '1px solid var(--mantine-color-gray-2)',
-                '--button-padding-x': '1rem', // §6l 16px (px-4)
-                boxShadow: 'var(--mantine-shadow-xs)',
-              }
+            ? { boxShadow: 'var(--mantine-shadow-xs)' }
             : {}),
         },
         // Task 567 round-2 Fix 1 (owner 2026-07-09): wordBreak was 'break-word', which breaks

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Button, Group, Stack, Text } from '@mantine/core'
-import { Save } from 'lucide-react'
+import { ArrowRight, LogOut, Save } from 'lucide-react'
 import { storyT } from '../../_storyI18n'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
@@ -124,6 +124,31 @@ export const Default: Story = {
             >
               {t('button_long_label')}
             </Button>
+          </Stack>
+
+          {/* ── Link / tertiary (§6a-link) — no-icon, with-icon, destructive ── */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              link / tertiary (§6a-link) — transparent, no border, no hover fill
+            </Text>
+            <Group gap="sm" wrap="wrap">
+              <Button variant="transparent">
+                {t('button_link_no_icon')}
+              </Button>
+              <Button
+                variant="transparent"
+                leftSection={<ArrowRight size={16} aria-hidden />}
+              >
+                {t('button_link_with_icon')}
+              </Button>
+              <Button
+                variant="transparent"
+                color="red"
+                leftSection={<LogOut size={16} aria-hidden />}
+              >
+                {t('button_link_destructive')}
+              </Button>
+            </Group>
           </Stack>
 
         </Stack>

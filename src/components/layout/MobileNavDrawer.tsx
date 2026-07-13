@@ -2,8 +2,7 @@
 
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import { Avatar } from '@mantine/core'
-import { Button } from '@/components/ui/button'
+import { Avatar, Button } from '@mantine/core'
 import { LogOut } from 'lucide-react'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
 
@@ -86,13 +85,21 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
 
         {!user && (
           <div className="border-t pt-4 flex flex-col gap-2">
-            <Button variant="outline" size="xl" className="w-full" onClick={() => openAuth('login')}>
+            <Button variant="default" fullWidth onClick={() => openAuth('login')}>
               {t('login')}
             </Button>
-            <Button size="xl" className="w-full" onClick={() => openAuth('register')}>
+            <Button variant="filled" fullWidth onClick={() => openAuth('register')}>
               {t('register')}
             </Button>
-            <Button variant="ghost" size="xl" className="w-full" onClick={() => openAuth('register-agent')}>
+            {/* §6a-link — STOP-AND-ASK resolved (owner 2026-07-13): left-aligned, no icon today,
+                consistent with the Logout link below; centered/iconed is a flagged follow-up, not this task. */}
+            <Button
+              variant="transparent"
+              fullWidth
+              justify="flex-start"
+              styles={{ root: { paddingLeft: 0 } }}
+              onClick={() => openAuth('register-agent')}
+            >
               {t('register_agent')}
             </Button>
           </div>
@@ -101,12 +108,14 @@ export function MobileNavDrawer({ opened, onClose, user, locale, onNavigate, onO
         {user && (
           <div className="border-t pt-4">
             <Button
-              variant="ghost"
-              size="xl"
+              variant="transparent"
+              color="red"
+              fullWidth
+              justify="flex-start"
+              leftSection={<LogOut size={16} />}
+              styles={{ root: { paddingLeft: 0 } }}
               onClick={logout}
-              className="w-full justify-start text-destructive hover:text-destructive/80 hover:bg-destructive/5"
             >
-              <LogOut className="h-4 w-4" />
               {t('logout')}
             </Button>
           </div>

@@ -74,6 +74,7 @@ Accent: theme-pink #ee46bc · theme-purple #7a5af8. `gray-dark` #1a2231. Primary
 | **Status badge** | `text-theme-xs rounded-full px-2 py-0.5 font-medium bg-{sem}-50 text-{sem}-700` | `Badge` pill, size sm, variant light, color = success/warning/error |
 | **Button (primary)** | `bg-brand-500 hover:bg-brand-600 rounded-lg p-3 text-theme-sm font-medium text-white` | `Button` filled brand, radius 8, ~44px, size md, fw 500 |
 | **Button (secondary/outline)** | `border border-gray-300 bg-white rounded-lg p-3 text-theme-sm font-medium text-gray-700 hover:bg-gray-50 shadow-theme-xs` | `Button` default/outline, radius 8, gray-300 border |
+| **Button (link/tertiary)** — *see §6a-link note* | transparent bg (no fill even on hover) · **no border** · `text-theme-sm font-medium` (14/500) · text `gray-700` (`#344054`) · icon-left, gap 12px · radius `lg` (8) · ≥44px touch | `Button variant="transparent"`; `color` per use (gray-7 default · **red** for destructive/logout · brand for primary-link); left-aligned with **no left padding** when siblings are flush-left nav text |
 | **Input / Select / Textarea** | `h-11 rounded-lg border border-gray-200 bg-transparent py-2.5 px-4 text-sm text-gray-800 placeholder:text-gray-400 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3` | `TextInput`/`Select`/`Textarea` size md (h 44), radius 8, border gray-200, focus ring brand |
 | **Label** | `text-theme-sm font-medium text-gray-700` | form label 14 fw500 gray-700 |
 
@@ -82,6 +83,16 @@ Accent: theme-pink #ee46bc · theme-purple #7a5af8. `gray-dark` #1a2231. Primary
 > `minHeight:'2.75rem'` (44px / `h-11`)** for Button/TextInput/Select/Textarea/Switch (already in `theme.ts`). Read "sm/14px/44px"
 > wherever these rows say "size md". TailAdmin's own controls use `text-sm`/`text-theme-sm` (14px) — this matches the reference.
 | **Avatar (sm)** | `h-11 w-11 rounded-full` | `Avatar` ~44, radius full |
+
+> **🔴 §6a-link note — link/tertiary button (owner P0, 2026-07-13, Task 587; clause-16a honest-negative + live capture).**
+> The TailAdmin `/buttons` gallery ships ONLY primary (filled) + secondary (white/border) — it has **no** text/link/ghost
+> button. The authoritative icon-left, borderless, transparent control in TailAdmin is the **sidebar `menu-item`**, live-captured
+> by the orchestrator (provenance: `demo.tailadmin.com/buttons`, `getComputedStyle`, 2026-07-13):
+> **resting** `color:#344054 (gray-700) · background:transparent · border:none · font 14px/500 · padding 8px 12px · gap 12px ·
+> border-radius 8px`; **active** `color:brand · background:brand-50` (demo `#465fff`/`#ECF3FF` → project brand `#EC5447` / brand-50
+> `#FDEEED`). **Owner override (2026-07-13): pure Link behavior — NO hover/press background fill** (the menu-item's gray-100 hover
+> is intentionally NOT adopted); hover = text-darken only, which is exactly Mantine's built-in `variant="transparent"`. Destructive
+> logout uses `color="red"` (red-600/700 text). This row is the single source of truth for the new themed `transparent` Button variant.
 
 ## 6b. Admin table BLOCK anatomy (CRM "Recent Orders" reference — exact)
 

@@ -2308,7 +2308,9 @@
       "locale_switcher_pending_caption": "isPending — shkaktari çaktivizohet me një rrotullues ndërsa ndryshimi është në proces",
       "user_menu_regular_caption": "Përdorues i rregullt — Profili, Shpalljet e mia, Shto shpallje, Dilni (pa artikullin e panelit të administrimit)",
       "user_menu_admin_caption": "Përdorues admin/moderator — artikulli i panelit të administrimit i pranishëm (hapet në skedë të re), Dilni destruktive",
-      "mobile_nav_drawer_caption": "I identifikuar — kokë përdoruesi, navigim i plotë, Dilni destruktive; çdo veprim e mbyll sirtarin. Shfaqet i hapur drejtpërdrejt (pa shkas në këtë primitivë). Gjendja e çidentifikuar (navigim + Hyrje/Regjistrohu/Regjistrohu si agjent) verifikohet me inspektim kodi — nuk shfaqet si mbivendosje e dytë e hapur, për të shmangur vendosjen mbi njëra-tjetrën të dy fletëve me gjerësi të plotë."
+      "mobile_nav_drawer_caption": "I identifikuar — kokë përdoruesi, navigim i plotë, Dilni destruktive; çdo veprim e mbyll sirtarin. Shfaqet i hapur drejtpërdrejt (pa shkas në këtë primitivë). Gjendja e çidentifikuar (navigim + Hyrje/Regjistrohu/Regjistrohu si agjent) verifikohet me inspektim kodi — nuk shfaqet si mbivendosje e dytë e hapur, për të shmangur vendosjen mbi njëra-tjetrën të dy fletëve me gjerësi të plotë.",
+      "header_view_caption_guest": "Vizitor — logo, navigim desktop, Të preferuarat→hyrje, Hyrje/Regjistrohu (≥md), hamburger (<md), pa UserMenu; mbivendosjet të mbyllura (pa sirtar celular ose fletë identifikimi të hapur)",
+      "header_view_caption_authed": "I identifikuar — logo, navigim desktop, Të preferuarat, kambanë njoftimesh, UserMenu (≥md), hamburger (<md); mbivendosjet të mbyllura (pa sirtar celular të hapur)"
     }
   },
   "ui": {

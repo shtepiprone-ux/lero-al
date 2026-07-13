@@ -2308,7 +2308,9 @@
       "locale_switcher_pending_caption": "isPending — trigger disabled with a spinner while the switch is in flight",
       "user_menu_regular_caption": "Regular user — Profile, My listings, Add listing, Logout (no Admin dashboard item)",
       "user_menu_admin_caption": "Admin/moderator user — Admin dashboard item present (opens in a new tab), destructive Logout",
-      "mobile_nav_drawer_caption": "Logged-in — user header, full nav, destructive Logout; each action closes the drawer. Rendered open directly (no trigger in this primitive). Logged-out (nav + Login/Register/Register-as-agent) is verified by code inspection — not rendered as a second open overlay, to avoid stacking two full-width sheets."
+      "mobile_nav_drawer_caption": "Logged-in — user header, full nav, destructive Logout; each action closes the drawer. Rendered open directly (no trigger in this primitive). Logged-out (nav + Login/Register/Register-as-agent) is verified by code inspection — not rendered as a second open overlay, to avoid stacking two full-width sheets.",
+      "header_view_caption_guest": "Guest — logo, desktop nav, Favorites→login, Login/Register (≥md), hamburger (<md), no UserMenu; overlays closed (no mobile drawer or auth sheet open)",
+      "header_view_caption_authed": "Authenticated — logo, desktop nav, Favorites, notification bell, UserMenu (≥md), hamburger (<md); overlays closed (no mobile drawer open)"
     }
   },
   "ui": {

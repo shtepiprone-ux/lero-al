@@ -43,7 +43,6 @@ export function NotificationBellView({ notifications, unreadCount, onRead }: Not
       iconOnlyTrigger
       position="bottom-end"
       width={320}
-      title={t('title')}
     >
       <Box style={{ display: 'flex', flexDirection: 'column', maxHeight: 480, overflow: 'hidden' }}>
         <NotificationCenter notifications={notifications} onRead={onRead} />

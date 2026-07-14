@@ -16,7 +16,7 @@ export function useNotifications() {
     const supabase = createClient()
     const { data } = await supabase
       .from('notifications')
-      .select('id, user_id, type, title, body, link, is_read, created_at')
+      .select('id, user_id, type, title, body, link, is_read, created_at, template_id, template_params')
       .order('created_at', { ascending: false })
       .limit(PAGE_SIZE)
     const list = (data ?? []) as Notification[]

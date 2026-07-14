@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { CheckCheck } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@mantine/core'
 import { markAllNotificationsRead } from '@/modules/notifications/lib/mutations'
 import { NotificationItem } from './NotificationItem'
 import type { Notification } from '@/types/database'
@@ -29,18 +29,24 @@ export function NotificationCenter({ notifications, onRead }: Props) {
 
   return (
     <div data-testid="notification-center" className="flex flex-1 min-h-0 flex-col overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b shrink-0">
+      {/* Header — Task 593: <390px the mark-all button drops to its own row below the title,
+          full-width with flush-left content (owner decision 2026-07-14); ≥390px reverts to the
+          original single-row layout (title left, button right) byte-for-byte. `min-[390px]:` is
+          the same Tailwind arbitrary-breakpoint convention as Task 590's HeaderView split — not a
+          new named breakpoint token. */}
+      <div className="flex flex-col min-[390px]:flex-row min-[390px]:items-center min-[390px]:justify-between gap-2 px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>
         {hasUnread && (
           <Button
-            variant="ghost"
-            size="sm"
+            variant="transparent"
+            color="brand"
+            leftSection={<CheckCheck size={14} />}
             onClick={handleMarkAll}
             disabled={isPending}
-            className="gap-1 text-xs text-primary hover:text-primary/80 h-auto p-1"
+            justify="flex-start"
+            styles={{ label: { textAlign: 'left' } }}
+            className="w-full min-[390px]:w-auto"
           >
-            <CheckCheck className="h-3.5 w-3.5 shrink-0" />
             {t('mark_all_read')}
           </Button>
         )}

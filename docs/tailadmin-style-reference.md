@@ -1122,6 +1122,37 @@ i.e. "take the TailAdmin styles" resolves to §6d/§6e here, not to the compact 
 time picker (`.flatpickr-time`), the week numbers (`.flatpickr-weekwrapper`), and the year `numInput` spinner —
 lero's DatePicker is single-date, no time, Monday-first. Those flatpickr sub-parts are out of scope (do not port).
 
+## 6u. Metric / stat card (dashboard KPI tile) — ZIP-CITED, extracted from `index.html` "Metric Item" (Task 597, 2026-07-14)
+
+> **Step 0 result — NOT an honest-negative. The zip HAS the metric card.** `index.html` (dashboard) renders the
+> "Metric Group One" block with two `<!-- Metric Item -->` tiles (Customers 3,782 / Orders 5,359). Extracted
+> directly from that markup + `css/style.css` tokens — no live capture needed (clause 16a N/A). Used for the
+> homepage stats block migration (Task 597): three KPI tiles (Active listings / Cities / Agents).
+
+**Markup source:** `index.html` → `.grid.grid-cols-1.gap-4.sm:grid-cols-2` → each `<!-- Metric Item -->`.
+**CSS source:** `css/style.css` → `--text-title-sm: 30px / 38px`, `--text-theme-sm: 14px / 20px`, gray/semantic ramps (§1).
+
+**Card wrapper (cited literal):** `rounded-2xl border border-gray-200 bg-white p-5 md:p-6`
+- radius `2xl` (16px) · border `gray-200` (#e4e7ec) · bg white · **no shadow** (flat, per §6 content-card rule) · padding 20→24 (`p-5 md:p-6`).
+
+**Icon badge (cited literal):** `flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100`
+- 48×48 · radius `xl` (12px) · bg `gray-100` (#f2f4f7) · icon 24px, `fill-gray-800`/`text-gray-800` (#1d2939).
+
+**Value + label row (cited literal):** `mt-5 flex items-end justify-between` wrapping:
+- **Label:** `<span class="text-sm text-gray-500">` → 14/20, `gray-500` (#667085). (lero: source from `t()`.)
+- **Number:** `<h4 class="mt-2 text-title-sm font-bold text-gray-800">` → **30px/38px, bold, `gray-800`** (#1d2939), `mt-2` (8px) below label.
+
+**Trend badge (cited literal, OPTIONAL — omit when there is no trend datum):**
+`flex items-center gap-1 rounded-full py-0.5 pl-2 pr-2.5 text-sm font-medium` +
+- positive: `bg-success-50 text-success-600` (#ecfdf3 / #039855) with an up-arrow 12px svg;
+- negative: `bg-error-50 text-error-600` (#fef3f2 / #d92d20) with a down-arrow 12px svg.
+- **lero Task 597 omits the trend badge** — the homepage stats have no period-over-period delta. Documented here for completeness / future dashboard reuse.
+
+**Group container (cited literal):** `grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6` (TailAdmin's 2-up).
+- **lero override for 3 tiles:** `grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6` — **1 column full-width `<640` (clause 11 mobile full-width gate: each card spans the row edge-to-edge when stacked), 3-across at ≥640.** The `sm:grid-cols-3` (not `sm:grid-cols-2`) is the only deviation from the zip's group, justified by the 3-tile count; every per-tile token above stays zip-literal.
+
+**Brand note:** the metric card uses NO brand color — it is a neutral white/gray tile. This is a deliberate visual change from lero's legacy brand-red stats strip (owner decision 2026-07-14: adopt TailAdmin white metric cards). The icon color stays `gray-800`, not brand.
+
 ## 7. Application plan
 
 1. **Task 484 (MM.0):** encode §1–§5 tokens + §6 core component defaults (Card, Table, Badge, Button, Input,

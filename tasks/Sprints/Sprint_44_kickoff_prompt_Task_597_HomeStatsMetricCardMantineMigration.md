@@ -25,18 +25,46 @@ grid; the brand-red band is removed; the Agents tile shows a **real** count from
 
 ## Implementation (literal)
 
-### 1. Data — `src/modules/listings/lib/queries.ts` → `getSiteStats`
-- Add `agents` to the returned object. Count agent-type profiles from a **publicly/anon-readable source**.
-  **Default predicate: `user_type = 'agent'`** (all agent accounts — matches the public `register?type=agent`
-  designation; NOT verification-gated). Keep the existing `unstable_cache(['site-stats'], … 1h)` window — add the
-  agents count to the same `Promise.all`.
-- **🛑 STOP-AND-ASK gate (do NOT guess):** the base `profiles` table may not be anon-countable under RLS. Determine
-  the correct public source: prefer the existing **`public_user_profiles` view** (safe public subset, has
-  `user_type`) via `.select('user_id', { count:'exact', head:true }).eq('user_type','agent')`. If that view is NOT
-  anon-readable / lacks `user_type`, or the only way to count is the service-role client (forbidden on a public
-  cached read), **STOP and ASK the orchestrator** — do not silently switch to an admin client or the base table.
-- Update the type/return so `{ listings, cities, agents }`. Update `page.tsx`'s `.catch(() => ({ listings:0,
-  cities:0 }))` to `({ listings:0, cities:0, agents:0 })`.
+### 1. Data — agent count via an anon-callable count-only RPC (ORCHESTRATOR-RESOLVED 2026-07-14)
+**Stop-and-ask outcome:** `public_user_profiles` is authenticated-only by deliberate decision (Task 266/268) and
+must NOT be reopened to anon; the service-role client / base table are forbidden on this public cached read. The
+agent count is sourced through **Option 1 — a `SECURITY DEFINER` count-only function**, matching the acknowledged
+anon-callable precedent (`record_listing_view` / `record_recently_viewed`, `rls-rules.md`).
+
+- **New SQL migration** (repo `supabase/migrations/…` per the project convention) defining:
+  ```sql
+  create or replace function public.get_agent_count()
+  returns integer
+  language sql
+  security definer
+  set search_path = ''            -- hardened: no mutable search_path
+  stable
+  as $$
+    select count(*)::int from public.profiles where user_type = 'agent';
+  $$;
+  revoke all on function public.get_agent_count() from public;
+  grant execute on function public.get_agent_count() to anon, authenticated;
+  ```
+  Confirm the actual agent-flag column against the schema (`profiles.user_type = 'agent'` is the public
+  `register?type=agent` designation — NOT verification-gated). If the column/table name differs, STOP and ASK
+  rather than guess. Returns ONLY an integer — no rows, no PII.
+- **`getSiteStats`** (`src/modules/listings/lib/queries.ts`): add `agents` to the `Promise.all` via
+  `supabase.rpc('get_agent_count')`; keep the existing `unstable_cache(['site-stats'], … 1h)` window; if the RPC
+  errors/does-not-exist-yet, resolve `agents: 0` (so the UI ships before the owner applies the SQL). Return
+  `{ listings, cities, agents }`; update `page.tsx`'s `.catch(() => ({ listings:0, cities:0 }))` to include
+  `agents:0`.
+- **RLS-change test (MANDATORY — `rls-rules.md` RLS-Change Test Requirement / clause 15):** this is a SECURITY
+  DEFINER + anon-grant change. Cover it: positive (the function returns an integer count; `getSiteStats` maps
+  `rpc('get_agent_count')` → `agents`), negative (the function exposes ONLY a count — no row payload — and
+  `getSiteStats` degrades to `agents:0` on RPC error). Planted-violation transcript required. Follow the project's
+  existing pattern for function-grant coverage (e.g. a static grant-audit gate like `check:listing-reports-grants`
+  if one fits, plus the `getSiteStats` mocked-client smoke).
+- **Owner action:** the `get_agent_count()` function must be **applied in Supabase** (single-writer SQL apply, like
+  the other pending Supabase applies) — record it in the session log's owner-action note; the UI shows `0+` until
+  then, which is acceptable.
+
+Pre-read additions for this scope: `docs/data-access-rules.md`, `docs/rls-rules.md` (RLS-Change Test Requirement),
+`docs/domain-rules.md` (agent/user_type semantics).
 
 ### 2. New presentational primitive — `src/design-system/mantine/patterns/MantineMetricCard.tsx`
 - **Pure, prop-driven** (no data/network hook — satisfies the Presentational-Primitive Split Gate). Props:
@@ -104,15 +132,16 @@ mock / `.storybook` alias / live Supabase). The server fetch stays in `page.tsx`
 
 `getSiteStats` gains an `agents` count. No existing `critical-flow-registry.md` flow covers `getSiteStats`
 (the listings-display row covers `ListingCard` formatting, not this). Add a **light smoke test** for `getSiteStats`
-(mock the Supabase client) asserting: it issues the agents count query against the chosen public source with
-`.eq('user_type','agent')`, and returns `{listings, cities, agents}`; a **planted-violation** (drop the agents
-query / return) makes the test FAIL. Paste the red/green transcript. (If the orchestrator confirms this warrants a
+(mock the Supabase client) asserting: it calls `supabase.rpc('get_agent_count')` and maps the returned integer to
+`agents`, returning `{listings, cities, agents}`; a **planted-violation** (drop the `rpc('get_agent_count')` call /
+drop `agents` from the return) makes the test FAIL. Paste the red/green transcript. (If the orchestrator confirms this warrants a
 registry row at review, add one then — otherwise the smoke test is sufficient for this P2 surface.)
 
 ## Acceptance criteria (each verifiable in the diff / rendered)
 
-1. `getSiteStats` returns `{listings, cities, agents}`; agents counted from the anon-readable source with
-   `user_type='agent'`; 1h cache preserved; `page.tsx` `.catch` fallback includes `agents:0`. (file:line)
+1. `getSiteStats` returns `{listings, cities, agents}`; agents counted via the anon-executable
+   `get_agent_count()` SECURITY DEFINER RPC (`profiles.user_type='agent'`, confirmed against schema or STOP-AND-ASK);
+   1h cache preserved; RPC error/missing degrades to `agents:0`; `page.tsx` `.catch` fallback includes `agents:0`. (file:line)
 2. `MantineMetricCard.tsx` — pure prop-driven primitive, §6u chrome, no brand color, label wraps, no trend badge.
 3. `MetricCard.stories.tsx` — canonical single-`Default` Mantine story, all 3 tiles in the responsive grid, no
    hardcoded strings, no `layout:'centered'`.

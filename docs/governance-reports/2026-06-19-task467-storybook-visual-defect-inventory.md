@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (291 stories, 628 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (295 stories, 692 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,17 +10,17 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 628 |
-| PASS (clean, verdict=pass) | 602 |
+| Total cells | 692 |
+| PASS (clean, verdict=pass) | 665 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
-| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 26 |
+| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 27 |
 | text-clipped | 0 |
 | offscreen-control | 0 |
 | outside-container | 0 |
 | element-overlap | 0 |
 | bottomsheet-overflow | 0 |
-| ambiguous-overlap | 26 |
+| ambiguous-overlap | 27 |
 | unstyled-render | 0 |
 
 ---
@@ -104,6 +104,7 @@
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Scutari") | "(empty)" ↔ "Scutari" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("SarandaCostiera") | "(empty)" ↔ "SarandaCostiera" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Immobili in affitto a lungo te") | "(empty)" ↔ "Immobili in affitto a lungo termine vicino al centro storico" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-notificationbellview--default` | en | mobile-320 | `mantine-primitives-notificationbellview--default__en__mobile-320.png` | ambiguous-overlap | button ↔ button("Mark all as read") | "Notifications" ↔ "Mark all as read" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Viti" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-375 | `mantine-primitives-rangedatepicker--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |

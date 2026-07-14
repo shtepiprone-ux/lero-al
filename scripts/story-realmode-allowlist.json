@@ -14,7 +14,6 @@
   { "file": "src/components/ui/dialog.stories.tsx", "export": "MobileFullWidth", "check": 12, "reason": "Real overlay mode: dialog full-width mobile open state." },
   { "file": "src/components/ui/tabs.stories.tsx", "export": "MobileScroll", "check": 12, "reason": "Real interaction mode: horizontal tab overflow scroll." },
   { "file": "src/stories/RecentlyViewedSection.stories.tsx", "export": "MobileScroll", "check": 12, "reason": "Real interaction mode: horizontal card scroll on mobile." },
-  { "file": "src/modules/notifications/components/NotificationCenter.stories.tsx", "export": "MobileBottomSheet", "check": 12, "reason": "Real overlay mode: notification center bottom-sheet open state." },
   { "file": "src/stories/Containers.stories.tsx", "export": "ContainerWide", "check": 12, "reason": "Container variant name (wide vs narrow), not a viewport keyword." },
   { "file": "src/components/admin/AdminListingsTable.stories.tsx", "export": "FilteredPending", "check": 13, "reason": "Genuine filter-state REAL_MODE (filtered → pending), not a proof duplicate — Group 5 canonical KEEP." }
 ]

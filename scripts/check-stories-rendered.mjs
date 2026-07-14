@@ -269,6 +269,7 @@ const MANTINE_PRIMITIVES_TITLE_PREFIX = 'Mantine/Primitives/';
 // exact click-then-assert approach Task 528's throwaway script used (see its session log).
 const MANTINE_OVERLAY_PRIMITIVES = new Set([
   'Modal', 'Drawer', 'Popover', 'DropdownMenu', 'NavigationMenu', 'Select', 'Tooltip', 'Combobox',
+  'NotificationBellView',
 ]);
 
 // Minimum enforced viewport set for the Mantine-primitives gate (agent-contract clause 12

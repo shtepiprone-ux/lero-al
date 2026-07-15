@@ -66,3 +66,98 @@ Actor: CI / owner runs the new `check:header-id-parity` against a prod build wit
 
 ## Hard contract
 No product-code (`src/`) change in the final diff (the `ssr:false` replant is throwaway, reverted, verified clean). Detect the id divergence DIRECTLY — do NOT reintroduce or lean on React console-warning scanning for this bug (that path is proven noisy in dev and stripped in prod). Do NOT guess the Menu-target-id selector — verify it against the real rendered header or STOP and ASK. If, after investigation, the `dynamic(ssr:false)` offset cannot be reproduced deterministically by ANY id-parity approach, STOP and ASK the orchestrator before writing a weaker proof. Self-validate before "complete"; "Files Changed" table required; executor emits NO git.
+
+---
+
+## 🟢 Orchestrator directive (2026-07-15) — authorized approach after the STOP-AND-ASK
+
+**STOP-AND-ASK resolved by the owner via the orchestrator.** Sonnet's finding is ACCEPTED and independently
+verified against `node_modules/@mantine/hooks/esm/use-id/use-id.mjs`: Mantine's `useId` returns the path-based
+`reactId` on the server, seeds client `useState(reactId)`, then a `useIsomorphicEffect` overwrites it with
+`randomId()` post-mount — so the **settled** client DOM id is always a fresh random on BOTH fixed and buggy
+code, while the SSR id is `reactId`. That is why settled-DOM parity is a 100% false positive and why the bug's
+only id-level signature lives **at hydration time** (`reactId` vs `reactId`), before Mantine's layout effect
+erases it.
+
+**Rejected branches (do NOT pursue):**
+- **Sonnet's option 1 (document + close 🟡):** REJECTED as premature. The settled-DOM + console failures are the
+  *expected consequence* of Mantine's post-mount randomization plus React stripping hydration warnings in prod —
+  NOT proof the bug is undetectable. The React-native detector built for exactly this (`onRecoverableError`) has
+  not been tried.
+- **Option 2 (chase a different Menu/Popover id):** REJECTED — the identical Mantine randomization defeats it.
+- **Option 3's premise ("`useId` is path-based ⇒ `ssr:false` can't shift siblings"):** technically WRONG and must
+  NOT be adopted as a conclusion. An asymmetric tree (bell absent on server, present on client) is exactly what
+  shifts the path/fork encoding for sibling `useId` calls. (Option 3's *instinct* — that we have not actually
+  confirmed the mechanism reproduces — is valid and is handled by the escape hatch below.)
+
+**AUTHORIZED APPROACH — deterministic jsdom dual-phase hydration harness (replaces the id-parity primary approach):**
+
+Build a **vitest** test (CI-safe, no Next server, no Playwright, no Turbopack → inherently noise-immune) that
+reproduces the `dynamic(ssr:false)` server↔client asymmetry directly and asserts on React's
+`onRecoverableError`, NOT on settled ids and NOT on console output:
+
+1. **Server phase:** `renderToString(<HeaderTreeUnderTest bellPresent={false} />)` — the server shape where the
+   bell is absent (mirrors `ssr:false`).
+2. **Client phase:** `hydrateRoot(container, <HeaderTreeUnderTest bellPresent={true} />, { onRecoverableError: spy })`
+   — the client shape where the bell is present.
+3. **Render the REAL tree** so real `useId` calls participate: actual `HeaderView` / `LocaleSwitcher` / `UserMenu`
+   (Mantine Menu targets) + the real `NotificationBell`. Provide a synthetic AUTHENTICATED user **identically on
+   both phases** (mock `useUser`/`AuthContext` to return the same user in both render passes), mock
+   `useNotifications` to a deterministic SSR-safe state, and wrap in `MantineProvider` + `NextIntlClientProvider`
+   **identically** on both phases. **The ONLY difference between the two trees is the bell's presence** — that is
+   the whole experiment.
+4. **Assertions (both directions, clause 15):**
+   - **Asymmetric (bell absent server / present client) → `onRecoverableError` IS called** with a hydration
+     mismatch on a `useId`/`id` attribute of the `LocaleSwitcher` or `UserMenu` Menu target. This is the
+     planted-violation FAIL proof — capture the spy's error text/args in the transcript.
+   - **Symmetric control (bell present in BOTH phases = the fixed HEAD shape) → `onRecoverableError` is NOT
+     called** (0 hydration mismatches). This is the fixed-code PASS.
+   - Stable across ≥3 runs (jsdom is deterministic — no flakiness permitted).
+
+5. **🔴 FAITHFULNESS CHECK (mandatory, record in the session log):** simulating the boundary by *omitting* the
+   bell is only valid if the omitted bell occupies the **same tree position** as the real `dynamic(ssr:false)`
+   bell — i.e. a sibling in the same parent, before/around `LocaleSwitcher`+`UserMenu` within `HeaderView`, so the
+   fork/path encoding shift matches production. Inspect the real `HeaderView` child order and place the simulated
+   boundary identically; state this explicitly in the session log. If the real bell sits in a tree position where
+   its absence would NOT shift the sibling `reactId`s, the harness is a false model — STOP and ASK.
+
+**🔴 ESCAPE HATCH / VALIDATION GATE (this is also how Option 3's concern is resolved):** if the **asymmetric tree
+does NOT trigger `onRecoverableError`** (no mismatch), that **refutes the Task 599 root-cause diagnosis**. In that
+case: do NOT fabricate a passing gate, do NOT fall back to console scanning, do NOT force the row to ✅. STOP and
+report the finding with evidence — the registry row stays 🟡, the corrected diagnosis is recorded, and the owner
+re-derives the actual cause (Option 3 for real). A harness that cannot make the buggy shape fail is a no-op gate
+and is a TASK FAILURE if shipped as green.
+
+**Scope unchanged:** test/tooling ONLY. Preferred location: a colocated vitest test (e.g.
+`src/components/layout/__tests__/header-hydration-id-parity.test.tsx`) following existing test conventions; add a
+`package.json` alias if you make it a standalone runnable. **No `src/` product-code change in the final diff.** The
+earlier settled-DOM `check-header-id-parity.mjs` may be retired or kept as a documented "structurally sound,
+cannot discriminate this bug (Mantine randomizes the settled id)" artifact — your judgment; document the reason
+either way.
+
+**Acceptance criteria (supersede AC1–AC4 of the original list; AC5–AC7 unchanged):**
+- **AC1′** The vitest dual-phase harness exists and asserts on `onRecoverableError` (not settled ids, not console). (file:line)
+- **AC2′** Immune to dev Turbopack noise AND prod warning-stripping by construction (jsdom, no Next server, hydration-time signal). (file:line + rationale)
+- **AC3′** `package.json` alias added if standalone. (file:line)
+- **AC4′** Both directions proven: asymmetric → `onRecoverableError` fires on a LocaleSwitcher/UserMenu Menu-target id (paste spy transcript); symmetric → not called, ≥3/3 stable (paste transcript). Faithfulness check recorded. `git status --porcelain -- src/` clean.
+- **AC5** flip the `docs/critical-flow-registry.md` 599/600 row to ✅ **only** after AC4′ is genuinely green both directions; command recorded. **If the escape hatch triggers (asymmetric shape does not fail), row stays 🟡 and the refuted-diagnosis finding is written up instead.**
+
+## 🟠 Orchestrator review follow-up (2026-07-15) — required tightening before commit
+
+Review PASSED in substance (approach valid, gate faithful, product code clean, deterministic). **One
+required change before the commit is emitted:**
+
+- The asymmetric ("planted-violation") test currently asserts only `recoveredErrors.length > 0`. That
+  passes on ANY recoverable error, so it does not durably prove the specific **hydration-mismatch** bug
+  class — the target-id evidence lives only in the session-log narrative + a deleted throwaway probe, not
+  in CI. Tighten the assertion so the durable test proves it caught a hydration mismatch, e.g.
+  `expect(recoveredErrors.some(m => /hydrat/i.test(m))).toBe(true)` (do NOT assert the exact `-target`
+  attribute — that detail arrives via the console diff we deliberately excluded, and React changes the
+  callback `message` wording across versions; a `/hydrat/i` pattern is the right stable level).
+- Re-run `test:header-hydration-id-parity` (3/3 both directions) + `tsc` + `check:file-integrity` after the
+  change; update the session log's AC4′ transcript. No other change. `git status --porcelain -- src/` must
+  still show only the new test file.
+
+The registry row may stay ✅ (the gate is genuinely functional); this tightening hardens the proof, it does
+not reverse the verdict. The orchestrator emits the commit after this lands + the owner's native run confirms
+`test:header-hydration-id-parity` 3/3.

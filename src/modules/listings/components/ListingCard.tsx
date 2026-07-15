@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
+import { MantineListingCardPattern } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
@@ -274,134 +275,129 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     )
   }
 
+  // ── Vertical card — thin container over MantineListingCardPattern (Task 602) ──
+  // The pattern owns structure/layout/adaptation; this container maps real listing data
+  // + business logic (translation, conversion, favorite, copy-id) into its slot props.
+
+  // Image + overlays (status overlay, badges, photo count, real favorite) — identical content
+  // to the pre-migration vertical card, now injected via `imageSlot` instead of inline JSX.
+  const imageSlot = (
+    <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
+      {/* No-image fallback */}
+      {!coverImage && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <Maximize2 className="h-8 w-8 text-muted-foreground" />
+        </div>
+      )}
+
+      {/* Sold/Rented overlay */}
+      {isListingClosed(listing.status as ListingStatus) && (
+        <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
+          <span className={cn(
+            'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
+            CLOSED_OVERLAY_STYLE[listing.status],
+          )}>
+            {t(`status_${listing.status}`).toUpperCase()}
+          </span>
+        </div>
+      )}
+
+      {/* Badges top-left */}
+      <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+        {badges.map(b => (
+          <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
+            {t(b.label)}
+          </Badge>
+        ))}
+      </div>
+
+      {/* Photo count bottom-right */}
+      {imageCount > 0 && (
+        <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
+          <Camera className="h-3 w-3" />
+          {imageCount}
+        </div>
+      )}
+
+      {/* Favorite button */}
+      <FavoriteButton
+        listingId={listing.id}
+        isFavorited={isFavorited}
+        onToggled={onFavoriteToggled}
+        disabled={isClosed}
+        disabledLabel={closedLabel}
+        className="absolute top-2 right-2 shadow-sm"
+      />
+    </AppImage>
+  )
+
+  // Features row (icons + value) — identical markup to the pre-migration vertical card.
+  const featuresSlot = (
+    <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2">
+      {getCardFeatures(listing).map(f => (
+        <span key={f.key} className="flex items-center gap-1">
+          <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
+          {f.value}
+        </span>
+      ))}
+    </div>
+  )
+
+  // Footer — original-price conversion line + per-m² line (kept, Note 20) + copy-ID + date.
+  // Location moved into the pattern's own dedicated location line (with MapPin icon); the
+  // rest keeps its pre-migration content, now stacked below the price instead of inline
+  // beside it — the pattern's Stack order is what's adopted (owner directive, Task 602).
+  const footerSlot = (
+    <div className="flex flex-col gap-1">
+      {(originalPriceStr || pricePerSqm) && (
+        <div className="flex items-center justify-between gap-2 text-2xs text-muted-foreground/70">
+          <span>{originalPriceStr}</span>
+          {pricePerSqm && <span className="ml-auto whitespace-nowrap">{formatPrice(pricePerSqm, activeCurrency, locale)} {t('per_sqm')}</span>}
+        </div>
+      )}
+      <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
+        <button
+          type="button"
+          onClick={copyId}
+          title={listing.id}
+          aria-label={idCopied ? t('id_copied') : t('copy_id')}
+          className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          #{listing.public_id ?? listing.id.slice(0, 8)}
+          {idCopied
+            ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
+            : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+          }
+        </button>
+        <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
+      </div>
+    </div>
+  )
+
   return (
     <Link
       href={`/${locale}/listings/${listing.slug}`}
-      className={cn(
-        "listing-card listing-card--vertical group flex flex-col rounded-xl border bg-card overflow-hidden transition-all duration-200",
-        listing.is_premium
-          ? "border-badge-premium/50 shadow-listing-card-ring hover:shadow-listing-card-elevation-lg hover:-translate-y-0.5"
-          : "hover:shadow-lg hover:-translate-y-0.5",
-        isListingArchived(listing.status as ListingStatus) && "grayscale opacity-60 hover:opacity-70",
-      )}
+      className="listing-card listing-card--vertical block h-full"
       data-track="listing_click"
       data-listing-slug={listing.slug}
       onClick={() => onBeforeNavigate?.(listing.slug)}
     >
-      {/* Premium top stripe */}
-      {listing.is_premium && (
-        <div className="h-0.5 bg-gradient-to-r from-badge-premium/0 via-badge-premium to-badge-premium/0 shrink-0" />
-      )}
-
-      {/* Image — AppImage owns the aspect-[4/3] container; overlays go inside as children */}
-      <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
-        {/* No-image fallback */}
-        {!coverImage && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Maximize2 className="h-8 w-8 text-muted-foreground" />
-          </div>
-        )}
-
-        {/* Sold/Rented overlay */}
-        {isListingClosed(listing.status as ListingStatus) && (
-          <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
-            <span className={cn(
-              'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
-              CLOSED_OVERLAY_STYLE[listing.status],
-            )}>
-              {t(`status_${listing.status}`).toUpperCase()}
-            </span>
-          </div>
-        )}
-
-        {/* Badges top-left */}
-        <div className="absolute top-2 left-2 flex flex-wrap gap-1">
-          {badges.map(b => (
-            <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
-              {t(b.label)}
-            </Badge>
-          ))}
-        </div>
-
-        {/* Photo count bottom-right */}
-        {imageCount > 0 && (
-          <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
-            <Camera className="h-3 w-3" />
-            {imageCount}
-          </div>
-        )}
-
-        {/* Favorite button */}
-        <FavoriteButton
-          listingId={listing.id}
-          isFavorited={isFavorited}
-          onToggled={onFavoriteToggled}
-          disabled={isClosed}
-          disabledLabel={closedLabel}
-          className="absolute top-2 right-2 shadow-sm"
-        />
-      </AppImage>
-
-      {/* Content */}
-      <div className="flex flex-col gap-2 p-3">
-        {/* Type label */}
-        <p className="text-xs text-muted-foreground">
-          {t(listing.listing_type)} · {t(`property_type_${listing.property_type}`)}
-        </p>
-
-        {/* Title */}
-        <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
-          {listing.title}
-        </h3>
-
-        {/* Price */}
-        <PriceBlock
-          displayPrice={displayPrice}
-          activeCurrency={activeCurrency}
-          locale={locale}
-          displayPriceOld={displayPriceOld}
-          originalPriceStr={originalPriceStr}
-          pricePerSqm={pricePerSqm}
-          perSqmLabel={t('per_sqm')}
-          priceSize="lg"
-        />
-
-        {/* Features row */}
-        <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2">
-          {getCardFeatures(listing).map(f => (
-            <span key={f.key} className="flex items-center gap-1">
-              <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
-              {f.value}
-            </span>
-          ))}
-        </div>
-
-        {/* Location + date + ID */}
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          {locationName && (
-            <span className="flex items-center gap-1 truncate">
-              <MapPin className="h-3.5 w-3.5 shrink-0" />
-              {locationName}
-            </span>
-          )}
-          <span className="ml-auto shrink-0 pl-2 flex items-center gap-2">
-            <button
-              type="button"
-              onClick={copyId}
-              title={listing.id}
-              aria-label={idCopied ? t('id_copied') : t('copy_id')}
-              className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-            >
-              #{listing.public_id ?? listing.id.slice(0, 8)}
-              {idCopied
-                ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
-                : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
-              }
-            </button>
-            <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
-          </span>
-        </div>
-      </div>
+      <MantineListingCardPattern
+        data={{
+          id: listing.id,
+          title: listing.title,
+          location: locationName,
+          price: formatPrice(displayPrice, activeCurrency, locale),
+          priceOld: displayPriceOld ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
+        }}
+        contactLabel=""
+        imageSlot={imageSlot}
+        typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
+        featuresSlot={featuresSlot}
+        footerSlot={footerSlot}
+        isPremium={listing.is_premium}
+        isArchived={isListingArchived(listing.status as ListingStatus)}
+      />
     </Link>
   )
 }

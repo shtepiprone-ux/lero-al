@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import { getTranslations, getLocale } from 'next-intl/server'
-import { Search, Home, Phone, Building2, MapPin, TrendingUp, Users } from 'lucide-react'
+import { Search, Home, Phone, Building2 } from 'lucide-react'
 import { HeroSearchClient } from '@/components/shared/HeroSearchClient'
 import { FeaturedListings } from '@/modules/listings/components/FeaturedListings'
 import { LatestListings } from '@/modules/listings/components/LatestListings'
 import { PopularLocations } from '@/modules/locations/components/PopularLocations'
-import { getSiteStats } from '@/modules/listings/lib/queries'
-import { formatCount } from '@/lib/formatters'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/server'
@@ -18,10 +16,7 @@ export default async function HomePage() {
   const locale = await getLocale()
 
   const supabase = await createClient()
-  const [stats, favoriteIds] = await Promise.all([
-    getSiteStats().catch(() => ({ listings: 0, cities: 0 })),
-    loadUserFavoriteListingIds(supabase),
-  ])
+  const favoriteIds = await loadUserFavoriteListingIds(supabase)
 
   return (
     <div className="flex flex-col">
@@ -38,35 +33,6 @@ export default async function HomePage() {
             </p>
           </div>
           <HeroSearchClient />
-        </div>
-      </section>
-
-      {/* ── Stats bar ── */}
-      <section className="bg-primary text-primary-foreground">
-        <div className="container-wide">
-          <div className="grid grid-cols-2 md:grid-cols-3 divide-x divide-primary-foreground/20">
-            <div className="flex flex-col items-center py-5 px-4 text-center">
-              <span className="text-2xl font-bold">{formatCount(stats.listings, locale)}+</span>
-              <span className="text-sm text-primary-foreground/80 flex items-center gap-1 mt-0.5">
-                <TrendingUp className="h-3.5 w-3.5" />
-                {t('stats_listings')}
-              </span>
-            </div>
-            <div className="flex flex-col items-center py-5 px-4 text-center">
-              <span className="text-2xl font-bold">{stats.cities}+</span>
-              <span className="text-sm text-primary-foreground/80 flex items-center gap-1 mt-0.5">
-                <MapPin className="h-3.5 w-3.5" />
-                {t('stats_cities')}
-              </span>
-            </div>
-            <div className="hidden md:flex flex-col items-center py-5 px-4 text-center">
-              <span className="text-2xl font-bold">100+</span>
-              <span className="text-sm text-primary-foreground/80 flex items-center gap-1 mt-0.5">
-                <Users className="h-3.5 w-3.5" />
-                {t('stats_agents')}
-              </span>
-            </div>
-          </div>
         </div>
       </section>
 

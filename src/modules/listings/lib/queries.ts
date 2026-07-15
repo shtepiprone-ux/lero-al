@@ -1,4 +1,3 @@
-import { unstable_cache } from 'next/cache'
 import { createClient } from '@/lib/supabase/client'
 import type { PropertyType, ListingType } from '@/types/database'
 import { LISTINGS_PER_PAGE } from '@/modules/listings/constants'
@@ -92,29 +91,3 @@ export async function getListings(filters: ListingFilters = {}) {
   if (error) throw error
   return { listings: data ?? [], total: count ?? 0 }
 }
-
-// Site stats (active listing count + city count) are global, not locale-keyed, and
-// change slowly. Cache for 1 hour to eliminate per-request Supabase round-trips.
-// The first request per revalidation period hits Supabase; all subsequent requests
-// within that window are served from the Next.js data cache.
-// getSiteStats is routed through the canonical visibility policy so the homepage
-// headline count matches the actual number of publicly visible listings on /listings.
-// Previously counted status='active' without expiry filter, which overstated the
-// count when active-but-expired listings existed. Aligned under Epic LV (Task 454).
-export const getSiteStats = unstable_cache(
-  async () => {
-    const supabase = createClient()
-    const [{ count: listingsCount }, { count: locationsCount }] = await Promise.all([
-      applyPublicVisibility(
-        supabase.from('listings').select('id', { count: 'exact', head: true }),
-      ),
-      supabase.from('locations').select('id', { count: 'exact', head: true }).eq('type', 'city'),
-    ])
-    return {
-      listings: listingsCount ?? 0,
-      cities: locationsCount ?? 0,
-    }
-  },
-  ['site-stats'],
-  { revalidate: 3600, tags: ['site-stats'] },
-)

@@ -15,7 +15,7 @@
 |------|-------|-------|
 | 🔐 Re-verify HIBP "Prevent use of leaked passwords" availability on Free tier (Supabase Auth → Sign In/Providers → Password Security). Owner flagged 2026-05-28 as Pro-only. If a Free-tier toggle is now available → enable; if not → enable at Pro upgrade. | Owner | Supabase Security Advisor `auth_leaked_password_protection` WARN. Documented in `docs/integrations.md` → "Supabase Auth Configuration". |
 | ✅ **DONE 2026-07-14** — notification localization one-row UPDATE applied in Supabase (`id 634f124c…` → `template_id='support_created'`, sq-fallback title/body). The only legacy `template_id=NULL` row now localizes per viewer locale. Owner still to eyeball-verify by re-opening the bell under `/sq`. | Owner | Data-only fix; current creation code already correct. |
-| 🐞 Pre-existing `/listings` Grid horizontal-overflow at <640px (Sonnet-flagged, Task 603 §out-of-scope): FilterBar segmented-control button (`flex-1`) + a `min-w-35` Combobox trigger push `scrollWidth` past the viewport at 320/375/390. Unrelated to `FavoriteButton`. Needs its own task (candidate 605). | Orchestrator | Traced via DOM offender scan; not touched by 603. |
+| 🐞 Pre-existing `/listings` Grid horizontal-overflow at <640px (Sonnet-flagged, Task 603 §out-of-scope): FilterBar segmented-control button (`flex-1`) + a `min-w-35` Combobox trigger push `scrollWidth` past the viewport at 320/375/390. Unrelated to `FavoriteButton`. Needs its own task (candidate 606). | Orchestrator | Traced via DOM offender scan; not touched by 603. |
 | 🧾 Run all pending emitted commits in PowerShell (single-writer). ✅-APPROVED-but-uncommitted tasks awaiting the owner's run + native gate: Sprint 39 overlay Batch C (513–517, 522), Sprint 38 form-control commits (494/496/497/498/499/500/505/507/508), Epic II (316–323), Epic BB (243/430/458/459/460/461/462 + Supabase SQL applies), Epic DD (246/432), Epic LV (454/456/457), plus 238/425/426/427/434/437/442/443/444/448. Per-task detail + Files-Changed tables live in the archive ledger + session logs. | Owner | Commit-emission policy below; nothing here needs new orchestrator work. |
 
 **🟢 Task 583 (Sprint 44 — Favorites icon all breakpoints) — ✅ APPROVED + COMMITTED + PUSHED (2026-07-13, owner).** `HeaderActions.tsx` Favorites heart visible at all breakpoints; native diff = two `visibleFrom="sm"` removals only, gates green. Session: `docs/sessions/2026-07-12-task583-favorites-icon-all-breakpoints.md`. (Open caveat: the 320px overlap/gap was not orchestrator-eyeballed — screenshots were throwaway; low risk on an icon-only add.)
@@ -52,7 +52,16 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 604. Next free: 605.** (604 = VERIFY (and fix if broken) the real-page `ListingCard`
+**Task numbering — last used: 605. Next free: 606.** (605 = OWNER P0 — rebuild `MantineListingCardPattern` into the
+COMPLETE, data-driven listing card (single source of truth): photo counter/badges/overlay/features/footer/price/premium/
+hover all owned by the pattern; favorite/image/copy-id passed as positioned nodes (hook-free split); the Storybook story
+finally renders a production-complete card incl. the favorite heart + photo counter it currently lacks; `ListingCard`
+collapses to a thin data-mapper; horizontal List view untouched. Root cause of the owner's "story ≠ site" + "story has no
+favorite/counter": Task 602 built the pattern as a hollow shell with real content injected via slots the story never
+fills. **SUPERSEDES Task 604** (real-page hover verify — absorbed here); **keeps Task 603** (compact-heart fix, orthogonal).
+Kickoff `..._Task_605_ListingCardPatternCompleteSingleSource.md`. Opened 2026-07-15.) (604 = ❌ SUPERSEDED by 605 —
+real-page hover verify/fix folded into the full-card rebuild; kickoff `..._Task_604_ListingCardRealPageHoverVerifyFix.md`
+retained for history. Was: VERIFY (and fix if broken) the real-page `ListingCard`
 hover — elevation + photo zoom — on the ACTUAL Next.js homepage/`/listings` grid, not Storybook; owner reports the
 story's hover doesn't appear on the live site. Standing gap: 602 proved hover ONLY in Storybook, 603 measured favorite
 geometry only — the real page was never hover-verified. Kickoff branches on real-page reproduction: Branch A (fires on

@@ -8,7 +8,7 @@ import { MantineListingCardPattern } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
-import { MapPin, Camera, Maximize2, Copy, Check } from 'lucide-react'
+import { MapPin, Maximize2, Copy, Check } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
@@ -275,102 +275,68 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     )
   }
 
-  // ── Vertical card — thin container over MantineListingCardPattern (Task 602) ──
-  // The pattern owns structure/layout/adaptation; this container maps real listing data
-  // + business logic (translation, conversion, favorite, copy-id) into its slot props.
+  // ── Vertical card — thin data-mapper over MantineListingCardPattern (Task 602, completed
+  // as the single source of truth in Task 605) ── The pattern owns ALL card structure/layout/
+  // chrome (badges, sold/rented overlay, photo counter, features row, footer layout, premium/
+  // archived, hover); this container only translates/converts/formats real listing data into
+  // the pattern's data props and builds the 3 behavior-bearing nodes (image/favorite/
+  // footerActions) it cannot own itself (presentational-split gate).
 
-  // Image + overlays (status overlay, badges, photo count, real favorite) — identical content
-  // to the pre-migration vertical card, now injected via `imageSlot` instead of inline JSX.
-  const imageSlot = (
+  // The real photo element — only the "no image" fallback lives alongside it (tied to whether
+  // coverImage exists, a pure data-mapping concern, not card chrome).
+  const image = (
     <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
-      {/* No-image fallback */}
       {!coverImage && (
         <div className="absolute inset-0 flex items-center justify-center">
           <Maximize2 className="h-8 w-8 text-muted-foreground" />
         </div>
       )}
-
-      {/* Sold/Rented overlay */}
-      {isListingClosed(listing.status as ListingStatus) && (
-        <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
-          <span className={cn(
-            'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
-            CLOSED_OVERLAY_STYLE[listing.status],
-          )}>
-            {t(`status_${listing.status}`).toUpperCase()}
-          </span>
-        </div>
-      )}
-
-      {/* Badges top-left */}
-      <div className="absolute top-2 left-2 flex flex-wrap gap-1">
-        {badges.map(b => (
-          <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
-            {t(b.label)}
-          </Badge>
-        ))}
-      </div>
-
-      {/* Photo count bottom-right */}
-      {imageCount > 0 && (
-        <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
-          <Camera className="h-3 w-3" />
-          {imageCount}
-        </div>
-      )}
-
-      {/* Favorite button */}
-      <FavoriteButton
-        listingId={listing.id}
-        isFavorited={isFavorited}
-        onToggled={onFavoriteToggled}
-        disabled={isClosed}
-        disabledLabel={closedLabel}
-        className="absolute top-2 right-2 shadow-sm"
-      />
     </AppImage>
   )
 
-  // Features row (icons + value) — identical markup to the pre-migration vertical card.
-  const featuresSlot = (
-    <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2">
-      {getCardFeatures(listing).map(f => (
-        <span key={f.key} className="flex items-center gap-1">
-          <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />
-          {f.value}
-        </span>
-      ))}
-    </div>
+  // Real favorite control — self-positions via className (contract with the pattern).
+  const favorite = (
+    <FavoriteButton
+      listingId={listing.id}
+      isFavorited={isFavorited}
+      onToggled={onFavoriteToggled}
+      disabled={isClosed}
+      disabledLabel={closedLabel}
+      className="absolute top-2 right-2 shadow-sm"
+    />
   )
 
-  // Footer — original-price conversion line + per-m² line (kept, Note 20) + copy-ID + date.
-  // Location moved into the pattern's own dedicated location line (with MapPin icon); the
-  // rest keeps its pre-migration content, now stacked below the price instead of inline
-  // beside it — the pattern's Stack order is what's adopted (owner directive, Task 602).
-  const footerSlot = (
-    <div className="flex flex-col gap-1">
-      {(originalPriceStr || pricePerSqm) && (
-        <div className="flex items-center justify-between gap-2 text-2xs text-muted-foreground/70">
-          <span>{originalPriceStr}</span>
-          {pricePerSqm && <span className="ml-auto whitespace-nowrap">{formatPrice(pricePerSqm, activeCurrency, locale)} {t('per_sqm')}</span>}
-        </div>
-      )}
-      <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-        <button
-          type="button"
-          onClick={copyId}
-          title={listing.id}
-          aria-label={idCopied ? t('id_copied') : t('copy_id')}
-          className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-        >
-          #{listing.public_id ?? listing.id.slice(0, 8)}
-          {idCopied
-            ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
-            : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
-          }
-        </button>
-        <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
-      </div>
+  // Badges + overlay — pre-translated here (pattern stays hook-free/no i18n).
+  const patternBadges = badges.map(b => ({ label: t(b.label), variant: b.variant, className: b.className }))
+  const overlay = isClosed
+    ? { label: t(`status_${listing.status}` as 'status_sold' | 'status_rented').toUpperCase(), className: CLOSED_OVERLAY_STYLE[listing.status] }
+    : undefined
+
+  // Features — icons pre-rendered as nodes so the pattern needs no app-specific icon map.
+  const features = getCardFeatures(listing).map(f => ({
+    icon: <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />,
+    value: f.value,
+  }))
+
+  const pricePerSqmStr = pricePerSqm ? `${formatPrice(pricePerSqm, activeCurrency, locale)} ${t('per_sqm')}` : undefined
+
+  // Copy-ID + date cluster — carries its own state (idCopied), stays a passed node.
+  const footerActions = (
+    <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
+      <button
+        type="button"
+        onClick={copyId}
+        title={listing.id}
+        aria-label={idCopied ? t('id_copied') : t('copy_id')}
+        className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+      >
+        #{listing.public_id ?? listing.id.slice(0, 8)}
+        {idCopied
+          ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
+          : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+        }
+      </button>
+      <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
     </div>
   )
 
@@ -390,11 +356,16 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           price: formatPrice(displayPrice, activeCurrency, locale),
           priceOld: displayPriceOld ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
         }}
-        contactLabel=""
-        imageSlot={imageSlot}
+        image={image}
+        favorite={favorite}
         typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
-        featuresSlot={featuresSlot}
-        footerSlot={footerSlot}
+        badges={patternBadges}
+        overlay={overlay}
+        photoCount={imageCount}
+        features={features}
+        originalPriceStr={originalPriceStr}
+        pricePerSqmStr={pricePerSqmStr}
+        footerActions={footerActions}
         isPremium={listing.is_premium}
         isArchived={isListingArchived(listing.status as ListingStatus)}
       />

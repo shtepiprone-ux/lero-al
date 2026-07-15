@@ -159,6 +159,27 @@ describe('ListingCard — vertical branch (Mantine pattern, default)', () => {
     renderCard({ ...BASE_LISTING, images: [] })
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
+
+  it('archived listing renders the archived badge + dimmed card (Task 605 — pattern-owned badges/isArchived)', () => {
+    renderCard({ ...BASE_LISTING, status: 'archived' })
+
+    expect(screen.getByText('Archived')).toBeInTheDocument()
+    const link = screen.getByRole('link')
+    expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocument()
+  })
+
+  it('favorite, photo counter, features, and footer actions all render through the pattern (Task 605 single-source proof)', () => {
+    renderCard(BASE_LISTING)
+
+    // Favorite (real FavoriteButton, passed as the `favorite` node)
+    expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument()
+    // Photo counter (pattern-owned, driven by `photoCount` data prop)
+    expect(screen.getByText('2')).toBeInTheDocument()
+    // Features row (pattern-owned, driven by `features` data prop)
+    expect(screen.getByText('80 m²')).toBeInTheDocument()
+    // Footer actions (copy-id + date, passed as the `footerActions` node)
+    expect(screen.getByLabelText('Copy listing ID')).toBeInTheDocument()
+  })
 })
 
 describe('ListingCard — horizontal branch (List view, unchanged — regression guard)', () => {

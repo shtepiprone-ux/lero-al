@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { SimpleGrid, Image } from '@mantine/core';
+import { SimpleGrid, Image, Stack, Divider, Title } from '@mantine/core';
 import { BedDouble, Bath, Maximize2, Heart, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { storyT } from '@/stories/_storyI18n';
@@ -11,7 +11,7 @@ const meta: Meta<typeof MantineListingCardPattern> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    docs: { description: { component: 'Complete listing card (Task 605) — single source of truth for the real ListingCard vertical branch: photo, badges, sold/rented overlay, photo counter, favorite, type/title/location, features, price(+old), footer. Grid cols adapt via SimpleGrid responsive cols. Viewport and locale switched via Storybook toolbar.' } },
+    docs: { description: { component: 'Complete listing card (Task 605) — single source of truth for the real ListingCard. `layout="grid"` (default, Grid/Latest surfaces) and `layout="list"` (Task 606, List view — structural port of the legacy horizontal branch) both demoed below. Grid cols adapt via SimpleGrid responsive cols. Viewport and locale switched via Storybook toolbar.' } },
   },
 };
 export default meta;
@@ -37,9 +37,11 @@ function DemoImage({ src, alt }: { src?: string; alt: string }) {
 
 // Demo favorite heart — visual stand-in for the real `FavoriteButton`, built on the same
 // canonical `Button` primitive (`icon-sm` size, Task 603 fix) so the story genuinely represents
-// production chrome. Self-positions via `absolute top-2 right-2` (the contract the pattern
-// expects from the `favorite` node).
-function DemoFavoriteButton({ locale, favorited = false }: { locale: string; favorited?: boolean }) {
+// production chrome. `grid`: floats on the image, self-positions via `absolute top-2 right-2`
+// (the contract `layout="grid"` expects). `list`: sits inline in the info column's top row —
+// must NOT be absolutely positioned (the contract `layout="list"` expects, matching the ported
+// legacy horizontal branch's own `className="shrink-0 -mt-0.5 -mr-1"`).
+function DemoFavoriteButton({ locale, favorited = false, inline = false }: { locale: string; favorited?: boolean; inline?: boolean }) {
   return (
     <Button
       type="button"
@@ -48,7 +50,8 @@ function DemoFavoriteButton({ locale, favorited = false }: { locale: string; fav
       aria-label={favorited ? storyT(locale, 'storybook.mantine.card_favorite_aria_remove') : storyT(locale, 'storybook.mantine.card_favorite_aria_add')}
       aria-pressed={favorited}
       className={
-        'absolute top-2 right-2 shadow-sm rounded-full w-8 h-8 p-0 ' +
+        (inline ? 'shrink-0 -mt-0.5 -mr-1 ' : 'absolute top-2 right-2 shadow-sm ') +
+        'rounded-full w-8 h-8 p-0 ' +
         (favorited ? 'bg-destructive/10 text-destructive hover:bg-destructive/20' : 'bg-card/80 text-foreground hover:bg-card hover:text-destructive')
       }
     >
@@ -82,6 +85,7 @@ function demoFeatures(l: string) {
 interface DemoCardOpts {
   l: string
   id: string
+  layout?: 'grid' | 'list'
   reduced?: boolean
   premium?: boolean
   archived?: boolean
@@ -91,7 +95,7 @@ interface DemoCardOpts {
   photoCount?: number
 }
 
-function DemoCard({ l, id, reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
+function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
   const badges: MantineListingCardBadge[] = [];
   if (!sold && !archived) {
     badges.push({
@@ -113,6 +117,7 @@ function DemoCard({ l, id, reduced = false, premium = false, archived = false, s
 
   return (
     <MantineListingCardPattern
+      layout={layout}
       data={{
         id,
         title: storyT(l, 'storybook.mantine.card_title_1'),
@@ -121,7 +126,7 @@ function DemoCard({ l, id, reduced = false, premium = false, archived = false, s
         priceOld: reduced ? storyT(l, 'storybook.mantine.card_price_old_1') : undefined,
       }}
       image={<DemoImage src={noImage ? undefined : DEMO_IMAGE_URL} alt={storyT(l, 'storybook.mantine.card_title_1')} />}
-      favorite={<DemoFavoriteButton locale={l} favorited={favorited} />}
+      favorite={<DemoFavoriteButton locale={l} favorited={favorited} inline={layout === 'list'} />}
       typeLabel={storyT(l, 'storybook.mantine.card_type_label')}
       badges={badges}
       overlay={overlay}
@@ -139,20 +144,45 @@ export const Default: Story = {
   render: (_, context) => {
     const l = (context?.globals?.locale as string) ?? 'en';
     return (
-      <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} p="md">
-        {/* Regular listing — favorite (unfavorited), new badge, photo counter */}
-        <DemoCard l={l} id="1" photoCount={5} />
-        {/* Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited */}
-        <DemoCard l={l} id="2" premium favorited photoCount={8} />
-        {/* Reduced-price — old price struck through + new price, reduced badge */}
-        <DemoCard l={l} id="3" reduced photoCount={3} />
-        {/* Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
-        <DemoCard l={l} id="4" sold photoCount={4} />
-        {/* No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
-        <DemoCard l={l} id="5" noImage />
-        {/* Archived — grayscale/dimmed whole card + archived badge */}
-        <DemoCard l={l} id="6" archived photoCount={2} />
-      </SimpleGrid>
+      <Stack gap="xl" p="md">
+        <Stack gap="sm">
+          <Title order={4}>{storyT(l, 'storybook.mantine.card_section_grid')}</Title>
+          <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }}>
+            {/* Regular listing — favorite (unfavorited), new badge, photo counter */}
+            <DemoCard l={l} id="1" photoCount={5} />
+            {/* Premium — brand ring/stripe + brand-tinted hover elevation, favorite already favorited */}
+            <DemoCard l={l} id="2" premium favorited photoCount={8} />
+            {/* Reduced-price — old price struck through + new price, reduced badge */}
+            <DemoCard l={l} id="3" reduced photoCount={3} />
+            {/* Sold — badge + centered rotated overlay, still shows favorite + photo counter */}
+            <DemoCard l={l} id="4" sold photoCount={4} />
+            {/* No-image fallback — Maximize2 placeholder, no photo counter (count=0) */}
+            <DemoCard l={l} id="5" noImage />
+            {/* Archived — grayscale/dimmed whole card + archived badge */}
+            <DemoCard l={l} id="6" archived photoCount={2} />
+          </SimpleGrid>
+        </Stack>
+
+        <Divider />
+
+        <Stack gap="sm">
+          <Title order={4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
+          <Stack gap="sm">
+            {/* Regular — favorite inline (unfavorited), new badge; no overlay/photo-counter (ported legacy design never had them) */}
+            <DemoCard l={l} id="7" layout="list" photoCount={5} />
+            {/* Premium — brand ring + brand-tinted hover elevation, favorite already favorited */}
+            <DemoCard l={l} id="8" layout="list" premium favorited photoCount={8} />
+            {/* Reduced-price — old price struck through + new price, reduced badge */}
+            <DemoCard l={l} id="9" layout="list" reduced photoCount={3} />
+            {/* Sold — badge conveys status (no centered overlay in list mode) */}
+            <DemoCard l={l} id="10" layout="list" sold photoCount={4} />
+            {/* No-image fallback */}
+            <DemoCard l={l} id="11" layout="list" noImage />
+            {/* Archived — grayscale/dimmed whole row + archived badge */}
+            <DemoCard l={l} id="12" layout="list" archived photoCount={2} />
+          </Stack>
+        </Stack>
+      </Stack>
     );
   },
 };

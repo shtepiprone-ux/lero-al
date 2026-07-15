@@ -29,6 +29,21 @@
   transition: transform 300ms ease-out, box-shadow 300ms ease-out;
 }
 
+/*
+ * layout='list' (Task 606): Mantine's `Card`/`Paper` root sets `display: block` via its OWN
+ * unlayered CSS. Tailwind's `flex`/`flex-row` utility classes are wrapped in `@layer utilities`
+ * and can NEVER override an unlayered declaration regardless of specificity (the exact Task 602
+ * cascade-layer lesson, this time for `display` instead of `box-shadow`) — verified empirically:
+ * with Tailwind-only `flex flex-row`, the image and info children stacked vertically anyway
+ * (block children stack top-to-bottom identically to a flex-column, so this bug is invisible on
+ * `layout='grid'` — column direction and block direction coincide — but breaks a row layout).
+ * This unlayered rule competes with Mantine's CSS on equal footing.
+ */
+.listRow {
+  display: flex;
+  flex-direction: row;
+}
+
 .premium {
   border-color: color-mix(in oklch, var(--color-badge-premium) 50%, transparent);
   box-shadow: var(--shadow-listing-card-ring);

@@ -40,22 +40,33 @@ export interface MantineListingCardPatternProps {
   contactLabel?: string
   onContact?: (id: string) => void
   onClick?: (id: string) => void
+  /**
+   * `'grid'` (default) — photo-first vertical card (Grid/Latest surfaces).
+   * `'list'` — horizontal row (List view), structurally ported from the legacy
+   * `ListingCard.tsx` `variant==='horizontal'` branch (Task 606) — image-left fixed width,
+   * info-right column. Same props/data model as `'grid'`; only layout + which pieces render
+   * differ (see `overlay`/`photoCount` below — `'list'` never had these in the legacy design).
+   */
+  layout?: 'grid' | 'list'
   /** The actual `<img>`/`AppImage` photo element. Required — the pattern owns the frame + everything overlaid on it. */
   image: ReactNode
   /**
-   * Real `FavoriteButton` (app) / demo heart button (story). Renders as a bare child of the
-   * (position:relative) image frame — the node itself must self-position via
+   * Real `FavoriteButton` (app) / demo heart button (story). Rendered as a bare child.
+   * `layout='grid'`: floats on the image — the node must self-position via
    * `absolute top-2 right-2` (the contract the real `FavoriteButton` already follows).
+   * `layout='list'`: sits inline in the info column's top row next to `typeLabel` — the node
+   * must NOT be absolutely positioned (matches the legacy horizontal branch's own
+   * `className="shrink-0 -mt-0.5 -mr-1"` contract).
    */
   favorite?: ReactNode
   typeLabel?: string
-  /** Top-left status/promo badges (new/price_reduced/sold/rented/archived/expired etc.). */
+  /** Top-left status/promo badges (new/price_reduced/sold/rented/archived/expired etc.). Renders in both layouts. */
   badges?: MantineListingCardBadge[]
-  /** Rotated centered overlay for closed listings (sold/rented). */
+  /** Rotated centered overlay for closed listings (sold/rented). `layout='grid'` only — the ported legacy `layout='list'` design never had this (the badge already conveys sold/rented). */
   overlay?: MantineListingCardOverlay
-  /** Bottom-right photo count pill. Omit/0 -> no counter rendered. */
+  /** Bottom-right photo count pill. `layout='grid'` only — the ported legacy `layout='list'` design never had this. Omit/0 -> no counter rendered. */
   photoCount?: number
-  /** Icon+value feature row (rooms/area/floor/etc.). */
+  /** Icon+value feature row (rooms/area/floor/etc.). Renders in both layouts. */
   features?: MantineListingCardFeature[]
   /** Original-price (pre-conversion) line, already formatted. */
   originalPriceStr?: string | null
@@ -63,7 +74,7 @@ export interface MantineListingCardPatternProps {
   pricePerSqmStr?: string | null
   /** Copy-id + date cluster (app) / demo equivalent (story) — carries its own state, passed as a node. */
   footerActions?: ReactNode
-  /** Premium styling: top gradient stripe + brand ring + brand-tinted hover elevation (replaces the default hover shadow). */
+  /** Premium styling: brand ring + brand-tinted hover elevation. `layout='grid'` additionally gets the top gradient stripe (no structural "top" to stripe in `layout='list'`'s row shape). */
   isPremium?: boolean
   /** Archived/expired dimming (grayscale + reduced opacity) on the whole card. */
   isArchived?: boolean
@@ -85,6 +96,7 @@ export function MantineListingCardPattern({
   contactLabel,
   onContact,
   onClick,
+  layout = 'grid',
   image,
   favorite,
   typeLabel,
@@ -98,6 +110,99 @@ export function MantineListingCardPattern({
   isPremium = false,
   isArchived = false,
 }: MantineListingCardPatternProps) {
+  // ── layout='list' — structural port of the legacy ListingCard.tsx `variant==='horizontal'`
+  // branch (Task 606): image-left fixed width row, info-right column. Reuses `styles.card`'s
+  // hover/premium CSS (same guards as 'grid' — (hover:hover)/(pointer:fine) + reduced-motion) so
+  // hover behavior is unified rather than re-deriving the legacy's own (cascade-layer-broken)
+  // Tailwind `hover:shadow-md`. `overlay`/`photoCount` are intentionally NOT rendered here — the
+  // ported legacy design never had them (the `badges` array already carries the sold/rented
+  // status); `onContact` CTA is likewise not rendered (legacy horizontal never had one).
+  if (layout === 'list') {
+    return (
+      <Card
+        padding={0}
+        radius="md"
+        withBorder
+        className={cn(
+          styles.card,
+          styles.listRow,
+          isPremium && styles.premium,
+          'group gap-3 overflow-hidden',
+          isArchived && 'grayscale opacity-60',
+        )}
+        style={{ cursor: onClick ? 'pointer' : undefined }}
+      >
+        <div
+          className={cn(styles.imageSection, 'relative w-32 shrink-0 sm:w-44 self-stretch min-h-20 overflow-hidden bg-muted')}
+          onClick={() => onClick?.(data.id)}
+        >
+          {image}
+
+          {badges && badges.length > 0 && (
+            <div className="absolute top-2 left-2 flex flex-col gap-1">
+              {badges.map(b => (
+                <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
+                  {b.label}
+                </Badge>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col justify-between py-3 pr-3 flex-1 min-w-0" onClick={() => onClick?.(data.id)}>
+          <div>
+            <div className="flex items-start justify-between gap-1 mb-1">
+              {typeLabel && <p className="text-xs text-muted-foreground">{typeLabel}</p>}
+              {favorite}
+            </div>
+            <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+              {data.title}
+            </h3>
+          </div>
+          <div>
+            <div className="w-full mt-2">
+              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 justify-between">
+                <div className="flex flex-wrap items-baseline gap-2">
+                  <span className="text-base font-bold text-primary whitespace-nowrap">{data.price}</span>
+                  {data.priceOld && (
+                    <span className="text-xs text-muted-foreground line-through whitespace-nowrap">{data.priceOld}</span>
+                  )}
+                </div>
+                {pricePerSqmStr && (
+                  <span className="text-xs text-muted-foreground whitespace-nowrap">{pricePerSqmStr}</span>
+                )}
+              </div>
+              {originalPriceStr && (
+                <span className="text-2xs text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
+              )}
+            </div>
+            {features && features.length > 0 && (
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
+                {features.map((f, i) => (
+                  <span key={i} className="flex items-center gap-1">
+                    {f.icon}
+                    {f.value}
+                  </span>
+                ))}
+              </div>
+            )}
+            <div className="flex items-center justify-between mt-1 text-xs text-muted-foreground">
+              {data.location ? (
+                <span className="flex items-center gap-1 truncate">
+                  <MapPin className="h-3 w-3 shrink-0" />
+                  {data.location}
+                </span>
+              ) : <span />}
+              <span className="ml-auto shrink-0 pl-2 flex items-center gap-2">
+                {footerActions}
+              </span>
+            </div>
+          </div>
+        </div>
+      </Card>
+    )
+  }
+
   return (
     <Card
       padding={0}

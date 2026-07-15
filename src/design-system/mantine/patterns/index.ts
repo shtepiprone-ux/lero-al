@@ -29,7 +29,13 @@ export { MantineNotificationPattern } from './MantineNotificationPattern'
 export type { MantineNotificationPatternProps, NotificationConfig, NotificationVariant } from './MantineNotificationPattern'
 
 export { MantineListingCardPattern } from './MantineListingCardPattern'
-export type { MantineListingCardPatternProps, MantineListingCardData } from './MantineListingCardPattern'
+export type {
+  MantineListingCardPatternProps,
+  MantineListingCardData,
+  MantineListingCardBadge,
+  MantineListingCardFeature,
+  MantineListingCardOverlay,
+} from './MantineListingCardPattern'
 
 export { MantineListingDetailPattern } from './MantineListingDetailPattern'
 export type { MantineListingDetailPatternProps, MantineListingDetailData, ListingFeature } from './MantineListingDetailPattern'

@@ -1,9 +1,30 @@
 'use client'
 
-import { Card, Image, Text, Badge, Group, Stack, Button, ActionIcon } from '@mantine/core'
-import { MapPin } from 'lucide-react'
+import type { ReactNode } from 'react'
+import { Card, Text, Group, Stack, Button } from '@mantine/core'
+import { Camera, MapPin } from 'lucide-react'
+import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import styles from './MantineListingCardPattern.module.css'
+
+export interface MantineListingCardBadge {
+  label: string
+  variant?: 'default' | 'secondary' | 'destructive' | 'outline'
+  className?: string
+}
+
+export interface MantineListingCardFeature {
+  /** Pre-rendered icon element (e.g. `<ListingFeatureIcon .../>`) — pattern needs no app icon map. */
+  icon: ReactNode
+  value: string
+}
+
+export interface MantineListingCardOverlay {
+  /** Already-translated, already-uppercased label (e.g. "SOLD"). */
+  label: string
+  /** Status color classes (e.g. `bg-status-info/80 border-status-info`) — a presentation-layer constant. */
+  className?: string
+}
 
 export interface MantineListingCardData {
   id: string
@@ -12,33 +33,36 @@ export interface MantineListingCardData {
   price: string
   /** Old (pre-discount) price, already formatted. Present -> price renders as struck-through-old + new. */
   priceOld?: string
-  area?: string
-  rooms?: string
-  badge?: string
-  badgeColor?: string
-  imageUrl?: string
-  isFavorite?: boolean
 }
 
 export interface MantineListingCardPatternProps {
   data: MantineListingCardData
-  contactLabel: string
-  favoriteAriaLabel?: string
+  contactLabel?: string
   onContact?: (id: string) => void
-  onFavorite?: (id: string) => void
   onClick?: (id: string) => void
+  /** The actual `<img>`/`AppImage` photo element. Required — the pattern owns the frame + everything overlaid on it. */
+  image: ReactNode
   /**
-   * Replaces the default demo image + badge + favorite content of the top Card.Section wholesale
-   * (e.g. the real `AppImage` + status overlay + photo-count + real `FavoriteButton`). Omit to keep
-   * the pattern's own Mantine `Image`/`Badge`/`ActionIcon` demo content (Storybook default, unchanged).
+   * Real `FavoriteButton` (app) / demo heart button (story). Renders as a bare child of the
+   * (position:relative) image frame — the node itself must self-position via
+   * `absolute top-2 right-2` (the contract the real `FavoriteButton` already follows).
    */
-  imageSlot?: React.ReactNode
-  /** Type label rendered above the title (e.g. "Sale · Apartment"). Omit to keep the title as the first line. */
+  favorite?: ReactNode
   typeLabel?: string
-  /** Icon-based features row (real content). Rendered instead of the plain rooms/area line when provided. */
-  featuresSlot?: React.ReactNode
-  /** Rendered below the price block (e.g. copy-ID + listing date). */
-  footerSlot?: React.ReactNode
+  /** Top-left status/promo badges (new/price_reduced/sold/rented/archived/expired etc.). */
+  badges?: MantineListingCardBadge[]
+  /** Rotated centered overlay for closed listings (sold/rented). */
+  overlay?: MantineListingCardOverlay
+  /** Bottom-right photo count pill. Omit/0 -> no counter rendered. */
+  photoCount?: number
+  /** Icon+value feature row (rooms/area/floor/etc.). */
+  features?: MantineListingCardFeature[]
+  /** Original-price (pre-conversion) line, already formatted. */
+  originalPriceStr?: string | null
+  /** Pre-formatted "<price> <per_sqm label>" string. */
+  pricePerSqmStr?: string | null
+  /** Copy-id + date cluster (app) / demo equivalent (story) — carries its own state, passed as a node. */
+  footerActions?: ReactNode
   /** Premium styling: top gradient stripe + brand ring + brand-tinted hover elevation (replaces the default hover shadow). */
   isPremium?: boolean
   /** Archived/expired dimming (grayscale + reduced opacity) on the whole card. */
@@ -46,31 +70,31 @@ export interface MantineListingCardPatternProps {
 }
 
 /**
- * Canonical listing card pattern for public marketplace.
- *
- * Mobile (<sm): card is full-width (natural at <640 in a grid col=1).
- * Desktop: card has fixed aspect-ratio image + content below.
- *
- * Responsive API:
- *   - Image height: 180px at base, 200px at sm+ via minHeight.
- *   - Used inside MantineCardGrid (cols={{ base: 1, sm: 2, md: 3 }}).
- *   - Contact button is full-width on mobile inside the card.
- *   - Favorite action icon: 44px touch target (size="lg").
+ * Canonical listing card pattern for public marketplace — SINGLE SOURCE OF TRUTH for the
+ * whole card (Task 605). Owns layout + all pure-visual chrome (badges, sold/rented overlay,
+ * photo counter, type/title/location, features row, price(+old), footer layout, premium/
+ * archived states, hover). `image`/`favorite`/`footerActions` are passed in as positioned
+ * nodes because they carry app behavior/state (real photo delivery, favorite toggle,
+ * copy-id) that this pattern must stay agnostic of (presentational-split gate).
  *
  * Matches the product listing card surface (src/modules/listings/components/ListingCard.tsx
- * migration target — Phase 4).
+ * — the vertical branch is a thin data-mapper over this pattern).
  */
 export function MantineListingCardPattern({
   data,
   contactLabel,
-  favoriteAriaLabel,
   onContact,
-  onFavorite,
   onClick,
-  imageSlot,
+  image,
+  favorite,
   typeLabel,
-  featuresSlot,
-  footerSlot,
+  badges,
+  overlay,
+  photoCount,
+  features,
+  originalPriceStr,
+  pricePerSqmStr,
+  footerActions,
   isPremium = false,
   isArchived = false,
 }: MantineListingCardPatternProps) {
@@ -92,41 +116,37 @@ export function MantineListingCardPattern({
       )}
 
       <Card.Section className={styles.imageSection} style={{ position: 'relative', overflow: 'hidden' }} onClick={() => onClick?.(data.id)}>
-        {imageSlot ?? (
-          <>
-            <Image
-              src={data.imageUrl}
-              height={180}
-              alt={data.title}
-              fallbackSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='180'%3E%3Crect width='400' height='180' fill='%23f5f5f5'/%3E%3Ctext x='50%25' y='50%25' fill='%23aaa' font-size='14' text-anchor='middle' dy='.3em'%3EPhoto%3C/text%3E%3C/svg%3E"
-            />
-            {data.badge && (
-              <Badge
-                color={data.badgeColor ?? 'brand'}
-                variant="filled"
-                size="sm"
-                style={{ position: 'absolute', top: 8, left: 8 }}
-              >
-                {data.badge}
+        {image}
+
+        {badges && badges.length > 0 && (
+          <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+            {badges.map(b => (
+              <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
+                {b.label}
               </Badge>
-            )}
-            {onFavorite && (
-              <ActionIcon
-                variant="filled"
-                color={data.isFavorite ? 'brand' : 'white'}
-                size="lg"
-                radius="xl"
-                style={{ position: 'absolute', top: 8, right: 8, minWidth: 44, minHeight: 44 }}
-                onClick={(e) => { e.stopPropagation(); onFavorite(data.id) }}
-                aria-label={favoriteAriaLabel}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill={data.isFavorite ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </ActionIcon>
-            )}
-          </>
+            ))}
+          </div>
         )}
+
+        {overlay && (
+          <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
+            <span className={cn(
+              'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
+              overlay.className,
+            )}>
+              {overlay.label}
+            </span>
+          </div>
+        )}
+
+        {!!photoCount && photoCount > 0 && (
+          <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
+            <Camera className="h-3 w-3" />
+            {photoCount}
+          </div>
+        )}
+
+        {favorite}
       </Card.Section>
 
       <Stack gap={4} p="sm" onClick={() => onClick?.(data.id)}>
@@ -144,13 +164,16 @@ export function MantineListingCardPattern({
             {data.location}
           </Text>
         </Group>
-        {featuresSlot ?? ((data.area || data.rooms) && (
-          <Group gap="xs">
-            {data.rooms && <Text size="xs" c="dimmed">{data.rooms}</Text>}
-            {data.area && data.rooms && <Text size="xs" c="dimmed">·</Text>}
-            {data.area && <Text size="xs" c="dimmed">{data.area}</Text>}
-          </Group>
-        ))}
+        {features && features.length > 0 && (
+          <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2 flex-wrap">
+            {features.map((f, i) => (
+              <span key={i} className="flex items-center gap-1">
+                {f.icon}
+                {f.value}
+              </span>
+            ))}
+          </div>
+        )}
         {data.priceOld ? (
           <Group gap={6} align="baseline" mt={4} wrap="wrap">
             <Text fw={700} size="md" c="brand">
@@ -165,7 +188,13 @@ export function MantineListingCardPattern({
             {data.price}
           </Text>
         )}
-        {footerSlot}
+        {(originalPriceStr || pricePerSqmStr) && (
+          <div className="flex items-center justify-between gap-2 text-2xs text-muted-foreground/70">
+            <span>{originalPriceStr}</span>
+            {pricePerSqmStr && <span className="ml-auto whitespace-nowrap">{pricePerSqmStr}</span>}
+          </div>
+        )}
+        {footerActions}
       </Stack>
 
       {onContact && (

@@ -211,7 +211,7 @@ export function MantineListingCardPattern({
       className={cn(
         styles.card,
         isPremium && styles.premium,
-        'flex h-full flex-col',
+        'group flex h-full flex-col',
         isArchived && 'grayscale opacity-60',
       )}
       style={{ cursor: onClick ? 'pointer' : undefined }}
@@ -260,9 +260,9 @@ export function MantineListingCardPattern({
             {typeLabel}
           </Text>
         )}
-        <Text fw={600} size="sm" lineClamp={2}>
+        <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
           {data.title}
-        </Text>
+        </h3>
         <Group gap={4} wrap="nowrap">
           <MapPin className="h-3 w-3 shrink-0 text-muted-foreground" />
           <Text size="xs" c="dimmed" truncate className="min-w-0">

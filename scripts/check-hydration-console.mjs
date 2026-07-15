@@ -15,6 +15,15 @@
  *   breaking the page. This gate was added by Epic RS Slice 1 (Task 436) to catch
  *   that class of regression automatically.
  *
+ * 🔴 DEV-ONLY DIAGNOSTIC — MUST run against `next dev`, NEVER `next start` (Task 599, 2026-07-15):
+ *   React strips hydration-mismatch console warnings from PRODUCTION builds by design (perf/size).
+ *   `check:hydration` against a `next start` server will PASS even when a real hydration mismatch
+ *   is present — this is a false green, not evidence of correctness. Verified empirically on this
+ *   task: a deliberately reintroduced mismatch (restored `ssr:false` + `if (loading) return null`
+ *   on `NotificationBell`) produced a clean 7/7 PASS against `next start` on 3 consecutive runs,
+ *   yet the SAME code reliably failed under `next dev` (see the authenticated-homepage differential
+ *   below). BASE_URL must point at a `next dev` server for this gate to mean anything.
+ *
  * Usage:
  *   # Verify the gate mechanism works (no server needed — self-test):
  *   npm run check:hydration:verify
@@ -49,10 +58,31 @@
  *   — they are NEVER navigated unauthenticated (that would only render the login page,
  *   producing a false PASS).
  *
+ * Authenticated-homepage coverage (Task 599):
+ *   Whenever a session is provided (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES),
+ *   independent of --with-admin, the gate ALSO navigates /en and /uk authenticated — the
+ *   exact state (header right-cluster with the NotificationBell present) that exposed the
+ *   Mantine useId hydration mismatch this gate previously missed (guest-only public routes
+ *   never render the bell, so no mismatch). Without a session these two routes are marked
+ *   SKIP / NOT-REAL-COVERAGE, never a false PASS.
+ *
+ *   Sandbox-observed differential (2026-07-15, `next dev`, real captured Supabase session,
+ *   NOT a verdict — see docs/critical-flow-registry.md "Authenticated header hydration" row):
+ *   with the pre-fix code restored (`ssr:false` dynamic import), 3 consecutive runs showed
+ *   guest `/en` PASS 3/3 vs authenticated `/en` FAIL 3/3 — a clean differential tracking the
+ *   presence/absence of the ssr:false boundary. Post-fix, a freshly-restarted `next dev`
+ *   still showed authenticated-route failures in a minority of runs, indistinguishable in
+ *   this sandbox from unrelated pre-existing dev-mode flakiness that also hits guest-only
+ *   routes with no bell (`/uk`, `/sq`, `/listings`) on identical unchanged code. Per
+ *   agent-contract clause 14 this sandbox is a SCREEN, not a verdict — the authoritative
+ *   planted-violation transcript (fix clean ≥3/3, replanted ssr:false FAILs authenticated
+ *   routes) must come from an owner NATIVE `next dev` run, not this sandbox.
+ *
  * CI integration:
  *   - `npm run check:hydration:verify` is CI-safe (self-test, no server needed).
  *   - `npm run check:hydration:admin-config` is CI-safe (config self-test, no server/auth).
- *   - `npm run check:hydration` requires a running server — owner-run only.
+ *   - `npm run check:hydration` requires a running `next dev` server — owner-run only.
+ *     NEVER run it against `next start` / production — see "DEV-ONLY DIAGNOSTIC" above.
  *
  * First run — install Playwright browsers:
  *   npx playwright install chromium
@@ -126,6 +156,34 @@ function planRoutes({ withAdmin, hasSession, adminUserId, listingPath }) {
           reason: 'HYDRATION_LISTING_PATH not set — set to /en/listings/<slug> of a real published listing',
         },
   ];
+
+  // Authenticated-homepage coverage (Task 599). The header right-cluster
+  // (LocaleSwitcher + UserMenu + NotificationBell) only renders its
+  // authenticated shape when a session is loaded into the browser context —
+  // the exact state that exposed the useId hydration mismatch this gate
+  // previously missed. Independent of --with-admin: this is a general
+  // authenticated-header check, not an admin-only one.
+  if (hasSession) {
+    routes.push(
+      { path: '/en', label: 'Homepage authenticated (en) — header hydration (Task 599)' },
+      { path: '/uk', label: 'Homepage authenticated (uk) — header hydration (Task 599)' },
+    );
+  } else {
+    routes.push(
+      {
+        path: null,
+        label: 'Homepage authenticated (en) — header hydration (Task 599)',
+        notRealCoverage: true,
+        reason: 'no session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set)',
+      },
+      {
+        path: null,
+        label: 'Homepage authenticated (uk) — header hydration (Task 599)',
+        notRealCoverage: true,
+        reason: 'no session (HYDRATION_GATE_STORAGE_STATE / HYDRATION_GATE_COOKIES not set)',
+      },
+    );
+  }
 
   if (!withAdmin) return routes;
 
@@ -341,6 +399,28 @@ function verifyAdminConfig() {
     pass = false;
   } else {
     console.log(`   ✅ [3] session+UUID: detail route → ${fullDetail.path}`);
+  }
+
+  // State 4 (Task 599): authenticated-homepage coverage gates purely on
+  // hasSession, independent of --with-admin, and is never a false PASS.
+  const noSessionHomepagePlan = planRoutes({ withAdmin: false, hasSession: false, adminUserId: null, listingPath: null });
+  const noSessionHomepageAuth = noSessionHomepagePlan.filter(r => r.label.includes('Homepage authenticated'));
+  if (noSessionHomepageAuth.length !== 2 || !noSessionHomepageAuth.every(r => r.notRealCoverage)) {
+    console.error(`   ❌ [4] no-session: authenticated-homepage routes not correctly gated (found ${noSessionHomepageAuth.length}, notRealCoverage=${noSessionHomepageAuth.map(r => r.notRealCoverage)}) — false green risk`);
+    pass = false;
+  } else {
+    console.log('   ✅ [4] no-session: both authenticated-homepage routes → notRealCoverage (never PASS)');
+  }
+
+  const sessionHomepagePlan = planRoutes({ withAdmin: false, hasSession: true, adminUserId: null, listingPath: null });
+  const sessionHomepageAuth = sessionHomepagePlan.filter(r => r.label.includes('Homepage authenticated'));
+  const enAuth = sessionHomepageAuth.find(r => r.label.includes('(en)'));
+  const ukAuth = sessionHomepageAuth.find(r => r.label.includes('(uk)'));
+  if (!enAuth || enAuth.notRealCoverage || enAuth.path !== '/en' || !ukAuth || ukAuth.notRealCoverage || ukAuth.path !== '/uk') {
+    console.error(`   ❌ [5] session (withAdmin=false): authenticated-homepage routes not navigable (en=${JSON.stringify(enAuth)}, uk=${JSON.stringify(ukAuth)})`);
+    pass = false;
+  } else {
+    console.log(`   ✅ [5] session (withAdmin=false): authenticated-homepage routes navigable → ${enAuth.path}, ${ukAuth.path}`);
   }
 
   if (pass) {

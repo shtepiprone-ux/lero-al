@@ -5,15 +5,10 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useUser } from '@/modules/auth/hooks/useUser'
 import { setAdminLocale } from '@/modules/admin/actions/locale'
-import dynamic from 'next/dynamic'
 import { HeaderView } from '@/components/layout/HeaderView'
 import { AuthSheet, type AuthView } from '@/modules/auth/components/AuthSheet'
 import { AUTH_SHEET_EVENT, AUTH_SHEET_CLOSED_EVENT } from '@/lib/auth/authSheet'
-
-const NotificationBell = dynamic(
-  () => import('@/modules/notifications/components/NotificationBell').then(m => m.NotificationBell),
-  { ssr: false },
-)
+import { NotificationBell } from '@/modules/notifications/components/NotificationBell'
 
 export function Header() {
   const locale = useLocale()

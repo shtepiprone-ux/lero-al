@@ -15,7 +15,7 @@ const meta: Meta<typeof MantineListingCardPattern> = {
 export default meta;
 type Story = StoryObj<typeof MantineListingCardPattern>;
 
-const makeCard = (l = 'en', id = '1', badge?: string) => ({
+const makeCard = (l = 'en', id = '1', badge?: string, reduced = false) => ({
   data: {
     id,
     title: storyT(l, 'storybook.mantine.card_title_1'),
@@ -23,6 +23,7 @@ const makeCard = (l = 'en', id = '1', badge?: string) => ({
     rooms: storyT(l, 'storybook.mantine.listing_feature_rooms'),
     area: storyT(l, 'storybook.mantine.listing_feature_area'),
     price: storyT(l, 'storybook.mantine.card_price_1'),
+    priceOld: reduced ? storyT(l, 'storybook.mantine.card_price_old_1') : undefined,
     badge: badge ?? storyT(l, 'storybook.mantine.card_badge_new'),
     imageUrl: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop',
   },
@@ -37,6 +38,8 @@ export const Default: Story = {
         <MantineListingCardPattern {...makeCard(l, '1')} />
         <MantineListingCardPattern {...makeCard(l, '2', storyT(l, 'storybook.mantine.card_badge_premium'))} />
         <MantineListingCardPattern {...makeCard(l, '3', undefined)} />
+        {/* Reduced-price variant (Task 602) — old price struck through + new price, plain-price cards above unaffected */}
+        <MantineListingCardPattern {...makeCard(l, '4', undefined, true)} />
       </SimpleGrid>
     );
   },

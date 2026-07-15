@@ -92,7 +92,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     <Button
       type="button"
       variant="ghost"
-      size={shape === 'pill' ? size : undefined}
+      size={shape === 'pill' ? size : 'icon-sm'}
       className={cn(
         shape === 'icon' && 'rounded-full w-8 h-8 p-0',
         disabled

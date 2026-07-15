@@ -191,4 +191,18 @@ describe('FavoriteButton', () => {
     expect(mockOpenAuthSheet).not.toHaveBeenCalled()
     expect(mockAddFavorite).not.toHaveBeenCalled()
   })
+
+  // ── Mobile full-width regression (Task 603) ────────────────────────────────
+
+  it('icon shape (card overlay, default) does NOT carry the mobile full-width chrome', () => {
+    renderButton({ isFavorited: false })
+    expect(getButton().className).not.toMatch(/max-sm:w-full/)
+    expect(getButton().className).not.toMatch(/max-sm:min-h-11/)
+  })
+
+  it('pill shape (ListingContact action row) still carries the mobile full-width chrome at size="lg"', () => {
+    renderButton({ isFavorited: false, shape: 'pill', size: 'lg' })
+    expect(getButton().className).toMatch(/max-sm:w-full/)
+    expect(getButton().className).toMatch(/h-9/)
+  })
 })

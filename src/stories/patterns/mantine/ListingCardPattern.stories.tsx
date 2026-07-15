@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SimpleGrid, Image, Stack, Divider, Title } from '@mantine/core';
-import { BedDouble, Bath, Maximize2, Heart, Copy } from 'lucide-react';
+import { BedDouble, Bath, Building2, Maximize2, Heart, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { storyT } from '@/stories/_storyI18n';
 import { MantineListingCardPattern, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
@@ -74,11 +74,18 @@ function DemoFooterActions({ locale, id }: { locale: string; id: string }) {
   );
 }
 
+// Card feature chips — MUST mirror the live `getCardFeatures` output for an apartment,
+// the COMPLETE metric set the real card shows (src/modules/listings/domain: schema
+// `showInCard` fields, in `order`, with their CARD icons):
+//   rooms → bed-double · bathrooms → bath · area → area(Maximize2) · floor → building
+// (floor uses `iconInCard: 'building'`, NOT layers). Do NOT drop, reorder, or swap icons —
+// this is the schema's authoritative, full card metric set.
 function demoFeatures(l: string) {
   return [
     { icon: <BedDouble className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_rooms') },
-    { icon: <Bath className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_floor') },
+    { icon: <Bath className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_bathrooms') },
     { icon: <Maximize2 className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_area') },
+    { icon: <Building2 className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_floor') },
   ];
 }
 

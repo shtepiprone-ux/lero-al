@@ -2,18 +2,28 @@
 /**
  * check-hydration-console.mjs — Playwright-based hydration / console-error gate.
  *
- * Navigates to Next.js app routes and FAILS if the browser console contains:
- *   - React hydration mismatch errors ("Hydration failed because…")
- *   - SSR/CSR tree-mismatch warnings ("Text content does not match. Server: … Client: …")
- *   - Invalid-HTML nesting warnings ("validateDOMNesting: <div> cannot appear in <p>")
- *   - Whitespace text node warnings ("whitespace text nodes cannot be a child of")
- *   - General React SSR/client tree-mismatch warnings
+ * Navigates to Next.js app routes and FAILS if:
+ *   - The browser console contains a React hydration mismatch ("Hydration failed because…"),
+ *     an SSR/CSR tree-mismatch warning, invalid-HTML nesting, a whitespace text-node warning,
+ *     or a runtime/build-error pattern ("Cannot find module…", "Module not found…", Task 600).
+ *   - The navigation response status is not OK (≥400 — a hard server error, Task 600).
+ *   - An uncaught client-side exception fires (`pageerror`, Task 600).
+ *   - The Next.js dev error-overlay dialog is present in the DOM (Task 600).
  *
  * WHY THIS GATE EXISTS:
  *   `build` / `tsc` / `lint` do NOT catch React hydration mismatches.
  *   Task 434 (admin date-format SSR/CSR divergence) passed all CI checks while
  *   breaking the page. This gate was added by Epic RS Slice 1 (Task 436) to catch
  *   that class of regression automatically.
+ *
+ * 🔴 HARDENED AGAINST FALSE PASS ON A HARD-ERRORED PAGE (Task 600, 2026-07-15):
+ *   Before this task, `checkRoute` ONLY inspected `page.on('console')` for `HYDRATION_PATTERNS`.
+ *   During the Task 599 review, a corrupted-`.next` runtime error (`Cannot find module
+ *   '../chunks/ssr/[turbopack]_runtime.js'`) produced a hard 500 — the app never hydrated — yet
+ *   the gate reported 7/7 PASS, because the crash never emitted console text matching a hydration
+ *   regex. `checkRoute` now also fails on a non-OK response status, any uncaught `pageerror`, and
+ *   the Next dev error-overlay dialog being present in the DOM (selector verified empirically
+ *   against a real running Next 15 dev instance — see `--verify-error-page`).
  *
  * 🔴 DEV-ONLY DIAGNOSTIC — MUST run against `next dev`, NEVER `next start` (Task 599, 2026-07-15):
  *   React strips hydration-mismatch console warnings from PRODUCTION builds by design (perf/size).
@@ -30,6 +40,9 @@
  *
  *   # Verify admin route config is wired (no server, no auth — CI-safe):
  *   npm run check:hydration:admin-config
+ *
+ *   # Verify the gate FAILs a hard-errored page instead of a false PASS (no Next server — CI-safe):
+ *   npm run check:hydration:error-page
  *
  *   # Check public routes on a running Next.js server:
  *   BASE_URL=http://localhost:3000 npm run check:hydration
@@ -81,6 +94,7 @@
  * CI integration:
  *   - `npm run check:hydration:verify` is CI-safe (self-test, no server needed).
  *   - `npm run check:hydration:admin-config` is CI-safe (config self-test, no server/auth).
+ *   - `npm run check:hydration:error-page` is CI-safe (self-test, no server needed, Task 600).
  *   - `npm run check:hydration` requires a running `next dev` server — owner-run only.
  *     NEVER run it against `next start` / production — see "DEV-ONLY DIAGNOSTIC" above.
  *
@@ -88,7 +102,9 @@
  *   npx playwright install chromium
  *
  * Added by Task 436 (Epic RS Slice 1, 2026-06-16). Slice 6b (Task 451): storageState,
- * admin-config self-test, no-session admin SKIP.
+ * admin-config self-test, no-session admin SKIP. Task 599 (2026-07-15): authenticated-homepage
+ * coverage. Task 600 (2026-07-15): hardened against false PASS on HTTP error / pageerror /
+ * dev error-overlay; RUNTIME_ERROR_PATTERNS; --verify-error-page self-test.
  */
 
 import { createServer } from 'node:http';
@@ -102,6 +118,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const VERIFY_GATE        = args.includes('--verify-gate');
 const VERIFY_ADMIN_CONFIG = args.includes('--verify-admin-config');
+const VERIFY_ERROR_PAGE  = args.includes('--verify-error-page');
 const WITH_ADMIN         = args.includes('--with-admin');
 const BASE_URL           = process.env.BASE_URL ?? 'http://localhost:3000';
 
@@ -133,6 +150,17 @@ const HYDRATION_PATTERNS = [
   /this tree will be regenerated on the client/i,
   /server component rendered more hooks/i,
   /rendered fewer hooks than expected/i,
+];
+
+// Runtime/build-error console patterns (Task 600). Additive to HYDRATION_PATTERNS, not a
+// replacement — these catch the class of error that hid behind a false PASS during the Task 599
+// review: a corrupted `.next` runtime ("Cannot find module …[turbopack]_runtime.js") produced a
+// hard 500 with no hydration-pattern console text at all.
+const RUNTIME_ERROR_PATTERNS = [
+  /cannot find module/i,
+  /unhandled runtime error/i,
+  /module not found/i,
+  /failed to compile/i,
 ];
 
 // ── Route planner (pure function — shared by runChecks + verifyAdminConfig) ──
@@ -255,23 +283,56 @@ const VIOLATION_PAGE_HTML = `<!DOCTYPE html>
 async function checkRoute(page, url, label) {
   const violations = [];
 
-  const handler = msg => {
+  const consoleHandler = msg => {
     const text = msg.text();
     const type = msg.type();
     if ((type === 'error' || type === 'warning') &&
-        HYDRATION_PATTERNS.some(p => p.test(text))) {
+        (HYDRATION_PATTERNS.some(p => p.test(text)) || RUNTIME_ERROR_PATTERNS.some(p => p.test(text)))) {
       violations.push({ type, text: text.slice(0, 300) });
     }
   };
 
-  page.on('console', handler);
+  // Task 600: uncaught client-side exceptions never surface via page.on('console') — they need
+  // their own listener. This is what catches "Cannot find module …[turbopack]_runtime.js" and
+  // any other thrown runtime error that previously produced a false PASS.
+  const pageErrorHandler = err => {
+    violations.push({ type: 'pageerror', text: String(err.message ?? err).slice(0, 300) });
+  };
+
+  page.on('console', consoleHandler);
+  page.on('pageerror', pageErrorHandler);
+
+  let response;
   try {
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15_000 });
+    response = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15_000 });
     await page.waitForTimeout(800);
   } catch (err) {
     return { label, url, status: 'SKIP', reason: String(err.message).slice(0, 120), violations: [] };
   } finally {
-    page.off('console', handler);
+    page.off('console', consoleHandler);
+    page.off('pageerror', pageErrorHandler);
+  }
+
+  // Task 600: fail on a non-OK navigation response (e.g. a corrupted-.next 500) — a hard error
+  // page has no hydration-pattern console text to match, so this was previously a false PASS.
+  if (response && !response.ok()) {
+    violations.push({ type: 'http', text: `HTTP ${response.status()} on ${url}` });
+  }
+
+  // Task 600: detect the Next.js dev error-overlay in the DOM even if console/pageerror were
+  // somehow silent. Verified against a real Next 15 dev instance (Task 600): the overlay renders
+  // inside <nextjs-portal>'s shadow root as #nextjs__container_errors_label (text e.g. "Runtime
+  // Error") only when an error dialog is actually shown — confirmed absent on a clean 200 page
+  // (the <nextjs-portal>/devtools-indicator element itself is ALWAYS present in dev mode, so its
+  // mere existence is not a valid signal; the error-dialog child inside its shadow root is).
+  const overlayText = await page.evaluate(() => {
+    const portal = document.querySelector('nextjs-portal');
+    if (!portal || !portal.shadowRoot) return null;
+    const label = portal.shadowRoot.querySelector('#nextjs__container_errors_label');
+    return label ? label.textContent : null;
+  }).catch(() => null);
+  if (overlayText) {
+    violations.push({ type: 'overlay', text: overlayText.slice(0, 300) });
   }
 
   return { label, url, status: violations.length === 0 ? 'PASS' : 'FAIL', violations };
@@ -329,6 +390,86 @@ async function runGateSelfTest() {
   } else {
     console.error('\n❌ GATE IS A NO-OP — planted violation was NOT detected.');
     console.error('   The hydration error patterns may not match. This is a gate defect.\n');
+    process.exit(1);
+  }
+}
+
+// ── G-C: error-page self-test (--verify-error-page) ──────────────────────────
+//
+// Task 600. Proves checkRoute() no longer gives a false PASS on a hard-errored page — the exact
+// blind spot the Task 599 review hit (a corrupted-.next 500 with no hydration-pattern console
+// text reported 7/7 PASS). Serves 3 tiny local pages: an HTTP 500, a page that throws an uncaught
+// pageerror, and a clean 200 page. CI-safe, no Next server needed — only requires chromium, same
+// as --verify-gate.
+
+const ERROR_PAGE_500_HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>Server Error</body></html>`;
+
+const ERROR_PAGE_THROW_HTML = `<!DOCTYPE html>
+<html><head><meta charset="utf-8"></head>
+<body>
+<div id="app">This page throws an uncaught client-side exception</div>
+<script>
+  setTimeout(() => { throw new Error('Task 600 self-test: deliberate uncaught pageerror'); }, 10);
+</script>
+</body></html>`;
+
+const ERROR_PAGE_CLEAN_HTML = `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>Clean page, no errors</body></html>`;
+
+async function runErrorPageSelfTest() {
+  console.log('\n🔬 Error-page self-test (--verify-error-page)');
+  console.log('   Purpose: prove checkRoute() FAILs on a hard-errored page instead of a false PASS.\n');
+
+  let server;
+  const baseUrl = await new Promise((resolve, reject) => {
+    server = createServer((req, res) => {
+      if (req.url === '/500') {
+        res.writeHead(500, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(ERROR_PAGE_500_HTML);
+      } else if (req.url === '/throw') {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(ERROR_PAGE_THROW_HTML);
+      } else {
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(ERROR_PAGE_CLEAN_HTML);
+      }
+    });
+    server.listen(0, '127.0.0.1', () => {
+      const { port } = server.address();
+      resolve(`http://127.0.0.1:${port}`);
+    });
+    server.on('error', reject);
+  });
+
+  const { chromium } = await import('playwright');
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
+  const cases = [
+    { url: `${baseUrl}/500`, label: 'HTTP 500 page', expect: 'FAIL' },
+    { url: `${baseUrl}/throw`, label: 'Uncaught pageerror page', expect: 'FAIL' },
+    { url: `${baseUrl}/clean`, label: 'Clean 200 page', expect: 'PASS' },
+  ];
+
+  let pass = true;
+  try {
+    for (const c of cases) {
+      const result = await checkRoute(page, c.url, c.label);
+      const ok = result.status === c.expect;
+      console.log(`   ${ok ? '✅' : '❌'} ${c.label}: expected ${c.expect}, got ${result.status}` +
+        (result.violations.length ? ` — ${result.violations.map(v => `(${v.type}) ${v.text.slice(0, 80)}`).join('; ')}` : ''));
+      if (!ok) pass = false;
+    }
+  } finally {
+    await browser.close();
+    await new Promise(r => server.close(r));
+  }
+
+  if (pass) {
+    console.log('\n✅ ERROR-PAGE HARDENING IS FUNCTIONAL — 500/pageerror FAIL, clean page PASSes.\n');
+    process.exit(0);
+  } else {
+    console.error('\n❌ ERROR-PAGE HARDENING IS BROKEN — see mismatches above. This is a gate defect.\n');
     process.exit(1);
   }
 }
@@ -560,6 +701,8 @@ async function main() {
     await runGateSelfTest();
   } else if (VERIFY_ADMIN_CONFIG) {
     verifyAdminConfig();
+  } else if (VERIFY_ERROR_PAGE) {
+    await runErrorPageSelfTest();
   } else {
     await runChecks();
   }

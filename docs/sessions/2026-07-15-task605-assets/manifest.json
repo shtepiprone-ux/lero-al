@@ -1,0 +1,1168 @@
+{
+  "timestamp": "2026-07-15T16-10",
+  "baseUrl": "http://localhost:3000",
+  "matrix": [
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/sq",
+      "locale": "sq",
+      "viewport": "2560",
+      "screenshot": "Homepage-Latest-vertical-card-__sq__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/en",
+      "locale": "en",
+      "viewport": "2560",
+      "screenshot": "Homepage-Latest-vertical-card-__en__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "320",
+      "screenshot": "Homepage-Latest-vertical-card-__uk__320.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "375",
+      "screenshot": "Homepage-Latest-vertical-card-__uk__375.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "390",
+      "screenshot": "Homepage-Latest-vertical-card-__uk__390.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/uk",
+      "locale": "uk",
+      "viewport": "2560",
+      "screenshot": "Homepage-Latest-vertical-card-__uk__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Homepage (Latest, vertical card)",
+      "url": "http://localhost:3000/it",
+      "locale": "it",
+      "viewport": "2560",
+      "screenshot": "Homepage-Latest-vertical-card-__it__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/sq/listings",
+      "locale": "sq",
+      "viewport": "2560",
+      "screenshot": "Listings-Grid__sq__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/en/listings",
+      "locale": "en",
+      "viewport": "2560",
+      "screenshot": "Listings-Grid__en__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "320",
+      "screenshot": "Listings-Grid__uk__320.png",
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "375",
+      "screenshot": "Listings-Grid__uk__375.png",
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "390",
+      "screenshot": "Listings-Grid__uk__390.png",
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/uk/listings",
+      "locale": "uk",
+      "viewport": "2560",
+      "screenshot": "Listings-Grid__uk__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": true,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": false,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "route": "Listings Grid",
+      "url": "http://localhost:3000/it/listings",
+      "locale": "it",
+      "viewport": "2560",
+      "screenshot": "Listings-Grid__it__2560.png",
+      "data": {
+        "found": true,
+        "pageOverflow": false,
+        "hasFavorite": true,
+        "hasPhotoCount": true,
+        "photoCountText": "1",
+        "hasBadge": false,
+        "hasTypeLabel": true,
+        "hasFooterActions": true,
+        "hasFeatures": true
+      },
+      "pass": true,
+      "error": null
+    }
+  ],
+  "desktopHover": {
+    "found": true,
+    "before": {
+      "boxShadow": "none",
+      "transform": "none"
+    },
+    "after": {
+      "boxShadow": "rgba(16, 24, 40, 0.08) 0px 12px 16px -4px, rgba(16, 24, 40, 0.03) 0px 4px 6px -2px",
+      "transform": "matrix(1, 0, 0, 1, 0, -2)"
+    },
+    "beforeImg": "none",
+    "afterImg": "matrix(1.05, 0, 0, 1.05, 0, 0)",
+    "hoverFired": true
+  },
+  "reducedHover": {
+    "found": true,
+    "before": {
+      "boxShadow": "none",
+      "transform": "none"
+    },
+    "after": {
+      "boxShadow": "rgba(16, 24, 40, 0.08) 0px 12px 16px -4px, rgba(16, 24, 40, 0.03) 0px 4px 6px -2px",
+      "transform": "none"
+    },
+    "beforeImg": "none",
+    "afterImg": "none",
+    "hoverFired": true
+  },
+  "coarseHover": {
+    "found": true,
+    "before": {
+      "boxShadow": "none",
+      "transform": "none"
+    },
+    "after": {
+      "boxShadow": "none",
+      "transform": "none"
+    },
+    "beforeImg": "none",
+    "afterImg": "none",
+    "hoverFired": false
+  }
+}

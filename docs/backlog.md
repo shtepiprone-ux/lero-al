@@ -52,7 +52,13 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 614. Next free: 615.** (614 = ✅ APPROVED 2026-07-16 (orchestrator review, commit emitted, pending owner native gate + run) — added
+**Task numbering — last used: 615. Next free: 616.** (615 = OPENED 2026-07-16 from the Task 609 review —
+`MantineListingDetailPattern` contact CTAs never switch to a side-by-side row at `sm+`: the inline
+`style={{flexDirection:'column'}}` (`MantineListingDetailPattern.tsx:129`) out-specificities the `styles`-prop
+`@media(min-width:40em){flexDirection:'row'}` override, so the row switch is dead. Fix = canonical Mantine responsive
+`Flex direction={{base:'column',sm:'row'}}` + per-button `flex:1` (drop `fullWidth` at `sm+`), `<640` full-width-stacked
+byte-identical, STOP-AND-ASK if two-across clips in the narrow span-4 column. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_615_ListingDetailCTAFlexDirectionFix.md`, not yet executed.) (614 = ✅ APPROVED 2026-07-16 (orchestrator review, commit emitted, pending owner native gate + run) — added
 the missing planted-violation proof for the shared `check-stories.mjs` Check-9 test-file exclusion Task 612 self-merged
 (`.test.tsx`/`__tests__` skip): 3 new tests prove `.test.tsx`/`__tests__` files are skipped AND a real non-test
 `src/modules` component with the same literal is STILL caught (blind-spot guard); anti-no-op transcript via reverting

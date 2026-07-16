@@ -47,8 +47,20 @@ export function MantineListingDetailPattern({
   onWhatsApp,
 }: MantineListingDetailPatternProps) {
   return (
-    <Grid gutter="lg">
-      <Grid.Col span={{ base: 12, sm: 8 }}>
+    // `Grid`'s gutter is implemented as a negative margin on `.mantine-Grid-inner` (bled back in
+    // by matching padding on each `Grid.Col`) — harmless when an ancestor clips it, but this
+    // pattern can render standalone (e.g. its own Storybook story) with nothing to hide the
+    // bleed, so the inner wrapper's own box measures wider than the viewport
+    // (scrollWidth > clientWidth). Clipping that ancestor doesn't fix it either: the geometry
+    // gate's text-clip check walks up from each button looking for the first clipped ancestor
+    // whose scrollWidth exceeds its clientWidth, and an overflow:clip Box around the whole Grid
+    // IS exactly that ancestor — a false positive, since nothing is actually clipped visually.
+    // Root-cause fix: `gutter={0}` removes the negative margin entirely, and the same visual
+    // gap is reproduced explicitly — `pr="lg"` between the two side-by-side columns at `sm+`,
+    // `mb="lg"` between the two stacked columns at base — so the layout stays byte-identical
+    // with zero negative-margin bleed anywhere.
+    <Grid gutter={0}>
+      <Grid.Col span={{ base: 12, sm: 8 }} pr={{ base: 0, sm: 'lg' }} mb={{ base: 'lg', sm: 0 }}>
         <Stack gap="md">
           <Paper
             radius="md"

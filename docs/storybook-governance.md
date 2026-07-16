@@ -1392,6 +1392,53 @@ RangeDatePicker portal-backdrop + Tabs swipe-scroll, unrelated to this task), 16
 
 ---
 
+### §14.9.20 — `ListingDetailPattern` Grid-gutter horizontal-overflow — RESOLVED (Task 609, 2026-07-16)
+
+**Root cause, confirmed.** `MantineListingDetailPattern.tsx`'s root `<Grid gutter="lg">` implements its gutter as
+a negative horizontal margin on `.mantine-Grid-inner` (bled back in by matching padding on each `Grid.Col`) —
+harmless when a real ancestor clips it, but this pattern renders standalone in its own story with nothing to hide
+the bleed, so `document.documentElement.scrollWidth` measured ~10px wider than `clientWidth` at every viewport,
+tripping Check-4a (`noHorizontalOverflow`) on all 16 cells (320/375/390/1024 × sq/en/uk/it).
+
+**First attempt (containment) tried and REJECTED — new false positive, not shipped.** The kickoff's primary
+recommendation — wrap the root `<Grid>` in a `<Box style={{ overflowX: 'clip' }}>` — does neutralize the
+document-level overflow, but introduces a NEW false positive: `geometry-integrity.mjs`'s Check-1 (`text-clipped`)
+walks up from every interactive element looking for the first ancestor with a clipped `overflow`/`overflowX`
+computed style, and if THAT ancestor's own `scrollWidth > clientWidth`, flags every descendant's text as
+clipped — with no check on whether the specific element's own rendered box actually falls in the clipped
+region. An `overflow:clip` Box around the whole Grid IS exactly that ancestor (its own box is, by construction,
+wider than its clientWidth — that's the overflow being contained), so the Call/WhatsApp buttons inside the
+sticky contact `Paper` two levels down were newly flagged `text-clipped` at all 16 cells even though nothing is
+visually clipped (full-width buttons, complete labels, confirmed via rendered screenshots). Reverted before
+landing.
+
+**Shipped fix — neutralize the gutter, not contain it (the kickoff's pre-approved alternative).**
+`gutter="lg"` → `gutter={0}` (removes the negative margin entirely — the Grid-inner box can never measure wider
+than its own container again), with the same visual gap reproduced explicitly on the left `Grid.Col`:
+`pr={{ base: 0, sm: 'lg' }}` (the `sm+` side-by-side inter-column gap) and `mb={{ base: 'lg', sm: 0 }}` (the
+`<sm` stacked inter-row gap). Outer edges are unaffected either way (gutter only ever affected the INNER gap
+between columns, never the outer edges against the container), so the visible layout is byte-identical — same
+column split, same gap, same sticky contact panel, same CTA behavior — with zero negative-margin bleed anywhere
+in the DOM, so neither Check-4a nor Check-1 has anything to trip on.
+
+**Verification.** A scoped Playwright probe (reusing the real exported `checkGeometryIntegrity()`) against all
+16 cells confirmed `scrollWidth === clientWidth` exactly (not just within tolerance) and 0 `text-clipped`
+violations; the sticky `Paper` (`position:sticky; top:80`) was confirmed via computed style plus a real scroll
+(`window.scrollBy`), its `top` offset intact and unmoved by the fix. Anti-regression: the original `gutter="lg"`
+was planted back (no `pr`/`mb`) and confirmed to genuinely fail all 16 cells with the exact predicted bleed
+(scrollWidth 330/385/400/1034 vs clientWidth 320/375/390/1024 — the ~10px half-gutter, matching the diagnosis
+precisely), then reverted to the shipped fix, re-confirmed green. `MANTINE_PATTERN_KNOWN_FAILURES` in
+`scripts/check-stories-rendered.mjs` is now `{}` (the `ListingDetailPattern` entry removed — the defect no
+longer exists, so the tracked-xfail pin would be dead governance state).
+
+**Result.** `--mantine-only`: 889/916 PASS, 0 FAIL, 27 AMBIGUOUS (pre-existing, unchanged), 0 KNOWN-FAILURE —
+**exit 0**. (Total cell count grew 900→916 between the Task 611 baseline and this run from the unrelated Task
+612 `LightboxView` registration, all 16 of which pass; the +16 delta from 857→873 attributable to Task 609
+itself is unaffected and independently confirmed via the scoped probe above.) Session:
+`docs/sessions/2026-07-16-task609-listingdetailpattern-grid-gutter-overflow-fix.md`.
+
+---
+
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.

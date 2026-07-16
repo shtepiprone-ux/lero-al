@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (295 stories, 900 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (296 stories, 916 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,8 +10,8 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 900 |
-| PASS (clean, verdict=pass) | 857 |
+| Total cells | 916 |
+| PASS (clean, verdict=pass) | 889 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
 | AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 27 |
@@ -37,22 +37,7 @@
 
 | Story ID | Locale | Viewport | Screenshot | Fail Reason | Follow-up Task |
 |---|---|---|---|---|---|
-| `patterns-mantine-listingdetailpattern--default` | sq | mobile-320 | `patterns-mantine-listingdetailpattern--default__sq__mobile-320.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | sq | mobile-375 | `patterns-mantine-listingdetailpattern--default__sq__mobile-375.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | sq | mobile-390 | `patterns-mantine-listingdetailpattern--default__sq__mobile-390.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | sq | desktop-1024 | `patterns-mantine-listingdetailpattern--default__sq__desktop-1024.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | en | mobile-320 | `patterns-mantine-listingdetailpattern--default__en__mobile-320.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | en | mobile-375 | `patterns-mantine-listingdetailpattern--default__en__mobile-375.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | en | mobile-390 | `patterns-mantine-listingdetailpattern--default__en__mobile-390.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | en | desktop-1024 | `patterns-mantine-listingdetailpattern--default__en__desktop-1024.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | uk | mobile-320 | `patterns-mantine-listingdetailpattern--default__uk__mobile-320.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | uk | mobile-375 | `patterns-mantine-listingdetailpattern--default__uk__mobile-375.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | uk | mobile-390 | `patterns-mantine-listingdetailpattern--default__uk__mobile-390.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | uk | desktop-1024 | `patterns-mantine-listingdetailpattern--default__uk__desktop-1024.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | it | mobile-320 | `patterns-mantine-listingdetailpattern--default__it__mobile-320.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | it | mobile-375 | `patterns-mantine-listingdetailpattern--default__it__mobile-375.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | it | mobile-390 | `patterns-mantine-listingdetailpattern--default__it__mobile-390.png` | horizontal-overflow | Task 609 |
-| `patterns-mantine-listingdetailpattern--default` | it | desktop-1024 | `patterns-mantine-listingdetailpattern--default__it__desktop-1024.png` | horizontal-overflow | Task 609 |
+| *(none)* | | | | | |
 
 ---
 

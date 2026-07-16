@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-16 — Task 612 (`ListingGallery` lightbox → Mantine `fullScreen Modal` root-cause z-index/portal fix) — IMPLEMENTED + self-reviewed same session, gates green.** Migrated to a raw Mantine `Modal.Root/Content/Body fullScreen` + extracted `LightboxView.tsx` primitive + canonical story; found+fixed a second cascade-layer bug mid-task (Mantine `Paper`/`ActionIcon` unlayered CSS beating the initial Tailwind className attempt — scrim rendered white, buttons squashed the image to 60px) via inline `style`. 4/4 vitest (planted-violation verified) + 28/28 live-page matrix + 16/16 Storybook cells + `check:hydration` PASS + full listings suite 1054/1054, zero regression. Session: `docs/sessions/2026-07-16-task612-listinggallery-lightbox-mantine-modal-migration.md`. **Next:** owner runs the emitted commit; Task 609 and Task 613 still awaiting execution.
+**2026-07-16 — Task 609 (`MantineListingDetailPattern` Grid-gutter horizontal-overflow fix) — ✅ APPROVED (orchestrator diff review + owner NATIVE gate GREEN 2026-07-16: tsc=0 · file-integrity 9/9 · mojibake 0 · check:stories 0 · `--mantine-only` 889/916 PASS, 0 FAIL, 0 KNOWN-FAILURE, exit 0), commit emitted, pending owner run.** Root cause: root `<Grid gutter="lg">`'s negative-margin gutter bled ~10px past the viewport with nothing to hide it in the isolated story. First attempt (wrap in `overflowX:'clip'` Box) was tried and REJECTED — it neutralized the overflow but introduced a NEW false `text-clipped` positive (the geometry check's Check-1 flags any interactive descendant of a clipped-and-inflated ancestor, regardless of whether that descendant itself is visually clipped). Shipped fix instead neutralizes the gutter at its source: `gutter={0}` + explicit `pr`/`mb` on the left column reproducing the identical visual gap, zero negative-margin bleed anywhere. Verified via a scoped Playwright probe (16/16 cells, `scrollWidth===clientWidth` exactly, 0 text-clipped, sticky panel confirmed via computed-style + real scroll) plus a full plant-then-revert anti-regression transcript. `MANTINE_PATTERN_KNOWN_FAILURES` registry now `{}`. Full gate: 889/916 PASS, 0 FAIL, 27 AMBIGUOUS (pre-existing), exit 0. Session: `docs/sessions/2026-07-16-task609-listingdetailpattern-grid-gutter-overflow-fix.md`. **Next:** orchestrator review of the diff, then owner native gate + run; Task 613 still awaiting execution.
 
 ## Pending Action Items
 
@@ -52,13 +52,14 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 614. Next free: 615.** (614 = OPENED 2026-07-16 from the Task 612 review — add the
-missing planted-violation proof for the shared `check-stories.mjs` Check-9 test-file exclusion Task 612 self-merged
-(`.test.tsx`/`__tests__` skip): prove `.test.tsx`/`__tests__` files are skipped AND a real non-test `src/modules`
-component with the same literal is STILL caught (blind-spot guard), anti-no-op via reverting the exclusion; also
-reconcile the pre-existing stale `checksRan===13` completeness assertion. Test-file + docs only; `check-stories.mjs`
-UNTOUCHED. LOW-PRIORITY, after 612. Kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_614_CheckStoriesCheck9TestFileExclusionProof.md`,
-not yet executed.) (613 = OPENED 2026-07-16 from the Task 612 STOP-AND-ASK —
+**Task numbering — last used: 614. Next free: 615.** (614 = ✅ APPROVED 2026-07-16 (orchestrator review, commit emitted, pending owner native gate + run) — added
+the missing planted-violation proof for the shared `check-stories.mjs` Check-9 test-file exclusion Task 612 self-merged
+(`.test.tsx`/`__tests__` skip): 3 new tests prove `.test.tsx`/`__tests__` files are skipped AND a real non-test
+`src/modules` component with the same literal is STILL caught (blind-spot guard); anti-no-op transcript via reverting
+the exclusion (both GOOD tests genuinely fail, then revert restores green, `check-stories.mjs` confirmed byte-identical);
+also reconciled the pre-existing stale `checksRan===13` completeness assertion to the true hardcoded `14`. Test-file +
+docs only; `check-stories.mjs` UNTOUCHED (verified). Kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_614_CheckStoriesCheck9TestFileExclusionProof.md`.
+Session `docs/sessions/2026-07-16-task614-check-stories-check9-test-file-exclusion-proof.md`.) (613 = OPENED 2026-07-16 from the Task 612 STOP-AND-ASK —
 remove/deprecate the DEAD `--z-*` Tailwind z-index token scale (`globals.css:245-251` is under the `--z-*` namespace
 Tailwind v4 never turns into `z-*` utilities → `z-toast`/`z-sticky`/… all compute `z-index:auto`; blast radius ≈ the
 single `ListingGallery` `z-toast`, fixed by 612, because overlays moved to Mantine + core `z-30/40/50` + the
@@ -74,10 +75,12 @@ listings suite. Session `docs/sessions/2026-07-16-task612-listinggallery-lightbo
 `ListingGallery` lightbox renders BELOW the site header + sticky contact card because it is NOT portaled
 (`fixed inset-0 z-toast` trapped in the page stacking context; `z-toast:100` can't beat root-level chrome from a
 nested context); fix = `createPortal` to `document.body`, keep the token, mandatory real-page before/after pixels.
-Kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_612_ListingGalleryLightboxPortalZIndex.md`. 609 = KICKED OFF
-2026-07-16 (`MantineListingDetailPattern` Grid-gutter horizontal-overflow → clears the last Task-607 tracked xfail;
-`overflow-x:clip`, preserve sticky panel, remove the registry entry); kickoff
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_609_ListingDetailPatternGridGutterOverflow.md`. 610 = still reserved,
+Kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_612_ListingGalleryLightboxPortalZIndex.md`. 609 = ✅ APPROVED
+2026-07-16 (orchestrator diff review + owner native gate green, commit emitted, pending owner run) — see Last Session for full detail (root-cause
+`gutter={0}`+`pr`/`mb` fix, NOT `overflow-x:clip` — that containment approach was tried and rejected for a new
+`text-clipped` false positive; registry entry removed, clears the last Task-607 tracked xfail). Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_609_ListingDetailPatternGridGutterOverflow.md`. Session
+`docs/sessions/2026-07-16-task609-listingdetailpattern-grid-gutter-overflow-fix.md`. 610 = still reserved,
 not yet kicked off (grid/list title-hover asymmetry — 608 notes the grid `group-hover` fix already shipped, so 610
 may now be a no-op/verify-only; re-scope before kicking off). 607/608/611 = ✅ APPROVED + COMMITTED + PUSHED
 2026-07-16, see archive + Last Session. 611 = resolved Task 607's 2 held stories via a generic gate fix. Kickoff

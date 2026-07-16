@@ -294,9 +294,12 @@ const MANTINE_STORY_TITLE_PREFIXES = ['Mantine/Primitives/', 'Patterns/Mantine/'
 // adding it to `MANTINE_OVERLAY_PRIMITIVES` below plus a trigger-visibility skip in
 // `captureCell`'s openTrigger handling (the Burger is `hiddenFrom="sm"`, legitimately absent at
 // desktop widths). Neither belongs in this registry even now — both cells genuinely PASS.
-const MANTINE_PATTERN_KNOWN_FAILURES = {
-  ListingDetailPattern: { followUpTask: 609, expectedFailingCells: 16, expectedFailReason: 'horizontal-overflow' },
-};
+// Task 609 fixed ListingDetailPattern's Grid-gutter horizontal-overflow (root `gutter={0}` +
+// explicit `pr`/`mb` on the left column, replacing the negative-margin gutter mechanism
+// entirely — see MantineListingDetailPattern.tsx and storybook-governance.md §14.9.20) —
+// registry is empty pending the next real defect; do not re-add an entry to mask an
+// incomplete fix.
+const MANTINE_PATTERN_KNOWN_FAILURES = {};
 
 // Derives the single primary fail reason for a cell — the first `visualIntegrity` violation's
 // `failReason` if any were recorded, else the synthetic `'horizontal-overflow'` when the plain

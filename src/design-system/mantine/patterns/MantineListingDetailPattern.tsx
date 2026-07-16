@@ -1,6 +1,6 @@
 'use client'
 
-import { Grid, Stack, Title, Text, Badge, Group, Button, Paper, SimpleGrid, Divider } from '@mantine/core'
+import { Grid, Stack, Title, Text, Badge, Flex, Button, Paper, SimpleGrid, Divider } from '@mantine/core'
 
 export interface ListingFeature {
   label: string
@@ -34,7 +34,13 @@ export interface MantineListingDetailPatternProps {
  *
  * Responsive API:
  *   - Grid cols={{ base: 1, sm: '1fr 360px' }} — Mantine Grid.
- *   - Contact buttons: `fullWidth` at base, auto at sm+.
+ *   - Contact buttons: `Flex direction={{ base: 'column', sm: 'row' }}` — full-width stacked at base
+ *     (default `align-items:stretch`), equal-width row (`style={{ flex: 1 }}` per button) at sm+.
+ *     `minWidth: 0` on the button root + its `inner`/`label` styles + an explicit wrapping `<span>`
+ *     around the label text defeat the flex-item automatic-minimum-size trap (a `display:flex`
+ *     label wrapping an unbreakable single-word Cyrillic/Italian label would otherwise refuse to
+ *     shrink below its full-word width and visually overflow the button at sm+ two-across widths —
+ *     Task 615) so long labels wrap onto a second line (button grows via `height:'auto'`) instead.
  *   - Features grid: SimpleGrid cols={{ base: 2, sm: 3 }}.
  *
  * Migration target: src/modules/listings/components/ListingDetailView.tsx (Phase 4).
@@ -126,24 +132,26 @@ export function MantineListingDetailPattern({
               {data.price}
             </Text>
             <Divider />
-            <Group gap="sm" style={{ flexDirection: 'column' }} styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row' } } }}>
+            <Flex direction={{ base: 'column', sm: 'row' }} gap="sm">
               <Button
                 color="brand"
-                fullWidth
                 size="md"
                 onClick={onCall}
+                style={{ flex: 1, minWidth: 0 }}
+                styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
-                {callLabel}
+                <span style={{ minWidth: 0, display: 'block' }}>{callLabel}</span>
               </Button>
               <Button
                 color="green"
-                fullWidth
                 size="md"
                 onClick={onWhatsApp}
+                style={{ flex: 1, minWidth: 0 }}
+                styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
               >
-                {whatsappLabel}
+                <span style={{ minWidth: 0, display: 'block' }}>{whatsappLabel}</span>
               </Button>
-            </Group>
+            </Flex>
           </Stack>
         </Paper>
       </Grid.Col>

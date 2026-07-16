@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-16 — Orchestrator: resolved the Task 612 STOP-AND-ASK (z-index).** Sonnet portaled the lightbox correctly but found (orchestrator independently confirmed by source read) that `z-toast` is DEAD CSS — the `--z-*` scale (`globals.css:245-251`) sits under the `--z-*` namespace Tailwind v4 never compiles into `z-*` utilities (no `--z-index-*` block, no `@utility`/`.z-toast{}` fallback), so it computes `z-index:auto` and the header (working core `z-30/z-50`) still covers the scrim. **Blast radius is ~1 (the lightbox), NOT sitewide** — overlays moved to Mantine + core z-classes + the `z-[9999]` escape-hatch (`Combobox.tsx:207`). **Ruling (owner steer: moving off Tailwind onto Mantine):** 612 stays NARROW — keep the portal, swap the lightbox's dead `z-toast`→allowlisted `z-[9999]`, `globals.css` untouched; do NOT revive the token scale. Updated the 612 kickoff; opened **Task 613** (deprecate the dead `--z-*` scale + reconcile `ui-rules.md §16/§12`, low-priority cleanup after 612). **Next:** hand the updated 612 back to Sonnet; 613 after 612 lands. *(Prior session — 607/608/611 APPROVED+COMMITTED+PUSHED; 609 opened — archived below.)*
+**2026-07-16 — Orchestrator: resolved the Task 612 STOP-AND-ASK, then RE-SCOPED 612 to a Mantine migration (owner decision).** Sonnet portaled the lightbox correctly but found (orchestrator confirmed by source read) that `z-toast` is DEAD CSS — the `--z-*` scale (`globals.css:245-251`) sits under the `--z-*` namespace Tailwind v4 never compiles into `z-*` utilities, so it computes `z-index:auto` and the header (working core `z-30/z-50`) covers the scrim. Blast radius ≈ 1 (this lightbox), NOT sitewide — overlays already on Mantine + core z-classes + the `z-[9999]` escape-hatch. **Owner chose (`AskUserQuestion`) to fix at the ROOT via Mantine** rather than ship a throwaway `z-[9999]`. **612 RE-SCOPED:** migrate the lightbox to a Mantine **`fullScreen Modal`** (managed z-index tier 200 > header → structural fix; NOT the `MantineModal` pattern, which forces a centered card / mobile bottom-sheet — wrong for a full-bleed media viewer) + extract a `LightboxView` presentational primitive + canonical Mantine story (closes the standing no-story/no-split gap on `ListingGallery`). Delete the hand-rolled portal/scroll-lock/Esc/backdrop (Mantine owns them), keep the Arrow-key nav. Kickoff fully rewritten. **Task 613** (deprecate the dead `--z-*` scale + reconcile `ui-rules.md §16/§12`) stays a low-priority cleanup after 612; `globals.css` untouched by 612. **Next:** hand the re-scoped 612 to Sonnet; 613 after it lands. *(Prior session — 607/608/611 APPROVED+COMMITTED+PUSHED; 609 opened — archived below.)*
 
 ## Pending Action Items
 
@@ -56,11 +56,13 @@
 remove/deprecate the DEAD `--z-*` Tailwind z-index token scale (`globals.css:245-251` is under the `--z-*` namespace
 Tailwind v4 never turns into `z-*` utilities → `z-toast`/`z-sticky`/… all compute `z-index:auto`; blast radius ≈ the
 single `ListingGallery` `z-toast`, fixed by 612, because overlays moved to Mantine + core `z-30/40/50` + the
-`z-[9999]` escape-hatch). Deprecate, do NOT revive (owner steer: moving off Tailwind onto Mantine); reconcile
-`ui-rules.md §16/§12`. LOW-PRIORITY cleanup, after 612. Kickoff
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_613_DeadZIndexTokenScaleCleanup.md`. 612 = STOP-AND-ASK RESOLVED
-2026-07-16: portal was correct but `z-toast` is dead CSS → narrow fix stays, swap `z-toast`→allowlisted `z-[9999]`
-(mirrors `Combobox.tsx:207`), `globals.css` untouched (→613); kickoff updated.) (612 = OPENED 2026-07-16 from an owner bug report —
+`z-[9999]` escape-hatch). Deprecate, do NOT revive; reconcile `ui-rules.md §16/§12`. LOW-PRIORITY cleanup, after 612. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_613_DeadZIndexTokenScaleCleanup.md`. 612 = RE-SCOPED 2026-07-16 (owner
+`AskUserQuestion`): from a portal+z-index bug-fix → **migrate the lightbox to a Mantine `fullScreen Modal`** (managed
+z-index fixes the stacking at root; NOT `MantineModal` pattern — that's a centered card / mobile bottom-sheet, wrong
+for a full-bleed media viewer) + extract `LightboxView` presentational primitive + canonical Mantine story; delete
+hand-rolled portal/scroll-lock/Esc/backdrop, keep Arrow-key nav; `globals.css` untouched (→613). Kickoff rewritten.)
+(612 = OPENED 2026-07-16 from an owner bug report —
 `ListingGallery` lightbox renders BELOW the site header + sticky contact card because it is NOT portaled
 (`fixed inset-0 z-toast` trapped in the page stacking context; `z-toast:100` can't beat root-level chrome from a
 nested context); fix = `createPortal` to `document.body`, keep the token, mandatory real-page before/after pixels.

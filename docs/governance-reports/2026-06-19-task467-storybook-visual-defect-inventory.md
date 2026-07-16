@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (295 stories, 692 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (295 stories, 900 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,8 +10,8 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 692 |
-| PASS (clean, verdict=pass) | 665 |
+| Total cells | 900 |
+| PASS (clean, verdict=pass) | 857 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
 | AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 27 |
@@ -33,6 +33,29 @@
 
 ---
 
+## Bucket 1b: Tracked known failures (Task 607 registry — real defects, dedicated follow-up task, non-blocking)
+
+| Story ID | Locale | Viewport | Screenshot | Fail Reason | Follow-up Task |
+|---|---|---|---|---|---|
+| `patterns-mantine-listingdetailpattern--default` | sq | mobile-320 | `patterns-mantine-listingdetailpattern--default__sq__mobile-320.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | sq | mobile-375 | `patterns-mantine-listingdetailpattern--default__sq__mobile-375.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | sq | mobile-390 | `patterns-mantine-listingdetailpattern--default__sq__mobile-390.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | sq | desktop-1024 | `patterns-mantine-listingdetailpattern--default__sq__desktop-1024.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | en | mobile-320 | `patterns-mantine-listingdetailpattern--default__en__mobile-320.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | en | mobile-375 | `patterns-mantine-listingdetailpattern--default__en__mobile-375.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | en | mobile-390 | `patterns-mantine-listingdetailpattern--default__en__mobile-390.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | en | desktop-1024 | `patterns-mantine-listingdetailpattern--default__en__desktop-1024.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | uk | mobile-320 | `patterns-mantine-listingdetailpattern--default__uk__mobile-320.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | uk | mobile-375 | `patterns-mantine-listingdetailpattern--default__uk__mobile-375.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | uk | mobile-390 | `patterns-mantine-listingdetailpattern--default__uk__mobile-390.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | uk | desktop-1024 | `patterns-mantine-listingdetailpattern--default__uk__desktop-1024.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | it | mobile-320 | `patterns-mantine-listingdetailpattern--default__it__mobile-320.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | it | mobile-375 | `patterns-mantine-listingdetailpattern--default__it__mobile-375.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | it | mobile-390 | `patterns-mantine-listingdetailpattern--default__it__mobile-390.png` | horizontal-overflow | Task 609 |
+| `patterns-mantine-listingdetailpattern--default` | it | desktop-1024 | `patterns-mantine-listingdetailpattern--default__it__desktop-1024.png` | horizontal-overflow | Task 609 |
+
+---
+
 ## Bucket 2: Needs-owner-decision (ambiguous third state)
 
 | Story ID | Locale | Viewport | Screenshot | Fail Reason | Selector | Label | Reason |
@@ -41,7 +64,6 @@
 | `mantine-primitives-combobox--default` | sq | mobile-320 | `mantine-primitives-combobox--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Tiranë") | "(empty)" ↔ "Tiranë" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-320 | `mantine-primitives-combobox--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Vlorë") | "(empty)" ↔ "Vlorë" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-320 | `mantine-primitives-combobox--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Shkodër") | "(empty)" ↔ "Shkodër" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-combobox--default` | sq | mobile-320 | `mantine-primitives-combobox--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Prona me qira afatgjatë pranë ") | "(empty)" ↔ "Prona me qira afatgjatë pranë qendrës historike të qytetit m" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-375 | `mantine-primitives-combobox--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-375 | `mantine-primitives-combobox--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Të gjitha qytetet") | "(empty)" ↔ "Të gjitha qytetet" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-375 | `mantine-primitives-combobox--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Durrës") | "(empty)" ↔ "Durrës" | background page content behind an opened overlay's backdrop |
@@ -51,13 +73,11 @@
 | `mantine-primitives-combobox--default` | sq | mobile-390 | `mantine-primitives-combobox--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-390 | `mantine-primitives-combobox--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Tiranë") | "(empty)" ↔ "Tiranë" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-390 | `mantine-primitives-combobox--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Durrës") | "(empty)" ↔ "Durrës" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-combobox--default` | sq | mobile-390 | `mantine-primitives-combobox--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Shkodër") | "(empty)" ↔ "Shkodër" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | sq | mobile-390 | `mantine-primitives-combobox--default__sq__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Prona me qira afatgjatë pranë ") | "(empty)" ↔ "Prona me qira afatgjatë pranë qendrës historike të qytetit m" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-320 | `mantine-primitives-combobox--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("All cities") | "(empty)" ↔ "All cities" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-320 | `mantine-primitives-combobox--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Tirana") | "(empty)" ↔ "Tirana" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-320 | `mantine-primitives-combobox--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Vlorë") | "(empty)" ↔ "Vlorë" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-320 | `mantine-primitives-combobox--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Shkodër") | "(empty)" ↔ "Shkodër" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-combobox--default` | en | mobile-320 | `mantine-primitives-combobox--default__en__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Long-term rental properties ne") | "(empty)" ↔ "Long-term rental properties near the historic city center wi" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-375 | `mantine-primitives-combobox--default__en__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-375 | `mantine-primitives-combobox--default__en__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("All cities") | "(empty)" ↔ "All cities" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-375 | `mantine-primitives-combobox--default__en__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Durrës") | "(empty)" ↔ "Durrës" | background page content behind an opened overlay's backdrop |
@@ -67,14 +87,12 @@
 | `mantine-primitives-combobox--default` | en | mobile-390 | `mantine-primitives-combobox--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-390 | `mantine-primitives-combobox--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Tirana") | "(empty)" ↔ "Tirana" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-390 | `mantine-primitives-combobox--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Durrës") | "(empty)" ↔ "Durrës" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-combobox--default` | en | mobile-390 | `mantine-primitives-combobox--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Shkodër") | "(empty)" ↔ "Shkodër" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | en | mobile-390 | `mantine-primitives-combobox--default__en__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Long-term rental properties ne") | "(empty)" ↔ "Long-term rental properties near the historic city center wi" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-320 | `mantine-primitives-combobox--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "Обрати місто" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-320 | `mantine-primitives-combobox--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Усі міста") | "(empty)" ↔ "Усі міста" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-320 | `mantine-primitives-combobox--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Тирана") | "(empty)" ↔ "Тирана" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-320 | `mantine-primitives-combobox--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Шкодер") | "(empty)" ↔ "Шкодер" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-320 | `mantine-primitives-combobox--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("СарандаПрибережне") | "(empty)" ↔ "СарандаПрибережне" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-combobox--default` | uk | mobile-320 | `mantine-primitives-combobox--default__uk__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Довгострокова оренда нерухомос") | "(empty)" ↔ "Довгострокова оренда нерухомості поблизу історичного центру " | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-375 | `mantine-primitives-combobox--default__uk__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-375 | `mantine-primitives-combobox--default__uk__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Усі міста") | "(empty)" ↔ "Усі міста" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | uk | mobile-375 | `mantine-primitives-combobox--default__uk__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Влера") | "(empty)" ↔ "Влера" | background page content behind an opened overlay's backdrop |
@@ -91,7 +109,6 @@
 | `mantine-primitives-combobox--default` | it | mobile-320 | `mantine-primitives-combobox--default__it__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Tirana") | "(empty)" ↔ "Tirana" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-320 | `mantine-primitives-combobox--default__it__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Valona") | "(empty)" ↔ "Valona" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-320 | `mantine-primitives-combobox--default__it__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Scutari") | "(empty)" ↔ "Scutari" | background page content behind an opened overlay's backdrop |
-| `mantine-primitives-combobox--default` | it | mobile-320 | `mantine-primitives-combobox--default__it__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ button("Immobili in affitto a lungo te") | "(empty)" ↔ "Immobili in affitto a lungo termine vicino al centro storico" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-375 | `mantine-primitives-combobox--default__it__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "(empty)" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-375 | `mantine-primitives-combobox--default__it__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Tutte le città") | "(empty)" ↔ "Tutte le città" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-375 | `mantine-primitives-combobox--default__it__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ button("Valona") | "(empty)" ↔ "Valona" | background page content behind an opened overlay's backdrop |

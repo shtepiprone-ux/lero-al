@@ -1,17 +1,18 @@
 /**
- * ListingCard — vertical Mantine migration regression guard (Task 602).
+ * ListingCard — vertical + horizontal Mantine migration regression guard (Tasks 602, 608).
  *
- * The vertical branch (default / grid view) now renders `MantineListingCardPattern`
- * (Card/Image/Stack + slot props) instead of the legacy hand-rolled markup; the horizontal
- * branch (`variant="horizontal"`, the `/listings` List view — `ListingsShell.tsx`) is
- * untouched. This mounts the REAL `ListingCard` under a REAL `NextIntlClientProvider` and
+ * Both the vertical branch (default / grid view) and the horizontal branch
+ * (`variant="horizontal"`, the `/listings` List view — `ListingsShell.tsx`) now render
+ * `MantineListingCardPattern` (`layout="grid"`/`layout="list"`) instead of hand-rolled
+ * markup. This mounts the REAL `ListingCard` under a REAL `NextIntlClientProvider` and
  * asserts:
  *   1. the vertical card renders every preserved content item through the new pattern
  *      (type label, title, price, features, location, badges, copy-id, date);
  *   2. a reduced-price listing (`price_old > price`) shows the old price struck through
  *      (`line-through`) next to the new price — a plain-price listing shows no strike;
- *   3. the horizontal branch still renders (List view regression guard) — unaffected by
- *      the vertical branch's migration to the Mantine pattern.
+ *   3. the horizontal branch renders every preserved content item through
+ *      `MantineListingCardPattern layout="list"` (title, price, favorite control, copy-id
+ *      button, features, badges) — Task 608 migration regression guard.
  */
 
 import React from 'react'
@@ -182,18 +183,71 @@ describe('ListingCard — vertical branch (Mantine pattern, default)', () => {
   })
 })
 
-describe('ListingCard — horizontal branch (List view, unchanged — regression guard)', () => {
-  it('still renders with variant="horizontal" after the vertical-branch migration', () => {
+describe('ListingCard — horizontal branch (List view, MantineListingCardPattern layout="list", Task 608)', () => {
+  it('renders the preserved content set through MantineListingCardPattern layout="list"', () => {
     renderCard(BASE_LISTING, 'en', { variant: 'horizontal' })
 
+    // Title + type label
     expect(screen.getByText('Modern Apartment in Tirana')).toBeInTheDocument()
+    expect(screen.getByText('For sale · Apartment')).toBeInTheDocument()
+
+    // Price
     expect(screen.getByText('80,000 EUR')).toBeInTheDocument()
-    expect(screen.getByRole('link')).toHaveClass('listing-card--horizontal')
+
+    // Location
+    expect(screen.getByText('Tiranë, Shqipëri')).toBeInTheDocument()
+
+    // Features row
+    expect(screen.getByText('80 m²')).toBeInTheDocument()
+
+    // Copy-ID button (public_id)
+    expect(screen.getByLabelText('Copy listing ID')).toBeInTheDocument()
+    expect(screen.getByText('#1234')).toBeInTheDocument()
+
+    // Nav wrapper — Link with tracking attributes + the horizontal class marker
+    const link = screen.getByRole('link')
+    expect(link).toHaveAttribute('href', '/en/listings/modern-apartment-tirana')
+    expect(link).toHaveAttribute('data-track', 'listing_click')
+    expect(link).toHaveAttribute('data-listing-slug', 'modern-apartment-tirana')
+    expect(link).toHaveClass('listing-card--horizontal')
+
+    // Favorite control (real FavoriteButton, inline — not dropped by the migration)
+    expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument()
+
+    // No photo-count pill in the list row (the ported legacy design never had one)
+    expect(screen.queryByText('2')).not.toBeInTheDocument()
   })
 
-  it('horizontal branch also shows the reduced-price strike-through (legacy PriceBlock, untouched)', () => {
+  it('reduced-price listing shows old price struck through + the price_reduced badge', () => {
     renderCard({ ...BASE_LISTING, price: 80000, price_old: 92000 }, 'en', { variant: 'horizontal' })
-    expect(screen.getByText('92,000 EUR')).toBeInTheDocument()
+
+    expect(screen.getByText('80,000 EUR')).toBeInTheDocument()
+    const oldPrice = screen.getByText('92,000 EUR')
+    expect(oldPrice).toBeInTheDocument()
+    expect(oldPrice).toHaveClass('line-through')
+    expect(screen.getByText('Price reduced')).toBeInTheDocument()
+  })
+
+  it('sold listing: favorite disabled with disabledLabel, badge shows, nav still allowed', () => {
+    renderCard({ ...BASE_LISTING, status: 'sold' }, 'en', { variant: 'horizontal' })
+
+    expect(screen.getByText('Sold')).toBeInTheDocument()
+    const favorite = screen.getByLabelText('This listing has been sold')
+    expect(favorite).toBeDisabled()
+    expect(screen.getByRole('link')).toHaveAttribute('href', '/en/listings/modern-apartment-tirana')
+  })
+
+  it('no-image listing renders the fallback, not a broken image', () => {
+    renderCard({ ...BASE_LISTING, images: [] }, 'en', { variant: 'horizontal' })
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
+
+  it('archived listing renders the archived badge + dimmed card', () => {
+    renderCard({ ...BASE_LISTING, status: 'archived' }, 'en', { variant: 'horizontal' })
+
+    expect(screen.getByText('Archived')).toBeInTheDocument()
+    const link = screen.getByRole('link')
+    expect(link.querySelector('.grayscale.opacity-60')).toBeInTheDocument()
   })
 })
 

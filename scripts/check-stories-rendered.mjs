@@ -260,7 +260,57 @@ const LOADER_ALLOWLIST = new Set([
 // in ASSERT_STORIES, and Phase 2's "geometry-only" coverage (below) never opens overlays, so
 // footer/radius-class defects — which only render once an overlay is OPENED — could never be
 // caught by any prior mechanism (docs/sessions/2026-07-02-task528-*.md lines 108-117).
-const MANTINE_PRIMITIVES_TITLE_PREFIX = 'Mantine/Primitives/';
+// Task 607 — extended from a single prefix to a LIST so the same enforced gate also covers
+// `Patterns/Mantine/*` (13 composite patterns, e.g. `Patterns/Mantine/ListingCardPattern`),
+// which was previously invisible to this gate and fell into the weaker geometry-only phase
+// (no render/anchor/style assertions, no --mantine-only coverage at all). Purely prefix-derived
+// — no hardcoded story-id allowlist — so a future `Patterns/Mantine/*` story is covered
+// automatically, preserving the Task 529 no-drift discipline.
+const MANTINE_STORY_TITLE_PREFIXES = ['Mantine/Primitives/', 'Patterns/Mantine/'];
+
+// Task 607 — tracked known-failure registry for `Patterns/Mantine/*` stories with an
+// ALREADY-FILED, REAL defect this task's coverage extension surfaced (not a gate false
+// positive). `--mantine-only` is a hard-blocking CI gate (.github/workflows/governance-pr.yml)
+// — allowlisting a TRUE positive here would be exactly the "ship invisibly" failure mode this
+// task exists to close (the `LOADER_ALLOWLIST` precedent is for FALSE positives only and does
+// NOT apply to real defects; owner decision, Task 607 review, 2026-07-15).
+//
+// Each entry pins the EXACT failure signature captured at the moment the defect was found and
+// filed as its own dedicated follow-up task. A matching cell still fails, still prints loudly
+// (see the "tracked known-failures" report section), and still shows `verdict: 'known-failure'`
+// (never `'pass'`) in the manifest — it is excluded from the CI-blocking `failed` count ONLY
+// when the actual failure for that story matches the pinned signature exactly (same failing-cell
+// count AND the same single primary fail reason across all of them). ANY divergence — fewer
+// failures (looks fixed), more failures, or a different fail reason — is NOT covered by the
+// entry and reverts to a normal hard, CI-blocking failure with a loud signature-mismatch
+// message, so this mechanism can never silently mask a NEW or WORSE regression.
+// AdminSurfacePattern (element-overlap) and AppShellFoundation (offscreen-control) are
+// DELIBERATELY NOT in this registry — Task 607 held both, pending owner pixel-review (§18.9),
+// as very likely gate-heuristic false positives / open-trigger cases, NOT confirmed real
+// defects. Task 611 confirmed both from the rendered pixels (Task 607 session log) and fixed
+// the GATE itself (never a per-story allowlist, which is reserved for confirmed real defects
+// only, same as this comment already said): AdminSurfacePattern via a generic bbox-containment
+// guard in `geometry-integrity.mjs`'s element-overlap check (Check 4), AppShellFoundation via
+// adding it to `MANTINE_OVERLAY_PRIMITIVES` below plus a trigger-visibility skip in
+// `captureCell`'s openTrigger handling (the Burger is `hiddenFrom="sm"`, legitimately absent at
+// desktop widths). Neither belongs in this registry even now — both cells genuinely PASS.
+const MANTINE_PATTERN_KNOWN_FAILURES = {
+  ListingDetailPattern: { followUpTask: 609, expectedFailingCells: 16, expectedFailReason: 'horizontal-overflow' },
+};
+
+// Derives the single primary fail reason for a cell — the first `visualIntegrity` violation's
+// `failReason` if any were recorded, else the synthetic `'horizontal-overflow'` when the plain
+// `noHorizontalOverflow` boolean assertion tripped with no other geometry violation, else the
+// DOM render-check's own `failReason`, else `'unknown'`. Used only to compare against the
+// `MANTINE_PATTERN_KNOWN_FAILURES` registry above — never affects a cell's own verdict directly.
+function getPrimaryFailReason(cell) {
+  if (cell.assertions?.visualIntegrity?.violations?.length > 0) {
+    return cell.assertions.visualIntegrity.violations[0].failReason;
+  }
+  if (cell.assertions?.noHorizontalOverflow === false) return 'horizontal-overflow';
+  if (cell.assertions?.renderCheck?.failReason) return cell.assertions.renderCheck.failReason;
+  return 'unknown';
+}
 
 // Overlay primitives whose defect class (footer gap, radius, crash-on-open) only manifests
 // once OPENED — asserted via a scripted trigger click before the render/anchor/style/geometry
@@ -270,6 +320,26 @@ const MANTINE_PRIMITIVES_TITLE_PREFIX = 'Mantine/Primitives/';
 const MANTINE_OVERLAY_PRIMITIVES = new Set([
   'Modal', 'Drawer', 'Popover', 'DropdownMenu', 'NavigationMenu', 'Select', 'Tooltip', 'Combobox',
   'NotificationBellView',
+  // Task 607 — `Patterns/Mantine/DialogDrawerPattern` is a real controlled overlay
+  // (`useDisclosure(false)` + a closed-trigger `<Button onClick={open}>`), the exact same
+  // lifecycle as Modal/Drawer above — click the trigger, the overlay opens and stays open,
+  // then assert. Reuses the proven click-then-assert path with zero new heuristic (owner
+  // decision at the Task 607 kickoff). `NotificationPattern` was explicitly NOT added here —
+  // its trigger calls the imperative `notifications.show()` API (an auto-dismissing toast
+  // portal, not a controlled overlay bound to the trigger), which is a different mechanism
+  // and a flaky-assert risk; deferred to a dedicated follow-up.
+  'DialogDrawerPattern',
+  // Task 611 — `Patterns/Mantine/AppShellFoundation` is mechanically identical to
+  // DialogDrawerPattern above: `useDisclosure()` defaults CLOSED, and the navbar is
+  // `collapsed:{mobile:!opened}` (off-canvas at <640 until the Burger is tapped). Owner
+  // adjudication (Task 607 review, personally viewed the rendered pixels, 2026-07-15) found
+  // the 12 mobile `offscreen-control` fails were an open-trigger gap, not a real defect —
+  // same click-then-assert path, zero new heuristic. Unlike DialogDrawerPattern's trigger
+  // (a plain always-rendered `<Button>`), the Burger is `hiddenFrom="sm"` (CSS `display:none`
+  // at >=640px) — see the trigger-visibility skip in captureCell's openTrigger handling below,
+  // added specifically because this component's trigger is legitimately absent at desktop
+  // widths where the navbar is already open by default.
+  'AppShellFoundation',
 ]);
 
 // Minimum enforced viewport set for the Mantine-primitives gate (agent-contract clause 12
@@ -288,7 +358,7 @@ const MANTINE_VIEWPORTS = [
 // ── Task 573 — per-story extra viewport for the Mantine gate (surgical, NOT global) ──
 // Keyed by the SAME `componentName` discoverMantinePrimitiveStories() derives from the story
 // title suffix — never a hardcoded story id (matches this file's existing no-hardcode
-// discipline, see the Task 529 doc note above `MANTINE_PRIMITIVES_TITLE_PREFIX`). For each
+// discipline, see the Task 529 doc note above `MANTINE_STORY_TITLE_PREFIXES`). For each
 // discovered Mantine story, the effective viewport list is `MANTINE_VIEWPORTS` concatenated
 // with `MANTINE_STORY_EXTRA_VIEWPORTS[componentName] ?? []` — only the named component(s) gain
 // extra cells; every other Mantine primitive story is byte-identical (still exactly
@@ -308,14 +378,17 @@ const MANTINE_STORY_EXTRA_VIEWPORTS = {
 };
 
 /**
- * Reads the already-parsed Storybook index and returns every `Mantine/Primitives/*` story,
- * flagging the ones that need a scripted open-trigger click. Never hardcodes story IDs.
+ * Reads the already-parsed Storybook index and returns every story whose title starts with ANY
+ * of `MANTINE_STORY_TITLE_PREFIXES` (`Mantine/Primitives/*` and, since Task 607,
+ * `Patterns/Mantine/*`), flagging the ones that need a scripted open-trigger click. Never
+ * hardcodes story IDs — a future story under either prefix is covered automatically.
  */
 function discoverMantinePrimitiveStories(indexData) {
   return Object.values(indexData.entries)
-    .filter((e) => e.type === 'story' && (e.title ?? '').startsWith(MANTINE_PRIMITIVES_TITLE_PREFIX))
+    .filter((e) => e.type === 'story' && MANTINE_STORY_TITLE_PREFIXES.some(p => (e.title ?? '').startsWith(p)))
     .map((e) => {
-      const componentName = e.title.slice(MANTINE_PRIMITIVES_TITLE_PREFIX.length);
+      const matchedPrefix = MANTINE_STORY_TITLE_PREFIXES.find(p => e.title.startsWith(p));
+      const componentName = e.title.slice(matchedPrefix.length);
       return {
         id: e.id,
         label: `${e.title}/${e.name}`,
@@ -758,23 +831,38 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     // (no `<button>`, no `role="combobox"` in this Mantine version — confirmed via DOM
     // inspection, not assumed). `.first()` in DOM order picks the story's first trigger. ──
     if (story.openTrigger) {
-      try {
-        const trigger = page.locator('#storybook-root button, #storybook-root input').first();
-        await trigger.click({ timeout: 5000 });
-        await page.waitForTimeout(500);
-      } catch (err) {
-        cell.assertions.renderCheck = {
-          pageErrors: [], consoleErrors: [], domFailed: true,
-          failReason: 'open-trigger-click-failed',
-          failDetail: String(err?.message ?? err).slice(0, 200),
-        };
-        cell.pass = false;
-        cell.verdict = 'fail';
+      const trigger = page.locator('#storybook-root button, #storybook-root input').first();
+      // Task 611 — a trigger can legitimately be ABSENT at a given viewport (e.g.
+      // AppShellFoundation's Burger is `hiddenFrom="sm"`, CSS `display:none` at >=640px,
+      // because the navbar it opens is already shown by default there — nothing to open).
+      // `isVisible()` is a synchronous DOM check, no wait: distinguishes "not clickable
+      // because responsive-hidden" from "not clickable because broken". Only a VISIBLE
+      // trigger that still fails to click is a real hard failure — every existing overlay
+      // primitive's trigger (Modal/Drawer/Popover/Select/DropdownMenu/NavigationMenu/Tooltip/
+      // Combobox/NotificationBellView/DialogDrawerPattern) is a plain always-rendered
+      // `<Button>`, so this is visible (and thus clicked, exactly as before) at every
+      // viewport — this change is a no-op for all of them. Skipping the click here is NOT a
+      // skip of the cell's checks: render/anchor/style/geometry assertions below still run
+      // against the current DOM, so a genuinely broken/empty render still fails.
+      const triggerVisible = (await trigger.count()) > 0 && await trigger.isVisible();
+      if (triggerVisible) {
         try {
-          await page.screenshot({ path: screenshotPath, fullPage: false });
-          cell.visualContentCheck = await assertScreenshotHasMeaningfulPixels(screenshotPath);
-        } catch { /* best-effort screenshot on click failure */ }
-        return cell;
+          await trigger.click({ timeout: 5000 });
+          await page.waitForTimeout(500);
+        } catch (err) {
+          cell.assertions.renderCheck = {
+            pageErrors: [], consoleErrors: [], domFailed: true,
+            failReason: 'open-trigger-click-failed',
+            failDetail: String(err?.message ?? err).slice(0, 200),
+          };
+          cell.pass = false;
+          cell.verdict = 'fail';
+          try {
+            await page.screenshot({ path: screenshotPath, fullPage: false });
+            cell.visualContentCheck = await assertScreenshotHasMeaningfulPixels(screenshotPath);
+          } catch { /* best-effort screenshot on click failure */ }
+          return cell;
+        }
       }
     }
 
@@ -1231,9 +1319,9 @@ async function runAssert() {
     // index is stale/wrong) is a DIFFERENT failure mode than "index unreadable" above, and needs
     // its own loud, non-zero-exit error — never a silent pass.
     if (mantineStories.length === 0) {
-      console.error('❌ Task 529 gate: discovered ZERO "Mantine/Primitives/*" stories from the built index.');
-      console.error(`   Checked: ${indexPath} — filtering entries with type==='story' and title starting with "${MANTINE_PRIMITIVES_TITLE_PREFIX}".`);
-      console.error('   This is a hard error, not a skip — either the index is stale/wrong, or the title prefix no longer matches story titles.');
+      console.error(`❌ Task 529/607 gate: discovered ZERO stories matching any of [${MANTINE_STORY_TITLE_PREFIXES.join(', ')}] from the built index.`);
+      console.error(`   Checked: ${indexPath} — filtering entries with type==='story' and title starting with one of the prefixes above.`);
+      console.error('   This is a hard error, not a skip — either the index is stale/wrong, or a title prefix no longer matches story titles.');
       process.exitCode = 1;
       return;
     }
@@ -1250,7 +1338,7 @@ async function runAssert() {
       0
     );
     const totalMantineCells = mantineStories.length * LOCALES.length * MANTINE_VIEWPORTS.length + extraMantineCellCount;
-    console.log(`    Mantine/Primitives/* stories (Task 529 ENFORCED gate, always runs incl. --fast): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
+    console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
     console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
     console.log('');
 
@@ -1400,11 +1488,36 @@ async function runAssert() {
 
     console.log('\n');
 
+    // ── Task 607 — reconcile the tracked known-failure registry against actual results ──
+    // Runs once, after every cell has been captured, so the reconciliation always sees the
+    // FULL set of failing cells per story (never a partial/in-progress view).
+    for (const [componentName, entry] of Object.entries(MANTINE_PATTERN_KNOWN_FAILURES)) {
+      const prefix = `Patterns/Mantine/${componentName}/`;
+      const failingCells = matrix.filter(c => c.story.startsWith(prefix) && c.verdict === 'fail');
+      const reasons = new Set(failingCells.map(getPrimaryFailReason));
+      const signatureMatches = failingCells.length === entry.expectedFailingCells &&
+        reasons.size === 1 && reasons.has(entry.expectedFailReason);
+
+      if (failingCells.length === 0) continue; // nothing to reconcile (also covers "already fixed")
+
+      if (signatureMatches) {
+        for (const c of failingCells) {
+          c.verdict = 'known-failure';
+          c.knownFailureTask = entry.followUpTask;
+        }
+        console.log(`ℹ️  ${componentName}: ${failingCells.length} cells match the tracked known-failure signature (Task ${entry.followUpTask}, "${entry.expectedFailReason}") — excluded from the blocking count, still listed below.`);
+      } else {
+        console.error(`❌ TRACKED KNOWN-FAILURE SIGNATURE CHANGED for ${componentName} (Task ${entry.followUpTask}): expected ${entry.expectedFailingCells} cells failing with "${entry.expectedFailReason}", found ${failingCells.length} cells failing with reason(s) [${[...reasons].join(', ')}]. Treating as a hard, BLOCKING failure — this may be a NEW or WORSE regression, do not assume it is still the original known issue.`);
+      }
+    }
+
     // ── Emit manifest.json with summary ─────────────────────────────────
     const outOfRange = matrix.filter(c => c.verdict === 'out-of-range').length;
     const passed  = matrix.filter(c => c.verdict === 'pass').length;
-    // Defensive: any cell with pass=false that isn't explicitly ambiguous or out-of-range is a hard fail
-    const failed  = matrix.filter(c => c.verdict === 'fail' || (c.pass === false && c.verdict !== 'ambiguous' && c.verdict !== 'out-of-range')).length;
+    const knownFailureCount = matrix.filter(c => c.verdict === 'known-failure').length;
+    // Defensive: any cell with pass=false that isn't explicitly ambiguous, out-of-range, or a
+    // reconciled known-failure (Task 607) is a hard fail
+    const failed  = matrix.filter(c => c.verdict === 'fail' || (c.pass === false && c.verdict !== 'ambiguous' && c.verdict !== 'out-of-range' && c.verdict !== 'known-failure')).length;
     const ambiguousOnlyCount = matrix.filter(c => c.verdict === 'ambiguous').length;
     const total   = matrix.length;
 
@@ -1413,6 +1526,7 @@ async function runAssert() {
       passed,
       failed,
       outOfRange,
+      knownFailure: knownFailureCount,
       ambiguousOnly: ambiguousOnlyCount,
       loaderOnly:          matrix.filter(c => c.assertions?.renderCheck?.failReason === 'loader-only').length,
       blankCanvas:         matrix.filter(c => c.assertions?.renderCheck?.failReason === 'blank-canvas').length,
@@ -1492,6 +1606,18 @@ async function runAssert() {
     }
     if (hardCells.length === 0) inventoryLines.push('| *(none)* | | | | | | |');
 
+    inventoryLines.push('', '---', '', '## Bucket 1b: Tracked known failures (Task 607 registry — real defects, dedicated follow-up task, non-blocking)', '',
+      '| Story ID | Locale | Viewport | Screenshot | Fail Reason | Follow-up Task |',
+      '|---|---|---|---|---|---|');
+    const knownFailureCells = matrix.filter(c => c.verdict === 'known-failure' && !c.storyId?.startsWith('planted-'));
+    for (const c of knownFailureCells) {
+      const reasons = [];
+      for (const v of (c.assertions?.visualIntegrity?.violations ?? [])) reasons.push(`${v.failReason}: ${stableSelector(v.selector)}`);
+      if (c.assertions?.noHorizontalOverflow === false) reasons.push('horizontal-overflow');
+      inventoryLines.push(`| \`${c.storyId}\` | ${c.locale} | ${c.viewport} | \`${c.screenshot}\` | ${reasons.join('; ') || '(render/visual)'} | Task ${c.knownFailureTask} |`);
+    }
+    if (knownFailureCells.length === 0) inventoryLines.push('| *(none)* | | | | | |');
+
     inventoryLines.push('', '---', '', '## Bucket 2: Needs-owner-decision (ambiguous third state)', '',
       '| Story ID | Locale | Viewport | Screenshot | Fail Reason | Selector | Label | Reason |',
       '|---|---|---|---|---|---|---|---|');
@@ -1562,7 +1688,7 @@ async function runAssert() {
     writeFileSync(inventoryPath, inventoryLines.join('\n') + '\n', 'utf8');
     console.log(`Inventory: docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md`);
 
-    console.log(`Results: ${passed}/${total} PASS, ${failed} FAIL${outOfRange > 0 ? `, ${outOfRange} OUT-OF-RANGE` : ''}${ambiguousOnlyCount > 0 ? `, ${ambiguousOnlyCount} AMBIGUOUS (needs-owner-decision)` : ''}`);
+    console.log(`Results: ${passed}/${total} PASS, ${failed} FAIL${outOfRange > 0 ? `, ${outOfRange} OUT-OF-RANGE` : ''}${ambiguousOnlyCount > 0 ? `, ${ambiguousOnlyCount} AMBIGUOUS (needs-owner-decision)` : ''}${knownFailureCount > 0 ? `, ${knownFailureCount} KNOWN-FAILURE (tracked, Task 607)` : ''}`);
     if (summary.loaderOnly > 0) console.log(`  loader-only: ${summary.loaderOnly}`);
     if (summary.blankCanvas > 0) console.log(`  blank-canvas: ${summary.blankCanvas}`);
     if (summary.emptyCanvas > 0) console.log(`  empty-canvas: ${summary.emptyCanvas}`);
@@ -1632,6 +1758,12 @@ async function runAssert() {
         }
         if (outOfRange > 20) console.log(`  … and ${outOfRange - 20} more`);
       }
+      if (knownFailureCount > 0) {
+        console.log(`\n📌 ${knownFailureCount} cells are TRACKED KNOWN FAILURES (Task 607 registry, non-blocking, real defects with a dedicated follow-up task — NOT fixed here):`);
+        for (const cell of matrix.filter(c => c.verdict === 'known-failure')) {
+          console.log(`  ${cell.story} × ${cell.locale} × ${cell.viewport} — Task ${cell.knownFailureTask}`);
+        }
+      }
       // Task 418 REWORK (P1-a): set exitCode + return (not process.exit) so the
       // `finally` below still runs `browser?.close()` / `server?.close()` on FAIL.
       process.exitCode = 1;
@@ -1640,6 +1772,13 @@ async function runAssert() {
 
     if (outOfRange > 0) {
       console.log(`\nℹ️  ${outOfRange} cells are out-of-viewport-range (verdict=out-of-range, not product defects).`);
+    }
+
+    if (knownFailureCount > 0) {
+      console.log(`\n📌 ${knownFailureCount} cells are TRACKED KNOWN FAILURES (Task 607 registry, non-blocking, real defects with a dedicated follow-up task — NOT fixed here):`);
+      for (const cell of matrix.filter(c => c.verdict === 'known-failure')) {
+        console.log(`  ${cell.story} × ${cell.locale} × ${cell.viewport} — Task ${cell.knownFailureTask}`);
+      }
     }
 
     if (ambiguousOnlyCount > 0) {

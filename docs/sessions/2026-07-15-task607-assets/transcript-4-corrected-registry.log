@@ -1,0 +1,257 @@
+📸  Starting rendered assertion (full mode)
+    Assert stories: 85 | Viewports: 14 | Locales: 4
+    Output: .screenshots/rendered-assert/2026-07-15T19-36/
+
+    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: Mantine/Primitives/, Patterns/Mantine/): 56 (900 cells @ 320/375/390/1024 × 4 locales + 4 per-story extra-viewport cells (Task 573); 10 overlay stories asserted OPENED via scripted click)
+    Geometry-only stories: 154 (1848 cells at 320/375/390 × 4 locales)
+
+  mantine: ✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓~✓✓✓✓✓✓✓✓✓✓✓???✓???✓???✓???✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓???✓???✓???✓???✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓?✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✓✗✗✗✓✗✗✗✓✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✗✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓✓
+
+
+ℹ️  ListingDetailPattern: 16 cells match the tracked known-failure signature (Task 609, "horizontal-overflow") — excluded from the blocking count, still listed below.
+Inventory: docs/governance-reports/2026-06-19-task467-storybook-visual-defect-inventory.md
+Results: 829/900 PASS, 28 FAIL, 27 AMBIGUOUS (needs-owner-decision), 16 KNOWN-FAILURE (tracked, Task 607)
+  offscreen-control: 12
+  element-overlap: 16
+  ambiguous-overlap: 27
+flaky-recovered: 1
+  Recovered cells (passed only after retry):
+    Mantine/Primitives/Checkbox/Default × en × mobile-320 (retries: 1)
+Manifest: .screenshots/rendered-assert/2026-07-15T19-36/manifest.json
+PNGs: .screenshots/rendered-assert/2026-07-15T19-36/*.png
+
+❌ Failed cells:
+  Patterns/Mantine/AdminSurfacePattern/Default × sq × mobile-320
+    ✗ geometry [element-overlap]: #mantine-b8c4y12jk ↔ button — "(empty)" ↔ "Kërko..."
+  Patterns/Mantine/AdminSurfacePattern/Default × sq × mobile-375
+    ✗ geometry [element-overlap]: #mantine-twvvevw20 ↔ button — "(empty)" ↔ "Kërko..."
+  Patterns/Mantine/AdminSurfacePattern/Default × sq × mobile-390
+    ✗ geometry [element-overlap]: #mantine-d0adx4xug ↔ button — "(empty)" ↔ "Kërko..."
+  Patterns/Mantine/AdminSurfacePattern/Default × sq × desktop-1024
+    ✗ geometry [element-overlap]: #mantine-u9w8klumz ↔ button — "(empty)" ↔ "Kërko..."
+  Patterns/Mantine/AdminSurfacePattern/Default × en × mobile-320
+    ✗ geometry [element-overlap]: #mantine-fyvx3eklf ↔ button — "(empty)" ↔ "Search..."
+  Patterns/Mantine/AdminSurfacePattern/Default × en × mobile-375
+    ✗ geometry [element-overlap]: #mantine-ttp1dcl45 ↔ button — "(empty)" ↔ "Search..."
+  Patterns/Mantine/AdminSurfacePattern/Default × en × mobile-390
+    ✗ geometry [element-overlap]: #mantine-clvwkov9g ↔ button — "(empty)" ↔ "Search..."
+  Patterns/Mantine/AdminSurfacePattern/Default × en × desktop-1024
+    ✗ geometry [element-overlap]: #mantine-y5p7x3mvw ↔ button — "(empty)" ↔ "Search..."
+  Patterns/Mantine/AdminSurfacePattern/Default × uk × mobile-320
+    ✗ geometry [element-overlap]: #mantine-13suj4zrz ↔ button — "(empty)" ↔ "Пошук..."
+  Patterns/Mantine/AdminSurfacePattern/Default × uk × mobile-375
+    ✗ geometry [element-overlap]: #mantine-xozcai88d ↔ button — "(empty)" ↔ "Пошук..."
+  Patterns/Mantine/AdminSurfacePattern/Default × uk × mobile-390
+    ✗ geometry [element-overlap]: #mantine-hcixx8mdh ↔ button — "(empty)" ↔ "Пошук..."
+  Patterns/Mantine/AdminSurfacePattern/Default × uk × desktop-1024
+    ✗ geometry [element-overlap]: #mantine-uthbbyb6h ↔ button — "(empty)" ↔ "Пошук..."
+  Patterns/Mantine/AdminSurfacePattern/Default × it × mobile-320
+    ✗ geometry [element-overlap]: #mantine-77igzi2ux ↔ button — "(empty)" ↔ "Cerca..."
+  Patterns/Mantine/AdminSurfacePattern/Default × it × mobile-375
+    ✗ geometry [element-overlap]: #mantine-f2d7rthu3 ↔ button — "(empty)" ↔ "Cerca..."
+  Patterns/Mantine/AdminSurfacePattern/Default × it × mobile-390
+    ✗ geometry [element-overlap]: #mantine-rvbaurf5l ↔ button — "(empty)" ↔ "Cerca..."
+  Patterns/Mantine/AdminSurfacePattern/Default × it × desktop-1024
+    ✗ geometry [element-overlap]: #mantine-kv1a93wsj ↔ button — "(empty)" ↔ "Cerca..."
+  Patterns/Mantine/AppShellFoundation/Default × sq × mobile-320
+    ✗ geometry [offscreen-control]: a("Kreu") — Kreu
+    ✗ geometry [offscreen-control]: a("Njoftime") — Njoftime
+    ✗ geometry [offscreen-control]: a("Kontakto") — Kontakto
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × sq × mobile-375
+    ✗ geometry [offscreen-control]: a("Kreu") — Kreu
+    ✗ geometry [offscreen-control]: a("Njoftime") — Njoftime
+    ✗ geometry [offscreen-control]: a("Kontakto") — Kontakto
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × sq × mobile-390
+    ✗ geometry [offscreen-control]: a("Kreu") — Kreu
+    ✗ geometry [offscreen-control]: a("Njoftime") — Njoftime
+    ✗ geometry [offscreen-control]: a("Kontakto") — Kontakto
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × en × mobile-320
+    ✗ geometry [offscreen-control]: a("Home") — Home
+    ✗ geometry [offscreen-control]: a("Listings") — Listings
+    ✗ geometry [offscreen-control]: a("Contact") — Contact
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × en × mobile-375
+    ✗ geometry [offscreen-control]: a("Home") — Home
+    ✗ geometry [offscreen-control]: a("Listings") — Listings
+    ✗ geometry [offscreen-control]: a("Contact") — Contact
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × en × mobile-390
+    ✗ geometry [offscreen-control]: a("Home") — Home
+    ✗ geometry [offscreen-control]: a("Listings") — Listings
+    ✗ geometry [offscreen-control]: a("Contact") — Contact
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × uk × mobile-320
+    ✗ geometry [offscreen-control]: a("Головна") — Головна
+    ✗ geometry [offscreen-control]: a("Оголошення") — Оголошення
+    ✗ geometry [offscreen-control]: a("Контакти") — Контакти
+    ✗ geometry [offscreen-control]: a("Адмін") — Адмін
+  Patterns/Mantine/AppShellFoundation/Default × uk × mobile-375
+    ✗ geometry [offscreen-control]: a("Головна") — Головна
+    ✗ geometry [offscreen-control]: a("Оголошення") — Оголошення
+    ✗ geometry [offscreen-control]: a("Контакти") — Контакти
+    ✗ geometry [offscreen-control]: a("Адмін") — Адмін
+  Patterns/Mantine/AppShellFoundation/Default × uk × mobile-390
+    ✗ geometry [offscreen-control]: a("Головна") — Головна
+    ✗ geometry [offscreen-control]: a("Оголошення") — Оголошення
+    ✗ geometry [offscreen-control]: a("Контакти") — Контакти
+    ✗ geometry [offscreen-control]: a("Адмін") — Адмін
+  Patterns/Mantine/AppShellFoundation/Default × it × mobile-320
+    ✗ geometry [offscreen-control]: a("Home") — Home
+    ✗ geometry [offscreen-control]: a("Annunci") — Annunci
+    ✗ geometry [offscreen-control]: a("Contatti") — Contatti
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × it × mobile-375
+    ✗ geometry [offscreen-control]: a("Home") — Home
+    ✗ geometry [offscreen-control]: a("Annunci") — Annunci
+    ✗ geometry [offscreen-control]: a("Contatti") — Contatti
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+  Patterns/Mantine/AppShellFoundation/Default × it × mobile-390
+    ✗ geometry [offscreen-control]: a("Home") — Home
+    ✗ geometry [offscreen-control]: a("Annunci") — Annunci
+    ✗ geometry [offscreen-control]: a("Contatti") — Contatti
+    ✗ geometry [offscreen-control]: a("Admin") — Admin
+
+⚠️  27 cells have ambiguous findings (needs-owner-decision):
+  Mantine/Primitives/Combobox/Default × sq × mobile-320
+    ? [ambiguous-overlap]: #mantine-pgfpygv6e ↔ button("Të gjitha qytetet") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-pgfpygv6e ↔ button("Tiranë") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-66zl75sk3 ↔ button("Vlorë") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-66zl75sk3 ↔ button("Shkodër") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-qyc93btof ↔ button("Prona me qira afatgjatë pranë ") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × sq × mobile-375
+    ? [ambiguous-overlap]: #mantine-g15pnp6zr ↔ #mantine-uowwyozzj — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-g15pnp6zr ↔ button("Të gjitha qytetet") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-k25kivwei ↔ button("Durrës") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-k25kivwei ↔ button("Vlorë") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-6z1qgslkd ↔ button("SarandëBregdetare") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-6z1qgslkd ↔ button("Prona me qira afatgjatë pranë ") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × sq × mobile-390
+    ? [ambiguous-overlap]: #mantine-8wyddqtrb ↔ #mantine-f83g9bcby — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-zdky7gkge ↔ button("Tiranë") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-zdky7gkge ↔ button("Durrës") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-0w25obldt ↔ button("Shkodër") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-h40wovhxg ↔ button("Prona me qira afatgjatë pranë ") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × en × mobile-320
+    ? [ambiguous-overlap]: #mantine-x2ipjtdla ↔ button("All cities") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-x2ipjtdla ↔ button("Tirana") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-w5ioqvvfg ↔ button("Vlorë") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-w5ioqvvfg ↔ button("Shkodër") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-4uzv44k5j ↔ button("Long-term rental properties ne") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × en × mobile-375
+    ? [ambiguous-overlap]: #mantine-rq81vy1qa ↔ #mantine-n0r9a65tc — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-rq81vy1qa ↔ button("All cities") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-zxwstkx9f ↔ button("Durrës") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-zxwstkx9f ↔ button("Vlorë") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-ga1v9zth7 ↔ button("SarandëCoastal") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-ga1v9zth7 ↔ button("Long-term rental properties ne") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × en × mobile-390
+    ? [ambiguous-overlap]: #mantine-031we12lp ↔ #mantine-3v52l79yl — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-o03rdewpr ↔ button("Tirana") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-o03rdewpr ↔ button("Durrës") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-g66e37rm9 ↔ button("Shkodër") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-b38qf352o ↔ button("Long-term rental properties ne") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × uk × mobile-320
+    ? [ambiguous-overlap]: #mantine-32277rtvm ↔ #mantine-vmetz1euo — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-2cll5qmci ↔ button("Усі міста") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-2cll5qmci ↔ button("Тирана") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-edabocsva ↔ button("Шкодер") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-edabocsva ↔ button("СарандаПрибережне") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-rsvdyo6sp ↔ button("Довгострокова оренда нерухомос") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × uk × mobile-375
+    ? [ambiguous-overlap]: #mantine-1mqv6nw8y ↔ #mantine-8p8bm4zzd — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-1mqv6nw8y ↔ button("Усі міста") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-at668dofs ↔ button("Влера") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-at668dofs ↔ button("Шкодер") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-dqtbs5job ↔ button("СарандаПрибережне") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-dqtbs5job ↔ button("Довгострокова оренда нерухомос") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × uk × mobile-390
+    ? [ambiguous-overlap]: #mantine-4mj6vzz8j ↔ #mantine-vw6fz3iux — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-91e8rb0xj ↔ button("Тирана") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-91e8rb0xj ↔ button("Дуррес") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-7u53y47eb ↔ button("Шкодер") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-7u53y47eb ↔ button("СарандаПрибережне") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-ua5vmbra4 ↔ button("Довгострокова оренда нерухомос") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × it × mobile-320
+    ? [ambiguous-overlap]: #mantine-eynv3t5w8 ↔ button("Tutte le città") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-eynv3t5w8 ↔ button("Tirana") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-5r6uk6onw ↔ button("Valona") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-5r6uk6onw ↔ button("Scutari") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-4il4o8a3e ↔ button("Immobili in affitto a lungo te") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × it × mobile-375
+    ? [ambiguous-overlap]: #mantine-3tjl7jgni ↔ #mantine-wdl4js69a — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-3tjl7jgni ↔ button("Tutte le città") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-1ns4d1pbe ↔ button("Valona") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-1ns4d1pbe ↔ button("Scutari") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-yxjn3kjd9 ↔ button("SarandaCostiera") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-yxjn3kjd9 ↔ button("Immobili in affitto a lungo te") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Combobox/Default × it × mobile-390
+    ? [ambiguous-overlap]: #mantine-nqht9rjjz ↔ #mantine-d8jfe9qk6 — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-5r850cdtn ↔ button("Tirana") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-5r850cdtn ↔ button("Durazzo") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-dzzd9u62a ↔ button("Scutari") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-dzzd9u62a ↔ button("SarandaCostiera") — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-8u5de782s ↔ button("Immobili in affitto a lungo te") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/NotificationBellView/Default × en × mobile-320
+    ? [ambiguous-overlap]: button ↔ button("Mark all as read") — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × sq × mobile-320
+    ? [ambiguous-overlap]: #mantine-yylae8xl2 ↔ #mantine-o6q4h0hvr — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-yylae8xl2 ↔ #mantine-2mjzqnwjb — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × sq × mobile-375
+    ? [ambiguous-overlap]: #mantine-ftf8ohz5f ↔ #mantine-1v9lw2n6r — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-ftf8ohz5f ↔ #mantine-t5uvpl2ws — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × sq × mobile-390
+    ? [ambiguous-overlap]: #mantine-ak1dqpqiu ↔ #mantine-2mg8efzwb — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-ak1dqpqiu ↔ #mantine-60lp7wgrd — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × en × mobile-320
+    ? [ambiguous-overlap]: #mantine-setclhngp ↔ #mantine-o4hg8u4b0 — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-setclhngp ↔ #mantine-b85b7faia — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × en × mobile-375
+    ? [ambiguous-overlap]: #mantine-y8atfost5 ↔ #mantine-ahqtkl1vc — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-y8atfost5 ↔ #mantine-l8z5wvzo5 — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × en × mobile-390
+    ? [ambiguous-overlap]: #mantine-lubyskanq ↔ #mantine-glmh21pyi — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-lubyskanq ↔ #mantine-l8qzqtvbw — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × uk × mobile-320
+    ? [ambiguous-overlap]: #mantine-rqtx8emp4 ↔ #mantine-jgqg15ha6 — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-rqtx8emp4 ↔ #mantine-f2ml3u5k6 — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × uk × mobile-375
+    ? [ambiguous-overlap]: #mantine-elqy2wb3z ↔ #mantine-ra1u39cti — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-elqy2wb3z ↔ #mantine-qylyvzqba — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × uk × mobile-390
+    ? [ambiguous-overlap]: #mantine-7l4ihs67t ↔ #mantine-86oulgnbz — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-7l4ihs67t ↔ #mantine-vnjyotk78 — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × it × mobile-320
+    ? [ambiguous-overlap]: #mantine-nexd32lh5 ↔ #mantine-laxqplfcj — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-nexd32lh5 ↔ #mantine-7sz4dab0b — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × it × mobile-375
+    ? [ambiguous-overlap]: #mantine-d62iw9ld0 ↔ #mantine-h2v199zmq — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-d62iw9ld0 ↔ #mantine-oag6bwauv — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/RangeDatePicker/Default × it × mobile-390
+    ? [ambiguous-overlap]: #mantine-47l0y5cah ↔ #mantine-p39wz4pts — background page content behind an opened overlay's backdrop
+    ? [ambiguous-overlap]: #mantine-47l0y5cah ↔ #mantine-juxwcqsza — background page content behind an opened overlay's backdrop
+  Mantine/Primitives/Tabs/Default × sq × mobile-320
+    ? [ambiguous-offscreen]: #mantine-zimk6mdhd-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+  Mantine/Primitives/Tabs/Default × it × mobile-320
+    ? [ambiguous-offscreen]: #mantine-ypzoeqp94-tab-activity — element reachable by horizontal scrolling (carousel/scroll-tabs)
+
+📌 16 cells are TRACKED KNOWN FAILURES (Task 607 registry, non-blocking, real defects with a dedicated follow-up task — NOT fixed here):
+  Patterns/Mantine/ListingDetailPattern/Default × sq × mobile-320 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × sq × mobile-375 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × sq × mobile-390 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × sq × desktop-1024 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × en × mobile-320 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × en × mobile-375 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × en × mobile-390 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × en × desktop-1024 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × uk × mobile-320 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × uk × mobile-375 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × uk × mobile-390 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × uk × desktop-1024 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × it × mobile-320 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × it × mobile-375 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × it × mobile-390 — Task 609
+  Patterns/Mantine/ListingDetailPattern/Default × it × desktop-1024 — Task 609
+EXIT_CODE=1

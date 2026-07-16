@@ -8,9 +8,7 @@ import { MantineListingCardPattern } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
-import { MapPin, Maximize2, Copy, Check } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
+import { Maximize2, Copy, Check } from 'lucide-react'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
@@ -50,45 +48,6 @@ interface ListingCardProps {
   priority?: boolean
   /** Grid layout context for the listing image sizes hint. See ListingLayoutContext in imageDelivery.ts. */
   layoutContext?: ListingLayoutContext
-}
-
-interface PriceBlockProps {
-  displayPrice: number
-  activeCurrency: string
-  locale: string
-  displayPriceOld: number | null
-  originalPriceStr: string | null
-  pricePerSqm: number | null
-  perSqmLabel: string
-  /** 'lg' for vertical card, 'base' for horizontal list row */
-  priceSize: 'base' | 'lg'
-}
-
-function PriceBlock({ displayPrice, activeCurrency, locale, displayPriceOld, originalPriceStr, pricePerSqm, perSqmLabel, priceSize }: PriceBlockProps) {
-  return (
-    <div className="w-full">
-      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 justify-between">
-        <div className="flex flex-wrap items-baseline gap-2">
-          <span className={cn(priceSize === 'lg' ? 'text-lg' : 'text-base', 'font-bold text-primary whitespace-nowrap')}>
-            {formatPrice(displayPrice, activeCurrency, locale)}
-          </span>
-          {displayPriceOld && (
-            <span className="text-xs text-muted-foreground line-through whitespace-nowrap">
-              {formatPrice(displayPriceOld, activeCurrency, locale)}
-            </span>
-          )}
-        </div>
-        {pricePerSqm && (
-          <span className="text-xs text-muted-foreground whitespace-nowrap">
-            {formatPrice(pricePerSqm, activeCurrency, locale)} {perSqmLabel}
-          </span>
-        )}
-      </div>
-      {originalPriceStr && (
-        <span className="text-2xs text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
-      )}
-    </div>
-  )
 }
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
@@ -171,106 +130,92 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     : null
 
   if (variant === 'horizontal') {
+    // ── Horizontal (List view) card — thin data-mapper over
+    // MantineListingCardPattern layout="list" (Task 608), mirroring the vertical branch's
+    // split below: the pattern owns ALL list-row chrome (border/radius/hover, type-label+
+    // inline-favorite row, title, price(+old)+per-sqm, features row, location+footer row);
+    // this container only converts/formats real listing data into the pattern's data props
+    // and builds the 2 behavior-bearing nodes (image/favorite; footerActions) it cannot own
+    // itself (presentational-split gate). No overlay/photoCount/onContact — the ported
+    // legacy list design never had them (badges already convey sold/rented).
+
+    const thumbImage = (
+      <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive>
+        {!coverImage && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <Maximize2 className="h-6 w-6 text-muted-foreground" />
+          </div>
+        )}
+      </AppImage>
+    )
+
+    const inlineFavorite = (
+      <FavoriteButton
+        listingId={listing.id}
+        isFavorited={isFavorited}
+        onToggled={onFavoriteToggled}
+        disabled={isClosed}
+        disabledLabel={closedLabel}
+        className="shrink-0 -mt-0.5 -mr-1"
+      />
+    )
+
+    const patternBadges = badges.map(b => ({ label: t(b.label), variant: b.variant, className: b.className }))
+
+    const listFeatures = getCardFeatures(listing).map(f => ({
+      icon: <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />,
+      value: f.value,
+    }))
+
+    const pricePerSqmStr = pricePerSqm ? `${formatPrice(pricePerSqm, activeCurrency, locale)} ${t('per_sqm')}` : undefined
+
+    const listFooterActions = (
+      <>
+        <button
+          type="button"
+          onClick={copyId}
+          title={listing.id}
+          aria-label={idCopied ? t('id_copied') : t('copy_id')}
+          className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
+        >
+          #{listing.public_id ?? listing.id.slice(0, 8)}
+          {idCopied
+            ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
+            : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
+          }
+        </button>
+        <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
+      </>
+    )
+
     return (
       <Link
         href={`/${locale}/listings/${listing.slug}`}
-        className={cn(
-          "listing-card listing-card--horizontal group flex gap-3 rounded-xl border bg-card transition-shadow overflow-hidden",
-          listing.is_premium
-            ? "border-badge-premium/50 shadow-listing-card-ring hover:shadow-listing-card-elevation-md"
-            : "hover:shadow-md",
-          isListingArchived(listing.status as ListingStatus) && "grayscale opacity-60 hover:opacity-70",
-        )}
+        className="listing-card listing-card--horizontal block"
         data-track="listing_click"
         data-listing-slug={listing.slug}
         onClick={() => onBeforeNavigate?.(listing.slug)}
       >
-        {/* Image */}
-        <div className="relative w-32 shrink-0 sm:w-44 self-stretch min-h-20 overflow-hidden bg-muted">
-          {coverImage ? (
-            <AppImage variant="listing-thumb" src={coverImage.url} alt={listing.title} priority={priority} predictive />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Maximize2 className="h-6 w-6 text-muted-foreground" />
-            </div>
-          )}
-          {/* Badges */}
-          <div className="absolute top-2 left-2 flex flex-col gap-1">
-            {badges.map(b => (
-              <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
-                {t(b.label)}
-              </Badge>
-            ))}
-          </div>
-        </div>
-
-        {/* Info */}
-        <div className="flex flex-col justify-between py-3 pr-3 flex-1 min-w-0">
-          <div>
-            <div className="flex items-start justify-between gap-1 mb-1">
-              <p className="text-xs text-muted-foreground">
-                {t(listing.listing_type)} · {t(`property_type_${listing.property_type}`)}
-              </p>
-              <FavoriteButton
-                listingId={listing.id}
-                isFavorited={isFavorited}
-                onToggled={onFavoriteToggled}
-                disabled={isClosed}
-                disabledLabel={closedLabel}
-                className="shrink-0 -mt-0.5 -mr-1"
-              />
-            </div>
-            <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
-              {listing.title}
-            </h3>
-          </div>
-          <div>
-            <div className="mt-2">
-              <PriceBlock
-                displayPrice={displayPrice}
-                activeCurrency={activeCurrency}
-                locale={locale}
-                displayPriceOld={displayPriceOld}
-                originalPriceStr={originalPriceStr}
-                pricePerSqm={pricePerSqm}
-                perSqmLabel={t('per_sqm')}
-                priceSize="base"
-              />
-            </div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
-              {getCardFeatures(listing).map(f => (
-                <span key={f.key} className="flex items-center gap-1">
-                  <ListingFeatureIcon name={f.icon} className="h-3 w-3" />
-                  {f.value}
-                </span>
-              ))}
-            </div>
-            <div className="flex items-center justify-between mt-1 text-xs text-muted-foreground">
-              {locationName ? (
-                <span className="flex items-center gap-1 truncate">
-                  <MapPin className="h-3 w-3 shrink-0" />
-                  {locationName}
-                </span>
-              ) : <span />}
-              <span className="ml-auto shrink-0 pl-2 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={copyId}
-                  title={listing.id}
-                  aria-label={idCopied ? t('id_copied') : t('copy_id')}
-                  className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-                >
-                  #{listing.public_id ?? listing.id.slice(0, 8)}
-                  {idCopied
-                    ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
-                    : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
-                  }
-                </button>
-                <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
-              </span>
-            </div>
-          </div>
-        </div>
+        <MantineListingCardPattern
+          layout="list"
+          data={{
+            id: listing.id,
+            title: listing.title,
+            location: locationName,
+            price: formatPrice(displayPrice, activeCurrency, locale),
+            priceOld: displayPriceOld ? formatPrice(displayPriceOld, activeCurrency, locale) : undefined,
+          }}
+          image={thumbImage}
+          favorite={inlineFavorite}
+          typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
+          badges={patternBadges}
+          features={listFeatures}
+          originalPriceStr={originalPriceStr}
+          pricePerSqmStr={pricePerSqmStr}
+          footerActions={listFooterActions}
+          isPremium={listing.is_premium}
+          isArchived={isListingArchived(listing.status as ListingStatus)}
+        />
       </Link>
     )
   }

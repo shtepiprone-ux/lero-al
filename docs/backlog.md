@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-15 — Task 606 (`MantineListingCardPattern` gains `layout: 'grid'|'list'`, Storybook only, no site wiring) — ✅ APPROVED (orchestrator review 2026-07-15: native gates green — tsc=0/check:stories/check:i18n 2155×4/check:file-integrity/vitest 4·4; .tsx+.css diff confirms grid path JSDoc-only + additive list branch; PNGs personally eyeballed uk@320/390 — list rows image-left/info-right, favorite inline no-overlap, sold=badge-no-overlay, no h-scroll@320); commit emitted, pending owner native run + push.** Two review notes: (a) the 606 feature commit EXCLUDES the co-modified `Task_602` kickoff (a legit plan-of-record reconciliation — keep both Grid/List — but a separate docs commit, not folded in); (b) canonical `check-stories-rendered.mjs` only auto-discovers `Mantine/Primitives/*`, so `Patterns/Mantine/*` (605+606) has NO machine rendered coverage — pixels verified by hand this task → follow-up **Task 607** to extend discovery. `layout='list'` structurally ports the legacy `ListingCard.tsx` horizontal branch (image-left/info-right) onto the SAME single-source pattern from Task 605 — reuses the same props; `overlay`/`photoCount` correctly absent (ported legacy design never had them). **Real bug found+fixed:** Mantine's `Card` sets `display:block` via unlayered CSS, so Tailwind's `flex flex-row` silently never applied (image/info stacked vertically) — same cascade-layer class as Task 602's hover bug, now for `display`; fixed with a new unlayered `.listRow` CSS-module rule. `layout='grid'` stays byte-identical (JSDoc-only diff, confirmed). Story gained a labelled List section (6 rows) below the unchanged Grid section. 28/28-cell Storybook matrix PASS, new pattern-level test suite (4 tests, 1 verified planted-violation), zero site consumers touched. All gates green. Session: `docs/sessions/2026-07-15-task606-listingcard-pattern-list-layout-variant.md`.
+**2026-07-16 — Task 608 (site-wiring: `ListingCard.tsx` `variant==='horizontal'` branch → `MantineListingCardPattern layout="list"`) — IMPLEMENTED, self-validated, awaiting orchestrator review.** Closes the Task 606 HELD site-wiring half: the legacy hand-rolled List-view row markup is now a thin data-mapper over the owner-approved pattern, mirroring the vertical branch's split (Task 602/605). Dead `PriceBlock`/`Badge`/`cn`/`MapPin` removed (compiler+grep verified unused). Smoke suite 2→5 horizontal tests (13/13 total), planted-violation genuinely FAILed 2/13, reverted → green. Real-page rendered matrix (`scripts/task608-qa-listingcard-list-site.mjs`): 28/28 PASS (7 breakpoints × 4 locales) — full-width row <640, no row-own overflow, inline favorite, no overlay/photo-count/contact, title hover→brand-red confirmed. Found (not caused): the pre-existing, already-tracked FilterBar/Combobox page-overflow bug reproduces byte-identically in List view — proven unrelated to the card row (row's own `scrollWidth===clientWidth`). All gates green (tsc/eslint/i18n/file-integrity/mojibake). Session: `docs/sessions/2026-07-15-task608-listingcard-list-layout-site-migration.md`.
 
 ## Pending Action Items
 
@@ -15,7 +15,7 @@
 |------|-------|-------|
 | 🔐 Re-verify HIBP "Prevent use of leaked passwords" availability on Free tier (Supabase Auth → Sign In/Providers → Password Security). Owner flagged 2026-05-28 as Pro-only. If a Free-tier toggle is now available → enable; if not → enable at Pro upgrade. | Owner | Supabase Security Advisor `auth_leaked_password_protection` WARN. Documented in `docs/integrations.md` → "Supabase Auth Configuration". |
 | ✅ **DONE 2026-07-14** — notification localization one-row UPDATE applied in Supabase (`id 634f124c…` → `template_id='support_created'`, sq-fallback title/body). The only legacy `template_id=NULL` row now localizes per viewer locale. Owner still to eyeball-verify by re-opening the bell under `/sq`. | Owner | Data-only fix; current creation code already correct. |
-| 🐞 Pre-existing `/listings` Grid horizontal-overflow at <640px (Sonnet-flagged, Task 603 §out-of-scope): FilterBar segmented-control button (`flex-1`) + a `min-w-35` Combobox trigger push `scrollWidth` past the viewport at 320/375/390. Unrelated to `FavoriteButton`. Needs its own task (candidate 607). | Orchestrator | Traced via DOM offender scan; not touched by 603. |
+| 🐞 Pre-existing `/listings` Grid horizontal-overflow at <640px (Sonnet-flagged, Task 603 §out-of-scope): FilterBar segmented-control button (`flex-1`) + a `min-w-35` Combobox trigger push `scrollWidth` past the viewport at 320/375/390. Unrelated to `FavoriteButton`. Needs its own task. | Orchestrator | Traced via DOM offender scan; not touched by 603. |
 | 🧾 Run all pending emitted commits in PowerShell (single-writer). ✅-APPROVED-but-uncommitted tasks awaiting the owner's run + native gate: Sprint 39 overlay Batch C (513–517, 522), Sprint 38 form-control commits (494/496/497/498/499/500/505/507/508), Epic II (316–323), Epic BB (243/430/458/459/460/461/462 + Supabase SQL applies), Epic DD (246/432), Epic LV (454/456/457), plus 238/425/426/427/434/437/442/443/444/448. Per-task detail + Files-Changed tables live in the archive ledger + session logs. | Owner | Commit-emission policy below; nothing here needs new orchestrator work. |
 
 **🟢 Task 583 (Sprint 44 — Favorites icon all breakpoints) — ✅ APPROVED + COMMITTED + PUSHED (2026-07-13, owner).** `HeaderActions.tsx` Favorites heart visible at all breakpoints; native diff = two `visibleFrom="sm"` removals only, gates green. Session: `docs/sessions/2026-07-12-task583-favorites-icon-all-breakpoints.md`. (Open caveat: the 320px overlap/gap was not orchestrator-eyeballed — screenshots were throwaway; low risk on an icon-only add.)
@@ -52,7 +52,26 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 606. Next free: 607.** (606 = add a `layout: 'grid' | 'list'` variant to
+**Task numbering — last used: 611. Next free: 612.** (611 = resolved Task 607's 2 held stories
+(`AppShellFoundation` open-trigger + `AdminSurfacePattern` element-overlap false positive) via a generic gate
+fix, never a per-story allowlist — see archive. **IMPLEMENTED 2026-07-15, gate GREEN.** Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_611_GateHeldStoryResolution.md`. 609/610 remain reserved,
+not yet kicked off (Task 609 = `ListingDetailPattern` Grid-gutter overflow fix; Task 610 = grid/list
+title-hover asymmetry fix — both candidates from the Task 607 review, unaffected by 611's gate-only fix). 608 =
+site-wiring for the Task 606 List-layout pattern — **IMPLEMENTED 2026-07-16, see Last Session.** Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_608_ListingCardListLayoutSiteMigration.md`.)
+(607 = OPENED 2026-07-15 from the Task 606 review —
+extend the canonical rendered gate `scripts/check-stories-rendered.mjs` to auto-discover `Patterns/Mantine/*`
+(all 13 pattern stories, owner chose full-group via AskUserQuestion), closing the machine-rendered-coverage hole
+that forced Task 606's ad-hoc QA script; prefix-LIST discovery, no hardcoded allowlist, STOP-AND-ASK on any
+pattern needing an overlay open-trigger or surfacing a real defect (never patch a component/story to force green),
+mandatory anti-no-op planted-violation transcript. **IMPLEMENTED 2026-07-15, gate currently RED (exit 1) —
+NOT approved.** `ListingDetailPattern` confirmed real (Grid-gutter overflow) → tracked, Task 609.
+`AdminSurfacePattern`/`AppShellFoundation` HELD for owner pixel-review (mid-task course-correction — initially
+mischaracterized as confirmed defects; screenshot+source review found both likely false-positive/open-trigger,
+not confirmed — owner must personally view evidence before any exemption per §18.9). See Last Session +
+session `docs/sessions/2026-07-15-task607-patterns-mantine-rendered-gate-coverage.md`. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_607_PatternsMantineRenderedGateCoverage.md`.) (606 = add a `layout: 'grid' | 'list'` variant to
 `MantineListingCardPattern` + a List section in its Storybook story — STORYBOOK ONLY, no site wiring; owner directive
 2026-07-15: the List-view horizontal card must exist in the SAME single-source pattern before ANY site wiring. Owner
 chose one pattern + `layout` variant (not a separate component). Grid layout stays byte-identical (live grid card

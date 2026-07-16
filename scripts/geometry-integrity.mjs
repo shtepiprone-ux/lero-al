@@ -424,6 +424,20 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
       return false;
     }
 
+    // Task 611 — bounding-box containment guard. A control fully nested inside another
+    // element's own box (Mantine `rightSection`/`leftSection`/adornment pattern — e.g. an
+    // input's rect visually reserves space for its section icon even though the icon is a DOM
+    // SIBLING, not a descendant, of the `<input>`) is by-design, not a sibling collision.
+    // `isAncestorOf` above only catches real DOM ancestor/descendant pairs; this catches the
+    // sibling-but-geometrically-nested case generically (no story-id/selector hardcode) by
+    // testing pure bbox containment. Deliberately one-directional-or-other (either fully
+    // contains the other) so it never suppresses a REAL collision, where neither box contains
+    // the other (partial overlap only).
+    function isContained(inner, outer) {
+      return inner.left >= outer.left - tol && inner.top >= outer.top - tol &&
+        inner.right <= outer.right + tol && inner.bottom <= outer.bottom + tol;
+    }
+
     function isLabelInputPair(a, b) {
       if (a.tagName === 'LABEL' && a.htmlFor && b.id === a.htmlFor) return true;
       if (b.tagName === 'LABEL' && b.htmlFor && a.id === b.htmlFor) return true;
@@ -459,6 +473,7 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
 
         // Algorithmic exclusions
         if (isAncestorOf(a, b) || isAncestorOf(b, a)) continue;
+        if (isContained(aVisibleRect, bVisibleRect) || isContained(bVisibleRect, aVisibleRect)) continue;
         if (isLabelInputPair(a, b)) continue;
         if (a.getAttribute('aria-hidden') === 'true' || b.getAttribute('aria-hidden') === 'true') continue;
         if (a.hasAttribute('inert') || b.hasAttribute('inert')) continue;

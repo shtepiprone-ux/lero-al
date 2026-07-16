@@ -1236,6 +1236,160 @@ non-zero FAIL count in the run; reverted → back to 20/20 PASS. See the Task 57
 before/planted-FAIL/after transcripts and `docs/critical-flow-registry.md` row 49 for the persisted-gate note
 that replaces the retired Task-572 one-off script as this band's authoritative proof.
 
+### §14.9.18 — `Patterns/Mantine/*` coverage extension + tracked known-failure registry (Task 607, 2026-07-15)
+
+**Why.** The gate's auto-discovery (§14.9.1) matched only the title prefix `Mantine/Primitives/*` — the 13
+`Patterns/Mantine/*` composite-pattern stories (`AdminSurfacePattern`, `AppShellFoundation`, `AuthFormPattern`,
+`CardGrid`, `DialogDrawerPattern`, `EmptyLoadingErrorState`, `FormSectionStack`, `ListingCardPattern`,
+`ListingDetailPattern`, `NotificationPattern`, `PageHeaderWithActions`, `ResponsiveActionFooter`,
+`TwoColumnForm`) fell into the weaker geometry-only phase (§14.4.2 — no render/anchor/style assertions,
+no `--mantine-only` coverage at all). Consequence found at the Task 605/606 reviews:
+`Patterns/Mantine/ListingCardPattern` had zero machine rendered coverage, forcing a throwaway ad-hoc QA script
+and hand-verified pixels for both tasks — the exact class of hole Task 529 closed for primitives, just for a
+different story-title prefix.
+
+**Fix — prefix LIST, not a second discovery mechanism.** `MANTINE_PRIMITIVES_TITLE_PREFIX` (a single string)
+became `MANTINE_STORY_TITLE_PREFIXES = ['Mantine/Primitives/', 'Patterns/Mantine/']`; `discoverMantinePrimitiveStories`
+now matches a story if its title starts with ANY listed prefix and derives `componentName` by stripping
+whichever prefix matched. Purely prefix-derived — no hardcoded story-id allowlist — so a future
+`Patterns/Mantine/*` story is covered automatically, preserving the Task 529 no-drift discipline. The existing
+`geometryOnlyStories` exclusion (§14.9.1, keyed off `mantineIds`) required no code change — the 13 patterns
+moved out of the geometry-only phase automatically once discovered. **Result:** 43 `Mantine/Primitives/*` +
+13 `Patterns/Mantine/*` = 56 stories, 900 cells total (320/375/390/1024 × 4 locales); the 43 primitives'
+discovery/viewports/overlay-triggers/pass-fail are byte-unchanged (before/after count diff confirmed in the
+Task 607 session log).
+
+**Open-trigger triage (owner `AskUserQuestion`, Task 607 review, 2026-07-15).** 11 of the 13 patterns render
+their full content inline and immediately (confirmed via source read, no `play` function in any of the 13
+story files). Two do not:
+- **`DialogDrawerPattern`** — a REAL controlled overlay (`useDisclosure(false)` + a closed-trigger
+  `<Button onClick={open}>`), byte-for-behavior the same lifecycle as `Modal`/`Drawer`/`Popover` already in
+  `MANTINE_OVERLAY_PRIMITIVES`. **Added to the set** — reuses the proven click-then-assert path with zero new
+  heuristic (the one authorized `MANTINE_OVERLAY_PRIMITIVES` edit this task's kickoff scope permitted).
+- **`NotificationPattern`** — its trigger buttons call the imperative `notifications.show()` API (an
+  auto-dismissing toast portal), NOT a controlled overlay bound to the trigger's open state. Treating it as
+  identical to the controlled-overlay set would be exactly the silent trigger-heuristic invention this file's
+  §9/§14 discipline forbids, and an auto-dismissing portal is a flaky-assert risk (the toast can vanish
+  before/after the assert fires). **Deliberately NOT added** — it still gets discovered and asserted on its
+  on-load render (trigger buttons + any static content), which genuinely PASSed 16/16 in the Task 607 run.
+  Full open-trigger coverage for the imperative toast is deferred to a dedicated follow-up (candidate Task 608).
+
+**New FAILs surfaced by the extended coverage — one confirmed real defect, two held for owner
+pixel-review.** The extended coverage surfaced 3 stories with zero prior machine coverage failing every
+cell:
+- `ListingDetailPattern` — horizontal overflow at ALL 16 cells, including desktop-1024. **Confirmed real**
+  (owner review, Task 607, 2026-07-15): a genuine Mantine `Grid` negative-margin gutter bleed (~10px per
+  side at 320px, invisible in a static screenshot but a literal `scrollWidth > clientWidth` violation — the
+  exact class of defect the gate exists to catch that the eye misses). Tracked in
+  `MANTINE_PATTERN_KNOWN_FAILURES` with follow-up **Task 609**.
+- `AdminSurfacePattern` — a search-input/button `element-overlap` at all 16 cells. Source review
+  (`MantineAdminSurfacePattern.tsx` lines 86–99) shows this is a Mantine `TextInput` `rightSection`
+  `ActionIcon` (the standard search-icon-in-input pattern) — the geometry checker's `element-overlap` rule
+  cannot distinguish a control legitimately nested in its parent's own reserved slot from two siblings truly
+  colliding, so this LOOKS like a heuristic false positive. **NOT added to the registry, NOT allowlisted** —
+  per standing orchestrator policy (§18.9: a chrome/overlap verdict requires the owner having personally
+  viewed the rendered pixels, since a rightSection icon genuinely overlapping real text is exactly what
+  Tasks 553/554 caught before), this stays a genuine CI-blocking `fail` until the owner confirms from the
+  persisted screenshots + source lines in the Task 607 session log. If confirmed a false positive, the
+  correct fix is likely to the `element-overlap` heuristic itself (exempt a control fully contained within
+  its own parent's padding/reserved-section box), not a per-story allowlist that would blind the check to a
+  real overlap on some OTHER story later.
+- `AppShellFoundation` — nav links pushed off-screen at the 3 mobile viewports only (desktop passes).
+  Source review (`MantineAppShellFoundation.tsx`) shows this is Mantine's own `AppShell` navbar,
+  `collapsed: { mobile: !opened }` with `useDisclosure()` defaulting closed and a REAL `<Burger opened=
+  {opened} onClick={toggle} hiddenFrom="sm">` trigger — mechanically identical to `DialogDrawerPattern`
+  (closed-by-default, real clickable trigger, `useDisclosure`). This is an **open-trigger case, not a
+  false positive** — the existing `MANTINE_OVERLAY_PRIMITIVES` click-then-assert mechanism would very
+  likely resolve it with zero new heuristic (same authorized mechanism already used for
+  `DialogDrawerPattern` in this same task). **NOT added to the registry, NOT wired to
+  `MANTINE_OVERLAY_PRIMITIVES` yet** — held for owner confirmation per the same §18.9 pixel-review
+  requirement before any diff change lands.
+
+`--mantine-only` is a hard-blocking CI gate (`.github/workflows/governance-pr.yml`); neither of the two held
+stories is allowlisted, so both remain genuinely CI-blocking pending owner review — the safe default when a
+defect classification is unconfirmed. None of the 3 patterns/components were edited in Task 607 (out of
+scope by the kickoff's own hard contract).
+
+**Tracked known-failure registry mechanism (`MANTINE_PATTERN_KNOWN_FAILURES`) — for CONFIRMED real defects
+only, not an allowlist for unconfirmed ones.** Each entry pins the EXACT failure signature (failing-cell
+count + single primary fail reason) captured when the defect was confirmed and filed as its own dedicated
+follow-up task. A matching cell still fails, still prints loudly (its own "TRACKED KNOWN FAILURES" report
+section + a dedicated "Bucket 1b" in the persisted governance inventory), and still carries
+`verdict: 'known-failure'` in the manifest (never `'pass'`) — it is excluded from the CI-blocking `failed`
+count ONLY while the signature matches exactly. ANY divergence (fewer failures = looks fixed, more failures,
+or a different fail reason) is NOT covered by the entry, reverts to a normal hard CI-blocking failure, and
+prints a loud "TRACKED KNOWN-FAILURE SIGNATURE CHANGED" warning — so the mechanism can never silently mask a
+NEW or WORSE regression. Currently holds only `ListingDetailPattern` (Task 609); `AdminSurfacePattern` and
+`AppShellFoundation` are deliberately absent pending the owner review above.
+
+**Also found: a real `layout='grid'` vs `layout='list'` title-hover divergence in `MantineListingCardPattern`**
+(Task 606 port artifact, found during the Task 607 evidence review, out of this task's own scope — the
+rendered gate is static-screenshot geometry and structurally cannot assert a `:hover` state, so this kind of
+divergence is a blind spot by construction). `layout='grid'`'s title is a plain Mantine `Text` with no
+`group`/`group-hover` wiring — it never changes color on hover. `layout='list'`'s title is a plain `<h3
+className="... group-hover:text-primary ...">` with `group` on the Card root (ported from the legacy
+horizontal branch) — it DOES change color on hover. Confirmed by direct source read
+(`MantineListingCardPattern.tsx` — grid title ~line 263 vs list title ~line 158/`group` ~line 130); not
+something Task 607 fixes. Candidate follow-up **Task 610**: unify grid/list title-hover behavior + add a
+targeted hover assertion so it cannot silently drift again.
+
+**Anti-no-op proof.** A planted violation (temporarily widened `ListingCardPattern`'s image frame past 320px
+via an injected inline `min-width`) made `--mantine-only` genuinely FAIL that story's 16 cells (cascading
+`horizontal overflow` + `offscreen-control` violations); reverted → confirmed byte-identical to the prior
+committed state via `git diff` (empty), then re-verified green on a fresh run (excluding the 1 confirmed
+known-tracked failure and the 2 held-for-review stories, none of which are affected by this story). See the
+Task 607 session log for the full transcript.
+
+### §14.9.19 — `AdminSurfacePattern` + `AppShellFoundation` held-story resolution (Task 611, 2026-07-15)
+
+**Owner adjudication.** After personally viewing the Task 607 rendered pixels (§18.9), the owner confirmed both
+held stories were gate-heuristic issues, NOT real defects, and directed the fix land in the GATE (never a
+per-story allowlist/exemption — reserved for confirmed real defects, e.g. `MANTINE_PATTERN_KNOWN_FAILURES`).
+
+**`AdminSurfacePattern` (`element-overlap`, 16 cells) — generic bbox-containment guard.** The checker's
+`element-overlap` rule (`geometry-integrity.mjs` Check 4) already exempted true DOM ancestor/descendant pairs
+(`isAncestorOf`), but `MantineAdminSurfacePattern.tsx`'s search `ActionIcon` is rendered via `TextInput`'s
+`rightSection` — a DOM **sibling** of the `<input>`, not a descendant — even though the `<input>`'s own
+`getBoundingClientRect()` visually reserves the icon's space (Mantine's standard icon-in-field mechanism, same
+class as the existing `PasswordInput`/`RangeDatePicker` `GEOMETRY_ALLOWLIST` entries in
+`scripts/check-stories-rendered.mjs` — this generic fix makes those two per-story entries a candidate for
+removal in a future task, since the containment guard now covers the same case generically; not removed here,
+out of this task's scope). Added `isContained(inner, outer)` — pure bbox containment, either direction — as a new
+algorithmic exclusion alongside `isAncestorOf`, scoped to Check 4 only. **Generic, no story-id/selector
+hardcode**, so it protects any other `rightSection`/`leftSection`/adornment pattern automatically. Verified via
+a direct call to the exported `checkGeometryIntegrity()` (the same function `captureCell` calls for every
+cell): `AdminSurfacePattern` now passes at 320/1024 with 0 `element-overlap` violations, AND the permanent
+`planted-visualviolations--overlapping-actions` fixture (a genuine **partial** overlap — neither box contains
+the other) still fails with 1 violation at 320/375/390 — proving the guard is scoped to true containment only,
+never widened to any overlap. Transcript:
+`docs/sessions/2026-07-15-task611-assets/transcript-2-ac3-anti-regression-proof.log`.
+
+**`AppShellFoundation` (`offscreen-control`, 12 cells) — open-trigger + trigger-visibility skip.** Added
+`'AppShellFoundation'` to `MANTINE_OVERLAY_PRIMITIVES` (mechanically identical to `DialogDrawerPattern`:
+`useDisclosure()` defaults closed, navbar is `collapsed:{mobile:!opened}`). Empirical testing surfaced a real
+gap the kickoff had already flagged as a STOP-AND-ASK trigger: the Burger is `hiddenFrom="sm"` (CSS
+`display:none` at >=640px), so the existing click-then-assert mechanism timed out at `desktop-1024` — 4 cells
+that already PASS there (navbar is open-by-default at desktop, nothing to open) would have newly broken. Per
+owner direction (`AskUserQuestion`, Task 611 session), `captureCell`'s `openTrigger` handling now checks
+`trigger.isVisible()` before clicking: a **visible** trigger is clicked exactly as before (a failed click on a
+visible trigger is still a hard `open-trigger-click-failed` fail — nothing here weakens that); an **invisible**
+trigger is skipped (no click, no failure) and every normal render/anchor/style/geometry assertion still runs
+against the CURRENT DOM — so a genuinely broken/empty render still fails. This is a no-op for every existing
+overlay primitive (`Modal`/`Drawer`/`Popover`/`Select`/`DropdownMenu`/`NavigationMenu`/`Tooltip`/`Combobox`/
+`NotificationBellView`/`DialogDrawerPattern`) — their triggers are plain always-rendered `<Button>`s, visible at
+every viewport, confirmed via a direct visibility probe. Verified: mobile-320/375/390 → Burger visible → real
+click → nav opens (links move from `left=-308` to `left=12`) → 12 cells now PASS via genuine opening, not a
+skip; desktop-1024 → Burger hidden → click skipped → checks run on the already-open navbar → 4 cells PASS
+without `open-trigger-click-failed`.
+
+**Result.** `--mantine-only`: 857/900 PASS, 0 FAIL, 27 AMBIGUOUS (pre-existing, unchanged — Combobox/
+RangeDatePicker portal-backdrop + Tabs swipe-scroll, unrelated to this task), 16 KNOWN-FAILURE (tracked,
+`ListingDetailPattern`, Task 609, unchanged) — **exit 0**. Exact before/after diff vs the Task 607 baseline
+(829/900 PASS, 28 FAIL, 27 AMBIGUOUS, 16 KNOWN-FAILURE): the 28 target cells (12 AppShellFoundation +
+16 AdminSurfacePattern) flipped FAIL→PASS; every other cell byte-identical. Full transcript + manifest excerpt
++ 32 persisted screenshots (both stories × 4 viewports × 4 locales):
+`docs/sessions/2026-07-15-task611-assets/`.
+
 ---
 
 ## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)

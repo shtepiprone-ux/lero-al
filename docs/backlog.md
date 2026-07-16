@@ -52,7 +52,13 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 613. Next free: 614.** (613 = OPENED 2026-07-16 from the Task 612 STOP-AND-ASK —
+**Task numbering — last used: 614. Next free: 615.** (614 = OPENED 2026-07-16 from the Task 612 review — add the
+missing planted-violation proof for the shared `check-stories.mjs` Check-9 test-file exclusion Task 612 self-merged
+(`.test.tsx`/`__tests__` skip): prove `.test.tsx`/`__tests__` files are skipped AND a real non-test `src/modules`
+component with the same literal is STILL caught (blind-spot guard), anti-no-op via reverting the exclusion; also
+reconcile the pre-existing stale `checksRan===13` completeness assertion. Test-file + docs only; `check-stories.mjs`
+UNTOUCHED. LOW-PRIORITY, after 612. Kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_614_CheckStoriesCheck9TestFileExclusionProof.md`,
+not yet executed.) (613 = OPENED 2026-07-16 from the Task 612 STOP-AND-ASK —
 remove/deprecate the DEAD `--z-*` Tailwind z-index token scale (`globals.css:245-251` is under the `--z-*` namespace
 Tailwind v4 never turns into `z-*` utilities → `z-toast`/`z-sticky`/… all compute `z-index:auto`; blast radius ≈ the
 single `ListingGallery` `z-toast`, fixed by 612, because overlays moved to Mantine + core `z-30/40/50` + the

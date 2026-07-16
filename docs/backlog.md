@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-16 — Orchestrator: reviewed + ✅ APPROVED Tasks 607 + 608 + 611, combined commit `feat(Task607+608+611)` LANDED + PUSHED (origin/main up to date).** Verified against the real per-file diffs (not the session logs), native gate (857/900 PASS, 0 FAIL, exit 0), native `tsc`/`vitest` (13/13), file-integrity/mojibake, and personally-viewed pixels (611 held-story resolution + 608 list-view uk@320). Resolved a stale-`git-status` false alarm (a Task-608 registry note looked "phantom" until the 608 files were confirmed freshly executed). **Opened two kickoffs:** Task 609 (`MantineListingDetailPattern` Grid-gutter horizontal-overflow → clears the last tracked xfail; fix = contain the negative-margin gutter with `overflow-x:clip`, preserve the sticky contact panel, remove the `MANTINE_PATTERN_KNOWN_FAILURES` entry) + Task 612 (owner-reported: `ListingGallery` lightbox is not portaled → the header + sticky contact card paint ABOVE it; `z-toast:100` is trapped in the page stacking context; fix = `createPortal` to `document.body`, keep the token). **Next:** hand 609 / 612 to Sonnet.
+**2026-07-16 — Orchestrator: resolved the Task 612 STOP-AND-ASK (z-index).** Sonnet portaled the lightbox correctly but found (orchestrator independently confirmed by source read) that `z-toast` is DEAD CSS — the `--z-*` scale (`globals.css:245-251`) sits under the `--z-*` namespace Tailwind v4 never compiles into `z-*` utilities (no `--z-index-*` block, no `@utility`/`.z-toast{}` fallback), so it computes `z-index:auto` and the header (working core `z-30/z-50`) still covers the scrim. **Blast radius is ~1 (the lightbox), NOT sitewide** — overlays moved to Mantine + core z-classes + the `z-[9999]` escape-hatch (`Combobox.tsx:207`). **Ruling (owner steer: moving off Tailwind onto Mantine):** 612 stays NARROW — keep the portal, swap the lightbox's dead `z-toast`→allowlisted `z-[9999]`, `globals.css` untouched; do NOT revive the token scale. Updated the 612 kickoff; opened **Task 613** (deprecate the dead `--z-*` scale + reconcile `ui-rules.md §16/§12`, low-priority cleanup after 612). **Next:** hand the updated 612 back to Sonnet; 613 after 612 lands. *(Prior session — 607/608/611 APPROVED+COMMITTED+PUSHED; 609 opened — archived below.)*
 
 ## Pending Action Items
 
@@ -52,7 +52,15 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 612. Next free: 613.** (612 = OPENED 2026-07-16 from an owner bug report —
+**Task numbering — last used: 613. Next free: 614.** (613 = OPENED 2026-07-16 from the Task 612 STOP-AND-ASK —
+remove/deprecate the DEAD `--z-*` Tailwind z-index token scale (`globals.css:245-251` is under the `--z-*` namespace
+Tailwind v4 never turns into `z-*` utilities → `z-toast`/`z-sticky`/… all compute `z-index:auto`; blast radius ≈ the
+single `ListingGallery` `z-toast`, fixed by 612, because overlays moved to Mantine + core `z-30/40/50` + the
+`z-[9999]` escape-hatch). Deprecate, do NOT revive (owner steer: moving off Tailwind onto Mantine); reconcile
+`ui-rules.md §16/§12`. LOW-PRIORITY cleanup, after 612. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_613_DeadZIndexTokenScaleCleanup.md`. 612 = STOP-AND-ASK RESOLVED
+2026-07-16: portal was correct but `z-toast` is dead CSS → narrow fix stays, swap `z-toast`→allowlisted `z-[9999]`
+(mirrors `Combobox.tsx:207`), `globals.css` untouched (→613); kickoff updated.) (612 = OPENED 2026-07-16 from an owner bug report —
 `ListingGallery` lightbox renders BELOW the site header + sticky contact card because it is NOT portaled
 (`fixed inset-0 z-toast` trapped in the page stacking context; `z-toast:100` can't beat root-level chrome from a
 nested context); fix = `createPortal` to `document.body`, keep the token, mandatory real-page before/after pixels.

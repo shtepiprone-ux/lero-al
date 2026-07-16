@@ -518,9 +518,14 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
 
   log('── Check 9: Runtime component hardcoded literals ────────────────────');
 
+  // Task 612 — also exclude test files (`.test.tsx` / `__tests__/**`): a vitest RTL assertion
+  // like `getByRole('button', { name: 'Next' })` matches a Mantine `aria-label`, not a hardcoded
+  // user-facing literal — the same "not runtime UI copy" reasoning that already excludes
+  // `.stories.tsx`.
+  const isNonRuntimeFile = (f) => f.endsWith('.stories.tsx') || f.endsWith('.test.tsx') || f.includes('__tests__');
   const RUNTIME_FILES = [
-    ...collectFiles(join(root, 'src', 'components'), ['.tsx']).filter(f => !f.endsWith('.stories.tsx')),
-    ...collectFiles(join(root, 'src', 'modules'), ['.tsx']).filter(f => !f.endsWith('.stories.tsx')),
+    ...collectFiles(join(root, 'src', 'components'), ['.tsx']).filter(f => !isNonRuntimeFile(f)),
+    ...collectFiles(join(root, 'src', 'modules'), ['.tsx']).filter(f => !isNonRuntimeFile(f)),
   ];
 
   const RUNTIME_HARDCODE_FORBIDDEN = [

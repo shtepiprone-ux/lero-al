@@ -340,6 +340,11 @@ const MANTINE_OVERLAY_PRIMITIVES = new Set([
   // added specifically because this component's trigger is legitimately absent at desktop
   // widths where the navbar is already open by default.
   'AppShellFoundation',
+  // Task 612 — `LightboxView` is a controlled `Modal.Root` overlay (`opened` prop, closed
+  // trigger `<Button onClick={() => setOpened(true)}>`), the same lifecycle shape as
+  // Modal/Drawer above — click the trigger, the overlay opens and stays open, then every check
+  // below runs against the opened DOM. Same click-then-assert path, zero new heuristic.
+  'LightboxView',
 ]);
 
 // Minimum enforced viewport set for the Mantine-primitives gate (agent-contract clause 12

@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-16 — Task 608 (site-wiring: `ListingCard.tsx` `variant==='horizontal'` branch → `MantineListingCardPattern layout="list"`) — IMPLEMENTED, self-validated, awaiting orchestrator review.** Closes the Task 606 HELD site-wiring half: the legacy hand-rolled List-view row markup is now a thin data-mapper over the owner-approved pattern, mirroring the vertical branch's split (Task 602/605). Dead `PriceBlock`/`Badge`/`cn`/`MapPin` removed (compiler+grep verified unused). Smoke suite 2→5 horizontal tests (13/13 total), planted-violation genuinely FAILed 2/13, reverted → green. Real-page rendered matrix (`scripts/task608-qa-listingcard-list-site.mjs`): 28/28 PASS (7 breakpoints × 4 locales) — full-width row <640, no row-own overflow, inline favorite, no overlay/photo-count/contact, title hover→brand-red confirmed. Found (not caused): the pre-existing, already-tracked FilterBar/Combobox page-overflow bug reproduces byte-identically in List view — proven unrelated to the card row (row's own `scrollWidth===clientWidth`). All gates green (tsc/eslint/i18n/file-integrity/mojibake). Session: `docs/sessions/2026-07-15-task608-listingcard-list-layout-site-migration.md`.
+**2026-07-16 — Orchestrator: reviewed + ✅ APPROVED Tasks 607 + 608 + 611, combined commit `feat(Task607+608+611)` LANDED + PUSHED (origin/main up to date).** Verified against the real per-file diffs (not the session logs), native gate (857/900 PASS, 0 FAIL, exit 0), native `tsc`/`vitest` (13/13), file-integrity/mojibake, and personally-viewed pixels (611 held-story resolution + 608 list-view uk@320). Resolved a stale-`git-status` false alarm (a Task-608 registry note looked "phantom" until the 608 files were confirmed freshly executed). **Opened two kickoffs:** Task 609 (`MantineListingDetailPattern` Grid-gutter horizontal-overflow → clears the last tracked xfail; fix = contain the negative-margin gutter with `overflow-x:clip`, preserve the sticky contact panel, remove the `MANTINE_PATTERN_KNOWN_FAILURES` entry) + Task 612 (owner-reported: `ListingGallery` lightbox is not portaled → the header + sticky contact card paint ABOVE it; `z-toast:100` is trapped in the page stacking context; fix = `createPortal` to `document.body`, keep the token). **Next:** hand 609 / 612 to Sonnet.
 
 ## Pending Action Items
 
@@ -52,14 +52,19 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 611. Next free: 612.** (611 = resolved Task 607's 2 held stories
-(`AppShellFoundation` open-trigger + `AdminSurfacePattern` element-overlap false positive) via a generic gate
-fix, never a per-story allowlist — see archive. **IMPLEMENTED 2026-07-15, gate GREEN.** Kickoff
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_611_GateHeldStoryResolution.md`. 609/610 remain reserved,
-not yet kicked off (Task 609 = `ListingDetailPattern` Grid-gutter overflow fix; Task 610 = grid/list
-title-hover asymmetry fix — both candidates from the Task 607 review, unaffected by 611's gate-only fix). 608 =
-site-wiring for the Task 606 List-layout pattern — **IMPLEMENTED 2026-07-16, see Last Session.** Kickoff
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_608_ListingCardListLayoutSiteMigration.md`.)
+**Task numbering — last used: 612. Next free: 613.** (612 = OPENED 2026-07-16 from an owner bug report —
+`ListingGallery` lightbox renders BELOW the site header + sticky contact card because it is NOT portaled
+(`fixed inset-0 z-toast` trapped in the page stacking context; `z-toast:100` can't beat root-level chrome from a
+nested context); fix = `createPortal` to `document.body`, keep the token, mandatory real-page before/after pixels.
+Kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_612_ListingGalleryLightboxPortalZIndex.md`. 609 = KICKED OFF
+2026-07-16 (`MantineListingDetailPattern` Grid-gutter horizontal-overflow → clears the last Task-607 tracked xfail;
+`overflow-x:clip`, preserve sticky panel, remove the registry entry); kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_609_ListingDetailPatternGridGutterOverflow.md`. 610 = still reserved,
+not yet kicked off (grid/list title-hover asymmetry — 608 notes the grid `group-hover` fix already shipped, so 610
+may now be a no-op/verify-only; re-scope before kicking off). 607/608/611 = ✅ APPROVED + COMMITTED + PUSHED
+2026-07-16, see archive + Last Session. 611 = resolved Task 607's 2 held stories via a generic gate fix. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_611_GateHeldStoryResolution.md`. 608 = site-wiring for the Task 606
+List-layout pattern; kickoff `tasks/Sprints/Sprint_44_kickoff_prompt_Task_608_ListingCardListLayoutSiteMigration.md`.)
 (607 = OPENED 2026-07-15 from the Task 606 review —
 extend the canonical rendered gate `scripts/check-stories-rendered.mjs` to auto-discover `Patterns/Mantine/*`
 (all 13 pattern stories, owner chose full-group via AskUserQuestion), closing the machine-rendered-coverage hole

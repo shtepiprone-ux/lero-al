@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
-import { X, ChevronLeft, ChevronRight, Camera, Maximize2 } from 'lucide-react'
+import { Camera, Maximize2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { LightboxView } from './LightboxView'
 
 interface GalleryImage { url: string; is_cover: boolean; order: number }
 
@@ -49,19 +49,16 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
     if (shell) shell.classList.remove('hidden')
   }, [])
 
+  // Arrow-key prev/next — Mantine's Modal has no built-in equivalent (Esc/backdrop/scroll-lock
+  // are now owned by Modal itself, see LightboxView).
   useEffect(() => {
     if (lightboxIndex === null) return
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightboxIndex(null)
       if (e.key === 'ArrowLeft') prev()
       if (e.key === 'ArrowRight') next()
     }
     document.addEventListener('keydown', handler)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', handler)
-      document.body.style.overflow = ''
-    }
+    return () => document.removeEventListener('keydown', handler)
   }, [lightboxIndex, prev, next])
 
   if (!sorted.length) {
@@ -145,71 +142,22 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
         </Button>
       )}
 
-      {/* Lightbox */}
-      {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-toast bg-overlay/95 flex items-center justify-center" role="dialog" aria-modal="true" aria-label={t('close_gallery')}>
-          {/* Close */}
-          <Button
-            variant="ghost"
-            size="icon-xl"
-            onClick={() => setLightboxIndex(null)}
-            className="absolute top-4 right-4 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 text-overlay-foreground z-10"
-            aria-label={t('close_gallery')}
-          >
-            <X className="size-5" />
-          </Button>
-
-          {/* Counter */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 text-overlay-foreground/80 text-sm">
-            {lightboxIndex + 1} / {sorted.length}
-          </div>
-
-          {/* Prev */}
-          {sorted.length > 1 && (
-            <Button
-              variant="ghost"
-              size="icon-xl"
-              onClick={prev}
-              className="absolute left-3 sm:left-6 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 text-overlay-foreground"
-              aria-label={tc('aria_prev')}
-            >
-              <ChevronLeft className="size-6" />
-            </Button>
-          )}
-
-          {/* Image */}
-          <div className="relative w-full h-full max-w-5xl max-h-[85vh] mx-16">
-            <AppImage variant="lightbox" src={sorted[lightboxIndex].url} alt={`${title} ${lightboxIndex + 1}`} />
-          </div>
-
-          {/* Next */}
-          {sorted.length > 1 && (
-            <Button
-              variant="ghost"
-              size="icon-xl"
-              onClick={next}
-              className="absolute right-3 sm:right-6 rounded-full bg-overlay-foreground/10 hover:bg-overlay-foreground/20 text-overlay-foreground"
-              aria-label={tc('aria_next')}
-            >
-              <ChevronRight className="size-6" />
-            </Button>
-          )}
-
-          {/* Thumbnail strip */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-2">
-            {sorted.map((img, i) => (
-              <Button
-                key={i}
-                variant="ghost"
-                onClick={() => setLightboxIndex(i)}
-                className={cn('relative h-14 w-20 shrink-0 rounded-lg overflow-hidden border-2 p-0 hover:bg-transparent', lightboxIndex === i ? 'border-white' : 'border-transparent opacity-60 hover:opacity-100')}
-              >
-                <AppImage variant="gallery-strip" src={img.url} alt="" />
-              </Button>
-            ))}
-          </div>
-        </div>
-      )}
+      <LightboxView
+        opened={lightboxIndex !== null}
+        images={sorted}
+        activeIndex={lightboxIndex ?? 0}
+        title={title}
+        labels={{
+          close: t('close_gallery'),
+          prev: tc('aria_prev'),
+          next: tc('aria_next'),
+          counter: (index, total) => `${index} / ${total}`,
+        }}
+        onClose={() => setLightboxIndex(null)}
+        onPrev={prev}
+        onNext={next}
+        onSelect={setLightboxIndex}
+      />
     </>
   )
 }

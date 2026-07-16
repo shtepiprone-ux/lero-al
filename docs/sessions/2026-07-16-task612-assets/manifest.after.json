@@ -1,0 +1,483 @@
+{
+  "mode": "after",
+  "baseUrl": "http://localhost:3000",
+  "slug": "11-mr7ucly4",
+  "matrix": [
+    {
+      "locale": "sq",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "sq",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "sq",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "sq",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "sq",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "sq",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "sq",
+      "viewport": "2560",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "1280",
+      "screenshot": "after__en__1280.png",
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "en",
+      "viewport": "2560",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "320",
+      "screenshot": "after__uk__320.png",
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "375",
+      "screenshot": "after__uk__375.png",
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "390",
+      "screenshot": "after__uk__390.png",
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "uk",
+      "viewport": "2560",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "320",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "375",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "390",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "768",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": false,
+        "contactCardCoveredByDialog": null
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "1280",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "1440",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    },
+    {
+      "locale": "it",
+      "viewport": "2560",
+      "screenshot": null,
+      "data": {
+        "dialogFound": true,
+        "isBodyChild": true,
+        "pageOverflow": false,
+        "headerFound": true,
+        "headerCoveredByDialog": true,
+        "contactCardFound": true,
+        "contactCardVisibleInViewport": true,
+        "contactCardCoveredByDialog": true
+      },
+      "pass": true,
+      "error": null
+    }
+  ]
+}

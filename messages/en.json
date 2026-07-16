@@ -2319,7 +2319,15 @@
       "user_menu_admin_caption": "Admin/moderator user — Admin dashboard item present (opens in a new tab), destructive Logout",
       "mobile_nav_drawer_caption": "Logged-in — user header, full nav, destructive Logout; each action closes the drawer. Rendered open directly (no trigger in this primitive). Logged-out (nav + Login/Register/Register-as-agent) is verified by code inspection — not rendered as a second open overlay, to avoid stacking two full-width sheets.",
       "header_view_caption_guest": "Guest — logo, desktop nav, Favorites→login, Login/Register (≥md), hamburger (<md), no UserMenu; overlays closed (no mobile drawer or auth sheet open)",
-      "header_view_caption_authed": "Authenticated — logo, desktop nav, Favorites, notification bell, UserMenu (≥md), hamburger (<md); overlays closed (no mobile drawer open)"
+      "header_view_caption_authed": "Authenticated — logo, desktop nav, Favorites, notification bell, UserMenu (≥md), hamburger (<md); overlays closed (no mobile drawer open)",
+      "lightbox_caption_multi": "Multi-image — click to open; Prev/Next (buttons + Arrow keys) wrap, thumbnail strip jumps to an image, counter updates, full-bleed dark scrim at every breakpoint",
+      "lightbox_caption_single": "Single image — Prev/Next hidden, no thumbnail strip",
+      "lightbox_trigger_multi": "Open lightbox (multi-image)",
+      "lightbox_trigger_single": "Open lightbox (single image)",
+      "lightbox_close": "Close gallery",
+      "lightbox_prev": "Previous",
+      "lightbox_next": "Next",
+      "lightbox_alt_title": "Storybook lightbox demo"
     }
   },
   "ui": {

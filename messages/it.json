@@ -2319,7 +2319,15 @@
       "user_menu_admin_caption": "Utente admin/moderatore — voce pannello admin presente (si apre in una nuova scheda), Esci distruttivo",
       "mobile_nav_drawer_caption": "Autenticato — intestazione utente, navigazione completa, Esci distruttivo; ogni azione chiude il cassetto. Visualizzato aperto direttamente (nessun trigger in questo primitivo). Lo stato disconnesso (navigazione + Accedi/Registrati/Registrati come agente) è verificato tramite ispezione del codice — non visualizzato come una seconda sovrapposizione aperta, per evitare di sovrapporre due fogli a larghezza intera.",
       "header_view_caption_guest": "Ospite — logo, navigazione desktop, Preferiti→accedi, Accedi/Registrati (≥md), hamburger (<md), senza UserMenu; overlay chiusi (nessun cassetto mobile o foglio di autenticazione aperto)",
-      "header_view_caption_authed": "Autenticato — logo, navigazione desktop, Preferiti, campanella notifiche, UserMenu (≥md), hamburger (<md); overlay chiusi (nessun cassetto mobile aperto)"
+      "header_view_caption_authed": "Autenticato — logo, navigazione desktop, Preferiti, campanella notifiche, UserMenu (≥md), hamburger (<md); overlay chiusi (nessun cassetto mobile aperto)",
+      "lightbox_caption_multi": "Multi-immagine — clicca per aprire; Prev/Next (pulsanti + tasti freccia) scorrono ciclicamente, la striscia di miniature salta a un'immagine, il contatore si aggiorna, sfondo scuro a tutta pagina a ogni breakpoint",
+      "lightbox_caption_single": "Immagine singola — Prev/Next nascosti, nessuna striscia di miniature",
+      "lightbox_trigger_multi": "Apri galleria (multi-immagine)",
+      "lightbox_trigger_single": "Apri galleria (immagine singola)",
+      "lightbox_close": "Chiudi galleria",
+      "lightbox_prev": "Precedente",
+      "lightbox_next": "Successivo",
+      "lightbox_alt_title": "Demo galleria Storybook"
     }
   },
   "ui": {

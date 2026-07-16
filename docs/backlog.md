@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-16 — Orchestrator: resolved the Task 612 STOP-AND-ASK, then RE-SCOPED 612 to a Mantine migration (owner decision).** Sonnet portaled the lightbox correctly but found (orchestrator confirmed by source read) that `z-toast` is DEAD CSS — the `--z-*` scale (`globals.css:245-251`) sits under the `--z-*` namespace Tailwind v4 never compiles into `z-*` utilities, so it computes `z-index:auto` and the header (working core `z-30/z-50`) covers the scrim. Blast radius ≈ 1 (this lightbox), NOT sitewide — overlays already on Mantine + core z-classes + the `z-[9999]` escape-hatch. **Owner chose (`AskUserQuestion`) to fix at the ROOT via Mantine** rather than ship a throwaway `z-[9999]`. **612 RE-SCOPED:** migrate the lightbox to a Mantine **`fullScreen Modal`** (managed z-index tier 200 > header → structural fix; NOT the `MantineModal` pattern, which forces a centered card / mobile bottom-sheet — wrong for a full-bleed media viewer) + extract a `LightboxView` presentational primitive + canonical Mantine story (closes the standing no-story/no-split gap on `ListingGallery`). Delete the hand-rolled portal/scroll-lock/Esc/backdrop (Mantine owns them), keep the Arrow-key nav. Kickoff fully rewritten. **Task 613** (deprecate the dead `--z-*` scale + reconcile `ui-rules.md §16/§12`) stays a low-priority cleanup after 612; `globals.css` untouched by 612. **Next:** hand the re-scoped 612 to Sonnet; 613 after it lands. *(Prior session — 607/608/611 APPROVED+COMMITTED+PUSHED; 609 opened — archived below.)*
+**2026-07-16 — Task 612 (`ListingGallery` lightbox → Mantine `fullScreen Modal` root-cause z-index/portal fix) — IMPLEMENTED + self-reviewed same session, gates green.** Migrated to a raw Mantine `Modal.Root/Content/Body fullScreen` + extracted `LightboxView.tsx` primitive + canonical story; found+fixed a second cascade-layer bug mid-task (Mantine `Paper`/`ActionIcon` unlayered CSS beating the initial Tailwind className attempt — scrim rendered white, buttons squashed the image to 60px) via inline `style`. 4/4 vitest (planted-violation verified) + 28/28 live-page matrix + 16/16 Storybook cells + `check:hydration` PASS + full listings suite 1054/1054, zero regression. Session: `docs/sessions/2026-07-16-task612-listinggallery-lightbox-mantine-modal-migration.md`. **Next:** owner runs the emitted commit; Task 609 and Task 613 still awaiting execution.
 
 ## Pending Action Items
 
@@ -57,11 +57,13 @@ remove/deprecate the DEAD `--z-*` Tailwind z-index token scale (`globals.css:245
 Tailwind v4 never turns into `z-*` utilities → `z-toast`/`z-sticky`/… all compute `z-index:auto`; blast radius ≈ the
 single `ListingGallery` `z-toast`, fixed by 612, because overlays moved to Mantine + core `z-30/40/50` + the
 `z-[9999]` escape-hatch). Deprecate, do NOT revive; reconcile `ui-rules.md §16/§12`. LOW-PRIORITY cleanup, after 612. Kickoff
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_613_DeadZIndexTokenScaleCleanup.md`. 612 = RE-SCOPED 2026-07-16 (owner
-`AskUserQuestion`): from a portal+z-index bug-fix → **migrate the lightbox to a Mantine `fullScreen Modal`** (managed
-z-index fixes the stacking at root; NOT `MantineModal` pattern — that's a centered card / mobile bottom-sheet, wrong
-for a full-bleed media viewer) + extract `LightboxView` presentational primitive + canonical Mantine story; delete
-hand-rolled portal/scroll-lock/Esc/backdrop, keep Arrow-key nav; `globals.css` untouched (→613). Kickoff rewritten.)
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_613_DeadZIndexTokenScaleCleanup.md`, not yet executed. 612 = RE-SCOPED
+2026-07-16 (owner `AskUserQuestion`) then **IMPLEMENTED + self-reviewed same session**: migrated the lightbox to a
+Mantine `fullScreen Modal` (managed z-index fixes the stacking at root; NOT `MantineModal` pattern) + extracted
+`LightboxView` presentational primitive + canonical Mantine story; found+fixed a second cascade-layer bug
+(Mantine `Paper`/`ActionIcon` unlayered CSS) via inline `style`; `globals.css` untouched (→613). All gates green,
+28/28 live-page + 16/16 Storybook + 4/4 vitest (planted-violation verified), zero regression on the 1054-test
+listings suite. Session `docs/sessions/2026-07-16-task612-listinggallery-lightbox-mantine-modal-migration.md`.)
 (612 = OPENED 2026-07-16 from an owner bug report —
 `ListingGallery` lightbox renders BELOW the site header + sticky contact card because it is NOT portaled
 (`fixed inset-0 z-toast` trapped in the page stacking context; `z-toast:100` can't beat root-level chrome from a

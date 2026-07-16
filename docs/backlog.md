@@ -7,7 +7,7 @@
 
 ## Last Session
 
-**2026-07-16 — Task 609 (`MantineListingDetailPattern` Grid-gutter horizontal-overflow fix) — ✅ APPROVED (orchestrator diff review + owner NATIVE gate GREEN 2026-07-16: tsc=0 · file-integrity 9/9 · mojibake 0 · check:stories 0 · `--mantine-only` 889/916 PASS, 0 FAIL, 0 KNOWN-FAILURE, exit 0), commit emitted, pending owner run.** Root cause: root `<Grid gutter="lg">`'s negative-margin gutter bled ~10px past the viewport with nothing to hide it in the isolated story. First attempt (wrap in `overflowX:'clip'` Box) was tried and REJECTED — it neutralized the overflow but introduced a NEW false `text-clipped` positive (the geometry check's Check-1 flags any interactive descendant of a clipped-and-inflated ancestor, regardless of whether that descendant itself is visually clipped). Shipped fix instead neutralizes the gutter at its source: `gutter={0}` + explicit `pr`/`mb` on the left column reproducing the identical visual gap, zero negative-margin bleed anywhere. Verified via a scoped Playwright probe (16/16 cells, `scrollWidth===clientWidth` exactly, 0 text-clipped, sticky panel confirmed via computed-style + real scroll) plus a full plant-then-revert anti-regression transcript. `MANTINE_PATTERN_KNOWN_FAILURES` registry now `{}`. Full gate: 889/916 PASS, 0 FAIL, 27 AMBIGUOUS (pre-existing), exit 0. Session: `docs/sessions/2026-07-16-task609-listingdetailpattern-grid-gutter-overflow-fix.md`. **Next:** orchestrator review of the diff, then owner native gate + run; Task 613 still awaiting execution.
+**2026-07-16 — Task 615 (`MantineListingDetailPattern` CTA `flexDirection` fix) — ✅ APPROVED + COMMIT EMITTED (pending owner run); Task 616 OPENED.** Orchestrator diff review: the fix is clean/canonical (`Flex direction={{ base:'column', sm:'row' }}` + per-button `flex:1 minWidth:0` + wrapping `<span>`; no inline `flexDirection` pin; scope = single product file). Owner NATIVE gate confirmed `ListingDetailPattern` 16/16 PASS. Committed on owner's instruction (separate from the readiness rework). **TWO findings from the native run + owner render:** (1) **owner rendered the story and rejected it as "not ready" — CORRECT.** The story fixture is broken: `description` uses `empty_description` ("Try a different search"), and feature rows pair full-phrase labels with duplicate values ("3 rooms / 3", "85 m² / 85 m²") — a Demo-content source-of-truth gate violation. The pattern is also a hollow skeleton vs the real `ListingDetailView` (no badges/price/meta/feature-card-with-icons/description-card/amenities-card). → **Task 616 opened for the full production-ready rebuild** (owner chose full rebuild via AskUserQuestion; Task 605 precedent). My miss: I passed 16/16 on a geometry gate blind to content/visual readiness and did not run the Demo-content gate on the fixture. (2) native `--mantine-only` = 888/916 PASS, **1 FAIL** (`PasswordInput/Default × en × mobile-320` — form control not full-width at <640) — UNRELATED to 615 (different file); sandbox baseline masked it. **Pending owner re-run to confirm deterministic before I open a PasswordInput task.** Session: `docs/sessions/2026-07-16-task615-listingdetailpattern-cta-flexdirection-fix.md`. Kickoff (616): `tasks/Sprints/Sprint_44_kickoff_prompt_Task_616_ListingDetailPatternProductionRebuild.md`. **Next:** owner re-runs the gate (PasswordInput determinism) + runs the 615 commit; then hand Task 616 to Sonnet.
 
 ## Pending Action Items
 
@@ -52,13 +52,24 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 615. Next free: 616.** (615 = OPENED 2026-07-16 from the Task 609 review —
-`MantineListingDetailPattern` contact CTAs never switch to a side-by-side row at `sm+`: the inline
-`style={{flexDirection:'column'}}` (`MantineListingDetailPattern.tsx:129`) out-specificities the `styles`-prop
-`@media(min-width:40em){flexDirection:'row'}` override, so the row switch is dead. Fix = canonical Mantine responsive
-`Flex direction={{base:'column',sm:'row'}}` + per-button `flex:1` (drop `fullWidth` at `sm+`), `<640` full-width-stacked
-byte-identical, STOP-AND-ASK if two-across clips in the narrow span-4 column. Kickoff
-`tasks/Sprints/Sprint_44_kickoff_prompt_Task_615_ListingDetailCTAFlexDirectionFix.md`, not yet executed.) (614 = ✅ APPROVED 2026-07-16 (orchestrator review, commit emitted, pending owner native gate + run) — added
+**Task numbering — last used: 616. Next free: 617.** (616 = OPENED 2026-07-16 from the Task 615 owner render rejection —
+full production-ready rebuild of `MantineListingDetailPattern` into the complete, source-of-truth-driven listing-detail
+pattern (Task 605 precedent for the card): fixture cited to `getDetailFeatures`/`getDetailAttributes` (fixes the
+`empty_description` description + garbled full-phrase feature labels), production chrome mirroring `ListingDetailViewBody`
+(badges/price/meta/feature-card-with-icons/description-card/amenities-card), Task 615 CTA fix + Task 609 gutter fix
+preserved, pure presentational primitive, + a persisted `band-768` gate cell. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_616_ListingDetailPatternProductionRebuild.md`, not yet executed.) (615 = ✅ APPROVED + commit emitted 2026-07-16 (pending owner run) —
+`MantineListingDetailPattern` contact CTAs never switched to a side-by-side row at `sm+` (inline
+`style={{flexDirection:'column'}}` out-specificitied a `styles`-prop `@media` override). Fixed via canonical
+`Flex direction={{base:'column',sm:'row'}}` + per-button `flex:1`; mid-task found+fixed a second real defect (flex-item
+automatic-minimum-size trap on an unbreakable single-word uk label — fixed via `minWidth:0` on root+`inner`+`label`
+styles plus an explicit wrapping `<span>` so long labels wrap instead of overflowing). Self-caught process bug:
+`screenshots:assert` doesn't rebuild `storybook-static/`, so `npm run build-storybook` was re-run before every assert.
+Verified: 20-cell Playwright probe (320/375/390/768/1024×4 locales) all PASS incl. hardest cell `uk@768`;
+`--mantine-only` 889/916 PASS 0 FAIL 27 AMBIGUOUS (byte-identical to Task 609 baseline), `ListingDetailPattern` 16/16;
+planted `minWidth:900` anti-regression genuinely FAILed all 16 cells, reverted clean. Kickoff
+`tasks/Sprints/Sprint_44_kickoff_prompt_Task_615_ListingDetailCTAFlexDirectionFix.md`. Session
+`docs/sessions/2026-07-16-task615-listingdetailpattern-cta-flexdirection-fix.md`.) (614 = ✅ APPROVED 2026-07-16 (orchestrator review, commit emitted, pending owner native gate + run) — added
 the missing planted-violation proof for the shared `check-stories.mjs` Check-9 test-file exclusion Task 612 self-merged
 (`.test.tsx`/`__tests__` skip): 3 new tests prove `.test.tsx`/`__tests__` files are skipped AND a real non-test
 `src/modules` component with the same literal is STILL caught (blind-spot guard); anti-no-op transcript via reverting

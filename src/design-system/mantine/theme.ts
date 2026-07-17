@@ -107,11 +107,45 @@ const purple: MantineColorsTuple = [
   '#3a2980', // 9 — approximation
 ]
 
+// Dedicated `sale` crimson for the price-reduced badge (Task 619, owner-provided 2026-07-17,
+// NOT TailAdmin-derived — no TailAdmin reference covers this signal). Authoritative stop
+// `#dd0939` placed at index **7**, NOT index 6 — a rendered-evidence correction of the
+// long-standing "Badge light text = index 6" comment convention used by every other color in
+// this file (`green`/`yellow`/`red`/`blueLight`/`purple`, see their comments above). Verified via
+// getComputedStyle + Mantine's own source (`get-css-color-variables.mjs` /
+// `get-primary-shade.mjs`): because this theme sets `primaryShade: 7` as a single NUMBER (not a
+// `{light,dark}` object), Mantine's `getPrimaryShade()` returns 7 for EVERY color's
+// `-light`/`-filled`/`-light-color` CSS variables, not just `theme.primaryColor` — so Badge
+// `variant='light'` text AND `variant='filled'` background both actually read shade index 7 for
+// ALL colors project-wide. This is a PRE-EXISTING, out-of-this-task's-scope mismatch: the other
+// five colors' "index 6 is authoritative" comments describe a value Badge never actually renders
+// (confirmed by probe: e.g. rendered `red` Badge text = `#b42318`, tuple index 7, not the
+// index-6 `#d92d20` the comment cites) — left untouched here, flagged for the orchestrator rather
+// than silently fixed (would require re-deriving 5 existing tuples, out of this task's scope).
+// For `sale` specifically — a brand-new tuple with no prior citation to preserve — the
+// authoritative owner hex is placed at the index Badge ACTUALLY reads (7) so the rendered pixel
+// genuinely IS `#dd0939`, per the kickoff's own instruction to report rendered evidence rather
+// than assume index 6. Distinguishes the "price reduced" signal from both `brand` (coral,
+// primary/price text) and `red` (error/`Blocked`) on both the listing card (filled) and the
+// listing-detail pattern (light).
+const sale: MantineColorsTuple = [
+  '#fdf0f3', // 0 — approximation
+  '#fadde3', // 1 — approximation
+  '#f5bac8', // 2 — approximation
+  '#f198ac', // 3 — approximation
+  '#ec7590', // 4 — approximation
+  '#e75374', // 5 — approximation
+  '#e22e57', // 6 — approximation
+  '#dd0939', // 7 — owner-provided (2026-07-17, not TailAdmin-derived) — Badge light text / filled fill (verified rendered index, see comment above)
+  '#b5072f', // 8 — approximation
+  '#8d0624', // 9 — approximation
+]
+
 export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red, blueLight, purple },
+  colors: { brand, gray, green, yellow, red, blueLight, purple, sale },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.

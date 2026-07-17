@@ -61,8 +61,10 @@ const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
 // Tone -> Mantine theme color name (Task 617). Replaces the legacy `className` color override —
 // Mantine's `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules, so a Tailwind
 // `@layer utilities` className on a Mantine `Badge` can never win (Task 602/606/612/616/617
-// cascade-layer trap). `new`=green, `price_reduced`=brand (matches the literal
-// `globals.css --badge-reduced: var(--brand-700)` token), `status_sold`=blueLight (matches
+// cascade-layer trap). `new`=green, `price_reduced`=`sale` (Task 619 — a dedicated owner-provided
+// crimson `#dd0939`, replacing `brand`; matches the detail pattern's `reduced` badge so the
+// "price reduced" signal reads as the same color on both surfaces, no longer colliding with the
+// page's own `color="brand"` price text), `status_sold`=blueLight (matches
 // `--status-info`, added to the canonical `Mantine/Primitives/Badge` story first), `status_rented`
 // =purple (matches `--status-rented`, `purple` added to `theme.ts` + the Badge story first),
 // `status_archived`=gray, `status_expired`=yellow (matches `--status-warning`). No `variant` field
@@ -99,7 +101,7 @@ function getBadges(listing: CardListingData) {
   }
   // Premium is expressed through card styling, not a text badge
   if (listing.price_old && listing.price < listing.price_old) {
-    badges.push({ label: 'price_reduced', color: 'brand' })
+    badges.push({ label: 'price_reduced', color: 'sale' })
   }
   return badges
 }

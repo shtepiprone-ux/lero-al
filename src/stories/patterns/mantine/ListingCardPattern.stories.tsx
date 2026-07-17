@@ -104,14 +104,16 @@ interface DemoCardOpts {
 
 function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
   // Tone -> Mantine theme color (Task 617 — matches ListingCard.tsx's real getBadges() mapping):
-  // new=green, reduced=brand (globals.css --badge-reduced: var(--brand-700)), sold=blueLight
-  // (globals.css --status-info), archived=gray. Pattern always renders these variant="filled"
-  // (opaque, safe over the photo) — no `variant` field needed on the badge data itself.
+  // new=green, reduced=sale (Task 619 — dedicated owner-provided crimson #dd0939, replacing
+  // brand; matches the detail pattern's reduced badge so the signal reads the same color across
+  // the whole product), sold=blueLight (globals.css --status-info), archived=gray. Pattern always
+  // renders these variant="filled" (opaque, safe over the photo) — no `variant` field needed on
+  // the badge data itself.
   const badges: MantineListingCardBadge[] = [];
   if (!sold && !archived) {
     badges.push({
       label: reduced ? storyT(l, 'storybook.mantine.card_badge_reduced') : storyT(l, 'storybook.mantine.card_badge_new'),
-      color: reduced ? 'brand' : 'green',
+      color: reduced ? 'sale' : 'green',
     });
   }
   if (sold) {

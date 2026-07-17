@@ -37,6 +37,9 @@ export const Default: Story = {
                   (globals.css --status-info / --status-rented have no prior Mantine color). */}
               <Badge color="blueLight">{t('storybook.mantine.badge_info')}</Badge>
               <Badge color="purple">{t('storybook.mantine.badge_purple')}</Badge>
+              {/* Task 619 — dedicated price-reduced crimson (owner-provided #dd0939), distinct
+                  from both `brand` (coral) and `red` (error/Blocked). */}
+              <Badge color="sale">{t('storybook.mantine.badge_sale')}</Badge>
             </Group>
           </Stack>
 
@@ -81,6 +84,7 @@ export const Default: Story = {
               <Badge variant="filled" color="brand">{t('storybook.mantine.badge_brand')}</Badge>
               <Badge variant="filled" color="blueLight">{t('storybook.mantine.badge_info')}</Badge>
               <Badge variant="filled" color="purple">{t('storybook.mantine.badge_purple')}</Badge>
+              <Badge variant="filled" color="sale">{t('storybook.mantine.badge_sale')}</Badge>
             </Group>
           </Stack>
         </Stack>

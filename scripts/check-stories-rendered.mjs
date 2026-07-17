@@ -383,6 +383,11 @@ const MANTINE_VIEWPORTS = [
 // HeroSearch and slowing every run.
 const MANTINE_STORY_EXTRA_VIEWPORTS = {
   HeroSearch: [{ name: 'band-700', width: 700, height: 812 }],
+  // Task 616 — persists the Task 615 contact-CTA `uk@768` proof (the hardest cell for the
+  // Flex `direction={{base:'column',sm:'row'}}` + long-label-wrap fix, verified manually at
+  // review time) as a standing gate cell instead of a one-off Playwright probe, matching the
+  // Task 573 HeroSearch precedent above.
+  ListingDetailPattern: [{ name: 'band-768', width: 768, height: 1024 }],
 };
 
 /**

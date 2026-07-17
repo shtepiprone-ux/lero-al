@@ -1,159 +1,221 @@
 'use client'
 
-import { Grid, Stack, Title, Text, Badge, Flex, Button, Paper, SimpleGrid, Divider } from '@mantine/core'
+import type { ReactNode } from 'react'
+import { Grid, Stack, Title, Text, Badge, Group, Paper, SimpleGrid, Divider } from '@mantine/core'
+import { MapPin, Eye, CalendarDays } from 'lucide-react'
+import { MantineListingGalleryPattern, type MantineListingGalleryImage, type MantineListingGalleryPatternProps } from './MantineListingGalleryPattern'
+import { MantineListingContactPattern, type MantineListingContactPatternProps } from './MantineListingContactPattern'
 
 export interface ListingFeature {
+  icon: ReactNode
   label: string
   value: string
 }
 
+export interface ListingAmenity {
+  label: string
+  value: string
+}
+
+export type ListingDetailBadgeTone = 'new' | 'premium' | 'reduced' | 'type'
+
+export interface ListingDetailBadge {
+  label: string
+  tone: ListingDetailBadgeTone
+}
+
 export interface MantineListingDetailData {
   title: string
-  location: string
+  location?: string
   price: string
-  badge?: string
+  priceOld?: string
+  originalPriceLabel?: string
+  pricePerSqm?: string
+  views: number
+  viewsLabel: string
+  date: string
+  publicId: string
   description?: string
-  features?: ListingFeature[]
-  imageUrl?: string
 }
 
 export interface MantineListingDetailPatternProps {
   data: MantineListingDetailData
-  callLabel: string
-  whatsappLabel: string
-  onCall?: () => void
-  onWhatsApp?: () => void
+  images: MantineListingGalleryImage[]
+  galleryLabels: MantineListingGalleryPatternProps['labels']
+  badges?: ListingDetailBadge[]
+  features: ListingFeature[]
+  descriptionTitle: string
+  amenitiesTitle: string
+  amenities?: ListingAmenity[]
+  contact: MantineListingContactPatternProps
 }
 
 /**
- * Canonical listing detail pattern.
+ * Tone -> Mantine THEME color name (owner decision, 2026-07-17: native Mantine `color` + the
+ * theme's default `variant='light'` — the SAME idiom as the canonical `Mantine/Primitives/Badge`
+ * story (`color="green"`/`"yellow"`/`"sale"`, soft background) — not a re-skin of the legacy
+ * `--badge-new/premium/reduced` tokens (`globals.css:373-375`), which were defined for the
+ * legacy `@/components/ui/badge` and would have reproduced its solid-fill look via a Mantine
+ * shell. `new`=green, `premium`=yellow (closest theme color to "gold"), `reduced`=`sale` (Task
+ * 619 — a dedicated owner-provided crimson `#dd0939`, distinct from both `brand` (the page's own
+ * price text) and `red` (error/`Blocked`); matches the card's `price_reduced` badge so the
+ * "price reduced" signal reads as the same color across the whole product) — all three from
+ * `theme.ts`'s `colors.{green,yellow,sale}` tuples, matched to Badge.stories.tsx.
+ */
+const BADGE_TONE_COLOR: Record<Exclude<ListingDetailBadgeTone, 'type'>, string> = {
+  new: 'green',
+  premium: 'yellow',
+  reduced: 'sale',
+}
+
+/**
+ * Canonical listing-detail pattern (Task 616 D3, ALL-Mantine rebuild) — composes the D1
+ * gallery pattern + a Mantine info block (badges/price/meta/key-features card/description
+ * card/amenities card) + the D2 sticky contact card. Zero `@/components/ui/*` imports.
  *
- * Mobile (<sm / 640px): single column — gallery top, info + contact below.
- *   Contact CTAs are full-width, stacked (P0 mobile gate).
- * Tablet/Desktop (sm+): two-column grid — gallery left, info + contact right.
- *
- * Responsive API:
- *   - Grid cols={{ base: 1, sm: '1fr 360px' }} — Mantine Grid.
- *   - Contact buttons: `Flex direction={{ base: 'column', sm: 'row' }}` — full-width stacked at base
- *     (default `align-items:stretch`), equal-width row (`style={{ flex: 1 }}` per button) at sm+.
- *     `minWidth: 0` on the button root + its `inner`/`label` styles + an explicit wrapping `<span>`
- *     around the label text defeat the flex-item automatic-minimum-size trap (a `display:flex`
- *     label wrapping an unbreakable single-word Cyrillic/Italian label would otherwise refuse to
- *     shrink below its full-word width and visually overflow the button at sm+ two-across widths —
- *     Task 615) so long labels wrap onto a second line (button grows via `height:'auto'`) instead.
- *   - Features grid: SimpleGrid cols={{ base: 2, sm: 3 }}.
- *
- * Migration target: src/modules/listings/components/ListingDetailView.tsx (Phase 4).
+ * Keeps the Task 609 `gutter={0}` + `pr`/`mb` gap fix (Grid's negative-margin gutter bleeds
+ * past an unclipped standalone story render otherwise) and the Task 615 contact-CTA
+ * `Flex`/`minWidth:0` fix (owned by `MantineListingContactPattern`, composed here unchanged).
  */
 export function MantineListingDetailPattern({
   data,
-  callLabel,
-  whatsappLabel,
-  onCall,
-  onWhatsApp,
+  images,
+  galleryLabels,
+  badges = [],
+  features,
+  descriptionTitle,
+  amenitiesTitle,
+  amenities = [],
+  contact,
 }: MantineListingDetailPatternProps) {
   return (
-    // `Grid`'s gutter is implemented as a negative margin on `.mantine-Grid-inner` (bled back in
-    // by matching padding on each `Grid.Col`) — harmless when an ancestor clips it, but this
-    // pattern can render standalone (e.g. its own Storybook story) with nothing to hide the
-    // bleed, so the inner wrapper's own box measures wider than the viewport
-    // (scrollWidth > clientWidth). Clipping that ancestor doesn't fix it either: the geometry
-    // gate's text-clip check walks up from each button looking for the first clipped ancestor
-    // whose scrollWidth exceeds its clientWidth, and an overflow:clip Box around the whole Grid
-    // IS exactly that ancestor — a false positive, since nothing is actually clipped visually.
-    // Root-cause fix: `gutter={0}` removes the negative margin entirely, and the same visual
-    // gap is reproduced explicitly — `pr="lg"` between the two side-by-side columns at `sm+`,
-    // `mb="lg"` between the two stacked columns at base — so the layout stays byte-identical
-    // with zero negative-margin bleed anywhere.
     <Grid gutter={0}>
       <Grid.Col span={{ base: 12, sm: 8 }} pr={{ base: 0, sm: 'lg' }} mb={{ base: 'lg', sm: 0 }}>
-        <Stack gap="md">
-          <Paper
-            radius="md"
-            style={{
-              background: data.imageUrl ? `url(${data.imageUrl}) center/cover` : 'var(--mantine-color-gray-1)',
-              minHeight: 320,
-              position: 'relative',
-            }}
-          >
-            {!data.imageUrl && (
-              <Text c="dimmed" ta="center" pt={140} size="sm">
-                Gallery
-              </Text>
+        <Stack gap="lg">
+          <MantineListingGalleryPattern images={images} title={data.title} labels={galleryLabels} />
+
+          <Stack gap="sm">
+            {badges.length > 0 && (
+              <Group gap="xs" wrap="wrap">
+                {badges.map((b, i) => (
+                  <Badge
+                    key={i}
+                    variant={b.tone === 'type' ? 'outline' : undefined}
+                    color={b.tone === 'type' ? 'gray' : BADGE_TONE_COLOR[b.tone]}
+                  >
+                    {b.label}
+                  </Badge>
+                ))}
+              </Group>
             )}
-          </Paper>
 
-          {data.description && (
-            <Stack gap="xs">
-              <Text fw={600} size="md">
-                {data.description.split('.')[0]}
-              </Text>
-              <Text size="sm" c="dimmed">
-                {data.description}
-              </Text>
-            </Stack>
-          )}
+            <Title order={1} size="h2" style={{ wordBreak: 'break-word' }}>
+              {data.title}
+            </Title>
 
-          {data.features && data.features.length > 0 && (
-            <Stack gap="sm">
-              <Divider />
-              <SimpleGrid cols={{ base: 2, sm: 3 }} spacing="sm">
-                {data.features.map((f) => (
-                  <Stack key={f.label} gap={2}>
-                    <Text size="xs" c="dimmed">
-                      {f.label}
-                    </Text>
-                    <Text size="sm" fw={500}>
+            <Group gap="sm" align="baseline" wrap="wrap">
+              <Text fw={700} size="xl" c="brand">
+                {data.price}
+              </Text>
+              {data.priceOld && (
+                <Text size="md" c="dimmed" td="line-through">
+                  {data.priceOld}
+                </Text>
+              )}
+              {data.pricePerSqm && (
+                <Text size="sm" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
+                  {data.pricePerSqm}
+                </Text>
+              )}
+            </Group>
+
+            <Group gap="md" wrap="wrap">
+              {data.location && (
+                <Group gap={4} wrap="nowrap">
+                  <MapPin size={16} className="shrink-0 text-muted-foreground" />
+                  <Text size="sm" c="dimmed">
+                    {data.location}
+                  </Text>
+                </Group>
+              )}
+              <Group gap={4} wrap="nowrap">
+                <Eye size={16} className="shrink-0 text-muted-foreground" />
+                <Text size="sm" c="dimmed">
+                  {data.views} {data.viewsLabel}
+                </Text>
+              </Group>
+              <Group gap={4} wrap="nowrap">
+                <CalendarDays size={16} className="shrink-0 text-muted-foreground" />
+                <Text size="sm" c="dimmed">
+                  {data.date}
+                </Text>
+              </Group>
+              <Text size="xs" c="dimmed" ff="monospace">
+                ID: #{data.publicId}
+              </Text>
+            </Group>
+          </Stack>
+
+          {features.length > 0 && (
+            <Paper withBorder radius="lg" p="lg">
+              <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="md">
+                {features.map((f, i) => (
+                  <Stack key={i} gap={2}>
+                    <Group gap={4} wrap="nowrap">
+                      <span className="shrink-0 text-muted-foreground">{f.icon}</span>
+                      <Text size="xs" c="dimmed">
+                        {f.label}
+                      </Text>
+                    </Group>
+                    <Text size="sm" fw={600}>
                       {f.value}
                     </Text>
                   </Stack>
                 ))}
               </SimpleGrid>
-            </Stack>
+            </Paper>
+          )}
+
+          {data.description && (
+            <Paper withBorder radius="lg" p="lg">
+              <Stack gap="sm">
+                <Title order={2} size="h4">
+                  {descriptionTitle}
+                </Title>
+                <Text c="dimmed" style={{ whiteSpace: 'pre-line', lineHeight: 1.6 }}>
+                  {data.description}
+                </Text>
+              </Stack>
+            </Paper>
+          )}
+
+          {amenities.length > 0 && (
+            <Paper withBorder radius="lg" p="lg">
+              <Stack gap="md">
+                <Title order={2} size="h4">
+                  {amenitiesTitle}
+                </Title>
+                <Divider />
+                <SimpleGrid cols={{ base: 2, sm: 3 }} spacing="sm">
+                  {amenities.map((a, i) => (
+                    <Stack key={i} gap={2}>
+                      <Text size="xs" c="dimmed">
+                        {a.label}
+                      </Text>
+                      <Text size="sm" fw={500}>
+                        {a.value}
+                      </Text>
+                    </Stack>
+                  ))}
+                </SimpleGrid>
+              </Stack>
+            </Paper>
           )}
         </Stack>
       </Grid.Col>
 
       <Grid.Col span={{ base: 12, sm: 4 }}>
-        <Paper shadow="sm" p="md" radius="md" withBorder style={{ position: 'sticky', top: 80 }}>
-          <Stack gap="sm">
-            {data.badge && (
-              <Badge color="brand" variant="filled" size="sm">
-                {data.badge}
-              </Badge>
-            )}
-            <Title order={2} size="h3" lineClamp={3}>
-              {data.title}
-            </Title>
-            <Text size="sm" c="dimmed">
-              {data.location}
-            </Text>
-            <Text fw={700} size="xl" c="brand">
-              {data.price}
-            </Text>
-            <Divider />
-            <Flex direction={{ base: 'column', sm: 'row' }} gap="sm">
-              <Button
-                color="brand"
-                size="md"
-                onClick={onCall}
-                style={{ flex: 1, minWidth: 0 }}
-                styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
-              >
-                <span style={{ minWidth: 0, display: 'block' }}>{callLabel}</span>
-              </Button>
-              <Button
-                color="green"
-                size="md"
-                onClick={onWhatsApp}
-                style={{ flex: 1, minWidth: 0 }}
-                styles={{ inner: { minWidth: 0 }, label: { minWidth: 0 } }}
-              >
-                <span style={{ minWidth: 0, display: 'block' }}>{whatsappLabel}</span>
-              </Button>
-            </Flex>
-          </Stack>
-        </Paper>
+        <MantineListingContactPattern {...contact} />
       </Grid.Col>
     </Grid>
   )

@@ -37,8 +37,27 @@ export type {
   MantineListingCardOverlay,
 } from './MantineListingCardPattern'
 
+export { MantineListingGalleryPattern } from './MantineListingGalleryPattern'
+export type { MantineListingGalleryPatternProps, MantineListingGalleryImage } from './MantineListingGalleryPattern'
+
+export { MantineListingContactPattern } from './MantineListingContactPattern'
+export type {
+  MantineListingContactPatternProps,
+  MantineListingContactAgent,
+  MantineListingContactPriceInfo,
+  MantineListingContactState,
+  MantineListingContactLabels,
+} from './MantineListingContactPattern'
+
 export { MantineListingDetailPattern } from './MantineListingDetailPattern'
-export type { MantineListingDetailPatternProps, MantineListingDetailData, ListingFeature } from './MantineListingDetailPattern'
+export type {
+  MantineListingDetailPatternProps,
+  MantineListingDetailData,
+  ListingFeature,
+  ListingAmenity,
+  ListingDetailBadge,
+  ListingDetailBadgeTone,
+} from './MantineListingDetailPattern'
 
 export { MantineAdminSurfacePattern } from './MantineAdminSurfacePattern'
 export type { MantineAdminSurfacePatternProps, AdminFilter } from './MantineAdminSurfacePattern'

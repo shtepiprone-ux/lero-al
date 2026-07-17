@@ -13,9 +13,6 @@
 
 ## Open — needs action
 
-**Orchestrator review pending:**
-- **Task 573** (Sprint 43) — HeroSearch 640–767 durable gate cell. Impl + gate committed (`test(Task573)`); no recorded approval → needs orchestrator review. Session `docs/sessions/2026-07-10-task573-herosearch-inband-gate-coverage.md`.
-
 **Not yet executed / re-scope before kicking off:**
 - **Task 610** — grid/list title-hover asymmetry. No commits; likely a no-op after Task 608 shipped the grid `group-hover` fix — verify/re-scope first.
 - **Task 613** — remove the DEAD `--z-*` Tailwind z-index token scale (`globals.css`; Tailwind v4 never compiles it into `z-*` utilities). Kickoff open, not executed; LOW priority. Kickoff `..._Task_613_DeadZIndexTokenScaleCleanup.md`.

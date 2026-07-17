@@ -51,42 +51,55 @@ interface ListingCardProps {
 }
 
 // Display map — allowed by domain policy (badge colors are presentation-layer constants).
+// The centered rotated closed-overlay is plain Tailwind-styled markup (not the Badge component),
+// so it is unaffected by the Task 617 Badge migration below — left as-is.
 const CLOSED_OVERLAY_STYLE: Partial<Record<ListingStatus, string>> = {
   sold:   'bg-status-info/80 border-status-info',
   rented: 'bg-status-rented/80 border-status-rented',
 }
 
+// Tone -> Mantine theme color name (Task 617). Replaces the legacy `className` color override —
+// Mantine's `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules, so a Tailwind
+// `@layer utilities` className on a Mantine `Badge` can never win (Task 602/606/612/616/617
+// cascade-layer trap). `new`=green, `price_reduced`=brand (matches the literal
+// `globals.css --badge-reduced: var(--brand-700)` token), `status_sold`=blueLight (matches
+// `--status-info`, added to the canonical `Mantine/Primitives/Badge` story first), `status_rented`
+// =purple (matches `--status-rented`, `purple` added to `theme.ts` + the Badge story first),
+// `status_archived`=gray, `status_expired`=yellow (matches `--status-warning`). No `variant` field
+// — `MantineListingCardPattern` always renders these `variant="filled"` (opaque, safe on the
+// photo these badges sit on top of; the theme's default `variant="light"` is translucent and
+// unreadable over a photo, owner-caught 2026-07-17).
 function getBadges(listing: CardListingData) {
-  const badges: { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline'; className: string }[] = []
+  const badges: { label: string; color: string }[] = []
 
   // Status badges take priority for non-active listings
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'sold') {
-    badges.push({ label: 'status_sold', variant: 'default', className: 'bg-status-info text-primary-foreground' })
+    badges.push({ label: 'status_sold', color: 'blueLight' })
     return badges
   }
   // eslint-disable-next-line no-restricted-syntax -- badge color distinguishes sold vs rented individually; isListingClosed() merges both and cannot be used here
   if (listing.status === 'rented') {
-    badges.push({ label: 'status_rented', variant: 'default', className: 'bg-status-rented text-primary-foreground' })
+    badges.push({ label: 'status_rented', color: 'purple' })
     return badges
   }
   if (isListingArchived(listing.status as ListingStatus)) {
-    badges.push({ label: 'status_archived', variant: 'outline', className: 'border-border text-muted-foreground' })
+    badges.push({ label: 'status_archived', color: 'gray' })
     return badges
   }
   if (listing.status === 'expired') {
-    badges.push({ label: 'status_expired', variant: 'outline', className: 'border-status-warning text-status-warning' })
+    badges.push({ label: 'status_expired', color: 'yellow' })
     return badges
   }
 
   // Active listing badges
   const sevenDaysAgo = new Date(Date.now() - LISTING_NEW_DAYS * 24 * 60 * 60 * 1000)
   if (new Date(listing.created_at) > sevenDaysAgo) {
-    badges.push({ label: 'new', variant: 'default', className: 'bg-badge-new hover:bg-badge-new/90 text-primary-foreground' })
+    badges.push({ label: 'new', color: 'green' })
   }
   // Premium is expressed through card styling, not a text badge
   if (listing.price_old && listing.price < listing.price_old) {
-    badges.push({ label: 'price_reduced', variant: 'default', className: 'bg-badge-reduced hover:bg-badge-reduced/90 text-primary-foreground' })
+    badges.push({ label: 'price_reduced', color: 'brand' })
   }
   return badges
 }
@@ -160,7 +173,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
       />
     )
 
-    const patternBadges = badges.map(b => ({ label: t(b.label), variant: b.variant, className: b.className }))
+    const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
 
     const listFeatures = getCardFeatures(listing).map(f => ({
       icon: <ListingFeatureIcon name={f.icon} className="h-3.5 w-3.5" />,
@@ -252,7 +265,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   )
 
   // Badges + overlay — pre-translated here (pattern stays hook-free/no i18n).
-  const patternBadges = badges.map(b => ({ label: t(b.label), variant: b.variant, className: b.className }))
+  const patternBadges = badges.map(b => ({ label: t(b.label), color: b.color }))
   const overlay = isClosed
     ? { label: t(`status_${listing.status}` as 'status_sold' | 'status_rented').toUpperCase(), className: CLOSED_OVERLAY_STYLE[listing.status] }
     : undefined

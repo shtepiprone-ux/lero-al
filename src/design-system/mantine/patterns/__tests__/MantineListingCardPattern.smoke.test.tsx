@@ -42,7 +42,7 @@ function baseProps(layout?: 'grid' | 'list') {
     image: <img src="https://example.com/photo.jpg" alt="Modern Apartment" />,
     favorite: <button aria-pressed="false" aria-label="Add to favorites">heart</button>,
     typeLabel: 'For sale · Apartment',
-    badges: [{ label: 'New', variant: 'default' as const, className: 'bg-badge-new' }],
+    badges: [{ label: 'New', color: 'green' }],
     overlay: undefined as MantineListingCardOverlay | undefined,
     photoCount: 5,
     features: [{ icon: <span data-testid="feature-icon" />, value: '3 rooms' }],

@@ -33,6 +33,10 @@ export const Default: Story = {
               <Badge color="red">{t('storybook.mantine.badge_blocked')}</Badge>
               <Badge color="gray">{t('storybook.mantine.admin_status_archived')}</Badge>
               <Badge color="brand">{t('storybook.mantine.badge_brand')}</Badge>
+              {/* Task 617 — added for MantineListingCardPattern's sold/rented status badges
+                  (globals.css --status-info / --status-rented have no prior Mantine color). */}
+              <Badge color="blueLight">{t('storybook.mantine.badge_info')}</Badge>
+              <Badge color="purple">{t('storybook.mantine.badge_purple')}</Badge>
             </Group>
           </Stack>
 
@@ -56,6 +60,27 @@ export const Default: Story = {
               <Badge color="red">{t('storybook.mantine.badge_blocked')}</Badge>
               <Badge color="yellow">{t('storybook.mantine.admin_status_pending')}</Badge>
               <Badge color="gray">{t('storybook.mantine.admin_status_archived')}</Badge>
+            </Group>
+          </Stack>
+
+          {/* Task 617 — `variant="filled"` (opaque, solid background + white text). The theme
+              default `variant="light"` (all sections above) mixes a translucent tint, which reads
+              poorly when a badge sits directly on top of a photo (e.g. MantineListingCardPattern's
+              corner status badges) — the underlying image can bleed through and kill contrast.
+              `filled` has no transparency, so it stays legible over any photo. Demoed on a gray
+              swatch below to make the "sits on a photo" case visible even in this plain story. */}
+          <Stack gap="xs">
+            <Text size="xs" c="gray.5" fw={500}>
+              {t('storybook.mantine.badge_filled_caption')}
+            </Text>
+            <Group gap="xs" p="md" style={{ backgroundColor: 'var(--mantine-color-gray-3)', borderRadius: 'var(--mantine-radius-lg)' }}>
+              <Badge variant="filled" color="green">{t('storybook.mantine.admin_status_active')}</Badge>
+              <Badge variant="filled" color="yellow">{t('storybook.mantine.admin_status_pending')}</Badge>
+              <Badge variant="filled" color="red">{t('storybook.mantine.badge_blocked')}</Badge>
+              <Badge variant="filled" color="gray">{t('storybook.mantine.admin_status_archived')}</Badge>
+              <Badge variant="filled" color="brand">{t('storybook.mantine.badge_brand')}</Badge>
+              <Badge variant="filled" color="blueLight">{t('storybook.mantine.badge_info')}</Badge>
+              <Badge variant="filled" color="purple">{t('storybook.mantine.badge_purple')}</Badge>
             </Group>
           </Stack>
         </Stack>

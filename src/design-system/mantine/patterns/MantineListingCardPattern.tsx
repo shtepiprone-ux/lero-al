@@ -1,16 +1,30 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Card, Text, Group, Stack, Button } from '@mantine/core'
+import { Card, Text, Group, Stack, Button, Badge } from '@mantine/core'
 import { Camera, MapPin } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import styles from './MantineListingCardPattern.module.css'
 
 export interface MantineListingCardBadge {
   label: string
-  variant?: 'default' | 'secondary' | 'destructive' | 'outline'
-  className?: string
+  /**
+   * Mantine theme color name (`'green'|'yellow'|'red'|'gray'|'brand'|'blueLight'|'purple'` —
+   * see `theme.ts` `colors`). Task 617 — replaces the legacy `className` color override: Mantine's
+   * own `Badge.css` sets `background`/`font-size`/`padding` as UNLAYERED rules (no `@layer`
+   * wrapper), so a Tailwind `@layer utilities` className can never win regardless of specificity
+   * (the same cascade-layer trap documented for `ActionIcon`/`Card`, Task 602/606/612/616) — a
+   * `className` color override on this component would have silently done nothing.
+   *
+   * The pattern always renders these with `variant="filled"` (opaque, solid background + white
+   * text) — not the theme's default `variant="light"` — because every badge here sits directly
+   * on top of the listing photo (both `layout="grid"` and `layout="list"`); `light`'s translucent
+   * tint lets the photo bleed through and kills contrast, the exact defect the owner caught on
+   * the first Mantine-Badge pass (Task 617). `filled` is documented on the canonical
+   * `Mantine/Primitives/Badge` story before use here, per the "add missing variant to the
+   * primitive story first" rule.
+   */
+  color?: string
 }
 
 export interface MantineListingCardFeature {
@@ -141,7 +155,7 @@ export function MantineListingCardPattern({
           {badges && badges.length > 0 && (
             <div className="absolute top-2 left-2 flex flex-col gap-1">
               {badges.map(b => (
-                <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
+                <Badge key={b.label} variant="filled" color={b.color}>
                   {b.label}
                 </Badge>
               ))}
@@ -226,7 +240,7 @@ export function MantineListingCardPattern({
         {badges && badges.length > 0 && (
           <div className="absolute top-2 left-2 flex flex-wrap gap-1">
             {badges.map(b => (
-              <Badge key={b.label} variant={b.variant} className={cn('text-2xs px-1.5 py-0', b.className)}>
+              <Badge key={b.label} variant="filled" color={b.color}>
                 {b.label}
               </Badge>
             ))}

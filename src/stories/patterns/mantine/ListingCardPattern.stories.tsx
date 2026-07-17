@@ -103,19 +103,22 @@ interface DemoCardOpts {
 }
 
 function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, archived = false, sold = false, noImage = false, favorited = false, photoCount = 5 }: DemoCardOpts) {
+  // Tone -> Mantine theme color (Task 617 — matches ListingCard.tsx's real getBadges() mapping):
+  // new=green, reduced=brand (globals.css --badge-reduced: var(--brand-700)), sold=blueLight
+  // (globals.css --status-info), archived=gray. Pattern always renders these variant="filled"
+  // (opaque, safe over the photo) — no `variant` field needed on the badge data itself.
   const badges: MantineListingCardBadge[] = [];
   if (!sold && !archived) {
     badges.push({
       label: reduced ? storyT(l, 'storybook.mantine.card_badge_reduced') : storyT(l, 'storybook.mantine.card_badge_new'),
-      variant: 'default',
-      className: reduced ? 'bg-badge-reduced text-primary-foreground' : 'bg-badge-new text-primary-foreground',
+      color: reduced ? 'brand' : 'green',
     });
   }
   if (sold) {
-    badges.push({ label: storyT(l, 'storybook.mantine.card_overlay_sold'), variant: 'default', className: 'bg-status-info text-primary-foreground' });
+    badges.push({ label: storyT(l, 'storybook.mantine.card_overlay_sold'), color: 'blueLight' });
   }
   if (archived) {
-    badges.push({ label: storyT(l, 'storybook.mantine.card_badge_archived'), variant: 'outline', className: 'border-border text-muted-foreground' });
+    badges.push({ label: storyT(l, 'storybook.mantine.card_badge_archived'), color: 'gray' });
   }
 
   const overlay: MantineListingCardOverlay | undefined = sold

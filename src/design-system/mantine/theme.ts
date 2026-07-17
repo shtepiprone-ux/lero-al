@@ -87,11 +87,31 @@ const blueLight: MantineColorsTuple = [
   '#0086c9', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
 ]
 
+// TailAdmin accent purple (tailadmin-style-reference.md §4: "Accent: theme-pink #ee46bc ·
+// theme-purple #7a5af8"). Only ONE authoritative stop exists in the source — the other 9 slots
+// are approximated from it (same derivation spirit as `brand` above: a single cited hex expanded
+// into a plausible 10-shade ramp, NOT additional TailAdmin citations). Placed at index 6 to match
+// the `green`/`yellow`/`red` convention (Badge `variant='light'` text color reads index 6).
+// Added for the `status_rented` card badge (Task 617) — no existing theme color matched
+// `globals.css --status-rented: oklch(0.577 0.174 295)` (purple).
+const purple: MantineColorsTuple = [
+  '#f4f2fe', // 0 — approximation (Badge light bg)
+  '#e9e5fd', // 1 — approximation
+  '#d3cbfb', // 2 — approximation
+  '#bdb1f9', // 3 — approximation
+  '#a897f7', // 4 — approximation
+  '#9280f8', // 5 — approximation
+  '#7a5af8', // 6 — theme-purple (§4 AUTHORITATIVE — Badge light text)
+  '#6547d6', // 7 — approximation
+  '#4f37a8', // 8 — approximation
+  '#3a2980', // 9 — approximation
+]
+
 export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red, blueLight },
+  colors: { brand, gray, green, yellow, red, blueLight, purple },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.

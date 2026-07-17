@@ -62,6 +62,12 @@ function writeComponent(root: string, relPath: string, content: string): void {
   writeFileSync(abs, content)
 }
 
+function writeModule(root: string, relPath: string, content: string): void {
+  const abs = join(root, 'src', 'modules', relPath)
+  mkdirSync(dirname(abs), { recursive: true })
+  writeFileSync(abs, content)
+}
+
 function writeMessages(root: string, data: Record<string, unknown>): void {
   for (const [locale, msgs] of Object.entries(data)) {
     writeFileSync(join(root, 'messages', `${locale}.json`), JSON.stringify(msgs))
@@ -429,6 +435,40 @@ describe('Check 9: runtime component hardcoded literals', () => {
   })
 })
 
+// ── Check 9 exclusion boundary (Task 612 / Task 614) ──────────────────────────
+//
+// Task 612 widened `isNonRuntimeFile` to also exclude `.test.tsx` and `__tests__/**`
+// files (previously only `.stories.tsx` was excluded), because a vitest RTL assertion
+// like `getByRole('button', { name: 'Next' })` matches the same regex as a genuine
+// hardcoded `Next` string in JSX — a false positive, not real runtime UI copy.
+//
+// Same literal content used in all three fixtures below so the ONLY variable is the
+// file path — the cleanest possible proof the exclusion keys on the filename alone.
+const CHECK9_BOUNDARY_CONTENT = `export const Prev = () => {
+  const btn = screen.getByRole('button', { name: 'Next' })
+  return <button>Previous</button>
+}`
+
+describe('Check 9 exclusion boundary (Task 612 test-file exclusion)', () => {
+  it('GOOD — src/components/**/*.test.tsx is excluded (no runtime-hardcode)', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'Pagination.test.tsx', CHECK9_BOUNDARY_CONTENT)
+    expect(hasRule(gate(root).violations, 'runtime-hardcode')).toBe(false)
+  })
+
+  it('GOOD — src/modules/**/__tests__/*.tsx is excluded (no runtime-hardcode)', () => {
+    const root = tmpRoot()
+    writeModule(root, join('__tests__', 'Pagination.tsx'), CHECK9_BOUNDARY_CONTENT)
+    expect(hasRule(gate(root).violations, 'runtime-hardcode')).toBe(false)
+  })
+
+  it('BAD (blind-spot guard) — real non-test src/modules/**/*.tsx with the SAME literal is still caught', () => {
+    const root = tmpRoot()
+    writeModule(root, 'Pagination.tsx', CHECK9_BOUNDARY_CONTENT)
+    expect(hasRule(gate(root).violations, 'runtime-hardcode')).toBe(true)
+  })
+})
+
 // ── isEnglishish unit tests ───────────────────────────────────────────────────
 
 describe('isEnglishish', () => {
@@ -736,10 +776,14 @@ describe('Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical
 // ── Gate completeness ─────────────────────────────────────────────────────────
 
 describe('gate completeness', () => {
-  it('checksRan === 13 on a clean root (all 13 checks executed)', () => {
+  // Tracks the real number of checks `runGate` runs (check-stories.mjs:872, hardcoded
+  // `checksRan: 14`). Was 13 pre-Task-520 (Check 14, Mantine Button off-scale size, added
+  // a 14th check without updating this assertion — stale drift, reconciled by Task 614).
+  // Bump this deliberately whenever a new Check N is added to the gate.
+  it('checksRan === 14 on a clean root (all 14 checks executed)', () => {
     const root = tmpRoot()
     const { checksRan } = gate(root)
-    expect(checksRan).toBe(13)
+    expect(checksRan).toBe(14)
   })
 
   it('returns 0 violations on a clean root with valid messages', () => {

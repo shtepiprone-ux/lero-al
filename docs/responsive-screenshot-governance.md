@@ -3,6 +3,10 @@
 Established: 2026-05-18
 Status: PERMANENT GOVERNANCE REFERENCE
 
+> **Current routing (2026-07-17):** screenshot evidence is selected by `docs/qa-profiles.md`.
+> Q2 UI work uses targeted rendered evidence. Q3/Q4 visual or release-critical work uses the full
+> matrix required by the relevant Mantine or legacy proof path.
+
 ---
 
 ## §1 — PURPOSE
@@ -22,7 +26,7 @@ drift, and locale-specific wrapping failures.
 
 ## §2 — WHEN SCREENSHOTS ARE REQUIRED
 
-### Mandatory — before any PR that changes:
+### Mandatory — when the selected QA profile requires screenshots, especially for:
 - Any component listed in `docs/responsive-screenshot-matrix.md §3`
 - Any Tailwind responsive class (`sm:`, `md:`, `lg:`, `xl:`, `2xl:`)
 - Any container or grid layout class

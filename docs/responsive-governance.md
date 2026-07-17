@@ -1,13 +1,16 @@
 # Responsive Governance — Lero.al
-**Phase 1 of Responsive/UI Governance Epic**  
-Audit date: 2026-05-18  
-Status: GOVERNANCE REFERENCE — defines rules for all future responsive work  
+**Phase 1 of Responsive/UI Governance Epic**
+Audit date: 2026-05-18
+Status: LEGACY GOVERNANCE REFERENCE — responsive philosophy and legacy Tailwind guidance
+
+> **Current routing (2026-07-17):** new or migrated UI uses `docs/mantine-responsive-design-system.md`.
+> Validation depth comes from `docs/qa-profiles.md`. The full 14-width matrix remains available for Q3/Q4
+> visual work, but this document no longer forces release-level matrices on every small responsive change.
 
 > ⚠️ **INHERITS `docs/design-system.md` (Global Responsive Design System Contract v1, Task 340, 2026-05-31).**
-> The breakpoint philosophy and patterns below remain valid, but the **verification-width canon is now
-> the 14-width × 4-locale set** defined in `docs/design-system.md §3` + ADDENDUM. The **7-width and
-> 9-width lists in this file are SUPERSEDED** — see the marked block in §1. Where this doc disagrees
-> with `design-system.md`, the contract wins.
+> The breakpoint philosophy and patterns below remain valid. Validation depth is selected by
+> `docs/qa-profiles.md`; the 14-width × 4-locale set in `docs/design-system.md §3` remains the full Q3/Q4
+> legacy proof matrix. The 7-width and 9-width lists in this file are superseded.
 
 ---
 
@@ -32,18 +35,20 @@ Status: GOVERNANCE REFERENCE — defines rules for all future responsive work
 
 **Non-standard breakpoints:** FORBIDDEN. Do not introduce arbitrary `min-width` or `max-width` inline styles for breakpoints. Use canonical Tailwind breakpoints only.
 
-**Verification widths — ⚠️ SUPERSEDED by the 14-width canon (Task 340, 2026-05-31).**
+**Verification widths — selected by QA profile.**
 
-> The **9-width list below (and the older 7-width list) is SUPERSEDED**. The canonical verification
-> set is now the **14 widths × 4 locales** in `docs/design-system.md §3` + ADDENDUM:
+> The **9-width list below (and the older 7-width list) is superseded**. Q2 uses the targeted set in
+> `docs/qa-profiles.md`. Q3/Q4 legacy visual work uses the **14 widths × 4 locales** in
+> `docs/design-system.md §3` + ADDENDUM:
 > **320 / 375 / 390 / 480 / 560 / 680 / 768 / 810 / 960 / 1024 / 1200 / 1440 / 1920 / 2560** ×
-> sq/en/uk/it (= 56 cells per touched screen). Use THAT set. The historical 9-width table is retained
-> below only for changelog context.
+> sq/en/uk/it (= 56 cells per touched screen). The historical 9-width table is retained below only for
+> changelog context.
 
 _Historical (SUPERSEDED) 9-width set — do not use; see `design-system.md §3`:_
 320 / 375 / 390 / 768 / 1024 / 1280 / 1440 / 1920 / 2560.
 
-Tailwind breakpoint TOKENS remain `sm: md: lg: xl: 2xl:` (no change). Only the verification set changed. UI pre-flight (§17 of `docs/ui-rules.md`) now uses the **14-width canon** from `docs/design-system.md`.
+Tailwind breakpoint tokens remain `sm: md: lg: xl: 2xl:`. UI pre-flight (§17 of `docs/ui-rules.md`) uses the
+selected QA profile; the full matrix remains the Q3/Q4 legacy standard.
 
 **Missing breakpoints:** The current project does not use `2xl:` anywhere. This is the primary gap for huge-desktop support. Future phases should add `2xl:` steps for grids, containers, and section padding.
 

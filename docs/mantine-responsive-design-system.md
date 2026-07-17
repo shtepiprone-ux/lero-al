@@ -5,6 +5,11 @@
 **Supersedes:** `docs/design-system.md` for future UI work. Legacy Tailwind/Base UI/shadcn rules in
 `docs/design-system.md` remain valid ONLY for existing surfaces not yet migrated.
 
+**Validation depth:** this document defines the current UI rules and proof paths. The amount of evidence required
+for a specific task is selected by `docs/qa-profiles.md` (`Q2` targeted UI vs `Q3` full visual matrix vs `Q4`
+critical/release). Do not apply full release-level matrices to small low-risk UI changes unless the selected profile
+requires it.
+
 ---
 
 ## §1 — Executive decision
@@ -815,17 +820,18 @@ claiming any input/theme styling works:
    (is it really Open Sans, or a fallback?), and toggle the property off to confirm it's actually driving the render.
 2. **Confirm the real selector** carrying the state (`data-error` vs `data-invalid`; `:disabled` vs `[data-disabled]`
    vs `:has`; `:focus` vs `:focus-within`) in the DOM before writing CSS against it.
-3. The rendered matrix (breakpoints × sq/en/uk/it, **uk@320/375/390 mandatory**) + a planted-violation transcript
-   is the verdict (clause 12/13). A green gate that contradicts the render is a fabricated proof.
+3. The rendered evidence required by the selected QA profile is the verdict (clauses 12/13). Q3/Q4 visual work
+   includes the full relevant breakpoint/locale matrix with the required mobile stress cells and a planted-violation
+   transcript when a mechanical gate is claimed. A green gate that contradicts the render is fabricated proof.
 
-### §18.7 — Never run git or integrity checks in the Cowork sandbox
+### §18.7 — Git/integrity evidence in shared sandbox views
 
-Reaffirms `docs/orchestrator-role.md` → "Orchestrator NEVER runs git or integrity checks in the Cowork sandbox":
-sandbox `git diff`/`git status` returns a phantom over-dirty tree (and corrupts `.git/index`); sandbox `tsc`/`tr`/
-binary-flags serve mount artifacts (e.g. spurious "Invalid character" on an empty line, `.ts` flagged "binary").
-Use the **Read tool** for file content and the **owner's NATIVE PowerShell** for all git + the authoritative
-integrity/`tsc` verdict.
-| `@mantine/form` scope | RESOLVED for Task 482 — installed and used in `MantineTwoColumnForm`. Future auth/cabinet forms will use it in Phase 3 migration | No |
+Reaffirms `docs/orchestrator-role.md` git policy: read-only git inspection is allowed, while mutating git is
+owner-only and native PowerShell only. If a sandbox or shared mount reports a phantom over-dirty tree, suspicious
+`.git/index` state, NUL/truncation, or impossible parse failures, treat that signal as a screen, not a verdict.
+Use owner-native or CI evidence before rejecting or approving on integrity grounds.
+Use file reads for content inspection. Read-only git may be used for diff/status inspection; owner-native
+PowerShell or CI remains authoritative for mutating git and suspicious integrity/`tsc` verdicts.
 
 ### §18.8 — RESOLVED: bottom-sheet now sizes to content up to a 90dvh cap (Task 522, fixed at the Task 514 single source)
 

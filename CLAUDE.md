@@ -1,126 +1,146 @@
-# Lero.al — Project Intelligence
+# Lero.al Project Intelligence
 
-> # 🔴🔴 OWNER P0 — MEMORIZE, NEVER DROP (2026-06-03) 🔴🔴
-> **MOBILE <640px = FULL WIDTH. ALWAYS. EVERYWHERE.** Every text Button, Tabs list, FilterBar control,
-> Select/Combobox trigger, PhoneField, CTA, toolbar and action row MUST span the full available width below 640px.
-> **AND: ALL POPUPS = FULL-WIDTH BOTTOM SHEET at <640, NO EXCEPTIONS** — Dialog, Sheet, Select, Combobox,
-> DropdownMenu, NavigationMenu, Popover, Command (every Base-UI Popup/Positioner): bottom-anchored, edge-to-edge full
-> width, rounded top corners only, slide-up, ≤90dvh internal scroll, top drag-handle bar, closes on backdrop tap + Esc.
-> NOT centered cards, NOT mini-dropdowns on mobile.
-> ≥44px touch targets, labels wrap (sq/en/uk/it), no clip, no horizontal scroll at 320. Only icon-only/compact
-> controls (and non-UI map-marker popups → STOP&ASK) are exempt. The owner demanded this repeatedly and rejects work
-> that ignores it.
-> **Every task MUST enforce it; every review MUST verify it with rendered evidence at ALL breakpoints × ALL 4
-> locales (uk@320/375/390 mandatory). tsc/build passing is NOT proof.** Full rule: `docs/agent-contract.md`
-> clauses 11–12 + `docs/orchestrator-role.md` → "Mobile <640 full-width gate".
+Lero.al is a real estate marketplace for the Albanian market.
 
-> ## 🛑🔴 ORCHESTRATOR SESSION-START GATE (Opus) — HARD BLOCK, NO EXCEPTION (owner P0, 2026-06-06, demanded repeatedly) 🔴🛑
-> **THE OWNER HAS REJECTED THIS BEING SKIPPED EVERY SESSION. This is now a HARD GATE, not a reminder.**
-> **Before reading the task, before ANY analysis, review, planning, tool call, or answer — the FIRST action of
-> every orchestrator session MUST be to OPEN AND READ these files in full (via the Read tool, not from memory,
-> not from a `git diff` fragment):**
-> 1. **`docs/orchestrator-role.md`** (loop, review checklist, commit-emission rules).
-> 2. **`docs/agent-contract.md`** (the 14 P0 clauses).
-> 3. **`docs/backlog.md`** (current state). Never plan or review from memory.
-> 4. **Pre-read per `docs/rule-index.md`** for the task type — not "read all docs".
->
-> **MANDATORY SELF-ATTESTATION — the orchestrator's FIRST message of every session MUST begin with this exact line,
-> filled in, BEFORE any other content:**
-> ```
-> ✅ Session-start gate: read orchestrator-role.md · agent-contract.md (clauses 1–14) · backlog.md (HEAD=<sha>) · rule-index pre-read for <task-type>.
-> ```
-> **If that attestation line is not the first thing emitted, the orchestrator has VIOLATED the gate. Any review,
-> verdict, plan, or commit emission produced without it is INVALID and must be discarded and redone from the top —
-> the owner will reject it on sight.** Reading the rules only AFTER starting work (as happened on Task 400 review,
-> 2026-06-06) is the exact failure this gate exists to stop. NO EXCEPTION, NO "I already know the rules", NO
-> "it's a quick task". Read first, attest first, THEN work.
->
-> **Standing rules carried by every session (verify against the read, not memory):**
-> - **Git = single-writer:** Opus NEVER runs mutating git (`add/commit/push/reset/...`); only the owner, in PowerShell. Opus emits explicit-path commit commands AFTER diff review.
-> - **Every kickoff → a FILE in `/tasks`** (never only chat), with **both** Positive & Negative flows; on return, **review the real `git diff`, not the report**.
-> - **Opus does not write product code** (`src/`, `app/`, `components/`, `modules/`, migrations, locales) unless the owner explicitly instructs it. Implementation is Sonnet's job.
-> - **Integrity re-runs are a SCREEN, not a verdict** (agent-contract clause 14): the Cowork sandbox mount can serve stale/fluctuating reads; the authoritative integrity check is native (owner PowerShell) or CI.
-> - **🔴 BACKLOG TIDY = MANDATORY AFTER EVERY TASK VERIFY/CLOSE (owner P0, 2026-06-12, demanded repeatedly — STOP forgetting this).** The MOMENT you finish verifying/reviewing/closing a task, immediately tidy `docs/backlog.md` in the same turn: **(1)** `## Last Session` holds ONLY the newest session (2–4 lines); **(2)** move every older session entry to ONE row at the TOP of [`docs/backlog-archive.md`](docs/backlog-archive.md) (newest first); **(3)** keep `docs/backlog.md` under ~80 lines of active content. This is not optional and not "later" — it is part of closing the task. Full rule: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
->
-> Detail lives in `docs/orchestrator-role.md` — this block is the unmissable, MANDATORY trigger.
+Stack: Next.js App Router, Supabase, Tailwind legacy surfaces, and an active migration to Mantine for new and migrated UI.
 
-## Project Context
-Real Estate Marketplace for the Albanian market.
-Stack: Next.js (App Router), Supabase, Tailwind CSS, shadcn/ui.
+## Operating model
 
-## AI Operating Model (READ FIRST)
+| Layer | Role |
+|---|---|
+| Opus | Orchestrator, task architect, reviewer, critic, QA gatekeeper. |
+| Sonnet | Executor that implements scoped tasks and produces evidence. |
+| Owner | Runs mutating git natively in PowerShell and makes final product decisions when rules conflict. |
 
-> ⚠️ **Git safety (single-writer): only the owner runs git, only from PowerShell.** The Cowork/Opus
-> assistant must NEVER run mutating git on this repo — it edits files via the filesystem only.
-> Two git processes on the same `.git` (Windows git + Cowork's Linux sandbox mounting the same
-> repo) corrupt `.git/index`. Recovery: `Remove-Item .git\index` → `git reset`. Full rule:
-> `docs/orchestrator-role.md` → "Environment & git safety" and `docs/ai-behavior.md` → "Git Rules".
+## Automatic Opus routing
 
-> ⚠️ **Commit hand-off (single-writer, READ EVERY SESSION — Task 264 rule, 2026-05-27): after
-> EVERY completed task, the Sonnet executor MUST include a "Files Changed" table in the session
-> log (one row per touched path + 1-line rationale). The Sonnet executor MUST NOT emit `git add`
-> / `git commit` commands. The ORCHESTRATOR (Opus) reads the real diff, validates the table
-> against it, and emits explicit-path commit commands during review. The owner runs ONLY the
-> orchestrator's commands in PowerShell. The Sonnet executor NEVER runs git itself.** Format
-> of the orchestrator's emitted commands:
-> ```
-> git add <file1> <file2> ...
-> git commit -m "feat(TaskN): <short description>"
-> ```
-> Use `feat:` / `fix:` / `chore:` / `docs:` / `refactor:`, one logical change per commit, explicit
-> paths only (NEVER `git add -A` / `git add -u` / wildcards — phantom-corruption mode on the
-> Cowork sandbox sweeps unrelated files into the commit otherwise). If `git status` shows
-> phantom mods, run `Remove-Item .git\index -ErrorAction SilentlyContinue; git reset` first.
-> Full rule: `docs/agent-contract.md` clause 10 + `docs/orchestrator-role.md` →
-> "Orchestrator-owned commit emission (Task 264)" + `docs/ai-behavior.md` → "Commit Rules" +
-> "Canonical Task Template" acceptance criteria.
+The project `UserPromptSubmit` hook classifies clear task-design and implementation-review prompts, then injects the
+full matching project skill before Opus responds. The user does not need to type a skill name for ordinary task or
+review work.
 
-There are two AI layers, with different jobs:
+- Task-design prompts receive `.claude/skills/create-task/SKILL.md`.
+- Review, QA, Storybook, validation, or release-readiness prompts receive `.claude/skills/review-task/SKILL.md`.
+- Explicit `/create-task` and `/review-task` commands retain Claude Code's native skill loading and are not injected
+  twice.
+- If a prompt is ambiguous or the hook is unavailable, Opus must classify the mode before its first substantive
+  response and invoke the matching skill itself.
 
-- **Opus 4.8 = orchestrator / reviewer.** Plans (Epic → Sprint → Task), hands off a ready prompt
-  for the executor **written to a kickoff file in `/tasks` (never pasted into chat — Sonnet reads
-  the file directly)**, then reviews the **actual diff** (not the executor's report), and either
-  approves or opens a follow-up task. **Does not write production code** — only reads it to verify.
-  Full rules: `docs/orchestrator-role.md`.
-- **Sonnet 4.6 = executor.** Writes the code per a literal, scoped prompt. Its rules live across
-  `/docs/` (entry: `docs/ai-behavior.md`).
+## Automatic Sonnet execution
 
-Every executor prompt carries a hard contract (no scope change, no self-invented architecture,
-literal AC, updates `docs/backlog.md` + `docs/sessions/`), which the orchestrator verifies against
-the diff — checking missing locales (`sq`/`en`/`uk`/`it`), breakpoints, and governance violations.
-See `docs/orchestrator-role.md`.
+On every Sonnet session start, the project `SessionStart` hook injects `.claude/skills/execute-task/SKILL.md` before
+the first user prompt. It applies the executor evidence protocol to normal Sonnet sessions; the dedicated
+`.claude/agents/executor.md` agent preloads the same skill without duplicate hook context.
 
-## Tasks Directory
+- Use `@executor` for an explicit Sonnet implementation handoff from a saved task under `tasks/`.
+- Sonnet implements, updates concise task state in `docs/backlog.md`, and writes the session log; Opus checks those
+  records against the real diff, corrects or consolidates the backlog when needed, and approves or rejects.
+- A Sonnet task is never self-approved. Its strongest valid completion status is
+  `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
-All task, epic, and sprint files MUST live inside `/tasks` (`/tasks/Epics/`, `/tasks/Sprints/`).
-This applies to every AI session regardless of chat. Detailed placement, naming, and format rules:
-see "Task File Location Rules" in `docs/ai-behavior.md`.
+## Read first
 
-## Documentation Structure
+For every task:
 
-All project rules are split into focused files inside `/docs/`.  
-`Claude.md` is the entry point and high-level index. Detailed rules live in the files below.
+1. Read `docs/agent-contract.md`.
+2. Use `docs/rule-index.md` to select the minimal task-specific rule bundle.
+3. Use `docs/qa-profiles.md` to choose validation depth.
+4. Read `docs/backlog.md` for current project state when planning, creating, or closing tasks.
 
-- `docs/ai-behavior.md` — AI workflow, session behavior, update discipline, commit/deploy behavior, and general working process.
-- `docs/analytics-rules.md` — analytics, event tracking, SEO rules, and conversion optimization requirements.
-- `docs/architecture.md` — modular monolith architecture, module boundaries, file organization, state management, and system structure.
-- `docs/backlog.md` — ACTIVE state only: current progress, last session summary, next immediate tasks (~80-line cap).
-- `docs/backlog-archive.md` — historical ledger of completed tasks/sprints/epics (split out of backlog.md 2026-06-03).
-- `docs/component-rules.md` — component-level coding rules, hardcode restrictions, design token usage, and reusable component standards.
-- `docs/data-access-rules.md` — database access patterns, API rules, query conventions, pagination, and Supabase data access rules.
-- `docs/dependencies.md` — dependency policy, package selection rules, and approved package ecosystem.
-- `docs/domain-rules.md` — business/domain-specific rules for listings, marketplace behavior, roles, and core platform logic.
-- `docs/env.md` — required environment variables, secret handling, and deployment configuration values.
-- `docs/integrations.md` — external services setup and integration rules (Supabase, Cloudinary, Resend, Sentry, etc.).
-- `docs/orchestrator-role.md` — **Opus 4.7 orchestrator/reviewer** operating model: plan→prompt→review-diff loop, Sonnet hard contract, review checklist (distinct from the Sonnet executor rules).
-- `docs/qa-rules.md` — QA process, validation, error handling, pre-commit checks, and manual testing checklist.
-- `docs/rls-rules.md` — Supabase RLS rules, permission boundaries, auth/session safety, and security constraints.
-- `docs/ui-rules.md` — UI Gate (no hardcode + component-first + Combobox-only) + dom.ria.com reference.
-- `docs/performance.md` — Core Web Vitals RUM layer: collector, reporter, budgets, logging, and analytics dispatch contract.
-- `docs/state-authority.md` — State authority map: SSR vs client authority, optimistic state rules, realtime sync model, cache invalidation, router.refresh behavior, concurrent rendering safety.
+For Opus orchestration or review, also read:
 
-## Documentation Update Rule
+- `docs/orchestrator-role.md`
+- `docs/orchestrator-procedures.md`
+- `.claude/skills/create-task/SKILL.md` when designing an implementation task.
+- `.claude/skills/review-task/SKILL.md` when reviewing implementation, Storybook/UI evidence, or release readiness.
 
-When changing project rules, always update the relevant file in `/docs/` instead of expanding `Claude.md`.
-If a rule could fit multiple files, keep it in the most specific document and avoid duplicating it across `/docs/`. 
-Use `Claude.md` only as the project index, context entry point, and navigation file.
+For Sonnet implementation, use the automatically loaded `.claude/skills/execute-task/SKILL.md` and the task's
+pre-read bundle.
+
+Do not read all docs by default.
+
+## Git policy
+
+Agents may use read-only git for inspection:
+
+- `git status`
+- `git diff`
+- `git show`
+- `git log`
+- `git grep`
+
+Mutating git is owner-only and native PowerShell only, including:
+
+- `git add`
+- `git commit`
+- `git push`
+- `git reset`
+- `git restore`
+- `git checkout`
+- `git stash`
+- `git merge`
+- `git rebase`
+- `git rm`
+- `git apply`
+- `git clean`
+- `git config`
+
+After a verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review,
+Opus may emit explicit-path owner-run commit commands. Sonnet must not emit or run mutating git commands.
+
+## UI rule split
+
+New or migrated UI:
+
+- Mantine provides behavior, component mechanism, accessibility, and responsive props.
+- TailAdmin provides visual chrome, spacing, typography, radius, shadow, density, and component styling.
+- Source docs: `docs/mantine-responsive-design-system.md` and `docs/tailadmin-style-reference.md`.
+
+Existing legacy UI:
+
+- shadcn/Tailwind/Base UI rules remain valid only for surfaces not yet migrated.
+- Source docs: `docs/ui-rules.md`, `docs/design-system.md`, and `docs/component-rules.md`.
+
+Do not apply legacy implementation details to new Mantine work unless the task is explicitly a migration bridge.
+
+## Task and review rules
+
+- Every implementation task must be concrete enough for a fresh Sonnet session to execute without hidden chat context.
+- Every implementation kickoff must be saved under `tasks/`; a chat-only handoff is not sufficient.
+- Every kickoff must include current behavior to preserve, required after behavior, positive flow, applicable negative flows, acceptance criteria, QA profile, and verification plan.
+- The executor's report is not proof. Approval requires inspecting the real changed files, diff, and validation evidence required by the selected QA profile.
+- Critical flows listed in `docs/critical-flow-registry.md` require automated regression evidence.
+
+## Documentation map
+
+- `docs/agent-contract.md` - short P0 invariants.
+- `docs/orchestrator-role.md` - Opus role, git policy, review expectations.
+- `docs/orchestrator-procedures.md` - task design and implementation review procedures.
+- `docs/rule-index.md` - task-type rule routing.
+- `docs/qa-profiles.md` - risk-based validation depth.
+- `docs/ai-behavior.md` - long-form Sonnet executor behavior rules and task template.
+- `docs/backlog.md` - active state only.
+- `docs/backlog-archive.md` - historical ledger.
+- `docs/mantine-responsive-design-system.md` - current UI/responsive source of truth.
+- `docs/tailadmin-style-reference.md` - visual source of truth.
+- `docs/ui-rules.md` - UI routing plus legacy rules.
+- `docs/component-rules.md` - component quality, i18n, no-duplicate, and container/presentational split.
+- `docs/qa-rules.md` - validation, encoding, error handling, and manual QA rules.
+- `docs/data-access-rules.md` - data access and Supabase patterns.
+- `docs/rls-rules.md` - RLS and permission boundaries.
+- `docs/domain-rules.md` - marketplace domain rules.
+- `docs/env.md` - environment and deployment configuration.
+- `docs/integrations.md` - external service setup.
+- `docs/performance.md` - Core Web Vitals and performance rules.
+- `docs/state-authority.md` - SSR/client state authority.
+- `.claude/agents/orchestrator.md` - dedicated Opus task architect and review agent.
+- `.claude/agents/executor.md` - dedicated Sonnet implementation agent.
+- `.claude/skills/create-task/SKILL.md` - task-design quality gate.
+- `.claude/skills/review-task/SKILL.md` - evidence-based review quality gate.
+- `.claude/skills/execute-task/SKILL.md` - Sonnet implementation and self-validation protocol.
+- `.claude/hooks/orchestrator-router.ps1` - automatic task/review skill router for normal Opus sessions.
+- `.claude/hooks/sonnet-executor-bootstrap.ps1` - automatic executor skill loader for normal Sonnet sessions.
+
+## Documentation update rule
+
+When changing project rules, update the most specific file in `docs/` instead of expanding this file.
+Use `CLAUDE.md` only as the project entry point and navigation index.

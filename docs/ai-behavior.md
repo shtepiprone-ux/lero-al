@@ -1,18 +1,31 @@
 > **P0 source of truth: `docs/agent-contract.md`.** Every Sonnet task must read it first. This file
-> (`docs/ai-behavior.md`) is the long-form expansion of the contract — read the sections relevant to
+> (`docs/ai-behavior.md`) is the long-form executor reference — read the sections relevant to
 > your task, not the whole file every time.
 >
 > **Pre-read selection: `docs/rule-index.md`.** Every kickoff lists only the docs that match the task
 > type. "Read all docs" is forbidden — it is the failure mode Task 253 was filed for.
 >
+> **QA depth:** every task uses `docs/qa-profiles.md`. Small tasks do not inherit release-level visual
+> evidence unless their scope requires it.
+>
+> **Current vs legacy UI:** new or migrated UI uses Mantine + TailAdmin. shadcn/Tailwind/Base UI rules in
+> this file are legacy-only unless the task explicitly touches a legacy surface.
+>
 > **Behavior-preservation core:** Notes 14, 18, 19, 20, 21, 22, 23 in this file. These are the rules
 > the orchestrator verifies against the diff on return.
+
+### Current backlog ownership
+
+Sonnet updates `docs/backlog.md` with concise current task state and writes detailed evidence to its session log.
+Opus then validates those records against the real diff, corrects or consolidates the backlog, and owns the final
+80-line-limit and archival decisions. Historical references below remain subject to this ownership split.
 
 ### Execution Protocol (to avoid compliance paralysis)
 - Do not re-read all /docs on every task. Read only the docs relevant to the current task — see `docs/rule-index.md` for the task-type bundle.
 - Always obey `docs/agent-contract.md`.
 - For env, RLS, component, UI, data-access, analytics, performance, or other domain rules, read and obey the relevant docs selected by `docs/rule-index.md` for the current task type.
-- For UI work obey: ui-rules.md. For DB work: data-access-rules.md. For analytics/SEO: analytics-rules.md.
+- For UI work, classify the surface as current Mantine, legacy, or mixed and load the matching UI bundle from
+  `docs/rule-index.md`. For DB work use the DB/RLS bundle; for analytics/SEO use the analytics bundle.
 - Do not ask “what should I build?” if a task is specified (backlog or user request). Proceed.
 - If blocked by rules, apply the smallest safe fix to unblock, then refactor into the correct component structure.
 - If docs were already read in this session, do not re-read them again; proceed with execution.
@@ -56,11 +69,16 @@ returned task.
 - Shared component changes that cause unrelated regressions are considered task failure.
 
 ### After Every Change
-- After making code changes, run the relevant local verification step (`npm run dev` for interactive verification, `npm run build` before commit/push, and any targeted checks needed for the changed scope).
-- **Mandatory TypeScript gate**: After ANY file write or edit, run `npx tsc --noEmit` in the shell and confirm 0 errors before reporting the task complete. **Do NOT rely on the Write/Edit tool's success confirmation** — the tool can write corrupted files (null bytes, truncated content) that pass the file API but fail tsc. The shell `npx tsc --noEmit` output is the only authoritative check.
+- Run the checks required by the selected profile in `docs/qa-profiles.md` and any task-specific gate. Use
+  interactive verification for rendered behavior and targeted tests for changed logic.
+- **TypeScript gate for source changes:** when TypeScript/JavaScript source is changed, run `npx tsc --noEmit` and
+  confirm 0 errors before reporting complete. Q0 docs/governance-only work does not require a product typecheck.
+  Do not rely on the Write/Edit tool's success confirmation; read touched files back and run the relevant parser or
+  integrity check.
 - **After every feature, fix, or significant change — update the relevant project documentation**:
 - Update the appropriate file in `/docs/` if rules, architecture, workflow, or standards changed.
-- Update `docs/backlog.md` for progress, session summary, and next tasks when applicable.
+- Update `docs/backlog.md` with concise current task state; report any limit breach to Opus and keep all detailed
+  evidence in the session log.
 - Update `Claude.md` only if the project index, global context, or documentation map changed.
 
 ### Pre-Completion Self-Validation (Note 18 — REMEMBER PERMANENTLY, enforced 2026-05-25)
@@ -71,12 +89,15 @@ returned task.
 > `issues.txt` 2026-05-25) burned the owner's review budget. The new contract is: **Sonnet self-verifies
 > against the acceptance criteria, line by line, BEFORE writing the session log "complete" claim.**
 
-Before reporting any task complete, Sonnet 4.6 MUST run, in order, and paste the output in the session log:
+Before reporting any task complete, Sonnet 4.6 MUST run the checks required by the selected QA profile, in order,
+and paste the output in the session log:
 
-1. **Build + typecheck gate (already required, restated here for completeness):**
-   - `npx tsc --noEmit` → 0 errors (the authoritative check; the Write/Edit tool's "success" reply is
-     not enough — null-byte / truncation corruption can pass the file API but fail tsc).
-   - `npm run build` if the change is non-trivial (server actions, routes, schema, shared primitives).
+1. **Profile-selected build + typecheck gate:**
+   - Source changes: `npx tsc --noEmit` -> 0 errors.
+   - Non-trivial product changes (server actions, routes, schema, shared primitives): `npm run build` when the
+     selected profile or kickoff requires it.
+   - Q0 docs/governance-only changes: markdown/reference/integrity checks; no product build unless a referenced
+     command or product configuration changed.
 
 2. **Acceptance-criteria self-audit (mandatory for every task — paste the table into the session log):**
 
@@ -93,12 +114,12 @@ Before reporting any task complete, Sonnet 4.6 MUST run, in order, and paste the
    - Read your own `git diff` and check each clause of the orchestrator hard contract
      (`docs/orchestrator-role.md` → "Hard contract embedded in EVERY Sonnet prompt").
    - Specifically look for: scope creep (files touched outside the kickoff list), missing locales
-     (`sq`/`en`/`uk`/`it` all four — same key set), missing breakpoints (320/375/390/768/1280/1440/2560
-     where UI is touched), governance violations (raw `<button>`, `div.fixed.inset-0`, non-canonical
+     (`sq`/`en`/`uk`/`it` all four — same key set), missing evidence required by the selected QA profile,
+     governance violations (raw `<button>`, `div.fixed.inset-0`, non-canonical
      primitives, hardcoded strings/tokens, `window.location.href`, etc.), and — new in 2026-05-25 —
      **silent control removal** (see Note 20 below) and **broken UX flow** (see Note 19 below).
 
-4. **UI runtime self-check (for any UI task — additive to the §17 UI pre-flight):**
+4. **UI runtime self-check (for Q2/Q3/Q4 UI work — additive to the §17 UI pre-flight):**
    - Open the affected page in the running app, switch the locale to `uk` (longest strings), resize to
      320px, and walk through the user flow end-to-end — entry point, all controls, all states (empty /
      loading / error / success).
@@ -266,14 +287,16 @@ If component A becomes a read-only display, the kickoff must say so explicitly, 
 must be referenced from A's entry point so the user can still reach editing without hunting.
 
 ### Deploy Command
-- When the user says "deploy", the executor only **prepares** the branch for deployment (final code/doc changes saved) and **provides ready-to-run git commands as plain text** — to commit the relevant changes, push the branch to GitHub, and merge to `main` through the project's approved workflow. The **owner runs these git commands manually in PowerShell**; the executor NEVER runs git itself (single-writer rule).
+- When the user says "deploy", the executor prepares final code/doc changes and deployment evidence. Sonnet does
+  not emit or run mutating git commands. After review, Opus may emit explicit-path commit/push instructions for the
+  owner, who runs them natively in PowerShell.
 
 ### Commit Rules
 - One logical change per commit.
 - Commit message format: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`.
 - Always include related file changes in the same commit.
 - Never commit broken code — run `npm run build` before pushing.
-- **After every completed task, list every file you touched in the session log's "Files Changed" table** — one row per path + a 1-line rationale per file. Never emit `git add` / `git commit` commands yourself — the **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). Never run git commands yourself (single-writer rule). Format of the "Files Changed" table:
+- **After every completed task, list every file you touched in the session log's "Files Changed" table** — one row per path + a 1-line rationale per file. Never emit or run mutating git commands yourself — the **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). Read-only git inspection is allowed. Format of the "Files Changed" table:
   ```
   | File | Rationale |
   |------|-----------|
@@ -295,10 +318,11 @@ must be referenced from A's entry point so the user can still reach editing with
 - **API/server-action errors must return stable English error codes** (e.g. `'no_file'`, `'invalid_type'`), not raw locale strings. Clients resolve to localized messages via `t()`. See `/api/upload-avatar` as the reference implementation (Task 103).
 
 ### Git Rules
-- Do not commit directly to `main` unless the current project workflow explicitly allows it; prefer feature branches and merge through the approved deployment flow.
-- Commit often with small logical changes.
-- Never commit: `.env` files, `node_modules`, `.next` folder.
-- Tag releases: `v0.1.0`, `v0.2.0` etc.
+- These commit/deploy rules describe the owner's native workflow; agents do not perform mutating git.
+- The owner does not commit directly to `main` unless the current workflow explicitly allows it; prefer feature
+  branches and the approved deployment flow.
+- Keep commits small and logical. Never commit `.env` files, `node_modules`, or `.next`.
+- Release tags use `v0.1.0`, `v0.2.0`, and so on.
 
 #### Single-writer git (Cowork + Windows) — enforced 2026-05-22
 - The repo lives on a local Windows drive (`C:\Claude_Code_Projects\lero-al`). The Cowork/Opus
@@ -306,8 +330,8 @@ must be referenced from A's entry point so the user can still reach editing with
   corrupt `.git/index`** (observed: `UU ./` / `X0` unmerged garbage, phantom 50+ line `messages/*.json`
   deletions). The move off the old network drive removes one aggravator, but this rule still stands —
   the corruption comes from two processes sharing one `.git`, not from the drive type.
-- **Only the owner runs git, and only from PowerShell.** The Cowork/Opus assistant must **never**
-  run mutating git (`add`/`commit`/`push`/`reset`/`restore`/`stash`/`checkout`/`merge`/…).
+- **Only the owner runs mutating git, and only from PowerShell.** Agents may use read-only git for inspection but
+  must never run `add`/`commit`/`push`/`reset`/`restore`/`stash`/`checkout`/`merge`/`rebase`/`rm`/`apply`.
 - The Cowork/Opus assistant edits files **only via the filesystem** (Read/Write/Edit) — that never
   touches `.git/index`, so it cannot race the owner's git. Read-only `git show`/`git diff`/`git log`
   is allowed for review, preferring `git show <sha>:<path>` over index-touching commands.
@@ -561,7 +585,11 @@ When writing stories:
 - DO NOT suppress governance:tailwind warnings without an allowlist entry in `scripts/governance/tailwind-entropy.allowlist.json`.
 - Before any UI task: run `npm run governance:tailwind` and check `docs/tailwind-canonical-fragments.md`.
 
-### AI Governance Enforcement Rules (enforced from 2026-05-18)
+### AI Governance Enforcement Rules (legacy surfaces; enforced from 2026-05-18)
+
+The rules below are legacy shadcn/Tailwind/Base UI governance. For new or migrated Mantine UI, use
+`docs/mantine-responsive-design-system.md`, `docs/tailadmin-style-reference.md`, and `docs/qa-profiles.md`.
+For mixed migration tasks, state which files are legacy and which files are Mantine.
 
 Before starting ANY UI task, Claude Code MUST:
 1. Consult `docs/governance-enforcement.md` for current governance state
@@ -575,7 +603,7 @@ After completing ANY UI task, Claude Code MUST:
 2. All checklist boxes must be checked before marking the task complete
 3. Governance violations discovered during the task MUST be documented even if not fixed
 
-#### Canonical Usage Enforcement
+#### Canonical Usage Enforcement (legacy shadcn/Tailwind surfaces)
 
 - **Button:** ALWAYS use `Button` from `@/components/ui/button`. NEVER raw `<button>`. NEVER `h-11` className.
 - **Input:** ALWAYS use `Input` from `@/components/ui/input`. NEVER local input wrappers with custom heights.
@@ -729,8 +757,14 @@ Area:        <component / module / domain area>
 Pre-read (mandatory before any code change):
 1. docs/agent-contract.md
 2. docs/backlog.md
-3. Task-relevant docs from docs/rule-index.md → "<task type>"
-4. Inspect package.json for current validation scripts.
+3. docs/rule-index.md → select "<task type>" bundle
+4. docs/qa-profiles.md → select Q0/Q1/Q2/Q3/Q4 validation depth
+5. Task-relevant docs from the selected bundle
+6. Inspect package.json for current validation scripts.
+
+QA profile:
+- <Q0 Docs/Governance | Q1 Targeted | Q2 Standard UI | Q3 Full Visual Matrix | Q4 Release/Critical Flow>
+- Why this profile fits this task: <one sentence>
 
 Localization coverage:
 - sq, en, uk, it for any UI/text task — verify all four files in messages/*.json
@@ -738,7 +772,9 @@ Localization coverage:
 - N/A only if the task has zero user-facing text (e.g. a build script, an internal migration)
 
 Responsive coverage:
-- 320, 375, 390, 768, 1280, 1440, 2560 for any UI/layout task
+- Use the selected QA profile from docs/qa-profiles.md.
+- Q2 minimum: 320, 390, 768, 1024, and one desktop width (1440 or 1920), with uk@320 mandatory.
+- Q3/Q4 visual work: full canonical matrix when required by docs/qa-profiles.md.
 - N/A only if the task does not touch any rendered UI
 
 Current behavior to preserve:
@@ -780,11 +816,12 @@ Acceptance criteria:
 - <Literal behavioral AC — pasted from "Required after behavior", one bullet per step>
 - <Literal behavioral AC>
 - Existing working controls/flows are preserved unless explicitly removed by this kickoff.
-- 0 new lint errors / 0 new warnings.
-- `npx tsc --noEmit` → 0 errors. (`npm run build` passes for non-trivial changes.)
+- 0 new lint errors / 0 new warnings when lint applies to the touched scope.
+- Source changes: `npx tsc --noEmit` -> 0 errors. Non-trivial product changes: `npm run build` passes when
+  required by the selected QA profile. Q0 docs/governance-only work uses markdown/reference/integrity checks.
 - Relevant governance checks pass (only the ones for the scope changed).
 - All four locales (sq/en/uk/it) render correctly at runtime if UI/text changed.
-- All seven breakpoints (320/375/390/768/1280/1440/2560) render correctly if UI/layout changed.
+- Responsive evidence matches the selected QA profile in `docs/qa-profiles.md` if UI/layout changed.
 - **Regression coverage (agent-contract clause 15 / Epic RS):** if this task touches a flow in
   `docs/critical-flow-registry.md`, a regression test (a) was green on the OLD behavior before the change
   (baseline pasted in the session log) and (b) covers the new behavior; it runs in CI and FAILS on a
@@ -795,8 +832,8 @@ Acceptance criteria:
 - A **"Files Changed" table** is present in the session log (one row per touched path + 1-line
   rationale per file). The executor MUST NOT emit `git add` / `git commit` commands — the
   **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). The executor
-  MUST NOT run git itself (single-writer rule). A task with no "Files Changed" table is
-  INCOMPLETE — see "Commit Rules" and CLAUDE.md "Commit hand-off".
+  MUST NOT run mutating git (single-writer rule). Read-only diff/status inspection is allowed. A task with no "Files Changed" table is
+  INCOMPLETE — see "Commit Rules" and `CLAUDE.md` "Git policy".
 
 Out of scope:
 - <Explicit list of things the agent must NOT touch — unrelated files, parallel refactors, …>
@@ -864,7 +901,7 @@ If editing moves from one component to another, the new component must include:
 - DO NOT restart task numbering per sprint — preserve the global counter (`docs/backlog.md`).
 - DO NOT omit the **Regression coverage** AC when the task touches a `docs/critical-flow-registry.md` flow. The kickoff must name the exact regression test + command, require the pre-change green baseline, and require a planted-violation FAIL transcript. A flow-touching task without regression proof is INCOMPLETE (agent-contract clause 15 / Epic RS).
 - DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
-- DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor NEVER emits `git add` / `git commit` commands and NEVER runs git itself (single-writer rule); the orchestrator (Opus) emits commit commands during review. This applies to EVERY task, including non-UI and docs-only tasks.
+- DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor never emits or runs mutating git commands; read-only inspection is allowed. The orchestrator (Opus) emits explicit-path commit commands during review. This applies to EVERY task, including non-UI and docs-only tasks.
 - **Canonical-first / no-duplicate-class AC (Task 426, 2026-06-15).** For any control rendered by a canonical primitive (`Button`, `Combobox`, `Input`, `Select`, `Dialog`, `Sheet`, `Popover`, …), acceptance criteria are *canonical-first*: a task adds a local responsive/utility class ONLY if the required behavior is **not already inherited** from the canonical primitive. If the primitive already provides the behavior, the deliverable is **canonical-source proof** (primitive `file:line`) **+ rendered evidence** — duplicating the class locally is a **rejection, not a pass** (it diverges the consumer from the canonical single-source per Note 14 and can regress the primitive's other size/state variants). Kickoffs MUST phrase such ACs conditionally, e.g.: *"add `max-sm:w-full max-sm:min-h-11` locally **only if not already inherited** from canonical `Button`; otherwise provide canonical-source proof + rendered evidence and **do not duplicate** the classes."* A flat "the class must appear in the local diff" AC, where a canonical primitive already satisfies it, is a kickoff defect.
 
 #### Why this matters

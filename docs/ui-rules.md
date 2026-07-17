@@ -1,5 +1,15 @@
 # UI Rules & Governance — Lero.al
 
+## Current vs legacy status
+
+This file now acts as a UI routing document plus the legacy rule reference.
+
+- **New or migrated UI:** use `docs/mantine-responsive-design-system.md` for behavior/responsiveness and
+  `docs/tailadmin-style-reference.md` for visual chrome.
+- **Existing legacy UI:** the shadcn/Tailwind/Base UI rules in this file remain valid until the surface is migrated.
+- **Migration work:** state which files are current Mantine and which files are legacy. Do not apply legacy
+  implementation details to new Mantine components unless the task explicitly needs a bridge.
+
 ## Reference & Inspiration
 - Primary reference: https://dom.ria.com/ — study its listing cards, search filters, listing detail page, user cabinet, photo gallery.
 - Follow modern real estate marketplace UX patterns.
@@ -9,16 +19,20 @@
 
 ### Must
 - No hardcoded user-visible text in UI. Use i18n keys (messages/*.json) or DB-driven content.
-- No hardcoded colors. Use semantic tokens only (globals.css via semantic utility classes).
+- No hardcoded colors. Current Mantine UI uses Mantine theme/TailAdmin sources; legacy Tailwind UI uses semantic
+  utilities backed by `globals.css`.
 - If a UI pattern is missing, create a reusable component first, then use it.
 - If blocked, apply the smallest safe local fix, then immediately extract/refactor into a reusable component.
-- Dropdowns must use the project Combobox pattern (input + popover list). Do not use Select components for UI dropdowns.
+- Legacy dropdowns must use the project Combobox pattern (input + popover list). New or migrated Mantine
+  dropdowns use the approved Mantine primitives documented in `docs/mantine-responsive-design-system.md`.
 
 ### Prefer
 - Fix styling in shared/module components or src/components/ui/*, not via one-off patches in pages.
 - Keep controls consistent (size, spacing, focus) by reusing existing components.
 
-### Canonical Primitive Quick Reference
+### Legacy Canonical Primitive Quick Reference
+
+These are legacy references for shadcn/Tailwind/Base UI surfaces that have not yet migrated to Mantine.
 
 | Primitive | Canonical | Location |
 |---|---|---|
@@ -67,9 +81,10 @@ caller passes — that breaks composition and makes the component render inconsi
   (`flex-1`, margins) only. If a component must look different per surface, add a variant — never rely
   on `className` overriding baked-in structural classes.
 
-**Responsive is non-negotiable.** Every interactive control must meet the touch-target (§8) and
-breakpoint rules (§7) at all seven widths (320/375/390/768/1280/1440/2560). "It looks fine on my
-desktop" is not verification — the canonical task template requires all seven.
+**Responsive is non-negotiable.** Every interactive control must meet the touch-target (§8) and the
+QA profile selected in `docs/qa-profiles.md`. "It looks fine on my desktop" is not verification.
+Full visual matrices remain mandatory for high-risk UI, primitives, overlays, table/card strategies,
+page shells, and release-critical visual work.
 
 ---
 
@@ -617,8 +632,8 @@ and configure EVERY control to it:
 > ⚠️ **INHERITS `docs/design-system.md` (Global Responsive Design System Contract v1, Task 340).**
 > The container, spacing, primitive-ownership, data-surface, overlay, forbidden-pattern, and PASS/FAIL
 > rules now live canonically in `docs/design-system.md` (§4–§21). This checklist is the mechanical
-> pre-flight that proves them. **Item 6 below now uses the 14-width canon** from `design-system.md §3`
-> (the prior 9-width list is SUPERSEDED).
+> pre-flight that proves them. **Item 6 below uses the QA profile selected from `docs/qa-profiles.md`.**
+> The full 14-width canon remains mandatory for Q3/Q4 visual work; the prior 9-width list is superseded.
 
 > Why this exists: the same UI/responsive defects (overflowing button rows, mismatched control heights,
 > non-canonical dropdowns, z-index collisions) keep recurring because "looks fine on desktop" was treated
@@ -628,8 +643,9 @@ and configure EVERY control to it:
 
 **Run and record (grep the touched files, ideally the whole `src/`):**
 
-1. **No non-canonical dropdowns:** `grep -rn "<select"` and shadcn `Select` imports in touched UI →
-   must be 0 (use `Combobox`). Record the result.
+1. **No non-canonical dropdowns:** raw `<select>` usage in touched product UI must be 0. Current Mantine surfaces
+   use the approved Mantine primitive; legacy surfaces use the canonical legacy `Combobox`. Record the result and
+   the classified surface.
 2. **No ad-hoc control heights on Button:** `grep -rn "h-8\|h-9\|h-10\|h-11\|h-12" <touched Button usages>`
    → each hit must be justified against §3/§15 or removed. Record.
 3. **Z-index on the scale:** `grep -rn "z-\[" <touched>` and any `z-30/40/50` → must match §16; chrome at
@@ -638,12 +654,11 @@ and configure EVERY control to it:
    `flex-wrap`/`truncate`; verify the row does not clip at **320px** in **uk** (longest). Record the
    widths checked.
 5. **Same-row height:** confirm every control on a shared row is one height (§15). Record.
-6. **All 14 breakpoints (canon set by Task 340, 2026-05-31 — supersedes the 9-width list):**
-   320 / 375 / 390 / 480 / 560 / 680 / 768 / 810 / 960 / **1024** / 1200 / 1440 / **1920** / 2560 —
-   state, per touched screen, that each was checked × 4 locales (sq/en/uk/it = 56 cells)
-   (screenshots strongly preferred). "Desktop only" is a fail. 1024 catches the admin sidebar/table↔card
-   flip; 1920 catches widescreen waste; 2560 validates the container cap. See
-   `docs/design-system.md §3` + ADDENDUM (canonical) and `docs/responsive-governance.md §1`.
+6. **Responsive proof per QA profile:** use `docs/qa-profiles.md`.
+   Q2 checks the affected UI at 320 / 390 / 768 / 1024 / one desktop width, with `uk@320` mandatory.
+   Q3/Q4 visual work uses the full canonical matrix:
+   320 / 375 / 390 / 480 / 560 / 680 / 768 / 810 / 960 / 1024 / 1200 / 1440 / 1920 / 2560
+   × sq/en/uk/it when required. "Desktop only" is a fail for any user-visible responsive change.
 7. **Touch targets:** mobile-reachable controls ≥44px (§8). Record.
 8. **4 locales:** sq/en/uk/it render without truncation breakage on the touched screens. Record.
 

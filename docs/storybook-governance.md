@@ -14,6 +14,10 @@ Status: PERMANENT GOVERNANCE REFERENCE
 > **Two proof paths exist after Task 482:**
 > - **Mantine path (new):** `Patterns/Mantine/*` stories use `skipCanvas: true`, `withMantine` decorator, Mantine layout components, toolbar viewport + locale proof, Light-only theme. No per-viewport exports, no per-locale exports.
 > - **Legacy path (existing):** All other stories use `withCanvas` / `.container-wide` per the existing governance below. These rules remain valid for legacy surfaces until migration.
+>
+> **Validation depth:** use `docs/qa-profiles.md`. New primitives, overlays, TailAdmin conformance, and
+> Storybook governance work are normally Q3. Small story text or fixture adjustments can be Q1/Q2 when no
+> responsive or visual chrome behavior changes.
 
 **Storybook version:** `10.4.2` (upgraded from 8.6.18 by Task 394, 2026-06-05)
 **Framework:** `@storybook/nextjs-vite@10.4.2` (was `@storybook/experimental-nextjs-vite@8.6.18`)

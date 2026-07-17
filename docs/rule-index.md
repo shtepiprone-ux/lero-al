@@ -1,161 +1,232 @@
-# Rule Index — pre-read selection for Sonnet 4.6
+# Rule Index
 
-> **Replaces "Read all docs".** Every Sonnet kickoff must load only the docs listed under the
-> matching task type below. Loading 30+ doc files at the top of every task is what produced
-> the failure modes Task 253 was filed for — Sonnet follows one visible rule and ignores another.
+This file selects the minimal rule bundle for each task type. It replaces "read all docs."
 
-## How to use this file
+## How to use
 
-1. The orchestrator selects ONE primary task type from the list below.
-2. The kickoff `Pre-read` section lists:
-   - the **Always required** block (every task),
-   - the matching task type's **Required** block,
-   - any **Only if relevant** entries that actually apply to this kickoff.
-3. Anything outside that list stays unread — by design. The relevant rule still exists; it is
-   just not in scope for this task.
+1. Classify the task type.
+2. Read the Always Required bundle.
+3. Read only the matching task bundle and relevant optional files.
+4. Select a QA profile from `docs/qa-profiles.md`.
+5. If a task spans multiple types, include each matching bundle and state the boundary.
 
-If a task spans two types (e.g. "admin table change + email lifecycle"), include both bundles.
-
-## Always required (every task, every type)
+## Always Required
 
 - `docs/agent-contract.md`
+- `docs/rule-index.md`
+- `docs/qa-profiles.md`
 - `docs/backlog.md`
-- `docs/critical-flow-registry.md` — **scan it for any flow your task touches.** If it touches one, the
-  regression-coverage P0 rule (`agent-contract.md` clause 15 / Epic RS) is in scope: baseline the existing
-  test, add/update a regression test, and do not close without automated proof the old behavior still works.
+- `docs/critical-flow-registry.md` - scan for affected critical flows only.
 
-## UI / layout / component task
+For Opus orchestration or review, also read:
 
-> **🔴 MANTINE FREEZE (owner, 2026-06-24, Task 482): Mantine is now the source of truth for all new UI work.** New components MUST use Mantine. New responsive layout MUST use Mantine's responsive prop system. New Storybook stories MUST use the Mantine-native proof path. See `docs/mantine-responsive-design-system.md` — read it FIRST for any UI/layout/component task.
+- `docs/orchestrator-role.md`
+- `docs/orchestrator-procedures.md`
 
-**Required:**
-- 🔴 **`docs/tailadmin-style-reference.md` + `demo_tailadmin_com.zip` ← MANDATORY STYLE SOURCE OF TRUTH for EVERY UI task (owner P0, agent-contract clause 16, 2026-07-02).** Every value must trace to a §-row / zip token; if the primitive's chrome is not yet an authoritative §6x row, extract it from the zip FIRST. Rendered side-by-side vs the zip is the only style proof.
-- `docs/mantine-responsive-design-system.md` ← **FIRST READ for any UI/layout/component work (Task 482, 2026-06-24). Mantine = source of truth.** §7 = mobile gate rules. §12 = canonical patterns. §15 = governance freeze. §16 = acceptance gates. **🔴 §18 = Mantine theming/CSS pitfalls (HARD-WON, Sprint 38) — MANDATORY before ANY input/theme styling: `theme.styles`=inline (no state selectors → use `input-chrome.css`); stable `.mantine-*-input` classes + PasswordInput anatomy; `data-error` not `data-invalid`; disabled `:disabled`/`[data-disabled]`/`:has`; `var()` fallback inside the parens; Open Sans + 600 labels; rendered proof ≠ tsc-green.**
+## UI / Layout / Component
+
+First classify the UI surface:
+
+- **New or migrated UI:** Mantine current path.
+- **Existing legacy UI:** shadcn/Tailwind/Base UI path until migrated.
+- **Mixed migration:** read both current and legacy docs, but state which files belong to each side.
+
+### Current Mantine path
+
+Required:
+
+- `docs/mantine-responsive-design-system.md`
+- `docs/tailadmin-style-reference.md`
+- `docs/component-rules.md`
+- `docs/ui-rules.md` - routing and legacy boundary notes only.
+- `docs/qa-rules.md` - validation and encoding rules.
+
+Optional if relevant:
+
+- `docs/mantine-tailadmin-migration-tracker.md`
+- `docs/storybook-governance.md`
+- `docs/storybook-visual-snapshots.md`
+- `docs/state-authority.md`
+- `docs/i18n-rules.md`
+
+### Legacy shadcn/Tailwind path
+
+Required:
+
 - `docs/ui-rules.md`
 - `docs/component-rules.md`
+- `docs/design-system.md`
 - `docs/qa-rules.md`
 
-**Only if relevant (legacy/migration context):**
-- `docs/design-system.md` ← legacy system doc — read ONLY when migrating an existing legacy surface or when a legacy rule is referenced. Do NOT use as source of truth for new patterns.
+Optional if relevant:
+
 - `docs/component-governance.md`
 - `docs/responsive-governance.md`
 - `docs/responsive-screenshot-governance.md`
-- `docs/governance-checklists.md`
 - `docs/tailwind-governance.md`
 - `docs/tailwind-canonical-fragments.md`
-- `docs/state-authority.md` (if touching client-state vs SSR boundaries)
+- `docs/state-authority.md`
 
-## Admin table / admin control task
+## Admin Table / Admin Control
 
-**Required:**
-- `docs/design-system.md` ← canonical contract (§9 admin layout, §10 `tableAt` decisions)
-- `docs/ui-rules.md`
-- `docs/component-rules.md`
-- `docs/component-governance.md` (canonical `AdminTableRow` pattern in §11)
+Required:
+
+- `docs/admin-ux-rules.md`
 - `docs/domain-rules.md`
 - `docs/rls-rules.md`
 - `docs/qa-rules.md`
-- `docs/ai-behavior.md` → Note 22 "Admin Table Preservation Rule"
+- `docs/ai-behavior.md` - Note 22 admin table/control preservation.
+- Current or legacy UI bundle above, depending on the touched surface.
 
-**Only if relevant:**
-- `docs/governance-checklists.md`
+Optional if relevant:
+
+- `docs/component-governance.md`
 - `docs/state-authority.md`
+- `docs/admin-data-freshness-inventory.md`
 
-## DB / server action / RLS task
+## DB / Server Action / RLS
 
-**Required:**
+Required:
+
 - `docs/data-access-rules.md`
-- `docs/rls-rules.md` ← **read "RLS-Change Test Requirement" section (Task 436, 2026-06-16): any RLS/permission/SECURITY DEFINER/write-path-table change requires positive + negative test coverage. Cannot close without CI-verifiable proof.**
+- `docs/rls-rules.md`
 - `docs/domain-rules.md`
-- `docs/qa-rules.md` ← **read "Actionable Error-Toast Rule" section (Task 436, 2026-06-16): server actions must log the root cause and return typed error keys; test must verify console.error is called.**
+- `docs/qa-rules.md`
 
-**Only if relevant:**
+Optional if relevant:
+
 - `docs/state-authority.md`
 - `docs/app-lifecycle-contract.md`
 - `docs/architecture.md`
 
-## Email / auth lifecycle task
+## Control Relocation
 
-**Required:**
+Use when an editable capability moves between surfaces or one location becomes read-only.
+
+Required:
+
+- `docs/ai-behavior.md` - Notes 20 and 21.
+- `docs/component-rules.md`
+- `docs/qa-rules.md`
+- The current or legacy UI bundle for both source and destination surfaces.
+
+Also include the destination task bundle, such as Profile / Edit Flow or Admin Table / Admin Control.
+
+## Auth / Email / Account Lifecycle
+
+Required:
+
 - `docs/env.md`
 - `docs/domain-rules.md`
 - `docs/qa-rules.md`
 - `docs/integrations.md`
-
-**Only if relevant:**
 - `docs/app-lifecycle-contract.md`
+
+Optional if relevant:
+
 - `docs/rls-rules.md`
+- `docs/data-access-rules.md`
 
-## Profile / edit-flow task
+## Profile / Edit Flow
 
-**Required:**
-- `docs/ui-rules.md`
-- `docs/component-rules.md`
-- `docs/qa-rules.md`
-- `docs/ai-behavior.md` → Note 23 "Edit-Flow Preservation Rule"
+Required:
 
-**Only if relevant:**
-- `docs/state-authority.md`
+- Current or legacy UI bundle above, depending on the touched surface.
 - `docs/domain-rules.md`
+- `docs/qa-rules.md`
+- `docs/ai-behavior.md` - behavior-preservation notes.
+
+Optional if relevant:
+
+- `docs/state-authority.md`
 - `docs/rls-rules.md`
 
-## Performance task
+## Storybook / Visual Proof
 
-**Required:**
-- `docs/performance.md`
-- `docs/qa-rules.md`
+Required:
 
-**Only if relevant:**
-- `docs/responsive-screenshot-governance.md`
-- `docs/responsive-screenshot-matrix.md`
-- `docs/state-authority.md`
-
-## Analytics / SEO task
-
-**Required:**
-- `docs/analytics-rules.md`
-- `docs/env.md`
-- `docs/qa-rules.md`
-
-## Storybook / visual snapshot task
-
-> **🔴 MANTINE PROOF PATH (Task 482, 2026-06-24):** New stories MUST use the Mantine-native proof path (`parameters.skipCanvas: true`, `storybook.mantine.*` i18n namespace, **Default only — toolbar-driven viewport/locale proof**). Each `Patterns/Mantine/*` story group exports exactly ONE story (`Default`). Viewport and locale switching is via Storybook toolbar (12 widths 275–1920px; en/uk/sq/it locales). No per-viewport, per-locale, `Dark`, `LongUk`, `Pass`, or `Fail` exports. See `docs/mantine-responsive-design-system.md` §8 + §13.
-
-**Required:**
-- `docs/mantine-responsive-design-system.md` §8 (Mantine Storybook proof rules) + §13 (Storybook rebuild plan)
+- `docs/mantine-responsive-design-system.md` for Mantine stories, or `docs/storybook-governance.md` plus legacy UI docs for legacy stories.
 - `docs/storybook-governance.md`
 - `docs/storybook-visual-snapshots.md`
-- `docs/component-rules.md`
+- `docs/qa-profiles.md`
 - `docs/qa-rules.md`
 
-**Only if relevant:**
-- `docs/design-system.md §27` (legacy Storybook proof contract — only when auditing legacy stories)
-- `docs/responsive-screenshot-governance.md` (§MQ: machine-detection limits + manual QA requirement — added Task 412)
+Optional if relevant:
+
+- `docs/responsive-screenshot-governance.md`
 - `docs/responsive-screenshot-matrix.md`
 
-## Responsive/global-inventory task (canonical standard + Storybook matrix)
+## Responsive / Global Inventory
 
-**Required:**
-- `docs/design-system.md` — full read (§3 14-viewport canon, §10 tableAt, §14 overlays, §24–§27 canonical responsive contracts — added Task 412)
-- `docs/storybook-governance.md` (§14 enforced gates, §MQ manual-QA requirement — added Task 412)
-- `docs/responsive-screenshot-governance.md` (§MQ machine-detection limits — added Task 412)
+Use for cross-project responsive audits, breakpoint governance, or full Storybook matrix work.
+
+Required:
+
+- `docs/qa-profiles.md`
+- `docs/storybook-governance.md`
+- `docs/responsive-screenshot-governance.md`
 - `docs/responsive-screenshot-matrix.md`
-- `docs/responsive-storybook-inventory.md` ← **global story inventory** (created Task 412)
-- `docs/agent-contract.md`
-- `docs/backlog.md`
+- `docs/responsive-storybook-inventory.md`
 
-## Tailwind / styling governance task
+Then select by scope:
 
-**Required:**
+- Current Mantine inventory: `docs/mantine-responsive-design-system.md`.
+- Legacy inventory: `docs/design-system.md` and `docs/responsive-governance.md`.
+- Mixed inventory: both sets, with the boundary stated explicitly.
+
+Do not apply one implementation system to the other.
+
+## TailAdmin / Styling Governance
+
+Required:
+
+- `docs/tailadmin-style-reference.md`
+- `docs/mantine-responsive-design-system.md`
+- `docs/qa-profiles.md`
+- `docs/qa-rules.md`
+
+Optional if relevant:
+
+- `docs/tailwind-governance.md`
+- `docs/tailwind-canonical-fragments.md`
+- `scripts/design-tokens-allowlist.json`
+
+## Legacy Tailwind Styling Governance
+
+Use only for legacy Tailwind surfaces or governance tooling that still scans them.
+
+Required:
+
 - `docs/tailwind-governance.md`
 - `docs/tailwind-canonical-fragments.md`
 - `docs/tailwind-entropy-audit.md`
 - `docs/ui-rules.md`
 - `docs/qa-rules.md`
 
-## Component catalog / coverage task
+## Performance
 
-**Required:**
+Required:
+
+- `docs/performance.md`
+- `docs/qa-rules.md`
+
+Optional if relevant:
+
+- `docs/state-authority.md`
+- `docs/responsive-screenshot-governance.md`
+
+## Analytics / SEO
+
+Required:
+
+- `docs/analytics-rules.md`
+- `docs/env.md`
+- `docs/qa-rules.md`
+
+## Component Catalog / Coverage
+
+Required:
+
 - `docs/component-catalog.md`
 - `docs/component-catalog-governance.md`
 - `docs/component-coverage-matrix.md`
@@ -163,68 +234,53 @@ If a task spans two types (e.g. "admin table change + email lifecycle"), include
 - `docs/component-rules.md`
 - `docs/qa-rules.md`
 
-## Control-relocation task (moves an editable control between surfaces)
+## Regression / Critical Flow Coverage
 
-**Required:**
-- `docs/ai-behavior.md` → Note 20 "Existing-Control Preservation"
-- `docs/ai-behavior.md` → Note 21 "Control Relocation Rule"
-- `docs/ui-rules.md`
-- `docs/component-rules.md`
+Required:
+
+- `docs/critical-flow-registry.md`
+- `tasks/Epics/Epic_RS_Regression_Shield.md`
 - `docs/qa-rules.md`
-- Any task-type bundle of the destination surface (e.g. profile/edit-flow if the new location is the user profile edit page).
+- `docs/agent-contract.md`
 
-This is the bundle that exists specifically to prevent the "moved editable control becomes read-only label" failure mode that motivated Task 253.
+Also include the bundle for the changed flow: auth, DB/RLS, UI, admin, or lifecycle.
 
-## Docs-only / governance / task-template task
+## Schema / Migration
 
-**Required:**
+Required:
+
+- `docs/data-access-rules.md`
+- `docs/domain-rules.md`
+- `docs/rls-rules.md`
+- `docs/qa-rules.md`
+- `docs/architecture.md`
+
+Optional if relevant:
+
+- `docs/state-authority.md`
+
+## Docs / Governance / Task Template
+
+Required:
+
 - `docs/agent-contract.md`
 - `docs/orchestrator-role.md`
+- `docs/orchestrator-procedures.md`
+- `docs/qa-profiles.md`
 - `docs/backlog.md`
 
-**Only if relevant:**
+Optional if relevant:
+
 - `docs/ai-behavior.md`
 - `docs/governance-checklists.md`
 - `docs/governance-enforcement.md`
 
-## Regression / critical-flow coverage task (Epic RS — Regression Shield)
+## Out of scope by default
 
-**Required:**
-- `docs/critical-flow-registry.md` — the registry being extended (single source of truth)
-- `tasks/Epics/Epic_RS_Regression_Shield.md` — slice contracts + definition of done
-- `docs/qa-rules.md` — test/error-handling conventions
-- `docs/agent-contract.md` (clause 15) + `docs/orchestrator-role.md` (regression-coverage gate)
+Read these only when the task specifically needs them:
 
-**Only if relevant (by the flow group being covered):**
-- Auth/listings/admin slices → the matching task-type bundle above (email/auth lifecycle, DB/RLS, admin).
-- `docs/rls-rules.md` + `docs/data-access-rules.md` for the server-action/RLS permission-coverage slice.
-- `docs/responsive-screenshot-governance.md` for the i18n/hydration/mobile slice.
-
-## Schema / migration task
-
-**Required:**
-- `docs/data-access-rules.md`
-- `docs/domain-rules.md`
-- `docs/rls-rules.md` ← **read "RLS-Change Test Requirement" (Task 436): positive + negative write-path tests are mandatory for any RLS/permission change.**
-- `docs/qa-rules.md`
-- `docs/architecture.md`
-
-**Only if relevant:**
-- `docs/state-authority.md`
-
-## Mixed task (overlapping types)
-
-List both bundles. The principle is the same: **load only what is relevant, never everything**.
-
-## Out of scope from every bundle
-
-Reference-only docs that are NOT mandatory pre-reads (read on demand):
-
-- `docs/architecture.md` (system overview — read when restructuring modules)
-- `docs/maintenance-playbook.md` (operational runbook — read on incident response)
-- `docs/governance-enforcement.md` (governance internals — read when changing governance gates)
-- `docs/eslint-debt-taxonomy.md` (lint debt history — read when triaging lint debt)
-- `docs/responsive-audit.md`, `docs/ui-audit.md` (historical audit snapshots)
-- Closed epic summaries (`Epic_*_Summary_CLOSED.md`).
-
-These are kept as reference, not deleted, but they do not belong in any Sonnet kickoff pre-read by default.
+- historical audits in `docs/*audit*.md`;
+- closed epic summaries;
+- old session logs;
+- broad governance reports;
+- full design-system legacy sections when working only on Mantine current UI.

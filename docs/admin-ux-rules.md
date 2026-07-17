@@ -2,6 +2,10 @@
 
 > **Status:** DRAFT — awaiting owner sign-off before Phase 2 (Tasks 306/307) can start.
 > **Source:** Epic HH Phase 1 Task 303 audit (2026-05-30). All decisions reference Epic HH `APPROVED owner decisions (2026-05-30)`.
+>
+> **Current routing (2026-07-17):** this file is a legacy/admin historical reference for surfaces not yet
+> migrated. New or migrated admin UI must also follow `docs/mantine-responsive-design-system.md`,
+> `docs/tailadmin-style-reference.md`, and the QA profile selected from `docs/qa-profiles.md`.
 
 ---
 
@@ -532,11 +536,12 @@ Task 307 MUST add these 11 keys to `messages/{sq,en,uk,it}.json` under the `admi
 > This §14 is the **admin specialisation** of the global contract: `.container-admin` is the admin
 > instance of the §4 container system; AdminPageShell/AdminTable/AdminCardList are the §7 admin layout
 > + data-surface primitives; the `lg:` table↔card switch is the §10 `tableAtLg` default; the
-> verification gate (§14.6) now uses the **14-width × 4-locale canon** from `design-system.md §3`
-> (not the SUPERSEDED 9-width list). Where §14 and `design-system.md` disagree, the global contract wins.
+> verification gate (§14.6) uses `docs/qa-profiles.md`: Q2 for targeted admin UI changes and the full
+> 14-width × 4-locale canon for Q3/Q4 visual work. Where this legacy section and the current Mantine
+> contract disagree, the current/legacy surface classification wins.
 >
-> This contract applies to EVERY admin route. The migration sweep enforces it across the remaining ~12
-> admin pages (Phases 4–5 of `design-system.md §18`).
+> Within legacy admin surfaces, this contract applies to every admin route. New or migrated surfaces use the
+> current Mantine contract while preserving the domain behavior in this file.
 
 ### 14.1 Container
 
@@ -577,10 +582,8 @@ Sticky first column applies at `lg:+` only (cards have natural hierarchy via tit
 
 ### 14.6 Verification gate
 
-- Every admin task touching a route MUST verify at the **14-width × 4-locale canon** (sq/en/uk/it):
+- Every admin task selects a QA profile from `docs/qa-profiles.md`.
+- Q2 targeted admin UI checks 320, 390, 768, 1024, and one desktop width, with `uk@320` mandatory.
+- Q3/Q4 visual admin work uses the full 14-width × 4-locale canon:
   320, 375, 390, 480, 560, 680, 768, 810, 960, **1024**, 1200, 1440, **1920**, 2560 (= 56 cells).
-  This **supersedes** the prior 9-width list.
-- Screenshots strongly preferred per width; per-width pass/fail notes mandatory in the session log.
-- Failure at any width × locale = task is NOT complete (STOP & ASK rather than ship defect).
-- Canonical source: `docs/design-system.md §3` + ADDENDUM. `docs/ui-rules.md §17 item 6` and
-  `docs/responsive-governance.md §1` now point to the 14-width canon.
+- Required pass/fail evidence is recorded in the session log. Any failure in a required cell blocks completion.

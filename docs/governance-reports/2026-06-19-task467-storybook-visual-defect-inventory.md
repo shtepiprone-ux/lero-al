@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (296 stories, 916 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (298 stories, 952 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,8 +10,8 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 916 |
-| PASS (clean, verdict=pass) | 889 |
+| Total cells | 952 |
+| PASS (clean, verdict=pass) | 925 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
 | AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 27 |

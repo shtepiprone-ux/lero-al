@@ -1,71 +1,111 @@
-# Agent Contract — P0 source of truth for Sonnet 4.6
+# Agent Contract
 
-> **Read this first on every task.** This is the short, non-negotiable P0 contract.
-> Long-form rules live in the docs listed under each clause.
-> If a longer doc appears to contradict this P0 contract, STOP and ask the orchestrator.
-> Do not use a longer doc to weaken or bypass the P0 contract.
+This is the short P0 contract for Claude Code agents on lero-al.
 
-## P0 Sonnet Contract
+Long procedures live in:
 
-These clauses (1–16) apply to **every** task. The orchestrator verifies each one against the actual diff on return.
+- `docs/orchestrator-procedures.md`
+- `docs/qa-profiles.md`
+- `docs/ai-behavior.md`
+- `docs/rule-index.md`
 
-1. **Do not change scope.** Only modify files needed for the kickoff. No drive-by refactors, no "while I'm here" cleanups. Full rule: `docs/ai-behavior.md` → "Scope Isolation Rules" and `docs/orchestrator-role.md` → "Hard contract".
+If a longer document appears to contradict this contract, stop and ask the orchestrator instead of choosing a
+convenient interpretation. Clause identifiers are intentionally stable because other project documents cite them.
 
-2. **Do not invent architecture.** If something is ambiguous or missing, **stop and ask** — do not invent your own solution. Full rule: `docs/orchestrator-role.md` → "Hard contract".
+## P0 invariants
 
-3. **Do not remove existing functionality unless the kickoff explicitly authorises it.** Silent removal of any interactive control (button, row action, dropdown item, status switcher, filter chip, sidebar entry, …) is a TASK FAILURE. Full rule: `docs/ai-behavior.md` → "Existing-Control Preservation (Note 20)".
+1. **Scope stays bounded.** Change only what the task requires. No drive-by refactors, unrelated cleanup, or hidden
+   architecture changes.
 
-4. **Do not replace an editable control with a read-only label unless the new editable location is implemented in the same task.** A read-only label is not a replacement for an editable control. Full rule: `docs/ai-behavior.md` → "Control Relocation Rule (Note 21)".
+2. **No invented architecture or facts.** If a required decision is missing and cannot be safely inferred from the
+   repository, stop and ask.
 
-5. **Preserve existing UX flow unless the task explicitly changes it.** Entry points, sibling controls, downstream steps, every empty/loading/error/success/cancel state in the affected flow must keep working end-to-end. Full rule: `docs/ai-behavior.md` → "UX Flow Preservation (Note 19)".
+3. **Existing capabilities stay reachable.** Do not remove buttons, row actions, filters, edit controls, navigation
+   entries, status controls, validation states, empty/loading/error/success/cancel states, or downstream steps unless
+   the kickoff explicitly authorizes removal.
 
-6. **Every UI/control change must define current behavior and required after-behavior in the kickoff and the session log.** No abstract task wording — the kickoff template enforces this; do not skip the "Current behavior to preserve" or "Required after behavior" sections. Full rule: `docs/ai-behavior.md` → "Canonical Task Template".
+4. **Editable controls cannot become read-only by accident.** If an editable control moves, the new editable
+   location must be implemented in the same task. A read-only label is not a replacement.
 
-6a. **🆕 Implement BOTH the positive flow and EVERY negative flow listed in the kickoff (Task 255 rule, 2026-05-27).** Every kickoff from Task 255 onward contains two explicit sections: `Positive flow (happy path)` and `Negative flow (every off-happy-path branch)`. Shipping only the happy path is a TASK FAILURE. For every negative branch listed (cancel/dismiss, validation error, server error, permission-denied, not-found, empty list, loading, double-submit, network/offline, expired session, locale mismatch, role-divergence, optimistic-concurrency), the diff must contain a verifiable handler/guard/toast/early-return with the correct locale key. The session log's AC-by-AC self-audit table must cite both flows by name. Full rule: `docs/orchestrator-role.md` → "Orchestrator standing rules" (Task 255 entry) + "Review checklist" (Positive + Negative flow parity).
+5. **Existing UX flows remain intact.** Preserve entry points, sibling controls, downstream steps, state transitions,
+   and cross-page effects unless the kickoff explicitly changes them.
 
-7. **Every new/changed user-facing string must cover all four locales — `sq`, `en`, `uk`, `it` — in the same key set.** Runtime locale switching must be visually confirmed (matching key counts is not enough). Full rule: `docs/ai-behavior.md` → "Localization (i18n) Rules".
+6. **Current and required behavior must be explicit.** Every UI/control kickoff and session log must describe the
+   current behavior to preserve and the required after behavior. Implementation kickoffs are saved under `tasks/`;
+   chat-only handoffs are not sufficient.
 
-8. **Every UI change must be verified at the seven canonical breakpoints — 320, 375, 390, 768, 1280, 1440, 2560.** Full rule: `docs/responsive-governance.md` and `docs/ai-behavior.md` → "Responsive Governance Enforcement".
+6a. **Positive and applicable negative flows must be handled.** Every task defines the happy path and an
+   applicability table for off-happy-path branches. Implement and verify every branch marked applicable; do not
+   invent irrelevant branches.
 
-9. **Run required validation before claiming complete.** `npx tsc --noEmit` → 0 errors. `npm run build` if the change is non-trivial. AC-by-AC self-audit table in the session log. Final "Self-validation: …" verdict line. Full rule: `docs/ai-behavior.md` → "Pre-Completion Self-Validation (Note 18)".
+7. **Localization covers all four locales.** Any new or changed user-facing string must be represented in `sq`,
+   `en`, `uk`, and `it`, with runtime behavior verified according to the selected QA profile.
 
-10. **Update `docs/backlog.md` and add a session log under `docs/sessions/` — the session log MUST include a "Files Changed" table listing every touched path + a 1-line rationale per file.** Do NOT emit `git add` / `git commit` commands yourself — the **ORCHESTRATOR (Opus)** emits commit commands during review (post-Task 264, 2026-05-27). **The executor NEVER runs git itself** (single-writer rule). Full rule: `docs/orchestrator-role.md` → "Environment & git safety" + "Orchestrator-owned commit emission (Task 264)" and `docs/ai-behavior.md` → "Commit Rules".
+8. **Responsive verification follows the selected QA profile.** Use `docs/qa-profiles.md` to choose targeted Q2
+   evidence or the full Q3/Q4 visual matrix. Historical fixed-width lists do not override the selected profile.
 
-11. **🔴 MOBILE <640px = FULL-WIDTH ADAPTATION — OWNER P0, NON-NEGOTIABLE (2026-06-03, owner repeated ≥5×).** On every viewport **below 640px (`max-sm`)**, interactive and container surfaces MUST adapt to the **full available width** — they must NOT remain content-width, centered cards with side margins, fixed-width, or `w-auto`. This applies to **ALL** of: every **text Button** (`max-sm:w-full`), **Tabs lists/triggers**, **FilterBar** controls/triggers, **Select/Combobox triggers**, **PhoneField**, form action rows, toolbars, admin row-action clusters, and any CTA.
+9. **Validation evidence is mandatory.** A completion claim must include the selected QA profile, exact checks run,
+   actual results, and an acceptance-criteria self-audit. `tsc=0` alone is not proof of UI behavior, regression
+   safety, or visual conformance. When a required check cannot run because of a sandbox, native-binary mismatch, or
+   timeout, record it as missing evidence and provide the owner exact native commands plus the expected evidence;
+   never replace the missing result with a confidence claim.
 
-**🔴🔴 ALL POPUPS = FULL-WIDTH BOTTOM SHEET AT <640px — NO EXCEPTIONS (owner 2026-06-03, "всі попапи… Всі! Без винятку!").** EVERY overlay/popup primitive — **Dialog, Sheet, Select dropdown, Combobox dropdown (+ Location/PropertyType/Year), DropdownMenu, NavigationMenu, Popover, Command** (i.e. every Base-UI `Popup`/`Positioner`/`Backdrop` surface) — renders below 640px as a **full-width bottom sheet**: anchored to the bottom edge, spanning the FULL viewport width edge-to-edge (no side margins, no `max-w-[calc(100%-2rem)]`/`sm:max-w-sm` leaking below 640), rounded TOP corners only, slide-up animation, height to content up to ~`90dvh` with internal vertical scroll, ≥44px touch targets, labels wrap. **A drag-handle bar (small centered grabber) sits at the top of every mobile bottom sheet** (visual affordance; swipe-to-dismiss only if trivially supported — otherwise handle is visual-only, documented). **Closes on backdrop tap AND Esc** (plus the sheet's own close/select action); focus returns to the trigger. NOT a centered card, NOT an anchored mini-dropdown on mobile. At ≥640 the existing desktop popup/anchor behavior is restored. The ONLY thing that may differ is a non-UI map-marker popup (e.g. Leaflet in `Map.tsx`) — if encountered, STOP and ASK rather than assume. Touch targets stay ≥44px (`min-h-11`); long sq/en/uk/it labels wrap (`whitespace-normal break-words`), never clip or overflow; no horizontal scroll at 320. **Icon-only/compact controls are the ONLY exemption and each MUST be listed explicitly with justification.** If a surface's correct mobile pattern is genuinely ambiguous (e.g. full-screen vs full-width bottom-sheet for a dialog), **STOP and ASK — do not guess.** A diff that leaves ANY text/container surface non-full-width at <640 without a documented icon-only/exempted row is a TASK FAILURE and is rejected on sight. Full rule: `docs/ui-rules.md` §15a + `docs/design-system.md` §12b + `docs/orchestrator-role.md` → "Mobile <640 full-width gate".
+10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
+    `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a
+    "Files Changed" table matching the real diff. Sonnet does not add detailed history to the backlog and flags a
+    `BACKLOG LIMIT BREACH` when it cannot keep the file at or below 80 lines. Opus validates Sonnet's backlog/session
+    evidence against the real diff, then corrects or consolidates the backlog as needed. Agents may use read-only git
+    for inspection. Mutating git is owner-only and native PowerShell only. Sonnet neither runs nor emits mutating git
+    commands; Opus may emit explicit-path commands for the owner after verified task design or approved review.
 
-12. **🔴 HARD VERIFICATION — RENDERED EVIDENCE AT EVERY BREAKPOINT × EVERY LOCALE (owner P0, 2026-06-03).** "It compiles / tsc=0 / build=✅" is NOT proof and NEVER closes a task. Every UI task's session log MUST contain a **rendered verification matrix**: rows = the canonical breakpoints (320·375·390·480·560·680·768·810·960·1024·1200·1440·1920·2560), columns = the four locales (sq·en·uk·it), each relevant cell marked PASS with concrete evidence (what was checked: full-width <640? label wrap? no clip/overflow? no h-scroll? indicator correct?). **uk@320/375/390 are mandatory stress cells.** A task that ships only happy-path or only ≥640 evidence, or only a sampled subset of consumers, is INCOMPLETE. The orchestrator MUST NOT approve any UI task whose log lacks this matrix with real per-cell evidence.
+11. **Mobile and overlay behavior remain protected.** For in-scope UI below 640px, text controls use the full
+    available width, mobile-reachable controls provide adequate touch targets, labels wrap without horizontal
+    overflow, and popups follow the current Mantine or legacy bottom-sheet contract for that surface. Icon-only or
+    domain-specific exemptions must be explicit.
 
-13. **🔴 ENFORCEABLE STORYBOOK / NO-HARDCODE GATE (owner P0, 2026-06-04 — after the Sprint 32 story rejection).** For any task touching `*.stories.tsx`, `src/stories/**`, or a primitive rendered by a story: hardcode and non-full-width are **un-committable**, and rendered proof is **machine-produced**, not self-reported. Specifically: (a) NO raw user-facing string literals in stories/fixtures/helpers — every visible string + `aria-label` comes from `t()`/`storyT()` against a namespace with full `sq/en/uk/it` parity; (b) NO `parameters.layout: 'centered'|'padded'` in stories — the global full-width `withCanvas` decorator + `layout:'fullscreen'` is mandatory so `max-sm:w-full` actually fills <640; (c) NO story export named `/Ukrainian/` and NO `globals:{locale:'uk'}` pin — one toolbar-reactive `LocaleStress` per component; (d) NO raw `<button>/<input>/<select>/<textarea>`. These are enforced by ESLint + `scripts/check-stories.mjs` (wired into `prebuild-storybook` + CI, `npm run check:stories`) — a violation FAILS the build. The ONLY accepted rendered proof is the `responsive-screenshots --assert` PNG/JSON matrix (no h-scroll at 320, full-width text controls at <640; uk@320/375/390 mandatory). A green `tsc`/`lint`/`build-storybook` is a baseline, never proof, and "no browser access" never closes a UI cell. Full rule: `docs/storybook-governance.md` §14 + `docs/orchestrator-role.md` → "Rendered-evidence approval gate" + Sprint 33 tasks (`tasks/Sprints/Sprint_33_CORRECTIVE_*`).
+12. **Rendered evidence follows risk.** UI compilation is only a baseline. Q2 requires targeted rendered evidence;
+    Q3/Q4 visual work requires the full proof path and locale/viewport matrix defined by `docs/qa-profiles.md` and
+    the relevant UI document. Missing required rendered evidence blocks approval.
 
-14. **🔴 FILE-INTEGRITY GATE — NO TRUNCATED / NUL-CORRUPTED / UNPARSEABLE FILES (owner P0, 2026-06-05, after repeated truncation: Task 395 gate-script, Task 397 ×2 baseline + email files).** Files written on the Cowork/Windows mount have repeatedly come out **truncated mid-token** or with **embedded NUL bytes**, while the session log still claimed `tsc=0` / gate-green. This is now a hard, machine-checked gate on BOTH sides of the loop:
-    - **Read-after-write:** after writing/editing ANY file, the executor MUST read it back and confirm it is complete (the intended last line is present) before moving on.
-    - **Pre-completion integrity check (MANDATORY, before writing the session log / claiming complete):** for EVERY touched file —
-      - **0 NUL bytes** — `tr -cd '\000' < <file> | wc -c` must be `0` (a non-zero result = corrupt = TASK FAILURE).
-      - **No UTF-8 BOM** in source files unless explicitly required (`head -c3 | od` ≠ `ef bb bf`).
-      - **`.json` parses** — `node -e "JSON.parse(fs.readFileSync(p,'utf8'))"` / `python -c "import json;json.load(...)"` exits 0.
-      - **`.mjs`/`.js` parse** — `node --check <file>` exits 0; **`.ts`/`.tsx` compile** — `tsc --noEmit` has no new errors.
-      - **Not truncated** — the file ends with its intended final token (parse success covers this; for non-code files re-read the tail).
-      The executor pastes the GREEN integrity transcript into the session log. **A claimed `tsc=0`/gate-green that is contradicted by a NUL byte or unparseable file is a fabricated proof — TASK FAILURE.**
-    - **Orchestrator independently RE-RUNS the integrity check on the real files at review** (`tr -cd '\000'`, `JSON.parse`, `node --check`, `node --check` of the file end) — the log is NOT proof. Any truncated/NUL/unparseable touched file = **auto-reject, route back**, regardless of what the log claims.
-    - **⚠️ Authoritative environment (2026-06-05 lesson):** the integrity check is authoritative ONLY when run on the **native filesystem (owner Windows / PowerShell) or in CI** — NOT via the orchestrator's Cowork **sandbox mount**, which has been observed serving a **stale snapshot** (40+ min old) and **fluctuating byte/NUL counts** for files just written by the Windows side. A sandbox-read "corruption" that the owner's native `tsc`/`git diff --numstat`/`tr -cd '\000'` does NOT reproduce is a **mount artifact, not a real defect** — the native run wins. Conversely a real corruption (confirmed natively or via an independent upload) is still auto-reject. The orchestrator's sandbox re-run is a SCREEN, not the verdict; when it disagrees with a clean native run, ask the owner to confirm natively and treat native as ground truth. **Operational rule (owner P0, 2026-06-13): on ANY sandbox-side truncation / NUL / parse-fail / phantom-git / over-dirty-tree signal, the orchestrator MUST emit the exact PowerShell verification command(s) for the owner and AWAIT the native result before issuing ANY verdict — it must NEVER reject, route back, or declare corruption from a sandbox read alone, nor write to the mount to "fix" it. See `docs/orchestrator-role.md` → "Sandbox-corruption screen → emit a native check".** **🔴 And (owner P0, 2026-06-13): the orchestrator must NOT run git OR file-integrity checks (`tr -cd`, `wc -c`, `tail`) in the Cowork sandbox as a verdict source — sandbox git corrupts `.git/index` (phantom objects/over-dirty tree) and the bash mount serves false NUL/truncation (e.g. `backlog.md` read 1245 NUL while native was `NUL=0`). Read file content via the Read tool; obtain ALL git facts and the authoritative integrity verdict from the owner's NATIVE PowerShell run. See `docs/orchestrator-role.md` → "Orchestrator NEVER runs git or integrity checks in the Cowork sandbox".**
-    - Enforced by `scripts/check-file-integrity.mjs` (Task 400), wired into CI / a Windows pre-commit hook (native), once it lands; until then run the checks inline natively. Full rule: `docs/orchestrator-role.md` → "Review checklist" (file-integrity row) + `docs/ai-behavior.md` → "Pre-Completion Self-Validation (Note 18)".
-    - **Companion gate — mojibake/double-encoding (Task 428, 2026-06-15):** `npm run check:mojibake` (`scripts/check-mojibake.mjs`, blocking in CI) detects UTF-8-as-CP125x re-decoding artifacts and the U+FFFD replacement character — distinct corruption modes from clause 14's NUL/BOM/truncation checks. Full rule: `docs/qa-rules.md` → "Encoding hygiene (UTF-8, mojibake gate — Task 428)".
+13. **Storybook and no-hardcode gates remain enforceable.** Work touching stories, story-rendered primitives, or
+    visual governance must follow the current Mantine or legacy Storybook proof path, use locale-backed visible
+    strings, avoid forbidden raw controls, and provide machine-produced evidence when Q3/Q4 requires it. A green
+    typecheck or Storybook build is not rendered proof.
 
-15. **🔴 REGRESSION COVERAGE FOR CRITICAL FLOWS — OWNER P0 (2026-06-16, Epic RS / Regression Shield).** Critical user/admin/listing/auth/RLS flows have silently regressed more than once while `build`/`tsc`/`lint` all passed (auth recovery + self-delete 2026-06-16; report-listing after the Task 270 RLS change → Task 435; admin date-format hydration → Task 434). Therefore: **any task that touches a flow listed in `docs/critical-flow-registry.md` MUST (a) establish the flow's existing regression test passes BEFORE the change (record the green baseline), and (b) add a NEW regression test or explicitly UPDATE the existing one to cover the changed behavior.** A task that touches a critical flow **CANNOT be marked complete/approved without automated proof that the pre-existing critical functionality still works** — "I manually checked one case" is NOT sufficient and is rejected on sight. If the touched flow has no registry row yet, the task ADDS one (with route/action, happy + failure path, the required test, and the command) in the same diff. Every bug fixed anywhere, after the fix, gets a regression test so it cannot return. The orchestrator verifies the named test exists, runs in CI, and FAILS on a planted violation (a no-op gate is a task failure). Full rule: `tasks/Epics/Epic_RS_Regression_Shield.md` + `docs/critical-flow-registry.md` + `docs/orchestrator-role.md` → "Regression-coverage gate" + `docs/ai-behavior.md` → Canonical Task Template "Regression coverage" block.
+14. **File integrity and encoding must be protected.** Touched text/source files remain UTF-8 without BOM, without
+    NUL bytes, parseable where applicable, complete, and free of mojibake. Use owner-native or CI evidence as the
+    authority when a sandbox read looks suspicious; a sandbox anomaly is a screen, not a verdict.
 
-16. **🔴 TAILADMIN STYLE IS MANDATORY ON EVERY UI TASK — OWNER P0 (2026-07-02, demanded repeatedly, ≥10×).** Every primitive, component, and surface MUST match the TailAdmin visual system. The SINGLE source of truth is **`demo_tailadmin_com.zip`** (repo root, gitignored — `css/style.css` tokens + the component class markup in its HTML) and its extraction in **`docs/tailadmin-style-reference.md`** (§1–§6x). **ZERO invented values** — every color / px / radius / shadow / font-size / weight traces to a token in `css/style.css` or a component class in the zip's HTML, and is cited by its §-row. The **brand color stays `#EC5447`**; everything else — the gray ramp (`#f9fafb`→`#101828`), the Outfit type scale (`text-theme-sm` 14/20, `text-theme-xs` 12/18, the title scale), radius (`rounded-lg` .5rem etc.), shadows (`shadow-theme-xs/sm/md/lg`), semantic success/error/warning, and every control's chrome (border `gray-300`, `bg-transparent`, `focus:border-brand-300 focus:ring-brand-500/10 focus:ring-3`, `h-11`/44px, `text-sm`, `font-medium`) — comes from TailAdmin. **If a primitive's chrome is not yet an authoritative row in `tailadmin-style-reference.md`, the task EXTRACTS it from the zip into a new §6x row BEFORE implementing — never invents, never guesses.** **Verification is RENDERED side-by-side against the zip reference at every breakpoint × locale — `tsc=0`/gate-green is NOT style proof and never closes a UI task.** A UI diff whose rendered output does not visibly match the TailAdmin reference (wrong border color, wrong radius, missing focus ring, off font, wrong density, invented shadow) = **REJECT, route back**. Full rule: `docs/tailadmin-style-reference.md` + `docs/mantine-responsive-design-system.md` §18 + `docs/orchestrator-role.md` → "TailAdmin conformance gate" + `docs/mantine-tailadmin-migration-tracker.md`.
+15. **Critical flows require regression proof.** If a task touches a flow in `docs/critical-flow-registry.md`, it
+    must establish the existing baseline, preserve or add automated coverage for the changed behavior, and record
+    the command/evidence. Manual checking alone is not enough for critical-flow closure.
 
-16a. **🔴 ZIP-ABSENT ("HONEST-NEGATIVE") PRIMITIVES REQUIRE A LIVE-CAPTURED REFERENCE — NOT "FORMALIZED PROSE + MANTINE ZERO-OVERRIDE" — OWNER P0 (2026-07-05, Variant A).** When Step 0 finds that `demo_tailadmin_com.zip` contains **zero reference markup** for the primitive/surface in scope (an "honest-negative on the zip" — as recorded for §6n Skeleton, §6q Slider, §6r Toast), the task **MUST NOT** close by (a) copying a prior "live-measured" prose line into a numbered `§6x` row and calling it authoritative, nor (b) accepting Mantine's own defaults as conformant on the grounds that "the default already matches" a value with no source-of-truth artifact. **Both moves are now a TASK FAILURE.** Capturing the live reference is the **ORCHESTRATOR's** job, NOT the executor's — the orchestrator owns the source of truth. The **orchestrator captures a live reference from the running `demo.tailadmin.com` page for that primitive** (Chrome: rendered screenshot + `getComputedStyle` of the real element at the canonical breakpoints) and records into the `§6x` row the **measured values WITH capture provenance** (exact URL, capture date, method, and the element/selector measured) BEFORE handing the kickoff to Sonnet. The **executor implements against that already-captured `§6x` reference** and never browses TailAdmin itself; if the reference row is missing or lacks provenance, the executor STOPS and asks the orchestrator. Every implementation value — **including every zero-override decision** — must then be **positively verified against that live capture** and proven **rendered side-by-side with the captured reference**, not asserted. A "zero-override: Mantine default already matches" claim is acceptable ONLY when the live capture confirms the pixel; absent a live capture (or a written owner waiver recorded in the row), the primitive **cannot be approved** and the crash-and-geometry rendered gate passing does NOT substitute for it (that gate does not check TailAdmin chrome — Task 529). Full rule: `docs/tailadmin-style-reference.md` → "Honest-negative rows require live-capture provenance" + `docs/orchestrator-role.md` → "TailAdmin conformance gate".
+16. **TailAdmin is the visual source for current UI.** New or migrated UI, and any task changing rendered chrome,
+    must trace visual values to `docs/tailadmin-style-reference.md` and use Mantine for behavior/responsiveness.
+    Legacy surfaces keep their existing token source until migrated. TailAdmin side-by-side evidence is required
+    when styling or chrome is in scope.
 
-## Where the full rules live
+16a. **A missing TailAdmin reference requires provenance, not invention.** If the bundled reference has no example
+    for an in-scope primitive, the orchestrator must establish a live-captured or owner-waived reference row with
+    provenance before implementation. The executor must stop if that source-of-truth row is missing.
 
-- **Long-form executor rules:** `docs/ai-behavior.md` (Notes 14, 18, 19, 20, 21, 22, 23 are the behavior-preservation core).
-- **Long-form orchestrator rules:** `docs/orchestrator-role.md`.
-- **Task-type-specific pre-read selection:** `docs/rule-index.md` — every Sonnet kickoff must use this to load only the relevant docs (no more "read all docs").
-- **Canonical Task Template:** `docs/ai-behavior.md` → "Canonical Task Template" — every task in `/tasks/Sprints/*.md` and `/tasks/Epics/*.md` must follow it.
+## Role split
 
-## What "Sonnet's report is not proof" means
+| Layer | Role |
+|---|---|
+| Opus orchestrator/reviewer | Plans, writes tasks, reviews evidence and diffs, and emits owner-run explicit-path commit commands after verified task design or approved review. Does not write product code unless explicitly asked. |
+| Sonnet executor | Implements code per the kickoff, self-validates, and writes session evidence. May inspect read-only git; does not run or emit mutating git commands. |
+| Owner | Runs mutating git natively in PowerShell and makes product decisions when rules conflict. |
 
-The orchestrator approves work only after reading the actual `git diff` — not the executor's session log claim. Self-validation in the session log is required (see clause 9) but it is the executor's *claim*, not the *proof*. If a diff disagrees with the session log, the diff wins and the task is routed back as a follow-up.
+## Required routing
+
+Every task or review must route through:
+
+1. `docs/rule-index.md` for the minimal rule bundle.
+2. `docs/qa-profiles.md` for validation depth.
+3. `docs/orchestrator-procedures.md` for task design and review protocol when Opus is planning or reviewing.
+
+## What "report is not proof" means
+
+The executor's report is an index, not evidence. Approval requires inspecting the actual changed files, the real
+diff, and the validation artifacts required by the selected QA profile.

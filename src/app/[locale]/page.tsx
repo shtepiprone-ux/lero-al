@@ -9,6 +9,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/server'
 import { loadUserFavoriteListingIds } from '@/modules/listings/lib/loadUserFavoriteListingIds'
+import { AgentCtaButton } from '@/components/shared/AgentCtaButton'
 
 export default async function HomePage() {
   const t = await getTranslations('home')
@@ -95,14 +96,10 @@ export default async function HomePage() {
             <Building2 className="h-12 w-12 text-primary mx-auto mb-4" />
             <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mb-3">{t('agent_cta_title')}</h2>
             <p className="text-muted-foreground mb-6">{t('agent_cta_desc')}</p>
-            <Link
+            <AgentCtaButton
               href={`/${locale}/auth/register?type=agent`}
-              className={cn(buttonVariants({ size: 'lg' }), 'gap-2')}
-              data-track="register"
-            >
-              <Building2 className="h-5 w-5" />
-              {t('agent_cta_button')}
-            </Link>
+              label={t('agent_cta_button')}
+            />
           </div>
         </div>
       </section>

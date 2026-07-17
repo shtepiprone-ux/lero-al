@@ -20,6 +20,7 @@
   "src/components/layout/Header.tsx": "full-page header with Next.js router + auth session; one-off app-shell element; no safe static mock",
   "src/components/layout/MobileBottomNav.tsx": "mobile bottom navigation bar; requires Next.js router for active-route detection; one-off app-shell element",
   "src/components/listing/WhatsAppContactButton.tsx": "opens WhatsApp URL with external phone number; no meaningful UI state to document in Storybook",
+  "src/components/shared/AgentCtaButton.tsx": "thin client-boundary island wrapping the canonical Mantine Button for one Homepage CTA; Button itself is covered by Button.stories.tsx — Task 621 Q2 scope excludes a new story",
   "src/components/shared/AvatarCropModal.tsx": "image crop modal requiring browser FileReader + canvas API; no safe Storybook mock for file-system operations",
   "src/components/shared/DatePicker.tsx": "date picker with complex calendar state; future story candidate once canonical DatePicker pattern is established",
   "src/components/shared/FilterMultiToggle.tsx": "filter sub-component; used within FiltersPanel only; no standalone reuse potential",

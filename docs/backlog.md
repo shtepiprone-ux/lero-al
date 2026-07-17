@@ -14,7 +14,6 @@
 ## Open — needs action
 
 **Not yet executed / re-scope before kicking off:**
-- **Task 610** — grid/list title-hover asymmetry. No commits; likely a no-op after Task 608 shipped the grid `group-hover` fix — verify/re-scope first.
 - **Task 613** — remove the DEAD `--z-*` Tailwind z-index token scale (`globals.css`; Tailwind v4 never compiles it into `z-*` utilities). Kickoff open, not executed; LOW priority. Kickoff `..._Task_613_DeadZIndexTokenScaleCleanup.md`.
 
 **Deferred / on hold:**
@@ -36,7 +35,7 @@
 
 ## Reserved / deferred / retired
 
-- Reserved: 310, 311, 313 (Epic HH), 453 (Epic KK.2), 610.
+- Reserved: 310, 311, 313 (Epic HH), 453 (Epic KK.2).
 - Deferred (no #): **I.3** listing-status helper API `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
 - Retired (never reuse): 465 (uk→ua migration, cancelled); 466/467/469–481 (legacy-primitive layout, superseded by the Mantine migration); 534 (superseded+closed by 535); 597/604 (superseded by 598/605).
 

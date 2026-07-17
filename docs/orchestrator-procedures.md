@@ -171,9 +171,15 @@ Never emit `git add -A`, `git add -u`, or wildcard staging.
 
 Immediately before the handoff, inspect `git status --short` and the corresponding real diff. Reconcile each status
 path with task scope and the session `Files Changed` table. The command lists every reconciled artifact once, including
-required `docs/backlog.md` and `docs/sessions/...` updates. If any status path is unexplained or missing from the
-session evidence, report `STATUS/REPORT MISMATCH` and withhold the handoff rather than omitting files or staging a
-broad set.
+required `docs/backlog.md` and `docs/sessions/...` updates. Classify every remaining status path as `EXCLUDED AS
+UNRELATED` or `AMBIGUOUS`. Explicitly excluded parallel work is not a blocker and must not be staged. Report
+`STATUS/REPORT MISMATCH` and withhold the handoff only when a path that should belong to the current task is missing,
+undocumented, or ambiguous; never omit a reconciled task artifact or stage a broad set.
+
+Before this reconciliation, inspect `.git/index.lock`. Stale lock cleanup is the sole authorized agent-side `.git`
+mutation: first check that no Git process is active; then delete only the exact project-local `.git/index.lock`,
+confirm it is absent, and re-run `git status --short`. If a Git process is active or the lock remains, return
+`GIT WRITE BLOCKED` and emit no handoff. Never delete another `.git` file or run recovery commands.
 
 If the sandbox view shows corruption, stale files, impossible dirty state, NUL bytes, or truncation, treat it as a
 screen only. Ask for owner-native verification or use available CI evidence before issuing a verdict.

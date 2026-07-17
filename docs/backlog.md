@@ -54,7 +54,7 @@
 
 **🟡 Task 599 (Sprint 44 — authenticated-header hydration fix) — IMPLEMENTED 2026-07-15, HELD for orchestrator review (see Last Session for full detail incl. the DEV-ONLY gate finding + open reopen criterion).** Kickoff: `tasks/Sprints/Sprint_44_kickoff_prompt_Task_599_HeaderAuthHydrationSSRBellFix.md`. Session: `docs/sessions/2026-07-15-task599-header-auth-hydration-ssr-bell-fix.md`.
 
-**Task numbering — last used: 618. Next free: 619.** (618 = ✅ APPROVED WITH NOTES 2026-07-17; 617 = ✅ APPROVED WITH NOTES 2026-07-17, pending owner commit —
+**Task numbering — last used: 619. Next free: 620.** (619 = 📝 DESIGNED 2026-07-17, awaiting Sonnet execution — `sale` badge color; 618 = ✅ APPROVED WITH NOTES 2026-07-17; 617 = ✅ APPROVED WITH NOTES 2026-07-17, pending owner commit —
 `MantineListingCardPattern` legacy Badge → Mantine Badge (`filled` variant, photo-overlay legibility fix); adds
 `purple` theme color + `Badge` primitive story swatches (Info/Purple/Filled); updates the live-site `ListingCard.tsx`
 consumer. See Last Session for full detail. Session `docs/sessions/2026-07-17-task617-listingcardpattern-mantine-badge-migration.md`.)

@@ -45,8 +45,7 @@
 }
 
 .premium {
-  border-color: color-mix(in oklch, var(--color-badge-premium) 50%, transparent);
-  box-shadow: var(--shadow-listing-card-ring);
+  border-color: var(--color-badge-premium);
 }
 
 .imageSection img {

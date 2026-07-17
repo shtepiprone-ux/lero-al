@@ -85,16 +85,11 @@ export function StoryListingCard({ data }: { data: StoryCardData }) {
       className={cn(
         'listing-card listing-card--vertical flex flex-col h-full rounded-xl border bg-card overflow-hidden transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5',
         data.is_premium
-          ? 'border-badge-premium/50 shadow-listing-card-ring'
+          ? 'border-badge-premium'
           : '',
         isArchived && 'grayscale opacity-60',
       )}
     >
-      {/* Premium top stripe */}
-      {data.is_premium && (
-        <div className="h-0.5 bg-gradient-to-r from-badge-premium/0 via-badge-premium to-badge-premium/0 shrink-0" />
-      )}
-
       {/* Image area */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">

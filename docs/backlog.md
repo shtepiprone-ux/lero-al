@@ -14,7 +14,7 @@
 ## Open — needs action
 
 **Not yet executed / re-scope before kicking off:**
-- **Task 613** — remove the DEAD `--z-*` Tailwind z-index token scale (`globals.css`; Tailwind v4 never compiles it into `z-*` utilities). Kickoff open, not executed; LOW priority. Kickoff `..._Task_613_DeadZIndexTokenScaleCleanup.md`.
+- **Task 613** — removed the DEAD `--z-*` Tailwind z-index token scale from `globals.css` (0 consumers grep-confirmed; `ui-rules.md` §16/§12 needed no edit, already correct). ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task613-dead-zindex-token-scale-cleanup.md`.
 
 **Deferred / on hold:**
 - **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.

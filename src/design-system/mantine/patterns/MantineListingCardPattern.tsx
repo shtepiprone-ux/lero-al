@@ -88,7 +88,7 @@ export interface MantineListingCardPatternProps {
   pricePerSqmStr?: string | null
   /** Copy-id + date cluster (app) / demo equivalent (story) — carries its own state, passed as a node. */
   footerActions?: ReactNode
-  /** Premium styling: brand ring + brand-tinted hover elevation. `layout='grid'` additionally gets the top gradient stripe (no structural "top" to stripe in `layout='list'`'s row shape). */
+  /** Premium styling: solid gold 1px border + brand-tinted hover elevation. */
   isPremium?: boolean
   /** Archived/expired dimming (grayscale + reduced opacity) on the whole card. */
   isArchived?: boolean
@@ -230,10 +230,6 @@ export function MantineListingCardPattern({
       )}
       style={{ cursor: onClick ? 'pointer' : undefined }}
     >
-      {isPremium && (
-        <div className="h-0.5 bg-gradient-to-r from-badge-premium/0 via-badge-premium to-badge-premium/0 shrink-0" />
-      )}
-
       <Card.Section className={styles.imageSection} style={{ position: 'relative', overflow: 'hidden' }} onClick={() => onClick?.(data.id)}>
         {image}
 

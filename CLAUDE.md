@@ -85,7 +85,9 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git config`
 
 After a verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review,
-Opus may emit explicit-path owner-run commit commands. Sonnet must not emit or run mutating git commands.
+Opus may emit explicit-path owner-run commit commands. Before doing so, it must reconcile final `git status --short`,
+the inspected diff, and the session `Files Changed` table; an unexplained path is `STATUS/REPORT MISMATCH`, not a
+reason to omit a task artifact or broadly stage files. Sonnet must not emit or run mutating git commands.
 
 ## UI rule split
 

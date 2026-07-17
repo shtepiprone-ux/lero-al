@@ -56,7 +56,10 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     `BACKLOG LIMIT BREACH` when it cannot keep the file at or below 80 lines. Opus validates Sonnet's backlog/session
     evidence against the real diff, then corrects or consolidates the backlog as needed. Agents may use read-only git
     for inspection. Mutating git is owner-only and native PowerShell only. Sonnet neither runs nor emits mutating git
-    commands; Opus may emit explicit-path commands for the owner after verified task design or approved review.
+    commands; Opus may emit explicit-path commands for the owner after verified task design or approved review. Before
+    emitting them, Opus reconciles final `git status --short`, the inspected diff, and the session `Files Changed`
+    table; every reconciled task artifact, including required backlog/session records, appears once in the handoff.
+    An unexplained status path is a `STATUS/REPORT MISMATCH`, not a reason to silently omit or broadly stage files.
 
 11. **Mobile and overlay behavior remain protected.** For in-scope UI below 640px, text controls use the full
     available width, mobile-reachable controls provide adequate touch targets, labels wrap without horizontal

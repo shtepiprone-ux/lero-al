@@ -169,6 +169,12 @@ After verified task design that changed task/docs artifacts, or an `APPROVED` / 
 orchestrator may emit explicit-path commit commands for the owner to run, but must not run them.
 Never emit `git add -A`, `git add -u`, or wildcard staging.
 
+Immediately before the handoff, inspect `git status --short` and the corresponding real diff. Reconcile each status
+path with task scope and the session `Files Changed` table. The command lists every reconciled artifact once, including
+required `docs/backlog.md` and `docs/sessions/...` updates. If any status path is unexplained or missing from the
+session evidence, report `STATUS/REPORT MISMATCH` and withhold the handoff rather than omitting files or staging a
+broad set.
+
 If the sandbox view shows corruption, stale files, impossible dirty state, NUL bytes, or truncation, treat it as a
 screen only. Ask for owner-native verification or use available CI evidence before issuing a verdict.
 

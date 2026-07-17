@@ -75,6 +75,13 @@ Forbidden emission:
 - wildcard staging
 - mutating recovery commands unless the owner explicitly asks for them
 
+Before emitting any owner-run commit handoff, inspect read-only `git status --short` and the corresponding diff.
+Reconcile every status path to the current task/design scope and its `Files Changed` table. Include every reconciled
+path exactly once, including `docs/backlog.md` and `docs/sessions/...` when required by the task. If a path is
+unexplained, outside the reviewed task, or absent from the session table, report `STATUS/REPORT MISMATCH` and do not
+emit a partial handoff. Never omit a known task artifact because it is documentation; never stage an uninspected file
+to clean the worktree.
+
 If a sandbox or mounted filesystem view reports suspicious corruption, stale files, impossible dirty state, NUL bytes, truncation, or phantom git objects, treat it as a screen only. Ask for owner-native/CI verification before issuing a verdict.
 
 ## Task design

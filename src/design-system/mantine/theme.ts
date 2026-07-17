@@ -30,42 +30,45 @@ const gray: MantineColorsTuple = [
 ]
 
 // TailAdmin semantic: success / warning / error (Task 484 §1b)
-// Badge variant="light" uses index 0 for bg, index 6 for text (Mantine v8 light mode).
+// Badge variant="light" text/filled/outline actually render index 7, NOT index 6 — this theme's
+// primaryShade:7 (a bare number) makes Mantine's getPrimaryShade() return 7 for every color's
+// CSS variables project-wide. See the `sale` tuple comment below for the full traced mechanism
+// (Task 620 correction of the prior index-6 claim on this header and the three tuples below).
 const green: MantineColorsTuple = [
-  '#ecfdf3', // 0 — success-50 (Badge light bg: #ecfdf3)
+  '#ecfdf3', // 0 — success-50 (lightest stop; Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex)
   '#d1fadf', // 1 — success-100
   '#a9f3c3', // 2
   '#6ce9a6', // 3 — success-300
   '#3dd68c', // 4
   '#12b76a', // 5 — success-500
-  '#039855', // 6 — success-600 (Badge light text: #039855)
-  '#027a48', // 7 — success-700
+  '#039855', // 6 — success-600 (NOT what Badge renders — see index 7)
+  '#027a48', // 7 — success-700 — Badge light text / filled / outline actually render THIS (primaryShade:7, Task 620)
   '#05603a', // 8 — success-800
   '#054f32', // 9
 ]
 
 const yellow: MantineColorsTuple = [
-  '#fffaeb', // 0 — warning-50 (Badge light bg: #fffaeb)
+  '#fffaeb', // 0 — warning-50 (lightest stop; Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex)
   '#fef3d0', // 1
   '#fee3a2', // 2
   '#fdc848', // 3
   '#fdb022', // 4 — warning-400
   '#f79009', // 5 — warning-500
-  '#dc6803', // 6 — warning-600 (Badge light text)
-  '#b54708', // 7 — warning-700
+  '#dc6803', // 6 — warning-600 (NOT what Badge renders — see index 7)
+  '#b54708', // 7 — warning-700 — Badge light text / filled / outline actually render THIS (primaryShade:7, Task 620)
   '#93370d', // 8
   '#7a2e0e', // 9
 ]
 
 const red: MantineColorsTuple = [
-  '#fef3f2', // 0 — error-50 (Badge light bg: #fef3f2)
+  '#fef3f2', // 0 — error-50 (lightest stop; Badge light bg is alpha(index7, 0.1) — a translucent tint, NOT this solid hex)
   '#fee4e2', // 1 — error-100
   '#fecdca', // 2
   '#fda29b', // 3 — error-300
   '#f97066', // 4 — error-400
   '#f04438', // 5 — error-500
-  '#d92d20', // 6 — error-600 (Badge light text: #d92d20)
-  '#b42318', // 7 — error-700
+  '#d92d20', // 6 — error-600 (NOT what Badge renders — see index 7)
+  '#b42318', // 7 — error-700 — Badge light text / filled / outline actually render THIS (primaryShade:7, Task 620)
   '#912018', // 8 — error-800
   '#7a271a', // 9
 ]
@@ -82,7 +85,7 @@ const blueLight: MantineColorsTuple = [
   '#36bffa', // 4 — blue-light-400 (§4 AUTHORITATIVE)
   '#0ba5ec', // 5 — blue-light-500 (§4 AUTHORITATIVE — Alert info border/icon)
   '#0086c9', // 6 — blue-light-600 (§4 AUTHORITATIVE)
-  '#0086c9', // 7 — UNUSED (placeholder = nearest §4 stop, not consumed)
+  '#0086c9', // 7 — UNUSED by Alert (placeholder = nearest §4 stop); Badge light/filled/outline DOES read this index (primaryShade:7, Task 620) — identical value to index 6 here, so no rendered discrepancy
   '#0086c9', // 8 — UNUSED (placeholder = nearest §4 stop, not consumed)
   '#0086c9', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
 ]
@@ -91,7 +94,9 @@ const blueLight: MantineColorsTuple = [
 // theme-purple #7a5af8"). Only ONE authoritative stop exists in the source — the other 9 slots
 // are approximated from it (same derivation spirit as `brand` above: a single cited hex expanded
 // into a plausible 10-shade ramp, NOT additional TailAdmin citations). Placed at index 6 to match
-// the `green`/`yellow`/`red` convention (Badge `variant='light'` text color reads index 6).
+// the `green`/`yellow`/`red` legacy convention, but Badge `variant='light'` text / filled / outline
+// actually read index 7 (primaryShade:7, Task 620) — the approximated `#6547d6`, NOT this
+// authoritative hex; see the `sale` tuple comment below for the traced mechanism.
 // Added for the `status_rented` card badge (Task 617) — no existing theme color matched
 // `globals.css --status-rented: oklch(0.577 0.174 295)` (purple).
 const purple: MantineColorsTuple = [
@@ -101,8 +106,8 @@ const purple: MantineColorsTuple = [
   '#bdb1f9', // 3 — approximation
   '#a897f7', // 4 — approximation
   '#9280f8', // 5 — approximation
-  '#7a5af8', // 6 — theme-purple (§4 AUTHORITATIVE — Badge light text)
-  '#6547d6', // 7 — approximation
+  '#7a5af8', // 6 — theme-purple (§4 AUTHORITATIVE), but NOT what Badge renders — see index 7
+  '#6547d6', // 7 — approximation — Badge light text / filled / outline actually render THIS (primaryShade:7, Task 620)
   '#4f37a8', // 8 — approximation
   '#3a2980', // 9 — approximation
 ]

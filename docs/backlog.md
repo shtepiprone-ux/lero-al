@@ -18,6 +18,8 @@
 - **Task 621** — Homepage Agent-CTA migrated to canonical Mantine `Button` (new island `AgentCtaButton.tsx`). Owner visual QA found + fixed 3 real defects beyond the kickoff's suggestion (off-menu `size="lg"`, asymmetric icon-side padding, a theme-wide `height:'auto'`-breaks-`inner`-centering bug fixed locally). Rendered proof captured at 320 for all 4 locales + desktop; hydration en/sq/uk PASS (one-off sq cold-compile flake, non-reproducible). ✅ APPROVED WITH NOTES (orchestrator review) + committed + pushed (`a5bbfc0ff`). Theme-wide centering bug split to **Task 622**. Session: `docs/sessions/2026-07-17-task621-homepage-agent-cta-mantine-button-migration.md`.
 - **Task 622** — theme-wide Mantine `Button` vertical-centering fix. `theme.ts` `Button.styles.inner.minHeight` (border-compensated: `calc(2.75rem - 2*(0.0625rem*var(--mantine-scale)))`) fixes root `height:'auto'` defeating inner `height:100%` centering, site-wide (43 Button consumers). DOM-measured offset 0 / height 44px across full Q3 matrix + 4 locales; fullWidth/wrap/chrome/Homepage-CTA regression-checked; `check:hydration` 4/4 PASS (warm run — a transient FAIL was investigated and confirmed pre-existing/unrelated, see session log). Orchestrator review closed 3 P1 evidence gaps by re-probe: Q3 artifacts re-captured to `.screenshots/task622/` (PASS, 0 failures, all 3 fullWidth consumers incl. FiltersPanelShell), AC4 wrap-growth past the inner floor demonstrated (44→58→72→100px, centered, no clip — the original run never exercised it), AC5/TailAdmin item 10 ruled not applicable by owner decision (layout-only diff, chrome tokens byte-unchanged). ✅ APPROVED WITH NOTES (orchestrator review) — awaiting owner commit. Session: `docs/sessions/2026-07-17-task622-mantine-button-theme-vertical-centering.md`.
 
+- **Task 623** — split public `Footer` into container + prop-driven `FooterView`, add `Mantine/Primitives/FooterView` story (2 fixtures: DB content + hardcoded fallback), then migrate the markup to Mantine with appearance preserved. Two ordered phases with a mandatory pixel-identity checkpoint between split and restyle. Owner scope decision: combined split + Mantine migration. No TailAdmin site-footer reference exists, so the Phase-1 baseline is the visual reference. Q3. 📋 DESIGNED — awaiting executor. Kickoff: `tasks/kickoff_prompt_Task_623_FooterViewSplitAndMantineMigration.md`.
+
 **Deferred / on hold:**
 - **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.
 - **Task 463** (Epic BB) — full admin report management. ON HOLD until the Mantine primitive library (Epic MM) is complete; must be rebuilt on finished primitives. Kickoff `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
@@ -33,7 +35,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 622. Next free: 623.**
+**Task numbering — last used: 623. Next free: 624.**
 
 ## Reserved / deferred / retired
 

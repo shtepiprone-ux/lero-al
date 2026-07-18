@@ -9,6 +9,7 @@ on:
       - 'eslint.config.mjs'
       - 'package.json'
       - 'messages/**'
+      - '.github/workflows/**'
 
 jobs:
   governance:

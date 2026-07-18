@@ -224,11 +224,24 @@ AC5 closed on diff evidence plus this decision. Future chrome-touching Button wo
 
 ### Review notes carried forward (non-blocking)
 
-- **P3 — border-compensation scale mismatch.** The compensation term is scale-aware
-  (`0.0625rem * var(--mantine-scale)`, mirroring `Button.css:43`), but the theme's own `outline`/`default`
-  override sets `--button-bd: '1px solid ...'` (`theme.ts:289`) — a hard, non-scaled `1px`. At
-  `--mantine-scale ≠ 1` these diverge on those two variants. `--mantine-scale` is never overridden in this
-  project (grep: 0 hits), so there is no live defect. Revisit if scale is ever customised.
+- **P3 — border-compensation scale form. `ACCEPTED` (owner decision, 2026-07-18). Closed, no action.**
+  Raised as: the compensation term is scale-aware (`0.0625rem * var(--mantine-scale)`, mirroring
+  `Button.css:43`) while the theme's `outline`/`default` override sets `--button-bd: '1px solid ...'`
+  (`theme.ts:289`) — a hard, non-scaled `1px`, diverging at `--mantine-scale ≠ 1`.
+
+  Corrected analysis on closure — the finding was initially framed backwards. Literal `1px` borders are
+  the **established convention of this whole theme**, not a slip at line 289: the same
+  `1px solid var(--mantine-color-gray-2)` appears at `theme.ts:289,451,546,555,577,647,862`. And the
+  compensation must track the *actual* root border, which for 4 of 6 variants
+  (`filled`/`subtle`/`light`/`transparent`) is Mantine's own scale-aware default; the project's
+  `--button-bd` override reaches only `outline`/`default`. Task 622's scale-aware form is therefore the
+  **more correct** one for the majority case, and rewriting it to a literal `2px` to match local
+  convention would be a regression, not a normalisation.
+
+  Disposition: accept. No live defect (`--mantine-scale` is never overridden — grep: 0 hits; rendered
+  output is byte-identical at scale 1). If the theme is ever normalised, the direction is
+  theme → scale-aware, never Task 622 → literal. Do not re-raise this finding on a future Button task
+  without that context.
 - **NOTE — consumer-level `styles.inner` does not collide.** `MantineListingContactPattern.tsx:158,169`
   passes `styles={{ inner: { minWidth: 0 } }}`. Verified via `@mantine/core` `get-style.cjs`: theme styles
   and component styles are spread sequentially per selector, so this is a property-level merge, not a

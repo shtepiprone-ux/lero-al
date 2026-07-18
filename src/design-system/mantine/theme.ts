@@ -310,6 +310,29 @@ export const theme = createTheme({
             ? { boxShadow: 'var(--mantine-shadow-xs)' }
             : {}),
         },
+        // Task 622 — root stays `inline-block` (Mantine's own CSS, `Button.css:39`) with
+        // `height:'auto'` (kept, see above, for Task 502 wrap-growth). A percentage `height:100%`
+        // on `.mantine-Button-inner` (`Button.css:126`) cannot resolve against an `auto`-height
+        // parent (CSS spec) — the inner then collapses to its own content height (~16-20px) and
+        // the extra `minHeight` slack renders BELOW the content (top-aligned, not centered),
+        // measured as a ~13px offset at 1920px in Task 621. Giving `inner` its OWN `minHeight` of
+        // the touch-target floor makes `inner`'s existing `align-items:center` (`Button.css:124`,
+        // untouched) center against a definite height instead of a collapsed one — root
+        // (`inline-block`, unmodified `display`) then shrink-wraps `inner`'s natural size, which is
+        // already ≥44px, so the box stays ≥44px. Display-agnostic: does not touch root `display`,
+        // so `[data-block]` fullWidth (`Button.css:50-53`) and shrink-to-fit both still resolve
+        // purely from root, untouched by this line. A wrapping label still grows `inner` (and
+        // therefore root) past 44px exactly as before — `minHeight` is a floor, not a fixed height,
+        // on both root and inner.
+        // `- 2 * (0.0625rem * var(--mantine-scale))` compensates root's own 1px-top + 1px-bottom
+        // border (`Button.css:43`, present on EVERY variant — filled's is `solid transparent`, but
+        // transparent still occupies border-width): root's `height:'auto'` resolves to
+        // content-height + border regardless of `box-sizing:border-box` (border-box only reinterprets
+        // an EXPLICIT height, not an `auto`-computed one) — verified via rendered probe: without this
+        // subtraction, `inner:44px` + `border:2px` measured root at 46px, not 44px (AC2 self-review
+        // catch). Subtracting the border here keeps root at exactly 44px while inner still visually
+        // fills flush to the border edge (inner has no border of its own).
+        inner: { minHeight: 'calc(2.75rem - 2 * (0.0625rem * var(--mantine-scale)))' },
         // Task 567 round-2 Fix 1 (owner 2026-07-09): wordBreak was 'break-word', which breaks
         // a word mid-character whenever a flex-squeezed row runs out of room (e.g. "Вторинна" ->
         // "Вторин|на"). 'normal' + overflowWrap:'break-word' wraps at spaces first; a single

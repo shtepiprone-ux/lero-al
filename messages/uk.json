@@ -2366,7 +2366,18 @@
       "listing_detail_section_guest": "Гість — заклик увійти, дії контакту приховані",
       "listing_detail_section_deleted": "Обліковий запис власника видалено — дії контакту недоступні",
       "listing_detail_gallery_section_default": "Галерея з кількома фото — клацніть на головне фото або мініатюру, щоб відкрити лайтбокс Mantine",
-      "listing_detail_gallery_section_empty": "Без фото — стан-заглушка, не клікабельний"
+      "listing_detail_gallery_section_empty": "Без фото — стан-заглушка, не клікабельний",
+      "footer_view_caption_db": "Вміст БД — три заповнені групи посилань, включно з одним зовнішнім соціальним посиланням",
+      "footer_view_caption_fallback": "Резервний варіант — порожні групи посилань БД показують жорстко закодовані резервні набори",
+      "footer_db_tagline": "Знайдіть своє наступне житло швидше.",
+      "footer_db_nav_title": "Швидкі посилання",
+      "footer_db_info_title": "Підтримка",
+      "footer_db_social_title": "Зв'язатися",
+      "footer_db_nav_link_1": "Переглянути оголошення",
+      "footer_db_nav_link_2": "Розмістити нерухомість",
+      "footer_db_info_link_1": "Про нас",
+      "footer_db_info_link_2": "Звернутися до підтримки",
+      "footer_db_social_link_1": "Слідкуйте за нами у Facebook"
     }
   },
   "ui": {

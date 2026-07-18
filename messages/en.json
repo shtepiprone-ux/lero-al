@@ -2366,7 +2366,18 @@
       "listing_detail_section_guest": "Guest viewer — sign-in CTA, contact actions hidden",
       "listing_detail_section_deleted": "Owner account deleted — no contact actions",
       "listing_detail_gallery_section_default": "Multi-image gallery — click the main photo or a thumbnail to open the Mantine lightbox",
-      "listing_detail_gallery_section_empty": "No photos — placeholder state, not clickable"
+      "listing_detail_gallery_section_empty": "No photos — placeholder state, not clickable",
+      "footer_view_caption_db": "DB content — three populated link groups, incl. one external social link",
+      "footer_view_caption_fallback": "Fallback — empty DB link groups render the hardcoded fallback sets",
+      "footer_db_tagline": "Find your next home, faster.",
+      "footer_db_nav_title": "Quick Links",
+      "footer_db_info_title": "Support",
+      "footer_db_social_title": "Connect",
+      "footer_db_nav_link_1": "Browse listings",
+      "footer_db_nav_link_2": "List your property",
+      "footer_db_info_link_1": "About us",
+      "footer_db_info_link_2": "Contact support",
+      "footer_db_social_link_1": "Follow us on Facebook"
     }
   },
   "ui": {

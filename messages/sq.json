@@ -2366,7 +2366,18 @@
       "listing_detail_section_guest": "Vizitor pa llogari — thirrje për identifikim, veprimet e kontaktit të fshehura",
       "listing_detail_section_deleted": "Llogaria e pronarit e fshirë — pa veprime kontakti",
       "listing_detail_gallery_section_default": "Galeri me shumë foto — kliko foton kryesore ose një miniaturë për të hapur lightbox-in Mantine",
-      "listing_detail_gallery_section_empty": "Pa foto — gjendje zëvendësuese, jo e klikueshme"
+      "listing_detail_gallery_section_empty": "Pa foto — gjendje zëvendësuese, jo e klikueshme",
+      "footer_view_caption_db": "Përmbajtje DB — tre grupe lidhjesh të plotësuara, përfshirë një lidhje sociale të jashtme",
+      "footer_view_caption_fallback": "Rezervë — grupet bosh të lidhjeve DB shfaqin grupet e kodifikuara rezervë",
+      "footer_db_tagline": "Gjeni shtëpinë tuaj të radhës, më shpejt.",
+      "footer_db_nav_title": "Lidhje të shpejta",
+      "footer_db_info_title": "Mbështetje",
+      "footer_db_social_title": "Lidhuni",
+      "footer_db_nav_link_1": "Shfleto njoftimet",
+      "footer_db_nav_link_2": "Listoni pronën tuaj",
+      "footer_db_info_link_1": "Rreth nesh",
+      "footer_db_info_link_2": "Kontaktoni mbështetjen",
+      "footer_db_social_link_1": "Na ndiqni në Facebook"
     }
   },
   "ui": {

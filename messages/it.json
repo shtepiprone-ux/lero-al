@@ -2366,7 +2366,18 @@
       "listing_detail_section_guest": "Visitatore ospite — invito ad accedere, azioni di contatto nascoste",
       "listing_detail_section_deleted": "Account del proprietario eliminato — nessuna azione di contatto",
       "listing_detail_gallery_section_default": "Galleria multi-foto — clicca la foto principale o una miniatura per aprire il lightbox Mantine",
-      "listing_detail_gallery_section_empty": "Nessuna foto — stato segnaposto, non cliccabile"
+      "listing_detail_gallery_section_empty": "Nessuna foto — stato segnaposto, non cliccabile",
+      "footer_view_caption_db": "Contenuto DB — tre gruppi di link popolati, incluso un link social esterno",
+      "footer_view_caption_fallback": "Fallback — i gruppi di link DB vuoti mostrano i set di fallback codificati",
+      "footer_db_tagline": "Trova la tua prossima casa, più velocemente.",
+      "footer_db_nav_title": "Link rapidi",
+      "footer_db_info_title": "Assistenza",
+      "footer_db_social_title": "Connettiti",
+      "footer_db_nav_link_1": "Sfoglia annunci",
+      "footer_db_nav_link_2": "Metti in vendita il tuo immobile",
+      "footer_db_info_link_1": "Chi siamo",
+      "footer_db_info_link_2": "Contatta l'assistenza",
+      "footer_db_social_link_1": "Seguici su Facebook"
     }
   },
   "ui": {

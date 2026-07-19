@@ -1,13 +1,11 @@
 'use client'
 
 import { useTranslations, useLocale } from 'next-intl'
-import Link from 'next/link'
 import { useFeaturedListings } from '@/modules/listings/hooks/useListings'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import { getImagePriority } from '@/lib/imageDelivery'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 
@@ -44,12 +42,7 @@ export function FeaturedListings({ favoriteIds }: FeaturedListingsProps = {}) {
     <div className="flex items-center justify-between mb-6">
       <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{t('featured')}</h2>
       {!loading && listings.length > 0 && (
-        <Link
-          href={`/${locale}/listings?premium=true`}
-          className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'max-sm:w-auto')}
-        >
-          {t('view_all')}
-        </Link>
+        <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />
       )}
     </div>
   )

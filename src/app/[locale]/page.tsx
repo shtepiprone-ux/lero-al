@@ -1,15 +1,13 @@
-import Link from 'next/link'
 import { getTranslations, getLocale } from 'next-intl/server'
 import { Search, Home, Phone, Building2 } from 'lucide-react'
 import { HeroSearchClient } from '@/components/shared/HeroSearchClient'
 import { FeaturedListings } from '@/modules/listings/components/FeaturedListings'
 import { LatestListings } from '@/modules/listings/components/LatestListings'
 import { PopularLocations } from '@/modules/locations/components/PopularLocations'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/server'
 import { loadUserFavoriteListingIds } from '@/modules/listings/lib/loadUserFavoriteListingIds'
 import { AgentCtaButton } from '@/components/shared/AgentCtaButton'
+import { ViewAllLink } from '@/components/shared/ViewAllLink'
 
 export default async function HomePage() {
   const t = await getTranslations('home')
@@ -49,12 +47,7 @@ export default async function HomePage() {
         <div className="container-wide">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{tl('latest')}</h2>
-            <Link
-              href={`/${locale}/listings`}
-              className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'max-sm:w-auto')}
-            >
-              {tl('view_all')}
-            </Link>
+            <ViewAllLink href={`/${locale}/listings`} label={tl('view_all')} />
           </div>
           <LatestListings favoriteIds={favoriteIds} />
         </div>

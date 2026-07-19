@@ -100,16 +100,17 @@ const LEAK_ALLOWLIST = [
   //    role keys and admin.settings.tab_brand. ─────────────────────────────────────────────────
   /^(Password|Dashboard|Admin|Panel|Brand)$/,
   // ── Task 624 — Real-estate loanwords, verified against messages/*.json listing.layout_*/
-  //    listing.premium: sq keeps Premium/Studio/Duplex/Penthouse identical to en; it keeps
-  //    Premium/Duplex identical to en (it translates Studio→"Monolocale" and Penthouse→"Attico"
-  //    elsewhere, so those it values never render this token — allowlisting is safe). ───────────
-  /^(Premium|Studio|Duplex|Penthouse)$/,
-  // ── Task 624 — universal Min/Max abbreviation, verified against messages/*.json common.min/
-  //    common.max and storybook.filtercontrols.price_min/price_max: sq/it keep "Min" identical to
-  //    en (Albanian "Minimumi" and Italian "minimo" abbreviate the same way); it also keeps "Max"
-  //    identical (Italian "massimo" abbreviates the same way); sq's distinct "Maks" spelling is
-  //    used where it already exists and is unaffected by this allowlist. ─────────────────────────
-  /^(Min|Max)$/,
+  //    listing.premium: sq/it keep Premium/Duplex identical to en (genuine cognates in both
+  //    locales). Studio/Penthouse do NOT stay here — Task 626 moved them to PER_STORY_TOKENS
+  //    because it translates Studio→"Monolocale" and Penthouse→"Attico" (a global allowlist
+  //    entry would have masked a real mistranslation anywhere else these render). ─────────────
+  /^(Premium|Duplex)$/,
+  // ── Task 624 — universal Min abbreviation, verified against messages/*.json common.min/
+  //    storybook.filtercontrols.price_min: sq/it keep "Min" identical to en (Albanian "Minimumi"
+  //    and Italian "minimo" abbreviate the same way). "Max" does NOT stay here — Task 626 moved
+  //    it to PER_STORY_TOKENS because sq translates Max→"Maks" (a global allowlist entry would
+  //    have masked a real sq mistranslation anywhere else this renders). ───────────────────────
+  /^(Min)$/,
   // ── Task 624 — brand names, identical across all locales by design. ────────────────────────
   /^(Lero|Lero\.al|Facebook|Instagram)$/,
   // ── Status codes — all-caps enum values, never translatable prose ─────────────
@@ -191,9 +192,13 @@ const PER_STORY_TOKENS = {
   'patterns-mantine-listingcontactpattern': ['Elira Hoxha', 'Prime Realty Tirana'],
   'patterns-mantine-listingdetailpattern': ['Elira Hoxha', 'Prime Realty Tirana', 'Tirana, Albania'],
   'patterns-mantine-listingcardpattern': ['Tirana, Albania'],
-  // FiltersPanelShell: heating_gas loanword — it:"Gas" is the correct Italian cognate for the
-  // fixture's pre-selected heating-type option (verified against messages/it.json).
-  'mantine-primitives-filterspanelshell': ['Gas'],
+  // FiltersPanelShell: heating_gas loanword (it:"Gas") + layout_features loanwords (sq:"Studio"/
+  // "Penthouse" — sq keeps these identical to en) + common.max loanword (it:"Max" — it keeps this
+  // identical to en); all verified against messages/it.json + messages/sq.json (Task 626).
+  'mantine-primitives-filterspanelshell': ['Gas', 'Studio', 'Penthouse', 'Max'],
+  // FilterControls: storybook.filtercontrols.price_max renders via common.max — it keeps "Max"
+  // identical to en (genuine Italian cognate), verified against messages/it.json (Task 626).
+  'mantine-primitives-filtercontrols': ['Max'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {

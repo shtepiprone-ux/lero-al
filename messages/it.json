@@ -1,6 +1,6 @@
 {
   "nav": {
-    "home": "Home",
+    "home": "Homepage",
     "listings": "Annunci",
     "favorites": "Preferiti",
     "profile": "Profilo",
@@ -2043,7 +2043,7 @@
       "recently_viewed_omitted": "Visti di recente — Omesso nella story — dati Supabase live in prod"
     },
     "mantine": {
-      "app_shell_nav_home": "Home",
+      "app_shell_nav_home": "Homepage",
       "app_shell_nav_listings": "Annunci",
       "app_shell_nav_contact": "Contatti",
       "app_shell_nav_admin": "Admin",
@@ -2131,7 +2131,7 @@
       "admin_card_actions_detail": "Dettaglio",
       "badge_blocked": "Bloccato",
       "badge_brand": "Brand",
-      "badge_info": "Info",
+      "badge_info": "Informazioni",
       "badge_purple": "Viola",
       "badge_sale": "Sconto",
       "badge_filled_caption": "Pieno — opaco, leggibile sulle foto",

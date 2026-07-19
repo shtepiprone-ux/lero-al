@@ -128,9 +128,12 @@ const makeArgs = (l = 'en') => ({
       date: '2026-06-22',
     },
     {
-      // Stress-test: compound surname — should push avatar+name below badge at narrow widths
+      // Stress-test: compound surname — should push avatar+name below badge at narrow widths.
+      // Task 624: was 'Arben RichardsonMontgomery' — a malformed concatenated fixture value
+      // (two English-looking surnames jammed together with no space); replaced with a real
+      // hyphenated compound Albanian surname that still stress-tests the same wrap behavior.
       id: '104',
-      name: 'Arben RichardsonMontgomery',
+      name: 'Arben Krasniqi-Marashi',
       company: 'Tirana RE',
       status: storyT(l, 'storybook.mantine.admin_status_active'),
       date: '2026-06-21',

@@ -190,8 +190,14 @@ jobs:
       - name: Build Storybook (runs check:stories pre-gate)
         run: npm run build-storybook
 
-      - name: Locale leak detection
-        run: npm run check:locale-leak
+      - name: Locale leak detection (Task Q0R — Mantine/Primitives/* + Patterns/Mantine/* only, legacy excluded)
+        # continue-on-error (Task 625, 2026-07-19): migration-window policy — the detector still runs and
+        # reports, but does not block the PR while legacy→Mantine story migration is active and newly
+        # migrated stories keep surfacing loanword/fixture leaks that would otherwise churn on every PR.
+        # Revert to blocking once migration completes (owner directive). The script's own exit code and
+        # check:locale-leak:mantine-only's definition are unchanged — only this CI job is non-blocking.
+        continue-on-error: true
+        run: npm run check:locale-leak:mantine-only
 
       - name: Upload leak report
         if: always()

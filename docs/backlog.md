@@ -14,6 +14,7 @@
 ## Open — needs action
 
 **Not yet executed / re-scope before kicking off:**
+- **Task 625** — lands Q0R + 624 as one commit: `governance-pr.yml` `locale-leak` job step now `continue-on-error: true` (migration-window warn-only policy, owner directive 2026-07-19 — script exit code / `check:locale-leak:mantine-only` definition unchanged, `rendered-proof`/`check:story-coverage` stay blocking); `scripts/mantine-migration-scope.json` completed to 6/6 (`FooterView.tsx` added — its story landed in `7bc4550b9` after Q0R was written); Q0R's shared-module/`--mantine-only`/coverage-rewrite work and 624's allowlist/translation/story fixes carried unchanged. R5 (moving `Studio`/`Penthouse`/`Max` from global to per-story allowlist) deferred as a follow-up, not blocking. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`.
 - **Task 613** — removed the DEAD `--z-*` Tailwind z-index token scale from `globals.css` (0 consumers grep-confirmed; `ui-rules.md` §16/§12 needed no edit, already correct). ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task613-dead-zindex-token-scale-cleanup.md`.
 - **Task 621** — Homepage Agent-CTA migrated to canonical Mantine `Button` (new island `AgentCtaButton.tsx`). Owner visual QA found + fixed 3 real defects beyond the kickoff's suggestion (off-menu `size="lg"`, asymmetric icon-side padding, a theme-wide `height:'auto'`-breaks-`inner`-centering bug fixed locally — flagged as a possible sitewide Button follow-up). `screenshots:responsive` found to be Storybook-only, not app-route-capable — kickoff defect, ad-hoc Playwright capture used instead. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task621-homepage-agent-cta-mantine-button-migration.md`.
 
@@ -32,7 +33,8 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 621. Next free: 622.**
+**Task numbering — last used: 625 (622/623 not used as plain numbers — `Q0R`/`623R` are lettered
+task IDs outside the plain numeric sequence; flagging for orchestrator reconciliation). Next free: 626.**
 
 ## Reserved / deferred / retired
 

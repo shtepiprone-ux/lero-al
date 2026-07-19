@@ -85,11 +85,10 @@ export const Default: Story = {
             <RangeInputsDemo minPlaceholder={t('price_min')} maxPlaceholder={t('price_max')} />
           </Stack>
 
-          {/* FilterMultiToggle — §6a Button toggles, multi-select, one pre-selected */}
+          {/* FilterMultiToggle — Mantine Button toggles (§6a chrome, filled=selected / default=unselected).
+              Task 624: this annotation used to render as visible <Text>, leaking as a hardcoded
+              English string in every locale — kept as a source comment only, never rendered. */}
           <Stack gap="xs">
-            <Text size="xs" c="gray.5" fw={500}>
-              FilterMultiToggle — Mantine Button toggles (§6a chrome, filled=selected / default=unselected)
-            </Text>
             <MultiToggleDemo getLabel={getLabel} />
           </Stack>
 

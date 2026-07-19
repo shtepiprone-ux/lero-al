@@ -51,6 +51,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkGeometryIntegrity } from './geometry-integrity.mjs';
+import { MANTINE_STORY_TITLE_PREFIXES } from './lib/mantine-story-scope.mjs';
 
 // Crash guards: ensure the process always exits with a controlled integer
 // code, never -1 (OS kill / unhandled exception). Exit 2 = harness crash
@@ -266,7 +267,9 @@ const LOADER_ALLOWLIST = new Set([
 // (no render/anchor/style assertions, no --mantine-only coverage at all). Purely prefix-derived
 // — no hardcoded story-id allowlist — so a future `Patterns/Mantine/*` story is covered
 // automatically, preserving the Task 529 no-drift discipline.
-const MANTINE_STORY_TITLE_PREFIXES = ['Mantine/Primitives/', 'Patterns/Mantine/'];
+// Task Q0R — moved to scripts/lib/mantine-story-scope.mjs (imported above) so
+// check-locale-leak.mjs and check-story-coverage.mjs enforce the identical criterion instead of
+// re-typing it. Do not redefine this constant in this file again.
 
 // Task 607 — tracked known-failure registry for `Patterns/Mantine/*` stories with an
 // ALREADY-FILED, REAL defect this task's coverage extension surfaced (not a gate false
@@ -1258,8 +1261,15 @@ async function runAssert() {
   const outputDir = join(ROOT, '.screenshots', 'rendered-assert', timestamp);
   mkdirSync(outputDir, { recursive: true });
 
-  console.log(`📸  Starting rendered assertion (${FAST_MODE ? 'fast/mobile' : 'full'} mode)`);
-  console.log(`    Assert stories: ${ASSERT_STORIES.length} | Viewports: ${viewports.length} | Locales: ${LOCALES.length}`);
+  // Task Q0R (Q4) — under --mantine-only, the banner must not claim full-mode/assert/geometry
+  // scope it does not run (Phase 1/2 are skipped entirely under this flag — see below). The
+  // truthful Mantine-only composition line is printed later, once the story index is parsed.
+  if (MANTINE_ONLY) {
+    console.log('📸  Starting rendered assertion (mantine-only mode)');
+  } else {
+    console.log(`📸  Starting rendered assertion (${FAST_MODE ? 'fast/mobile' : 'full'} mode)`);
+    console.log(`    Assert stories: ${ASSERT_STORIES.length} | Viewports: ${viewports.length} | Locales: ${LOCALES.length}`);
+  }
   console.log(`    Output: .screenshots/rendered-assert/${timestamp}/`);
   console.log('');
 
@@ -1312,8 +1322,10 @@ async function runAssert() {
     const indexPath = join(storybookStaticDir, 'index.json');
     let geometryOnlyStories = [];
     let mantineStories = [];
+    let totalStoriesInIndex = 0;
     try {
       const indexData = JSON.parse(await readFile(indexPath, 'utf8'));
+      totalStoriesInIndex = Object.values(indexData.entries).filter(e => e.type === 'story').length;
       const assertIds = new Set(ASSERT_STORIES.map(s => s.id));
       mantineStories = discoverMantinePrimitiveStories(indexData);
       const mantineIds = new Set(mantineStories.map(s => s.id));
@@ -1351,8 +1363,16 @@ async function runAssert() {
       0
     );
     const totalMantineCells = mantineStories.length * LOCALES.length * MANTINE_VIEWPORTS.length + extraMantineCellCount;
-    console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
-    console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
+    // Task Q0R (Q3/Q4) — under --mantine-only, print ONLY the exact required composition line;
+    // do not also print the Phase-1 (ASSERT_STORIES)/Phase-2 (geometry-only) counts since neither
+    // phase runs under this flag (see the Phase 1/2 skip conditions below) — printing them would
+    // be the same "claims scope it does not enforce" defect this task exists to close.
+    if (MANTINE_ONLY) {
+      console.log(`Mantine selected: ${mantineStories.length}; non-Mantine excluded: ${totalStoriesInIndex - mantineStories.length}`);
+    } else {
+      console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
+      console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
+    }
     console.log('');
 
     const MAX_ATTEMPTS = 3;

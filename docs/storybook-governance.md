@@ -1441,42 +1441,86 @@ longer exists, so the tracked-xfail pin would be dead governance state).
 itself is unaffected and independently confirmed via the scoped probe above.) Session:
 `docs/sessions/2026-07-16-task609-listingdetailpattern-grid-gutter-overflow-fix.md`.
 
+### §14.9.21 — Mantine-only becomes the sole mandatory CI scope; shared criterion module (Task Q0R, 2026-07-18)
+
+**Owner directive.** The only mandatory CI scope is canonical Mantine stories. Legacy stories are deprecated code
+awaiting migration/replacement — they no longer run `check:locale-leak` or `screenshots:assert` and can never
+block a PR. This is a scope change (what blocks CI), never a deletion — `ASSERT_STORIES`/geometry-only membership
+and the full (non-`--mantine-only`) run remain available for local/owner-native full sweeps.
+
+**Shared criterion module.** `MANTINE_STORY_TITLE_PREFIXES`/`isCanonicalMantineTitle()` moved out of
+`check-stories-rendered.mjs` into `scripts/lib/mantine-story-scope.mjs` — the ONE place all three gates
+(`check-stories-rendered.mjs`, `check-locale-leak.mjs`, `check-story-coverage.mjs`) import it from. No file
+re-types the prefix list.
+
+**`check-locale-leak.mjs` gained `--mantine-only`** (previously scanned every story, legacy included — Q0R's
+Current-state audit found this the one gap versus the rendered gate, which already had the flag from Task 529).
+Wired into `governance-pr.yml`'s `locale-leak` job via the new `check:locale-leak:mantine-only` npm script.
+Empty-canonical-set is a hard, non-zero-exit error in both scripts under `--mantine-only` (never a silent skip
+to green).
+
+**Truthful composition banner (Q3/Q4).** Both scripts print exactly `Mantine selected: N; non-Mantine excluded: M`
+before running under `--mantine-only`, and the rendered script's banner no longer claims
+full-mode/`ASSERT_STORIES`/geometry-only scope when that flag is set (Phase 1/2 are skipped entirely under
+`--mantine-only` — the banner previously still announced their counts, the same "gate claims scope it does not
+enforce" defect class as the Task 529 hole this section's siblings closed).
+
+**`check:story-coverage` rewritten** — see §15.1. It is no longer the "colocated story or exemption" gate; it now
+enforces `scripts/mantine-migration-scope.json` (the hand-maintained Mantine-migration enrolment list) via
+AST-parsed static-import proof, applying the same `isCanonicalMantineTitle` criterion to parsed story source
+(no built index — this gate runs pre-build).
+
+Session: `docs/sessions/2026-07-18-taskQ0R-mantine-only-ci-scope.md`.
+
+### §14.9.22 — Locale-leak CI job is warn-only during migration; manifest completed to 6 (Task 625, 2026-07-19)
+
+**Owner directive.** While legacy→Mantine story migration is active, newly migrated stories keep surfacing
+loanword/fixture leaks; the owner does not want that churn to block merges. `governance-pr.yml`'s `locale-leak`
+job step now carries `continue-on-error: true` — the detector still runs, still reports, and still exits non-zero
+on a real leak (report artifact upload via `if: always()` is unchanged), but a non-zero exit no longer fails the
+overall PR check. This is CI-wiring only: the script's own exit code, `check:locale-leak:mantine-only`'s
+definition, `LEAK_ALLOWLIST`/`PER_STORY_TOKENS`, and the detector algorithm are all untouched. Revert to blocking
+once migration completes (owner directive; log as a follow-up when that milestone is reached).
+
+**`rendered-proof` and `check:story-coverage` stay blocking, unchanged.** The warn-only policy applies to the
+`locale-leak` job only — coverage failures are author-controlled (a component is only enrolled in
+`scripts/mantine-migration-scope.json` when its migration lands), not churn-driven, and rendered-proof's
+ambiguous cells are already non-failing.
+
+**Manifest completed to 6/6.** `src/components/layout/FooterView.tsx` landed in commit `7bc4550b9` (after Q0R was
+written) with a canonical story (`src/stories/mantine/primitives/FooterView.stories.tsx`, title
+`Mantine/Primitives/FooterView`) that statically imports it. Added as the 6th `scripts/mantine-migration-scope.json`
+entry, resolving Q0R's `FooterView` gap. `check:story-coverage` now reports 6/6 covered, exit 0.
+
+Session: `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`.
+
 ---
 
-## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
+## §15 — Story Coverage Gate (Task 398, 2026-06-06; rewritten Task Q0R, 2026-07-18)
 
-**Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.
+**Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only run over canonical Mantine stories as their sole mandatory CI scope (Task Q0R — see §14.9 for the rendered-proof gate this criterion originated from). This gate ensures that a component enrolled in the Mantine migration actually has a canonical Mantine story proving it, so the migration can't silently regress (a component moved into scope, then its story quietly stops importing it) without CI catching it.
 
-### §15.1 Gate: `check:story-coverage`
+### §15.1 Gate: `check:story-coverage` (manifest-based, Task Q0R)
 
-Every component under `src/components/**` must EITHER:
-- Have a colocated `*.stories.tsx`, OR
-- Be listed in `scripts/story-coverage-exempt.json` with a one-line justification.
+Owner ruling (Task 623R, reaffirmed Task Q0R): coverage is derived from **static imports**, never filename/directory membership, never a hand exemption entry — the previous "colocated `*.stories.tsx` or exemption" design was replaced because it was tautological (a component's own presence was its own coverage proof) and covered the entire legacy surface, which this task exists to remove from CI blocking.
 
-A component that is neither → **gate FAILS, CI exit 1, naming the component**.
+`scripts/mantine-migration-scope.json` is the hand-maintained enrolment list — the real production component source paths currently in Mantine migration scope (explicit manifest, owner design "A"; never auto-derived from the story set, which would reintroduce the tautology).
 
-**"Fail-on-new" rollout:** all currently storyless components are seeded into the exemption allowlist. Going forward, a NEW component must come with a story OR an explicit (reviewed) exemption entry. The allowlist is only flipped to strict (remove exemptions) once backlog "should-have-a-story" components are covered.
-
-**Stale-entry check:** any exemption entry pointing at a non-existent file is flagged as a warning (not a hard fail). Clean up with `--update-exempt`.
+The gate, run **pre-build** (no `storybook-static/index.json` exists yet — it parses `src/stories/**/*.stories.tsx` source via the TypeScript compiler API):
+1. Finds every canonical Mantine story (`title` starting with `Mantine/Primitives/` or `Patterns/Mantine/` — `scripts/lib/mantine-story-scope.mjs`).
+2. Resolves each canonical story's `import` declarations to repo-relative component paths.
+3. For each manifest entry: **covered** if ≥1 canonical Mantine story statically imports it; **FAIL** if enrolled but no canonical story imports it; components **not** in the manifest are out of scope — never checked, never blocking.
 
 ```bash
 npm run check:story-coverage                    # gate check (CI default)
-npm run check:story-coverage:report             # full report, always exit 0
-npm run check:story-coverage:update-exempt      # seed/refresh exemption allowlist
+npm run check:story-coverage:report             # full per-entry report, always exit 0
 ```
 
-### §15.2 Exemption allowlist (`scripts/story-coverage-exempt.json`)
+**Governance obligation:** every future component migration to Mantine adds that component to `scripts/mantine-migration-scope.json` in the SAME PR as the migration — the manifest is how a migration announces itself to CI.
 
-Each entry:
-```json
-"src/components/shared/Map.tsx": "Leaflet map requiring browser DOM + live tile URL; cannot be safely rendered in Storybook (SSR-incompatible)"
-```
+### §15.2 Retired: colocated-story / exemption-allowlist design
 
-Tiering:
-- **Full exemption** (keep indefinitely): trivial presentational primitives (no user-facing strings, no interactive/responsive behavior), components requiring live auth/Supabase/third-party integrations that cannot be safely mocked, one-off page-shell wrappers.
-- **Temporary exemption** (marked as "future story candidate"): complex interactive components where story coverage is desirable but blocked on canonical pattern establishment.
-
-Only the orchestrator may review and promote a stub justification to a permanent exemption.
+The old `scripts/story-coverage-exempt.json` mechanism (every `src/components/**` file needing a colocated story or a hand exemption) is **no longer consulted by this gate**. The file itself is left in place (historical record) but is orphaned for coverage purposes — `--update-exempt` now prints a deprecation notice and exits 0 rather than seeding it.
 
 ### §15.3 Scaffold generator (`npm run new:story`)
 
@@ -1497,13 +1541,14 @@ The scaffold:
 1. Fill props with `storyT(locale, 'storybook.NAMESPACE.key')`.
 2. Add keys to `messages/{sq,en,uk,it}.json` under `storybook.NAMESPACE.*`.
 3. Run `npm run check:stories` (must exit 0 before committing).
-4. Remove the component from `story-coverage-exempt.json` if it was exempted.
+4. If this scaffold is a canonical Mantine story proving a newly migrated component, add that
+   component's source path to `scripts/mantine-migration-scope.json` in the same PR (§15.1).
 
 **Intentional gate behavior:** adding a raw English literal to a watched prop (title/label/placeholder/aria-label/…) in the filled-in story WILL make `check:stories` fail — proving the scaffold doesn't smuggle hardcode past the gate.
 
 ### §15.4 CI wiring
 
-`check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, after the file-integrity gate. It does not require Storybook to build — it is a pure filesystem check (fast, ~100ms).
+`check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, before Storybook builds. It parses story source directly (TypeScript AST) rather than a built index — no Storybook build required.
 
 ---
 

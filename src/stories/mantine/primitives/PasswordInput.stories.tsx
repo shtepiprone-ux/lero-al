@@ -49,7 +49,7 @@ export const Default: Story = {
           {/* 2 — requirements hint: checkPasswordRules drives met/unmet rows; rule strings from auth.* */}
           <Stack gap="xs">
             <Text size="xs" c="gray.5" fw={500}>
-              requirements-hint — &quot;{DEMO_VALUE}&quot;: 4 met / 1 unmet (special); rule strings reuse auth.password_rule_*; uk wraps at 320
+              requirements-hint — 4 met / 1 unmet (special); rule strings reuse auth.password_rule_*; uk wraps at 320
             </Text>
             <PasswordInput
               label={t('pw_label')}

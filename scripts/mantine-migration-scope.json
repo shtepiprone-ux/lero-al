@@ -1,0 +1,8 @@
+[
+  "src/components/layout/HeaderView.tsx",
+  "src/components/layout/HeaderActions.tsx",
+  "src/components/layout/MobileNavDrawer.tsx",
+  "src/components/layout/UserMenu.tsx",
+  "src/components/shared/HeroSearchView.tsx",
+  "src/components/layout/FooterView.tsx"
+]

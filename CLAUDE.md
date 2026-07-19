@@ -89,6 +89,10 @@ Opus may emit explicit-path owner-run commit commands only through the single pr
 `docs/orchestrator-procedures.md`, including its stale `.git/index.lock` cleanup preflight. Sonnet must not emit or
 run mutating git commands.
 
+**ALWAYS-DO (owner rule):** every time Opus creates or edits a task/docs artifact, it MUST end that response with the
+explicit-path owner-run `git add` + `git commit` handoff for exactly the file(s) touched. Never finish a
+task-creation response without the git command. This is mandatory, not optional.
+
 ## UI rule split
 
 New or migrated UI:

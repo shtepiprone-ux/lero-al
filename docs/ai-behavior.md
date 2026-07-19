@@ -33,8 +33,11 @@ Opus then validates those records against the real diff, corrects or consolidate
 ### Pre-Task Mandatory Checklist
 Before writing any code, the agent MUST confirm:
 1. **No duplicate components** — searched `src/components/` for existing similar components; result documented.
-2. **No hardcode planned** — every string in the implementation plan has a corresponding i18n key path.
-3. **Scope is isolated** — files to be modified are listed; no unrelated files will be touched.
+2. **Canonical UI source discovered** — for every visible artifact, searched canonical Mantine Stories, the
+   component catalog, patterns, and the relevant primitive source; documented `reuse`, `extend`, or `create
+   canonical` with the shared style/token path. An uncited "no story" claim is not a result.
+3. **No hardcode planned** — every string in the implementation plan has a corresponding i18n key path.
+4. **Scope is isolated** — files to be modified are listed; no unrelated files will be touched.
 
 Skipping this checklist is a rule violation.
 
@@ -777,6 +780,19 @@ Responsive coverage:
 - Q3/Q4 visual work: full canonical matrix when required by docs/qa-profiles.md.
 - N/A only if the task does not touch any rendered UI
 
+Canonical UI provenance (mandatory for rendered UI):
+Before Sonnet edits visible markup or styles, the task author records one row for every changed visible artifact:
+
+| Artifact | Search queries + inspected paths | Canonical story/source | `reuse` / `extend` / `create canonical` | Shared style/token path + registration |
+|---|---|---|---|---|
+
+- `reuse`: consume the source; no copied local classes or style values.
+- `extend`: change the shared source and its canonical Storybook proof once, then update all in-scope consumers.
+- `create canonical`: only after an evidenced absence; create the shared primitive/pattern/token in the correct
+  library, add or update the canonical Storybook proof, and perform applicable catalog/coverage registration.
+- If the required value is not proven by TailAdmin or the active design system, stop for
+  `CANONICAL STYLE DECISION REQUIRED`; a component-local raw value or scanner allowlist is not a fallback.
+
 Current behavior to preserve:
 Before editing, inspect the affected surface and list in the kickoff (the orchestrator fills this
 section; Sonnet re-verifies it in the session log):
@@ -903,6 +919,10 @@ If editing moves from one component to another, the new component must include:
 - DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
 - DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor never emits or runs mutating git commands; read-only inspection is allowed. The orchestrator (Opus) emits explicit-path commit commands during review. This applies to EVERY task, including non-UI and docs-only tasks.
 - **Canonical-first / no-duplicate-class AC (Task 426, 2026-06-15).** For any control rendered by a canonical primitive (`Button`, `Combobox`, `Input`, `Select`, `Dialog`, `Sheet`, `Popover`, …), acceptance criteria are *canonical-first*: a task adds a local responsive/utility class ONLY if the required behavior is **not already inherited** from the canonical primitive. If the primitive already provides the behavior, the deliverable is **canonical-source proof** (primitive `file:line`) **+ rendered evidence** — duplicating the class locally is a **rejection, not a pass** (it diverges the consumer from the canonical single-source per Note 14 and can regress the primitive's other size/state variants). Kickoffs MUST phrase such ACs conditionally, e.g.: *"add `max-sm:w-full max-sm:min-h-11` locally **only if not already inherited** from canonical `Button`; otherwise provide canonical-source proof + rendered evidence and **do not duplicate** the classes."* A flat "the class must appear in the local diff" AC, where a canonical primitive already satisfies it, is a kickoff defect.
+- **Canonical UI discovery AC.** Every rendered-UI kickoff must include the `Canonical UI provenance` table above.
+  The table is a pre-edit gate, not a retrospective excuse: `reuse` prohibits copied local styling; `extend` and
+  `create canonical` require the shared source, canonical Storybook proof, and applicable registration in the same
+  task. Missing search evidence, an uninspected story, or an uncited visual value is a task-specification defect.
 
 #### Why this matters
 

@@ -19,6 +19,10 @@ Task: _______________
 Date: _______________
 
 [ ] Searched src/components/ for similar existing components — result: _______________
+[ ] Canonical UI discovery recorded for every changed visible artifact — query/paths: _______________
+[ ] Canonical Story/component/pattern source inspected — source(s): _______________
+[ ] Decision recorded for each artifact: reuse / extend / create canonical
+[ ] If no source exists: task requires the shared source, canonical Storybook proof, and applicable registration
 [ ] All planned text strings have i18n key paths — no hardcode planned
 [ ] Scope is isolated — files to modify listed: _______________
 [ ] Governance docs consulted: ui-rules.md, component-governance.md, responsive-governance.md
@@ -45,6 +49,12 @@ CANONICAL PRIMITIVES
 [ ] Used Dialog for confirmation/form modals — no custom overlay
 [ ] Used Tabs from @/components/ui/tabs — no local tab button clones
 [ ] Used only lucide-react icons — no other icon library introduced
+
+CANONICAL UI PROVENANCE
+[ ] Canonical UI decision record matches the real diff and rendered proof
+[ ] Reused sources have no copied component-local class chain, style prop, or raw value
+[ ] Extended/created sources changed their shared owner and canonical Storybook proof once
+[ ] Required component catalog or Storybook coverage registration is present
 
 RESPONSIVE GOVERNANCE
 [ ] Mobile-first: base styles for 320px, scaled up with sm:/md:/lg:/xl:/2xl:

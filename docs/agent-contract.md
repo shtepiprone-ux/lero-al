@@ -90,6 +90,12 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     for an in-scope primitive, the orchestrator must establish a live-captured or owner-waived reference row with
     provenance before implementation. The executor must stop if that source-of-truth row is missing.
 
+16b. **UI styles require canonical provenance before code.** For every visible UI artifact, the task and executor
+    must record the canonical-story/component/pattern search, its result, and the reused, extended, or newly-created
+    shared source. A component-local utility chain, inline value, or scanner allowlist is not evidence of a canonical
+    style. If no suitable source exists, create and register one in the appropriate library or stop for the missing
+    design decision; do not improvise a local style.
+
 ## Role split
 
 | Layer | Role |

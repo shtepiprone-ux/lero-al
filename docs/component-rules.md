@@ -66,6 +66,36 @@
 - Enforced on every UI kickoff and review. See `docs/storybook-governance.md` for the rendered-proof layers a
   story must pass.
 
+### Canonical UI Discovery and Style Provenance Gate (MANDATORY)
+- **Before editing JSX, CSS, a `className`, or a component style prop for any visible UI artifact, search for a
+  canonical Mantine Story first.** Search the canonical Mantine Storybook scope, `docs/component-catalog.md`,
+  `src/design-system/mantine/patterns/`, and the relevant current or legacy primitive library by the artifact's
+  purpose and interaction — not merely by its proposed filename. Inspect every candidate story together with the
+  component or pattern it imports. A filename alone is not proof that a story is canonical.
+- Record the result in the task and session evidence as a **Canonical UI decision record**:
+
+  | Visible artifact | Search evidence | Canonical story / source | Decision | Consumed style or token path |
+  |---|---|---|---|---|
+
+  `Search evidence` names queries and inspected paths; `Decision` is exactly `reuse`, `extend`, or
+  `create canonical`. "Not found" without those searches is not an acceptable result.
+- **`reuse`:** an existing canonical story/component/pattern already covers the artifact or variant. Consume or
+  configure that source. Do not copy its utility chain, inline style, CSS value, or responsive behavior locally.
+- **`extend`:** no exact variant exists, but a canonical component or pattern is the right owner. Add the behavior
+  once to that owner, update its canonical story, and migrate every in-scope consumer that would otherwise diverge.
+  A local one-off override is not an extension.
+- **`create canonical`:** no suitable canonical story, component, pattern, or token exists. Create the missing
+  reusable primitive, pattern, or semantic token in the correct current/legacy library **before** consuming it in
+  the feature; add or update the toolbar-reactive canonical Storybook proof for that source and perform the
+  required catalog/coverage registration in the same task. A raw value or a local style is never a substitute for
+  creating the missing canonical source.
+- When an absent style needs a visual value that cannot be derived from the TailAdmin reference or existing design
+  system, do not invent it. Stop with `CANONICAL STYLE DECISION REQUIRED` for Opus/owner. When the value is
+  evidenced, place it at the shared source of truth (Mantine theme/pattern or legacy semantic token/fragment), cite
+  that source in the decision record, and consume the shared source instead of retyping the value.
+- An allowlisted raw value is only an exception to the static scanner; it does **not** satisfy this provenance gate.
+  It must still be a cited, shared canonical value rather than a component-local hardcode.
+
 ### CSS & Design System Rules (MANDATORY)
 - New or migrated Mantine UI uses Mantine theme tokens and TailAdmin-cited values from
   `docs/tailadmin-style-reference.md`. Do not invent raw colors, spacing, radius, shadows, or density values.

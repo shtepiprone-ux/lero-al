@@ -78,6 +78,18 @@ A valid task includes:
     - unresolved issues;
     - evidence needed for review.
 
+For a UI task, add a canonical UI decision record before publishing the kickoff:
+
+| Visible artifact | Search queries and inspected paths | Canonical story/source | Disposition | Required implementation and registration |
+|---|---|---|---|---|
+
+Use `reuse` when the canonical story/component already covers the artifact, `extend` when that source is the right
+owner for a missing variant, and `create canonical` only when searches prove no suitable source exists. The record
+must cite the exact story title/path when available and the component, pattern, theme token, or legacy semantic
+token that supplies each visual value. `create canonical` requires the shared source, a canonical Storybook proof
+added or updated in the same task, and applicable catalog/coverage updates. If a needed visual value has no approved
+provenance, stop task design for `CANONICAL STYLE DECISION REQUIRED`; do not leave Sonnet to choose a local value.
+
 Do not publish a task that says "read all docs." Use `docs/rule-index.md`.
 Save an implementation kickoff under `tasks/` using the location and naming rules in `docs/ai-behavior.md`.
 
@@ -92,7 +104,10 @@ Review implementation evidence, not the author's explanation.
 5. Check failure paths that are applicable to the task.
 6. Check regressions in affected components and consumers.
 7. Apply the selected QA profile from `docs/qa-profiles.md`.
-8. Produce exactly one decision.
+8. For UI work, compare the canonical UI decision record with the diff and rendered evidence. Reject copied local
+   styles when `reuse` was available; require the shared source, canonical story, and registration when `extend` or
+   `create canonical` was selected. A missing record or uncited "no story" claim is missing P1 evidence.
+9. Produce exactly one decision.
 
 Allowed decisions:
 

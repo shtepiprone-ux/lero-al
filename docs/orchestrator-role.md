@@ -101,6 +101,13 @@ Every kickoff must be executable by a fresh Sonnet session with no hidden chat c
 Every kickoff must select pre-read files from `docs/rule-index.md`. Never write "read all docs."
 Save implementation kickoffs under `tasks/` using the project naming/location rules; do not hand off only in chat.
 
+For every UI task, Opus must add a canonical UI decision record before handing work to Sonnet. For each changed
+visible artifact, it records the searches and inspected paths, the canonical Mantine Story (when one exists), the
+component/pattern/token that owns the style, and one disposition: `reuse`, `extend`, or `create canonical`. A
+verified absence is a task requirement: the task must create and register the shared source in the correct library,
+not tell Sonnet to improvise local styles. If the visual value is not evidenced by the active design source, the
+task is blocked on an owner decision rather than published with a guessed value.
+
 ## Review
 
 Use `docs/orchestrator-procedures.md` for the full review protocol.
@@ -127,6 +134,9 @@ Approval requires:
 6. Critical-flow regression proof present when applicable.
 7. No unresolved P0/P1/P2 findings.
 8. Presentational-primitive, canonical-first, and source-of-truth gates from the selected task bundle are satisfied.
+9. For UI work, the canonical UI decision record matches the real diff: reused sources are consumed without copied
+   styles; extensions and new canonical sources have their canonical stories and required registrations in the same
+   diff; no component-local hardcode is disguised as a scanner exception.
 
 ## Owner-native validation handoff
 

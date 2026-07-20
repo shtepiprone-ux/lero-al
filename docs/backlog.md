@@ -42,9 +42,9 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 637 (622/623 not used as plain numbers — `Q0R`/`623R` are lettered
+**Task numbering — last used: 638 (622/623 not used as plain numbers — `Q0R`/`623R` are lettered
 task IDs outside the plain numeric sequence; flagging for orchestrator reconciliation). 628 reserved for the
-SB10 lint-debt fix (Task 627's follow-up). Next free: 638.**
+SB10 lint-debt fix (Task 627's follow-up). Next free: 639.**
 
 ## Reserved / deferred / retired
 

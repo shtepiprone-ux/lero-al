@@ -11,15 +11,13 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Alert, Button, PasswordInput, Text, TextInput } from '@mantine/core'
-import { MantineDrawer } from '@/design-system/mantine/patterns'
-import { Label } from '@/components/ui/label'
+import { Alert, Button, InputLabel, PasswordInput, Text, TextInput } from '@mantine/core'
+import { MantineCombobox, MantineDrawer } from '@/design-system/mantine/patterns'
 import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { useCompanies } from '@/modules/companies/hooks/useCompanies'
 import { createCompanyAction } from '@/modules/companies/actions'
-import { Combobox } from '@/components/shared/Combobox'
 import { PhoneField } from '@/components/shared/PhoneField'
 import type { PhoneFieldValue } from '@/components/shared/PhoneField'
 import { validateNationalPhone } from '@/lib/phone'
@@ -118,7 +116,7 @@ function LoginView({
 
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
-          <Label htmlFor="login-password">{t('password')}</Label>
+          <InputLabel htmlFor="login-password">{t('password')}</InputLabel>
           <button
             type="button"
             onClick={onForgotPassword}
@@ -295,7 +293,7 @@ function AgentCityField({
   const { locations } = useLocations()
   return (
     <div className="flex flex-col gap-1.5">
-      <Label>{label}</Label>
+      <InputLabel>{label}</InputLabel>
       <LocationCombobox
         locations={locations}
         value={value}
@@ -408,14 +406,14 @@ function CompanyField({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <Label>{label}</Label>
-      <Combobox
+      <InputLabel>{label}</InputLabel>
+      <MantineCombobox
         options={options}
         value={companyId}
         onChange={onCompanyId}
         placeholder={selectPlaceholder}
         variant="input"
-        portal
+        noResultsLabel={tc('no_results')}
       />
       {!showAdd ? (
         <Button
@@ -439,7 +437,7 @@ function CompanyField({
 
           {/* Logo upload */}
           <div className="flex flex-col gap-1">
-            <Label className="text-xs text-muted-foreground">{t('company_logo')}</Label>
+            <Text component="label" size="xs" c="dimmed">{t('company_logo')}</Text>
             <div className="flex items-center gap-2">
               {logoPreview ? (
                 // eslint-disable-next-line @next/next/no-img-element

@@ -1,5 +1,5 @@
 import { getTranslations, getLocale } from 'next-intl/server'
-import { Search, Home, Phone, Building2 } from 'lucide-react'
+import { Building2 } from 'lucide-react'
 import { HeroSearchClient } from '@/components/shared/HeroSearchClient'
 import { FeaturedListings } from '@/modules/listings/components/FeaturedListings'
 import { LatestListings } from '@/modules/listings/components/LatestListings'
@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/server'
 import { loadUserFavoriteListingIds } from '@/modules/listings/lib/loadUserFavoriteListingIds'
 import { AgentCtaButton } from '@/components/shared/AgentCtaButton'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
+import { HowItWorksSteps } from '@/components/shared/HowItWorksSteps'
 
 export default async function HomePage() {
   const t = await getTranslations('home')
@@ -60,25 +61,14 @@ export default async function HomePage() {
       {/* ── How it works ── */}
       <section className="py-12 md:py-16 2xl:py-20 [content-visibility:auto] [contain-intrinsic-size:auto_340px]">
         <div className="container-wide">
-          <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold text-center mb-10">{t('how_it_works')}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
-            {[
-              { Icon: Search, title: t('step1_title'), desc: t('step1_desc'), num: '1' },
-              { Icon: Home, title: t('step2_title'), desc: t('step2_desc'), num: '2' },
-              { Icon: Phone, title: t('step3_title'), desc: t('step3_desc'), num: '3' },
-            ].map(step => (
-              <div key={step.num} className="flex flex-col items-center text-center gap-3">
-                <div className="relative h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-                  <step.Icon className="h-6 w-6 text-primary" />
-                  <span className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center">
-                    {step.num}
-                  </span>
-                </div>
-                <h3 className="font-semibold">{step.title}</h3>
-                <p className="text-sm text-muted-foreground">{step.desc}</p>
-              </div>
-            ))}
-          </div>
+          <HowItWorksSteps
+            heading={t('how_it_works')}
+            steps={[
+              { title: t('step1_title'), desc: t('step1_desc') },
+              { title: t('step2_title'), desc: t('step2_desc') },
+              { title: t('step3_title'), desc: t('step3_desc') },
+            ]}
+          />
         </div>
       </section>
 

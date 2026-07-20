@@ -22,10 +22,6 @@
 - **Task 629** — migrated `HeaderView.tsx` chrome to Mantine `Box/Group/Anchor/Text` (all `unstyled`, committed `9cc5ec5c8`). **Mid-task defect:** `@mantine/core/styles.css` is unlayered so its CSS silently beat the Tailwind classNames (contradicts `mantine-responsive-design-system.md §4` — recommend a Q0 doc-correction); fixed via `unstyled`, re-verified pixel-identical at 320–1440 × sq/uk, hydration id-parity 3/3, `screenshots:assert --mantine-only` 16/16 HeaderView pass. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task629-headerview-chrome-mantine-migration.md`.
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
-**Designed — not yet executed (homepage "How it works" → Mantine, Story-first):**
-- **Task 644** — created canonical `HowItWorksSteps` Mantine component (`src/components/shared/HowItWorksSteps.tsx`) + toolbar-reactive canonical Storybook story (`Mantine/Primitives/HowItWorksSteps`); icon-box bg/badge provenance traced exactly (mathematically verified via Mantine's `-light`/`filled` CSS-var source). ✅ APPROVED WITH NOTES (orchestrator review 2026-07-20) — review finding F1 (spacing tighter than legacy) resolved per owner **option B**: `mb={40}` + `spacing={32}` numeric px for exact "preserve the look" parity (was `mb/spacing="xl"`=24px). Gates all green (typecheck 0 / mojibake 0/1830 owner-native; check:stories 121/0 + check:story-coverage + check:i18n 2206×4 reviewer-reproduced, incl. after the F1 edit); Q3 rendered proof 957/984 PASS + legacy side-by-side parity. `page.tsx`/i18n/`theme.ts` untouched. P3: `2xl:`(1536) heading breakpoint → `xxl`(1440) — no theme stop at 1536, invisible in all captured viewports. **Story-first slice 1/2; Task 645 wires it into `page.tsx`.** Session: `docs/sessions/2026-07-20-task644-howitworksteps-mantine-component-story.md`. Pending owner commit.
-- **Task 645** — swap the legacy `page.tsx` "How it works" block to render `<HowItWorksSteps/>` (Task 644 component) inside the preserved `<section>`/`container-wide` wrappers; remove now-dead `Search`/`Home`/`Phone` lucide imports (keep `Building2`); rendered `/{locale}` parity proof incl. uk@320. Q3. Kickoff `tasks/kickoff_prompt_Task_645_Homepage_Swap_HowItWorksSteps.md`. **Execute next — closes the "How it works" migration.**
-
 **Deferred / on hold:**
 - **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.
 - **Task 463** (Epic BB) — full admin report management. ON HOLD until the Mantine primitive library (Epic MM) is complete; must be rebuilt on finished primitives. Kickoff `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
@@ -41,10 +37,9 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644 approved + committed (`ad937f2fa`); 645 designed (execute next).
+**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644 committed (`ad937f2fa`); 645 approved + committed (How-it-works migration done). Next free: 646.
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
-flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).
-Next free: 644.**
+flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).**
 
 ## Reserved / deferred / retired
 

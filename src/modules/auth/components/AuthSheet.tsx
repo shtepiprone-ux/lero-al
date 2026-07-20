@@ -11,10 +11,9 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Button, Text, TextInput } from '@mantine/core'
+import { Button, PasswordInput, Text, TextInput } from '@mantine/core'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { Label } from '@/components/ui/label'
-import { PasswordInput, type PasswordInputState } from '@/components/ui/PasswordInput'
 import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
@@ -58,9 +57,11 @@ function LoginView({
   onClose: () => void
 }) {
   const t = useTranslations('auth')
+  const tc = useTranslations('common')
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordVisible, setPasswordVisible] = useState(false)
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [sessionLost, setSessionLost] = useState(false)
@@ -137,6 +138,9 @@ function LoginView({
           onChange={e => setPassword(e.target.value)}
           required
           autoComplete="current-password"
+          visible={passwordVisible}
+          onVisibilityChange={setPasswordVisible}
+          visibilityToggleButtonProps={{ 'aria-label': passwordVisible ? tc('hide_password') : tc('show_password') }}
         />
       </div>
 
@@ -554,6 +558,7 @@ function RegisterView({
   onSharedChange?: (v: SharedRegFields) => void
 }) {
   const t = useTranslations('auth')
+  const tc = useTranslations('common')
   const locale = useLocale()
   const [name, setName] = useState(initialShared?.name ?? '')
   const [email, setEmail] = useState(initialShared?.email ?? '')
@@ -561,13 +566,12 @@ function RegisterView({
   const [locationId, setLocationId] = useState<string>('')
   const [companyId, setCompanyId] = useState<string>('')
   const [password, setPassword] = useState(initialShared?.password ?? '')
+  const [passwordVisible, setPasswordVisible] = useState(false)
   const [errorKey, setErrorKey] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const hasPasswordInput = password.length > 0
   const allPasswordMet = allPasswordRulesMet(password)
-  const passwordInputState: PasswordInputState = hasPasswordInput ? (allPasswordMet ? 'success' : 'error') : 'idle'
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
   const widgetRef = useRef<CaptchaWidgetHandle>(null)
 
@@ -695,14 +699,16 @@ function RegisterView({
       )}
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="reg-password">{t('password')}</Label>
         <PasswordInput
           id="reg-password"
+          label={t('password')}
           value={password}
           onChange={e => { const v = e.target.value; setPassword(v); onSharedChange?.({ name, email, password: v, phone }) }}
           required
           autoComplete="new-password"
-          inputState={passwordInputState}
+          visible={passwordVisible}
+          onVisibilityChange={setPasswordVisible}
+          visibilityToggleButtonProps={{ 'aria-label': passwordVisible ? tc('hide_password') : tc('show_password') }}
         />
         <PasswordRequirementsHint value={password} />
       </div>

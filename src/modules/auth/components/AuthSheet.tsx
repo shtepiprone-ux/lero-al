@@ -11,9 +11,8 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Button, Text } from '@mantine/core'
+import { Button, Text, TextInput } from '@mantine/core'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PasswordInput, type PasswordInputState } from '@/components/ui/PasswordInput'
 import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
@@ -111,17 +110,15 @@ function LoginView({
         </Alert>
       )}
 
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="login-email">{t('email')}</Label>
-        <Input
-          id="login-email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-        />
-      </div>
+      <TextInput
+        id="login-email"
+        label={t('email')}
+        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+        autoComplete="email"
+      />
 
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center justify-between">
@@ -244,18 +241,16 @@ function ForgotPasswordView({
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
       <p className="text-sm text-muted-foreground">{t('forgot_password_body')}</p>
 
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="forgot-email">{t('email')}</Label>
-        <Input
-          id="forgot-email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-          autoFocus
-        />
-      </div>
+      <TextInput
+        id="forgot-email"
+        label={t('email')}
+        type="email"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        required
+        autoComplete="email"
+        autoFocus
+      />
 
       {captchaFailed && (
         <Alert variant="destructive">
@@ -436,11 +431,10 @@ function CompanyField({
         </Button>
       ) : (
         <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30">
-          <Input
+          <TextInput
             value={newName}
             onChange={e => setNewName(e.target.value)}
             placeholder={label}
-            className="h-9 rounded-xl text-sm"
             maxLength={120}
             autoFocus
             onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleCreate() } }}
@@ -656,28 +650,24 @@ function RegisterView({
         </button>
       )}
 
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="reg-name">{t('name')}</Label>
-        <Input
-          id="reg-name"
-          value={name}
-          onChange={e => { const v = e.target.value; setName(v); onSharedChange?.({ name: v, email, password, phone }) }}
-          required
-          autoComplete="name"
-        />
-      </div>
+      <TextInput
+        id="reg-name"
+        label={t('name')}
+        value={name}
+        onChange={e => { const v = e.target.value; setName(v); onSharedChange?.({ name: v, email, password, phone }) }}
+        required
+        autoComplete="name"
+      />
 
-      <div className="flex flex-col gap-1.5">
-        <Label htmlFor="reg-email">{t('email')}</Label>
-        <Input
-          id="reg-email"
-          type="email"
-          value={email}
-          onChange={e => { const v = e.target.value; setEmail(v); onSharedChange?.({ name, email: v, password, phone }) }}
-          required
-          autoComplete="email"
-        />
-      </div>
+      <TextInput
+        id="reg-email"
+        label={t('email')}
+        type="email"
+        value={email}
+        onChange={e => { const v = e.target.value; setEmail(v); onSharedChange?.({ name, email: v, password, phone }) }}
+        required
+        autoComplete="email"
+      />
 
       <PhoneField
         value={phone.e164}

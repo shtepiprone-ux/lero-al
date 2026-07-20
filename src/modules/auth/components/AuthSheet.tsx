@@ -11,13 +11,8 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet'
+import { Text } from '@mantine/core'
+import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -105,7 +100,7 @@ function LoginView({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4 pb-6">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
       {sessionLost && (
         <Alert>
           <AlertDescription>{t('session_recovery_message')}</AlertDescription>
@@ -224,7 +219,7 @@ function ForgotPasswordView({
 
   if (submitted) {
     return (
-      <div className="flex flex-col items-center gap-4 px-4 pb-6 pt-2 text-center">
+      <div className="flex flex-col items-center gap-4 pb-6 pt-2 text-center">
         <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
         <h3 className="font-semibold text-lg">{t('forgot_password_success_title')}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{t('forgot_password_success_body')}</p>
@@ -240,7 +235,7 @@ function ForgotPasswordView({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4 pb-6">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
       <p className="text-sm text-muted-foreground">{t('forgot_password_body')}</p>
 
       <div className="flex flex-col gap-1.5">
@@ -629,7 +624,7 @@ function RegisterView({
 
   if (success) {
     return (
-      <div className="flex flex-col items-center gap-4 px-4 pb-6 pt-2 text-center">
+      <div className="flex flex-col items-center gap-4 pb-6 pt-2 text-center">
         <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
         <h3 className="font-semibold text-lg">{t('register_success_title')}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{t('register_success_body')}</p>
@@ -641,7 +636,7 @@ function RegisterView({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-4 pb-6">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
       {errorKey && (
         <Alert variant="destructive">
           <AlertDescription>{t(errorKey as Parameters<typeof t>[0])}</AlertDescription>
@@ -775,53 +770,55 @@ export function AuthSheet({ open, onOpenChange, initialView = 'login' }: AuthShe
     'forgot-password': t('forgot_password_title'),
   }
 
-  return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-full sm:max-w-sm flex flex-col overflow-y-auto p-0">
-        <SheetHeader className="px-4 pt-5 pb-2 pr-12">
-          <SheetTitle>{titles[view]}</SheetTitle>
-          {view === 'register-agent' && (
-            <SheetDescription className="text-xs text-muted-foreground">
-              {t('register_as')} {t('agent')}
-            </SheetDescription>
-          )}
-        </SheetHeader>
+  // component="span" (not the Text default of "p") — this node is composed into the shared
+  // MantineDrawer's own title slot, which itself sits inside an <h2> (desktop) or an
+  // additional <Text> "p" wrapper (mobile ResponsiveBottomSheet) — block-level content would
+  // nest invalidly (<p> in <p>, block content in <h2>) and trip a hydration error.
+  const drawerTitle = (
+    <>
+      <Text component="span" fw={600} size="lg">{titles[view]}</Text>
+      {view === 'register-agent' && (
+        <Text component="span" c="dimmed" size="xs" style={{ display: 'block' }}>
+          {t('register_as')} {t('agent')}
+        </Text>
+      )}
+    </>
+  )
 
-        <div className="flex-1">
-          {view === 'login' && (
-            <LoginView
-              onRegister={() => setView('register')}
-              onForgotPassword={() => setView('forgot-password')}
-              onClose={() => onOpenChange(false)}
-            />
-          )}
-          {view === 'forgot-password' && (
-            <ForgotPasswordView
-              onBack={() => setView('login')}
-            />
-          )}
-          {view === 'register' && (
-            <RegisterView
-              isAgent={false}
-              onLogin={() => setView('login')}
-              onAgentRegister={() => setView('register-agent')}
-              onClose={() => onOpenChange(false)}
-              initialShared={regShared}
-              onSharedChange={setRegShared}
-            />
-          )}
-          {view === 'register-agent' && (
-            <RegisterView
-              isAgent
-              onLogin={() => setView('login')}
-              onBack={() => setView('register')}
-              onClose={() => onOpenChange(false)}
-              initialShared={regShared}
-              onSharedChange={setRegShared}
-            />
-          )}
-        </div>
-      </SheetContent>
-    </Sheet>
+  return (
+    <MantineDrawer opened={open} onClose={() => onOpenChange(false)} title={drawerTitle} side="right" size="sm">
+      {view === 'login' && (
+        <LoginView
+          onRegister={() => setView('register')}
+          onForgotPassword={() => setView('forgot-password')}
+          onClose={() => onOpenChange(false)}
+        />
+      )}
+      {view === 'forgot-password' && (
+        <ForgotPasswordView
+          onBack={() => setView('login')}
+        />
+      )}
+      {view === 'register' && (
+        <RegisterView
+          isAgent={false}
+          onLogin={() => setView('login')}
+          onAgentRegister={() => setView('register-agent')}
+          onClose={() => onOpenChange(false)}
+          initialShared={regShared}
+          onSharedChange={setRegShared}
+        />
+      )}
+      {view === 'register-agent' && (
+        <RegisterView
+          isAgent
+          onLogin={() => setView('login')}
+          onBack={() => setView('register')}
+          onClose={() => onOpenChange(false)}
+          initialShared={regShared}
+          onSharedChange={setRegShared}
+        />
+      )}
+    </MantineDrawer>
   )
 }

@@ -9,7 +9,8 @@
 - **AuthSheet Mantine migration COMPLETE (Slices 1–2e: Tasks 633–638)** — shell→`MantineDrawer`, Button/Input/Label→TextInput, PasswordInput, Alert, Combobox→`MantineCombobox`, Labels→`InputLabel`; `AuthSheet.tsx` now imports zero base `@/components/ui/*` primitives (only domain `PasswordRequirementsHint`). ✅ all reviewed + committed → archive (2026-07-20).
 - **Tasks 639, 640, 643** — company-field trio: `useCompanies` refetch-after-create (no reload); duplicate-name detection + Select-existing UX in AuthSheet; `AdminCompaniesManager` reacts to the duplicate result (no logo overwrite). ✅ all APPROVED WITH NOTES + committed (`ca44cfc96`/`7e701a522`/`9dc7ccb38`) → archive.
 - **Tasks 631–632, 626** — ViewAllLink story proof-path + wrapped-label right-align; locale-leak R5 per-story allowlist. ✅ all APPROVED + committed → archive.
-- **Remaining AuthSheet follow-ups:** 641 (DB UNIQUE index + dedup migration — riskiest, DRY-RUN gated), 642 (drop `📷` from company dropdown; logo thumbnails deferred).
+- **Task 641** — normalized `UNIQUE INDEX companies (lower(btrim(name)))` ✅ APPROVED WITH NOTES + APPLIED (owner ran it in Supabase; Section A showed 0 duplicates so the merge was a no-op; index verified live) → archive. Activates Task 640's `23505` fallback.
+- **Remaining AuthSheet follow-up:** 642 (drop `📷` from company dropdown; logo thumbnails deferred).
 
 ## Open — needs action
 
@@ -21,8 +22,7 @@
 - **Task 629** — migrated `HeaderView.tsx` chrome to Mantine `Box/Group/Anchor/Text` (all `unstyled`, committed `9cc5ec5c8`). **Mid-task defect:** `@mantine/core/styles.css` is unlayered so its CSS silently beat the Tailwind classNames (contradicts `mantine-responsive-design-system.md §4` — recommend a Q0 doc-correction); fixed via `unstyled`, re-verified pixel-identical at 320–1440 × sq/uk, hydration id-parity 3/3, `screenshots:assert --mantine-only` 16/16 HeaderView pass. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task629-headerview-chrome-mantine-migration.md`.
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
-**Designed — not yet executed (AuthSheet company-field follow-ups, ordered):**
-- **Task 641** — DRY-RUN-gated SQL migration (`scripts/task-641-*.sql`, owner-run in Supabase SQL editor): Section A read-only duplicate + FK-discovery report → Section B transaction-wrapped merge (re-point every FK incl. `users.company_id` to the earliest-`created_at` keeper, delete losers, verify 0 duplicates) → Section C normalized `UNIQUE INDEX companies (lower(btrim(name)))` (matches Task 640's check; activates its dormant `23505` fallback). Open owner decision: case/whitespace-only (default) vs `unaccent` (needs app follow-up). Executor authors the script only — no SQL run, no app-code change. Q4 (data-loss). Kickoff `tasks/kickoff_prompt_Task_641_Companies_Dedup_And_Unique_Index.md`. **Execute next.**
+**Designed — not yet executed (AuthSheet company-field follow-up):**
 - **Task 642** — drop the `📷` emoji indicator from the company dropdown (`options` mapping). Real logo thumbnails deferred to a later canonical-`MantineCombobox` extension task. Not yet designed.
 
 **Deferred / on hold:**
@@ -40,7 +40,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed). 641 designed (kickoff saved, execute next); 642 planned.
+**Task numbering — last used: 643 (committed); 641 applied + closed. 642 planned (next).
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).
 Next free: 644.**

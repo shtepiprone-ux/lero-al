@@ -22,8 +22,7 @@
 - **Task 629** — migrated `HeaderView.tsx` chrome to Mantine `Box/Group/Anchor/Text` (all `unstyled`, committed `9cc5ec5c8`). **Mid-task defect:** `@mantine/core/styles.css` is unlayered so its CSS silently beat the Tailwind classNames (contradicts `mantine-responsive-design-system.md §4` — recommend a Q0 doc-correction); fixed via `unstyled`, re-verified pixel-identical at 320–1440 × sq/uk, hydration id-parity 3/3, `screenshots:assert --mantine-only` 16/16 HeaderView pass. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task629-headerview-chrome-mantine-migration.md`.
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
-**Designed — homepage → 100% Mantine (audit 2026-07-20; plan A→C→B, D deferred):**
-- **Task 646 (block A)** — migrate `page.tsx` inline text chrome (Hero `<h1>`/subtitle, Latest `<h2>`, Agent-CTA `Building2`+`<h2>`+desc) → Mantine `Title`/`Text`/`Box`+icon, **server-side** (FooterView precedent, no island), look preserved. Q3. Kickoff `tasks/kickoff_prompt_Task_646_Homepage_Inline_Chrome_Mantine.md`. **Execute next.**
+**Designed — homepage → 100% Mantine (audit 2026-07-20; plan A→C→B, D deferred; block A/646 ✅ done → archive):**
 - **Task 647 (block C)** — Featured/Latest loading skeletons: legacy `@/components/ui/skeleton` + local `CardSkeleton` → Mantine `Skeleton`. Small, independent. Not yet designed.
 - **Tasks 648→649 (block B, Story-first)** — `PopularLocations` (own section+heading+city-card grid, `AppImage`/gradients, fully legacy) → canonical Mantine location-card component + story, then swap. Largest block. Not yet designed.
 - **HeroSearch (block D)** — legacy composite, **Phase-2 deferred** per `docs/mantine-tailadmin-migration-tracker.md` (waits on Combobox-consumer migration). Not scheduled here.
@@ -43,7 +42,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644/645 done (How-it-works migration). 646 designed (execute next); 647/648/649 planned (homepage completion). Next free: 647.
+**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644/645 done (How-it-works). 646 approved + committed (block A). 647/648/649 planned (homepage completion). Next free: 647.
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).**
 

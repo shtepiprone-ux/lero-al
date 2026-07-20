@@ -1,4 +1,5 @@
 import { getTranslations, getLocale } from 'next-intl/server'
+import { Title, Text, Box } from '@mantine/core'
 import { Building2 } from 'lucide-react'
 import { HeroSearchClient } from '@/components/shared/HeroSearchClient'
 import { FeaturedListings } from '@/modules/listings/components/FeaturedListings'
@@ -25,12 +26,12 @@ export default async function HomePage() {
       <section className="relative bg-gradient-to-br from-brand-950 via-primary/80 to-brand-950 text-primary-foreground py-16 md:py-24">
         <div className="container-wide relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-10">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4">
+            <Title order={1} c="white" fw={700} lh={1.25} fz={{ base: '1.875rem', sm: '2.25rem', md: '3rem' }} mb="md">
               {t('hero_title')}
-            </h1>
-            <p className="text-base sm:text-lg text-primary-foreground/80 max-w-xl mx-auto">
+            </Title>
+            <Text c="white" opacity={0.8} fz={{ base: '1rem', sm: '1.125rem' }} maw={576} mx="auto">
               {t('hero_subtitle')}
-            </p>
+            </Text>
           </div>
           <HeroSearchClient />
         </div>
@@ -47,7 +48,7 @@ export default async function HomePage() {
       <section className="py-12 md:py-16 2xl:py-20 [content-visibility:auto] [contain-intrinsic-size:auto_500px]">
         <div className="container-wide">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{tl('latest')}</h2>
+            <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }}>{tl('latest')}</Title>
             <ViewAllLink href={`/${locale}/listings`} label={tl('view_all')} />
           </div>
           <LatestListings favoriteIds={favoriteIds} />
@@ -76,9 +77,13 @@ export default async function HomePage() {
       <section className="py-12 md:py-16 2xl:py-20 bg-gradient-to-br from-primary/10 to-primary/5 [content-visibility:auto] [contain-intrinsic-size:auto_280px]">
         <div className="container-wide">
           <div className="max-w-2xl mx-auto text-center">
-            <Building2 className="h-12 w-12 text-primary mx-auto mb-4" />
-            <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mb-3">{t('agent_cta_title')}</h2>
-            <p className="text-muted-foreground mb-6">{t('agent_cta_desc')}</p>
+            <Box ta="center" mb="md">
+              <Building2 size={48} color="var(--mantine-color-brand-7)" />
+            </Box>
+            <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }} mb="sm">
+              {t('agent_cta_title')}
+            </Title>
+            <Text c="dimmed" mb="xl">{t('agent_cta_desc')}</Text>
             <AgentCtaButton
               href={`/${locale}/auth/register?type=agent`}
               label={t('agent_cta_button')}

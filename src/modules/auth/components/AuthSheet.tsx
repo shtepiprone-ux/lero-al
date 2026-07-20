@@ -4,16 +4,15 @@ import { useState, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
-import { Loader2, CheckCircle2, ImagePlus } from 'lucide-react'
+import { CheckCircle2, ImagePlus } from 'lucide-react'
 import { signIn, signInWithOAuth } from '@/lib/auth/browser'
 import { sanitizeReturnTo } from '@/modules/auth/lib/sanitizeReturnTo'
 import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Text } from '@mantine/core'
+import { Button, Text } from '@mantine/core'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PasswordInput, type PasswordInputState } from '@/components/ui/PasswordInput'
@@ -144,8 +143,8 @@ function LoginView({
         />
       </div>
 
-      <Button type="submit" size="xl" className="w-full" disabled={loading}>
-        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('login')}
+      <Button type="submit" fullWidth loading={loading} disabled={loading}>
+        {t('login')}
       </Button>
 
       <div className="relative">
@@ -157,13 +156,20 @@ function LoginView({
         </div>
       </div>
 
-      <Button type="button" variant="outline" size="xl" className="w-full" onClick={handleGoogle}>
-        <svg className="mr-2 h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
+      <Button
+        type="button"
+        variant="default"
+        fullWidth
+        onClick={handleGoogle}
+        leftSection={
+          <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+        }
+      >
         Google
       </Button>
 
@@ -266,8 +272,8 @@ function ForgotPasswordView({
         />
       </div>
 
-      <Button type="submit" size="xl" className="w-full" disabled={loading || !captchaToken}>
-        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('forgot_password_submit')}
+      <Button type="submit" fullWidth loading={loading} disabled={loading || !captchaToken}>
+        {t('forgot_password_submit')}
       </Button>
 
       <button
@@ -422,9 +428,9 @@ function CompanyField({
       {!showAdd ? (
         <Button
           type="button"
-          variant="link"
+          variant="transparent"
           onClick={() => setShowAdd(true)}
-          className="text-xs h-auto p-0 justify-start"
+          styles={{ inner: { justifyContent: 'flex-start' } }}
         >
           + {addNewLabel}
         </Button>
@@ -458,9 +464,8 @@ function CompanyField({
               )}
               <Button
                 type="button"
-                variant="outline"
-                size="default"
-                className="text-xs rounded-lg"
+                variant="default"
+                size="xs"
                 onClick={() => logoInputRef.current?.click()}
               >
                 {logoFile ? tc('replace') : tc('choose_file')}
@@ -468,9 +473,8 @@ function CompanyField({
               {logoFile && (
                 <Button
                   type="button"
-                  variant="ghost"
-                  size="default"
-                  className="text-xs rounded-lg text-muted-foreground"
+                  variant="subtle"
+                  size="xs"
                   onClick={() => {
                     setLogoFile(null)
                     if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
@@ -505,14 +509,13 @@ function CompanyField({
               size="sm"
               onClick={handleCreate}
               disabled={!newName.trim() || creating}
-              className="gap-1.5"
+              loading={creating}
             >
-              {creating && <Loader2 className="h-3 w-3 animate-spin shrink-0" />}
               {tc('add')}
             </Button>
             <Button
               type="button"
-              variant="ghost"
+              variant="subtle"
               size="sm"
               onClick={handleCancel}
             >
@@ -628,7 +631,7 @@ function RegisterView({
         <CheckCircle2 className="h-12 w-12 text-status-success shrink-0" aria-hidden="true" />
         <h3 className="font-semibold text-lg">{t('register_success_title')}</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">{t('register_success_body')}</p>
-        <Button size="xl" className="w-full mt-2" onClick={onClose}>
+        <Button fullWidth className="mt-2" onClick={onClose}>
           {t('register_success_go_home')}
         </Button>
       </div>
@@ -723,8 +726,8 @@ function RegisterView({
         />
       </div>
 
-      <Button type="submit" size="xl" className="w-full" disabled={loading || !allPasswordMet || !captchaToken}>
-        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('register')}
+      <Button type="submit" fullWidth loading={loading} disabled={loading || !allPasswordMet || !captchaToken}>
+        {t('register')}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
@@ -740,7 +743,7 @@ function RegisterView({
 
       {!isAgent && onAgentRegister && (
         <div className="border-t pt-4">
-          <Button type="button" variant="outline" size="xl" className="w-full" onClick={onAgentRegister}>
+          <Button type="button" variant="default" fullWidth onClick={onAgentRegister}>
             {t('register_agent')}
           </Button>
         </div>

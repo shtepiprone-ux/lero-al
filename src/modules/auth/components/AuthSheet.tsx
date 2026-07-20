@@ -11,11 +11,10 @@ import { AUTH_SESSION_LOST_KEY } from '@/modules/auth/components/AuthRedirect'
 import { logPasswordRecoveryRequest } from '@/modules/auth/actions/recovery'
 import { signUpWithCaptcha, requestPasswordResetWithCaptcha } from '@/modules/auth/actions/captcha'
 import { CaptchaWidget, type CaptchaWidgetHandle } from '@/components/auth/CaptchaWidget'
-import { Button, PasswordInput, Text, TextInput } from '@mantine/core'
+import { Alert, Button, PasswordInput, Text, TextInput } from '@mantine/core'
 import { MantineDrawer } from '@/design-system/mantine/patterns'
 import { Label } from '@/components/ui/label'
 import { PasswordRequirementsHint, allPasswordRulesMet } from '@/components/ui/PasswordRequirementsHint'
-import { Alert, AlertDescription } from '@/components/ui/alert'
 import { useLocations } from '@/modules/locations/hooks/useLocations'
 import { LocationCombobox } from '@/components/shared/LocationCombobox'
 import { useCompanies } from '@/modules/companies/hooks/useCompanies'
@@ -101,14 +100,10 @@ function LoginView({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
       {sessionLost && (
-        <Alert>
-          <AlertDescription>{t('session_recovery_message')}</AlertDescription>
-        </Alert>
+        <Alert color="blueLight">{t('session_recovery_message')}</Alert>
       )}
       {errorKey && (
-        <Alert variant="destructive">
-          <AlertDescription>{t(errorKey as Parameters<typeof t>[0])}</AlertDescription>
-        </Alert>
+        <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>
       )}
 
       <TextInput
@@ -257,9 +252,7 @@ function ForgotPasswordView({
       />
 
       {captchaFailed && (
-        <Alert variant="destructive">
-          <AlertDescription>{t('captcha_error_failed')}</AlertDescription>
-        </Alert>
+        <Alert color="red">{t('captcha_error_failed')}</Alert>
       )}
 
       <div className="my-3">
@@ -639,9 +632,7 @@ function RegisterView({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 pb-6">
       {errorKey && (
-        <Alert variant="destructive">
-          <AlertDescription>{t(errorKey as Parameters<typeof t>[0])}</AlertDescription>
-        </Alert>
+        <Alert color="red">{t(errorKey as Parameters<typeof t>[0])}</Alert>
       )}
 
       {isAgent && onBack && (

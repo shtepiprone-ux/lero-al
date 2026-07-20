@@ -12,6 +12,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useTranslations } from 'next-intl'
 import { StoryListingCard, makeStoryListings } from './StoryListingCard'
+import { ViewAllLink } from '@/components/shared/ViewAllLink'
 
 const meta: Meta = {
   title: 'System/FeaturedListings',
@@ -19,7 +20,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4.',
+        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4. Header mirrors the real component\'s flex justify-between row with the ViewAllLink control; the control is shown unconditionally here (the fixtures have no loading/empty state) as the faithful analogue of the real `!loading && listings.length > 0` present branch.',
       },
     },
   },
@@ -27,9 +28,14 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
-function Header() {
+function Header({ locale }: { locale: string }) {
   const t = useTranslations('listing')
-  return <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold mb-6">{t('featured')}</h2>
+  return (
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{t('featured')}</h2>
+      <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />
+    </div>
+  )
 }
 
 export const Default: Story = {
@@ -37,7 +43,7 @@ export const Default: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header />
+        <Header locale={locale} />
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
         </div>
@@ -62,7 +68,7 @@ export const LocaleStress: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header />
+        <Header locale={locale} />
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {makeStoryListings(locale).slice(0, 4).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
         </div>

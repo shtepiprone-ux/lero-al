@@ -1100,6 +1100,7 @@
       "error_save_failed": "Salvataggio fallito",
       "error_delete_failed": "Eliminazione fallita",
       "error_name_required": "Nome obbligatorio",
+      "error_duplicate": "Un'azienda con questo nome esiste già.",
       "empty": "Nessuna azienda",
       "search_placeholder": "Cerca aziende...",
       "new_btn": "Nuova azienda",

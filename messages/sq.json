@@ -1100,6 +1100,7 @@
       "error_save_failed": "Dështoi ruajtja",
       "error_delete_failed": "Nuk u fshi",
       "error_name_required": "Emri është i detyrueshëm",
+      "error_duplicate": "Një kompani me këtë emër ekziston tashmë.",
       "empty": "Nuk ka kompani",
       "search_placeholder": "Kërko kompani...",
       "new_btn": "Shto kompani",

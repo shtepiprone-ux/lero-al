@@ -1100,6 +1100,7 @@
       "error_save_failed": "Save failed",
       "error_delete_failed": "Delete failed",
       "error_name_required": "Name is required",
+      "error_duplicate": "A company with this name already exists.",
       "empty": "No companies yet",
       "search_placeholder": "Search companies...",
       "new_btn": "New company",

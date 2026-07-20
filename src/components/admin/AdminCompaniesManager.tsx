@@ -98,6 +98,7 @@ function CompanyFormDialog({
       } else {
         // Create
         const result = await createCompanyAction(name)
+        if (result.duplicate) { toast.error(t('error_duplicate')); return }
         if (!result.id) { toast.error(t('error_save_failed')); return }
         companyId = result.id
       }

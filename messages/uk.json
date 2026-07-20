@@ -1100,6 +1100,7 @@
       "error_save_failed": "Помилка збереження",
       "error_delete_failed": "Помилка видалення",
       "error_name_required": "Назва обов'язкова",
+      "error_duplicate": "Компанія з такою назвою вже існує.",
       "empty": "Компаній немає",
       "search_placeholder": "Пошук компаній...",
       "new_btn": "Нова компанія",

@@ -23,7 +23,7 @@
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
 **Designed — not yet executed (AuthSheet company-field follow-up):**
-- **Task 642** — drop the `📷` emoji indicator from the company dropdown (`options` mapping). Real logo thumbnails deferred to a later canonical-`MantineCombobox` extension task. Not yet designed.
+- **Task 642** — drop the `📷` emoji indicator from the company dropdown: delete the `description: c.logo_url ? '📷' : undefined` line from `CompanyField`'s `options` mapping (`AuthSheet.tsx`); rows show the name only. `c.logo_url` data untouched; real logo thumbnails deferred to a future `MantineCombobox` image-slot extension. Q4 (auth overlay, one-line presentational). Kickoff `tasks/kickoff_prompt_Task_642_CompanyField_Drop_Emoji_Indicator.md`. **Closes the 639–643 company-field cluster.**
 
 **Deferred / on hold:**
 - **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.
@@ -40,7 +40,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed); 641 applied + closed. 642 planned (next).
+**Task numbering — last used: 643 (committed); 641 applied + closed. 642 designed (kickoff saved, execute next).
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).
 Next free: 644.**

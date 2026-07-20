@@ -181,7 +181,10 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git config`
 
 After verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review, the
-orchestrator may emit explicit-path commit commands for the owner to run, but must not run them.
+orchestrator may emit explicit-path commit commands for the owner to run, but must not run them. Only after the
+`APPROVED` / `APPROVED WITH NOTES` review may Opus append `git push <verified-remote> <verified-branch>` for the
+owner. Inspect the current branch and remote/upstream read-only first and replace both placeholders with verified
+values; never emit a bare `git push`. A task-design handoff and each non-approved review must omit a push command.
 Never emit `git add -A`, `git add -u`, or wildcard staging.
 
 Immediately before the handoff, inspect `git status --short` and the corresponding real diff. Reconcile each status

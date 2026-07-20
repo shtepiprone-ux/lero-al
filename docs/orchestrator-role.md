@@ -59,7 +59,10 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git config`
 
 Opus may emit explicit-path commit commands for the owner after a verified task design that changed task/docs
-artifacts, or after an `APPROVED` / `APPROVED WITH NOTES` review. Opus must not run them.
+artifacts, or after an `APPROVED` / `APPROVED WITH NOTES` review. Only after the latter approved review may Opus also
+emit `git push <verified-remote> <verified-branch>` for the owner. It must verify the remote and branch/upstream
+read-only before emitting that command, and it must not run any of these commands. A task-design handoff and every
+non-approved review are never authorization to emit a push command.
 
 Allowed emission format:
 
@@ -68,11 +71,18 @@ git add <explicit-file-1> <explicit-file-2>
 git commit -m "<type>(TaskN): <short description>"
 ```
 
+For an approved review only, append the verified owner-run push command:
+
+```powershell
+git push <verified-remote> <verified-branch>
+```
+
 Forbidden emission:
 
 - `git add -A`
 - `git add -u`
 - wildcard staging
+- `git push` before an `APPROVED` / `APPROVED WITH NOTES` review, or without a verified remote and branch
 - mutating recovery commands unless the owner explicitly asks for them
 
 Use the single owner-run handoff protocol in `docs/orchestrator-procedures.md`; do not create a variant in a task,

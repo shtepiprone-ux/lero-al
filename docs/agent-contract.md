@@ -55,9 +55,11 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     "Files Changed" table matching the real diff. Sonnet does not add detailed history to the backlog and flags a
     `BACKLOG LIMIT BREACH` when it cannot keep the file at or below 80 lines. Opus validates Sonnet's backlog/session
     evidence against the real diff, then corrects or consolidates the backlog as needed. Agents may use read-only git
-    for inspection. Mutating git is owner-only and native PowerShell only. Sonnet neither runs nor emits mutating git
-    commands; Opus may emit explicit-path commands for the owner after verified task design or approved review, using
-    the single handoff protocol in `docs/orchestrator-procedures.md`.
+    for inspection. Mutating git is owner-only and native PowerShell only. Sonnet neither runs, emits, suggests, nor
+    delegates mutating git commands, including any `git push` form, and it cannot approve its own task. Opus alone
+    may issue an approval verdict after review; it may emit explicit-path commit commands after verified task design
+    or approved review, and a push command only after an approved review, using the single handoff protocol in
+    `docs/orchestrator-procedures.md`.
 
 11. **Mobile and overlay behavior remain protected.** For in-scope UI below 640px, text controls use the full
     available width, mobile-reachable controls provide adequate touch targets, labels wrap without horizontal
@@ -100,8 +102,8 @@ convenient interpretation. Clause identifiers are intentionally stable because o
 
 | Layer | Role |
 |---|---|
-| Opus orchestrator/reviewer | Plans, writes tasks, reviews evidence and diffs, and emits owner-run explicit-path commit commands after verified task design or approved review. Does not write product code unless explicitly asked. |
-| Sonnet executor | Implements code per the kickoff, self-validates, and writes session evidence. May inspect read-only git; does not run or emit mutating git commands. |
+| Opus orchestrator/reviewer | Plans, writes tasks, and is the sole approval authority after reviewing evidence and diffs. It emits owner-run explicit-path commit commands after verified task design or approved review, and an owner-run push command only after approved review. Does not write product code unless explicitly asked. |
+| Sonnet executor | Implements code per the kickoff, self-validates, and writes session evidence. May inspect read-only git; cannot approve a task and does not run, emit, or suggest mutating git commands, including `git push`. |
 | Owner | Runs mutating git natively in PowerShell and makes product decisions when rules conflict. |
 
 ## Required routing

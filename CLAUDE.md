@@ -84,10 +84,11 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git clean`
 - `git config`
 
-After a verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review,
-Opus may emit explicit-path owner-run commit commands only through the single protocol in
-`docs/orchestrator-procedures.md`, including its stale `.git/index.lock` cleanup preflight. Sonnet must not emit or
-run mutating git commands.
+After a verified task design that changed task/docs artifacts, Opus may emit an explicit-path owner-run **commit**
+handoff. Only after Opus has completed an `APPROVED` / `APPROVED WITH NOTES` implementation review may it also emit
+the owner-run **push** command, through the single protocol in `docs/orchestrator-procedures.md`, including its stale
+`.git/index.lock` cleanup preflight. Sonnet has no approval authority and must not emit, suggest, or run mutating git
+commands, including any form of `git push`.
 
 **ALWAYS-DO (owner rule):** every time Opus creates or edits a task/docs artifact, it MUST end that response with the
 explicit-path owner-run `git add` + `git commit` handoff for exactly the file(s) touched. Never finish a

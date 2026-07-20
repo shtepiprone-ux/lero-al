@@ -291,15 +291,16 @@ must be referenced from A's entry point so the user can still reach editing with
 
 ### Deploy Command
 - When the user says "deploy", the executor prepares final code/doc changes and deployment evidence. Sonnet does
-  not emit or run mutating git commands. After review, Opus may emit explicit-path commit/push instructions for the
-  owner, who runs them natively in PowerShell.
+  not approve its own task or emit, suggest, or run mutating git commands, including `git push`. Only after Opus has
+  completed an `APPROVED` / `APPROVED WITH NOTES` review may Opus emit verified explicit-path commit/push instructions
+  for the owner, who runs them natively in PowerShell.
 
 ### Commit Rules
 - One logical change per commit.
 - Commit message format: `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`.
 - Always include related file changes in the same commit.
 - Never commit broken code — run `npm run build` before pushing.
-- **After every completed task, list every file you touched in the session log's "Files Changed" table** — one row per path + a 1-line rationale per file. Never emit or run mutating git commands yourself — the **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). Read-only git inspection is allowed. Format of the "Files Changed" table:
+- **After every completed task, list every file you touched in the session log's "Files Changed" table** — one row per path + a 1-line rationale per file. Sonnet never approves its own task and never emits, suggests, or runs mutating git commands, including `git push`; the **orchestrator (Opus)** alone emits owner-run commands after review (Task 264 rule, 2026-05-27). Read-only git inspection is allowed. Format of the "Files Changed" table:
   ```
   | File | Rationale |
   |------|-----------|
@@ -321,7 +322,8 @@ must be referenced from A's entry point so the user can still reach editing with
 - **API/server-action errors must return stable English error codes** (e.g. `'no_file'`, `'invalid_type'`), not raw locale strings. Clients resolve to localized messages via `t()`. See `/api/upload-avatar` as the reference implementation (Task 103).
 
 ### Git Rules
-- These commit/deploy rules describe the owner's native workflow; agents do not perform mutating git.
+- These commit/deploy rules describe the owner's native workflow; agents do not perform mutating git. Only Opus may
+  give the owner a push command, and only after an `APPROVED` / `APPROVED WITH NOTES` review.
 - The owner does not commit directly to `main` unless the current workflow explicitly allows it; prefer feature
   branches and the approved deployment flow.
 - Keep commits small and logical. Never commit `.env` files, `node_modules`, or `.next`.
@@ -846,9 +848,9 @@ Acceptance criteria:
 - `docs/backlog.md` is updated.
 - A session log under `docs/sessions/` is added, with the Note 18 self-validation block.
 - A **"Files Changed" table** is present in the session log (one row per touched path + 1-line
-  rationale per file). The executor MUST NOT emit `git add` / `git commit` commands — the
-  **orchestrator (Opus)** emits them during review (Task 264 rule, 2026-05-27). The executor
-  MUST NOT run mutating git (single-writer rule). Read-only diff/status inspection is allowed. A task with no "Files Changed" table is
+  rationale per file). The executor MUST NOT approve its own task or emit `git add` / `git commit` /
+  `git push` commands — only the **orchestrator (Opus)** emits owner-run commands after review (Task 264 rule,
+  2026-05-27). The executor MUST NOT run mutating git (single-writer rule). Read-only diff/status inspection is allowed. A task with no "Files Changed" table is
   INCOMPLETE — see "Commit Rules" and `CLAUDE.md` "Git policy".
 
 Out of scope:
@@ -917,7 +919,7 @@ If editing moves from one component to another, the new component must include:
 - DO NOT restart task numbering per sprint — preserve the global counter (`docs/backlog.md`).
 - DO NOT omit the **Regression coverage** AC when the task touches a `docs/critical-flow-registry.md` flow. The kickoff must name the exact regression test + command, require the pre-change green baseline, and require a planted-violation FAIL transcript. A flow-touching task without regression proof is INCOMPLETE (agent-contract clause 15 / Epic RS).
 - DO NOT add tasks to `/tasks` files without the full template — partial entries are rejected.
-- DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor never emits or runs mutating git commands; read-only inspection is allowed. The orchestrator (Opus) emits explicit-path commit commands during review. This applies to EVERY task, including non-UI and docs-only tasks.
+- DO NOT mark a task complete without a "Files Changed" table in the session log (Task 264 rule, 2026-05-27). The executor cannot approve a task and never emits, suggests, or runs mutating git commands, including `git push`; read-only inspection is allowed. The orchestrator (Opus) alone emits owner-run commit commands and, only after an approved review, a verified push command. This applies to EVERY task, including non-UI and docs-only tasks.
 - **Canonical-first / no-duplicate-class AC (Task 426, 2026-06-15).** For any control rendered by a canonical primitive (`Button`, `Combobox`, `Input`, `Select`, `Dialog`, `Sheet`, `Popover`, …), acceptance criteria are *canonical-first*: a task adds a local responsive/utility class ONLY if the required behavior is **not already inherited** from the canonical primitive. If the primitive already provides the behavior, the deliverable is **canonical-source proof** (primitive `file:line`) **+ rendered evidence** — duplicating the class locally is a **rejection, not a pass** (it diverges the consumer from the canonical single-source per Note 14 and can regress the primitive's other size/state variants). Kickoffs MUST phrase such ACs conditionally, e.g.: *"add `max-sm:w-full max-sm:min-h-11` locally **only if not already inherited** from canonical `Button`; otherwise provide canonical-source proof + rendered evidence and **do not duplicate** the classes."* A flat "the class must appear in the local diff" AC, where a canonical primitive already satisfies it, is a kickoff defect.
 - **Canonical UI discovery AC.** Every rendered-UI kickoff must include the `Canonical UI provenance` table above.
   The table is a pre-edit gate, not a retrospective excuse: `reuse` prohibits copied local styling; `extend` and

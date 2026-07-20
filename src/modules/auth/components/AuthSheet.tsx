@@ -336,7 +336,6 @@ function CompanyField({
   const options = companies.map(c => ({
     value: c.id,
     label: c.name,
-    description: c.logo_url ? '📷' : undefined,
   }))
 
   function handleLogoSelect(file: File) {

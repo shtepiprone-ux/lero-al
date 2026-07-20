@@ -10,7 +10,7 @@
 - **Tasks 639, 640, 643** — company-field trio: `useCompanies` refetch-after-create (no reload); duplicate-name detection + Select-existing UX in AuthSheet; `AdminCompaniesManager` reacts to the duplicate result (no logo overwrite). ✅ all APPROVED WITH NOTES + committed (`ca44cfc96`/`7e701a522`/`9dc7ccb38`) → archive.
 - **Tasks 631–632, 626** — ViewAllLink story proof-path + wrapped-label right-align; locale-leak R5 per-story allowlist. ✅ all APPROVED + committed → archive.
 - **Task 641** — normalized `UNIQUE INDEX companies (lower(btrim(name)))` ✅ APPROVED WITH NOTES + APPLIED (owner ran it in Supabase; Section A showed 0 duplicates so the merge was a no-op; index verified live) → archive. Activates Task 640's `23505` fallback.
-- **Remaining AuthSheet follow-up:** 642 (drop `📷` from company dropdown; logo thumbnails deferred).
+- **Task 642** — dropped `📷` emoji indicator from `CompanyField` dropdown (1-line deletion, `AuthSheet.tsx`; rows show name only). ✅ APPROVED WITH NOTES + committed → archive. **Closes the 639–643 AuthSheet company-field cluster** (639 refetch · 640 dup-detect+Select · 643 admin dup-guard · 641 DB UNIQUE index · 642 emoji removal).
 
 ## Open — needs action
 
@@ -21,9 +21,6 @@
 - **Task 627** — authoritative `npm run lint` inventory (47 problems: 17 err/30 warn) + per-category remediation plan in `docs/sb10-lint-debt-inventory.md` (committed `967234ece`); no source touched. Task 628 reserved for the fix. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task627-sb10-lint-debt-triage.md`.
 - **Task 629** — migrated `HeaderView.tsx` chrome to Mantine `Box/Group/Anchor/Text` (all `unstyled`, committed `9cc5ec5c8`). **Mid-task defect:** `@mantine/core/styles.css` is unlayered so its CSS silently beat the Tailwind classNames (contradicts `mantine-responsive-design-system.md §4` — recommend a Q0 doc-correction); fixed via `unstyled`, re-verified pixel-identical at 320–1440 × sq/uk, hydration id-parity 3/3, `screenshots:assert --mantine-only` 16/16 HeaderView pass. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task629-headerview-chrome-mantine-migration.md`.
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
-
-**Designed — not yet executed (AuthSheet company-field follow-up):**
-- **Task 642** — drop the `📷` emoji indicator from the company dropdown: delete the `description: c.logo_url ? '📷' : undefined` line from `CompanyField`'s `options` mapping (`AuthSheet.tsx`); rows show the name only. `c.logo_url` data untouched; real logo thumbnails deferred to a future `MantineCombobox` image-slot extension. Q4 (auth overlay, one-line presentational). Kickoff `tasks/kickoff_prompt_Task_642_CompanyField_Drop_Emoji_Indicator.md`. **Closes the 639–643 company-field cluster.**
 
 **Deferred / on hold:**
 - **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.
@@ -40,7 +37,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed); 641 applied + closed. 642 designed (kickoff saved, execute next).
+**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done).
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).
 Next free: 644.**

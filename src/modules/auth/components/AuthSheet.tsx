@@ -322,7 +322,7 @@ function CompanyField({
 }) {
   const t = useTranslations('auth')
   const tc = useTranslations('common')
-  const { companies } = useCompanies()
+  const { companies, refetch } = useCompanies()
   const logoInputRef = useRef<HTMLInputElement>(null)
 
   const [showAdd, setShowAdd] = useState(false)
@@ -386,6 +386,12 @@ function CompanyField({
       } catch {
         // Logo upload failure is non-fatal — company is created successfully
       }
+    }
+    try {
+      await refetch()
+    } catch (err) {
+      // Refetch failure is non-fatal — the company is already created and selected below
+      console.error(err)
     }
     setCreating(false)
     onCompanyId(result.id)

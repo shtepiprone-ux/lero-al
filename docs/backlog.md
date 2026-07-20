@@ -22,6 +22,10 @@
 - **Task 629** — migrated `HeaderView.tsx` chrome to Mantine `Box/Group/Anchor/Text` (all `unstyled`, committed `9cc5ec5c8`). **Mid-task defect:** `@mantine/core/styles.css` is unlayered so its CSS silently beat the Tailwind classNames (contradicts `mantine-responsive-design-system.md §4` — recommend a Q0 doc-correction); fixed via `unstyled`, re-verified pixel-identical at 320–1440 × sq/uk, hydration id-parity 3/3, `screenshots:assert --mantine-only` 16/16 HeaderView pass. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task629-headerview-chrome-mantine-migration.md`.
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
+**Designed — not yet executed (homepage "How it works" → Mantine, Story-first):**
+- **Task 644** — create canonical `HowItWorksSteps` Mantine component (client island, `src/components/shared/`) reproducing the current homepage "How it works" 3-step block (icon box + numbered badge + title + desc) on Mantine primitives + theme tokens, **preserving the look** (owner decision); + toolbar-reactive canonical Storybook story (`Mantine/Primitives/HowItWorksSteps`, locale+viewport) + coverage/catalog registration. Does NOT touch `page.tsx`. Q3 visual. Kickoff `tasks/kickoff_prompt_Task_644_HowItWorksSteps_Mantine_Component_And_Story.md`. **Execute next.**
+- **Task 645** — swap the legacy `page.tsx` "How it works" block to render `<HowItWorksSteps/>`, remove the inline Tailwind markup, rendered proof on the real `/{locale}` route. Not yet designed — depends on 644's component API.
+
 **Deferred / on hold:**
 - **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.
 - **Task 463** (Epic BB) — full admin report management. ON HOLD until the Mantine primitive library (Epic MM) is complete; must be rebuilt on finished primitives. Kickoff `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
@@ -37,7 +41,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done).
+**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644 designed (execute next); 645 planned.
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).
 Next free: 644.**

@@ -15,16 +15,25 @@ async function assertAdminOrMod(): Promise<string | null> {
 /**
  * Create a new company record. Uses the service-role client so it can be
  * called during agent registration (before the user has a session).
- * Returns the new company id on success, or an error code.
+ * Returns the new company id on success, an existing company id flagged as
+ * a duplicate when the name already exists, or an error code.
  */
 export async function createCompanyAction(
   name: string
-): Promise<{ id?: string; error?: string }> {
+): Promise<{ id?: string; duplicate?: boolean; error?: string }> {
   const trimmed = name.trim()
   if (!trimmed || trimmed.length < 2) return { error: 'company_name_too_short' }
   if (trimmed.length > 120) return { error: 'company_name_too_long' }
 
   const db = createAdminClient()
+  const normalized = trimmed.toLowerCase()
+
+  const { data: existing } = await db.from('companies').select('id, name')
+  const existingMatch = existing?.find(c => c.name.trim().toLowerCase() === normalized)
+  if (existingMatch) {
+    return { id: existingMatch.id, duplicate: true }
+  }
+
   const { data, error } = await db
     .from('companies')
     .insert({ name: trimmed })
@@ -32,6 +41,13 @@ export async function createCompanyAction(
     .single()
 
   if (error) {
+    if (error.code === '23505') {
+      const { data: retryExisting } = await db.from('companies').select('id, name')
+      const retryMatch = retryExisting?.find(c => c.name.trim().toLowerCase() === normalized)
+      if (retryMatch) {
+        return { id: retryMatch.id, duplicate: true }
+      }
+    }
     console.error('createCompanyAction failed', error)
     return { error: 'save_failed' }
   }

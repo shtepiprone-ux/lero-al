@@ -331,6 +331,7 @@ function CompanyField({
   const [logoFile, setLogoFile] = useState<File | null>(null)
   const [logoPreview, setLogoPreview] = useState<string | null>(null)
   const [logoError, setLogoError] = useState<string | null>(null)
+  const [duplicate, setDuplicate] = useState<{ id: string; name: string } | null>(null)
 
   const options = companies.map(c => ({
     value: c.id,
@@ -368,10 +369,25 @@ function CompanyField({
     img.src = url
   }
 
+  function resetAddForm() {
+    setShowAdd(false)
+    setNewName('')
+    setLogoFile(null)
+    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
+    setLogoError(null)
+    setDuplicate(null)
+  }
+
   async function handleCreate() {
     if (!newName.trim() || creating) return
+    setDuplicate(null)
     setCreating(true)
     const result = await createCompanyAction(newName.trim())
+    if (result.duplicate && result.id) {
+      setCreating(false)
+      setDuplicate({ id: result.id, name: newName.trim() })
+      return
+    }
     if (!result.id) {
       setCreating(false)
       return
@@ -395,19 +411,17 @@ function CompanyField({
     }
     setCreating(false)
     onCompanyId(result.id)
-    setShowAdd(false)
-    setNewName('')
-    setLogoFile(null)
-    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
-    setLogoError(null)
+    resetAddForm()
+  }
+
+  function handleSelectDuplicate() {
+    if (!duplicate) return
+    onCompanyId(duplicate.id)
+    resetAddForm()
   }
 
   function handleCancel() {
-    setShowAdd(false)
-    setNewName('')
-    setLogoFile(null)
-    if (logoPreview) { URL.revokeObjectURL(logoPreview); setLogoPreview(null) }
-    setLogoError(null)
+    resetAddForm()
   }
 
   return (
@@ -434,7 +448,7 @@ function CompanyField({
         <div className="border rounded-xl p-3 flex flex-col gap-2 bg-muted/30">
           <TextInput
             value={newName}
-            onChange={e => setNewName(e.target.value)}
+            onChange={e => { setNewName(e.target.value); setDuplicate(null) }}
             placeholder={label}
             maxLength={120}
             autoFocus
@@ -497,6 +511,19 @@ function CompanyField({
               <p className="text-[10px] text-muted-foreground">{t('company_logo_hint')}</p>
             )}
           </div>
+
+          {duplicate && (
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <Text size="xs" c="dimmed">{t('company_exists')}</Text>
+              <Button
+                type="button"
+                size="xs"
+                onClick={handleSelectDuplicate}
+              >
+                {tc('select')}
+              </Button>
+            </div>
+          )}
 
           <div className="flex flex-col sm:flex-row gap-2 pt-1">
             <Button

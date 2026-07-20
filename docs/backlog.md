@@ -14,6 +14,7 @@
 ## Open — needs action
 
 **Implemented — awaiting orchestrator review (several already committed; review before further work):**
+- **Task 640** — `createCompanyAction` now looks up an existing company by `trim().toLowerCase()` name before insert and returns `{ id, duplicate: true }` instead of inserting a second row (plus a dormant `23505` forward-compat branch for Task 641's future UNIQUE index); `CompanyField` branches on `duplicate`, shows `auth.company_exists` + a `common.select` Button, clears on name-edit, and reuses a shared `resetAddForm()` for the Select/Cancel/success paths. 2 new i18n keys × 4 locales (2205/locale). 🟡 PARTIALLY VERIFIED (orchestrator review 2026-07-20): all gates green — typecheck 0 / mojibake 0/1820 / 4 auth smokes 15/15 / hydration 3/3 (owner-native) + check:stories 120/0 + check:i18n 2205×4 (reviewer-reproduced); code R1–R10 traced correct. **Blocking:** duplicate-state rendered proof (uk@320 message+Select, Select→selected, edit-clears) still pending owner visual repro. Review finding F2 (shared-action change silently altered `AdminCompaniesManager` — logo-overwrite risk) → owner chose option B → **Task 643** spawned. Session: `docs/sessions/2026-07-20-task640-companyfield-duplicate-name-select-existing.md`.
 - **Task 625** — lands Q0R + 624 as one commit (`704a1912e`): `governance-pr.yml` `locale-leak` job step now `continue-on-error: true` (migration-window warn-only; script exit code / `check:locale-leak:mantine-only` unchanged, `rendered-proof`/`check:story-coverage` stay blocking); `scripts/mantine-migration-scope.json` completed to 6/6 (`FooterView.tsx` added). ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`.
 - **Task 613** — removed the DEAD `--z-*` Tailwind z-index token scale from `globals.css` (0 consumers grep-confirmed). ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task613-dead-zindex-token-scale-cleanup.md`.
 - **Task 621** — Homepage Agent-CTA → canonical Mantine `Button` (new island `AgentCtaButton.tsx`); owner visual QA found+fixed 3 defects (off-menu `size="lg"`, asymmetric icon padding, theme-wide `height:'auto'`-breaks-`inner`-centering fixed locally — possible sitewide Button follow-up). ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task621-homepage-agent-cta-mantine-button-migration.md`.
@@ -22,8 +23,8 @@
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
 **Designed — not yet executed (AuthSheet company-field follow-ups, ordered):**
-- **Task 640** — duplicate-name UX: `createCompanyAction` detects an existing normalized name and returns it as a duplicate; `CompanyField` shows "company already exists" + a "Select" button (owner directive). Kickoff `tasks/kickoff_prompt_Task_640_CompanyField_DuplicateName_SelectExisting.md`. **Execute first of the three.**
-- **Task 641** — DB-level normalized `UNIQUE` index on `companies` + one-time existing-duplicate cleanup migration (with a DRY-RUN report before mutating). Not yet designed — depends on 640's normalization decision.
+- **Task 643** — Task 640 follow-up (review finding F2, owner option B): `AdminCompaniesManager` create flow must react to `createCompanyAction`'s new `duplicate` result — show an "already exists" toast + return early, so it no longer silently reuses the existing id, overwrites the existing company's logo, or fires a false "created" toast. 1 new i18n key (`admin.companies.error_duplicate`) × 4 locales. Q2. Kickoff `tasks/kickoff_prompt_Task_643_AdminCompaniesManager_HandleDuplicate.md`.
+- **Task 641** — DB-level normalized `UNIQUE` index on `companies` + one-time existing-duplicate cleanup migration (with a DRY-RUN report before mutating). Not yet designed — depends on 640's normalization decision (case/whitespace only, accent deferred; landed in Task 640).
 - **Task 642** — drop the `📷` emoji indicator from the company dropdown (`options` mapping). Real logo thumbnails deferred to a later canonical-`MantineCombobox` extension task. Not yet designed.
 
 **Deferred / on hold:**
@@ -41,7 +42,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 639 (committed). 640 designed (kickoff saved); 641/642 planned, not yet designed.
+**Task numbering — last used: 640 (implemented). 643 designed (kickoff saved); 641/642 planned, not yet designed.
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).
 Next free: 643.**

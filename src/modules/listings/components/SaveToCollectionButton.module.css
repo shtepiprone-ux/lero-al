@@ -1,0 +1,37 @@
+/*
+ * Task 654 — SaveToCollectionButton icon-shape trigger chrome.
+ *
+ * The icon shape's only current consumer (FavoritesShell.tsx, per-card hover overlay) passes
+ * `className="bg-card/80 hover:bg-card shadow-sm rounded-lg"`. Those Tailwind background classes
+ * become inert once the trigger is a Mantine `ActionIcon` — Mantine's own `background`/
+ * `border-radius` CSS (`node_modules/@mantine/core/styles.css`, `.mantine-ActionIcon-root`) is
+ * imported UNLAYERED and unconditionally sets `background`, which always beats a layered Tailwind
+ * utility class for the same property (confirmed project rule, Tasks 629/650/651/653; see
+ * `docs/mantine-responsive-design-system.md`). `radius="0.75rem"` is passed as a canonical Mantine
+ * prop instead, reproducing `rounded-lg` exactly — NOT Mantine's own theme `radius="lg"` token
+ * (8px): this project's `globals.css` `@theme` overrides Tailwind's `--radius-lg` to the legacy
+ * shadcn `--radius` (0.75rem = 12px, `globals.css:92,399`), a different token than
+ * `theme.radius.lg` (same Task-652/R8 finding; corrected here in Revision 1). This module
+ * reproduces the resting/hover background so the overlay's frosted-white look is unchanged.
+ *
+ * `[data-shape='icon']` gives this rule (0,2,0) specificity — higher than Mantine's own plain-class
+ * `.mantine-ActionIcon-root` (0,1,0) — so it wins regardless of stylesheet load order, same
+ * technique as FavoriteButton.module.css (Task 653). No `:hover` color change is needed (unlike
+ * FavoriteButton's heart) — the icon's text color is unconflicted `--foreground` on both states,
+ * matching the current shadcn `ghost` variant's rendered look exactly.
+ *
+ * Tokens traced verbatim (globals.css): --card = var(--neutral-0) = #FFFFFF. `bg-card/80` =
+ * rgba(255, 255, 255, 0.8); `hover:bg-card` = solid #ffffff — identical resting/hover values to
+ * FavoriteButton.module.css's icon-default rule (same visual pattern: a frosted-white icon overlay
+ * on a listing card photo).
+ */
+
+.control[data-shape='icon'] {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .control[data-shape='icon']:hover:not(:disabled) {
+    background-color: #ffffff;
+  }
+}

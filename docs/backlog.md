@@ -23,7 +23,7 @@
 - **Task 630** — migrated both homepage "view all" links (`page.tsx`, `FeaturedListings.tsx`) to Mantine `Button variant="transparent"` (§6a-link) via the shared `ViewAllLink.tsx` island (committed `68870a807`); `buttonVariants`/`cn` removed from both. Q3: 56/56 matrix + hover-no-fill + 48 screenshots + hydration 4/4. Kickoff evidence-path gap (`System/FeaturedListings` story never rendered `view_all`) → substituted a real `/{locale}` app-route capture. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-19-task630-homepage-viewall-mantine-transparent-button.md`.
 
 **Designed — homepage → 100% Mantine (audit 2026-07-20; plan A→C→B, D deferred; block A/646 ✅ done → archive):**
-- **Task 647 (block C)** — Featured/Latest loading skeletons: legacy `@/components/ui/skeleton` + local `CardSkeleton` → Mantine `Skeleton`. Small, independent. Not yet designed.
+- **Task 647 (block C)** — Featured/Latest loading skeletons (`CardSkeleton`/`RowSkeleton`) legacy `@/components/ui/skeleton` → canonical Mantine `Skeleton` (reuse; already storied + theme-chromed, Task 550), Tailwind sizes → props; **+ migrate `FeaturedListings`' own inline `<h2>` → `Title order={2}`** (Task-646 scale; discovered during design — 646 only touched `page.tsx`, this heading lives inside the component). Q3. Kickoff `tasks/kickoff_prompt_Task_647_FeaturedLatest_Skeleton_And_Heading_Mantine.md`. **Execute next.**
 - **Tasks 648→649 (block B, Story-first)** — `PopularLocations` (own section+heading+city-card grid, `AppImage`/gradients, fully legacy) → canonical Mantine location-card component + story, then swap. Largest block. Not yet designed.
 - **HeroSearch (block D)** — legacy composite, **Phase-2 deferred** per `docs/mantine-tailadmin-migration-tracker.md` (waits on Combobox-consumer migration). Not scheduled here.
 
@@ -42,7 +42,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644/645 done (How-it-works). 646 approved + committed (block A). 647/648/649 planned (homepage completion). Next free: 647.
+**Task numbering — last used: 643 (committed); 641 applied + closed; 642 approved + closed (company-field cluster done). 644/645 done (How-it-works). 646 approved + committed (block A). 647 designed (execute next); 648/649 planned (homepage completion). Next free: 648.
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).**
 

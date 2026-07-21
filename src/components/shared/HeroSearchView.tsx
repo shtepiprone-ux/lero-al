@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Search, SlidersHorizontal } from 'lucide-react'
-import { Button } from '@mantine/core'
+import { Box, Button } from '@mantine/core'
 import { MantineCountButton } from '@/design-system/mantine/patterns'
 import { cn } from '@/lib/utils'
 import { FiltersPanel } from '@/components/shared/FiltersPanel'
@@ -47,12 +47,12 @@ export function HeroSearchView({
 
   return (
     <>
-      <div className="hero-search w-full max-w-3xl mx-auto">
+      <Box className="hero-search w-full max-w-3xl mx-auto">
         {/* Listing type tabs — Task 570 max-sm:flex-1 max-sm:min-w-0 (50/50 full-width, no
             overflow) preserved; Task 568 adds joined-inner-corner radius (each corner declared
             explicitly, never the bare `rounded-*` shorthand — Mantine's own radius CSS var wins
             ties on the shorthand property, so only per-corner longhand utilities are safe here). */}
-        <div className="flex mb-0">
+        <Box className="flex mb-0">
           {(['sale', 'rent'] as ListingType[]).map((type, i) => (
             <Button
               key={type}
@@ -70,20 +70,29 @@ export function HeroSearchView({
               {tl(type)}
             </Button>
           ))}
-        </div>
+        </Box>
 
         {/* Search bar — top corners squared on mobile (full-width tab strip now covers the
             entire top edge, incl. top-right); desktop keeps its original rounded-tr-2xl since
-            the tabs stay content-width chips at top-left there (owner-confirmed, unchanged). */}
-        <div className="bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3">
-          {/* Task 572: flattened into ONE flex-wrap container (no more separate action-buttons
-              <div> grouping filters+Search) so each control's own flex-basis decides its row
-              placement per breakpoint. <640 and >=768 render byte-identical to before; the NEW
-              640-767 (`sm`) band wraps Search alone to a second row so Location regains width
-              (was crushed illegible at ~720px — owner-reported). See "Why these exact classes" in
-              the Task 572 kickoff — do NOT swap any basis/grow/shrink utility for the `flex-1`
-              shorthand, it fights the sm:/md: flex-basis overrides. */}
-          <div className="flex flex-wrap md:flex-nowrap gap-2">
+            the tabs stay content-width chips at top-left there (owner-confirmed, unchanged).
+            Task 650: kept as `Box`, NOT `Paper` — `@mantine/core/styles.css` is imported
+            unlayered in `src/app/layout.tsx` (no `@layer mantine` wrapper), so Paper's own
+            component CSS (defaultProps.radius='2xl', shadow, border-color) wins over ANY
+            Tailwind utility class unconditionally, regardless of source order (unlayered CSS
+            always beats layered `@layer utilities`). Verified via computed-style inspection:
+            Paper forced all 4 corners to 16px (leaking onto the un-overridden top-left corner,
+            which must stay 0px) and collapsed `shadow-xl` to `none`. `Box` carries no
+            component-level defaults in `theme.ts`, so the verbatim classes render byte-identical
+            to the legacy `div`. See session log deviation note for the reviewer. */}
+          <Box className="bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3">
+            {/* Task 572: flattened into ONE flex-wrap container (no more separate action-buttons
+                <div> grouping filters+Search) so each control's own flex-basis decides its row
+                placement per breakpoint. <640 and >=768 render byte-identical to before; the NEW
+                640-767 (`sm`) band wraps Search alone to a second row so Location regains width
+                (was crushed illegible at ~720px — owner-reported). See "Why these exact classes" in
+                the Task 572 kickoff — do NOT swap any basis/grow/shrink utility for the `flex-1`
+                shorthand, it fights the sm:/md: flex-basis overrides. */}
+            <Box className="flex flex-wrap md:flex-nowrap gap-2">
 
             <PropertyTypeCombobox
               value={propertyType}
@@ -126,9 +135,9 @@ export function HeroSearchView({
             >
               {t('search')}
             </Button>
-          </div>
-        </div>
-      </div>
+          </Box>
+        </Box>
+      </Box>
 
       <FiltersPanel
         open={filtersOpen}

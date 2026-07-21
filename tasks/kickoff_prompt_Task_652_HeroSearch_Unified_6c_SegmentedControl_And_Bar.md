@@ -161,3 +161,38 @@ Handoff: execute via `.claude/skills/execute-task/SKILL.md` against this file pa
 - Scope protects behavior, inner controls, `FiltersPanel`, `HeroSearch.tsx`, i18n, `theme.ts`; names what must not change. ✅
 - Reuse (not create) — SegmentedControl §6c + story already exist; no i18n change. ✅
 - Negative flows selected by applicability (render/select/mobile/sm-band/override-check/behavior-regression/build in; i18n-change out). ✅
+
+## Revision 1 — owner (2026-07-21): canonical search-bar corner radius (R8)
+
+**Status of base task:** `npm run build` exit 0 (60s, 40/40 pages) and `npm run typecheck` 0 errors verified
+owner-native 2026-07-21; owner visually approved the §6c composition **with one change** below. Everything else
+in Task 652 stands; implement ONLY this revision on top of the existing diff.
+
+**R8 — make the search bar's corner radius identical to the tabs (canonical control radius).** The search-bar
+`Box` currently rounds at `2xl` (16px) via `rounded-b-2xl sm:rounded-tr-2xl`, visibly larger than the
+`SegmentedControl`'s canonical `lg` (8px) corners (owner screenshot). Bring the bar to the same canonical
+radius so the unified surface reads as one control.
+
+- **Change (one className, `src/components/shared/HeroSearchView.tsx`):** on the search-bar `Box`, replace
+  `rounded-b-2xl sm:rounded-tr-2xl` → `rounded-b-lg sm:rounded-tr-lg`. Tailwind `lg` = `0.5rem` = 8px =
+  Mantine theme `radius.lg` (`defaultRadius`, the SegmentedControl's radius), so the corners match exactly.
+- **Preserve the asymmetric pattern unchanged:** top-left stays squared (0) where the toggle meets; top-right
+  rounded only on `sm+`; bottom always rounded — only the radius *value* changes (16px → 8px).
+- Keep `bg="gray.1"`, `bd="1px solid var(--mantine-color-gray-2)"`, `p-3`, the `SegmentedControl`, and every
+  other line unchanged. Radius Tailwind classes on `Box` are already verified to render (Box has no component
+  CSS to override them — Task 650/651), so keep the class approach; do not switch to `Paper`/`styles` for this.
+
+**R8 acceptance:** Given the rendered hero, the search-bar rounded corners visually match the SegmentedControl
+corners (8px), the asymmetric top-left-squared layout is preserved, and computed `border-bottom-left/right-radius`
+(and `sm+` `border-top-right-radius`) = `8px`. No other visual or behavioral change.
+
+**R8 verification / QA (Q3 + build gate, same as base task):**
+1. `npm run typecheck` → 0; `npm run check:stories` / `check:i18n` / `check:mojibake` → green; `npm run build` → exit 0.
+2. Rendered re-capture at **uk@320 + desktop** showing the tightened 8px bar radius matching the tabs (before/after
+   the radius change); computed-style spot-check that the rounded corners now read `8px` (not `16px`).
+3. `git status --short` → still only `HeroSearchView.tsx`, `docs/backlog.md`, and the session log (Task 651's
+   uncommitted doc files remain untouched).
+4. Update the session log with an R8 note + refresh the `docs/backlog.md` Task 652 entry (radius → canonical `lg`).
+   Final status `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` — no self-approval, no mutating git.
+
+Handoff: execute via `.claude/skills/execute-task/SKILL.md` against this file (Revision 1 only).

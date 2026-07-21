@@ -1,0 +1,60 @@
+/*
+ * Task 653 — FavoriteButton three-state colors (default/favorited/disabled) + hover + pending.
+ *
+ * All state colors live here, not inline `style` — a real CSS module rule (unlayered) is the
+ * ONLY mechanism that can express :hover, since an inline `style` attribute always wins over
+ * ANY external stylesheet rule for the SAME property regardless of specificity or cascade layer
+ * (verified empirically: an earlier draft set background-color/color via inline `style`, which
+ * did correctly beat ActionIcon/Button's own unlayered CSS at rest, but ALSO permanently blocked
+ * this module's own `:hover` rules from ever applying — inline style has no "resting only"
+ * concept, it wins unconditionally). Attribute selectors (`[data-favorited]`/`[data-disabled]`/
+ * `[data-pending]`, set in FavoriteButton.tsx) give every rule below higher specificity than
+ * ActionIcon/Button's own compiled single-class rules (`.mantine-ActionIcon-root`/
+ * `.mantine-Button-root`, specificity (0,1,0) vs this module's (0,2,0)+), so they win regardless
+ * of stylesheet load order — same technique as MantineListingCardPattern.module.css and the
+ * Task 612 lightbox ActionIcon fix, this time for :hover specifically.
+ *
+ * Tokens (traced verbatim, globals.css/theme.ts): --card=#FFFFFF, --foreground=#232323,
+ * --destructive=--brand-900=theme.ts brand[9]=#8E322B (NOT the red/error scale), --muted=#F5F5F5,
+ * --muted-foreground=#8C8C8C. Favorited hover bg = brand-900 @ 20% alpha (double the 10% resting
+ * tint) — matches the original `hover:bg-destructive/20` Tailwind class exactly.
+ */
+
+.control[data-favorited='false'] {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #232323;
+}
+
+.control[data-favorited='true'] {
+  background-color: rgba(142, 50, 43, 0.1);
+  color: #8e322b;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .control[data-favorited='false']:hover:not(:disabled) {
+    background-color: #ffffff;
+    color: #8e322b;
+  }
+
+  .control[data-favorited='true']:hover:not(:disabled) {
+    background-color: rgba(142, 50, 43, 0.2);
+  }
+}
+
+/* Placed after the favorited/default rules — same (0,2,0) specificity, source order breaks the
+   tie so the disabled look always wins even on an already-favorited listing. Uses the custom
+   `data-fav-disabled` attribute, NOT `data-disabled` — that name is reserved by Mantine's own
+   ActionIcon/Button typed `disabled` prop and its internal disabled-state styling hook. */
+.control[data-fav-disabled='true'] {
+  background-color: rgba(245, 245, 245, 0.6);
+  color: #8c8c8c;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Pending only touches opacity/cursor — layers on top of whichever bg/color rule above is
+   active, matching the original Tailwind class list's additive `opacity-60 cursor-wait`. */
+.control[data-pending='true'] {
+  opacity: 0.6;
+  cursor: wait;
+}

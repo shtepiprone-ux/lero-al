@@ -93,7 +93,7 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Mantine docs — Next.js App Router | Next.js App Router setup | CSS imports in root server component; `MantineRootProvider` as client boundary | CSS in `src/app/layout.tsx`; provider in `MantineRootProvider.tsx` | `src/app/layout.tsx`, `src/design-system/mantine/MantineRootProvider.tsx` |
 | Mantine docs — `MantineProvider` | Provider setup | Single `MantineProvider` wraps the full app once | Root layout wraps once; locale/admin layouts do NOT add duplicate providers | `src/design-system/mantine/MantineRootProvider.tsx` |
 | Mantine docs — `ColorSchemeScript` | FOUC prevention | `ColorSchemeScript` in `<head>` before any CSS prevents flash of wrong color scheme | Kept in `<head>` with `defaultColorScheme="light"` (Light-only) | `src/app/layout.tsx` |
-| Mantine docs — CSS imports | CSS import order | `@mantine/core/styles.css` before app CSS so Tailwind utilities can override | Both imports in `src/app/layout.tsx`; `@layer mantine` is below Tailwind `@layer utilities` | `src/app/layout.tsx`, `.storybook/preview.tsx` |
+| Mantine docs — CSS imports | CSS import order | `@mantine/core/styles.css` is imported UNLAYERED (plain import, no `@layer` wrapper) before app CSS — unlayered CSS always beats layered CSS, so Mantine component styling wins over Tailwind `@layer utilities`, not the reverse | Both imports in `src/app/layout.tsx`; there is no `@layer mantine` wrapper — confirmed unlayered (Task 651, 2026-07-20) | `src/app/layout.tsx`, `.storybook/preview.tsx` |
 | Mantine docs — color scheme | Light-only setup | `defaultColorScheme="light"` disables auto/dark scheme | `MantineProvider defaultColorScheme="light"`, `forceColorScheme="light"` in Storybook | `src/design-system/mantine/MantineRootProvider.tsx`, `.storybook/preview.tsx` |
 | Mantine docs — responsive styles | Responsive prop system | `{ base: X, sm: Y }` on size/spacing props; `useMatches` for non-prop responsive | All pattern components use responsive object props | `src/design-system/mantine/patterns/**` |
 | Mantine docs — `createTheme` | Theme API | Raw hex and rem values required as input (not CSS custom properties) | `src/design-system/mantine/theme.ts`; allowlisted in `scripts/design-tokens-allowlist.json` | `src/design-system/mantine/theme.ts` |
@@ -102,7 +102,7 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Storybook 10 docs | Storybook 10+ integration | Viewport via `globals.viewport`; toolbar globals | `withMantine` global decorator; viewport via toolbar; `parameters.skipCanvas` pattern | `.storybook/preview.tsx` |
 | npm registry | Package version | `@mantine/core@^9.4.0` requires `react@^19.2.0` | React 19.2.4 installed; no peer conflict | `package.json` |
 | MIT license | License | Mantine is MIT-licensed | Compatible with commercial use; no restriction | `package.json` |
-| Tailwind v4 docs | CSS layer coexistence | Mantine uses `@layer mantine`; Tailwind v4 uses `@layer base, components, utilities` — separate cascade layers, no conflict | No `postcss-preset-mantine` needed; Mantine CSS imported directly | `postcss.config.mjs` (unchanged), `src/app/layout.tsx` |
+| Tailwind v4 docs | CSS layer coexistence | Mantine CSS is imported directly and UNLAYERED — there is no `@layer mantine`. Tailwind v4 uses `@layer base, components, utilities`. Unlayered rules always beat layered rules, so Mantine component CSS overrides Tailwind utilities | `postcss-preset-mantine`'s layer option is NOT enabled (would wrap Mantine CSS in `@layer mantine`); Mantine CSS is imported directly, unlayered, by design | `postcss.config.mjs` (unchanged), `src/app/layout.tsx` |
 | Mantine docs — `useMediaQuery` | SSR/hydration caveat | Returns `initialValue` (`false`) on first render; media query evaluated only in `useEffect` (`getInitialValueInEffect: true` default in v9) | Documented in `MantineDialogDrawerPattern.tsx`; overlay is always closed on SSR so no visible flash | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` |
 
 ---
@@ -141,7 +141,18 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Radius | **xs=2 / sm=4 / md=6 / lg=8 (controls) / xl=12 / 2xl=16 (Card) / pill=9999 px** | `radius: { ..., '2xl': '1rem', pill: '9999px' }`; `defaultRadius: 'lg'` |
 | Touch target | ≥44px via `Button styles.root.minHeight: '2.75rem'` | All Buttons ≥44px regardless of `size` prop |
 | Theme breakpoints | 6 breakpoints covering the mobile gate and design widths | xs=20em(320), sm=40em(640), md=48em(768), lg=64em(1024), xl=80em(1280), xxl=90em(1440) |
-| Tailwind boundary | `@layer mantine` is separate from `@layer utilities` | No conflict |
+| Tailwind boundary | Mantine `styles.css` is imported UNLAYERED (no `@layer mantine`) — unlayered CSS beats Tailwind's `@layer utilities`, so Mantine component styling wins over Tailwind utility classes | Not "no conflict" — see the practical rule below |
+
+**Practical rule — when a Tailwind utility must win over a Mantine component's own CSS:** because Mantine's
+`styles.css` is unlayered and always beats Tailwind's `@layer utilities`, a plain Tailwind className on a
+styled Mantine component (e.g. `Paper`, `Card`) can be silently overridden by that component's own CSS
+(radius, shadow, border, background). To make the Tailwind utility win, either:
+
+1. Use the component's `unstyled` prop to strip its own CSS (Task 629 — `HeaderView` chrome, fixed a silent
+   Tailwind classname loss this way), or
+2. Use `Box` instead of a styled surface primitive like `Paper`/`Card` — `Box` ships no component CSS of its
+   own, so Tailwind classes apply cleanly (Task 650 — `HeroSearchView` container chrome; `Paper` was forcing
+   16px corners and collapsing `shadow-xl` until swapped for `Box`).
 
 ### §6.1 — TailAdmin token map (§1b — authoritative; Task 484 2026-06-25)
 

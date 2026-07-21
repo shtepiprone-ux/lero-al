@@ -104,3 +104,34 @@ Handoff: execute via `.claude/skills/execute-task/SKILL.md` against this file pa
 - Scope protects the dialog internals, the consumer, `theme.ts`, i18n; names what must not change. ✅
 - Canonical decision = reuse (`ActionIcon`/`Button`, per Task 653); no new token/story. ✅
 - Negative flows selected by applicability (render/click-opens-dialog/icon-variant/build in; i18n-change out). ✅
+
+## Revision 1 — orchestrator review (2026-07-21): fix the icon-shape radius regression (R3)
+
+**Status of base task:** implementation inspected and correct EXCEPT one visual regression below. Pill unification
+(R1/R2: 44px / radius `1.125rem`=18px / `1px solid var(--border)`) verified correct; behavior/isolation/gates all
+green. Implement ONLY this revision on top of the existing diff.
+
+**R3-fix — the icon `radius="lg"` (8px) does NOT match the legacy 12px; correct it.** The sole icon consumer
+`FavoritesShell.tsx:216` passes `className="… rounded-lg"`, which on the legacy shadcn `Button` overrode `icon-sm`'s
+own radius, so the legacy overlay icon rendered at **Tailwind `rounded-lg` = `var(--radius-lg)` = `var(--radius)` =
+`0.75rem` = 12px**. The migration used Mantine `radius="lg"`, which is `theme.ts` `radius.lg` = `0.5rem` = **8px** — a
+different token (the exact Tailwind-`lg` ≠ Mantine-`lg` trap from Tasks 652-R8/653). Result: the `/favorites` overlay
+icon regressed 12px → 8px, and the code/session-log claim "radius='lg' reproduces `rounded-lg` exactly" is false.
+
+- **Change (one prop, `src/modules/listings/components/SaveToCollectionButton.tsx`):** on the icon `ActionIcon`,
+  `radius="lg"` → `radius="0.75rem"` (= 12px = `var(--radius-lg)`, matching the legacy `rounded-lg`). Keep
+  `size={28}` (correct: `icon-sm` = `size-7` = 28px), `variant="subtle"`, and the `data-shape='icon'` CSS-module
+  background rule unchanged. Update the now-inaccurate code comment (do not claim Mantine `lg` == Tailwind `rounded-lg`).
+- **Do NOT** switch to a Tailwind arbitrary class — on a Mantine `ActionIcon` the `radius` prop is the correct
+  unlayered-safe mechanism; just give it the 12px value.
+
+**R3-fix acceptance:** Given the rendered `/favorites` overlay icon, computed `border-radius` = **12px** (not 8px),
+matching the pre-migration capture; background/size/hover unchanged; typecheck/check:stories/check:i18n/check:mojibake
++ `npm run build` still exit 0; only `SaveToCollectionButton.tsx` (+ `docs/backlog.md` + session log) touched.
+
+**Non-blocking note (no action required unless the owner wants it):** the pill background differs from the favorite
+pill (save = solid Mantine `variant="default"`; favorite = translucent white@80% via its module). R1/R2 named only
+height/radius/border and the two are visually indistinguishable on the white card, so this is accepted as-is; a
+`[data-shape='pill']` bg rule mirroring `FavoriteButton.module.css` would unify it if ever desired.
+
+Handoff: execute via `.claude/skills/execute-task/SKILL.md` against this file (Revision 1 only).

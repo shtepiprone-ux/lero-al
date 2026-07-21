@@ -100,6 +100,18 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     style. If no suitable source exists, create and register one in the appropriate library or stop for the missing
     design decision; do not improvise a local style.
 
+16c. **Canonical Mantine Stories are the visual source of truth and cannot be bypassed.** Before publishing a task
+    that changes a visible Mantine-migrated artifact, the Opus orchestrator must inspect its corresponding canonical
+    Mantine Story and put the required Story work in scope; before implementing it, the executor must re-verify that
+    result. If that Story exists, the same task must preserve or update it so it renders the migrated artifact with
+    the same canonical primitive and state; neither the orchestrator nor executor may declare the Story out of scope,
+    rely on a divergent demo stand-in, or use route-only evidence as a substitute. If no corresponding canonical
+    Mantine Story exists, create it first (or in the same task before consumer migration), register it and its
+    migrated production source with the applicable story-coverage path, then perform the migration. A pattern Story
+    that receives a behavior-bearing node through a slot is not proof for that node unless it renders the real
+    production component or an equivalent canonical composition; otherwise update the Story or create that
+    composition Story. Stop for an owner decision if the required Story boundary is genuinely ambiguous.
+
 ## Role split
 
 | Layer | Role |

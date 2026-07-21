@@ -90,6 +90,26 @@ token that supplies each visual value. `create canonical` requires the shared so
 added or updated in the same task, and applicable catalog/coverage updates. If a needed visual value has no approved
 provenance, stop task design for `CANONICAL STYLE DECISION REQUIRED`; do not leave Sonnet to choose a local value.
 
+### Canonical Story source-of-truth check (mandatory for Opus before publishing a UI kickoff)
+
+Opus must inspect the source of the corresponding canonical Mantine Story, not merely cite its title or path. The
+kickoff's decision record, scope, requirements, and acceptance criteria must then bind the production change to that
+Story:
+
+- **Existing Story:** the same task must update or preserve the exact Story so it renders the migrated artifact with
+  the same canonical Mantine primitive and applicable states. Opus must not mark that Story out of scope or authorize
+  a route-only proof in its place.
+- **No Story:** the kickoff must require creation of a canonical Mantine Story before, or in the same task as, the
+  consumer migration, plus `scripts/mantine-migration-scope.json` registration and a passing static-import proof from
+  `check:story-coverage`.
+- **Slot or demo mismatch:** a Story that supplies a static stand-in, legacy control, or other divergent demo through
+  a pattern slot does not cover the real production node. Opus must scope an update that renders the real node or an
+  equivalent canonical composition Story. If that would change a deliberate boundary, stop task design and ask the
+  owner; do not leave the decision to Sonnet or silently exclude the Story.
+
+A kickoff that omits this decision, declares an existing corresponding Story out of scope, or treats a demo stand-in
+as Story proof is a task-design defect and must not be handed to Sonnet.
+
 Do not publish a task that says "read all docs." Use `docs/rule-index.md`.
 Save an implementation kickoff under `tasks/` using the location and naming rules in `docs/ai-behavior.md`.
 

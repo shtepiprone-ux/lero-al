@@ -1518,6 +1518,26 @@ npm run check:story-coverage:report             # full per-entry report, always 
 
 **Governance obligation:** every future component migration to Mantine adds that component to `scripts/mantine-migration-scope.json` in the SAME PR as the migration — the manifest is how a migration announces itself to CI.
 
+### §15.1a — Canonical Story is mandatory migration source of truth (owner directive, 2026-07-21)
+
+For any visible Mantine migration, the canonical Mantine Story is the visual source of truth, not optional
+documentation or a post-hoc screenshot target. The executor must inspect it before changing the production surface.
+
+- **Story exists:** update or preserve that exact Story in the same task so it renders the migrated artifact with the
+  same canonical Mantine primitive and relevant states. It may not be declared out of scope. A raw/legacy/demo
+  control that merely resembles the production control is not valid evidence and must be replaced with the
+  canonical control or with a composition that imports the real production component.
+- **Story does not exist:** create a canonical Mantine Story before, or in the same task as, the consumer migration;
+  add its migrated production source to `scripts/mantine-migration-scope.json` and make `check:story-coverage`
+  prove the static import. A route-only migration without this Story is incomplete.
+- **Pattern slots:** a pattern Story that receives a behavior-bearing `ReactNode` slot does not cover the supplied
+  production node unless the Story imports and renders that node (or an explicitly equivalent canonical
+  composition). Do not count a static `<span>` or a legacy/demo button as coverage for a migrated interactive
+  control.
+
+When an existing Story cannot truthfully cover the target without changing the intended component boundary, stop and
+ask the owner whether to extend that Story or introduce a separate composition Story; do not silently bypass it.
+
 ### §15.2 Retired: colocated-story / exemption-allowlist design
 
 The old `scripts/story-coverage-exempt.json` mechanism (every `src/components/**` file needing a colocated story or a hand exemption) is **no longer consulted by this gate**. The file itself is left in place (historical record) but is orphaned for coverage purposes — `--update-exempt` now prints a deprecation notice and exits 0 rather than seeding it.

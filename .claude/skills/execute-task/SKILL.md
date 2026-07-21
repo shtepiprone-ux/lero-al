@@ -84,12 +84,16 @@ Before reporting, perform an adversarial self-review against every acceptance cr
 2. Inspect the real diff and compare it to task scope and the session `Files Changed` table.
 3. Run the exact tests, checks, and commands required by the task and QA profile. Record actual output/results, not
    intended commands or expected results.
-4. Verify every applicable failure path. For a UI task, obtain the required rendered Storybook/app proof at the
+4. For every non-Q0 task, run `npm run build` after the final edit and record its actual zero-exit result. This is a
+   hard completion gate even when the selected profile would otherwise require only targeted checks or typechecking.
+   If the build fails or cannot run, stop and return `PARTIALLY IMPLEMENTED` or `BLOCKED` with the exact output and
+   an owner-native command; never return `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
+5. Verify every applicable failure path. For a UI task, obtain the required rendered Storybook/app proof at the
    profile's viewports and locales; typecheck or a build alone is insufficient.
-5. For a new Q4 regression/gate claim, show that the gate fails under the task's planted violation before restoring
+6. For a new Q4 regression/gate claim, show that the gate fails under the task's planted violation before restoring
    the correct implementation.
-6. Check touched files for integrity, encoding, parsing, and truncation as required by the project contract.
-7. Reconcile the visual source trace with the rendered proof. Explicitly confirm both changed artifacts and each
+7. Check touched files for integrity, encoding, parsing, and truncation as required by the project contract.
+8. Reconcile the visual source trace with the rendered proof. Explicitly confirm both changed artifacts and each
    task-named preserved artifact; do not report a visual source as missing when the trace identifies it.
 
 If any requirement lacks evidence, any test is unavailable, or a defect remains, report that status explicitly. Do
@@ -111,7 +115,8 @@ The session report must include:
 2. `Requirement and acceptance-criteria evidence` - one row per requirement/criterion.
 3. `Current versus required behavior` - including applicable negative flows.
 4. `Files Changed` - every path from the real diff and a one-line reason.
-5. `Validation evidence` - exact commands, actual outcomes, rendered proof, and planted-violation result when required.
+5. `Validation evidence` - exact commands, actual outcomes, final production-build result for every non-Q0 task,
+   rendered proof, and planted-violation result when required.
 6. `Visual source trace` - the required trace for UI work, including explicit preserve/out-of-scope siblings.
 7. `Canonical UI decision record` - one row per changed visible artifact, with search evidence, canonical Storybook
    source, disposition, consumed shared style/token path, and any registration performed.

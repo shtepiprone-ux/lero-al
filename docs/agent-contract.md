@@ -45,10 +45,12 @@ convenient interpretation. Clause identifiers are intentionally stable because o
    evidence or the full Q3/Q4 visual matrix. Historical fixed-width lists do not override the selected profile.
 
 9. **Validation evidence is mandatory.** A completion claim must include the selected QA profile, exact checks run,
-   actual results, and an acceptance-criteria self-audit. `tsc=0` alone is not proof of UI behavior, regression
-   safety, or visual conformance. When a required check cannot run because of a sandbox, native-binary mismatch, or
-   timeout, record it as missing evidence and provide the owner exact native commands plus the expected evidence;
-   never replace the missing result with a confidence claim.
+   actual results, and an acceptance-criteria self-audit. Every non-Q0 task must include the final `npm run build`
+   result with exit code 0; a failed, unavailable, or stale build transcript blocks `IMPLEMENTED - AWAITING
+   ORCHESTRATOR REVIEW` and all approval decisions. `tsc=0` alone is not proof of build integrity, UI behavior,
+   regression safety, or visual conformance. When a required check cannot run because of a sandbox, native-binary
+   mismatch, or timeout, record it as missing evidence and provide the owner exact native commands plus the expected
+   evidence; return `PARTIALLY IMPLEMENTED` or `BLOCKED`, never a confidence claim.
 
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a

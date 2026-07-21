@@ -104,10 +104,12 @@ Review implementation evidence, not the author's explanation.
 5. Check failure paths that are applicable to the task.
 6. Check regressions in affected components and consumers.
 7. Apply the selected QA profile from `docs/qa-profiles.md`.
-8. For UI work, compare the canonical UI decision record with the diff and rendered evidence. Reject copied local
+8. For every non-Q0 task, require a final `npm run build` transcript with exit code 0 for the reviewed diff. A
+   failed, unrun, or stale build is missing blocking evidence and cannot receive an approval decision.
+9. For UI work, compare the canonical UI decision record with the diff and rendered evidence. Reject copied local
    styles when `reuse` was available; require the shared source, canonical story, and registration when `extend` or
    `create canonical` was selected. A missing record or uncited "no story" claim is missing P1 evidence.
-9. Produce exactly one decision.
+10. Produce exactly one decision.
 
 Allowed decisions:
 

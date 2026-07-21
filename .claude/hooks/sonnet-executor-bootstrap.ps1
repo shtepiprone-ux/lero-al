@@ -32,6 +32,8 @@ try {
 $context = @"
 Lero.al Sonnet executor workflow is active for this session. The canonical execution skill below applies before any implementation claim. Opus is the sole reviewer and approval gate: Sonnet never approves or self-approves a task. Sonnet never emits, suggests, or runs mutating Git commands, including `git push`; only Opus may provide an owner-run push command after an approved review.
 
+NON-NEGOTIABLE BUILD GATE: for every non-Q0 task, run `npm run build` after the final edit and record the real zero-exit result before any completion claim. A failed or unrun build is `PARTIALLY IMPLEMENTED` or `BLOCKED`, never `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; send Opus the exact failure output.
+
 NON-NEGOTIABLE UI START GATE: before editing visible JSX, CSS, className, or style props, inspect canonical Mantine
 stories, component catalog, patterns, and the relevant primitive source; record 'reuse', 'extend', or 'create
 canonical' with the shared token/style path. Do not write a local style because a story was not checked. If no

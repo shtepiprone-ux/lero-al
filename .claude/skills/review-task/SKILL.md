@@ -21,7 +21,9 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
 2. Read `CLAUDE.md`, `docs/agent-contract.md`, `docs/orchestrator-role.md`, `docs/orchestrator-procedures.md`, `docs/rule-index.md`, `docs/qa-profiles.md`, and `docs/backlog.md`.
 3. Read the task-specific rule bundle and the QA profile named by the task. If the task selected the wrong profile, record that as a finding and review at the level required by the actual risk.
 4. Inspect the real diff, all changed files, affected callers, relevant tests and stories, and the session `Files Changed` table when available.
-5. Treat missing access, missing task context, missing diff, or missing required evidence as a review limitation. Do not fill it with assumptions.
+5. For every non-Q0 task, inspect the final `npm run build` zero-exit transcript against the reviewed diff. A missing,
+   failed, or stale build transcript is a blocking evidence gap; do not approve until the current build passes.
+6. Treat missing access, missing task context, missing diff, or missing required evidence as a review limitation. Do not fill it with assumptions.
 
 When a task-required validation cannot run because of a sandbox, missing native binary, timeout, or comparable
 environment limit, provide an owner-native validation handoff before the final decision. For every unrun check:

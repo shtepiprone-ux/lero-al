@@ -141,10 +141,11 @@ Approval requires:
 3. Session "Files Changed" table matches the real diff.
 4. Applicable positive and negative flows verified.
 5. Selected QA profile evidence present.
-6. Critical-flow regression proof present when applicable.
-7. No unresolved P0/P1/P2 findings.
-8. Presentational-primitive, canonical-first, and source-of-truth gates from the selected task bundle are satisfied.
-9. For UI work, the canonical UI decision record matches the real diff: reused sources are consumed without copied
+6. For every non-Q0 task, the final `npm run build` transcript is current for the reviewed diff and exits 0.
+7. Critical-flow regression proof present when applicable.
+8. No unresolved P0/P1/P2 findings.
+9. Presentational-primitive, canonical-first, and source-of-truth gates from the selected task bundle are satisfied.
+10. For UI work, the canonical UI decision record matches the real diff: reused sources are consumed without copied
    styles; extensions and new canonical sources have their canonical stories and required registrations in the same
    diff; no component-local hardcode is disguised as a scanner exception.
 

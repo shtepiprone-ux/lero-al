@@ -95,12 +95,14 @@ returned task.
 Before reporting any task complete, Sonnet 4.6 MUST run the checks required by the selected QA profile, in order,
 and paste the output in the session log:
 
-1. **Profile-selected build + typecheck gate:**
+1. **Production-build + typecheck gate:**
    - Source changes: `npx tsc --noEmit` -> 0 errors.
-   - Non-trivial product changes (server actions, routes, schema, shared primitives): `npm run build` when the
-     selected profile or kickoff requires it.
+   - Every non-Q0 task: after the final edit, `npm run build` -> exit code 0. This is mandatory for small, isolated,
+     and non-UI product changes too; the selected QA profile cannot waive it.
    - Q0 docs/governance-only changes: markdown/reference/integrity checks; no product build unless a referenced
      command or product configuration changed.
+   - If the build fails or cannot run, paste the actual output, report `PARTIALLY IMPLEMENTED` or `BLOCKED`, and stop.
+     Never write a completion claim, green self-validation verdict, or `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.
 
 2. **Acceptance-criteria self-audit (mandatory for every task — paste the table into the session log):**
 
@@ -835,8 +837,9 @@ Acceptance criteria:
 - <Literal behavioral AC>
 - Existing working controls/flows are preserved unless explicitly removed by this kickoff.
 - 0 new lint errors / 0 new warnings when lint applies to the touched scope.
-- Source changes: `npx tsc --noEmit` -> 0 errors. Non-trivial product changes: `npm run build` passes when
-  required by the selected QA profile. Q0 docs/governance-only work uses markdown/reference/integrity checks.
+- Source changes: `npx tsc --noEmit` -> 0 errors. Every non-Q0 task: the final `npm run build` exits 0; a failed or
+  unrun build requires `PARTIALLY IMPLEMENTED` or `BLOCKED`. Q0 docs/governance-only work uses markdown/reference/
+  integrity checks.
 - Relevant governance checks pass (only the ones for the scope changed).
 - All four locales (sq/en/uk/it) render correctly at runtime if UI/text changed.
 - Responsive evidence matches the selected QA profile in `docs/qa-profiles.md` if UI/layout changed.

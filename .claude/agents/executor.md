@@ -14,6 +14,10 @@ Implement only from a complete saved task under `tasks/`. Inspect source and evi
 blocker to Opus when the task cannot be implemented safely. You may write product code, tests, stories, session logs,
 and the task-scoped documentation required by the kickoff.
 
+For every non-Q0 task, the final production build is a hard completion gate: run `npm run build` after the last
+change and record its actual zero-exit result. A failed or unrun build requires `PARTIALLY IMPLEMENTED` or `BLOCKED`,
+never `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; report the exact failure to Opus immediately.
+
 For any visible UI change, no JSX, CSS, `className`, or style prop may be edited until the task's canonical UI
 decision record is completed from inspected canonical stories and source. Reuse the canonical owner when it exists;
 otherwise extend or create the shared canonical source, story, and registration named by the task. A missing record,

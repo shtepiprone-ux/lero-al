@@ -214,8 +214,8 @@ describe('ListingCard — horizontal branch (List view, MantineListingCardPatter
     // Favorite control (real FavoriteButton, inline — not dropped by the migration)
     expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument()
 
-    // No photo-count pill in the list row (the ported legacy design never had one)
-    expect(screen.queryByText('2')).not.toBeInTheDocument()
+    // Photo-count pill IS rendered in the list row (Task 656 — bottom-left, 2 fixture images)
+    expect(screen.getByText('2')).toBeInTheDocument()
   })
 
   it('reduced-price listing shows old price struck through + the price_reduced badge', () => {

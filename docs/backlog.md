@@ -7,6 +7,7 @@
 ## Last Session (2026-07-21)
 
 - **651–654 ✅ APPROVED + COMMITTED → archived** (651 unlayered-CSS doc-correction; 652 hero §6c `SegmentedControl`+bar; 653 `FavoriteButton` → Mantine; 654 `SaveToCollectionButton` trigger → Mantine — the listing-detail action row now unifies at 44px; **Homepage render tree is now 100% Mantine**).
+- **656 — IMPLEMENTED, AWAITING ORCHESTRATOR REVIEW (supersedes 655).** Extracted copy-id into canonical `MantineCopyIdButton` (owns clipboard/copied-state + styling); `ListingCardPattern` story rebuilt to render only real canonical components (real `FavoriteButton` + `MantineCopyIdButton`, zero demo stand-ins); new `Mantine/Primitives/ListingCard` story statically imports the real production component; production `ListingCard.tsx` migrated + registered in `mantine-migration-scope.json`, coverage-proven. Owner-authorized mid-task expansion fixed 2 real defects the truthful Story surfaced: `FavoriteButton`'s `absolute` position was silently defeated by Mantine `ActionIcon`'s unlayered CSS (new `overlay` prop, inline-styled fix); list-layout footer row collapsed `location` to `width:0` at narrow widths + had no photo count — rebuilt as independent flex-wrap items (photo count now bottom-left in list; location/copy-id/date shed to next line left-aligned, last-first). Session: `docs/sessions/2026-07-21-task656-listingcard-canonical-story-foundation.md`.
 
 ## Open — needs action
 
@@ -28,7 +29,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 654. 641 applied + closed; 642 closed (company-field cluster done). 644–654 all APPROVED + COMMITTED + archived (homepage → Mantine chrome migration COMPLETE; 651 doc-correction; 652 hero §6c; 653 FavoriteButton; 654 SaveToCollectionButton trigger). 613/621/625/627/629/630 reviewed + committed + archived (2026-07-21 consolidation). Next free: 655. **Governance: `npm run build` exit 0 now mandatory for non-Q0 (`67340ff49`).**
+**Task numbering — last used: 656. 641 applied + closed; 642 closed (company-field cluster done). 644–654 all APPROVED + COMMITTED + archived (homepage → Mantine chrome migration COMPLETE; 651 doc-correction; 652 hero §6c; 653 FavoriteButton; 654 SaveToCollectionButton trigger). 655 superseded by 656 (ListingCard canonical Story-first foundation) — IMPLEMENTED, awaiting review; do not commit 655 separately. 613/621/625/627/629/630 reviewed + committed + archived (2026-07-21 consolidation). Next free: 657. **Governance: `npm run build` exit 0 now mandatory for non-Q0 (`67340ff49`).**
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).**
 

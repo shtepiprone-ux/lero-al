@@ -1,14 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { AppImage } from '@/components/ui/AppImage'
-import { MantineListingCardPattern } from '@/design-system/mantine/patterns'
+import { MantineListingCardPattern, MantineCopyIdButton } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
 import { LISTING_NEW_DAYS } from '@/modules/listings/constants'
 import { formatPrice, formatCount, formatListingDate } from '@/lib/formatters'
-import { Maximize2, Copy, Check } from 'lucide-react'
+import { Maximize2 } from 'lucide-react'
 import { getCardFeatures, type ListingSnapshot } from '@/modules/listings/domain/presentationEngine'
 import { isListingClosed, isListingArchived } from '@/modules/listings/domain'
 import type { ListingStatus } from '@/types/database'
@@ -110,17 +109,9 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const t = useTranslations('listing')
   const locale = useLocale()
   const badges = getBadges(listing)
-  const [idCopied, setIdCopied] = useState(false)
   const isClosed = isListingClosed(listing.status as ListingStatus)
   const closedLabel = isClosed ? t(`action_disabled_${listing.status}` as 'action_disabled_sold' | 'action_disabled_rented') : undefined
-
-  function copyId(e: React.MouseEvent) {
-    e.preventDefault()
-    e.stopPropagation()
-    navigator.clipboard?.writeText(listing.id).catch(() => {})
-    setIdCopied(true)
-    setTimeout(() => setIdCopied(false), 1500)
-  }
+  const copyIdLabel = `#${listing.public_id ?? listing.id.slice(0, 8)}`
 
   const coverImage = listing.images?.find(img => img.is_cover) || listing.images?.[0]
   const imageCount = listing.images?.length ?? 0
@@ -184,21 +175,19 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
 
     const pricePerSqmStr = pricePerSqm ? `${formatPrice(pricePerSqm, activeCurrency, locale)} ${t('per_sqm')}` : undefined
 
+    // Copy-ID + date cluster — the canonical MantineCopyIdButton owns the clipboard write
+    // and the copied-state toggle internally; this container only supplies the real id,
+    // display label, and translated aria strings. Both flow left like every other text
+    // element in the row (no forced right-alignment) so they read naturally whether they
+    // share the location's line or shed onto their own (Task 656).
     const listFooterActions = (
       <>
-        <button
-          type="button"
-          onClick={copyId}
-          title={listing.id}
-          aria-label={idCopied ? t('id_copied') : t('copy_id')}
-          className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-        >
-          #{listing.public_id ?? listing.id.slice(0, 8)}
-          {idCopied
-            ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
-            : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
-          }
-        </button>
+        <MantineCopyIdButton
+          id={listing.id}
+          label={copyIdLabel}
+          copyLabel={t('copy_id')}
+          copiedLabel={t('id_copied')}
+        />
         <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
       </>
     )
@@ -224,6 +213,7 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           favorite={inlineFavorite}
           typeLabel={`${t(listing.listing_type)} · ${t(`property_type_${listing.property_type}`)}`}
           badges={patternBadges}
+          photoCount={imageCount}
           features={listFeatures}
           originalPriceStr={originalPriceStr}
           pricePerSqmStr={pricePerSqmStr}
@@ -262,7 +252,8 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
       onToggled={onFavoriteToggled}
       disabled={isClosed}
       disabledLabel={closedLabel}
-      className="absolute top-2 right-2 shadow-sm"
+      overlay
+      className="shadow-sm"
     />
   )
 
@@ -280,22 +271,17 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
 
   const pricePerSqmStr = pricePerSqm ? `${formatPrice(pricePerSqm, activeCurrency, locale)} ${t('per_sqm')}` : undefined
 
-  // Copy-ID + date cluster — carries its own state (idCopied), stays a passed node.
+  // Copy-ID + date cluster — the canonical MantineCopyIdButton owns the clipboard write
+  // and the copied-state toggle internally; this container only supplies the real id,
+  // display label, and translated aria strings.
   const footerActions = (
     <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-      <button
-        type="button"
-        onClick={copyId}
-        title={listing.id}
-        aria-label={idCopied ? t('id_copied') : t('copy_id')}
-        className="font-mono text-2xs text-muted-foreground/70 hover:text-muted-foreground transition-colors inline-flex items-center gap-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded"
-      >
-        #{listing.public_id ?? listing.id.slice(0, 8)}
-        {idCopied
-          ? <Check className="h-2.5 w-2.5 shrink-0 text-status-success" />
-          : <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
-        }
-      </button>
+      <MantineCopyIdButton
+        id={listing.id}
+        label={copyIdLabel}
+        copyLabel={t('copy_id')}
+        copiedLabel={t('id_copied')}
+      />
       <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
     </div>
   )

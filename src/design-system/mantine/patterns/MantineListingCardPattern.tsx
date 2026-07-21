@@ -78,7 +78,12 @@ export interface MantineListingCardPatternProps {
   badges?: MantineListingCardBadge[]
   /** Rotated centered overlay for closed listings (sold/rented). `layout='grid'` only — the ported legacy `layout='list'` design never had this (the badge already conveys sold/rented). */
   overlay?: MantineListingCardOverlay
-  /** Bottom-right photo count pill. `layout='grid'` only — the ported legacy `layout='list'` design never had this. Omit/0 -> no counter rendered. */
+  /**
+   * Photo count pill. Renders in both layouts (Task 656): `layout='grid'` → bottom-right
+   * (unchanged); `layout='list'` → bottom-left (owner-specified position, distinct from
+   * grid's bottom-right so it doesn't collide with the list row's own right-aligned footer
+   * meta). Omit/0 -> no counter rendered.
+   */
   photoCount?: number
   /** Icon+value feature row (rooms/area/floor/etc.). Renders in both layouts. */
   features?: MantineListingCardFeature[]
@@ -128,9 +133,10 @@ export function MantineListingCardPattern({
   // branch (Task 606): image-left fixed width row, info-right column. Reuses `styles.card`'s
   // hover/premium CSS (same guards as 'grid' — (hover:hover)/(pointer:fine) + reduced-motion) so
   // hover behavior is unified rather than re-deriving the legacy's own (cascade-layer-broken)
-  // Tailwind `hover:shadow-md`. `overlay`/`photoCount` are intentionally NOT rendered here — the
-  // ported legacy design never had them (the `badges` array already carries the sold/rented
-  // status); `onContact` CTA is likewise not rendered (legacy horizontal never had one).
+  // Tailwind `hover:shadow-md`. `overlay` is intentionally NOT rendered here — the ported legacy
+  // design never had it (the `badges` array already carries the sold/rented status);
+  // `onContact` CTA is likewise not rendered (legacy horizontal never had one). `photoCount`
+  // IS rendered (Task 656 — bottom-left, see below).
   if (layout === 'list') {
     return (
       <Card
@@ -159,6 +165,13 @@ export function MantineListingCardPattern({
                   {b.label}
                 </Badge>
               ))}
+            </div>
+          )}
+
+          {!!photoCount && photoCount > 0 && (
+            <div className="absolute bottom-2 left-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
+              <Camera className="h-3 w-3" />
+              {photoCount}
             </div>
           )}
         </div>
@@ -200,16 +213,34 @@ export function MantineListingCardPattern({
                 ))}
               </div>
             )}
-            <div className="flex items-center justify-between mt-1 text-xs text-muted-foreground">
-              {data.location ? (
-                <span className="flex items-center gap-1 truncate">
+            {/*
+              Location + footer actions (copy-id, date) share ONE wrapping row (Task 656 fix
+              — owner-caught regression). Each is an independent flex item — never a single
+              non-wrapping `shrink-0` cluster — so when all of them don't fit on one line, they
+              shed to the next line starting from the LAST one (date first, then copy-id): the
+              browser's native flex-wrap placement order, no custom measurement needed. All
+              three flow left, same as every other text element in this card (title, price,
+              features) — no forced right-alignment: an earlier draft pushed copy-id right via
+              `ml-auto` so it stayed clustered with date when both fit next to location, but that
+              same margin also yanked a LONE wrapped copy-id to the row's right edge once it had
+              shed onto its own line, which read as a stray hardcoded position (owner-caught).
+              Previously `location` used `truncate` inside a NON-wrapping row next to a
+              `shrink-0` sibling: per spec, `overflow:hidden` makes a flex item's automatic
+              min-width resolve to 0, so `location` silently collapsed to `width:0` (invisible)
+              instead of truncating or wrapping, whenever the row was too narrow for both
+              (verified via rendered computed-style inspection: `location` span computed
+              `width: 0px` at 320px while the footer cluster alone needed more width than the
+              row had). `shrink-0` + `max-w-full` on the location item now caps it against the
+              row's own full width without letting sibling competition crush it to zero.
+            */}
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1 text-xs text-muted-foreground">
+              {data.location && (
+                <span className="flex items-center gap-1 min-w-0 max-w-full shrink-0">
                   <MapPin className="h-3 w-3 shrink-0" />
-                  {data.location}
+                  <span className="truncate min-w-0">{data.location}</span>
                 </span>
-              ) : <span />}
-              <span className="ml-auto shrink-0 pl-2 flex items-center gap-2">
-                {footerActions}
-              </span>
+              )}
+              {footerActions}
             </div>
           </div>
         </div>

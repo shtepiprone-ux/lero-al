@@ -4,5 +4,6 @@
   "src/components/layout/MobileNavDrawer.tsx",
   "src/components/layout/UserMenu.tsx",
   "src/components/shared/HeroSearchView.tsx",
-  "src/components/layout/FooterView.tsx"
+  "src/components/layout/FooterView.tsx",
+  "src/modules/listings/components/ListingCard.tsx"
 ]

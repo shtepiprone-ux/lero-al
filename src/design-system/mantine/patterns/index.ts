@@ -89,6 +89,9 @@ export type { MantineDrawerProps } from './MantineDrawer'
 export { MantineCountButton } from './MantineCountButton'
 export type { MantineCountButtonProps } from './MantineCountButton'
 
+export { MantineCopyIdButton } from './MantineCopyIdButton'
+export type { MantineCopyIdButtonProps } from './MantineCopyIdButton'
+
 export { MantineTooltip } from './MantineTooltip'
 export type { MantineTooltipProps } from './MantineTooltip'
 

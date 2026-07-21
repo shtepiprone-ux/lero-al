@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition, useEffect, useRef } from 'react'
+import { useState, useTransition, useEffect, useRef, type CSSProperties } from 'react'
 import { useTranslations } from 'next-intl'
 import { Heart } from 'lucide-react'
 import { ActionIcon, Button } from '@mantine/core'
@@ -22,6 +22,25 @@ interface FavoriteButtonProps {
   shape?: 'icon' | 'pill'
   /** Canonical button size for pill shape. Has no effect on icon shape. */
   size?: 'default' | 'lg' | 'xl'
+  /**
+   * Task 656 (owner-caught regression, `Mantine/Primitives/ListingCard` canonical Story):
+   * grid-card floating top-right overlay position. Mantine `ActionIcon`'s own unlayered CSS
+   * (`@mantine/core/styles/ActionIcon.css` `.mantine-ActionIcon-root { position: relative }`)
+   * unconditionally beats a Tailwind `absolute top-2 right-2` className — Tailwind utilities
+   * live in the layered `@layer utilities`, and unlayered CSS always wins regardless of
+   * specificity or source order (the same cascade-layer trap already documented for
+   * background/color in this file). So the "absolute top-2/right-2" contract could never
+   * actually apply via className alone — verified via rendered computed-style inspection
+   * (`getComputedStyle(button).position` resolved to `'relative'`, not `'absolute'`) on both
+   * the `ListingCardPattern` story and the real production `ListingCard`. An inline `style`
+   * always wins over ANY external stylesheet rule for the same property regardless of cascade
+   * layer (same precedent as the color/background note below), so `overlay` inline-styles
+   * `position`/`top`/`right` instead of relying on the caller's className for those three
+   * properties. `top`/`right` use the theme's own `xs` spacing token (0.5rem/8px — matches the
+   * pre-fix `top-2`/`right-2` value exactly, zero invented number). Default `false` (list/
+   * inline usage, unaffected — `shrink-0 -mt-0.5 -mr-1` never needed `position:absolute`).
+   */
+  overlay?: boolean
 }
 
 // Task 653: pill-shape size → Mantine Button size, governing padding-x/font-size only.
@@ -35,7 +54,7 @@ interface FavoriteButtonProps {
 // touch-target rule project-wide). 'default'/'xl' are unexercised by any current consumer.
 const PILL_SIZE_MAP = { default: 'xs', lg: 'sm', xl: 'md' } as const
 
-export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon', size }: FavoriteButtonProps) {
+export function FavoriteButton({ listingId, isFavorited, className, onToggled, disabled = false, disabledLabel, shape = 'icon', size, overlay = false }: FavoriteButtonProps) {
   const tc = useTranslations('common')
   const { user, status } = useAuth()
   const [favorited, setFavorited] = useState(isFavorited)
@@ -114,6 +133,12 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
   // which lets `:hover` correctly cascade over the resting state.
   const icon = <Heart className={cn('h-4 w-4', !disabled && favorited && 'fill-current')} />
 
+  // See the `overlay` doc block above — inline style is the only mechanism that reliably wins
+  // over ActionIcon's own unlayered `position: relative`, for these 3 position-only properties.
+  const overlayStyle: CSSProperties | undefined = overlay
+    ? { position: 'absolute', top: 'var(--mantine-spacing-xs)', right: 'var(--mantine-spacing-xs)' }
+    : undefined
+
   const commonProps = {
     type: 'button' as const,
     onClick: handleClick,
@@ -128,6 +153,7 @@ export function FavoriteButton({ listingId, isFavorited, className, onToggled, d
     'data-fav-disabled': disabled ? 'true' : undefined,
     'data-pending': !disabled && isPending ? 'true' : undefined,
     className: cn(styles.control, className),
+    style: overlayStyle,
   }
 
   if (shape === 'icon') {

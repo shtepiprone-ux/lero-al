@@ -37,7 +37,13 @@ export interface AuthContextValue {
   refreshUser: () => void
 }
 
-const AuthContext = createContext<AuthContextValue>({
+/**
+ * Exported (Task 656) so a Storybook story can mount the real `ListingCard` under a
+ * mocked signed-in value via `<AuthContext.Provider value={...}>` — bypassing
+ * `AuthProvider`'s `AuthController`/Supabase-subscription wiring entirely, per the
+ * "no live Supabase client / no network calls in stories" governance rule.
+ */
+export const AuthContext = createContext<AuthContextValue>({
   user: null,
   status: 'initializing',
   loading: true,

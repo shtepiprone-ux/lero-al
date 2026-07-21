@@ -1,9 +1,9 @@
 'use client'
 
 import { useTranslations, useLocale } from 'next-intl'
+import { Skeleton, Title } from '@mantine/core'
 import { useFeaturedListings } from '@/modules/listings/hooks/useListings'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
-import { Skeleton } from '@/components/ui/skeleton'
 import { getImagePriority } from '@/lib/imageDelivery'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
@@ -12,13 +12,13 @@ import { useAuth } from '@/modules/auth/context/AuthContext'
 function CardSkeleton() {
   return (
     <div className="rounded-xl border bg-card overflow-hidden">
-      <Skeleton className="aspect-[4/3] w-full" />
+      <Skeleton style={{ aspectRatio: '4 / 3' }} />
       <div className="p-3 space-y-2">
-        <Skeleton className="h-3 w-20" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-4 w-3/4" />
-        <Skeleton className="h-5 w-32" />
-        <Skeleton className="h-3 w-full" />
+        <Skeleton height={12} width={80} />
+        <Skeleton height={16} />
+        <Skeleton height={16} width="75%" />
+        <Skeleton height={20} width={128} />
+        <Skeleton height={12} />
       </div>
     </div>
   )
@@ -40,7 +40,7 @@ export function FeaturedListings({ favoriteIds }: FeaturedListingsProps = {}) {
 
   const header = (
     <div className="flex items-center justify-between mb-6">
-      <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{t('featured')}</h2>
+      <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }}>{t('featured')}</Title>
       {!loading && listings.length > 0 && (
         <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />
       )}

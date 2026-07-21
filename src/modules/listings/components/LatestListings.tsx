@@ -1,9 +1,9 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { Skeleton } from '@mantine/core'
 import { useLatestListings } from '@/modules/listings/hooks/useListings'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
-import { Skeleton } from '@/components/ui/skeleton'
 import { getImagePriority } from '@/lib/imageDelivery'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
@@ -11,12 +11,12 @@ import { useAuth } from '@/modules/auth/context/AuthContext'
 function RowSkeleton() {
   return (
     <div className="flex flex-col rounded-xl border bg-card overflow-hidden">
-      <Skeleton className="w-full aspect-[4/3]" />
+      <Skeleton style={{ aspectRatio: '4 / 3' }} />
       <div className="p-3 space-y-2">
-        <Skeleton className="h-3 w-20" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-5 w-28" />
-        <Skeleton className="h-3 w-full" />
+        <Skeleton height={12} width={80} />
+        <Skeleton height={16} />
+        <Skeleton height={20} width={112} />
+        <Skeleton height={12} />
       </div>
     </div>
   )

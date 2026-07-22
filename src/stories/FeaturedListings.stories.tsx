@@ -11,8 +11,10 @@
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { useTranslations } from 'next-intl'
+import { Text } from '@mantine/core'
 import { StoryListingCard, makeStoryListings } from './StoryListingCard'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
+import { CardSkeleton } from '@/modules/listings/components/FeaturedListings'
 
 const meta: Meta = {
   title: 'System/FeaturedListings',
@@ -20,7 +22,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4. Header mirrors the real component\'s flex justify-between row with the ViewAllLink control; the control is shown unconditionally here (the fixtures have no loading/empty state) as the faithful analogue of the real `!loading && listings.length > 0` present branch.',
+        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4. Header mirrors the real component\'s flex justify-between row with the ViewAllLink control; the control is shown unconditionally here (the fixtures have no loading/empty state) as the faithful analogue of the real `!loading && listings.length > 0` present branch. `Loading` and `Empty` render the actual production `CardSkeleton`/`Text` markup imported from `FeaturedListings.tsx` (Task 657 R7 — no divergent stand-in).',
       },
     },
   },
@@ -36,6 +38,13 @@ function Header({ locale }: { locale: string }) {
       <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />
     </div>
   )
+}
+
+/** Mirrors FeaturedListings.tsx's `!listings.length` branch — same Mantine `Text` primitive
+ * and props, reusing the real production i18n key (no new/story-only key). */
+function EmptyMessage() {
+  const t = useTranslations('listing')
+  return <Text ta="center" c="var(--muted-foreground)" py="2rem">{t('no_premium_listings')}</Text>
 }
 
 export const Default: Story = {
@@ -86,4 +95,38 @@ export const LocaleStress: Story = {
       isRotated: false
     }
   }
+}
+
+export const Loading: Story = {
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="container-wide mx-auto px-4 py-8">
+        <Header locale={locale} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+          {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}
+        </div>
+      </div>
+    )
+  },
+
+  parameters: {
+    docs: { description: { story: 'Loading state — three skeleton cards rendered via the production `CardSkeleton` (Mantine `Box`/`Skeleton`), byte-identical to the real §8.3 grid loading branch.' } }
+  },
+}
+
+export const Empty: Story = {
+  render: (_, context) => {
+    const locale = (context?.globals?.locale as string) ?? 'en'
+    return (
+      <div className="container-wide mx-auto px-4 py-8">
+        <Header locale={locale} />
+        <EmptyMessage />
+      </div>
+    )
+  },
+
+  parameters: {
+    docs: { description: { story: 'Empty state — zero premium listings resolved; renders the production Mantine `Text` (centered, dimmed) used by the real `!listings.length` branch.' } }
+  },
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations, useLocale } from 'next-intl'
-import { Skeleton, Title } from '@mantine/core'
+import { Skeleton, Title, Box, Text } from '@mantine/core'
 import { useFeaturedListings } from '@/modules/listings/hooks/useListings'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
 import { getImagePriority } from '@/lib/imageDelivery'
@@ -9,18 +9,20 @@ import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 
-function CardSkeleton() {
+/** Skeleton card chrome for the loading grid — exported so `FeaturedListings.stories.tsx`
+ * can render this exact production markup (Task 657 R7, no divergent stand-in). */
+export function CardSkeleton() {
   return (
-    <div className="rounded-xl border bg-card overflow-hidden">
+    <Box className="rounded-xl border bg-card overflow-hidden">
       <Skeleton style={{ aspectRatio: '4 / 3' }} />
-      <div className="p-3 space-y-2">
+      <Box className="p-3 space-y-2">
         <Skeleton height={12} width={80} />
         <Skeleton height={16} />
         <Skeleton height={16} width="75%" />
         <Skeleton height={20} width={128} />
         <Skeleton height={12} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
@@ -62,7 +64,7 @@ export function FeaturedListings({ favoriteIds }: FeaturedListingsProps = {}) {
     return (
       <>
         {header}
-        <p className="text-center text-muted-foreground py-8">{t('no_premium_listings')}</p>
+        <Text ta="center" c="var(--muted-foreground)" py="2rem">{t('no_premium_listings')}</Text>
       </>
     )
   }

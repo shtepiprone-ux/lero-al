@@ -1,24 +1,26 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { Skeleton } from '@mantine/core'
+import { Skeleton, Box, Text } from '@mantine/core'
 import { useLatestListings } from '@/modules/listings/hooks/useListings'
 import { ListingCard } from '@/modules/listings/components/ListingCard'
 import { getImagePriority } from '@/lib/imageDelivery'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 
-function RowSkeleton() {
+/** Skeleton row chrome for the loading grid — exported so a `LatestListings` story can
+ * render this exact production markup (Task 657 R7, no divergent stand-in). */
+export function RowSkeleton() {
   return (
-    <div className="flex flex-col rounded-xl border bg-card overflow-hidden">
+    <Box className="flex flex-col rounded-xl border bg-card overflow-hidden">
       <Skeleton style={{ aspectRatio: '4 / 3' }} />
-      <div className="p-3 space-y-2">
+      <Box className="p-3 space-y-2">
         <Skeleton height={12} width={80} />
         <Skeleton height={16} />
         <Skeleton height={20} width={112} />
         <Skeleton height={12} />
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
@@ -45,7 +47,7 @@ export function LatestListings({ favoriteIds }: LatestListingsProps = {}) {
 
   if (!listings.length) {
     return (
-      <p className="text-center text-muted-foreground py-8">{t('no_listings')}</p>
+      <Text ta="center" c="var(--muted-foreground)" py="2rem">{t('no_listings')}</Text>
     )
   }
 

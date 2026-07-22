@@ -6,6 +6,13 @@
 
 ## Last Session (2026-07-22)
 
+- **660 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Q0, read-only).** Brand-color oklch(globals.css)↔hex(theme.ts)
+  drift audit: every `--brand-*` shade computed from spec (light+dark), cross-checked against its own comment and
+  the `theme.ts` tuple — zero exact hex matches; brand-700 light confirmed `#D25656` (matches Task 659), brand-700
+  dark `#F04C54`. Found the dark-mode `--accent`/`--accent-foreground`/`--destructive`/`--chart-4` hardcodes are not
+  wired to `--brand-*` at all. Recommends correcting the oklch scale to the declared `#EC5447` (Q3/Q4 follow-up, not
+  decided here). No code/token/comment changed. Evidence: `docs/governance-reports/2026-07-22-task660-brand-color-oklch-hex-drift-audit.md`, `docs/sessions/2026-07-22-task660-brand-color-oklch-hex-drift-audit.md`.
+
 - **658 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW.** `MantineListingCardPattern.tsx` (grid+list) +
   `ListingCard.tsx` container: full internal-chrome de-Tailwind → Mantine `Box`/`Group`/`Stack`/
   `Center`/`Text`, byte-identical rendering (documented className carve-outs retained per kickoff
@@ -47,7 +54,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 659 (IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW, not yet archived; 658/657 also IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW, not yet archived — **BACKLOG LIMIT BREACH: file at/over the 80-line hard cap, consolidate 657/658/659 to archive at next review**). 641 applied + closed; 642 closed (company-field cluster done). 644–654 + 656 all APPROVED + COMMITTED + archived (homepage → Mantine chrome migration COMPLETE; 651 doc-correction; 652 hero §6c; 653 FavoriteButton; 654 SaveToCollectionButton trigger; 656 listing-card canonical Story-first foundation `1e1a06756`). 655 RETIRED/VOID (incorrectly-created task, no code shipped — superseded+reverted by 656). 613/621/625/627/629/630 reviewed + committed + archived (2026-07-21 consolidation). Next free: 660. **Governance: `npm run build` exit 0 now mandatory for non-Q0 (`67340ff49`).**
+**Task numbering — last used: 660 (IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW, not yet archived; 659/658/657 also IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW, not yet archived — **BACKLOG LIMIT BREACH: file at/over the 80-line hard cap, consolidate 657/658/659/660 to archive at next review**). 641 applied + closed; 642 closed (company-field cluster done). 644–654 + 656 all APPROVED + COMMITTED + archived (homepage → Mantine chrome migration COMPLETE; 651 doc-correction; 652 hero §6c; 653 FavoriteButton; 654 SaveToCollectionButton trigger; 656 listing-card canonical Story-first foundation `1e1a06756`). 655 RETIRED/VOID (incorrectly-created task, no code shipped — superseded+reverted by 656). 613/621/625/627/629/630 reviewed + committed + archived (2026-07-21 consolidation). Next free: 660. **Governance: `npm run build` exit 0 now mandatory for non-Q0 (`67340ff49`).**
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).**
 

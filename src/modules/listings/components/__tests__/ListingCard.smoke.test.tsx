@@ -224,7 +224,10 @@ describe('ListingCard — horizontal branch (List view, MantineListingCardPatter
     expect(screen.getByText('80,000 EUR')).toBeInTheDocument()
     const oldPrice = screen.getByText('92,000 EUR')
     expect(oldPrice).toBeInTheDocument()
-    expect(oldPrice).toHaveClass('line-through')
+    // Task 658: list-branch priceOld migrated to Mantine `Text td="line-through"` (a CSS
+    // style prop, not the literal Tailwind `.line-through` class) — same computed-style
+    // assertion already used for the vertical branch's equivalent case above.
+    expect(oldPrice.style.textDecoration || getComputedStyle(oldPrice).textDecorationLine).toMatch(/line-through/)
     expect(screen.getByText('Price reduced')).toBeInTheDocument()
   })
 

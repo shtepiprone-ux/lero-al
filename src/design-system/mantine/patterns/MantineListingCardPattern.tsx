@@ -1,7 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { Card, Text, Group, Stack, Button, Badge } from '@mantine/core'
+import { Card, Text, Group, Stack, Button, Badge, Box, Center } from '@mantine/core'
 import { Camera, MapPin } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import styles from './MantineListingCardPattern.module.css'
@@ -109,6 +109,22 @@ export interface MantineListingCardPatternProps {
  *
  * Matches the product listing card surface (src/modules/listings/components/ListingCard.tsx
  * — the vertical branch is a thin data-mapper over this pattern).
+ *
+ * Task 658 note (internal chrome de-Tailwind): every raw `<div>/<span>/<p>` structural element
+ * below is now a Mantine primitive (`Box`/`Group`/`Stack`/`Center`/`Text`). Mantine's own
+ * component CSS (`@mantine/core/styles.css`) is imported UNLAYERED in this project
+ * (`src/app/layout.tsx`) and always wins over a Tailwind `@layer utilities` class for any
+ * property Mantine's own stylesheet declares on that exact component (the cascade-layer trap
+ * already documented for `Card`/`Badge`/`ActionIcon` in Task 602/606/612/616/617) — so:
+ *   - `Group`/`Stack` always receive explicit `gap`/`wrap`/`justify`/`align` props (their own
+ *     CSS sets unconditional unlayered fallbacks for all four — a kept Tailwind class for any
+ *     of them would be silently defeated).
+ *   - `Text` always receives an explicit `size`/`fw` (or the `inherit` prop) whenever the
+ *     desired value isn't its own default (font-size/line-height/font-weight have unlayered
+ *     fallbacks; only `color` safely falls through to the inherited value when no `c` is set).
+ *   - Elements needing a token-less carve-out class (`text-2xs`, opacity tints, overlay/photo-
+ *     counter tints, `group-hover:`) use `Box` (no component-level CSS of its own — a className
+ *     on `Box` behaves exactly as it did on the raw element), never `Text`, to avoid the same trap.
  */
 export function MantineListingCardPattern({
   data,
@@ -152,66 +168,78 @@ export function MantineListingCardPattern({
         )}
         style={{ cursor: onClick ? 'pointer' : undefined }}
       >
-        <div
+        <Box
           className={cn(styles.imageSection, 'relative w-32 shrink-0 sm:w-44 self-stretch min-h-20 overflow-hidden bg-muted')}
           onClick={() => onClick?.(data.id)}
         >
           {image}
 
           {badges && badges.length > 0 && (
-            <div className="absolute top-2 left-2 flex flex-col gap-1">
+            <Box className="absolute top-2 left-2 flex flex-col gap-1">
               {badges.map(b => (
                 <Badge key={b.label} variant="filled" color={b.color}>
                   {b.label}
                 </Badge>
               ))}
-            </div>
+            </Box>
           )}
 
           {!!photoCount && photoCount > 0 && (
-            <div className="absolute bottom-2 left-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
+            <Group gap={4} className="absolute bottom-2 left-2 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
               <Camera className="h-3 w-3" />
               {photoCount}
-            </div>
+            </Group>
           )}
-        </div>
+        </Box>
 
-        <div className="flex flex-col justify-between py-3 pr-3 flex-1 min-w-0" onClick={() => onClick?.(data.id)}>
-          <div>
-            <div className="flex items-start justify-between gap-1 mb-1">
-              {typeLabel && <p className="text-xs text-muted-foreground">{typeLabel}</p>}
-              {favorite}
-            </div>
-            <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
-              {data.title}
-            </h3>
-          </div>
-          <div>
-            <div className="w-full mt-2">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 justify-between">
-                <div className="flex flex-wrap items-baseline gap-2">
-                  <span className="text-base font-bold text-primary whitespace-nowrap">{data.price}</span>
-                  {data.priceOld && (
-                    <span className="text-xs text-muted-foreground line-through whitespace-nowrap">{data.priceOld}</span>
-                  )}
-                </div>
-                {pricePerSqmStr && (
-                  <span className="text-xs text-muted-foreground whitespace-nowrap">{pricePerSqmStr}</span>
-                )}
-              </div>
-              {originalPriceStr && (
-                <span className="text-2xs text-muted-foreground/70 leading-tight">{originalPriceStr}</span>
+        <Stack justify="space-between" gap={0} py="sm" pr="sm" className="flex-1 min-w-0" onClick={() => onClick?.(data.id)}>
+          <Box>
+            <Group justify="space-between" align="flex-start" wrap="nowrap" gap={4} mb={4}>
+              {typeLabel && (
+                <Text size="xs" c="var(--muted-foreground)">
+                  {typeLabel}
+                </Text>
               )}
-            </div>
+              {favorite}
+            </Group>
+            <Text component="h3" fw={600} size="sm" lineClamp={2} className="leading-snug group-hover:[--text-color:var(--primary)] transition-colors">
+              {data.title}
+            </Text>
+          </Box>
+          <Box>
+            <Box className="w-full mt-2">
+              <Group justify="space-between" align="baseline" wrap="wrap" gap="0.125rem 0.75rem">
+                <Group align="baseline" wrap="wrap" gap="xs">
+                  <Text component="span" size="md" fw={700} c="brand" style={{ whiteSpace: 'nowrap' }}>
+                    {data.price}
+                  </Text>
+                  {data.priceOld && (
+                    <Text component="span" size="xs" c="var(--muted-foreground)" td="line-through" style={{ whiteSpace: 'nowrap' }}>
+                      {data.priceOld}
+                    </Text>
+                  )}
+                </Group>
+                {pricePerSqmStr && (
+                  <Text component="span" size="xs" c="var(--muted-foreground)" style={{ whiteSpace: 'nowrap' }}>
+                    {pricePerSqmStr}
+                  </Text>
+                )}
+              </Group>
+              {originalPriceStr && (
+                <Box component="span" className="text-2xs text-muted-foreground/70 leading-tight">
+                  {originalPriceStr}
+                </Box>
+              )}
+            </Box>
             {features && features.length > 0 && (
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5 text-xs text-muted-foreground">
+              <Group gap="0.25rem 0.75rem" wrap="wrap" mt={6} className="text-xs text-muted-foreground">
                 {features.map((f, i) => (
-                  <span key={i} className="flex items-center gap-1">
+                  <Group key={i} component="span" gap={4} wrap="nowrap">
                     {f.icon}
                     {f.value}
-                  </span>
+                  </Group>
                 ))}
-              </div>
+              </Group>
             )}
             {/*
               Location + footer actions (copy-id, date) share ONE wrapping row (Task 656 fix
@@ -232,18 +260,24 @@ export function MantineListingCardPattern({
               `width: 0px` at 320px while the footer cluster alone needed more width than the
               row had). `shrink-0` + `max-w-full` on the location item now caps it against the
               row's own full width without letting sibling competition crush it to zero.
+              Task 658: this row is now a Mantine `Group` — its `gap`/`wrap` are explicit props
+              (Group's own CSS sets unlayered fallbacks for both; a bare `gap-x-2 gap-y-1`
+              className would be silently defeated) reproducing the same asymmetric 4px/8px
+              row/column gap via the CSS `gap` shorthand's two-value form.
             */}
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mt-1 text-xs text-muted-foreground">
+            <Group wrap="wrap" gap="0.25rem 0.5rem" mt={4} className="text-xs text-muted-foreground">
               {data.location && (
-                <span className="flex items-center gap-1 min-w-0 max-w-full shrink-0">
+                <Group component="span" gap={4} wrap="nowrap" className="min-w-0 max-w-full shrink-0">
                   <MapPin className="h-3 w-3 shrink-0" />
-                  <span className="truncate min-w-0">{data.location}</span>
-                </span>
+                  <Text component="span" inherit truncate className="min-w-0">
+                    {data.location}
+                  </Text>
+                </Group>
               )}
               {footerActions}
-            </div>
-          </div>
-        </div>
+            </Group>
+          </Box>
+        </Stack>
       </Card>
     )
   }
@@ -265,31 +299,31 @@ export function MantineListingCardPattern({
         {image}
 
         {badges && badges.length > 0 && (
-          <div className="absolute top-2 left-2 flex flex-wrap gap-1">
+          <Box className="absolute top-2 left-2 flex flex-wrap gap-1">
             {badges.map(b => (
               <Badge key={b.label} variant="filled" color={b.color}>
                 {b.label}
               </Badge>
             ))}
-          </div>
+          </Box>
         )}
 
         {overlay && (
-          <div className="absolute inset-0 bg-overlay/30 flex items-center justify-center">
-            <span className={cn(
+          <Center pos="absolute" inset={0} className="bg-overlay/30">
+            <Box component="span" className={cn(
               'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
               overlay.className,
             )}>
               {overlay.label}
-            </span>
-          </div>
+            </Box>
+          </Center>
         )}
 
         {!!photoCount && photoCount > 0 && (
-          <div className="absolute bottom-2 right-2 flex items-center gap-1 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
+          <Group gap={4} className="absolute bottom-2 right-2 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
             <Camera className="h-3 w-3" />
             {photoCount}
-          </div>
+          </Group>
         )}
 
         {favorite}
@@ -301,9 +335,9 @@ export function MantineListingCardPattern({
             {typeLabel}
           </Text>
         )}
-        <h3 className="font-semibold text-sm leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+        <Text component="h3" fw={600} size="sm" lineClamp={2} className="leading-snug group-hover:[--text-color:var(--primary)] transition-colors">
           {data.title}
-        </h3>
+        </Text>
         <Group gap={4} wrap="nowrap">
           <MapPin className="h-3 w-3 shrink-0 text-muted-foreground" />
           <Text size="xs" c="dimmed" truncate className="min-w-0">
@@ -311,14 +345,14 @@ export function MantineListingCardPattern({
           </Text>
         </Group>
         {features && features.length > 0 && (
-          <div className="flex items-center gap-3 text-xs text-muted-foreground border-t pt-2 flex-wrap">
+          <Group gap="sm" wrap="wrap" className="text-xs text-muted-foreground border-t pt-2">
             {features.map((f, i) => (
-              <span key={i} className="flex items-center gap-1">
+              <Group key={i} component="span" gap={4} wrap="nowrap">
                 {f.icon}
                 {f.value}
-              </span>
+              </Group>
             ))}
-          </div>
+          </Group>
         )}
         {data.priceOld ? (
           <Group gap={6} align="baseline" mt={4} wrap="wrap">
@@ -335,10 +369,12 @@ export function MantineListingCardPattern({
           </Text>
         )}
         {(originalPriceStr || pricePerSqmStr) && (
-          <div className="flex items-center justify-between gap-2 text-2xs text-muted-foreground/70">
-            <span>{originalPriceStr}</span>
-            {pricePerSqmStr && <span className="ml-auto whitespace-nowrap">{pricePerSqmStr}</span>}
-          </div>
+          <Group justify="space-between" gap={8} className="text-2xs text-muted-foreground/70">
+            <Box component="span">{originalPriceStr}</Box>
+            {pricePerSqmStr && (
+              <Box component="span" className="ml-auto whitespace-nowrap">{pricePerSqmStr}</Box>
+            )}
+          </Group>
         )}
         {footerActions}
       </Stack>

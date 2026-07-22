@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
+import { Center, Group, Text } from '@mantine/core'
 import { AppImage } from '@/components/ui/AppImage'
 import { MantineListingCardPattern, MantineCopyIdButton } from '@/design-system/mantine/patterns'
 import type { ListingLayoutContext } from '@/lib/imageDelivery'
@@ -148,9 +149,9 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
     const thumbImage = (
       <AppImage variant="listing-thumb" src={coverImage?.url} alt={listing.title} priority={priority} predictive>
         {!coverImage && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <Center pos="absolute" inset={0}>
             <Maximize2 className="h-6 w-6 text-muted-foreground" />
-          </div>
+          </Center>
         )}
       </AppImage>
     )
@@ -188,7 +189,9 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
           copyLabel={t('copy_id')}
           copiedLabel={t('id_copied')}
         />
-        <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
+        <Text component="span" size="xs" c="var(--muted-foreground)" style={{ whiteSpace: 'nowrap' }}>
+          {formatListingDate(listing.created_at, locale)}
+        </Text>
       </>
     )
 
@@ -237,9 +240,9 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   const image = (
     <AppImage variant="listing" src={coverImage?.url} alt={listing.title} priority={priority} layoutContext={layoutContext} predictive>
       {!coverImage && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <Center pos="absolute" inset={0}>
           <Maximize2 className="h-8 w-8 text-muted-foreground" />
-        </div>
+        </Center>
       )}
     </AppImage>
   )
@@ -275,15 +278,17 @@ export function ListingCard({ listing, variant = 'vertical', onBeforeNavigate, d
   // and the copied-state toggle internally; this container only supplies the real id,
   // display label, and translated aria strings.
   const footerActions = (
-    <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
+    <Group justify="flex-end" gap="xs" wrap="nowrap" fz="xs" c="var(--muted-foreground)">
       <MantineCopyIdButton
         id={listing.id}
         label={copyIdLabel}
         copyLabel={t('copy_id')}
         copiedLabel={t('id_copied')}
       />
-      <span className="whitespace-nowrap">{formatListingDate(listing.created_at, locale)}</span>
-    </div>
+      <Text component="span" size="xs" c="var(--muted-foreground)" style={{ whiteSpace: 'nowrap' }}>
+        {formatListingDate(listing.created_at, locale)}
+      </Text>
+    </Group>
   )
 
   return (

@@ -6,27 +6,8 @@
 
 ## Last Session (2026-07-22)
 
-- **660 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW (Q0, read-only).** Brand-color oklch(globals.css)↔hex(theme.ts)
-  drift audit: every `--brand-*` shade computed from spec (light+dark), cross-checked against its own comment and
-  the `theme.ts` tuple — zero exact hex matches; brand-700 light confirmed `#D25656` (matches Task 659), brand-700
-  dark `#F04C54`. Found the dark-mode `--accent`/`--accent-foreground`/`--destructive`/`--chart-4` hardcodes are not
-  wired to `--brand-*` at all. Recommends correcting the oklch scale to the declared `#EC5447` (Q3/Q4 follow-up, not
-  decided here). No code/token/comment changed. Evidence: `docs/governance-reports/2026-07-22-task660-brand-color-oklch-hex-drift-audit.md`, `docs/sessions/2026-07-22-task660-brand-color-oklch-hex-drift-audit.md`.
-
-- **658 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW.** `MantineListingCardPattern.tsx` (grid+list) +
-  `ListingCard.tsx` container: full internal-chrome de-Tailwind → Mantine `Box`/`Group`/`Stack`/
-  `Center`/`Text`, byte-identical rendering (documented className carve-outs retained per kickoff
-  §2/§10). **Found+fixed a real cascade-layer regression:** the title's `group-hover:text-primary`
-  went inert once migrated to Mantine `Text` (Mantine's own unlayered `color` rule always beats
-  Tailwind's layered hover utility) — fixed via `group-hover:[--text-color:var(--primary)]`
-  (targets the custom property Mantine's rule reads, no layer conflict), verified before/after via
-  real Playwright hover. Also fixed 1 pre-existing stale test assertion (predates this task,
-  contradicted already-shipped Task 656 behavior). `module.css` untouched; both canonical Stories
-  re-verified with zero divergence (no edit needed). Evidence: `docs/sessions/2026-07-22-task658-listingcard-pattern-fullchrome-mantine-migration.md`
-  — `screenshots:assert --mantine-only` 1005/1048 PASS/0 FAIL/43 AMBIGUOUS (zero involving this
-  task's stories), regression suite 17/17 (+606/606 broader), `npm run build` exit 0.
-
-- **657 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW.** Homepage `FeaturedListings`/`LatestListings`: last raw-HTML (empty-state `<p>`, `CardSkeleton`/`RowSkeleton` `<div>` wrappers) → Mantine `Text`/`Box`; skeleton wrappers keep their exact Tailwind className (radius/border/bg have no matching Mantine token — Task 650-class mismatch, resolved by not translating). Both skeleton subcomponents now exported; `FeaturedListings.stories.tsx` gained `Loading`/`Empty`; new `LatestListings.stories.tsx` (`Default`/`LocaleStress`/`Loading`/`Empty`). Evidence: `docs/sessions/2026-07-22-task657-homepage-featuredlatest-emptyskeleton-mantine.md` (120-cell rendered matrix, computed-style parity, `npm run build` exit 0).
+- **657 / 658 / 659 / 660 ✅ APPROVED + COMMITTED → archived** (orchestrator reviews 2026-07-22): 657 homepage `FeaturedListings`/`LatestListings` empty-state + skeleton wrappers → Mantine `Text`/`Box`; 658 `MantineListingCardPattern`+`ListingCard` internal-chrome de-Tailwind (+ found/fixed a real `group-hover` cascade-layer regression); 659 homepage route shell de-Tailwind + hero gradient → **solid `--primary` coral** (subtitle bumped to clear AA-large); 660 (Q0) brand-color **drift audit** — CSS `--brand-*` render `#D25656`-family, NOT the declared `#EC5447` that Mantine `brand[7]` still renders. Detail → archive ledger.
+- **⚠️ Open owner decision (from 660):** correct the `globals.css` oklch brand scale to render the declared `#EC5447` (app-wide primary shift, Q3/Q4 follow-up) vs accept `#D25656`. Audit: `docs/governance-reports/2026-07-22-task660-brand-color-oklch-hex-drift-audit.md`.
 
 ## Prior Session (2026-07-21)
 
@@ -54,7 +35,7 @@
 | 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
 
-**Task numbering — last used: 660 (IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW, not yet archived; 659/658/657 also IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW, not yet archived — **BACKLOG LIMIT BREACH: file at/over the 80-line hard cap, consolidate 657/658/659/660 to archive at next review**). 641 applied + closed; 642 closed (company-field cluster done). 644–654 + 656 all APPROVED + COMMITTED + archived (homepage → Mantine chrome migration COMPLETE; 651 doc-correction; 652 hero §6c; 653 FavoriteButton; 654 SaveToCollectionButton trigger; 656 listing-card canonical Story-first foundation `1e1a06756`). 655 RETIRED/VOID (incorrectly-created task, no code shipped — superseded+reverted by 656). 613/621/625/627/629/630 reviewed + committed + archived (2026-07-21 consolidation). Next free: 660. **Governance: `npm run build` exit 0 now mandatory for non-Q0 (`67340ff49`).**
+**Task numbering — last used: 660.** 641 applied + closed; 642 closed (company-field cluster done). 644–654 + 656 all APPROVED + COMMITTED + archived (homepage → Mantine chrome migration COMPLETE; 651 doc-correction; 652 hero §6c; 653 FavoriteButton; 654 SaveToCollectionButton trigger; 656 listing-card canonical Story-first foundation `1e1a06756`). **657/658/659/660 APPROVED + COMMITTED + archived (2026-07-22 consolidation): 657 homepage empty/skeleton→Mantine (`25447868f`); 658 listing-card internal chrome (`c7329139d`); 659 homepage shell + solid-coral hero (`6efce9069`); 660 brand-color drift audit (`e9f2af416`) → pending oklch-correction owner decision.** 655 RETIRED/VOID (incorrectly-created task, no code shipped — superseded+reverted by 656). 613/621/625/627/629/630 reviewed + committed + archived (2026-07-21 consolidation). Next free: 661. **Governance: `npm run build` exit 0 now mandatory for non-Q0 (`67340ff49`).**
 622/623 not used as plain numbers — `Q0R`/`623R` are lettered task IDs outside the plain numeric sequence;
 flagging for orchestrator reconciliation. 628 reserved for the SB10 lint-debt fix (Task 627's follow-up).**
 

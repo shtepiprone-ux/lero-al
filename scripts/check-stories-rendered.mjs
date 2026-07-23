@@ -221,6 +221,12 @@ const ASSERT_STORIES = [
   // 320/375/390 × sq/en/uk/it without needing the full Phase-2 global-enumeration sweep.
   { id: 'planted-visualviolations--scroll-clipped-overlap', label: 'Planted/ScrollClippedOverlap', anchors: [{ type: 'testid', value: 'planted-scroll-footer', label: 'scroll-footer' }] },
   { id: 'planted-visualviolations--scroll-visible-overlap', label: 'Planted/ScrollVisibleOverlap', anchors: [{ type: 'testid', value: 'planted-scroll-visible-a', label: 'scroll-visible-a' }] },
+  // Task 663 — backdrop-gated downgrade of the Check-4 cross-overlay-boundary ambiguous-overlap
+  // branch. OverlayBackdropCovered: expected PASS (a real, verified `.mantine-Overlay-root`
+  // backdrop covers the background element — provably unreachable). OverlayNoBackdrop: expected
+  // still `ambiguous-overlap` (no covering backdrop — non-weakening proof, R2).
+  { id: 'planted-visualviolations--overlay-backdrop-covered', label: 'Planted/OverlayBackdropCovered', anchors: [{ type: 'testid', value: 'planted-backdrop-covered-sheet-btn', label: 'backdrop-covered-sheet-btn' }] },
+  { id: 'planted-visualviolations--overlay-no-backdrop',      label: 'Planted/OverlayNoBackdrop',      anchors: [{ type: 'testid', value: 'planted-no-backdrop-sheet-btn', label: 'no-backdrop-sheet-btn' }] },
 ];
 
 // ── Loader-allowlist: story IDs whose intended content IS a loading/skeleton state ──

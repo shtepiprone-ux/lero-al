@@ -2373,7 +2373,12 @@
       "listing_detail_section_guest": "Guest viewer — sign-in CTA, contact actions hidden",
       "listing_detail_section_deleted": "Owner account deleted — no contact actions",
       "listing_detail_gallery_section_default": "Multi-image gallery — click the main photo or a thumbnail to open the Mantine lightbox",
-      "listing_detail_gallery_section_empty": "No photos — placeholder state, not clickable"
+      "listing_detail_gallery_section_empty": "No photos — placeholder state, not clickable",
+      "home_section_caption_default": "Default — transparent background",
+      "home_section_caption_muted": "Muted — 30% tinted band background",
+      "home_section_caption_brandfade": "Brand fade — diagonal gradient background",
+      "home_section_body": "Vertical rhythm (48 / 64 / 80px) and background are token-driven; every band wraps its content in `.container-wide`.",
+      "home_section_cta": "View listings"
     }
   },
   "ui": {

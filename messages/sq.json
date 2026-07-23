@@ -2373,7 +2373,12 @@
       "listing_detail_section_guest": "Vizitor pa llogari — thirrje për identifikim, veprimet e kontaktit të fshehura",
       "listing_detail_section_deleted": "Llogaria e pronarit e fshirë — pa veprime kontakti",
       "listing_detail_gallery_section_default": "Galeri me shumë foto — kliko foton kryesore ose një miniaturë për të hapur lightbox-in Mantine",
-      "listing_detail_gallery_section_empty": "Pa foto — gjendje zëvendësuese, jo e klikueshme"
+      "listing_detail_gallery_section_empty": "Pa foto — gjendje zëvendësuese, jo e klikueshme",
+      "home_section_caption_default": "Parazgjedhur — sfond transparent",
+      "home_section_caption_muted": "E zbehur — sfond me nuancë 30%",
+      "home_section_caption_brandfade": "Zbehje e markës — sfond me gradient diagonal",
+      "home_section_body": "Ritmi vertikal (48 / 64 / 80px) dhe sfondi bazohen te tokena; çdo brez e mbështjell përmbajtjen në `.container-wide`.",
+      "home_section_cta": "Shiko listimet"
     }
   },
   "ui": {

@@ -16,6 +16,9 @@ export type { MantineResponsiveActionFooterProps, FooterAction } from './Mantine
 export { MantineCardGrid } from './MantineCardGrid'
 export type { MantineCardGridProps, CardGridItem } from './MantineCardGrid'
 
+export { MantineHomeSection } from './MantineHomeSection'
+export type { MantineHomeSectionProps, MantineHomeSectionVariant } from './MantineHomeSection'
+
 export { MantineDataTableToCards } from './MantineDataTableToCards'
 export type { MantineDataTableToCardsProps, TableColumn, TableRow, CardConfig } from './MantineDataTableToCards'
 

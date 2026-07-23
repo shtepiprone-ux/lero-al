@@ -279,6 +279,14 @@
      NOT in the --container-* namespace (avoids max-w-max keyword clash). */
   --width-page-max: 88rem;  /* 1408px — access via var(--width-page-max) or .container-wide */
 
+  /* Home section vertical rhythm (Task 662) — preserve-existing values, byte-identical to the
+     prior `py-12 md:py-16 2xl:py-20` Tailwind utility chain (48/64/80px). Consumed by
+     MantineHomeSection.module.css's own @media chain, including the 1536px step no Mantine
+     theme breakpoint reaches (theme.ts tops out at xxl=90em/1440px — see kickoff §3.3). */
+  --home-section-py-base: 3rem;   /* 48px — base */
+  --home-section-py-md:   4rem;   /* 64px — ≥768px */
+  --home-section-py-lg:   5rem;   /* 80px — ≥1536px */
+
   /* ── 8. Listing layout — narrowly-scoped semantic layout tokens ─ */
   /* Listing gallery frame heights — consumed ONLY at the 4 named listing gallery call sites. */
   /* Do NOT apply to any other gallery/image/card surface. (Task 405, Epic JJ §22.5) */

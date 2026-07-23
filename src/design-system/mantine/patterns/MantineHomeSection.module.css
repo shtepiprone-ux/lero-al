@@ -1,0 +1,50 @@
+/*
+ * MantineHomeSection.module.css — Task 662.
+ *
+ * Vertical rhythm MUST live here (a real CSS module with a `@media (min-width:1536px)` step),
+ * not in theme.ts inline styles or a Mantine responsive style prop: theme.ts's own breakpoints
+ * top out at xxl=90em (1440px) — there is no 1536px (`2xl`) Mantine breakpoint to bind a style
+ * prop to (kickoff §3.3, Task 659 precedent). `--home-section-py-*` (globals.css) reproduce the
+ * prior `py-12 md:py-16 2xl:py-20` Tailwind chain byte-for-byte (48/64/80px).
+ *
+ * `.muted`/`.brandFade` reproduce the prior `bg-muted/30` / `bg-gradient-to-br from-primary/10
+ * to-primary/5` Tailwind utilities' OWN compiled output (verified against the built
+ * `.next/static/css` bundle, Task 662): Tailwind v4 renders a bare alpha modifier as
+ * `color-mix(in oklab, <var> <pct>%, transparent)`, and `bg-gradient-to-br` sets
+ * `--tw-gradient-position: to bottom right in oklab` with default 0%/100% stop positions — the
+ * two color-mix stops below reproduce that exact computed `background-image` without the
+ * `--tw-gradient-*` custom-property machinery.
+ */
+
+.band {
+  content-visibility: auto;
+  padding-block: var(--home-section-py-base);
+}
+
+@media (min-width: 768px) {
+  .band {
+    padding-block: var(--home-section-py-md);
+  }
+}
+
+@media (min-width: 1536px) {
+  .band {
+    padding-block: var(--home-section-py-lg);
+  }
+}
+
+.muted {
+  background-color: color-mix(in oklab, var(--muted) 30%, transparent);
+}
+
+.brandFade {
+  /* Explicit 0%/100% stops (Tailwind's own --tw-gradient-from-position/-to-position defaults) —
+     without them the browser still PAINTS an identical gradient, but omits the stop position from
+     getComputedStyle's serialized string; keeping them here makes the computed `background-image`
+     byte-identical to the prior Tailwind output, not just visually equivalent (verified, Task 662). */
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    color-mix(in oklab, var(--primary) 10%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 5%, transparent) 100%
+  );
+}

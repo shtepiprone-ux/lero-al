@@ -2373,7 +2373,12 @@
       "listing_detail_section_guest": "Visitatore ospite — invito ad accedere, azioni di contatto nascoste",
       "listing_detail_section_deleted": "Account del proprietario eliminato — nessuna azione di contatto",
       "listing_detail_gallery_section_default": "Galleria multi-foto — clicca la foto principale o una miniatura per aprire il lightbox Mantine",
-      "listing_detail_gallery_section_empty": "Nessuna foto — stato segnaposto, non cliccabile"
+      "listing_detail_gallery_section_empty": "Nessuna foto — stato segnaposto, non cliccabile",
+      "home_section_caption_default": "Predefinito — sfondo trasparente",
+      "home_section_caption_muted": "Attenuato — sfondo con tinta al 30%",
+      "home_section_caption_brandfade": "Sfumatura del brand — sfondo con gradiente diagonale",
+      "home_section_body": "Il ritmo verticale (48 / 64 / 80px) e lo sfondo sono basati su token; ogni sezione racchiude il contenuto in `.container-wide`.",
+      "home_section_cta": "Vedi gli annunci"
     }
   },
   "ui": {

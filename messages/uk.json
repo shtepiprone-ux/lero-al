@@ -2373,7 +2373,12 @@
       "listing_detail_section_guest": "Гість — заклик увійти, дії контакту приховані",
       "listing_detail_section_deleted": "Обліковий запис власника видалено — дії контакту недоступні",
       "listing_detail_gallery_section_default": "Галерея з кількома фото — клацніть на головне фото або мініатюру, щоб відкрити лайтбокс Mantine",
-      "listing_detail_gallery_section_empty": "Без фото — стан-заглушка, не клікабельний"
+      "listing_detail_gallery_section_empty": "Без фото — стан-заглушка, не клікабельний",
+      "home_section_caption_default": "За замовчуванням — прозорий фон",
+      "home_section_caption_muted": "Приглушений — фон з 30% відтінком",
+      "home_section_caption_brandfade": "Градієнт бренду — діагональний градієнтний фон",
+      "home_section_body": "Вертикальний ритм (48 / 64 / 80px) і фон задаються токенами; кожна секція обгортає вміст у `.container-wide`.",
+      "home_section_cta": "Переглянути оголошення"
     }
   },
   "ui": {

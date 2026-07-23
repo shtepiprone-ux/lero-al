@@ -169,7 +169,7 @@ export const AmbiguousOverlap: Story = {
           role="button"
           tabIndex={0}
           data-testid="planted-ambiguous-popup"
-          style={{ position: 'absolute', left: 0, top: 0, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+          style={{ position: 'absolute', left: 60, top: 0, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
         >
           {'Popup #467'}
         </div>

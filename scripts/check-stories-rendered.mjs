@@ -207,6 +207,9 @@ const ASSERT_STORIES = [
   { id: 'planted-visualviolations--off-viewport-control', label: 'Planted/OffViewportControl',  anchors: [{ type: 'testid', value: 'planted-offscreen-btn', label: 'offscreen-btn' }] },
   { id: 'planted-visualviolations--container-clipped',    label: 'Planted/ContainerClipped',    anchors: [{ type: 'testid', value: 'planted-container-clip', label: 'container-clip' }] },
   { id: 'planted-visualviolations--known-good-control',   label: 'Planted/KnownGoodControl',    anchors: [{ type: 'testid', value: 'planted-good', label: 'good-ctrl' }] },
+  // Task 664: reshaped to a partial, non-containing overlap (previously byte-identical rects,
+  // silently short-circuited to `pass` by the Task-611 isContained guard before reaching R1).
+  // Expected verdict: ambiguous-overlap (R1 isAbsoluteOverOwnTrigger), not pass, not hard FAIL.
   { id: 'planted-visualviolations--ambiguous-overlap',    label: 'Planted/AmbiguousOverlap',    anchors: [{ type: 'testid', value: 'planted-ambiguous-trigger', label: 'ambig-trigger' }] },
   { id: 'planted-visualviolations--intentional-ellipsis', label: 'Planted/IntentionalEllipsis', anchors: [{ type: 'testid', value: 'planted-ellipsis-link', label: 'ellipsis-link' }] },
   { id: 'planted-visualviolations--container-escape',     label: 'Planted/ContainerEscape',     anchors: [{ type: 'testid', value: 'planted-escape-btn', label: 'escape-btn' }] },

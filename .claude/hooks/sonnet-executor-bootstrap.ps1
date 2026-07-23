@@ -1,8 +1,13 @@
+param(
+  [ValidateRange(1, 3)][int]$Part = 1
+)
+
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 [Console]::InputEncoding = $utf8
 [Console]::OutputEncoding = $utf8
+$contextChunkSize = 7000
 
 try {
   $event = [Console]::In.ReadToEnd() | ConvertFrom-Json -ErrorAction Stop
@@ -43,9 +48,19 @@ canonical source or approved value exists, create the shared source/story/regist
 $body
 "@
 
+$partCount = [Math]::Ceiling($context.Length / $contextChunkSize)
+if ($Part -gt $partCount) {
+  exit 0
+}
+
+$offset = ($Part - 1) * $contextChunkSize
+$length = [Math]::Min($contextChunkSize, $context.Length - $offset)
+$contextPart = $context.Substring($offset, $length)
+$additionalContext = "Lero.al Sonnet executor workflow, segment $Part of $partCount. Apply all segments as one mandatory workflow.`n`n$contextPart"
+
 @{
   hookSpecificOutput = @{
     hookEventName = 'SessionStart'
-    additionalContext = $context
+    additionalContext = $additionalContext
   }
 } | ConvertTo-Json -Depth 5 -Compress

@@ -4,8 +4,9 @@
  * Implements the approved design reference (tasks/Epics/Epic_D_email_design_reference.html):
  * top 3px coral strip, logo tile + wordmark, content slot, faint-grey footer.
  *
- * Brand accent lives in ONE constant (BRAND_ACCENT = #EC5447).
- * For WCAG AA on smaller body text use BRAND_AA (#BD4339).
+ * Brand accent is sourced from src/design-system/brand.ts (Task 661 single source of
+ * truth) — BRAND_ACCENT = BRAND_PRIMARY (#EC5447), BRAND_AA = BRAND_HOVER (#BD4339,
+ * WCAG AA on smaller body text). Editing brand.ts and rebuilding propagates here.
  */
 import {
   Html,
@@ -21,9 +22,10 @@ import {
   Hr,
 } from '@react-email/components'
 import * as React from 'react'
+import { BRAND_PRIMARY, BRAND_HOVER } from '@/design-system/brand'
 
-export const BRAND_ACCENT = '#EC5447'
-export const BRAND_AA = '#BD4339'
+export const BRAND_ACCENT = BRAND_PRIMARY
+export const BRAND_AA = BRAND_HOVER
 
 interface BaseEmailProps {
   preview?: string

@@ -1,19 +1,5 @@
 import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
-
-// Brand color scale derived from globals.css oklch palette (EC5447 primary)
-// Mapped to hex approximations for Mantine's 10-shade color array.
-const brand: MantineColorsTuple = [
-  '#FDEEED', // 0 — brand-50
-  '#FBDDDA', // 1 — brand-100
-  '#F9CCC8', // 2 — brand-200
-  '#F7BBB5', // 3 — brand-300
-  '#F6AAA3', // 4 — brand-400
-  '#F2877E', // 5 — brand-500
-  '#F0766C', // 6 — brand-600
-  '#EC5447', // 7 — brand-700 (primary)
-  '#BD4339', // 8 — brand-800 (hover)
-  '#8E322B', // 9 — brand-900
-]
+import { brand } from '@/design-system/brand'
 
 // TailAdmin gray scale (Task 484 §1b — source of truth for neutral tones)
 const gray: MantineColorsTuple = [

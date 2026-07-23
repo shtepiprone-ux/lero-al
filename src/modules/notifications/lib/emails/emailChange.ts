@@ -13,6 +13,7 @@
  * BaseEmail-wrapped component is deferred to a future cleanup task — the
  * required outcome is routing through the shared send helper, which is done.
  */
+import { BRAND_PRIMARY } from '@/design-system/brand'
 import { sendEmail } from './send'
 
 // ── Locale strings ────────────────────────────────────────────────────────────
@@ -118,7 +119,7 @@ function emailLayout(content: string): string {
     <tr><td align="center">
       <table width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:40px 32px;border:1px solid #e4e4e7;">
         <tr><td>
-          <div style="font-size:22px;font-weight:700;color:#EC5447;margin-bottom:24px;">Lero.al</div>
+          <div style="font-size:22px;font-weight:700;color:${BRAND_PRIMARY};margin-bottom:24px;">Lero.al</div>
           ${content}
           <div style="margin-top:32px;padding-top:24px;border-top:1px solid #e4e4e7;font-size:12px;color:#71717a;">
             © ${new Date().getFullYear()} Lero.al — lero.al
@@ -136,7 +137,7 @@ function verificationHtml(s: ReturnType<typeof getStrings>, verificationUrl: str
     <p style="font-size:16px;color:#18181b;margin:0 0 16px;">${s.verifyGreeting}</p>
     <p style="font-size:15px;color:#3f3f46;margin:0 0 24px;line-height:1.6;">${s.verifyBody}</p>
     <div style="text-align:center;margin:32px 0;">
-      <a href="${verificationUrl}" style="display:inline-block;background:#EC5447;color:#ffffff;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">${s.verifyButton}</a>
+      <a href="${verificationUrl}" style="display:inline-block;background:${BRAND_PRIMARY};color:#ffffff;font-size:15px;font-weight:600;padding:14px 32px;border-radius:8px;text-decoration:none;">${s.verifyButton}</a>
     </div>
     <p style="font-size:13px;color:#71717a;margin:0 0 8px;">${s.verifyExpiry}</p>
     <p style="font-size:13px;color:#71717a;margin:0;">${s.verifyIgnore}</p>

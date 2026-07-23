@@ -297,20 +297,27 @@
    Muted fg on background: 5.2:1 (WCAG AA ✓)
    ───────────────────────────────────────────── */
 :root {
-  /* ── Brand shade scale (EC5447 official palette) ── */
-  /* Used ONLY for primary, badges, price, CTA — never for surfaces */
-  --brand-50:  oklch(0.969 0.010 18);   /* #FDEEED — very subtle tint for hover states */
-  --brand-100: oklch(0.932 0.020 20);   /* #FBDDDA */
-  --brand-200: oklch(0.895 0.031 20);   /* #F9CCC8 */
-  --brand-300: oklch(0.858 0.042 21);   /* #F7BBB5 */
-  --brand-400: oklch(0.820 0.054 21);   /* #F6AAA3 */
-  --brand-500: oklch(0.745 0.078 22);   /* #F2877E */
-  --brand-600: oklch(0.707 0.093 22);   /* #F0766C */
-  --brand-700: oklch(0.614 0.158 23);   /* #EC5447 — primary */
-  --brand-800: oklch(0.541 0.168 23);   /* #BD4339 — hover */
-  --brand-850: oklch(0.497 0.155 23);   /* #A53B32 */
-  --brand-900: oklch(0.452 0.142 23);   /* #8E322B */
-  --brand-950: oklch(0.132 0.022 23);   /* #180807 */
+  /* ── Brand shade scale (Task 661 — single-sourced from src/design-system/brand.ts) ── */
+  /* Used ONLY for primary, badges, price, CTA — never for surfaces. Each shade aliases
+     Mantine's own generated CSS variable (theme.ts brand tuple, primaryShade:7), so this
+     scale and Mantine `color="brand"` surfaces render the identical hex — no second
+     hand-authored source to drift out of sync (Task 660 finding). */
+  --brand-50:  var(--mantine-color-brand-0);  /* #FDEEED */
+  --brand-100: var(--mantine-color-brand-1);  /* #FBDDDA */
+  --brand-200: var(--mantine-color-brand-2);  /* #F9CCC8 */
+  --brand-300: var(--mantine-color-brand-3);  /* #F7BBB5 */
+  --brand-400: var(--mantine-color-brand-4);  /* #F6AAA3 */
+  --brand-500: var(--mantine-color-brand-5);  /* #F2877E */
+  --brand-600: var(--mantine-color-brand-6);  /* #F0766C */
+  --brand-700: var(--mantine-color-brand-7);  /* #EC5447 — primary */
+  --brand-800: var(--mantine-color-brand-8);  /* #BD4339 — hover */
+  --brand-900: var(--mantine-color-brand-9);  /* #8E322B */
+  /* --brand-850 removed (Task 661 OQ1): no Mantine index and grep-confirmed zero
+     consumers (only ever self-defined, never referenced). */
+  /* --brand-950 intentionally NOT tuple-derived (Task 661 OQ2): renders near-black
+     (#180807), not a red tint of the brand scale — kept hand-authored. Live consumers:
+     HeroSearch.stories.tsx, PopularLocationsView.tsx gradient stops. */
+  --brand-950: oklch(0.132 0.022 23);   /* #180807 — intentionally NOT brand-scale-derived */
 
   /* ── Neutral scale — all surfaces use these ── */
   --neutral-0:   oklch(1 0 0);          /* Pure white */
@@ -346,7 +353,7 @@
   --secondary-foreground: var(--neutral-900);
 
   /* Accent — subtle brand tint for hover backgrounds, chips */
-  --accent:              var(--brand-50);            /* #FDEEED — very subtle red tint */
+  --accent:              var(--mantine-color-brand-0); /* #FDEEED — very subtle red tint */
   --accent-foreground:   var(--brand-800);           /* Dark red text on tint */
 
   /* Destructive */
@@ -426,10 +433,12 @@
   --muted:               var(--neutral-100);
   --muted-foreground:    var(--neutral-500);         /* 4.9:1 on dark ✓ */
 
-  /* Brand shades for dark — primary slightly brighter for contrast */
-  --brand-50:  oklch(0.220 0 0);        /* Accent hover bg on dark */
-  --brand-700: oklch(0.648 0.200 22);   /* Brighter #EC5447 on dark */
-  --brand-800: oklch(0.700 0.190 22);   /* Hover — lighter on dark */
+  /* Brand shades for dark (Task 661 OQ4): dark mode has no reachable UI toggle
+     (MantineRootProvider defaultColorScheme="light", no scheme-switcher found) — treated
+     as dormant. No dark-specific --brand-* override remains here; the scale falls through
+     to :root's Mantine-sourced values (identical hex, since theme.ts primaryShade:7 is a
+     bare number and resolves the same shade in both Mantine color schemes — Task 660
+     finding). This intentionally drops the old divergent hand-authored dark brightening. */
 
   --primary:             var(--brand-700);
   --primary-foreground:  oklch(1 0 0);
@@ -438,8 +447,10 @@
   --secondary:           var(--neutral-100);
   --secondary-foreground: var(--neutral-900);
 
-  --accent:              oklch(0.614 0.158 23 / 15%); /* Brand tint at 15% on dark */
-  --accent-foreground:   oklch(0.648 0.200 22);
+  /* Brand tint at 15% on dark (Task 661 OQ3) — color-mix over the single-sourced
+     Mantine brand-7 var instead of a hardcoded oklch literal duplicating its LCH. */
+  --accent:              color-mix(in srgb, var(--mantine-color-brand-7) 15%, transparent);
+  --accent-foreground:   var(--mantine-color-brand-7);
 
   --destructive:         oklch(0.520 0.215 17);
   --destructive-foreground: oklch(1 0 0);

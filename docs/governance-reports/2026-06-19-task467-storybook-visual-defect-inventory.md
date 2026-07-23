@@ -1,7 +1,7 @@
 # Task 467 — Storybook visual-defect inventory (geometry + style integrity layers)
 
 **Harness:** `scripts/check-stories-rendered.mjs` + `scripts/geometry-integrity.mjs` (Task 467 R1–R4/B1–B8) — run timestamp recorded in `.screenshots/rendered-assert/<ts>/manifest.json`
-**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (298 stories, 952 cells)
+**Run mode:** full (320/375/390 × sq/en/uk/it) | **Scope:** Global enumeration (311 stories, 1064 cells)
 
 > **Harness-generated inventory.** Every row below is emitted by the harness from the manifest.
 > Full global-enumeration run.
@@ -10,17 +10,17 @@
 
 | Counter | Count |
 |---------|-------|
-| Total cells | 952 |
-| PASS (clean, verdict=pass) | 925 |
+| Total cells | 1064 |
+| PASS (clean, verdict=pass) | 1021 |
 | FAIL (hard defect, verdict=fail) | 0 |
 | OUT-OF-RANGE (viewport mismatch, not product defect) | 0 |
-| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 27 |
+| AMBIGUOUS (needs-owner-decision, verdict=ambiguous) | 43 |
 | text-clipped | 0 |
 | offscreen-control | 0 |
 | outside-container | 0 |
 | element-overlap | 0 |
 | bottomsheet-overflow | 0 |
-| ambiguous-overlap | 27 |
+| ambiguous-overlap | 43 |
 | unstyled-render | 0 |
 
 ---
@@ -107,6 +107,22 @@
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("SarandaCostiera") | "(empty)" ↔ "SarandaCostiera" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-combobox--default` | it | mobile-390 | `mantine-primitives-combobox--default__it__mobile-390.png` | ambiguous-overlap | #mantine-<id> ↔ button("Immobili in affitto a lungo te") | "(empty)" ↔ "Immobili in affitto a lungo termine vicino al centro storico" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-notificationbellview--default` | en | mobile-320 | `mantine-primitives-notificationbellview--default__en__mobile-320.png` | ambiguous-overlap | button ↔ button("Mark all as read") | "Notifications" ↔ "Mark all as read" | background page content behind an opened overlay's backdrop |
+| `mantine-primitives-popularlocationsview--long-city-name` | sq | mobile-320 | `mantine-primitives-popularlocationsview--long-city-name__sq__mobile-320.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | sq | mobile-375 | `mantine-primitives-popularlocationsview--long-city-name__sq__mobile-375.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | sq | mobile-390 | `mantine-primitives-popularlocationsview--long-city-name__sq__mobile-390.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | sq | desktop-1024 | `mantine-primitives-popularlocationsview--long-city-name__sq__desktop-1024.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | en | mobile-320 | `mantine-primitives-popularlocationsview--long-city-name__en__mobile-320.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | en | mobile-375 | `mantine-primitives-popularlocationsview--long-city-name__en__mobile-375.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | en | mobile-390 | `mantine-primitives-popularlocationsview--long-city-name__en__mobile-390.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | en | desktop-1024 | `mantine-primitives-popularlocationsview--long-city-name__en__desktop-1024.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | uk | mobile-320 | `mantine-primitives-popularlocationsview--long-city-name__uk__mobile-320.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | uk | mobile-375 | `mantine-primitives-popularlocationsview--long-city-name__uk__mobile-375.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | uk | mobile-390 | `mantine-primitives-popularlocationsview--long-city-name__uk__mobile-390.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | uk | desktop-1024 | `mantine-primitives-popularlocationsview--long-city-name__uk__desktop-1024.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | it | mobile-320 | `mantine-primitives-popularlocationsview--long-city-name__it__mobile-320.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | it | mobile-375 | `mantine-primitives-popularlocationsview--long-city-name__it__mobile-375.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | it | mobile-390 | `mantine-primitives-popularlocationsview--long-city-name__it__mobile-390.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
+| `mantine-primitives-popularlocationsview--long-city-name` | it | desktop-1024 | `mantine-primitives-popularlocationsview--long-city-name__it__desktop-1024.png` | text-clipped-ellipsis | a("Rrogozhinë-Peqin-Kavajë Bashki") | Rrogozhinë-Peqin-Kavajë Bashkiake | intentional ellipsis with accessible name or content link |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-320 | `mantine-primitives-rangedatepicker--default__sq__mobile-320.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Viti" | background page content behind an opened overlay's backdrop |
 | `mantine-primitives-rangedatepicker--default` | sq | mobile-375 | `mantine-primitives-rangedatepicker--default__sq__mobile-375.png` | ambiguous-overlap | #mantine-<id> ↔ #mantine-<id> | "(empty)" ↔ "Muaj" | background page content behind an opened overlay's backdrop |

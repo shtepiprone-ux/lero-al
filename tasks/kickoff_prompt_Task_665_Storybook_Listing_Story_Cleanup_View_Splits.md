@@ -298,3 +298,85 @@ ORCHESTRATOR REVIEW`/`PARTIALLY IMPLEMENTED`/`BLOCKED`. No self-approval. No mut
 **Ambiguous/conflicting requirements:** none blocking. A1 (useTranslations-in-View) is a labeled reversible assumption.
 **Owner decision still needed:** none — the no-mock View-split approach, the four Views, the deletions, and the
 `System/*` title / no-manifest decision are all owner-directed inputs recorded here.
+
+---
+
+## 16. Post-review revision (orchestrator reviews 2026-07-24, owner-directed) — R13, R14, and corrections
+
+This section **supersedes** the §13.7 Featured/Latest selector rows, the R12/AC8 wording, and adds R13–R14. Static
+View-split (R1–R11) is verified healthy. The first pass returned `NEEDS REVISION` (broken governance gate). The second
+pass found that R13-as-first-written only removes a symptom and that R12/AC8/§13.7 assert unverifiable/false conditions.
+All of the following must land before Task 665 can be approved.
+
+### 16.1 §13.7 selector correction (route-parity locators must exist in the LOADED state)
+
+`.featured-listings` and `.latest-listings` exist **only in the loading branch** (`FeaturedListingsView.tsx:57`,
+`LatestListingsView.tsx:43`); the **loaded** grids that route-parity actually captures carry no such class
+(`FeaturedListingsView.tsx:76`, `LatestListingsView.tsx:56`). The §13.7 Featured/Latest rows therefore target
+selectors that are absent in the captured state. Fix, **without adding any `data-*` attribute to production DOM** (these classes are byte-stable before/after the split).
+
+**Do NOT use a raw CSS selector for the grids.** The Tailwind classes include digit-leading tokens (`2xl:grid-cols-4`),
+so `document.querySelector('div.grid.…\.2xl\:grid-cols-4…')` throws `SyntaxError: Invalid selector` (a CSS identifier
+cannot begin with a digit). Use a single JS `classList.contains` locator predicate, identical for baseline and after:
+
+```js
+// Featured (/{locale}) — inside the Featured MantineHomeSection (page.tsx:42)
+const featured = Array.from(document.querySelectorAll('div.grid')).find(
+  (el) =>
+    ['grid-cols-1', 'sm:grid-cols-2', 'xl:grid-cols-3', '2xl:grid-cols-4', 'gap-4']
+      .every((className) => el.classList.contains(className)) &&
+    el.querySelector('.listing-card'),
+)
+
+// Latest (/{locale}) — inside the Latest MantineHomeSection (page.tsx:47)
+const latest = Array.from(document.querySelectorAll('div.grid')).find(
+  (el) =>
+    ['grid-cols-1', 'md:grid-cols-2', '2xl:grid-cols-3', 'gap-3']
+      .every((className) => el.classList.contains(className)) &&
+    el.querySelector('.listing-card'),
+)
+```
+
+`.similar-listings` and `.recently-viewed` remain valid raw selectors (the container wrapper / View render both preserve
+them pre/post). `.listing-card` (`ListingCard.tsx:201/297`) is production-stable and untouched by this task.
+
+### 16.2 R13 (P0) — re-point ListingGrid screenshot-governance coverage, do NOT just delete it
+
+`npm run governance:screenshots` (`responsive-screenshots.mjs --check`) currently **exits 1**
+(`❌ story files missing`, `responsive-screenshots.mjs:159` still requires the deleted `ListingGrid.stories.tsx`).
+
+| Sub | Observable requirement | Verification |
+|---|---|---|
+| R13.1 | Re-point the 4-column responsive-grid proof at the surviving `System/FeaturedListings/Default` — preserve equivalent viewport/locale coverage incl. the `uk` stress cell and `huge-2560`; do not drop coverage. | Target-list diff |
+| R13.2 | `responsive-screenshots.mjs`: replace the 4 `system-listinggrid--*` capture entries (~99–102) **and** the `ListingGrid.stories.tsx` existence guard (~159, → `FeaturedListings.stories.tsx`). **All four replacement entries use the identical story ID `system-featuredlistings--default`** — only their `label`, `viewports`, and `locales` differ (this story has a single `Default` export; no other IDs exist — do not invent `system-featuredlistings--desktop/--mobile/…`). | Source diff + `storybook-static/index.json` |
+| R13.3 | `governance/component-catalog.mjs`: in `SCREENSHOT_TARGETS` (~132) use the token the generator derives from the **story filename** — `FeaturedListings` (NOT `FeaturedListingsView`) — and update the generated matrix/prose rows (~442/460/463/465). | Source diff |
+| R13.4 | `governance/tailwind-entropy.allowlist.json:198`: remove or re-point the entry citing the deleted `ListingGrid.stories.tsx`. | Source diff |
+| R13.5 | Regenerate the catalog: `npm run catalog:components` (`--write`), then confirm the **expected, reviewed** diff in `docs/component-coverage-matrix.md` (ListingGrid rows replaced by FeaturedListings). `governance:components --check` alone is insufficient — it verifies infra presence, not matrix sync. | Regen diff + `git diff docs/component-coverage-matrix.md` |
+| R13.6 | Update every **current** governance/matrix/inventory doc still naming ListingGrid a live screenshot target: `docs/responsive-screenshot-matrix.md`, `docs/responsive-storybook-inventory.md`, `docs/storybook-governance.md`, `docs/component-coverage-matrix.md`, `docs/governance-enforcement.md`, `docs/responsive-screenshot-governance.md`, `docs/maintenance-playbook.md`. **Never edit** `docs/sessions/*`, `docs/governance-reports/*`, `docs/chat-gpt-reports/*` (immutable history). | `grep -rl "ListingGrid" docs/` → only history + this kickoff |
+| R13.7 | Prove the re-point actually captures, not just that a file exists: fresh `npm run build-storybook`; assert `system-featuredlistings--default` is present in `storybook-static/index.json`; run the real capture and confirm the critical `uk` and `huge-2560` output files are produced. | `index.json` grep + capture output listing |
+| R13.8 | `npm run governance:screenshots` exits **0**; `npm run governance:components` exits **0**. | Transcripts with exit codes |
+
+### 16.3 R14 (P0) — the three rebuilt stories are not actually rendered-proven
+
+R12/AC8 claim `screenshots:assert` covers all four rebuilt stories. It does not: `check-stories-rendered.mjs`
+`ASSERT_STORIES` registers only `system-recentlyviewedsection--populated` (~line 166); **Featured, Latest, and
+Similar are absent**, so those three currently have **no** rendered-proof.
+
+| Sub | Observable requirement | Verification |
+|---|---|---|
+| R14.1 | Add real `ASSERT_STORIES` entries for `system-featuredlistings--default`, `system-latestlistings--default`, `system-similarlistings--default`, each anchored on a selector present in the story's loaded render — `{ type: 'selector', value: '.listing-card' }` (confirm the exact generated IDs from `storybook-static/index.json`). | Source diff + `index.json` |
+| R14.2 | Re-run full `npm run screenshots:assert`; the three newly-registered cells resolve (found + anchor matched), 0 FAIL among them. | Assert manifest |
+
+### 16.4 AC8 correction (baseline is 219, not 0)
+
+AC8 simultaneously asserting an "0 FAIL" run and a "219 pre-existing baseline" is contradictory and unsatisfiable.
+Restate: the owner-approved regression baseline is **219 historical FAIL** (per Task 663/664). AC8 passes when the
+full `screenshots:assert` run shows **0 NEW FAIL vs the 219 baseline** AND **0 FAIL among the newly-registered
+Featured/Latest/Similar cells (R14) and the RVS cell**. No claim of an absolute zero-FAIL run.
+
+### 16.5 Sequencing and scope
+
+R13 + R14 + §16.1/§16.4 are in-repo executor work (Sonnet) and land first. The AC1/AC8 route-parity baseline
+(session log §10, using the §16.1-corrected locators) remains an owner-native step run after R13/R14 are approved.
+Task 665 is not `APPROVED` until all clear. Still out of scope: any restyle/de-Tailwind, editing historical logs,
+adding Views to the migration manifest.

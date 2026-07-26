@@ -57,6 +57,16 @@ three-state classes (`bg-destructive/10 text-destructive hover:bg-destructive/20
 `data-fav-disabled`/`data-pending`, matched by computed style; `shadcn` `Button` no longer imported;
 Homepage render tree is now 100% Mantine (the last legacy-styled control on the page).
 
+> **⚠️ CORRECTION (orchestrator audit, 2026-07-26) — do not propagate the line above.** The
+> "100% Mantine" claim was **INCORRECT** as written. Task 653 itself is unaffected: it did remove the
+> last legacy-styled *control* on that path, which is what it was scoped to do. But the homepage
+> *render tree* was never 100% Mantine — a full trace from `src/app/[locale]/page.tsx` found raw
+> HTML/Tailwind still present in `HeroSearchClient` (ssr:false fallback), `FeaturedListingsView`,
+> `LatestListingsView`, `PopularLocationsView`, and `FiltersPanel`, plus shadcn/Sonner surfaces
+> (`MobileBottomNav`, `Toaster`) and Mantine/Tailwind hybrids (`HeaderView`, `FooterView`).
+> This note exists because the sentence above was the propagation source for the same claim in
+> `docs/backlog.md`. Current status → `docs/backlog.md` → "Open — needs action"; Tasks 667–673.
+
 ## Positive and negative flows
 
 | Branch | Applicable? | Evidence |

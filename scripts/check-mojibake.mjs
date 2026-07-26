@@ -200,10 +200,25 @@ function scanFile(absPath) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 function run() {
   const allowlist = loadAllowlist();
-  const files = gitTrackedFiles().filter(shouldScan);
+  const candidates = gitTrackedFiles().filter(shouldScan);
+  const files = [];
+  const missing = [];
+  for (const rel of candidates) {
+    if (existsSync(resolve(ROOT, rel))) {
+      files.push(rel);
+    } else {
+      missing.push(rel);
+    }
+  }
 
   console.log(`check:mojibake — scanning ${files.length} tracked text file(s) under docs/ src/ app/ components/ modules/ messages/ tasks/ + root *.md`);
   console.log('');
+
+  if (missing.length > 0) {
+    console.log(`check:mojibake — skipping ${missing.length} tracked-but-deleted path(s) (staged deletion pending, nothing to scan):`);
+    for (const rel of missing) console.log(`  ${rel}`);
+    console.log('');
+  }
 
   let artifactCount = 0;
   let invalidCount = 0;

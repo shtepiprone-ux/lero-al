@@ -87,7 +87,11 @@ same gaps remain.
   safe.
 - For UI migrations, test the smallest observable question. When the only suspected difference is a runtime style
   value, a same-page synthetic measurement may be valid; prove that all other relevant container rules are
-  equivalent first, restore temporary state in `finally`, and document the measurement limits.
+  equivalent first, assert and persist the effective mutation for every cell, retain raw live/synthetic measurements
+  before deriving deltas, restore temporary state in `finally`, and document the measurement limits. A zero delta
+  does not prove a synthetic mutation ran.
+- Distinguish an executed falsification from an analytical counterfactual. Call a branch `fired`, `passed`, or
+  `cleared` only when a run or persisted artifact actually exercised it.
 
 ## Ambiguity policy
 

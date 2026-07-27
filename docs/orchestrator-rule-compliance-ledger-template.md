@@ -24,6 +24,9 @@ Rules:
 6. When a selected rule permits or requires an execution route, link its row to the completed
    `orchestrator-execution-contract-template.md`. An unresolved owner choice is `BLOCKED`; it is not a compliant
    alternative route inside an executor task.
+7. A disclosed limitation, planned future check, manual transcription, or statement that a risk is out of scope is
+   not `COMPLIANT` evidence for a mandatory rule. The row stays `BLOCKED` unless its required observable has the
+   required present-tense artifact and failure semantics.
 
 Publication and approval are forbidden unless every applicable row is `COMPLIANT` and the completed ledger is
 retained with the task/review evidence; otherwise return `BLOCKED` or `NEEDS REVISION` and name the exact unresolved

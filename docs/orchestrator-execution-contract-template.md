@@ -18,7 +18,8 @@ An executable task has exactly one active route. Do not put alternative owner ch
 criteria in its execution plan. If an owner decision is unresolved, publish only a `BLOCKED -- OWNER DECISION
 REQUIRED` decision note: it must not be handed to an executor. After the decision, regenerate the active scope,
 acceptance criteria, verification steps, report contract, and handoff together. Separate viable routes require
-separate contracts.
+separate contracts. An existing multi-route or contradictory kickoff remains `DRAFT`/`BLOCKED` until replaced; a
+chat response, review summary, or self-label cannot reclassify that file as a decision note.
 
 ## 2. Checkpoint matrix
 
@@ -45,8 +46,9 @@ baseline, scan, status set, or other input and place its creation after the affe
 | New gate | planted violation or no-op probe | | observed failure, then clean recovery | |
 | Task-created artifact | created before baseline by mistake | | count/scope difference detected | |
 
-Mark `EXECUTED` only for an observed run. `ANALYTICAL` must name the inspected source branch and cannot certify a
-gate as tested.
+Mark `EXECUTED` only for an observed run with its exact command and output or persisted-artifact location recorded.
+A tool label, confidence statement, or summary without that evidence is `ANALYTICAL`. `ANALYTICAL` must name the
+inspected source branch and cannot certify a gate as tested.
 
 ## 4. Publication and review gate
 

@@ -5,6 +5,14 @@ Complete the applicable sections of
 `docs/orchestrator-evidence-preflight-template.md` in working notes. This is a fail-closed gate: an unobservable
 claim, invalid scheduled command, or destructive re-run is not ready for execution or approval.
 
+## Treat selected rules as unwaivable invariants
+
+Complete `docs/orchestrator-rule-compliance-ledger-template.md` for every rule in the selected pre-read bundle.
+An agent may identify a rule conflict but cannot resolve it by rewording the rule, narrowing its scope, declaring an
+alternative equivalent, or calling its own decision an exception. Only a traceable owner decision may change that
+outcome. An incomplete or non-compliant ledger row is `BLOCKED` or `NEEDS REVISION`, never a publishable task or
+approval.
+
 ## Establish the evidence contract
 
 For every material requirement, acceptance criterion, or gate, record:

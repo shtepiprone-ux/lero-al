@@ -18,6 +18,8 @@ Act as the task architect. Produce an executable, evidence-based task for a fres
 Before assigning a fact, command, acceptance criterion, or gate `VERIFIED`, read
 [`Evidence-first preflight`](../../../docs/orchestrator-evidence-first-preflight.md) and complete the task-design sections of
 `docs/orchestrator-evidence-preflight-template.md` in working notes.
+Complete `docs/orchestrator-rule-compliance-ledger-template.md` for every selected rule. Do not weaken,
+reinterpret, or replace a mandatory rule unless that rule explicitly permits it or a traceable owner decision does.
 
 ## Gather evidence before writing
 
@@ -83,6 +85,8 @@ Do not publish the first draft. Check all of the following and revise the task i
 - The task does not claim a command, source file, test, story, screenshot, or existing behavior that was not inspected.
 - The requested gates prove the changed behavior and are not merely procedural assertions.
 - Every owner-only exception has traceable owner authorization; the task itself is never that authorization.
+- Every applicable selected rule has a `COMPLIANT` row in the rule-compliance ledger; no task-authored exception or
+  merely plausible alternative can substitute for the rule.
 - In a dirty worktree, every status/diff path assertion uses a pre-write `git status --porcelain` snapshot and an
   explicit comparator, never an assumed clean status.
 - Every claim that a pre-existing modified path was untouched has matching before/after content witnesses; an equal

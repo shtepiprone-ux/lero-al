@@ -30,6 +30,8 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
    unaccounted task-created input is not sufficient evidence.
    When the start state is dirty, reconcile every start entry to the completed
    `orchestrator-dirty-worktree-manifest-template.md`, unless verified isolated clean execution replaces it.
+8. Complete `orchestrator-rule-compliance-ledger-template.md`; a missing row, agent exception, or unsupported
+   alternative is blocking.
 
 Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
 complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.
@@ -151,3 +153,4 @@ Confirm that any owner-only exception has traceable owner authorization, dirty-w
 pre-write comparator, and stateful measurements account for task-created artifacts and timing.
 Confirm that pre-existing modified paths have content witnesses where needed and that the latest task revision has no
 stale step reference or self-check claim contradicted by its current instructions.
+Confirm that the rule ledger is current, complete, and has no agent-authored exception.

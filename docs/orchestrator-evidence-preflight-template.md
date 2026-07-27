@@ -83,6 +83,12 @@ Never use the task document itself as evidence of owner approval. A raw final st
 worktree. If an artifact could change the measured input set, the task must either schedule it after the measurement
 or include it in the expected result.
 
+### 6b. Unwaivable rule-compliance ledger
+
+Complete `docs/orchestrator-rule-compliance-ledger-template.md` for every selected rule. Record the exact clause,
+its applicability, mandatory observable, evidence, and `COMPLIANT` / `BLOCKED` / source-based `NOT APPLICABLE`
+result. A task-authored exception, a weaker alternative, or a row omitted from the ledger is `BLOCKED`.
+
 ## 7. Publication gate
 
 - [ ] Every required AC has an observable artifact and valid verification command.
@@ -96,6 +102,7 @@ or include it in the expected result.
 - [ ] Dirty-worktree path assertions compare against a pre-write status snapshot, not a purported clean status.
 - [ ] An unchanged-content claim for a pre-modified path has matching before/after content witnesses.
 - [ ] Every starting dirty entry is covered by the integrity manifest, or execution has verified clean isolation.
+- [ ] Every applicable selected rule has a `COMPLIANT` row in the rule-compliance ledger.
 - [ ] Exact baseline/count/manifest assertions account for the timing of every task-created input artifact.
 - [ ] The current task text has no stale step reference or self-check claim contradicted by its latest revision.
 - [ ] Every material claim has a recorded falsification attempt.

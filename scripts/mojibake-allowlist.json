@@ -8,5 +8,6 @@
   "docs/sessions/task467-full-owner-native-v1final.log",
   "docs/sessions/task467-new-planted-containerescape-unstyledframe.json",
   "docs/sessions/task467-old-planted-containerescape-unstyledframe.json",
-  "docs/sessions/task467-owner-final-rerun.log"
+  "docs/sessions/task467-owner-final-rerun.log",
+  "scripts/check-mojibake.mjs"
 ]

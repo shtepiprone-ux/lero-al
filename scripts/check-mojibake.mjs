@@ -32,7 +32,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
 // ── Scanned roots ─────────────────────────────────────────────────────────────
-const SCAN_DIR_PREFIXES = ['docs/', 'src/', 'app/', 'components/', 'modules/', 'messages/', 'tasks/'];
+const SCAN_DIR_PREFIXES = ['docs/', 'src/', 'app/', 'components/', 'modules/', 'messages/', 'tasks/', 'scripts/'];
 
 // ── Binary extensions — never scanned as text ────────────────────────────────
 const BINARY_EXTS = new Set([
@@ -211,7 +211,7 @@ function run() {
     }
   }
 
-  console.log(`check:mojibake — scanning ${files.length} tracked text file(s) under docs/ src/ app/ components/ modules/ messages/ tasks/ + root *.md`);
+  console.log(`check:mojibake — scanning ${files.length} text file(s), tracked and untracked-not-ignored, under ${SCAN_DIR_PREFIXES.join(' ')} + root *.md`);
   console.log('');
 
   if (missing.length > 0) {

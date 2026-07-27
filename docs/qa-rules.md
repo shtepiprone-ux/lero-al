@@ -67,12 +67,23 @@
 
 ### Encoding hygiene (UTF-8, mojibake gate — Task 428)
 
-All tracked text in this repo is **UTF-8, no BOM**. `npm run check:mojibake`
+All text in this repo is **UTF-8, no BOM**. `npm run check:mojibake`
 (`scripts/check-mojibake.mjs`) scans `docs/`, `src/`, `app/`, `components/`, `modules/`,
-`messages/`, `tasks/`, and root `*.md` for double-encoding / corruption artifacts and is a
-**blocking CI step** (see `.github/workflows/governance-pr.yml`). There is no native pre-commit
+`messages/`, `tasks/`, `scripts/`, and root `*.md` for double-encoding / corruption artifacts and is a
+**blocking CI step** (see `.github/workflows/governance-pr.yml`). It collects **tracked *and*
+untracked-but-not-ignored** files (`git ls-files --cached --others --exclude-standard`), so a file
+added in the same change as the code it checks is scanned too. There is no native pre-commit
 hook in this repo (`.git/hooks/` has only `.sample` files) — run `npm run check:mojibake` manually
 before committing if you touched non-ASCII text.
+
+`scripts/` was added to the scanned set by Task 674 (2026-07-27): every governance and QA harness
+lives there and is dense with non-ASCII, but none of it was covered before. The detector's own
+source, `scripts/check-mojibake.mjs`, is allowlisted, because its `SIGNATURES` table necessarily
+contains every artifact string as a literal and would otherwise fail its own gate. **Note the
+breadth of that exemption:** `isAllowlisted()` is consulted in the invalid-UTF-8 branch (L232) as
+well as in the signature branch (L240), so the detector is exempt from **encoding-validity
+checking too** — if its source were ever saved as CP1252 or truncated mid-sequence, its own gate
+would stay green. No compensating control exists today.
 
 What it catches — text that was UTF-8 but got re-decoded as CP1252/Latin-1 somewhere in the
 authoring pipeline, e.g. `Ô£à` (was `✅`), `ÔåÆ` (was `→`), `ÔÇö` (was `—`), `â€“` (was `–`), or the

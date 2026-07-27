@@ -74,7 +74,9 @@ non-growing consolidation plan. Scope, Out of scope, verification, completion re
 |---|---|---|
 | Owner-only exception | Verbatim owner decision or durable reference: date, exact exception scope, follow-up owner | `VERIFIED` / `BLOCKED` |
 | Start-state comparator | Read-only `git status --porcelain` captured before task writes; pre-existing paths classified; ending comparison defined | `VERIFIED` / `BLOCKED` |
+| Pre-modified path integrity | Content SHA-256 or read-only snapshot before and after every pre-existing modified path claimed untouched | `VERIFIED` / `BLOCKED` |
 | Stateful measurement timing | Every new scanned/input artifact named, with its creation point relative to each baseline/count/manifest command | `VERIFIED` / `BLOCKED` |
+| Revision consistency | Every step/phase/AC reference and current self-check recomputed after the last edit; superseded claims marked historical | `VERIFIED` / `BLOCKED` |
 
 Never use the task document itself as evidence of owner approval. A raw final status is not a delta in a dirty
 worktree. If an artifact could change the measured input set, the task must either schedule it after the measurement
@@ -91,7 +93,9 @@ or include it in the expected result.
 - [ ] Every required write path is viable in the current worktree; no scope or reporting instruction contradicts it.
 - [ ] Every exception to an owner-only rule has a traceable owner decision; otherwise the task is `BLOCKED`.
 - [ ] Dirty-worktree path assertions compare against a pre-write status snapshot, not a purported clean status.
+- [ ] An unchanged-content claim for a pre-modified path has matching before/after content witnesses.
 - [ ] Exact baseline/count/manifest assertions account for the timing of every task-created input artifact.
+- [ ] The current task text has no stale step reference or self-check claim contradicted by its latest revision.
 - [ ] Every material claim has a recorded falsification attempt.
 - [ ] Unresolved rows are labelled `ASSUMED`, `UNKNOWN`, or `BLOCKED`; none is presented as verified.
 

@@ -32,8 +32,8 @@ Before assigning a fact, command, acceptance criterion, or gate `VERIFIED`, read
 5. State verified facts separately from assumptions and unresolved questions.
 
 Do not invent file paths, current behavior, APIs, commands, test results, or user decisions. Do not write `read all docs`; name the exact pre-read bundle needed by the executor.
-Do not call an exception "owner-approved" unless the actual owner decision is quoted or precisely referenced with
-its date and scope. Otherwise stop for `BLOCKED -- OWNER DECISION REQUIRED`.
+Do not call an exception "owner-approved" or "owner-acknowledged" unless the actual owner decision is quoted or
+precisely referenced with its date and scope. Otherwise stop for `BLOCKED -- OWNER DECISION REQUIRED`.
 
 ## Build the requirement ledger
 
@@ -85,8 +85,12 @@ Do not publish the first draft. Check all of the following and revise the task i
 - Every owner-only exception has traceable owner authorization; the task itself is never that authorization.
 - In a dirty worktree, every status/diff path assertion uses a pre-write `git status --porcelain` snapshot and an
   explicit comparator, never an assumed clean status.
+- Every claim that a pre-existing modified path was untouched has matching before/after content witnesses; an equal
+  porcelain status alone is insufficient.
 - Every exact baseline, count, or manifest result accounts for task-created scanned/input artifacts and their
   creation order.
+- After the final revision, every cited step/phase/AC matches the actual plan and no current self-check repeats a
+  superseded claim.
 - Assumptions and unresolved decisions are visible to the executor and reviewer.
 
 ## Required task document structure

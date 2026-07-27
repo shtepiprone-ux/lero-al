@@ -25,8 +25,9 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
    failed, or stale build transcript is a blocking evidence gap; do not approve until the current build passes.
 6. Treat missing access, missing task context, missing diff, or missing required evidence as a review limitation. Do not fill it with assumptions.
 7. For any owner-only exception, dirty-worktree path claim, or exact baseline/count/manifest assertion, inspect the
-   owner-decision source, pre-write status comparator, and artifact-creation timeline. A self-declared waiver, raw
-   final status, or unaccounted task-created input is not sufficient evidence.
+   owner-decision source, pre-write status comparator, content witness for every already-modified path claimed
+   untouched, and artifact-creation timeline. A self-declared waiver, raw final status, equal porcelain entries, or
+   unaccounted task-created input is not sufficient evidence.
 
 Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
 complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.
@@ -146,3 +147,5 @@ Also confirm that the evidence-first preflight checked artifact schemas/enums, m
 execution state, and at least one relevant falsification path for every material new claim or gate.
 Confirm that any owner-only exception has traceable owner authorization, dirty-worktree path assertions use a
 pre-write comparator, and stateful measurements account for task-created artifacts and timing.
+Confirm that pre-existing modified paths have content witnesses where needed and that the latest task revision has no
+stale step reference or self-check claim contradicted by its current instructions.

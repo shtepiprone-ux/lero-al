@@ -41,20 +41,29 @@ sequencing decision first. Do not publish a kickoff that both requires and forbi
 
 ## Authorize exceptions and make dirty-tree evidence reproducible
 
-A task document cannot grant its own exception to an owner-only rule. A claimed owner waiver must quote or precisely
-reference the owner's actual decision, including its date, exact scope, and any follow-up owner. Without that evidence,
-mark the task `BLOCKED -- OWNER DECISION REQUIRED`; do not label the exception "owner-approved" or turn it into an
-executor choice.
+A task document cannot grant its own exception to an owner-only rule. A claimed owner waiver, approval, or
+acknowledgement must quote or precisely reference the owner's actual decision, including its date, exact scope, and
+any follow-up owner. Without that evidence, mark the task `BLOCKED -- OWNER DECISION REQUIRED`; do not label the
+exception "owner-approved" or turn it into an executor choice.
 
 When a task uses `git status`, a diff, or an "exactly these paths" claim in a dirty worktree, capture a read-only
 starting `git status --porcelain` snapshot before the task writes anything. State the comparator and classify
 pre-existing paths; compare the ending state to that snapshot, never to an imagined clean worktree. A raw final
 `git status --short` cannot prove that a pre-existing modified path was untouched.
 
+For each pre-existing modified path that the task claims was not touched, an equal porcelain entry proves only that
+the same path is still modified. Capture a content witness before and after (a SHA-256 hash or read-only source
+snapshot) and require equality. If another writer may change that path concurrently, the task cannot make an
+untouched-content claim: sequence the work or return `BLOCKED`.
+
 For every exact count, baseline, manifest, or other stateful measurement, enumerate every task-created file that can
 enter its input set, including session logs, scratch probes, and ignored artifacts. Fix their creation order relative
 to each measurement. Capture the result before a new scanned artifact exists, or explicitly account for it. Do not
 leave this timing to executor convention.
+
+After revising a task, recompute its current quality gate. Verify every cited step, phase, AC, and artifact against
+the actual execution order, and remove or clearly mark superseded statements. A task may preserve historical context,
+but a current self-check must not report a retracted waiver, status, or route as passing.
 
 ## Separate UI evidence layers
 

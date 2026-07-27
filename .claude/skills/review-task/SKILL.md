@@ -28,6 +28,8 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
    owner-decision source, pre-write status comparator, content witness for every already-modified path claimed
    untouched, and artifact-creation timeline. A self-declared waiver, raw final status, equal porcelain entries, or
    unaccounted task-created input is not sufficient evidence.
+   When the start state is dirty, reconcile every start entry to the completed
+   `orchestrator-dirty-worktree-manifest-template.md`, unless verified isolated clean execution replaces it.
 
 Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
 complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.

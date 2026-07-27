@@ -56,6 +56,13 @@ the same path is still modified. Capture a content witness before and after (a S
 snapshot) and require equality. If another writer may change that path concurrently, the task cannot make an
 untouched-content claim: sequence the work or return `BLOCKED`.
 
+When the starting status is non-empty, complete
+`docs/orchestrator-dirty-worktree-manifest-template.md` for every start entry before publishing or approving work.
+The only alternative is evidence of an actually isolated clean worktree. `M`, `??`, deleted, renamed, staged, and
+conflict entries all require an explicit row; a single special-file hash or an "if concerned" instruction is not
+full scope protection. A task must also require the executor to recapture or update the manifest immediately before
+its first write; review the actual-start manifest, not only the design-time snapshot.
+
 For every exact count, baseline, manifest, or other stateful measurement, enumerate every task-created file that can
 enter its input set, including session logs, scratch probes, and ignored artifacts. Fix their creation order relative
 to each measurement. Capture the result before a new scanned artifact exists, or explicitly account for it. Do not

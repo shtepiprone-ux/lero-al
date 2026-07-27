@@ -87,6 +87,8 @@ Do not publish the first draft. Check all of the following and revise the task i
   explicit comparator, never an assumed clean status.
 - Every claim that a pre-existing modified path was untouched has matching before/after content witnesses; an equal
   porcelain status alone is insufficient.
+- When the worktree starts dirty, the task completes
+  `docs/orchestrator-dirty-worktree-manifest-template.md` for every status entry or proves isolated clean execution.
 - Every exact baseline, count, or manifest result accounts for task-created scanned/input artifacts and their
   creation order.
 - After the final revision, every cited step/phase/AC matches the actual plan and no current self-check repeats a

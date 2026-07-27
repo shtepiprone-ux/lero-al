@@ -20,6 +20,8 @@ Before assigning a fact, command, acceptance criterion, or gate `VERIFIED`, read
 `docs/orchestrator-evidence-preflight-template.md` in working notes.
 Complete `docs/orchestrator-rule-compliance-ledger-template.md` for every selected rule. Do not weaken,
 reinterpret, or replace a mandatory rule unless that rule explicitly permits it or a traceable owner decision does.
+Complete `docs/orchestrator-execution-contract-template.md` and retain both completed artifacts with the kickoff.
+An unresolved owner decision produces a blocked decision note, not a multi-route task for Sonnet.
 
 ## Gather evidence before writing
 
@@ -87,6 +89,10 @@ Do not publish the first draft. Check all of the following and revise the task i
 - Every owner-only exception has traceable owner authorization; the task itself is never that authorization.
 - Every applicable selected rule has a `COMPLIANT` row in the rule-compliance ledger; no task-authored exception or
   merely plausible alternative can substitute for the rule.
+- The retained executable-route contract has exactly one active owner route; its scope, ACs, verification plan,
+  report contract, and handoff all derive from that route.
+- Every checkpoint names its producer, persisted output, comparator, and failure behavior; dynamic state was checked
+  for both zero/empty and non-empty cases.
 - In a dirty worktree, every status/diff path assertion uses a pre-write `git status --porcelain` snapshot and an
   explicit comparator, never an assumed clean status.
 - Every claim that a pre-existing modified path was untouched has matching before/after content witnesses; an equal

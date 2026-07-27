@@ -89,6 +89,19 @@ Complete `docs/orchestrator-rule-compliance-ledger-template.md` for every select
 its applicability, mandatory observable, evidence, and `COMPLIANT` / `BLOCKED` / source-based `NOT APPLICABLE`
 result. A task-authored exception, a weaker alternative, or a row omitted from the ledger is `BLOCKED`.
 
+### 6c. Executable route contract
+
+Complete `docs/orchestrator-execution-contract-template.md` and retain it with this preflight. An unresolved owner
+decision is a blocked decision note, not an executable multi-route task.
+
+| Checkpoint | Preconditions / preserved inputs | Allowed writes | Produced artifact and observable | Comparator / failure result | Zero or alternate-route counterexample |
+|---|---|---|---|---|---|
+| | | | | non-zero exit / `BLOCKED` | |
+
+The final write set, ACs, verification plan, report contract, and handoff must all be derived from the one active
+route. A status/diff, count, or manifest claim needs a persisted baseline and comparator that can reject both an
+unexpected path and a changed value; manual quotation is not a gate.
+
 ## 7. Publication gate
 
 - [ ] Every required AC has an observable artifact and valid verification command.
@@ -103,6 +116,8 @@ result. A task-authored exception, a weaker alternative, or a row omitted from t
 - [ ] An unchanged-content claim for a pre-modified path has matching before/after content witnesses.
 - [ ] Every starting dirty entry is covered by the integrity manifest, or execution has verified clean isolation.
 - [ ] Every applicable selected rule has a `COMPLIANT` row in the rule-compliance ledger.
+- [ ] A completed executable route contract is retained with the task/review evidence; it has one active route and
+      every checkpoint has a producer, persisted result, comparator, and failure behavior.
 - [ ] Exact baseline/count/manifest assertions account for the timing of every task-created input artifact.
 - [ ] The current task text has no stale step reference or self-check claim contradicted by its latest revision.
 - [ ] Every material claim has a recorded falsification attempt.

@@ -30,8 +30,10 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
    unaccounted task-created input is not sufficient evidence.
    When the start state is dirty, reconcile every start entry to the completed
    `orchestrator-dirty-worktree-manifest-template.md`, unless verified isolated clean execution replaces it.
-8. Complete `orchestrator-rule-compliance-ledger-template.md`; a missing row, agent exception, or unsupported
-   alternative is blocking.
+8. Complete `orchestrator-rule-compliance-ledger-template.md` and
+   `orchestrator-execution-contract-template.md`. Rebuild one active route, its final write set, and every
+   checkpoint from the final task text; a missing ledger/contract, multi-route executor plan, non-failing
+   comparator, or unsupported alternative is blocking.
 
 Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
 complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.
@@ -146,11 +148,7 @@ Use these headings in order:
 9. `Required next actions`
 10. `Reviewer self-check`
 
-In the self-check, confirm that the review inspected evidence rather than summaries, preserved every explicit requirement, applied the right current/legacy UI route and QA profile, considered applicable failure paths, and made a decision consistent with the evidence.
-Also confirm that the evidence-first preflight checked artifact schemas/enums, matrix scope, baseline preservation,
-execution state, and at least one relevant falsification path for every material new claim or gate.
-Confirm that any owner-only exception has traceable owner authorization, dirty-worktree path assertions use a
-pre-write comparator, and stateful measurements account for task-created artifacts and timing.
-Confirm that pre-existing modified paths have content witnesses where needed and that the latest task revision has no
-stale step reference or self-check claim contradicted by its current instructions.
-Confirm that the rule ledger is current, complete, and has no agent-authored exception.
+In the self-check, confirm that evidence, not summaries, supports every requirement; the final task has one active
+route; and the retained rule ledger and executable contract are current. Confirm each checkpoint has a producer,
+persisted result, comparator, and failure path, including valid zero/empty inputs, task-created artifacts, and dirty
+worktree integrity. Confirm no owner exception is invented and no current instruction contradicts the final route.

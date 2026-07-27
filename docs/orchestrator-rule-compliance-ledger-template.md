@@ -21,6 +21,10 @@ Rules:
    manual interpretation. Its evidence must have the required artifact and failure semantics.
 5. After every revision, recompute all rows from the current text and current worktree. A prior `COMPLIANT` result
    does not survive a changed plan, scope, command, baseline, or owner decision automatically.
+6. When a selected rule permits or requires an execution route, link its row to the completed
+   `orchestrator-execution-contract-template.md`. An unresolved owner choice is `BLOCKED`; it is not a compliant
+   alternative route inside an executor task.
 
-Publication and approval are forbidden unless every applicable row is `COMPLIANT`; otherwise return `BLOCKED` or
-`NEEDS REVISION` and name the exact unresolved rule row.
+Publication and approval are forbidden unless every applicable row is `COMPLIANT` and the completed ledger is
+retained with the task/review evidence; otherwise return `BLOCKED` or `NEEDS REVISION` and name the exact unresolved
+rule row.

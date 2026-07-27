@@ -13,6 +13,17 @@ alternative equivalent, or calling its own decision an exception. Only a traceab
 outcome. An incomplete or non-compliant ledger row is `BLOCKED` or `NEEDS REVISION`, never a publishable task or
 approval.
 
+## Model the task as one executable route
+
+Complete `docs/orchestrator-execution-contract-template.md` and retain the completed contract with the task or review
+evidence. An unresolved owner choice is a blocked decision note, not a multi-route executor task. After the owner
+chooses, regenerate every route-dependent scope, acceptance criterion, verification step, report requirement, and
+handoff as one active contract.
+
+For every checkpoint, record its preconditions, allowed writes, producer, persisted output, comparator, and failure
+behavior. Test the zero/empty and non-empty forms of every dynamic count, manifest, or baseline. "Compare", "quote",
+or a green self-check is not evidence unless an exact comparator can reject the counterexample.
+
 ## Establish the evidence contract
 
 For every material requirement, acceptance criterion, or gate, record:

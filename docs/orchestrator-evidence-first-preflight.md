@@ -29,6 +29,16 @@ schedule a baseline capture when its only valid pre-change input is gone, and do
 doing so is explicitly safe. Name `fast`, full, route, Storybook, locale, and historical matrices exactly; never use
 one as evidence for another without proving their scopes are identical.
 
+## Verify write-scope viability
+
+Before task publication, inspect the current worktree for every path the executor is required to edit. Record whether
+it is `CLEAN`, `OWNED`, `EXCLUDED AS UNRELATED`, or `AMBIGUOUS`, plus any file-local limit or write constraint. The
+task's Scope, Out of scope, verification plan, completion report, and handoff must name the same viable write set.
+
+An `AMBIGUOUS` path containing unreviewed work from another task, or a capped file already over its limit, is not
+available for a new task's required edit. Defer it, define an explicit non-growing consolidation, or obtain an owner
+sequencing decision first. Do not publish a kickoff that both requires and forbids the same path.
+
 ## Separate UI evidence layers
 
 Keep source rules, computed values, rendered geometry, and visual/pixel outcome distinct. A CSS rule or computed
@@ -58,4 +68,4 @@ Label a source-derived counterfactual as `ANALYTICAL`; do not call it “fired�
 
 Return `DRAFT — NEEDS EVIDENCE`, `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `BLOCKED` rather than publish or approve
 when a required artifact cannot represent the claim, a command cannot run at its scheduled point, baseline evidence
-would be destroyed, or an owner decision remains unresolved.
+would be destroyed, a required write path is not viable, or an owner decision remains unresolved.

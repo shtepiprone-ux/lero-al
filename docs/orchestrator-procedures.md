@@ -61,8 +61,9 @@ The preflight must distinguish these evidence layers:
 4. **Execution state:** label the plan exactly one of `from-scratch`, `remediation`, or `mixed`. A remediation plan
    must name its start step, reusable artifacts, forbidden re-runs, and every preserved artifact that a command
    could overwrite.
-5. **Ownership and sequencing:** reconcile task-owned, unrelated, and ambiguous paths before a handoff. A path
-   containing unreviewed work from another task is ambiguous, not implicitly available to stage.
+5. **Ownership and sequencing:** reconcile task-owned, unrelated, and ambiguous paths before task publication and
+   before a handoff. A path containing unreviewed work from another task is ambiguous, not implicitly available to
+   edit or stage.
 
 For every material claim, acceptance criterion, and proposed gate, attempt one concrete falsification before relying
 on it: inspect a counter-branch, an absent/missing baseline, a different matrix mode, a real enum, a narrow/long
@@ -85,6 +86,10 @@ same gaps remain.
 - A revision of completed work must begin with an explicit re-entry mode. Preserve prior baseline artifacts by
   default; do not rerun a baseline capture unless a valid pre-change input is available and overwriting is explicitly
   safe.
+- Before assigning an executor write path, inspect its current worktree classification and any file-local cap. A
+  mixed/unreviewed path or an already-over-limit file is not viable scope: defer it, define an explicit non-growing
+  consolidation, or obtain owner sequencing. Scope, out-of-scope, verification, completion-report, and handoff
+  instructions must not contradict one another.
 - For UI migrations, test the smallest observable question. When the only suspected difference is a runtime style
   value, a same-page synthetic measurement may be valid; prove that all other relevant container rules are
   equivalent first, assert and persist the effective mutation for every cell, retain raw live/synthetic measurements

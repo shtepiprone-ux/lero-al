@@ -58,13 +58,15 @@ At minimum test every new or changed gate against a missing/invalid input and in
 reported status. Mark the result `EXECUTED` only when a command or artifact actually exercised it; label a
 source-derived counterfactual `ANALYTICAL`, never “fired” or “cleared”.
 
-## 6. Diff ownership and handoff readiness
+## 6. Write-scope viability, ownership, and handoff readiness
 
-| Path | Task-owned evidence | Classification | Staging status / reason |
-|---|---|---|---|
-| | session log + diff | `OWNED` / `EXCLUDED AS UNRELATED` / `AMBIGUOUS` | |
+| Path the executor must change | Current classification | File-local limit / constraint | Allowed action or owner decision | Handoff / staging status |
+|---|---|---|---|---|
+| | `CLEAN` / `OWNED` / `EXCLUDED AS UNRELATED` / `AMBIGUOUS` | e.g. line cap, mixed diff | edit / defer / non-growing consolidation / owner sequencing | |
 
-An `AMBIGUOUS` path with mixed unreviewed work blocks an isolated task handoff.
+Inspect this before publishing a task, not only before its handoff. An `AMBIGUOUS` path with mixed unreviewed work,
+or a capped file already over its limit, cannot be a required executor edit without an explicit owner decision or
+non-growing consolidation plan. Scope, Out of scope, verification, completion report, and handoff must agree.
 
 ## 7. Publication gate
 
@@ -74,6 +76,7 @@ An `AMBIGUOUS` path with mixed unreviewed work blocks an isolated task handoff.
 - [ ] UI claims separate source, computed, geometry, and required visual evidence.
 - [ ] Synthetic UI probes assert and persist the effective mutation plus raw live/synthetic measurements.
 - [ ] Remediation plans name their start phase and preserved artifacts.
+- [ ] Every required write path is viable in the current worktree; no scope or reporting instruction contradicts it.
 - [ ] Every material claim has a recorded falsification attempt.
 - [ ] Unresolved rows are labelled `ASSUMED`, `UNKNOWN`, or `BLOCKED`; none is presented as verified.
 

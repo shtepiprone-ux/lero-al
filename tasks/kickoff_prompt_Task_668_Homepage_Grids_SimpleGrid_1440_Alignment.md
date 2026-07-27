@@ -45,6 +45,44 @@
 > requires a Phase-A0 content snapshot of both Views into the ignored QA-artifact directory and a
 > `git diff --no-index` file-to-file comparison afterwards (§13 A0.1a, step 10b); R7/R8/AC7 now cite that mechanism,
 > with ordinary `git diff` retained only for the tracked paths.
+>
+> **Revision 7 (2026-07-27)** after orchestrator review returned `NEEDS REVISION` on the revision-6 implementation.
+> Three P2 and two P3 findings, **all evidence/specification defects — no product-code defect was found.** The six
+> render branches, both harnesses, the canonical story, and the migration-scope enrolment were all verified against
+> real artifacts, and the owner-native `tsc` / `build` / `governance:screenshots` / `governance:components` gates all
+> returned exit 0. Only the deltas below are re-opened; everything else in revisions 1–6 stands.
+>
+> 🛑 **EXECUTION MODE — READ FIRST. Revision 7 starts at §13 Phase D, step 17.**
+> **Do NOT run Phase A0, Phase A, Phase B, or Phase C. Do NOT re-run `task668-qa-grid-1440.mjs --baseline`. Do NOT
+> overwrite `.screenshots/task668/baseline.json`.** The task is already implemented; `runBaseline()` writes that file
+> unconditionally (L229–231) and the pre-change tree is no longer buildable, so a re-run would irreversibly destroy
+> the AC1/AC2/AC4/AC11 before/after proof and leave `--verify` comparing the change against itself. Reuse the
+> recorded artifacts of the previous execution. Full rationale and the artifact list: **§13.0**.
+>
+> - **F1 `P2` (AC5/R5).** The header row's required **computed-style proof was never produced**, and the migration
+>   introduces an undeclared computed `column-gap` `normal → 16px`: `@mantine/core@8.3.18`
+>   `esm/components/Group/Group.mjs` L24 sets `defaultProps = { gap: "md" }` → `theme.spacing.md` = 16px, with **no**
+>   `Group` defaultProps override in `theme.ts`. The old `<div className="flex … mb-6">` computed `column-gap: normal`
+>   (0px). ⚠️ The rendered impact is **NOT established in either direction** — with `justify-content: space-between`
+>   and two children the gap is absorbed by free space and the extreme positions can be identical. This is an
+>   **unproven** change, not a demonstrated regression. New **§10.14** defines the only permitted proof method;
+>   **AC5 is rewritten** around measured geometry rather than computed rules alone.
+> - **F7 `P2` (AC13).** Revision 6's AC13 demanded that `--loading` "appear as **allowlisted**" — **no such verdict
+>   exists.** `scripts/check-stories-rendered.mjs` emits `pass` / `fail` / `ambiguous` / `out-of-range` /
+>   `known-failure` (L1253, L858, L1250, L1484, L1564); `LOADER_ALLOWLIST` is consulted only by readiness/gating
+>   logic (L530, L851, L990) and never assigns a verdict. The implementation was correct throughout; the AC — and the
+>   self-audit that marked it `VERIFIED` — were not. **AC13 rewritten** to a checkable condition.
+> - **F2 `P2` (owner sequencing, not an executor action).** Four of this task's tracked paths carry Task 668 **and**
+>   unreviewed Task 665 changes in the same working-tree diff, and Task 665 is `PARTIALLY VERIFIED`. No isolated
+>   commit handoff for Task 668 is constructible until the owner sequences 665. Recorded in §16.
+> - **F3 `P3`.** `scripts/task668-qa-grid-1440.mjs` L315–317 pushes a reason string but leaves `row.pass = true` when
+>   a baseline cell is missing or `infraOk:false`, silently skipping the before/after assertion. Fix in §10.15.
+>   It stays `P3` **because §10.14 puts the header proof in a separate script**: the grid harness's baseline schema is
+>   untouched, so F3 is not a precondition of F1. Had the header capture been bolted onto the same harness, F3 would
+>   escalate to `P2` and block first — the pre-change baseline moment has passed, so the missing header rows would
+>   pass silently through exactly this branch.
+> - **F4 `P3`.** §3.10 cited `screenshots:assert:fast` counts as the **full** run's baseline. Both figures are real
+>   but describe different matrices; §3.10 now carries them as two separate rows rather than overwriting history.
 
 ## 1. Mode and task type
 
@@ -256,11 +294,13 @@ this** — the locator must change too, while still locating `SimilarListings`' 
 | Fact | Evidence |
 |---|---|
 | `screenshots:assert` (full run) sets `process.exitCode = 1` on **any** FAIL | `scripts/check-stories-rendered.mjs` L1324/L1352/L1364/L1816 |
-| The pre-change full-run baseline already carries **219 FAIL** (historical, unrelated to this task) | `docs/backlog.md` Task 665 entry: "1827/2116 PASS, 219 FAIL unchanged vs baseline" |
-| ⇒ **"`screenshots:assert` exits 0" is unachievable** and must never be an acceptance criterion for the full run | the two rows above |
+| **`screenshots:assert:fast`** (a DIFFERENT, smaller matrix) carries **2116 cells / 219 FAIL** | `docs/backlog.md` Task 665 entry: "`screenshots:assert:fast` now 1827/2116 PASS, 219 FAIL unchanged vs baseline" |
+| **`screenshots:assert`** (the FULL run this task judges) carries **7880 cells / 953 FAIL** pre-change | measured directly in Task 668 Phase A, manifest `.screenshots/rendered-assert/2026-07-26T18-37/manifest.json` |
+| ⚠️ **Revision 7 correction (F4):** revisions 1–6 quoted the `--fast` figure (219/2116) as if it were the **full** run's baseline. Both numbers are real; they describe **different matrices**. Judge the full run only against its own `953 FAIL / 7880 cells`, and never "correct" the historical `--fast` record | the two rows above |
+| ⇒ **"`screenshots:assert` exits 0" is unachievable** and must never be an acceptance criterion for the full run | the rows above |
 | The run emits a machine-readable `.screenshots/rendered-assert/<ts>/manifest.json` with `{ timestamp, summary, matrix }` (story × viewport × locale, PASS/FAIL) | L1561, L1593–1594, L1759 |
 | ⇒ for the **full** run the correct criterion is a **manifest-based delta** on task-owned cells, not the process exit code | — |
-| ⚠️ **`--mantine-only` is a DIFFERENT run with a DIFFERENT baseline — it does NOT inherit the 219 FAIL.** It skips the legacy `ASSERT_STORIES` and geometry-only phases and covers only `Mantine/Primitives/*` + `Patterns/Mantine/*`. Its recorded baseline is **`0 FAIL`** | `docs/sessions/2026-07-23-task663-harness-backdrop-overlap-downgrade.md` R4/AC4: "1064 cells, 1021 PASS, **0 FAIL**, 43 ambiguous" before / "1064 cells, 1042 PASS, **0 FAIL**" after; `docs/backlog.md` Task 663: "`0 FAIL` both before/after" |
+| ⚠️ **`--mantine-only` is a DIFFERENT run with a DIFFERENT baseline — it inherits neither the full run's 953 FAIL nor the `--fast` 219 FAIL.** It skips the legacy `ASSERT_STORIES` and geometry-only phases and covers only `Mantine/Primitives/*` + `Patterns/Mantine/*`. Its recorded baseline is **`0 FAIL`** | `docs/sessions/2026-07-23-task663-harness-backdrop-overlap-downgrade.md` R4/AC4: "1064 cells, 1021 PASS, **0 FAIL**, 43 ambiguous" before / "1064 cells, 1042 PASS, **0 FAIL**" after; `docs/backlog.md` Task 663: "`0 FAIL` both before/after" |
 | ⇒ `--mantine-only` **must exit 0 with 0 FAIL** — it is a hard-blocking CI gate (`check-stories-rendered.mjs` L290) and a delta-only criterion would be strictly weaker than the project's own gate | — |
 | `check:locale-leak:mantine-only` is `continue-on-error: true` in CI (Task 625 migration-window policy) | `.github/workflows/governance-pr.yml` L194–200 |
 | ⇒ requiring exit 0 from it is stricter than the project's own gate; require a **delta** instead | — |
@@ -277,7 +317,8 @@ this** — the locator must change too, while still locating `SimilarListings`' 
 | R2 | Owner §1.2 | Latest grid (populated **and** loading) renders via Mantine `SimpleGrid` with column steps **1 / 2 @768 / 3 @1440**. | P0 | §10.10 harness | Confirmed |
 | R3 | §3.3 | Gaps unchanged: Featured 16px, Latest 12px, on **both** axes, at every width. | P0 | computed `columnGap` + `rowGap` | Confirmed |
 | R4 | Owner §1.3–1.4 | The 1440–1535px difference vs the pre-change render is recorded as the **approved** outcome; every other width band matches the pre-change computed grid. | P0 | before/after table (AC11) | Confirmed |
-| R5 | §3.1 | The Featured header row (L47) renders via Mantine `Group` with `justify="space-between"`, `align="center"`, `wrap="nowrap"`, and a computed `margin-bottom` of 24px; `Title` + `ViewAllLink` unchanged. | P1 | computed style | Confirmed |
+| R5 | §3.1 | The Featured header row (L47) renders via Mantine `Group` with `justify="space-between"`, `align="center"`, `wrap="nowrap"`, and a computed `margin-bottom` of 24px; `Title` + `ViewAllLink` unchanged. | P1 | **§10.14 synthetic-`gap:0` geometry harness** — computed rules ALONE are not sufficient (revision 7, F1) | Confirmed |
+| R17 | Revision 7 F1 | The header row's `column-gap` `normal → 16px` change is **measured**, not asserted: the rendered geometry of `Group`/`Title`/`ViewAllLink` is proven either unchanged by the gap, or the affected element and width band are named for an owner decision. | P0 | §10.14, AC5 | Confirmed |
 | R6 | §3.6 | `.featured-listings` / `.latest-listings` remain on the **loading** grid only. | P0 | DOM, both branches | Confirmed |
 | R7 | agent-contract P0.3/P0.5 | Card count, order, props (`priority`, `displayCurrency`, `rates`, `isFavorited`), `getImagePriority()` index semantics, empty state, and skeleton counts (3 Featured / 4 Latest) unchanged. | P0 | DOM + the **§3.11 targeted file diff** (NOT repo-wide `git diff` — both Views are untracked) | Confirmed |
 | R8 | agent-contract P0.7 | No user-facing string added or changed. | P0 | **§3.11 targeted file diff**, zero `t()` key changes | Confirmed |
@@ -288,7 +329,7 @@ this** — the locator must change too, while still locating `SimilarListings`' 
 | R13 | §10.10 | A new `scripts/task668-qa-grid-1440.mjs` with explicit `--baseline` / `--verify` modes, a stable baseline path, and a **dual locator** that works on both the pre-change Tailwind grid and the post-change `SimpleGrid`; captures `gridTemplateColumns`/`columnGap`/`rowGap` for all four grid containers × the §13 widths × 4 locales; `--baseline` asserts nothing and exits 0 on the unchanged tree, `--verify` asserts the §12 tables and produces the AC11 diff. | P0 | both modes run, exit 0 + recorded table | Confirmed |
 | R14 | qa-profiles Q3 + §3.10 | Rendered proof judged by **manifest delta**, not exit code: zero new FAIL on task-owned cells in the full run, no increase in totals, and the new canonical story clean in `--mantine-only`. | P0 | before/after manifests | Confirmed |
 | R15 | §3.10 / §10.11 | The new canonical story has a **fixed** filename, `meta.title`, and exports (`Default`, `Loading`); `--default` is registered in `ASSERT_STORIES` with the `.listing-card` anchor and `--loading` in `LOADER_ALLOWLIST` (false-positive category, **not** the known-failure registry). | P0 | source + `--mantine-only` verdicts | Confirmed |
-| R16 | §3.10 / §13 | `npm run build-storybook` runs immediately before **every** harness capture (Phase A baseline and Phase C verification), so no harness reads a stale `storybook-static/`. | P0 | command transcripts, in order | Confirmed |
+| R16 | §3.10 / §13 | `npm run build-storybook` runs immediately before **every** harness capture — Phase A baseline, Phase C verification, **and Phase D step 19 before the new header harness (revision 7)** — so no harness ever reads a stale `storybook-static/`. | P0 | command transcripts, in order | Confirmed |
 
 Every acceptance criterion in §12 maps to these IDs.
 
@@ -334,6 +375,10 @@ Every acceptance criterion in §12 maps to these IDs.
   Views by direct file path.
 - `scripts/mantine-migration-scope.json` — add both View paths.
 - **New** `scripts/task668-qa-grid-1440.mjs` — the computed-grid harness, `--baseline` / `--verify` (§10.10).
+  **Revision 7:** one bug fix only (§10.15 / F3). Do **not** add header capture to this script — see §10.14.
+- **New (revision 7)** `scripts/task668-qa-header-geometry.mjs` — the header-row synthetic-`gap:0` geometry harness
+  (§10.14). A **separate** script by design: it needs no pre-change tree and must not touch
+  `task668-qa-grid-1440.mjs`'s `baseline.json` schema.
 - `scripts/task420-qa-grid-step.mjs` — per-story expected-column table **and** per-story locator (§3.9 / §10.9).
 - `scripts/check-stories-rendered.mjs` — add `patterns-mantine-homepagelistinggrids--default` to `ASSERT_STORIES`
   (anchor `.listing-card`) and `patterns-mantine-homepagelistinggrids--loading` to `LOADER_ALLOWLIST` (§10.11.a/b);
@@ -393,6 +438,12 @@ cols instead of 3; Latest 3 cols instead of 2) — the approved outcome per §1.
    (`theme.ts` L176). **`wrap="nowrap"` is mandatory:** Tailwind `flex` defaults to `nowrap` while Mantine `Group`
    defaults to `wrap="wrap"`, so omitting it silently changes behavior. This matches the sibling Latest heading row
    at `page.tsx` L48. Verify computed `margin-bottom` is 24px; if not, use the value that computes to 24px.
+   ⚠️ **Revision 7 (F1) — the `gap` trap, the exact sibling of the `wrap` trap above.** Mantine `Group` also defaults
+   to **`gap="md"` = 16px** (`Group.mjs` L24 → `--group-gap`, `Group.mjs` L33), while Tailwind `flex` defaults to
+   `column-gap: normal` (0px). Revision 6 enumerated four props and omitted this one, so the shipped `Group` carries a
+   16px inter-child gap the old `<div>` did not. **Do NOT reflexively add `gap={0}`** — with `justify-content:
+   space-between` and two children the gap is normally absorbed by free space, and `page.tsx` L48 (the canonical
+   sibling this row is modelled on) also omits `gap`. Measure first per §10.14, then apply §10.14's decision rule.
 6. **Imports — per file, exactly:**
    - `FeaturedListingsView.tsx`: add **`SimpleGrid` and `Group`** to the existing `@mantine/core` import
      (it owns the header row).
@@ -463,6 +514,84 @@ cols instead of 3; Latest 3 cols instead of 2) — the approved outcome per §1.
 12. **Manifest:** add `src/modules/listings/components/FeaturedListingsView.tsx` and
     `src/modules/listings/components/LatestListingsView.tsx` to `scripts/mantine-migration-scope.json`.
 13. **i18n / encoding:** no `t()` key changes; touched files stay UTF-8 no-BOM, no mojibake.
+14. **NEW (revision 7, F1) — `scripts/task668-qa-header-geometry.mjs`: the header-row proof.**
+
+    **Why a synthetic before, and why in-place.** There is **no rendered pre-change baseline** for this row and there
+    cannot be one retroactively: `.screenshots/task668/source-baseline/` holds only two `.tsx` files, and
+    `baseline.json` holds only `{found, columnCount, gridTemplateColumns, columnGap, rowGap, childrenCount}` — no
+    header data, no rects. The pre-change capture moment has passed. Two alternatives are **explicitly forbidden**:
+
+    - ❌ **Do NOT swap the untracked Views back to their snapshots to rebuild a pre-change Storybook.** Both Views are
+      untracked, so `git checkout` / `git restore` cannot recover them; a failure between swap and restore would
+      destroy uncommitted Task 665 work. (A rebuild is only defensible inside an isolated temporary copy of the
+      project, and is not worth its cost given the method below.)
+    - ❌ **Do NOT measure a hidden clone.** Mantine puts scoped classes and CSS variables on the element and its
+      ancestors; a clone in another subtree inherits the cascade differently, so any rect delta would be an artifact
+      of cloning rather than a property of `gap`.
+
+    **Required method — synthetic `gap:0` on the real element, inside one `page.evaluate`:**
+
+    1. Measure the live row: `getBoundingClientRect()` for the `Group`, the `Title`, and the `ViewAllLink`;
+       `Group.clientWidth` / `Group.scrollWidth`; and computed `display`, `justify-content`, `align-items`,
+       `flex-wrap`, `margin-bottom`, `column-gap`.
+    2. Save the inline custom-property state **completely** — both `el.style.getPropertyValue('--group-gap')` **and**
+       `el.style.getPropertyPriority('--group-gap')`, and note whether the property was absent (empty value).
+    3. Set `el.style.setProperty('--group-gap', '0px')`. This is exactly the variable `Group.mjs` L33 writes, so the
+       probe hits the one suspected difference and nothing else.
+    4. Wait one frame (`requestAnimationFrame`), then repeat step 1's measurements.
+    5. In a **`finally`** block, restore the saved state precisely: if the property was originally absent, call
+       `el.style.removeProperty('--group-gap')`; otherwise `setProperty(name, savedValue, savedPriority)`. Never
+       leave the probe applied, and never restore by guessing `'16px'`.
+    6. Matrix: **exactly one story ID × 3 widths × 4 locales = 12 deterministic cells.**
+
+    **Deterministic identity (do not leave any of this to executor discretion):**
+
+    | Parameter | Value |
+    |---|---|
+    | Story ID | **`system-featuredlistings--default`** — the only ID. Chosen because it is the populated branch, so `ViewAllLink` is present (it renders only under `!loading && listings.length > 0`, `FeaturedListingsView.tsx` L47). Do **not** add `--loading` (no `ViewAllLink` → the two-child geometry under test does not exist) and do **not** add `--empty`. |
+    | Widths | `320`, `640`, `1440` |
+    | Locales | `sq`, `en`, `uk`, `it` |
+    | Runner | Same model as `scripts/task668-qa-grid-1440.mjs`: `createServer` static server over `storybook-static/` on a **free port not already used by a sibling harness** (verified: `task420-qa-grid-step.mjs` L186 uses **6014**, `task668-qa-grid-1440.mjs` L365 uses **6015** — use **6016**), Playwright `chromium.launch()`, `page.setViewportSize({ width, height: 900 })`, `page.goto('iframe.html?id=<id>&globals=locale:<loc>&viewMode=story', { waitUntil: 'networkidle', timeout: 20000 })`, then `page.waitForTimeout(400)`. |
+    | `Group` locator | Within `#storybook-root`, the first element whose computed `display` is `flex` **and** which contains an `h2` descendant. Mechanism-agnostic — do **not** match Mantine class names. Assert exactly one match; on 0 or >1, fail the cell as an infra error with a distinct reason string rather than guessing. |
+    | `Title` locator | `group.querySelector('h2')` — `Title order={2}` renders `<h2>` (`FeaturedListingsView.tsx` L46). |
+    | `ViewAllLink` locator | The `Group`'s **last element child**, asserted `!== title`. Do not pin to a class or `href`. |
+    | Render-failure guard | Reuse `task668-qa-grid-1440.mjs`'s `renderResult` check verbatim (`sb-show-errordisplay`, blank canvas, `pageerror` collection) so an unrendered story cannot silently produce "matching" rects. |
+
+    Both measurement passes (live and synthetic) must run inside **one** `page.evaluate` on the **same** page instance
+    — never two `goto`s, never two page objects. Re-navigating would re-lay-out and defeat the comparison.
+
+    **Premise that must be VERIFIED, not assumed.** This method proves the effect of `gap` only. Confirm by reading
+    Mantine's compiled `Group` root CSS that the root differs from the old `<div className="flex items-center
+    justify-between mb-6">` **solely** in `display` / `flex-direction` / `flex-wrap` / `align-items` /
+    `justify-content` / `gap` (plus `margin-bottom` via `mb`) — in particular that `grow={false}` adds no `flex-grow`
+    to the children.
+
+    ⚠️ **`flex-direction: row` is EXPECTED — do not escalate on it.** Mantine's `Group` root sets it explicitly,
+    while the old Tailwind `flex` div inherited the identical value from the CSS initial value for a flex container.
+    The computed result is `row` on both sides, so this is a **declaration difference with no rendered effect**, not
+    a regression. It is listed here precisely so the "report any other root rule" instruction below does not fire a
+    false escalation on it.
+
+    If any root rule **beyond** the six listed above exists, report it; the synthetic probe does not cover it.
+
+    **Decision rule — measured rects and overflow only.** Free space
+    (`Group.clientWidth − (Title.width + ViewAllLink.width) − column-gap`) is a **diagnostic field for the report,
+    never a pass condition**. In particular a negative value is NOT by itself grounds for escalation: if synthetic
+    `gap:0` yields the same rects and the same overflow, the negative figure proves nothing.
+    ⚠️ `scrollWidth ≤ clientWidth` also does **not** prove absence of shrink — a compressed flex item re-wraps its
+    text inside the smaller width and stays within `scrollWidth`. Escalate to an owner decision **only** on:
+
+    - any rect difference **> 0.5px** between the live and synthetic-`gap:0` measurements (epsilon `≤ 0.5px`); or
+    - **worse overflow** with the real `gap:16px` than with synthetic `gap:0`.
+
+    On escalation, name **which** element moved or compressed and **at which width/locale**. Do not predict which one
+    it will be — either child may shrink depending on resolved `flex-shrink` / `min-width`, or overflow may occur
+    instead. If neither trigger fires, record the row as `PRESERVE (rendered layout) — MEASURED`, and record the
+    `column-gap` `0 → 16px` as an accepted convergence with the `page.tsx` L48 canonical sibling.
+15. **NEW (revision 7, F3) — `scripts/task668-qa-grid-1440.mjs` L315–317 bug fix.** The `else` branch that handles a
+    missing or `infraOk:false` baseline cell pushes a reason string but leaves `row.pass = true`, so the before/after
+    assertion is skipped silently. Set `row.pass = false` in that branch. Change nothing else in this script; its
+    `baseline.json` schema and both modes stay exactly as verified.
 
 ### Canonical UI decision record
 
@@ -513,9 +642,24 @@ order, favorites, and headings unchanged.
 - **AC4 [R1,R2,R7,R13]** Given the **loading** branch of both Views, then its grid computes the SAME
   `gridTemplateColumns` / `columnGap` / `rowGap` as the populated branch at every AC1 width, and renders exactly
   3 (Featured) / 4 (Latest) skeletons.
-- **AC5 [R5]** Given the Featured header row, then computed `display:flex`, `justify-content:space-between`,
-  `align-items:center`, `flex-wrap:nowrap`, `margin-bottom:24px`, with `Title` + `ViewAllLink` unchanged in order and
-  conditional rendering.
+- **AC5 [R5,R17]** *(rewritten in revision 7 — F1.)* Given `node scripts/task668-qa-header-geometry.mjs` run per
+  §10.14 at **320 / 640 / 1440 × sq/en/uk/it**, then **both** of the following hold:
+  - **(a) Computed rules.** The `Group` computes `display:flex`, **`flex-direction:row`**, `justify-content:space-between`,
+    `align-items:center`, `flex-wrap:nowrap`, `margin-bottom:24px`, and `column-gap:16px`; `Title` + `ViewAllLink`
+    are unchanged in order and conditional rendering. `flex-direction:row` is recorded as **equivalent to the old
+    `display:flex` div's browser-default `row`** — Mantine declares it explicitly, the outcome is identical, and it
+    is **not** an escalation trigger (§10.14).
+  - **(b) Measured geometry.** For every cell, the live rects of `Group` / `Title` / `ViewAllLink` and the
+    `clientWidth`/`scrollWidth` overflow state match the synthetic-`gap:0` measurement within **≤ 0.5px**, and the
+    real `gap:16px` does not produce worse overflow than synthetic `gap:0`.
+
+  Clause (a) alone is **NOT** sufficient and must not be reported as AC5 satisfied — that substitution is exactly the
+  revision-6 defect. Free space is reported as diagnostic context only and is **not** a pass condition; a negative
+  value with matching rects and matching overflow is not a failure. If either (b) trigger fires, the AC is **not**
+  met: report the element, width, and locale, and stop for the owner decision (`gap={0}` or an explicit acceptance of
+  the `page.tsx` L48 convergence) rather than choosing one unilaterally. The session log's visual-source-trace row for
+  this artifact must then read `PRESERVE (rendered layout) — MEASURED` or `CHANGE (<element>, <width>, <locale>)`;
+  an unmeasured `PRESERVE` claim is not acceptable.
 - **AC6 [R6]** Given the DOM, then `.featured-listings` / `.latest-listings` appear on the loading grid only.
 - **AC7 [R7,R8]** Given the **§3.11 targeted before/after file diff** of `FeaturedListingsView.tsx` and
   `LatestListingsView.tsx` (produced against the Phase-A0 content snapshot, **not** repo-wide `git diff` — both files
@@ -531,7 +675,9 @@ order, favorites, and headings unchanged.
   `system-featuredlistings--default`, `system-latestlistings--default`, and
   `patterns-mantine-homepagelistinggrids--default` — and the total FAIL count is **not higher** than the pre-change
   baseline. *(The process **exit code will be non-zero** in both runs: the harness sets exit 1 on any FAIL and the
-  repo baseline already carries 219 historical FAIL. Exit 0 is NOT a criterion for the full run and must not be
+  full run's own pre-change baseline already carries **953 FAIL across 7880 cells** (§3.10). ⚠️ Do **not** use
+  `219 / 2116` here — that is the historical **`screenshots:assert:fast`** figure for a different, smaller matrix
+  (revision 7, F4). Exit 0 is NOT a criterion for the full run and must not be
   reported as one. AC9 also deliberately does NOT claim full-matrix `Loading` or 1439/1535 coverage — the harness
   asserts `Default` for these IDs and sweeps `Loading` only in the geometry-only phase at 320/375/390. The
   moved-breakpoint proof is AC1–AC4 via R13.)*
@@ -543,12 +689,24 @@ order, favorites, and headings unchanged.
 - **AC12 [R11,R12]** Given the repo, then `npm run check:stories`, `npm run governance:screenshots`,
   `npm run governance:components`, and `node scripts/task420-qa-grid-step.mjs` all exit 0, with Featured asserting the
   new 1440 step and Similar still asserting 1536; the existing `System/*` titles, exports, and IDs are unchanged.
-- **AC13 [R14]** Given `npm run screenshots:assert -- --mantine-only`, then it **exits 0 with 0 FAIL** — not a
-  delta. This run does **not** inherit the full run's 219 historical FAIL: it skips the legacy `ASSERT_STORIES` and
-  geometry-only phases, its recorded baseline is `0 FAIL`, and it is a hard-blocking CI gate (§3.10). The new
-  canonical story must be present in the discovered set, `patterns-mantine-homepagelistinggrids--default` must PASS,
-  and `patterns-mantine-homepagelistinggrids--loading` must appear as **allowlisted** — not FAIL, and not in the
-  known-failure registry. AMBIGUOUS counts must not increase versus the pre-change `--mantine-only` run.
+- **AC13 [R14]** *(rewritten in revision 7 — F7.)* Given `npm run screenshots:assert -- --mantine-only`, then it
+  **exits 0 with 0 FAIL** — not a delta. This run does **not** inherit the full run's historical FAIL: it skips the
+  legacy `ASSERT_STORIES` and geometry-only phases, its recorded baseline is `0 FAIL`, and it is a hard-blocking CI
+  gate (§3.10). The new canonical story must be present in the discovered set,
+  `patterns-mantine-homepagelistinggrids--default` must PASS, and for
+  `patterns-mantine-homepagelistinggrids--loading`:
+
+  > the ID is present in `LOADER_ALLOWLIST`; its rendered verdict is **`pass`**, not `fail` and not `known-failure`.
+
+  AMBIGUOUS counts must not increase versus the pre-change `--mantine-only` run.
+
+  ⚠️ **Revisions 1–6 required this story to "appear as allowlisted". No such verdict exists** and that wording was
+  unsatisfiable by construction: `scripts/check-stories-rendered.mjs` emits only `pass` / `fail` / `ambiguous` /
+  `out-of-range` / `known-failure` (L1253, L858, L1250, L1484, L1564), while `LOADER_ALLOWLIST` is consulted purely by
+  readiness/gating logic (L530, L851, L990) and never assigns a verdict. A static skeleton never trips the
+  loader-timeout heuristic, so `pass` is the correct and expected outcome. The allowlist entry stays as a defensive
+  registration per §10.11.b. Do **not** invent a verdict value, and do **not** mark this AC `VERIFIED` on the strength
+  of a state the harness cannot emit.
 - **AC13b [R14]** Given `npm run check:locale-leak:mantine-only`, then its report shows **no new leak attributable
   to the new story**, judged as a **delta**: this step is `continue-on-error: true` in CI (§3.10), so its exit code
   is not a gate.
@@ -561,9 +719,37 @@ with a deliberate owner-approved breakpoint change, plus a new canonical story a
 responsive work". Not Q4: no critical flow, auth, RLS, or data-loss path (§3.8). Not Q2: the layout genuinely changes
 at a real viewport band.
 
-Verification plan. **Order is mandatory** — steps 1–3 run on the UNCHANGED tree, before any source edit. Both QA
-harnesses read `storybook-static/`, so a stale bundle silently tests the wrong code; every capture is therefore
-preceded by its own `build-storybook` (this mirrors CI, which builds Storybook before each gate — §3.10).
+### 🛑 13.0 — EXECUTION MODE. READ BEFORE ANY COMMAND.
+
+**Task 668 is ALREADY IMPLEMENTED** (revision-6 execution, session log
+`docs/sessions/2026-07-26-task668-homepage-grids-simplegrid-1440-alignment.md`). Revision 7 is a **remediation pass**,
+not a fresh run.
+
+> **For revision 7: START AT PHASE D, STEP 17. DO NOT RUN PHASE A0, PHASE A, PHASE B, OR PHASE C.**
+> **DO NOT re-run `scripts/task668-qa-grid-1440.mjs --baseline`. DO NOT overwrite
+> `.screenshots/task668/baseline.json`.** Reuse the recorded artifacts of the previous execution.
+
+⚠️ **Why this is a hard stop, not a preference.** Phase A step 3 invokes `--baseline`, and `runBaseline()`
+**unconditionally writes** `.screenshots/task668/baseline.json` (`scripts/task668-qa-grid-1440.mjs` L229–231). On the
+current, already-migrated tree that would overwrite the pre-change grid data with post-change data. The baseline is
+**not reconstructable** — the pre-change tree no longer exists in any buildable form — so AC1/AC2/AC4/AC11's entire
+before/after proof would be destroyed irreversibly, and `--verify` would then compare the change against itself and
+report a meaningless 160/160 PASS.
+
+Phases A0–C below are retained **as the historical record of how the implementation was produced**, and remain
+binding for anyone executing this task from scratch on an unchanged tree. They are **not** revision-7 instructions.
+
+Artifacts to reuse as-is (do not regenerate): `.screenshots/task668/baseline.json`,
+`.screenshots/task668/source-baseline/*.tsx`, `.screenshots/task668/verify-2026-07-26T23-53/manifest.json`,
+`.screenshots/rendered-assert/2026-07-26T{18-37,23-55}/manifest.json`, and the Phase-A/C logs under
+`.screenshots/task668/*.log`.
+
+---
+
+Verification plan **for a from-scratch execution on an unchanged tree** (see §13.0 — revision 7 skips to Phase D).
+**Order is mandatory** — steps 1–3 run on the UNCHANGED tree, before any source edit. Both QA harnesses read
+`storybook-static/`, so a stale bundle silently tests the wrong code; every capture is therefore preceded by its own
+`build-storybook` (this mirrors CI, which builds Storybook before each gate — §3.10).
 
 **Phase A0 — create the harness ONLY (no product/UI change yet).**
 The baseline in Phase A is captured by `scripts/task668-qa-grid-1440.mjs`, which **this task creates** — so it cannot
@@ -633,11 +819,27 @@ already exist on an untouched tree. Resolve the ordering explicitly:
 15. `npm run governance:screenshots`, `npm run governance:components` → **exit 0**.
 16. File-integrity/mojibake check on all touched text files.
 
+**Phase D — revision 7 remediation (F1 / F3). ⬅️ THIS IS WHERE REVISION 7 STARTS (§13.0).**
+Runs on the already-implemented tree. No product-code change, no `--baseline` re-run, no `baseline.json` write.
+
+17. Apply the §10.15 one-line fix to `scripts/task668-qa-grid-1440.mjs` (F3).
+18. Write `scripts/task668-qa-header-geometry.mjs` per §10.14.
+19. **`npm run build-storybook` → exit 0. MANDATORY, not optional.** R16 requires a freshly built bundle before
+    **every** rendered capture, and step 18 is a new capture. ⚠️ "No rebuild" in §10.14 means only "do not build a
+    separate **pre-change** tree" — it never means reusing a stale `storybook-static/`. The bundle on disk may
+    predate steps 17–18 and any interleaved work.
+20. `node scripts/task668-qa-header-geometry.mjs` → **exit 0** (AC5). On an escalation trigger it must exit non-zero
+    and name the element/width/locale; do not choose `gap={0}` or any other fix unilaterally — stop for the owner.
+21. `node scripts/task668-qa-grid-1440.mjs --verify` → **exit 0**, re-run to confirm §10.15 did not disturb the
+    160/160 result.
+22. Update the session log: AC5 rewritten per the measured result, AC13 restated per its revision-7 wording, and the
+    §2 visual-source-trace row for the header carrying `MEASURED` rather than an assumed `PRESERVE`.
+
 **Exit-code expectations, so results are not misreported:**
 
 | Must exit 0 | Expected non-zero (not this task's defect) | Exit code not a gate |
 |---|---|---|
-| 2, 3, 5, 6, 7, 8, 9, 10, 11, 13, 15 | 4 (full run) and 12 (full run) — 219-FAIL historical baseline; 10b (`git diff --no-index` exits 1 whenever files differ, which is the expected result here) | 14 (`continue-on-error` in CI) |
+| 2, 3, 5, 6, 7, 8, 9, 10, 11, 13, 15, **19, 20, 21** | 4 (full run) and 12 (full run) — see the §3.10 full-run baseline (**953 FAIL / 7880 cells**, NOT the `--fast` 219/2116); 10b (`git diff --no-index` exits 1 whenever files differ, which is the expected result here) | 14 (`continue-on-error` in CI) |
 
 Never report "exit 0" for a command that cannot produce it; never treat the full run's historical non-zero exit as
 this task's defect; and never downgrade step 13 to a delta — `--mantine-only` has a `0 FAIL` baseline and blocks CI.
@@ -651,7 +853,7 @@ The session log (`docs/sessions/2026-07-26-task668-*.md`) and the `docs/backlog.
 changed-files table matching the real diff — noting for each path whether it was tracked or untracked at the time,
 since the two Views require the §3.11 snapshot diff rather than `git diff`; the **§3.11 targeted before/after diff**
 for `FeaturedListingsView.tsx` and `LatestListingsView.tsx`, quoted, plus ordinary `git diff` for the tracked paths;
-completed requirement IDs (R1–R16) each with evidence; every command run
+completed requirement IDs (R1–R17) each with evidence; every command run
 with its actual result/exit code **in the §13 Phase A / B / C order** (build-storybook ×2, task668 `--baseline`,
 baseline screenshots:assert runs, tsc, check:story-coverage, check:stories, build, task668 `--verify`, task420, the
 post-change screenshots:assert + `--mantine-only` + locale-leak runs, governance:screenshots,
@@ -661,33 +863,51 @@ before vs after), with each manifest path quoted; for **`--mantine-only`**, the 
 **`exit 0` + `0 FAIL`** (AC13) — a before/after comparison may be included as *informative context* for the
 AMBIGUOUS count, but must never be presented as the pass criterion; the locale-leak delta; the A0 `git status
 --porcelain` **delta** against the starting snapshot (§13 A0.1b), showing only the harness path(s); confirmation that
-`patterns-mantine-homepagelistinggrids--loading` is allowlisted rather than failing and is absent from the
+`patterns-mantine-homepagelistinggrids--loading` is **registered in `LOADER_ALLOWLIST` and carries rendered verdict
+`pass`, not `fail` and not `known-failure`** (revision 7, F7 — there is no `allowlisted` verdict) and is absent from the
 known-failure registry; the `check:story-coverage` count before/after; the `task420` per-story table **and locator**
 diff; assumptions/deviations/limitations; and the acceptance-criteria self-audit (AC1–AC13, incl. AC13b).
 
+**Revision 7 additions to the report contract.** The session log must also carry: the §10.14 header table (live vs
+synthetic-`gap:0` rects for `Group`/`Title`/`ViewAllLink`, `clientWidth`/`scrollWidth`, computed rules, and free
+space as a diagnostic column) for all 12 cells; the verified premise that the `Group` root differs from the old
+Tailwind `<div>` only in `display`/`flex-wrap`/`align-items`/`justify-content`/`gap`; the §10.15 one-line diff; the
+step-19 `build-storybook` transcript **preceding** step 20; and AC5/AC13 restated in their revision-7 wording.
+⚠️ Do not carry the revision-6 self-audit forward unchanged: AC5 was marked `VERIFIED` on computed-rule reasoning
+that AC5 no longer accepts, and AC13 was marked `VERIFIED` against a verdict the harness cannot emit. Both must be
+re-derived from the new evidence, and `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` remains the strongest valid
+status.
+
 For every command whose non-zero exit is EXPECTED (§13), report the exit code **and** the reason it is expected —
-do not silently omit it, do not relabel it as exit 0, and do not attempt to drive the historical 219-FAIL baseline
-to zero; that is out of scope. Set status to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`,
+do not silently omit it, do not relabel it as exit 0, and do not attempt to drive the full run's historical FAIL
+baseline (**953 FAIL / 7880 cells**, §3.10 — not the `--fast` 219/2116) to zero; that is out of scope. Set status to `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`,
 or `BLOCKED`. Do not self-approve. Do not run, emit, or suggest any mutating git command.
 
 ## 15. Task quality gate (orchestrator self-check — all pass)
 
 - A fresh Sonnet can execute without chat context — yes (files, line numbers, verbatim markup, both breakpoint scales,
   gap tokens, story IDs and export names, fixture paths, harness model, and all four doc-string lines inlined).
-- Every primary requirement has ≥1 binary AC and ≥1 verification method — yes (R1–R16 → AC1–AC13b + §13).
+- Every primary requirement has ≥1 binary AC and ≥1 verification method — yes (R1–R17 → AC1–AC13b + §13).
+- **No retained step can destroy the evidence of a completed step** — yes (**revision 7**, §13.0): Phase A step 3
+  writes `.screenshots/task668/baseline.json` unconditionally (`task668-qa-grid-1440.mjs` L229–231), and the
+  pre-change tree is no longer buildable, so re-running Phase A on the implemented tree would irreversibly destroy
+  the AC1/AC2/AC4/AC11 before/after proof. §13.0 pins revision 7 to start at Phase D step 17 and forbids the
+  `--baseline` re-run; Phases A0–C are retained only as the from-scratch record.
 - **Every step of the plan can run at the point the plan runs it** — yes (revision 4): Phase A0 creates the harness
   before Phase A invokes it, and touches nothing else, so the Phase-A baseline is still captured against unchanged
   product code.
-- **Each gate is held to its own real baseline, not a borrowed one** — yes (revision 4): the full run is delta-judged
-  against 219 historical FAIL; `--mantine-only` is a separate run with a `0 FAIL` baseline and is held to exit 0 /
-  0 FAIL; locale-leak is delta-only because CI marks it `continue-on-error`.
+- **Each gate is held to its own real baseline, not a borrowed one** — yes (revision 4, **corrected in revision 7**):
+  the full run is delta-judged against **its own** pre-change baseline of **953 FAIL / 7880 cells**, NOT against the
+  historical `screenshots:assert:fast` figure of `219 FAIL / 2116 cells` that revisions 1–6 mistakenly borrowed for
+  it (F4 — two different matrices, both real, §3.10); `--mantine-only` is a separate run with a `0 FAIL` baseline and
+  is held to exit 0 / 0 FAIL; locale-leak is delta-only because CI marks it `continue-on-error`.
 - **Every AC is achievable with a named, existing-or-created command** — yes: revision 1's AC9 demanded full-matrix
   `Loading` + 1439/1535 evidence from `screenshots:assert`, which asserts only `Default` for these IDs and sweeps
   `Loading` in the geometry-only phase at 320/375/390. AC9 is now scoped to what that harness really covers, and the
   breakpoint proof moved to R13's dedicated `task668-qa-grid-1440.mjs`.
 - **Every AC's pass condition matches the command's real exit semantics** — yes, as corrected in revision 4:
-  **AC9** (full run) is a manifest-delta criterion, because that run sets exit 1 against a 219-FAIL historical
-  baseline; **AC13** (`--mantine-only`) is **exit 0 / 0 FAIL**, because it is a separate hard-blocking run that skips
+  **AC9** (full run) is a manifest-delta criterion, because that run sets exit 1 against its own historical baseline
+  of **953 FAIL / 7880 cells** (revision 7, F4 — revisions 1–6 wrote `219` here, which is the `--fast` matrix); **AC13** (`--mantine-only`) is **exit 0 / 0 FAIL**, because it is a separate hard-blocking run that skips
   the legacy and geometry phases and has a `0 FAIL` baseline; **AC13b** (locale-leak) is delta-only, because CI marks
   it `continue-on-error` (§3.10). *(Revision 3 wrongly grouped AC13 with AC9 as manifest-delta — that grouping is
   withdrawn.)* §13 lists per-step exit expectations so a historical non-zero exit is not misreported as this task's
@@ -742,3 +962,28 @@ revision 4's P0 is resolved by A0's snapshot-delta exit criterion (§13 A0.0/A0.
 the §3.11 targeted source-snapshot diff (§13 A0.1a + step 10b, R7/R8, AC7).
 **Owner decision still needed:** none for execution. OQ3 (`MantineHomeSection`'s own 1536px band-padding step, now
 inconsistent with the 1440 grids) is recorded for a separate follow-up decision.
+
+## 16. Commit sequencing — revision 7, F2 (owner action, NOT an executor action)
+
+No isolated commit handoff for Task 668 is constructible from the current worktree. Four of this task's tracked
+paths carry Task 668 **and** unreviewed Task 665 changes in the same diff:
+
+- `src/stories/FeaturedListings.stories.tsx`
+- `src/stories/LatestListings.stories.tsx`
+- `scripts/check-stories-rendered.mjs`
+- `scripts/task420-qa-grid-step.mjs`
+
+`docs/backlog.md` additionally carries 665/666/668 state, and Task 665 is `PARTIALLY VERIFIED` (`docs/backlog.md`).
+Staging any of these paths therefore commits unreviewed Task 665 work, so the orchestrator withholds the handoff
+under the `STATUS/REPORT MISMATCH` rule until the owner picks one:
+
+1. close Task 665 first, then commit 668 on top; or
+2. accept an explicit combined `665 + 666 + 668` commit.
+
+⚠️ The executor must not attempt to resolve this. Mutating Git is owner-only and native-PowerShell-only, and the
+`git clean` / `git restore` / `git checkout --` / `git stash` family is prohibited outright — both target Views are
+untracked, so those commands would destroy Task 665's uncommitted work rather than recover it.
+
+Independent of sequencing: `docs/backlog.md` is at **88 physical lines** against the 80-line cap
+(`BACKLOG LIMIT BREACH`, correctly flagged by the executor and carried over from Task 665/666). Consolidation is an
+orchestrator duty and is deferred until this task's review closes.

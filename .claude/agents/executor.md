@@ -18,6 +18,12 @@ For every non-Q0 task, the final production build is a hard completion gate: run
 change and record its actual zero-exit result. A failed or unrun build requires `PARTIALLY IMPLEMENTED` or `BLOCKED`,
 never `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; report the exact failure to Opus immediately.
 
+When deleting or renaming a surface, search for every live downstream reference (including automation, governance
+scripts, catalogs, allowlists, CI/configuration, and current operational documentation), update each active consumer,
+and run its relevant gate. Report actual exit statuses. A known active broken reference or non-zero required gate is
+part of the task, not out-of-scope cleanup; return `PARTIALLY IMPLEMENTED` or `BLOCKED`, never an "all clean" or
+completion claim, until it is resolved.
+
 For any visible UI change, no JSX, CSS, `className`, or style prop may be edited until the task's canonical UI
 decision record is completed from inspected canonical stories and source. Reuse the canonical owner when it exists;
 otherwise extend or create the shared canonical source, story, and registration named by the task. A missing record,

@@ -95,9 +95,14 @@ Before reporting, perform an adversarial self-review against every acceptance cr
 7. Check touched files for integrity, encoding, parsing, and truncation as required by the project contract.
 8. Reconcile the visual source trace with the rendered proof. Explicitly confirm both changed artifacts and each
    task-named preserved artifact; do not report a visual source as missing when the trace identifies it.
+9. When deleting or renaming a surface, search the whole repository for live downstream references, including
+   automation, governance scripts, catalogs, allowlists, CI/configuration, and current operational documentation.
+   Update every active consumer and run its relevant gate. Record every command's actual exit status. A known active
+   broken reference or non-zero required gate is in scope for the change; it cannot be deferred as cleanup.
 
 If any requirement lacks evidence, any test is unavailable, or a defect remains, report that status explicitly. Do
-not hide it in a positive summary.
+not hide it in a positive summary. Do not describe the work as "all clean", complete, validated, or ready for review
+while a required check is unrun or failing.
 
 ## Completion report
 

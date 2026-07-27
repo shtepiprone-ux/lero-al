@@ -124,6 +124,13 @@ and paste the output in the session log:
      primitives, hardcoded strings/tokens, `window.location.href`, etc.), and — new in 2026-05-25 —
      **silent control removal** (see Note 20 below) and **broken UX flow** (see Note 19 below).
 
+   - **Deletion/rename dependency audit (mandatory when applicable):** search the whole repository for every live
+     downstream reference to the deleted or renamed surface: automation, governance scripts, catalogs, allowlists,
+     CI/configuration, and current operational documentation. Update every active consumer and run its relevant
+     gate. Record each command's actual exit status. A known active broken reference or non-zero required gate is
+     part of the same task, never out-of-scope cleanup; return `PARTIALLY IMPLEMENTED` or `BLOCKED` and do not write
+     an "all clean", complete, validated, or ready-for-review claim until it is resolved.
+
 4. **UI runtime self-check (for Q2/Q3/Q4 UI work — additive to the §17 UI pre-flight):**
    - Open the affected page in the running app, switch the locale to `uk` (longest strings), resize to
      320px, and walk through the user flow end-to-end — entry point, all controls, all states (empty /

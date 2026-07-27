@@ -52,6 +52,12 @@ convenient interpretation. Clause identifiers are intentionally stable because o
    mismatch, or timeout, record it as missing evidence and provide the owner exact native commands plus the expected
    evidence; return `PARTIALLY IMPLEMENTED` or `BLOCKED`, never a confidence claim.
 
+   A deletion or rename also requires a whole-repository audit of its live downstream references: automation,
+   governance scripts, catalogs, allowlists, CI/configuration, and current operational documentation. Update or
+   remove every active consumer and run its relevant gate. A known active broken reference or non-zero required gate
+   is part of the same task, never an out-of-scope cleanup. Report each command's real exit status; do not call the
+   work clean, complete, validated, or ready for review while any required check is unrun or failing.
+
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a
     "Files Changed" table matching the real diff. Sonnet does not add detailed history to the backlog and flags a

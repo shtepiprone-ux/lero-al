@@ -159,6 +159,17 @@ async function evalHeaderGeometry() {
     else group.style.setProperty('--group-gap', savedValue, savedPriority);
   }
 
+  // The intended mutation is its own asserted observation. Without this check a zero geometry
+  // delta is ambiguous: it is equally consistent with "gap has no rendered effect" and with
+  // "the probe never took effect, so both passes measured the same state".
+  // Checked AFTER the finally block, so the original inline state is already restored.
+  if (synthetic.computed.columnGap !== '0px') {
+    return {
+      infra: false,
+      reason: `synthetic probe ineffective: columnGap=${synthetic.computed.columnGap} expected=0px`,
+    };
+  }
+
   return { infra: true, live, synthetic };
 }
 /* eslint-enable no-undef */
@@ -248,6 +259,25 @@ function evaluateCell(cell) {
   }
 
   const { live, synthetic } = cell;
+
+  // Persist the raw measurements, not only the derived deltas: a reviewer must be able to see
+  // that the probe reached column-gap:0px and that the live pass carried the real 16px, without
+  // re-running the harness.
+  row.liveComputed = live.computed;
+  row.syntheticComputed = synthetic.computed;
+  row.liveRects = { group: live.group, title: live.title, viewAllLink: live.viewAllLink };
+  row.syntheticRects = { group: synthetic.group, title: synthetic.title, viewAllLink: synthetic.viewAllLink };
+  row.liveClientWidth = live.clientWidth;
+  row.liveScrollWidth = live.scrollWidth;
+  row.syntheticClientWidth = synthetic.clientWidth;
+  row.syntheticScrollWidth = synthetic.scrollWidth;
+
+  // Defence in depth: the effectiveness guard lives in the page context (captureCell), so a
+  // future refactor that drops it cannot silently turn this into an unfalsifiable check.
+  if (synthetic.computed.columnGap !== '0px') {
+    row.pass = false;
+    row.reasons.push(`synthetic probe ineffective: columnGap=${synthetic.computed.columnGap} expected=0px`);
+  }
 
   // (a) Computed rules — necessary but NOT sufficient (revision-7 F1: clause (a) alone must not
   // be reported as AC5 satisfied).

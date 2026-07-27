@@ -351,6 +351,54 @@ on this tree, not to re-establish AC1–AC4.
   before and after the fix, so `row.pass` was never set via the previously-buggy branch. The fix protects a future
   execution from-scratch, not this one.
 
+### 12.6 — Revision 8: orchestrator-review remediation (F-A) — 2026-07-27
+
+The orchestrator review of 2026-07-27 returned `NEEDS REVISION` with one `P2`, against the **evidence**, not
+the product code or the measured outcome.
+
+**F-A — the synthetic mutation was never asserted to have taken effect.** `measure()` captured
+`computed.columnGap` on both passes, but the `EXPECTED_RULES` loop read **`live.computed`** only, and the
+manifest persisted just the derived deltas. A `0.00px` delta was therefore ambiguous: equally consistent with
+"`gap` has no rendered effect" and with "the probe never applied, so both passes measured the same state".
+`docs/orchestrator-evidence-first-preflight.md` names this exact case — *"a matching result without a recorded
+effective perturbation is `NOT VERIFIABLE`, not preservation evidence"*.
+
+Patch to `scripts/task668-qa-header-geometry.mjs` (+30 lines, no product code):
+
+1. **Effectiveness guard in the page context**, placed **after** the `finally` block so the original inline
+   state is already restored: if `synthetic.computed.columnGap !== '0px'` the cell returns
+   `infra: false, reason: 'synthetic probe ineffective: columnGap=… expected=0px'` instead of a silent zero.
+2. **Raw measurements persisted** per row — `liveComputed`, `syntheticComputed`, `liveRects`,
+   `syntheticRects`, and both `clientWidth`/`scrollWidth` pairs — so the proof is auditable without re-running.
+3. **Duplicate assertion in `evaluateCell`**, deliberately redundant: the primary guard lives in page context,
+   and this one prevents a future refactor from silently turning the check unfalsifiable. Both run **before**
+   the rules loop and the geometry comparison.
+
+**Re-runs (owner-native, no Storybook rebuild — bundle current, story sources unchanged):**
+
+| Manifest | Result |
+|---|---|
+| `header-geometry-2026-07-27T18-00` | **12/12 PASS, 0 FAIL, 0 escalations** |
+| `header-geometry-2026-07-27T18-01` | **12/12 PASS, 0 FAIL, 0 escalations** |
+
+Across both runs (24 rows): `liveComputed.columnGap` = **`16px`** on every row, `syntheticComputed.columnGap`
+= **`0px`** on every row. The probe demonstrably reached the requested state, so the zero geometry delta is now
+a measurement rather than an ambiguity. The orchestrator independently recomputed the rect deltas from the
+persisted raw rects — not from the harness's own delta arithmetic — and obtained **0px** maximum across all
+elements, all cells, both runs. **AC5(b) VERIFIED on falsifiable evidence.**
+
+**F-B — one non-reproducible cell, recorded not hidden.** An intermediate run
+(`header-geometry-2026-07-27T17-56`, before the patch) reported `en@1440 → infra: render: blank-canvas`,
+11/12. That cell has now rendered and passed in **four** runs (`08-45`, `09-05`, `18-00`, `18-01`) with a
+bit-identical `freeSpace` of `1046.21875px`, against that single failure. Assessed as a Storybook render
+flake, not a defect: `escalate` was `false` and `groupDeltaMax` was `null`, i.e. the §10.14 render-failure
+guard **refused** to emit "matching" rects from an unrendered story rather than passing silently. That is the
+guard behaving as designed, and it is the reason the flake was visible at all.
+
+**Also noted by the review:** a second header-geometry run, `header-geometry-2026-07-27T09-05`, existed but
+was not cited in §12.2. It reproduces the `08-45` result exactly (12 rows, 0 escalations, 0.00px). Recorded
+here for completeness.
+
 ## 13. Opus handoff
 
 - Evidence locations: this session log (all sections, including new §12); `.screenshots/task668/baseline.json`

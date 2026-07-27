@@ -39,6 +39,23 @@ An `AMBIGUOUS` path containing unreviewed work from another task, or a capped fi
 available for a new task's required edit. Defer it, define an explicit non-growing consolidation, or obtain an owner
 sequencing decision first. Do not publish a kickoff that both requires and forbids the same path.
 
+## Authorize exceptions and make dirty-tree evidence reproducible
+
+A task document cannot grant its own exception to an owner-only rule. A claimed owner waiver must quote or precisely
+reference the owner's actual decision, including its date, exact scope, and any follow-up owner. Without that evidence,
+mark the task `BLOCKED -- OWNER DECISION REQUIRED`; do not label the exception "owner-approved" or turn it into an
+executor choice.
+
+When a task uses `git status`, a diff, or an "exactly these paths" claim in a dirty worktree, capture a read-only
+starting `git status --porcelain` snapshot before the task writes anything. State the comparator and classify
+pre-existing paths; compare the ending state to that snapshot, never to an imagined clean worktree. A raw final
+`git status --short` cannot prove that a pre-existing modified path was untouched.
+
+For every exact count, baseline, manifest, or other stateful measurement, enumerate every task-created file that can
+enter its input set, including session logs, scratch probes, and ignored artifacts. Fix their creation order relative
+to each measurement. Capture the result before a new scanned artifact exists, or explicitly account for it. Do not
+leave this timing to executor convention.
+
 ## Separate UI evidence layers
 
 Keep source rules, computed values, rendered geometry, and visual/pixel outcome distinct. A CSS rule or computed

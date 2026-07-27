@@ -68,6 +68,18 @@ Inspect this before publishing a task, not only before its handoff. An `AMBIGUOU
 or a capped file already over its limit, cannot be a required executor edit without an explicit owner decision or
 non-growing consolidation plan. Scope, Out of scope, verification, completion report, and handoff must agree.
 
+### 6a. Exceptions, dirty-worktree comparison, and artifact timing
+
+| Check | Evidence / exact plan | Status |
+|---|---|---|
+| Owner-only exception | Verbatim owner decision or durable reference: date, exact exception scope, follow-up owner | `VERIFIED` / `BLOCKED` |
+| Start-state comparator | Read-only `git status --porcelain` captured before task writes; pre-existing paths classified; ending comparison defined | `VERIFIED` / `BLOCKED` |
+| Stateful measurement timing | Every new scanned/input artifact named, with its creation point relative to each baseline/count/manifest command | `VERIFIED` / `BLOCKED` |
+
+Never use the task document itself as evidence of owner approval. A raw final status is not a delta in a dirty
+worktree. If an artifact could change the measured input set, the task must either schedule it after the measurement
+or include it in the expected result.
+
 ## 7. Publication gate
 
 - [ ] Every required AC has an observable artifact and valid verification command.
@@ -77,6 +89,9 @@ non-growing consolidation plan. Scope, Out of scope, verification, completion re
 - [ ] Synthetic UI probes assert and persist the effective mutation plus raw live/synthetic measurements.
 - [ ] Remediation plans name their start phase and preserved artifacts.
 - [ ] Every required write path is viable in the current worktree; no scope or reporting instruction contradicts it.
+- [ ] Every exception to an owner-only rule has a traceable owner decision; otherwise the task is `BLOCKED`.
+- [ ] Dirty-worktree path assertions compare against a pre-write status snapshot, not a purported clean status.
+- [ ] Exact baseline/count/manifest assertions account for the timing of every task-created input artifact.
 - [ ] Every material claim has a recorded falsification attempt.
 - [ ] Unresolved rows are labelled `ASSUMED`, `UNKNOWN`, or `BLOCKED`; none is presented as verified.
 

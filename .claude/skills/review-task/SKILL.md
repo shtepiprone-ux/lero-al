@@ -24,6 +24,9 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
 5. For every non-Q0 task, inspect the final `npm run build` zero-exit transcript against the reviewed diff. A missing,
    failed, or stale build transcript is a blocking evidence gap; do not approve until the current build passes.
 6. Treat missing access, missing task context, missing diff, or missing required evidence as a review limitation. Do not fill it with assumptions.
+7. For any owner-only exception, dirty-worktree path claim, or exact baseline/count/manifest assertion, inspect the
+   owner-decision source, pre-write status comparator, and artifact-creation timeline. A self-declared waiver, raw
+   final status, or unaccounted task-created input is not sufficient evidence.
 
 Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
 complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.
@@ -141,3 +144,5 @@ Use these headings in order:
 In the self-check, confirm that the review inspected evidence rather than summaries, preserved every explicit requirement, applied the right current/legacy UI route and QA profile, considered applicable failure paths, and made a decision consistent with the evidence.
 Also confirm that the evidence-first preflight checked artifact schemas/enums, matrix scope, baseline preservation,
 execution state, and at least one relevant falsification path for every material new claim or gate.
+Confirm that any owner-only exception has traceable owner authorization, dirty-worktree path assertions use a
+pre-write comparator, and stateful measurements account for task-created artifacts and timing.

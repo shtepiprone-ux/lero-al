@@ -40,6 +40,55 @@ For non-trivial task design or review, normalize requirements into a ledger:
 
 Every acceptance criterion and every confirmed review finding should map back to one or more requirement IDs.
 
+## Evidence-first preflight (mandatory before task publication or review decision)
+
+Before publishing an implementation kickoff, declaring a task executable, or returning an approval/revision
+decision, complete the applicable sections of
+[`docs/orchestrator-evidence-preflight-template.md`](orchestrator-evidence-preflight-template.md). This is a
+**fail-closed gate**, not optional planning prose.
+
+The preflight must distinguish these evidence layers:
+
+1. **Source semantics:** inspect the exact implementation, enum, conditional branches, and configuration that make
+   the claim true. Do not infer an output state, default, selector, or registry behavior from a name, a comment, or
+   a prior report.
+2. **Command/artifact contract:** for every required command, record its real inputs, output path and schema, matrix
+   scope, exit semantics, and every file it writes or can overwrite. A command may prove only properties observable
+   in its actual artifact.
+3. **Rendered behavior:** keep source rules, computed CSS, geometry, and visual outcome separate. A declaration or
+   computed value does not prove rendered geometry; a geometry result does not prove a pixel-level result unless the
+   selected QA profile calls for that evidence.
+4. **Execution state:** label the plan exactly one of `from-scratch`, `remediation`, or `mixed`. A remediation plan
+   must name its start step, reusable artifacts, forbidden re-runs, and every preserved artifact that a command
+   could overwrite.
+5. **Ownership and sequencing:** reconcile task-owned, unrelated, and ambiguous paths before a handoff. A path
+   containing unreviewed work from another task is ambiguous, not implicitly available to stage.
+
+For every material claim, acceptance criterion, and proposed gate, attempt one concrete falsification before relying
+on it: inspect a counter-branch, an absent/missing baseline, a different matrix mode, a real enum, a narrow/long
+locale UI state, or another relevant failure mode. Record the result as `VERIFIED`, `ASSUMED`, `UNKNOWN`, or
+`BLOCKED`.
+
+Do not publish a task as ready for Sonnet when a required command has no valid input at the point it is scheduled,
+when a required artifact cannot represent the claimed property, or when a proposed rerun can overwrite the only
+baseline. Return `DRAFT — NEEDS EVIDENCE` or stop for an owner decision instead. Do not approve a review while the
+same gaps remain.
+
+### Additional rules for baselines, assertions, and revisions
+
+- Name matrices precisely. Never substitute a `fast`, subset, Storybook-only, route-only, or historical result for a
+  full-run baseline without proving identical scope.
+- Read the code that produces a reported status or verdict. An allowlist entry, configuration name, or expected
+  behavior does not create a manifest enum value unless the code assigns one.
+- New regression harnesses must fail closed for missing baseline cells, infra failures, absent selectors, and
+  unrendered pages. A reason string without a failing result is not an assertion.
+- A revision of completed work must begin with an explicit re-entry mode. Preserve prior baseline artifacts by
+  default; do not rerun a baseline capture unless a valid pre-change input is available and overwriting is explicitly
+  safe.
+- For UI migrations, test the smallest observable question. When the only suspected difference is a runtime style
+  value, a same-page synthetic measurement may be valid; prove that all other relevant container rules are
+  equivalent first, restore temporary state in `finally`, and document the measurement limits.
+
 ## Ambiguity policy
 
 Ask the user only when all are true:

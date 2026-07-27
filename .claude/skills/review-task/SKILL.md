@@ -25,6 +25,9 @@ Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement pro
    failed, or stale build transcript is a blocking evidence gap; do not approve until the current build passes.
 6. Treat missing access, missing task context, missing diff, or missing required evidence as a review limitation. Do not fill it with assumptions.
 
+Before assigning any requirement status, read [Evidence-first preflight](../../../docs/orchestrator-evidence-first-preflight.md) and
+complete the review sections of `docs/orchestrator-evidence-preflight-template.md` in working notes.
+
 When a task-required validation cannot run because of a sandbox, missing native binary, timeout, or comparable
 environment limit, provide an owner-native validation handoff before the final decision. For every unrun check:
 
@@ -89,31 +92,8 @@ Trace each one to the implementing code and concrete evidence. Inspect relevant 
 
 Attempt to invalidate the happy path with conditions relevant to the change: invalid or absent input, stale or missing data, duplicate action, partial failure, authorization/RLS failure, locale expansion, small viewport, changed consumer, or repeated execution. Mark a branch `not applicable` only with a concrete reason.
 
-For current Mantine/TailAdmin UI, check the current design-system and Storybook proof path. For legacy shadcn/Tailwind UI, apply only the legacy rule bundle. For UI changes, verify rendered behavior at the viewports/locales required by the selected QA profile; source inspection or a passing unit test does not replace required visual proof.
-
-For UI visual work, independently rebuild a visual source trace from the actual source and diff before accepting the
-executor's explanation:
-
-| Visible artifact/state | Component/markup | Class/selector | Utility, cascade, and token path | Required disposition | Evidence |
-|---|---|---|---|---|---|
-
-Trace utility classes to generated CSS semantics and variables to concrete tokens. Verify every task-named changed,
-preserved, or out-of-scope sibling artifact against both source and rendered proof. Do not accept "not found" when
-the task or source names markup, a utility, a selector, or a token that has not been opened and traced. Treat a
-missing or incorrect trace as insufficient evidence and apply the decision rules accordingly.
-
-Independently verify the task's canonical UI decision record for each changed visible artifact. Open the cited
-canonical story and source, repeat enough of the repository search to verify a claimed absence, and compare the
-record to the real diff. A `reuse` decision must consume the shared source without a copied local style. An `extend`
-or `create canonical` decision must add or update the shared owner, its toolbar-reactive canonical Storybook proof,
-and every required catalog/coverage registration in the same diff. Treat a missing record, an uncited "no story" claim, a
-component-local raw value, or an allowlisted raw value without shared provenance as a `P1 HIGH` finding; it blocks
-approval even when token or typecheck gates are green.
-
-Reconcile the task's change/preserve/out-of-scope classifications with the original owner request and available
-visual evidence. If an artifact marked preserved is a plausible cause of the unresolved defect or prevents an
-acceptance criterion, record a `P1 HIGH - TASK SPECIFICATION DEFECT` and return `NEEDS REVISION` or `PARTIALLY
-VERIFIED`; do not approve implementation merely because it followed the faulty scope.
+For UI changes or preservation claims, read [UI review requirements](../../../docs/orchestrator-ui-review.md) before accepting the
+executor's explanation or assigning a decision.
 
 When a task claims a new validation or regression gate, verify that it asserts observable behavior. Q4 gate claims require planted-violation failure proof. Do not accept a test that only mirrors an implementation detail, is weakened to pass, or fails to exercise the changed flow.
 
@@ -159,3 +139,5 @@ Use these headings in order:
 10. `Reviewer self-check`
 
 In the self-check, confirm that the review inspected evidence rather than summaries, preserved every explicit requirement, applied the right current/legacy UI route and QA profile, considered applicable failure paths, and made a decision consistent with the evidence.
+Also confirm that the evidence-first preflight checked artifact schemas/enums, matrix scope, baseline preservation,
+execution state, and at least one relevant falsification path for every material new claim or gate.

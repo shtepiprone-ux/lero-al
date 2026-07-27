@@ -15,6 +15,10 @@ $ARGUMENTS
 
 Act as the task architect. Produce an executable, evidence-based task for a fresh Sonnet session. Do not implement product code while using this skill.
 
+Before assigning a fact, command, acceptance criterion, or gate `VERIFIED`, read
+[`Evidence-first preflight`](../../../docs/orchestrator-evidence-first-preflight.md) and complete the task-design sections of
+`docs/orchestrator-evidence-preflight-template.md` in working notes.
+
 ## Gather evidence before writing
 
 1. Classify the request and state the task type.
@@ -59,31 +63,8 @@ an `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED`, or `BL
 Sonnet updates `docs/backlog.md` with concise current state and writes the detailed session log; Opus validates and
 consolidates those records during review.
 
-For UI work, explicitly classify each affected surface as current Mantine/TailAdmin or legacy shadcn/Tailwind. Identify the applicable Storybook or rendered proof path. In verified context, create a visual source map for every affected visible artifact and every visually related artifact that the task says to preserve or exclude:
-
-| Visible artifact/state | Component/markup | Class/selector | Utility, cascade, and token path | Disposition | Evidence |
-|---|---|---|---|---|---|
-
-Trace utility classes to their generated CSS semantics and CSS variables to their concrete tokens. State whether each artifact is changed, preserved, or out of scope. Never describe a visual root cause or preservation boundary only by a broad term such as "gradient", "border", or "shadow" when inspected markup, classes, selectors, or tokens can name it precisely. Require the visual profile from `docs/qa-profiles.md`; never promote a logic-only change to a full visual matrix without a concrete risk reason.
-
-Also include a canonical UI decision record in the kickoff for every changed visible artifact:
-
-| Visible artifact | Search queries and inspected paths | Canonical Mantine Story / source | Disposition | Shared style/token path and required registration |
-|---|---|---|---|---|
-
-The disposition is exactly `reuse`, `extend`, or `create canonical`. `reuse` requires Sonnet to consume the source
-without copying its styles locally. `extend` requires the canonical owner and story to change once for all in-scope
-consumers. `create canonical` is allowed only after an evidenced search finds no suitable source; it requires a new
-shared primitive/pattern/token in the correct library, a toolbar-reactive canonical story added or updated to prove
-it, and applicable catalog or coverage registration in the same task. Do not hand Sonnet an uncited "no story exists" assertion. If the required
-visual value has no TailAdmin/design-system provenance, leave the task `BLOCKED - CANONICAL STYLE DECISION REQUIRED`
-for the owner instead of authorizing a guessed local value.
-
-Reconcile that source map with the owner's stated rendered outcome and any supplied visual evidence. A `preserve` or
-`out of scope` classification requires positive evidence that the artifact cannot cause the reported defect or
-prevent an acceptance criterion. It does not override explicit owner intent. If the artifact remains a plausible
-cause, either place its change in scope or surface an owner decision as `AMBIGUOUS` or `CONFLICTING`; never publish a
-self-contradictory task as ready for execution.
+For UI work, read [UI task-design requirements](../../../docs/orchestrator-ui-task-design.md) before defining scope or QA. Its visual
+source map and canonical UI decision record are mandatory task artifacts.
 
 For a critical flow, name the registry entry and require automated regression evidence. For changed tests or gates, require assertions of observable behavior rather than implementation detail.
 
@@ -94,14 +75,8 @@ Do not publish the first draft. Check all of the following and revise the task i
 - A fresh Sonnet session can execute it without hidden chat context.
 - Every primary requirement has at least one binary acceptance criterion and one verification method.
 - Scope protects existing behavior and names what must not change.
-- The current/legacy UI boundary, QA profile, locale needs, and Storybook obligations are explicit when applicable.
-- A UI task traces each changed visual artifact and each task-named preserved sibling to inspected markup, styling,
-  and tokens; a fresh executor can distinguish a ring from a border, gradient, overlay, or hover state.
-- Every changed UI artifact has a canonical UI decision record backed by inspected search evidence; a `reuse` result
-  forbids copied local styles, while an `extend` or `create canonical` result names the shared owner, canonical
-  story, and required catalog/coverage registration.
-- The trace's change/preserve/out-of-scope classifications agree with the owner-requested rendered result and any
-  supplied visual evidence; a plausible source of the defect was not incorrectly protected as a preserved sibling.
+- For UI work, all publication checks in `references/ui-task-design.md` pass: current/legacy boundary, QA profile,
+  source map, canonical decision record, and preservation classifications are explicit and evidenced.
 - Negative flows are selected by applicability, not copied as a generic checklist.
 - The task does not claim a command, source file, test, story, screenshot, or existing behavior that was not inspected.
 - The requested gates prove the changed behavior and are not merely procedural assertions.

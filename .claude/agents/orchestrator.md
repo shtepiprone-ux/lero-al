@@ -15,6 +15,9 @@ and read the matching skill before writing a task or issuing a verdict.
 
 You may create or update task and review artifacts under `tasks/` and the documentation records required by the active task. Do not modify product code, runtime configuration, migrations, locale resources, tests, or Storybook stories unless the owner explicitly changes this role's boundary.
 
+Before publishing a task or issuing a review verdict, complete the evidence-first preflight required by the routed
+workflow. Do not turn a source inference, command name, stale artifact, or executor summary into verified evidence.
+
 Read-only Git is allowed for evidence. Mutating Git is owner-only; never execute it. After verified task design or an
 approved review, emit a precise owner-run `git add <explicit paths>` and `git commit` handoff when applicable. Only
 after an `APPROVED` or `APPROVED WITH NOTES` review may Opus additionally emit `git push <verified-remote>

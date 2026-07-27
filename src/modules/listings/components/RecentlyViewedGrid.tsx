@@ -1,10 +1,10 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import { useTranslations } from 'next-intl'
-import { ListingCard, type CardListingData } from './ListingCard'
+import type { CardListingData } from './ListingCard'
 import { useExchangeRate } from '@/hooks/useExchangeRate'
 import { useAuth } from '@/modules/auth/context/AuthContext'
+import { RecentlyViewedGridView } from './RecentlyViewedGridView'
 
 interface Props {
   listings: CardListingData[]
@@ -19,50 +19,23 @@ interface Props {
 }
 
 /**
- * Presentational recently-viewed grid.
+ * Recently-viewed grid container (Task 665 container/View split).
  *
- * Mobile (base): horizontal scroll, fixed-width cards (w-48).
- * sm+: responsive CSS grid (2 → 3 → 4 columns).
- *
- * No auth, no DB access, no server actions — purely a layout component.
- * Data is provided by the parent Server Component (RecentlyViewedSection).
+ * Owns the auth/exchange-rate hooks; data is provided by the parent Server Component
+ * (RecentlyViewedSection). Renders RecentlyViewedGridView with the computed props.
  */
 export function RecentlyViewedGrid({ listings, showEmptyState = false, clearSlot }: Props) {
-  const t = useTranslations('listing')
   const { rates } = useExchangeRate()
   const { user } = useAuth()
   const displayCurrency = user?.preferred_currency ?? 'ALL'
 
-  if (!listings.length) {
-    if (!showEmptyState) return null
-    return (
-      <div data-testid="recently-viewed-section" className="recently-viewed">
-        <h2 className="text-xl font-bold mb-4">{t('recently_viewed_title')}</h2>
-        <p className="text-sm text-muted-foreground">{t('recently_viewed_empty')}</p>
-      </div>
-    )
-  }
-
   return (
-    <div data-testid="recently-viewed-section" className="recently-viewed">
-      {/* Flat flex-wrap: title + clear button on same row; only wraps left-aligned when title fills the row.
-          Same fix family as FilterBar (Task 389 / Task 392). */}
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
-        <h2 className="text-xl font-bold">{t('recently_viewed_title')}</h2>
-        {clearSlot}
-      </div>
-
-      {/*
-        Mobile: horizontal flex scroll (w-48 fixed cards, no-scrollbar).
-        sm+: grid overrides flex display; cards fill column width.
-      */}
-      <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 md:grid-cols-3 lg:grid-cols-4 sm:[&>*]:h-full">
-        {listings.map(listing => (
-          <div key={listing.id} className="w-48 shrink-0 sm:w-auto sm:shrink flex flex-col">
-            <ListingCard listing={listing} layoutContext="4-col" displayCurrency={displayCurrency} rates={rates} />
-          </div>
-        ))}
-      </div>
-    </div>
+    <RecentlyViewedGridView
+      listings={listings}
+      rates={rates}
+      displayCurrency={displayCurrency}
+      showEmptyState={showEmptyState}
+      clearSlot={clearSlot}
+    />
   )
 }

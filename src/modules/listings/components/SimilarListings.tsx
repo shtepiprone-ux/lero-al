@@ -3,8 +3,9 @@ import { headers } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { getExchangeRates } from '@/lib/getExchangeRateServer'
-import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
+import type { CardListingData } from '@/modules/listings/components/ListingCard'
 import { applyPublicVisibility } from '@/modules/listings/lib/visibility'
+import { SimilarListingsView } from './SimilarListingsView'
 
 interface Props {
   currentId: string
@@ -35,6 +36,11 @@ const SELECT = `
  * 2 similar listing URLs when Save-Data is not set. Chrome prerenders those pages
  * on hover/focus intent — dramatically improving perceived LCP on subsequent
  * marketplace navigations. Progressive enhancement: ignored by non-Chrome browsers.
+ *
+ * Task 665: the heading + card grid are extracted into the presentational
+ * `SimilarListingsView` (container/View split); this container keeps the query,
+ * headers, and speculation-rules script, and owns the `.similar-listings` wrapper so
+ * production output stays byte-identical to the pre-split render.
  */
 export async function SimilarListings({ currentId, propertyType, locationId }: Props) {
   const [t, locale, supabase, exchangeRates, authUser] = await Promise.all([
@@ -86,12 +92,12 @@ export async function SimilarListings({ currentId, propertyType, locationId }: P
 
   return (
     <div className="similar-listings">
-      <h2 className="text-xl font-bold mb-5">{t('similar_listings')}</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-        {(listings as unknown as CardListingData[]).map(l => (
-          <ListingCard key={l.id} listing={l} layoutContext="4-col" displayCurrency={displayCurrency} rates={exchangeRates} />
-        ))}
-      </div>
+      <SimilarListingsView
+        heading={t('similar_listings')}
+        listings={listings as unknown as CardListingData[]}
+        rates={exchangeRates}
+        displayCurrency={displayCurrency}
+      />
 
       {speculationUrls.length > 0 && (
         <script

@@ -704,12 +704,12 @@ export const theme = createTheme({
     //   pseudo-element, unreachable via `styles`).
     // - shadow = `shadow-theme-sm` (`0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06)`,
     //   §6r-LIVE literal, cited — NOT the `shadow-lg` Task 549 wrongly relied on). Set as a literal
-    //   inline `boxShadow`, NOT routed through `theme.shadows.sm`: 4 existing pattern consumers
-    //   (`MantineCardGrid`/`MantineAuthFormPattern`/`MantineListingDetailPattern`/
-    //   `MantineListingCardPattern`) already pass `shadow="sm"` on `Paper`/`Card` and currently
-    //   resolve to Mantine's own stock `sm` shadow — overriding `theme.shadows.sm` globally would
-    //   silently reshade all four, outside this task's scope (no shared token/consumer regression
-    //   allowed). The literal value lives here, scoped to `Notification` only.
+    //   inline `boxShadow`, NOT routed through `theme.shadows.sm`: 3 existing pattern consumers
+    //   (`MantineAuthFormPattern`/`MantineListingDetailPattern`/`MantineListingCardPattern`)
+    //   already pass `shadow="sm"` on `Paper`/`Card` and currently resolve to Mantine's own stock
+    //   `sm` shadow — overriding `theme.shadows.sm` globally would silently reshade all three,
+    //   outside this task's scope (no shared token/consumer regression allowed). The literal value
+    //   lives here, scoped to `Notification` only.
     // - icon badge = 40×40 (`h-10 w-10`) `rounded-lg` (8px, NOT a 28px circle), background =
     //   semantic-50 (index 0), glyph color = semantic-600 (index 6, inherited via `currentColor` by
     //   the lucide icon passed as the `icon` prop — lucide icons default to `stroke="currentColor"`).

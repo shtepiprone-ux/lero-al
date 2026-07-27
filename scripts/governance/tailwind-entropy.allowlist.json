@@ -194,16 +194,6 @@
       "why_safe": "Compact admin stat display. Canonical allowed value."
     },
     {
-      "rule": "arbitrary-font-size",
-      "file": "src/stories/ListingGrid.stories.tsx",
-      "pattern": "text-[10px]",
-      "reason": "Storybook story fixture for photo count badge. Stories mirror production component patterns; text-[10px] is canonical for badges.",
-      "reviewer": "governance",
-      "expires": "2026-12-01",
-      "severity": "LOW",
-      "why_safe": "Story file only, not production code. Mirrors ListingCard badge pattern."
-    },
-    {
       "rule": "arbitrary-z-index",
       "file": "src/components/shared/PerfDevOverlay.tsx",
       "pattern": "z-[9999]",

@@ -6,5 +6,7 @@
   "src/components/shared/HeroSearchView.tsx",
   "src/components/layout/FooterView.tsx",
   "src/modules/listings/components/ListingCard.tsx",
-  "src/design-system/mantine/patterns/MantineHomeSection.tsx"
+  "src/design-system/mantine/patterns/MantineHomeSection.tsx",
+  "src/modules/listings/components/FeaturedListingsView.tsx",
+  "src/modules/listings/components/LatestListingsView.tsx"
 ]

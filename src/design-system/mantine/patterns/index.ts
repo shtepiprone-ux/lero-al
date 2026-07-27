@@ -13,9 +13,6 @@ export type { MantineTwoColumnFormProps, TwoColField } from './MantineTwoColumnF
 export { MantineResponsiveActionFooter } from './MantineResponsiveActionFooter'
 export type { MantineResponsiveActionFooterProps, FooterAction } from './MantineResponsiveActionFooter'
 
-export { MantineCardGrid } from './MantineCardGrid'
-export type { MantineCardGridProps, CardGridItem } from './MantineCardGrid'
-
 export { MantineHomeSection } from './MantineHomeSection'
 export type { MantineHomeSectionProps, MantineHomeSectionVariant } from './MantineHomeSection'
 

@@ -1,20 +1,23 @@
 'use client'
 
 /**
- * Storybook story for the FeaturedListings public-homepage grid.
+ * Storybook story for the FeaturedListings public-homepage grid (Task 665).
  *
- * Mirrors the live FeaturedListings markup (header + canonical §8.3 card grid)
- * using the shared StoryListingCard/makeStoryListings fixtures (Task 370 parity).
- * Added for Task 420 (Slice 5) to prove the §8.3 column step
- * (grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4) at every breakpoint.
+ * Statically imports the real production `FeaturedListingsView` (Task 665 container/View
+ * split — clause 16c canonical-Story honesty, no divergent fake card). `Default`/`LocaleStress`
+ * wrap with a fixed signed-in `AuthContext.Provider` (same mechanism as
+ * `Mantine/Primitives/ListingCard.stories.tsx` — never `AuthProvider`, never a mock) and mark
+ * one fixture listing as favorited, so the real `FavoriteButton` renders its favorited state,
+ * not just the guest look. `Loading`/`Empty` pass `loading:true` / `listings:[]` to the same
+ * View — no separate fake markup.
  */
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { useTranslations } from 'next-intl'
-import { Text } from '@mantine/core'
-import { StoryListingCard, makeStoryListings } from './StoryListingCard'
-import { ViewAllLink } from '@/components/shared/ViewAllLink'
-import { CardSkeleton } from '@/modules/listings/components/FeaturedListings'
+import { FeaturedListingsView } from '@/modules/listings/components/FeaturedListingsView'
+import { AuthContext } from '@/modules/auth/context/AuthContext'
+import { makeCardListingFixtures } from './fixtures/cardListingData.fixture'
+import type { ExchangeRates } from '@/lib/getExchangeRate'
+import type { User } from '@/types/database'
 
 const meta: Meta = {
   title: 'System/FeaturedListings',
@@ -22,7 +25,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4. Header mirrors the real component\'s flex justify-between row with the ViewAllLink control; the control is shown unconditionally here (the fixtures have no loading/empty state) as the faithful analogue of the real `!loading && listings.length > 0` present branch. `Loading` and `Empty` render the actual production `CardSkeleton`/`Text` markup imported from `FeaturedListings.tsx` (Task 657 R7 — no divergent stand-in).',
+        component: 'Featured listings grid — public homepage section. Canonical §8.3 card grid, migrated to Mantine (Task 668): `<SimpleGrid cols={{ base: 1, sm: 2, xl: 3, xxl: 4 }} spacing="md">`. Statically imports the real production `FeaturedListingsView`; `Default` renders the signed-in favorited state via a fixed `AuthContext.Provider` fixture (Task 665).',
       },
     },
   },
@@ -30,38 +33,71 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
-function Header({ locale }: { locale: string }) {
-  const t = useTranslations('listing')
-  return (
-    <div className="flex items-center justify-between mb-6">
-      <h2 className="text-xl sm:text-2xl 2xl:text-3xl font-bold">{t('featured')}</h2>
-      <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />
-    </div>
-  )
+const FIXTURE_RATES: ExchangeRates = { ALL: 1, EUR: 100 }
+
+const FIXTURE_USER: User = {
+  id: 'story-user-001',
+  public_id: 1,
+  name: 'Story User',
+  last_name: null,
+  phone: null,
+  whatsapp: null,
+  avatar_url: null,
+  role: 'user',
+  user_type: 'private',
+  status: 'active',
+  block_reason: null,
+  suspended_until: null,
+  company_name: null,
+  company_logo_url: null,
+  company_id: null,
+  website: null,
+  is_verified: true,
+  social_provider: null,
+  location_id: null,
+  position: null,
+  year_started: null,
+  deleted_at: null,
+  location_request: null,
+  preferred_currency: 'EUR',
+  pending_email: null,
+  last_seen_at: null,
+  inactivity_warning_sent_at: null,
+  preferred_locale: 'en',
+  created_at: '2026-01-01T00:00:00.000Z',
 }
 
-/** Mirrors FeaturedListings.tsx's `!listings.length` branch — same Mantine `Text` primitive
- * and props, reusing the real production i18n key (no new/story-only key). */
-function EmptyMessage() {
-  const t = useTranslations('listing')
-  return <Text ta="center" c="var(--muted-foreground)" py="2rem">{t('no_premium_listings')}</Text>
+const MOCK_SIGNED_IN_AUTH = {
+  user: FIXTURE_USER,
+  status: 'authenticated' as const,
+  loading: false,
+  signOut: () => {},
+  refreshUser: () => {},
 }
 
 export const Default: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
+    const listings = makeCardListingFixtures(locale)
+    const favoriteIds = new Set([listings[0]!.id])
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header locale={locale} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
-        </div>
+        <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+          <FeaturedListingsView
+            listings={listings}
+            loading={false}
+            rates={FIXTURE_RATES}
+            displayCurrency="EUR"
+            favoriteIds={favoriteIds}
+            locale={locale}
+          />
+        </AuthContext.Provider>
       </div>
     )
   },
 
   parameters: {
-    docs: { description: { story: 'Exercises the §8.3 column step across breakpoints: 1 col (<640) → 2 cols (sm) → 3 cols (xl, 1280px) → 4 cols (2xl, 1536px).' } }
+    docs: { description: { story: 'Exercises the §8.3 column step across Mantine theme breakpoints: 1 col (<640) → 2 cols (sm, 640px) → 3 cols (xl, 1280px) → 4 cols (xxl, 1440px) — moved from Tailwind 1536px to Mantine xxl/1440px per the Task 668 owner decision (2026-07-26). Card 0 is favorited (signed-in fixture user) — the real `FavoriteButton` renders filled, not just the guest state.' } }
   },
 
   globals: {
@@ -75,12 +111,20 @@ export const Default: Story = {
 export const LocaleStress: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
+    const listings = makeCardListingFixtures(locale).slice(0, 4)
+    const favoriteIds = new Set([listings[0]!.id])
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header locale={locale} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {makeStoryListings(locale).slice(0, 4).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
-        </div>
+        <AuthContext.Provider value={MOCK_SIGNED_IN_AUTH}>
+          <FeaturedListingsView
+            listings={listings}
+            loading={false}
+            rates={FIXTURE_RATES}
+            displayCurrency="EUR"
+            favoriteIds={favoriteIds}
+            locale={locale}
+          />
+        </AuthContext.Provider>
       </div>
     )
   },
@@ -102,16 +146,20 @@ export const Loading: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header locale={locale} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {Array.from({ length: 3 }).map((_, i) => <CardSkeleton key={i} />)}
-        </div>
+        <FeaturedListingsView
+          listings={[]}
+          loading
+          rates={FIXTURE_RATES}
+          displayCurrency="EUR"
+          favoriteIds={new Set()}
+          locale={locale}
+        />
       </div>
     )
   },
 
   parameters: {
-    docs: { description: { story: 'Loading state — three skeleton cards rendered via the production `CardSkeleton` (Mantine `Box`/`Skeleton`), byte-identical to the real §8.3 grid loading branch.' } }
+    docs: { description: { story: 'Loading state — three skeleton cards, rendered by the real `FeaturedListingsView`\'s own loading branch (byte-identical to production, Task 665 — no divergent stand-in).' } }
   },
 }
 
@@ -120,13 +168,19 @@ export const Empty: Story = {
     const locale = (context?.globals?.locale as string) ?? 'en'
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header locale={locale} />
-        <EmptyMessage />
+        <FeaturedListingsView
+          listings={[]}
+          loading={false}
+          rates={FIXTURE_RATES}
+          displayCurrency="EUR"
+          favoriteIds={new Set()}
+          locale={locale}
+        />
       </div>
     )
   },
 
   parameters: {
-    docs: { description: { story: 'Empty state — zero premium listings resolved; renders the production Mantine `Text` (centered, dimmed) used by the real `!listings.length` branch.' } }
+    docs: { description: { story: 'Empty state — zero premium listings resolved; rendered by the real `FeaturedListingsView`\'s own empty branch (Mantine `Text`, centered, dimmed).' } }
   },
 }

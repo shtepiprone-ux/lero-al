@@ -225,7 +225,6 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   /* ListingCard brand-highlight ring/elevation — narrowly-scoped semantic tokens (Task 405, §22.3) */
   /* Consumed ONLY in ListingCard brand-highlight states (horizontal + vertical premium card). */
-  /* StoryListingCard uses same pattern — recorded cross-scope for Task 406. */
   --shadow-listing-card-ring:         0 0 0 1px oklch(0.700 0.162 65 / 0.2);
   --shadow-listing-card-elevation-md: 0 4px 16px oklch(0.700 0.162 65 / 0.25);
   --shadow-listing-card-elevation-lg: 0 8px 24px oklch(0.700 0.162 65 / 0.2);

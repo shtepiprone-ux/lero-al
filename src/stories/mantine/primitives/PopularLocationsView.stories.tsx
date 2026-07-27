@@ -18,8 +18,7 @@ type Story = StoryObj<typeof meta>
 // so any HTTPS photo renders correctly here, same convention as ListingCardPattern.stories.tsx.
 const DEMO_IMAGE_URL = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=300&fit=crop'
 
-// Real Albanian city names — proper nouns, not translatable UI copy (same convention as
-// StoryListingCard.tsx's LOCATIONS fixture array).
+// Real Albanian city names — proper nouns, not translatable UI copy.
 const CITY_NAMES = ['Tiranë', 'Durrës', 'Vlorë', 'Shkodër', 'Elbasan', 'Berat', 'Korçë', 'Sarandë']
 
 function makeLocations(): PopularLocationsViewLocation[] {

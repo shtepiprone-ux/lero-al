@@ -159,7 +159,7 @@ For any story demonstrating containers, grids, or page layouts:
 - Verify listing grids show `2xl:grid-cols-4` (4 columns at 2560px)
 - Verify admin layouts don't stretch full viewport
 
-Reference stories: `System/Containers`, `System/ListingGrid`
+Reference stories: `System/Containers`, `System/FeaturedListings`
 
 ---
 
@@ -331,7 +331,7 @@ src/
       listing.fixture.ts     — Stable test data
     EmptyState.stories.tsx
     Containers.stories.tsx
-    ListingGrid.stories.tsx
+    FeaturedListings.stories.tsx
     AdminLayout.stories.tsx
 ```
 
@@ -435,7 +435,7 @@ All five Storybook categories are required sweep scope:
 - **Layout**: FilterBar, PageHeader, PageShell, Section
 - **Shared**: Combobox
 - **Primitives**: Badge, Button, Checkbox, Command, Dialog, DropdownMenu, Input, PasswordInput, PasswordRequirementsHint, Popover, Select, Sheet, Skeleton, Tabs
-- **System**: AdminLayout, Containers, EmptyState, ListingGrid, RecentlyViewedSection
+- **System**: AdminLayout, Containers, EmptyState, FeaturedListings, LatestListings, RecentlyViewedSection, SimilarListings
 
 ### Remaining rules (unchanged from §9)
 1. **No raw HTML controls.** No `<button>`, `<input>`, `<select>`, `<textarea>` — use canonical components only.

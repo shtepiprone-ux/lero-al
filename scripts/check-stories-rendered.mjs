@@ -163,12 +163,22 @@ const ASSERT_STORIES = [
   { id: 'layout-pageheader--default',              label: 'PageHeader/Default',               anchors: [{ type: 'testid', value: 'page-header', label: 'page-header' }] },
   { id: 'layout-pageshell--default',               label: 'PageShell/Default',                anchors: [{ type: 'testid', value: 'page-shell', label: 'page-shell' }] },
   { id: 'layout-section--with-title-and-description', label: 'Section/WithTitleAndDesc',      anchors: [{ type: 'testid', value: 'section', label: 'section' }] },
-  // ── System (5) ──
+  // ── System (7) — ListingGrid/Default removed (Task 665: System/ListingGrid story deleted, R7);
+  // Featured/Latest/Similar added (Task 665 §16 R14 — these 3 rebuilt System/* stories previously
+  // had no rendered-proof at all; anchored on '.listing-card', rendered by the real ListingCard
+  // each View statically imports and renders in its Default/loaded state) ──
   { id: 'system-adminlayout--admin-toolbar',       label: 'AdminLayout/AdminToolbar',         anchors: [{ type: 'testid', value: 'admin-toolbar', label: 'toolbar' }] },
   { id: 'system-containers--container-wide',       label: 'Containers/Wide',                  anchors: [{ type: 'testid', value: 'container', label: 'container' }] },
   { id: 'system-emptystate--no-listings',          label: 'EmptyState/NoListings',            anchors: [{ type: 'testid', value: 'empty-state', label: 'empty-state' }] },
-  { id: 'system-listinggrid--default',              label: 'ListingGrid/Default',              anchors: [{ type: 'testid', value: 'listing-grid', label: 'listing-grid' }] },
+  { id: 'system-featuredlistings--default',        label: 'FeaturedListings/Default',         anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+  { id: 'system-latestlistings--default',          label: 'LatestListings/Default',           anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+  { id: 'system-similarlistings--default',         label: 'SimilarListings/Default',          anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
   { id: 'system-recentlyviewedsection--populated', label: 'RVS/Populated',                   anchors: [{ type: 'selector', value: '.recently-viewed', label: 'rvs' }] },
+  // Task 668 — new canonical Patterns/Mantine/* story enrolling FeaturedListingsView/
+  // LatestListingsView in the Mantine migration scope (§3.7). Only `--default` is asserted here
+  // (anchored on `.listing-card`, same anchor as the System/* rows above); `--loading` has no
+  // `.listing-card` to anchor on by design and is allowlisted in LOADER_ALLOWLIST instead.
+  { id: 'patterns-mantine-homepagelistinggrids--default', label: 'HomepageListingGrids/Default', anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
   // ── Open-state overlays (7 — Task 421 Slice 6) ──
   { id: 'primitives-dialog--mobile-full-width',    label: 'Dialog/MobileFullWidth',           anchors: [{ type: 'slot', value: 'dialog-content', label: 'dialog-content' }] },
   { id: 'primitives-select--mobile-bottom-sheet',  label: 'Select/MobileBottomSheet',         anchors: [{ type: 'slot', value: 'select-content', label: 'select-content' }] },
@@ -260,6 +270,13 @@ const LOADER_ALLOWLIST = new Set([
   // all 3 stacked fixtures render correctly (default trigger, showLabel trigger with full
   // language name, disabled+spinner trigger), no clip/overflow, correct §6 chrome.
   'mantine-primitives-localeswitcher--default',
+  // Task 668 — `Patterns/Mantine/HomepageListingGrids`'s `Loading` export intentionally renders
+  // both Featured (3 skeletons) and Latest (4 skeletons) in their permanent loading branch —
+  // the same false-positive category as `primitives-skeleton--listing-card-skeleton` above, not
+  // a transient loading state. `--mantine-only` auto-discovers this story by its
+  // `Patterns/Mantine/*` title prefix, so without this entry the hard-blocking gate would fail
+  // on a deliberate, permanent skeleton state (kickoff §10.11.b).
+  'patterns-mantine-homepagelistinggrids--loading',
 ]);
 
 // ── Task 529 — Mantine primitive stories, AUTO-DISCOVERED from the built Storybook index ──

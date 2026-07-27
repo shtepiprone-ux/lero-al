@@ -411,7 +411,6 @@ UI governance docs.
 | `src/design-system/mantine/patterns/MantineFormSectionStack.tsx` | Multi-section stacked form | Mantine Paper + Stack + TextInput | None — full-width | `Patterns/Mantine/FormSectionStack` Default | REPLACE WITH MANTINE | MantineFormSectionStack | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineTwoColumnForm.tsx` | 2-column responsive form | Mantine SimpleGrid + TextInput | None — SimpleGrid responsive | `Patterns/Mantine/TwoColumnForm` Default | REPLACE WITH MANTINE | MantineTwoColumnForm | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx` | Sticky action footer | Mantine Stack/Group responsive | None — P0 compliant | `Patterns/Mantine/ResponsiveActionFooter` Default | REPLACE WITH MANTINE | MantineResponsiveActionFooter | Phase 1 ✅ | None |
-| `src/design-system/mantine/patterns/MantineCardGrid.tsx` | Responsive card grid | Mantine SimpleGrid responsive cols | None — responsive | `Patterns/Mantine/CardGrid` Default | REPLACE WITH MANTINE | MantineCardGrid | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` | Table→cards responsive data | Mantine Table + Stack (mobile) | None — responsive | `Patterns/Mantine/DataTableToCards` Default | REPLACE WITH MANTINE | MantineDataTableToCards | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` | Dialog (desktop) / Drawer (mobile) | Mantine Modal + Drawer, useMediaQuery | useMediaQuery SSR caveat documented | `Patterns/Mantine/DialogDrawerPattern` Default | REPLACE WITH MANTINE | MantineDialogDrawerPattern | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx` | Empty / loading / error states | Mantine Loader + Text + Button | None — centered | `Patterns/Mantine/EmptyLoadingErrorState` Default | REPLACE WITH MANTINE | MantineEmptyLoadingErrorState | Phase 1 ✅ | None |
@@ -483,8 +482,8 @@ UI governance docs.
 | `src/app/layout.tsx` | Root layout | RSC, provider wiring | None (already wired) | n/a | NON-UI SUPPORT | n/a | Phase 1 ✅ | None |
 | `src/app/[locale]/layout.tsx` | Locale layout | RSC, i18n + auth | None | n/a | KEEP TEMPORARILY AS LEGACY | No migration needed (auth/i18n layer) | n/a | — |
 | `src/app/admin/layout.tsx` | Admin layout | RSC, auth guard | None | n/a | KEEP TEMPORARILY AS LEGACY | No migration needed (auth layer) | n/a | — |
-| `src/app/[locale]/page.tsx` | Home page | Tailwind layout | P0 risk: listing grid | No story | MIGRATE TO MANTINE | MantineCardGrid + Mantine layout | Phase 4 | — |
-| `src/app/[locale]/listings/page.tsx` | Listings search | Tailwind layout + filters | P0 risk: filter controls | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern + MantineCardGrid | Phase 4 | Complex: URL state + filters |
+| `src/app/[locale]/page.tsx` | Home page | Tailwind layout | P0 risk: listing grid | No story | MIGRATE TO MANTINE | Mantine layout (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | — |
+| `src/app/[locale]/listings/page.tsx` | Listings search | Tailwind layout + filters | P0 risk: filter controls | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | Complex: URL state + filters |
 | `src/app/[locale]/listings/[id]/page.tsx` | Listing detail | Tailwind 2-col layout | P0 risk: detail layout collapse | No story | MIGRATE TO MANTINE | MantineListingDetailPattern | Phase 4 | — |
 | `src/app/[locale]/(auth)/**/*.tsx` | Auth pages | Tailwind centered forms | P0 risk: form width | No story | MIGRATE TO MANTINE | MantineAuthFormPattern | Phase 3 | — |
 | `src/app/[locale]/cabinet/**/*.tsx` | Cabinet/profile pages | Tailwind forms | P0 risk: form layout | No story | MIGRATE TO MANTINE | MantineFormSectionStack + MantineTwoColumnForm | Phase 4 | — |
@@ -508,10 +507,9 @@ UI governance docs.
 | `src/stories/Containers.stories.tsx` | Container governance story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Delete after Phase 6 | Phase 6 | — |
 | `src/stories/AdminLayout.stories.tsx` | Admin layout story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Migrate to Mantine AppShell story | Phase 5 | — |
 | `src/stories/EmptyState.stories.tsx` | Empty state story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineEmptyLoadingErrorState | Phase 5 | — |
-| `src/stories/ListingGrid.stories.tsx` | Listing grid story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
-| `src/stories/FeaturedListings.stories.tsx` | Featured listings | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
-| `src/stories/RecentlyViewedSection.stories.tsx` | Recently viewed | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
-| `src/stories/SimilarListings.stories.tsx` | Similar listings | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
+| `src/stories/FeaturedListings.stories.tsx` | Featured listings | Real production `FeaturedListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+| `src/stories/RecentlyViewedSection.stories.tsx` | Recently viewed | Real production `RecentlyViewedGridView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+| `src/stories/SimilarListings.stories.tsx` | Similar listings | Real production `SimilarListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
 | `src/stories/VerifiedPage.stories.tsx` | Verified page | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Mantine page pattern | Phase 5 | — |
 | `src/stories/PlantedVisualViolations.stories.tsx` | QA violation reference | Governance | Active | KEEP TEMPORARILY AS LEGACY | Update with Mantine violation patterns | Phase 5 | — |
 | `src/stories/patterns/mantine/**` (14 files) | Mantine canonical patterns | Mantine native proof | Active — Default export | REPLACE WITH MANTINE | Already done | Phase 1 ✅ | None |
@@ -644,7 +642,6 @@ per migration phase will be established in each phase's kickoff document.*
 | `Patterns/Mantine/FormSectionStack` | `MantineFormSectionStack` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/TwoColumnForm` | `MantineTwoColumnForm` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/ResponsiveActionFooter` | `MantineResponsiveActionFooter` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
-| `Patterns/Mantine/CardGrid` | `MantineCardGrid` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/DataTableToCards` | `MantineDataTableToCards` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/DialogDrawerPattern` | `MantineDialogDrawerPattern` | Default only | yes | yes | yes | yes | ✅ Task 482 complete; P0 bottom-sheet fixed |
 | `Patterns/Mantine/EmptyLoadingErrorState` | `MantineEmptyLoadingErrorState` | Default only | yes | yes | yes | yes | ✅ Default shows all 3 states (empty/loading/error) in a Stack |

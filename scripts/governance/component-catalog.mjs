@@ -129,7 +129,11 @@ function analyzeFile(absPath, rel) {
   // Known story targets from responsive screenshot matrix
   const SCREENSHOT_TARGETS = new Set([
     'button', 'input', 'tabs', 'dialog', 'sheet', 'badge', 'skeleton',
-    'ListingGrid', 'Containers', 'EmptyState', 'AdminLayout', 'checkbox',
+    // Task 665 R13.3: ListingGrid.stories.tsx was deleted (fake-card cleanup); the responsive
+    // grid screenshot target re-points at the story filename token for the surviving
+    // System/FeaturedListings story (the token this generator derives from a story's filename,
+    // not the extracted FeaturedListingsView presentational component).
+    'FeaturedListings', 'Containers', 'EmptyState', 'AdminLayout', 'checkbox',
   ]);
   const inScreenshotMatrix = SCREENSHOT_TARGETS.has(name);
 
@@ -439,7 +443,7 @@ function generateCatalogSummary(entries, storyFiles, stamp) {
   matrixLines.push('| `primitives-sheet--*` | mobile-375, tablet-768 | all 4 locales |');
   matrixLines.push('| `primitives-badge--*` | desktop-1280 | all 4 locales |');
   matrixLines.push('| `primitives-skeleton--*` | desktop-1280 | all 4 locales |');
-  matrixLines.push('| `system-listinggrid--*` | mobile-375, desktop-1280, huge-2560 | all 4 locales |');
+  matrixLines.push('| `system-featuredlistings--default` | mobile-375, desktop-1280, huge-2560 | all 4 locales |');
   matrixLines.push('| `system-containers--*` | desktop-1280, huge-2560 | all 4 locales |');
   matrixLines.push('| `system-emptystate--*` | mobile-375, desktop-1280 | all 4 locales |');
   matrixLines.push('| `system-adminlayout--*` | desktop-1280 | all 4 locales |');
@@ -457,12 +461,12 @@ function generateCatalogSummary(entries, storyFiles, stamp) {
   matrixLines.push('');
   matrixLines.push('| Breakpoint | In fast-check matrix | In full matrix | Story coverage |');
   matrixLines.push('|---|---|---|---|');
-  matrixLines.push('| 320px | ✅ | ✅ | button, listinggrid, emptystate |');
+  matrixLines.push('| 320px | ✅ | ✅ | button, featuredlistings, emptystate |');
   matrixLines.push('| 360–480px | — | ✅ | (full matrix only) |');
   matrixLines.push('| 640–768px | ✅ (768px) | ✅ | sheet, dialog, tabs |');
-  matrixLines.push('| 1024–1440px | ✅ (1280, 1440) | ✅ | listinggrid, containers, admin |');
+  matrixLines.push('| 1024–1440px | ✅ (1280, 1440) | ✅ | featuredlistings, containers, admin |');
   matrixLines.push('| 1720–1920px | — | ✅ | (full matrix only) |');
-  matrixLines.push('| 2560px | ✅ | ✅ | listinggrid-huge, containers-wide |');
+  matrixLines.push('| 2560px | ✅ | ✅ | featuredlistings-huge, containers-wide |');
   matrixLines.push('| 3440px ultrawide | — | ✅ | (full matrix only) |');
   matrixLines.push('');
   matrixLines.push('## Governance Script Coverage');

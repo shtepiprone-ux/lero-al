@@ -421,6 +421,26 @@ const MANTINE_STORY_EXTRA_VIEWPORTS = {
   // review time) as a standing gate cell instead of a one-off Playwright probe, matching the
   // Task 573 HeroSearch precedent above.
   ListingDetailPattern: [{ name: 'band-768', width: 768, height: 1024 }],
+  // Task 669 — persists rendered proof at the homepage band's third vertical-rhythm step, which
+  // moved from the Tailwind-only 1536px to Mantine's own `xxl` (1440px) breakpoint (owner
+  // decision 2026-07-28). The standing MANTINE_VIEWPORTS sample (320/375/390/1024) never lands
+  // above 1024px, so neither the retired 1536 step nor the new 1440 step has ever been captured
+  // — a future edit deleting the third step entirely would pass every standing gate. 1200 = below
+  // the step (must still read 64px), 1440 = at the step (must read 80px), 1536 = above the
+  // retired step (must still read 80px, proving no residual 1536 rule). Both HomeSection (the
+  // canonical band, all 4 homepage consumers) and PopularLocationsView (Task 669's own new
+  // MantineHomeSection consumer) get identical cells so the shared rhythm and the newly-adopted
+  // band are both proven at the boundary widths.
+  HomeSection: [
+    { name: 'wide-1200', width: 1200, height: 1024 },
+    { name: 'wide-1440', width: 1440, height: 1024 },
+    { name: 'wide-1536', width: 1536, height: 1024 },
+  ],
+  PopularLocationsView: [
+    { name: 'wide-1200', width: 1200, height: 1024 },
+    { name: 'wide-1440', width: 1440, height: 1024 },
+    { name: 'wide-1536', width: 1536, height: 1024 },
+  ],
 };
 
 /**

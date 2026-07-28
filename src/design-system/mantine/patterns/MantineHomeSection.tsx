@@ -23,11 +23,11 @@ const VARIANT_CLASS: Record<MantineHomeSectionVariant, string | undefined> = {
 }
 
 /**
- * Canonical homepage content-band section (Task 662) — owns vertical rhythm (48/64/80px via a
- * CSS-module `@media` chain, including the 1536px step Mantine's own theme breakpoints don't
- * reach) and background variant via design tokens. Reuses `.container-wide` (globals.css) for
- * the inner content column rather than reimplementing its 1408px/responsive-padding logic.
- * Presentational only — no data fetching.
+ * Canonical homepage content-band section (Task 662; rhythm rebound to Mantine `xxl` in Task 669
+ * per owner decision 2026-07-28) — owns vertical rhythm (48/64/80px via a Mantine responsive `py`
+ * prop bound to `base`/`md`/`xxl`) and background variant via design tokens. Reuses
+ * `.container-wide` (globals.css) for the inner content column rather than reimplementing its
+ * 1408px/responsive-padding logic. Presentational only — no data fetching.
  */
 export function MantineHomeSection({
   variant = 'default',
@@ -40,6 +40,11 @@ export function MantineHomeSection({
     <Box
       component="section"
       className={cn(styles.band, VARIANT_CLASS[variant], className)}
+      py={{
+        base: 'var(--home-section-py-base)',
+        md: 'var(--home-section-py-md)',
+        xxl: 'var(--home-section-py-lg)',
+      }}
       style={containIntrinsicSize ? { containIntrinsicSize } : undefined}
     >
       {withContainer ? <Box className="container-wide">{children}</Box> : children}

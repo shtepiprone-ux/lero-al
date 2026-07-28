@@ -1,11 +1,10 @@
 /*
- * MantineHomeSection.module.css — Task 662.
- *
- * Vertical rhythm MUST live here (a real CSS module with a `@media (min-width:1536px)` step),
- * not in theme.ts inline styles or a Mantine responsive style prop: theme.ts's own breakpoints
- * top out at xxl=90em (1440px) — there is no 1536px (`2xl`) Mantine breakpoint to bind a style
- * prop to (kickoff §3.3, Task 659 precedent). `--home-section-py-*` (globals.css) reproduce the
- * prior `py-12 md:py-16 2xl:py-20` Tailwind chain byte-for-byte (48/64/80px).
+ * MantineHomeSection.module.css — Task 662; vertical rhythm moved out (Task 669, owner decision
+ * 2026-07-28) — see MantineHomeSection.tsx `py` prop. `.band` now carries only
+ * `content-visibility` here; the responsive vertical padding (48/64/80px) is a Mantine `py`
+ * responsive style prop bound to `base`/`md`/`xxl` (theme.ts:150) consuming
+ * `--home-section-py-*` (globals.css) directly, byte-identical values, third-step trigger
+ * rebound onto Mantine's own `xxl` breakpoint (theme.ts:150).
  *
  * `.muted`/`.brandFade` reproduce the prior `bg-muted/30` / `bg-gradient-to-br from-primary/10
  * to-primary/5` Tailwind utilities' OWN compiled output (verified against the built
@@ -18,19 +17,6 @@
 
 .band {
   content-visibility: auto;
-  padding-block: var(--home-section-py-base);
-}
-
-@media (min-width: 768px) {
-  .band {
-    padding-block: var(--home-section-py-md);
-  }
-}
-
-@media (min-width: 1536px) {
-  .band {
-    padding-block: var(--home-section-py-lg);
-  }
 }
 
 .muted {

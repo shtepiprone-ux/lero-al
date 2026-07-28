@@ -11,5 +11,6 @@
   "src/modules/listings/components/LatestListingsView.tsx",
   "src/components/shared/HeroSearchFallback.tsx",
   "src/design-system/mantine/patterns/MantineFilterSection.tsx",
-  "src/components/shared/FiltersPanel.tsx"
+  "src/components/shared/FiltersPanel.tsx",
+  "src/modules/locations/components/PopularLocationsView.tsx"
 ]

@@ -17,9 +17,11 @@ const meta: Meta<typeof MantineHomeSection> = {
         component:
           'Canonical homepage content-band section (Task 662) — real production component migrated ' +
           "from the homepage's four Tailwind `py-12 md:py-16 2xl:py-20` band wrappers. Owns vertical " +
-          'rhythm (48/64/80px, including the 1536px step via a CSS-module `@media` chain) and background ' +
-          '(`muted`/`brandFade`) via design tokens; reuses `.container-wide` for the inner content column. ' +
-          'Viewport and locale switched via Storybook toolbar.',
+          'rhythm (48/64/80px) via a Mantine `py` responsive style prop bound to `base`/`md`/`xxl`; the ' +
+          'third step was rebound from the legacy Tailwind `2xl` trigger to Mantine\'s own `xxl` ' +
+          '(1440px) breakpoint (owner decision 2026-07-28, Task 669). Background (`muted`/`brandFade`) via design ' +
+          'tokens; reuses `.container-wide` for the inner content column. Viewport and locale switched ' +
+          'via Storybook toolbar.',
       },
     },
   },

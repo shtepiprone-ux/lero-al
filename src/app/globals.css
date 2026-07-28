@@ -280,11 +280,12 @@
 
   /* Home section vertical rhythm (Task 662) — preserve-existing values, byte-identical to the
      prior `py-12 md:py-16 2xl:py-20` Tailwind utility chain (48/64/80px). Consumed by
-     MantineHomeSection.module.css's own @media chain, including the 1536px step no Mantine
-     theme breakpoint reaches (theme.ts tops out at xxl=90em/1440px — see kickoff §3.3). */
+     MantineHomeSection's own Mantine `py` responsive style prop (base/md/xxl) — rebound off the
+     Tailwind-only 1536px step onto Mantine's own `xxl` (1440px) breakpoint, owner decision
+     2026-07-28, Task 669. */
   --home-section-py-base: 3rem;   /* 48px — base */
   --home-section-py-md:   4rem;   /* 64px — ≥768px */
-  --home-section-py-lg:   5rem;   /* 80px — ≥1536px */
+  --home-section-py-lg:   5rem;   /* 80px — ≥1440px (xxl) */
 
   /* ── 8. Listing layout — narrowly-scoped semantic layout tokens ─ */
   /* Listing gallery frame heights — consumed ONLY at the 4 named listing gallery call sites. */

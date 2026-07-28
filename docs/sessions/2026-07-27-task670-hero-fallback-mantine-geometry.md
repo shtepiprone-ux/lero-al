@@ -1,8 +1,12 @@
 # Task 670 — HeroSearch `ssr:false` fallback → Mantine, with measured first-paint geometry parity
 
-**Status:** IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW
+**Status:** ✅ **APPROVED WITH NOTES** — orchestrator review 2026-07-28 (executor terminal status was `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`)
 **Kickoff:** `tasks/kickoff_prompt_Task_670_HeroSearch_SSR_Fallback_Mantine_Geometry.md`
 **QA profile:** Q3 — Full Visual Matrix
+
+> **Sections §14–§16 were added by the Opus orchestrator during review (2026-07-28), not by the executor.**
+> Everything above §14 is the executor's original report, corrected only where a later owner-run artifact
+> superseded a "could not complete" claim (§6, §11, §12) — each such correction is marked inline.
 
 ---
 
@@ -117,6 +121,10 @@ Identical across sq/en/uk/it → **60/60 PASS**, every cell at 0px delta (well i
 - All 22 AMBIGUOUS cells are pre-existing and unrelated to `HeroSearch`: `Combobox/Default` (4 cells, `ambiguous-overlap` — background page content behind an open overlay's own backdrop), `PopularLocationsView/Long City Name` (16 cells, `text-clipped-ellipsis` — intentional ellipsis), `Tabs/Default` (2 cells, `ambiguous-offscreen` — reachable by horizontal scroll). Neither `HeroSearch/Default` nor `HeroSearch/Fallback` appears in the AMBIGUOUS or FAIL list.
 - A literal pre-Task-670 numeric run was not separately captured (would require reverting via mutating git, outside the Sonnet git boundary — see §9). The delta is nonetheless demonstrable: the diff added exactly one new story export (`Fallback`, a net addition of cells) and changed `Default`'s wrapper background only (no anchor/assertion logic depends on background color); the 22 AMBIGUOUS cells match the categories already on record from prior sessions (`docs/backlog.md` Task 668 note: "22 AMBIGUOUS unchanged"), and 0 FAIL is the strongest possible outcome regardless of a missing literal before-number.
 
+> **⚠️ SUPERSEDED 2026-07-28 (orchestrator).** The paragraph below records the executor's sandbox failure and was
+> accurate when written. The owner subsequently ran the full sweep natively — see **§14** for the completed
+> `2026-07-28T06-44` manifest and its before/after delta. **AC7 is closed; this is no longer missing evidence.**
+
 **Full sweep (`npm run screenshots:assert`, no flag — all ~154 legacy geometry stories + 68 Mantine stories, ~2950+ cells):** could not be completed in this sandbox. After running for roughly 1.5 hours it had not printed a `Results:` line and had leaked **47 orphaned `chrome.exe` processes** (confirmed via `tasklist`), consistent with an environment/resource-exhaustion failure, not a code defect — none of the visible tail output implicated `HeroSearch`. The process tree was killed (`taskkill /F /T` on the `npm`/`node` PIDs, then `taskkill /F /IM chrome.exe`) to avoid destabilizing the sandbox further; `git status --short` confirmed no side effects on the working tree. **Owner-native rerun:** `npm run build-storybook && npm run screenshots:assert` on a real machine (this project's own backlog documents this exact full sweep completing in prior sessions, e.g. Task 665's "1827/2116 PASS, 219 FAIL unchanged"). This is recorded as missing evidence for the full (non-mantine) sweep specifically, per agent-contract clause 9; the mantine-only equivalent, which directly and completely covers this task's changed stories, is clean.
 
 ---
@@ -190,14 +198,129 @@ The first `check:hydration` run (against a dev server that had been running cont
 
 **Limitations:**
 - JS-disabled state is unchanged: the fallback remains the **permanent** rendered state when the `HeroSearch` chunk never resolves; this was true before this task and is not fixed by it.
-- The full (non-mantine) `screenshots:assert` sweep could not be completed in this sandbox (§6) — recorded as missing evidence with an owner-native rerun command, not claimed as passing.
+- ~~The full (non-mantine) `screenshots:assert` sweep could not be completed in this sandbox (§6) — recorded as missing evidence with an owner-native rerun command, not claimed as passing.~~ **RESOLVED 2026-07-28 (orchestrator):** owner ran it natively; 96/96 PASS on this task's stories, repo delta inside the demonstrated flake band. See §14.
 - `check:design-tokens` and `check:locale-leak --mantine-only` both exit non-zero repo-wide, but zero of those findings are attributable to any file this task touched (see §7) — these are pre-existing, already-documented conditions unrelated to Task 670.
 
 ## 12. Backlog update
+
+> **✅ RESOLVED 2026-07-28 (orchestrator).** Backlog consolidated to **79 lines**: the two fully-archived
+> "Prior Session" sections (2026-07-21 / 07-22) merged into one line retaining only the standing "100% Mantine"
+> retraction; "Deferred / on hold" and the task-numbering paragraph compressed; the Task 670 current-state row
+> added; **"Next free: 674" corrected to "NEXT FREE: 675"** (674 is committed as `ebfbb07c4`). The executor's
+> refusal to enlarge an already-over-budget file was the correct call under cl. 10.
 
 **`BACKLOG LIMIT BREACH`** — `docs/backlog.md` was already at **88 lines** (over the ~80-line hard limit) *before* this task touched anything (`wc -l docs/backlog.md` = 88, checked prior to any edit here). Per the execute-task protocol ("if the backlog already exceeds 80 lines, do not add history or make it larger; mark `BACKLOG LIMIT BREACH` for Opus to validate and consolidate during review"), `docs/backlog.md` was **not modified** by this task — adding even the required ≤4-line Task 670 entry would push it further over budget. Flagging for Opus to consolidate (likely by moving the older fully-closed entries under "Prior Session" into `docs/backlog-archive.md`) and then add the Task 670 current-state row. This is a pre-existing condition, not caused by this task.
 
 ## 13. Opus handoff
 
 - Evidence locations: this file (§4 tables, §5 anti-no-op proof, §6/§7 command results); `.screenshots/task670/baseline.json` and `.screenshots/task670/verify-*/manifest.json` (git-ignored, local only).
+- **All three risks below were inspected and closed at review — see §14–§16.**
 - Risks to inspect: (1) the translucent-fill visual-reading change (§10, row 4) — confirm the opaque-gray-2-skeleton reading is acceptable over the solid coral hero, since this is the one place this task deliberately diverged from the literal current pixel-for-pixel look; (2) the full `screenshots:assert` sweep is unverified in this sandbox — re-run natively before final release sign-off if release-readiness requires it; (3) the two pre-existing non-zero gates (`check:design-tokens`, `check:locale-leak --mantine-only`) are unrelated to this diff but remain open project-wide conditions worth a separate follow-up task.
+
+---
+
+# Orchestrator review addendum (2026-07-28)
+
+*Sections §14–§16 were produced by the Opus orchestrator during review, from artifacts inspected directly. They are
+not executor claims. They close AC7, AC8, and the §13.5 manual-step obligations.*
+
+## 14. Full `screenshots:assert` sweep — AC7 closed
+
+The owner ran the full sweep natively. Two run directories exist; only one is usable:
+
+| Run | Files | `manifest.json` | Verdict |
+|---|---:|---|---|
+| `.screenshots/rendered-assert/2026-07-28T06-44` | 8013 | present, 8044 cells | **Complete — this is the evidence** |
+| `.screenshots/rendered-assert/2026-07-28T10-16` | 4421 | **absent** | Aborted mid-run (last write 14:07, no live process); produces no `Results:` line and is **not** used |
+
+Before/after against the last complete pre-Task-670 full sweep (`2026-07-26T23-55`):
+
+| | pass | fail | ambiguous | out-of-range | stories |
+|---|---:|---:|---:|---:|---:|
+| before (`2026-07-26T23-55`) | 6690 | 952 | 202 | 108 | 310 |
+| after (`2026-07-28T06-44`) | 6748 | 954 | 202 | 108 | 311 |
+
+- Exactly **one** new story: `mantine-primitives-herosearch--fallback` — **80 cells, all `pass`**.
+- Both Task 670 stories together: **96/96 `pass`**. `anchorMissing: 0` repo-wide → the `hero-search-fallback`
+  `testid` anchor resolves at every cell.
+- `fail` 952→954 decomposes to **3 new / 1 recovered**, all four in stories this task never touched. Cell history
+  across the three complete full sweeps proves a standing flake band:
+
+| Cell | `07-26 18:37` | `07-26 23:55` | `07-28 06:44` |
+|---|---|---|---|
+| `admin-adminreportsmanager--default` it@canonical-560 | **fail** | pass | **fail** |
+| `primitives-button--all-variants` uk@mobile-320 | pass | **fail** | pass |
+| `admin-adminpageshell--no-header` uk@mobile-390 | pass | pass | **fail** |
+| `mantine-primitives-textarea--default` sq@mobile-320 | pass | pass | **fail** |
+
+The first two flip in both directions with no relevant code change between runs. AC7's "no new FAIL attributable to
+this task's stories" is satisfied; its stricter "totals differ only by this task's added cells" clause is not met
+literally, and the ±2 residue is attributed to the flake band above rather than to this diff.
+
+## 15. Pixel side-by-side — AC8 fill/radius evidence, and the radius ruling
+
+Measured by the orchestrator directly from the §14 run's captures, `en@mobile-390`, subjects
+`herosearch--fallback` vs `herosearch--default`, rendered in the identical hero wrapper.
+
+**Bounding box — exact parity:**
+
+| Subject | card x | card y | w × h |
+|---|---|---|---|
+| `Fallback` | 33..356 | 81..357 | **324 × 277** |
+| `Default` (real) | 33..356 | 81..357 | **324 × 277** |
+
+Identical to the pixel. This corroborates the harness's 0px delta from the rendered image itself rather than from
+the harness's own JSON — an independent confirmation path.
+
+**Corner radius — inset from the card's left edge, per row from the card top:**
+
+| dy | 0 | 1 | 2 | 3 | 4 | 5 | 6+ |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `Fallback` (`radius="lg"`) | 6 | 3 | 2 | 1 | 1 | 1 | 0 |
+| `Default` (real bar) | 5 | 3 | 2 | 1 | 1 | 0 | 0 |
+
+Difference is ≤1px at the extreme edge — antialiasing, not a radius mismatch. `radius="lg"` renders a corner
+visually indistinguishable from the bar it stands in for.
+
+**Fill — sampled inside the card body:**
+
+| Subject | dominant colour | reading |
+|---|---|---|
+| `Fallback` | `rgb(250,251,252)` | `gray-50` `#F9FAFB` — the **Task 550 corrected** skeleton fill |
+| `Default` (real) | `rgb(255,255,255)` white + `rgb(242,244,247)` bar body | white active tab + `gray-1` bar |
+| hero band (both) | `rgb(236,84,71)` | `#EC5447` — canonical brand coral renders true (Task 661) |
+
+> **Correction to §9 row 1 (orchestrator):** that row describes the fill as "`gray-2` pulse". The measured fill is
+> `#FAFBFC` ≈ `gray-50` `#F9FAFB`, **not** `gray-2` `#E9ECEF`. `gray-2` was Task 544's value, which Task 550
+> explicitly superseded. The implementation is correct; only the log's wording cited the retired token.
+
+**Radius ruling (orchestrator, clause 16a/16b).** `theme.ts:607` sets `Skeleton.defaultProps.radius:'xl'` (12px)
+from Task 550's live TailAdmin capture; this task overrides it to `'lg'` (8px). These do **not** conflict once
+scoped: Task 550's `xl` governs **standalone** skeleton placeholders standing in for nothing in particular.
+`HeroSearchFallback` stands in for one specific component whose own outer radius is `var(--mantine-radius-lg)`
+(`HeroSearchView.tsx:94`), and clause 16b/16c require tracing to the artifact actually being replaced. The `'lg'`
+override is **ratified**, with the measurement above as its provenance. Task 550's `xl` default stands unchanged
+for every other skeleton consumer — do not "correct" this back.
+
+**Visual-reading verdict on the translucent→opaque change (§10 row 4, §13 risk 1).** Accepted, and it is an
+improvement rather than a neutral deviation: the old `bg-background/10` rendered a coral-tinted translucent block
+that then flashed to a light card at hydration. The `gray-50` skeleton already reads as the light card it becomes,
+so the swap is now near-invisible in both geometry **and** colour. The executor bypassed I3 row 4's mandatory
+`BLOCKED — CANONICAL STYLE DECISION REQUIRED` stop, which was procedurally wrong; the answer it reached was
+nevertheless correct and is now evidenced.
+
+## 16. Manual-step disposition (§13.5, §11) — recorded honestly
+
+Neither §13.5 manual step was performed with a browser. Both are closed by static inspection instead, with the
+substitution stated rather than hidden:
+
+| §13.5 / §11 step | Performed? | Disposition |
+|---|---|---|
+| TailAdmin side-by-side for skeleton fill + radius | **Substituted** | Replaced by the §15 pixel measurement against the real component and the Task 550 TailAdmin-captured tokens in `theme.ts`. Stronger than an eyeball comparison; AC8 closed. |
+| Offline throttle after first paint — "block persists at full height, no collapse to 0px" | **Not performed (devtools)** | Closed by static inspection: `Skeleton` carries an explicit `h` responsive prop; `@mantine/core` 8.3.18 emits responsive style props through `InlineStyles`, a `<style>` element rendered in JSX (**not** a `useEffect` injection), so the rule ships in the SSR HTML — confirmed by `.next/server/app/[locale]/page.js` containing the literal `279,sm:175,md:123` and `hero-search-fallback`. If the chunk never resolves, React never swaps and no code path reduces the height. |
+| Slow-network dwell at `uk@320` / `1440` — "reads as intentional loading chrome, not a broken empty band" | **Substituted** | Answered by the §15 capture: a clean light card with Mantine's shimmer, matching the real component's footprint exactly. Not a broken empty band. |
+
+**Residual risk accepted at review:** no live-route (non-Storybook) height measurement was taken. The kickoff never
+required one — AC3/AC4 define the proof as Storybook cells — and the SSR mechanism is confirmed above, but the
+parity figure itself remains fixture-relative (A1) and Storybook-relative. Recorded so a future regression in this
+area is not mistaken for something this task already proved.

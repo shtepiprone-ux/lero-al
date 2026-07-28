@@ -179,6 +179,10 @@ const ASSERT_STORIES = [
   // (anchored on `.listing-card`, same anchor as the System/* rows above); `--loading` has no
   // `.listing-card` to anchor on by design and is allowlisted in LOADER_ALLOWLIST instead.
   { id: 'patterns-mantine-homepagelistinggrids--default', label: 'HomepageListingGrids/Default', anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+  // Task 670 — `HeroSearch`'s `ssr:false` first-paint fallback, extracted into `HeroSearchFallback`
+  // and enrolled in `mantine-migration-scope.json`. Anchored on the component's own `data-testid`
+  // (I6) — additive registration only, no change to any existing entry.
+  { id: 'mantine-primitives-herosearch--fallback', label: 'HeroSearch/Fallback', anchors: [{ type: 'testid', value: 'hero-search-fallback', label: 'hero-search-fallback' }] },
   // ── Open-state overlays (7 — Task 421 Slice 6) ──
   { id: 'primitives-dialog--mobile-full-width',    label: 'Dialog/MobileFullWidth',           anchors: [{ type: 'slot', value: 'dialog-content', label: 'dialog-content' }] },
   { id: 'primitives-select--mobile-bottom-sheet',  label: 'Select/MobileBottomSheet',         anchors: [{ type: 'slot', value: 'select-content', label: 'select-content' }] },

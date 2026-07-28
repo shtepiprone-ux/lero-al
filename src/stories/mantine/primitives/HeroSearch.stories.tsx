@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { storyT } from '../../_storyI18n'
 import { HeroSearchView } from '@/components/shared/HeroSearchView'
+import { HeroSearchFallback } from '@/components/shared/HeroSearchFallback'
 import type { LocationOption } from '@/components/shared/LocationCombobox'
 import { MantineStoryShell } from '../_MantineStoryShell'
 
@@ -46,10 +47,10 @@ export const Default: Story = {
 
     return (
       <MantineStoryShell>
-        {/* Same hero wrapper classes as src/app/[locale]/page.tsx — the tabs' translucent/active
-            treatment is hero-relative chrome (item 1) and only reads correctly against the real
-            gradient background, not a plain white one. */}
-        <section className="relative bg-gradient-to-br from-brand-950 via-primary/80 to-brand-950 text-primary-foreground py-16 md:py-24">
+        {/* Task 670: production hero background is `bg="var(--primary)"` (solid coral,
+            `src/app/[locale]/page.tsx:27`, since Task 659) — the gradient this section used to
+            render here was stale (pre-659). */}
+        <section className="relative py-16 md:py-24" style={{ background: 'var(--primary)' }}>
           <div className="container-wide relative z-10">
             <HeroSearchView
               locations={locations}
@@ -73,4 +74,24 @@ export const Default: Story = {
       </MantineStoryShell>
     )
   },
+}
+
+/**
+ * Task 670 — statically imports `HeroSearchFallback`, the `HeroSearchClient` `ssr:false`
+ * `loading:` component extracted into its own presentational component so it can be
+ * story-rendered deterministically (the dynamic import itself can't be story-rendered in its
+ * loading branch, per the kickoff §3.4). Rendered in the SAME wrapper/background as `Default` so
+ * `scripts/task670-qa-hero-fallback-geometry.mjs` measures both under identical conditions
+ * (AC3/AC4). Enrolled in `scripts/mantine-migration-scope.json`.
+ */
+export const Fallback: Story = {
+  render: () => (
+    <MantineStoryShell>
+      <section className="relative py-16 md:py-24" style={{ background: 'var(--primary)' }}>
+        <div className="container-wide relative z-10">
+          <HeroSearchFallback />
+        </div>
+      </section>
+    </MantineStoryShell>
+  ),
 }

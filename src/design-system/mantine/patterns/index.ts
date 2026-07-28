@@ -106,3 +106,6 @@ export type { MantineProgressProps } from './MantineProgress'
 
 export { RangeDatePicker } from './RangeDatePicker'
 export type { RangeDatePickerProps, DateRange } from './RangeDatePicker'
+
+export { MantineFilterSection } from './MantineFilterSection'
+export type { MantineFilterSectionProps } from './MantineFilterSection'

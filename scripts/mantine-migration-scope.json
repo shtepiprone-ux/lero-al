@@ -9,5 +9,7 @@
   "src/design-system/mantine/patterns/MantineHomeSection.tsx",
   "src/modules/listings/components/FeaturedListingsView.tsx",
   "src/modules/listings/components/LatestListingsView.tsx",
-  "src/components/shared/HeroSearchFallback.tsx"
+  "src/components/shared/HeroSearchFallback.tsx",
+  "src/design-system/mantine/patterns/MantineFilterSection.tsx",
+  "src/components/shared/FiltersPanel.tsx"
 ]

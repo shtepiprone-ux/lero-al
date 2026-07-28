@@ -113,15 +113,16 @@ visual change and must be evidenced (AC7), not silently shipped. **Stop conditio
 `BLOCKED — CANONICAL STYLE DECISION REQUIRED` with the measured evidence.
 
 **D2 — `divide-y divide-border` → `gray-3` dividers.** `--border` resolves to `var(--neutral-200)` =
-`#EBEBEB` (`globals.css:371`), a **legacy shadcn token** with no Mantine equivalent. The canonical divider in
-this exact component tree is `var(--mantine-color-gray-3)` (`#d0d5dd`, `theme.ts` gray tuple index 3): the
-parent `MantineDrawer` already draws **both** its header bottom-border (`MantineDrawer.tsx:148`) and its
-footer top-border (`:71`) with it, and its own source comment names it "the same canonical gray-3 divider
-token as `MantineResponsiveActionFooter`'s `borderTop` (zero invented value)". **Ruling: the section
-dividers adopt `gray-3`,** making the panel's internal separators consistent with its own header/footer
-separators. This darkens the divider `#EBEBEB → #D0D5DD` — a real, visible change, required to be shown
-side-by-side in AC7. `gray-2` (`#e4e7ec`) is the closer hex but has **no** divider precedent in this tree and
-must not be substituted.
+`#E5E5E5` (`globals.css:371` — corrected 2026-07-28, Task 675: the source comment there names a different,
+non-rendering hex; measured `#E5E5E5`, see Task 675 §3.2), a **legacy shadcn token** with no Mantine
+equivalent. The canonical divider in this exact component tree is `var(--mantine-color-gray-3)` (`#d0d5dd`,
+`theme.ts` gray tuple index 3): the parent `MantineDrawer` already draws **both** its header bottom-border
+(`MantineDrawer.tsx:148`) and its footer top-border (`:71`) with it, and its own source comment names it "the
+same canonical gray-3 divider token as `MantineResponsiveActionFooter`'s `borderTop` (zero invented value)".
+**Ruling: the section dividers adopt `gray-3`,** making the panel's internal separators consistent with its
+own header/footer separators. This darkens the divider `#E5E5E5 → #D0D5DD` — a real, visible change, required
+to be shown side-by-side in AC7. `gray-2` (`#e4e7ec`) is the closer hex but has **no** divider precedent in
+this tree and must not be substituted.
 
 **D3 — the divider mechanism.** The 17 sections currently separate via the parent's `divide-y`, which draws a
 border on every child *except the first*. Reproduce that semantics, not "a border on every section" — a
@@ -216,7 +217,7 @@ from the agent environment. It is an owner-side condition. Do not attempt recove
 | R4 | cl. 3, 4, 5; §3.6 | Every filter behaviour is preserved byte-identically: `useHomepageFilters` wiring, all `update()`/`onToggle` handlers, `shows()` conditionals, `contentReady` idle-mount gate, Apply/Reset, Drawer open/close | P0 | AC4 + RTL suites | Confirmed |
 | R5 | cl. 15; registry row 50 | The critical-flow RTL suite is preserved and **extended**: the class-coupled test at `:203` is rewritten to assert observed behaviour, and the migration gains changed-behaviour coverage | P0 | AC5 + planted-violation proof | Confirmed |
 | R6 | §3.3, D1, D2 | Every spacing/colour value traces to a `theme.ts` token or a §3.4 ruling; **no** new `design-tokens-allow` marker and **no** new `GEOMETRY_ALLOWLIST` entry | P0 | `check:design-tokens` (AC6) | Confirmed |
-| R7 | cl. 12, 16; D1, D2 | The two deliberate visual changes (D1 +2px grid gap, D2 divider `#EBEBEB→#D0D5DD`) are captured side-by-side before/after; every other rendered pixel is unchanged | P0 | AC7 | Confirmed |
+| R7 | cl. 12, 16; D1, D2 | The two deliberate visual changes (D1 +2px grid gap, D2 divider `#E5E5E5→#D0D5DD`) are captured side-by-side before/after; every other rendered pixel is unchanged | P0 | AC7 | Confirmed |
 | R8 | cl. 13; §3.6 | `FiltersPanelShell` still renders the **real** `FiltersPanel`, still passes 16/16 with **no** `GEOMETRY_ALLOWLIST` exemption | P0 | AC8 | Confirmed |
 | R9 | cl. 7; I5 | Zero new user-facing strings; `check:i18n` key counts unchanged across `sq`/`en`/`uk`/`it` | P1 | AC9 | Confirmed |
 | R10 | cl. 9 | Final `npm run build` exits 0; no required gate left unrun or failing | P0 | AC10 | Confirmed |
@@ -356,7 +357,7 @@ Exactly these paths may be created or modified:
 ### Required after behavior
 
 1. Items 1–4, 6 (layout semantics), 7 and 8: **unchanged**.
-2. Item 5's rule is unchanged in geometry and position; its colour changes `#EBEBEB → #D0D5DD` (D2).
+2. Item 5's rule is unchanged in geometry and position; its colour changes `#E5E5E5 → #D0D5DD` (D2).
 3. The property-type grid gap changes 6px → 8px (D1).
 4. Every wrapper listed in §3.1 is a Mantine primitive or `MantineFilterSection`; the file contains no raw
    element and no layout `className`.
@@ -493,7 +494,7 @@ Homepage `/{locale}` (any of `sq`/`en`/`uk`/`it`), user taps the filters trigger
   (`320/375/390/480/560/680/768/810/960/1024/1200/1440/1920/2560`) × all four locales for
   `Mantine/Primitives/FiltersPanelShell` and `Patterns/Mantine/FilterSection`, with `uk@320` explicitly
   present; **and** a before/after side-by-side isolates exactly two deltas — the property-grid gap (6→8px)
-  and the divider colour (`#EBEBEB→#D0D5DD`) — with every other measured value unchanged. TailAdmin
+  and the divider colour (`#E5E5E5→#D0D5DD`) — with every other measured value unchanged. TailAdmin
   side-by-side is required for the divider reading. *If the 8px gap causes reflow, clipping or overflow at
   320px in any locale, stop and return `BLOCKED — CANONICAL STYLE DECISION REQUIRED` with the measured
   table.*

@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView`; full regeneration deferred to avoid sweeping in unreviewed Task 669/675 drift)
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion; full regeneration deferred to avoid sweeping in unreviewed Task 669/675 drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -8,15 +8,15 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 245 |
+| Total cataloged components | 244 |
 | Storybook stories | 47 |
 | Locale-aware (useTranslations) | 108 |
-| Client components ('use client') | 159 |
+| Client components ('use client') | 158 |
 | With arbitrary Tailwind values | 37 |
 | Components with 2xl responsive step | 12 |
 | Components flagged for review | 52 |
 
-## Canonical UI Primitives (`src/components/ui/`) (34)
+## Canonical UI Primitives (`src/components/ui/`) (33)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -48,7 +48,6 @@ See `docs/component-risk-register.md` for risk register.
 | `sheet` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
 | `skeleton` | CANONICAL | ✅ | — | —  |
 | `slider` | NEEDS_STORY | — | — | —  |
-| `sonner` | NEEDS_STORY | — | — | —  |
 | `switch` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
 | `table` | NEEDS_STORY | — | — | —  |
 | `tabs` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |

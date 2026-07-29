@@ -14,8 +14,8 @@
  *
  * ## Mountability: jsdom + RTL
  * The component is 'use client' (React state only — useState, useTransition). No Next.js
- * server context required. All shadcn/ui components, next-intl, sonner, and lucide-react
- * are mocked at the module boundary. The component renders fully in jsdom.
+ * server context required. All shadcn/ui components, next-intl, the toast adapter, and
+ * lucide-react are mocked at the module boundary. The component renders fully in jsdom.
  *
  * ## Mobile gate N/A
  * This slice modifies NO rendered surface — smoke only. The <640 full-width gate does
@@ -46,7 +46,7 @@ vi.mock('next-intl', () => ({
 const mockToastInfo    = vi.fn()
 const mockToastError   = vi.fn()
 const mockToastSuccess = vi.fn()
-vi.mock('sonner', () => ({
+vi.mock('@/lib/toast', () => ({
   toast: {
     info:    (...args: unknown[]) => mockToastInfo(...args),
     error:   (...args: unknown[]) => mockToastError(...args),

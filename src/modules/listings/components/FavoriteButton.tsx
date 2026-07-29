@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import { addFavorite, removeFavorite } from '@/modules/listings/actions/favoriteActions'
 import { useAuth } from '@/modules/auth/context/AuthContext'
 import { openAuthSheet } from '@/lib/auth/authSheet'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import styles from './FavoriteButton.module.css'
 
 interface FavoriteButtonProps {

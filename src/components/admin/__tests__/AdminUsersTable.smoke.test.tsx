@@ -54,7 +54,7 @@ vi.mock('next-intl', () => ({
 // ── Toast mock ────────────────────────────────────────────────────────────────
 
 const mockToastSuccess = vi.fn()
-vi.mock('sonner', () => ({
+vi.mock('@/lib/toast', () => ({
   toast: { success: (...args: unknown[]) => mockToastSuccess(...args) },
 }))
 

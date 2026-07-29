@@ -6,7 +6,6 @@ import { createClient } from '@/lib/supabase/server'
 import { getUser } from '@/lib/auth/server'
 import { AdminShell } from '@/components/admin/AdminShell'
 import { getAllSettings } from '@/modules/admin/lib/settings'
-import { Toaster } from '@/components/ui/sonner'
 const ADMIN_LOCALE_COOKIE = 'admin-locale'
 const ADMIN_LOCALE_DEFAULT = 'en'
 
@@ -59,7 +58,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AdminShell siteName={siteName} locale={locale}>{children}</AdminShell>
-      <Toaster />
     </NextIntlClientProvider>
   )
 }

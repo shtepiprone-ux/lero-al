@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useEffect } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import {
   Circle, AlertCircle, CheckCircle2,
   Mail, Send, ChevronRight,

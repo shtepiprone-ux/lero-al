@@ -25,7 +25,7 @@ import { AdminPageShell } from '@/components/admin/AdminPageShell'
 import { AdminTable, type AdminTableColumn } from '@/components/admin/AdminTable'
 import { formatPrice } from '@/lib/formatters'
 import { cn } from '@/lib/utils'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import type { ListingStatus } from '@/types/database'
 import {
   isListingArchived,

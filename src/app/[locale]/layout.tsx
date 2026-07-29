@@ -11,7 +11,6 @@ import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { WebVitalsReporter } from '@/components/shared/WebVitalsReporter'
 import { PerformanceStoreInit } from '@/components/shared/PerformanceStoreInit'
 import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
-import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
   title: 'Lero.al — Real estate marketplace in Albania',
@@ -55,7 +54,6 @@ export default async function LocaleLayout({
           <WebVitalsReporter />
           <PerformanceStoreInit />
           <PerfDevOverlay />
-          <Toaster />
         </>
       </AuthProvider>
     </NextIntlClientProvider>

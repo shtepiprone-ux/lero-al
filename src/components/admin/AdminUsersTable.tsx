@@ -14,7 +14,7 @@ import { MantineDataTableToCards, type TableColumn, type CardConfig } from '@/de
 import { formatDate } from '@/lib/formatters'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 
 export interface VerifiedAgent {
   id: string

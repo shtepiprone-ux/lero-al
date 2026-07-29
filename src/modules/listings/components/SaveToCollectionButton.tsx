@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { FolderOpen, Folder, Check, Loader2 } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { ActionIcon, Button as MantineButton } from '@mantine/core'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

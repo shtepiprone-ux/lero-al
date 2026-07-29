@@ -21,6 +21,11 @@
  *      canonical default is size="sm"/14px + 44px min-height, theme.ts + §6 of
  *      docs/tailadmin-style-reference.md). Escape hatch: "// @allow-button-size <reason>"
  *      on the size="lg"/"xl" line or the line immediately above it.
+ *  15. Unregistered Mantine colour prop (color|c|bg) in src/stories/mantine/** +
+ *      src/stories/patterns/mantine/** + src/design-system/mantine/patterns/** (Task 685 —
+ *      unregistered-colour gate). The registered set is derived from theme.ts's `colors: {…}`
+ *      object at runtime, not hard-coded. Accepts a registered name (bare or `.0`-`.9` shaded),
+ *      a Mantine keyword (dimmed/bright/white/black), or a var()/#/rgb/hsl passthrough value.
  *
  * Exit 0 on clean tree. Exit non-zero on any violation.
  * Wired into prebuild-storybook, prestorybook, and CI.
@@ -88,7 +93,7 @@ export const JSX_PROP_ALLOWLIST = [
 // ── Gate runner (exported for testing) ────────────────────────────────────────
 
 /**
- * Run all 14 governance checks against the given repo root.
+ * Run all 15 governance checks against the given repo root.
  *
  * @param {string} root - Absolute path to the repo root (defaults to this script's parent dir).
  * @param {{ verbose?: boolean }} opts - When verbose=true, prints check-header lines to stdout.
@@ -841,6 +846,69 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
+  // ── Check 15: Unregistered Mantine colour prop (Task 685) ──────────────────
+
+  log('── Check 15: Unregistered Mantine colour prop (Task 685) ────────────');
+
+  const COLOR_SCOPE_FILES = [
+    ...collectFiles(join(root, 'src', 'stories', 'mantine'), ['.tsx', '.ts']),
+    ...collectFiles(join(root, 'src', 'stories', 'patterns', 'mantine'), ['.tsx', '.ts']),
+    ...collectFiles(join(root, 'src', 'design-system', 'mantine', 'patterns'), ['.tsx', '.ts']),
+  ];
+
+  // Registered set is derived from theme.ts's `colors: { … }` object at runtime — never a
+  // hard-coded literal — so it tracks any future colour addition/removal with no script edit.
+  function loadRegisteredColorNames(rootDir) {
+    const themePath = join(rootDir, 'src', 'design-system', 'mantine', 'theme.ts');
+    let themeContent;
+    try { themeContent = readFileSync(themePath, 'utf8'); } catch { return new Set(); }
+    const match = themeContent.match(/colors:\s*\{([^}]*)\}/s);
+    if (!match) return new Set();
+    return new Set(
+      match[1]
+        .split(',')
+        .map((entry) => entry.split(':')[0].trim())
+        .filter((name) => /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name))
+    );
+  }
+
+  const REGISTERED_COLORS = loadRegisteredColorNames(root);
+
+  // Resolved outside theme.colors by Mantine's own parseThemeColor() — legal, not a theme
+  // lookup (node_modules/@mantine/core/esm/core/MantineProvider/color-functions/parse-theme-color).
+  const MANTINE_COLOR_KEYWORDS = new Set(['dimmed', 'bright', 'white', 'black']);
+
+  const COLOR_PROP_RE = /\b(color|c|bg)="([^"]+)"/g;
+
+  function isRegisteredColorValue(value) {
+    if (MANTINE_COLOR_KEYWORDS.has(value)) return true;
+    if (/^(var\(|#|rgb|hsl)/.test(value)) return true;
+    const [name, shade] = value.split('.');
+    if (shade !== undefined && !/^[0-9]$/.test(shade)) return false;
+    return REGISTERED_COLORS.has(name);
+  }
+
+  for (const f of COLOR_SCOPE_FILES) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const lines = content.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trimStart();
+      const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
+      if (isComment) continue;
+      for (const match of line.matchAll(COLOR_PROP_RE)) {
+        const [, prop, value] = match;
+        if (!isRegisteredColorValue(value)) {
+          fail(f, i + 1, 'unregistered-mantine-colour',
+            `${prop}="${value}" names a colour absent from theme.ts's registered set ` +
+            `(${[...REGISTERED_COLORS].join(', ')}). Use a registered colour, a shade of one ` +
+            `(e.g. "gray.5"), a Mantine keyword (dimmed/bright/white/black), or a var()/#/rgb/hsl value.`);
+        }
+      }
+    }
+  }
+
   // ── Stale allowlist entry check ────────────────────────────────────────────
 
   log('── Stale allowlist entry check ──────────────────────────────────────');
@@ -869,7 +937,7 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
-  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 14 };
+  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 15 };
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────

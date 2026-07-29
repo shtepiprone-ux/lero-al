@@ -78,7 +78,7 @@ export function MantineNotificationPattern({
           {triggerErrorLabel}
         </Button>
         <Button
-          color="blue"
+          color="blueLight"
           onClick={() => showNotification(infoConfig)}
           w={{ base: '100%', sm: 'auto' }}
         >

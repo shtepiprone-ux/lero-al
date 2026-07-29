@@ -777,13 +777,13 @@ describe('Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical
 
 describe('gate completeness', () => {
   // Tracks the real number of checks `runGate` runs (check-stories.mjs:872, hardcoded
-  // `checksRan: 14`). Was 13 pre-Task-520 (Check 14, Mantine Button off-scale size, added
-  // a 14th check without updating this assertion — stale drift, reconciled by Task 614).
+  // `checksRan: 15`). Was 14 pre-Task-685 (Check 15, unregistered Mantine colour prop, added
+  // a 15th check — this assertion is bumped in the same task, unlike Check 14's drift).
   // Bump this deliberately whenever a new Check N is added to the gate.
-  it('checksRan === 14 on a clean root (all 14 checks executed)', () => {
+  it('checksRan === 15 on a clean root (all 15 checks executed)', () => {
     const root = tmpRoot()
     const { checksRan } = gate(root)
-    expect(checksRan).toBe(14)
+    expect(checksRan).toBe(15)
   })
 
   it('returns 0 violations on a clean root with valid messages', () => {

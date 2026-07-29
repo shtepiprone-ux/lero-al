@@ -21,11 +21,18 @@
  *      canonical default is size="sm"/14px + 44px min-height, theme.ts + §6 of
  *      docs/tailadmin-style-reference.md). Escape hatch: "// @allow-button-size <reason>"
  *      on the size="lg"/"xl" line or the line immediately above it.
- *  15. Unregistered Mantine colour prop (color|c|bg) in src/stories/mantine/** +
- *      src/stories/patterns/mantine/** + src/design-system/mantine/patterns/** (Task 685 —
- *      unregistered-colour gate). The registered set is derived from theme.ts's `colors: {…}`
- *      object at runtime, not hard-coded. Accepts a registered name (bare or `.0`-`.9` shaded),
- *      a Mantine keyword (dimmed/bright/white/black), or a var()/#/rgb/hsl passthrough value.
+ *  15. Unregistered Mantine colour — repository-wide over all of src/**, three forms (Task 685,
+ *      widened repository-wide by Task 686): (A) a literal `(color|c|bg)="value"` prop; (B) a
+ *      `var(--mantine-color-<stock-but-unregistered>-<digit>)` CSS variable, which re-catches an
+ *      unregistered ramp smuggled past Form A's var() passthrough; (C) a `*COLOR*`-named object
+ *      literal whose string value is a stock-but-unregistered palette name. The registered set is
+ *      derived from theme.ts's `colors: {…}` object at runtime; the stock Mantine palette set is
+ *      derived from the installed `default-colors.mjs` at runtime — neither is hard-coded, and an
+ *      underivable set fails loudly rather than scanning with an empty set. The passthrough
+ *      accepts `#`-values, any CSS function call (`var()`/`rgb()`/`rgba()`/`hsl()`/`oklch()`/
+ *      `lab()`/`color()`/`*-gradient()`), the CSS-wide keywords (transparent/currentColor/
+ *      inherit/initial/unset/revert/none), the Mantine keywords (dimmed/bright/white/black), or a
+ *      registered name (bare or `.0`-`.9` shaded).
  *
  * Exit 0 on clean tree. Exit non-zero on any violation.
  * Wired into prebuild-storybook, prestorybook, and CI.
@@ -846,15 +853,11 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
-  // ── Check 15: Unregistered Mantine colour prop (Task 685) ──────────────────
+  // ── Check 15: Unregistered Mantine colour — forms A/B/C (Task 685, widened Task 686) ──
 
-  log('── Check 15: Unregistered Mantine colour prop (Task 685) ────────────');
+  log('── Check 15: Unregistered Mantine colour prop (Task 685/686) ────────');
 
-  const COLOR_SCOPE_FILES = [
-    ...collectFiles(join(root, 'src', 'stories', 'mantine'), ['.tsx', '.ts']),
-    ...collectFiles(join(root, 'src', 'stories', 'patterns', 'mantine'), ['.tsx', '.ts']),
-    ...collectFiles(join(root, 'src', 'design-system', 'mantine', 'patterns'), ['.tsx', '.ts']),
-  ];
+  const COLOR_SCOPE_FILES = collectFiles(join(root, 'src'), ['.ts', '.tsx']);
 
   // Registered set is derived from theme.ts's `colors: { … }` object at runtime — never a
   // hard-coded literal — so it tracks any future colour addition/removal with no script edit.
@@ -872,38 +875,144 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     );
   }
 
+  // Stock Mantine palette keys, derived at runtime from the installed package's own default
+  // colour table — never retyped (A2 discipline, inherited from Task 685 R3). Tracks any future
+  // Mantine colour addition/removal with no script edit. Always resolved against the real
+  // repository root (module-level ROOT), never the scan `root` argument — the installed
+  // node_modules package is a fixed dependency of THIS script, not of whatever directory is being
+  // scanned (a vitest temp fixture root has no node_modules of its own to derive from).
+  function loadStockPaletteNames(rootDir) {
+    const defaultColorsPath = join(
+      rootDir, 'node_modules', '@mantine', 'core', 'esm', 'core', 'MantineProvider', 'default-colors.mjs'
+    );
+    let content;
+    try { content = readFileSync(defaultColorsPath, 'utf8'); } catch { return new Set(); }
+    const objMatch = content.match(/const DEFAULT_COLORS\s*=\s*\{([\s\S]*?)\n\};/);
+    if (!objMatch) return new Set();
+    const names = new Set();
+    for (const m of objMatch[1].matchAll(/^\s{2}([A-Za-z_$][A-Za-z0-9_$]*):\s*\[/gm)) {
+      names.add(m[1]);
+    }
+    return names;
+  }
+
   const REGISTERED_COLORS = loadRegisteredColorNames(root);
+  const STOCK_PALETTE_NAMES = loadStockPaletteNames(ROOT);
 
   // Resolved outside theme.colors by Mantine's own parseThemeColor() — legal, not a theme
   // lookup (node_modules/@mantine/core/esm/core/MantineProvider/color-functions/parse-theme-color).
   const MANTINE_COLOR_KEYWORDS = new Set(['dimmed', 'bright', 'white', 'black']);
 
+  // CSS-wide keywords and any CSS function call are legal colour-prop values under a
+  // repository-wide scope (F3, Task 686 §3.10) — without this passthrough, legal values like
+  // `bg="transparent"` or `c="oklch(0.6 0.2 20)"` would become build-blocking false positives.
+  const CSS_WIDE_KEYWORDS = new Set(['transparent', 'currentColor', 'inherit', 'initial', 'unset', 'revert', 'none']);
+  const CSS_FUNCTION_CALL_RE = /^[a-z-]+\(/;
+
   const COLOR_PROP_RE = /\b(color|c|bg)="([^"]+)"/g;
+  const COLOR_VAR_RE = /var\(--mantine-color-([a-z]+)-([0-9])\)/g;
+  const COLOR_MAP_DECL_RE = /(?:export\s+)?const\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*(?::[^=]+)?=\s*\{/g;
+  const COLOR_MAP_VALUE_RE = /:\s*['"]([A-Za-z][A-Za-z0-9]*)(?:\.([0-9]))?['"]/g;
 
   function isRegisteredColorValue(value) {
+    if (value.startsWith('#')) return true;
+    if (CSS_FUNCTION_CALL_RE.test(value)) return true;
+    if (CSS_WIDE_KEYWORDS.has(value)) return true;
     if (MANTINE_COLOR_KEYWORDS.has(value)) return true;
-    if (/^(var\(|#|rgb|hsl)/.test(value)) return true;
     const [name, shade] = value.split('.');
     if (shade !== undefined && !/^[0-9]$/.test(shade)) return false;
     return REGISTERED_COLORS.has(name);
   }
 
-  for (const f of COLOR_SCOPE_FILES) {
-    let content;
-    try { content = readFileSync(f, 'utf8'); } catch { continue; }
-    const lines = content.split('\n');
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const trimmed = line.trimStart();
-      const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
-      if (isComment) continue;
-      for (const match of line.matchAll(COLOR_PROP_RE)) {
-        const [, prop, value] = match;
-        if (!isRegisteredColorValue(value)) {
-          fail(f, i + 1, 'unregistered-mantine-colour',
-            `${prop}="${value}" names a colour absent from theme.ts's registered set ` +
-            `(${[...REGISTERED_COLORS].join(', ')}). Use a registered colour, a shade of one ` +
-            `(e.g. "gray.5"), a Mantine keyword (dimmed/bright/white/black), or a var()/#/rgb/hsl value.`);
+  function isStockButUnregistered(name) {
+    return STOCK_PALETTE_NAMES.has(name) && !REGISTERED_COLORS.has(name);
+  }
+
+  if (REGISTERED_COLORS.size === 0) {
+    fail(join(root, 'src', 'design-system', 'mantine', 'theme.ts'), 0, 'colour-registered-set-underivable',
+      `Check 15 could not derive a registered colour set from theme.ts's colors:{…} object. ` +
+      `Refusing to scan src/ with an empty registered set — that would flag every legal colour ` +
+      `value as a violation. Fix theme.ts's colors:{…} object.`);
+  } else if (STOCK_PALETTE_NAMES.size === 0) {
+    fail(join(ROOT, 'node_modules', '@mantine', 'core', 'esm', 'core', 'MantineProvider', 'default-colors.mjs'), 0,
+      'colour-stock-set-underivable',
+      `Check 15 could not derive the stock Mantine palette set from the installed ` +
+      `default-colors.mjs. Refusing to scan src/ with an empty stock set — Forms B and C would ` +
+      `silently never fire. Reinstall @mantine/core or check the file's shape.`);
+  } else {
+    for (const f of COLOR_SCOPE_FILES) {
+      let content;
+      try { content = readFileSync(f, 'utf8'); } catch { continue; }
+      const lines = content.split('\n');
+
+      // Form A — literal (color|c|bg)="value" prop.
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trimStart();
+        const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
+        if (isComment) continue;
+        for (const match of line.matchAll(COLOR_PROP_RE)) {
+          const [, prop, value] = match;
+          if (!isRegisteredColorValue(value)) {
+            fail(f, i + 1, 'unregistered-mantine-colour',
+              `${prop}="${value}" names a colour absent from theme.ts's registered set ` +
+              `(${[...REGISTERED_COLORS].join(', ')}). Use a registered colour, a shade of one ` +
+              `(e.g. "gray.5"), a Mantine keyword (dimmed/bright/white/black), a CSS-wide keyword, ` +
+              `or a CSS function call / #hex value.`);
+          }
+        }
+      }
+
+      // Form B — var(--mantine-color-<stock-but-unregistered>-<digit>). Re-catches an
+      // unregistered ramp smuggled in through a CSS variable (Form A's var() passthrough stays).
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trimStart();
+        const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
+        if (isComment) continue;
+        for (const match of line.matchAll(COLOR_VAR_RE)) {
+          const [full, name] = match;
+          if (isStockButUnregistered(name)) {
+            fail(f, i + 1, 'unregistered-mantine-colour-var',
+              `${full} names a colour absent from theme.ts's registered set ` +
+              `(${[...REGISTERED_COLORS].join(', ')}). Register '${name}' in theme.ts or use a ` +
+              `registered colour's CSS variable.`);
+          }
+        }
+      }
+
+      // Form C — a *COLOR*-named object literal whose string value is a stock-but-unregistered
+      // palette name (the map shape; free-form expressions remain outside the gate, §3.8).
+      for (const declMatch of content.matchAll(COLOR_MAP_DECL_RE)) {
+        const ident = declMatch[1];
+        if (!/COLOR/i.test(ident)) continue;
+        const openBraceIdx = declMatch.index + declMatch[0].length - 1;
+        let depth = 0;
+        let endIdx = -1;
+        for (let p = openBraceIdx; p < content.length; p++) {
+          if (content[p] === '{') depth++;
+          else if (content[p] === '}') {
+            depth--;
+            if (depth === 0) { endIdx = p; break; }
+          }
+        }
+        if (endIdx === -1) continue;
+        const blockContent = content.slice(openBraceIdx, endIdx + 1);
+        const startLine = content.slice(0, openBraceIdx).split('\n').length;
+        const blockLines = blockContent.split('\n');
+        for (let bi = 0; bi < blockLines.length; bi++) {
+          const bLine = blockLines[bi];
+          const bTrimmed = bLine.trimStart();
+          if (bTrimmed.startsWith('//') || bTrimmed.startsWith('*') || bTrimmed.startsWith('/*')) continue;
+          for (const vMatch of bLine.matchAll(COLOR_MAP_VALUE_RE)) {
+            const [, name, shade] = vMatch;
+            if (isStockButUnregistered(name)) {
+              fail(f, startLine + bi, 'unregistered-mantine-colour-map',
+                `${ident}[…] = '${name}${shade ? `.${shade}` : ''}' names a colour absent from ` +
+                `theme.ts's registered set (${[...REGISTERED_COLORS].join(', ')}). Register ` +
+                `'${name}' in theme.ts or use a registered colour.`);
+            }
+          }
         }
       }
     }

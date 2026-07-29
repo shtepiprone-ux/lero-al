@@ -76,6 +76,25 @@ const blueLight: MantineColorsTuple = [
   '#0086c9', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
 ]
 
+// TailAdmin orange (Task 686 §4 line 46 — role `moderator` Badge + `location_request` signal in
+// AdminUsersTable.tsx). The zip ships only 3 stops (--color-orange-50/400/500). Same sparse-ramp
+// convention as `blueLight` above: unused slots are placeholder-filled with the nearest §4 stop
+// (NOT interpolated, NOT presented as authoritative). Index 2 sits equidistant between index 0
+// and index 4 — resolved DOWNWARD per convention (index 0's value), since no rendered consumer
+// exists at index 2 to force a choice either way.
+const orange: MantineColorsTuple = [
+  '#fff6ed', // 0 — orange-50  (§4 AUTHORITATIVE)
+  '#fff6ed', // 1 — UNUSED (no TailAdmin stop; placeholder = nearest §4 stop, not consumed)
+  '#fff6ed', // 2 — UNUSED (equidistant between orange-50/orange-400; resolved downward, not consumed)
+  '#fd853a', // 3 — UNUSED (nearest §4 stop is orange-400, not consumed)
+  '#fd853a', // 4 — orange-400 (§4 AUTHORITATIVE)
+  '#fb6514', // 5 — orange-500 (§4 AUTHORITATIVE)
+  '#fb6514', // 6 — UNUSED by TailAdmin (no orange-600 stop; placeholder = nearest §4 stop, orange-500) — consumed by `c="orange.6"` / `var(--mantine-color-orange-6)` (AdminUsersTable.tsx location-request icon/label)
+  '#fb6514', // 7 — UNUSED by TailAdmin; Badge/Button variant="light" DOES read this index (primaryShade:7, Task 620) — identical value to index 6 here, so no rendered discrepancy — consumed by ROLE_COLOR.moderator Badge + the location-request filter Button
+  '#fb6514', // 8 — UNUSED (placeholder = nearest §4 stop, not consumed)
+  '#fb6514', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
+]
+
 // TailAdmin accent purple (tailadmin-style-reference.md §4: "Accent: theme-pink #ee46bc ·
 // theme-purple #7a5af8"). Only ONE authoritative stop exists in the source — the other 9 slots
 // are approximated from it (same derivation spirit as `brand` above: a single cited hex expanded
@@ -136,7 +155,7 @@ export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red, blueLight, purple, sale },
+  colors: { brand, gray, green, yellow, red, blueLight, purple, sale, orange },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.

@@ -38,11 +38,23 @@ function makeRoot(): string {
   mkdirSync(join(dir, 'src', 'stories', 'fixtures'), { recursive: true })
   mkdirSync(join(dir, 'src', 'components'), { recursive: true })
   mkdirSync(join(dir, 'src', 'modules'), { recursive: true })
+  mkdirSync(join(dir, 'src', 'design-system', 'mantine'), { recursive: true })
   mkdirSync(join(dir, 'messages'), { recursive: true })
   const emptyMsg = JSON.stringify({ storybook: {} })
   for (const l of ['sq', 'en', 'uk', 'it']) {
     writeFileSync(join(dir, 'messages', `${l}.json`), emptyMsg)
   }
+  // Check 15 (Task 686) scans all of src/, so every test root needs a real registered-colour
+  // set — without this stub, loadRegisteredColorNames() returns an empty Set for every test
+  // root, and the widened scope would flag every legal colour fixture (including a
+  // deliberately-legal `color="brand"`) as a violation (§3.6). Kept in sync by hand with the
+  // real theme.ts's `colors: {…}` object — this is a stub, not an import of the real file.
+  writeFileSync(
+    join(dir, 'src', 'design-system', 'mantine', 'theme.ts'),
+    'export const theme = {\n' +
+    '  colors: { brand: [], gray: [], green: [], yellow: [], red: [], blueLight: [], purple: [], sale: [], orange: [] },\n' +
+    '}\n'
+  )
   return dir
 }
 
@@ -770,6 +782,100 @@ describe('Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical
     const root = tmpRoot()
     writeStory(root, 'Test.stories.ts', `export const ProofRow = {}`)
     expect(hasRule(gate(root).violations, 'duplicate-family-export')).toBe(true)
+  })
+})
+
+// ── Check 15: Unregistered Mantine colour — forms A/B/C (Task 685, widened Task 686) ──
+
+describe('Check 15: Unregistered Mantine colour prop — Form A (literal prop)', () => {
+  it('BAD — color="cyan" (stock, unregistered) FAILS', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoA.tsx', `export const DemoA = () => <Text color="cyan">x</Text>`)
+    const v = gate(root).violations.filter(v => v.rule === 'unregistered-mantine-colour')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('color="cyan"')
+  })
+
+  it('GOOD — color="brand" (registered) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoA.tsx', `export const DemoA = () => <Text color="brand">x</Text>`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour')).toBe(false)
+  })
+
+  it('GOOD — c="gray.5" (registered, shaded) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoA.tsx', `export const DemoA = () => <Text c="gray.5">x</Text>`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour')).toBe(false)
+  })
+})
+
+describe('Check 15: Unregistered Mantine colour prop — Form B (var(--mantine-color-*))', () => {
+  it('BAD — var(--mantine-color-teal-6) (stock, unregistered) FAILS', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoB.tsx', `export const DemoB = () => <div style={{ color: 'var(--mantine-color-teal-6)' }} />`)
+    const v = gate(root).violations.filter(v => v.rule === 'unregistered-mantine-colour-var')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('var(--mantine-color-teal-6)')
+  })
+
+  it('GOOD — var(--mantine-color-brand-7) (registered) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoB.tsx', `export const DemoB = () => <div style={{ color: 'var(--mantine-color-brand-7)' }} />`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-var')).toBe(false)
+  })
+
+  it('GOOD — var(--mantine-color-white) (no digit shade) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoB.tsx', `export const DemoB = () => <div style={{ color: 'var(--mantine-color-white)' }} />`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-var')).toBe(false)
+  })
+})
+
+describe('Check 15: Unregistered Mantine colour prop — Form C (*COLOR* map)', () => {
+  it('BAD — const DEMO_COLOR = { x: "grape" } (stock, unregistered) FAILS', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoC.tsx', `const DEMO_COLOR = { x: 'grape' }\nexport { DEMO_COLOR }`)
+    const v = gate(root).violations.filter(v => v.rule === 'unregistered-mantine-colour-map')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain("'grape'")
+  })
+
+  it('GOOD — const STATUS_COLOR = { active: "green" } (registered) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoC.tsx', `const STATUS_COLOR = { active: 'green', blocked: 'red' }\nexport { STATUS_COLOR }`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-map')).toBe(false)
+  })
+
+  it('GOOD — a map not named *COLOR* is not scanned even with a stock unregistered value', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoC.tsx', `const NOT_A_MAP = { x: 'grape' }\nexport { NOT_A_MAP }`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-map')).toBe(false)
+  })
+})
+
+describe('Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords)', () => {
+  it.each([
+    ['transparent', `<Box bg="transparent">a</Box>`],
+    ['currentColor', `<Text color="currentColor">b</Text>`],
+    ['oklch()', `<Text c="oklch(0.6 0.2 20)">c</Text>`],
+    ['linear-gradient()', `<Box bg="linear-gradient(90deg, #fff, #000)">d</Box>`],
+    ['dimmed', `<Text c="dimmed">e</Text>`],
+  ])('GOOD — %s PASSES', (_label, jsx) => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoF3.tsx', `export const DemoF3 = () => ${jsx}`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour')).toBe(false)
+  })
+})
+
+describe('Check 15: underivable registered-colour set fails loudly', () => {
+  it('BAD — missing theme.ts reports colour-registered-set-underivable, not a silent empty-set scan', () => {
+    const root = tmpRoot()
+    rmSync(join(root, 'src', 'design-system', 'mantine', 'theme.ts'), { force: true })
+    const v = gate(root).violations
+    expect(hasRule(v, 'colour-registered-set-underivable')).toBe(true)
+    // No unregistered-colour noise should fire once the set is known-bad — the loud fail is the
+    // only signal, not a flood of false positives from scanning with an empty set.
+    expect(hasRule(v, 'unregistered-mantine-colour')).toBe(false)
   })
 })
 

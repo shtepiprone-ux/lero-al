@@ -26,7 +26,7 @@ export interface VerifiedAgent {
 const ROLES: UserRole[] = ['user', 'agent', 'moderator', 'admin']
 
 const ROLE_COLOR: Record<UserRole, string> = {
-  user: 'gray', agent: 'blue', moderator: 'orange', admin: 'green',
+  user: 'gray', agent: 'blueLight', moderator: 'orange', admin: 'green',
 }
 
 const STATUS_COLOR: Record<string, string> = {

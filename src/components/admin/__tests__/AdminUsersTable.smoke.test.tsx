@@ -549,4 +549,27 @@ describe('AdminUsersTable — data rendering', () => {
     const row = container.querySelector('[data-testid="row-usr-003"]')!
     expect(row.textContent).toContain('location_request_badge')
   })
+
+  // Task 686 (R9) — role Badge colour is `blueLight` for `agent` (D12, closes the story↔prod
+  // divergence Task 685 opened) and registered `orange` for `moderator` (D11). Registry row
+  // `:45` (verify/revoke agent) behaviour is unchanged — this asserts a colour value only.
+  it('role Badge data-color is blueLight for an agent row and orange for a moderator row', async () => {
+    const moderatorUser: AdminUser = {
+      ...BASE_USER,
+      id: 'usr-004',
+      role: 'moderator',
+      user_type: 'moderator',
+    }
+    const { AdminUsersTable } = await import('../AdminUsersTable')
+    const { container } = render(React.createElement(AdminUsersTable, {
+      ...DEFAULT_PROPS,
+      users: [BASE_USER, moderatorUser],
+      total: 2,
+    }))
+
+    const agentBadge = container.querySelector('[data-testid="cell-usr-001-role"] [data-testid="badge"]')
+    const moderatorBadge = container.querySelector('[data-testid="cell-usr-004-role"] [data-testid="badge"]')
+    expect(agentBadge?.getAttribute('data-color')).toBe('blueLight')
+    expect(moderatorBadge?.getAttribute('data-color')).toBe('orange')
+  })
 })

@@ -4,7 +4,7 @@
 
 - **Mode:** implementation (Sonnet executor, via `.claude/skills/execute-task/SKILL.md`).
 - **Primary task type:** UI / component migration — **current Mantine path** (`docs/rule-index.md`).
-- **Secondary types:** cross-cutting import migration (34 files); design-system shared-source extraction; Storybook
+- **Secondary types:** cross-cutting import migration (33 consumer files + 2 mount sites); design-system shared-source extraction; Storybook
   governance (existing canonical Pattern + Story must be updated, cl. 16c); **critical-flow-adjacent** — three
   `docs/critical-flow-registry.md` rows name `toast.*` behavior explicitly (§3.8).
 - **Origin:** the owner's homepage/layout Mantine-migration plan, the unnumbered row
@@ -58,14 +58,25 @@ D1 and D2 are the source of truth and must not be re-litigated.
 
 `grep -rn "cn-toast" src/app/globals.css` → **0 hits**. That class is dead; nothing styles it.
 
-Mounted in exactly one place: `src/app/[locale]/layout.tsx:14` (import) and `:58` (`<Toaster />`), with no props.
-Sonner's default position is therefore in effect (D2).
+**Mounted in TWO places** — corrected 2026-07-29 after Sonnet's I0 stop (see §3.11 R2):
+
+| Mount | Import | Render | Wraps |
+|---|---|---|---|
+| `src/app/[locale]/layout.tsx` | `:14` | `:58` | every public `/{locale}/*` route |
+| `src/app/admin/layout.tsx` | `:9` | `:62` | every `/admin/*` route |
+
+Both render `<Toaster />` with **no props**, so Sonner's default position is in effect on both (D2). The admin
+mount predates the cited commit — `git log -S "from '@/components/ui/sonner'" -- src/app/admin/layout.tsx` →
+`3e30eae9b` *"fix: avatar upload silent failures + admin nav guard back-button + Toaster"*. It is **not** drift;
+the first draft of this kickoff simply failed to search for it.
 
 **Call-site census** — the numbers that make this task mechanical:
 
 | Measure | Value | Command |
 |---|---:|---|
-| Files importing from `sonner` | **34** | `grep -rln "from 'sonner'" src/` |
+| Consumer files importing `toast` (single-quoted) | **33** | `grep -rln "from 'sonner'" src/` |
+| …plus the wrapper's own double-quoted import | **1** (`src/components/ui/sonner.tsx`) | `grep -rln 'from "sonner"' src/` |
+| Files rendering `<Toaster />` | **2** | `grep -rn "<Toaster" src/` |
 | Total `toast.*` call sites | **169** | `grep -rn "toast\.[a-z]" src/ --include=*.tsx --include=*.ts` |
 | `toast.error` | 101 | `grep -rhoE "toast\.[a-zA-Z]+" src/ \| sort \| uniq -c` |
 | `toast.success` | 57 | same |
@@ -151,6 +162,27 @@ and `showNotification()` calling `notifications.show({ title, message, color, au
 `icon`**. Its canonical Story is `src/stories/patterns/mantine/NotificationPattern.stories.tsx`,
 `title: 'Patterns/Mantine/NotificationPattern'`, strings via `storyT`, exports covering success / error / loading.
 
+### 3.6a — the canonical **visual** Story already exists, and it is not the Pattern
+
+`src/stories/mantine/primitives/Notification.stories.tsx`, `title: 'Mantine/Primitives/Notification'`, **already in
+the screenshot manifest** (`Mantine/Primitives/Notification/Default` appears in
+`.screenshots/rendered-assert/2026-07-28T20-40/manifest.json`). It renders five static `<Notification>` elements —
+`green`/`blueLight`/`yellow`/`red` plus a neutral `gray` — each with the **same four lucide icons** this task needs,
+at `const ICON_SIZE = 24 // §6r-LIVE — captured glyph size`.
+
+Its own doc-block records a deliberate design decision:
+
+> *"Static/determinate — no `notifications.show()` call (that's a portal with an auto-close timer + enter/leave
+> transition, not byte-stable). Each state renders a `<Notification>` directly, matching §6r-LIVE…"*
+
+**Consequences, and they are binding:**
+
+- This Story — **not** `Patterns/Mantine/NotificationPattern` — is the canonical **visual** source of truth for the
+  toast, and it is already under the standing visual gate.
+- **A3 is answered by the repository**: the glyph size is `24`, already cited to §6r-LIVE. Do not choose a value.
+- **Do not make any Story fire `notifications.show()`.** An earlier draft of this kickoff instructed exactly that;
+  it is withdrawn. The portal + timer is not byte-stable and would inject flake into the gate.
+
 `VARIANT_COLORS` is the repository's canonical variant→colour mapping and **must be reused, not duplicated**
 (cl. 16b). It cannot simply be imported by the adapter, because that module is `'use client'` and imports
 `Button`/`Group`/`Stack`/`Paper`/`Text`/`ThemeIcon`/`Badge` from `@mantine/core` — importing it from a helper used
@@ -201,20 +233,42 @@ column from a **colocated** sibling only (`:126` — `absPath.replace('.tsx','.s
 `catalog:components --write`** — it would sweep in unreviewed Task 669/675 drift (the Task 672 review reached the
 same conclusion).
 
+### 3.11 Draft-1 defects, corrected 2026-07-29 (read this before trusting any number above)
+
+Sonnet stopped at I0 on a census divergence. The stop was correct; the investigation that followed found **five**
+defects in this kickoff's first draft. All are corrected above and below. They are recorded, not erased, because
+the executor must know which claims were re-verified.
+
+| # | Draft-1 defect | Correction | Found by |
+|---|---|---|---|
+| **1** | §3.2 claimed the `Toaster` is *"mounted in exactly one place"*. The claim came from grepping **two named files**, never the tree. | `src/app/admin/layout.tsx:9,62` is a second mount. Added to scope (§7, I7). Deleting `sonner.tsx` without it would break the admin build — R10/AC10 — and leave an AC5 grep hit. | **Sonnet, I0** |
+| **2** | "34 files importing from `sonner`" conflated **33** consumer files with the wrapper's own **double-quoted** import. §7 then told the executor to edit an import line in the file it also deletes. | Census split into 33 consumers + 1 wrapper + 2 mounts. This — not the admin mount — is what actually tripped A1; the admin mount matched **neither** grep and would have detonated at build time instead. | Orchestrator, reviewing Sonnet's stop |
+| **3** | §16 named `Patterns/Mantine/NotificationPattern` as the canonical source. | `Mantine/Primitives/Notification` exists, is already in the screenshot manifest, and is the canonical **visual** source (§3.6a). Draft 1 violated cl. 16c in the task design itself. | Orchestrator |
+| **4** | I8 instructed the Story to "fire the real icon-bearing notification". | **Withdrawn.** The canonical Story deliberately renders static `<Notification>` elements because a portal + auto-close timer is not byte-stable (§3.6a). | Orchestrator |
+| **5** | R1 said to move `VARIANT_COLORS` **verbatim**, including `info: 'blue'`. | **`blue` is not a registered theme colour.** `theme.ts:139` registers `{ brand, gray, green, yellow, red, blueLight, purple, sale }`, and `theme.ts:837` documents `info→blueLight`. The canonical Story uses `blueLight`. Verbatim reuse would have shipped an unthemed-palette fallback to all 7 `toast.info` sites. See below. | Orchestrator |
+
+**Defect 5 — the `info` colour correction (needs ratification at review).** `MantineNotificationPattern`'s
+`VARIANT_COLORS.info = 'blue'` is a **pre-existing latent bug**, not a design choice: Mantine falls back to its own
+default blue ramp because the project never registers `blue`. The shared module must use **`blueLight`**, matching
+`theme.ts:837`'s documented intent and the canonical Story. This changes the rendered colour of the 7 `toast.info`
+sites and of the Pattern's info trigger. It is a correction toward documented intent with no invented value, and it
+is flagged here for explicit owner ratification at review — the same handling Task 672's D4 received. **Report the
+before/after colour tokens; do not treat it as a silent fix.**
+
 ---
 
 ## 4. Requirements
 
 | ID | Source | Observable requirement | Priority | Verification | Status |
 |---|---|---|---|---|---|
-| R1 | §3.6, cl. 16b | `src/design-system/mantine/notificationVariants.ts` exists as a shared leaf module exporting `NotificationVariant`, `VARIANT_COLORS`, `VARIANT_ICONS`, `NOTIFICATION_AUTO_CLOSE`. It imports **no** `@mantine/core` component and is not `'use client'`. | P0 | AC1 | Confirmed |
+| R1 | §3.6, §3.6a, §3.11, cl. 16b | `src/design-system/mantine/notificationVariants.ts` exists as a shared leaf module exporting `NotificationVariant`, `VARIANT_COLORS`, `VARIANT_ICONS`, `NOTIFICATION_AUTO_CLOSE`. It imports **no** `@mantine/core` component and is not `'use client'`. `VARIANT_COLORS.info` is **`blueLight`**, not `blue` (§3.11 defect 5); icons and their `size={24}` match the canonical Story exactly. | P0 | AC1 | Confirmed |
 | R2 | §3.2, §3.4 | `src/lib/toast.ts` exports `toast` with exactly `success`, `error`, `info`, `warning`, each `(message: string) => void`, delegating to `notifications.show({ message, color, icon, autoClose })` using R1's maps. | P0 | AC2 | Confirmed |
 | R3 | §3.6, cl. 16b | `MantineNotificationPattern.tsx` no longer declares its own `VARIANT_COLORS`; it imports from R1 and passes `icon` to `notifications.show`. Its public props are unchanged. | P0 | AC3 | Confirmed |
-| R4 | §3.2 | All **34** files import `toast` from `@/lib/toast`; `grep -rn "from 'sonner'" src/` returns **0 hits**. **No call-site argument is edited** — the 169 sites keep their exact message expressions and variants. | P0 | AC4 | Confirmed |
-| R5 | §3.2 | `<Toaster />` and its import are removed from `src/app/[locale]/layout.tsx`; `src/components/ui/sonner.tsx` is deleted; `grep -rn "sonner" src/` returns **0 hits**. | P0 | AC5 | Confirmed |
+| R4 | §3.2 | All **33** consumer files import `toast` from `@/lib/toast`; `grep -rn "from 'sonner'" src/` returns **0 hits**. **No call-site argument is edited** — the 169 sites keep their exact message expressions and variants. | P0 | AC4 | Confirmed |
+| R5 | §3.2, §3.11 | `<Toaster />` and its import are removed from **both** `src/app/[locale]/layout.tsx` **and** `src/app/admin/layout.tsx`; `src/components/ui/sonner.tsx` is deleted; `grep -rn "sonner" src/` returns hits **only** in `src/stories/mantine/primitives/Notification.stories.tsx` (a prose comment, §3.6a) — quote the surviving hit. | P0 | AC5 | Confirmed |
 | R6 | §3.7 | All three `vi.mock('sonner')` test files mock `@/lib/toast` instead, and still assert the same observable call (variant + message key). | P0 | AC6 | Confirmed |
 | R7 | cl. 15, §3.8 | The three registry-referenced suites pass unchanged in substance, and a **new** adapter smoke test proves each of the four variants calls `notifications.show` with the correct `color` and `icon` from R1. | P0 | AC7 | Confirmed |
-| R8 | cl. 16c, §3.6 | `NotificationPattern.stories.tsx` renders all **four** production variants (a `warning` export is added), and the Story fires the real icon-bearing notification. `check:stories` and `check:story-coverage` stay green. | P1 | AC8 | Confirmed |
+| R8 | cl. 16c, §3.6a, §3.11 | The canonical **visual** Story `Mantine/Primitives/Notification` keeps rendering static `<Notification>` elements and stays byte-stable — its cells must be **unchanged** by this task. `NotificationPattern`'s info trigger reflects the `blueLight` correction. **No Story fires `notifications.show()`.** `check:stories` and `check:story-coverage` stay green. | P1 | AC8 | Confirmed |
 | R9 | D2, cl. 11 | Rendered proof at `320` that a `top-right` toast does not collide with the site header, in all four locales. | P0 | AC9 | Confirmed |
 | R10 | cl. 9 | `npm run build` exits 0 on a fresh post-change transcript. | P0 | AC10 | Confirmed |
 | R11 | cl. 7, 14 | Zero new i18n keys (parity stays 2215×4); `check:design-tokens` gains no violation in any touched file; `check:file-integrity` / `check:mojibake` exit 0. | P1 | AC11 | Confirmed |
@@ -224,17 +278,19 @@ same conclusion).
 
 ## 5. Assumptions and open questions
 
-- **A1 — the census is a measurement, and it is your gate.** The 169/34/101/57/7/4 figures in §3.2 were measured at
-  `9601d6908`. **Re-run the census commands before you start.** If any number differs, or if any `toast.promise`,
+- **A1 — the census is a measurement, and it is your gate.** Expected: **169** call sites / **33** consumer files /
+  **1** wrapper / **2** mount sites / 101-57-7-4, re-verified 2026-07-29 after the draft-1 correction (§3.11).
+  **Re-run the census commands before you start**, including `grep -rn "<Toaster" src/` — draft 1 omitted that
+  command, which is why the second mount survived research. If any number differs, or if any `toast.promise`,
   `toast.loading`, `toast.custom`, `toast.dismiss`, bare `toast(...)`, or a genuine Sonner options object appears,
   **stop and report** — the four-method adapter is no longer a lossless replacement and the task needs re-scoping.
   Do not extend the adapter on your own initiative.
 - **A2 — `title` is deliberately not part of the adapter.** Sonner call sites pass a single string and Mantine
   renders `message` alone perfectly well. Do **not** invent a title, and do **not** derive one from the variant
   (that would create user-facing copy with no i18n key, breaking cl. 7).
-- **A3 — icon size.** §6r-LIVE specifies a 24px glyph inside the 40×40 badge. `theme.ts` sizes the badge, not the
-  glyph. Set the glyph size explicitly in `VARIANT_ICONS` and record the value you used. If the rendered badge does
-  not match §6r-LIVE, that is an R8 failure — fix it in the shared module, never by editing `theme.ts` global chrome.
+- **A3 — icon size is already decided: `24`.** `Notification.stories.tsx:18` declares
+  `const ICON_SIZE = 24 // §6r-LIVE — captured glyph size`. Use that value; do not pick your own. If the rendered
+  badge does not match §6r-LIVE, fix it in the shared module, never by editing `theme.ts` global chrome (§8).
 - **A4 — `MantineNotificationPattern`'s `autoClose: 4000` is the existing value** and becomes
   `NOTIFICATION_AUTO_CLOSE`. Preserve it exactly; Sonner's own default is not the reference here, the in-repo
   Mantine pattern is.
@@ -283,8 +339,8 @@ visual target is cited (§3.5); the canonical source exists (§3.6).
 | `src/design-system/mantine/notificationVariants.ts` | **create** | Shared leaf source for variant→colour/icon (R1). |
 | `src/lib/toast.ts` | **create** | The four-method adapter (R2). |
 | `src/design-system/mantine/patterns/MantineNotificationPattern.tsx` | modify | Consume R1, pass `icon` (R3). |
-| `src/stories/patterns/mantine/NotificationPattern.stories.tsx` | modify | Add the `warning` export; prove all four variants (R8). |
-| 34 files importing from `sonner` | modify | **Import line only** (R4). Enumerate every one in the session log. |
+| **33** files importing `toast` from `sonner` | modify | **Import line only** (R4). Enumerate every one in the session log. |
+| `src/app/admin/layout.tsx` | modify | **Second `Toaster` mount** — remove the `:9` import and the `:62` render (R5, §3.11 defect 1). |
 | `src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx` | modify | Re-point `vi.mock` (R6). |
 | `src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx` | modify | Re-point `vi.mock` (R6). |
 | `src/modules/listings/components/__tests__/ReportListingDialog.smoke.test.tsx` | modify | Re-point `vi.mock` (R6). |
@@ -319,8 +375,9 @@ visual target is cited (§3.5); the canonical source exists (§3.6).
 through `next-themes` and four `--popover`/`--border`/`--radius` CSS variables, with five lucide icons and a dead
 `cn-toast` class. In parallel, `MantineRootProvider` mounts `<Notifications position="top-right" />`, whose
 `Notification` chrome is already TailAdmin-conformed in `theme.ts` but whose 40×40 tinted icon badge never renders
-because no caller passes `icon`. 169 call sites across 34 files import `toast` from `sonner` and call exactly four
-variants with a single string. Three test files mock `sonner`.
+because no caller passes `icon`. 169 call sites across **33** consumer files import `toast` from `sonner` and call
+exactly four variants with a single string, and a **second** `<Toaster />` is mounted in `src/app/admin/layout.tsx`,
+so `/admin/*` renders the same dual-system problem. Three test files mock `sonner`.
 
 **Required after.** One toast system. Every one of the 169 call sites is byte-identical in its arguments but
 imports from `@/lib/toast`, which fires `notifications.show()` with the canonical colour and icon for its variant
@@ -339,11 +396,17 @@ quote the actual numbers. Any divergence from 169/34/101/57/7/4, or any fifth ca
 
 **I1 — the shared variant source.** Create `src/design-system/mantine/notificationVariants.ts`. It must be a plain
 leaf module — **no `'use client'`, no `@mantine/core` component import**. Move `NotificationVariant` and
-`VARIANT_COLORS` here verbatim from `MantineNotificationPattern.tsx` (`success:'green'`, `error:'red'`,
-`info:'blue'`, `warning:'yellow'`). Add `VARIANT_ICONS` built from the four lucide icons the retired Sonner wrapper
-already used — `CircleCheckIcon` (success), `OctagonXIcon` (error), `InfoIcon` (info), `TriangleAlertIcon` (warning)
-— sized per A3, and `NOTIFICATION_AUTO_CLOSE = 4000` (A4). `Loader2Icon` has **no** consumer (zero `toast.loading`
-call sites) and must not be carried over.
+`VARIANT_COLORS` here from `MantineNotificationPattern.tsx` with **exactly one corrected value**:
+`success:'green'`, `error:'red'`, `warning:'yellow'`, **`info:'blueLight'`** — *not* the pattern's `'blue'`, which
+is not a registered theme colour (§3.11 defect 5; `theme.ts:139`, `theme.ts:837`).
+
+Add `VARIANT_ICONS` using the four lucide icons **already used by the canonical Story** — `CircleCheckIcon`
+(success), `OctagonXIcon` (error), `InfoIcon` (info), `TriangleAlertIcon` (warning) — at `size={24}`, the value the
+Story already cites to §6r-LIVE (`ICON_SIZE = 24`). Add `NOTIFICATION_AUTO_CLOSE = 4000` (A4). `Loader2Icon` has
+**no** consumer (zero `toast.loading` call sites) and must not be carried over.
+
+The resulting variant→colour→icon triple must match `Notification.stories.tsx` cell-for-cell. If it does not, the
+shared module is wrong — the Story is the visual source of truth (§3.6a), not the Pattern.
 
 **I2 — the adapter.** Create `src/lib/toast.ts`:
 
@@ -377,12 +440,21 @@ for each of the four variants, that `notifications.show` is called **once** with
 `icon` component, `autoClose: 4000`, and the message passed through **unchanged**. Add one negative assertion:
 `title` is `undefined` (A2). This must assert observable arguments, not that a function exists.
 
-**I7 — unmount and delete.** Remove `:14`'s import and `:58`'s `<Toaster />` from `src/app/[locale]/layout.tsx`;
-delete `src/components/ui/sonner.tsx`. Then `grep -rn "sonner" src/` must return **0 hits** — that grep is AC5.
+**I7 — unmount BOTH, then delete.** Remove the import and `<Toaster />` from **both** layouts:
+`src/app/[locale]/layout.tsx` (`:14`, `:58`) **and** `src/app/admin/layout.tsx` (`:9`, `:62`). Only then delete
+`src/components/ui/sonner.tsx`. Deleting first will break the admin build (§3.11 defect 1). Afterwards
+`grep -rn "sonner" src/` must return exactly **one** hit — the prose comment in `Notification.stories.tsx` — and
+nothing else (AC5).
 
-**I8 — the Story.** Extend `NotificationPattern.stories.tsx` with a `warning` export so all four production
-variants are represented, using `storyT` for every visible string (no English literals, Check 10; no raw
-`<button>`, Check 2). Reuse the existing story's fixture shape.
+**I8 — the Stories: verify, do not rewrite.**
+
+- `Mantine/Primitives/Notification` (canonical visual source, §3.6a): **do not modify it.** Its cells must be
+  byte-unchanged by this task; that is the comparator proving you did not disturb the visual source of truth.
+- `Patterns/Mantine/NotificationPattern`: its info trigger inherits `blueLight` via I3. Update the Story only if a
+  visible string or fixture actually requires it; if no change is needed, say so explicitly rather than editing it
+  to look busy.
+- **Do not add a Story that calls `notifications.show()`.** The canonical Story documents why (portal + auto-close
+  timer is not byte-stable). Draft 1 instructed the opposite; that instruction is withdrawn (§3.11 defect 4).
 
 **I9 — rendered proof (D2/R9).** Capture the `top-right` toast against the real header at **320** in all four
 locales and confirm no overlap of the toast with the header's interactive controls. Storybook cannot prove this —
@@ -436,13 +508,15 @@ below 640px, showing the localized success message with a 40×40 green-tinted ch
   `grep -n "VARIANT_COLORS: Record" <file>` returns **0 hits** (the literal moved, not copied) and
   `showNotification` passes `icon`.
 
-- **AC4 [R4]** — *Given* the final diff, *then* `grep -rn "from 'sonner'" src/` returns **0 hits**, exactly **34**
-  files show an import-line change, and `git diff -U0 -- <those 34 files>` contains **no** hunk touching a
+- **AC4 [R4]** — *Given* the final diff, *then* `grep -rn "from 'sonner'" src/` returns **0 hits**, exactly **33**
+  files show an import-line change, and `git diff -U0 -- <those 33 files>` contains **no** hunk touching a
   `toast.` call site. Quote the per-file hunk count.
 
-- **AC5 [R5]** — *Given* the final tree, *then* `grep -rn "sonner" src/` returns **0 hits**;
-  `src/components/ui/sonner.tsx` is absent from `git status --porcelain` as a tracked file (shows as `D`); and
-  `src/app/[locale]/layout.tsx` contains no `Toaster`.
+- **AC5 [R5]** — *Given* the final tree, *then* `grep -rn "<Toaster" src/` returns **0 hits**;
+  `grep -rn "sonner" src/` returns **exactly one** hit — the prose comment in
+  `src/stories/mantine/primitives/Notification.stories.tsx` — quoted in the report; `src/components/ui/sonner.tsx`
+  shows as `D` in `git status --porcelain`; and neither `src/app/[locale]/layout.tsx` nor `src/app/admin/layout.tsx`
+  contains `Toaster`.
 
 - **AC6 [R6]** — *Given* the three test files, *then* each mocks the exact specifier `@/lib/toast`, none still
   references `'sonner'`, and each still asserts the same variant + message key it asserted before. Quote one
@@ -453,9 +527,11 @@ below 640px, showing the localized success message with a 40×40 green-tinted ch
   message-passthrough and the `title === undefined` assertion; **and** the three registry commands from §13.3 exit
   0 with their pre-existing counts. Report each separately.
 
-- **AC8 [R8]** — *Given* a fresh `build-storybook`, *then* `Patterns/Mantine/NotificationPattern` exposes all four
-  variants; `npm run check:stories` exits **0**; `npm run check:story-coverage` exits **0** at its current total
-  (unchanged — no manifest entry is added or removed by this task; state the number you observe).
+- **AC8 [R8]** — *Given* a fresh `build-storybook` and a `--mantine-only` capture, *then* every
+  `mantine-primitives-notification--default__*` cell is **byte-identical** to the pre-change baseline (hash-compare
+  and quote the counts) — proving the canonical visual source was not disturbed; no Story calls
+  `notifications.show()` (`grep -rn "notifications.show" src/stories/` → 0 hits); `npm run check:stories` exits
+  **0**; and `npm run check:story-coverage` exits **0** at its current total, unchanged (state the number).
 
 - **AC9 [R9]** — *Given* a live capture at **320** × {sq,en,uk,it}, *then* a fired toast does not overlap the site
   header's interactive controls, and no horizontal overflow is introduced. Quote the method, the route, and the
@@ -572,7 +648,8 @@ does not self-approve and does not run, emit, suggest, or delegate any mutating 
 
 | Visible artifact | Search queries and inspected paths | Canonical Mantine story/source | Disposition | Shared style/token path and required registration |
 |---|---|---|---|---|
-| Application toast | `grep -rn "@mantine/notifications" src/ .storybook/`; read `MantineRootProvider.tsx`, `MantineNotificationPattern.tsx`, `NotificationPattern.stories.tsx`, `theme.ts` `Notification` block; `ls src/stories/patterns/mantine/ \| grep -i notif` | **`Patterns/Mantine/NotificationPattern`** — exists, renders the real `MantineNotificationPattern`, fires real `notifications.show()` | **extend** — the Story exists and already owns the artifact; it must gain the fourth (`warning`) variant and the icon-bearing shape so it stays a truthful proof of the production toast (cl. 16c) | No new component; `theme.ts` `Notification` supplies all chrome from §6r-LIVE. No manifest change — `MantineNotificationPattern` is a `src/design-system/mantine/patterns/` pattern already covered by its Pattern story |
+| Application toast — **rendered chrome** | `grep -rln "sonner" src/` (full tree, 40 hits); `ls src/stories/mantine/primitives/ \| grep -i notif`; read `Notification.stories.tsx` in full; `grep -n "Notification" .screenshots/rendered-assert/*/manifest.json` | **`Mantine/Primitives/Notification`** — exists, already in the screenshot manifest, renders 5 static `<Notification>` states with the 4 lucide icons at `ICON_SIZE = 24`, deliberately **without** `notifications.show()` | **reuse, unchanged** — it is already the canonical visual source; this task must leave its cells byte-identical and use it as the comparator (AC8) | No new component, no new value; `theme.ts` `Notification` supplies the chrome from §6r-LIVE. **Draft 1 missed this Story entirely and named the Pattern instead — corrected, §3.11 defect 3.** |
+| Application toast — **dispatch behavior** | read `MantineNotificationPattern.tsx` and `NotificationPattern.stories.tsx` in full | **`Patterns/Mantine/NotificationPattern`** — the behavioral demo that actually calls `notifications.show()` | **reuse; touch only via the `blueLight` correction (I3)** — it is not the visual source of truth and must not be reshaped to become one | Consumes the shared module from R1; no manifest change |
 | Variant → colour mapping | Read `MantineNotificationPattern.tsx` in full; `grep -rn "VARIANT_COLORS" src/` → single declaration | `VARIANT_COLORS` inside `MantineNotificationPattern.tsx` | **extract to shared leaf, then reuse** — a second copy inside the adapter would violate cl. 16b / the no-duplicate rule, and importing the `'use client'` pattern at 169 call sites would drag `@mantine/core` components into every consumer bundle | New `src/design-system/mantine/notificationVariants.ts`; both the pattern and the adapter import it |
 | Toast chrome (fill, radius, accent, badge, shadow) | `grep -niE "toast\|notification" docs/tailadmin-style-reference.md` → §6r-LIVE at `:872` (AUTHORITATIVE) and §6r at `:907` (SUPERSEDED) | **§6r-LIVE**, live-captured 2026-07-05, already implemented in `theme.ts:726+` (Task 550) | **reuse-existing, no restyle** — the reference row exists, so cl. 16a is **not** triggered and no value is invented | Existing `theme.ts` `Notification` block; **Task 682** reserved for dependency removal only, not for chrome |
 
@@ -630,8 +707,16 @@ reference row with recorded provenance. This task is therefore **not** `BLOCKED 
 | Single active owner route | **Yes** — the only forks are A1's census stop and A5's dirty-worktree stop |
 | API claims verified, not assumed | **Yes** — §3.4 reads the installed `notifications.store.d.ts`; §3.2's counts are grep output; §3.5 quotes the authoritative reference block and the implementing `theme.ts` lines |
 
-**Known-risk note for the reviewer.** Four likely defects. First, **scope creep in the 34-file edit** — a "helpful"
-refactor inside a call-site file; AC4's `git diff -U0` hunk count is the detector. Second, **inventing a `title`**
+**Draft-2 provenance.** This kickoff was corrected on 2026-07-29 after Sonnet's I0 stop exposed five draft-1
+research defects (§3.11). The corrections were verified by tree-wide greps and by reading
+`Notification.stories.tsx` and `theme.ts:139/837` — not by patching the numbers to agree. Reviewers should treat
+§3.2, §3.6a, §3.11 and §16 as the re-verified sections.
+
+**Known-risk note for the reviewer.** Six likely defects. Zeroth, **deleting `sonner.tsx` before unmounting the
+admin layout** — I7's ordering is load-bearing, and getting it wrong fails the build. First, **scope creep in the
+33-file edit** — a "helpful" refactor inside a call-site file; AC4's `git diff -U0` hunk count is the detector.
+Fifth, **"fixing" the canonical `Notification` Story** to fire real notifications or to match the Pattern — AC8's
+byte-identity comparator is the detector. Second, **inventing a `title`**
 to make the toast look fuller, creating untranslated user-facing copy (A2 forbids it; AC7 asserts
 `title === undefined`). Third, **copying `VARIANT_COLORS` into the adapter** instead of extracting it — AC3's
 zero-hit grep on the original declaration is the detector. Fourth, **declaring AC9 satisfied from a Storybook

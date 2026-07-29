@@ -45,9 +45,11 @@ Recorded this session, 2026-07-28, in response to three explicit orchestrator qu
 | **D1** | TailAdmin's reference has **no** bottom-nav / tab-bar row, so cl. 16a blocks inventing visual values. Which route? | **Mechanism-only, zero visual change.** shadcn `Button` → Mantine `UnstyledButton`, raw `<nav>` → `Box component="nav"`, every visual `className` preserved byte-for-byte. Any TailAdmin restyle is a **separate reserved task**. |
 | **D2** | shadcn `Button`'s base class carries `[&_svg:not([class*='size-'])]:size-4` (specificity 0,2,0), which beats the icon's own `h-5 w-5` (0,1,0) — so guest Heart/Profile icons appear to render **16px** while every other item renders **20px**. Dropping `Button` removes that rule. | **Unify to 20px and declare it an intended fix.** Capture the baseline first and measure both branches; if the asymmetry is confirmed, the migration lands 20px everywhere and records it as a deliberate correction of an accidental shadcn side effect — **the one permitted visual delta in this task**. |
 | **D3** | The component uses `useUser`/`usePathname`, so it cannot be rendered in a Story as-is. How should the split go? | **Extract `MobileBottomNavView`, prop-driven.** Container keeps the hooks and computes the active flags; the View takes items/active/handlers as props and is what the Story and the manifest enrol. Matches `HeaderView`/`FooterView`/`PopularLocationsView`/`HeroSearchView` precedent. |
+| **D4** *(added at orchestrator review, 2026-07-29)* | Review measurement found a **second** undeclared visual delta of the same family as D2: the shadcn `Button`'s `cva` width contributions (`px-2.5`, `gap-1.5`, `whitespace-nowrap`, `border`) inflated the guest items' min-content width under `flex:1 1 0%` / `min-width:auto`, pushing **all five** guest slots off the grid the authenticated branch renders on — by up to **9.5px**. Dropping `Button` removes that offset. Ratify or revert? | **Ratified as a second authorized delta, conditional on the result being the canonical grid.** Condition **verified at review**: guest slots 0–2 now sit at **0.0px** deviation from the authenticated branch in **all 16** cells (4 locales × 4 widths), versus up to 9.5px before. The change removes a non-canonical shadcn-injected offset; it introduces no new value and no new token. Same root cause and same corrective direction as D2. |
 
-D1–D3 are the source of truth and must not be re-litigated. D1 explicitly does **not** authorize any TailAdmin
-restyle, token change, or spacing/typography edit.
+D1–D4 are the source of truth and must not be re-litigated. D1 explicitly does **not** authorize any TailAdmin
+restyle, token change, or spacing/typography edit. **D4 authorizes no new value either** — it ratifies the removal of
+an accidental offset, restoring the canonical equal-fifths slot grid the authenticated branch already used.
 
 ### 3.2 The current component — inspected in full
 
@@ -460,6 +462,14 @@ the space.
 - **AC6 [R6]** — *Given* the I2 baseline and the I6 capture, *when* hashed, *then* **all 16**
   `…mobilebottomnavview--authenticated__{sq,en,uk,it}__{mobile-320,mobile-375,mobile-390,desktop-1024}.png`
   cells are **byte-identical**. Quote the compared/differing counts. Any difference is a **stop** condition.
+
+  **AC6 amendment (orchestrator, 2026-07-29 review).** The original wording admitted no capture nondeterminism and
+  was unsatisfiable as written. A differing cell is discharged **only** when all four hold, each evidenced: (a) the
+  diff is `< 0.01%` of the cell's pixels with a single-scanline bounding box; (b) a **same-code repeat capture**
+  reproduces the identical magnitude and location with zero source change; (c) the differing cells do not form a
+  locale-consistent or width-consistent pattern (a real mechanism regression appears in every locale); and (d) the
+  full-manifest comparison shows the same drift class in **unrelated, untouched stories**. Any cell not discharged on
+  all four remains a stop condition. Clause (d) is new and is now a required I6 artifact — see the amended I6 below.
 
 - **AC7 [R7]** — *Given* the same two captures, *when* the guest Heart/Profile icon box is measured, *then*
   the baseline value and the post-change value are both quoted, and the post-change value is **20×20 px**,

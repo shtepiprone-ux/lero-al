@@ -1,5 +1,5 @@
 # Component Catalog — Lero.al
-Last generated: 2026-07-24
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView`; full regeneration deferred to avoid sweeping in unreviewed Task 669/675 drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
@@ -8,10 +8,10 @@ See `docs/component-risk-register.md` for risk register.
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 244 |
-| Storybook stories | 46 |
+| Total cataloged components | 245 |
+| Storybook stories | 47 |
 | Locale-aware (useTranslations) | 108 |
-| Client components ('use client') | 158 |
+| Client components ('use client') | 159 |
 | With arbitrary Tailwind values | 37 |
 | Components with 2xl responsive step | 12 |
 | Components flagged for review | 52 |
@@ -85,7 +85,7 @@ See `docs/component-risk-register.md` for risk register.
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `YearCombobox` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (11)
+## Layout Components (`src/components/layout/`) (12)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -94,7 +94,8 @@ See `docs/component-risk-register.md` for risk register.
 | `Header` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `HeaderActions` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 | `HeaderView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
-| `MobileBottomNav` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `MobileBottomNav` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `MobileBottomNavView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `MobileNavDrawer` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 | `PageHeader` | APPROVED | ✅ | — | —  |
 | `PageShell` | APPROVED | ✅ | — | —  |

@@ -46,6 +46,7 @@ Every fact below was read or executed in the worktree on branch `task/q0-ci-rend
 | **D17** (Task 688 review, standing) | md5 motion on rendered cells. | **0 verdict changes + byte-identical assertion payloads + max channel delta ≤ 1/255**, with per-cell attribution over the **full** changed set. Baseline `2026-07-29T20-43/`. |
 | **D18** (Task 690, **SUPERSEDED**) | Close F1 by relocating the declarations `@theme` → `:root`. | **Falsified by measurement** (§3.3). Superseded by D19; do not re-apply. |
 | **D19** (this task, 2026-07-30) | How to close F1 without losing Tailwind's static fallback tier? | **Declare the two variables in BOTH blocks.** `@theme inline` restores static resolution; the `:root` copy guarantees unconditional emission. The duplicated literal is accepted, guarded by a comment now and by **Task 692**'s gate later. |
+| **D21** (this task, amended 2026-07-30 after the second `BLOCKED`) | D20's plant covered only `dialog.tsx`/`sheet.tsx`, so `--color-black` survived: three `scripts/governance/` files carry the literal `bg-black` in a comment, two detector regexes and a JSON `_comment`, and `scripts/` is inside Tailwind's scanned corpus. Root cause of the miss: §3.8 grepped for `--color-black` (the variable name) instead of `bg-black` (the utility candidate) — **M5**. | **Widen I5.2's plant to all 5 `bg-black` sites**, named explicitly in the step's table. The executor already proved diagnostically that this makes the token disappear, so F1's mechanism is confirmed; this re-runs it under the AC. The root fix — putting `scripts/` behind `@source not`, as Task 433 did for `docs/`/`tasks/` — is **Task 696**, out of scope (§8). |
 | **D20** (this task, amended 2026-07-30 after the first `BLOCKED`) | I5's control failed its second half: on the pre-690 arrangement with every `overlay` utility stripped, the variables **stayed present**, so the control could not demonstrate F1. | **The control's subject was wrong, not its logic.** Re-point I5 at **`--color-black`** — F1's actual subject — and plant on `dialog.tsx`/`sheet.tsx`. The overlay pair was structurally incapable of failing the control (§3.8). D19's code is **unchanged and retained**: its own gates (I3, I4) passed. Execution **resumes at I5**; I0–I4 are not re-run (§10 I0). |
 
 ### 3.2 Start state — an intentional, manifested dirty worktree
@@ -178,12 +179,34 @@ content detection is on (`globals.css:1` `@import "tailwindcss"`, with only `@so
 
 Consequences, and they point in opposite directions:
 
-**F1 stands.** `--color-black` has exactly one class of lifeline. It appears in **zero** scanned source
-(`grep -rn -- "--color-black" src/ scripts/ .storybook/ --include=*.tsx --include=*.ts --include=*.mjs
---include=*.js --include=*.json` → no hits; the only occurrence is in the unscanned `.module.css`). It is **not**
-declared or referenced anywhere inside `@theme` — it is a Tailwind default-palette entry, absent from `globals.css`
-entirely. Its emission therefore depends solely on `bg-black/10` at `dialog.tsx:35` and `sheet.tsx:32`. No
-confounder exists, so Task 688 finding F1 is **not** invalidated by the first I5 result.
+**F1 stands.** `--color-black` is not declared or referenced anywhere inside `@theme` — it is a Tailwind
+default-palette entry, absent from `globals.css` entirely — so it has no self-reference lifeline. Its emission
+depends purely on `bg-black` **utility candidates** in the scanned corpus, and the executor's second attempt proved
+empirically that removing all of them makes it disappear.
+
+> **Census corrected 2026-07-30 by D21 — the first D20 attempt used the wrong search string (M5).** §3.8 originally
+> grepped for `--color-black`, the *CSS custom-property name*. Tailwind's scanner extracts **class-name candidates**,
+> not `var()` references — the very distinction this section's `.css` argument rests on. The correct search is
+> `bg-black`. Searching for it repo-wide (excluding the `@source not` dirs, `node_modules/`, `.next/`) gives
+> **5 sites in 5 files**, of which only two are real utilities:
+>
+> | Site | Nature |
+> |---|---|
+> | `src/components/ui/dialog.tsx:35` | real utility, `bg-black/10` |
+> | `src/components/ui/sheet.tsx:32` | real utility, `bg-black/10` |
+> | `scripts/governance/scan-tailwind.mjs:11` | **comment** — `T4 - arbitrary hex / bg-white / bg-black backgrounds` |
+> | `scripts/governance/scan-tailwind.mjs:127` | **detector regex** — `/bg-\[#[0-9a-fA-F]{3,6}\]\|bg-white\b\|bg-black\b/` |
+> | `scripts/governance/tailwind-entropy.mjs:323` | **detector regex** — `/fixed\s+inset-0.*bg-black\/[0-9]\|…/` |
+> | `scripts/governance/baseline.json:2` | **prose** inside a `_comment` field |
+>
+> `scripts/` is **not** excluded from content detection — `globals.css:11-12` excludes only `docs/` and `tasks/`.
+> The scanner is a context-free candidate extractor, so a utility named inside a regex, a comment or a JSON prose
+> blob is indistinguishable from one used in markup. The governance scripts whose job is to *detect* these utilities
+> therefore cause Tailwind to *emit* them.
+>
+> This makes F1 stronger, not weaker: the homepage scrim's rendering depended on a regex inside a governance script.
+> The root cause — `scripts/` belongs behind `@source not`, exactly as `docs/`/`tasks/` were placed there by Task 433
+> for the identical reason — is **Task 696**, out of scope here (§8).
 
 **The overlay pair was the wrong subject.** Unlike `--color-black`, it carries two additional lifelines that no
 plant on the 8 consumer files can remove:
@@ -234,11 +257,13 @@ already authorised for the consumer files — it is not a scope expansion (A4, �
   criterion showing F1 was ever real; this task's first attempt shipped one whose subject was immune (§3.8). If I5.3
   now shows `--color-black` **surviving** the plant, F1 is disproven and the whole 690→693 line rests on a phantom —
   **stop and report**, do not rationalise it.
-- **A4 — do not touch any consumer file, with one named exception.** `LightboxView`, `ListingGallery`,
+- **A4 — do not touch any consumer file; the plant set is closed and named.** `LightboxView`, `ListingGallery`,
   `MantineListingCardPattern`, `MantineListingGalleryPattern`, `ImageUpload`, `AdminUserAvatar`, `PerfDevOverlay`
-  are **read-only, including diagnostically**. `dialog.tsx` and `sheet.tsx` are read-only as *deliverables* but carry
-  I5's temporary, fully-reverted plant (§10 I5.2/I5.4) — that plant is authorised by **D20** and is the only edit
-  permitted outside §7's scope. It must leave no trace in `git diff --stat` (AC2).
+  are **read-only, including diagnostically**. The five files in I5.2's table (`dialog.tsx`, `sheet.tsx`,
+  `scan-tailwind.mjs`, `tailwind-entropy.mjs`, `baseline.json`) are read-only as *deliverables* but carry I5's
+  temporary, fully-reverted plant — authorised by **D20/D21**, the only edits permitted outside §7's scope, and they
+  must leave no trace in `git diff --stat` (AC2). A sixth `bg-black` site is a **stop**, not an invitation to extend
+  the set yourself.
 - **A5 — the start state is dirty by design** (§3.2). Verify all four entries and their md5 witnesses before the
   first write. An unexpected fifth path, or a witness mismatch, → **stop and report**.
 - **A6 — do not delete Task 690's session log.** It is the falsification record and ships with this task.
@@ -298,7 +323,11 @@ Evidence under `.screenshots/task693-delta/`; the Task 690 baselines under `.scr
 - **Task 691** — `MantineListingCardPattern` (28) + `ListingCard` (8) de-Tailwind, unblocked by this task.
 - **Task 689** — the project-wide section-heading `fz` rem triple.
 - **Removing `bg-black/10` from `dialog.tsx`/`sheet.tsx` as a deliverable**, or de-Tailwinding any overlay consumer
-  (A4). I5's plant on those two lines is temporary, fully reverted, and must not appear in the final diff.
+  (A4). I5's plant on the five named sites is temporary, fully reverted, and must not appear in the final diff.
+- **Task 696** — add `@source not "../../scripts"` to `globals.css`, extending Task 433's `docs/`/`tasks/`
+  exclusion to the governance tooling that names Tailwind utilities in comments, detector regexes and baseline
+  prose (§3.8). It is the root fix for the census problem D21 worked around, but it changes the emitted bundle and
+  needs its own before/after selector-set proof — own blast radius, not a rider on this task.
 - **Re-applying D18** in any form, including "move it back later" comments (A2).
 - **Editing the module, the eight `CITY_GRADIENTS` rules, or the `:focus-visible` ring.**
 - **Creating any test** (A7). **Any mutating Git command.**
@@ -374,22 +403,37 @@ exactly one class of lifeline. Four steps, in order, each with its own clean bui
    `grep -ho -- "--color-black:[^;]*" .next/static/css/*.css | sort -u`.
    **Required: `--color-black:#000` is present.** Quote the output. This is the positive arm — without it the
    negative arm proves nothing.
-2. **Plant.** Temporarily remove the `bg-black/10` token from `src/components/ui/dialog.tsx:35` and
-   `src/components/ui/sheet.tsx:32` — those two occurrences only, file edits, **no git**. Quote both before/after
-   lines. Change nothing else in either file.
+2. **Plant — all 5 `bg-black` sites (widened by D21).** Neutralise every literal `bg-black` occurrence in the
+   scanned corpus so Tailwind extracts no such candidate. File edits only, **no git**, all reverted at I5.4. Quote
+   every before/after line. Change nothing else in any of these files:
+
+   | Site | How to neutralise |
+   |---|---|
+   | `src/components/ui/dialog.tsx:35` | remove the `bg-black/10` token from the class string |
+   | `src/components/ui/sheet.tsx:32` | remove the `bg-black/10` token from the class string |
+   | `scripts/governance/scan-tailwind.mjs:11` | break the literal in the comment (e.g. `bg-bl` + `ack`) |
+   | `scripts/governance/scan-tailwind.mjs:127` | break the literal inside the regex the same way |
+   | `scripts/governance/tailwind-entropy.mjs:323` | break the literal inside the regex the same way |
+   | `scripts/governance/baseline.json:2` | break the literal inside the `_comment` string |
+
+   The three `scripts/governance/` files are **tooling, not production code**, are not run by any I5 build, and are
+   named here explicitly by D21 — this is not executor discretion. If a **sixth** `bg-black` site exists that this
+   table does not list, **stop and report**: the census is then wrong again and must not be patched over. Verify with
+   `grep -rn "bg-black" src/ scripts/ .storybook/` before and after planting.
 3. **Prove the risk was real.** `rm -rf .next && npm run build`; re-run the same grep.
    **Required: `--color-black` is ABSENT.** Quote the output. If it is still present, then usage-contingent emission
    does not apply to this token, Task 688 finding F1 is disproven, and the entire 690→693 line rests on a phantom —
    **stop and report** rather than proceeding (A3).
-4. **Restore and prove no drift.** Revert both files verbatim. Then: `git diff --stat` must list **only** the paths
-   in §3.2 plus this task's records — `dialog.tsx` and `sheet.tsx` must be **absent** from it; re-verify the two
-   surviving md5 witnesses from §3.2 (`PopularLocationsView.module.css` = `b721ecf9284f23a026d097b4012bdea4`; record
-   `globals.css`'s post-I2 value at I2 and re-verify it here); `npm run typecheck` exit 0; and a final
-   `rm -rf .next && npm run build` re-confirming **I3's selector diff is still empty**. Quote all four.
+4. **Restore and prove no drift.** Revert all five files verbatim. Then: `git diff --stat` must list **only** the
+   paths in §3.2 plus this task's records — `dialog.tsx`, `sheet.tsx`, `scan-tailwind.mjs`, `tailwind-entropy.mjs`
+   and `baseline.json` must all be **absent** from it; `grep -rn "bg-black" src/ scripts/` must return the original
+   5 sites; re-verify the module md5 (`b721ecf9284f23a026d097b4012bdea4`) and `globals.css`'s post-I2 value;
+   `npm run typecheck` exit 0; and a final `rm -rf .next && npm run build` re-confirming **I3's selector diff is
+   still empty**. Quote all five.
 
-**No file in A4's list other than `dialog.tsx` and `sheet.tsx` may be touched, even diagnostically.** In particular
-the six `var(--color-overlay*)` sites in `LightboxView.tsx` / `MantineListingGalleryPattern.tsx` stay untouched:
-§3.8 already explains their effect analytically, so no experiment needs them.
+**No file outside I5.2's five-row table may be touched, even diagnostically.** In particular the six
+`var(--color-overlay*)` sites in `LightboxView.tsx` / `MantineListingGalleryPattern.tsx` stay untouched: §3.8
+explains their effect analytically, so no experiment needs them.
 
 **I6 — rendered proof (R8).** `npm run build-storybook` (fresh, post-restore), then
 `npm run screenshots:assert -- --mantine-only` compared against `.screenshots/rendered-assert/2026-07-29T20-43/`
@@ -460,10 +504,12 @@ selector diff and AC5's empty computed diff.
   and `diff .screenshots/task690-delta/overlay-selectors-before.txt .screenshots/task693-delta/overlay-selectors-after.txt`
   is **empty**. Quote the moved lines and the diff result.
 - **AC2 [R5]** — *Given* I5's two clean builds, *then* (a) unplanted, the bundle emits `--color-black:#000`, and
-  (b) with `bg-black/10` removed from `dialog.tsx:35` and `sheet.tsx:32`, the bundle emits **no** `--color-black`
-  declaration at all. Quote both greps verbatim. Both arms are required — (a) alone shows nothing, and (b) alone
-  cannot be distinguished from a broken build. *And* — *given* I5.4 — `dialog.tsx` and `sheet.tsx` are absent from
-  `git diff --stat`, the module md5 is unchanged, `typecheck` is 0, and I3's selector diff is still empty.
+  (b) with **all five** `bg-black` sites from I5.2's table neutralised, the bundle emits **no** `--color-black`
+  declaration at all. Quote both greps verbatim, plus the pre-plant `grep -rn "bg-black" src/ scripts/ .storybook/`
+  showing exactly those 5 sites and no sixth. Both arms are required — (a) alone shows nothing, and (b) alone cannot
+  be distinguished from a broken build. *And* — *given* I5.4 — all five planted files are absent from
+  `git diff --stat`, `grep -rn "bg-black" src/ scripts/` returns the original 5 sites, the module md5 is unchanged,
+  `typecheck` is 0, and I3's selector diff is still empty.
 - **AC3 [R4]** — *Given* the final `globals.css`, *then* neither comment claims the declarations live in only one
   block; both state why each copy exists, the sync obligation, and Task 693/D19/Task 692.
 - **AC4 [R6]** — *Given* the final tree, *then* `PopularLocationsView.module.css`'s md5 is
@@ -516,8 +562,9 @@ re-verify after I5.4's restore. A fifth path or a witness mismatch → **stop an
 |---|---|
 | bundle `overlay` selector-set diff vs pre-690 baseline | **empty** (AC1) |
 | I5.1 unplanted reference build | `--color-black:#000` **present** (AC2a) |
-| I5.3 planted build (`bg-black/10` removed from `dialog.tsx`+`sheet.tsx`) | `--color-black` **absent** (AC2b) |
-| I5.4 restore | `dialog.tsx`/`sheet.tsx` absent from `git diff --stat`; module md5 unchanged; `typecheck` 0; I3 selector diff still empty |
+| I5.2 pre-plant census | `grep -rn "bg-black" src/ scripts/ .storybook/` → **exactly the 5 sites** in I5.2's table, no sixth |
+| I5.3 planted build (all 5 sites neutralised) | `--color-black` **absent** (AC2b) |
+| I5.4 restore | all 5 planted files absent from `git diff --stat`; census back to 5 sites; module md5 unchanged; `typecheck` 0; I3 selector diff still empty |
 | computed-style before/after diff | **empty**; scrim matches §3.7 (AC5) |
 | `npm run check:design-tokens` (before / after) | **43 / 0 stale** both times; module at 0 (AC7) |
 | `npm run typecheck` | 0 |
@@ -542,10 +589,10 @@ Session log at `docs/sessions/2026-07-30-task693-overlay-dual-declaration.md`:
 3. R1–R10 mapped to AC1–AC9 with evidence.
 4. The `globals.css` before/after excerpt showing **both** blocks with line numbers.
 5. The selector-set diff vs the pre-690 baseline, quoted in full if non-empty, or stated empty.
-6. **The I5 control, all four steps** (D20 subject = `--color-black`): the exact two-line plant on
-   `dialog.tsx:35`/`sheet.tsx:32` with before/after lines, both greps quoted verbatim, and the I5.4 restore
-   verification (`git diff --stat`, md5 witnesses, `typecheck`, re-confirmed empty selector diff). State explicitly
-   whether the resume branch or the full I1–I4 branch was taken at I0.
+6. **The I5 control, all four steps** (D20 subject = `--color-black`, D21 plant = 5 sites): the pre-plant census
+   output, the five-site plant with before/after lines for each, both `--color-black` greps quoted verbatim, and the
+   I5.4 restore verification (`git diff --stat`, post-restore census, md5 witnesses, `typecheck`, re-confirmed empty
+   selector diff). State explicitly whether the resume branch or the full I1–I4 branch was taken at I0.
 7. `computed-after.json` / `computed-diff.json` paths, diff result and scrim string quoted.
 8. The 1184-cell summary and the **full** per-cell pixel table for every md5-changed cell (or "0 changed cells").
 9. The `check:design-tokens` before/after per-file sections (43 → 43).
@@ -589,10 +636,13 @@ the planted arm alone cannot be told apart from a broken build, and the unplante
 **touching an A4 file other than `dialog.tsx`/`sheet.tsx`**, or leaving the plant behind; AC2's `git diff --stat`
 clause and AC9's witnesses catch it. Fifth, **treating a green Q3 matrix as proof the fallback works** — §13.1 states
 that the Chromium harness cannot see that tier, which is exactly how Task 690's regression reached review undetected.
-Sixth, and the reason this task was amended: **accepting a control that cannot fail.** The first I5 used the overlay
-pair, which has two lifelines a plant cannot remove, so `ABSENT` was unreachable by construction (**M4**). Before
-accepting any planted-negative evidence here, verify the subject could actually have failed — that is the whole
-point of AC2's paired arms.
+Sixth, and the reason this task was amended twice: **accepting a control that cannot fail, or one whose census is
+incomplete.** The first I5 used the overlay pair, which has two lifelines a plant cannot remove, so `ABSENT` was
+unreachable by construction (**M4**). The second used the right subject but an incomplete plant, because §3.8
+searched for the CSS variable name `--color-black` instead of the utility candidate `bg-black`, missing three
+`scripts/governance/` files (**M5**). Before accepting any planted-negative evidence here: confirm the subject could
+have failed, **and** confirm the pre-plant census is complete for the string Tailwind's scanner actually consumes —
+a class-name candidate, never a `var()` reference. AC2's pre-plant census clause exists for exactly this.
 
 ---
 
@@ -649,7 +699,7 @@ acceptance evidence for AC6 — with the §13.1 caveat that they cannot cover th
 | Starting worktree mode | **Dirty by design** — §3.2's four-entry manifest with md5 content witnesses, re-verified after I5.4 |
 | Producer of each checkpoint | I0 manifest + witnesses → baseline gates on the dirty tree → `@theme` re-declaration → clean build + **selector-set diff vs the pre-690 baseline** → storybook + **computed diff** → **two-sided planted control** (fix passes, pre-690 fails) → restore + drift re-verification → `--mantine-only` 1184-cell comparison + full pixel attribution → design-tokens 43 → typecheck/stories/coverage/i18n/vitest → build → records → post-records encoding gates |
 | Persisted result | I0/final porcelain snapshots + md5 witnesses; `.screenshots/task693-delta/overlay-selectors-after.txt`, `computed-after.json`, `computed-diff.json`, the manifest comparison and full pixel table; both I5 grep outputs and the plant edit set; every gate transcript; build tail with route table; session log |
-| Comparator | selector-set diff vs `overlay-selectors-before.txt` **empty**; **I5.1 `--color-black` present / I5.3 absent** (D20 subject); I5.4 restore leaves `dialog.tsx`/`sheet.tsx` out of `git diff --stat`; computed diff **empty** with the scrim byte-equal to §3.7; **1184** cells 0 FAIL / **0 verdict changes**; every md5-changed cell **≤ 1/255**; `design-tokens` **43 / 0 stale**, module 0; module md5 `b721ecf9284f23a026d097b4012bdea4`; `stories` 15/127/0; `story-coverage` 15/15; `i18n` 2215×4 |
-| Failure path | I0 manifest/witness mismatch → stop; non-empty selector diff → stop, do not hand-write utilities or drop the `:root` copy (A2); **I5.1 `--color-black` absent → stop, the build or grep is wrong, not the premise; I5.3 `--color-black` still present → stop, F1 is disproven and the 690→693 line must not ship on inertia (A3)**; any verdict change or md5 delta >1/255 → stop; restore drift at I5.4, or any A4 file other than `dialog.tsx`/`sheet.tsx` touched → stop |
+| Comparator | selector-set diff vs `overlay-selectors-before.txt` **empty**; **pre-plant census = exactly 5 `bg-black` sites; I5.1 `--color-black` present / I5.3 absent** (D20 subject, D21 plant set); I5.4 restore leaves all 5 planted files out of `git diff --stat` and the census back at 5; computed diff **empty** with the scrim byte-equal to §3.7; **1184** cells 0 FAIL / **0 verdict changes**; every md5-changed cell **≤ 1/255**; `design-tokens` **43 / 0 stale**, module 0; module md5 `b721ecf9284f23a026d097b4012bdea4`; `stories` 15/127/0; `story-coverage` 15/15; `i18n` 2215×4 |
+| Failure path | I0 manifest/witness mismatch → stop; non-empty selector diff → stop, do not hand-write utilities or drop the `:root` copy (A2); **a sixth `bg-black` site in the pre-plant census → stop, the census is wrong again and must not be patched over; I5.1 `--color-black` absent → stop, the build or grep is wrong, not the premise; I5.3 `--color-black` still present with all 5 sites planted → stop, F1 is disproven and the 690→693 line must not ship on inertia (A3)**; any verdict change or md5 delta >1/255 → stop; restore drift at I5.4, or any file outside I5.2's five-row table touched → stop |
 | Zero/empty input case | Two comparators succeed by being **empty** (the selector diff, the computed diff), so each persists its raw before/after inputs as the producer witness. The md5-changed cell set may legitimately be **empty** — a pass that must be recorded as "0 changed cells", never omitted. I5's plant may legitimately leave **zero** `overlay` utilities in the tree; that is the intended state of the control, not a broken build |
 | Task-created artifacts in baselines | `.screenshots/task693-delta/` is task-created with no prior baseline. `.screenshots/task690-delta/overlay-selectors-before.txt` and `computed-before.json` are **read-only inputs captured before Task 690's edit** — they must not be regenerated, since a post-edit regeneration would silently make AC1 self-satisfying |

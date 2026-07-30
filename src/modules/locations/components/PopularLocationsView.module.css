@@ -46,8 +46,8 @@
 .scrim {
   background-image: linear-gradient(
     to top in oklab,
-    color-mix(in oklab, var(--color-black) 60%, transparent) 0%,
-    color-mix(in oklab, var(--color-black) 20%, transparent) 50%,
+    color-mix(in oklab, var(--overlay) 60%, transparent) 0%,
+    color-mix(in oklab, var(--overlay) 20%, transparent) 50%,
     transparent 100%
   );
 }

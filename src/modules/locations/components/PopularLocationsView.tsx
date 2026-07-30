@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import { Box, SimpleGrid, Text, Title } from '@mantine/core'
+import { Box, Flex, SimpleGrid, Text, Title } from '@mantine/core'
 import { MapPin } from 'lucide-react'
 import { AppImage } from '@/components/ui/AppImage'
 import { MantineHomeSection } from '@/design-system/mantine/patterns'
+import styles from './PopularLocationsView.module.css'
 
 export interface PopularLocationsViewLocation {
   id: string
@@ -16,25 +17,28 @@ export interface PopularLocationsViewProps {
   locations: PopularLocationsViewLocation[]
 }
 
-// Fallback gradient when no photo is set — semantic tokens only.
+// Fallback gradient when no photo is set — module classes reproducing the prior Tailwind
+// utilities' own compiled output byte-for-byte (Task 688, PopularLocationsView.module.css).
 const CITY_GRADIENTS = [
-  'bg-gradient-to-br from-primary to-brand-950',
-  'bg-gradient-to-br from-badge-new to-badge-new/70',
-  'bg-gradient-to-br from-badge-premium to-badge-premium/70',
-  'bg-gradient-to-br from-brand-950 to-primary',
-  'bg-gradient-to-br from-primary/80 to-brand-800',
-  'bg-gradient-to-br from-badge-new/90 to-brand-950',
-  'bg-gradient-to-br from-badge-premium/90 to-brand-800',
-  'bg-gradient-to-br from-brand-800 to-brand-950',
+  styles.gradient0,
+  styles.gradient1,
+  styles.gradient2,
+  styles.gradient3,
+  styles.gradient4,
+  styles.gradient5,
+  styles.gradient6,
+  styles.gradient7,
 ]
 
 /**
- * Presentational "Popular locations" section — Mantine primitives + theme tokens, with
- * decorative gradients/`AppImage`/interaction states kept as `className` (no Mantine
- * equivalent, approved semantic tokens). Prop-driven, hook-free (no useTranslations/data
- * fetching) so it renders identically in the story via storyT() and in the
- * `PopularLocations` consumer. Band is now the canonical `MantineHomeSection` (Task 669) —
- * own hand-rolled Tailwind band retired.
+ * Presentational "Popular locations" section — Mantine primitives + theme tokens throughout.
+ * `Flex`'s `direction`/`justify` props express the card's layout; `PopularLocationsView.module.css`
+ * (Task 688) reproduces the interaction states and gradients a Mantine prop cannot express —
+ * `:hover`, `:focus-visible`, and the decorative gradients — since an inline `style` attribute
+ * permanently blocks a module's own `:hover` rule (Task 653 finding, `FavoriteButton.module.css`).
+ * Prop-driven, hook-free (no useTranslations/data fetching) so it renders identically in the
+ * story via storyT() and in the `PopularLocations` consumer. Band is the canonical
+ * `MantineHomeSection` (Task 669).
  */
 export function PopularLocationsView({ heading, locations }: PopularLocationsViewProps) {
   return (
@@ -43,18 +47,20 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
         {heading}
       </Title>
 
-      <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="sm" className="popular-locations">
+      <SimpleGrid cols={{ base: 2, sm: 3, md: 4 }} spacing="sm">
         {locations.map((loc, i) => (
-          <Box
+          <Flex
             key={loc.id}
             component={Link}
             href={loc.href}
+            direction="column"
+            justify="flex-end"
             pos="relative"
             h={112}
             p="sm"
             c="white"
             bdrs="xl"
-            className="flex flex-col justify-end overflow-hidden hover:opacity-90 transition-opacity focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className={styles.card}
             data-track="popular_location_click"
           >
             {loc.imageUrl ? (
@@ -63,14 +69,14 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
                   variant="listing-thumb"
                   src={loc.imageUrl}
                   alt={loc.name}
-                  className="absolute inset-0"
+                  className={styles.absoluteFill}
                 />
-                <Box className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <Box pos="absolute" inset={0} className={styles.scrim} />
               </>
             ) : (
-              <Box className={`absolute inset-0 ${CITY_GRADIENTS[i % CITY_GRADIENTS.length]}`} />
+              <Box pos="absolute" inset={0} className={CITY_GRADIENTS[i % CITY_GRADIENTS.length]} />
             )}
-            <Box pos="relative" style={{ zIndex: 1 }}>
+            <Box pos="relative" className={styles.content}>
               <Box mb={2}>
                 <MapPin size={14} style={{ opacity: 0.7 }} aria-hidden />
               </Box>
@@ -78,7 +84,7 @@ export function PopularLocationsView({ heading, locations }: PopularLocationsVie
                 {loc.name}
               </Text>
             </Box>
-          </Box>
+          </Flex>
         ))}
       </SimpleGrid>
     </MantineHomeSection>

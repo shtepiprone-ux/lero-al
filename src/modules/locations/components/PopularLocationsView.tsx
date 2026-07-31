@@ -3,6 +3,7 @@ import { Box, Flex, SimpleGrid, Text, Title } from '@mantine/core'
 import { MapPin } from 'lucide-react'
 import { AppImage } from '@/components/ui/AppImage'
 import { MantineHomeSection } from '@/design-system/mantine/patterns'
+import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
 import styles from './PopularLocationsView.module.css'
 
 export interface PopularLocationsViewLocation {
@@ -43,7 +44,7 @@ const CITY_GRADIENTS = [
 export function PopularLocationsView({ heading, locations }: PopularLocationsViewProps) {
   return (
     <MantineHomeSection variant="muted" containIntrinsicSize="auto 380px">
-      <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }} mb="xl">
+      <Title order={2} fw={700} fz={SECTION_HEADING_FZ} mb="xl">
         {heading}
       </Title>
 

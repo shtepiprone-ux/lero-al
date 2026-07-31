@@ -2,6 +2,7 @@
 
 import { Box, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core'
 import { Search, Home, Phone } from 'lucide-react'
+import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
 
 const STEP_ICONS = [Search, Home, Phone] as const
 
@@ -24,7 +25,7 @@ export interface HowItWorksStepsProps {
 export function HowItWorksSteps({ heading, steps }: HowItWorksStepsProps) {
   return (
     <>
-      <Title order={2} ta="center" fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }} mb={40}>
+      <Title order={2} ta="center" fw={700} fz={SECTION_HEADING_FZ} mb={40}>
         {heading}
       </Title>
       <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={32} maw={768} mx="auto">

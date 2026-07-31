@@ -6,6 +6,7 @@ import { ListingCard, type CardListingData } from '@/modules/listings/components
 import { getImagePriority } from '@/lib/imageDelivery'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
+import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
 
 /** Skeleton card chrome for the loading grid — owned by the View (Task 665 container/View
  * split; moved out of FeaturedListings.tsx so the View never imports its container). */
@@ -43,7 +44,7 @@ export function FeaturedListingsView({ listings, loading, rates, displayCurrency
 
   const header = (
     <Group justify="space-between" align="center" wrap="nowrap" mb="xl">
-      <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }}>{t('featured')}</Title>
+      <Title order={2} fw={700} fz={SECTION_HEADING_FZ}>{t('featured')}</Title>
       {!loading && listings.length > 0 && (
         <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />
       )}

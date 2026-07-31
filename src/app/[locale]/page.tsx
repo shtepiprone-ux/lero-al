@@ -11,6 +11,7 @@ import { AgentCtaButton } from '@/components/shared/AgentCtaButton'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import { HowItWorksSteps } from '@/components/shared/HowItWorksSteps'
 import { MantineHomeSection } from '@/design-system/mantine/patterns'
+import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
 
 export default async function HomePage() {
   const t = await getTranslations('home')
@@ -46,7 +47,7 @@ export default async function HomePage() {
       {/* ── Latest listings ── */}
       <MantineHomeSection containIntrinsicSize="auto 500px">
         <Group justify="space-between" align="center" wrap="nowrap" mb="xl">
-          <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }}>{tl('latest')}</Title>
+          <Title order={2} fw={700} fz={SECTION_HEADING_FZ}>{tl('latest')}</Title>
           <ViewAllLink href={`/${locale}/listings`} label={tl('view_all')} />
         </Group>
         <LatestListings favoriteIds={favoriteIds} />
@@ -74,7 +75,7 @@ export default async function HomePage() {
           <Box ta="center" mb="md">
             <Building2 size={48} color="var(--mantine-color-brand-7)" />
           </Box>
-          <Title order={2} fw={700} fz={{ base: '1.25rem', sm: '1.5rem', xxl: '1.875rem' }} mb="sm">
+          <Title order={2} fw={700} fz={SECTION_HEADING_FZ} mb="sm">
             {t('agent_cta_title')}
           </Title>
           <Text c="dimmed" mb="xl">{t('agent_cta_desc')}</Text>

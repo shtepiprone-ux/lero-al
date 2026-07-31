@@ -29,6 +29,12 @@ type Story = StoryObj<typeof meta>
 
 const FIXTURE_RATES: ExchangeRates = { ALL: 1, EUR: 100 }
 
+// Frozen "created 2 days ago" (no Date.now()/new Date() wall-clock in fixtures per Storybook
+// governance §14, Task 697) — a cross-day capture must render byte-identical PNGs. Anchor is
+// 2026-07-30 (Task 697 kickoff date); keeps the "New" badge (LISTING_NEW_DAYS=7,
+// docs/domain-rules.md:106) in its current visible state.
+const FIXTURE_CREATED_AT = '2026-07-28T00:00:00.000Z'
+
 const FIXTURE_USER: User = {
   id: 'story-user-001',
   public_id: 1,
@@ -81,7 +87,7 @@ function makeFixtureListing(l: string): CardListingData {
     property_type: 'apartment',
     is_premium: false,
     status: 'active',
-    created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    created_at: FIXTURE_CREATED_AT,
     images: [
       { url: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=500&fit=crop', is_cover: true, order: 0 },
     ],

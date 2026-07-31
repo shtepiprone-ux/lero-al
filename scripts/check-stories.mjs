@@ -100,7 +100,7 @@ export const JSX_PROP_ALLOWLIST = [
 // ── Gate runner (exported for testing) ────────────────────────────────────────
 
 /**
- * Run all 15 governance checks against the given repo root.
+ * Run all 16 governance checks against the given repo root.
  *
  * @param {string} root - Absolute path to the repo root (defaults to this script's parent dir).
  * @param {{ verbose?: boolean }} opts - When verbose=true, prints check-header lines to stdout.
@@ -1018,6 +1018,156 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
+  // ── Check 16: Wall-clock fixture values (Task 697, §14.10; corrected Task 698) ─
+
+  log('── Check 16: Wall-clock fixture values (Task 697/698, §14.10) ─────────');
+
+  // Flags Date.now() used anywhere as a value, and bare zero-argument new Date() used as a
+  // value — both outside comments AND outside string/template literals. Deliberately does NOT
+  // flag new Date(<non-empty argument>): a frozen literal (new Date('2026-01-01T00:00:00.000Z'))
+  // or an expression derived from a frozen constant
+  // (new Date(FIXTURE_ANCHOR_MS - 2 * 86_400_000)) is the required fix, not a second violation —
+  // over-flagging either form is a gate defect (Task 697 I6.4).
+  //
+  // Matching runs against a comment/string-masked copy of the whole file (not line-by-line), so:
+  //   - a trailing `// … new Date() …` comment is masked and never matches (Task 698 F3);
+  //   - `'… new Date() …'` / `"… new Date() …"` / a non-interpolated `` `…` `` template literal
+  //     is masked and never matches (Task 698 F3);
+  //   - an apostrophe that does NOT close on its own line (JSX text `It's`, a regex literal
+  //     `/don't/`) is treated as ordinary code, not as the start of a string, so it cannot
+  //     swallow a real violation further down the file (Task 698 review F1);
+  //   - a `new` / `Date()` pair split across a line break still matches, since `\s` in the regex
+  //     already spans the intervening newline once masking removes the comment/string noise
+  //     around it (Task 698 F3).
+  // A template literal containing `${…}` interpolation is left unmasked (treated as ordinary
+  // code) so a real `` `${new Date()}` `` violation inside the interpolation is still caught.
+  const WALLCLOCK_DATE_NOW_RE = /\bDate\.now\(\)/g;
+  const WALLCLOCK_BARE_NEW_DATE_RE = /\bnew\s+Date\(\s*\)/g;
+
+  function maskCommentsAndStrings(content) {
+    let out = '';
+    let i = 0;
+    const n = content.length;
+    while (i < n) {
+      const two = content.slice(i, i + 2);
+      if (two === '//') {
+        let j = i;
+        while (j < n && content[j] !== '\n') { out += ' '; j++; }
+        i = j;
+        continue;
+      }
+      if (two === '/*') {
+        out += '  ';
+        let j = i + 2;
+        while (j < n && content.slice(j, j + 2) !== '*/') {
+          out += content[j] === '\n' ? '\n' : ' ';
+          j++;
+        }
+        if (j < n) { out += '  '; j += 2; } else { j = n; }
+        i = j;
+        continue;
+      }
+      const ch = content[i];
+      if (ch === '"' || ch === "'") {
+        const quote = ch;
+        // A JS single-/double-quoted string literal cannot contain a RAW line break, so a quote
+        // with no matching close before the next newline is not a string delimiter at all — it is
+        // an apostrophe in JSX text (<span>It's brand new</span>) or inside a regex literal
+        // (/don't/). Masking from there to the next stray quote would swallow real code and
+        // silently hide a genuine violation further down the file (Task 698 review F1).
+        // A backslash line-continuation IS a legal way for a literal to span lines, so the scan
+        // steps over any escaped character (including an escaped newline) and keeps looking.
+        let close = -1;
+        for (let j = i + 1; j < n; j++) {
+          const cj = content[j];
+          if (cj === '\\') { j++; continue; }
+          if (cj === '\n') break;
+          if (cj === quote) { close = j; break; }
+        }
+        if (close === -1) { out += ch; i++; continue; }
+        // Keep the quote delimiters themselves in the masked output (not whitespace) so a
+        // frozen literal like new Date('2026-01-01T00:00:00.000Z') doesn't mask down to
+        // new Date(          ) — which would wrongly match the bare-new-Date() regex.
+        out += quote;
+        let j = i + 1;
+        while (j < close) {
+          // Preserve a continuation newline so line numbers stay exact.
+          if (content[j] === '\\') { out += ' '; out += content[j + 1] === '\n' ? '\n' : ' '; j += 2; continue; }
+          out += content[j] === '\n' ? '\n' : ' ';
+          j++;
+        }
+        out += quote;
+        i = close + 1;
+        continue;
+      }
+      if (ch === '`') {
+        const start = i;
+        let j = i + 1;
+        let depth = 0;
+        let hasInterpolation = false;
+        while (j < n) {
+          if (content[j] === '\\' && j + 1 < n) { j += 2; continue; }
+          if (depth === 0 && content[j] === '`') { j++; break; }
+          if (depth === 0 && content[j] === '$' && content[j + 1] === '{') {
+            hasInterpolation = true;
+            depth = 1;
+            j += 2;
+            continue;
+          }
+          if (depth > 0) {
+            if (content[j] === '{') depth++;
+            else if (content[j] === '}') depth--;
+            j++;
+            continue;
+          }
+          j++;
+        }
+        const raw = content.slice(start, j);
+        if (hasInterpolation) {
+          out += raw; // leave as code — a real `${new Date()}` violation must still be caught
+        } else {
+          // Keep the backtick delimiters themselves (not whitespace) — same reason as the
+          // quote-preservation above.
+          for (let k = 0; k < raw.length; k++) {
+            const c = raw[k];
+            if (k === 0 || k === raw.length - 1) out += c;
+            else out += (c === '\n' ? '\n' : ' ');
+          }
+        }
+        i = j;
+        continue;
+      }
+      out += ch;
+      i++;
+    }
+    return out;
+  }
+
+  function lineOf(content, index) {
+    let line = 1;
+    for (let k = 0; k < index; k++) if (content[k] === '\n') line++;
+    return line;
+  }
+
+  for (const f of STORY_FILES) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const masked = maskCommentsAndStrings(content);
+
+    for (const m of masked.matchAll(WALLCLOCK_DATE_NOW_RE)) {
+      fail(f, lineOf(masked, m.index), 'wall-clock-fixture-value',
+        `Line uses Date.now() as a story fixture value. A rendered capture taken on a different ` +
+        `calendar day will not be byte-identical. Derive the value from a frozen, named, ` +
+        `documented anchor constant instead (docs/storybook-governance.md §14.10, Task 697).`);
+    }
+    for (const m of masked.matchAll(WALLCLOCK_BARE_NEW_DATE_RE)) {
+      fail(f, lineOf(masked, m.index), 'wall-clock-fixture-value',
+        `Line uses bare new Date() (current wall-clock instant) as a story fixture value. Use a ` +
+        `frozen, named, documented anchor constant instead (docs/storybook-governance.md §14.10, ` +
+        `Task 697).`);
+    }
+  }
+
   // ── Stale allowlist entry check ────────────────────────────────────────────
 
   log('── Stale allowlist entry check ──────────────────────────────────────');
@@ -1046,7 +1196,7 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
-  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 15 };
+  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 16 };
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────

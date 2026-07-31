@@ -1,3 +1,51 @@
+<script>
+  // Frozen Storybook preview clock (Task 698, D25, docs/storybook-governance.md §14.10).
+  // Task 697 froze every story fixture's date VALUES to this same instant; this script freezes
+  // the other half of every date comparison — the CLOCK a component reads at render time — so a
+  // capture on any calendar day is byte-identical. Runs before the story bundle loads (module-scope
+  // fixture constants evaluate before any decorator runs), the only point early enough for the
+  // freeze to take effect (a preview.tsx decorator would run too late).
+  // Every other Date behaviour passes through unchanged: new Date(<any argument form>), Date.parse,
+  // Date.UTC, Date.prototype, `instanceof Date`, subclassing via `class X extends Date`, and
+  // Date() called without `new`.
+  // Known, accepted deviation (Task 698 review): `new Date().constructor` is the real Date
+  // constructor, not this Proxy, so `x.constructor === Date` reads false inside the preview
+  // iframe. No consumer in the enrolled matrix relies on that identity (1184/1184 cells pass).
+  (function () {
+    var FROZEN_ISO = '2026-07-30T00:00:00.000Z';
+    var RealDate = window.Date;
+    var FROZEN_MS = RealDate.parse(FROZEN_ISO);
+    // Hoisted so `Date.now === Date.now` stays true — a fresh function per property read would
+    // break any consumer that compares or caches the reference (Task 698 review P3).
+    var frozenNow = function now() { return FROZEN_MS; };
+
+    var FrozenDate = new Proxy(RealDate, {
+      construct: function (target, args, newTarget) {
+        if (args.length === 0) {
+          // Zero-argument `new Date()` — pin to the frozen instant, preserving newTarget so
+          // subclassing (`class X extends Date {}`) still yields an X instance.
+          return Reflect.construct(target, [FROZEN_MS], newTarget);
+        }
+        // Any non-empty argument form (iso string, ms, y/m/d/...) passes through untouched.
+        return Reflect.construct(target, args, newTarget);
+      },
+      apply: function () {
+        // Date() called as a function (no `new`) always ignores its arguments and returns a
+        // string for "now" — return the frozen instant's string instead of the real clock.
+        return new RealDate(FROZEN_MS).toString();
+      },
+      get: function (target, prop, receiver) {
+        if (prop === 'now') {
+          return frozenNow;
+        }
+        // Date.parse, Date.UTC, Date.prototype, etc. pass through unchanged.
+        return Reflect.get(target, prop, receiver);
+      },
+    });
+
+    window.Date = FrozenDate;
+  })();
+</script>
 <!-- Fonts from Google Fonts CDN — mirrors src/app/layout.tsx font setup -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

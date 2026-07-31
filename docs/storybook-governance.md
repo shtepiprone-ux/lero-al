@@ -507,7 +507,7 @@ All five Storybook categories are required sweep scope:
   `<button>/<input>/<select>/<textarea>` JSX; raw user-facing string literals in JSX text / `aria-label` /
   `title`/`label`/`placeholder` / fixture fields (anything not from `t()`/`storyT()`, minus a documented allowlist).
   ESLint is a static best-effort signal; `check-stories.mjs` is authoritative for allowlist-aware checks.
-- **`scripts/check-stories.mjs`** (`npm run check:stories`, `checksRan: 13`) runs 13 governance checks over
+- **`scripts/check-stories.mjs`** (`npm run check:stories`, `checksRan: 16`) runs 16 governance checks over
   `**/*.stories.{ts,tsx}` and exits non-zero on any violation; wired into `prebuild-storybook`/`prestorybook` and CI.
   Checks 1–11 are the original checks (layout, raw HTML, locale-NAME families, locale pins, title literals, key parity,
   inline locale maps, uk.json Cyrillic, runtime hardcode, JSX string-prop literals, toolbar overflow). Task 468 broadened
@@ -594,7 +594,7 @@ G:  ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/U
 H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜ][A-Za-zÀ-ÖØ-öø-ÿ\s]{7,}$/]
 ```
 
-**check-stories.mjs checks (`checksRan: 13`, updated Task 468 2026-06-22):**
+**check-stories.mjs checks (`checksRan: 16`, updated Task 697 2026-07-30):**
 1. `layout:'centered'|'padded'` — banned layout values
 2. `<button|input|select|textarea>` — raw HTML controls in JSX (string-literal context filtered)
 3. **Locale-NAME export families** (broadened Task 468) — identifier-token segmentation; FAIL if any segment equals `Ukrainian|Albanian|Italian|English` or `Uk|Sq|It|En` as a leading segment. File-scoped allowlist (`scripts/story-realmode-allowlist.json`). Token-segment, not substring: `Items`/`Enabled`/`Square` PASS
@@ -608,6 +608,9 @@ H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃ�
 11. `sm:flex-row` + `sm:flex-wrap` on same line — toolbar 640px overflow; use `md:flex-row md:flex-wrap`
 12. **Viewport/width-named exports** (new Task 468) — identifier-token segmentation; FAIL if any segment equals `Mobile|Tablet|Desktop|Laptop|Wide|Huge`, `keyword+digits` (e.g. `Mobile320`), or a bare width number (`320…2560`). File-scoped allowlist (`scripts/story-realmode-allowlist.json`, keyed by `{file, export, check, reason}`). Stale-entry check: an allowlist entry pointing at a non-existent file or export FAIL
 13. **Duplicate-family export names** (new Task 468) — FAIL if any identifier segment equals `Proof|Demo|Canonical(+digits)|Filtered`. Same file-scoped allowlist; only `AdminListingsTable/FilteredPending` allowlisted
+14. Mantine `<Button size="lg"|"xl">` — off-scale button size (Task 520); canonical default `size="sm"` (14px) + 44px min-height, escape via `// @allow-button-size <reason>`
+15. **Unregistered Mantine colour prop** (Task 685/686) — `color`/`c`/`bg` literal (Form A), `var(--mantine-color-*)` (Form B), and `*COLOR*`-named object-literal map (Form C) values must resolve to `theme.ts`'s registered colour set or a documented passthrough (CSS-wide keyword, CSS function call, `#hex`, Mantine keyword)
+16. **Wall-clock fixture value** (Task 697/698, §14.10) — `Date.now()` used anywhere as a value, or bare zero-argument `new Date()` used as a value, outside comments and outside string/template literals. Does NOT flag `new Date(<non-empty argument>)`
 
 **check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} (canonical 14 from `docs/responsive-screenshot-matrix.md §1`) × {sq,en,uk,it}. `--fast` runs only {320,375,390} for quick local loops. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`. **`npm run screenshots:assert` (non-fast) is the canonical full-matrix acceptance command** — its transcript must show `Viewports: 14` for rendered-proof approval (Task 411).
 
@@ -670,7 +673,7 @@ const T = { en: 'New Listing', sq: 'Njoftim i ri', uk: 'Orenda ta prodazh', it: 
 wrap in a JSX expression `{'Developer note text'}` — breaks the `>text<` regex while preserving display.
 Do NOT use this pattern for real user-facing content; always localize that via storyT.
 
-**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 13 checks (including Check 3/4 broadened + Check 12/13 new — Task 468) and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
+**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 16 checks (including Check 3/4 broadened + Check 12/13 new — Task 468; Check 15 — Task 685/686; Check 16 — Task 697) and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
 
 ---
 
@@ -1493,6 +1496,66 @@ written) with a canonical story (`src/stories/mantine/primitives/FooterView.stor
 entry, resolving Q0R's `FooterView` gap. `check:story-coverage` now reports 6/6 covered, exit 0.
 
 Session: `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`.
+
+---
+
+### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
+
+**Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date
+into its rendered PNG. A baseline captured today and a re-run captured tomorrow then differ — not because anything
+changed, but because the calendar day changed. Task 693's Q3 rendered run burned a full diagnostic cycle chasing 32
+cells that differed at max channel delta 140 purely because the baseline (captured 2026-07-29) and the new run
+(2026-07-30) each recomputed a `created_at`/`expires_at` string live: `"Jul 27, 2026"` → `"Jul 28, 2026"`. A
+same-day, zero-code-diff control produced zero motion on those stories; only the day boundary did.
+
+**Rule:** every value a story fixture supplies to a component prop MUST be a literal, or a value derived by
+arithmetic from a frozen, named, documented constant — never from `Date.now()` or a bare `new Date()`. A fixture that
+needs to demonstrate a relative relationship (e.g. "created N days ago", "expires in 30 days") derives every related
+value from ONE frozen anchor constant so the relationships stay intact; freezing must not collapse "staggered",
+"valid vs. expired", or similar demonstrations to the same instant.
+
+**Required form** (model: `RangeDatePicker.stories.tsx:79-83`):
+```ts
+// Frozen anchor (no Date.now()/new Date() wall-clock in fixtures per Storybook governance §14, Task 697)
+const FIXTURE_ANCHOR_MS = Date.parse('2026-07-30T00:00:00.000Z')
+const created_at = new Date(FIXTURE_ANCHOR_MS - 2 * 24 * 60 * 60 * 1000).toISOString()
+```
+A frozen ISO string literal is equally acceptable when no relative-offset arithmetic is needed.
+
+**Gate:** `check:stories` Check 16 scans the full story scope (`src/**/*.stories.{ts,tsx}` + `src/stories/**`) for
+`Date.now()` used anywhere as a value, and bare `new Date()` (zero-argument) used as a value — both outside comments
+and outside string/template literals (Task 698 corrected the gate to strip comment and string content before
+matching, and to catch a `new` / `Date()` pair split across a line break, closing 3 false-flagging/false-negative
+forms found in the 698 review; the 698 **review** then closed a fourth — a quote that does not close on its own line
+is treated as ordinary code, not as a string delimiter, so an apostrophe in JSX text (`It's brand new`) or in a
+regex literal (`/don't/`) can never mask away a real violation further down the file, F1). It does NOT flag `new
+Date(<any non-empty argument>)` — a frozen literal or an
+expression that does not itself call `Date.now()` — that is the negative-control boundary a fixture author relies
+on. Flagging a frozen constant would be over-broad and is treated as a gate defect, not a stricter gate (Task 697
+I6.4).
+
+**The Storybook preview clock is also frozen (Task 698, D25).** Freezing only the fixture VALUES leaves half of
+every date comparison live: a component that itself reads `Date.now()`/`new Date()` at render time against a
+now-frozen fixture field — `NotificationItem.tsx`'s `formatDistanceToNow` relative-time string, the
+`LISTING_NEW_DAYS` "new" badge (`docs/domain-rules.md:106`), and `isListingPubliclyVisible`'s expiry check — still
+drifted across calendar days even after Task 697, because only the fixture's half of each comparison was frozen.
+`.storybook/preview-head.html` now carries an inline `<script>` that runs before the story bundle loads (module-scope
+fixture constants evaluate before any decorator, so a `preview.tsx` decorator would run too late) and replaces
+`window.Date` with a `Proxy` that pins `Date.now()` and zero-argument `new Date()` to the same anchor instant Task
+697's fixtures already use (`2026-07-30T00:00:00.000Z`), while passing every other `Date` behaviour through
+unchanged: `new Date(<any argument form>)`, `Date.parse`, `Date.UTC`, `Date.prototype`, `instanceof Date`,
+subclassing (`class X extends Date`), and `Date()` called without `new`. One accepted deviation: `new
+Date().constructor` is the real `Date` constructor rather than the Proxy, so `x.constructor === Date` reads false
+inside the preview iframe — no enrolled consumer depends on that identity. Because the anchor literal cannot be
+`import`ed into raw HTML, it exists in two places by necessity — the inline script and the fixtures — so
+`scripts/__tests__/preview-clock-anchor.test.ts` gates the two against silent divergence, failing and naming both
+values the instant they go out of sync.
+
+**Interaction with a date-dependent affordance — now also frozen.** A component that reads live `Date.now()` against
+a fixture field (the `LISTING_NEW_DAYS` "new" badge, or `isListingPubliclyVisible`'s expiry check) is no longer left
+unaffected by this rule: with the preview clock pinned to the same anchor as the fixtures (Task 698), both halves of
+the comparison are now constants, so the affordance's rendered state is permanently stable on any future capture day.
+There is no anchor left to "revisit" as real time passes — that caveat is retired.
 
 ---
 

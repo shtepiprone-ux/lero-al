@@ -40,6 +40,13 @@ const IMAGE_URLS = [
   'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=500&fit=crop',
 ]
 
+// Frozen anchor "today" (no Date.now()/new Date() wall-clock in fixtures per Storybook
+// governance §14, Task 697) — a cross-day capture must render byte-identical PNGs. Anchor is
+// 2026-07-30 (Task 697 kickoff date). Each card's created_at is derived from this single
+// constant, preserving the original per-card staggered offset (i+1 days ago). Keeps the "New"
+// badge (LISTING_NEW_DAYS=7, docs/domain-rules.md:106) in its current per-card visible state.
+const FIXTURE_ANCHOR_MS = Date.parse('2026-07-30T00:00:00.000Z')
+
 /**
  * Factory — builds fixture listings with locale-resolved titles.
  * Call at render time: makeCardListingFixtures(context?.globals?.locale ?? 'en')
@@ -58,7 +65,7 @@ export function makeCardListingFixtures(locale: string): CardListingData[] {
       property_type: 'apartment',
       is_premium: i < 2,
       status: 'active',
-      created_at: new Date(Date.now() - (i + 1) * 24 * 60 * 60 * 1000).toISOString(),
+      created_at: new Date(FIXTURE_ANCHOR_MS - (i + 1) * 24 * 60 * 60 * 1000).toISOString(),
       images: [{ url: IMAGE_URLS[i % IMAGE_URLS.length]!, is_cover: true, order: 0 }],
       location: { id: i + 1, name_al: loc.name_al, slug: loc.slug, type: 'city' },
       area_gross: 60 + i * 10,

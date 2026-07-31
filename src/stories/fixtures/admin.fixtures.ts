@@ -42,6 +42,14 @@ const D3 = '2026-03-05T11:00:00Z'
 const D4 = '2026-04-10T08:45:00Z'
 const D5 = '2026-05-01T16:00:00Z'
 
+// Frozen anchor "today" (no Date.now()/new Date() wall-clock in fixtures per Storybook
+// governance §14, Task 697) — a cross-day capture must render byte-identical PNGs. Anchor is
+// 2026-07-30 (Task 697 kickoff date). expires_at values below are derived from this single
+// constant, preserving the original +30d valid / -10d expired relationship (A3).
+const FIXTURE_TODAY_MS = Date.parse('2026-07-30T00:00:00.000Z')
+const FIXTURE_EXPIRES_VALID = new Date(FIXTURE_TODAY_MS + 30 * 86_400_000).toISOString()
+const FIXTURE_EXPIRES_PAST = new Date(FIXTURE_TODAY_MS - 10 * 86_400_000).toISOString()
+
 // ── DBCurrency fixtures ───────────────────────────────────────────────────────
 
 export const FIXTURE_CURRENCIES: DBCurrency[] = [
@@ -328,7 +336,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'apartament-3-1-tirane-qender-1001',
     created_at: D1,
-    expires_at: new Date(Date.now() + 30 * 86_400_000).toISOString(),
+    expires_at: FIXTURE_EXPIRES_VALID,
     owner: { name: 'Arben Krasniqi' },
   },
   {
@@ -373,7 +381,7 @@ export const FIXTURE_LISTINGS: AdminListing[] = [
     currency: 'EUR',
     slug: 'apartament-2-1-durres-bregdet-1004',
     created_at: D4,
-    expires_at: new Date(Date.now() - 10 * 86_400_000).toISOString(),
+    expires_at: FIXTURE_EXPIRES_PAST,
     owner: { name: 'Arben Krasniqi' },
   },
   {

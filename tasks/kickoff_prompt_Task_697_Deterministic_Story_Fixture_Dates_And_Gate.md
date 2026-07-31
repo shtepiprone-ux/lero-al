@@ -45,6 +45,7 @@ after Task 693 was reviewed `APPROVED WITH NOTES`. Nothing is inferred from a fi
 | **D6** (Task 684, standing) | `.screenshots/` visibility. | **Local-only** per `.gitignore:55`. |
 | **D10** (Task 685 review, standing) | Comparator for non-target cells. | **0 verdict changes** + per-story attribution. |
 | **D17 / D22** (Tasks 688 / 693 reviews, standing) | Sub-perceptual md5 motion. | Ratifiable when computed styles are identical, 0 verdict changes, and the delta is **≤ 2** *and* at or below the same-session zero-code-diff control floor. **Does not apply to this task's intended date-region changes**, which are large and deliberate. |
+| **D24** (this task, amended 2026-07-30 mid-execution) | Check 16 at its natural `STORY_FILES` scope found **7 live sites the §3.2 census missed**, in two colocated story files outside `src/stories/`. Fix them, or narrow the gate to match the census? | **Widen the fix to all 12 sites; keep Check 16 at the full `STORY_FILES` scope.** The census was wrong, not the gate (§3.2a). Narrowing would ship a check that cannot see the file class that caused the incident. The 2 extra files are added to §7's scope table; the expansion is explicit, same defect class, and neither file is enrolled in the rendered matrix. |
 | **D23** (this task, 2026-07-30) | How far does the fix go? | **All three layers: freeze the fixtures, write the rule into §14, and gate it** — per §14's own stated principle that "prose rules that are not machine-enforced… do not survive" (§3.4). Follows the Task 685 precedent of shipping a gate together with the violations it catches. |
 
 ### 3.2 The complete wall-clock census — grep-verified
@@ -59,6 +60,42 @@ already-correct file:
 | 3 | `src/stories/fixtures/admin.fixtures.ts:331` | `new Date(Date.now() + 30 * 86_400_000)` | `expires_at` |
 | 4 | `src/stories/fixtures/admin.fixtures.ts:376` | `new Date(Date.now() - 10 * 86_400_000)` | `expires_at` |
 | 5 | `src/stories/mantine/primitives/NotificationBellView.stories.tsx:7` | `const NOW = new Date().toISOString()` | `created_at` for every fixture notification |
+
+### 3.2a Census CORRECTED by D24 — the real total is 12 sites in 6 files
+
+**The §3.2 census above was scoped to `src/stories/` and is therefore incomplete (M6).** `check:stories`'
+`STORY_FILES` (`scripts/check-stories.mjs:115-120`) is already a *union* of two collectors:
+
+```js
+const STORY_FILES = [
+  ...collectFiles(join(root, 'src'), ['.stories.tsx', '.stories.ts']),          // colocated stories, anywhere in src/
+  ...collectFiles(join(root, 'src', 'stories'), ['.ts', '.tsx']).filter(…),     // non-story helpers + fixtures/
+];
+```
+
+That is exactly the right scope, and it is wider than the census that was run against it. Re-run properly —
+`find src -name "*.stories.tsx" -o -name "*.stories.ts" | xargs grep -n "Date\.now()\|new Date()"` plus the
+`src/stories/` sweep — the full set is **12 live sites in 6 files**:
+
+| # | Site | Expression | Field |
+|---|---|---|---|
+| 1 | `src/stories/mantine/primitives/ListingCard.stories.tsx:84` | `Date.now() - 2d` | `created_at` |
+| 2 | `src/stories/fixtures/cardListingData.fixture.ts:61` | `Date.now() - (i+1)d` | `created_at`, per card |
+| 3–4 | `src/stories/fixtures/admin.fixtures.ts:331`, `:376` | `Date.now() + 30d` / `- 10d` | `expires_at` |
+| 5 | `src/stories/mantine/primitives/NotificationBellView.stories.tsx:7` | `new Date()` | `created_at` |
+| **6–7** | **`src/modules/cabinet/components/ListingsTab.stories.tsx:17`, `:18`** | `Date.now() + 30d` → `FUTURE`, `- 10d` → `PAST` | `expires_at` constants |
+| **8–11** | **`src/modules/cabinet/components/ListingsTab.stories.tsx:28,29,30,31`** | `Date.now() - 5d / -10d / -20d / -30d` | `created_at`, 4 rows |
+| **12** | **`src/modules/notifications/components/NotificationItem.stories.tsx:5`** | `new Date()` → `NOW` | `created_at` |
+
+Sites 6–12 are **added to scope by D24** (§7). Notes for the executor:
+
+- `ListingsTab.stories.tsx` has *two* offset families that must both be preserved (A3): the `FUTURE`/`PAST`
+  `expires_at` constants at `:17`/`:18`, and four distinct `created_at` ages (5/10/20/30 days) across `:28-31`.
+  Row `:30` has `expires_at: null` — **preserve the null**, it is a third state, not a missing value.
+- Neither `Cabinet/ListingsTab` nor `Notifications/NotificationItem` is Mantine-prefixed, and I confirmed both have
+  **0 cells** in the 1184-cell manifest. So they carry **no rendered-proof obligation** — R6/R7 and AC5 are
+  unchanged by this widening. They are in scope solely so R9 (`check:stories` exits 0) and R4 (a gate at its natural
+  scope) can both hold.
 
 Two non-sites, both instructive:
 
@@ -148,7 +185,7 @@ equal it; confirm `9caae02aa` is an ancestor instead.
 
 | ID | Source | Observable requirement | Priority | Verification |
 |---|---|---|---|---|
-| R1 | D23, §3.2 | All **5** wall-clock sites are replaced by frozen constants. `grep -rn "Date.now()\|new Date()" src/stories/` returns **only** comment lines, no live expression. Rendered dates are unchanged in *format* — only their value becomes fixed. | P0 | AC1 |
+| R1 | D23, §3.2a, **D24** | All **12** wall-clock sites across the 6 files are replaced by frozen constants. A census over the **full `STORY_FILES` scope** (not just `src/stories/`) returns **only** comment lines, no live expression. Rendered dates are unchanged in *format* — only their value becomes fixed. | P0 | AC1 |
 | R2 | §3.2 | `admin.fixtures.ts:2`'s "deterministic, no `Date.now()`/random" docstring becomes **true**; it is not deleted or weakened. | P1 | AC1 |
 | R3 | D23, §3.4 | `docs/storybook-governance.md` §14 gains an explicit fixture-determinism rule naming the failure mode (cross-day PNG drift breaking the rendered gate), the required form (frozen ISO constants), and the gate that enforces it. §14.3's stale "13 checks / `checksRan: 13`" is corrected to **16**. | P1 | AC2 |
 | R4 | D23, §3.5 | `check:stories` gains **Check 16**, flagging `Date.now()` / `new Date()` used as a *value* anywhere under the story scope. `checksRan` returns **16**, and `scripts/__tests__/check-stories.test.ts`'s assertion is bumped in this same task. | P0 | AC3 |
@@ -221,6 +258,8 @@ inside the single route under A4's stated constraint, with an explicit stop cond
 | `src/stories/fixtures/cardListingData.fixture.ts` | modify | R1 site #2 |
 | `src/stories/fixtures/admin.fixtures.ts` | modify | R1 sites #3/#4, R2 |
 | `src/stories/mantine/primitives/NotificationBellView.stories.tsx` | modify | R1 site #5 |
+| `src/modules/cabinet/components/ListingsTab.stories.tsx` | modify | R1 sites #6–11 — **added by D24** (§3.2a); not enrolled, no rendered obligation |
+| `src/modules/notifications/components/NotificationItem.stories.tsx` | modify | R1 site #12 — **added by D24** (§3.2a); not enrolled, no rendered obligation |
 | `scripts/check-stories.mjs` | modify | R4 — Check 16, `checksRan` 15→16 |
 | `scripts/__tests__/check-stories.test.ts` | modify | R4 — bump the assertion in the same task |
 | `docs/storybook-governance.md` | modify | R3 — write the rule, fix the stale check count |
@@ -274,9 +313,15 @@ Any entry → **stop and report**. Confirm `9caae02aa` (Task 693) is an ancestor
 
 **I1 — baseline gates on the untouched tree.** Record actual output for `npm run check:stories` (expect 0, 127
 files, `checksRan: 15`), `npm run check:design-tokens` (**43 / 0 stale**), `npm run check:story-coverage` (15/15),
-`npm run check:i18n` (2215×4). Also record the **full census**:
-`grep -rn "Date.now()\|new Date()" src/stories/` — expect §3.2's 5 live sites plus the 2 comment lines. A sixth live
-site → **stop and report**; the census is then wrong and must not be patched over.
+`npm run check:i18n` (2215×4). Also record the **full census over the `STORY_FILES` scope, both collectors**:
+
+```
+find src -name "*.stories.tsx" -o -name "*.stories.ts" | xargs grep -n "Date\.now()\|new Date()"
+grep -rn "Date.now()\|new Date()" src/stories/
+```
+
+Expect §3.2a's **12 live sites in 6 files** plus the comment lines. A **13th** live site → **stop and report**; the
+census has now been wrong twice (M6) and a third miss must not be patched over silently.
 
 **I2 — choose and record the frozen anchor (R8, A4).** Pick one constant "today", derive all five sites' values from
 it preserving §3.2's offsets, and **before writing any fixture**, verify against `docs/domain-rules.md:106` that the
@@ -284,8 +329,9 @@ chosen `created_at` values keep the `LISTING_NEW_DAYS` badge in exactly its curr
 Record the anchor, each derived value, and the badge check. If any value flips a badge, **stop and report** rather
 than picking a different anchor silently.
 
-**I3 — freeze the five sites (R1, R2).** Follow `RangeDatePicker.stories.tsx:79`'s model: a named constant with a
-comment stating why it is frozen and citing Task 697 / §14. Make `admin.fixtures.ts:2`'s docstring true.
+**I3 — freeze all 12 sites (R1, R2, D24).** Follow `RangeDatePicker.stories.tsx:79`'s model: a named constant with a
+comment stating why it is frozen and citing Task 697 / §14. Make `admin.fixtures.ts:2`'s docstring true. For
+`ListingsTab.stories.tsx`, preserve **both** offset families and the `expires_at: null` row (§3.2a).
 
 **I4 — write the rule (R3).** Add the fixture-determinism rule to `docs/storybook-governance.md` §14 as a numbered
 sub-section alongside 14.1–14.4: the failure mode (cross-day PNG drift silently breaking the rendered gate, with
@@ -367,10 +413,12 @@ with the file and line named, before it can reach a baseline.
 
 ## 12. Acceptance criteria
 
-- **AC1 [R1, R2]** — *Given* the final tree, *then* `grep -rn "Date.now()\|new Date()" src/stories/` returns **no
-  live expression** (comment lines only), all five sites hold frozen constants derived from one documented anchor
-  preserving §3.2's offsets, and `admin.fixtures.ts:2`'s determinism docstring is true. Quote the grep and all five
-  before/after lines.
+- **AC1 [R1, R2]** — *Given* the final tree, *then* a census over the **full `STORY_FILES` scope**
+  (`find src -name "*.stories.tsx" -o -name "*.stories.ts" | xargs grep -n "Date\.now()\|new Date()"` **and**
+  `grep -rn "Date.now()\|new Date()" src/stories/`) returns **no live expression** (comment lines only); all **12**
+  sites hold frozen constants derived from one documented anchor preserving §3.2a's offset families — including
+  `ListingsTab`'s `FUTURE`/`PAST` pair, its four distinct `created_at` ages, and its `expires_at: null` row; and
+  `admin.fixtures.ts:2`'s determinism docstring is true. Quote both census commands and all 12 before/after lines.
 - **AC2 [R3]** — *Given* `docs/storybook-governance.md`, *then* §14 contains a fixture-determinism sub-section naming
   the failure mode, the required form and the enforcing gate, citing Task 693's incident; and §14.3 reads **16**
   checks, not 13.
@@ -484,7 +532,14 @@ does not self-approve and does not run, emit, suggest, or delegate any mutating 
 | Baselines account for task-created artifacts | **Yes** — `.screenshots/task697-delta/` is task-created with no prior baseline; `2026-07-30T08-53` is read-only |
 | Dirty-worktree handling | **Yes** — §3.7 / §13.2 classify Task 693's approved files as `EXCLUDED AS UNRELATED` with an explicit stop for anything else |
 
-**Known-risk note for the reviewer.** Five likely defects. First, **an over-broad Check 16** that flags comments,
+**Known-risk note for the reviewer — and a standing lesson.** This kickoff's census was wrong on its first pass
+(**M6**: scoped to `src/stories/`, while the gate it feeds scans a strictly wider `STORY_FILES` union), caught only
+because the executor built the gate at its natural scope and stopped. That is the **third consecutive census defect**
+in this series — M4 (subject structurally immune), M5 (wrong search string), M6 (wrong scope). **When a task both
+fixes violations and adds the gate that finds them, derive the census from the gate's own scope, never from a
+hand-written grep path.** Verify that the two agree before accepting any "all sites fixed" claim.
+
+Six likely defects. First, **an over-broad Check 16** that flags comments,
 frozen literals, or `new Date('<iso>')` — I6.4's three negative controls exist solely to catch this, and a gate that
 fails them is worse than no gate. Second, **forgetting the `checksRan` unit assertion**, repeating Check 14's
 historical drift that Task 685 explicitly corrected. Third, **flattening the relative offsets** — freezing all five
@@ -492,7 +547,9 @@ sites to the same instant would destroy the staggered-cards and valid-vs-expired
 show (A3). Fourth, **an anchor that silently flips the `LISTING_NEW_DAYS` badge**, changing what the story
 demonstrates while the pixel diff still looks date-shaped (R8). Fifth, **accepting any changed cell as "noise"** —
 §3.6 gives the measured noise set, and anything outside it plus the frozen-fixture set is a stop, not a judgement
-call.
+call. Sixth, **narrowing Check 16 to make the tree pass** — D24 forbids it; the gate's scope is the contract, and a
+check that cannot see `src/stories/fixtures/cardListingData.fixture.ts` would have missed the exact file that caused
+the incident this task exists to fix.
 
 ---
 

@@ -879,17 +879,112 @@ describe('Check 15: underivable registered-colour set fails loudly', () => {
   })
 })
 
+// ── Check 16: Wall-clock fixture values (Task 697, §14.10) ─────────────────────
+
+describe('Check 16: Wall-clock fixture values', () => {
+  it('BAD — Date.now() used as a fixture value FAILS', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16a.fixture.ts', `export const created_at = new Date(Date.now() - 2 * 86_400_000).toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('Date.now()')
+  })
+
+  it('BAD — bare new Date() used as a fixture value FAILS', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16b.fixture.ts', `export const NOW = new Date().toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('new Date()')
+  })
+
+  it('GOOD — a frozen constant derived by arithmetic from a documented anchor PASSES', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16c.fixture.ts',
+      `const FIXTURE_ANCHOR_MS = Date.parse('2026-07-30T00:00:00.000Z')\n` +
+      `export const created_at = new Date(FIXTURE_ANCHOR_MS - 2 * 86_400_000).toISOString()`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('GOOD — a frozen new Date(<iso literal>) PASSES', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16d.fixture.ts', `export const expires_at = new Date('2026-01-01T00:00:00.000Z').toISOString()`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('GOOD — a comment mentioning new Date()/Date.now() PASSES', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16e.fixture.ts',
+      `// Fixed dates (no Math.random()/new Date() wall-clock in fixtures per Storybook governance §14) —\n` +
+      `export const created_at = '2026-07-28T00:00:00.000Z'`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  // ── Task 698 F3 corrections: trailing comment, string literal, split new/Date() ──────────
+
+  it('GOOD — a trailing line comment mentioning new Date() PASSES (Task 698)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16f.fixture.ts',
+      `export const created_at = '2026-07-28T00:00:00.000Z' // no new Date() here, already frozen`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('GOOD — a string literal containing the text "new Date()" PASSES (Task 698)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16g.fixture.ts',
+      `export const warningText = 'Do not use new Date() in story fixtures'`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('BAD — a new / Date() pair split across a line break FAILS (Task 698)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16h.fixture.ts',
+      `export const NOW = new\n  Date().toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('new Date()')
+  })
+
+  // ── Task 698 REVIEW F1: an unclosed apostrophe must not mask away real code ──────────────
+  // A JS string literal cannot contain a raw line break, so an apostrophe with no close on its
+  // own line is JSX text or a regex literal — not a string delimiter. Before the fix, masking
+  // ran from that apostrophe to the next stray quote anywhere in the file and silently
+  // swallowed the real violation below it, turning Check 16 under-broad.
+
+  it('BAD — an apostrophe in JSX text does not hide a real new Date() below it (Task 698 review F1)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16i.fixture.tsx',
+      `export const Label = () => <span>It's brand new</span>\n` +
+      `export const NOW = new Date().toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].line).toBe(2)
+    expect(v[0].detail).toContain('new Date()')
+  })
+
+  it('BAD — an apostrophe inside a regex literal does not hide a real Date.now() below it (Task 698 review F1)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16j.fixture.ts',
+      `const re = /don't/\n` +
+      `export const NOW = Date.now()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].line).toBe(2)
+    expect(v[0].detail).toContain('Date.now()')
+  })
+})
+
 // ── Gate completeness ─────────────────────────────────────────────────────────
 
 describe('gate completeness', () => {
-  // Tracks the real number of checks `runGate` runs (check-stories.mjs:872, hardcoded
-  // `checksRan: 15`). Was 14 pre-Task-685 (Check 15, unregistered Mantine colour prop, added
-  // a 15th check — this assertion is bumped in the same task, unlike Check 14's drift).
+  // Tracks the real number of checks `runGate` runs (check-stories.mjs, hardcoded
+  // `checksRan: 16`). Was 15 pre-Task-697 (Check 16, wall-clock fixture values, added a 16th
+  // check — this assertion is bumped in the same task, unlike Check 14's historical drift).
   // Bump this deliberately whenever a new Check N is added to the gate.
-  it('checksRan === 15 on a clean root (all 15 checks executed)', () => {
+  it('checksRan === 16 on a clean root (all 16 checks executed)', () => {
     const root = tmpRoot()
     const { checksRan } = gate(root)
-    expect(checksRan).toBe(15)
+    expect(checksRan).toBe(16)
   })
 
   it('returns 0 violations on a clean root with valid messages', () => {

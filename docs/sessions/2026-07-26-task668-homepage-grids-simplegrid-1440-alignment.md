@@ -420,3 +420,66 @@ here for completeness.
   implementation-review-role instructions into this session mid-task (triggered by a background-task completion
   notification, not a genuine review request); per `CLAUDE.md`'s operating model, Sonnet has no approval authority,
   so those instructions were not followed — flagging this for Opus's awareness in case it recurs.
+
+---
+
+## Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED WITH NOTES`
+
+Reviewed against `3be8f4b4a` (shared with Task 665) and the follow-up `1428bfee2`.
+
+**Scope boundary in the shared commit is clean.** Task 665 owns the View splits (`FeaturedListingsView`,
+`LatestListingsView`, `RecentlyViewedGridView`, `SimilarListingsView`) and the rebuilt `System/*` stories; Task 668
+owns the `SimpleGrid` migration and the 1440 rebind. The harness comments attribute each added row to its own
+task; the two scopes are not blended.
+
+**The `MantineCardGrid.tsx` deletion passes the clause-9 downstream audit.** Reviewer grep across `src/`,
+`scripts/`, `.storybook/` and current `docs/` returns **zero live references**; the only survivors are inside
+`docs/chat-gpt-reports/rules-backup-2026-07-17/`, an explicitly-named historical snapshot. The commit also swept
+`component-catalog.md`, `component-coverage-matrix.md`, `component-risk-register.md`,
+`mantine-responsive-design-system.md`, `responsive-screenshot-matrix.md`, `responsive-storybook-inventory.md`,
+`storybook-governance.md`, `patterns/index.ts`, `mantine-migration-scope.json` and
+`tailwind-entropy.allowlist.json`. The `theme.ts` edit is comment-only ("4 consumers" → "3 consumers"). This is
+the consumer sweep the clause asks for, not a bare delete.
+
+**The best work here is the defect revision 7 caught.** Mantine `Group` defaults `gap="md"` = 16px where the prior
+`div.flex` had `column-gap: normal` = 0px, so the header row's claimed PRESERVE would in fact have shifted the
+layout. Revision 6 asserted preservation **without measuring**; review caught it; revision 7 built a synthetic
+`gap:0` geometry harness (12/12 cells, 0 escalations) that supersedes the unmeasured claim. The follow-up commit
+`1428bfee2` then added an assertion that the probe *itself* took effect — an anti-no-op check on the measuring
+instrument. That is a level of self-verification most tasks here do not reach.
+
+**Steps are declared precisely and are owner-approved** (kickoff §1, 2026-07-26 — same decision family as Task
+669's D1): Featured 1→2@640→3@1280→**4@1440** (was 1536), Latest 1→2@768→**3@1440** (was 1536); spacing 16px/12px
+from `theme.spacing.md/sm`. The 1440–1535px band intentionally differs from the pre-change render.
+
+**Findings.**
+
+- **F1 `P3` — `scripts/` accumulates 13 task-numbered QA probes that are wired nowhere, and they are currently
+  load-bearing on the CSS bundle.** Neither `package.json` nor `.github/workflows/` references any of
+  `task319/320/419/420/603/605/606/608/612/658/668×2/670`. `task668-qa-grid-1440.mjs` (385 lines) and
+  `task668-qa-header-geometry.mjs` (367) are 752 lines that look like a gate and never run.
+  **Do not mass-delete them.** `src/app/globals.css` excludes only `docs/` and `tasks/` from Tailwind's source
+  scan — `scripts/` is still scanned. The reviewer measured the consequence: **21 utility classes are emitted into
+  the shipped CSS bundle whose only source occurrence is under `scripts/`** — `py-7/9/10/11/13/14/15`,
+  `max-w-[1800px]`, `h-[76px]`, `z-[100]`, `w-[100%]`, `max-w-screen-2xl`, `rounded-b-2xl`, `text-clip`,
+  `text-green-500`, `text-[20px]`, `duration-[1000ms]`, and `bg-black` (the very utility Task 693's planted control
+  had to chase through `scripts/governance/`, its M5 defect). Deleting the probes today would silently change the
+  production CSS.
+  **Owner-directed sequencing, 2026-07-31:** (1) land the reserved **Task 696** (`@source not "../../scripts"`) —
+  which is not cosmetic, it removes 21 dead utilities from production CSS; (2) consolidate the genuinely permanent
+  invariants — Featured/Latest column counts at 1440, the 16/12px gaps, and the header geometry — into **one
+  neutrally-named npm/CI gate** (`task420-qa-grid-step.mjs` already covers part of the column logic and is also
+  unwired); (3) only then delete the one-off probes. Task 670's probe either becomes a gate or goes with them.
+  **Additional condition for Task 696, found during this review:** `scripts/__tests__/` is scanned too, so a gate
+  file that names a utility literally (e.g. `bg-overlay/60` rather than `bg-overlay*`) becomes a synthetic consumer
+  of it and would mask exactly the disappearance Task 700 is meant to detect. The new
+  `overlay-dual-declaration.test.ts` is clear today (its prose uses `*` wildcards, and it contributes none of the
+  21), but the hazard must be stated in 696.
+- **F2 `NOTE` — the kickoff needed seven revisions.** It converged, and the result is high quality, but seven
+  iterations signals the initial task design was under-specified. Revision 6's unmeasured PRESERVE claim was the
+  most expensive of those cycles.
+
+**Requirement coverage.** All requirements `VERIFIED`: AC1/AC2 prove the 1439/1440 and 1535/1536 boundaries
+exactly, AC3 the columns and gaps, AC4 the loading state; the empty branch is byte-unchanged by targeted diff. The
+`Patterns/Mantine/HomepageListingGrids/Default` story enrolled here is the same story the reviewer independently
+measured as 16/16 byte-identical during the Task 699 review. **Verdict: `APPROVED WITH NOTES`.** No code revision.

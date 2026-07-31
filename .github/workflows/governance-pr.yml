@@ -147,6 +147,12 @@ jobs:
       - name: Build Storybook (runs check:stories pre-gate)
         run: npm run build-storybook
 
+      - name: Homepage grid invariants gate (column steps, gaps, header geometry)
+        run: npm run check:homepage-grid
+
+      - name: Homepage grid invariants gate self-test (verifies gate detects violations — CI-safe)
+        run: npm run check:homepage-grid:verify
+
       - name: Rendered-proof gate (Task 529 — Mantine/Primitives/* enforced, auto-discovered)
         # --mantine-only: blocks CI specifically on the Mantine/Primitives/* gate this task adds.
         # Deliberately does NOT also run the pre-existing ASSERT_STORIES/geometry-only phases here —

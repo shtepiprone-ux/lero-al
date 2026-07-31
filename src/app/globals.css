@@ -10,6 +10,19 @@
    excluding them drops no real utility. */
 @source not "../../docs";
 @source not "../../tasks";
+/* Exclude scripts/ from Tailwind's automatic content detection (Task 696).
+   Regex literals, comments, governance baselines, and allowlist JSON inside
+   build/QA tooling contain Tailwind class-name-shaped strings that are never
+   rendered, so the v4 scanner was extracting them as real utility candidates
+   and shipping them in production CSS (initial estimate: 21; verified: 35
+   removed / 0 added, ratified in the Task 696 review — e.g. bg-black, the
+   py-* gap set, text-green-500, sm:rounded-tr-2xl, the z-[N]/text-[Npx]
+   doc-placeholder set). This also closes a hazard found reviewing Task
+   692: scripts/__tests__/ is scanned too, so a gate test that names a utility
+   literally (not via a wildcard) could keep it alive in the bundle after its
+   last real consumer is gone, masking the exact disappearance Task 700's
+   @theme-dependency gate must detect. */
+@source not "../../scripts";
 
 @custom-variant dark (&:is(.dark *));
 

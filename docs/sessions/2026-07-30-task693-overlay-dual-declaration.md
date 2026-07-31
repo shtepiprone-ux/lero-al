@@ -321,3 +321,45 @@ No A4-listed consumer file, and none of I5.2's 5 planted files, appear here.
   flag these two stories.
 - **What is fully resolved, not in question:** R1–R7, R9, R10 — including the objective proof (R5)
   that blocked both prior attempts. D21's widened plant is correct and works exactly as designed.
+
+---
+
+## 12. Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED WITH NOTES`
+
+**R8's ratification question is answered: ratified, and generalized.** The owner ratified the bound as a standing
+rule on 2026-07-31 — **D26**, recorded in `docs/storybook-governance.md` §14.11, which **supersedes D17's
+`≤ 1/255`**. This session's 52 cells qualify: the reviewer re-verified all four D26 conditions — full attribution
+(§4's computed-style capture shows 0 differing properties), 0 FAIL / 0 verdict changes (§4), identical assertion
+payloads, and a same-tree stability control (`09-26` vs `08-53`, zero code diff). D26 is explicitly **not** a
+general exemption for visual changes, and **not** a ceiling on the separate documented-noise-set path.
+
+**The mechanism was re-verified in the shipped CSS, not accepted from this report.** From the production build at
+`.next/static/css/8116c739843b9305.css`: `--overlay:oklch(0% 0 0)` is emitted from `:root`,
+`--color-overlay:var(--overlay)` survives from `@theme`, and every overlay utility is emitted **twice** —
+`.bg-overlay\/60{background-color:#0009}` (the composited static tier this task restored) followed by
+`.bg-overlay\/60{background-color:color-mix(in oklab,var(--overlay) 60%,transparent)}`. Both halves of R1/R2's
+claim hold. The two declaration pairs are currently byte-identical (md5 `c4b000f2c892a11c54e96c554dc7d7b5`).
+
+**Findings — none blocking.**
+
+- **F1 `P2` — the dual declaration has no gate.** Both comments promise "Task 692 will gate their sync", but 692
+  did not exist; nor did 694/695/696. The only protection was comment prose, while Task 691 — the heaviest
+  consumer of `bg-overlay/*` — was queued directly behind it. **Closed by this review:** Task 692 filed
+  2026-07-31 (`tasks/kickoff_prompt_Task_692_Overlay_Dual_Declaration_Sync_Gate.md`, Q4), with the general
+  `@theme`-dependency half split out and reserved as Task 700.
+- **F2 `P3` — unresolved arithmetic left in the record.** §4 reads: *"Combobox overlap ×4, PopularLocationsView
+  LongCityName ellipsis ×12, Tabs offscreen ×2 — wait, actually 4+12+2=18, plus verify count"*. The executor
+  noticed the mismatch and wrote it into the completion report instead of closing it. **Correct composition,
+  verified by the reviewer against the persisted manifest: Combobox 4 + `PopularLocationsView/Long City Name`
+  **16** + Tabs 2 = 22.** The figure is 16, not 12. The comparator itself passed correctly; only the prose
+  description of the ambiguous set was wrong.
+- **F3 `P3` — the `Files Changed` table contradicts the real diff.** §8 marks
+  `src/modules/locations/components/PopularLocationsView.module.css` as **"Unchanged"**, while §9's own
+  `git status` and commit `9caae02aa` both show it modified (+2/−2 — the `--color-black` → `--overlay` scrim
+  swap carried forward from blocked Task 690). The intended meaning was "unchanged since attempt 1", but
+  agent-contract cl. 10 requires the table to match the real diff against `HEAD`. **Corrected here: that file is
+  MODIFIED by this task's commit.**
+
+**Requirement coverage.** R1–R7, R9, R10 `VERIFIED`. R8 `VERIFIED` — its noted deviation is closed by D26.
+**Verdict: `APPROVED WITH NOTES`. Task 691 is unblocked** (recommend landing 692's gate first, since 691 is its
+heaviest consumer).

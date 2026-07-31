@@ -133,3 +133,48 @@ Identical before vs. after, all 4 locales, all 5 widths (full JSON captures were
 ## 11. Backlog update
 
 Added a single concise bullet to `docs/backlog.md` → "Last Session (2026-07-23)" (see diff). Backlog is **76 lines** (`grep -c "" docs/backlog.md`) — under the 80-line cap, no `BACKLOG LIMIT BREACH`.
+
+---
+
+## 12. Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED WITH NOTES`
+
+Reviewed against commit `9ddd532a9` and the current tree.
+
+**Value preservation verified arithmetically.** `py-12 md:py-16 2xl:py-20` → `--home-section-py-base: 3rem` (48px),
+`--home-section-py-md: 4rem` (64px), `--home-section-py-lg: 5rem` (80px). Exact match; nothing was re-derived.
+
+**The strongest artifact here is the route capture, not Storybook.** The `screenshots:assert` of this era reported
+only "All hard assertions PASSED" with no md5 comparator (the D10/D17 practice postdates this task). The live
+before/after computed-style capture on the real route — **0/700 diffs** — is the substantive proof, and it is the
+right comparator for a "nothing changed" claim. Tasks 669 and 699 both reused this method.
+
+**Unusual care, worth recording.** The CSS module reproduces the Tailwind utilities' **compiled output**, verified
+against the built bundle, not their visual appearance: Tailwind v4 emits a bare alpha modifier as
+`color-mix(in oklab, …)` and `bg-gradient-to-br` as `to bottom right in oklab`. The first capture pass then caught
+that `agentCta`'s `background-image` differed only in its *serialized* stop positions (Tailwind emits `0px`/`100%`;
+a bare two-stop gradient omits them, though both paint identically). Explicit `0%`/`100%` stops were added so the
+`getComputedStyle` string is byte-identical too, not just the pixels.
+
+**A stale-comment risk was checked and did not materialise.** `--home-section-py-lg` was introduced with a 1536px
+trigger; Task 669 rebound it to Mantine `xxl` (1440px). `globals.css:295`/`:299` were correctly updated to
+`≥1440px (xxl)` with the owner-decision reference. Task 669 cleaned up after itself.
+
+**Findings.**
+
+- **F1 `P3` — the strongest matrix artifact is one tweak stale.** The full `screenshots:assert -- --mantine-only`
+  run (§4.8) was captured *before* the §5.1 gradient-stop-position tweak; only a `--fast` subset was re-run after.
+  The full matrix therefore never saw the shipped CSS. The log is honest about this and argues the tweak is inert
+  both analytically and via a post-tweak live 0-diff capture — the argument holds, but the ordering does not. The
+  "final artifact is captured last" rule exists for exactly this case.
+- **F2 `P3` — a canonical Mantine pattern imports a Tailwind helper.** `MantineHomeSection.tsx` imports `cn()` from
+  `@/lib/utils`, which is `twMerge(clsx(...))` — tailwind-merge inside a component whose purpose is de-Tailwinding.
+  Harmless in function (it only joins `styles.band`, the variant class and an incoming `className`), but it is a
+  residual Tailwind dependency in the canonical layer. A plain `[a, b, c].filter(Boolean).join(' ')` covers this
+  usage completely; natural cleanup point is the de-Tailwind endgame (Tasks 694/695).
+- **F3 `NOTE`** — the component correctly carries no `'use client'`, which is what lets the server `page.tsx` consume
+  it. Two live consumers today: `src/app/[locale]/page.tsx` and `src/modules/locations/components/PopularLocationsView.tsx`.
+  Enrolment in `mantine-migration-scope.json` and the `Patterns/Mantine/HomeSection` story are both present.
+
+**Requirement coverage.** R1–R10 `VERIFIED`; no open requirement. `tsc` 0, `build` exit 0 (40/40), `check:i18n`
+2215×4 with the five new Storybook keys added identically across sq/en/uk/it. **Verdict: `APPROVED WITH NOTES`.**
+Commit `9ddd532a9` needs no code revision.

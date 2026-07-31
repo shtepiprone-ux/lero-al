@@ -1559,6 +1559,63 @@ There is no anchor left to "revisit" as real time passes — that caveat is reti
 
 ---
 
+### §14.11 Sub-perceptual rasterization delta — standing comparator (D26, owner ratification 2026-07-31)
+
+**Status.** Owner decision, 2026-07-31, ratifying the ad-hoc D17 (Task 688) and D22-class (Task 693) reliefs into one
+standing rule and **superseding D17's `≤ 1/255` bound**. Filed during the Task 699 review, which needed the same
+relief for a third time.
+
+**The rule.** An md5-changed cell may be attributed as sub-perceptual rasterization noise — and therefore not treated
+as a rendered change — when its **max channel delta is `≤ 2/255`** AND all four of the following hold:
+
+1. the delta is **fully attributed** as rasterization/antialiasing noise, not merely bounded (a named mechanism plus
+   evidence: no import path from the story to any file in the diff, a positive control that resolves, or a prior
+   zero-code-change observation of the same story);
+2. the run reports **0 FAIL and 0 verdict changes** across the full enrolled matrix;
+3. the cell's **assertion payload is identical** to baseline after the required Mantine-ID normalization below;
+   if the task captures computed styles for the affected surface, those values are identical too;
+4. a **same-tree stability control** exists for the run — a second capture of the identical worktree, so the noise
+   floor is measured on this tree, not quoted from an older task.
+
+All four are conjunctive. A cell meeting the delta bound but missing any condition is a **stop and report**, not a
+tolerated cell.
+
+**Explicit non-scope — this is not a general exemption for visual changes.** `≤ 2/255` never licenses an intended or
+unexplained *visual* difference. It is an attribution path for noise in a run whose claim is "nothing rendered
+differently". A task that changes a visual value proves that change with the evidence its QA profile requires; it does
+not reach for this clause. Nor may a task widen the bound by citing this section: `2/255` is the ceiling, and a delta
+above it needs its own owner decision, as D17 and D22 each did.
+
+**Normalization required before comparing assertion payloads (condition 3).** Random Mantine element IDs appear inside
+`visualIntegrity.ambiguous[].selector` strings and rotate every run. Measured on the Task 699 pair
+(`2026-07-31T10-33` → `11-57`): **6 of 1184 cells** — 4 `Combobox/Default` + 2 `Tabs/Default`, all
+**md5-identical** — differ in payload for that reason alone, with `failReason`, `label` and geometry
+(`right=362, viewportWidth=320`) unchanged. Strip Mantine-generated IDs before the comparison, per the existing
+§14.9.15 `stableSelector()` normalization precedent; an unnormalized payload diff makes condition 3 unsatisfiable on any run containing those
+stories.
+
+**This clause does not replace, and does not cap, the documented-noise-set path.** The empirically measured
+harness-noise set (§8.1 of the Task 698 session log — `HeroSearch/Fallback`, `EmptyLoadingErrorState`,
+`HomepageListingGrids/Loading`, `LocaleSwitcher`, `Button`, `Skeleton`, `MobileBottomNavView`, `PopularLocationsView`,
+`ListingDetailPattern`, `ListingGalleryPattern`, `FilterControls`, `UserMenu`) remains a **separate and independent**
+attribution path, established by zero-code-change controls rather than by delta magnitude. Those stories routinely
+move far above `2/255` with no code change at all: measured on the Task 699 run, **45 of the 91** md5-changed cells
+exceed `2/255`, including `EmptyLoadingErrorState/Default` at **179**, `Button/Default` at **158** and
+`FilterControls/Default` at **226** — the last of which is a ~1px whole-panel layout shift from a font-metrics race,
+structurally proven independent of that task's diff. Reading `≤ 2/255` as a universal ceiling on every changed cell
+would therefore retroactively fail Tasks 693, 698 and 699. It is a bound on *this* attribution path only.
+
+**Required record.** A task invoking this clause states, per tolerated cell: the story, locale, viewport, measured max
+channel delta, differing-pixel count, the attribution mechanism, and the same-tree control it was measured against.
+"Sub-perceptual" as a bare adjective is not evidence.
+
+**Precedents folded in.** D17 (Task 688 — comparator re-scoped to 0-verdict-change + `≤1/255`), D22-class (Task 693 —
+52 cells at max delta 2), Task 699 (2 `PopularLocationsView` cells + 1 `FiltersPanelShell` cell at max delta 2, with
+assertion payloads verified identical across all 91 changed cells and a same-tree control at
+`.screenshots/rendered-assert/2026-07-31T12-29/`).
+
+---
+
 ## §15 — Story Coverage Gate (Task 398, 2026-06-06; rewritten Task Q0R, 2026-07-18)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only run over canonical Mantine stories as their sole mandatory CI scope (Task Q0R — see §14.9 for the rendered-proof gate this criterion originated from). This gate ensures that a component enrolled in the Mantine migration actually has a canonical Mantine story proving it, so the migration can't silently regress (a component moved into scope, then its story quietly stops importing it) without CI catching it.

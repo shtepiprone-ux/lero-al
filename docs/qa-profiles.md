@@ -35,6 +35,17 @@ Older references to 7-width, 9-width, or 12-width sets are historical unless the
 Some legacy proof commands capture an additional ultrawide viewport (15 cells instead of this 14-width canon).
 That is an acceptable superset, not a competing canonical matrix.
 
+**Per-story viewport sets are not uniform.** The `--mantine-only` rendered matrix assigns viewports per story, so a
+story enrolled at 4 viewports (e.g. `HowItWorksSteps/Default`, `HomepageListingGrids/Default` — mobile-320/375/390 +
+desktop-1024) proves nothing above 1024px. Before claiming a breakpoint tier is covered, read the tier's widths out of
+the manifest for that specific story; do not infer coverage from the union of all viewports in the run. See
+`docs/storybook-governance.md` §14.9.17 for the per-story mechanism.
+
+**Comparing a rendered run against a baseline.** When a task's claim is that nothing rendered differently, the
+comparator and the tolerance for md5-changed cells are governed by `docs/storybook-governance.md` §14.11 (D26,
+sub-perceptual rasterization delta) together with the empirically measured harness-noise set. Do not invent a
+per-task pixel tolerance.
+
 ## Negative-flow applicability
 
 Kickoffs must include positive and negative flows, but not every possible branch applies to every task.

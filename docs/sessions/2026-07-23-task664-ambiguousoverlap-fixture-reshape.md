@@ -170,3 +170,27 @@ matches the Task 663 baseline's pre-existing/unrelated set). **AC2 and AC4 confi
 - `scripts/geometry-integrity.mjs` — byte-for-byte unchanged (confirmed via `git diff`).
 - No other planted fixture's markup touched.
 - No product component/route/style/i18n change.
+
+---
+
+## Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED`
+
+Reviewed against commit `7c94cedbb`.
+
+**The entire code change is one number: `left: 0` → `left: 60`** on the absolutely-positioned element in the
+`AmbiguousOverlap` planted fixture, plus three lines of harness comment. That is the correct size for what it does.
+
+**Why this task deserved to exist.** The fixture had drifted into no longer exercising the branch it was named
+for: with the element sitting exactly over its own trigger, `isAbsoluteOverOwnTrigger` short-circuited first, so
+the R1 path the fixture was supposed to guard was never reached. The planted control still *passed*, and would
+have kept passing forever, while silently testing nothing. Offsetting it to `left: 60` restores a partial overlap
+so the intended branch runs again.
+
+**This is the discipline the rest of the queue should copy.** A planted violation is only worth its maintenance
+cost if someone periodically verifies it still exercises the branch it claims to. Task 693 needed three attempts
+before its control was valid; Task 669 shipped new gate cells with no control at all. Task 664 exists purely
+because someone checked an *existing* control was still doing its job — the rarest of the three behaviours.
+
+**Findings — none.**
+
+**Requirement coverage.** All requirements `VERIFIED`. **Verdict: `APPROVED`.** No code revision.

@@ -280,3 +280,32 @@ session) — flagging for orchestrator consolidation, not fixing here (out of th
   should happen now or wait for 665's closure.
 - No mutating git was run. This task does not request a commit for `scripts/check-mojibake.mjs`/backlog/session-log
   changes — that is the orchestrator's owner-run handoff per `docs/orchestrator-procedures.md`.
+
+---
+
+## Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED WITH NOTES`
+
+Reviewed against commit `51776f697`.
+
+**The fix is correct and does not weaken the gate.** `check:mojibake` previously fed `gitTrackedFiles()` straight
+into the scanner, so a tracked-but-deleted path (a staged deletion still pending commit) crashed the run. The
+change partitions candidates through `existsSync` into `files` and `missing`, scans the former, and **prints every
+skipped path by name** before continuing. Nothing is skipped silently, and no existing file escapes the scan —
+the gate's strength on real content is unchanged.
+
+**Findings.**
+
+- **F1 `P3` — a gate was changed with no regression test.** `scripts/__tests__/` holds sibling tests for
+  `check-design-tokens`, `check-i18n-parity`, `check-stories` and the Task 698 preview-clock anchor, but there is
+  **no** `check-mojibake` test. Nothing prevents this branch from regressing — including back to the original
+  crash. Since `npm test` already runs in CI (`governance-pr.yml:40`), a test asserting "a tracked-but-deleted
+  path is reported and skipped, and a real file is still scanned" would cost a few lines and match the pattern
+  Task 692 later established. Worth folding into the next gate-hygiene slice rather than a task of its own.
+- **F2 `P3` — the skip message asserts a cause it has not verified.** The output reads "staged deletion pending,
+  nothing to scan", but `existsSync` returning false only proves the path is absent. A file missing for another
+  reason — an interrupted checkout, a permissions or symlink failure, a case-sensitivity mismatch on a
+  cross-platform checkout — would be reported under the same confident explanation and skipped. The skip itself is
+  right; the wording should either drop the asserted cause or confirm it from `git status`.
+
+**Requirement coverage.** All requirements `VERIFIED`. **Verdict: `APPROVED WITH NOTES`.** No code revision;
+both findings are hygiene items for a later gate slice.

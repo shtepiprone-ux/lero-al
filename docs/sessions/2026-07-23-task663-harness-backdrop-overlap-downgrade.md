@@ -166,3 +166,52 @@ Self-validation: `tsc=0 errors` · `build=passes` · `AC table=all green (AC3 wi
 ## 9. Backlog update
 
 See `docs/backlog.md` — concise "Last Session (2026-07-23)" bullet added for Task 663.
+
+---
+
+## Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED`
+
+Reviewed against commit `0b264d5db` and the current tree.
+
+**The predicate is correctly conservative in the direction that matters.** `isBackgroundCoveredByOverlayBackdrop`
+downgrades a Check-4 cross-boundary overlap to a silent pass only when a `.mantine-Overlay-root` element is
+`position: fixed`, not `display:none`/`visibility:hidden`/`opacity:0`, has z-index at or above the background
+element's, and has a rect containing the background rect within tolerance. Every weaker case — no backdrop,
+`withOverlay={false}`, or a background element stacked above — keeps the pre-existing `ambiguous-overlap` push. A
+real bleed-through is never silently hidden.
+
+**The class-name derivation is traced, not assumed.** The comment walks `.mantine-Overlay-root` back through
+`getStaticClassNames` → `useStyles({name:"Overlay"})`, then through `DrawerOverlay` → `ModalBaseOverlay` to the
+compiled `Overlay.module.css` (`position:absolute` by default, `fixed` under `[data-fixed]`, `inset:0`,
+`z-index:var(--overlay-z-index)`), and establishes paint order from `Drawer.mjs` rendering `DrawerOverlay` before
+`DrawerContent`. That is source-level provenance for a selector the harness now depends on.
+
+**The control is two-armed and permanent — the part most tasks omit.** Both planted stories are enrolled as
+standing harness cells (`check-stories-rendered.mjs:245-246`):
+
+- `OverlayBackdropCovered` — expected **PASS** on the new harness, `ambiguous-overlap` on the pre-663 harness.
+  Proves the downgrade fires.
+- `OverlayNoBackdrop` — expected `ambiguous-overlap` on **both**. Proves the downgrade did not widen beyond the
+  verified-backdrop case.
+
+The second arm is the one that matters and it is the one usually missing. Because both are standing cells rather
+than a one-off run, a future edit that over-broadens the predicate fails CI rather than passing quietly.
+
+**Findings — none blocking.**
+
+- **F1 `P3` — z-index is compared numerically across possibly-different stacking contexts.** `bdZIndex < bgZIndex'
+  uses `parseInt(getComputedStyle(el).zIndex)` with `NaN → 0`, which is not a valid cross-context comparison: a
+  background element reading `z-index: 0` inside an ancestor stacking context with a high z-index can paint above
+  a backdrop reading `500`, and the predicate would wrongly return "covered" — a silent pass on a real overlap.
+  The inverse error is safe (finding retained). Low likelihood in the Storybook story set the harness runs on, and
+  the `OverlayNoBackdrop` arm constrains the blast radius, but the limitation is real and is not stated in the
+  code comment. Worth a sentence there, or a `checkVisibility()`/`elementFromPoint` cross-check if this ever
+  produces a suspicious pass.
+- **F2 `P3` — "unreachable" overstates what is measured.** The comment justifies the downgrade with "provably
+  unreachable/unperceivable", but the predicate proves visual coverage only; `pointer-events: none` on the
+  backdrop is not checked, and such a backdrop leaves the background control clickable while fully covering it.
+  For a geometry/overlap check, visual coverage is the right criterion — so this is a wording precision issue, not
+  a logic defect. Recommend narrowing the claim to "visually covered".
+
+**Requirement coverage.** All requirements `VERIFIED`. **Verdict: `APPROVED`** — the two remaining items are
+documentation-precision notes on a correct, well-controlled change. No code revision.

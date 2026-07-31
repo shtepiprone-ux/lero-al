@@ -196,3 +196,53 @@ No artifact needed a value without design-system provenance; not `BLOCKED — CA
 Concise entry added to `docs/backlog.md` → "Last Session (2026-07-28)" (1 line, matches the file's existing
 density convention). OQ3 resolved in the "Open — needs action" section; numbering line updated (669 moved from
 "reserved" to "Awaiting review"). Final line count: **80** — at, not over, the limit. No `BACKLOG LIMIT BREACH`.
+
+---
+
+## Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED WITH NOTES`
+
+Reviewed against commit `222498d41` and the current tree. This is the strongest-instrumented task in the review
+queue; the one gap is named below.
+
+**D1 is a real owner decision, not a self-authorization.** §3.1 of the kickoff carries the owner's words verbatim,
+dated 2026-07-28, plus a scope table fixing both what replaces the 1536 step (re-bind to `xxl` = 1440px, rhythm
+stays 48/64/80) and where it is done. It also explicitly withholds authority over every other 1536px rule in the
+repository. That meets the evidence bar for an owner exception.
+
+**The measurement is falsifiable, and it lands.** R7: `h(1200)=258px`, `h(1440)=290px`, `h(1536)=290px`. The step
+is 64px→80px, i.e. +16px per side = **+32px of height — and Δ is exactly 32**. `h(1536)=h(1440)` is the negative
+half: it proves no residual 1536 rule survives. R2 backs this structurally with a live SSR capture of the emitted
+rule showing `@media(min-width: 90em)` (= 1440px) on all five homepage `<section>` instances.
+
+**The viewport design is the right instrument, and it is the model the rest of the queue should follow.** The task
+recognised that its own change lives at ≥1440px while `MANTINE_VIEWPORTS` tops out at 1024px, and added a surgical
+boundary *triple* to `MANTINE_STORY_EXTRA_VIEWPORTS` — 1200 below the step (must still read 64px), 1440 at the step
+(must read 80px), 1536 above the retired step (must read 80px). The 1536 cell exists purely as a negative control.
+Most tasks would have added one wide viewport and called it proof.
+
+**Reviewer cross-checks against independent data.** The resulting cell counts (`[320,375,390,1024,1200,1440,1536]` ×
+4 locales = 28) match exactly what the reviewer measured from the persisted manifests during the Task 699 review
+(`PopularLocationsView/Default` 28, `Long City Name` 28). The `Long City Name` truncation ambiguity this log
+attributes to the story's own intentional stress test — 4 locales × 4 standing widths, never at the 3 new wide
+widths — is 16 cells, which is exactly the ambiguous count the reviewer independently measured for that story.
+Two independent corroborations of this log's numbers.
+
+**Preservation below 1440 is proven structurally rather than by before/after pixels, and that is adequate here.**
+The 1200/1440/1536 cells are new, so no prior baseline exists for them; the 1025–1439 band rests on the emitted
+rule read from live SSR (`48em` → py-md until `90em`) plus `h(1200)=258px`. All standing ≤1024 cells for the four
+untouched `page.tsx` consumers stayed byte-identical. `check:design-tokens` 44 before / 44 after, 0 new.
+
+**Finding.**
+
+- **F1 `P3` — a CI gate was extended without a planted-violation control.** This task adds three cells to
+  `scripts/check-stories-rendered.mjs`, a hard-blocking gate, and justifies them with the explicit claim that "a
+  future edit deleting the third step entirely would pass every standing gate". That claim was never demonstrated:
+  no grep in this session log finds a plant, revert, or negative-control run for the new cells. The R7 measurement
+  makes it near-certain they would bite — a 32px height delta is orders of magnitude above any rasterization noise
+  floor — but agent-contract cl. 13 asks for a planted violation when a gate is claimed, and inference is not that.
+  Compare Task 693 (planted, and it took three attempts to get the control right) and Task 692 (four plants).
+  Not blocking: the gate cells are additive, correct, and independently corroborated by the manifest counts.
+
+**Requirement coverage.** R1–R9 `VERIFIED`. **Verdict: `APPROVED WITH NOTES`.** Commit `222498d41` needs no code
+revision. Note for future rhythm work: `.container-wide` keeps its own 1536px side-padding step (`globals.css`),
+deliberately out of D1's scope — the repository is intentionally not 1536-free.

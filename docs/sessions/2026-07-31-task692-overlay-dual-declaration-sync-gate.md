@@ -509,3 +509,49 @@ I0 `git status --porcelain` was **empty** (owner had committed Task 699 before t
 - This gate asserts the **source-level** invariant (the two `globals.css` declarations), not the **built CSS**. It would not catch a Tailwind version upgrade that changes how the static-fallback tier is composited, or any other mechanism that stops relying on `@theme` static resolution while leaving the source declaration pair intact. §3.2's shipped-bundle evidence is the *motivation*; this test does not re-derive it on every run (A4 — building inside a test is out of scope and would couple `npm test` to a prior `npm run build`).
 - It covers **only** the `--overlay`/`--overlay-foreground`/`--color-overlay*` pair. The general class of "a `.module.css` or Tailwind utility depends on an `@theme` variable whose last utility consumer can disappear" is **Task 700**, explicitly out of scope here (§8).
 - **Task 695** will legitimately delete the `@theme` copy of `--overlay`/`--overlay-foreground` once the last `bg-overlay*`/`text-overlay-foreground*` utility is migrated away. This gate's first `it()` will then fail permanently (0 declarations instead of 1) until Task 695 updates it — this is intentional and documented in the test's own header comment, not a defect to fix now.
+
+---
+
+## 10. Orchestrator review outcome (Opus, 2026-07-31) — `APPROVED WITH NOTES`
+
+**All four planted controls independently reproduced.** vitest does not run in the reviewer's sandbox (rollup ships a
+Windows-native binary), so the reviewer extracted `extractBlock`, `extractSingleDeclarationValue` and
+`countDeclarations` verbatim from the test file and exercised them against in-memory mutations of `globals.css` —
+no file was touched. Results match this log exactly:
+
+| Control | Result | Diagnostic |
+|---|---|---|
+| (a) value changed in the `:root` copy only | **FAIL** | `--overlay diverged: @theme='oklch(0 0 0)' vs :root='oklch(0.1 0 0)'` |
+| (b) `:root` pair deleted | **FAIL** | `expected exactly one "--overlay" inside :root, found 0` |
+| (c) `@theme` pair deleted | **FAIL** | `expected exactly one "--overlay" inside @theme inline, found 0` |
+| (d) `--color-overlay` leaked into `:root` | **FAIL** | `--color-overlay found 1x inside :root` |
+| comment reworded | **PASS** | not brittle (AC2) |
+| +40 lines prepended | **PASS** | brace-matching, not line numbers (A2) |
+
+`globals.css` md5 `1f7690d0de50ed658fde83478a9c59f2` — identical to what Task 693 left, so it survived all four
+plant/restore cycles (R7). `git status` showed no `package.json` / `vitest.config.ts` / `.github/` entry (R6).
+`check:design-tokens` 28/0/0 unchanged; `check:file-integrity` 3/3. A1 and A2 — the two defects the kickoff
+predicted — were both avoided.
+
+**Findings.**
+
+- **F1 `P3` — brace counting does not skip comments; two new brittleness controls fail.** The reviewer ran two
+  controls that were not in AC2: an unrelated comment gaining an **unbalanced `{`** yields
+  `FAIL: @theme inline never closes`, and a comment anywhere containing the literal **`:root {`** yields
+  `FAIL: :root never closes`. Both are false positives. `globals.css` already carries at least eight brace-bearing
+  comments (`font-{name}`, `text-theme-{xs,sm,xl}`, `text-title-{xs..2xl}`, `shadow-{xs,sm,md,lg,xl}`,
+  `duration-{name}`, `ease-{name}`) that pass today only because each pair happens to be balanced, and the file
+  documents `:root` in prose at four places. Severity is `P3` because the gate is **fail-closed** — both cases are
+  loud failures, never a silent pass, so no real regression can hide behind them. Note also that the unbalanced-`}`
+  control passed only by position (the brace sits *after* lines 63–64, so the early close still captured the pair);
+  placed earlier it would fail too. Recommended hardening (~4 lines): strip `/* … */` before brace counting and
+  anchor `:root {` to line start. Natural home is **Task 695**, which must update this gate anyway.
+- **F2 `NOTE` — orchestrator defect, caught by the executor.** The kickoff's I4 offered
+  `git checkout -- src/app/globals.css` as a restore method. `git checkout` is on `CLAUDE.md`'s owner-only mutating
+  list; Sonnet correctly refused, the Bash tool blocked the attempt, and the executor fell back to the task's own
+  stated alternative (exact-text revert with md5 verification after every restore), which meets the same
+  evidentiary bar. The kickoff should not have proposed a mutating git command at all. Task-design defect, not an
+  execution defect.
+
+**Requirement coverage.** R1–R10 `VERIFIED`; R4 independently reproduced 4/4. **Verdict: `APPROVED WITH NOTES`.**
+Task 691's `bg-overlay/*` consumption is now gated.

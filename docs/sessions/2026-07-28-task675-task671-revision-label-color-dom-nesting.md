@@ -232,3 +232,52 @@ green · screenshots:assert(--mantine-only)=1094/1116 PASS/0 FAIL/22 pre-existin
 16/16+16/16 · label colour=#667085 (measured) · design-tokens=44/44 identical baseline, 0 in touched files ·
 i18n=2215×4 unchanged · file-integrity=PASS · mojibake=PASS · scope=clean (git status matches Task 671's 9
 paths + this session's 1 new session log + 1 newly-tracked-modified kickoff file) · integrity=PASS`
+
+---
+
+## Orchestrator review outcome (Opus, 2026-07-31) — Tasks 671 + 675 reviewed as one unit: `APPROVED WITH NOTES`
+
+Reviewed against commit `bdf0f69be` and the current tree, not against these reports.
+
+**The de-Tailwind is real, re-verified in the shipped source.** `grep` on the current tree returns **zero**
+`className` attributes and **zero** raw `<button|input|select|textarea>` in both `src/components/shared/FiltersPanel.tsx`
+and `src/design-system/mantine/patterns/MantineFilterSection.tsx`. Task 671's 27 raw elements + 32 Tailwind class
+values are gone. This is a genuine migration slice.
+
+**All three Task 675 corrections are present in code:** `c="gray.5"` with `tt="uppercase"`
+(`MantineFilterSection.tsx:42`), `component="span"` on the Drawer title (`FiltersPanel.tsx:98`, closing the
+`<p>`-in-`<p>` nesting), and the `isFirstVisible` → `withTopDivider` rename — 18 occurrences in `FiltersPanel`,
+**zero** stale `isFirstVisible` anywhere. The pattern's own prop stays `withDivider`; the names are consistent, not
+a mismatch.
+
+**Provenance is recorded, not invented.** The `gray.5` doc block carries owner decision **D4, 2026-07-28**, its
+clause 16a basis (no TailAdmin row exists for a 12px uppercase micro-heading), and the `tt="uppercase"` grep result
+(exactly one hit, so no precedent existed). Both planted-violation proofs are real: hardcoding `isFirstVisible` to
+`true` genuinely failed the two new divider assertions, and dropping `component="span"` genuinely failed the DOM-
+nesting test *and* reproduced the React warning on the mobile path. Both reverted to green. The new tests assert
+observable DOM behaviour including the zero/empty case (`contentReady === false` → header + footer, empty body, no
+orphan divider).
+
+**Findings.**
+
+- **F1 `P3` — R13 stays `NOT VERIFIABLE`, and the residual risk is real.** The stop condition ("if `gap="xs"` breaks
+  the 2-column grid at 320px in any locale, stop") was evaluated against raw English enum values, because the
+  Storybook fixture renders `usePropertyTypes()`'s `buildFallback()` rather than the real `messages/*.json` labels.
+  Whether the grid holds at 320px under the actual Albanian/Ukrainian labels is therefore still unmeasured. Task 679
+  closes the *cause* (the fixture), not the *risk*. This is the listings filter panel — a critical-flow surface.
+- **F2 `P2` — the 4-width harness limit is confirmed, and the downgrade was correct.** The reviewer read
+  `scripts/check-stories-rendered.mjs:392`: `MANTINE_VIEWPORTS` is exactly four widths (320/375/390/1024), and the
+  Task 573 per-story extras are explicitly "surgical, NOT global". The 14-width canon was never producible by this
+  harness, so Task 675's downgrade of R7/R8 to `PARTIALLY IMPLEMENTED`, with the owner's native 480/560/680/768 ×
+  sq/en/uk/it waiver and Task 678 reserved, is honest and correct. **Reviewer's own defect, recorded here:** the
+  Task 699 kickoff §3.5 (written 2026-07-31) asserted a nine-viewport matrix as if global — an error this task had
+  already identified and reserved on 2026-07-28. The orchestrator repeated a defect the project had already caught.
+- **F3 `NEEDS VERIFICATION` — not blocking.** `MantineFilterSection` is `'use client'` and is exported from the
+  `@/design-system/mantine/patterns` barrel, from which the **server** component `src/app/[locale]/page.tsx` imports
+  `MantineHomeSection`. The production build reports `/[locale]` at **618 kB** First Load JS against a 185 kB
+  baseline on most routes. Causation is not established — this may be Mantine core rather than barrel re-export —
+  but the figure warrants its own measurement before Task 691 adds more to that route.
+
+**Requirement coverage.** R1–R6, R9–R12 `VERIFIED`. R7/R8 `PARTIALLY VERIFIED` (owner waiver + Task 678).
+R13 `NOT VERIFIABLE` (Task 679). Every open item has a registered closure task, which is why the verdict is
+`APPROVED WITH NOTES` rather than `PARTIALLY VERIFIED`. Commit `bdf0f69be` needs no code revision.

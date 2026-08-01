@@ -46,6 +46,25 @@
     window.Date = FrozenDate;
   })();
 </script>
+<style>
+  /* Frozen Storybook preview motion, capture-only (Task 704 R4/R5, revised Task 705 — Task 704
+     review F1, 2026-08-01). Task 704's freeze was unconditional, which also froze the pulse for
+     every human visitor to Storybook, invisibly regressing the D27 feature on the one surface the
+     team reviews it on. Scoped here to `prefers-reduced-motion: reduce` — the same standard media
+     feature Task 704 already keyed the Skeleton's own accessibility rule to
+     (skeleton-chrome.css R6) — so it applies only when the capture harness emulates that condition
+     (scripts/check-stories-rendered.mjs, Task 705 R2) or a real OS/browser reduced-motion setting is
+     on, never to a default browser tab. Reach (`*, *::before, *::after`) intentionally unchanged
+     (Task 705 A2): narrowing it to Skeleton alone would leave every other animating story
+     non-deterministic under emulation. Scoped to this Storybook-only file, never loaded by the real
+     app (src/app/layout.tsx has no reference to it, verified at Task 704 I8). */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
 <!-- Fonts from Google Fonts CDN — mirrors src/app/layout.tsx font setup -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

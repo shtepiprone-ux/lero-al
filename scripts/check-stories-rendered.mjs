@@ -844,6 +844,13 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
   try {
     page = await browser.newPage();
 
+    // Task 705 R2 — every capture page emulates prefers-reduced-motion:reduce, matching the
+    // condition .storybook/preview-head.html's capture-only freeze is now keyed to (Task 705,
+    // Task 704 review F1). Without this, the preview no longer freezes animation/transition for a
+    // default-media Playwright page, and the rendered comparator's determinism proof (R3/R6) would
+    // flake on every animating story (Skeleton, Loader spinners, Modal/Drawer transitions).
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
     // ── Render-failure signal collectors (attached before goto) ────
     const pageErrors = [];
     const consoleErrors = [];

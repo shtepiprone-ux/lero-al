@@ -23,6 +23,8 @@
  *   I-B  Featured grid gap       16px (theme.spacing.md)          (task668-qa-grid-1440.mjs)
  *   I-B  Latest grid gap         12px (theme.spacing.sm)          (task668-qa-grid-1440.mjs)
  *   I-C  Featured header row     Group geometry == pre-migration flex row (task668-qa-header-geometry.mjs)
+ *   I-D  Featured/Latest loading skeleton count  3 / 4 grid direct children (task668-qa-grid-1440.mjs:77,
+ *        added Task 703 — F1 of the Task 701 review, ported into the existing gap-matrix pass, no new cells)
  *   supporting  no horizontal scroll (scrollWidth <= clientWidth + 2)     (task420-qa-grid-step.mjs)
  *   supporting  .container-wide content box <= 1408px at >=1536          (task420-qa-grid-step.mjs)
  *
@@ -36,8 +38,9 @@
  *   node scripts/check-homepage-grid.mjs --verify-gate    Self-test (CI-safe, no product-code
  *                                                         edits). Negative arm: every invariant
  *                                                         PASSes on the unmodified real tree.
- *                                                         Then, for each of the six invariants in
- *                                                         kickoff §I5, an in-page `page.evaluate`
+ *                                                         Then, for each of the seven invariants in
+ *                                                         kickoff §I5 (Task 701) / §3.4 (Task 703,
+ *                                                         I-D), an in-page `page.evaluate`
  *                                                         plant is applied, measured, asserted to
  *                                                         trip THAT invariant (and no other), and
  *                                                         restored in a `finally` block. A plant
@@ -101,6 +104,13 @@ const GAP_EXPECTED_COLS = {
   Latest:   { 320: 1, 640: 1, 768: 2, 1024: 2, 1280: 2, 1439: 2, 1440: 3, 1535: 3, 1536: 3, 1920: 3 },
 };
 const GAP_EXPECTED_PX = { Featured: 16, Latest: 12 };
+
+// ── I-D — transcribed verbatim from scripts/task668-qa-grid-1440.mjs:77 EXPECTED_SKELETON_COUNT.
+// Grid direct-children count on the loading branch (cards, not .mantine-Skeleton-root elements —
+// kickoff Task 703 A1). Live count read and confirmed 3/4 before this assertion existed (I2),
+// against FeaturedListingsView.tsx:59 / LatestListingsView.tsx:44. Checked inside the existing
+// gap-matrix pass (A2) — no new story matrix, no new cells. ──
+const GAP_EXPECTED_SKELETON_COUNT = { Featured: 3, Latest: 4 };
 
 const GAP_STORIES = [
   { id: 'system-featuredlistings--default', component: 'Featured', branch: 'populated' },
@@ -221,6 +231,14 @@ function evalGridCell({ locatorType, plant }) {
       else grid.style.removeProperty('column-gap');
       if (prevRow) grid.style.setProperty('row-gap', prevRow);
       else grid.style.removeProperty('row-gap');
+    };
+  } else if (plant && plant.type === 'removeChild') {
+    // I-D plant (Task 703) — remove the last skeleton card so childrenCount is wrong; restore by
+    // re-appending the SAME node (last child removed, so appendChild restores its original slot).
+    const removedNode = grid.lastElementChild;
+    if (removedNode) grid.removeChild(removedNode);
+    restore = () => {
+      if (removedNode) grid.appendChild(removedNode);
     };
   }
 
@@ -503,10 +521,13 @@ async function runGapMatrix(browser, baseUrl, { onlyStoryId, onlyWidths, onlyLoc
       for (const width of widths) {
         const expectedCols = GAP_EXPECTED_COLS[story.component][width];
         const expectedGap = GAP_EXPECTED_PX[story.component];
+        const expectedSkeleton = story.branch === 'loading' ? GAP_EXPECTED_SKELETON_COUNT[story.component] : null;
         const row = {
-          matrix: 'gap', invariant: `I-A/I-B ${story.component}`, storyId: story.id,
+          matrix: 'gap',
+          invariant: story.branch === 'loading' ? `I-A/I-B/I-D ${story.component}` : `I-A/I-B ${story.component}`,
+          storyId: story.id,
           component: story.component, branch: story.branch, locale, width,
-          expectedCols, expectedGap, pass: true, reasons: [],
+          expectedCols, expectedGap, expectedSkeleton, pass: true, reasons: [],
         };
         const page = await browser.newPage();
         try {
@@ -539,6 +560,11 @@ async function runGapMatrix(browser, baseUrl, { onlyStoryId, onlyWidths, onlyLoc
               if (rowGapPx !== expectedGap) {
                 row.pass = false;
                 row.reasons.push(`rowGap=${grid.rowGap} expected=${expectedGap}px`);
+              }
+              // I-D — task668-qa-grid-1440.mjs:77 EXPECTED_SKELETON_COUNT, loading branch only.
+              if (expectedSkeleton !== null && grid.childrenCount !== expectedSkeleton) {
+                row.pass = false;
+                row.reasons.push(`skeletonCount=${grid.childrenCount} expected=${expectedSkeleton}`);
               }
             }
           }
@@ -617,7 +643,7 @@ async function runGate(baseUrl, browser) {
   const headerSummary = summarize(header);
 
   printSummary('I-A/supporting (step matrix, task420 source)', stepSummary);
-  printSummary('I-A/I-B (gap matrix, task668-grid-1440 source)', gapSummary);
+  printSummary('I-A/I-B/I-D (gap matrix, task668-grid-1440 source)', gapSummary);
   printSummary('I-C (header matrix, task668-header-geometry source)', headerSummary);
 
   const totalFail = stepSummary.fail + gapSummary.fail + headerSummary.fail;
@@ -690,6 +716,17 @@ const PLANTS = [
     run: (browser, baseUrl) => runHeaderMatrix(browser, baseUrl, { onlyWidths: [1440], onlyLocales: ['en'], plantGapPx: 40 }),
     expectReason: (r) => /computed columnGap=40px expected=16px/.test(r.reasons.join(';')),
   },
+  {
+    id: 'I-D-Featured-skeleton-count',
+    describe: 'Featured skeleton count: remove one skeleton card from the loading grid at 1024 (expected childrenCount=3)',
+    run: (browser, baseUrl) => runGapMatrix(browser, baseUrl, {
+      onlyStoryId: 'system-featuredlistings--loading',
+      onlyWidths: [1024],
+      onlyLocales: ['en'],
+      plant: { storyId: 'system-featuredlistings--loading', width: 1024, locale: 'en', spec: { type: 'removeChild' } },
+    }),
+    expectReason: (r) => /skeletonCount=2 expected=3/.test(r.reasons.join(';')),
+  },
 ];
 
 async function runVerifyGate(baseUrl, browser) {
@@ -705,7 +742,7 @@ async function runVerifyGate(baseUrl, browser) {
   const gapSummary = summarize(gap);
   const headerSummary = summarize(header);
   printSummary('I-A/supporting', stepSummary);
-  printSummary('I-A/I-B gap', gapSummary);
+  printSummary('I-A/I-B/I-D gap', gapSummary);
   printSummary('I-C header', headerSummary);
   const negativeFail = stepSummary.fail + gapSummary.fail + headerSummary.fail;
   if (negativeFail === 0) {
@@ -715,7 +752,7 @@ async function runVerifyGate(baseUrl, browser) {
     overallPass = false;
   }
 
-  // ── Six per-invariant plants (R3, R4, cross-swap per I5). ──
+  // ── Seven per-invariant plants (R3, R4, cross-swap per I5; I-D added Task 703). ──
   for (const plant of PLANTS) {
     console.log(`── Plant: ${plant.id} — ${plant.describe} ──`);
     const rows = await plant.run(browser, baseUrl);
@@ -742,7 +779,7 @@ async function runVerifyGate(baseUrl, browser) {
   const { step: step2, gap: gap2, header: header2 } = await runFullGate(browser, baseUrl);
   const restoredFail = summarize(step2).fail + summarize(gap2).fail + summarize(header2).fail;
   if (restoredFail === 0) {
-    console.log('✅ Tree fully restored — 0 FAIL after all six plants.\n');
+    console.log('✅ Tree fully restored — 0 FAIL after all seven plants.\n');
   } else {
     console.log(`❌ Tree NOT fully restored — ${restoredFail} cell(s) still failing after plants. A plant leaked.\n`);
     overallPass = false;

@@ -105,6 +105,22 @@ Do not publish the first draft. Check all of the following and revise the task i
   superseded claim.
 - Assumptions and unresolved decisions are visible to the executor and reviewer.
 
+## Sprint assignment — blocking, check this first
+
+Owner rule, 2026-08-01. **A task may not be created without a sprint.**
+
+1. Read `docs/backlog.md` → "Current sprint" and open `tasks/Sprints/Sprint_NN_*.md` for that sprint.
+2. If the task fits an open sprint, save the kickoff as
+   `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` and add its row to that sprint's Tasks table.
+3. If nothing fits, **open the next sprint first** — create `tasks/Sprints/Sprint_NN_<Slug>.md` with goal, task
+   table, preconditions and exit criteria — then write the kickoff inside it.
+4. **Never** write a kickoff to the root of `tasks/`. That is what produced the 621–705 gap: 67 kickoffs with no
+   sprint above them, undetected for roughly six weeks until the 2026-08-01 backlog audit, leaving
+   `docs/mantine-tailadmin-migration-tracker.md` pointing at slices that had been finished for a month.
+
+Sprint 45 is the after-the-fact name for that unsprinted 621–705 period, not a planned sprint; its kickoffs are
+grandfathered at their original paths. Task **706** onward has no exemption.
+
 ## Required task document structure
 
 Use these headings in the saved task file:

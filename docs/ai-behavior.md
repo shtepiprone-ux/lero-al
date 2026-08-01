@@ -708,6 +708,13 @@ docs/backlog-archive.md  ← HISTORICAL ledger (split out 2026-06-03):
 
 All task, epic, and sprint files MUST be created inside the `/tasks` directory at the project root. This applies to every AI session, regardless of chat or agent.
 
+**Sprint assignment is mandatory (owner rule, 2026-08-01).** Every task belongs to a sprint. Implementation
+kickoffs are saved as `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` — a kickoff at the root of
+`tasks/` is a rule violation. If no open sprint fits, open the next sprint's plan file first. Binds Task **706**
+onward. Tasks 621–705 ran without sprints — a real six-week lapse, closed on 2026-08-01 by naming that stretch
+**Sprint 45, the unsprinted period**, as a single closed unit rather than inventing parallel sprints for it; those
+kickoffs stay at their original paths so existing references hold. Discipline restarts at Sprint 46.
+
 #### Canonical structure
 ```
 /tasks

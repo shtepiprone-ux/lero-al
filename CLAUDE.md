@@ -112,6 +112,14 @@ Do not apply legacy implementation details to new Mantine work unless the task i
 ## Task and review rules
 
 - Every implementation task must be concrete enough for a fresh Sonnet session to execute without hidden chat context.
+- **Every task belongs to a sprint (owner rule, 2026-08-01).** A task may not be created without one. The kickoff is
+  saved as `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` — **never** at the root of `tasks/`. If no open
+  sprint fits, open the next one with its own plan file before writing the kickoff. Binds Task **706** onward; Sprints
+  **45** is not a planned sprint — it is the name given after the fact to the unsprinted 621–705 period, and those
+  kickoffs stay at their original paths. Discipline restarts at 46.
+  Open sprints, running in parallel: **46** (`tasks/Sprints/Sprint_46_ListingCard_DeTailwind_And_Overlay_Exit.md`)
+  and **47** (`tasks/Sprints/Sprint_47_Layout_Shell_DeHybrid.md`). Pick the one whose goal the task actually fits;
+  if neither does, open 48 with its own plan file first. Do not treat "the highest number" as "the current one".
 - Every implementation kickoff must be saved under `tasks/`; a chat-only handoff is not sufficient.
 - Every kickoff must include current behavior to preserve, required after behavior, positive flow, applicable negative flows, acceptance criteria, QA profile, and verification plan.
 - The executor's report is not proof. Approval requires inspecting the real changed files, diff, and validation evidence required by the selected QA profile.

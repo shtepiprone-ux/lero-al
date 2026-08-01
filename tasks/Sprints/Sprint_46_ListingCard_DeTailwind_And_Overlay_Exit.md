@@ -1,0 +1,48 @@
+# Sprint 46 — ListingCard de-Tailwind + the overlay exit condition
+
+**Opened:** 2026-08-01. **State:** 🟠 **OPEN — current sprint.** **Epic:** MM (Mantine/TailAdmin) Phase-2.
+
+> **First sprint under the "every task belongs to a sprint" rule (owner, 2026-08-01)** — and the first planned sprint
+> since 44. Sprint 45 is not a planned sprint: it is the name given after the fact to Tasks 621–705, which ran with
+> no sprint above them for roughly six weeks. From **Task 706** onward a task may not be created without a sprint,
+> and its kickoff lives at `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never at the root of `tasks/`.
+
+## Goal
+
+Finish the listing-card de-Tailwind and reach the **exit condition** for the `--overlay` token pair — the point at
+which the transitional `@theme inline` copy that D19 introduced can legitimately be deleted. These belong in one
+sprint because they are one dependency chain: 691 is the heaviest `bg-overlay*` consumer in the repo, so 695 cannot
+close until 691 and 702 land.
+
+## Tasks
+
+| # | State | Scope | Depends on |
+|---|---|---|---|
+| **691** | `KICKOFF FILED`, Q3 | `MantineListingCardPattern.tsx` de-Tailwind — 25 editable `className` sites (28 `className=` minus the 3 cross-file contract strings). Overlay chips → `var(--overlay*)`. Comparator = the D26 rendered matrix **plus** `check:homepage-grid`, both required. | 692 · 693 · 701 (all landed) |
+| **702** | reserved | `ListingCard.tsx` de-Tailwind — exactly 8 `className=` sites (icon sizing + `shadow-sm`). Marker classes stay verbatim: **`.listing-card` is load-bearing**, anchoring stories in `check-stories-rendered.mjs` and acting as the grid locator in `check:homepage-grid`. | 691 |
+| **694** | reserved | Alias `--overlay`/`--overlay-foreground` → `var(--mantine-color-black/white)` per the 660/661 no-second-hand-authored-source convention. Declarations are at `globals.css:76-79` (`@theme inline`) + `:451-452` (`:root`). Runnable independently of 691/702. | — |
+| **695** | reserved | **Exit condition.** Delete the `@theme inline` `--overlay*` copy **and** the `--color-overlay*` namespace once the last of the **33** overlay utilities across **7** files is gone. **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 `P3` and 662 F2 `P3`. | 691 · 702 · 694 |
+| **700** | reserved | The general `@theme`-dependency gate — fail when any `.module.css` consumes an `@theme` var whose last Tailwind-utility consumer disappears. Repo-wide scan; own blast radius, deliberately not a rider on 695. | — |
+
+Carried in from Sprint 45 — all five numbers were issued during the unsprinted period and never executed.
+691's kickoff predates the rule and stays at `tasks/kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md`;
+kickoffs for 694, 695, 700 and 702 must be written **inside this sprint's directory path**.
+
+## Preconditions before 691 starts
+
+- **Measure `/[locale]` First Load JS first.** The 671/675 review recorded **618 kB against a 185 kB baseline** while
+  a server component imports the client-component patterns barrel (`F3`, `NEEDS VERIFICATION`). 691 adds to that
+  route — take the reading before, not after.
+- Extend `MantineListingCardPattern.module.css` (Task 602). Mantine's `Card` CSS is **unlayered** and per the Cascade
+  Layers spec always beats Tailwind's `@layer utilities`, so a `hover:shadow-*` can never win — never `!important`,
+  never a layer override.
+- Per-site disposition for all 25 sites is required **before** editing, grouped A–F per the kickoff.
+
+## Sprint exit criteria
+
+1. 691 and 702 approved, `.listing-card` md5-witnessed unchanged throughout.
+2. Overlay-utility count measured at **0**. If 691 alone takes it to 0 that is a **report-only** finding — 695 must
+   then update 692's gate, rather than the sprint quietly ending.
+3. `check:homepage-grid` 260/260 and the D26 rendered matrix both green on every task.
+4. **Owner cleanup step 3 closed** — the 3 consolidated probes deleted, and a decision recorded on 670 and the other
+   9 unwired probes.

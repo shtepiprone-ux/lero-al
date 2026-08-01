@@ -171,3 +171,53 @@ reverted**; Task 705 amends `.storybook/preview-head.html`'s freeze in place, wr
 `scripts/check-stories-rendered.mjs`'s capture page — the same standard media feature this task's own R6 rule (§4
 above) already keyed the Skeleton's accessibility behaviour to. D27 (the fill colour, this file's own subject) is
 **not** revisited. Full evidence: `docs/sessions/2026-08-01-task705-task704-revision-capture-freeze-scope.md`.
+
+## 16. Orchestrator review outcome (Opus, 2026-08-01) — `APPROVED` (704 + 705 together)
+
+The interim 🛑 `NEEDS REVISION` recorded against this task is **LIFTED**. Its blocking finding (F1 `P1`, §15
+above) is closed by Task 705, which amended the freeze in place rather than reverting this task's code. The two
+are reviewed and approved as one unit.
+
+### Both anticipated defects checked; one was a design choice, the other never existed
+
+**Anticipated defect #1 — freeze scope.** The freeze is correctly wrapped in
+`@media (prefers-reduced-motion: reduce)`, and its reach `*, *::before, *::after` is deliberately **not** narrowed
+to the Skeleton. The accompanying comment explains why, and the reasoning is right: narrowing it to this component
+alone would leave every other animated story non-deterministic under capture. Reach was the point.
+
+**Anticipated defect #2 — a missed page-creation site.** Did not materialise. `check-stories-rendered.mjs` has
+**exactly one** page-creation point, `newPage()` at line 845, and `emulateMedia` sits at line 852 — immediately
+after it and before navigation. There was nothing to miss.
+
+### D27 fenced, and the proof is falsifiable
+
+`skeleton-chrome.css` diffed against `HEAD` shows **33/2** — precisely this task's change and nothing else. D27
+was not revisited by 705.
+
+AC3's evidence is the falsifiable pair the task was required to produce, because a PNG cannot prove motion:
+**before the fix — 0 animations, `opacity` pinned at 1; after — 8 running, `opacity` moving 0.45 → 0.84 over
+600 ms.** The owner's reported symptom is closed by a measurement, not by an assertion.
+
+Determinism survives the change: **0/16** md5-changed on both target stories under emulation, and the full
+1184-cell comparison gives **0 FAIL / 0 verdict changes**, with the 20 changed cells distributed elsewhere and
+**none** on the target stories.
+
+### Finding
+
+- **F1 `P3` — non-blocking.** `check-homepage-grid.mjs` does not call `emulateMedia` at any of its **three**
+  page-creation sites. The executor disclosed this itself and correctly left it outside scope per §8.
+  Assessed as harmless on the merits, not waved through: that gate measures **layout only** —
+  `gridTemplateColumns`, `gap`, child count, `scrollWidth`, header geometry. An opacity animation does not move
+  layout. The single theoretical vector is a `transition` on a layout property caught mid-flight, and that state
+  **pre-dates 705 rather than being introduced by it**. Add the emulation at the next touch of that file — for
+  consistency, not for correctness.
+
+### Commit shape
+
+704 and 705 ship as **one commit**. 704's code was `NEEDS REVISION` and therefore never committed; 705 corrects it
+in place. Splitting them would write a state I had rejected into the permanent history. Owner-run handoff was
+emitted accordingly and has since been executed as **`a5eed6542`**
+(`feat(Task704,Task705): restore Skeleton pulse amplitude (D27 gray-3) and scope the Storybook capture freeze to
+reduced-motion emulation`), pushed to `origin/task/q0-ci-rendered-locale-split`.
+
+Owner native gates clean: `check:file-integrity` **6/6**, `check:mojibake` **0/2031**.

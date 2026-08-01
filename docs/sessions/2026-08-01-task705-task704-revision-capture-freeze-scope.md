@@ -303,3 +303,32 @@ Appended a short pointer section at the end of
 
 See §9 — one appended sentence to the existing Task 704 paragraph in `docs/backlog.md`'s "Last Session" section,
 file held at 80 physical lines.
+
+## 15. Orchestrator review outcome (Opus, 2026-08-01) — `APPROVED` (704 + 705 together)
+
+Reviewed and approved **as a pair with Task 704**, whose interim `NEEDS REVISION` this task lifts. Full verdict:
+`2026-08-01-task704-skeleton-shimmer-amplitude.md` §16. Summary of what was checked here:
+
+- **Freeze correctly conditioned, deliberately not narrowed.** `@media (prefers-reduced-motion: reduce)` wraps the
+  rule; the `*, *::before, *::after` reach is preserved on purpose — narrowing to the Skeleton alone would leave
+  every other animated story non-deterministic under capture. The comment says so.
+- **The anticipated "missed page-creation site" defect never existed.** `check-stories-rendered.mjs` has exactly
+  one, `newPage()` at line 845, with `emulateMedia` at line 852 — immediately after, before navigation.
+- **D27 fenced:** `skeleton-chrome.css` diffed against `HEAD` shows 33/2, exactly Task 704's change; 705 did not
+  revisit the fill colour.
+- **AC3's proof is falsifiable and lands:** 0 animations with `opacity` pinned at 1 before, 8 running with
+  `opacity` 0.45 → 0.84 over 600 ms after. A PNG cannot prove motion; this does.
+- **Determinism preserved:** 0/16 md5-changed on both target stories under emulation; 1184-cell comparison
+  0 FAIL / 0 verdict changes, the 20 changed cells all elsewhere.
+
+### Finding
+
+- **F1 `P3` — non-blocking.** `check-homepage-grid.mjs` calls `emulateMedia` at none of its three page-creation
+  sites; the executor disclosed it and correctly held it outside §8's scope. Harmless on the merits: that gate
+  measures layout only (`gridTemplateColumns`, `gap`, child count, `scrollWidth`, header geometry), and an opacity
+  animation does not move layout. The only theoretical vector — a `transition` on a layout property caught
+  mid-flight — is a pre-existing condition, not one 705 introduced. Fold the emulation in at the next touch of
+  that file, for consistency rather than correctness.
+
+Shipped with 704 in a single commit **`a5eed6542`**, pushed to `origin/task/q0-ci-rendered-locale-split`.
+Owner native gates clean: `check:file-integrity` **6/6**, `check:mojibake` **0/2031**.

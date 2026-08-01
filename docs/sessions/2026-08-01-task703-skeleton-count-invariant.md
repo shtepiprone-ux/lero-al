@@ -533,3 +533,35 @@ Route (app)                                 Size  First Load JS  Revalidate  Exp
 
 No `TASK SPECIFICATION CONTRADICTION`, `CANONICAL UI SPECIFICATION GAP`, or `CANONICAL STYLE DECISION REQUIRED`
 condition was encountered — this task has no visible UI surface (Q4, gate-only, `src/` read-only).
+
+## 11. Orchestrator review outcome (Opus, 2026-08-01) — `APPROVED`
+
+### The port is exact
+
+`GAP_EXPECTED_SKELETON_COUNT = { Featured: 3, Latest: 4 }` carries a provenance comment naming
+`task668-qa-grid-1440.mjs:77`, and the **direct-children** semantics of A1 are honoured — the count is the grid's
+own children (cards), not `.mantine-Skeleton-root` elements, of which each card holds 5–6.
+
+**I2 confirmed the live 3/4 before the assertion existed**, so R2 was executed in the right order and no stop
+condition was triggered — the value was transcribed and *then* verified, never adopted from today's render.
+
+### The seventh plant tests its own invariant, not "any failure"
+
+The `removeChild` plant removes the last card and restores the same node. `expectReason` asserts specifically
+`skeletonCount=2 expected=3` — so the arm proves I-D fired, rather than proving that something, somewhere, broke.
+That is the same per-invariant standard the other six plants were held to.
+
+`src/` and all three source probes are untouched; `git status` shows exactly three paths.
+
+### Finding — the one deviation is the orchestrator's, not the executor's
+
+The kickoff contradicted itself on cell count: **I3 described the total growing past 260, while A2 of the same
+task forbade adding a new story matrix.** Both cannot hold. The executor complied with A2, kept the total at
+**260/260 PASS**, and flagged the contradiction rather than silently picking one reading — which is the correct
+response. This is a wording defect in my own kickoff, not an implementation defect.
+
+### Consequence
+
+Owner-sequence **step 3 is unblocked**: `task420-qa-grid-step.mjs`, `task668-qa-grid-1440.mjs` and
+`task668-qa-header-geometry.mjs` may now be deleted, because the assertion whose loss gated step 3 (the Task 701
+review's F1 `P2`) has landed with its own plant.

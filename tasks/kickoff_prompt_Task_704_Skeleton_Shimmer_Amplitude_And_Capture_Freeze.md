@@ -46,16 +46,35 @@ stylesheet can reach it:
 }
 ```
 
-**The measured consequence**, from the shipped bundle and token values:
+**The actual mechanism — read from `node_modules/@mantine/core/styles/Skeleton.css`, not inferred.** Mantine's
+pulse animates **`opacity`, not colour**:
 
-| | Colour | Source |
-|---|---|---|
-| Mantine's stock pulse target | `--mantine-color-gray-3` = **`#dee2e6`** | `@mantine/core/styles.css` |
-| Current pulse target after Decision B | `--mantine-color-gray-0` = **`#f8f9fa`** | `skeleton-chrome.css` |
-| Skeleton base neighbourhood | `--mantine-color-gray-1` = **`#f1f3f5`** | `theme.ts` corrected tokens |
+```css
+@keyframes m_299c329c { 0%, 100% { opacity: 0.4 } 50% { opacity: 1 } }
+.m_18320242:where([data-animate])::after  { animation: m_299c329c 1500ms linear infinite }
+.m_18320242:where([data-visible])::before { inset: 0; z-index: 10; background-color: var(--mantine-color-body) }
+.m_18320242:where([data-visible])::after  { inset: 0; z-index: 11; background-color: var(--mantine-color-gray-3) }
+```
 
-Per-channel amplitude fell from roughly **20–35/255** to about **5–7/255**. `animate: true` is still in effect —
-the animation runs, the contrast does not. That is exactly what "looks static" means.
+`::after` **is** the grey placeholder fill, stacked over a `::before` layer painted in
+`--mantine-color-body` (white). The pulse fades that fill between 40% and 100% opacity. The visible amplitude is
+therefore a function of **the fill's contrast against the body colour**, not of any colour-to-colour transition.
+
+**The measured consequence** of Decision B switching that fill from `gray-3` to `gray-0`:
+
+| Fill | at `opacity: 1` | at `opacity: 0.4` (composited over white) | visible swing |
+|---|---|---|---|
+| Mantine stock `--mantine-color-gray-3` = `#dee2e6` | `#dee2e6` | ≈ `#f5f6f7` | **≈ 23/255** |
+| Current `--mantine-color-gray-0` = `#f8f9fa` | `#f8f9fa` | ≈ `#fcfdfd` | **≈ 4/255** |
+
+`animate: true` is still in effect and the animation genuinely runs — it modulates a fill already
+indistinguishable from the page background. At ~4/255 the pulse is below the threshold of perception, which is why
+the owner reports it as **absent** rather than faint (owner confirmation 2026-07-31, Storybook
+`Mantine/Primitives/Skeleton/Default`).
+
+**Two independent levers exist.** Amplitude can be restored by darkening the fill (Decision B's value) **or** by
+widening the keyframe's opacity range — or both. D27 must choose between them (§5 A1); do not assume the fill is
+the only knob.
 
 **Do not resolve this by reverting Decision B.** Its fill value is a live TailAdmin capture
 (`demo.tailadmin.com/layout-one`, `bg-gray-50`) ratified under clause 16a. Both decisions must survive.
@@ -100,9 +119,9 @@ apply to the capture context only — never to the product.
 
 | ID | Source | Observable requirement | Priority | Verification | Status |
 |---|---|---|---|---|---|
-| R1 | §3.1 | The pulse regains a visible amplitude. The chosen `::after` colour is **traced** — either to a `docs/tailadmin-style-reference.md` row or, if none exists, escalated as a clause-16a owner decision **before** implementation. Inventing a value is a **stop and report**. | P0 | AC1 | **Ambiguous — see A1** |
-| R2 | §3.1 | Task 550's TailAdmin fill correction is **not reverted**. The Skeleton's resting appearance (base fill, 1px gray-200 border, 12px radius) is unchanged; only the animated pseudo-element's target moves. | P0 | AC1, AC2 | Confirmed |
-| R3 | §3.1 | `animate: true` stays; no `animate={false}`, no new `@keyframes`, no JS-driven animation. The mechanism is Mantine's own pulse with a usable target colour. | P0 | AC1 | Confirmed |
+| R1 | §3.1, A1 | The pulse regains a visible amplitude via the **D27-ratified lever** (fill colour, opacity range, or both). Any value is traced to a `docs/tailadmin-style-reference.md` row or to the ratified decision; inventing one is a **stop and report**. | P0 | AC1 | **Ambiguous — see A1** |
+| R2 | §3.1 | Task 550's TailAdmin fill correction is **not reverted**. The Skeleton's **resting** appearance at `opacity: 1` — fill, 1px gray-200 border, 12px radius — is unchanged unless D27 explicitly selects Lever 1 and ratifies the new resting value. | P0 | AC1, AC2 | Confirmed |
+| R3 | §3.1 | `animate: true` stays; no `animate={false}`, no JS-driven animation. Mantine's own `m_299c329c` pulse remains the mechanism — a replacement keyframe is permitted **only** if D27 selects Lever 2, and then only to widen the opacity range, never to animate a different property. | P0 | AC1 | Confirmed |
 | R4 | §3.3, §3.4 | Animations and transitions are disabled inside the Storybook preview iframe via `.storybook/preview-head.html`, so captured cells are deterministic. Product code is unaffected. | P0 | AC3 | Confirmed |
 | R5 | R4 | Proven by a **same-tree, zero-code-diff double capture** after the freeze: `Skeleton/Default` and `HomepageListingGrids/Loading` show **0 md5-changed cells** between the two runs — against the 12 and 10 recorded in §3.3. | P0 | AC3 | Confirmed |
 | R6 | cl. 11, 12 | `prefers-reduced-motion: reduce` suppresses the pulse in the product. If Mantine already honours it, verify and record; if not, add it. A restored animation that ignores the OS setting is an accessibility regression. | P0 | AC4 | Confirmed |
@@ -114,12 +133,18 @@ apply to the capture context only — never to the product.
 
 ## 5. Assumptions and open questions
 
-- **A1 — OPEN, OWNER DECISION REQUIRED BEFORE I3.** Which colour the `::after` should pulse to is **not settled**.
-  `gray-3` (`#dee2e6`) is Mantine's stock value and restores the original amplitude, but Task 550 replaced it
-  precisely because TailAdmin's placeholder is `gray-50`. Intermediate stops (`gray-1` `#f1f3f5`, `gray-2`) trade
-  visibility against fidelity. `docs/tailadmin-style-reference.md` has **no row for an animated placeholder** —
-  TailAdmin's is static — so clause 16a applies: **the executor must stop and request the owner decision, quoting
-  the amplitude each candidate yields, rather than choosing.** Record it as **D27**.
+- **A1 — OPEN, OWNER DECISION REQUIRED BEFORE I3.** How to restore amplitude is **not settled**, and there are
+  **two independent levers** (§3.1):
+  - **Lever 1 — the fill colour** (`skeleton-chrome.css`'s `::after` `background-color`). `gray-3` `#dee2e6` is
+    Mantine's stock and yields ≈23/255, but Task 550 replaced it precisely because TailAdmin's placeholder is
+    `gray-50`; `gray-1` `#f1f3f5` and `gray-2` are intermediate stops trading visibility against fidelity.
+    Darkening this changes the skeleton's **resting** appearance, which is what R2 protects.
+  - **Lever 2 — the opacity range.** Overriding the animation with a wider range (e.g. `0.15 → 1`) on the existing
+    `gray-0` fill increases the swing **without touching the resting look at `opacity: 1`** — the TailAdmin value
+    stays exactly as captured. This lever did not exist in the original framing and may well be the better answer.
+  `docs/tailadmin-style-reference.md` has **no row for an animated placeholder** — TailAdmin's is static — so
+  clause 16a applies: **the executor must stop and present both levers with the amplitude each candidate yields,
+  rather than choosing.** Record the outcome as **D27**.
 - **A2 — subtle, per the owner.** The request was a weak blink, not a marketing shimmer. Whatever D27 selects,
   the resting appearance must stay TailAdmin-faithful; only the moving target changes.
 - **A3 — the freeze is capture-only.** A product-wide animation kill would satisfy R5 and destroy R1. If the
@@ -150,7 +175,7 @@ apply to the capture context only — never to the product.
 
 | Path | Action |
 |---|---|
-| `src/design-system/mantine/skeleton-chrome.css` | modify — the pulse target + a reduced-motion rule if R6 needs one |
+| `src/design-system/mantine/skeleton-chrome.css` | modify — the D27-ratified lever (fill colour and/or opacity range) + a reduced-motion rule if R6 needs one |
 | `.storybook/preview-head.html` | modify — capture-time animation freeze |
 | `docs/backlog.md` | modify — **80 lines** |
 | `docs/sessions/2026-08-01-task704-skeleton-shimmer-amplitude.md` | create |
@@ -169,9 +194,10 @@ Nothing else. `theme.ts`, the Views and the route `loading.tsx` files are **read
 
 ## 9. Current and required behavior
 
-**Current.** `animate: true` is set and Mantine's pulse runs, but its `::after` target was pinned to `gray-0`
-`#f8f9fa` against a base neighbourhood of `#f1f3f5` — an amplitude of about 5–7/255, below the threshold of
-casual perception. The owner reports the skeleton as static. Separately, the harness disables no animation, so the
+**Current.** `animate: true` is set and Mantine's `opacity: 0.4 ↔ 1` pulse runs, but the `::after` fill it
+modulates was pinned to `gray-0` `#f8f9fa` — near-identical to the `--mantine-color-body` layer beneath it — so
+the visible swing is ≈4/255, below the threshold of perception. The owner reports the skeleton as static
+(confirmed 2026-07-31). Separately, the harness disables no animation, so the
 two animating stories are the matrix's noisiest, at 12 and 10 md5-changed cells under zero-code-diff controls.
 
 **Required after.** The pulse is visibly present and deliberately subtle, at a colour ratified as **D27**, with
@@ -187,13 +213,15 @@ both animating stories show 0 changed cells across a same-tree double capture.
 identical tree** and record the md5-changed cell counts for `Skeleton/Default` and `HomepageListingGrids/Loading`.
 Expect roughly the §3.3 figures — this is the "before" for R5.
 
-**I2 — measure the current amplitude.** Read the computed `background-color` of `.mantine-Skeleton-root::after`
-and of the resting root, at both animation extremes, and record the per-channel delta. This converts §3.1's
-inference into a measurement.
+**I2 — measure the current amplitude.** The pulse animates **opacity** (§3.1), so sample the `::after` at both
+keyframe extremes — `getComputedStyle(el, '::after')` for `opacity` and `background-color`, composited over the
+`::before` body colour — and record the resulting per-channel swing. Expect ≈4/255. This converts §3.1's
+arithmetic into a measurement on the real render.
 
-**I3 — BLOCKED ON D27.** Present the owner with the candidate colours and the amplitude each yields (from I2's
-method), then apply the ratified one to `skeleton-chrome.css`. **Do not choose.** Quote the decision, its date and
-its scope in the file's comment.
+**I3 — BLOCKED ON D27.** Present the owner with **both levers** (§5 A1) and the amplitude each candidate yields,
+computed by I2's method: for Lever 1, the candidate fill colours; for Lever 2, the candidate opacity ranges on the
+existing `gray-0` fill. State for each whether it changes the **resting** appearance. **Do not choose.** Then apply
+the ratified option and quote the decision, its date and its scope in the file comment.
 
 **I4 — reduced motion (R6).** Verify whether Mantine's pulse already respects `prefers-reduced-motion: reduce`.
 Record the result; add a suppression rule only if it does not.
@@ -307,10 +335,14 @@ mutating git.
 | Dirty-worktree handling | **Yes, declared** — §3.5 |
 | Unresolved decision visible | **Yes** — A1/D27 is marked open, blocks I3, and the report contract expects `BLOCKED` there |
 
-**Known-risk note for the reviewer.** Three likely defects. First, **reverting Task 550** — the fastest way to
+**Known-risk note for the reviewer.** Four likely defects. First, **reverting Task 550** — the fastest way to
 restore amplitude is to delete the `::after` override, which silently discards a clause-16a-ratified TailAdmin
 capture; R2 forbids it. Second, **killing animation globally to satisfy the determinism proof** — R5 becomes
 trivially true and R1 becomes false, and a diff review would not obviously show which happened; I8 exists for
 that. Third, **labelling the two animating stories' new deltas as D26 noise** — they are an intended visual
 change, and filing them under the sub-perceptual clause would both misuse D26 and hide the only rendered evidence
-that the fix did anything.
+that the fix did anything. Fourth, **treating the fill colour as the only lever** — this kickoff originally
+described the pulse as a colour-to-colour transition, which was wrong (§3.1 corrected 2026-07-31 against
+`node_modules/@mantine/core/styles/Skeleton.css`); it animates opacity, and Lever 2 can restore visibility without
+touching the resting appearance at all. An executor who only considers the fill will present the owner half the
+decision.

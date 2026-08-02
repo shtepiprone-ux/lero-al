@@ -1,0 +1,138 @@
+/*
+ * FooterView.module.css — Task 673 (D28 mechanism-only de-hybrid, D29 footer-first split).
+ * Reproduces the PRIOR Tailwind utility chains' OWN compiled output for the 16 `className=`
+ * sites named in the kickoff §3.2 table, verified against a live `getComputedStyle` capture
+ * on the real, pre-edit `Mantine/Primitives/FooterView/Default` story (I2, 2026-08-01,
+ * `docs/sessions/2026-08-01-task673-footerview-de-hybrid.md`), same convention as
+ * `PopularLocationsView.module.css` (Task 688).
+ *
+ * Colour values consume `globals.css` custom properties only (D27 "token not hex") — every
+ * value below was traced to its declaring line in the kickoff §3.6 provenance table:
+ *   --border (neutral-200), --surface-2 (neutral-50), --primary (brand-700),
+ *   --foreground (neutral-900), --muted-foreground (neutral-500).
+ *
+ * Length values (padding/gap/max-width/font-size/line-height/letter-spacing) are the prior
+ * Tailwind spacing/typography scale's OWN literal output (`--space-*`/`--text-*--line-height`
+ * in `globals.css`), confirmed live rather than computed from the scale formula (I2).
+ *
+ * `:hover` MUST live here, never as an inline `style` — `FavoriteButton.tsx` (Task 653)
+ * proved an inline `style` attribute unconditionally beats any external stylesheet rule for
+ * the same property and therefore permanently blocks a module's own `:hover` rule.
+ *
+ * `<p>`-rendering sites (tagline / section headings / copyright) rely on the project-wide
+ * `p { @apply leading-relaxed; }` base rule (`globals.css` `@layer base`, ~line 583) for their
+ * line-height instead of an explicit declaration here — that ambient tag rule is untouched by
+ * this task and continues to apply automatically as long as the migrated element still renders
+ * a real `<p>` tag (Mantine `Text`'s own default `component`), which is why the live capture
+ * measured 1.625 line-height on these `<p>` sites even where the source has no explicit
+ * `leading-relaxed` class (site headings #9/#11, copyright #14) — confirmed live, not assumed.
+ */
+
+/* Site #2 — <Box component="footer"> (site-footer class preserved verbatim outside this module) */
+.footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--surface-2);
+  padding-bottom: 3.5rem; /* pb-14 — measured 56px @375, I2 */
+}
+@media (min-width: 48rem) {
+  .footer {
+    padding-bottom: 0; /* md:pb-0 — measured 0px @800, I2 */
+  }
+}
+
+/* Site #3 — <Box> (container-wide class preserved verbatim outside this module) */
+.container {
+  padding-top: 3rem; /* py-12 — measured 48px, I2 */
+  padding-bottom: 3rem;
+}
+
+/* Site #5 — brand <Anchor unstyled component={Link}> */
+.brandLink {
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 700; /* font-bold */
+  line-height: 1.75rem; /* measured 28px @20px font, I2 */
+  width: fit-content; /* w-fit */
+}
+
+/* Site #6 — brand <Text unstyled component="span"> */
+.textPrimary {
+  color: var(--primary);
+}
+
+/* Site #7 — tld <Text unstyled component="span"> */
+.textForeground {
+  color: var(--foreground);
+}
+
+/* Site #8 — tagline <Text unstyled> (renders <p>, ambient p{} rule already supplies 1.625,
+   restated here to match the source's explicit `leading-relaxed`) */
+.tagline {
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.625; /* leading-relaxed */
+  color: var(--muted-foreground);
+  max-width: 13.75rem; /* max-w-55 — measured 220px, I2 */
+}
+
+/* Sites #9 / #11 — nav/info section heading <Text unstyled> (shared, renders <p>) */
+.sectionHeading {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 600; /* font-semibold */
+  text-transform: uppercase;
+  letter-spacing: 0.1em; /* tracking-widest — measured 1.2px @12px font, I2 */
+  color: var(--muted-foreground);
+}
+
+/* Sites #10 / #12 — nav/info <Box component="nav"> (shared) */
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem; /* gap-2.5 — measured 10px, I2 */
+}
+
+/* Site #1 — FooterLink_ <Anchor unstyled component={Link}> */
+.footerLink {
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.25rem; /* measured 20px @14px font, I2 */
+  color: var(--muted-foreground);
+  width: fit-content; /* w-fit */
+  transition-property: color, background-color, border-color, outline-color,
+    text-decoration-color, fill, stroke; /* transition-colors — measured, I2 */
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.footerLink:hover {
+  color: var(--foreground);
+}
+
+/* Site #13 — bottom bar <Flex> (mt/pt moved to Mantine style props — measured 48px/24px, I2) */
+.bottomBar {
+  border-top: 1px solid var(--border);
+}
+
+/* Site #14 — copyright <Text unstyled> (renders <p>) */
+.copyright {
+  font-size: 0.75rem; /* text-xs */
+  color: var(--muted-foreground);
+}
+
+/* Site #15 — social label <Text unstyled component="span"> (visibleFrom="sm" replaces
+   `hidden sm:block`) */
+.socialLabel {
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1rem; /* measured 16px @12px font, I2 */
+  color: var(--muted-foreground);
+}
+
+/* Site #16 — social <Anchor unstyled> */
+.socialLink {
+  font-size: 0.75rem; /* text-xs */
+  line-height: 1rem; /* measured 16px @12px font, I2 */
+  color: var(--muted-foreground);
+  transition-property: color, background-color, border-color, outline-color,
+    text-decoration-color, fill, stroke; /* transition-colors — measured, I2 */
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.socialLink:hover {
+  color: var(--foreground);
+}

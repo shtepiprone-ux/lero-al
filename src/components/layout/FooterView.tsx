@@ -1,6 +1,8 @@
 import Link from 'next/link'
-import { Box, Stack, Group, Flex } from '@mantine/core'
+import { Anchor, Box, Stack, Group, Flex, SimpleGrid, Text } from '@mantine/core'
+import { cn } from '@/lib/utils'
 import type { FooterLink } from '@/types/database'
+import styles from './FooterView.module.css'
 
 // Resolve a link URL: internal paths get the locale prefix; external used as-is.
 function resolveHref(url: string, locale: string): string {
@@ -16,13 +18,15 @@ function isExternal(url: string): boolean {
 function FooterLink_({ link, locale }: { link: FooterLink; locale: string }) {
   const ext = isExternal(link.url)
   return (
-    <Link
+    <Anchor
+      unstyled
+      component={Link}
       href={resolveHref(link.url, locale)}
-      className="text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
+      className={styles.footerLink}
       {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {link.label}
-    </Link>
+    </Anchor>
   )
 }
 
@@ -41,10 +45,11 @@ export interface FooterViewProps {
 }
 
 /**
- * Presentational footer built from Mantine layout primitives (Box/Stack/Group/Flex).
- * Prop-driven and hook-free — all data resolution (DB values, fallbacks, i18n) happens in the
- * `Footer` container. Visual tokens keep the existing footer classNames so the migration is
- * pixel-faithful to the legacy footer.
+ * Presentational footer built from Mantine layout primitives (Box/Stack/Group/Flex/SimpleGrid)
+ * and Mantine content primitives (Anchor/Text, both `unstyled`). Prop-driven and hook-free — all
+ * data resolution (DB values, fallbacks, i18n) happens in the `Footer` container. Visual values
+ * live in `FooterView.module.css` (consuming `globals.css` variables) or as Mantine style props —
+ * zero raw Tailwind utility classes (Task 673, D28 mechanism-only de-hybrid).
  */
 export function FooterView({
   brand,
@@ -60,25 +65,25 @@ export function FooterView({
   locale,
 }: FooterViewProps) {
   return (
-    <Box component="footer" className="site-footer border-t bg-surface-2 pb-14 md:pb-0">
-      <Box className="container-wide py-12">
-        <Box className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+    <Box component="footer" className={cn('site-footer', styles.footer)}>
+      <Box className={cn('container-wide', styles.container)}>
+        <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing={40}>
 
           {/* Brand */}
           <Stack gap="md">
-            <Link href={`/${locale}`} className="font-bold text-xl w-fit">
-              <span className="text-primary">{brand}</span>
-              <span className="text-foreground">{tld}</span>
-            </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-55">{tagline}</p>
+            <Anchor unstyled component={Link} href={`/${locale}`} className={styles.brandLink}>
+              <Text unstyled component="span" className={styles.textPrimary}>{brand}</Text>
+              <Text unstyled component="span" className={styles.textForeground}>{tld}</Text>
+            </Anchor>
+            <Text unstyled className={styles.tagline}>{tagline}</Text>
           </Stack>
 
           {/* Navigation */}
           <Stack gap="md">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <Text unstyled className={styles.sectionHeading}>
               {navTitle}
-            </p>
-            <Box component="nav" className="flex flex-col gap-2.5" aria-label={navTitle}>
+            </Text>
+            <Box component="nav" className={styles.linkList} aria-label={navTitle}>
               {navLinks.map(link => (
                 <FooterLink_ key={link.id} link={link} locale={locale} />
               ))}
@@ -87,16 +92,16 @@ export function FooterView({
 
           {/* Information */}
           <Stack gap="md">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <Text unstyled className={styles.sectionHeading}>
               {infoTitle}
-            </p>
-            <Box component="nav" className="flex flex-col gap-2.5" aria-label={infoTitle}>
+            </Text>
+            <Box component="nav" className={styles.linkList} aria-label={infoTitle}>
               {infoLinks.map(link => (
                 <FooterLink_ key={link.id} link={link} locale={locale} />
               ))}
             </Box>
           </Stack>
-        </Box>
+        </SimpleGrid>
 
         {/* Bottom bar */}
         <Flex
@@ -104,21 +109,24 @@ export function FooterView({
           align="center"
           justify="space-between"
           gap="sm"
-          className="mt-12 border-t pt-6"
+          mt={48}
+          pt={24}
+          className={styles.bottomBar}
         >
-          <p className="text-xs text-muted-foreground">{copyright}</p>
+          <Text unstyled className={styles.copyright}>{copyright}</Text>
           <Group align="center" gap="lg">
-            <span className="text-xs text-muted-foreground hidden sm:block">{socialTitle}:</span>
+            <Text unstyled component="span" className={styles.socialLabel} visibleFrom="sm">{socialTitle}:</Text>
             {socialLinks.map(link => (
-              <a
+              <Anchor
+                unstyled
                 key={link.id}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                className={styles.socialLink}
               >
                 {link.label}
-              </a>
+              </Anchor>
             ))}
           </Group>
         </Flex>

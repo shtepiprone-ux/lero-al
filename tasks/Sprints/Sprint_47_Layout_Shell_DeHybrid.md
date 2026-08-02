@@ -23,6 +23,7 @@ The sprint ends when both files hold **zero raw Tailwind utility classes** and t
 |---|---|---|
 | **D28** (2026-08-01) | `backlog.md:52` records 673 as "mechanism-only (owner 2026-07-29, as in 672)", but the decision text itself was never written down anywhere. Two incompatible readings exist: keep `unstyled` and move the utilities into a module (zero visual delta), or drop `unstyled` and let Mantine style the chrome (visual delta, needs a TailAdmin reference row that does not exist). Which? | **Mechanism-only, zero visual delta.** Keep `unstyled` where it exists and add it where a raw element becomes a Mantine primitive. Utilities become Mantine style props where a prop exists, and a colocated `.module.css` where one does not — the **Task 688 D16 pattern**. No restyle, no token change, no spacing/typography edit. |
 | **D29** (2026-08-01) | One task for both files, or split? | **Split, footer first.** `FooterView` establishes the pattern with no risk exposure; `HeaderView` inherits it afterwards. |
+| **D30** (2026-08-02) | Do `HeaderView`'s five `min-[390px]` violations belong to 706, or to a separate token task? | **In scope for 706.** Moving them into the module's own `@media (min-width: 390px)` is a mechanism change with zero visual delta, so it does not conflict with D28. Verified 2026-08-02 that `scripts/check-design-tokens.mjs` raises no `length:` finding on any `.css` file (it collects `.css` at `:438` but every live `.css` finding is a colour rule), so the move removes the violations without re-introducing them. **706's AC is `check:design-tokens` = 23**, not 28. |
 
 D28 supersedes nothing — it is the first written form of a ruling the backlog had only summarised.
 
@@ -30,8 +31,8 @@ D28 supersedes nothing — it is the first written form of a ruling the backlog 
 
 | # | State | Scope | Depends on |
 |---|---|---|---|
-| **673** | `KICKOFF FILED` | `FooterView.tsx` de-hybrid — **16** `className=` sites, 8 raw HTML elements (`<p>`×4, `<span>`×3, `<a>`×1). Zero critical-flow exposure, zero `check:design-tokens` violations, and `.site-footer` has **zero consumers repo-wide**. `Sprint_47_kickoff_prompt_Task_673_FooterView_DeHybrid.md` | — |
-| **706** | reserved | `HeaderView.tsx` de-hybrid — **11** `className=` sites. Carries everything 673 does not: the P0 critical flow *Authenticated header hydration* (599/601), three live `.site-header` consumers, and Task 684's hardcoded 97px/65px notification clearance measured off this header's own height. Inherits 673's proven module pattern. | 673 |
+| **673** | ✅ `APPROVED WITH NOTES` — landed `135e864e7`, 2026-08-02 | `FooterView.tsx` de-hybrid — **16** `className=` sites, 8 raw HTML elements (`<p>`×4, `<span>`×3, `<a>`×1). Zero critical-flow exposure, zero `check:design-tokens` violations, and `.site-footer` has **zero consumers repo-wide**. `Sprint_47_kickoff_prompt_Task_673_FooterView_DeHybrid.md` | — |
+| **706** | `KICKOFF FILED` (2026-08-02), unblocked | `HeaderView.tsx` de-hybrid — **11** `className=` sites and **zero raw HTML elements** (Task 629 already converted them, so this is a class-level de-hybrid only). Carries everything 673 does not: the P0 critical flow *Authenticated header hydration* (599/601) → **Q4**, three live `.site-header` consumers, Task 684's hardcoded 97px/65px notification clearance measured off this header's own height, and the five `min-[390px]` violations (**D30**, 28 → 23). Inherits 673's proven module pattern. `Sprint_47_kickoff_prompt_Task_706_HeaderView_DeHybrid.md` | 673 ✅ |
 
 ## Why footer first — the asymmetry, measured 2026-08-01
 

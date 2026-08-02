@@ -35,7 +35,7 @@ try {
 }
 
 $context = @"
-Lero.al Sonnet executor workflow is active for this session. The canonical execution skill below applies before any implementation claim. Opus is the sole reviewer and approval gate: Sonnet never approves or self-approves a task. Sonnet never emits, suggests, or runs mutating Git commands, including `git push`; only Opus may provide an owner-run push command after an approved review.
+Lero.al Sonnet executor workflow is active for this session. The canonical execution skill below applies before any implementation claim. Opus is the sole reviewer and approval gate: Sonnet never approves or self-approves a task. Sonnet never conducts, initiates, simulates, or continues an implementation review, including automatically after its implementation handoff. Sonnet may run required implementation checks and report factual evidence, but this validation is not review. At handoff Sonnet must return its required status and stop; a separate Opus orchestrator session alone decides whether to run `review-task`, independently review the diff/evidence, and issue a verdict. Sonnet never emits, suggests, or runs mutating Git commands, including `git push`; only Opus may provide an owner-run push command after an approved review.
 
 NON-NEGOTIABLE BUILD GATE: for every non-Q0 task, run `npm run build` after the final edit and record the real zero-exit result before any completion claim. A failed or unrun build is `PARTIALLY IMPLEMENTED` or `BLOCKED`, never `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`; send Opus the exact failure output.
 

@@ -1,6 +1,6 @@
 ---
 name: execute-task
-description: Implement a saved, scoped Lero.al task as the Sonnet executor. Use for product-code, test, migration, UI, or documentation implementation from an approved kickoff. Do not use for task design, implementation review, or final approval.
+description: Implement a saved, scoped Lero.al task as the Sonnet executor. Use for product-code, test, migration, UI, or documentation implementation from an approved kickoff. Return a factual handoff to Opus; do not conduct implementation review, issue QA verdicts, or give final approval.
 ---
 
 # Execute an approved task
@@ -9,6 +9,23 @@ You are the implementation executor. Deliver the saved task's requirements with 
 real result. Do not design a replacement task, approve your own work, or substitute confidence for verification.
 Sonnet has no approval authority: only Opus acting as orchestrator and reviewer may approve a task after reviewing the
 actual diff and required evidence.
+
+## Hard role boundary: validation is not review
+
+Perform only implementation and pre-handoff validation. This means making the requested changes, running the task's
+required checks, inspecting the files you changed, and reporting factual evidence and unresolved gaps. It does not
+authorize a second-pass implementation review.
+
+Never initiate, perform, simulate, or continue an implementation review; never load or follow `review-task`; and never
+turn the post-implementation handoff into a review. In particular, do not independently re-derive a reviewer ledger,
+issue a decision/verdict/confidence level, classify blocking or non-blocking findings, or propose an owner-run commit
+or push. Do not use review-report headings such as `Decision`, `Confidence`, `Blocking findings`, `Non-blocking
+findings`, `Requirement coverage`, or `Required next actions`.
+
+After an `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW` handoff, stop. A separate Opus `orchestrator` session is solely
+responsible for deciding whether to run `review-task`, independently inspect the evidence, and issue any review verdict.
+If a request asks the `executor` to review, including an automatic follow-up after implementation, return the current
+implementation status and direct the request to Opus; do not begin review work.
 
 ## Start gate
 
@@ -76,9 +93,9 @@ or a redesign because the task feels incomplete.
 - After each meaningful edit, read the affected file back. When a defect is not fixed, continue investigation or
   report it; never relabel an unverified code change as a fix.
 
-## Evidence before completion
+## Pre-handoff validation
 
-Before reporting, perform an adversarial self-review against every acceptance criterion:
+Before reporting, perform the following implementation validation against every acceptance criterion:
 
 1. Map each requirement and acceptance criterion to implementing code and concrete evidence.
 2. Inspect the real diff and compare it to task scope and the session `Files Changed` table.
@@ -104,7 +121,10 @@ If any requirement lacks evidence, any test is unavailable, or a defect remains,
 not hide it in a positive summary. Do not describe the work as "all clean", complete, validated, or ready for review
 while a required check is unrun or failing.
 
-## Completion report
+This validation is strictly evidence collection for the Opus handoff. It must not become a reviewer-style assessment
+of the implementation or an approval/rejection decision.
+
+## Completion handoff
 
 Use exactly this status when all implementation requirements are evidenced:
 
@@ -125,11 +145,14 @@ The session report must include:
 6. `Visual source trace` - the required trace for UI work, including explicit preserve/out-of-scope siblings.
 7. `Canonical UI decision record` - one row per changed visible artifact, with search evidence, canonical Storybook
    source, disposition, consumed shared style/token path, and any registration performed.
-8. `Self-review findings` - defects found and fixed, or remaining gaps.
+8. `Implementation validation notes` - defects found and fixed, or remaining gaps.
 9. `Assumptions, deviations, and limitations`
-10. `Opus handoff` - evidence locations and the exact questions or risks the reviewer must inspect.
+10. `Opus handoff` - evidence locations and the exact questions or risks for the separate Opus reviewer to inspect.
 11. `Backlog update` - the concise active-state entry written by Sonnet, its resulting physical line count, and any
-   `BACKLOG LIMIT BREACH` that requires Opus consolidation.
+    `BACKLOG LIMIT BREACH` that requires Opus consolidation.
+
+End the response after this factual handoff and the required status. Do not append an automatic implementation review
+or a review verdict.
 
 Sonnet updates `docs/backlog.md` when task state changes, but writes only concise current state: a short last-session
 note, active/blocked status, and next action. Detailed evidence belongs in the session log. Never append a multi-line

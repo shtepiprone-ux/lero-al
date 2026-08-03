@@ -117,9 +117,12 @@ Do not apply legacy implementation details to new Mantine work unless the task i
   sprint fits, open the next one with its own plan file before writing the kickoff. Binds Task **706** onward; Sprints
   **45** is not a planned sprint — it is the name given after the fact to the unsprinted 621–705 period, and those
   kickoffs stay at their original paths. Discipline restarts at 46.
-  Open sprints, running in parallel: **46** (`tasks/Sprints/Sprint_46_ListingCard_DeTailwind_And_Overlay_Exit.md`)
-  and **47** (`tasks/Sprints/Sprint_47_Layout_Shell_DeHybrid.md`). Pick the one whose goal the task actually fits;
-  if neither does, open 48 with its own plan file first. Do not treat "the highest number" as "the current one".
+  Open sprints (2026-08-03): **46** (`tasks/Sprints/Sprint_46_ListingCard_DeTailwind_And_Overlay_Exit.md`) and
+  **49** (`tasks/Sprints/Sprint_49_HeroSearch_Gate_And_DeTailwind.md`). Sprint **47** is closed; **48** closes with
+  707. **50** is reserved for `MobileBottomNavView` and needs its own plan file before its kickoff. Pick the sprint
+  whose goal the task actually fits; if none does, open the next one with a plan file first. Do not treat "the
+  highest number" as "the current one". Sprint 49 is **ordered**: 708 blocks 709 (**D32** — a migration may not be
+  proven against a comparator that has not been shown to fail).
 - Every implementation kickoff must be saved under `tasks/`; a chat-only handoff is not sufficient.
 - Every kickoff must include current behavior to preserve, required after behavior, positive flow, applicable negative flows, acceptance criteria, QA profile, and verification plan.
 - The executor's report is not proof. Approval requires inspecting the real changed files, diff, and validation evidence required by the selected QA profile.

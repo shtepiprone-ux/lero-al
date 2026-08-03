@@ -7,14 +7,15 @@ import { getImagePriority } from '@/lib/imageDelivery'
 import { ViewAllLink } from '@/components/shared/ViewAllLink'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
 import { SECTION_HEADING_FZ } from '@/design-system/mantine/typography'
+import styles from './FeaturedListingsView.module.css'
 
 /** Skeleton card chrome for the loading grid — owned by the View (Task 665 container/View
  * split; moved out of FeaturedListings.tsx so the View never imports its container). */
 function CardSkeleton() {
   return (
-    <Box className="rounded-xl border bg-card overflow-hidden">
+    <Box className={styles.skeletonCard}>
       <Skeleton style={{ aspectRatio: '4 / 3' }} />
-      <Box className="p-3 space-y-2">
+      <Box className={styles.skeletonBody}>
         <Skeleton height={12} width={80} />
         <Skeleton height={16} />
         <Skeleton height={16} width="75%" />

@@ -16,7 +16,7 @@ export function AgentCtaButton({ href, label }: AgentCtaButtonProps) {
       href={href}
       variant="filled"
       size="sm"
-      leftSection={<Building2 className="h-4 w-4" />}
+      leftSection={<Building2 size={16} />}
       data-track="register"
       w={{ base: '100%', sm: 'auto' }}
       styles={{

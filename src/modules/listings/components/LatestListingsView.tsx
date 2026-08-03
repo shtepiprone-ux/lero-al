@@ -5,14 +5,15 @@ import { Skeleton, Box, Text, SimpleGrid } from '@mantine/core'
 import { ListingCard, type CardListingData } from '@/modules/listings/components/ListingCard'
 import { getImagePriority } from '@/lib/imageDelivery'
 import type { ExchangeRates } from '@/lib/getExchangeRate'
+import styles from './LatestListingsView.module.css'
 
 /** Skeleton row chrome for the loading grid — owned by the View (Task 665 container/View
  * split; moved out of LatestListings.tsx so the View never imports its container). */
 function RowSkeleton() {
   return (
-    <Box className="flex flex-col rounded-xl border bg-card overflow-hidden">
+    <Box className={styles.skeletonRow}>
       <Skeleton style={{ aspectRatio: '4 / 3' }} />
-      <Box className="p-3 space-y-2">
+      <Box className={styles.skeletonBody}>
         <Skeleton height={12} width={80} />
         <Skeleton height={16} />
         <Skeleton height={20} width={112} />

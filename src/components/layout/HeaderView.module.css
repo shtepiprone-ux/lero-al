@@ -1,0 +1,128 @@
+/*
+ * HeaderView.module.css — Task 706 (D28 mechanism-only de-hybrid, D29 header-second split, D30
+ * folds the five prior 390px arbitrary-value utilities into this module's own media query).
+ * Reproduces the PRIOR Tailwind utility chains' OWN compiled output for the 11 `className=` sites
+ * named in the kickoff §3.2 table, verified against a live `getComputedStyle` capture on the real,
+ * pre-edit `Mantine/Primitives/HeaderView/Default` story (I2, 2026-08-02,
+ * `docs/sessions/2026-08-02-task706-headerview-de-hybrid.md`), same convention as
+ * `FooterView.module.css` (Task 673).
+ *
+ * Colour values consume `globals.css` custom properties only (D27 "token not hex") — every value
+ * below was traced to its declaring line in the kickoff §3.6 provenance table:
+ *   --border (neutral-200), --background (neutral-50), --primary (brand-700), --foreground
+ *   (neutral-900). The `/95`, `/60` and `/80` Tailwind v4 opacity modifiers compile to
+ *   `color-mix(in oklab, var(--*) N%, transparent)` (confirmed against the built Tailwind CSS,
+ *   `storybook-static/assets/iframe-*.css`, not computed by hand) — reproduced verbatim below.
+ *
+ * `:hover` MUST live here, never as an inline `style` — `FavoriteButton.tsx` (Task 653) proved an
+ * inline `style` attribute unconditionally beats any external stylesheet rule for the same property
+ * and therefore permanently blocks a module's own `:hover` rule.
+ *
+ * The `@media (min-width: 390px)` rule is the reproduction of the file's prior five arbitrary-value
+ * 390px-breakpoint utilities (`:110` x3, `:128` x2) — D30. I2 straddled the boundary at 389/390 and
+ * confirmed the switch lands exactly at 390px (below: wraps, `.site-header` height 97px; at/above:
+ * single row, height 65px), matching Task 684's D3 97/97/65/65 invariant at 320/375/390/1024.
+ *
+ * `Group unstyled` strips Mantine's own `display:flex` default (Task 629) — every class below that
+ * replaces an `unstyled` `Group`'s className re-declares `display:flex` explicitly so the layout
+ * does not collapse to block (`.bar`, `.desktopNav`, `.rightCluster`, `.userMenuSlot`).
+ */
+
+/* Site #3 — <Box component="header"> (site-header class preserved verbatim outside this module) */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 30; /* z-30 — no --z-* named token exists (globals.css:264-266) */
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  background-color: color-mix(in oklab, var(--background) 95%, transparent); /* bg-background/95 fallback */
+  backdrop-filter: blur(8px); /* backdrop-blur — unconditional in the compiled Tailwind output */
+  -webkit-backdrop-filter: blur(8px);
+}
+@supports (backdrop-filter: blur(0px)) {
+  .header {
+    /* supports-[backdrop-filter]:bg-background/60 — overrides the /95 fallback when supported */
+    background-color: color-mix(in oklab, var(--background) 60%, transparent);
+  }
+}
+
+/* Site #4 — <Group unstyled> row (container-wide class preserved verbatim outside this module) */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem; /* gap-2 — measured 8px, I2 */
+  padding-block: 0.5rem; /* py-2 — measured 8px @<390, I2 */
+}
+@media (min-width: 390px) {
+  .bar {
+    flex-wrap: nowrap;
+    height: 4rem; /* h-16 — measured 64px @>=390, I2 */
+    padding-block: 0;
+  }
+}
+
+/* Site #5 — logo <Anchor unstyled component={Link}> */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* gap-1 — measured 4px, I2 */
+  font-weight: 700; /* font-bold */
+  font-size: 1.25rem; /* text-xl — measured 20px, I2 */
+  line-height: 1.75rem; /* text-xl's own line-height (compiled Tailwind output), I2 */
+}
+
+/* Site #6 — brand <Text unstyled component="span"> */
+.brandPrimary {
+  color: var(--primary);
+}
+
+/* Site #7 — tld <Text unstyled component="span"> */
+.brandForeground {
+  color: var(--foreground);
+}
+
+/* Site #8 — desktop nav <Group unstyled visibleFrom="md"> */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* gap-6 — measured 24px, I2 */
+}
+
+/* Sites #1 / #2 — NavLinks <Anchor unstyled component={Link}> (shared) */
+.navLink {
+  font-size: 0.875rem; /* text-sm — measured 14px, I2 */
+  line-height: 1.25rem; /* text-sm's own line-height (compiled Tailwind output), I2 */
+  font-weight: 500; /* font-medium */
+  color: color-mix(in oklab, var(--foreground) 80%, transparent); /* text-foreground/80 */
+  transition-property: color, background-color, border-color, outline-color, text-decoration-color,
+    fill, stroke; /* transition-colors — measured, I2 */
+  transition-duration: 0.15s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.navLink:hover {
+  color: var(--foreground); /* hover:text-foreground — measured solid (no opacity), I2 */
+}
+
+/* Site #9 — right cluster <Group unstyled> */
+.rightCluster {
+  display: flex;
+  align-items: center;
+  width: 100%; /* w-full — measured, I2 */
+  justify-content: space-between;
+  gap: 0.5rem; /* gap-2 — measured 8px, I2 */
+}
+@media (min-width: 390px) {
+  .rightCluster {
+    width: auto; /* prior w-auto at >=390px */
+    justify-content: flex-start; /* prior justify-start at >=390px */
+  }
+}
+
+/* Site #10 — user-menu slot <Group unstyled visibleFrom="md"> */
+.userMenuSlot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 — measured 8px, I2 */
+}

@@ -92,6 +92,7 @@ export function HeroSearchView({
             bg="gray.1"
             bd="1px solid var(--mantine-color-gray-2)"
             className="rounded-b-[var(--mantine-radius-lg)] sm:rounded-tr-[var(--mantine-radius-lg)] p-3"
+            data-testid="hero-search-card"
           >
             {/* Task 572: flattened into ONE flex-wrap container (no more separate action-buttons
                 <div> grouping filters+Search) so each control's own flex-basis decides its row
@@ -100,7 +101,7 @@ export function HeroSearchView({
                 (was crushed illegible at ~720px — owner-reported). See "Why these exact classes" in
                 the Task 572 kickoff — do NOT swap any basis/grow/shrink utility for the `flex-1`
                 shorthand, it fights the sm:/md: flex-basis overrides. */}
-            <Box className="flex flex-wrap md:flex-nowrap gap-2">
+            <Box className="flex flex-wrap md:flex-nowrap gap-2" data-testid="hero-search-controls">
 
             <PropertyTypeCombobox
               value={propertyType}

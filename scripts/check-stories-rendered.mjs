@@ -1235,17 +1235,19 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     let heroSearchWrapInBand = null;
     if (story.componentName === 'HeroSearch' && viewport.width >= 640 && viewport.width < 768) {
       heroSearchWrapInBand = await page.evaluate(() => {
-        // `.bg-background` alone is AMBIGUOUS inside Storybook: `withTheme` (.storybook/preview.tsx)
-        // wraps EVERY story (Mantine included — it does not check skipCanvas) in an outer
-        // `<div class="min-h-screen bg-background text-foreground">`, which `document.querySelector`
-        // would match FIRST, before ever reaching the real search-bar card nested inside it. Narrow
-        // to the element that ALSO carries the search-bar card's other literal classes
-        // (`border` + `shadow-xl`, from HeroSearchView.tsx's
-        // `"bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3"`) so this can never
-        // resolve to the outer theme wrapper.
-        const card = Array.from(document.querySelectorAll('#storybook-root .bg-background'))
-          .find((el) => el.classList.contains('border') && el.classList.contains('shadow-xl'));
-        const container = card?.querySelector(':scope > .flex.flex-wrap');
+        // Task 708 (D33): anchored on `data-testid`, not a Tailwind class. The original selector
+        // matched `.bg-background` + `.border` + `.shadow-xl` — literal classes Task 652 replaced
+        // with Mantine `bg`/`bd` style props, which silently made `card` (and therefore this whole
+        // assertion) `undefined` forever; every consumer only checks `=== false`, so the dead
+        // selector passed vacuously for ~5 weeks (docs/critical-flow-registry.md row 50). A class
+        // anchor re-breaks on the next de-Tailwind pass (Task 709) the same way; `data-testid` is
+        // inert to className/style changes, so it survives that migration. Card = the search-bar
+        // `Box` (`HeroSearchView.tsx` `data-testid="hero-search-card"`); the control row is now
+        // its own hook (`data-testid="hero-search-controls"`) rather than a `:scope > .flex.flex-wrap`
+        // class match — both are unaffected by the `withTheme` outer `<div class="... bg-background
+        // ...">` wrapper (`.storybook/preview.tsx`) that the old selector had to defend against.
+        const card = document.querySelector('#storybook-root [data-testid="hero-search-card"]');
+        const container = card?.querySelector('[data-testid="hero-search-controls"]');
         if (!container) return null;
         const controls = Array.from(container.children).filter((el) => {
           const r = el.getBoundingClientRect();

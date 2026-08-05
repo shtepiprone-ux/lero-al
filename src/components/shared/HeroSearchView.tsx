@@ -9,6 +9,7 @@ import type { FilterValues } from '@/modules/listings/domain/filterEngine'
 import { LocationCombobox, type LocationOption } from '@/components/shared/LocationCombobox'
 import { PropertyTypeCombobox } from '@/components/shared/PropertyTypeCombobox'
 import type { ListingType } from '@/types/database'
+import styles from './HeroSearchView.module.css'
 
 interface HeroSearchViewProps {
   locations: LocationOption[]
@@ -46,7 +47,7 @@ export function HeroSearchView({
 
   return (
     <>
-      <Box className="hero-search w-full max-w-3xl mx-auto">
+      <Box className="hero-search" w="100%" maw="var(--container-3xl)" mx="auto">
         {/* Task 652: §6c gray SegmentedControl, flush (0px) on top of the bar. Mobile = full-width
             50/50 (fullWidth inside a 100%-wide wrapper); desktop = content-width (fullWidth inside
             a fit-content wrapper) — CSS-based (`w` responsive prop), no hook, keeps the Task-568
@@ -91,7 +92,7 @@ export function HeroSearchView({
           <Box
             bg="gray.1"
             bd="1px solid var(--mantine-color-gray-2)"
-            className="rounded-b-[var(--mantine-radius-lg)] sm:rounded-tr-[var(--mantine-radius-lg)] p-3"
+            className={styles.searchCard}
             data-testid="hero-search-card"
           >
             {/* Task 572: flattened into ONE flex-wrap container (no more separate action-buttons
@@ -101,12 +102,12 @@ export function HeroSearchView({
                 (was crushed illegible at ~720px — owner-reported). See "Why these exact classes" in
                 the Task 572 kickoff — do NOT swap any basis/grow/shrink utility for the `flex-1`
                 shorthand, it fights the sm:/md: flex-basis overrides. */}
-            <Box className="flex flex-wrap md:flex-nowrap gap-2" data-testid="hero-search-controls">
+            <Box className={styles.controls} data-testid="hero-search-controls">
 
             <PropertyTypeCombobox
               value={propertyType}
               onChange={onPropertyTypeChange}
-              className="basis-full sm:basis-auto sm:w-48 shrink-0"
+              className={styles.typeControl}
             />
 
             <LocationCombobox
@@ -115,7 +116,7 @@ export function HeroSearchView({
               onChange={onLocationChange}
               onKeyDown={onLocationKeyDown}
               placeholder={th('hero_placeholder_location')}
-              className="basis-full sm:basis-0 grow min-w-0"
+              className={styles.locationControl}
             />
 
             {/* Task 571: canonical MantineCountButton — owns both the label-collapse (icon-only
@@ -130,8 +131,8 @@ export function HeroSearchView({
               iconOnlyBelow={860}
               onClick={onOpenFilters}
               aria-label={t('advanced_filters')}
-              leftSection={<SlidersHorizontal className="h-4 w-4" />}
-              className="shrink-0"
+              leftSection={<SlidersHorizontal size={16} />}
+              className={styles.filtersControl}
             >
               {t('advanced_filters')}
             </MantineCountButton>
@@ -139,8 +140,8 @@ export function HeroSearchView({
             <Button
               variant="filled"
               onClick={() => onSearch()}
-              className="px-6 font-semibold basis-full sm:basis-full md:grow-0 md:basis-auto"
-              leftSection={<Search className="h-4 w-4" />}
+              className={styles.searchControl}
+              leftSection={<Search size={16} />}
             >
               {t('search')}
             </Button>

@@ -127,6 +127,16 @@ carrying a class that compiles to nothing into a CSS module would mean inventing
 Corroboration from Task 708's AC2: its plant replaced `sm:basis-full` with `sm:basis-auto sm:shrink-0` and the gate
 flipped to `false` — the flip came from the two *added* emitted classes, consistent with `sm:basis-full` being inert.
 
+> **Correction (Task 709-R, 2026-08-05, session log §7):** this section's own measurement was wrong. Task 709's I1
+> re-extraction against its rebuilt bundle found `.sm\:basis-full{flex-basis:100%}` **does** compile, inside
+> `@media(min-width:40rem)` — the pre-edit `HeroSearchView.tsx` source still carried the literal class, so Tailwind's
+> content-scanner correctly generated a rule for it. The bundle this section measured against
+> (`iframe-HOXpMATP.css`, "358081 chars") apparently omitted it for an unknown reason. The **drop decision itself
+> still stands**, but on the correct basis: `sm:basis-full` reasserts the exact same value
+> (`flex-basis:100%`) the unconditional `.basis-full` rule already applies across the whole 640–767 band, and both
+> are overridden identically by `md:basis-auto` at ≥768px — a measured equivalence (Task 709's I2/I3 computed-style
+> diff for site 8 at width=700 confirms zero delta with the rule absent), not a "compiles to nothing" absence.
+
 ### 3.4 Three sites pass `className` into child components
 
 Sites 4, 5 and 7 do not put `className` on a Mantine `Box` — they hand it to a child, which merges it:

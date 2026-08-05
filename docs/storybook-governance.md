@@ -1587,6 +1587,51 @@ Session: `docs/sessions/2026-08-0X-task710-assertion-liveness-meta-gate.md`.
 
 ---
 
+### §14.9.24 — `HeroSearch` Story stand-in closed: renders the same Mantine `Box` composition as production (Task 712, 2026-08-05)
+
+**Why.** `Mantine/Primitives/HeroSearch`'s `Default`/`Fallback` stories
+(`src/stories/mantine/primitives/HeroSearch.stories.tsx:53-54`/`:90-91`) rendered a hand-written
+`<section className="relative py-16 md:py-24">` wrapping `<div className="container-wide relative
+z-10">` — a raw-HTML replica standing in for the production composition
+(`src/app/[locale]/page.tsx:28-29`, `<Box component="section" bg pos py>` wrapping `<Box
+className="container-wide …">`). This predates Task 712 and is exactly the cl. 16c "divergent
+demo stand-in" defect: the CI-blocking `--mantine-only` matrix (§14.9, 40 herosearch cells) proved
+the replica's geometry, never production's.
+
+**The fix.** Both stories now render `<Box component="section" bg="var(--primary)"
+pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>` wrapping `<Box
+className="container-wide">` — byte-identical to production after Task 712 also removed the
+`relative`/`z-10` utilities from `page.tsx:29` itself (D28/D34; A1 measured-inert stacking-census
+proof, not a silent drop — the outer `Box` already carried `pos="relative"`, and the census of
+every positioned/z-indexed descendant was byte-identical before/after except the removed entry
+itself). `container-wide` stays a marker class, unchanged, in both (A3).
+
+**A2 resolved — geometry always matched.** The replica's `py-16 md:py-24` and production's
+`py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}` both compute to `64px`/`96px` — measured
+via `getComputedStyle` on the built Storybook at 320/700/1024, identical before and after the
+parity edit. The Story never actually diverged from production geometrically; only its markup
+(raw HTML vs. `Box`) diverged.
+
+**Why that holds at *every* width, not just the three measured** (Task 712 review, F1). The two
+sides use different breakpoint systems, so three sample widths cannot by themselves justify
+"always". The equivalence holds because `src/design-system/mantine/theme.ts:163-170` overrides
+Mantine's breakpoints onto the Tailwind scale — `md: '48em'` (768px) against Mantine's `62em`
+(992px) default. **Without that override the replica would have rendered `96px` and production
+`64px` across 768–991px, a band no `MANTINE_VIEWPORTS` cell samples** (320/375/390/1024 + the
+HeroSearch-only `band-700`), so the 40-cell comparator would not have caught it. Cite the theme
+override, not the sample, whenever a Tailwind-vs-Mantine responsive equivalence is claimed.
+
+**The 40-cell comparator.** All 40 herosearch cells (2 story IDs × 4 locales × 5 viewports,
+§3.4/§14.9.2's `MANTINE_STORY_EXTRA_VIEWPORTS.HeroSearch`) remain md5-identical to the
+`2026-08-05T11-33` (709-R) baseline — zero visual delta despite the markup swap and the
+production `z-10`/`relative` drop, confirming both fixes are geometry-neutral. Cross-references
+§14.9 (the gate this closes the stand-in gap on) and D32 (comparator demonstrably fails — proven
+by 709/709-R history, not re-proven here).
+
+Session: `docs/sessions/2026-08-05-task712-homepage-route-shell-de-tailwind.md`.
+
+---
+
 ### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
 
 **Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date

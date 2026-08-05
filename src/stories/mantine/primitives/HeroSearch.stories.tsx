@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { Box } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { HeroSearchView } from '@/components/shared/HeroSearchView'
 import { HeroSearchFallback } from '@/components/shared/HeroSearchFallback'
@@ -49,9 +50,11 @@ export const Default: Story = {
       <MantineStoryShell>
         {/* Task 670: production hero background is `bg="var(--primary)"` (solid coral,
             `src/app/[locale]/page.tsx:27`, since Task 659) — the gradient this section used to
-            render here was stale (pre-659). */}
-        <section className="relative py-16 md:py-24" style={{ background: 'var(--primary)' }}>
-          <div className="container-wide relative z-10">
+            render here was stale (pre-659). Task 712: renders the SAME Mantine `Box` composition
+            production renders (`src/app/[locale]/page.tsx:28-29`) — no raw `<section>`/`<div>`
+            wrapper, no raw Tailwind utility (cl. 16c parity). */}
+        <Box component="section" bg="var(--primary)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
+          <Box className="container-wide">
             <HeroSearchView
               locations={locations}
               listingType="sale"
@@ -69,8 +72,8 @@ export const Default: Story = {
               onSearch={() => {}}
               onLocationKeyDown={() => {}}
             />
-          </div>
-        </section>
+          </Box>
+        </Box>
       </MantineStoryShell>
     )
   },
@@ -87,11 +90,11 @@ export const Default: Story = {
 export const Fallback: Story = {
   render: () => (
     <MantineStoryShell>
-      <section className="relative py-16 md:py-24" style={{ background: 'var(--primary)' }}>
-        <div className="container-wide relative z-10">
+      <Box component="section" bg="var(--primary)" pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>
+        <Box className="container-wide">
           <HeroSearchFallback />
-        </div>
-      </section>
+        </Box>
+      </Box>
     </MantineStoryShell>
   ),
 }

@@ -64,8 +64,8 @@ the discovered `componentName` — only the DOM assertion inside it is dead. It 
 
 | # | Title | State | Depends on |
 |---|---|---|---|
-| **708** | Repair the `heroSearchWrapInBand` gate and re-anchor it de-Tailwind-stably | `KICKOFF FILED` — `Sprint_49_kickoff_prompt_Task_708_HeroSearchWrapInBand_Gate_Repair.md` | — |
-| **709** | `HeroSearchView` de-Tailwind — 9 sites → colocated `.module.css` | reserved, **blocked on 708** | 708 |
+| **708** | Repair the `heroSearchWrapInBand` gate and re-anchor it de-Tailwind-stably | ✅ **`APPROVED WITH NOTES`** — reviewed 2026-08-04, committed `16960dc77`. Gate returns `true`×4 in `band-700`; planted violation flips it to `false`×4 with process exit 1. D32 satisfied. | — |
+| **709** | `HeroSearchView` de-Tailwind — 9 sites → Mantine props + one colocated `.module.css` | `KICKOFF FILED` — `Sprint_49_kickoff_prompt_Task_709_HeroSearchView_DeTailwind.md` | 708 ✅ |
 | **710** | Meta-gate: an assertion `null` across every one of its target cells is a dead gate | reserved | may run in parallel with 709 |
 
 **708 is Q4** — it changes a gate, so `docs/qa-profiles.md` requires planted-violation proof that the gate genuinely

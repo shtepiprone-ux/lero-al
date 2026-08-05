@@ -56,6 +56,7 @@ the discovered `componentName` — only the DOM assertion inside it is dead. It 
 |---|---|---|
 | **D32** (2026-08-03) | **A migration may not be proven against a comparator that has not been shown to fail.** 708 repairs and proves the gate; only then may 709 migrate against it. This is the AC11 doctrine (`blind comparator ⇒ BLOCKED, not IMPLEMENTED`) applied to a standing gate rather than a per-task plant. | Binds 708 → 709 |
 | **D33** (2026-08-03) | **Re-anchor, do not re-classify.** The repaired gate must select on a hook that survives de-Tailwinding. Re-anchoring it onto any other Tailwind class would only move the same time-bomb. | Binds 708 |
+| **D34** (2026-08-05) | **A D28 de-Tailwind module must reproduce the utility's cascade layer, not only its declaration and specificity.** Tailwind utilities live in `@layer utilities`; a `.module.css` is unlayered, and per the Cascade Layers spec an unlayered rule beats every layered one. So a mechanically faithful migration can still change which rule wins. Under D28 — whose contract is *zero rendered delta* — the module must therefore be wrapped in `@layer utilities`. **This is the inverse of the 602/629/650/651/653/654/656 pattern**, where a module is deliberately left unlayered so it *can* beat Mantine; those tasks were fixing a utility that never took effect, and their modules must not be layered. The two are distinguished by intent: a D28 migration **reproduces**, a cascade-trap fix **overrides**. Extends 707's N2 from specificity to layers. | Binds 709-R; binds every future de-Tailwind task in Sprints 46, 49, 50 |
 | **D28** (2026-08-01, Sprint 47) | Mechanism-only, zero visual delta. Utilities → Mantine style props where a prop exists, colocated `.module.css` otherwise. | Binds 709 |
 | **D6** (Task 684) | `.screenshots/` evidence is local-only per `.gitignore:55`. Reference by path. | Evidence handling |
 | **D26** (`docs/storybook-governance.md` §14.11) | The rendered-matrix comparator and its sub-perceptual tolerance. Do not invent a per-task pixel tolerance. | Binds 709 |
@@ -65,8 +66,9 @@ the discovered `componentName` — only the DOM assertion inside it is dead. It 
 | # | Title | State | Depends on |
 |---|---|---|---|
 | **708** | Repair the `heroSearchWrapInBand` gate and re-anchor it de-Tailwind-stably | ✅ **`APPROVED WITH NOTES`** — reviewed 2026-08-04, committed `16960dc77`. Gate returns `true`×4 in `band-700`; planted violation flips it to `false`×4 with process exit 1. D32 satisfied. | — |
-| **709** | `HeroSearchView` de-Tailwind — 9 sites → Mantine props + one colocated `.module.css` | `KICKOFF FILED` — `Sprint_49_kickoff_prompt_Task_709_HeroSearchView_DeTailwind.md` | 708 ✅ |
-| **710** | Meta-gate: an assertion `null` across every one of its target cells is a dead gate | reserved | may run in parallel with 709 |
+| **709** | `HeroSearchView` de-Tailwind — 9 sites → Mantine props + one colocated `.module.css` | ⛔ **`NEEDS REVISION`** — reviewed 2026-08-05, **uncommitted**. All 9 sites migrated correctly; every declaration faithful. One defect: the module is unlayered, so site 8's `padding-inline` beats a Mantine `Button` rule the original `px-6` lost to — 12/18px → 24/24px, 20 of 40 herosearch md5s changed. Reviewer-confirmed across 4 runs with a zero noise floor. Corrected by 709-R under D34. | 708 ✅ |
+| **709-R** | Restore site 8's cascade-layer standing — wrap the module in `@layer utilities` | `KICKOFF FILED` — `Sprint_49_kickoff_prompt_Task_709R_HeroSearchView_LayerFix.md` | 709 (inherits its uncommitted tree) |
+| **710** | Meta-gate: an assertion `null` across every one of its target cells is a dead gate | reserved. **Scope grew:** the 709 plant run persisted `EXIT_CODE=0` beside 4 genuine FAILs. Probably a piped-capture artifact, but unproven — 709-R AC5 re-tests it natively and hands a confirmed zero-exit-on-failure here as a P0. | may run in parallel with 709-R |
 
 **708 is Q4** — it changes a gate, so `docs/qa-profiles.md` requires planted-violation proof that the gate genuinely
 fails. A repaired gate that has not been shown to fail is the same defect in a new place.
@@ -92,9 +94,11 @@ that survives in that out-of-scope file either way.
 1. `heroSearchWrapInBand` returns a real boolean in the 8 `band-700` cells, and a planted violation makes
    `npm run screenshots:assert -- --mantine-only` genuinely FAIL (708).
 2. `HeroSearchView.tsx` greps **0** Tailwind utilities; every surviving `className` is `styles.*` or the verbatim
-   `hero-search` marker; all 40 herosearch cells hold their pre-task PNG md5 and verdict (709).
+   `hero-search` marker; all 40 herosearch cells hold their pre-task PNG md5 and verdict (709 + **709-R**).
+   709 satisfied the grep half; the md5 half is restored by 709-R under D34.
 3. A dead assertion cannot pass silently again (710).
-4. `check:design-tokens` unchanged at **23** across all three tasks.
+4. `check:design-tokens` unchanged at **23** across all tasks in this sprint.
+5. **The colocated module reproduces the utility's cascade layer, not only its declaration** (D34, 709-R).
 
 ## 7. Carried-forward corrections from the 707 review
 
@@ -107,6 +111,11 @@ Fold these into every kickoff in this sprint; they are cheap to state and each o
   lives in `@theme inline` and is not emitted. Check emission per token; do not generalise either way.
 - **N2 — reproduce specificity, not just value.** Tailwind wraps sibling-margin and several other rules in
   `:where(...)` (specificity 0,0,0). A module rule that drops the `:where()` wins fights the original lost.
+- **N2-L — reproduce the cascade *layer* too (D34, added 2026-08-05 after Task 709).** N2 is necessary but not
+  sufficient: Task 709 reproduced every declaration and every specificity correctly and *still* regressed, because
+  moving a rule out of `@layer utilities` beats unlayered Mantine CSS the utility had been losing to. Wrap D28
+  migration modules in `@layer utilities`. Do **not** apply this to the 602/656-family modules, which are unlayered on
+  purpose — see D34 for the intent boundary.
 - **N6 — run the counting gates last.** `check:file-integrity` and `check:mojibake` scan git-changed + untracked
   files; running them before the session log and backlog row exist reports a stale denominator. Third recurrence at
   707; a fourth is a P2.

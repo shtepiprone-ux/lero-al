@@ -96,6 +96,9 @@ jobs:
       - name: Design token strict gate (blocking — 0 unsuppressed raw values)
         run: npm run check:design-tokens:strict
 
+      - name: Install Chromium for hydration self-test
+        run: npx playwright install chromium --with-deps
+
       - name: Hydration gate self-test (verifies gate detects violations — CI-safe, no server needed)
         run: npm run check:hydration:verify
 

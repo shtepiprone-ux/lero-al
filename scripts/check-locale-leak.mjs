@@ -192,6 +192,9 @@ const PER_STORY_TOKENS = {
   'patterns-mantine-listingcontactpattern': ['Elira Hoxha', 'Prime Realty Tirana'],
   'patterns-mantine-listingdetailpattern': ['Elira Hoxha', 'Prime Realty Tirana', 'Tirana, Albania'],
   'patterns-mantine-listingcardpattern': ['Tirana, Albania'],
+  // ListingCard: "Tirana, Albania" is the correct Italian spelling of this place name.
+  // Its canonical Storybook ID is mantine-primitives-listingcard--default.
+  'mantine-primitives-listingcard': ['Tirana, Albania'],
   // FiltersPanelShell: heating_gas loanword (it:"Gas") + layout_features loanwords (sq:"Studio"/
   // "Penthouse" — sq keeps these identical to en) + common.max loanword (it:"Max" — it keeps this
   // identical to en); all verified against messages/it.json + messages/sq.json (Task 626).

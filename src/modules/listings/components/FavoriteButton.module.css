@@ -21,23 +21,23 @@
  */
 
 .control[data-favorited='false'] {
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #232323;
+  background-color: color-mix(in srgb, var(--card) 80%, transparent);
+  color: var(--foreground);
 }
 
 .control[data-favorited='true'] {
-  background-color: rgba(142, 50, 43, 0.1);
-  color: #8e322b;
+  background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
+  color: var(--destructive);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .control[data-favorited='false']:hover:not(:disabled) {
-    background-color: #ffffff;
-    color: #8e322b;
+    background-color: var(--card);
+    color: var(--destructive);
   }
 
   .control[data-favorited='true']:hover:not(:disabled) {
-    background-color: rgba(142, 50, 43, 0.2);
+    background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
   }
 }
 
@@ -46,8 +46,8 @@
    `data-fav-disabled` attribute, NOT `data-disabled` — that name is reserved by Mantine's own
    ActionIcon/Button typed `disabled` prop and its internal disabled-state styling hook. */
 .control[data-fav-disabled='true'] {
-  background-color: rgba(245, 245, 245, 0.6);
-  color: #8c8c8c;
+  background-color: color-mix(in srgb, var(--muted) 60%, transparent);
+  color: var(--muted-foreground);
   opacity: 0.5;
   cursor: not-allowed;
 }

@@ -34,7 +34,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
           original single-row layout (title left, button right) byte-for-byte. `min-[390px]:` is
           the same Tailwind arbitrary-breakpoint convention as Task 590's HeaderView split — not a
           new named breakpoint token. */}
-      <div className="flex flex-col min-[390px]:flex-row min-[390px]:items-center min-[390px]:justify-between gap-2 px-4 py-3 border-b shrink-0">
+      <div className="flex flex-col notification-compact:flex-row notification-compact:items-center notification-compact:justify-between gap-2 px-4 py-3 border-b shrink-0">
         <p className="text-sm font-semibold">{t('title')}</p>
         {hasUnread && (
           <Button
@@ -45,7 +45,7 @@ export function NotificationCenter({ notifications, onRead }: Props) {
             disabled={isPending}
             justify="flex-start"
             styles={{ label: { textAlign: 'left' } }}
-            className="w-full min-[390px]:w-auto"
+            className="w-full notification-compact:w-auto"
           >
             {t('mark_all_read')}
           </Button>

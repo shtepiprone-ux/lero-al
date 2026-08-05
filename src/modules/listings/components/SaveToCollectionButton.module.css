@@ -27,11 +27,11 @@
  */
 
 .control[data-shape='icon'] {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: color-mix(in srgb, var(--card) 80%, transparent);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .control[data-shape='icon']:hover:not(:disabled) {
-    background-color: #ffffff;
+    background-color: var(--card);
   }
 }

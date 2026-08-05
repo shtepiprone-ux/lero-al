@@ -101,6 +101,13 @@ Before reporting, perform the following implementation validation against every 
 2. Inspect the real diff and compare it to task scope and the session `Files Changed` table.
 3. Run the exact tests, checks, and commands required by the task and QA profile. Record actual output/results, not
    intended commands or expected results.
+3a. **Capture every evidence transcript unpiped.** Redirect a command's output to a file, then append the shell's
+    exit-code variable (`$?` in Bash, `$LASTEXITCODE` in PowerShell) as its own separate statement into that same
+    file. Never pipe a gate's output through another command (`| tee`, `| Select-Object`, etc.) and trust the piped
+    command's exit code — it reports the pipe's own status, not the upstream command's. Task 709 persisted
+    `EXIT_CODE=0` beside 4 genuine FAILs this way; Task 709-R re-captured the identical command unpiped and got the
+    real `EXIT_CODE=1` (see `docs/storybook-governance.md` §14.9.23). The defect was in evidence capture, not in
+    any gate's logic — but a mis-captured transcript is exactly as misleading as a broken gate.
 4. For every non-Q0 task, run `npm run build` after the final edit and record its actual zero-exit result. This is a
    hard completion gate even when the selected profile would otherwise require only targeted checks or typechecking.
    If the build fails or cannot run, stop and return `PARTIALLY IMPLEMENTED` or `BLOCKED` with the exact output and

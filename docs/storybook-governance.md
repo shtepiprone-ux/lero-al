@@ -1499,6 +1499,94 @@ Session: `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`.
 
 ---
 
+### §14.9.23 — Assertion-liveness meta-gate: a `null`-everywhere assertion is a dead gate, not a pass (Task 710, 2026-08-05)
+
+**Why.** Every consumer of a `cell.assertions.<key>` boolean only ever tests `=== false`
+(`isTransientFailure()`, `hardPass`, §14.9.17) — never "is this a real boolean". A key that is
+`null`/absent in EVERY cell of its scope therefore contributes `true` to `hardPass` while never
+having checked anything: it LOOKS like a passing gate and is actually a vacuous one. This is
+exactly how Task 573's `fullWidthButtonsAtMobile`/`popupBottomSheetAtMobile` assertions died
+unnoticed for ~5 weeks (docs/critical-flow-registry.md row 50) — nothing detected the death until
+the 709/709-R review measured the CI-blocking `--mantine-only` manifest by direct enumeration and
+found both `null` in **all 1184 cells**.
+
+**Root cause (measured, not guessed).** `fullWidthButtonsAtMobile`'s candidate selector
+(`[data-slot="button"]:not([data-icon-only])`, `check-stories-rendered.mjs:1161`) and
+`popupBottomSheetAtMobile`'s six candidate selectors (`:1185-1192`) are all `data-slot` names — a
+**shadcn** convention emitted only by `src/components/ui/*` (27 files). Mantine-scope stories
+render `m_*`/`mantine-*-root` classes and no `data-slot` at all, so `checkedAny` never becomes
+`true` and both assertions write `null` unconditionally. **Same root cause §14.9.9 already
+recorded for a different check** — geometry's `PORTAL_SELECTOR` "only matches legacy shadcn
+`data-slot` names Mantine never renders" — never generalised into a standing detector until now.
+
+**The gate.** `scripts/check-assertion-liveness.mjs` (`npm run check:assertion-liveness`) reads an
+already-persisted `manifest.json` — it never launches a browser — and classifies every **boolean**
+assertion key it finds, SHAPE-driven (a key is a candidate iff every value it ever takes is `true`,
+`false`, or `null`; an object-valued key like `renderCheck`/`styleIntegrity`/`visualIntegrity` is
+skipped automatically, never by a hardcoded name list). `null` and "key absent from this cell" are
+treated identically. Four states:
+
+| State | Meaning | Exit contribution |
+|---|---|---|
+| `LIVE` | resolved `true`/`false` in ≥1 cell | none |
+| `DEAD-NEW` | `null`/absent in EVERY cell, no registry entry for this `{scope, assertion}` | **blocking (1)** |
+| `DEAD-KNOWN` | `null`/absent in EVERY cell, AND a registry entry tracks it | reported loudly, non-blocking |
+| `STALE-ENTRY` | a registry entry names it, but it resolved `true`/`false` in ≥1 cell again | **blocking (1)** |
+
+Bad input (manifest missing, unparseable, no `matrix` array, or zero cells) exits **2**, distinctly
+per case — never a silent green.
+
+**Registry contract (`scripts/assertion-liveness-registry.json`).** One entry per
+`{ scope, assertion }`. Every entry is a **TRACKED DEAD GATE, not an exemption**: it MUST carry a
+`followUpTask`, `deadSince`, and `reason`. `DEAD-KNOWN` is reported in the same voice
+`check-stories-rendered.mjs:1854`'s known-failure registry uses ("TRACKED … NOT fixed here").
+Mirrors `check:design-tokens`'s stale-marker precedent: if the registered assertion comes back to
+life, that is `STALE-ENTRY` — a hard failure naming the exact entry to delete — so the registry can
+never rot into a silent allowlist for the next 573-class death. Current entries (both scope
+`mantine-only`, `followUpTask: 711`): `fullWidthButtonsAtMobile`, `popupBottomSheetAtMobile`.
+
+**Scope is part of the registry key (A3) — full-matrix liveness is UNMEASURED.** §3.1's
+measurements, and both registry entries, are `--mantine-only` only. The two dead assertions may
+well be live in the full (non-Mantine) matrix, where shadcn stories DO render `data-slot` — that
+sweep was not run (out of this task's budget) and no claim is made about it.
+
+**CI wiring.** `governance-pr.yml`'s `rendered-proof` job runs `npm run check:assertion-liveness`
+immediately after `npm run screenshots:assert -- --mantine-only`, with no explicit `--manifest`
+flag — the gate's default manifest discovery picks the latest directory under
+`.screenshots/rendered-assert/` (lexicographic sort == chronological sort for the
+`YYYY-MM-DDTHH-MM` directory names), which on a fresh CI checkout is exactly the run the previous
+step just produced.
+
+**Self-test (`npm run check:assertion-liveness:verify`, house `--verify-gate` pattern,
+`check-homepage-grid.mjs:655-760`).** A negative arm (the real, latest manifest — expect exit 0)
+plus three planted failing arms, each asserted on both its exit code AND its specific diagnostic
+text (never merely "it failed"): an unregistered all-null key (`DEAD-NEW`, exit 1), a registered
+key that resolved `true` in a cell (`STALE-ENTRY`, exit 1), and a nonexistent manifest path
+(exit 2, distinct `[missing-file]` message). All four of the R8 degenerate-input cases (missing
+file, unparseable JSON, no `matrix` array, zero-cell `matrix`) were additionally run directly
+against dedicated fixtures and each produces its own distinct message, all exit 2.
+
+**Structural regression coverage (R9).** `scripts/__tests__/rendered-gate-exit-code.test.ts`
+asserts `check-stories-rendered.mjs`'s `if (failed > 0)` branch still contains
+`process.exitCode = 1` and that no later line in the file resets it to `0` — protecting the sweep's
+own failure exit path (see the unpiped-capture rule immediately below) independently of this
+meta-gate. `check-stories-rendered.mjs` itself has **zero diff** from this task (D33 — a migration
+may not be proven against a comparator not shown to fail applies equally to a gate this task must
+not silently weaken).
+
+**Unpiped-capture rule (R10 — see also `.claude/skills/execute-task/SKILL.md`).** Task 709
+persisted `EXIT_CODE=0` in its evidence transcript beside 4 genuine FAILs; 709-R proved, capturing
+the SAME command unpiped, that the sweep really does exit 1 — the zero was a piped-capture
+artifact (`$?`/`$LASTEXITCODE` reads a pipe's own status, not the upstream command's), not a code
+defect. **Every evidence transcript in this repo must redirect a command's output to a file, then
+append the shell's exit-code variable as its own separate statement into that same file** — never
+pipe a gate's output through another command (`| tee`, `| Select-Object`, etc.) and trust the
+piped exit code. This task's own evidence transcripts follow that rule throughout.
+
+Session: `docs/sessions/2026-08-0X-task710-assertion-liveness-meta-gate.md`.
+
+---
+
 ### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
 
 **Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date

@@ -160,6 +160,13 @@ jobs:
         # follow-up. Story/cell counts are printed by the run itself; do not hardcode them here.
         run: npm run screenshots:assert -- --mantine-only
 
+      - name: Assertion-liveness meta-gate (Task 710 — a null-everywhere assertion is a dead gate, not a pass)
+        # Reads the manifest.json the previous step just produced (default discovery: the latest
+        # dir under .screenshots/rendered-assert/, which is exactly that run on a fresh checkout).
+        # Fails on a NEW dead assertion or a STALE registry entry; reports the two currently-tracked
+        # dead assertions (Task 711) loudly without blocking. Never launches a browser.
+        run: npm run check:assertion-liveness
+
       - name: Upload rendered-assert report
         if: always()
         uses: actions/upload-artifact@v4

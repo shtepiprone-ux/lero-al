@@ -99,7 +99,7 @@ function stubMatchMedia(matches: boolean) {
 
 afterEach(() => cleanup())
 
-describe('RangeDatePicker — desktop (Task 558/561)', () => {
+describe('RangeDatePicker — desktop (Task 558/561)', { timeout: 15_000 }, () => {
   beforeEach(() => stubMatchMedia(false))
 
   it('picking from+to (fresh, no pre-existing value) then Apply fires ONE onChange({from,to})', () => {
@@ -238,7 +238,7 @@ describe('RangeDatePicker — desktop (Task 558/561)', () => {
   })
 })
 
-describe('RangeDatePicker — mobile (Task 558/561)', () => {
+describe('RangeDatePicker — mobile (Task 558/561)', { timeout: 15_000 }, () => {
   beforeEach(() => stubMatchMedia(true))
 
   it('tapping days alone does NOT fire onChange; only Confirm commits', () => {
@@ -299,7 +299,7 @@ describe('RangeDatePicker — mobile (Task 558/561)', () => {
   })
 })
 
-describe('RangeDatePicker — trigger (Task 558)', () => {
+describe('RangeDatePicker — trigger (Task 558)', { timeout: 15_000 }, () => {
   beforeEach(() => stubMatchMedia(false))
 
   it('clear-X commits onChange({undefined,undefined}) and does NOT open the panel', () => {

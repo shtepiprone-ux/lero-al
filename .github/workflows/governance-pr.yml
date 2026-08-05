@@ -115,16 +115,58 @@ jobs:
         if: always()
         run: npm run governance
 
-  # ── Rendered proof and locale leak run as TWO INDEPENDENT jobs (no `needs`) ──
-  # Previously both ran as sequential steps inside one 45-min job, so locale-leak
-  # only got whatever budget rendered-proof left behind and was Cancelled on timeout
-  # rather than producing an explicit PASS/FAIL. Split so each gets its own full
-  # 45-min budget and runs in parallel. Both build Storybook independently (no shared
-  # artifact between jobs). Full matrix stays blocking — no --fast, no reduced
-  # stories/locales/viewports.
+  # ── Rendered proof, homepage-grid, and locale leak run as independent jobs (no `needs`) ──
+  # Each job gets its own 45-minute GitHub Actions budget. The homepage-grid gate and
+  # its self-test use Playwright extensively, so keeping them before rendered-proof
+  # left the rendered-proof matrix insufficient time to complete. The three jobs build
+  # Storybook independently (no shared artifact). The rendered-proof and homepage-grid
+  # matrices stay blocking — no --fast, reduced stories, locales, or viewports.
 
   rendered-proof:
     name: Rendered Proof (Mantine)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Build Storybook (runs check:stories pre-gate)
+        run: npm run build-storybook
+
+      - name: Rendered-proof gate (Task 529 — Mantine/Primitives/* enforced, auto-discovered)
+        # --mantine-only: blocks CI specifically on the Mantine/Primitives/* gate this task adds.
+        # Deliberately does NOT also run the pre-existing ASSERT_STORIES/geometry-only phases here —
+        # running the full assert surfaced pre-existing failures across unrelated admin stories
+        # (AdminSidebar, AdminSupportManager, NotificationCenter, AdminReportsManager, etc.) that
+        # predate this task and are out of its scope to fix; wiring the FULL gate in as blocking
+        # would make every PR red for reasons unrelated to Mantine primitives. See the Task 529
+        # session log for the full breakdown — that pre-existing gap is flagged as a separate
+        # follow-up. Story/cell counts are printed by the run itself; do not hardcode them here.
+        run: npm run screenshots:assert -- --mantine-only
+
+      - name: Upload rendered-assert report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-assert-report
+          path: .screenshots/rendered-assert/
+          retention-days: 7
+
+  homepage-grid:
+    name: Homepage Grid Validation
     runs-on: ubuntu-latest
     timeout-minutes: 45
 
@@ -152,25 +194,6 @@ jobs:
 
       - name: Homepage grid invariants gate self-test (verifies gate detects violations — CI-safe)
         run: npm run check:homepage-grid:verify
-
-      - name: Rendered-proof gate (Task 529 — Mantine/Primitives/* enforced, auto-discovered)
-        # --mantine-only: blocks CI specifically on the Mantine/Primitives/* gate this task adds.
-        # Deliberately does NOT also run the pre-existing ASSERT_STORIES/geometry-only phases here —
-        # running the full assert surfaced pre-existing failures across unrelated admin stories
-        # (AdminSidebar, AdminSupportManager, NotificationCenter, AdminReportsManager, etc.) that
-        # predate this task and are out of its scope to fix; wiring the FULL gate in as blocking
-        # would make every PR red for reasons unrelated to Mantine primitives. See the Task 529
-        # session log for the full breakdown — that pre-existing gap is flagged as a separate
-        # follow-up. Story/cell counts are printed by the run itself; do not hardcode them here.
-        run: npm run screenshots:assert -- --mantine-only
-
-      - name: Upload rendered-assert report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: rendered-assert-report
-          path: .screenshots/rendered-assert/
-          retention-days: 7
 
   locale-leak:
     name: Locale Leak Detection

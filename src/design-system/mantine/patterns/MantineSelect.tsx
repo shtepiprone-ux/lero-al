@@ -50,7 +50,7 @@ function flattenData(data: ComboboxData | undefined): ComboboxItem[] {
 
 // ── MantineSelect ─────────────────────────────────────────────────────────────
 
-export interface MantineSelectProps extends SelectProps {}
+export type MantineSelectProps = SelectProps
 
 /**
  * Canonical P0-compliant responsive Select.

@@ -111,7 +111,7 @@ export const Default: Story = {
               disablePastDates — prop accepted, trigger unaffected while closed (forcing this OPEN
               too, alongside the section below, made two floating panels collide on screen — a
               story-layout artifact confirmed via a rendered-gate probe, not a component defect;
-              see the session log's Rendered evidence for an isolated open capture of this prop)
+              see the session log&apos;s Rendered evidence for an isolated open capture of this prop)
             </Text>
             <RangeDatePickerRow disablePastDates placeholder={t('range_placeholder')} />
           </Stack>

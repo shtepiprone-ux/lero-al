@@ -123,8 +123,9 @@ function ReportDetailDialog({
 
   const reasonKey = `report_reason_${report.reason}` as Parameters<typeof tl>[0]
   const listingUrl = report.listing ? `/${locale}/listings/${report.listing.slug}` : null
-  const isOpen = report.status === 'pending' || report.status === 'reviewed'
-  const isTerminal = report.status === 'resolved' || report.status === 'dismissed'
+  const reportStatus = report.status
+  const isOpen = reportStatus === 'pending' || reportStatus === 'reviewed'
+  const isTerminal = reportStatus === 'resolved' || reportStatus === 'dismissed'
 
   const statusItems = ALL_STATUSES.map(s => ({
     value: s,

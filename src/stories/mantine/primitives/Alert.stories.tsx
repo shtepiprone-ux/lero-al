@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { Alert, Stack, Text } from '@mantine/core'
 import { CircleCheck, TriangleAlert, CircleX, Info } from 'lucide-react'
 import { storyT } from '../../_storyI18n'

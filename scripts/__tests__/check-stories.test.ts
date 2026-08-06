@@ -38,11 +38,23 @@ function makeRoot(): string {
   mkdirSync(join(dir, 'src', 'stories', 'fixtures'), { recursive: true })
   mkdirSync(join(dir, 'src', 'components'), { recursive: true })
   mkdirSync(join(dir, 'src', 'modules'), { recursive: true })
+  mkdirSync(join(dir, 'src', 'design-system', 'mantine'), { recursive: true })
   mkdirSync(join(dir, 'messages'), { recursive: true })
   const emptyMsg = JSON.stringify({ storybook: {} })
   for (const l of ['sq', 'en', 'uk', 'it']) {
     writeFileSync(join(dir, 'messages', `${l}.json`), emptyMsg)
   }
+  // Check 15 (Task 686) scans all of src/, so every test root needs a real registered-colour
+  // set — without this stub, loadRegisteredColorNames() returns an empty Set for every test
+  // root, and the widened scope would flag every legal colour fixture (including a
+  // deliberately-legal `color="brand"`) as a violation (§3.6). Kept in sync by hand with the
+  // real theme.ts's `colors: {…}` object — this is a stub, not an import of the real file.
+  writeFileSync(
+    join(dir, 'src', 'design-system', 'mantine', 'theme.ts'),
+    'export const theme = {\n' +
+    '  colors: { brand: [], gray: [], green: [], yellow: [], red: [], blueLight: [], purple: [], sale: [], orange: [] },\n' +
+    '}\n'
+  )
   return dir
 }
 
@@ -773,17 +785,206 @@ describe('Check 13: Duplicate-family export names (Proof/Demo/Filtered/Canonical
   })
 })
 
+// ── Check 15: Unregistered Mantine colour — forms A/B/C (Task 685, widened Task 686) ──
+
+describe('Check 15: Unregistered Mantine colour prop — Form A (literal prop)', () => {
+  it('BAD — color="cyan" (stock, unregistered) FAILS', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoA.tsx', `export const DemoA = () => <Text color="cyan">x</Text>`)
+    const v = gate(root).violations.filter(v => v.rule === 'unregistered-mantine-colour')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('color="cyan"')
+  })
+
+  it('GOOD — color="brand" (registered) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoA.tsx', `export const DemoA = () => <Text color="brand">x</Text>`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour')).toBe(false)
+  })
+
+  it('GOOD — c="gray.5" (registered, shaded) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoA.tsx', `export const DemoA = () => <Text c="gray.5">x</Text>`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour')).toBe(false)
+  })
+})
+
+describe('Check 15: Unregistered Mantine colour prop — Form B (var(--mantine-color-*))', () => {
+  it('BAD — var(--mantine-color-teal-6) (stock, unregistered) FAILS', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoB.tsx', `export const DemoB = () => <div style={{ color: 'var(--mantine-color-teal-6)' }} />`)
+    const v = gate(root).violations.filter(v => v.rule === 'unregistered-mantine-colour-var')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('var(--mantine-color-teal-6)')
+  })
+
+  it('GOOD — var(--mantine-color-brand-7) (registered) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoB.tsx', `export const DemoB = () => <div style={{ color: 'var(--mantine-color-brand-7)' }} />`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-var')).toBe(false)
+  })
+
+  it('GOOD — var(--mantine-color-white) (no digit shade) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoB.tsx', `export const DemoB = () => <div style={{ color: 'var(--mantine-color-white)' }} />`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-var')).toBe(false)
+  })
+})
+
+describe('Check 15: Unregistered Mantine colour prop — Form C (*COLOR* map)', () => {
+  it('BAD — const DEMO_COLOR = { x: "grape" } (stock, unregistered) FAILS', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoC.tsx', `const DEMO_COLOR = { x: 'grape' }\nexport { DEMO_COLOR }`)
+    const v = gate(root).violations.filter(v => v.rule === 'unregistered-mantine-colour-map')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain("'grape'")
+  })
+
+  it('GOOD — const STATUS_COLOR = { active: "green" } (registered) PASSES', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoC.tsx', `const STATUS_COLOR = { active: 'green', blocked: 'red' }\nexport { STATUS_COLOR }`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-map')).toBe(false)
+  })
+
+  it('GOOD — a map not named *COLOR* is not scanned even with a stock unregistered value', () => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoC.tsx', `const NOT_A_MAP = { x: 'grape' }\nexport { NOT_A_MAP }`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour-map')).toBe(false)
+  })
+})
+
+describe('Check 15: F3 passthrough set (CSS-wide keywords, CSS functions, Mantine keywords)', () => {
+  it.each([
+    ['transparent', `<Box bg="transparent">a</Box>`],
+    ['currentColor', `<Text color="currentColor">b</Text>`],
+    ['oklch()', `<Text c="oklch(0.6 0.2 20)">c</Text>`],
+    ['linear-gradient()', `<Box bg="linear-gradient(90deg, #fff, #000)">d</Box>`],
+    ['dimmed', `<Text c="dimmed">e</Text>`],
+  ])('GOOD — %s PASSES', (_label, jsx) => {
+    const root = tmpRoot()
+    writeComponent(root, 'DemoF3.tsx', `export const DemoF3 = () => ${jsx}`)
+    expect(hasRule(gate(root).violations, 'unregistered-mantine-colour')).toBe(false)
+  })
+})
+
+describe('Check 15: underivable registered-colour set fails loudly', () => {
+  it('BAD — missing theme.ts reports colour-registered-set-underivable, not a silent empty-set scan', () => {
+    const root = tmpRoot()
+    rmSync(join(root, 'src', 'design-system', 'mantine', 'theme.ts'), { force: true })
+    const v = gate(root).violations
+    expect(hasRule(v, 'colour-registered-set-underivable')).toBe(true)
+    // No unregistered-colour noise should fire once the set is known-bad — the loud fail is the
+    // only signal, not a flood of false positives from scanning with an empty set.
+    expect(hasRule(v, 'unregistered-mantine-colour')).toBe(false)
+  })
+})
+
+// ── Check 16: Wall-clock fixture values (Task 697, §14.10) ─────────────────────
+
+describe('Check 16: Wall-clock fixture values', () => {
+  it('BAD — Date.now() used as a fixture value FAILS', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16a.fixture.ts', `export const created_at = new Date(Date.now() - 2 * 86_400_000).toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('Date.now()')
+  })
+
+  it('BAD — bare new Date() used as a fixture value FAILS', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16b.fixture.ts', `export const NOW = new Date().toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('new Date()')
+  })
+
+  it('GOOD — a frozen constant derived by arithmetic from a documented anchor PASSES', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16c.fixture.ts',
+      `const FIXTURE_ANCHOR_MS = Date.parse('2026-07-30T00:00:00.000Z')\n` +
+      `export const created_at = new Date(FIXTURE_ANCHOR_MS - 2 * 86_400_000).toISOString()`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('GOOD — a frozen new Date(<iso literal>) PASSES', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16d.fixture.ts', `export const expires_at = new Date('2026-01-01T00:00:00.000Z').toISOString()`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('GOOD — a comment mentioning new Date()/Date.now() PASSES', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16e.fixture.ts',
+      `// Fixed dates (no Math.random()/new Date() wall-clock in fixtures per Storybook governance §14) —\n` +
+      `export const created_at = '2026-07-28T00:00:00.000Z'`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  // ── Task 698 F3 corrections: trailing comment, string literal, split new/Date() ──────────
+
+  it('GOOD — a trailing line comment mentioning new Date() PASSES (Task 698)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16f.fixture.ts',
+      `export const created_at = '2026-07-28T00:00:00.000Z' // no new Date() here, already frozen`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('GOOD — a string literal containing the text "new Date()" PASSES (Task 698)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16g.fixture.ts',
+      `export const warningText = 'Do not use new Date() in story fixtures'`)
+    expect(hasRule(gate(root).violations, 'wall-clock-fixture-value')).toBe(false)
+  })
+
+  it('BAD — a new / Date() pair split across a line break FAILS (Task 698)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16h.fixture.ts',
+      `export const NOW = new\n  Date().toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].detail).toContain('new Date()')
+  })
+
+  // ── Task 698 REVIEW F1: an unclosed apostrophe must not mask away real code ──────────────
+  // A JS string literal cannot contain a raw line break, so an apostrophe with no close on its
+  // own line is JSX text or a regex literal — not a string delimiter. Before the fix, masking
+  // ran from that apostrophe to the next stray quote anywhere in the file and silently
+  // swallowed the real violation below it, turning Check 16 under-broad.
+
+  it('BAD — an apostrophe in JSX text does not hide a real new Date() below it (Task 698 review F1)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16i.fixture.tsx',
+      `export const Label = () => <span>It's brand new</span>\n` +
+      `export const NOW = new Date().toISOString()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].line).toBe(2)
+    expect(v[0].detail).toContain('new Date()')
+  })
+
+  it('BAD — an apostrophe inside a regex literal does not hide a real Date.now() below it (Task 698 review F1)', () => {
+    const root = tmpRoot()
+    writeFixture(root, 'demo16j.fixture.ts',
+      `const re = /don't/\n` +
+      `export const NOW = Date.now()`)
+    const v = gate(root).violations.filter(v => v.rule === 'wall-clock-fixture-value')
+    expect(v.length).toBe(1)
+    expect(v[0].line).toBe(2)
+    expect(v[0].detail).toContain('Date.now()')
+  })
+})
+
 // ── Gate completeness ─────────────────────────────────────────────────────────
 
 describe('gate completeness', () => {
-  // Tracks the real number of checks `runGate` runs (check-stories.mjs:872, hardcoded
-  // `checksRan: 14`). Was 13 pre-Task-520 (Check 14, Mantine Button off-scale size, added
-  // a 14th check without updating this assertion — stale drift, reconciled by Task 614).
+  // Tracks the real number of checks `runGate` runs (check-stories.mjs, hardcoded
+  // `checksRan: 16`). Was 15 pre-Task-697 (Check 16, wall-clock fixture values, added a 16th
+  // check — this assertion is bumped in the same task, unlike Check 14's historical drift).
   // Bump this deliberately whenever a new Check N is added to the gate.
-  it('checksRan === 14 on a clean root (all 14 checks executed)', () => {
+  it('checksRan === 16 on a clean root (all 16 checks executed)', () => {
     const root = tmpRoot()
     const { checksRan } = gate(root)
-    expect(checksRan).toBe(14)
+    expect(checksRan).toBe(16)
   })
 
   it('returns 0 violations on a clean root with valid messages', () => {

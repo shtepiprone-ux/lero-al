@@ -1,21 +1,20 @@
 # Component Catalog — Lero.al
-Last generated: 2026-06-01
+Last generated: 2026-07-24 (Summary counters hand-corrected 2026-07-29 for Task 672's `MobileBottomNavView` and Task 681's `sonner` deletion; full regeneration deferred to avoid sweeping in unreviewed Task 669/675 drift)
 See `docs/component-catalog-governance.md` for classification rules.
 See `docs/component-coverage-matrix.md` for coverage mapping.
 See `docs/component-risk-register.md` for risk register.
-See `docs/design-system.md §7` for the canonical **component-ownership taxonomy** (Tier 1 Primitive UI · Tier 2 Global layout primitive · Tier 3 Data-surface primitive · Tier 4 Domain component) — Task 340. Catalog categories map onto these four tiers.
 
 ## Summary
 
 | Metric | Count |
 |---|---|
-| Total cataloged components | 212 |
-| Storybook stories | 21 |
-| Locale-aware (useTranslations) | 84 |
-| Client components ('use client') | 132 |
-| With arbitrary Tailwind values | 64 |
-| Components with 2xl responsive step | 7 |
-| Components flagged for review | 73 |
+| Total cataloged components | 244 |
+| Storybook stories | 47 |
+| Locale-aware (useTranslations) | 108 |
+| Client components ('use client') | 158 |
+| With arbitrary Tailwind values | 37 |
+| Components with 2xl responsive step | 12 |
+| Components flagged for review | 52 |
 
 ## Canonical UI Primitives (`src/components/ui/`) (33)
 
@@ -25,142 +24,149 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `AppImage` | NEEDS_STORY | — | — | —  |
 | `appImageConfig.ts` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
 | `avatar` | NEEDS_STORY | — | — | —  |
-| `badge` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
+| `badge` | CANONICAL | ✅ | — | —  |
 | `button` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
 | `card` | NEEDS_STORY | — | — | —  |
 | `checkbox` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
-| `command` | NEEDS_STORY | — | — | —  |
-| `dialog` | CANONICAL | ✅ | — | —  |
-| `dropdown-menu` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
+| `command` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
+| `dialog` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
+| `dropdown-menu` | CANONICAL | ✅ | — | —  |
 | `input` | CANONICAL | ✅ | — | —  |
 | `input-group` | NEEDS_STORY | — | — | —  |
 | `label` | NEEDS_STORY | — | — | —  |
-| `navigation-menu` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
-| `pagination` | NEEDS_STORY | — | — | —  |
+| `mobile-bottom-sheet.ts` | CANONICAL | ✅ | — | —  |
+| `navigation-menu` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
+| `pagination` | NEEDS_STORY | — | 🌐 | LOCALIZATION  |
 | `PasswordInput` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
 | `PasswordRequirementsHint` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
-| `popover` | NEEDS_STORY | — | — | —  |
+| `popover` | CANONICAL | ✅ | — | —  |
 | `progress` | NEEDS_STORY | — | — | —  |
 | `radio-group` | NEEDS_STORY | — | — | —  |
 | `scroll-area` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
-| `select` | NEEDS_STORY | — | — | —  |
+| `select` | CANONICAL | ✅ | — | —  |
 | `separator` | NEEDS_STORY | — | — | —  |
-| `sheet` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
+| `sheet` | CANONICAL | ✅ | 🌐 | LOCALIZATION  |
 | `skeleton` | CANONICAL | ✅ | — | —  |
 | `slider` | NEEDS_STORY | — | — | —  |
-| `sonner` | NEEDS_STORY | — | — | —  |
 | `switch` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
 | `table` | NEEDS_STORY | — | — | —  |
 | `tabs` | MANUAL_REVIEW | ✅ | — | TAILWIND_ENTROPY ⚠️ |
 | `textarea` | NEEDS_STORY | — | — | —  |
 | `useAdaptiveImageConfig.ts` | CANONICAL | ✅ | — | —  |
 
-## Shared UI Components (`src/components/shared/`) (21)
+## Shared UI Components (`src/components/shared/`) (25)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `AvatarCropModal` | APPROVED | — | — | —  |
-| `Combobox` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `AgentCtaButton` | APPROVED | — | — | —  |
+| `AvatarCropModal` | NEEDS_STORY | — | 🌐 | LOCALIZATION  |
+| `Combobox` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `DatePicker` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `FilterMultiToggle` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
+| `FilterMultiToggle` | APPROVED | — | — | —  |
 | `FilterRangeInputs` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `FilterRoomsRow` | APPROVED | — | — | —  |
-| `FiltersPanel` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `FilterToggleGroup` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
-| `HeroSearch` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `FiltersPanel` | NEEDS_STORY | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
+| `FilterToggleGroup` | APPROVED | — | — | —  |
+| `HeroSearch` | APPROVED | — | — | —  |
 | `HeroSearchClient` | MANUAL_REVIEW | — | — | PRIMITIVE_CHECK, TAILWIND_ENTROPY ⚠️ |
+| `HeroSearchView` | NEEDS_STORY | — | 🌐 | LOCALIZATION  |
+| `HowItWorksSteps` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `LocaleSwitcher` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
-| `LocationCombobox` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, MOBILE ⚠️ |
+| `LocationCombobox` | NEEDS_STORY | — | 🌐 | LOCALIZATION  |
 | `Map` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `MapWrapper` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `PerfDevOverlay` | MANUAL_REVIEW | — | — | PRIMITIVE_CHECK, TAILWIND_ENTROPY ⚠️ |
 | `PerformanceStoreInit` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `PhoneField` | MANUAL_REVIEW | — | — | PRIMITIVE_CHECK, TAILWIND_ENTROPY ⚠️ |
+| `PhoneField` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `PropertyTypeCombobox` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `RelativeTime` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `ViewAllLink` | APPROVED | — | — | —  |
 | `WebVitalsReporter` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `YearCombobox` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `YearCombobox` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 
-## Layout Components (`src/components/layout/`) (7)
-
-> **Tier-2 Global Layout Primitives** (per `docs/design-system.md §7`): `PageShell`, `Section` (DS-1 Task 345), `PageHeader` (DS-2 Task 347), `FilterBar` (DS-4 Task 349).
-> **Note:** `FilterBar` is a client-side Tier-2 layout primitive (`'use client'`). All others are server-safe.
-> **Removed (Task 358, 2026-06-02):** `ActionBar` (DS-3, Task 348) and `ControlGroup` (Task 354-Fix) — zero product consumers in `src/app`/`src/modules`; owner-authorised deletion.
+## Layout Components (`src/components/layout/`) (12)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `FilterBar` | CANONICAL | ✅ | — | Tier-2 global layout primitive; **CLIENT** ('use client' — Sheet open-state); filter chips+search+reset row; <lg: collapses filters into Sheet (all-or-nothing D1); count Badge + single global Reset only when activeCount>0 (D2); search min-w-0 flex-1; labels prop i18n-safe (zero literal strings); no overflow-x-auto; no route adoption (Task 349 DS-4) |
-| `Footer` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
-| `Header` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `MobileBottomNav` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
-| `PageHeader` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; h1 title + optional description/countBadge/action; action stacks <md: / right-aligns md:+; no own container |
-| `PageShell` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; container=wide/narrow/form; §4 container-wide |
-| `Section` | CANONICAL | ✅ | — | Tier-2 global layout primitive; server-safe; optional title (h2) + description; no own container |
+| `FilterBar` | APPROVED | ✅ | — | —  |
+| `FooterView` | APPROVED | — | — | HUGE_DESKTOP  |
+| `Header` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `HeaderActions` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
+| `HeaderView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `MobileBottomNav` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `MobileBottomNavView` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `MobileNavDrawer` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
+| `PageHeader` | APPROVED | ✅ | — | —  |
+| `PageShell` | APPROVED | ✅ | — | —  |
+| `Section` | APPROVED | ✅ | — | —  |
+| `UserMenu` | NEEDS_STORY | — | 🌐 | LOCALIZATION, MOBILE  |
 
-## Admin Shared Components (`src/components/admin/`) (34)
+## Admin Shared Components (`src/components/admin/`) (35)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `AdminCardList` | CANONICAL | ✅ | — | Structured card shape (title/subtitle/meta/trailing) + legacy ReactNode. **Auto-chevron contract**: when `onRowClick` is set and `StructuredCard.trailing` is null/undefined, renders `ChevronRight` automatically in the trailing slot. Explicit `trailing` (e.g. a Badge) takes precedence. Static rows (no `onRowClick`) never show auto-chevron. |
-| `AdminCompaniesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminCurrenciesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminCardList` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
+| `AdminCompaniesManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `AdminCurrenciesManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
 | `AdminCurrencyTabs` | NEEDS_STORY | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `AdminDashboardRecentListings` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminEditLayout` | APPROVED | — | — | —  |
-| `AdminEmailTemplatesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminExchangeProvidersManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminEmailTemplatesManager` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
+| `AdminExchangeProvidersManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
 | `AdminFooterManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminInput` | APPROVED | — | — | —  |
 | `AdminInquiriesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminLegalManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminListingsTable` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminLocaleSwitcher` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
-| `AdminLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminMobileHeader` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminPageHeader` | APPROVED | — | — | Superseded by `AdminPageShell` — do not use in new pages |
-| `AdminPageShell` | CANONICAL | ✅ | — | — |
-| `AdminPermissionsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `AdminLegalManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
+| `AdminListingsTable` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminLocaleSwitcher` | APPROVED | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `AdminLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, HUGE_DESKTOP ⚠️ |
+| `AdminMobileHeader` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
+| `AdminPageHeader` | APPROVED | — | — | —  |
+| `AdminPageShell` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
+| `AdminPagesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminPermissionsManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AdminPopularLocationsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
-| `AdminPropertyTypesManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminReportsManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `AdminPropertyTypesManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `AdminReportsManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `AdminSearchInput` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `AdminTable` | CANONICAL | ✅ | — | Internal lg: table↔card switch; cardRow prop with synthesis fallback. **Trailing chevron column contract**: when `onRowClick` is set, a fixed `w-8` trailing column renders `ChevronRight` in every table-mode data row. No chevron column for static tables (no `onRowClick`). At <lg: (card mode), AdminCardList handles auto-chevron via its own contract. **Column-menu contract (2026-06-02)**: `sortable`+`sortType`+`onSort(dir)`+`hideable`+`onHideColumn`+`sortLabels` — when set, renders `ArrowUpDown` (h-3 w-3, 12px, strictly < text-sm 14px) as a `DropdownMenu` trigger with type-correct sort items (text: A→Z/Z→A; date: Newest/Oldest; numeric: low→high/high→low) + EyeOff "Hide column". Forbidden icons: Funnel, Sliders, Tune, Settings, ListFilter, Filter. NO row-filter chips — global search is the ONLY data-narrowing control. Columns visibility managed at the wrapper/page level via `initialHidden`/`onHideColumn`. See `docs/storybook-governance.md §12`. |
-| `StatusChangeControl` | CANONICAL | ✅ | 🌐 | — |
-| `StatusChangeHistory` | CANONICAL | ✅ | 🌐 | — |
-| `AdminSettings` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminSettings` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
 | `AdminShell` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `AdminSidebar` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminSupportManager` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminUserAvatar` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminSidebar` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminSupportManager` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminTable` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `AdminUserAvatar` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `AdminUserCreate` | NEEDS_STORY | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
-| `AdminUserProfile` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `AdminUsersTable` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminUserProfile` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `AdminUsersTable` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
+| `StatusChangeControl` | APPROVED | ✅ | 🌐 | LOCALIZATION  |
+| `StatusChangeHistory` | APPROVED | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 
 ## Auth Feature Components (4)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
 | `AuthContext` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `AuthRedirect` | MANUAL_REVIEW | — | — | PRIMITIVE_CHECK, TAILWIND_ENTROPY ⚠️ |
+| `AuthRedirect` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `AuthSheet` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `ResetPasswordClient` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 
-## Cabinet Feature Components (6)
+## Cabinet Feature Components (7)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `CabinetShell` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `CabinetPasswordSection` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `CabinetShell` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `index.ts` | APPROVED | ✅ | — | —  |
-| `ListingsTab` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `ListingsTab` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `ProfileTab` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `queries.ts` | APPROVED | ✅ | — | —  |
 | `SavedSearchesTab` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 
-## Listings Feature Components (59)
+## Listings Feature Components (72)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `ActiveFilterChips` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `ActiveFilterChips` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `AreaPairField` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `BuildingFloorsField` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `ButtonGroupField` | APPROVED | — | 🌐 | LOCALIZATION  |
@@ -171,7 +177,8 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `FavoriteButton` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `FavoritesShell` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `FavoritesTypeFilter` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `FeaturedListings` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `FeaturedListings` | APPROVED | 📷 | — | PRIMITIVE_CHECK  |
+| `FeaturedListingsView` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `fieldRegistry.ts` | APPROVED | ✅ | — | —  |
 | `filterEngine.ts` | APPROVED | ✅ | — | —  |
 | `FloorGroupField` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
@@ -179,54 +186,66 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `GalleryStaticFrame` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `ImageUpload` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `index.ts` | APPROVED | ✅ | — | —  |
-| `LatestListings` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `LatestListings` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `LatestListingsView` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `LightboxView` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
 | `ListingBackButton` | APPROVED | — | — | —  |
 | `ListingCard` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `listingConstants.ts` | APPROVED | ✅ | — | —  |
 | `ListingContact` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `ListingDetailView` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
 | `ListingFeatureIcon` | APPROVED | — | — | —  |
 | `ListingFormLoader` | APPROVED | — | — | PRIMITIVE_CHECK  |
-| `ListingFormShell` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `ListingGallery` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `ListingFormShell` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `ListingFormShellView` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
+| `ListingGallery` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
+| `ListingInquiryDialog` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `ListingMobileCTA` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
 | `ListingReportDialog` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `listingSelect.ts` | APPROVED | ✅ | — | —  |
 | `listingSemanticLayer.ts` | APPROVED | ✅ | — | —  |
-| `ListingsFilterBar` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `ListingsFilters` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `ListingsFilterBar` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `ListingsFilters` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `ListingsPagination` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `ListingsShell` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `ListingsSortBar` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `ListingsSortBar` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `ListingsStatusTabs` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `ListingStatusBanner` | APPROVED | — | — | —  |
+| `listingTransitionEngine.test.ts` | APPROVED | ✅ | — | —  |
 | `listingTransitionEngine.ts` | APPROVED | ✅ | — | —  |
 | `MultiToggleField` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `NumInputField` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `NumInputField` | MANUAL_REVIEW | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
 | `propertyTypeSchema.ts` | APPROVED | ✅ | — | —  |
 | `recentlyViewedConstants.ts` | APPROVED | ✅ | — | —  |
-| `RecentlyViewedGrid` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
+| `RecentlyViewedGrid` | APPROVED | — | — | —  |
+| `RecentlyViewedGridView` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `RecentlyViewedSection` | APPROVED | — | — | HUGE_DESKTOP  |
 | `RecentlyViewedTracker` | APPROVED | — | — | PRIMITIVE_CHECK  |
 | `reportListing.ts` | APPROVED | ✅ | — | —  |
 | `RoomsSelectorField` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `SaveSearchButton` | APPROVED | — | 🌐 | LOCALIZATION  |
-| `SaveToCollectionButton` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, GOVERNANCE_VIOLATION ⚠️ |
-| `SimilarListings` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
+| `SaveToCollectionButton` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `SimilarListings` | APPROVED | — | 🌐 | LOCALIZATION  |
+| `SimilarListingsView` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `StepBasicInfo` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `StepDetails` | APPROVED | — | 🌐 | LOCALIZATION, HUGE_DESKTOP  |
 | `StepLocation` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `StepPhotos` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `StepPreview` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `submitListingInquiry.test.ts` | APPROVED | ✅ | — | —  |
+| `submitListingInquiry.ts` | APPROVED | ✅ | — | —  |
 | `useListingsUrlFilters.ts` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
 | `ViewTracker` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `visibility.ts` | APPROVED | ✅ | — | —  |
 | `YearComboboxField` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 
 ## Locations Feature Components (1)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
-| `PopularLocations` | APPROVED | — | — | —  |
+| `PopularLocationsView` | APPROVED | — | 🌐 | LOCALIZATION  |
 
-## Notifications Feature Components (17)
+## Notifications Feature Components (21)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -235,10 +254,14 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `emailChange.ts` | APPROVED | ✅ | — | —  |
 | `InactivityFinalEmail` | APPROVED | — | — | —  |
 | `InactivityWarningEmail` | APPROVED | — | — | —  |
+| `listingInquiry.ts` | APPROVED | ✅ | — | —  |
 | `MagicLinkEmail` | APPROVED | — | — | —  |
-| `NotificationBell` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
+| `NotificationBell` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `NotificationBellView` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `NotificationCenter` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, TAILWIND_ENTROPY ⚠️ |
-| `NotificationItem` | MANUAL_REVIEW | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK ⚠️ |
+| `NotificationItem` | APPROVED | ✅ | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
+| `passwordChanged.ts` | APPROVED | ✅ | — | —  |
+| `PasswordChangedEmail` | APPROVED | — | — | —  |
 | `ReauthEmail` | APPROVED | — | — | —  |
 | `RecoveryEmail` | APPROVED | — | — | —  |
 | `ReporterNotificationEmail` | APPROVED | — | — | —  |
@@ -248,7 +271,7 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `useNotifications.ts` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
 | `VerifyEmail` | APPROVED | — | — | —  |
 
-## Page/Layout Routes (`src/app/`) (10)
+## Page/Layout Routes (`src/app/`) (11)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
@@ -256,17 +279,19 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `loading` | APPROVED | — | — | —  |
 | `loading` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `page` | APPROVED | — | — | —  |
-| `page` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
 | `page` | APPROVED | — | — | —  |
 | `page` | APPROVED | — | — | —  |
 | `page` | APPROVED | — | — | —  |
 | `page` | APPROVED | — | — | —  |
-| `page` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY, HUGE_DESKTOP ⚠️ |
+| `page` | APPROVED | — | — | —  |
+| `page` | APPROVED | — | — | —  |
+| `page` | APPROVED | — | — | —  |
 
-## Unknown / Manual Review (19)
+## Unknown / Manual Review (23)
 
 | Component | Status | Story | i18n | Risks |
 |---|---|---|---|---|
+| `CaptchaWidget` | APPROVED | — | 🌐 | LOCALIZATION, PRIMITIVE_CHECK  |
 | `ContactForm` | APPROVED | — | 🌐 | LOCALIZATION  |
 | `currencies.ts` | APPROVED | ✅ | — | —  |
 | `exchangeProviders.ts` | APPROVED | ✅ | — | —  |
@@ -286,6 +311,9 @@ See `docs/design-system.md §7` for the canonical **component-ownership taxonomy
 | `route.ts` | APPROVED | ✅ | — | —  |
 | `settings.ts` | APPROVED | ✅ | — | —  |
 | `useCurrencies.ts` | APPROVED | ✅ | — | PRIMITIVE_CHECK  |
+| `VerifiedBridge` | APPROVED | — | — | PRIMITIVE_CHECK  |
+| `VerifiedCard` | MANUAL_REVIEW | — | — | TAILWIND_ENTROPY ⚠️ |
+| `WhatsAppContactButton` | APPROVED | — | 🌐 | LOCALIZATION  |
 
 ---
 

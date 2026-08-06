@@ -1,20 +1,21 @@
 'use client'
 
 /**
- * Storybook story for the SimilarListings public listing-detail grid.
+ * Storybook story for the SimilarListings public listing-detail grid (Task 665).
  *
- * Mirrors the live SimilarListings markup (header + canonical §8.3 card grid)
- * using the shared StoryListingCard/makeStoryListings fixtures (Task 370 parity).
- * The live component is a Server Component (Supabase query); this story renders
- * the presentational shell only — same approach as RecentlyViewedSection.stories.tsx
- * (docs/responsive-screenshot-governance.md §12).
- * Added for Task 420 (Slice 5) to prove the §8.3 column step
- * (grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4) at every breakpoint.
+ * Statically imports the real production `SimilarListingsView` (Task 665 container/View
+ * split — clause 16c canonical-Story honesty, no divergent fake card). The live container
+ * (`SimilarListings.tsx`) is a Server Component (Supabase query, headers, speculation-rules
+ * script); this story renders the presentational View only, with a fixed `heading` string
+ * resolved through the same real `listing.similar_listings` message key the server container
+ * passes via `getTranslations('listing')('similar_listings')`.
  */
 
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { useTranslations } from 'next-intl'
-import { StoryListingCard, makeStoryListings } from './StoryListingCard'
+import { SimilarListingsView } from '@/modules/listings/components/SimilarListingsView'
+import { makeCardListingFixtures } from './fixtures/cardListingData.fixture'
+import { storyT } from './_storyI18n'
+import type { ExchangeRates } from '@/lib/getExchangeRate'
 
 const meta: Meta = {
   title: 'System/SimilarListings',
@@ -22,7 +23,7 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Similar listings grid — public listing-detail section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4.',
+        component: 'Similar listings grid — public listing-detail section. Canonical §8.3 card grid: grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4. Statically imports the real production `SimilarListingsView` (Task 665).',
       },
     },
   },
@@ -30,20 +31,20 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj
 
-function Header() {
-  const t = useTranslations('listing')
-  return <h2 className="text-xl font-bold mb-5">{t('similar_listings')}</h2>
-}
+const FIXTURE_RATES: ExchangeRates = { ALL: 1, EUR: 100 }
 
 export const Default: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
+    const listings = makeCardListingFixtures(locale)
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header />
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {makeStoryListings(locale).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
-        </div>
+        <SimilarListingsView
+          heading={storyT(locale, 'listing.similar_listings')}
+          listings={listings}
+          rates={FIXTURE_RATES}
+          displayCurrency="EUR"
+        />
       </div>
     )
   },
@@ -63,12 +64,15 @@ export const Default: Story = {
 export const LocaleStress: Story = {
   render: (_, context) => {
     const locale = (context?.globals?.locale as string) ?? 'en'
+    const listings = makeCardListingFixtures(locale).slice(0, 4)
     return (
       <div className="container-wide mx-auto px-4 py-8">
-        <Header />
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {makeStoryListings(locale).slice(0, 4).map(listing => (<StoryListingCard key={listing.id} data={listing} />))}
-        </div>
+        <SimilarListingsView
+          heading={storyT(locale, 'listing.similar_listings')}
+          listings={listings}
+          rates={FIXTURE_RATES}
+          displayCurrency="EUR"
+        />
       </div>
     )
   },

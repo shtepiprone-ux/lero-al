@@ -1,53 +1,71 @@
 #!/usr/bin/env node
 /**
- * check-story-coverage.mjs — Story coverage gate (Task 398, Sprint 34).
+ * check-story-coverage.mjs — Mantine migration-scope coverage gate (Task Q0R rewrite).
  *
- * Enforces that every component under src/components/** either has a
- * colocated *.stories.tsx OR is listed in scripts/story-coverage-exempt.json
- * with a one-line justification.
+ * Runs PRE-BUILD in the `governance` job of `.github/workflows/governance-pr.yml`, before
+ * `build-storybook` — there is NO `storybook-static/index.json` at this point. Everything below
+ * is derived from SOURCE, never a built index:
  *
- * Gate mode (CI / default):
- *   Exits 1 if any component is NEITHER covered NOR in the exemption allowlist.
- *   Existing exempted components do NOT block commits ("fail-on-new" rollout).
+ *   1. Parse every `src/stories/**\/*.stories.tsx` file's AST, read its `meta.title` string
+ *      literal (handles both `export default {...}` and `const meta = {...}; export default meta`).
+ *   2. A story is canonical Mantine iff `isCanonicalMantineTitle(title)`
+ *      (scripts/lib/mantine-story-scope.mjs) — the SAME criterion check-stories-rendered.mjs and
+ *      check-locale-leak.mjs enforce. This gate never re-derives or widens that definition.
+ *   3. For each canonical story, parse its `import` declarations and resolve `@/*` + relative
+ *      specifiers to repo-relative component paths.
+ *   4. `scripts/mantine-migration-scope.json` is the hand-maintained enrolment list of real
+ *      production components currently in Mantine migration scope (owner decision, Task Q0R,
+ *      explicit manifest design "A" — never derived from the story set itself, which would
+ *      reintroduce the tautology the manifest exists to avoid).
  *
- * CLI modes:
- *   (default)           fail-on-new gate check
- *   --update-exempt     write today's storyless components to the exemption
- *                       allowlist (seed once; review stubs afterward)
- *   --report            print full coverage info, always exit 0
+ * Coverage logic:
+ *   - component IN manifest AND statically imported by ≥1 canonical Mantine story → covered.
+ *   - component IN manifest AND NO canonical Mantine story imports it → FAIL (enrolled, unproven).
+ *   - component NOT in manifest → out of scope, never checked, never blocking. This is what
+ *     removes the entire legacy (non-Mantine) surface from this gate — legacy components are
+ *     deprecated code awaiting migration or replacement, not exempted by hand.
  *
- * Stale-entry check: any exemption entry pointing to a non-existent file is
- * flagged as a warning (not a hard failure — file may have been renamed).
+ * Governance obligation: every future component migration to Mantine adds that component to
+ * `scripts/mantine-migration-scope.json` in the SAME PR as the migration.
+ *
+ * `scripts/story-coverage-exempt.json` (the old colocated-*.stories.tsx-or-exempt mechanism) is
+ * NOT consulted by this gate — the manifest supersedes it (owner ruling, Task 623R reaffirmed at
+ * Task Q0R). The file itself is left untouched; it is simply orphaned for this gate's purposes.
  *
  * Usage:
  *   node scripts/check-story-coverage.mjs
  *   npm run check:story-coverage
  *   npm run check:story-coverage:report
- *   npm run check:story-coverage:update-exempt
  *
- * Added by Task 398 (Sprint 34, 2026-06-06).
- * Docs: docs/storybook-governance.md §15
+ * Docs: docs/storybook-governance.md §15.
  */
 
-import { readFileSync, readdirSync, statSync, existsSync, writeFileSync } from 'node:fs';
-import { resolve, join, dirname, relative, basename, sep } from 'node:path';
+import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { resolve, join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import ts from 'typescript';
+import { MANTINE_STORY_TITLE_PREFIXES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
-const EXEMPT_PATH = resolve(__dirname, 'story-coverage-exempt.json');
+const MANIFEST_PATH = join(ROOT, 'scripts', 'mantine-migration-scope.json');
 
 // ── CLI flags ─────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
-const UPDATE_EXEMPT = args.includes('--update-exempt');
 const REPORT_ONLY = args.includes('--report');
 
-// ── File collection ───────────────────────────────────────────────────────────
-const SKIP_DIRS = new Set([
-  'node_modules', '.next', 'storybook-static', '__tests__', 'tests',
-]);
+if (args.includes('--update-exempt')) {
+  console.log('ℹ️  --update-exempt is retired (Task Q0R). This gate no longer checks colocated');
+  console.log('    *.stories.tsx presence or a per-component exemption allowlist. Coverage is now');
+  console.log(`    scripts/mantine-migration-scope.json — add newly migrated components there`);
+  console.log('    in the same PR as their migration. See docs/storybook-governance.md §15.');
+  process.exit(0);
+}
 
-function collectTsx(dir) {
+// ── Story-file discovery (src/stories/** only — colocated *.stories.tsx are legacy-surface) ──
+const SKIP_DIRS = new Set(['node_modules', '.next', 'storybook-static']);
+
+function collectStoryFiles(dir) {
   const results = [];
   if (!existsSync(dir)) return results;
   for (const entry of readdirSync(dir)) {
@@ -55,136 +73,194 @@ function collectTsx(dir) {
     const full = join(dir, entry);
     let stat;
     try { stat = statSync(full); } catch { continue; }
-    if (stat.isDirectory()) {
-      results.push(...collectTsx(full));
-    } else if (entry.endsWith('.tsx') && !entry.endsWith('.stories.tsx')) {
-      results.push(full);
-    }
+    if (stat.isDirectory()) results.push(...collectStoryFiles(full));
+    else if (entry.endsWith('.stories.tsx') || entry.endsWith('.stories.ts')) results.push(full);
   }
   return results;
 }
 
-// ── Coverage check ────────────────────────────────────────────────────────────
-const COMPONENTS_DIR = join(ROOT, 'src', 'components');
-const allComponents = collectTsx(COMPONENTS_DIR);
+const STORY_FILES = collectStoryFiles(join(ROOT, 'src'));
 
-const rel = (p) => relative(ROOT, p).replace(/\\/g, '/');
+// ── AST parsing (real parser, not regex — this gate has no built index to fall back on) ──
 
-const covered = [];
-const storyless = [];
+function parseSourceFile(filePath) {
+  const text = readFileSync(filePath, 'utf8');
+  return ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest, /* setParentNodes */ true, ts.ScriptKind.TSX);
+}
 
-for (const compPath of allComponents) {
-  const dir = dirname(compPath);
-  const base = basename(compPath, '.tsx');
-  const storyPath = join(dir, `${base}.stories.tsx`);
-  if (existsSync(storyPath)) {
-    covered.push(compPath);
+function findObjectTitle(objLiteral) {
+  for (const prop of objLiteral.properties) {
+    if (
+      ts.isPropertyAssignment(prop) &&
+      ((ts.isIdentifier(prop.name) && prop.name.text === 'title') ||
+        (ts.isStringLiteral(prop.name) && prop.name.text === 'title')) &&
+      ts.isStringLiteralLike(prop.initializer)
+    ) {
+      return prop.initializer.text;
+    }
+  }
+  return null;
+}
+
+/**
+ * Extracts a story file's `meta.title` string literal via AST.
+ * Handles both `export default { title: '...' }` and the codebase's common
+ * `const meta: Meta = { title: '...' }; export default meta` pattern. Falls back to scanning the
+ * whole file for the first object literal carrying a string `title` property (still AST-based,
+ * never a text regex) if the export-default identifier cannot be resolved.
+ */
+function extractTitle(sourceFile) {
+  let defaultExportExpr = null;
+  for (const stmt of sourceFile.statements) {
+    if (ts.isExportAssignment(stmt) && !stmt.isExportEquals) {
+      defaultExportExpr = stmt.expression;
+    }
+  }
+
+  if (defaultExportExpr) {
+    if (ts.isObjectLiteralExpression(defaultExportExpr)) {
+      const title = findObjectTitle(defaultExportExpr);
+      if (title) return title;
+    }
+    if (ts.isIdentifier(defaultExportExpr)) {
+      const name = defaultExportExpr.text;
+      for (const stmt of sourceFile.statements) {
+        if (ts.isVariableStatement(stmt)) {
+          for (const decl of stmt.declarationList.declarations) {
+            if (
+              ts.isIdentifier(decl.name) &&
+              decl.name.text === name &&
+              decl.initializer &&
+              ts.isObjectLiteralExpression(decl.initializer)
+            ) {
+              const title = findObjectTitle(decl.initializer);
+              if (title) return title;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  let found = null;
+  function visit(node) {
+    if (found) return;
+    if (ts.isObjectLiteralExpression(node)) {
+      const title = findObjectTitle(node);
+      if (title) { found = title; return; }
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(sourceFile);
+  return found;
+}
+
+/** Every `import ... from '<spec>'` module specifier in the file (AST, not regex). */
+function extractImportSpecifiers(sourceFile) {
+  const specs = [];
+  for (const stmt of sourceFile.statements) {
+    if (ts.isImportDeclaration(stmt) && ts.isStringLiteral(stmt.moduleSpecifier)) {
+      specs.push(stmt.moduleSpecifier.text);
+    }
+  }
+  return specs;
+}
+
+/** Resolves an `@/*` or relative import specifier to a repo-relative file path, or null (external). */
+function resolveImportSpecifier(storyFilePath, spec) {
+  let candidate;
+  if (spec.startsWith('@/')) {
+    candidate = join(ROOT, 'src', spec.slice(2));
+  } else if (spec.startsWith('.')) {
+    candidate = resolve(dirname(storyFilePath), spec);
   } else {
-    storyless.push(compPath);
+    return null; // external package — not a local component
   }
+  for (const ext of ['', '.tsx', '.ts', '/index.tsx', '/index.ts']) {
+    const p = candidate + ext;
+    try {
+      if (existsSync(p) && statSync(p).isFile()) {
+        return relative(ROOT, p).replace(/\\/g, '/');
+      }
+    } catch { /* candidate not a file — keep trying extensions */ }
+  }
+  return null;
 }
 
-// ── Load exemption allowlist ──────────────────────────────────────────────────
-let exempt = {};
-if (existsSync(EXEMPT_PATH)) {
+// ── Parse every story file; classify canonical Mantine; collect import edges ──
+
+let canonicalStoryCount = 0;
+const importedByAny = new Set(); // union of every path imported by ANY canonical Mantine story
+const importsByComponent = new Map(); // resolved component path -> [canonical story files importing it]
+
+for (const file of STORY_FILES) {
+  let sourceFile;
   try {
-    exempt = JSON.parse(readFileSync(EXEMPT_PATH, 'utf8'));
+    sourceFile = parseSourceFile(file);
   } catch {
-    console.error('⚠️  story-coverage-exempt.json is not valid JSON.');
-    console.error('    Fix manually or re-run: node scripts/check-story-coverage.mjs --update-exempt');
-    process.exit(1);
+    continue; // unparseable story file — not this gate's concern (check:stories/tsc catch that)
+  }
+  const title = extractTitle(sourceFile);
+  if (!isCanonicalMantineTitle(title)) continue;
+  canonicalStoryCount++;
+
+  const relStory = relative(ROOT, file).replace(/\\/g, '/');
+  for (const spec of extractImportSpecifiers(sourceFile)) {
+    const resolved = resolveImportSpecifier(file, spec);
+    if (!resolved) continue;
+    importedByAny.add(resolved);
+    if (!importsByComponent.has(resolved)) importsByComponent.set(resolved, []);
+    importsByComponent.get(resolved).push(relStory);
   }
 }
 
-// ── --update-exempt: seed/refresh allowlist from current storyless components ──
-if (UPDATE_EXEMPT) {
-  const updated = { ...exempt };
-  for (const p of storyless) {
-    const key = rel(p);
-    if (!updated[key]) {
-      updated[key] = 'STUB — owner review needed: describe why this component does not need a story';
-    }
-  }
-  // Remove stale entries (files that no longer exist)
-  for (const key of Object.keys(updated)) {
-    if (!existsSync(join(ROOT, key.replace(/\//g, sep)))) {
-      delete updated[key];
-    }
-  }
-  writeFileSync(EXEMPT_PATH, JSON.stringify(updated, null, 2) + '\n', 'utf8');
-  console.log(`✅  Exemption allowlist updated → scripts/story-coverage-exempt.json`);
-  console.log(`    ${Object.keys(updated).length} entries (${storyless.length} storyless components)`);
-  process.exit(0);
+// ── Load the manifest (source of truth for migration scope) ──────────────────
+
+let manifest;
+try {
+  manifest = JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'));
+} catch (err) {
+  console.error(`❌  Cannot read/parse ${relative(ROOT, MANIFEST_PATH)}: ${err.message}`);
+  process.exit(1);
+}
+if (!Array.isArray(manifest)) {
+  console.error(`❌  ${relative(ROOT, MANIFEST_PATH)} must be a JSON array of component source paths.`);
+  process.exit(1);
 }
 
-// ── Stale entry check ─────────────────────────────────────────────────────────
-const staleEntries = Object.keys(exempt).filter(key => {
-  const abs = join(ROOT, key);
-  return !existsSync(abs);
-});
+const covered = manifest.filter((p) => importedByAny.has(p));
+const missing = manifest.filter((p) => !importedByAny.has(p));
 
-// ── Non-exempt storyless components ──────────────────────────────────────────
-const missing = storyless.filter(p => !exempt[rel(p)]);
+// ── Report ─────────────────────────────────────────────────────────────────────
 
-// ── Report ────────────────────────────────────────────────────────────────────
-console.log(`📖  check:story-coverage — ${allComponents.length} component(s) in src/components/**`);
-console.log(`    ✅ ${covered.length} have a colocated *.stories.tsx`);
-console.log(`    📋 ${storyless.filter(p => !!exempt[rel(p)]).length} explicitly exempt (in allowlist)`);
-console.log(`    ❌ ${missing.length} uncovered and NOT exempt`);
-if (staleEntries.length > 0) {
-  console.log(`    ⚠️  ${staleEntries.length} stale exemption entry/entries (file no longer exists)`);
-}
+console.log('📖  check:story-coverage — pre-build, source-parsed (Task Q0R manifest gate)');
+console.log(`    Canonical Mantine story files: ${canonicalStoryCount} (of ${STORY_FILES.length} total *.stories.tsx; prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')})`);
+console.log(`    Manifest entries (migration scope): ${manifest.length}`);
+console.log(`    ✅ ${covered.length} covered (statically imported by ≥1 canonical Mantine story)`);
+console.log(`    ❌ ${missing.length} enrolled but unproven (no canonical Mantine story imports them)`);
 console.log('');
 
 if (REPORT_ONLY) {
-  const maxPathLen = allComponents.reduce((m, p) => Math.max(m, rel(p).length), 0);
-  console.log('Component coverage:');
-  for (const p of allComponents) {
-    const key = rel(p);
-    const hasCoverage = covered.includes(p);
-    const isExempt = !!exempt[key];
-    const statusIcon = hasCoverage ? '✅ story ' : isExempt ? '📋 exempt' : '❌ missing';
-    console.log(`  ${statusIcon}  ${key}`);
-  }
-  console.log('');
-  if (staleEntries.length > 0) {
-    console.log('Stale exemption entries (file no longer exists):');
-    for (const key of staleEntries) {
-      console.log(`  ⚠️  ${key}`);
-    }
-    console.log('  Run --update-exempt to remove stale entries.');
-    console.log('');
+  for (const p of manifest) {
+    const isCovered = importedByAny.has(p);
+    const via = isCovered ? ` — via ${importsByComponent.get(p).join(', ')}` : '';
+    console.log(`  ${isCovered ? '✅ covered' : '❌ missing'}  ${p}${via}`);
   }
   process.exit(0);
-}
-
-// ── Gate verdict ──────────────────────────────────────────────────────────────
-if (staleEntries.length > 0) {
-  console.warn('⚠️  Stale exemption entries (not a hard failure — clean up when convenient):');
-  for (const key of staleEntries) {
-    console.warn(`    ${key}`);
-  }
-  console.warn('    Run: node scripts/check-story-coverage.mjs --update-exempt');
-  console.warn('');
 }
 
 if (missing.length === 0) {
-  const verdict = staleEntries.length > 0
-    ? `✅  check:story-coverage PASSED (with ${staleEntries.length} stale entry/entries — clean up).`
-    : '✅  check:story-coverage PASSED — all components are covered or explicitly exempt.';
-  console.log(verdict);
+  console.log('✅  check:story-coverage PASSED — every manifest-enrolled component has a canonical Mantine story import.');
   process.exit(0);
 }
 
-console.error(`❌  check:story-coverage FAILED — ${missing.length} component(s) have no story and no exemption entry:\n`);
+console.error(`❌  check:story-coverage FAILED — ${missing.length} manifest-enrolled component(s) have no canonical Mantine story importing them:\n`);
 for (const p of missing) {
-  console.error(`    ${rel(p)}`);
+  console.error(`    ${p}`);
 }
 console.error('');
-console.error('  Fix options (pick ONE per component):');
-console.error('    (a) Add a colocated *.stories.tsx — run: npm run new:story <ComponentPath>');
-console.error('    (b) Add an entry to scripts/story-coverage-exempt.json with a one-line justification');
-console.error('        (for trivial primitives or components that cannot be mocked safely)');
-console.error('');
-console.error('  Docs: docs/storybook-governance.md §15');
+console.error('  Fix: add (or restore) a canonical Mantine story — title starting with one of');
+console.error(`  [${MANTINE_STORY_TITLE_PREFIXES.join(', ')}] — that statically imports this exact component path.`);
+console.error('  A component NOT in scripts/mantine-migration-scope.json is out of scope and never blocks this gate.');
+console.error('  Docs: docs/storybook-governance.md §15.');
 process.exit(1);

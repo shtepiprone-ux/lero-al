@@ -5,7 +5,7 @@ import { useTranslations, useFormatter } from 'next-intl'
 import { Shield, ShieldCheck, ShieldX, AlertTriangle } from 'lucide-react'
 import { Switch } from '@/components/ui/switch'
 import { Badge } from '@/components/ui/badge'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import {
   setModeratorPermission,
   type PermissionData,

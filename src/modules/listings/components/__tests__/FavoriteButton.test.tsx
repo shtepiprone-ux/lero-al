@@ -1,5 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest'
 import { render, screen, act, fireEvent } from '@testing-library/react'
+import { MantineProvider } from '@mantine/core'
+import { theme } from '@/design-system/mantine/theme'
 import { FavoriteButton } from '../FavoriteButton'
 
 // ── Stubs ─────────────────────────────────────────────────────────────────────
@@ -7,6 +9,24 @@ import { FavoriteButton } from '../FavoriteButton'
 vi.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }))
+
+beforeAll(() => {
+  // jsdom has no matchMedia — MantineProvider's color-scheme detection needs it
+  // (same stub convention as ListingCard.smoke.test.tsx / MantinePagination.smoke.test.tsx).
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  )
+})
 
 const mockAddFavorite = vi.fn()
 const mockRemoveFavorite = vi.fn()
@@ -29,7 +49,11 @@ vi.mock('@/lib/auth/authSheet', () => ({
 
 function renderButton(props: Partial<Parameters<typeof FavoriteButton>[0]> = {}) {
   const merged = { listingId: 'test-id', isFavorited: false, ...props }
-  return render(<FavoriteButton {...merged} />)
+  return render(
+    <MantineProvider theme={theme}>
+      <FavoriteButton {...merged} />
+    </MantineProvider>,
+  )
 }
 
 function getButton() { return screen.getByRole('button') }
@@ -61,7 +85,7 @@ describe('FavoriteButton', () => {
 
     // Simulate external prop update (router.refresh or parent state update)
     await act(async () => {
-      rerender(<FavoriteButton listingId="test-id" isFavorited={true} />)
+      rerender(<MantineProvider theme={theme}><FavoriteButton listingId="test-id" isFavorited={true} /></MantineProvider>)
     })
 
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
@@ -72,7 +96,7 @@ describe('FavoriteButton', () => {
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
 
     await act(async () => {
-      rerender(<FavoriteButton listingId="test-id" isFavorited={false} />)
+      rerender(<MantineProvider theme={theme}><FavoriteButton listingId="test-id" isFavorited={false} /></MantineProvider>)
     })
 
     expect(getButton()).toHaveAttribute('aria-pressed', 'false')
@@ -124,7 +148,7 @@ describe('FavoriteButton', () => {
 
     // External prop update arrives while pending — isPendingRef guard should block sync
     await act(async () => {
-      rerender(<FavoriteButton listingId="test-id" isFavorited={false} />)
+      rerender(<MantineProvider theme={theme}><FavoriteButton listingId="test-id" isFavorited={false} /></MantineProvider>)
     })
 
     // Optimistic state must survive: button still shows true
@@ -148,7 +172,7 @@ describe('FavoriteButton', () => {
     await act(async () => { resolveAdd({ isFavorited: true }) })
     // Simulate parent acknowledging onToggled → prop updates to true
     await act(async () => {
-      rerender(<FavoriteButton listingId="test-id" isFavorited={true} onToggled={onToggled} />)
+      rerender(<MantineProvider theme={theme}><FavoriteButton listingId="test-id" isFavorited={true} onToggled={onToggled} /></MantineProvider>)
     })
 
     expect(getButton()).toHaveAttribute('aria-pressed', 'true')
@@ -192,17 +216,31 @@ describe('FavoriteButton', () => {
     expect(mockAddFavorite).not.toHaveBeenCalled()
   })
 
-  // ── Mobile full-width regression (Task 603) ────────────────────────────────
+  // ── Shape geometry regression (Task 603, updated Task 653 Mantine migration) ──
+  // Task 603's `max-sm:w-full`/`max-sm:min-h-11`/`h-9` Tailwind-class assertions no longer
+  // apply post-migration (Mantine renders no Tailwind utility classes at all — the icon-chrome
+  // absence check is trivially true now, kept as a regression guard). Replaced with assertions
+  // on the real geometry Mantine renders (inline style / custom properties, verified via a
+  // rendered-DOM inspection during Task 653): the icon is a fixed 32px round `ActionIcon` with
+  // no forced width; the pill is a Mantine `Button` whose `radius`/`border` are pinned to match
+  // the still-legacy `SaveToCollectionButton` sibling in `ListingContact.tsx` (18px / `var(--border)`).
 
   it('icon shape (card overlay, default) does NOT carry the mobile full-width chrome', () => {
     renderButton({ isFavorited: false })
-    expect(getButton().className).not.toMatch(/max-sm:w-full/)
-    expect(getButton().className).not.toMatch(/max-sm:min-h-11/)
+    const button = getButton()
+    expect(button.className).not.toMatch(/max-sm:w-full/)
+    expect(button.className).not.toMatch(/max-sm:min-h-11/)
+    // No forced width — stays a fixed round 32px control at every viewport.
+    expect(button.style.width).toBe('')
+    expect(button.style.getPropertyValue('--ai-size')).toContain('2rem')
   })
 
-  it('pill shape (ListingContact action row) still carries the mobile full-width chrome at size="lg"', () => {
+  it('pill shape (ListingContact action row) radius/border match the still-legacy SaveToCollectionButton sibling', () => {
     renderButton({ isFavorited: false, shape: 'pill', size: 'lg' })
-    expect(getButton().className).toMatch(/max-sm:w-full/)
-    expect(getButton().className).toMatch(/h-9/)
+    const button = getButton()
+    // Matches the sibling's Tailwind `rounded-xl` (18px) and `border-border` (var(--border)),
+    // applied via Mantine props per the unlayered-CSS rule (Tasks 629/650/651), not Tailwind classes.
+    expect(button.style.getPropertyValue('--button-radius')).toBe('1.125rem')
+    expect(button.style.border).toContain('var(--border)')
   })
 })

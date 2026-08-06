@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { SimpleGrid, Image, Stack, Divider, Title } from '@mantine/core';
-import { BedDouble, Bath, Building2, Maximize2, Heart, Copy } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { BedDouble, Bath, Building2, Maximize2 } from 'lucide-react';
 import { storyT } from '@/stories/_storyI18n';
-import { MantineListingCardPattern, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
+import { MantineListingCardPattern, MantineCopyIdButton, type MantineListingCardBadge, type MantineListingCardOverlay } from '@/design-system/mantine/patterns';
+import { FavoriteButton } from '@/modules/listings/components/FavoriteButton';
 
 const meta: Meta<typeof MantineListingCardPattern> = {
   title: 'Patterns/Mantine/ListingCardPattern',
@@ -11,7 +11,7 @@ const meta: Meta<typeof MantineListingCardPattern> = {
   parameters: {
     skipCanvas: true,
     layout: 'fullscreen',
-    docs: { description: { component: 'Complete listing card (Task 605) — single source of truth for the real ListingCard. `layout="grid"` (default, Grid/Latest surfaces) and `layout="list"` (Task 606, List view — structural port of the legacy horizontal branch) both demoed below. Grid cols adapt via SimpleGrid responsive cols. Viewport and locale switched via Storybook toolbar.' } },
+    docs: { description: { component: 'Complete listing card (Task 605) — single source of truth for the real ListingCard. `layout="grid"` (default, Grid/Latest surfaces) and `layout="list"` (Task 606, List view — structural port of the legacy horizontal branch) both demoed below. Task 656: the favorite slot renders the REAL `FavoriteButton` and the footer copy-id control renders the REAL canonical `MantineCopyIdButton` — no demo stand-ins. Grid cols adapt via SimpleGrid responsive cols. Viewport and locale switched via Storybook toolbar.' } },
   },
 };
 export default meta;
@@ -19,9 +19,9 @@ type Story = StoryObj<typeof MantineListingCardPattern>;
 
 const DEMO_IMAGE_URL = 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&h=250&fit=crop';
 
-// Demo photo element — a plain <img>, standing in for the real app's `AppImage`. The pattern's
-// `.imageSection img` tag-selector hover-zoom targets this the same way it targets AppImage's
-// inner <img> (Task 602 CSS-cascade note).
+// Demo photo element — a plain Mantine `Image`, standing in for the real app's `AppImage`.
+// The pattern's `.imageSection img` tag-selector hover-zoom targets this the same way it
+// targets AppImage's inner <img> (Task 602 CSS-cascade note).
 function DemoImage({ src, alt }: { src?: string; alt: string }) {
   if (!src) {
     // Explicit height — this fallback has no intrinsic size of its own (unlike the real
@@ -33,45 +33,6 @@ function DemoImage({ src, alt }: { src?: string; alt: string }) {
     );
   }
   return <Image src={src} alt={alt} h={180} fit="cover" />;
-}
-
-// Demo favorite heart — visual stand-in for the real `FavoriteButton`, built on the same
-// canonical `Button` primitive (`icon-sm` size, Task 603 fix) so the story genuinely represents
-// production chrome. `grid`: floats on the image, self-positions via `absolute top-2 right-2`
-// (the contract `layout="grid"` expects). `list`: sits inline in the info column's top row —
-// must NOT be absolutely positioned (the contract `layout="list"` expects, matching the ported
-// legacy horizontal branch's own `className="shrink-0 -mt-0.5 -mr-1"`).
-function DemoFavoriteButton({ locale, favorited = false, inline = false }: { locale: string; favorited?: boolean; inline?: boolean }) {
-  return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon-sm"
-      aria-label={favorited ? storyT(locale, 'storybook.mantine.card_favorite_aria_remove') : storyT(locale, 'storybook.mantine.card_favorite_aria_add')}
-      aria-pressed={favorited}
-      className={
-        (inline ? 'shrink-0 -mt-0.5 -mr-1 ' : 'absolute top-2 right-2 shadow-sm ') +
-        'rounded-full w-8 h-8 p-0 ' +
-        (favorited ? 'bg-destructive/10 text-destructive hover:bg-destructive/20' : 'bg-card/80 text-foreground hover:bg-card hover:text-destructive')
-      }
-    >
-      <Heart className="h-4 w-4" fill={favorited ? 'currentColor' : 'none'} />
-    </Button>
-  );
-}
-
-// Demo footer actions — copy-id + date cluster, visual stand-in for the real container's
-// stateful copy-id button.
-function DemoFooterActions({ locale, id }: { locale: string; id: string }) {
-  return (
-    <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
-      <span className="font-mono text-2xs text-muted-foreground/70 inline-flex items-center gap-0.5">
-        #{id}
-        <Copy className="h-2.5 w-2.5 shrink-0 opacity-50" />
-      </span>
-      <span className="whitespace-nowrap">{storyT(locale, 'storybook.mantine.card_footer_date')}</span>
-    </div>
-  );
 }
 
 // Card feature chips — MUST mirror the live `getCardFeatures` output for an apartment,
@@ -87,6 +48,38 @@ function demoFeatures(l: string) {
     { icon: <Maximize2 className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_area') },
     { icon: <Building2 className="h-3.5 w-3.5" />, value: storyT(l, 'storybook.mantine.listing_feature_floor') },
   ];
+}
+
+// Footer actions — the REAL canonical `MantineCopyIdButton` + date cluster. Structurally
+// mirrors ListingCard.tsx exactly: grid layout wraps in the same flex div; list layout is a
+// bare fragment (the pattern's own `layout="list"` footer row already supplies the flex
+// wrapper), so the story is a truthful rendering of production markup, not an approximation.
+function DemoFooterActions({ locale, id, layout }: { locale: string; id: string; layout: 'grid' | 'list' }) {
+  const copyButton = (
+    <MantineCopyIdButton
+      id={id}
+      label={`#${id}`}
+      copyLabel={storyT(locale, 'storybook.mantine.copy_id_button_aria_copy')}
+      copiedLabel={storyT(locale, 'storybook.mantine.copy_id_button_aria_copied')}
+    />
+  );
+  const dateLabel = <span className="whitespace-nowrap">{storyT(locale, 'storybook.mantine.card_footer_date')}</span>;
+
+  if (layout === 'list') {
+    return (
+      <>
+        {copyButton}
+        {dateLabel}
+      </>
+    );
+  }
+
+  return (
+    <div className="flex items-center justify-end gap-2 text-xs text-muted-foreground">
+      {copyButton}
+      {dateLabel}
+    </div>
+  );
 }
 
 interface DemoCardOpts {
@@ -138,14 +131,21 @@ function DemoCard({ l, id, layout = 'grid', reduced = false, premium = false, ar
         priceOld: reduced ? storyT(l, 'storybook.mantine.card_price_old_1') : undefined,
       }}
       image={<DemoImage src={noImage ? undefined : DEMO_IMAGE_URL} alt={storyT(l, 'storybook.mantine.card_title_1')} />}
-      favorite={<DemoFavoriteButton locale={l} favorited={favorited} inline={layout === 'list'} />}
+      favorite={
+        <FavoriteButton
+          listingId={id}
+          isFavorited={favorited}
+          overlay={layout === 'grid'}
+          className={layout === 'list' ? 'shrink-0 -mt-0.5 -mr-1' : 'shadow-sm'}
+        />
+      }
       typeLabel={storyT(l, 'storybook.mantine.card_type_label')}
       badges={badges}
       overlay={overlay}
       photoCount={noImage ? 0 : photoCount}
       features={demoFeatures(l)}
       pricePerSqmStr={storyT(l, 'storybook.mantine.card_price_per_sqm_1')}
-      footerActions={<DemoFooterActions locale={l} id={id} />}
+      footerActions={<DemoFooterActions locale={l} id={id} layout={layout} />}
       isPremium={premium}
       isArchived={archived}
     />
@@ -180,7 +180,7 @@ export const Default: Story = {
         <Stack gap="sm">
           <Title order={4}>{storyT(l, 'storybook.mantine.card_section_list')}</Title>
           <Stack gap="sm">
-            {/* Regular — favorite inline (unfavorited), new badge; no overlay/photo-counter (ported legacy design never had them) */}
+            {/* Regular — favorite inline (unfavorited), new badge, photo counter bottom-left (Task 656); no overlay (never had one — the badge already conveys sold/rented) */}
             <DemoCard l={l} id="7" layout="list" photoCount={5} />
             {/* Premium — brand ring + brand-tinted hover elevation, favorite already favorited */}
             <DemoCard l={l} id="8" layout="list" premium favorited photoCount={8} />

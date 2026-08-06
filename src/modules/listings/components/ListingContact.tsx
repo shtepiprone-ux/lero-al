@@ -5,7 +5,7 @@ import { getListingOwnerContact } from '@/modules/listings/actions/getListingOwn
 import { useTranslations, useLocale } from 'next-intl'
 import { formatPrice } from '@/lib/formatters'
 import { Phone, MessageCircle, Share2, CheckCircle, UserX, LogIn, Loader2 } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'

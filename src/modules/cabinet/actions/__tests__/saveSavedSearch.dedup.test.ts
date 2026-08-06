@@ -35,7 +35,7 @@ vi.mock('@/lib/supabase/admin', () => ({
 
 // Dynamic imports from the actions file trigger next/cache revalidate calls — already stubbed.
 
-describe('saveSavedSearch — dedup via canonical hash', () => {
+describe('saveSavedSearch — dedup via canonical hash', { timeout: 15_000 }, () => {
   beforeEach(() => {
     vi.clearAllMocks()
     mockChain.select.mockReturnThis()

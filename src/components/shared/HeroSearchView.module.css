@@ -1,0 +1,121 @@
+/*
+ * HeroSearchView.module.css — Task 709 (D28 mechanism-only de-hybrid, the 673/706/707 pattern).
+ * Reproduces the PRIOR Tailwind utility chains' OWN compiled declarations for the 6 `className=`
+ * sites named in the kickoff §3.1/§7 tables, read directly from the rebuilt
+ * `storybook-static/assets/iframe-DnJgGJJb.css` (2026-08-05, this session's I1 re-extraction of
+ * the kickoff §3.2 table — every row confirmed to still match except §3.3, see below) and
+ * verified against the I2 `getComputedStyle` capture on the real, pre-edit
+ * `Mantine/Primitives/HeroSearch/Default` story at 375/700/1024.
+ *
+ * N1 (Task 707 P3, carried forward as a rule): every declaration reproduces the compiled
+ * TOKEN REFERENCE, never its resolved value — `padding: var(--space-3)`, never `padding: 0.75rem`.
+ * N2: none of these 23 utilities is `:where()`-wrapped (all plain single-class declarations per
+ * the I1 extraction), so plain declarations here reproduce the same specificity.
+ *
+ * Site 1 (outer `hero-search` Box) takes Mantine style props instead of a module class
+ * (`w="100%" maw="var(--container-3xl)" mx="auto"` on HeroSearchView.tsx) — not reproduced here.
+ * Sites 6/9 (icons) take `size={16}` — not reproduced here (N3: rem->px unit change, accepted
+ * sprint convention, see session log).
+ *
+ * `sm:basis-full` on site 8 (kickoff §3.3) is DROPPED, not reproduced. The kickoff's own claim
+ * that it "emits no rule" did NOT reproduce on this session's I1 rebuild
+ * (`storybook-static/assets/iframe-DnJgGJJb.css` DOES contain
+ * `.sm\:basis-full{flex-basis:100%}` inside `@media(min-width:40rem)`, because the pre-edit
+ * source still carried the literal class) — flagged as a session finding for the orchestrator.
+ * The drop itself is still correct: `.sm\:basis-full` only reasserts the SAME value
+ * (`flex-basis:100%`) the unconditional `.basis-full` rule already applies across the whole
+ * 640-767 band, and is overridden identically by `md:basis-auto` at >=768 either way — the I2/I3
+ * computed-style diff for site 8 at width=700 confirms zero delta with the rule absent.
+ *
+ * RESOLVED — D34 cascade-layer fix (Task 709-R, 2026-08-05). The A2 regression (kickoff Assumption
+ * A2): `.searchControl`'s `padding-inline` won over Mantine `Button`'s own unlayered
+ * `:where([data-with-left-section])` rule (`node_modules/@mantine/core/styles.css:3326-3328`,
+ * `padding-inline-start: calc(var(--button-padding-x) / 1.5)`), where the PRIOR Tailwind `px-6`
+ * utility had LOST to that same Mantine rule. **Corrected mechanism** (the Task 709 session log's
+ * "`.searchControl` (0,1,0) beats the `:where()`-wrapped rule (0,0,0)" claim was wrong and is
+ * retracted): `:where()` zeroes only the attribute selector it wraps, not the class it is chained
+ * to, so `.m_77c9d27d:where([data-with-left-section])` is `(0,1,0)` — EQUAL specificity to
+ * `.searchControl`'s own `(0,1,0)`. At equal specificity and equal (unlayered) cascade tier, the
+ * module won on source order (it loads after `@mantine/core/styles.css`), not on any specificity
+ * edge. The prior Tailwind `px-6` avoided this collision entirely by sitting in `@layer utilities`:
+ * a layered rule loses to every unlayered rule regardless of specificity or source order, per the
+ * CSS Cascade Layers spec. **Fix (D34, 2026-08-05, Sprint 49 §3):** this file's rules are wrapped in
+ * `@layer utilities`, restoring exactly that losing standing without depending on the fragile
+ * source-order argument. Site 8 measures `paddingLeft:12px`/`paddingRight:18px` again at all three
+ * widths, and all 20 previously-regressed herosearch cells return to their pre-709 md5.
+ * **The inverse pattern does not apply here.** Six shipped tasks (602/629/650/651/653/654/656 —
+ * `MantineListingCardPattern`, `MantineCopyIdButton`, `FavoriteButton`, `SaveToCollectionButton`)
+ * deliberately leave their `.module.css` UNLAYERED so it CAN beat Mantine, because those fix a
+ * utility that never took effect. D34 distinguishes the two by intent: a D28 de-Tailwind migration
+ * reproduces the utility's own cascade standing (must layer, as here); a cascade-trap fix overrides
+ * a dead utility (must stay unlayered, as those six). This file is the former case.
+ */
+
+@layer utilities {
+  /* Site #2 — search-card Box (rounded-b-[var(--mantine-radius-lg)] sm:rounded-tr-[var(--mantine-radius-lg)] p-3) */
+  .searchCard {
+    border-bottom-right-radius: var(--mantine-radius-lg); /* rounded-b-[...] — I1 */
+    border-bottom-left-radius: var(--mantine-radius-lg); /* rounded-b-[...] — I1 */
+    padding: var(--space-3); /* p-3 — I1, N1: token reference kept */
+  }
+  @media (min-width: 40rem) {
+    .searchCard {
+      border-top-right-radius: var(--mantine-radius-lg); /* sm:rounded-tr-[...] — I1 */
+    }
+  }
+
+  /* Site #3 — control-row Box (flex flex-wrap md:flex-nowrap gap-2) */
+  .controls {
+    display: flex; /* flex — I1 */
+    flex-wrap: wrap; /* flex-wrap — I1 */
+    gap: var(--space-2); /* gap-2 — I1, N1: token reference kept */
+  }
+  @media (min-width: 48rem) {
+    .controls {
+      flex-wrap: nowrap; /* md:flex-nowrap — I1 */
+    }
+  }
+
+  /* Site #4 — PropertyTypeCombobox (basis-full sm:basis-auto sm:w-48 shrink-0) */
+  .typeControl {
+    flex-basis: 100%; /* basis-full — I1 */
+    flex-shrink: 0; /* shrink-0 — I1 */
+  }
+  @media (min-width: 40rem) {
+    .typeControl {
+      flex-basis: auto; /* sm:basis-auto — I1 */
+      width: calc(var(--spacing) * 48); /* sm:w-48 — I1, N1: token reference kept */
+    }
+  }
+
+  /* Site #5 — LocationCombobox (basis-full sm:basis-0 grow min-w-0) */
+  .locationControl {
+    flex-basis: 100%; /* basis-full — I1 */
+    flex-grow: 1; /* grow — I1 */
+    min-width: var(--space-0); /* min-w-0 — I1, N1: token reference kept */
+  }
+  @media (min-width: 40rem) {
+    .locationControl {
+      flex-basis: var(--space-0); /* sm:basis-0 — I1, N1: token reference kept */
+    }
+  }
+
+  /* Site #7 — MantineCountButton (shrink-0) */
+  .filtersControl {
+    flex-shrink: 0; /* shrink-0 — I1 */
+  }
+
+  /* Site #8 — Search Button (px-6 font-semibold basis-full sm:basis-full[dropped, see header] md:grow-0 md:basis-auto) */
+  .searchControl {
+    padding-inline: var(--space-6); /* px-6 — I1, N1: token reference kept */
+    --tw-font-weight: 600; /* font-semibold — I1, reproduced verbatim incl. the Tailwind bookkeeping var */
+    font-weight: 600; /* font-semibold — I1 */
+    flex-basis: 100%; /* basis-full — I1 */
+  }
+  @media (min-width: 48rem) {
+    .searchControl {
+      flex-grow: 0; /* md:grow-0 — I1 */
+      flex-basis: auto; /* md:basis-auto — I1 */
+    }
+  }
+}

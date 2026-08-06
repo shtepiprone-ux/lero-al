@@ -175,7 +175,7 @@ describe('HeroSearch — Mantine Button migration (Task 568)', () => {
 
     const container = searchButton.parentElement
     expect(container).not.toBeNull()
-    expect(container).toHaveClass('flex', 'flex-wrap', 'gap-2')
+    expect(container).toHaveAttribute('data-testid', 'hero-search-controls')
 
     // filters and Search are DIRECT SIBLINGS of the same container — no intermediate wrapper.
     expect(filtersButton.parentElement).toBe(container)

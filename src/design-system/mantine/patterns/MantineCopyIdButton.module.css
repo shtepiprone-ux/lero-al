@@ -1,0 +1,32 @@
+/*
+ * Task 656 — copy-ID `UnstyledButton` unlayered-CSS overrides, moved verbatim from the
+ * Task 655 Homepage-only `ListingCard.module.css` into this canonical component's own
+ * co-located module (single source, shared by production + both Stories).
+ *
+ * Verified via real-browser computed style: `UnstyledButton`'s own unlayered CSS
+ * (`.m_87cf2631` in @mantine/core/styles/UnstyledButton.css) sets `font-size:
+ * var(--mantine-font-size-md)` (16px) and `color: inherit` unconditionally, beating
+ * the Tailwind `text-2xs`/`text-muted-foreground/70`/`hover:text-muted-foreground`
+ * utility classes (all `@layer utilities`, unlayered always loses — Tasks
+ * 629/650/651/653/654 cascade-layer trap). Mantine's global
+ * `.mantine-focus-auto:focus-visible` rule (@mantine/core/styles/global.css) also
+ * adds its own 2px solid outline on top of the intended `focus-visible:ring-1`
+ * box-shadow, doubling the focus indicator. `[data-copy-id]` gives every rule here
+ * higher specificity than Mantine's plain-class rules, so it wins regardless of
+ * stylesheet load order — same technique as FavoriteButton.module.css (Task 653).
+ */
+
+.copyId[data-copy-id] {
+  font-size: var(--text-2xs);
+  color: color-mix(in oklab, var(--color-muted-foreground) 70%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .copyId[data-copy-id]:hover {
+    color: var(--color-muted-foreground);
+  }
+}
+
+.copyId[data-copy-id]:focus-visible {
+  outline: none;
+}

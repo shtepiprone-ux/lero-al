@@ -182,7 +182,7 @@ Review at `huge-2560`:
 4. **Navigation** — must remain bounded, not stretch across 2560px.
 5. **Admin layout** — must use `max-w-6xl` or similar, not stretch full width.
 
-Files: `system-listinggrid--huge-desktop__*__huge-2560.png` and `system-containers--container-wide__*__huge-2560.png`
+Files: `system-featuredlistings--default__*__huge-2560.png` and `system-containers--container-wide__*__huge-2560.png`
 
 ---
 

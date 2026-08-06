@@ -32,7 +32,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
 // ── Scanned roots ─────────────────────────────────────────────────────────────
-const SCAN_DIR_PREFIXES = ['docs/', 'src/', 'app/', 'components/', 'modules/', 'messages/', 'tasks/'];
+const SCAN_DIR_PREFIXES = ['docs/', 'src/', 'app/', 'components/', 'modules/', 'messages/', 'tasks/', 'scripts/'];
 
 // ── Binary extensions — never scanned as text ────────────────────────────────
 const BINARY_EXTS = new Set([
@@ -200,10 +200,25 @@ function scanFile(absPath) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 function run() {
   const allowlist = loadAllowlist();
-  const files = gitTrackedFiles().filter(shouldScan);
+  const candidates = gitTrackedFiles().filter(shouldScan);
+  const files = [];
+  const missing = [];
+  for (const rel of candidates) {
+    if (existsSync(resolve(ROOT, rel))) {
+      files.push(rel);
+    } else {
+      missing.push(rel);
+    }
+  }
 
-  console.log(`check:mojibake — scanning ${files.length} tracked text file(s) under docs/ src/ app/ components/ modules/ messages/ tasks/ + root *.md`);
+  console.log(`check:mojibake — scanning ${files.length} text file(s), tracked and untracked-not-ignored, under ${SCAN_DIR_PREFIXES.join(' ')} + root *.md`);
   console.log('');
+
+  if (missing.length > 0) {
+    console.log(`check:mojibake — skipping ${missing.length} tracked-but-deleted path(s) (staged deletion pending, nothing to scan):`);
+    for (const rel of missing) console.log(`  ${rel}`);
+    console.log('');
+  }
 
   let artifactCount = 0;
   let invalidCount = 0;

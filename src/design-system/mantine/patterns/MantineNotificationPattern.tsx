@@ -2,8 +2,14 @@
 
 import { Button, Group, Stack, Paper, Text, ThemeIcon, Badge } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
+import {
+  VARIANT_COLORS,
+  VARIANT_ICONS,
+  NOTIFICATION_AUTO_CLOSE,
+  type NotificationVariant,
+} from '@/design-system/mantine/notificationVariants'
 
-export type NotificationVariant = 'success' | 'error' | 'info' | 'warning'
+export type { NotificationVariant }
 
 export interface NotificationConfig {
   variant: NotificationVariant
@@ -19,13 +25,6 @@ export interface MantineNotificationPatternProps {
   errorConfig: NotificationConfig
   infoConfig: NotificationConfig
   previewItems?: NotificationConfig[]
-}
-
-const VARIANT_COLORS: Record<NotificationVariant, string> = {
-  success: 'green',
-  error: 'red',
-  info: 'blue',
-  warning: 'yellow',
 }
 
 /**
@@ -56,7 +55,8 @@ export function MantineNotificationPattern({
       title: config.title,
       message: config.message,
       color: VARIANT_COLORS[config.variant],
-      autoClose: 4000,
+      icon: VARIANT_ICONS[config.variant],
+      autoClose: NOTIFICATION_AUTO_CLOSE,
     })
   }
 
@@ -78,7 +78,7 @@ export function MantineNotificationPattern({
           {triggerErrorLabel}
         </Button>
         <Button
-          color="blue"
+          color="blueLight"
           onClick={() => showNotification(infoConfig)}
           w={{ base: '100%', sm: 'auto' }}
         >

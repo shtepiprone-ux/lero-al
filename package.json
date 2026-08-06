@@ -37,6 +37,8 @@
     "screenshots:responsive:storybook": "node scripts/responsive-screenshots.mjs --storybook-only",
     "screenshots:assert": "node scripts/check-stories-rendered.mjs",
     "screenshots:assert:fast": "node scripts/check-stories-rendered.mjs --fast",
+    "check:assertion-liveness": "node scripts/check-assertion-liveness.mjs",
+    "check:assertion-liveness:verify": "node scripts/check-assertion-liveness.mjs --verify-gate",
     "governance:screenshots": "node scripts/responsive-screenshots.mjs --check",
     "governance:screenshots:assert": "node scripts/check-stories-rendered.mjs --check",
     "governance:components": "node scripts/governance/component-catalog.mjs --check",
@@ -48,6 +50,7 @@
     "email": "email dev --dir src/modules/notifications/lib/emails",
     "check:locale-leak": "node scripts/check-locale-leak.mjs",
     "check:locale-leak:fast": "node scripts/check-locale-leak.mjs --fast",
+    "check:locale-leak:mantine-only": "node scripts/check-locale-leak.mjs --mantine-only",
     "check:i18n-hardcode": "node scripts/check-hardcoded-i18n.mjs",
     "check:i18n-hardcode:report": "node scripts/check-hardcoded-i18n.mjs --report",
     "check:i18n-hardcode:update-baseline": "node scripts/check-hardcoded-i18n.mjs --update-baseline",
@@ -75,6 +78,8 @@
     "check:listing-visibility": "node scripts/check-listing-visibility.mjs",
     "check:listing-visibility:report": "node scripts/check-listing-visibility.mjs --report",
     "check:listing-visibility:verify": "node scripts/check-listing-visibility.mjs --verify-gate",
+    "check:homepage-grid": "node scripts/check-homepage-grid.mjs",
+    "check:homepage-grid:verify": "node scripts/check-homepage-grid.mjs --verify-gate",
     "capture:admin-session": "node scripts/capture-admin-session.mjs",
     "new:story": "node scripts/scaffold-story.mjs"
   },
@@ -141,6 +146,7 @@
     "shadcn": "^4.3.0",
     "storybook": "^10.4.2",
     "tailwindcss": "^4",
+    "tsx": "^4.23.7",
     "typescript": "^5",
     "vite": "^6.0.0",
     "vitest": "^4.1.5"

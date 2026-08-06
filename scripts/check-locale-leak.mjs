@@ -36,6 +36,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { MANTINE_STORY_TITLE_PREFIXES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -44,6 +45,10 @@ const ROOT = resolve(__dirname, '..');
 
 const args = process.argv.slice(2);
 const FAST_MODE = args.includes('--fast');
+// Task Q0R — restricts the scan to canonical Mantine stories only (scripts/lib/mantine-story-scope.mjs),
+// the same criterion check-stories-rendered.mjs enforces. Legacy stories are excluded entirely —
+// they never run this gate and can never block a PR on it.
+const MANTINE_ONLY = args.includes('--mantine-only');
 
 // ── Locales to compare (en = baseline; sq/uk/it = detection targets) ──────────
 
@@ -88,6 +93,26 @@ const LEAK_ALLOWLIST = [
   /^(EUR|URL|DELETE|SMS|HTTP|HTTPS|WhatsApp|Email|SEO|API|ID|QA)$/i,
   // ── Design-system CSS variant labels (not translatable UI content) ────────────
   /^(Outline|Neutral)$/,
+  // ── Task 624 — Tech/UI canonical loanwords, verified against messages/*.json (not guessed):
+  //    it: password/dashboard/admin/pannello(wall_panel loanword)/brand are ALL used identically
+  //    to en across many real product keys (auth.password, nav.admin_dashboard, admin.settings.tab_brand,
+  //    listing.wall_panel); sq: admin/brand/panel(wall_panel) likewise identical to en in admin.*/
+  //    role keys and admin.settings.tab_brand. ─────────────────────────────────────────────────
+  /^(Password|Dashboard|Admin|Panel|Brand)$/,
+  // ── Task 624 — Real-estate loanwords, verified against messages/*.json listing.layout_*/
+  //    listing.premium: sq/it keep Premium/Duplex identical to en (genuine cognates in both
+  //    locales). Studio/Penthouse do NOT stay here — Task 626 moved them to PER_STORY_TOKENS
+  //    because it translates Studio→"Monolocale" and Penthouse→"Attico" (a global allowlist
+  //    entry would have masked a real mistranslation anywhere else these render). ─────────────
+  /^(Premium|Duplex)$/,
+  // ── Task 624 — universal Min abbreviation, verified against messages/*.json common.min/
+  //    storybook.filtercontrols.price_min: sq/it keep "Min" identical to en (Albanian "Minimumi"
+  //    and Italian "minimo" abbreviate the same way). "Max" does NOT stay here — Task 626 moved
+  //    it to PER_STORY_TOKENS because sq translates Max→"Maks" (a global allowlist entry would
+  //    have masked a real sq mistranslation anywhere else this renders). ───────────────────────
+  /^(Min)$/,
+  // ── Task 624 — brand names, identical across all locales by design. ────────────────────────
+  /^(Lero|Lero\.al|Facebook|Instagram)$/,
   // ── Status codes — all-caps enum values, never translatable prose ─────────────
   /^(ACTIVE|INACTIVE|PENDING|CLOSED|OPEN|SOLD|RENTED|ARCHIVED)$/i,
   // ── Storybook chrome ──────────────────────────────────────────────────────────
@@ -147,6 +172,36 @@ const PER_STORY_TOKENS = {
   'admin-statuschangehistory': ['Admin', 'Moderator', 'Administrator', 'In Progress', 'Resolved'],
   // StatusChangeControl/WorkflowWithHistory: actorName fixture + status label t() fallbacks.
   'admin-statuschangecontrol': ['Admin', 'Moderator', 'New', 'In Progress'],
+
+  // ── Task 624 — canonical Mantine-prefix mirrors of the legacy-keyed entries above. The legacy
+  // prefixes ('admin-admintable', etc.) never matched the new Mantine story IDs, so these role/
+  // fixture allowances were simply never applied to the Mantine stories until now.
+  // Avatar/SegmentedControl: mirrors admin-admintable's "Administrator" role fixture.
+  'mantine-primitives-avatar': ['Administrator'],
+  'mantine-primitives-segmentedcontrol': ['Administrator'],
+  // Table: raw fixture role + agency/person names (mirrors admin-admintable's "Agent"; agency/
+  // person names are story-specific, not in the legacy table).
+  'mantine-primitives-table': ['Agent', 'Tirana RE', 'Antonio Berluskoni', 'Roma Immobili', 'Albhome', 'Arben Krasniqi-Marashi'],
+  // AdminSurfacePattern: same raw fixture role + agency/person names as Table.
+  'patterns-mantine-adminsurfacepattern': ['Agent', 'Tirana RE', 'Roma Immobili', 'Albhome', 'Giulia Romano'],
+  // HeaderView/MobileNavDrawer/UserMenu: demo authenticated-user fixture name(s).
+  'mantine-primitives-headerview': ['Alba Krasniqi'],
+  'mantine-primitives-mobilenavdrawer': ['Alba Krasniqi'],
+  'mantine-primitives-usermenu': ['Alba Krasniqi', 'Driton Berisha'],
+  // Listing patterns: agent/agency/place proper-noun fixtures.
+  'patterns-mantine-listingcontactpattern': ['Elira Hoxha', 'Prime Realty Tirana'],
+  'patterns-mantine-listingdetailpattern': ['Elira Hoxha', 'Prime Realty Tirana', 'Tirana, Albania'],
+  'patterns-mantine-listingcardpattern': ['Tirana, Albania'],
+  // ListingCard: "Tirana, Albania" is the correct Italian spelling of this place name.
+  // Its canonical Storybook ID is mantine-primitives-listingcard--default.
+  'mantine-primitives-listingcard': ['Tirana, Albania'],
+  // FiltersPanelShell: heating_gas loanword (it:"Gas") + layout_features loanwords (sq:"Studio"/
+  // "Penthouse" — sq keeps these identical to en) + common.max loanword (it:"Max" — it keeps this
+  // identical to en); all verified against messages/it.json + messages/sq.json (Task 626).
+  'mantine-primitives-filterspanelshell': ['Gas', 'Studio', 'Penthouse', 'Max'],
+  // FilterControls: storybook.filtercontrols.price_max renders via common.max — it keeps "Max"
+  // identical to en (genuine Italian cognate), verified against messages/it.json (Task 626).
+  'mantine-primitives-filtercontrols': ['Max'],
 };
 
 function isPerStoryAllowlisted(storyId, token) {
@@ -279,12 +334,12 @@ function loadStoryIds(storybookStaticDir) {
       if (data.entries) {
         return Object.values(data.entries)
           .filter(e => e.type === 'story')
-          .map(e => ({ id: e.id, label: e.title + '/' + e.name }));
+          .map(e => ({ id: e.id, title: e.title ?? '', label: e.title + '/' + e.name }));
       }
       // Storybook 6 stories.json: { stories: { [id]: { id, kind, name } } }
       if (data.stories) {
         return Object.values(data.stories)
-          .map(e => ({ id: e.id, label: (e.kind || e.title || '') + '/' + e.name }));
+          .map(e => ({ id: e.id, title: e.kind ?? e.title ?? '', label: (e.kind || e.title || '') + '/' + e.name }));
       }
     } catch {
       // ignore parse errors
@@ -314,15 +369,29 @@ async function run() {
     process.exit(1);
   }
 
+  // Task Q0R (Q2/Q5) — under --mantine-only, restrict the entire scan to the canonical Mantine
+  // set (scripts/lib/mantine-story-scope.mjs). An empty result is a hard error, not a silent
+  // skip — either the build is stale/wrong or the title prefixes no longer match any story.
+  const scopedStories = MANTINE_ONLY ? allStories.filter(s => isCanonicalMantineTitle(s.title)) : allStories;
+  if (MANTINE_ONLY && scopedStories.length === 0) {
+    console.error(`❌ check-locale-leak --mantine-only: discovered ZERO stories matching any of [${MANTINE_STORY_TITLE_PREFIXES.join(', ')}].`);
+    console.error(`   Checked: storybook-static/index.json — filtering entries with a title starting with one of the prefixes above.`);
+    console.error('   This is a hard error, not a skip — either the build is stale/wrong, or a title prefix no longer matches story titles.');
+    process.exit(1);
+  }
+
   const PORT = 6009;
   const baseUrl = `http://127.0.0.1:${PORT}`;
   const timestamp = new Date().toISOString().slice(0, 16).replace(':', '-');
   const outputDir = join(ROOT, '.screenshots', 'locale-leak', timestamp);
   mkdirSync(outputDir, { recursive: true });
 
-  const scannable = allStories.filter(s => !DEMO_STORY_SKIP.test(s.id));
-  console.log(`🔍  Locale leak detector — ${FAST_MODE ? 'fast' : 'full'} mode`);
-  console.log(`    Stories: ${scannable.length} scanned (${allStories.length - scannable.length} multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: ${VIEWPORTS.length}`);
+  const scannable = scopedStories.filter(s => !DEMO_STORY_SKIP.test(s.id));
+  console.log(`🔍  Locale leak detector — ${FAST_MODE ? 'fast' : 'full'} mode${MANTINE_ONLY ? ' (mantine-only)' : ''}`);
+  if (MANTINE_ONLY) {
+    console.log(`Mantine selected: ${scopedStories.length}; non-Mantine excluded: ${allStories.length - scopedStories.length}`);
+  }
+  console.log(`    Stories: ${scannable.length} scanned (${scopedStories.length - scannable.length} multi-locale demo stories excluded) | Locales: sq/uk/it | Viewports: ${VIEWPORTS.length}`);
   console.log(`    Output: .screenshots/locale-leak/${timestamp}/`);
   console.log('');
 
@@ -334,7 +403,7 @@ async function run() {
     server = await startStaticServer(storybookStaticDir, PORT);
     browser = await chromium.launch();
 
-    for (const story of allStories) {
+    for (const story of scopedStories) {
       // Skip multi-locale demo stories — excluded by ID, not by global allowlist
       if (DEMO_STORY_SKIP.test(story.id)) continue;
 
@@ -410,8 +479,10 @@ async function run() {
     const report = {
       timestamp,
       mode: FAST_MODE ? 'fast' : 'full',
+      mantineOnly: MANTINE_ONLY,
       storiesScanned: scannable.length,
-      storiesExcluded: allStories.length - scannable.length,
+      storiesExcluded: scopedStories.length - scannable.length,
+      nonMantineExcluded: MANTINE_ONLY ? allStories.length - scopedStories.length : undefined,
       localesChecked: TARGET_LOCALES,
       leakCount: uniqueLeaks.length,
       leaks: uniqueLeaks,

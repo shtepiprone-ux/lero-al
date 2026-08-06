@@ -1,0 +1,17 @@
+[
+  "src/components/layout/HeaderView.tsx",
+  "src/components/layout/HeaderActions.tsx",
+  "src/components/layout/MobileNavDrawer.tsx",
+  "src/components/layout/UserMenu.tsx",
+  "src/components/shared/HeroSearchView.tsx",
+  "src/components/layout/FooterView.tsx",
+  "src/modules/listings/components/ListingCard.tsx",
+  "src/design-system/mantine/patterns/MantineHomeSection.tsx",
+  "src/modules/listings/components/FeaturedListingsView.tsx",
+  "src/modules/listings/components/LatestListingsView.tsx",
+  "src/components/shared/HeroSearchFallback.tsx",
+  "src/design-system/mantine/patterns/MantineFilterSection.tsx",
+  "src/components/shared/FiltersPanel.tsx",
+  "src/modules/locations/components/PopularLocationsView.tsx",
+  "src/components/layout/MobileBottomNavView.tsx"
+]

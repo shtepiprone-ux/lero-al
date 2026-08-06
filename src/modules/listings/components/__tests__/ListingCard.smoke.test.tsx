@@ -214,8 +214,8 @@ describe('ListingCard — horizontal branch (List view, MantineListingCardPatter
     // Favorite control (real FavoriteButton, inline — not dropped by the migration)
     expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument()
 
-    // No photo-count pill in the list row (the ported legacy design never had one)
-    expect(screen.queryByText('2')).not.toBeInTheDocument()
+    // Photo-count pill IS rendered in the list row (Task 656 — bottom-left, 2 fixture images)
+    expect(screen.getByText('2')).toBeInTheDocument()
   })
 
   it('reduced-price listing shows old price struck through + the price_reduced badge', () => {
@@ -224,7 +224,10 @@ describe('ListingCard — horizontal branch (List view, MantineListingCardPatter
     expect(screen.getByText('80,000 EUR')).toBeInTheDocument()
     const oldPrice = screen.getByText('92,000 EUR')
     expect(oldPrice).toBeInTheDocument()
-    expect(oldPrice).toHaveClass('line-through')
+    // Task 658: list-branch priceOld migrated to Mantine `Text td="line-through"` (a CSS
+    // style prop, not the literal Tailwind `.line-through` class) — same computed-style
+    // assertion already used for the vertical branch's equivalent case above.
+    expect(oldPrice.style.textDecoration || getComputedStyle(oldPrice).textDecorationLine).toMatch(/line-through/)
     expect(screen.getByText('Price reduced')).toBeInTheDocument()
   })
 

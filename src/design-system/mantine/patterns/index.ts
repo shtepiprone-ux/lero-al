@@ -13,8 +13,8 @@ export type { MantineTwoColumnFormProps, TwoColField } from './MantineTwoColumnF
 export { MantineResponsiveActionFooter } from './MantineResponsiveActionFooter'
 export type { MantineResponsiveActionFooterProps, FooterAction } from './MantineResponsiveActionFooter'
 
-export { MantineCardGrid } from './MantineCardGrid'
-export type { MantineCardGridProps, CardGridItem } from './MantineCardGrid'
+export { MantineHomeSection } from './MantineHomeSection'
+export type { MantineHomeSectionProps, MantineHomeSectionVariant } from './MantineHomeSection'
 
 export { MantineDataTableToCards } from './MantineDataTableToCards'
 export type { MantineDataTableToCardsProps, TableColumn, TableRow, CardConfig } from './MantineDataTableToCards'
@@ -89,6 +89,9 @@ export type { MantineDrawerProps } from './MantineDrawer'
 export { MantineCountButton } from './MantineCountButton'
 export type { MantineCountButtonProps } from './MantineCountButton'
 
+export { MantineCopyIdButton } from './MantineCopyIdButton'
+export type { MantineCopyIdButtonProps } from './MantineCopyIdButton'
+
 export { MantineTooltip } from './MantineTooltip'
 export type { MantineTooltipProps } from './MantineTooltip'
 
@@ -103,3 +106,6 @@ export type { MantineProgressProps } from './MantineProgress'
 
 export { RangeDatePicker } from './RangeDatePicker'
 export type { RangeDatePickerProps, DateRange } from './RangeDatePicker'
+
+export { MantineFilterSection } from './MantineFilterSection'
+export type { MantineFilterSectionProps } from './MantineFilterSection'

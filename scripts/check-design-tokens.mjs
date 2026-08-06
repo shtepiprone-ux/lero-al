@@ -18,6 +18,11 @@
  *   - Z-index arbitrary: z-[N] and inline zIndex: N / 'z-index': N
  *   - Shadow arbitrary: shadow-[...] (including negative-offset, e.g. shadow-[0_-2px_...])
  *   - Duration arbitrary: duration-[...] and inline transitionDuration/animationDuration
+ *   - Undefined CSS custom-property references: var(--x) in a .css file where --x
+ *     resolves against NONE of globals.css / the same file / a measured external
+ *     prefix-or-exact-name list (Task 718, category css-undefined-var, blocking
+ *     from the start — see "A documented token is not an implemented token" in
+ *     docs/orchestrator-procedures.md)
  *
  * Does NOT flag:
  *   - var(--token) references, including function-wrapped *-[var(--token)] forms
@@ -32,6 +37,9 @@
  *     before detection so commented-out code is not scanned as a live violation. A
  *     real violation earlier on the same line as a trailing {/* ... *\/} is still
  *     flagged (only the comment span is blanked).
+ *   - var(--x, fallback) — a reference WITH a fallback (Task 718 A5): it cannot
+ *     silently fall back to the property's initial value, so it is treated as
+ *     resolved regardless of whether --x itself is defined anywhere.
  *
  * Inline suppression (Task 403, Part 0; marker-value parsing widened Task 408):
  *   Place a comment on the SAME physical line as the match:
@@ -59,6 +67,14 @@
  * Inline suppression added by Task 403 (Sprint 35, 2026-06-06). Epic JJ Phase 3.
  * Detector hardening (JSX-comment strip, inline zIndex marker, negative/var lock
  * tests) added by Task 408 (Sprint 35, 2026-06-13). Epic JJ Phase 4.
+ * Plain CSS declaration coverage (css-length/css-duration/css-zindex,
+ * single-value only, report-only) added by Task 714 (Sprint 52, 2026-08-06).
+ * Shorthand / function-wrapped generalization of those 3 categories (per-literal
+ * token-anchored exemption) + reason-less CSS marker missing-reason fix added by
+ * Task 716 (Sprint 52, 2026-08-06).
+ * Undefined CSS custom-property reference detection (css-undefined-var, blocking
+ * from the start) + globals.css --z-* token definitions + R8 stale-string fix
+ * added by Task 718 (Sprint 52, 2026-08-06).
  * Docs: docs/design-system.md §23
  */
 
@@ -180,7 +196,327 @@ export const DETECTION_PATTERNS = [
     cat: 'duration',
     label: 'inline duration value',
   },
+
+  // ── Plain CSS declaration coverage (Task 714, report-only category — see §23.6) ──
+  //
+  // The patterns above are all shaped around Tailwind's arbitrary-value bracket
+  // syntax (`*-[Npx]`) or inline style-object literals. A plain CSS declaration in
+  // a `.module.css` file — e.g. `font-size: 10px;`, `gap: 1.5rem;`,
+  // `transition-duration: .15s;`, `z-index: 30;` — matches none of them (Task 713
+  // moved 3 previously-detected `text-[10px]` sites into exactly this blind spot).
+  //
+  // Scope (deliberate, documented boundary — Task 714 A2/A3/A5):
+  //   - `cssOnly: true` — only ever runs against `.css` file content; `.tsx`/`.ts`
+  //     detection is byte-identical to before this task (R9).
+  //   - Matches ONLY a declaration whose value is a single bare numeric-unit token
+  //     (`property: <N unit>` followed by `;` or `}`) — i.e. plain, unambiguous,
+  //     directly-tokenizable declarations. Multi-value/shorthand lists
+  //     (`border-bottom: 1px solid var(--border)`) and function-wrapped values
+  //     (`blur(8px)`, `calc(...)`, `translateY(-2px)`) are OUT of scope: they need
+  //     the same nested-function handling Task 408 built for Tailwind's
+  //     calc/min/max/clamp brackets, generalized to arbitrary CSS functions — a
+  //     separate, harder follow-on, not required by R1/R2's "plain CSS
+  //     declaration" wording. Named as a limitation for a future task.
+  //   - Zero values (`0`, `0px`, `0rem`, `0em`) and the approved `1px`/`-1px`
+  //     hairline-border value (A3 — `HeaderView.module.css:37` precedent) are
+  //     exempt by value via the `filter` callback, not by regex shape.
+  //   - `@media (min-width: 40rem)`/`@supports (...)` preludes never match: the
+  //     condition's numeric token is always followed by `)`, never `;`/`}`, so the
+  //     terminator lookahead structurally excludes preludes (A5) without special
+  //     casing.
+  //   - rawValue reported is `property: value` (e.g. `font-size: 10px`), matching
+  //     the existing inline-zIndex convention — this disambiguates identical bare
+  //     values on one line coming from different properties, and is the exact
+  //     string a `design-tokens-allow` marker must reproduce (A1).
+  {
+    re: /([\w-]+)\s*:\s*(-?(?:\d+\.\d+|\.\d+|\d+)(?:e\d+)?(?:px|rem|em))(?=\s*[;}])/g,
+    cat: 'css-length',
+    label: 'raw CSS length declaration',
+    cssOnly: true,
+    filter: (m) => {
+      const v = m.match(/(-?(?:\d+\.\d+|\.\d+|\d+)(?:e\d+)?)(px|rem|em)$/);
+      if (!v) return true;
+      const num = parseFloat(v[1]);
+      if (num === 0) return false;
+      if (v[2] === 'px' && Math.abs(num) <= 1) return false; // A3: 0px/1px/-1px exempt
+      return true;
+    },
+  },
+  {
+    re: /([\w-]+)\s*:\s*(-?(?:\d+\.\d+|\.\d+|\d+)(?:ms|s))(?=\s*[;}])/g,
+    cat: 'css-duration',
+    label: 'raw CSS duration declaration',
+    cssOnly: true,
+    filter: (m) => {
+      const v = m.match(/(-?(?:\d+\.\d+|\.\d+|\d+))(ms|s)$/);
+      if (!v) return true;
+      return parseFloat(v[1]) !== 0;
+    },
+  },
+  {
+    re: /(z-index)\s*:\s*(-?\d+)(?=\s*[;}])/g,
+    cat: 'css-zindex',
+    label: 'raw CSS z-index declaration',
+    cssOnly: true,
+    filter: (m) => {
+      const v = m.match(/(-?\d+)$/);
+      if (!v) return true;
+      return parseInt(v[1], 10) !== 0;
+    },
+  },
 ];
+
+// Categories landed report-only by Task 714 (§23.6): detected and printed under
+// their own heading, but never counted toward the strict/blocking exit code.
+// 715 owns the strict flip once the pre-existing inventory (Task 714 R6) is
+// remediated or explicitly marker-suppressed.
+export const REPORT_ONLY_CATEGORIES = /** @type {Set<string>} */ (new Set([]));
+
+// ── Shorthand / function-wrapped CSS declaration coverage (Task 716) ─────────
+//
+// The css-length/css-duration/css-zindex DETECTION_PATTERNS entries above only
+// match a declaration whose ENTIRE value is one bare token (the §23.6 boundary
+// Task 714 documented and this task closes). This section generalizes them to a
+// raw literal that appears INSIDE a multi-value shorthand list
+// (`border-bottom: 1px solid var(--border)`) or wrapped in a CSS function
+// (`filter: blur(8px)`), following the SAME token-anchored exemption mechanism
+// Task 408 built for Tailwind's calc/min/max/clamp brackets (§23.1.b) — but
+// applied per-literal, scoped to the literal's OWN outermost enclosing function
+// call, not per-declaration (Task 716 A1): a raw literal sitting at the
+// declaration's TOP level (not inside any function) is never exempted just
+// because a var(--…) reference appears elsewhere in the same value. That is
+// exactly what makes `border-bottom: 1px solid var(--border)` detect the `1px`
+// (R1) while a function like `calc(var(--x) + 2px)` stays exempt (A4 — the
+// literal's own outermost function contains a var(--…) reference, matching the
+// frozen Task 408 `rounded-[calc(var(--radius)-5px)]` precedent exactly).
+//
+// A declaration whose value IS exactly one bare token is skipped here — the
+// dedicated single-value pattern above already reports it (incl. its own
+// zero/A3 1px-exemption), so this function never double-counts a finding.
+//
+// Task 716 A3 (the 1px policy, decided): the 1px/-1px hairline exemption is
+// SINGLE-VALUE-ONLY, unchanged above. The instant 1px co-occurs with any other
+// token in a shorthand list it is a full finding like any other raw literal —
+// proven by AC1's `border-bottom: 1px solid var(--border)` case. This is one
+// consistent rule ("the exemption applies only when 1px IS the whole value")
+// applied identically in both paths, not two different policies.
+//
+// Task 716 A5 (the --* decision): custom-property declarations are IN scope,
+// unchanged from the property-name shape already used above (`[\w-]+` matches
+// a leading `--`) — no special-casing needed or added.
+const SHORTHAND_CSS_SPECS = [
+  {
+    cat: 'css-length',
+    label: 'raw CSS length declaration (shorthand/function-wrapped)',
+    propertySource: '[\\w-]+',
+    unitSource: '-?(?:\\d+\\.\\d+|\\.\\d+|\\d+)(?:e\\d+)?(?:px|rem|em)',
+    isZero: (literal) => {
+      const m = literal.match(/^(-?(?:\d+\.\d+|\.\d+|\d+)(?:e\d+)?)(px|rem|em)$/);
+      return m ? parseFloat(m[1]) === 0 : false;
+    },
+  },
+  {
+    cat: 'css-duration',
+    label: 'raw CSS duration declaration (shorthand/function-wrapped)',
+    propertySource: '[\\w-]+',
+    unitSource: '-?(?:\\d+\\.\\d+|\\.\\d+|\\d+)(?:ms|s)',
+    isZero: (literal) => {
+      const m = literal.match(/^(-?(?:\d+\.\d+|\.\d+|\d+))(ms|s)$/);
+      return m ? parseFloat(m[1]) === 0 : false;
+    },
+  },
+  {
+    cat: 'css-zindex',
+    label: 'raw CSS z-index declaration (function-wrapped)',
+    propertySource: 'z-index',
+    unitSource: '-?\\d+',
+    isZero: (literal) => parseInt(literal, 10) === 0,
+  },
+];
+
+// Returns true when the literal starting at `litStart` inside `value` sits
+// within a CSS function call whose full parenthesized span (from its own `(`
+// to its matching `)`) contains a `var(--` reference ANYWHERE — the per-function
+// token-anchored exemption (A1/A4), generalizing Task 408's whole-bracket
+// var-anywhere rule from Tailwind's `*-[calc(...)]` syntax to arbitrary CSS
+// functions. A literal that is not inside any function at all (paren depth 0
+// at its own position) is never anchored — this is what makes a bare
+// shorthand token never inherit exemption from a sibling `var()` token.
+function isVarAnchoredLiteral(value, litStart) {
+  let depth = 0;
+  let outerStart = -1;
+  for (let i = 0; i < litStart; i++) {
+    if (value[i] === '(') {
+      if (depth === 0) outerStart = i;
+      depth++;
+    } else if (value[i] === ')') {
+      depth--;
+      if (depth === 0) outerStart = -1;
+    }
+  }
+  if (depth <= 0 || outerStart === -1) return false;
+  let d2 = 0;
+  let outerEnd = value.length - 1;
+  for (let i = outerStart; i < value.length; i++) {
+    if (value[i] === '(') d2++;
+    else if (value[i] === ')') {
+      d2--;
+      if (d2 === 0) { outerEnd = i; break; }
+    }
+  }
+  return /var\(--/.test(value.slice(outerStart, outerEnd + 1));
+}
+
+// Finds raw literals for one spec (css-length/css-duration/css-zindex) in
+// shorthand or function-wrapped declarations on a single, already
+// CSS-comment-stripped line. Declarations are located by scanning for
+// `property:` then walking forward tracking paren depth to find the
+// terminating `;`/`}` AT depth 0. This is what structurally excludes
+// @media/@supports preludes (A5) without special-casing: a prelude's condition
+// paren (e.g. `(min-width: 40rem)`) closes to a NEGATIVE depth relative to this
+// walk (the walk starts after the prelude's own property colon, so it never saw
+// the prelude's opening paren), so depth never returns to exactly 0 and no
+// terminator is ever found on that line — the candidate declaration is skipped.
+function findShorthandCssLiterals(line, spec) {
+  const results = [];
+  const declRe = new RegExp(`(${spec.propertySource})\\s*:\\s*`, 'g');
+  const soleTokenRe = new RegExp(`^${spec.unitSource}$`);
+  const literalRe = new RegExp(spec.unitSource, 'g');
+  let dm;
+  while ((dm = declRe.exec(line)) !== null) {
+    const property = dm[1];
+    const valueStart = declRe.lastIndex;
+    let depth = 0;
+    let valueEnd = -1;
+    for (let i = valueStart; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '(') depth++;
+      else if (ch === ')') depth--;
+      else if ((ch === ';' || ch === '}') && depth === 0) { valueEnd = i; break; }
+    }
+    if (valueEnd === -1) continue;
+    const value = line.slice(valueStart, valueEnd);
+
+    // Single-bare-token values are already reported by the dedicated
+    // single-value pattern above (incl. its own zero/A3 exemption) — skip
+    // here so this function never double-counts a finding.
+    if (soleTokenRe.test(value.trim())) continue;
+
+    literalRe.lastIndex = 0;
+    let lm;
+    while ((lm = literalRe.exec(value)) !== null) {
+      const literal = lm[0];
+      if (spec.isZero(literal)) continue;
+      if (isVarAnchoredLiteral(value, lm.index)) continue;
+      results.push({ cat: spec.cat, label: spec.label, match: `${property}: ${literal}` });
+    }
+  }
+  return results;
+}
+
+// ── Undefined CSS custom-property reference coverage (Task 718, R4) ──────────
+//
+// A var(--x) reference in a scanned .css file is a finding when --x cannot be
+// resolved against any of three sources:
+//   1. src/app/globals.css — the token source of truth. It is itself excluded
+//      from scanning (SKIP_FILES), so its definitions are supplied by the
+//      caller as globalsDefinedProps (measured once in run(), threaded through
+//      scanFile → scanContent; test callers pass their own set or the default
+//      empty one).
+//   2. The same file being scanned — via extractCssCustomPropertyDefinitions
+//      on that file's own content (self-contained, no extra input needed).
+//   3. A measured external prefix/exact-name list (EXTERNAL_VAR_PREFIXES /
+//      EXTERNAL_VAR_EXACT_NAMES below) — variables a framework supplies at
+//      build time that this repo does not define. --z- is deliberately
+//      absent: it is the token family Task 718 defines in globals.css, and if
+//      it needed this list, R1 failed.
+//
+// A5 (decided): var(--x, fallback) is treated as RESOLVED even when --x is
+// undefined — a fallback means the declaration can never silently compute to
+// the property's initial value, which is the exact failure mode (§3.6/R2 of
+// the Task 718 kickoff) this category exists to catch. Only a var() with NO
+// fallback and NO resolvable definition is a finding.
+//
+// Runs on the SAME CSS-comment-stripped source (codeOnlyCss) the shorthand
+// scanner above already uses (A3 — no second stripper), and is found by a
+// direct `var(` text search rather than a DETECTION_PATTERNS regex entry,
+// because correctly matching the reference's own closing paren (which may
+// contain nested function calls in its fallback) needs the same paren-balance
+// walk isVarAnchoredLiteral/findShorthandCssLiterals already use above.
+//
+// Each external entry is proven present in the production build and/or
+// node_modules (measured 2026-08-06, R6):
+//   --tw-       Tailwind v4 internal utility vars (e.g. --tw-shadow,
+//               --tw-ring-color) — present in 3 of 6 .next/static/css/*.css
+//               build chunks and generated by every Tailwind utility class.
+//   --mantine-  Mantine v9 createTheme() output (e.g. --mantine-color-brand-5)
+//               — present in .next/static/css/*.css and in every
+//               node_modules/@mantine/core/styles/*.css file.
+//   --spacing   Tailwind v4's OWN base spacing-scale unit (`--spacing: .25rem`
+//               at node_modules/tailwindcss/theme.css:325, also present in
+//               .next/static/css/e55fe1d775976885.css) — DISTINCT from this
+//               repo's --spacing-N named tokens in globals.css. Consumed via
+//               calc(var(--spacing) * N), Tailwind's own compiled form of
+//               gap-0.5/w-48 etc. (MobileBottomNavView.module.css,
+//               HeroSearchView.module.css — the 3 real sites that forced this
+//               entry onto the list; measured, not guessed, per A2).
+//   --default-transition-timing-function   Tailwind v4's own base easing
+//               variable — defined at node_modules/tailwindcss/theme.css:493
+//               and node_modules/tailwindcss/index.css:502, present in
+//               .next/static/css/e55fe1d775976885.css. Consumed as the
+//               fallback arm of a nested var(--tw-ease, var(--default-...))
+//               at MobileBottomNavView.module.css:92 (transition-timing-function,
+//               Tailwind's compiled `transition-transform` output) — the one
+//               real site that forced this entry onto the list, per A2.
+const EXTERNAL_VAR_PREFIXES = ['--tw-', '--mantine-'];
+const EXTERNAL_VAR_EXACT_NAMES = new Set(['--spacing', '--default-transition-timing-function']);
+
+function isExternallyResolvedVar(name) {
+  if (EXTERNAL_VAR_EXACT_NAMES.has(name)) return true;
+  return EXTERNAL_VAR_PREFIXES.some((p) => name.startsWith(p));
+}
+
+function findUndefinedCssVarReferences(line, globalsDefinedProps, localDefinedProps) {
+  const results = [];
+  const callRe = /var\(/gi;
+  let m;
+  while ((m = callRe.exec(line)) !== null) {
+    const contentStart = m.index + 4; // length of the literal "var("
+    let depth = 1;
+    let i = contentStart;
+    for (; i < line.length; i++) {
+      if (line[i] === '(') depth++;
+      else if (line[i] === ')') {
+        depth--;
+        if (depth === 0) break;
+      }
+    }
+    if (depth !== 0) continue; // unterminated on this physical line — skip
+    const inner = line.slice(contentStart, i);
+    const nameMatch = inner.match(/^\s*(--[\w-]+)/);
+    if (!nameMatch) continue;
+    const name = nameMatch[1];
+
+    // A5: a top-level comma after the name (not nested inside the fallback's
+    // own function call) means a fallback is present — resolved regardless.
+    let hasFallback = false;
+    let d2 = 0;
+    for (let j = nameMatch[0].length; j < inner.length; j++) {
+      const ch = inner[j];
+      if (ch === '(') d2++;
+      else if (ch === ')') d2--;
+      else if (ch === ',' && d2 === 0) { hasFallback = true; break; }
+    }
+    if (hasFallback) continue;
+
+    if (localDefinedProps.has(name)) continue;
+    if (globalsDefinedProps.has(name)) continue;
+    if (isExternallyResolvedVar(name)) continue;
+
+    results.push({ match: line.slice(m.index, i + 1) });
+  }
+  return results;
+}
 
 // ── JSX comment stripping (Task 408, §A) ──────────────────────────────────────
 //
@@ -202,13 +538,89 @@ export function stripJsxComments(content) {
   );
 }
 
+// ── CSS comment stripping (Task 714, A2) ──────────────────────────────────────
+//
+// Replace every /* ... */ span (including multi-line) with whitespace of the
+// same shape, so line/column numbers of real code are unchanged. Used ONLY to
+// build the detection source for the cssOnly patterns above — the existing
+// color/Tailwind-bracket patterns keep reading the unstripped codeOnly source,
+// so their behavior on .css files is unchanged (R9). A `design-tokens-allow`
+// marker lives INSIDE a CSS comment, so this strip also removes the marker's own
+// text from the detection source — exactly like the existing trailing `//`
+// strip does for TSX — preventing the marker's embedded value string from being
+// double-counted as a live violation. Markers themselves are still parsed from
+// the original, unstripped physical line (parseInlineMarkers below).
+export function stripCssComments(content) {
+  return content.replace(/\/\*[\s\S]*?\*\//g, (match) =>
+    match.replace(/[^\n]/g, ' ')
+  );
+}
+
+// ── CSS custom-property definition extraction (Task 718, R4; Task 720, R1-R3) ─
+//
+// Returns the set of custom-property NAMES declared anywhere in `content`, using
+// the same CSS-comment-stripped source as stripCssComments above (A3 — one
+// stripper, reused). Position within the file does not matter for resolution:
+// a declaration is in scope for the whole cascade context it lives in, and
+// this detector does not model selector/media scoping (a documented
+// simplification consistent with the rest of this file's line-based design).
+// Used for TWO resolution sources in scanContent: globals.css (called once in
+// run() against globals.css's own content, passed in as globalsDefinedProps)
+// and the same file being scanned (called per-file against its own content).
+//
+// Task 720, R1/R2: a declaration can start anywhere a top-level `{` or `;` just
+// ended (or at the very start of the source) — not only at the start of a
+// physical line, so a second same-line declaration is no longer invisible.
+// "Top-level" is tracked with a quote-state + paren-depth walk over the
+// stripped source, so a declaration-shaped literal inside a quoted value (a
+// `content` string, a data-URI) is never mistaken for a definition — deleting
+// the old `^` line anchor outright was rejected for exactly that reason (§3.4
+// of the kickoff): it would register `--fake` out of `content: "--fake: 1px"`.
+// Name case is never normalized (R3) — `--Foo` and `--foo` stay distinct.
+export function extractCssCustomPropertyDefinitions(content) {
+  const stripped = stripCssComments(content);
+  const defs = new Set();
+  const declRe = /\s*(--[\w-]+)\s*:/y;
+  const tryMatchAt = (pos) => {
+    declRe.lastIndex = pos;
+    const m = declRe.exec(stripped);
+    if (m) defs.add(m[1]);
+  };
+  tryMatchAt(0);
+  let parenDepth = 0;
+  let quote = null;
+  for (let i = 0; i < stripped.length; i++) {
+    const ch = stripped[i];
+    if (quote) {
+      if (ch === '\\') i++;
+      else if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'") { quote = ch; continue; }
+    if (ch === '(') { parenDepth++; continue; }
+    if (ch === ')') { if (parenDepth > 0) parenDepth--; continue; }
+    if (parenDepth === 0 && (ch === '{' || ch === ';')) tryMatchAt(i + 1);
+  }
+  return defs;
+}
+
 // ── Skip heuristics ───────────────────────────────────────────────────────────
-function shouldSkipLine(line) {
+// Task 719, R1: in .css, CSS comments have already been stripped into
+// cssStrippedLine (Task 714 A2) by the time this runs, so a leading `*` there
+// is the universal selector, not a comment — ask the stripper whether
+// anything real survived instead of guessing from the raw line's first
+// character. In .ts/.tsx, nothing else strips `/** ... */` JSDoc continuation
+// lines, so the leading-`*`/`/*` heuristic stays exactly as it was for those
+// files (A2 of the kickoff — this branch must not move).
+function shouldSkipLine(line, isCssFile, cssStrippedLine) {
   const trimmed = line.trimStart();
   // Comment-only lines (value inside a trailing // comment is not runtime code)
-  if (trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*')) return true;
-  // CSS comment lines
-  if (trimmed.startsWith('/*') || trimmed.startsWith('*')) return true;
+  if (trimmed.startsWith('//')) return true;
+  if (isCssFile) {
+    if (cssStrippedLine.trim() === '') return true;
+  } else if (trimmed.startsWith('*') || trimmed.startsWith('/*')) {
+    return true;
+  }
   // Import / type declarations — no runtime style values
   if (/^\s*(import\s|export\s+type|type\s+\w|interface\s+\w)/.test(line)) return true;
   return false;
@@ -239,7 +651,16 @@ export function parseInlineMarkers(line) {
 
     const afterPrefix = line.slice(pos + ALLOW_MARKER_PREFIX.length);
     const dashIdx = afterPrefix.indexOf('—');
-    const valuePart = dashIdx === -1 ? afterPrefix : afterPrefix.slice(0, dashIdx);
+    // Task 716 R4: a reason-less CSS block-comment marker (`/* design-tokens-allow:
+    // <value> */`, no — separator) had its own `*/` terminator absorbed into
+    // valuePart, so the extracted value never matched the detected source text and
+    // the marker misreported as `stale-marker` instead of the documented
+    // missing-reason error. Strip a trailing `*/` ONLY when there is no reason — a
+    // marker WITH a reason never has `*/` before the — separator, so this never
+    // touches that path. The `//` (TSX) form has no terminator to strip, so this is
+    // a no-op there — the TSX path is unchanged.
+    let valuePart = dashIdx === -1 ? afterPrefix : afterPrefix.slice(0, dashIdx);
+    if (dashIdx === -1) valuePart = valuePart.replace(/\*\/\s*$/, '');
     const rawValue = valuePart.trim();
 
     if (!rawValue) {
@@ -333,33 +754,47 @@ function collectFiles(dir, exts) {
 //
 // scanContent operates on raw text + a relPath used only for grouping/allowlist
 // lookups — it does not touch the filesystem, so tests can plant fixtures as
-// in-memory strings (Task 408, §E).
-export function scanContent(content, relPath, allowlist = {}) {
+// in-memory strings (Task 408, §E). globalsDefinedProps (Task 718) is the one
+// exception to "no filesystem": it is a Set of custom-property names computed
+// by the CALLER (run() reads real globals.css once; tests pass their own set
+// or the empty default) — scanContent itself never reads a file.
+export function scanContent(content, relPath, allowlist = {}, globalsDefinedProps = new Set()) {
   if (isAllowlisted(relPath, allowlist)) return [];
 
+  const isCssFile = relPath.endsWith('.css');
   const lines = content.split('\n');
   // §A: strip {/* ... */} JSX comment blocks (incl. multi-line) before detection.
   // Markers are still parsed from the ORIGINAL (unstripped) lines below.
   const strippedLines = stripJsxComments(content).split('\n');
+  // Task 714 A2: separate CSS-comment-stripped source, .css files only, used
+  // ONLY by the cssOnly patterns — existing patterns keep reading strippedLines
+  // so their behavior is unchanged (R9).
+  const cssStrippedLines = isCssFile ? stripCssComments(content).split('\n') : null;
+  // Task 718, R4 resolution source 2: custom properties defined anywhere in
+  // THIS file (position-independent — see extractCssCustomPropertyDefinitions).
+  const localDefinedProps = isCssFile ? extractCssCustomPropertyDefinitions(content) : new Set();
   const findings = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     const lineNum = i + 1;
 
-    if (shouldSkipLine(line)) continue;
+    if (shouldSkipLine(line, isCssFile, isCssFile ? cssStrippedLines[i] : null)) continue;
 
     // Strip trailing // comment before detection so that the marker text itself
     // (which contains the suppressed value string) is not scanned as a violation.
     // parseInlineMarkers runs on the full original line to find the markers.
     const codeOnly = strippedLines[i].replace(/\s*\/\/.*$/, '');
+    const codeOnlyCss = isCssFile ? cssStrippedLines[i].replace(/\s*\/\/.*$/, '') : null;
 
     // Collect all pattern matches on the code portion of this line
     const rawMatches = [];
-    for (const { re, cat, label, filter } of DETECTION_PATTERNS) {
+    for (const { re, cat, label, filter, cssOnly } of DETECTION_PATTERNS) {
+      if (cssOnly && !isCssFile) continue;
+      const source = cssOnly ? codeOnlyCss : codeOnly;
       re.lastIndex = 0;
       let m;
-      while ((m = re.exec(codeOnly)) !== null) {
+      while ((m = re.exec(source)) !== null) {
         if (filter && !filter(m[0])) continue;
         rawMatches.push({
           file: relPath,
@@ -367,6 +802,30 @@ export function scanContent(content, relPath, allowlist = {}) {
           cat,
           label,
           match: m[0],
+          area: getArea(relPath),
+        });
+      }
+    }
+
+    // Task 716: shorthand / function-wrapped css-length/css-duration/css-zindex
+    // literals — only ever runs against .css content, on the same CSS-comment-
+    // stripped source the single-value cssOnly patterns above already use.
+    if (isCssFile) {
+      for (const spec of SHORTHAND_CSS_SPECS) {
+        for (const { cat, label, match } of findShorthandCssLiterals(codeOnlyCss, spec)) {
+          rawMatches.push({ file: relPath, line: lineNum, cat, label, match, area: getArea(relPath) });
+        }
+      }
+      // Task 718, R4: a var(--x) reference that resolves against none of
+      // globals.css / this file / the measured external list — blocking from
+      // the start (not added to REPORT_ONLY_CATEGORIES).
+      for (const { match } of findUndefinedCssVarReferences(codeOnlyCss, globalsDefinedProps, localDefinedProps)) {
+        rawMatches.push({
+          file: relPath,
+          line: lineNum,
+          cat: 'css-undefined-var',
+          label: 'var() reference with no resolvable definition',
+          match,
           area: getArea(relPath),
         });
       }
@@ -422,17 +881,25 @@ export function scanContent(content, relPath, allowlist = {}) {
   return findings;
 }
 
-function scanFile(filePath, allowlist) {
+function scanFile(filePath, allowlist, globalsDefinedProps) {
   const relPath = relative(ROOT, filePath).replace(/\\/g, '/');
   let content;
   try { content = readFileSync(filePath, 'utf8'); } catch { return []; }
-  return scanContent(content, relPath, allowlist);
+  return scanContent(content, relPath, allowlist, globalsDefinedProps);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 function run() {
   const allowlist = loadAllowlist();
   const staleWarnings = checkStaleEntries(allowlist);
+
+  // Task 718, R4 resolution source 1: globals.css is excluded from the file
+  // loop below (SKIP_FILES) but IS the token source of truth, so its
+  // definitions are read once here and threaded through every css-file scan.
+  const globalsCssPath = join(ROOT, 'src/app/globals.css');
+  const globalsDefinedProps = existsSync(globalsCssPath)
+    ? extractCssCustomPropertyDefinitions(readFileSync(globalsCssPath, 'utf8'))
+    : new Set();
 
   const srcDir = join(ROOT, 'src');
   const allFiles = collectFiles(srcDir, ['.tsx', '.ts', '.css']);
@@ -449,7 +916,7 @@ function run() {
 
   const allFindings = [];
   for (const f of allFiles) {
-    allFindings.push(...scanFile(f, allowlist));
+    allFindings.push(...scanFile(f, allowlist, globalsDefinedProps));
   }
 
   // ── --update-allowlist mode (only uses regular findings, not marker errors)
@@ -472,11 +939,18 @@ function run() {
   // ── Separate finding types
   const missingReasonFindings = allFindings.filter(f => f.cat === 'missing-reason');
   const staleMarkerFindings = allFindings.filter(f => f.cat === 'stale-marker');
-  const regularFindings = allFindings.filter(f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker');
+  // Task 714 (§23.6): css-length/css-duration/css-zindex are report-only — never
+  // counted toward the strict/blocking exit code, printed under their own heading.
+  const cssDeclFindings = allFindings.filter(f => REPORT_ONLY_CATEGORIES.has(f.cat));
+  const regularFindings = allFindings.filter(
+    f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker' && !REPORT_ONLY_CATEGORIES.has(f.cat)
+  );
 
-  // ── Group findings by area → file → category
+  // ── Group findings by area → file → category (excludes report-only css-decl
+  // findings, which get their own dedicated section below — A4)
   const byArea = {};
   for (const finding of allFindings) {
+    if (REPORT_ONLY_CATEGORIES.has(finding.cat)) continue;
     (byArea[finding.area] ??= {})[finding.file] ??= [];
     byArea[finding.area][finding.file].push(finding);
   }
@@ -504,8 +978,30 @@ function run() {
     console.log('');
   }
 
+  // ── CSS declaration coverage — legacy report-only heading (Task 714, §23.6).
+  // REPORT_ONLY_CATEGORIES has been empty since Task 715 (§23.6.b), so
+  // cssDeclFindings is always []; css-length/css-duration/css-zindex findings
+  // now surface in the per-area sections above like every other blocking
+  // category. Own heading kept for output-shape stability, count always 0.
+  console.log(`  ── CSS DECLARATION LITERALS — legacy report-only heading, always 0 since Task 715  (${cssDeclFindings.length} finding${cssDeclFindings.length === 1 ? '' : 's'}) ──`);
+  if (cssDeclFindings.length === 0) {
+    console.log('  (none found)');
+  } else {
+    const byFile = {};
+    for (const f of cssDeclFindings) (byFile[f.file] ??= []).push(f);
+    for (const file of Object.keys(byFile).sort()) {
+      const items = byFile[file];
+      console.log(`  ${file}  (${items.length})`);
+      for (const { line, cat, label, match } of items) {
+        console.log(`    :${line}  [${cat}:${label}]  "${match}"`);
+      }
+    }
+  }
+  console.log(`  715 flipped css-length/css-duration/css-zindex to blocking; they report above with every other category now. Docs: docs/design-system.md §23.6.b.`);
+  console.log('');
+
   // ── Summary
-  console.log(`  Total: ${regularFindings.length} raw style-value violation(s) | ${staleMarkerFindings.length} stale-marker(s) | ${missingReasonFindings.length} missing-reason error(s)`);
+  console.log(`  Total: ${regularFindings.length} raw style-value violation(s) | ${staleMarkerFindings.length} stale-marker(s) | ${missingReasonFindings.length} missing-reason error(s) | ${cssDeclFindings.length} css-declaration literal(s) (report-only)`);
   if (Object.keys(catCounts).length > 0) {
     console.log('  By category (regular violations):');
     for (const [cat, count] of Object.entries(catCounts).sort((a, b) => b[1] - a[1])) {

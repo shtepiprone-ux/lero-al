@@ -85,7 +85,7 @@ describe('MantineListingCardPattern — layout="list" (Task 606, ported legacy h
     expect(infoEl.textContent).toContain('Modern Apartment')
   })
 
-  it('still renders favorite/photoCount-absent-by-design/features/price/footer in list mode', () => {
+  it('still renders favorite/photoCount/features/price/footer in list mode', () => {
     renderPattern(baseProps('list'))
 
     expect(screen.getByText('Modern Apartment')).toBeInTheDocument()
@@ -94,9 +94,11 @@ describe('MantineListingCardPattern — layout="list" (Task 606, ported legacy h
     expect(screen.getByText('3 rooms')).toBeInTheDocument()
     expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument()
     expect(screen.getByText('#1234')).toBeInTheDocument()
-    // photoCount is intentionally NOT rendered in layout='list' (the ported legacy design
-    // never had a photo-counter pill) — even though photoCount=5 is passed in baseProps().
-    expect(screen.queryByText('5')).not.toBeInTheDocument()
+    // photoCount (Task 656 — bottom-left in list mode, distinct from grid's bottom-right)
+    // IS rendered when > 0. Pre-existing test bug fixed under Task 658: this assertion
+    // predated Task 656 and was never updated, so it asserted the opposite of shipped,
+    // intentional behavior (photoCount=5 is passed in baseProps() and genuinely renders).
+    expect(screen.getByText('5')).toBeInTheDocument()
   })
 
   it('does NOT render the overlay in list mode (badge conveys sold/rented status instead)', () => {

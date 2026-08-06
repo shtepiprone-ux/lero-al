@@ -76,7 +76,7 @@ const makeCardConfig = (l: string): CardConfig<StoryRow> => ({
   meta: [
     {
       label: storyT(l, 'storybook.mantine.admin_table_col_role'),
-      value: () => <Badge color="blue" variant="light" size="sm">Agent</Badge>,
+      value: () => <Badge color="blueLight" variant="light" size="sm">Agent</Badge>,
     },
     {
       label: storyT(l, 'storybook.mantine.admin_table_col_phone'),

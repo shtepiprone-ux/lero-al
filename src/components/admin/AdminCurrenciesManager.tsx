@@ -3,7 +3,7 @@
 import { useState, useTransition, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 import { Plus, Pencil, Trash2, Star, ToggleLeft, ToggleRight, Loader2, Search, ChevronRight } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'

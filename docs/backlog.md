@@ -1,67 +1,83 @@
 # Project Backlog
 
-> ⚠️ **HARD LIMIT: this file holds ACTIVE state only (~80 lines).** Historical ledger → [`docs/backlog-archive.md`](backlog-archive.md); full per-task detail → `docs/sessions/`.
-> "Last Session" = 2–4 lines. When a task is reviewed/closed, move it to ONE row at the TOP of the archive ledger. See `docs/ai-behavior.md` → "Backlog & Session Log Rules".
-> Reconciled against git history 2026-07-17 (`main` == `origin/main`): everything committed is pushed. The former per-task "pending owner run" narrative was stale (its detail already lives in the archive) and has been removed.
+> ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
+> "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-07-17)
+## Last Session (2026-08-06) — 719 + 720 ✅ approved → archived; Sprint 52's design-token half is closed
 
-- **Task 620** — `theme.ts` badge shade-index comments corrected to index 7 (comment-only, zero pixel change; mechanism verified against Mantine `get-primary-shade.mjs`/`get-css-color-variables.mjs`). ✅ APPROVED (orchestrator review) + committed + pushed. Open P3 follow-ups: light-mode qualifier on the new comments, `purple` index-0 comment still imprecise, stale `sale` prose. Session: `docs/sessions/2026-07-17-task620-badge-shade-comment-accuracy.md`.
-- **Task 619** — dedicated `sale` `#dd0939` badge color (index 7 per `primaryShade:7`, card + detail surfaces). ✅ APPROVED + committed + pushed.
-- **Tasks 614–618** — Sprint 44 listing card/detail Mantine tail (`ListingDetailPattern` rebuild, premium uniform gold border, Badge→Mantine `filled`, CTA flex-direction fix, check-stories Check-9 proof). ✅ all committed + pushed.
-- **Governance** — added the STATUS/REPORT MISMATCH reconciliation gate (`CLAUDE.md` + `agent-contract.md` + `orchestrator-role.md` + `orchestrator-procedures.md`).
+- **719 + 720 `APPROVED WITH NOTES`** — archive ledger. Sprint 52's design-token arc (714 · 716 · 715 · 718 · 718R · 719 · 720) is complete; **711** and **717** are all that remain in the sprint.
+- **Rule defect fixed, not an executor lapse:** `ai-behavior.md` step 5 ordered the counting gates *"before writing the session log"*, which cannot reconcile — the log and this file are themselves `git status` paths. 719 and 720 both shipped a false "N modified, 0 untracked" claim by following it. New **step 5a** mandates the two-pass pattern (integrity early, both gates again after the path set is final). Both session logs corrected at review.
 
 ## Open — needs action
 
-**Not yet executed / re-scope before kicking off:**
-- **Task 613** — removed the DEAD `--z-*` Tailwind z-index token scale from `globals.css` (0 consumers grep-confirmed; `ui-rules.md` §16/§12 needed no edit, already correct). ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task613-dead-zindex-token-scale-cleanup.md`.
-- **Task 621** — Homepage Agent-CTA migrated to canonical Mantine `Button` (new island `AgentCtaButton.tsx`). Owner visual QA found + fixed 3 real defects beyond the kickoff's suggestion (off-menu `size="lg"`, asymmetric icon-side padding, a theme-wide `height:'auto'`-breaks-`inner`-centering bug fixed locally — flagged as a possible sitewide Button follow-up). `screenshots:responsive` found to be Storybook-only, not app-route-capable — kickoff defect, ad-hoc Playwright capture used instead. ✅ IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW. Session: `docs/sessions/2026-07-17-task621-homepage-agent-cta-mantine-button-migration.md`.
+| Item | State | Next step |
+|---|---|---|
+| **Git** | On `task/q0-ci-rendered-locale-split`, which `origin` contains. **`HEAD` is not in `origin/main`** | ⚠️ **Never record divergence counts or tree cleanliness here** — stale within one commit. Read from `git status` / `git rev-list` |
+| **Cleanup step 3** | UNBLOCKED (696 = step 1, 701 = step 2, I-D landed in 703) | Delete 3 consolidated probes: `task420-qa-grid-step.mjs` · `task668-qa-grid-1440.mjs` · `task668-qa-header-geometry.mjs` (**1084 lines by `wc -l`, 946 non-blank** — say which you mean). **Must also update `check-homepage-grid.mjs`, which names all three in 18 provenance comments.** `scripts/` holds **13** task-numbered probes, all unwired; the other 10 are a separate call, incl. **670** |
+| **661** | AWAITING ORCHESTRATOR REVIEW | Review `sessions/2026-07-23-task661-single-source-brand-color.md` |
+| **665** | `PARTIALLY IMPLEMENTED / PARTIALLY VERIFIED` | **Only §13.7's live-route before/after DOM/computed-style baseline is outstanding** (AC1 — needs a routable dev server + seeded DB; use §16.1's corrected `classList.contains` locator). Also decide the orphan `listing.fixture.ts` |
+| **691** | `KICKOFF FILED`, Q3 — under 692 + 693 + 701 protection | `tasks/kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md`. **Precondition measured, decision outstanding:** `/[locale]` First Load JS is **618 kB vs a 185 kB baseline** (671/675 F3), unchanged across the 710/712/713/714 builds — the number exists; the go/no-go does not |
 
-**Deferred / on hold:**
-- **Task 560** — admin suspension-as-date-range (DB/RLS/server action). Deferred.
-- **Task 463** (Epic BB) — full admin report management. ON HOLD until the Mantine primitive library (Epic MM) is complete; must be rebuilt on finished primitives. Kickoff `tasks/Epics/Epic_BB_kickoff_prompt_Task_463_AdminReportFullManagement.md`.
-- **Epic HH** — 310 (P4 content/settings routes), 311 (P5 modal standardisation, partial), 313 (P6 Verified Agents, blocked on owner DB-schema sign-off); 308/309 re-scope onto canonical primitives.
-- **Task 453** (Epic KK.2) — remaining admin-manager freshness. Reserved.
+**Homepage — TWO SEPARATE AXES. Do not conflate them; conflating them produced two false "complete" claims.** ⓐ **Mantine component migration**: ✅ **COMPLETE** for the whole `/[locale]` tree — Task 650, re-verified 2026-08-05 (only `AppImage` imports from `components/ui/`, and it is a native `<img>` wrapper, not shadcn). ⓑ **De-Tailwind (D28)**: ⚠️ **OPEN — only the card pair remains**, `MantineListingCardPattern` **28** (→ 691 + 695) and `ListingCard` **8** (→ 702), which the homepage grids render via `ListingCard.tsx:7`. Done: `FooterView` (673) · `HeaderView` (706) · `FeaturedListingsView`/`LatestListingsView`/`AgentCtaButton` (707) · `PopularLocationsView` (688) · `HeroSearchView` (709 + 709-R) · `MobileBottomNavView` (713) · **route files** `page.tsx` (712) and `layout.tsx` (713), both 0 raw utilities. Genuinely 0: `HeroSearch.tsx`, `HeroSearchFallback`, `HowItWorksSteps`, `ViewAllLink`, `FiltersPanel` (671/675), `MantineHomeSection`. 667 stays the route-level inventory.
 
 ## Pending Action Items (owner)
 
 | Item | Notes |
 |---|---|
-| 🔐 Re-verify HIBP "leaked password protection" availability on Supabase Free tier (Auth → Password Security); enable now if available, else at Pro upgrade. | Security Advisor `auth_leaked_password_protection` WARN. `docs/integrations.md`. |
-| 👁️ Eyeball-verify notification localization under `/sq` (data-only fix applied 2026-07-14; creation code already correct). | Re-open the bell under `/sq`. |
-| 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). Needs its own task. | Traced via DOM offender scan; out of Task 603 scope. |
+| 🔐 Re-verify HIBP "leaked password protection" on Supabase Free tier (Auth → Password Security). | Advisor `auth_leaked_password_protection` WARN. `docs/integrations.md`. |
+| 👁️ Eyeball-verify notification localization under `/sq` (data-only fix 2026-07-14). | Re-open the bell under `/sq`. |
+| 🐞 `/listings` Grid horizontal overflow <640px (FilterBar segmented `flex-1` + `min-w-35` Combobox push `scrollWidth` past the viewport at 320/375/390). | Needs its own task; out of Task 603 scope. |
 | 🖋️ Verified Agents DB schema sign-off (Task 313) + verified-badge public visibility. | Epic HH blocker. |
+| 🗺️ **The Epic MM tracker is ~160 tasks stale and is nominally the migration's source of truth.** `docs/mantine-tailadmin-migration-tracker.md` last touched **2026-07-06** (Task 556), highest task **556** while work is at **716**; its "Current pointer" and all four "next" slices are already done. `tasks/Epics/Epic_MM_Mantine_UI_Migration.md` is worse — untouched since **2026-06-25**, highest task 484. | Decide: refresh both as their own task, or demote them to historical and name a real successor pointer. Own blast radius. |
+| 🐞 **Pre-existing `<div>`-in-`<p>` hydration error** in the FiltersPanel drawer (`DrawerTitle → ModalBaseTitle → Text(component="p") → Group(div)`), re-confirmed live 2026-08-05. **677** reserves it. | Promote 677 to a kickoff, or fold into the next FiltersPanel touch. |
+| ✅ **Ack that 689 is retired** — 699 repointed all 5 sites; the only surviving `1.875rem` is the hero triple 689 excluded by design. | Needs your ack only. |
 
-**Task numbering — last used: 621. Next free: 622.**
+## Sprints
 
-## Reserved / deferred / retired
+**Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. Remaining: **711** · **717** reserved. 🟠 OPEN.
+🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
-- Reserved: 310, 311, 313 (Epic HH), 453 (Epic KK.2).
-- Deferred (no #): **I.3** listing-status helper API `(status) → (listing)` — see `docs/domain-rules.md` → "Future ListingStateMachine evolution trigger".
-- Retired (never reuse): 465 (uk→ua migration, cancelled); 466/467/469–481 (legacy-primitive layout, superseded by the Mantine migration); 534 (superseded+closed by 535); 597/604 (superseded by 598/605).
+**Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Active Epics — open (closed epics → archive)
+## Task registry — single source for every open number. Last used **720**, NEXT FREE **721**
 
-| Epic | Status | Plan |
+| # | State | What |
 |---|---|---|
-| **HH — Admin UX System** | OPEN — 310 (P4), 311 (P5 partial), 313 (P6, blocked on owner DB sign-off); 308/309 re-scope onto canonical primitives | [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md) |
-| **BB — Listing Inquiries: Report & Message** | ⏸️ ON HOLD — Task 463 held until Epic MM primitives complete; earlier BB tasks (242/243/430/435/458–462) done | [`Epic_BB_…`](../tasks/Epics/Epic_BB_Listing_Inquiries_Report_and_Message.md) |
-| **II — Global i18n Hardening** | Implemented + reviewed (316–323); committed + pushed | [`Epic_II_…`](../tasks/Epics/Epic_II_Global_i18n_Hardening.md) |
-| **KK — Admin Data Freshness** | 452 (KK.1) done; 453 (KK.2) reserved for remaining managers | [`Epic_KK_…`](../tasks/Epics/Epic_KK_Admin_Data_Freshness.md) |
-| **MM — Mantine/TailAdmin Restyle** | IN PROGRESS — Sprints 37–44 landed + pushed (form controls, overlays, TailAdmin conformance, Combobox/DatePicker family, Header/app-shell decomposition, listing card/detail). Next primitives per tracker | [`Epic_MM_…`](../tasks/Epics/Epic_MM_Mantine_UI_Migration.md) · tracker `docs/mantine-tailadmin-migration-tracker.md` |
+| 667 | reserved | Route-oriented Mantine inventory; enrolment stays story-first per slice. |
+| 675 §8 family | reserved | **676** `globals.css` stale hex comments · **677** the `<div>`-in-`<p>` FiltersPanel warning (owner item) · **679** `usePropertyTypes` fallback localization, the cause behind 671/675's `NOT VERIFIABLE` R13 · **680** `check:locale-leak` lowercase blind spot. |
+| 678 | reserved (675 §8) | 14-width matrix enrolment (`MANTINE_VIEWPORTS` is 4 widths, `check-stories-rendered.mjs:392`). Folds in 699's gap: `xxl` ≥1440 unproven for 2 of the 5 heading sites. |
+| 682 · 683 | reserved | **682** drop `sonner` + `next-themes` from `package.json` (681) · **683** TailAdmin bottom-nav conformance slice, no reference row exists yet (672). |
+| 687 | reserved | Enrol `Admin/AdminUsersTable` into the `--mantine-only` manifest (+16 cells on a blocking gate → own blast radius). |
+| 694 | reserved — Sprint 46 | Alias `--overlay*` → `var(--mantine-color-black/white)` (660/661 convention). Declarations at `globals.css:76-79` + `:451-452`. Runnable now; NOT foldable into 693. |
+| 695 | reserved, blocked on 691 — Sprint 46 | **De-Tailwind exit condition for the overlay pair** — drop the `@theme inline` copy + `--color-overlay*` namespace once the last of **33** overlay utilities across **7** files is gone (`PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGallery` 5 · `LightboxView` 4 · `MantineListingGalleryPattern` 3 · `ImageUpload` 3 · `AdminUserAvatar` 1). **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 + 662 F2. |
+| 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
+| 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
+| 711 | reserved — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM; their selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) Mantine never renders — the §14.9.9 `PORTAL_SELECTOR` defect again. Planted proof per assertion. **Must fold in four 710-review findings:** `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · the `critical-flow-registry` row-50 + `2026-08-0X` citation fixes · a `LIVE-THIN` threshold (`heroSearchWrapInBand` resolves in only 4/1184 cells). |
+| 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
+
+- **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
+- **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).
+- **Not plain numbers:** 622/623 (`Q0R`, `623R`) · **709-R** (closed with 709) · **628** SB10 lint-debt. **Retired, never reuse:** 465 · 466/467/469–481 · 534 · 597/604 · 655.
+
+**Unnumbered follow-ups:** the `ListingCard`/`HomepageListingGrids` live relative-date fixture spuriously flags on any Q3 re-capture taken on a different calendar day · add `TextInput/Default`, `PopularLocationsView/Long City Name` (sq@390), `LocationComboboxSubPanel/Default` (en@320) to `storybook-governance.md` §8.1 — **`MobileBottomNavView` (uk) is already listed there**, confirmed 2026-08-06 · no regression test for `check:mojibake` (666 F1) · `check-homepage-grid.mjs` lacks `emulateMedia` (704/705 F1 `P3`) — **assessed harmless, do not escalate**.
+
+## Active Epics
+
+**HH — Admin UX System** 🟠 310 (P4) · 311 (P5 partial) · 313 (P6, blocked on owner DB sign-off); 308/309 re-scope onto canonical primitives → [`Epic_HH_…`](../tasks/Epics/Epic_HH_Admin_UX_System.md)
+**KK — Admin Data Freshness** 🟠 452 done. **453 is conditional** — it opens *only if* 452's investigation exposes a page needing special handling; no such page has been named → [`Epic_KK_…`](../tasks/Epics/Epic_KK_Admin_Data_Freshness.md)
+**MM — Mantine/TailAdmin Restyle** 🟠 Phase-1 primitives COMPLETE; Sprints 37–44 landed, the structure lapsed, resumed at 46. ⚠️ **Do NOT use the tracker as the "what's next" pointer** (owner item above) → [`Epic_MM_…`](../tasks/Epics/Epic_MM_Mantine_UI_Migration.md)
 
 ## Standing notes
 
-> **Frozen/deferred (reviewed 2026-06-05):** Sprint 28 admin-mobile 308/309 must be re-scoped onto the DS + canonical primitives before resuming; Epic HH P4/P5/P6 per the table above; I.3 deferred (valid). Every open task consumes the global Design System (`docs/design-system.md`, Task 340) wherever UI/responsive/overlay is touched, and since the Mantine freeze (Task 482) new UI uses Mantine (`docs/mantine-responsive-design-system.md`); `docs/rule-index.md` sets the per-task pre-read.
+> **Binding decisions:** **D19** overlay pair declared in both `@theme inline` and `:root`; the `@theme` copy is transitional, expiry = 694 → 695. · **D25** frozen Storybook preview clock. · **D26** sub-perceptual delta **≤2/255** is an attribution path under 4 conjunctive conditions only (`storybook-governance.md` §14.11). · **D27** Skeleton `::after` fill = gray-3 `#d0d5dd`, token not hex. · **D28** (2026-08-01) de-hybrid = **mechanism-only, zero visual delta**; authorizes no restyle, token, spacing or typography change. · **D32** a migration may not be proven against a comparator not shown to fail. · **D33** re-anchor a gate onto a de-Tailwind-stable hook, never another utility class. · **D34** (2026-08-05) a D28 module reproduces the utility's cascade **layer** — wrap in `@layer utilities`; the inverse 602/629/650/651/653/654/656 family stays **unlayered** on purpose (a migration reproduces; a cascade-trap fix overrides).
 
-> **🟡 Console NOISE (not bugs — do not re-triage as P0):** `[PRED] … preloaded`, `[LCP] … route`, `[Vercel Speed Insights] debug`, "speculation rule set … will be ignored", Turbopack dev-only CSS-chunk/`*.woff2` preload warnings — all dev/debug artifacts, gone in prod. OpenTelemetry `import-in-the-middle` resolved by Task 450 (`322c5d599`); Cloudinary LCP "preloaded but not used" by Task 437. A stale Turbopack `next dev` HMR cache can emit a one-off React `useId` `mantine-_R_…-target` hydration error that does NOT survive a clean `next build` + fresh dev restart and does NOT reproduce in prod — re-verify with `check:hydration` against a freshly restarted server before triaging any `_R_` id mismatch as a code bug (Task 582).
+> **Recurring orchestrator failure mode — read before writing any kickoff (M1 · M2 · M4 · M5).** Four blocked/revised tasks failed identically: the *fix* was right, the *control* could not detect its own effect. **Every kickoff needs a two-armed plant that can demonstrably fail, plus a pre-plant census proving no further lifeline.** Reconcile git state from `git log`/`git status`, never a session log's self-description. **Corollary (709):** a kickoff's own "measured" facts are not exempt. **Corollary (710–714, 2026-08-06):** four consecutive kickoffs shipped a factual defect the executor had to correct — a stale line reference, a `grep` that counted `.split(` as a test, a crude literal census, and a requirement that was *unsatisfiable* because the detector could not see the target syntax. **Measure with the real tool, not an ad-hoc grep**; see `orchestrator-procedures.md` → "Detector-aware requirements and migrations" (`6c3a2054e`).
 
-> **Commit emission policy:** the orchestrator emits explicit-path `git add`/`git commit` per task at review time (never `-A`/`-u`/wildcards, never pre-staged batches); the owner runs them in PowerShell. Before emitting, reconcile `git status --short` + the real diff + the session `Files Changed` table (STATUS/REPORT MISMATCH gate). Each commit is reconstructable from the session log.
+> **No CI gate asserts the Mantine composition of a *route*** (2026-07-26, still true). `--mantine-only` scopes by Storybook title prefix; only `check:story-coverage` reads `mantine-migration-scope.json`, treating anything absent as out of scope. `15/15` proves coverage of fifteen enrolled components — not the homepage.
 
-> **Acknowledged advisor exceptions** (intentional, no task): `pg_net in public` (deferred); `email_change_tokens` RLS-enabled-no-policy — see `docs/rls-rules.md` → "Acknowledged Advisor Exceptions".
+> **🟡 Console NOISE (not bugs — do not re-triage as P0):** `[PRED] … preloaded`, `[LCP] … route`, `[Vercel Speed Insights] debug`, "speculation rule set … will be ignored", Turbopack dev-only CSS-chunk/`*.woff2` preload warnings. OpenTelemetry `import-in-the-middle` fixed by Task 450; Cloudinary LCP preload by Task 437. A stale Turbopack HMR cache can emit a one-off `useId` hydration error that does not survive a clean `next build` (Task 582). **Advisor exceptions** (intentional, no task): `pg_net in public`; `email_change_tokens` RLS-enabled-no-policy — `docs/rls-rules.md`.
 
-> **Standing governance:** `ai-behavior.md` Notes 18–23 + `agent-contract.md` (P0, clauses 1–15) + `rule-index.md` (task-type pre-reads) + the Positive/Negative flow rule (`orchestrator-role.md`). Non-optional acceptance gates on every task.
+> **Commit emission policy:** the orchestrator emits explicit-path `git add`/`git commit` per task at review time (never `-A`/`-u`/wildcards, never pre-staged batches); the owner runs them in PowerShell. Reconcile `git status --short` + the real diff + the session log's `Files Changed` table first. Check `.git/index.lock`; a stale lock blocks the handoff.
 
-## Archive
-
-Completed tasks, sprints, and epics live in **[`docs/backlog-archive.md`](backlog-archive.md)**.
+> **Standing governance:** `ai-behavior.md` Notes 18–23 + `agent-contract.md` (P0, clauses 1–15) + `rule-index.md` + the Positive/Negative flow rule. Non-optional on every task. **`npm run build` exit 0 mandatory for non-Q0.** **Design-system floor:** every task consumes `docs/design-system.md` wherever UI/responsive/overlay is touched; new UI uses Mantine (`docs/mantine-responsive-design-system.md`), and `docs/rule-index.md` sets the per-task pre-read.

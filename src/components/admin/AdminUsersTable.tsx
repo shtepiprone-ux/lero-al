@@ -14,7 +14,7 @@ import { MantineDataTableToCards, type TableColumn, type CardConfig } from '@/de
 import { formatDate } from '@/lib/formatters'
 import { toggleUserVerified } from '@/modules/admin/actions'
 import type { UserRole } from '@/types/database'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 
 export interface VerifiedAgent {
   id: string
@@ -26,7 +26,7 @@ export interface VerifiedAgent {
 const ROLES: UserRole[] = ['user', 'agent', 'moderator', 'admin']
 
 const ROLE_COLOR: Record<UserRole, string> = {
-  user: 'gray', agent: 'blue', moderator: 'orange', admin: 'green',
+  user: 'gray', agent: 'blueLight', moderator: 'orange', admin: 'green',
 }
 
 const STATUS_COLOR: Record<string, string> = {

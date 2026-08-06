@@ -8,7 +8,8 @@
  */
 
 import { describe, it, expect } from 'vitest'
-import { execSync } from 'child_process'
+import { execFileSync } from 'child_process'
+import { resolve } from 'path'
 import { formatDate, formatDateTime, formatListingDate } from '../formatters'
 
 const LOCALES = ['sq', 'en', 'uk', 'it'] as const
@@ -93,7 +94,11 @@ describe('formatDateTime — TZ-invariance (child process)', () => {
       }
       process.stdout.write(JSON.stringify(result));
     `
-    const out = execSync(`npx tsx -e "${script.replace(/"/g, '\\"').replace(/\n/g, ' ')}"`, {
+    const out = execFileSync(process.execPath, [
+      resolve(process.cwd(), 'node_modules', 'tsx', 'dist', 'cli.mjs'),
+      '-e',
+      script,
+    ], {
       env: { ...process.env, TZ: tz },
       encoding: 'utf-8',
       timeout: 15_000,
@@ -108,7 +113,7 @@ describe('formatDateTime — TZ-invariance (child process)', () => {
     for (const locale of LOCALES) {
       expect(utcResults[locale]).toBe(nyResults[locale])
     }
-  })
+  }, 15_000)
 })
 
 // ── Edge cases: null / undefined / invalid → '—' ────────────────────────────

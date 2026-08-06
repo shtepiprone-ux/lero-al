@@ -656,17 +656,40 @@ Do NOT apply to panels, galleries, admin tables, dialogs, or generic cards.
 
 **Z-index** (reconciles `ui-rules.md §16`: Chrome=30 / Scrim=40 / Floating=50)
 
+> ✅ **Defined by Task 718 (2026-08-06).** All seven `--z-*` tokens below are now real custom
+> properties in `src/app/globals.css`'s `@theme inline` block (`:279-285`), at exactly the values in
+> this table — `^\s*--z-[a-z-]+\s*:` returns 7 matches. `var(--z-sticky)` and its siblings resolve.
+> The prior ⚠️ NOT-IMPLEMENTED banner (added by Task 715's review, F1) is retired: Task 715 had
+> shipped `var(--z-sticky)` into two chrome surfaces while the token was tabled here but undefined in
+> `globals.css`, caught only at review. **718 also closed the detector blind spot** that let that
+> ship silently — `check:design-tokens` now has a `css-undefined-var` category (§23.6.c) that fails
+> closed on any `var(--x)` in `src/**/*.css` that does not resolve.
+>
+> **The "Use via" column below states the two forms that actually exist — not three.** Tailwind v4
+> has no `--z-index-*` theme namespace (measured: 0 occurrences in `tailwindcss`'s `theme.css` and
+> `dist/lib.js`; `z` is a bare-value functional utility, unlike `--space-N`'s bridge into
+> `--spacing-N`). Defining `--z-sticky` makes `var(--z-sticky)` resolve; it **cannot** make a
+> `z-sticky` utility class exist. Use `var(--z-*)` directly in CSS/inline style, or the bare-value
+> `z-30`/`z-40`/`z-50` Tailwind utilities — never a `z-{name}` class, which Tailwind will not generate.
+
 | Token | Value | Tier | Use via |
 |---|---|---|---|
-| `--z-base` | `0` | base | `z-base` or `z-0` — base page content |
-| `--z-dropdown` | `10` | within-card | `z-dropdown` or `z-10` — sticky cols, count badges, abs-within-card |
-| `--z-sticky` | `30` | chrome | `z-sticky` or `z-30` — site header, bottom nav, sticky admin header |
-| `--z-overlay` | `40` | scrim | `z-overlay` or `z-40` — sheet/dialog backdrop (covers chrome) |
-| `--z-modal` | `50` | floating | `z-modal` or `z-50` — dialog/sheet panels |
-| `--z-popover` | `50` | floating | `z-popover` or `z-50` — combobox, dropdowns (same tier as modal) |
-| `--z-toast` | `100` | highest | `z-toast` — Sonner toasts, ListingGallery lightbox (Task 405) |
+| `--z-base` | `0` | base | `var(--z-base)` or `z-0` — base page content |
+| `--z-dropdown` | `10` | within-card | `var(--z-dropdown)` or `z-10` — sticky cols, count badges, abs-within-card |
+| `--z-sticky` | `30` | chrome | `var(--z-sticky)` or `z-30` — site header, bottom nav, sticky admin header |
+| `--z-overlay` | `40` | scrim | `var(--z-overlay)` or `z-40` — sheet/dialog backdrop (covers chrome) |
+| `--z-modal` | `50` | floating | `var(--z-modal)` or `z-50` — dialog/sheet panels |
+| `--z-popover` | `50` | floating | `var(--z-popover)` or `z-50` — combobox, dropdowns (same tier as modal) |
+| `--z-toast` | `100` | highest | `var(--z-toast)` — Sonner toasts, ListingGallery lightbox (Task 405) |
 
 Exception: `z-[9999]` (Combobox mobile bottom sheet, PerfDevOverlay) is intentionally above the scale and stays as an allowlisted arbitrary value.
+
+**Zero rendered delta from this definition (Task 718, R2).** As of 2026-08-06, no `.css` or `.tsx`
+file under `src/` consumes any `--z-*` token — the two former consumers
+(`HeaderView.module.css:35`, `MobileBottomNavView.module.css:55`) carry a marked, unconsumed
+`z-index: 30` instead (Task 715 §5.3). Defining the tokens therefore cannot change a rendered pixel;
+it only makes the documentation and `globals.css` agree, and makes the next `var(--z-sticky)`
+consumption resolve instead of silently computing to `auto`.
 
 ### §22.4 — Motion tokens
 
@@ -933,6 +956,243 @@ and a valid/commented/var/suppressed case (must NOT be caught or must be suppres
 
 This harness is the evidence that the gate's positive AND negative paths are exercised, and
 backs the Task 407 strict/blocking flip (now landed — see §23.4).
+
+### §23.6 — Plain CSS declaration coverage: `css-length`/`css-duration`/`css-zindex` (Task 714, report-only)
+
+> **Coverage decrease this closes:** every pattern in §23.1 is shaped around Tailwind's
+> arbitrary-value bracket syntax (`*-[Npx]`) or an inline style-object literal. A plain CSS
+> declaration in a `.module.css` file — `font-size: 10px;`, `gap: 1.5rem;`,
+> `transition-duration: .15s;`, `z-index: 30;` — matched none of them. Task 713's D28 migration
+> moved three previously-detected, explicitly-marked `text-[10px]` TSX sites into exactly this
+> blind spot (proof: `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md` §4); the
+> gate reported `0 violations` while the site-level protection was gone. Task 714 closes the gap.
+
+Three new categories, extending `DETECTION_PATTERNS`, `.css` files only:
+
+| Category | Matches | Does NOT match |
+|---|---|---|
+| `css-length` | A declaration whose value is a single bare `px`/`rem`/`em` literal (incl. scientific notation, e.g. `border-radius: 3.40282e38px`) followed by `;` or `}`; **and, since Task 716, a raw `px`/`rem`/`em` literal anywhere inside a multi-value/shorthand declaration or a CSS function, per-literal (§23.6.a)** | Zero values (`0`, `0px`, `0rem`, `0em`); `var(--token)`; `calc(var(...))`; a literal whose own outermost enclosing function contains a `var(--…)` reference anywhere (§23.6.a A1/A4) |
+| `css-duration` | A declaration whose value is a single bare `s`/`ms` literal (incl. leading-dot, e.g. `.15s`); **and, since Task 716, the same shorthand/function-wrapped generalization** | Zero values; the same var-anchored exclusion as above |
+| `css-zindex` | `z-index: N;` with a raw unitless integer; **and, since Task 716, the same generalization for a function-wrapped z-index value** | `z-index: 0`; `z-index: var(--z-toast)` |
+
+**Scope boundary as of Task 714 (superseded — kept for history):** these patterns originally matched
+only a declaration whose entire value was one bare token; a multi-value list or a function-wrapped
+value was explicitly out of scope, pending the same nested-function handling Task 408 built for
+Tailwind's `calc/min/max/clamp` brackets. **Task 716 closed that gap — see §23.6.a.**
+
+**CSS comment stripping (A2):** a new `stripCssComments()` helper strips `/* ... */` spans (incl.
+multi-line) to whitespace, used only to build the detection source for these three patterns — the
+existing color/Tailwind-bracket patterns keep reading the unstripped source, so their behavior on
+`.css` files is byte-identical to before this task. `design-tokens-allow` markers are still parsed
+from the original, unstripped physical line — unchanged mechanism, first proven for CSS colour
+markers by Task 713 (`MobileBottomNavView.module.css:60`, `:87`), now proven for length too
+(Task 714 R5: suppression and orphaned-marker-as-stale-marker, both arms, on a throwaway copy).
+
+**rawValue convention (A1):** reported as `property: value` (e.g. `font-size: 10px`, `z-index:
+30`), matching the existing inline-`zIndex` convention — this disambiguates identical bare values
+on one line coming from different properties, and is the exact string a `design-tokens-allow`
+marker must reproduce byte-for-byte. Task 716 keeps this convention for shorthand findings too:
+`property: literal` where `literal` is the one raw token found, not the whole multi-value list
+(e.g. `border-bottom: 1px`, not `border-bottom: 1px solid var(--border)`).
+
+**`@media`/`@supports` preludes (A5):** never match. A condition's numeric token (e.g. `(min-width:
+40rem)`) is always followed by `)`, never `;`/`}`, so the terminator lookahead structurally
+excludes preludes without special-casing. Proven with a dedicated test — including a Task 716
+regression arm confirming the shorthand-scanning code path is equally excluded.
+
+**Report-only, not silent (R3/A4), historical:** `REPORT_ONLY_CATEGORIES` (`css-length`,
+`css-duration`, `css-zindex`) were excluded from the strict/blocking exit-code computation and from
+the main per-area violation printout, but always printed under their own `CSS DECLARATION LITERALS —
+report-only, not blocking` heading with an explicit count — never silently absorbed. **Superseded by
+Task 715 (§23.6.b) — the categories now block.**
+
+### §23.6.a — Shorthand / function-wrapped generalization (Task 716)
+
+Task 714's single-token-only boundary left every multi-value CSS declaration
+(`border-bottom: 1px solid var(--border)`) and every function-wrapped value (`filter: blur(8px)`)
+undetected. Task 716 generalizes all three categories to a **per-literal** scan of the declaration's
+full value, following the same token-anchored-exemption mechanism Task 408 built for Tailwind's
+`*-[calc/min/max/clamp(...)]` brackets, but corrected for the declaration-list case:
+
+- **A1 (the central design problem, resolved):** Task 408's filter exempts a match containing
+  `var(--` **anywhere in the same bracket**, which is correct when the bracket is one function-call
+  value. It is wrong applied to a whole *declaration list*, where `border-bottom: 1px solid
+  var(--border)` has THREE independent top-level tokens (`1px`, `solid`, `var(--border)`) — exempting
+  `1px` because a sibling token is a `var()` would be an over-exemption. The fix: the exemption is
+  **per-literal, scoped to that literal's own outermost enclosing function call** (`isVarAnchoredLiteral`
+  in `scripts/check-design-tokens.mjs`). A literal at the declaration's top level (no enclosing
+  function at all) is never exempted by a sibling `var()` — this is exactly what makes `1px` in
+  `border-bottom: 1px solid var(--border)` a finding. A literal genuinely INSIDE a function that also
+  contains a `var(--…)` reference anywhere within that same function (e.g. `calc(var(--x) + 2px)`)
+  stays exempt — the frozen Task 408 `rounded-[calc(var(--radius)-5px)]` precedent, generalized from
+  Tailwind brackets to arbitrary CSS functions.
+- **A2 (zero/unitless forms):** structurally silent without extra filtering — the unit regex requires
+  a `px`/`rem`/`em`/`s`/`ms` suffix, so unitless multi-value tokens (`flex: 1 1 0`, `border: 0`,
+  `line-height: 1.5`, `scale: 0.95`) never match at all; a zero-WITH-unit token (`margin: 0px 8px`)
+  is filtered by the same zero-value check the single-value pattern already used.
+- **A3 (the 1px policy, decided):** the 1px/-1px hairline exemption is **single-value-only** and
+  unchanged (`border-top-width: 1px;` stays silent). The instant `1px` co-occurs with any other token
+  in a shorthand list, it is a full finding like any other raw literal — one consistent rule ("the
+  exemption applies only when 1px IS the whole value"), not two different policies, proven by
+  `border-bottom: 1px solid var(--border)` now reporting `border-bottom: 1px`.
+- **A4 (nesting):** handled to arbitrary depth by walking paren balance rather than a fixed pattern —
+  `calc(var(--x) + 2px)` (var-anchored, exempt), `clamp(1rem, 2vw, 3rem)` (no var anywhere in the
+  function, both `1rem`/`3rem` flagged), `color-mix(in oklab, var(--primary) 90%, transparent)` (no
+  unit literal present, nothing to flag) are all proven with tests.
+- **A5 (`--*` custom properties, decided):** IN scope, unchanged from the property-name pattern
+  already in use (`[\w-]+` matches a leading `--`) — no special-casing needed. Proven against the
+  real `MobileBottomNavView.module.css:60`/`:87` `--tw-shadow` shapes.
+- **A declaration whose value IS exactly one bare token** is left to the pre-existing single-value
+  pattern (incl. its own zero/A3 exemption) so the two code paths never double-count a finding.
+
+**R4 — reason-less CSS marker diagnostic fix:** a `design-tokens-allow` marker with no `—` separator
+inside a CSS block comment (`/* design-tokens-allow: font-size: 10px */`) had its own comment
+terminator `*/` absorbed into the extracted value (`parseInlineMarkers`), so it never matched the
+detected source text and misreported as `stale-marker` instead of the documented missing-reason
+error. Fixed by stripping a trailing `*/` **only in the no-reason branch** (a marker with a reason
+never has `*/` before the `—` separator, so that path is untouched; the TSX `//` form has no
+terminator to strip, so it is unaffected).
+
+**Measured 2026-08-06 (re-run, supersedes Task 714's 45-item table):** **60 literals across the same
+6 files** (`npm run check:design-tokens` still exits **0**) — **delta: +15, 0 files added or
+removed**, all 15 newly-detected literals classified `COMPILED-ARTIFACT` (0 new `N1-VIOLATION`).
+`src/design-system/mantine/patterns/MantineListingCardPattern.module.css` is excluded at the
+path-level allowlist (`scripts/design-tokens-allowlist.json`) regardless of detector coverage — it
+was never in either census. Classified inventory:
+`.screenshots/task716-evidence/task716-css-declaration-inventory.md` (local-only, D6), summarized in
+`docs/sessions/2026-08-06-task716-design-tokens-shorthand-and-function-coverage.md`. **715 must scope
+its remediation from this 60-item table, not Task 714's 45-item one.**
+
+**Test coverage:** Task 714 shipped 18 planted arms (§D) on top of 25 pre-existing (43 total). Task
+716 adds 24 new arms (§E/§F, plus 2 `parseInlineMarkers` arms) and corrects 2 pre-existing §D
+assertions whose old behavior this task's own requirements mandate changing — not a silent
+weakening: (1) the 1px-in-shorthand assertion (now split so the single-value case stays exempt and a
+new §E arm proves the shorthand case is a finding, per A3/AC1); (2) the reason-less-CSS-marker
+assertion (flipped from asserting the `stale-marker` bug to asserting the `missing-reason` fix, per
+R4/AC4). **67 total, all passing** (`npx vitest run scripts/__tests__/check-design-tokens.test.ts`).
+
+### §23.6.b — Strict flip and inventory closure (Task 715)
+
+**`css-length`/`css-duration`/`css-zindex` are now BLOCKING.** `REPORT_ONLY_CATEGORIES` is empty
+(`scripts/check-design-tokens.mjs:262`) — `npm run check:design-tokens` (which already runs
+`--strict`, Task 407) now exits non-zero on any raw length, duration, or z-index literal in a
+`.css` file under `src/**`, matching the treatment every other category already received.
+
+**The 716 60-item inventory is closed.** Every item was either tokenized (`N1-VIOLATION`, consuming
+its §22 token — value verified equal, not assumed) or marked with a `design-tokens-allow` reason
+(`COMPILED-ARTIFACT`) across the six owning files (`FooterView`, `HeaderView`,
+`MobileBottomNavView`, `FeaturedListingsView`, `LatestListingsView`, `PopularLocationsView`
+`.module.css`). Full literal → token → §22-value substitution table and every marker string:
+`docs/sessions/2026-08-0X-task715-design-tokens-strict-flip-and-remediation.md`.
+
+**The nav-label `10px` decision (§3.3 of the Task 715 kickoff) is a restoration, not a new policy
+call.** `MobileBottomNavView.module.css`'s `.fabLabel`/`.navItemLabel` `font-size: 10px` sites carry
+`design-tokens-allow` markers reusing the exact reason text from the pre-Task-713 TSX markers
+(`git show 8199a5aae^:src/components/layout/MobileBottomNavView.tsx:56,:92,:101`) — consistent with
+this section's own `--text-2xs` prohibition (§22.2: "Do NOT use for … nav labels"). `--text-2xs` was
+never substituted here.
+
+**Two remediated files have no rendered Storybook coverage** (`FeaturedListingsView.module.css`,
+`LatestListingsView.module.css` — no story lives under the `--mantine-only` `Mantine/Primitives/` or
+`Patterns/Mantine/` title prefixes). Their substitutions are proven by a numeric literal→token
+equality table instead of the rendered comparator — recorded in the Task 715 session log, not
+papered over.
+
+**The `z-index: 30` sites are marked, not tokenized (review finding F1).** 716's inventory classified
+`HeaderView.module.css:35` and `MobileBottomNavView.module.css:55` as `N1-VIOLATION → --z-sticky (30)`
+against §22.3's z-index table. That table is documentation-only — see its ⚠️ banner. Both sites keep
+`z-index: 30` with a `design-tokens-allow` marker, matching `PopularLocationsView.module.css:56`'s
+`z-index: 1`. Final split: **30 tokenized / 30 marked**.
+
+**Standing gap, not closed here:** `scripts/design-tokens-allowlist.json`'s `src/design-system/mantine`
+entry allowlists the whole directory at the path level, exempting
+`MantineListingCardPattern.module.css` from token enforcement entirely regardless of this flip —
+registered as **717**, out of scope for Task 715 (its own blast radius across a whole library).
+
+### §23.6.c — Undefined CSS custom-property references: `css-undefined-var` (Task 718, R4)
+
+> **Origin.** Every category above validates *syntax* — `var(--token)` is exempt everywhere it
+> appears, regardless of whether `--token` is actually defined. Task 715 shipped `var(--z-sticky)`
+> into two chrome surfaces on the strength of §22.3's table alone; `--z-sticky` did not exist in
+> `globals.css`, so the declaration was invalid at computed-value time and silently computed to
+> `auto` — caught only at review (Task 715 §5.3, F1). `css-undefined-var` closes that blind spot:
+> **blocking from the start**, no report-only staging, because the pre-existing baseline measured 0
+> (§3.6 of the Task 718 kickoff).
+
+**Scope:** `.css` files only (`cssOnly`), a `var(--x)` reference with NO resolvable definition. A
+reference resolves against exactly three sources:
+
+1. **`src/app/globals.css`** — the token source of truth. It is itself excluded from scanning
+   (`SKIP_FILES`), so `run()` reads it once and threads its definitions through every `.css` scan as
+   `globalsDefinedProps`.
+2. **The same file being scanned** — a `--x:` declaration anywhere in that file (position-independent
+   — the detector does not model selector/media scoping, a documented simplification consistent with
+   the rest of this file's line-based design). `extractCssCustomPropertyDefinitions` registers **every**
+   top-level declaration, not only the first one on a physical line (Task 720, R1/R2): a declaration
+   start is recognized right after a top-level `{` or `;` (or at the very start of the source), where
+   "top-level" is tracked by a quote-state + paren-depth walk over the already CSS-comment-stripped
+   source — never inside a quoted string or inside `(...)` nesting. That is what makes
+   `.x { --local: 1px; width: var(--local); }` resolve correctly (a same-line define-and-use no longer
+   a phantom finding) while a declaration-shaped literal inside a `content` string or a data-URI value
+   is still never mistaken for a definition. Name case is never normalized — `--Foo` and `--foo` remain
+   two distinct entries.
+3. **A measured external prefix/exact-name list** — variables a framework supplies at build time that
+   this repo does not define. Every entry is proven present in the production build and/or
+   `node_modules` (measured 2026-08-06):
+
+   | Entry | Kind | Proof |
+   |---|---|---|
+   | `--tw-` | prefix | Tailwind v4 internal utility vars (`--tw-shadow`, `--tw-ring-color`, …) — present in `.next/static/css/*.css`, generated by every Tailwind utility class |
+   | `--mantine-` | prefix | Mantine v9 `createTheme()` output — present in `.next/static/css/*.css` and every `node_modules/@mantine/core/styles/*.css` |
+   | `--spacing` | exact name | Tailwind v4's own base spacing-scale unit (`--spacing: .25rem`) — `node_modules/tailwindcss/theme.css:325`, also in the production build. **Distinct** from this repo's `--spacing-N` named tokens |
+   | `--default-transition-timing-function` | exact name | Tailwind v4's own base easing variable — `node_modules/tailwindcss/theme.css:493`, also in the production build. Consumed as the fallback arm of a nested `var(--tw-ease, var(--default-transition-timing-function))` at `MobileBottomNavView.module.css:92` |
+
+   `--z-` is deliberately **absent** — it is the token family this task defines in `globals.css`; if
+   it needed the external list, R1 failed.
+
+**A5 — the `var(--x, fallback)` decision:** a reference **with** a fallback is treated as resolved,
+even when `--x` itself is undefined — it cannot silently fall back to the property's initial value,
+which is the exact failure mode this category exists to catch. Only a `var()` with **no** fallback
+and no resolvable definition is a finding. A fallback is detected as a top-level comma inside the
+`var(...)` call, scoped to that call's own paren depth, so a nested reference used *as* another
+`var()`'s fallback (the real `MobileBottomNavView.module.css:92` shape) is still independently
+checked for its own resolution.
+
+**A3 — comment stripping reused, not duplicated:** runs on the same CSS-comment-stripped source
+(`codeOnlyCss`) the shorthand `css-length`/`css-duration`/`css-zindex` scanner already uses.
+
+**A4 — known coverage limitation, not closed here:** the path-level allowlist
+(`scripts/design-tokens-allowlist.json`) still short-circuits a whole file before any category runs,
+so `src/design-system/mantine/**` is exempt from `css-undefined-var` too. Narrowing that allowlist is
+**717**'s blast radius, not this task's.
+
+**A6 — known coverage limitation, not closed here:** `globals.css` is excluded from the scanner
+entirely (unchanged), so a self-referential mistake inside `globals.css` itself (e.g. one token
+defined in terms of a misspelled sibling) is not caught by this category.
+
+**A7 — closed by Task 719.** A `var(` reference — and, cross-category, a `css-length`/`css-duration`/
+`css-zindex` declaration too — on a line whose first non-space character is `*` used to be silently
+not a finding, because `shouldSkipLine` treated any such line as a comment before any category ran,
+conflating the CSS-comment heuristic with the universal selector. Task 719 made the `.css` skip
+decision consult the already CSS-comment-stripped line (Task 714 A2) and skip only when that line is
+blank, so a universal-selector rule is scanned like any other; the `.ts`/`.tsx` leading-`*`/`/*` JSDoc
+heuristic is unchanged, because nothing else strips those continuation lines. Proof: four planted
+arms, one per blinded category, each failing before the fix and passing after
+(`scripts/__tests__/check-design-tokens.test.ts` §I).
+
+**A8 — known coverage limitation, not closed here (718R):** a `var(` call split across physical
+lines (the opening paren on one line, its contents or closing paren on another) is silently not a
+finding, because `findUndefinedCssVarReferences` scans one physical line and bails on an unbalanced
+paren. This is deliberate and consistent with the whole file's line-based scan model (§3.4 of the
+718R kickoff) — making one category multi-line would give it a different source model from every
+other category in the same loop. Owner: none — architectural, unowned; fixing it is a
+scanner-architecture task, not a regex change.
+
+**Proof (Task 718 R5, D32):** a planted `var(--z-does-not-exist)` in a scanned `.css` file makes
+`npm run check:design-tokens` exit non-zero, naming it; removing the plant restores exit 0 — both
+arms captured unpiped, `git status` confirming the plant is gone. Detector unit suite: 16 new arms
+(§H) covering all seven branches above, `npx vitest run scripts/__tests__/check-design-tokens.test.ts`
+— 85/85 passing (69 pre-existing + 16 new).
 
 ---
 

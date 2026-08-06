@@ -93,7 +93,7 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Mantine docs — Next.js App Router | Next.js App Router setup | CSS imports in root server component; `MantineRootProvider` as client boundary | CSS in `src/app/layout.tsx`; provider in `MantineRootProvider.tsx` | `src/app/layout.tsx`, `src/design-system/mantine/MantineRootProvider.tsx` |
 | Mantine docs — `MantineProvider` | Provider setup | Single `MantineProvider` wraps the full app once | Root layout wraps once; locale/admin layouts do NOT add duplicate providers | `src/design-system/mantine/MantineRootProvider.tsx` |
 | Mantine docs — `ColorSchemeScript` | FOUC prevention | `ColorSchemeScript` in `<head>` before any CSS prevents flash of wrong color scheme | Kept in `<head>` with `defaultColorScheme="light"` (Light-only) | `src/app/layout.tsx` |
-| Mantine docs — CSS imports | CSS import order | `@mantine/core/styles.css` before app CSS so Tailwind utilities can override | Both imports in `src/app/layout.tsx`; `@layer mantine` is below Tailwind `@layer utilities` | `src/app/layout.tsx`, `.storybook/preview.tsx` |
+| Mantine docs — CSS imports | CSS import order | `@mantine/core/styles.css` is imported UNLAYERED (plain import, no `@layer` wrapper) before app CSS — unlayered CSS always beats layered CSS, so Mantine component styling wins over Tailwind `@layer utilities`, not the reverse | Both imports in `src/app/layout.tsx`; there is no `@layer mantine` wrapper — confirmed unlayered (Task 651, 2026-07-20) | `src/app/layout.tsx`, `.storybook/preview.tsx` |
 | Mantine docs — color scheme | Light-only setup | `defaultColorScheme="light"` disables auto/dark scheme | `MantineProvider defaultColorScheme="light"`, `forceColorScheme="light"` in Storybook | `src/design-system/mantine/MantineRootProvider.tsx`, `.storybook/preview.tsx` |
 | Mantine docs — responsive styles | Responsive prop system | `{ base: X, sm: Y }` on size/spacing props; `useMatches` for non-prop responsive | All pattern components use responsive object props | `src/design-system/mantine/patterns/**` |
 | Mantine docs — `createTheme` | Theme API | Raw hex and rem values required as input (not CSS custom properties) | `src/design-system/mantine/theme.ts`; allowlisted in `scripts/design-tokens-allowlist.json` | `src/design-system/mantine/theme.ts` |
@@ -102,7 +102,7 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Storybook 10 docs | Storybook 10+ integration | Viewport via `globals.viewport`; toolbar globals | `withMantine` global decorator; viewport via toolbar; `parameters.skipCanvas` pattern | `.storybook/preview.tsx` |
 | npm registry | Package version | `@mantine/core@^9.4.0` requires `react@^19.2.0` | React 19.2.4 installed; no peer conflict | `package.json` |
 | MIT license | License | Mantine is MIT-licensed | Compatible with commercial use; no restriction | `package.json` |
-| Tailwind v4 docs | CSS layer coexistence | Mantine uses `@layer mantine`; Tailwind v4 uses `@layer base, components, utilities` — separate cascade layers, no conflict | No `postcss-preset-mantine` needed; Mantine CSS imported directly | `postcss.config.mjs` (unchanged), `src/app/layout.tsx` |
+| Tailwind v4 docs | CSS layer coexistence | Mantine CSS is imported directly and UNLAYERED — there is no `@layer mantine`. Tailwind v4 uses `@layer base, components, utilities`. Unlayered rules always beat layered rules, so Mantine component CSS overrides Tailwind utilities | `postcss-preset-mantine`'s layer option is NOT enabled (would wrap Mantine CSS in `@layer mantine`); Mantine CSS is imported directly, unlayered, by design | `postcss.config.mjs` (unchanged), `src/app/layout.tsx` |
 | Mantine docs — `useMediaQuery` | SSR/hydration caveat | Returns `initialValue` (`false`) on first render; media query evaluated only in `useEffect` (`getInitialValueInEffect: true` default in v9) | Documented in `MantineDialogDrawerPattern.tsx`; overlay is always closed on SSR so no visible flash | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` |
 
 ---
@@ -141,7 +141,18 @@ valid ONLY for existing legacy surfaces. These rules must NOT be applied to new 
 | Radius | **xs=2 / sm=4 / md=6 / lg=8 (controls) / xl=12 / 2xl=16 (Card) / pill=9999 px** | `radius: { ..., '2xl': '1rem', pill: '9999px' }`; `defaultRadius: 'lg'` |
 | Touch target | ≥44px via `Button styles.root.minHeight: '2.75rem'` | All Buttons ≥44px regardless of `size` prop |
 | Theme breakpoints | 6 breakpoints covering the mobile gate and design widths | xs=20em(320), sm=40em(640), md=48em(768), lg=64em(1024), xl=80em(1280), xxl=90em(1440) |
-| Tailwind boundary | `@layer mantine` is separate from `@layer utilities` | No conflict |
+| Tailwind boundary | Mantine `styles.css` is imported UNLAYERED (no `@layer mantine`) — unlayered CSS beats Tailwind's `@layer utilities`, so Mantine component styling wins over Tailwind utility classes | Not "no conflict" — see the practical rule below |
+
+**Practical rule — when a Tailwind utility must win over a Mantine component's own CSS:** because Mantine's
+`styles.css` is unlayered and always beats Tailwind's `@layer utilities`, a plain Tailwind className on a
+styled Mantine component (e.g. `Paper`, `Card`) can be silently overridden by that component's own CSS
+(radius, shadow, border, background). To make the Tailwind utility win, either:
+
+1. Use the component's `unstyled` prop to strip its own CSS (Task 629 — `HeaderView` chrome, fixed a silent
+   Tailwind classname loss this way), or
+2. Use `Box` instead of a styled surface primitive like `Paper`/`Card` — `Box` ships no component CSS of its
+   own, so Tailwind classes apply cleanly (Task 650 — `HeroSearchView` container chrome; `Paper` was forcing
+   16px corners and collapsing `shadow-xl` until swapped for `Box`).
 
 ### §6.1 — TailAdmin token map (§1b — authoritative; Task 484 2026-06-25)
 
@@ -400,7 +411,6 @@ UI governance docs.
 | `src/design-system/mantine/patterns/MantineFormSectionStack.tsx` | Multi-section stacked form | Mantine Paper + Stack + TextInput | None — full-width | `Patterns/Mantine/FormSectionStack` Default | REPLACE WITH MANTINE | MantineFormSectionStack | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineTwoColumnForm.tsx` | 2-column responsive form | Mantine SimpleGrid + TextInput | None — SimpleGrid responsive | `Patterns/Mantine/TwoColumnForm` Default | REPLACE WITH MANTINE | MantineTwoColumnForm | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineResponsiveActionFooter.tsx` | Sticky action footer | Mantine Stack/Group responsive | None — P0 compliant | `Patterns/Mantine/ResponsiveActionFooter` Default | REPLACE WITH MANTINE | MantineResponsiveActionFooter | Phase 1 ✅ | None |
-| `src/design-system/mantine/patterns/MantineCardGrid.tsx` | Responsive card grid | Mantine SimpleGrid responsive cols | None — responsive | `Patterns/Mantine/CardGrid` Default | REPLACE WITH MANTINE | MantineCardGrid | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineDataTableToCards.tsx` | Table→cards responsive data | Mantine Table + Stack (mobile) | None — responsive | `Patterns/Mantine/DataTableToCards` Default | REPLACE WITH MANTINE | MantineDataTableToCards | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` | Dialog (desktop) / Drawer (mobile) | Mantine Modal + Drawer, useMediaQuery | useMediaQuery SSR caveat documented | `Patterns/Mantine/DialogDrawerPattern` Default | REPLACE WITH MANTINE | MantineDialogDrawerPattern | Phase 1 ✅ | None |
 | `src/design-system/mantine/patterns/MantineEmptyLoadingErrorState.tsx` | Empty / loading / error states | Mantine Loader + Text + Button | None — centered | `Patterns/Mantine/EmptyLoadingErrorState` Default | REPLACE WITH MANTINE | MantineEmptyLoadingErrorState | Phase 1 ✅ | None |
@@ -472,8 +482,8 @@ UI governance docs.
 | `src/app/layout.tsx` | Root layout | RSC, provider wiring | None (already wired) | n/a | NON-UI SUPPORT | n/a | Phase 1 ✅ | None |
 | `src/app/[locale]/layout.tsx` | Locale layout | RSC, i18n + auth | None | n/a | KEEP TEMPORARILY AS LEGACY | No migration needed (auth/i18n layer) | n/a | — |
 | `src/app/admin/layout.tsx` | Admin layout | RSC, auth guard | None | n/a | KEEP TEMPORARILY AS LEGACY | No migration needed (auth layer) | n/a | — |
-| `src/app/[locale]/page.tsx` | Home page | Tailwind layout | P0 risk: listing grid | No story | MIGRATE TO MANTINE | MantineCardGrid + Mantine layout | Phase 4 | — |
-| `src/app/[locale]/listings/page.tsx` | Listings search | Tailwind layout + filters | P0 risk: filter controls | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern + MantineCardGrid | Phase 4 | Complex: URL state + filters |
+| `src/app/[locale]/page.tsx` | Home page | Tailwind layout | P0 risk: listing grid | No story | MIGRATE TO MANTINE | Mantine layout (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | — |
+| `src/app/[locale]/listings/page.tsx` | Listings search | Tailwind layout + filters | P0 risk: filter controls | No story | MIGRATE TO MANTINE | MantineAdminSurfacePattern (grid pattern TBD — prior unused placeholder pattern removed, Task 665) | Phase 4 | Complex: URL state + filters |
 | `src/app/[locale]/listings/[id]/page.tsx` | Listing detail | Tailwind 2-col layout | P0 risk: detail layout collapse | No story | MIGRATE TO MANTINE | MantineListingDetailPattern | Phase 4 | — |
 | `src/app/[locale]/(auth)/**/*.tsx` | Auth pages | Tailwind centered forms | P0 risk: form width | No story | MIGRATE TO MANTINE | MantineAuthFormPattern | Phase 3 | — |
 | `src/app/[locale]/cabinet/**/*.tsx` | Cabinet/profile pages | Tailwind forms | P0 risk: form layout | No story | MIGRATE TO MANTINE | MantineFormSectionStack + MantineTwoColumnForm | Phase 4 | — |
@@ -497,10 +507,9 @@ UI governance docs.
 | `src/stories/Containers.stories.tsx` | Container governance story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Delete after Phase 6 | Phase 6 | — |
 | `src/stories/AdminLayout.stories.tsx` | Admin layout story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Migrate to Mantine AppShell story | Phase 5 | — |
 | `src/stories/EmptyState.stories.tsx` | Empty state story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineEmptyLoadingErrorState | Phase 5 | — |
-| `src/stories/ListingGrid.stories.tsx` | Listing grid story | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
-| `src/stories/FeaturedListings.stories.tsx` | Featured listings | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
-| `src/stories/RecentlyViewedSection.stories.tsx` | Recently viewed | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
-| `src/stories/SimilarListings.stories.tsx` | Similar listings | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | MantineCardGrid | Phase 5 | — |
+| `src/stories/FeaturedListings.stories.tsx` | Featured listings | Real production `FeaturedListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+| `src/stories/RecentlyViewedSection.stories.tsx` | Recently viewed | Real production `RecentlyViewedGridView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
+| `src/stories/SimilarListings.stories.tsx` | Similar listings | Real production `SimilarListingsView` import (Task 665) | Active | KEEP TEMPORARILY AS LEGACY | Grid pattern TBD (prior unused placeholder pattern removed) | Phase 5 | — |
 | `src/stories/VerifiedPage.stories.tsx` | Verified page | withCanvas proof | Active | KEEP TEMPORARILY AS LEGACY | Mantine page pattern | Phase 5 | — |
 | `src/stories/PlantedVisualViolations.stories.tsx` | QA violation reference | Governance | Active | KEEP TEMPORARILY AS LEGACY | Update with Mantine violation patterns | Phase 5 | — |
 | `src/stories/patterns/mantine/**` (14 files) | Mantine canonical patterns | Mantine native proof | Active — Default export | REPLACE WITH MANTINE | Already done | Phase 1 ✅ | None |
@@ -633,7 +642,6 @@ per migration phase will be established in each phase's kickoff document.*
 | `Patterns/Mantine/FormSectionStack` | `MantineFormSectionStack` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/TwoColumnForm` | `MantineTwoColumnForm` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/ResponsiveActionFooter` | `MantineResponsiveActionFooter` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
-| `Patterns/Mantine/CardGrid` | `MantineCardGrid` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/DataTableToCards` | `MantineDataTableToCards` | Default only | yes | yes | yes | yes | ✅ Task 482 complete |
 | `Patterns/Mantine/DialogDrawerPattern` | `MantineDialogDrawerPattern` | Default only | yes | yes | yes | yes | ✅ Task 482 complete; P0 bottom-sheet fixed |
 | `Patterns/Mantine/EmptyLoadingErrorState` | `MantineEmptyLoadingErrorState` | Default only | yes | yes | yes | yes | ✅ Default shows all 3 states (empty/loading/error) in a Stack |

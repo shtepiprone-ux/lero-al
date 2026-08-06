@@ -14,8 +14,13 @@ const STATUS_VARIANT: Record<ListingStatus, 'warning' | 'success' | 'neutral' | 
   sold: 'info', rented: 'rented', archived: 'neutral', expired: 'warning',
 }
 
-const FUTURE = new Date(Date.now() + 30 * 86_400_000).toISOString()
-const PAST = new Date(Date.now() - 10 * 86_400_000).toISOString()
+// Frozen anchor "today" (no Date.now()/new Date() wall-clock in fixtures per Storybook
+// governance §14, Task 697) — a cross-day capture must render byte-identical PNGs. Anchor is
+// 2026-07-30 (Task 697 kickoff date, D24); every value below is derived from this single
+// constant, preserving the original +30d valid / -10d expired relationship (A3).
+const FIXTURE_TODAY_MS = Date.parse('2026-07-30T00:00:00.000Z')
+const FUTURE = new Date(FIXTURE_TODAY_MS + 30 * 86_400_000).toISOString()
+const PAST = new Date(FIXTURE_TODAY_MS - 10 * 86_400_000).toISOString()
 
 interface RowData {
   id: string; title: string; price: number; currency: string
@@ -25,10 +30,10 @@ interface RowData {
 }
 
 const ROWS: RowData[] = [
-  { id: '1', title: '3+1 apartament në qendër të Tiranës — kati i 5-të', price: 95000, currency: 'EUR', listing_type: 'sale', property_type: 'apartment', status: 'active', slug: 'a', created_at: new Date(Date.now() - 5 * 86_400_000).toISOString(), expires_at: FUTURE, is_premium: false, views_count: 42 },
-  { id: '2', title: 'Shtëpi 250 m² me kopsht — Kombinat, Tirana', price: 180000, currency: 'EUR', listing_type: 'sale', property_type: 'house', status: 'active', slug: 'b', created_at: new Date(Date.now() - 10 * 86_400_000).toISOString(), expires_at: PAST, is_premium: false, views_count: 18 },
-  { id: '3', title: 'Lokal tregtar 120 m² — Rruga e Kavajës, pranë sheshit kryesor', price: 1200, currency: 'EUR', listing_type: 'rent', property_type: 'commercial', status: 'active', slug: 'c', created_at: new Date(Date.now() - 20 * 86_400_000).toISOString(), expires_at: null, is_premium: false, views_count: 5 },
-  { id: '4', title: 'Apartament 2+1 — Durrës, pranë bregdetit', price: 62000, currency: 'EUR', listing_type: 'sale', property_type: 'apartment', status: 'sold', slug: 'd', created_at: new Date(Date.now() - 30 * 86_400_000).toISOString(), expires_at: PAST, is_premium: false, views_count: 91 },
+  { id: '1', title: '3+1 apartament në qendër të Tiranës — kati i 5-të', price: 95000, currency: 'EUR', listing_type: 'sale', property_type: 'apartment', status: 'active', slug: 'a', created_at: new Date(FIXTURE_TODAY_MS - 5 * 86_400_000).toISOString(), expires_at: FUTURE, is_premium: false, views_count: 42 },
+  { id: '2', title: 'Shtëpi 250 m² me kopsht — Kombinat, Tirana', price: 180000, currency: 'EUR', listing_type: 'sale', property_type: 'house', status: 'active', slug: 'b', created_at: new Date(FIXTURE_TODAY_MS - 10 * 86_400_000).toISOString(), expires_at: PAST, is_premium: false, views_count: 18 },
+  { id: '3', title: 'Lokal tregtar 120 m² — Rruga e Kavajës, pranë sheshit kryesor', price: 1200, currency: 'EUR', listing_type: 'rent', property_type: 'commercial', status: 'active', slug: 'c', created_at: new Date(FIXTURE_TODAY_MS - 20 * 86_400_000).toISOString(), expires_at: null, is_premium: false, views_count: 5 },
+  { id: '4', title: 'Apartament 2+1 — Durrës, pranë bregdetit', price: 62000, currency: 'EUR', listing_type: 'sale', property_type: 'apartment', status: 'sold', slug: 'd', created_at: new Date(FIXTURE_TODAY_MS - 30 * 86_400_000).toISOString(), expires_at: PAST, is_premium: false, views_count: 91 },
 ]
 
 function CabinetRowsView() {

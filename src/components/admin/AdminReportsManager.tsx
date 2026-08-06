@@ -4,7 +4,7 @@ import { useState, useMemo, useTransition, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { ExternalLink, Loader2, Flag, Trash2, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -123,8 +123,9 @@ function ReportDetailDialog({
 
   const reasonKey = `report_reason_${report.reason}` as Parameters<typeof tl>[0]
   const listingUrl = report.listing ? `/${locale}/listings/${report.listing.slug}` : null
-  const isOpen = report.status === 'pending' || report.status === 'reviewed'
-  const isTerminal = report.status === 'resolved' || report.status === 'dismissed'
+  const reportStatus = report.status
+  const isOpen = reportStatus === 'pending' || reportStatus === 'reviewed'
+  const isTerminal = reportStatus === 'resolved' || reportStatus === 'dismissed'
 
   const statusItems = ALL_STATUSES.map(s => ({
     value: s,

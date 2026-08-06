@@ -28,10 +28,56 @@ function finding(severity, file, line, message, pattern) {
   findings.push({ severity, file: relative(ROOT, file), line, message, pattern });
 }
 
+/**
+ * React does not execute the function passed to useEffect/useCallback while it
+ * renders on the server. Those callbacks may safely read browser geometry when
+ * they run after mount (for example, to place a portalled popup). Keep this
+ * scope separate from render-time code, where window.innerWidth is a genuine
+ * hydration risk.
+ */
+export function getPostRenderHookBodyLineNumbers(lines) {
+  const lineNumbers = new Set();
+  let hookBodyBraceDepth = 0;
+  let waitingForHookBody = false;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const lineNumber = index + 1;
+
+    if (hookBodyBraceDepth > 0) {
+      lineNumbers.add(lineNumber);
+      hookBodyBraceDepth += (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+      if (hookBodyBraceDepth <= 0) hookBodyBraceDepth = 0;
+      continue;
+    }
+
+    if (/\b(?:useEffect|useCallback)\s*\(/.test(line)) {
+      waitingForHookBody = true;
+    }
+
+    if (!waitingForHookBody || !/=>\s*\{/.test(line)) continue;
+
+    lineNumbers.add(lineNumber);
+    hookBodyBraceDepth = (line.match(/\{/g) ?? []).length - (line.match(/\}/g) ?? []).length;
+    waitingForHookBody = false;
+  }
+
+  return lineNumbers;
+}
+
+export function isViewportReadInRenderPath(line, postRenderHookBodyLines, lineNumber) {
+  return (
+    /window\.(innerWidth|outerWidth)/.test(line) &&
+    !/\/\//.test(line) &&
+    !postRenderHookBodyLines.has(lineNumber)
+  );
+}
+
 for (const file of walkTsx(SRC)) {
   const content = readFileSync(file, 'utf-8');
   const lines = content.split('\n');
   const relPath = relative(ROOT, file);
+  const postRenderHookBodyLines = getPostRenderHookBodyLineNumbers(lines);
 
   // ── Scoping: typeof window / viewport checks ──────────────────────────────
   // Only flag React component files (not pure utility/lib files).
@@ -78,8 +124,7 @@ for (const file of walkTsx(SRC)) {
     if (
       isReactComponent &&
       !isLibUtility &&
-      /window\.(innerWidth|outerWidth)/.test(line) &&
-      !/useEffect|\/\//.test(line)
+      isViewportReadInRenderPath(line, postRenderHookBodyLines, lineNum)
     ) {
       finding(
         'HIGH',

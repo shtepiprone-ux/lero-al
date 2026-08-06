@@ -513,7 +513,7 @@ npm run screenshots:responsive -- --full   # all 15 viewports × 4 locales
 Review priority order:
 1. `*__uk__mobile-320.png` — maximum stress (Ukrainian × narrowest)
 2. `*__uk__mobile-375.png` — typical mobile × stress locale
-3. `system-listinggrid--huge-desktop__*__huge-2560.png` — 4-column grid check
+3. `system-featuredlistings--default__*__huge-2560.png` — 4-column grid check
 4. `system-containers--container-wide__*__huge-2560.png` — container bounds check
 
 ### Quarterly — full screenshot audit

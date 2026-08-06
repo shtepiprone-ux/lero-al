@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { ScrollArea, SegmentedControl, Stack, Text, useMatches } from '@mantine/core'
 import { storyT } from '../../_storyI18n'
 import { MantineStoryShell } from '../_MantineStoryShell'

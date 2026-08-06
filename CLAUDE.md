@@ -84,10 +84,15 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git clean`
 - `git config`
 
-After a verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review,
-Opus may emit explicit-path owner-run commit commands only through the single protocol in
-`docs/orchestrator-procedures.md`, including its stale `.git/index.lock` cleanup preflight. Sonnet must not emit or
-run mutating git commands.
+After a verified task design that changed task/docs artifacts, Opus may emit an explicit-path owner-run **commit**
+handoff. Only after Opus has completed an `APPROVED` / `APPROVED WITH NOTES` implementation review may it also emit
+the owner-run **push** command, through the single protocol in `docs/orchestrator-procedures.md`, including its stale
+`.git/index.lock` cleanup preflight. Sonnet has no approval authority and must not emit, suggest, or run mutating git
+commands, including any form of `git push`.
+
+**ALWAYS-DO (owner rule):** every time Opus creates or edits a task/docs artifact, it MUST end that response with the
+explicit-path owner-run `git add` + `git commit` handoff for exactly the file(s) touched. Never finish a
+task-creation response without the git command. This is mandatory, not optional.
 
 ## UI rule split
 
@@ -107,6 +112,17 @@ Do not apply legacy implementation details to new Mantine work unless the task i
 ## Task and review rules
 
 - Every implementation task must be concrete enough for a fresh Sonnet session to execute without hidden chat context.
+- **Every task belongs to a sprint (owner rule, 2026-08-01).** A task may not be created without one. The kickoff is
+  saved as `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` — **never** at the root of `tasks/`. If no open
+  sprint fits, open the next one with its own plan file before writing the kickoff. Binds Task **706** onward; Sprints
+  **45** is not a planned sprint — it is the name given after the fact to the unsprinted 621–705 period, and those
+  kickoffs stay at their original paths. Discipline restarts at 46.
+  Open sprints (2026-08-03): **46** (`tasks/Sprints/Sprint_46_ListingCard_DeTailwind_And_Overlay_Exit.md`) and
+  **49** (`tasks/Sprints/Sprint_49_HeroSearch_Gate_And_DeTailwind.md`). Sprint **47** is closed; **48** closes with
+  707. **50** is reserved for `MobileBottomNavView` and needs its own plan file before its kickoff. Pick the sprint
+  whose goal the task actually fits; if none does, open the next one with a plan file first. Do not treat "the
+  highest number" as "the current one". Sprint 49 is **ordered**: 708 blocks 709 (**D32** — a migration may not be
+  proven against a comparator that has not been shown to fail).
 - Every implementation kickoff must be saved under `tasks/`; a chat-only handoff is not sufficient.
 - Every kickoff must include current behavior to preserve, required after behavior, positive flow, applicable negative flows, acceptance criteria, QA profile, and verification plan.
 - The executor's report is not proof. Approval requires inspecting the real changed files, diff, and validation evidence required by the selected QA profile.

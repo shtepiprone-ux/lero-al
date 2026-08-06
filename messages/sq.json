@@ -316,6 +316,7 @@
     "company_logo_invalid_type": "Lejohen vetëm skedarë PNG, JPG ose WEBP.",
     "company_logo_too_large": "Skedari duhet të jetë nën 2 MB.",
     "company_logo_too_big": "Imazhi duhet të jetë maksimum 256×256 px.",
+    "company_exists": "Një kompani me këtë emër ekziston tashmë.",
     "register_as": "Regjistrohu si",
     "register_agent": "Regjistrohu si agjent",
     "register_back_to_standard": "Kthehu te regjistrimi standard",
@@ -391,6 +392,7 @@
     "confirm": "Konfirmo",
     "clear_filters": "Pastro filtrat",
     "add": "Shto",
+    "select": "Zgjidh",
     "choose_file": "Zgjidhni skedarin",
     "replace": "Zëvendëso",
     "add_location": "Shto vendbanim",
@@ -1098,6 +1100,7 @@
       "error_save_failed": "Dështoi ruajtja",
       "error_delete_failed": "Nuk u fshi",
       "error_name_required": "Emri është i detyrueshëm",
+      "error_duplicate": "Një kompani me këtë emër ekziston tashmë.",
       "empty": "Nuk ka kompani",
       "search_placeholder": "Kërko kompani...",
       "new_btn": "Shto kompani",
@@ -2086,6 +2089,10 @@
       "card_favorite_aria_add": "Shto te preferuarat",
       "card_favorite_aria_remove": "Hiq nga të preferuarat",
       "card_location_tirana": "Tiranë, Shqipëri",
+      "copy_id_button_aria_copy": "Kopjo ID-në",
+      "copy_id_button_aria_copied": "ID u kopjua",
+      "copy_id_button_resting_caption": "gjendje fillestare — kliko për të kopjuar ID-në",
+      "copy_id_button_copied_caption": "u kopjua — kthehet në gjendjen fillestare pas 1.5s",
       "listing_feature_rooms": "3 dhoma",
       "listing_feature_bathrooms": "2 banja",
       "listing_feature_area": "85 m²",
@@ -2366,7 +2373,12 @@
       "listing_detail_section_guest": "Vizitor pa llogari — thirrje për identifikim, veprimet e kontaktit të fshehura",
       "listing_detail_section_deleted": "Llogaria e pronarit e fshirë — pa veprime kontakti",
       "listing_detail_gallery_section_default": "Galeri me shumë foto — kliko foton kryesore ose një miniaturë për të hapur lightbox-in Mantine",
-      "listing_detail_gallery_section_empty": "Pa foto — gjendje zëvendësuese, jo e klikueshme"
+      "listing_detail_gallery_section_empty": "Pa foto — gjendje zëvendësuese, jo e klikueshme",
+      "home_section_caption_default": "Parazgjedhur — sfond transparent",
+      "home_section_caption_muted": "E zbehur — sfond me nuancë 30%",
+      "home_section_caption_brandfade": "Zbehje e markës — sfond me gradient diagonal",
+      "home_section_body": "Ritmi vertikal (48 / 64 / 80px) dhe sfondi bazohen te tokena; çdo brez e mbështjell përmbajtjen në `.container-wide`.",
+      "home_section_cta": "Shiko listimet"
     }
   },
   "ui": {

@@ -1,0 +1,111 @@
+/*
+ * PopularLocationsView.module.css — Task 688; reproduces the prior Tailwind utilities' OWN
+ * compiled output (verified against the built `.next/static/css` bundle AND a live
+ * `getComputedStyle` capture on the real story, Task 688 §3.3/I3), same convention as
+ * `MantineHomeSection.module.css` (Task 662): explicit 0%/50%/100% gradient stop positions so
+ * the serialized `background-image` is byte-identical, not merely visually equivalent.
+ *
+ * `:hover`/`:focus-visible` MUST live here, never as an inline `style` — `FavoriteButton.tsx`
+ * (Task 653) proved an inline `style` attribute unconditionally beats any external stylesheet
+ * rule for the same property and therefore permanently blocks a module's own `:hover` rule.
+ *
+ * The `:focus-visible` ring colour was measured live (I3), not assumed: `rgb(236, 84, 71)` =
+ * `var(--ring)` (not `currentColor`, despite the card's `c="white"`). The five-layer
+ * `box-shadow` list reproduces Tailwind's own `--tw-inset-shadow,--tw-inset-ring-shadow,
+ * --tw-ring-offset-shadow,--tw-ring-shadow,--tw-shadow` composition — the ring is the 4th layer.
+ */
+
+.card {
+  overflow: hidden;
+  transition-property: opacity;
+  transition-duration: 0.15s; /* design-tokens-allow: transition-duration: 0.15s — 150ms Tailwind default transition duration, no §22.4 duration token matches (fast=100ms/base=200ms/slow=300ms, Task 715) */
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  opacity: 0.9;
+}
+
+.card:focus-visible {
+  box-shadow:
+    transparent 0 0 0 0,
+    transparent 0 0 0 0,
+    transparent 0 0 0 0,
+    var(--ring) 0 0 0 2px,
+    transparent 0 0 0 0;
+  outline-style: none;
+}
+
+/* AppImage's own container div — not a Mantine Box, so absolute-fill positioning cannot be a
+   style prop; the photo scrim Box below IS a Box and takes `pos="absolute" inset={0}` instead. */
+.absoluteFill {
+  position: absolute;
+  inset: 0;
+}
+
+.scrim {
+  background-image: linear-gradient(
+    to top in oklab,
+    color-mix(in oklab, var(--overlay) 60%, transparent) 0%,
+    color-mix(in oklab, var(--overlay) 20%, transparent) 50%,
+    transparent 100%
+  );
+}
+
+.content {
+  z-index: 1; /* design-tokens-allow: z-index: 1 — local stacking-context lift for scrim/content layering within this card, no §22.3 z-index token has value 1 (Task 715) */
+}
+
+/* CITY_GRADIENTS fallback variants — each reproduces its own prior `bg-gradient-to-br from-* to-*`
+   compiled output exactly (Task 688 §3.3/I3 live capture). */
+.gradient0 {
+  background-image: linear-gradient(to bottom right in oklab, var(--primary) 0%, var(--brand-950) 100%);
+}
+
+.gradient1 {
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    var(--badge-new) 0%,
+    color-mix(in oklab, var(--badge-new) 70%, transparent) 100%
+  );
+}
+
+.gradient2 {
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    var(--badge-premium) 0%,
+    color-mix(in oklab, var(--badge-premium) 70%, transparent) 100%
+  );
+}
+
+.gradient3 {
+  background-image: linear-gradient(to bottom right in oklab, var(--brand-950) 0%, var(--primary) 100%);
+}
+
+.gradient4 {
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    color-mix(in oklab, var(--primary) 80%, transparent) 0%,
+    var(--brand-800) 100%
+  );
+}
+
+.gradient5 {
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    color-mix(in oklab, var(--badge-new) 90%, transparent) 0%,
+    var(--brand-950) 100%
+  );
+}
+
+.gradient6 {
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    color-mix(in oklab, var(--badge-premium) 90%, transparent) 0%,
+    var(--brand-800) 100%
+  );
+}
+
+.gradient7 {
+  background-image: linear-gradient(to bottom right in oklab, var(--brand-800) 0%, var(--brand-950) 100%);
+}

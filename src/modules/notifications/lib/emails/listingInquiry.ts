@@ -7,6 +7,7 @@
  * Locale strings are inline (sq/en/uk/it) — same pattern as contactInquiry.ts.
  * Locale defaults to 'sq' (Task 251 — outbound notification language policy).
  */
+import { BRAND_PRIMARY } from '@/design-system/brand'
 import { sendEmail } from './send'
 
 const STRINGS: Record<string, {
@@ -96,7 +97,7 @@ function buildHtml(opts: {
     <tr><td align="center">
       <table width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:40px 32px;border:1px solid #e4e4e7;">
         <tr><td>
-          <div style="font-size:22px;font-weight:700;color:#EC5447;margin-bottom:8px;">Lero.al</div>
+          <div style="font-size:22px;font-weight:700;color:${BRAND_PRIMARY};margin-bottom:8px;">Lero.al</div>
           <h2 style="font-size:18px;font-weight:600;color:#18181b;margin:0 0 16px;">${s.heading}</h2>
           <p style="font-size:14px;color:#71717a;margin:0 0 24px;">${s.body}</p>
           <table style="background:#f4f4f5;border-radius:8px;padding:16px;width:100%;border-collapse:collapse;margin-bottom:24px;">
@@ -115,7 +116,7 @@ function buildHtml(opts: {
           </table>
           <div style="margin-bottom:16px;">
             <p style="font-size:12px;color:#71717a;margin:0 0 8px;text-transform:uppercase;letter-spacing:.05em;">${s.messageLabel}</p>
-            <div style="background:#f9f9fb;border-left:3px solid #EC5447;padding:16px;border-radius:0 6px 6px 0;font-size:14px;color:#27272a;line-height:1.7;">
+            <div style="background:#f9f9fb;border-left:3px solid ${BRAND_PRIMARY};padding:16px;border-radius:0 6px 6px 0;font-size:14px;color:#27272a;line-height:1.7;">
               ${safeMessage}
             </div>
           </div>

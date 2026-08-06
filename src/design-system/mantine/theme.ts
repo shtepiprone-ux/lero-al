@@ -1,19 +1,5 @@
 import { createTheme, type MantineColorsTuple, type MantineTheme, type ButtonProps, type BadgeProps, type AlertProps, type ProgressProps, type NotificationProps } from '@mantine/core'
-
-// Brand color scale derived from globals.css oklch palette (EC5447 primary)
-// Mapped to hex approximations for Mantine's 10-shade color array.
-const brand: MantineColorsTuple = [
-  '#FDEEED', // 0 — brand-50
-  '#FBDDDA', // 1 — brand-100
-  '#F9CCC8', // 2 — brand-200
-  '#F7BBB5', // 3 — brand-300
-  '#F6AAA3', // 4 — brand-400
-  '#F2877E', // 5 — brand-500
-  '#F0766C', // 6 — brand-600
-  '#EC5447', // 7 — brand-700 (primary)
-  '#BD4339', // 8 — brand-800 (hover)
-  '#8E322B', // 9 — brand-900
-]
+import { brand } from '@/design-system/brand'
 
 // TailAdmin gray scale (Task 484 §1b — source of truth for neutral tones)
 const gray: MantineColorsTuple = [
@@ -90,6 +76,25 @@ const blueLight: MantineColorsTuple = [
   '#0086c9', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
 ]
 
+// TailAdmin orange (Task 686 §4 line 46 — role `moderator` Badge + `location_request` signal in
+// AdminUsersTable.tsx). The zip ships only 3 stops (--color-orange-50/400/500). Same sparse-ramp
+// convention as `blueLight` above: unused slots are placeholder-filled with the nearest §4 stop
+// (NOT interpolated, NOT presented as authoritative). Index 2 sits equidistant between index 0
+// and index 4 — resolved DOWNWARD per convention (index 0's value), since no rendered consumer
+// exists at index 2 to force a choice either way.
+const orange: MantineColorsTuple = [
+  '#fff6ed', // 0 — orange-50  (§4 AUTHORITATIVE)
+  '#fff6ed', // 1 — UNUSED (no TailAdmin stop; placeholder = nearest §4 stop, not consumed)
+  '#fff6ed', // 2 — UNUSED (equidistant between orange-50/orange-400; resolved downward, not consumed)
+  '#fd853a', // 3 — UNUSED (nearest §4 stop is orange-400, not consumed)
+  '#fd853a', // 4 — orange-400 (§4 AUTHORITATIVE)
+  '#fb6514', // 5 — orange-500 (§4 AUTHORITATIVE)
+  '#fb6514', // 6 — UNUSED by TailAdmin (no orange-600 stop; placeholder = nearest §4 stop, orange-500) — consumed by `c="orange.6"` / `var(--mantine-color-orange-6)` (AdminUsersTable.tsx location-request icon/label)
+  '#fb6514', // 7 — UNUSED by TailAdmin; Badge/Button variant="light" DOES read this index (primaryShade:7, Task 620) — identical value to index 6 here, so no rendered discrepancy — consumed by ROLE_COLOR.moderator Badge + the location-request filter Button
+  '#fb6514', // 8 — UNUSED (placeholder = nearest §4 stop, not consumed)
+  '#fb6514', // 9 — UNUSED (placeholder = nearest §4 stop, not consumed)
+]
+
 // TailAdmin accent purple (tailadmin-style-reference.md §4: "Accent: theme-pink #ee46bc ·
 // theme-purple #7a5af8"). Only ONE authoritative stop exists in the source — the other 9 slots
 // are approximated from it (same derivation spirit as `brand` above: a single cited hex expanded
@@ -150,7 +155,7 @@ export const theme = createTheme({
   // Primary color: maps to brand-700 (#EC5447) at primaryShade 7.
   primaryColor: 'brand',
   primaryShade: 7,
-  colors: { brand, gray, green, yellow, red, blueLight, purple, sale },
+  colors: { brand, gray, green, yellow, red, blueLight, purple, sale, orange },
 
   // Breakpoints aligned to the project's mobile gate (<640px) and canonical widths.
   // xs=320, sm=640 (the critical full-width gate), md=768, lg=1024, xl=1280, xxl=1440.
@@ -718,12 +723,12 @@ export const theme = createTheme({
     //   pseudo-element, unreachable via `styles`).
     // - shadow = `shadow-theme-sm` (`0 1px 3px rgba(16,24,40,.1), 0 1px 2px rgba(16,24,40,.06)`,
     //   §6r-LIVE literal, cited — NOT the `shadow-lg` Task 549 wrongly relied on). Set as a literal
-    //   inline `boxShadow`, NOT routed through `theme.shadows.sm`: 4 existing pattern consumers
-    //   (`MantineCardGrid`/`MantineAuthFormPattern`/`MantineListingDetailPattern`/
-    //   `MantineListingCardPattern`) already pass `shadow="sm"` on `Paper`/`Card` and currently
-    //   resolve to Mantine's own stock `sm` shadow — overriding `theme.shadows.sm` globally would
-    //   silently reshade all four, outside this task's scope (no shared token/consumer regression
-    //   allowed). The literal value lives here, scoped to `Notification` only.
+    //   inline `boxShadow`, NOT routed through `theme.shadows.sm`: 3 existing pattern consumers
+    //   (`MantineAuthFormPattern`/`MantineListingDetailPattern`/`MantineListingCardPattern`)
+    //   already pass `shadow="sm"` on `Paper`/`Card` and currently resolve to Mantine's own stock
+    //   `sm` shadow — overriding `theme.shadows.sm` globally would silently reshade all three,
+    //   outside this task's scope (no shared token/consumer regression allowed). The literal value
+    //   lives here, scoped to `Notification` only.
     // - icon badge = 40×40 (`h-10 w-10`) `rounded-lg` (8px, NOT a 28px circle), background =
     //   semantic-50 (index 0), glyph color = semantic-600 (index 6, inherited via `currentColor` by
     //   the lucide icon passed as the `icon` prop — lucide icons default to `stroke="currentColor"`).

@@ -6,8 +6,39 @@
    skeleton placeholder as `bg-gray-50` — gray-50 (index 0, `#F9FAFB`), NOT gray-200 (Task 544's wrong
    Progress-track analog, since the real component turned out to exist and use a different token).
    Border (1px gray-200) and radius (12px) are both reachable via `theme.components.Skeleton` instead
-   (see theme.ts) — only the pulse fill color needs this stylesheet. */
+   (see theme.ts) — only the pulse fill color needs this stylesheet.
+
+   Task 704 (D27, owner decision, 2026-08-01, scope: this pulse fill only) — Mantine's `animate:true`
+   pulse modulates opacity (0.4<->1) over this fill, composited against the `--mantine-color-body`
+   layer beneath it; the gray-0 fill above was only ~3.6/255 from white, so the swing was below the
+   threshold of perception (owner-reported as static). No TailAdmin row covers an animated placeholder
+   (clause 16a honest-negative, §6n) so this value is an owner ratification, not a live capture
+   (Lever 2 alone — widening the range on gray-0 — was measured incapable of reaching visibility,
+   capped ~6/255 even at the extreme 0-1 range, since gray-0 has almost no contrast against the white
+   body layer to begin with — Lever 1, the fill colour, is the only viable lever).
+
+   D27 was conditional: gray-2/`#e4e7ec` first (measured swing ~16.2/255), checked at I8 for
+   border/fill merging since gray-2 equals this component's own border colour
+   (`theme.ts`'s `Skeleton.styles.root.border`). I8 confirmed the merge on the live app: at rest
+   (opacity:1) the composited fill and the border resolved to the IDENTICAL
+   `rgb(228,231,236)` (verified via `getComputedStyle`, corroborated by a raw pixel sample across
+   the card edge) — zero contrast, the border reads as absent. Per the owner's pre-authorized
+   fallback, rolled back to gray-3/`#d0d5dd` (measured swing ~28.2/255): a raw pixel sample at rest
+   confirmed a real ~20/255 edge against the unchanged gray-2 border, matching the magnitude of
+   contrast the original gray-0-fill/gray-2-border design had (just inverted — fill now darker than
+   its border instead of lighter). Stock 0.4-1 opacity range kept unchanged either way (Lever 2 not
+   invoked). */
 
 .mantine-Skeleton-root::after {
-  background-color: var(--mantine-color-gray-0); /* §6n-LIVE — gray-50 #f9fafb */
+  background-color: var(--mantine-color-gray-3); /* D27 (rev. after I8 border-merge check) — gray-300 #d0d5dd, was gray-50 #f9fafb */
+}
+
+/* Task 704 (R6) — Mantine's Skeleton never emits the `data-reduce-motion` mod attribute its own
+   global `[data-respect-reduced-motion] [data-reduce-motion]` rule requires (verified against
+   `Skeleton.mjs`: only `data-visible`/`data-animate` are set), so that rule can never match this
+   pulse — `prefers-reduced-motion` was not honoured before this rule existed. */
+@media (prefers-reduced-motion: reduce) {
+  .mantine-Skeleton-root::after {
+    animation: none;
+  }
 }

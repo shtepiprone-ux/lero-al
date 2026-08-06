@@ -204,6 +204,48 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
       return !!el.closest('.mantine-Drawer-body');
     }
 
+    // Task 663: verified backdrop element for the Check-4 cross-overlay-boundary downgrade
+    // below. `.mantine-Overlay-root` is Mantine's default static-class name for the `Overlay`
+    // component (`getStaticClassNames` → `${classNamesPrefix}-${componentName}-${selector}` =
+    // `mantine-Overlay-root`; confirmed against @mantine/core/esm/components/Overlay/Overlay.mjs
+    // useStyles({name:"Overlay"}) call). `DrawerOverlay` renders it via `ModalBaseOverlay` with
+    // `fixed: true` and `zIndex: ctx.zIndex` (@mantine/core Drawer.mjs / DrawerOverlay.mjs /
+    // ModalBaseOverlay.mjs) — confirmed compiled CSS (`Overlay.module.css`): `position:absolute`
+    // by default, `position:fixed` under `[data-fixed]` (always set here), `inset:0` (full
+    // viewport), `z-index:var(--overlay-z-index)` resolved from the same `zIndex` prop. The
+    // sheet content wrapper shares the identical z-index variable (`ModalBase.css` `.m_60c222c7`
+    // `z-index:var(--mb-z-index)`) and is rendered LATER in DOM order than the overlay
+    // (`Drawer.mjs`: `DrawerOverlay` before `DrawerContent`), so with equal z-index the sheet
+    // content paints above the backdrop — the backdrop sits strictly between the background page
+    // and the sheet, exactly as required. A background element is provably unreachable only when
+    // a real backdrop of this shape (fixed, visible, z-index at/above the background element's
+    // own stacking, rect containing the background element's rect) is present — anything weaker
+    // (no backdrop at all, `withOverlay={false}`, or a background element stacked above it) must
+    // NOT be treated as covered.
+    function isBackgroundCoveredByOverlayBackdrop(bgEl) {
+      const bgRect = bgEl.getBoundingClientRect();
+      const bgZRaw = parseInt(window.getComputedStyle(bgEl).zIndex, 10);
+      const bgZIndex = Number.isNaN(bgZRaw) ? 0 : bgZRaw;
+      const backdrops = document.querySelectorAll('.mantine-Overlay-root');
+      for (const backdrop of backdrops) {
+        const cs = window.getComputedStyle(backdrop);
+        if (cs.position !== 'fixed') continue;
+        if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity) === 0) continue;
+        const bdZRaw = parseInt(cs.zIndex, 10);
+        const bdZIndex = Number.isNaN(bdZRaw) ? 0 : bdZRaw;
+        if (bdZIndex < bgZIndex) continue;
+        const bRect = backdrop.getBoundingClientRect();
+        if (bRect.width === 0 || bRect.height === 0) continue;
+        const covers =
+          bRect.left <= bgRect.left + tol &&
+          bRect.top <= bgRect.top + tol &&
+          bRect.right >= bgRect.right - tol &&
+          bRect.bottom >= bgRect.bottom - tol;
+        if (covers) return true;
+      }
+      return false;
+    }
+
     function hasHorizontalScrollAncestor(el) {
       if (isInsideOverlayBody(el)) return false;
       let parent = el.parentElement;
@@ -499,7 +541,20 @@ export async function checkGeometryIntegrity(page, viewportWidth, allowlist = []
         // to the portal case now reachable since Check 4 gained overlay-body candidates
         // (BOTTOM_SHEET_BODY_SELECTOR above). A pair fully on ONE side of the boundary (both
         // inside, or both outside) is unaffected — still a hard `element-overlap` violation.
+        //
+        // Task 663: the ambiguous downgrade above was a false positive whenever a real,
+        // verified backdrop actually covers the outside-sheet (background) element — the
+        // background control is then provably unreachable/unperceivable, so this is expected
+        // modal behavior, not even an ambiguous case. Only downgrade further to a silent PASS
+        // (no finding) when `isBackgroundCoveredByOverlayBackdrop` proves that; otherwise keep
+        // the pre-existing `ambiguous-overlap` push unchanged (e.g. `withOverlay={false}`, or a
+        // background element stacked above the backdrop) so a real bleed-through is never
+        // silently hidden.
         if (isInsideOverlayBody(a) !== isInsideOverlayBody(b)) {
+          const backgroundEl = isInsideOverlayBody(a) ? b : a;
+          if (isBackgroundCoveredByOverlayBackdrop(backgroundEl)) {
+            continue; // pass — background provably unreachable behind a real blocking backdrop
+          }
           ambiguous.push({
             failReason: 'ambiguous-overlap',
             selector: `${selectorFor(a)} ↔ ${selectorFor(b)}`,

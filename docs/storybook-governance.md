@@ -159,7 +159,7 @@ For any story demonstrating containers, grids, or page layouts:
 - Verify listing grids show `2xl:grid-cols-4` (4 columns at 2560px)
 - Verify admin layouts don't stretch full viewport
 
-Reference stories: `System/Containers`, `System/ListingGrid`
+Reference stories: `System/Containers`, `System/FeaturedListings`
 
 ---
 
@@ -331,7 +331,7 @@ src/
       listing.fixture.ts     — Stable test data
     EmptyState.stories.tsx
     Containers.stories.tsx
-    ListingGrid.stories.tsx
+    FeaturedListings.stories.tsx
     AdminLayout.stories.tsx
 ```
 
@@ -435,7 +435,7 @@ All five Storybook categories are required sweep scope:
 - **Layout**: FilterBar, PageHeader, PageShell, Section
 - **Shared**: Combobox
 - **Primitives**: Badge, Button, Checkbox, Command, Dialog, DropdownMenu, Input, PasswordInput, PasswordRequirementsHint, Popover, Select, Sheet, Skeleton, Tabs
-- **System**: AdminLayout, Containers, EmptyState, ListingGrid, RecentlyViewedSection
+- **System**: AdminLayout, Containers, EmptyState, FeaturedListings, LatestListings, RecentlyViewedSection, SimilarListings
 
 ### Remaining rules (unchanged from §9)
 1. **No raw HTML controls.** No `<button>`, `<input>`, `<select>`, `<textarea>` — use canonical components only.
@@ -507,7 +507,7 @@ All five Storybook categories are required sweep scope:
   `<button>/<input>/<select>/<textarea>` JSX; raw user-facing string literals in JSX text / `aria-label` /
   `title`/`label`/`placeholder` / fixture fields (anything not from `t()`/`storyT()`, minus a documented allowlist).
   ESLint is a static best-effort signal; `check-stories.mjs` is authoritative for allowlist-aware checks.
-- **`scripts/check-stories.mjs`** (`npm run check:stories`, `checksRan: 13`) runs 13 governance checks over
+- **`scripts/check-stories.mjs`** (`npm run check:stories`, `checksRan: 16`) runs 16 governance checks over
   `**/*.stories.{ts,tsx}` and exits non-zero on any violation; wired into `prebuild-storybook`/`prestorybook` and CI.
   Checks 1–11 are the original checks (layout, raw HTML, locale-NAME families, locale pins, title literals, key parity,
   inline locale maps, uk.json Cyrillic, runtime hardcode, JSX string-prop literals, toolbar overflow). Task 468 broadened
@@ -594,7 +594,7 @@ G:  ExportNamedDeclaration > VariableDeclaration > VariableDeclarator[id.name=/U
 H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜ][A-Za-zÀ-ÖØ-öø-ÿ\s]{7,}$/]
 ```
 
-**check-stories.mjs checks (`checksRan: 13`, updated Task 468 2026-06-22):**
+**check-stories.mjs checks (`checksRan: 16`, updated Task 697 2026-07-30):**
 1. `layout:'centered'|'padded'` — banned layout values
 2. `<button|input|select|textarea>` — raw HTML controls in JSX (string-literal context filtered)
 3. **Locale-NAME export families** (broadened Task 468) — identifier-token segmentation; FAIL if any segment equals `Ukrainian|Albanian|Italian|English` or `Uk|Sq|It|En` as a leading segment. File-scoped allowlist (`scripts/story-realmode-allowlist.json`). Token-segment, not substring: `Items`/`Enabled`/`Square` PASS
@@ -608,6 +608,9 @@ H:  Property[key.name='title'][value.type='Literal'][value.value=/^[A-ZÀÁÂÃ�
 11. `sm:flex-row` + `sm:flex-wrap` on same line — toolbar 640px overflow; use `md:flex-row md:flex-wrap`
 12. **Viewport/width-named exports** (new Task 468) — identifier-token segmentation; FAIL if any segment equals `Mobile|Tablet|Desktop|Laptop|Wide|Huge`, `keyword+digits` (e.g. `Mobile320`), or a bare width number (`320…2560`). File-scoped allowlist (`scripts/story-realmode-allowlist.json`, keyed by `{file, export, check, reason}`). Stale-entry check: an allowlist entry pointing at a non-existent file or export FAIL
 13. **Duplicate-family export names** (new Task 468) — FAIL if any identifier segment equals `Proof|Demo|Canonical(+digits)|Filtered`. Same file-scoped allowlist; only `AdminListingsTable/FilteredPending` allowlisted
+14. Mantine `<Button size="lg"|"xl">` — off-scale button size (Task 520); canonical default `size="sm"` (14px) + 44px min-height, escape via `// @allow-button-size <reason>`
+15. **Unregistered Mantine colour prop** (Task 685/686) — `color`/`c`/`bg` literal (Form A), `var(--mantine-color-*)` (Form B), and `*COLOR*`-named object-literal map (Form C) values must resolve to `theme.ts`'s registered colour set or a documented passthrough (CSS-wide keyword, CSS function call, `#hex`, Mantine keyword)
+16. **Wall-clock fixture value** (Task 697/698, §14.10) — `Date.now()` used anywhere as a value, or bare zero-argument `new Date()` used as a value, outside comments and outside string/template literals. Does NOT flag `new Date(<non-empty argument>)`
 
 **check-stories-rendered.mjs** (`npm run screenshots:assert`): Playwright assertions per story × {320,375,390,480,560,680,768,810,960,1024,1200,1440,1920,2560} (canonical 14 from `docs/responsive-screenshot-matrix.md §1`) × {sq,en,uk,it}. `--fast` runs only {320,375,390} for quick local loops. Assertions: (a) no `scrollWidth > clientWidth` overflow, (b) non-icon-only form controls `offsetWidth >= container content width - 8px` at <640. Emits JSON manifest + PNG per cell to `.screenshots/rendered-assert/<timestamp>/`. **`npm run screenshots:assert` (non-fast) is the canonical full-matrix acceptance command** — its transcript must show `Viewports: 14` for rendered-proof approval (Task 411).
 
@@ -670,7 +673,7 @@ const T = { en: 'New Listing', sq: 'Njoftim i ri', uk: 'Orenda ta prodazh', it: 
 wrap in a JSX expression `{'Developer note text'}` — breaks the `>text<` regex while preserving display.
 Do NOT use this pattern for real user-facing content; always localize that via storyT.
 
-**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 13 checks (including Check 3/4 broadened + Check 12/13 new — Task 468) and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
+**Gate wiring:** Check 10 runs as part of `check:stories` (wired into `prebuild-storybook`) and exits non-zero on any violation. A test suite at `scripts/__tests__/check-stories.test.ts` (run by `npm test`) verifies all 16 checks (including Check 3/4 broadened + Check 12/13 new — Task 468; Check 15 — Task 685/686; Check 16 — Task 697) and all 6 Check-10 variants. Plant `title="Submit"` in a story and the build fails at file:line.
 
 ---
 
@@ -1441,42 +1444,453 @@ longer exists, so the tracked-xfail pin would be dead governance state).
 itself is unaffected and independently confirmed via the scoped probe above.) Session:
 `docs/sessions/2026-07-16-task609-listingdetailpattern-grid-gutter-overflow-fix.md`.
 
+### §14.9.21 — Mantine-only becomes the sole mandatory CI scope; shared criterion module (Task Q0R, 2026-07-18)
+
+**Owner directive.** The only mandatory CI scope is canonical Mantine stories. Legacy stories are deprecated code
+awaiting migration/replacement — they no longer run `check:locale-leak` or `screenshots:assert` and can never
+block a PR. This is a scope change (what blocks CI), never a deletion — `ASSERT_STORIES`/geometry-only membership
+and the full (non-`--mantine-only`) run remain available for local/owner-native full sweeps.
+
+**Shared criterion module.** `MANTINE_STORY_TITLE_PREFIXES`/`isCanonicalMantineTitle()` moved out of
+`check-stories-rendered.mjs` into `scripts/lib/mantine-story-scope.mjs` — the ONE place all three gates
+(`check-stories-rendered.mjs`, `check-locale-leak.mjs`, `check-story-coverage.mjs`) import it from. No file
+re-types the prefix list.
+
+**`check-locale-leak.mjs` gained `--mantine-only`** (previously scanned every story, legacy included — Q0R's
+Current-state audit found this the one gap versus the rendered gate, which already had the flag from Task 529).
+Wired into `governance-pr.yml`'s `locale-leak` job via the new `check:locale-leak:mantine-only` npm script.
+Empty-canonical-set is a hard, non-zero-exit error in both scripts under `--mantine-only` (never a silent skip
+to green).
+
+**Truthful composition banner (Q3/Q4).** Both scripts print exactly `Mantine selected: N; non-Mantine excluded: M`
+before running under `--mantine-only`, and the rendered script's banner no longer claims
+full-mode/`ASSERT_STORIES`/geometry-only scope when that flag is set (Phase 1/2 are skipped entirely under
+`--mantine-only` — the banner previously still announced their counts, the same "gate claims scope it does not
+enforce" defect class as the Task 529 hole this section's siblings closed).
+
+**`check:story-coverage` rewritten** — see §15.1. It is no longer the "colocated story or exemption" gate; it now
+enforces `scripts/mantine-migration-scope.json` (the hand-maintained Mantine-migration enrolment list) via
+AST-parsed static-import proof, applying the same `isCanonicalMantineTitle` criterion to parsed story source
+(no built index — this gate runs pre-build).
+
+Session: `docs/sessions/2026-07-18-taskQ0R-mantine-only-ci-scope.md`.
+
+### §14.9.22 — Locale-leak CI job is warn-only during migration; manifest completed to 6 (Task 625, 2026-07-19)
+
+**Owner directive.** While legacy→Mantine story migration is active, newly migrated stories keep surfacing
+loanword/fixture leaks; the owner does not want that churn to block merges. `governance-pr.yml`'s `locale-leak`
+job step now carries `continue-on-error: true` — the detector still runs, still reports, and still exits non-zero
+on a real leak (report artifact upload via `if: always()` is unchanged), but a non-zero exit no longer fails the
+overall PR check. This is CI-wiring only: the script's own exit code, `check:locale-leak:mantine-only`'s
+definition, `LEAK_ALLOWLIST`/`PER_STORY_TOKENS`, and the detector algorithm are all untouched. Revert to blocking
+once migration completes (owner directive; log as a follow-up when that milestone is reached).
+
+**`rendered-proof` and `check:story-coverage` stay blocking, unchanged.** The warn-only policy applies to the
+`locale-leak` job only — coverage failures are author-controlled (a component is only enrolled in
+`scripts/mantine-migration-scope.json` when its migration lands), not churn-driven, and rendered-proof's
+ambiguous cells are already non-failing.
+
+**Manifest completed to 6/6.** `src/components/layout/FooterView.tsx` landed in commit `7bc4550b9` (after Q0R was
+written) with a canonical story (`src/stories/mantine/primitives/FooterView.stories.tsx`, title
+`Mantine/Primitives/FooterView`) that statically imports it. Added as the 6th `scripts/mantine-migration-scope.json`
+entry, resolving Q0R's `FooterView` gap. `check:story-coverage` now reports 6/6 covered, exit 0.
+
+Session: `docs/sessions/2026-07-19-task625-q0r-624-warnonly-landing.md`.
+
 ---
 
-## §15 — Story Coverage Gate + Scaffold (Task 398, 2026-06-06)
+### §14.9.23 — Assertion-liveness meta-gate: a `null`-everywhere assertion is a dead gate, not a pass (Task 710, 2026-08-05)
 
-**Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only see components that have a story. The hardcode blind spot is already closed by the Task 396 static scanner (source-level, no story needed). This gate is about ensuring components with real runtime-i18n / interactive / responsive behavior get render + screenshot + locale coverage, while NOT forcing low-value stories on trivial presentational primitives. Blanket "story for everything, auto-generated" is explicitly rejected: empty/auto-filler stories with English fixtures are exactly what caused the Sprint 32 rejection.
+**Why.** Every consumer of a `cell.assertions.<key>` boolean only ever tests `=== false`
+(`isTransientFailure()`, `hardPass`, §14.9.17) — never "is this a real boolean". A key that is
+`null`/absent in EVERY cell of its scope therefore contributes `true` to `hardPass` while never
+having checked anything: it LOOKS like a passing gate and is actually a vacuous one. This is
+exactly how Task 573's `fullWidthButtonsAtMobile`/`popupBottomSheetAtMobile` assertions died
+unnoticed for ~5 weeks (docs/critical-flow-registry.md row 50) — nothing detected the death until
+the 709/709-R review measured the CI-blocking `--mantine-only` manifest by direct enumeration and
+found both `null` in **all 1184 cells**.
 
-### §15.1 Gate: `check:story-coverage`
+**Root cause (measured, not guessed).** `fullWidthButtonsAtMobile`'s candidate selector
+(`[data-slot="button"]:not([data-icon-only])`, `check-stories-rendered.mjs:1161`) and
+`popupBottomSheetAtMobile`'s six candidate selectors (`:1185-1192`) are all `data-slot` names — a
+**shadcn** convention emitted only by `src/components/ui/*` (27 files). Mantine-scope stories
+render `m_*`/`mantine-*-root` classes and no `data-slot` at all, so `checkedAny` never becomes
+`true` and both assertions write `null` unconditionally. **Same root cause §14.9.9 already
+recorded for a different check** — geometry's `PORTAL_SELECTOR` "only matches legacy shadcn
+`data-slot` names Mantine never renders" — never generalised into a standing detector until now.
 
-Every component under `src/components/**` must EITHER:
-- Have a colocated `*.stories.tsx`, OR
-- Be listed in `scripts/story-coverage-exempt.json` with a one-line justification.
+**The gate.** `scripts/check-assertion-liveness.mjs` (`npm run check:assertion-liveness`) reads an
+already-persisted `manifest.json` — it never launches a browser — and classifies every **boolean**
+assertion key it finds, SHAPE-driven (a key is a candidate iff every value it ever takes is `true`,
+`false`, or `null`; an object-valued key like `renderCheck`/`styleIntegrity`/`visualIntegrity` is
+skipped automatically, never by a hardcoded name list). `null` and "key absent from this cell" are
+treated identically. Four states:
 
-A component that is neither → **gate FAILS, CI exit 1, naming the component**.
+| State | Meaning | Exit contribution |
+|---|---|---|
+| `LIVE` | resolved `true`/`false` in ≥1 cell | none |
+| `DEAD-NEW` | `null`/absent in EVERY cell, no registry entry for this `{scope, assertion}` | **blocking (1)** |
+| `DEAD-KNOWN` | `null`/absent in EVERY cell, AND a registry entry tracks it | reported loudly, non-blocking |
+| `STALE-ENTRY` | a registry entry names it, but it resolved `true`/`false` in ≥1 cell again | **blocking (1)** |
 
-**"Fail-on-new" rollout:** all currently storyless components are seeded into the exemption allowlist. Going forward, a NEW component must come with a story OR an explicit (reviewed) exemption entry. The allowlist is only flipped to strict (remove exemptions) once backlog "should-have-a-story" components are covered.
+Bad input (manifest missing, unparseable, no `matrix` array, or zero cells) exits **2**, distinctly
+per case — never a silent green.
 
-**Stale-entry check:** any exemption entry pointing at a non-existent file is flagged as a warning (not a hard fail). Clean up with `--update-exempt`.
+**Registry contract (`scripts/assertion-liveness-registry.json`).** One entry per
+`{ scope, assertion }`. Every entry is a **TRACKED DEAD GATE, not an exemption**: it MUST carry a
+`followUpTask`, `deadSince`, and `reason`. `DEAD-KNOWN` is reported in the same voice
+`check-stories-rendered.mjs:1854`'s known-failure registry uses ("TRACKED … NOT fixed here").
+Mirrors `check:design-tokens`'s stale-marker precedent: if the registered assertion comes back to
+life, that is `STALE-ENTRY` — a hard failure naming the exact entry to delete — so the registry can
+never rot into a silent allowlist for the next 573-class death. Current entries (both scope
+`mantine-only`, `followUpTask: 711`): `fullWidthButtonsAtMobile`, `popupBottomSheetAtMobile`.
+
+**Scope is part of the registry key (A3) — full-matrix liveness is UNMEASURED.** §3.1's
+measurements, and both registry entries, are `--mantine-only` only. The two dead assertions may
+well be live in the full (non-Mantine) matrix, where shadcn stories DO render `data-slot` — that
+sweep was not run (out of this task's budget) and no claim is made about it.
+
+**CI wiring.** `governance-pr.yml`'s `rendered-proof` job runs `npm run check:assertion-liveness`
+immediately after `npm run screenshots:assert -- --mantine-only`, with no explicit `--manifest`
+flag — the gate's default manifest discovery picks the latest directory under
+`.screenshots/rendered-assert/` (lexicographic sort == chronological sort for the
+`YYYY-MM-DDTHH-MM` directory names), which on a fresh CI checkout is exactly the run the previous
+step just produced.
+
+**Self-test (`npm run check:assertion-liveness:verify`, house `--verify-gate` pattern,
+`check-homepage-grid.mjs:655-760`).** A negative arm (the real, latest manifest — expect exit 0)
+plus three planted failing arms, each asserted on both its exit code AND its specific diagnostic
+text (never merely "it failed"): an unregistered all-null key (`DEAD-NEW`, exit 1), a registered
+key that resolved `true` in a cell (`STALE-ENTRY`, exit 1), and a nonexistent manifest path
+(exit 2, distinct `[missing-file]` message). All four of the R8 degenerate-input cases (missing
+file, unparseable JSON, no `matrix` array, zero-cell `matrix`) were additionally run directly
+against dedicated fixtures and each produces its own distinct message, all exit 2.
+
+**Structural regression coverage (R9).** `scripts/__tests__/rendered-gate-exit-code.test.ts`
+asserts `check-stories-rendered.mjs`'s `if (failed > 0)` branch still contains
+`process.exitCode = 1` and that no later line in the file resets it to `0` — protecting the sweep's
+own failure exit path (see the unpiped-capture rule immediately below) independently of this
+meta-gate. `check-stories-rendered.mjs` itself has **zero diff** from this task (D33 — a migration
+may not be proven against a comparator not shown to fail applies equally to a gate this task must
+not silently weaken).
+
+**Unpiped-capture rule (R10 — see also `.claude/skills/execute-task/SKILL.md`).** Task 709
+persisted `EXIT_CODE=0` in its evidence transcript beside 4 genuine FAILs; 709-R proved, capturing
+the SAME command unpiped, that the sweep really does exit 1 — the zero was a piped-capture
+artifact (`$?`/`$LASTEXITCODE` reads a pipe's own status, not the upstream command's), not a code
+defect. **Every evidence transcript in this repo must redirect a command's output to a file, then
+append the shell's exit-code variable as its own separate statement into that same file** — never
+pipe a gate's output through another command (`| tee`, `| Select-Object`, etc.) and trust the
+piped exit code. This task's own evidence transcripts follow that rule throughout.
+
+Session: `docs/sessions/2026-08-0X-task710-assertion-liveness-meta-gate.md`.
+
+---
+
+### §14.9.24 — `HeroSearch` Story stand-in closed: renders the same Mantine `Box` composition as production (Task 712, 2026-08-05)
+
+**Why.** `Mantine/Primitives/HeroSearch`'s `Default`/`Fallback` stories
+(`src/stories/mantine/primitives/HeroSearch.stories.tsx:53-54`/`:90-91`) rendered a hand-written
+`<section className="relative py-16 md:py-24">` wrapping `<div className="container-wide relative
+z-10">` — a raw-HTML replica standing in for the production composition
+(`src/app/[locale]/page.tsx:28-29`, `<Box component="section" bg pos py>` wrapping `<Box
+className="container-wide …">`). This predates Task 712 and is exactly the cl. 16c "divergent
+demo stand-in" defect: the CI-blocking `--mantine-only` matrix (§14.9, 40 herosearch cells) proved
+the replica's geometry, never production's.
+
+**The fix.** Both stories now render `<Box component="section" bg="var(--primary)"
+pos="relative" py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}>` wrapping `<Box
+className="container-wide">` — byte-identical to production after Task 712 also removed the
+`relative`/`z-10` utilities from `page.tsx:29` itself (D28/D34; A1 measured-inert stacking-census
+proof, not a silent drop — the outer `Box` already carried `pos="relative"`, and the census of
+every positioned/z-indexed descendant was byte-identical before/after except the removed entry
+itself). `container-wide` stays a marker class, unchanged, in both (A3).
+
+**A2 resolved — geometry always matched.** The replica's `py-16 md:py-24` and production's
+`py={{ base: 'var(--space-16)', md: 'var(--space-24)' }}` both compute to `64px`/`96px` — measured
+via `getComputedStyle` on the built Storybook at 320/700/1024, identical before and after the
+parity edit. The Story never actually diverged from production geometrically; only its markup
+(raw HTML vs. `Box`) diverged.
+
+**Why that holds at *every* width, not just the three measured** (Task 712 review, F1). The two
+sides use different breakpoint systems, so three sample widths cannot by themselves justify
+"always". The equivalence holds because `src/design-system/mantine/theme.ts:163-170` overrides
+Mantine's breakpoints onto the Tailwind scale — `md: '48em'` (768px) against Mantine's `62em`
+(992px) default. **Without that override the replica would have rendered `96px` and production
+`64px` across 768–991px, a band no `MANTINE_VIEWPORTS` cell samples** (320/375/390/1024 + the
+HeroSearch-only `band-700`), so the 40-cell comparator would not have caught it. Cite the theme
+override, not the sample, whenever a Tailwind-vs-Mantine responsive equivalence is claimed.
+
+**The 40-cell comparator.** All 40 herosearch cells (2 story IDs × 4 locales × 5 viewports,
+§3.4/§14.9.2's `MANTINE_STORY_EXTRA_VIEWPORTS.HeroSearch`) remain md5-identical to the
+`2026-08-05T11-33` (709-R) baseline — zero visual delta despite the markup swap and the
+production `z-10`/`relative` drop, confirming both fixes are geometry-neutral. Cross-references
+§14.9 (the gate this closes the stand-in gap on) and D32 (comparator demonstrably fails — proven
+by 709/709-R history, not re-proven here).
+
+Session: `docs/sessions/2026-08-05-task712-homepage-route-shell-de-tailwind.md`.
+
+---
+
+### §14.9.25 — `design-tokens-allow` marker carry-across into a `.module.css`: the detector is Tailwind-syntax-shaped, not value-shaped (Task 713, 2026-08-05)
+
+**Why.** `MobileBottomNavView.tsx` was the first D28 de-Tailwind migration carrying pre-existing
+`design-tokens-allow` markers into a `.module.css`. The kickoff's premise — 4 markers, one per
+pre-migration TSX site — did not survive contact with how `scripts/check-design-tokens.mjs`'s
+`DETECTION_PATTERNS` actually work: most of them match **Tailwind's own bracket/function syntax**
+(`shadow-\[...\]`, `\b[\w-]+-\[[\d.]+(?:px|rem)\]`, an inline-style quoted px/rem string), not
+arbitrary CSS property values. A plain CSS declaration like `font-size: 10px;` never matches any
+of those patterns — the "length" bracket pattern requires the literal `word-[` substring, which
+plain CSS syntax never produces.
+
+**What this means for a marker carry-across.** Measured, not assumed (A1's rule, generalized):
+
+1. **A marker protecting a Tailwind *arbitrary-bracket* utility** (`shadow-[...]`, `text-[10px]`,
+   `z-[N]`, `duration-[...]`) may or may not have a post-migration equivalent, depending on whether
+   the compiled declaration you write happens to contain a substring one of the OTHER patterns
+   (hex color, `rgb()`/`color-mix` function, etc.) still matches. `text-[10px]` compiled to plain
+   `font-size: 10px` and stopped matching anything — 2 of this task's 4 pre-migration markers
+   (sites :92/:101, already consolidated to one shared class per the "N sites, 1 shared class"
+   `HeaderView.module.css`/`FooterView.module.css` precedent) and 1 more (site :56, the FAB label)
+   had **zero** post-migration detector hits. Adding a marker to a line with no violation is an
+   immediate `stale-marker` failure (`:224`) — do not add one defensively "to be safe."
+2. **A migration can introduce a *brand-new* violation a Tailwind-syntax scan never saw.** This
+   task's `shadow-lg` (a **named** utility, never scanned as a literal value pre-migration) compiles
+   to `--tw-shadow:...var(--tw-shadow-color,#0000001a)...` — the literal hex fallback is real CSS
+   text now, and the `color: hex color` pattern (a general pattern, not shadow-specific) catches it.
+   This is not a regression in the gate; it is the gate correctly scanning source text that only
+   became literal because of the migration.
+3. **Net result for this task:** 4 pre-migration markers → 2 post-migration markers, one carried
+   (`#00000014`, the bespoke upward-shadow arbitrary value, site :36) and one new (`#0000001a`,
+   `shadow-lg`'s compiled color fallback, site :50). Both were determined by I4 arm 1's actual
+   failure output (A1), never guessed. `check:design-tokens` → `0 violations / 0 stale-markers /
+   0 missing-reason` with exactly these two markers; adding markers for the 3 dropped sites was
+   verified to immediately regress to `stale-marker` and was not shipped.
+
+**A CSS-comment-specific trap (found and fixed in this session, not shipped broken).** The
+detector's `codeOnly` line-scrubbing (`scanContent`, `:355`) only strips a trailing `// comment` —
+built for JSX/TS. A `.module.css`'s `/* design-tokens-allow: ... — reason */` marker comment is
+**not** stripped before pattern-matching, so any Tailwind-bracket-shaped substring written inside
+your OWN reason text (e.g., quoting the original utility as `shadow-[0_-2px_16px_rgba(0,0,0,0.08)]`
+for readability) is scanned as if it were live code and produces a **second, self-inflicted**
+violation on the same line. Multi-line `/* ... */` block comments where every continuation line
+starts with `*` ARE skipped by `shouldSkipLine` (`:206-215`) — only a marker sharing a physical line
+with real code is at risk. **Rule: never quote Tailwind's own `word-[...]` bracket syntax inside a
+`.module.css` marker's reason text; describe the original utility in prose instead.**
+
+**The two-armed proof, reusable shape.** Write the moved declaration(s) with **no** marker first,
+run `npm run check:design-tokens`, and persist the failing transcript — it names the exact detected
+substring for anything that still matches, and its ABSENCE for anything that doesn't (which is
+itself the proof that no marker belongs there). Only then add markers using the exact strings the
+failure named, and re-run to `0/0/0`. A single green run proves nothing; the failing arm is the
+proof that the suppression is real, not vacuous — same shape as `check:assertion-liveness`'s
+`DEAD-NEW` detection (§14.9.23) and `check-design-tokens.mjs`'s own stale-marker rule.
+
+Session: `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md`.
+
+### §14.9.26 — The Tailwind-syntax-shaped blind spot §14.9.25 named is now closed, report-only (Task 714, 2026-08-06)
+
+**What changed.** `scripts/check-design-tokens.mjs` now has three additional `DETECTION_PATTERNS`
+entries — `css-length`, `css-duration`, `css-zindex` — that read a plain CSS declaration whose value
+is a single bare `px`/`rem`/`em`/`s`/`ms`/unitless-integer token (`property: value;`), gated to
+`.css` files only. This is exactly the gap §14.9.25 documented: `font-size: 10px;` in a `.module.css`
+now matches. Full design, scope boundary, and rawValue convention: `docs/design-system.md` §23.6.
+
+**Proven, not assumed, against the real §14.9.25 site.** `MobileBottomNavView.module.css:123` and
+`:164` (the two `font-size: 10px` sites §14.9.25 confirmed had **zero** post-migration detector
+hits) are now both reported as `css-length` — read-only against the real, unmodified, still-approved
+file (zero diff). A throwaway in-memory copy proved both marker arms: a same-line
+`/* design-tokens-allow: font-size: 10px — reason */` suppresses it; the same marker with the
+declaration removed reports `stale-marker` — the identical two-armed mechanism §14.9.25 established
+for CSS colour markers, now proven for length. Evidence:
+`.screenshots/task714-evidence/i5-r4-r5-real-and-throwaway-proof.log`.
+
+**Staged report-only, per the repo's own 402→407 precedent (§23.4).** The three new categories are
+excluded from the strict/blocking exit-code computation — `npm run check:design-tokens` still exits
+**0** on the current tree — but print under their own `CSS DECLARATION LITERALS` heading with an
+explicit count (45, current tree) so the inventory is loud, not silently absorbed. A classified
+34 `N1-VIOLATION` / 11 `COMPILED-ARTIFACT` breakdown lives at
+`.screenshots/task714-evidence/task714-css-declaration-inventory.md`. **715** owns the strict flip
+and the remediation/marker-suppression pass; it must re-run the command against the tree at the time
+it starts, not inherit this task's numbers uncritically (same "re-measure, don't inherit" discipline
+as §14.9.25 and the standing backlog note on stale kickoff measurements).
+
+**Scope boundary, stated so 715 doesn't rediscover it the hard way.** The new patterns only match a
+declaration whose entire value is one bare token — multi-value/shorthand lists
+(`transition: transform 300ms ease-out, box-shadow 300ms ease-out;`) and function-wrapped values
+(`blur(8px)`, `calc(2px + var(--x))`) are out of scope. This is why
+`MantineListingCardPattern.module.css` — which only carries `300ms` inside a `transition:` shorthand
+— shows 0 findings under Task 714's detector despite the kickoff's own §3.5 pre-measurement claiming
+4. Generalizing to those forms needs the same nested-function handling Task 408 built for Tailwind's
+`calc/min/max/clamp` brackets (§23.1.b), applied to arbitrary CSS functions — named as a follow-on,
+not attempted here.
+
+Session: `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverage.md`.
+
+---
+
+### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
+
+**Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date
+into its rendered PNG. A baseline captured today and a re-run captured tomorrow then differ — not because anything
+changed, but because the calendar day changed. Task 693's Q3 rendered run burned a full diagnostic cycle chasing 32
+cells that differed at max channel delta 140 purely because the baseline (captured 2026-07-29) and the new run
+(2026-07-30) each recomputed a `created_at`/`expires_at` string live: `"Jul 27, 2026"` → `"Jul 28, 2026"`. A
+same-day, zero-code-diff control produced zero motion on those stories; only the day boundary did.
+
+**Rule:** every value a story fixture supplies to a component prop MUST be a literal, or a value derived by
+arithmetic from a frozen, named, documented constant — never from `Date.now()` or a bare `new Date()`. A fixture that
+needs to demonstrate a relative relationship (e.g. "created N days ago", "expires in 30 days") derives every related
+value from ONE frozen anchor constant so the relationships stay intact; freezing must not collapse "staggered",
+"valid vs. expired", or similar demonstrations to the same instant.
+
+**Required form** (model: `RangeDatePicker.stories.tsx:79-83`):
+```ts
+// Frozen anchor (no Date.now()/new Date() wall-clock in fixtures per Storybook governance §14, Task 697)
+const FIXTURE_ANCHOR_MS = Date.parse('2026-07-30T00:00:00.000Z')
+const created_at = new Date(FIXTURE_ANCHOR_MS - 2 * 24 * 60 * 60 * 1000).toISOString()
+```
+A frozen ISO string literal is equally acceptable when no relative-offset arithmetic is needed.
+
+**Gate:** `check:stories` Check 16 scans the full story scope (`src/**/*.stories.{ts,tsx}` + `src/stories/**`) for
+`Date.now()` used anywhere as a value, and bare `new Date()` (zero-argument) used as a value — both outside comments
+and outside string/template literals (Task 698 corrected the gate to strip comment and string content before
+matching, and to catch a `new` / `Date()` pair split across a line break, closing 3 false-flagging/false-negative
+forms found in the 698 review; the 698 **review** then closed a fourth — a quote that does not close on its own line
+is treated as ordinary code, not as a string delimiter, so an apostrophe in JSX text (`It's brand new`) or in a
+regex literal (`/don't/`) can never mask away a real violation further down the file, F1). It does NOT flag `new
+Date(<any non-empty argument>)` — a frozen literal or an
+expression that does not itself call `Date.now()` — that is the negative-control boundary a fixture author relies
+on. Flagging a frozen constant would be over-broad and is treated as a gate defect, not a stricter gate (Task 697
+I6.4).
+
+**The Storybook preview clock is also frozen (Task 698, D25).** Freezing only the fixture VALUES leaves half of
+every date comparison live: a component that itself reads `Date.now()`/`new Date()` at render time against a
+now-frozen fixture field — `NotificationItem.tsx`'s `formatDistanceToNow` relative-time string, the
+`LISTING_NEW_DAYS` "new" badge (`docs/domain-rules.md:106`), and `isListingPubliclyVisible`'s expiry check — still
+drifted across calendar days even after Task 697, because only the fixture's half of each comparison was frozen.
+`.storybook/preview-head.html` now carries an inline `<script>` that runs before the story bundle loads (module-scope
+fixture constants evaluate before any decorator, so a `preview.tsx` decorator would run too late) and replaces
+`window.Date` with a `Proxy` that pins `Date.now()` and zero-argument `new Date()` to the same anchor instant Task
+697's fixtures already use (`2026-07-30T00:00:00.000Z`), while passing every other `Date` behaviour through
+unchanged: `new Date(<any argument form>)`, `Date.parse`, `Date.UTC`, `Date.prototype`, `instanceof Date`,
+subclassing (`class X extends Date`), and `Date()` called without `new`. One accepted deviation: `new
+Date().constructor` is the real `Date` constructor rather than the Proxy, so `x.constructor === Date` reads false
+inside the preview iframe — no enrolled consumer depends on that identity. Because the anchor literal cannot be
+`import`ed into raw HTML, it exists in two places by necessity — the inline script and the fixtures — so
+`scripts/__tests__/preview-clock-anchor.test.ts` gates the two against silent divergence, failing and naming both
+values the instant they go out of sync.
+
+**Interaction with a date-dependent affordance — now also frozen.** A component that reads live `Date.now()` against
+a fixture field (the `LISTING_NEW_DAYS` "new" badge, or `isListingPubliclyVisible`'s expiry check) is no longer left
+unaffected by this rule: with the preview clock pinned to the same anchor as the fixtures (Task 698), both halves of
+the comparison are now constants, so the affordance's rendered state is permanently stable on any future capture day.
+There is no anchor left to "revisit" as real time passes — that caveat is retired.
+
+---
+
+### §14.11 Sub-perceptual rasterization delta — standing comparator (D26, owner ratification 2026-07-31)
+
+**Status.** Owner decision, 2026-07-31, ratifying the ad-hoc D17 (Task 688) and D22-class (Task 693) reliefs into one
+standing rule and **superseding D17's `≤ 1/255` bound**. Filed during the Task 699 review, which needed the same
+relief for a third time.
+
+**The rule.** An md5-changed cell may be attributed as sub-perceptual rasterization noise — and therefore not treated
+as a rendered change — when its **max channel delta is `≤ 2/255`** AND all four of the following hold:
+
+1. the delta is **fully attributed** as rasterization/antialiasing noise, not merely bounded (a named mechanism plus
+   evidence: no import path from the story to any file in the diff, a positive control that resolves, or a prior
+   zero-code-change observation of the same story);
+2. the run reports **0 FAIL and 0 verdict changes** across the full enrolled matrix;
+3. the cell's **assertion payload is identical** to baseline after the required Mantine-ID normalization below;
+   if the task captures computed styles for the affected surface, those values are identical too;
+4. a **same-tree stability control** exists for the run — a second capture of the identical worktree, so the noise
+   floor is measured on this tree, not quoted from an older task.
+
+All four are conjunctive. A cell meeting the delta bound but missing any condition is a **stop and report**, not a
+tolerated cell.
+
+**Explicit non-scope — this is not a general exemption for visual changes.** `≤ 2/255` never licenses an intended or
+unexplained *visual* difference. It is an attribution path for noise in a run whose claim is "nothing rendered
+differently". A task that changes a visual value proves that change with the evidence its QA profile requires; it does
+not reach for this clause. Nor may a task widen the bound by citing this section: `2/255` is the ceiling, and a delta
+above it needs its own owner decision, as D17 and D22 each did.
+
+**Normalization required before comparing assertion payloads (condition 3).** Random Mantine element IDs appear inside
+`visualIntegrity.ambiguous[].selector` strings and rotate every run. Measured on the Task 699 pair
+(`2026-07-31T10-33` → `11-57`): **6 of 1184 cells** — 4 `Combobox/Default` + 2 `Tabs/Default`, all
+**md5-identical** — differ in payload for that reason alone, with `failReason`, `label` and geometry
+(`right=362, viewportWidth=320`) unchanged. Strip Mantine-generated IDs before the comparison, per the existing
+§14.9.15 `stableSelector()` normalization precedent; an unnormalized payload diff makes condition 3 unsatisfiable on any run containing those
+stories.
+
+**This clause does not replace, and does not cap, the documented-noise-set path.** The empirically measured
+harness-noise set (§8.1 of the Task 698 session log — `HeroSearch/Fallback`, `EmptyLoadingErrorState`,
+`HomepageListingGrids/Loading`, `LocaleSwitcher`, `Button`, `Skeleton`, `MobileBottomNavView`, `PopularLocationsView`,
+`ListingDetailPattern`, `ListingGalleryPattern`, `FilterControls`, `UserMenu`) remains a **separate and independent**
+attribution path, established by zero-code-change controls rather than by delta magnitude. Those stories routinely
+move far above `2/255` with no code change at all: measured on the Task 699 run, **45 of the 91** md5-changed cells
+exceed `2/255`, including `EmptyLoadingErrorState/Default` at **179**, `Button/Default` at **158** and
+`FilterControls/Default` at **226** — the last of which is a ~1px whole-panel layout shift from a font-metrics race,
+structurally proven independent of that task's diff. Reading `≤ 2/255` as a universal ceiling on every changed cell
+would therefore retroactively fail Tasks 693, 698 and 699. It is a bound on *this* attribution path only.
+
+**Required record.** A task invoking this clause states, per tolerated cell: the story, locale, viewport, measured max
+channel delta, differing-pixel count, the attribution mechanism, and the same-tree control it was measured against.
+"Sub-perceptual" as a bare adjective is not evidence.
+
+**Precedents folded in.** D17 (Task 688 — comparator re-scoped to 0-verdict-change + `≤1/255`), D22-class (Task 693 —
+52 cells at max delta 2), Task 699 (2 `PopularLocationsView` cells + 1 `FiltersPanelShell` cell at max delta 2, with
+assertion payloads verified identical across all 91 changed cells and a same-tree control at
+`.screenshots/rendered-assert/2026-07-31T12-29/`).
+
+---
+
+## §15 — Story Coverage Gate (Task 398, 2026-06-06; rewritten Task Q0R, 2026-07-18)
+
+**Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only run over canonical Mantine stories as their sole mandatory CI scope (Task Q0R — see §14.9 for the rendered-proof gate this criterion originated from). This gate ensures that a component enrolled in the Mantine migration actually has a canonical Mantine story proving it, so the migration can't silently regress (a component moved into scope, then its story quietly stops importing it) without CI catching it.
+
+### §15.1 Gate: `check:story-coverage` (manifest-based, Task Q0R)
+
+Owner ruling (Task 623R, reaffirmed Task Q0R): coverage is derived from **static imports**, never filename/directory membership, never a hand exemption entry — the previous "colocated `*.stories.tsx` or exemption" design was replaced because it was tautological (a component's own presence was its own coverage proof) and covered the entire legacy surface, which this task exists to remove from CI blocking.
+
+`scripts/mantine-migration-scope.json` is the hand-maintained enrolment list — the real production component source paths currently in Mantine migration scope (explicit manifest, owner design "A"; never auto-derived from the story set, which would reintroduce the tautology).
+
+The gate, run **pre-build** (no `storybook-static/index.json` exists yet — it parses `src/stories/**/*.stories.tsx` source via the TypeScript compiler API):
+1. Finds every canonical Mantine story (`title` starting with `Mantine/Primitives/` or `Patterns/Mantine/` — `scripts/lib/mantine-story-scope.mjs`).
+2. Resolves each canonical story's `import` declarations to repo-relative component paths.
+3. For each manifest entry: **covered** if ≥1 canonical Mantine story statically imports it; **FAIL** if enrolled but no canonical story imports it; components **not** in the manifest are out of scope — never checked, never blocking.
 
 ```bash
 npm run check:story-coverage                    # gate check (CI default)
-npm run check:story-coverage:report             # full report, always exit 0
-npm run check:story-coverage:update-exempt      # seed/refresh exemption allowlist
+npm run check:story-coverage:report             # full per-entry report, always exit 0
 ```
 
-### §15.2 Exemption allowlist (`scripts/story-coverage-exempt.json`)
+**Governance obligation:** every future component migration to Mantine adds that component to `scripts/mantine-migration-scope.json` in the SAME PR as the migration — the manifest is how a migration announces itself to CI.
 
-Each entry:
-```json
-"src/components/shared/Map.tsx": "Leaflet map requiring browser DOM + live tile URL; cannot be safely rendered in Storybook (SSR-incompatible)"
-```
+### §15.1a — Canonical Story is mandatory migration source of truth (owner directive, 2026-07-21)
 
-Tiering:
-- **Full exemption** (keep indefinitely): trivial presentational primitives (no user-facing strings, no interactive/responsive behavior), components requiring live auth/Supabase/third-party integrations that cannot be safely mocked, one-off page-shell wrappers.
-- **Temporary exemption** (marked as "future story candidate"): complex interactive components where story coverage is desirable but blocked on canonical pattern establishment.
+For any visible Mantine migration, the canonical Mantine Story is the visual source of truth, not optional
+documentation or a post-hoc screenshot target. The executor must inspect it before changing the production surface.
 
-Only the orchestrator may review and promote a stub justification to a permanent exemption.
+- **Story exists:** update or preserve that exact Story in the same task so it renders the migrated artifact with the
+  same canonical Mantine primitive and relevant states. It may not be declared out of scope. A raw/legacy/demo
+  control that merely resembles the production control is not valid evidence and must be replaced with the
+  canonical control or with a composition that imports the real production component.
+- **Story does not exist:** create a canonical Mantine Story before, or in the same task as, the consumer migration;
+  add its migrated production source to `scripts/mantine-migration-scope.json` and make `check:story-coverage`
+  prove the static import. A route-only migration without this Story is incomplete.
+- **Pattern slots:** a pattern Story that receives a behavior-bearing `ReactNode` slot does not cover the supplied
+  production node unless the Story imports and renders that node (or an explicitly equivalent canonical
+  composition). Do not count a static `<span>` or a legacy/demo button as coverage for a migrated interactive
+  control.
+
+When an existing Story cannot truthfully cover the target without changing the intended component boundary, stop and
+ask the owner whether to extend that Story or introduce a separate composition Story; do not silently bypass it.
+
+### §15.2 Retired: colocated-story / exemption-allowlist design
+
+The old `scripts/story-coverage-exempt.json` mechanism (every `src/components/**` file needing a colocated story or a hand exemption) is **no longer consulted by this gate**. The file itself is left in place (historical record) but is orphaned for coverage purposes — `--update-exempt` now prints a deprecation notice and exits 0 rather than seeding it.
 
 ### §15.3 Scaffold generator (`npm run new:story`)
 
@@ -1497,13 +1911,14 @@ The scaffold:
 1. Fill props with `storyT(locale, 'storybook.NAMESPACE.key')`.
 2. Add keys to `messages/{sq,en,uk,it}.json` under `storybook.NAMESPACE.*`.
 3. Run `npm run check:stories` (must exit 0 before committing).
-4. Remove the component from `story-coverage-exempt.json` if it was exempted.
+4. If this scaffold is a canonical Mantine story proving a newly migrated component, add that
+   component's source path to `scripts/mantine-migration-scope.json` in the same PR (§15.1).
 
 **Intentional gate behavior:** adding a raw English literal to a watched prop (title/label/placeholder/aria-label/…) in the filled-in story WILL make `check:stories` fail — proving the scaffold doesn't smuggle hardcode past the gate.
 
 ### §15.4 CI wiring
 
-`check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, after the file-integrity gate. It does not require Storybook to build — it is a pure filesystem check (fast, ~100ms).
+`check:story-coverage` runs in the `governance` job of `.github/workflows/governance-pr.yml`, before Storybook builds. It parses story source directly (TypeScript AST) rather than a built index — no Storybook build required.
 
 ---
 

@@ -2,7 +2,9 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { NotificationItem } from './NotificationItem'
 import type { Notification } from '@/types/database'
 
-const NOW = new Date().toISOString()
+// Frozen "now" (no Date.now()/new Date() wall-clock in fixtures per Storybook governance §14,
+// Task 697, D24) — a cross-day capture must render byte-identical PNGs.
+const NOW = '2026-07-30T00:00:00.000Z'
 
 function n(partial: Partial<Notification> & Pick<Notification, 'id' | 'type' | 'title' | 'body'>): Notification {
   return {

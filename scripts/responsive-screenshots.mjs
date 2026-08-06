@@ -96,10 +96,14 @@ const STORY_TARGETS = [
   { id: 'primitives-badge--default',           label: 'Badge/Default' },
   { id: 'primitives-skeleton--listing-card',   label: 'Skeleton/ListingCard' },
   // System — huge desktop & responsive grid
-  { id: 'system-listinggrid--desktop',         label: 'ListingGrid/Desktop',  viewports: ['desktop-1280', 'desktop-1440'] },
-  { id: 'system-listinggrid--huge-desktop',    label: 'ListingGrid/HugeDesktop', viewports: ['huge-2560'] },
-  { id: 'system-listinggrid--mobile',          label: 'ListingGrid/Mobile',   viewports: ['mobile-320', 'mobile-375'] },
-  { id: 'system-listinggrid--with-ukrainian-titles', label: 'ListingGrid/Ukrainian', locales: ['uk'] },
+  // Task 665 R13.1/R13.2: ListingGrid.stories.tsx was deleted (fake-card cleanup); the 4-column
+  // responsive-grid proof re-points at the surviving System/FeaturedListings/Default story (the
+  // only export — no --desktop/--mobile/etc IDs exist for it), preserving equivalent
+  // viewport/locale coverage incl. the uk stress cell and huge-2560.
+  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Desktop',  viewports: ['desktop-1280', 'desktop-1440'] },
+  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/HugeDesktop', viewports: ['huge-2560'] },
+  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Mobile',   viewports: ['mobile-320', 'mobile-375'] },
+  { id: 'system-featuredlistings--default',    label: 'FeaturedListings/Ukrainian', locales: ['uk'] },
   { id: 'system-containers--container-wide',   label: 'Containers/Wide',      viewports: ['desktop-1280', 'huge-2560'] },
   { id: 'system-containers--all-containers',   label: 'Containers/All',       viewports: ['desktop-1280'] },
   { id: 'system-emptystate--no-listings',      label: 'EmptyState/NoListings' },
@@ -156,7 +160,7 @@ async function runCheck() {
 
   // 3. Stories present?
   const storiesExist = existsSync(join(ROOT, 'src', 'components', 'ui', 'button.stories.tsx'))
-    && existsSync(join(ROOT, 'src', 'stories', 'ListingGrid.stories.tsx'));
+    && existsSync(join(ROOT, 'src', 'stories', 'FeaturedListings.stories.tsx'));
   if (storiesExist) {
     console.log('✅ story files present');
   } else {

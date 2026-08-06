@@ -21,6 +21,18 @@
  *      canonical default is size="sm"/14px + 44px min-height, theme.ts + §6 of
  *      docs/tailadmin-style-reference.md). Escape hatch: "// @allow-button-size <reason>"
  *      on the size="lg"/"xl" line or the line immediately above it.
+ *  15. Unregistered Mantine colour — repository-wide over all of src/**, three forms (Task 685,
+ *      widened repository-wide by Task 686): (A) a literal `(color|c|bg)="value"` prop; (B) a
+ *      `var(--mantine-color-<stock-but-unregistered>-<digit>)` CSS variable, which re-catches an
+ *      unregistered ramp smuggled past Form A's var() passthrough; (C) a `*COLOR*`-named object
+ *      literal whose string value is a stock-but-unregistered palette name. The registered set is
+ *      derived from theme.ts's `colors: {…}` object at runtime; the stock Mantine palette set is
+ *      derived from the installed `default-colors.mjs` at runtime — neither is hard-coded, and an
+ *      underivable set fails loudly rather than scanning with an empty set. The passthrough
+ *      accepts `#`-values, any CSS function call (`var()`/`rgb()`/`rgba()`/`hsl()`/`oklch()`/
+ *      `lab()`/`color()`/`*-gradient()`), the CSS-wide keywords (transparent/currentColor/
+ *      inherit/initial/unset/revert/none), the Mantine keywords (dimmed/bright/white/black), or a
+ *      registered name (bare or `.0`-`.9` shaded).
  *
  * Exit 0 on clean tree. Exit non-zero on any violation.
  * Wired into prebuild-storybook, prestorybook, and CI.
@@ -88,7 +100,7 @@ export const JSX_PROP_ALLOWLIST = [
 // ── Gate runner (exported for testing) ────────────────────────────────────────
 
 /**
- * Run all 14 governance checks against the given repo root.
+ * Run all 16 governance checks against the given repo root.
  *
  * @param {string} root - Absolute path to the repo root (defaults to this script's parent dir).
  * @param {{ verbose?: boolean }} opts - When verbose=true, prints check-header lines to stdout.
@@ -841,6 +853,321 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
+  // ── Check 15: Unregistered Mantine colour — forms A/B/C (Task 685, widened Task 686) ──
+
+  log('── Check 15: Unregistered Mantine colour prop (Task 685/686) ────────');
+
+  const COLOR_SCOPE_FILES = collectFiles(join(root, 'src'), ['.ts', '.tsx']);
+
+  // Registered set is derived from theme.ts's `colors: { … }` object at runtime — never a
+  // hard-coded literal — so it tracks any future colour addition/removal with no script edit.
+  function loadRegisteredColorNames(rootDir) {
+    const themePath = join(rootDir, 'src', 'design-system', 'mantine', 'theme.ts');
+    let themeContent;
+    try { themeContent = readFileSync(themePath, 'utf8'); } catch { return new Set(); }
+    const match = themeContent.match(/colors:\s*\{([^}]*)\}/s);
+    if (!match) return new Set();
+    return new Set(
+      match[1]
+        .split(',')
+        .map((entry) => entry.split(':')[0].trim())
+        .filter((name) => /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name))
+    );
+  }
+
+  // Stock Mantine palette keys, derived at runtime from the installed package's own default
+  // colour table — never retyped (A2 discipline, inherited from Task 685 R3). Tracks any future
+  // Mantine colour addition/removal with no script edit. Always resolved against the real
+  // repository root (module-level ROOT), never the scan `root` argument — the installed
+  // node_modules package is a fixed dependency of THIS script, not of whatever directory is being
+  // scanned (a vitest temp fixture root has no node_modules of its own to derive from).
+  function loadStockPaletteNames(rootDir) {
+    const defaultColorsPath = join(
+      rootDir, 'node_modules', '@mantine', 'core', 'esm', 'core', 'MantineProvider', 'default-colors.mjs'
+    );
+    let content;
+    try { content = readFileSync(defaultColorsPath, 'utf8'); } catch { return new Set(); }
+    const objMatch = content.match(/const DEFAULT_COLORS\s*=\s*\{([\s\S]*?)\n\};/);
+    if (!objMatch) return new Set();
+    const names = new Set();
+    for (const m of objMatch[1].matchAll(/^\s{2}([A-Za-z_$][A-Za-z0-9_$]*):\s*\[/gm)) {
+      names.add(m[1]);
+    }
+    return names;
+  }
+
+  const REGISTERED_COLORS = loadRegisteredColorNames(root);
+  const STOCK_PALETTE_NAMES = loadStockPaletteNames(ROOT);
+
+  // Resolved outside theme.colors by Mantine's own parseThemeColor() — legal, not a theme
+  // lookup (node_modules/@mantine/core/esm/core/MantineProvider/color-functions/parse-theme-color).
+  const MANTINE_COLOR_KEYWORDS = new Set(['dimmed', 'bright', 'white', 'black']);
+
+  // CSS-wide keywords and any CSS function call are legal colour-prop values under a
+  // repository-wide scope (F3, Task 686 §3.10) — without this passthrough, legal values like
+  // `bg="transparent"` or `c="oklch(0.6 0.2 20)"` would become build-blocking false positives.
+  const CSS_WIDE_KEYWORDS = new Set(['transparent', 'currentColor', 'inherit', 'initial', 'unset', 'revert', 'none']);
+  const CSS_FUNCTION_CALL_RE = /^[a-z-]+\(/;
+
+  const COLOR_PROP_RE = /\b(color|c|bg)="([^"]+)"/g;
+  const COLOR_VAR_RE = /var\(--mantine-color-([a-z]+)-([0-9])\)/g;
+  const COLOR_MAP_DECL_RE = /(?:export\s+)?const\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*(?::[^=]+)?=\s*\{/g;
+  const COLOR_MAP_VALUE_RE = /:\s*['"]([A-Za-z][A-Za-z0-9]*)(?:\.([0-9]))?['"]/g;
+
+  function isRegisteredColorValue(value) {
+    if (value.startsWith('#')) return true;
+    if (CSS_FUNCTION_CALL_RE.test(value)) return true;
+    if (CSS_WIDE_KEYWORDS.has(value)) return true;
+    if (MANTINE_COLOR_KEYWORDS.has(value)) return true;
+    const [name, shade] = value.split('.');
+    if (shade !== undefined && !/^[0-9]$/.test(shade)) return false;
+    return REGISTERED_COLORS.has(name);
+  }
+
+  function isStockButUnregistered(name) {
+    return STOCK_PALETTE_NAMES.has(name) && !REGISTERED_COLORS.has(name);
+  }
+
+  if (REGISTERED_COLORS.size === 0) {
+    fail(join(root, 'src', 'design-system', 'mantine', 'theme.ts'), 0, 'colour-registered-set-underivable',
+      `Check 15 could not derive a registered colour set from theme.ts's colors:{…} object. ` +
+      `Refusing to scan src/ with an empty registered set — that would flag every legal colour ` +
+      `value as a violation. Fix theme.ts's colors:{…} object.`);
+  } else if (STOCK_PALETTE_NAMES.size === 0) {
+    fail(join(ROOT, 'node_modules', '@mantine', 'core', 'esm', 'core', 'MantineProvider', 'default-colors.mjs'), 0,
+      'colour-stock-set-underivable',
+      `Check 15 could not derive the stock Mantine palette set from the installed ` +
+      `default-colors.mjs. Refusing to scan src/ with an empty stock set — Forms B and C would ` +
+      `silently never fire. Reinstall @mantine/core or check the file's shape.`);
+  } else {
+    for (const f of COLOR_SCOPE_FILES) {
+      let content;
+      try { content = readFileSync(f, 'utf8'); } catch { continue; }
+      const lines = content.split('\n');
+
+      // Form A — literal (color|c|bg)="value" prop.
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trimStart();
+        const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
+        if (isComment) continue;
+        for (const match of line.matchAll(COLOR_PROP_RE)) {
+          const [, prop, value] = match;
+          if (!isRegisteredColorValue(value)) {
+            fail(f, i + 1, 'unregistered-mantine-colour',
+              `${prop}="${value}" names a colour absent from theme.ts's registered set ` +
+              `(${[...REGISTERED_COLORS].join(', ')}). Use a registered colour, a shade of one ` +
+              `(e.g. "gray.5"), a Mantine keyword (dimmed/bright/white/black), a CSS-wide keyword, ` +
+              `or a CSS function call / #hex value.`);
+          }
+        }
+      }
+
+      // Form B — var(--mantine-color-<stock-but-unregistered>-<digit>). Re-catches an
+      // unregistered ramp smuggled in through a CSS variable (Form A's var() passthrough stays).
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const trimmed = line.trimStart();
+        const isComment = trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*');
+        if (isComment) continue;
+        for (const match of line.matchAll(COLOR_VAR_RE)) {
+          const [full, name] = match;
+          if (isStockButUnregistered(name)) {
+            fail(f, i + 1, 'unregistered-mantine-colour-var',
+              `${full} names a colour absent from theme.ts's registered set ` +
+              `(${[...REGISTERED_COLORS].join(', ')}). Register '${name}' in theme.ts or use a ` +
+              `registered colour's CSS variable.`);
+          }
+        }
+      }
+
+      // Form C — a *COLOR*-named object literal whose string value is a stock-but-unregistered
+      // palette name (the map shape; free-form expressions remain outside the gate, §3.8).
+      for (const declMatch of content.matchAll(COLOR_MAP_DECL_RE)) {
+        const ident = declMatch[1];
+        if (!/COLOR/i.test(ident)) continue;
+        const openBraceIdx = declMatch.index + declMatch[0].length - 1;
+        let depth = 0;
+        let endIdx = -1;
+        for (let p = openBraceIdx; p < content.length; p++) {
+          if (content[p] === '{') depth++;
+          else if (content[p] === '}') {
+            depth--;
+            if (depth === 0) { endIdx = p; break; }
+          }
+        }
+        if (endIdx === -1) continue;
+        const blockContent = content.slice(openBraceIdx, endIdx + 1);
+        const startLine = content.slice(0, openBraceIdx).split('\n').length;
+        const blockLines = blockContent.split('\n');
+        for (let bi = 0; bi < blockLines.length; bi++) {
+          const bLine = blockLines[bi];
+          const bTrimmed = bLine.trimStart();
+          if (bTrimmed.startsWith('//') || bTrimmed.startsWith('*') || bTrimmed.startsWith('/*')) continue;
+          for (const vMatch of bLine.matchAll(COLOR_MAP_VALUE_RE)) {
+            const [, name, shade] = vMatch;
+            if (isStockButUnregistered(name)) {
+              fail(f, startLine + bi, 'unregistered-mantine-colour-map',
+                `${ident}[…] = '${name}${shade ? `.${shade}` : ''}' names a colour absent from ` +
+                `theme.ts's registered set (${[...REGISTERED_COLORS].join(', ')}). Register ` +
+                `'${name}' in theme.ts or use a registered colour.`);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // ── Check 16: Wall-clock fixture values (Task 697, §14.10; corrected Task 698) ─
+
+  log('── Check 16: Wall-clock fixture values (Task 697/698, §14.10) ─────────');
+
+  // Flags Date.now() used anywhere as a value, and bare zero-argument new Date() used as a
+  // value — both outside comments AND outside string/template literals. Deliberately does NOT
+  // flag new Date(<non-empty argument>): a frozen literal (new Date('2026-01-01T00:00:00.000Z'))
+  // or an expression derived from a frozen constant
+  // (new Date(FIXTURE_ANCHOR_MS - 2 * 86_400_000)) is the required fix, not a second violation —
+  // over-flagging either form is a gate defect (Task 697 I6.4).
+  //
+  // Matching runs against a comment/string-masked copy of the whole file (not line-by-line), so:
+  //   - a trailing `// … new Date() …` comment is masked and never matches (Task 698 F3);
+  //   - `'… new Date() …'` / `"… new Date() …"` / a non-interpolated `` `…` `` template literal
+  //     is masked and never matches (Task 698 F3);
+  //   - an apostrophe that does NOT close on its own line (JSX text `It's`, a regex literal
+  //     `/don't/`) is treated as ordinary code, not as the start of a string, so it cannot
+  //     swallow a real violation further down the file (Task 698 review F1);
+  //   - a `new` / `Date()` pair split across a line break still matches, since `\s` in the regex
+  //     already spans the intervening newline once masking removes the comment/string noise
+  //     around it (Task 698 F3).
+  // A template literal containing `${…}` interpolation is left unmasked (treated as ordinary
+  // code) so a real `` `${new Date()}` `` violation inside the interpolation is still caught.
+  const WALLCLOCK_DATE_NOW_RE = /\bDate\.now\(\)/g;
+  const WALLCLOCK_BARE_NEW_DATE_RE = /\bnew\s+Date\(\s*\)/g;
+
+  function maskCommentsAndStrings(content) {
+    let out = '';
+    let i = 0;
+    const n = content.length;
+    while (i < n) {
+      const two = content.slice(i, i + 2);
+      if (two === '//') {
+        let j = i;
+        while (j < n && content[j] !== '\n') { out += ' '; j++; }
+        i = j;
+        continue;
+      }
+      if (two === '/*') {
+        out += '  ';
+        let j = i + 2;
+        while (j < n && content.slice(j, j + 2) !== '*/') {
+          out += content[j] === '\n' ? '\n' : ' ';
+          j++;
+        }
+        if (j < n) { out += '  '; j += 2; } else { j = n; }
+        i = j;
+        continue;
+      }
+      const ch = content[i];
+      if (ch === '"' || ch === "'") {
+        const quote = ch;
+        // A JS single-/double-quoted string literal cannot contain a RAW line break, so a quote
+        // with no matching close before the next newline is not a string delimiter at all — it is
+        // an apostrophe in JSX text (<span>It's brand new</span>) or inside a regex literal
+        // (/don't/). Masking from there to the next stray quote would swallow real code and
+        // silently hide a genuine violation further down the file (Task 698 review F1).
+        // A backslash line-continuation IS a legal way for a literal to span lines, so the scan
+        // steps over any escaped character (including an escaped newline) and keeps looking.
+        let close = -1;
+        for (let j = i + 1; j < n; j++) {
+          const cj = content[j];
+          if (cj === '\\') { j++; continue; }
+          if (cj === '\n') break;
+          if (cj === quote) { close = j; break; }
+        }
+        if (close === -1) { out += ch; i++; continue; }
+        // Keep the quote delimiters themselves in the masked output (not whitespace) so a
+        // frozen literal like new Date('2026-01-01T00:00:00.000Z') doesn't mask down to
+        // new Date(          ) — which would wrongly match the bare-new-Date() regex.
+        out += quote;
+        let j = i + 1;
+        while (j < close) {
+          // Preserve a continuation newline so line numbers stay exact.
+          if (content[j] === '\\') { out += ' '; out += content[j + 1] === '\n' ? '\n' : ' '; j += 2; continue; }
+          out += content[j] === '\n' ? '\n' : ' ';
+          j++;
+        }
+        out += quote;
+        i = close + 1;
+        continue;
+      }
+      if (ch === '`') {
+        const start = i;
+        let j = i + 1;
+        let depth = 0;
+        let hasInterpolation = false;
+        while (j < n) {
+          if (content[j] === '\\' && j + 1 < n) { j += 2; continue; }
+          if (depth === 0 && content[j] === '`') { j++; break; }
+          if (depth === 0 && content[j] === '$' && content[j + 1] === '{') {
+            hasInterpolation = true;
+            depth = 1;
+            j += 2;
+            continue;
+          }
+          if (depth > 0) {
+            if (content[j] === '{') depth++;
+            else if (content[j] === '}') depth--;
+            j++;
+            continue;
+          }
+          j++;
+        }
+        const raw = content.slice(start, j);
+        if (hasInterpolation) {
+          out += raw; // leave as code — a real `${new Date()}` violation must still be caught
+        } else {
+          // Keep the backtick delimiters themselves (not whitespace) — same reason as the
+          // quote-preservation above.
+          for (let k = 0; k < raw.length; k++) {
+            const c = raw[k];
+            if (k === 0 || k === raw.length - 1) out += c;
+            else out += (c === '\n' ? '\n' : ' ');
+          }
+        }
+        i = j;
+        continue;
+      }
+      out += ch;
+      i++;
+    }
+    return out;
+  }
+
+  function lineOf(content, index) {
+    let line = 1;
+    for (let k = 0; k < index; k++) if (content[k] === '\n') line++;
+    return line;
+  }
+
+  for (const f of STORY_FILES) {
+    let content;
+    try { content = readFileSync(f, 'utf8'); } catch { continue; }
+    const masked = maskCommentsAndStrings(content);
+
+    for (const m of masked.matchAll(WALLCLOCK_DATE_NOW_RE)) {
+      fail(f, lineOf(masked, m.index), 'wall-clock-fixture-value',
+        `Line uses Date.now() as a story fixture value. A rendered capture taken on a different ` +
+        `calendar day will not be byte-identical. Derive the value from a frozen, named, ` +
+        `documented anchor constant instead (docs/storybook-governance.md §14.10, Task 697).`);
+    }
+    for (const m of masked.matchAll(WALLCLOCK_BARE_NEW_DATE_RE)) {
+      fail(f, lineOf(masked, m.index), 'wall-clock-fixture-value',
+        `Line uses bare new Date() (current wall-clock instant) as a story fixture value. Use a ` +
+        `frozen, named, documented anchor constant instead (docs/storybook-governance.md §14.10, ` +
+        `Task 697).`);
+    }
+  }
+
   // ── Stale allowlist entry check ────────────────────────────────────────────
 
   log('── Stale allowlist entry check ──────────────────────────────────────');
@@ -869,7 +1196,7 @@ export function runGate(root = ROOT, { verbose = false } = {}) {
     }
   }
 
-  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 14 };
+  return { violations, storyFilesCount: STORY_FILES.length, checksRan: 16 };
 }
 
 // ── CLI entrypoint ────────────────────────────────────────────────────────────

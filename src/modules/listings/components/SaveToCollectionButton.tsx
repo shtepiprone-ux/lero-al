@@ -3,7 +3,8 @@
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { FolderOpen, Folder, Check, Loader2 } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
+import { ActionIcon, Button as MantineButton } from '@mantine/core'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -19,7 +20,9 @@ import {
   removeFromCollection,
 } from '@/modules/listings/actions/collectionActions'
 import { useAuth } from '@/modules/auth/context/AuthContext'
+import { cn } from '@/lib/utils'
 import type { CollectionWithCount } from '@/types/database'
+import styles from './SaveToCollectionButton.module.css'
 
 interface Props {
   listingId: string
@@ -29,6 +32,13 @@ interface Props {
   /** Canonical button size for default variant. Has no effect on icon variant. */
   size?: 'default' | 'lg' | 'xl'
 }
+
+// Task 654: default-variant (pill) size → Mantine Button size, governing padding-x/font-size only.
+// Mirrors FavoriteButton.tsx's PILL_SIZE_MAP exactly (Task 653) — theme.ts's project-wide Button
+// `styles.root` sets `minHeight: '2.75rem'` (44px) UNCONDITIONALLY on every Button instance, so the
+// migrated pill renders at 44px on all breakpoints, unifying the ListingContact action row with the
+// now-Mantine favorite pill (R1/R2). 'default'/'xl' are unexercised by any current consumer.
+const PILL_SIZE_MAP = { default: 'xs', lg: 'sm', xl: 'md' } as const
 
 export function SaveToCollectionButton({ listingId, variant = 'icon', className, size }: Props) {
   const t = useTranslations('collections')
@@ -50,6 +60,12 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
     setCollections(result.collections)
     setMemberIds(new Set(result.memberIds))
     setLoading(false)
+  }
+
+  function handleTriggerClick(e: React.MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    handleOpen()
   }
 
   function toggleCollection(col: CollectionWithCount) {
@@ -101,19 +117,56 @@ export function SaveToCollectionButton({ listingId, variant = 'icon', className,
     toast.success(t('created'))
   }
 
+  // Task 654: trigger control — legacy shadcn `Button` → canonical Mantine `ActionIcon`/`Button`,
+  // mirroring FavoriteButton.tsx's (Task 653) prop-choice pattern. `commonProps` carries the
+  // identical `type`/`onClick`/`aria-label`/`className` for both shapes.
+  const icon = <FolderOpen className="h-4 w-4 shrink-0" />
+
+  const commonProps = {
+    type: 'button' as const,
+    onClick: handleTriggerClick,
+    'aria-label': t('save_to'),
+    className: cn(styles.control, className),
+  }
+
   return (
     <>
-      <Button
-        type="button"
-        variant="ghost"
-        size={variant === 'icon' ? 'icon-sm' : (size ?? 'sm')}
-        onClick={e => { e.preventDefault(); e.stopPropagation(); handleOpen() }}
-        aria-label={t('save_to')}
-        className={className}
-      >
-        <FolderOpen className="h-4 w-4 shrink-0" />
-        {variant === 'default' && <span className="ml-1">{t('save_to')}</span>}
-      </Button>
+      {variant === 'icon' ? (
+        // Icon shape — the only current consumer is FavoritesShell.tsx's per-card hover overlay,
+        // which passes `className="bg-card/80 hover:bg-card shadow-sm rounded-lg"`. Those Tailwind
+        // background/radius classes would become inert once the trigger is a Mantine ActionIcon
+        // (Mantine's own `background`/`border-radius` CSS is unlayered and unconditionally set —
+        // confirmed via `node_modules/@mantine/core/styles.css`'s `.mantine-ActionIcon-root` rule —
+        // so it always beats a layered Tailwind utility class for the same property). `radius="0.75rem"`
+        // reproduces the exact `rounded-lg` value via a canonical Mantine prop — NOT Mantine's own
+        // theme `radius="lg"` token (8px, `theme.ts` line 198): this project's `globals.css` `@theme`
+        // overrides Tailwind's `--radius-lg` to the legacy shadcn `--radius` (0.75rem = 12px, see
+        // `globals.css:92,399`), a different token than Mantine's `theme.radius.lg` — same
+        // Task-652/R8 finding, re-verified here (Revision 1, 2026-07-21).
+        // `SaveToCollectionButton.module.css`'s `[data-shape='icon']` rule reproduces the exact
+        // `bg-card/80`/`hover:bg-card` resting/hover background (same technique + same token values
+        // as FavoriteButton.module.css, Task 653) so the overlay's frosted-white look is unchanged.
+        // `size={28}` matches the legacy `icon-sm` (`size-7` = 1.75rem = 28px) exactly.
+        <ActionIcon {...commonProps} data-shape="icon" variant="subtle" size={28} radius="0.75rem">
+          {icon}
+        </ActionIcon>
+      ) : (
+        // Default shape — the pill used in ListingContact.tsx's action row. `variant="default"`,
+        // `radius="1.125rem"`, `bd="1px solid var(--border)"` are the EXACT prop values Task 653
+        // used for the adjacent FavoriteButton pill, so both action-row pills render with matching
+        // height (44px, via theme.ts's project-wide Button `styles.root.minHeight` — the R1/R2
+        // row-unification goal), radius, and border.
+        <MantineButton
+          {...commonProps}
+          variant="default"
+          size={PILL_SIZE_MAP[size ?? 'default']}
+          radius="1.125rem"
+          bd="1px solid var(--border)"
+        >
+          {icon}
+          <span className="ml-1">{t('save_to')}</span>
+        </MantineButton>
+      )}
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-sm" onClick={e => e.stopPropagation()}>

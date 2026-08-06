@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Box } from '@mantine/core'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
@@ -11,7 +12,6 @@ import { MobileBottomNav } from '@/components/layout/MobileBottomNav'
 import { WebVitalsReporter } from '@/components/shared/WebVitalsReporter'
 import { PerformanceStoreInit } from '@/components/shared/PerformanceStoreInit'
 import { PerfDevOverlay } from '@/components/shared/PerfDevOverlay'
-import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
   title: 'Lero.al — Real estate marketplace in Albania',
@@ -47,15 +47,14 @@ export default async function LocaleLayout({
       <AuthProvider initialUser={initialUser}>
         <>
           <Header />
-          <main className="min-h-[calc(100vh-4rem)] pb-14 md:pb-0"> {/* design-tokens-allow: min-h-[calc(100vh-4rem)] — viewport-minus-header height, no scale token */}
+          <Box component="main" className="min-h-[calc(100vh-4rem)]" pb={{ base: 'var(--space-14)', md: 0 }}> {/* design-tokens-allow: min-h-[calc(100vh-4rem)] — viewport-minus-header height, no scale token */}
             {children}
-          </main>
+          </Box>
           <Footer />
           <MobileBottomNav />
           <WebVitalsReporter />
           <PerformanceStoreInit />
           <PerfDevOverlay />
-          <Toaster />
         </>
       </AuthProvider>
     </NextIntlClientProvider>

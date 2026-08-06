@@ -51,6 +51,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkGeometryIntegrity } from './geometry-integrity.mjs';
+import { MANTINE_STORY_TITLE_PREFIXES } from './lib/mantine-story-scope.mjs';
 
 // Crash guards: ensure the process always exits with a controlled integer
 // code, never -1 (OS kill / unhandled exception). Exit 2 = harness crash
@@ -162,12 +163,26 @@ const ASSERT_STORIES = [
   { id: 'layout-pageheader--default',              label: 'PageHeader/Default',               anchors: [{ type: 'testid', value: 'page-header', label: 'page-header' }] },
   { id: 'layout-pageshell--default',               label: 'PageShell/Default',                anchors: [{ type: 'testid', value: 'page-shell', label: 'page-shell' }] },
   { id: 'layout-section--with-title-and-description', label: 'Section/WithTitleAndDesc',      anchors: [{ type: 'testid', value: 'section', label: 'section' }] },
-  // ── System (5) ──
+  // ── System (7) — ListingGrid/Default removed (Task 665: System/ListingGrid story deleted, R7);
+  // Featured/Latest/Similar added (Task 665 §16 R14 — these 3 rebuilt System/* stories previously
+  // had no rendered-proof at all; anchored on '.listing-card', rendered by the real ListingCard
+  // each View statically imports and renders in its Default/loaded state) ──
   { id: 'system-adminlayout--admin-toolbar',       label: 'AdminLayout/AdminToolbar',         anchors: [{ type: 'testid', value: 'admin-toolbar', label: 'toolbar' }] },
   { id: 'system-containers--container-wide',       label: 'Containers/Wide',                  anchors: [{ type: 'testid', value: 'container', label: 'container' }] },
   { id: 'system-emptystate--no-listings',          label: 'EmptyState/NoListings',            anchors: [{ type: 'testid', value: 'empty-state', label: 'empty-state' }] },
-  { id: 'system-listinggrid--default',              label: 'ListingGrid/Default',              anchors: [{ type: 'testid', value: 'listing-grid', label: 'listing-grid' }] },
+  { id: 'system-featuredlistings--default',        label: 'FeaturedListings/Default',         anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+  { id: 'system-latestlistings--default',          label: 'LatestListings/Default',           anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+  { id: 'system-similarlistings--default',         label: 'SimilarListings/Default',          anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
   { id: 'system-recentlyviewedsection--populated', label: 'RVS/Populated',                   anchors: [{ type: 'selector', value: '.recently-viewed', label: 'rvs' }] },
+  // Task 668 — new canonical Patterns/Mantine/* story enrolling FeaturedListingsView/
+  // LatestListingsView in the Mantine migration scope (§3.7). Only `--default` is asserted here
+  // (anchored on `.listing-card`, same anchor as the System/* rows above); `--loading` has no
+  // `.listing-card` to anchor on by design and is allowlisted in LOADER_ALLOWLIST instead.
+  { id: 'patterns-mantine-homepagelistinggrids--default', label: 'HomepageListingGrids/Default', anchors: [{ type: 'selector', value: '.listing-card', label: 'listing-card' }] },
+  // Task 670 — `HeroSearch`'s `ssr:false` first-paint fallback, extracted into `HeroSearchFallback`
+  // and enrolled in `mantine-migration-scope.json`. Anchored on the component's own `data-testid`
+  // (I6) — additive registration only, no change to any existing entry.
+  { id: 'mantine-primitives-herosearch--fallback', label: 'HeroSearch/Fallback', anchors: [{ type: 'testid', value: 'hero-search-fallback', label: 'hero-search-fallback' }] },
   // ── Open-state overlays (7 — Task 421 Slice 6) ──
   { id: 'primitives-dialog--mobile-full-width',    label: 'Dialog/MobileFullWidth',           anchors: [{ type: 'slot', value: 'dialog-content', label: 'dialog-content' }] },
   { id: 'primitives-select--mobile-bottom-sheet',  label: 'Select/MobileBottomSheet',         anchors: [{ type: 'slot', value: 'select-content', label: 'select-content' }] },
@@ -206,6 +221,9 @@ const ASSERT_STORIES = [
   { id: 'planted-visualviolations--off-viewport-control', label: 'Planted/OffViewportControl',  anchors: [{ type: 'testid', value: 'planted-offscreen-btn', label: 'offscreen-btn' }] },
   { id: 'planted-visualviolations--container-clipped',    label: 'Planted/ContainerClipped',    anchors: [{ type: 'testid', value: 'planted-container-clip', label: 'container-clip' }] },
   { id: 'planted-visualviolations--known-good-control',   label: 'Planted/KnownGoodControl',    anchors: [{ type: 'testid', value: 'planted-good', label: 'good-ctrl' }] },
+  // Task 664: reshaped to a partial, non-containing overlap (previously byte-identical rects,
+  // silently short-circuited to `pass` by the Task-611 isContained guard before reaching R1).
+  // Expected verdict: ambiguous-overlap (R1 isAbsoluteOverOwnTrigger), not pass, not hard FAIL.
   { id: 'planted-visualviolations--ambiguous-overlap',    label: 'Planted/AmbiguousOverlap',    anchors: [{ type: 'testid', value: 'planted-ambiguous-trigger', label: 'ambig-trigger' }] },
   { id: 'planted-visualviolations--intentional-ellipsis', label: 'Planted/IntentionalEllipsis', anchors: [{ type: 'testid', value: 'planted-ellipsis-link', label: 'ellipsis-link' }] },
   { id: 'planted-visualviolations--container-escape',     label: 'Planted/ContainerEscape',     anchors: [{ type: 'testid', value: 'planted-escape-btn', label: 'escape-btn' }] },
@@ -220,6 +238,12 @@ const ASSERT_STORIES = [
   // 320/375/390 × sq/en/uk/it without needing the full Phase-2 global-enumeration sweep.
   { id: 'planted-visualviolations--scroll-clipped-overlap', label: 'Planted/ScrollClippedOverlap', anchors: [{ type: 'testid', value: 'planted-scroll-footer', label: 'scroll-footer' }] },
   { id: 'planted-visualviolations--scroll-visible-overlap', label: 'Planted/ScrollVisibleOverlap', anchors: [{ type: 'testid', value: 'planted-scroll-visible-a', label: 'scroll-visible-a' }] },
+  // Task 663 — backdrop-gated downgrade of the Check-4 cross-overlay-boundary ambiguous-overlap
+  // branch. OverlayBackdropCovered: expected PASS (a real, verified `.mantine-Overlay-root`
+  // backdrop covers the background element — provably unreachable). OverlayNoBackdrop: expected
+  // still `ambiguous-overlap` (no covering backdrop — non-weakening proof, R2).
+  { id: 'planted-visualviolations--overlay-backdrop-covered', label: 'Planted/OverlayBackdropCovered', anchors: [{ type: 'testid', value: 'planted-backdrop-covered-sheet-btn', label: 'backdrop-covered-sheet-btn' }] },
+  { id: 'planted-visualviolations--overlay-no-backdrop',      label: 'Planted/OverlayNoBackdrop',      anchors: [{ type: 'testid', value: 'planted-no-backdrop-sheet-btn', label: 'no-backdrop-sheet-btn' }] },
 ];
 
 // ── Loader-allowlist: story IDs whose intended content IS a loading/skeleton state ──
@@ -250,6 +274,13 @@ const LOADER_ALLOWLIST = new Set([
   // all 3 stacked fixtures render correctly (default trigger, showLabel trigger with full
   // language name, disabled+spinner trigger), no clip/overflow, correct §6 chrome.
   'mantine-primitives-localeswitcher--default',
+  // Task 668 — `Patterns/Mantine/HomepageListingGrids`'s `Loading` export intentionally renders
+  // both Featured (3 skeletons) and Latest (4 skeletons) in their permanent loading branch —
+  // the same false-positive category as `primitives-skeleton--listing-card-skeleton` above, not
+  // a transient loading state. `--mantine-only` auto-discovers this story by its
+  // `Patterns/Mantine/*` title prefix, so without this entry the hard-blocking gate would fail
+  // on a deliberate, permanent skeleton state (kickoff §10.11.b).
+  'patterns-mantine-homepagelistinggrids--loading',
 ]);
 
 // ── Task 529 — Mantine primitive stories, AUTO-DISCOVERED from the built Storybook index ──
@@ -266,7 +297,9 @@ const LOADER_ALLOWLIST = new Set([
 // (no render/anchor/style assertions, no --mantine-only coverage at all). Purely prefix-derived
 // — no hardcoded story-id allowlist — so a future `Patterns/Mantine/*` story is covered
 // automatically, preserving the Task 529 no-drift discipline.
-const MANTINE_STORY_TITLE_PREFIXES = ['Mantine/Primitives/', 'Patterns/Mantine/'];
+// Task Q0R — moved to scripts/lib/mantine-story-scope.mjs (imported above) so
+// check-locale-leak.mjs and check-story-coverage.mjs enforce the identical criterion instead of
+// re-typing it. Do not redefine this constant in this file again.
 
 // Task 607 — tracked known-failure registry for `Patterns/Mantine/*` stories with an
 // ALREADY-FILED, REAL defect this task's coverage extension surfaced (not a gate false
@@ -388,6 +421,26 @@ const MANTINE_STORY_EXTRA_VIEWPORTS = {
   // review time) as a standing gate cell instead of a one-off Playwright probe, matching the
   // Task 573 HeroSearch precedent above.
   ListingDetailPattern: [{ name: 'band-768', width: 768, height: 1024 }],
+  // Task 669 — persists rendered proof at the homepage band's third vertical-rhythm step, which
+  // moved from the Tailwind-only 1536px to Mantine's own `xxl` (1440px) breakpoint (owner
+  // decision 2026-07-28). The standing MANTINE_VIEWPORTS sample (320/375/390/1024) never lands
+  // above 1024px, so neither the retired 1536 step nor the new 1440 step has ever been captured
+  // — a future edit deleting the third step entirely would pass every standing gate. 1200 = below
+  // the step (must still read 64px), 1440 = at the step (must read 80px), 1536 = above the
+  // retired step (must still read 80px, proving no residual 1536 rule). Both HomeSection (the
+  // canonical band, all 4 homepage consumers) and PopularLocationsView (Task 669's own new
+  // MantineHomeSection consumer) get identical cells so the shared rhythm and the newly-adopted
+  // band are both proven at the boundary widths.
+  HomeSection: [
+    { name: 'wide-1200', width: 1200, height: 1024 },
+    { name: 'wide-1440', width: 1440, height: 1024 },
+    { name: 'wide-1536', width: 1536, height: 1024 },
+  ],
+  PopularLocationsView: [
+    { name: 'wide-1200', width: 1200, height: 1024 },
+    { name: 'wide-1440', width: 1440, height: 1024 },
+    { name: 'wide-1536', width: 1536, height: 1024 },
+  ],
 };
 
 /**
@@ -791,6 +844,13 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
   try {
     page = await browser.newPage();
 
+    // Task 705 R2 — every capture page emulates prefers-reduced-motion:reduce, matching the
+    // condition .storybook/preview-head.html's capture-only freeze is now keyed to (Task 705,
+    // Task 704 review F1). Without this, the preview no longer freezes animation/transition for a
+    // default-media Playwright page, and the rendered comparator's determinism proof (R3/R6) would
+    // flake on every animating story (Skeleton, Loader spinners, Modal/Drawer transitions).
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+
     // ── Render-failure signal collectors (attached before goto) ────
     const pageErrors = [];
     const consoleErrors = [];
@@ -1175,17 +1235,19 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     let heroSearchWrapInBand = null;
     if (story.componentName === 'HeroSearch' && viewport.width >= 640 && viewport.width < 768) {
       heroSearchWrapInBand = await page.evaluate(() => {
-        // `.bg-background` alone is AMBIGUOUS inside Storybook: `withTheme` (.storybook/preview.tsx)
-        // wraps EVERY story (Mantine included — it does not check skipCanvas) in an outer
-        // `<div class="min-h-screen bg-background text-foreground">`, which `document.querySelector`
-        // would match FIRST, before ever reaching the real search-bar card nested inside it. Narrow
-        // to the element that ALSO carries the search-bar card's other literal classes
-        // (`border` + `shadow-xl`, from HeroSearchView.tsx's
-        // `"bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3"`) so this can never
-        // resolve to the outer theme wrapper.
-        const card = Array.from(document.querySelectorAll('#storybook-root .bg-background'))
-          .find((el) => el.classList.contains('border') && el.classList.contains('shadow-xl'));
-        const container = card?.querySelector(':scope > .flex.flex-wrap');
+        // Task 708 (D33): anchored on `data-testid`, not a Tailwind class. The original selector
+        // matched `.bg-background` + `.border` + `.shadow-xl` — literal classes Task 652 replaced
+        // with Mantine `bg`/`bd` style props, which silently made `card` (and therefore this whole
+        // assertion) `undefined` forever; every consumer only checks `=== false`, so the dead
+        // selector passed vacuously for ~5 weeks (docs/critical-flow-registry.md row 50). A class
+        // anchor re-breaks on the next de-Tailwind pass (Task 709) the same way; `data-testid` is
+        // inert to className/style changes, so it survives that migration. Card = the search-bar
+        // `Box` (`HeroSearchView.tsx` `data-testid="hero-search-card"`); the control row is now
+        // its own hook (`data-testid="hero-search-controls"`) rather than a `:scope > .flex.flex-wrap`
+        // class match — both are unaffected by the `withTheme` outer `<div class="... bg-background
+        // ...">` wrapper (`.storybook/preview.tsx`) that the old selector had to defend against.
+        const card = document.querySelector('#storybook-root [data-testid="hero-search-card"]');
+        const container = card?.querySelector('[data-testid="hero-search-controls"]');
         if (!container) return null;
         const controls = Array.from(container.children).filter((el) => {
           const r = el.getBoundingClientRect();
@@ -1258,8 +1320,15 @@ async function runAssert() {
   const outputDir = join(ROOT, '.screenshots', 'rendered-assert', timestamp);
   mkdirSync(outputDir, { recursive: true });
 
-  console.log(`📸  Starting rendered assertion (${FAST_MODE ? 'fast/mobile' : 'full'} mode)`);
-  console.log(`    Assert stories: ${ASSERT_STORIES.length} | Viewports: ${viewports.length} | Locales: ${LOCALES.length}`);
+  // Task Q0R (Q4) — under --mantine-only, the banner must not claim full-mode/assert/geometry
+  // scope it does not run (Phase 1/2 are skipped entirely under this flag — see below). The
+  // truthful Mantine-only composition line is printed later, once the story index is parsed.
+  if (MANTINE_ONLY) {
+    console.log('📸  Starting rendered assertion (mantine-only mode)');
+  } else {
+    console.log(`📸  Starting rendered assertion (${FAST_MODE ? 'fast/mobile' : 'full'} mode)`);
+    console.log(`    Assert stories: ${ASSERT_STORIES.length} | Viewports: ${viewports.length} | Locales: ${LOCALES.length}`);
+  }
   console.log(`    Output: .screenshots/rendered-assert/${timestamp}/`);
   console.log('');
 
@@ -1312,8 +1381,10 @@ async function runAssert() {
     const indexPath = join(storybookStaticDir, 'index.json');
     let geometryOnlyStories = [];
     let mantineStories = [];
+    let totalStoriesInIndex = 0;
     try {
       const indexData = JSON.parse(await readFile(indexPath, 'utf8'));
+      totalStoriesInIndex = Object.values(indexData.entries).filter(e => e.type === 'story').length;
       const assertIds = new Set(ASSERT_STORIES.map(s => s.id));
       mantineStories = discoverMantinePrimitiveStories(indexData);
       const mantineIds = new Set(mantineStories.map(s => s.id));
@@ -1351,8 +1422,16 @@ async function runAssert() {
       0
     );
     const totalMantineCells = mantineStories.length * LOCALES.length * MANTINE_VIEWPORTS.length + extraMantineCellCount;
-    console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
-    console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
+    // Task Q0R (Q3/Q4) — under --mantine-only, print ONLY the exact required composition line;
+    // do not also print the Phase-1 (ASSERT_STORIES)/Phase-2 (geometry-only) counts since neither
+    // phase runs under this flag (see the Phase 1/2 skip conditions below) — printing them would
+    // be the same "claims scope it does not enforce" defect this task exists to close.
+    if (MANTINE_ONLY) {
+      console.log(`Mantine selected: ${mantineStories.length}; non-Mantine excluded: ${totalStoriesInIndex - mantineStories.length}`);
+    } else {
+      console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
+      console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
+    }
     console.log('');
 
     const MAX_ATTEMPTS = 3;

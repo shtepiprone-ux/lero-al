@@ -576,7 +576,7 @@ npm run build-storybook
 npm run screenshots:responsive -- --full
 ```
 Then manually review:
-- `system-listinggrid--huge-desktop__*__huge-2560.png` — must show 4 columns
+- `system-featuredlistings--default__*__huge-2560.png` — must show 4 columns
 - `system-containers--container-wide__*__huge-2560.png` — must not stretch full width
 
 ### Violations

@@ -1,0 +1,36 @@
+/*
+ * MantineHomeSection.module.css — Task 662; vertical rhythm moved out (Task 669, owner decision
+ * 2026-07-28) — see MantineHomeSection.tsx `py` prop. `.band` now carries only
+ * `content-visibility` here; the responsive vertical padding (48/64/80px) is a Mantine `py`
+ * responsive style prop bound to `base`/`md`/`xxl` (theme.ts:150) consuming
+ * `--home-section-py-*` (globals.css) directly, byte-identical values, third-step trigger
+ * rebound onto Mantine's own `xxl` breakpoint (theme.ts:150).
+ *
+ * `.muted`/`.brandFade` reproduce the prior `bg-muted/30` / `bg-gradient-to-br from-primary/10
+ * to-primary/5` Tailwind utilities' OWN compiled output (verified against the built
+ * `.next/static/css` bundle, Task 662): Tailwind v4 renders a bare alpha modifier as
+ * `color-mix(in oklab, <var> <pct>%, transparent)`, and `bg-gradient-to-br` sets
+ * `--tw-gradient-position: to bottom right in oklab` with default 0%/100% stop positions — the
+ * two color-mix stops below reproduce that exact computed `background-image` without the
+ * `--tw-gradient-*` custom-property machinery.
+ */
+
+.band {
+  content-visibility: auto;
+}
+
+.muted {
+  background-color: color-mix(in oklab, var(--muted) 30%, transparent);
+}
+
+.brandFade {
+  /* Explicit 0%/100% stops (Tailwind's own --tw-gradient-from-position/-to-position defaults) —
+     without them the browser still PAINTS an identical gradient, but omits the stop position from
+     getComputedStyle's serialized string; keeping them here makes the computed `background-image`
+     byte-identical to the prior Tailwind output, not just visually equivalent (verified, Task 662). */
+  background-image: linear-gradient(
+    to bottom right in oklab,
+    color-mix(in oklab, var(--primary) 10%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 5%, transparent) 100%
+  );
+}

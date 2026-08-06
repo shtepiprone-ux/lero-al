@@ -1,6 +1,6 @@
 {
   "nav": {
-    "home": "Home",
+    "home": "Homepage",
     "listings": "Annunci",
     "favorites": "Preferiti",
     "profile": "Profilo",
@@ -316,6 +316,7 @@
     "company_logo_invalid_type": "Sono consentiti solo file PNG, JPG o WEBP.",
     "company_logo_too_large": "Il file deve essere inferiore a 2 MB.",
     "company_logo_too_big": "L'immagine deve essere max 256×256 px.",
+    "company_exists": "Un'azienda con questo nome esiste già.",
     "register_as": "Registrati come",
     "register_agent": "Registrati come agente",
     "register_back_to_standard": "Torna alla registrazione standard",
@@ -391,6 +392,7 @@
     "confirm": "Conferma",
     "clear_filters": "Cancella filtri",
     "add": "Aggiungi",
+    "select": "Seleziona",
     "choose_file": "Scegli file",
     "replace": "Sostituisci",
     "add_location": "Aggiungi posizione",
@@ -1098,6 +1100,7 @@
       "error_save_failed": "Salvataggio fallito",
       "error_delete_failed": "Eliminazione fallita",
       "error_name_required": "Nome obbligatorio",
+      "error_duplicate": "Un'azienda con questo nome esiste già.",
       "empty": "Nessuna azienda",
       "search_placeholder": "Cerca aziende...",
       "new_btn": "Nuova azienda",
@@ -2043,7 +2046,7 @@
       "recently_viewed_omitted": "Visti di recente — Omesso nella story — dati Supabase live in prod"
     },
     "mantine": {
-      "app_shell_nav_home": "Home",
+      "app_shell_nav_home": "Homepage",
       "app_shell_nav_listings": "Annunci",
       "app_shell_nav_contact": "Contatti",
       "app_shell_nav_admin": "Admin",
@@ -2086,6 +2089,10 @@
       "card_favorite_aria_add": "Aggiungi ai preferiti",
       "card_favorite_aria_remove": "Rimuovi dai preferiti",
       "card_location_tirana": "Tirana, Albania",
+      "copy_id_button_aria_copy": "Copia ID",
+      "copy_id_button_aria_copied": "ID copiato",
+      "copy_id_button_resting_caption": "a riposo — clicca per copiare l'ID",
+      "copy_id_button_copied_caption": "copiato — torna a riposo dopo 1,5s",
       "listing_feature_rooms": "3 camere",
       "listing_feature_bathrooms": "2 bagni",
       "listing_feature_area": "85 m²",
@@ -2131,7 +2138,7 @@
       "admin_card_actions_detail": "Dettaglio",
       "badge_blocked": "Bloccato",
       "badge_brand": "Brand",
-      "badge_info": "Info",
+      "badge_info": "Informazioni",
       "badge_purple": "Viola",
       "badge_sale": "Sconto",
       "badge_filled_caption": "Pieno — opaco, leggibile sulle foto",
@@ -2366,7 +2373,12 @@
       "listing_detail_section_guest": "Visitatore ospite — invito ad accedere, azioni di contatto nascoste",
       "listing_detail_section_deleted": "Account del proprietario eliminato — nessuna azione di contatto",
       "listing_detail_gallery_section_default": "Galleria multi-foto — clicca la foto principale o una miniatura per aprire il lightbox Mantine",
-      "listing_detail_gallery_section_empty": "Nessuna foto — stato segnaposto, non cliccabile"
+      "listing_detail_gallery_section_empty": "Nessuna foto — stato segnaposto, non cliccabile",
+      "home_section_caption_default": "Predefinito — sfondo trasparente",
+      "home_section_caption_muted": "Attenuato — sfondo con tinta al 30%",
+      "home_section_caption_brandfade": "Sfumatura del brand — sfondo con gradiente diagonale",
+      "home_section_body": "Il ritmo verticale (48 / 64 / 80px) e lo sfondo sono basati su token; ogni sezione racchiude il contenuto in `.container-wide`.",
+      "home_section_cta": "Vedi gli annunci"
     }
   },
   "ui": {

@@ -1,0 +1,122 @@
+# Sprint 49 — HeroSearch: gate integrity, then de-Tailwind
+
+**Opened:** 2026-08-03. **Status:** 🟠 OPEN. **Epic:** MM Phase-2.
+**Predecessors:** Sprint 47 (layout shell, ✅ closed) · Sprint 48 (homepage tail, 🟢 closing with 707).
+
+---
+
+## 1. Why this sprint exists
+
+Sprint 48's closing note claimed that after 707 and Sprint 46 landed, the whole `/[locale]` tree would be
+Tailwind-utility-free at component level. **That claim was false.** A direct re-census on 2026-08-03 —
+`grep -c 'className='` on every file `src/app/[locale]/page.tsx` reaches — found **20** utility sites in two
+surfaces that no sprint owned:
+
+| Surface | Sites | Why it was missed |
+|---|---:|---|
+| `src/components/shared/HeroSearchView.tsx` | **9** | The 2026-08-01 homepage trace measured `HeroSearch.tsx` — the thin container Task 568 split out, which genuinely has 0 — and recorded the pair as "clean". The **View** holds all the JSX. |
+| `src/components/layout/MobileBottomNavView.tsx` | **11** | App-shell, not homepage content; it renders on every route via `layout.tsx:53`, so a homepage-scoped trace never reached it. |
+
+This sprint takes the first. **Sprint 50** takes the second — it belongs to the Sprint 47 Header/Footer app-shell
+family, and it carries three `design-tokens-allow` markers that must move with their justifications.
+
+## 2. The blocking discovery — the comparator is dead
+
+While building the verified context for the migration kickoff, the gate that was supposed to protect it was found
+**non-asserting**.
+
+`scripts/check-stories-rendered.mjs:1245-1247` locates the hero search card as:
+
+```js
+const card = Array.from(document.querySelectorAll('#storybook-root .bg-background'))
+  .find((el) => el.classList.contains('border') && el.classList.contains('shadow-xl'));
+const container = card?.querySelector(':scope > .flex.flex-wrap');
+if (!container) return null;
+```
+
+**Task 652 deleted all three of those classes.** `HeroSearchView.tsx:91-94` now carries Mantine `bg="gray.1"` and
+`bd="1px solid var(--mantine-color-gray-2)"` style props instead; the gate's own comment still quotes the
+pre-652 string `"bg-background rounded-b-2xl sm:rounded-tr-2xl border shadow-xl p-3"`. So `card` is `undefined`,
+the function returns `null`, and every consumer of the result is written as `!== false`:
+
+- `:680` — `if (cell.assertions.heroSearchWrapInBand === false) return false;`
+- `:1276` — `const hardPass = … && heroSearchWrapInBand !== false && …`
+
+`null` therefore passes vacuously.
+
+**Measured, not inferred.** In the official run `.screenshots/rendered-assert/2026-08-03T15-13/manifest.json`,
+`heroSearchWrapInBand` is `null` in **all 40** `herosearch` cells, including **all 8** `band-700` cells
+(`--default` and `--fallback` × sq/en/uk/it) where it is the only cell set that can produce a verdict at all.
+The extra viewport itself still works — `MANTINE_STORY_EXTRA_VIEWPORTS.HeroSearch` at `:406` is correctly keyed off
+the discovered `componentName` — only the DOM assertion inside it is dead. It has been dead since Task 652.
+
+## 3. Owner decisions
+
+| ID | Ruling | Scope |
+|---|---|---|
+| **D32** (2026-08-03) | **A migration may not be proven against a comparator that has not been shown to fail.** 708 repairs and proves the gate; only then may 709 migrate against it. This is the AC11 doctrine (`blind comparator ⇒ BLOCKED, not IMPLEMENTED`) applied to a standing gate rather than a per-task plant. | Binds 708 → 709 |
+| **D33** (2026-08-03) | **Re-anchor, do not re-classify.** The repaired gate must select on a hook that survives de-Tailwinding. Re-anchoring it onto any other Tailwind class would only move the same time-bomb. | Binds 708 |
+| **D34** (2026-08-05) | **A D28 de-Tailwind module must reproduce the utility's cascade layer, not only its declaration and specificity.** Tailwind utilities live in `@layer utilities`; a `.module.css` is unlayered, and per the Cascade Layers spec an unlayered rule beats every layered one. So a mechanically faithful migration can still change which rule wins. Under D28 — whose contract is *zero rendered delta* — the module must therefore be wrapped in `@layer utilities`. **This is the inverse of the 602/629/650/651/653/654/656 pattern**, where a module is deliberately left unlayered so it *can* beat Mantine; those tasks were fixing a utility that never took effect, and their modules must not be layered. The two are distinguished by intent: a D28 migration **reproduces**, a cascade-trap fix **overrides**. Extends 707's N2 from specificity to layers. | Binds 709-R; binds every future de-Tailwind task in Sprints 46, 49, 50 |
+| **D28** (2026-08-01, Sprint 47) | Mechanism-only, zero visual delta. Utilities → Mantine style props where a prop exists, colocated `.module.css` otherwise. | Binds 709 |
+| **D6** (Task 684) | `.screenshots/` evidence is local-only per `.gitignore:55`. Reference by path. | Evidence handling |
+| **D26** (`docs/storybook-governance.md` §14.11) | The rendered-matrix comparator and its sub-perceptual tolerance. Do not invent a per-task pixel tolerance. | Binds 709 |
+
+## 4. Tasks
+
+| # | Title | State | Depends on |
+|---|---|---|---|
+| **708** | Repair the `heroSearchWrapInBand` gate and re-anchor it de-Tailwind-stably | ✅ **`APPROVED WITH NOTES`** — reviewed 2026-08-04, committed `16960dc77`. Gate returns `true`×4 in `band-700`; planted violation flips it to `false`×4 with process exit 1. D32 satisfied. | — |
+| **709** | `HeroSearchView` de-Tailwind — 9 sites → Mantine props + one colocated `.module.css` | ⛔ **`NEEDS REVISION`** — reviewed 2026-08-05, **uncommitted**. All 9 sites migrated correctly; every declaration faithful. One defect: the module is unlayered, so site 8's `padding-inline` beats a Mantine `Button` rule the original `px-6` lost to — 12/18px → 24/24px, 20 of 40 herosearch md5s changed. Reviewer-confirmed across 4 runs with a zero noise floor. Corrected by 709-R under D34. | 708 ✅ |
+| **709-R** | Restore site 8's cascade-layer standing — wrap the module in `@layer utilities` | `KICKOFF FILED` — `Sprint_49_kickoff_prompt_Task_709R_HeroSearchView_LayerFix.md` | 709 (inherits its uncommitted tree) |
+| **710** | Meta-gate: an assertion `null` across every one of its target cells is a dead gate | `KICKOFF FILED` — `Sprint_49_kickoff_prompt_Task_710_Assertion_Liveness_Meta_Gate.md`. **Closes the sprint.** The 2026-08-05 census found the problem is not hypothetical: **`fullWidthButtonsAtMobile` and `popupBottomSheetAtMobile` are `null` in all 1184 cells** of the CI-blocking `--mantine-only` matrix. 709-R settled the exit-code half — the sweep does exit 1 unpiped, so 709's `EXIT_CODE=0` was a capture artifact, and 710 gates it structurally rather than by spawning a 30-minute sweep. | — |
+| **711** | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM | reserved, blocked on 710 (which registers them as tracked-dead). Both die for one cause: their candidate selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) that Mantine never emits — the same defect governance §14.9.9 already recorded for geometry's `PORTAL_SELECTOR`. Needs its own planted proof per assertion. **Sprint not yet assigned** — open Sprint 51 or fold into 50. | 710 |
+
+**708 is Q4** — it changes a gate, so `docs/qa-profiles.md` requires planted-violation proof that the gate genuinely
+fails. A repaired gate that has not been shown to fail is the same defect in a new place.
+
+**709 is the hardest task in the D28 set.** Named here so its kickoff cannot understate it: arbitrary-value utilities
+(`rounded-b-[var(--mantine-radius-lg)]`, `sm:rounded-tr-[…]`), `sm:`/`md:` responsive variants that must be
+reproduced as `@media(min-width:40rem)` / `@media(min-width:48rem)` exactly, the Task 572 `basis`/`grow`/`shrink`
+chain whose own source comment forbids collapsing it to `flex-1`, and **3 of the 9 sites pass `className` into child
+components** (`PropertyTypeCombobox`, `LocationCombobox`, `MantineCountButton`) rather than onto a Mantine `Box`.
+`PropertyTypeCombobox.tsx:36` additionally carries a Tailwind **default fallback** (`className ?? 'sm:w-48 shrink-0'`)
+that survives in that out-of-scope file either way.
+
+## 5. Preconditions
+
+- 707 committed by the owner (Sprint 48 closes).
+- No work in this sprint starts from a dirty worktree without a reconciled manifest.
+- `storybook-static/` is rebuilt before any capture — the compiled Tailwind output in
+  `storybook-static/assets/iframe-*.css` is the authority for every "what does this utility actually compile to"
+  question in 709, and a stale bundle silently answers the wrong question.
+
+## 6. Exit criteria
+
+1. `heroSearchWrapInBand` returns a real boolean in the 8 `band-700` cells, and a planted violation makes
+   `npm run screenshots:assert -- --mantine-only` genuinely FAIL (708).
+2. `HeroSearchView.tsx` greps **0** Tailwind utilities; every surviving `className` is `styles.*` or the verbatim
+   `hero-search` marker; all 40 herosearch cells hold their pre-task PNG md5 and verdict (709 + **709-R**).
+   709 satisfied the grep half; the md5 half is restored by 709-R under D34.
+3. A dead assertion cannot pass silently again (710).
+4. `check:design-tokens` unchanged at **23** across all tasks in this sprint.
+5. **The colocated module reproduces the utility's cascade layer, not only its declaration** (D34, 709-R).
+
+## 7. Carried-forward corrections from the 707 review
+
+Fold these into every kickoff in this sprint; they are cheap to state and each one has already cost a review cycle.
+
+- **N1 — do not hardcode a token's resolved value.** Read the compiled utility from the built CSS and reproduce its
+  *declaration*. `p-3` compiles to `padding:var(--space-3)`, not `padding:0.75rem`. Verified 2026-08-03 against
+  `storybook-static/assets/iframe-DnJgGJJb.css`: `--spacing`, `--container-3xl`, `--space-0/2/3/6` and
+  `--mantine-radius-lg` are **all emitted** and therefore consumable from a CSS module — unlike `--radius-xl`, which
+  lives in `@theme inline` and is not emitted. Check emission per token; do not generalise either way.
+- **N2 — reproduce specificity, not just value.** Tailwind wraps sibling-margin and several other rules in
+  `:where(...)` (specificity 0,0,0). A module rule that drops the `:where()` wins fights the original lost.
+- **N2-L — reproduce the cascade *layer* too (D34, added 2026-08-05 after Task 709).** N2 is necessary but not
+  sufficient: Task 709 reproduced every declaration and every specificity correctly and *still* regressed, because
+  moving a rule out of `@layer utilities` beats unlayered Mantine CSS the utility had been losing to. Wrap D28
+  migration modules in `@layer utilities`. Do **not** apply this to the 602/656-family modules, which are unlayered on
+  purpose — see D34 for the intent boundary.
+- **N6 — run the counting gates last.** `check:file-integrity` and `check:mojibake` scan git-changed + untracked
+  files; running them before the session log and backlog row exist reports a stale denominator. Third recurrence at
+  707; a fourth is a P2.

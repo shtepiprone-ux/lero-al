@@ -133,7 +133,6 @@ describe('policy-predicate consistency', () => {
 // The script gates execution behind an entry-point check, so importing it
 // does NOT run the audit / hit the network / call process.exit.
 
-// @ts-ignore — .mjs has no type declarations; runtime import is sufficient for drift assertion
 import { PUBLIC_VISIBLE_STATUSES as SCRIPT_POLICY, classifyHiddenReason as scriptClassify } from '../../../../../scripts/audit-listing-visibility.mjs'
 
 describe('audit-script drift guard (imports from the ACTUAL .mjs)', () => {

@@ -20,10 +20,11 @@
  */
 
 import { createAdminClient } from '@/lib/supabase/admin'
+import { BRAND_PRIMARY } from '@/design-system/brand'
 import { sendEmail } from './emails/send'
 import type { EmailTemplate } from '@/types/database'
 
-const BRAND_ACCENT = '#EC5447'
+const BRAND_ACCENT = BRAND_PRIMARY
 
 function brandEmailLayout(innerHtml: string, locale: string): string {
   const year = new Date().getFullYear()

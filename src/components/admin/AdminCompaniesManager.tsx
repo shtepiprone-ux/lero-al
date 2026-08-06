@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
 import { Plus, Trash2, Loader2, Building2, ImagePlus, Search, ChevronRight } from 'lucide-react'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -98,6 +98,7 @@ function CompanyFormDialog({
       } else {
         // Create
         const result = await createCompanyAction(name)
+        if (result.duplicate) { toast.error(t('error_duplicate')); return }
         if (!result.id) { toast.error(t('error_save_failed')); return }
         companyId = result.id
       }

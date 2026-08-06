@@ -2,13 +2,22 @@
 /**
  * task420-qa-grid-step.mjs — Task 420 (Slice 5) rendered evidence.
  *
- * Proves the §8.3 canonical listing-card grid column step
- * (grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4) for the two fixed
- * surfaces — FeaturedListings and SimilarListings — across the full breakpoint
- * matrix x 4 locales.
+ * Proves the §8.3 canonical listing-card grid column step for the two fixed surfaces —
+ * FeaturedListings and SimilarListings — across the full breakpoint matrix x 4 locales.
+ *
+ * Task 668 (2026-07-26) moved FeaturedListings' large-desktop step from Tailwind `2xl`
+ * (1536px) to Mantine `xxl` (1440px) — an owner-approved change — while SimilarListings
+ * stays an unmigrated Tailwind grid still stepping at 1536px. A single shared expected-column
+ * table and a single Tailwind-token locator can no longer describe both stories, so each
+ * `STORIES` entry now carries its OWN `expectedCols` table and its OWN grid locator:
+ *  - `similarlistings` keeps the original hardcoded-Tailwind-token locator VERBATIM — proof
+ *    that this story was NOT migrated.
+ *  - `featuredlistings` uses a mechanism-agnostic locator (first `display:grid` element inside
+ *    `#storybook-root` with >=1 `.listing-card` descendant) since it now renders via Mantine
+ *    `SimpleGrid`, not Tailwind grid-template classes.
  *
  * For each (story x locale x viewport) cell asserts:
- *  - column-track count matches the §2 expected table
+ *  - column-track count matches the story's OWN expected table
  *    (getComputedStyle(grid).gridTemplateColumns -> number of non-"0px" tracks)
  *  - no horizontal scroll (scrollWidth <= clientWidth + 2)
  *  - container cap: the nearest .container-wide ancestor's content box <= 1408px
@@ -30,28 +39,46 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
-// §2 expected column-track count by viewport width.
+// Shared viewport widths — expected column counts now live PER-STORY (§3.9/§10.9, Task 668).
 const VIEWPORTS = [
-  { name: '320',  width:  320, height:  812, expectedCols: 1 },
-  { name: '375',  width:  375, height:  812, expectedCols: 1 },
-  { name: '390',  width:  390, height:  844, expectedCols: 1 },
-  { name: '640',  width:  640, height:  900, expectedCols: 2 },
-  { name: '768',  width:  768, height: 1024, expectedCols: 2 },
-  { name: '1024', width: 1024, height:  768, expectedCols: 2 },
-  { name: '1280', width: 1280, height:  900, expectedCols: 3 },
-  { name: '1440', width: 1440, height:  900, expectedCols: 3 },
-  { name: '1536', width: 1536, height:  960, expectedCols: 4 },
-  { name: '1920', width: 1920, height: 1080, expectedCols: 4 },
-  { name: '2560', width: 2560, height: 1440, expectedCols: 4 },
+  { name: '320',  width:  320, height:  812 },
+  { name: '375',  width:  375, height:  812 },
+  { name: '390',  width:  390, height:  844 },
+  { name: '640',  width:  640, height:  900 },
+  { name: '768',  width:  768, height: 1024 },
+  { name: '1024', width: 1024, height:  768 },
+  { name: '1280', width: 1280, height:  900 },
+  { name: '1440', width: 1440, height:  900 },
+  { name: '1536', width: 1536, height:  960 },
+  { name: '1920', width: 1920, height: 1080 },
+  { name: '2560', width: 2560, height: 1440 },
 ];
 
 const LOCALES = ['sq', 'en', 'uk', 'it'];
 const MOBILE_NAMES = new Set(['320', '375', '390']);
 const CONTAINER_CAP_PX = 1408;
 
+// Per-viewport expected column count, per story (Task 668 §3.9). FeaturedListings steps at the
+// new Mantine xxl/1440px breakpoint; SimilarListings is unmigrated and still steps at Tailwind
+// 2xl/1536px.
+const EXPECTED_COLS_BY_WIDTH = {
+  featured: { 320: 1, 375: 1, 390: 1, 640: 2, 768: 2, 1024: 2, 1280: 3, 1440: 4, 1536: 4, 1920: 4, 2560: 4 },
+  similar:  { 320: 1, 375: 1, 390: 1, 640: 2, 768: 2, 1024: 2, 1280: 3, 1440: 3, 1536: 4, 1920: 4, 2560: 4 },
+};
+
 const STORIES = [
-  { id: 'system-featuredlistings--default', label: 'FeaturedListings/Default' },
-  { id: 'system-similarlistings--default',  label: 'SimilarListings/Default' },
+  {
+    id: 'system-featuredlistings--default',
+    label: 'FeaturedListings/Default',
+    expectedColsKey: 'featured',
+    locator: 'mechanism-agnostic', // Task 668 — migrated to Mantine SimpleGrid, no Tailwind grid tokens left
+  },
+  {
+    id: 'system-similarlistings--default',
+    label: 'SimilarListings/Default',
+    expectedColsKey: 'similar',
+    locator: 'tailwind-tokens', // unmigrated — proves Similar was NOT accidentally migrated
+  },
 ];
 
 const MIME = {
@@ -94,17 +121,33 @@ function startStaticServer(staticDir, port) {
   });
 }
 
-// In-page evaluation: finds the canonical §8.3 card grid and the nearest
-// .container-wide ancestor, returns measurements.
+// In-page evaluation: finds the story's canonical card grid and the nearest .container-wide
+// ancestor, returns measurements. `locatorType` selects the per-story locator strategy
+// (Task 668 §3.9/§10.9):
+//  - 'tailwind-tokens' — the ORIGINAL hardcoded-Tailwind-class predicate, kept VERBATIM.
+//    Proves SimilarListings was NOT accidentally migrated.
+//  - 'mechanism-agnostic' — first `display:grid` element inside #storybook-root with >=1
+//    `.listing-card` descendant. Used for FeaturedListings, which now renders via Mantine
+//    SimpleGrid and carries no Tailwind grid-template classes to match on.
 /* eslint-disable no-undef */
-function evalGrid() {
+function evalGrid(locatorType) {
   function tokens(el) { return (el.className || '').toString().split(/\s+/); }
 
-  const grid = [...document.querySelectorAll('div')].find(d => {
-    const t = tokens(d);
-    return t.includes('grid') && t.includes('grid-cols-1') &&
-      t.includes('sm:grid-cols-2') && t.includes('xl:grid-cols-3') && t.includes('2xl:grid-cols-4');
-  });
+  let grid = null;
+  if (locatorType === 'tailwind-tokens') {
+    grid = [...document.querySelectorAll('div')].find(d => {
+      const t = tokens(d);
+      return t.includes('grid') && t.includes('grid-cols-1') &&
+        t.includes('sm:grid-cols-2') && t.includes('xl:grid-cols-3') && t.includes('2xl:grid-cols-4');
+    });
+  } else {
+    const root = document.querySelector('#storybook-root');
+    if (root) {
+      grid = [...root.querySelectorAll('*')].find(
+        (el) => getComputedStyle(el).display === 'grid' && el.querySelector('.listing-card')
+      );
+    }
+  }
   if (!grid) return { found: false };
 
   const colsStr = getComputedStyle(grid).gridTemplateColumns;
@@ -173,13 +216,14 @@ async function main() {
     const filename = `${story.id}__${locale}__${viewport.name}.png`;
     const screenshotPath = join(outputDir, filename);
 
+    const expectedCols = EXPECTED_COLS_BY_WIDTH[story.expectedColsKey][viewport.width];
     const cell = {
       story: story.label,
       storyId: story.id,
       locale,
       viewport: viewport.name,
       width: viewport.width,
-      expectedCols: viewport.expectedCols,
+      expectedCols,
       screenshot: isMandatoryShot ? filename : null,
       assertions: {},
       pass: null,
@@ -206,7 +250,7 @@ async function main() {
       });
 
       const noHScroll = await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 2);
-      const grid = await page.evaluate(evalGrid);
+      const grid = await page.evaluate(evalGrid, story.locator);
 
       cell.assertions = { renderCheck: renderResult, pageErrors: pageErrors.slice(0, 2), noHScroll, grid };
 
@@ -217,7 +261,7 @@ async function main() {
         if (!grid.found) {
           pass = false;
         } else {
-          if (grid.columnCount !== viewport.expectedCols) pass = false;
+          if (grid.columnCount !== expectedCols) pass = false;
           if (viewport.width >= 1536 && grid.containerWidthPx !== null && grid.containerWidthPx > CONTAINER_CAP_PX + 2) pass = false;
         }
       }
@@ -229,7 +273,7 @@ async function main() {
       await page.close();
 
       const mark = pass ? '✓' : (renderFailed ? 'E' : '✗');
-      console.log(`  ${mark} ${story.label} x ${locale} x ${viewport.name} (cols=${grid.found ? grid.columnCount : 'n/a'}, expected=${viewport.expectedCols})`);
+      console.log(`  ${mark} ${story.label} x ${locale} x ${viewport.name} (cols=${grid.found ? grid.columnCount : 'n/a'}, expected=${expectedCols})`);
     } catch (err) {
       cell.error = String(err).slice(0, 300);
       cell.pass = false;

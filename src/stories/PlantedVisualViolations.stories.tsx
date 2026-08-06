@@ -169,7 +169,7 @@ export const AmbiguousOverlap: Story = {
           role="button"
           tabIndex={0}
           data-testid="planted-ambiguous-popup"
-          style={{ position: 'absolute', left: 0, top: 0, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+          style={{ position: 'absolute', left: 60, top: 0, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
         >
           {'Popup #467'}
         </div>
@@ -457,6 +457,88 @@ export const ScrollVisibleOverlap: Story = {
           >
             {'Visible-B #569'}
           </div>
+        </div>
+      </div>
+    </PlantedWrapper>
+  ),
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+// ── 16. Overlay backdrop covered (Task 663 — cross-overlay-boundary downgrade proof) ───────
+// Simulates the real `.mantine-Drawer-body`/`.mantine-Overlay-root` shape geometry-integrity.mjs
+// verified against @mantine/core: a background trigger sits behind a real, opaque, viewport-
+// covering `position:fixed` backdrop (`.mantine-Overlay-root`, z-index between the background
+// and the sheet), which in turn sits behind the opened sheet body (`.mantine-Drawer-body`). The
+// background trigger and the sheet's own control are positioned to partially (not fully) overlap
+// on screen — a real Storybook multi-demo-page artifact — but the background trigger is provably
+// unreachable/unperceivable behind the backdrop.
+// Expected: PASS (NEW harness, Task 663 — `isBackgroundCoveredByOverlayBackdrop` downgrades this
+// to a silent pass); ambiguous-overlap (pre-Task-663 harness).
+export const OverlayBackdropCovered: Story = {
+  render: () => (
+    <PlantedWrapper>
+      <div
+        role="button"
+        tabIndex={0}
+        data-testid="planted-backdrop-covered-bg"
+        style={{ position: 'fixed', left: 20, top: 20, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+      >
+        {'Background trigger #663'}
+      </div>
+      <div
+        className="mantine-Overlay-root"
+        data-testid="planted-backdrop-covered-overlay"
+        style={{ position: 'fixed', inset: 0, zIndex: 500, background: 'rgba(0,0,0,0.6)' }}
+      />
+      <div
+        className="mantine-Drawer-body"
+        data-testid="planted-backdrop-covered-sheet"
+        style={{ position: 'fixed', left: 0, top: 0, width: 320, height: 200, zIndex: 501, background: '#fff' }}
+      >
+        <div
+          role="button"
+          tabIndex={0}
+          data-testid="planted-backdrop-covered-sheet-btn"
+          style={{ position: 'absolute', left: 60, top: 20, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+        >
+          {'Sheet control #663'}
+        </div>
+      </div>
+    </PlantedWrapper>
+  ),
+  globals: { viewport: { value: 'mobile320', isRotated: false } },
+}
+
+// ── 17. Overlay, no backdrop (Task 663 — non-weakening proof, R2) ──────────────────────────
+// Same cross-overlay-boundary shape as OverlayBackdropCovered — a background trigger overlapping
+// a sheet-body control — but with NO covering `.mantine-Overlay-root` backdrop at all (simulates
+// `withOverlay={false}` or a background element stacked above the backdrop). The background
+// control is genuinely NOT proven unreachable, so this must NOT be downgraded to pass.
+// Expected: ambiguous-overlap (both NEW and pre-Task-663 harness) — proves the downgrade did not
+// widen beyond the verified-backdrop case.
+export const OverlayNoBackdrop: Story = {
+  render: () => (
+    <PlantedWrapper>
+      <div
+        role="button"
+        tabIndex={0}
+        data-testid="planted-no-backdrop-bg"
+        style={{ position: 'fixed', left: 20, top: 100, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+      >
+        {'Background trigger #663 (no backdrop)'}
+      </div>
+      <div
+        className="mantine-Drawer-body"
+        data-testid="planted-no-backdrop-sheet"
+        style={{ position: 'fixed', left: 0, top: 80, width: 320, height: 200, zIndex: 10, background: '#fff' }}
+      >
+        <div
+          role="button"
+          tabIndex={0}
+          data-testid="planted-no-backdrop-sheet-btn"
+          style={{ position: 'absolute', left: 60, top: 20, width: 120, height: 40, padding: 8, cursor: 'pointer' }}
+        >
+          {'Sheet control #663 (no backdrop)'}
         </div>
       </div>
     </PlantedWrapper>

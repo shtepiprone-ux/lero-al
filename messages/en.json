@@ -316,6 +316,7 @@
     "company_logo_invalid_type": "Only PNG, JPG or WEBP files are allowed.",
     "company_logo_too_large": "File must be under 2 MB.",
     "company_logo_too_big": "Image must be max 256×256 px.",
+    "company_exists": "A company with this name already exists.",
     "register_as": "Register as",
     "register_agent": "Register as agent",
     "register_back_to_standard": "Back to standard registration",
@@ -391,6 +392,7 @@
     "confirm": "Confirm",
     "clear_filters": "Clear filters",
     "add": "Add",
+    "select": "Select",
     "choose_file": "Choose file",
     "replace": "Replace",
     "add_location": "Add location",
@@ -1098,6 +1100,7 @@
       "error_save_failed": "Save failed",
       "error_delete_failed": "Delete failed",
       "error_name_required": "Name is required",
+      "error_duplicate": "A company with this name already exists.",
       "empty": "No companies yet",
       "search_placeholder": "Search companies...",
       "new_btn": "New company",
@@ -2086,6 +2089,10 @@
       "card_favorite_aria_add": "Add to favorites",
       "card_favorite_aria_remove": "Remove from favorites",
       "card_location_tirana": "Tirana, Albania",
+      "copy_id_button_aria_copy": "Copy ID",
+      "copy_id_button_aria_copied": "ID copied",
+      "copy_id_button_resting_caption": "resting — click to copy the ID",
+      "copy_id_button_copied_caption": "copied — reverts to resting after 1.5s",
       "listing_feature_rooms": "3 rooms",
       "listing_feature_bathrooms": "2 baths",
       "listing_feature_area": "85 m²",
@@ -2366,7 +2373,12 @@
       "listing_detail_section_guest": "Guest viewer — sign-in CTA, contact actions hidden",
       "listing_detail_section_deleted": "Owner account deleted — no contact actions",
       "listing_detail_gallery_section_default": "Multi-image gallery — click the main photo or a thumbnail to open the Mantine lightbox",
-      "listing_detail_gallery_section_empty": "No photos — placeholder state, not clickable"
+      "listing_detail_gallery_section_empty": "No photos — placeholder state, not clickable",
+      "home_section_caption_default": "Default — transparent background",
+      "home_section_caption_muted": "Muted — 30% tinted band background",
+      "home_section_caption_brandfade": "Brand fade — diagonal gradient background",
+      "home_section_body": "Vertical rhythm (48 / 64 / 80px) and background are token-driven; every band wraps its content in `.container-wide`.",
+      "home_section_cta": "View listings"
     }
   },
   "ui": {

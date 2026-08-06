@@ -40,6 +40,109 @@ For non-trivial task design or review, normalize requirements into a ledger:
 
 Every acceptance criterion and every confirmed review finding should map back to one or more requirement IDs.
 
+## Evidence-first preflight (mandatory before task publication or review decision)
+
+Before publishing an implementation kickoff, declaring a task executable, or returning an approval/revision
+decision, complete the applicable sections of
+[`docs/orchestrator-evidence-preflight-template.md`](orchestrator-evidence-preflight-template.md). This is a
+**fail-closed gate**, not optional planning prose.
+
+The preflight must distinguish these evidence layers:
+
+1. **Source semantics:** inspect the exact implementation, enum, conditional branches, and configuration that make
+   the claim true. Do not infer an output state, default, selector, or registry behavior from a name, a comment, or
+   a prior report.
+2. **Command/artifact contract:** for every required command, record its real inputs, output path and schema, matrix
+   scope, exit semantics, and every file it writes or can overwrite. A command may prove only properties observable
+   in its actual artifact.
+3. **Rendered behavior:** keep source rules, computed CSS, geometry, and visual outcome separate. A declaration or
+   computed value does not prove rendered geometry; a geometry result does not prove a pixel-level result unless the
+   selected QA profile calls for that evidence.
+4. **Execution state:** label the plan exactly one of `from-scratch`, `remediation`, or `mixed`. A remediation plan
+   must name its start step, reusable artifacts, forbidden re-runs, and every preserved artifact that a command
+   could overwrite.
+5. **Ownership and sequencing:** reconcile task-owned, unrelated, and ambiguous paths before task publication and
+   before a handoff. A path containing unreviewed work from another task is ambiguous, not implicitly available to
+   edit or stage.
+6. **Requirement feasibility and detector scope:** when a requirement depends on a static checker recognizing source
+   syntax—for example, a marker, suppression, allowlist, forbidden value, or a required pass/fail count—read the
+   detector and prove how it treats the target syntax before publishing the task. Do not carry forward a historical
+   marker count unless each post-change raw value is demonstrably detectable and suppressible. A green gate proves
+   only properties within that gate's actual detection scope.
+
+For every material claim, acceptance criterion, and proposed gate, attempt one concrete falsification before relying
+on it: inspect a counter-branch, an absent/missing baseline, a different matrix mode, a real enum, a narrow/long
+locale UI state, or another relevant failure mode. Record the result as `VERIFIED`, `ASSUMED`, `UNKNOWN`, or
+`BLOCKED`.
+
+Do not publish a task as ready for Sonnet when a required command has no valid input at the point it is scheduled,
+when a required artifact cannot represent the claimed property, or when a proposed rerun can overwrite the only
+baseline. Return `DRAFT — NEEDS EVIDENCE` or stop for an owner decision instead. Do not approve a review while the
+same gaps remain.
+
+### Detector-aware requirements and migrations
+
+When a migration changes the syntax through which a policy-sensitive value is expressed, Opus must establish whether
+the relevant detector still observes that value. Use a minimal, reversible failing arm and passing arm in the target
+syntax when feasible; otherwise record the detector blind spot explicitly.
+
+- Do not require historical markers or suppressions to be copied mechanically into syntax the detector does not
+  inspect. A stale-marker failure is evidence that the requirement is unsatisfiable, not an executor deviation.
+- If the migration moves a value outside detector coverage, the kickoff must either include detector support in the
+  same task or name a separately sequenced corrective task. Until then, describe the coverage decrease accurately;
+  never treat a green result as proof that the original site-level protection remains enforced.
+- When feasibility evidence contradicts a drafted acceptance criterion, correct the criterion before assigning the
+  task and record it as a task-design defect. Do not delegate the contradiction to Sonnet to resolve ad hoc.
+
+### A documented token is not an implemented token — grep the definition, never the table
+
+Before writing any requirement, inventory row, or acceptance criterion that tells the executor to consume
+`var(--some-token)`, prove the custom property is *defined*, not merely *tabled*:
+
+```powershell
+Select-String -Path src\app\globals.css -Pattern '^\s*--some-token\s*:'
+```
+
+Zero matches means the token does not exist, no matter how completely `docs/design-system.md` §22 documents its
+value, tier and "Use via" column. **Quote the matched definition line in the task.** The same rule binds any
+`@theme` variable, Mantine theme key, or CSS custom property a task directs the executor to consume, and it binds
+the reviewer: an `N1-VIOLATION`-style "a token exists at this value" claim is not verified until the definition
+has been grepped.
+
+**This is a hard gate, not advice, because every gate the repo owns is blind to the failure.**
+`check:design-tokens` exempts anything *shaped* like `var(--token)` without resolving it (its own arm:
+`does NOT flag zIndex bound to a var(--token)`); `tsc` and `next build` never read CSS values; a rendered md5
+comparator cannot see a stacking-order change in an isolated story. The declaration becomes invalid at
+computed-value time and silently falls back to the property's initial value — for a non-inherited property such as
+`z-index`, that is `auto`.
+
+Tasks **714 → 716 → 715** carried `--z-sticky` — tabled in §22.3, defined nowhere — through two `APPROVED WITH
+NOTES` reviews and into a production build before the third review caught it. Both inventories classified against
+the documentation table rather than `globals.css`. See `docs/design-system.md` §22.3's ⚠️ banner and Task **718**.
+
+### Additional rules for baselines, assertions, and revisions
+
+- Name matrices precisely. Never substitute a `fast`, subset, Storybook-only, route-only, or historical result for a
+  full-run baseline without proving identical scope.
+- Read the code that produces a reported status or verdict. An allowlist entry, configuration name, or expected
+  behavior does not create a manifest enum value unless the code assigns one.
+- New regression harnesses must fail closed for missing baseline cells, infra failures, absent selectors, and
+  unrendered pages. A reason string without a failing result is not an assertion.
+- A revision of completed work must begin with an explicit re-entry mode. Preserve prior baseline artifacts by
+  default; do not rerun a baseline capture unless a valid pre-change input is available and overwriting is explicitly
+  safe.
+- Before assigning an executor write path, inspect its current worktree classification and any file-local cap. A
+  mixed/unreviewed path or an already-over-limit file is not viable scope: defer it, define an explicit non-growing
+  consolidation, or obtain owner sequencing. Scope, out-of-scope, verification, completion-report, and handoff
+  instructions must not contradict one another.
+- For UI migrations, test the smallest observable question. When the only suspected difference is a runtime style
+  value, a same-page synthetic measurement may be valid; prove that all other relevant container rules are
+  equivalent first, assert and persist the effective mutation for every cell, retain raw live/synthetic measurements
+  before deriving deltas, restore temporary state in `finally`, and document the measurement limits. A zero delta
+  does not prove a synthetic mutation ran.
+- Distinguish an executed falsification from an analytical counterfactual. Call a branch `fired`, `passed`, or
+  `cleared` only when a run or persisted artifact actually exercised it.
+
 ## Ambiguity policy
 
 Ask the user only when all are true:
@@ -78,6 +181,38 @@ A valid task includes:
     - unresolved issues;
     - evidence needed for review.
 
+For a UI task, add a canonical UI decision record before publishing the kickoff:
+
+| Visible artifact | Search queries and inspected paths | Canonical story/source | Disposition | Required implementation and registration |
+|---|---|---|---|---|
+
+Use `reuse` when the canonical story/component already covers the artifact, `extend` when that source is the right
+owner for a missing variant, and `create canonical` only when searches prove no suitable source exists. The record
+must cite the exact story title/path when available and the component, pattern, theme token, or legacy semantic
+token that supplies each visual value. `create canonical` requires the shared source, a canonical Storybook proof
+added or updated in the same task, and applicable catalog/coverage updates. If a needed visual value has no approved
+provenance, stop task design for `CANONICAL STYLE DECISION REQUIRED`; do not leave Sonnet to choose a local value.
+
+### Canonical Story source-of-truth check (mandatory for Opus before publishing a UI kickoff)
+
+Opus must inspect the source of the corresponding canonical Mantine Story, not merely cite its title or path. The
+kickoff's decision record, scope, requirements, and acceptance criteria must then bind the production change to that
+Story:
+
+- **Existing Story:** the same task must update or preserve the exact Story so it renders the migrated artifact with
+  the same canonical Mantine primitive and applicable states. Opus must not mark that Story out of scope or authorize
+  a route-only proof in its place.
+- **No Story:** the kickoff must require creation of a canonical Mantine Story before, or in the same task as, the
+  consumer migration, plus `scripts/mantine-migration-scope.json` registration and a passing static-import proof from
+  `check:story-coverage`.
+- **Slot or demo mismatch:** a Story that supplies a static stand-in, legacy control, or other divergent demo through
+  a pattern slot does not cover the real production node. Opus must scope an update that renders the real node or an
+  equivalent canonical composition Story. If that would change a deliberate boundary, stop task design and ask the
+  owner; do not leave the decision to Sonnet or silently exclude the Story.
+
+A kickoff that omits this decision, declares an existing corresponding Story out of scope, or treats a demo stand-in
+as Story proof is a task-design defect and must not be handed to Sonnet.
+
 Do not publish a task that says "read all docs." Use `docs/rule-index.md`.
 Save an implementation kickoff under `tasks/` using the location and naming rules in `docs/ai-behavior.md`.
 
@@ -92,7 +227,12 @@ Review implementation evidence, not the author's explanation.
 5. Check failure paths that are applicable to the task.
 6. Check regressions in affected components and consumers.
 7. Apply the selected QA profile from `docs/qa-profiles.md`.
-8. Produce exactly one decision.
+8. For every non-Q0 task, require a final `npm run build` transcript with exit code 0 for the reviewed diff. A
+   failed, unrun, or stale build is missing blocking evidence and cannot receive an approval decision.
+9. For UI work, compare the canonical UI decision record with the diff and rendered evidence. Reject copied local
+   styles when `reuse` was available; require the shared source, canonical story, and registration when `extend` or
+   `create canonical` was selected. A missing record or uncited "no story" claim is missing P1 evidence.
+10. Produce exactly one decision.
 
 Allowed decisions:
 
@@ -166,7 +306,10 @@ Mutating git is owner-only and native PowerShell only, including:
 - `git config`
 
 After verified task design that changed task/docs artifacts, or an `APPROVED` / `APPROVED WITH NOTES` review, the
-orchestrator may emit explicit-path commit commands for the owner to run, but must not run them.
+orchestrator may emit explicit-path commit commands for the owner to run, but must not run them. Only after the
+`APPROVED` / `APPROVED WITH NOTES` review may Opus append `git push <verified-remote> <verified-branch>` for the
+owner. Inspect the current branch and remote/upstream read-only first and replace both placeholders with verified
+values; never emit a bare `git push`. A task-design handoff and each non-approved review must omit a push command.
 Never emit `git add -A`, `git add -u`, or wildcard staging.
 
 Immediately before the handoff, inspect `git status --short` and the corresponding real diff. Reconcile each status
@@ -195,5 +338,6 @@ Before returning a task or review:
 5. Did I verify applicable failure paths?
 6. Are findings specific and actionable?
 7. Does the decision match the evidence?
+8. Did each marker, suppression, or gate-based requirement remain satisfiable and enforced in the target syntax?
 
 If any answer exposes a gap, revise before returning.

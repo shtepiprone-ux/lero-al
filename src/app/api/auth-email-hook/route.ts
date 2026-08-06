@@ -36,6 +36,7 @@ import { Webhook } from 'standardwebhooks'
 import { NextRequest, NextResponse } from 'next/server'
 import * as React from 'react'
 
+import { BRAND_PRIMARY } from '@/design-system/brand'
 import { sendEmail } from '@/modules/notifications/lib/emails/send'
 import { VerifyEmail, getVerifyEmailStrings } from '@/modules/notifications/lib/emails/VerifyEmail'
 import { RecoveryEmail, getRecoveryEmailStrings } from '@/modules/notifications/lib/emails/RecoveryEmail'
@@ -134,16 +135,16 @@ function emailChangeHtml(s: ReturnType<typeof getEmailChangeStrings>, verifyUrl:
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
     <tr><td align="center">
       <table width="100%" style="max-width:600px;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #ececec;">
-        <tr><td style="height:3px;background:#EC5447;padding:0;"></td></tr>
+        <tr><td style="height:3px;background:${BRAND_PRIMARY};padding:0;"></td></tr>
         <tr><td style="padding:38px 48px 0;">
-          <span style="font-size:17px;font-weight:500;color:#18181b;">Lero<span style="color:#EC5447">.al</span></span>
+          <span style="font-size:17px;font-weight:500;color:#18181b;">Lero<span style="color:${BRAND_PRIMARY}">.al</span></span>
         </td></tr>
         <tr><td style="padding:32px 48px 8px;">
           <p style="font-size:16px;color:#18181b;margin:0 0 16px;">${s.greeting}</p>
           <p style="font-size:15px;color:#52525b;margin:0;line-height:1.65;">${s.body}</p>
         </td></tr>
         <tr><td style="padding:28px 48px 4px;">
-          <a href="${verifyUrl}" style="display:block;text-align:center;background:#EC5447;color:#ffffff;font-size:15px;font-weight:500;text-decoration:none;padding:14px 24px;border-radius:10px;">${s.button}</a>
+          <a href="${verifyUrl}" style="display:block;text-align:center;background:${BRAND_PRIMARY};color:#ffffff;font-size:15px;font-weight:500;text-decoration:none;padding:14px 24px;border-radius:10px;">${s.button}</a>
         </td></tr>
         <tr><td style="padding:20px 48px 0;">
           <p style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12px;color:#3f3f46;background:#fdf1f0;border:1px solid #f7d7d3;border-radius:8px;padding:10px 12px;word-break:break-all;margin:0;">${verifyUrl}</p>
@@ -152,7 +153,7 @@ function emailChangeHtml(s: ReturnType<typeof getEmailChangeStrings>, verifyUrl:
           <p style="font-size:13px;color:#a1a1aa;margin:0;">${s.expiry} ${s.ignore}</p>
         </td></tr>
         <tr><td style="border-top:1px solid #f0f0f0;padding:24px 48px 36px;background:#fafafa;">
-          <p style="font-size:13px;font-weight:500;color:#3f3f46;margin:0;">Lero<span style="color:#EC5447">.al</span></p>
+          <p style="font-size:13px;font-weight:500;color:#3f3f46;margin:0;">Lero<span style="color:${BRAND_PRIMARY}">.al</span></p>
           <p style="font-size:12px;color:#a1a1aa;margin:4px 0 0;">Tregu kryesor i pasurive të paluajtshme në Shqipëri</p>
         </td></tr>
       </table>

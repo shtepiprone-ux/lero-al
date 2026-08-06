@@ -10,8 +10,27 @@
    excluding them drops no real utility. */
 @source not "../../docs";
 @source not "../../tasks";
+/* Exclude scripts/ from Tailwind's automatic content detection (Task 696).
+   Regex literals, comments, governance baselines, and allowlist JSON inside
+   build/QA tooling contain Tailwind class-name-shaped strings that are never
+   rendered, so the v4 scanner was extracting them as real utility candidates
+   and shipping them in production CSS (initial estimate: 21; verified: 35
+   removed / 0 added, ratified in the Task 696 review — e.g. bg-black, the
+   py-* gap set, text-green-500, sm:rounded-tr-2xl, the z-[N]/text-[Npx]
+   doc-placeholder set). This also closes a hazard found reviewing Task
+   692: scripts/__tests__/ is scanned too, so a gate test that names a utility
+   literally (not via a wildcard) could keep it alive in the bundle after its
+   last real consumer is gone, masking the exact disappearance Task 700's
+   @theme-dependency gate must detect. */
+@source not "../../scripts";
 
 @custom-variant dark (&:is(.dark *));
+
+/* Task 593's owner-approved compact notification layout threshold. Named here so
+   consumers use a stable responsive token instead of repeating min-[390px]. */
+@theme {
+  --breakpoint-notification-compact: 24.375rem;
+}
 
 /* ─────────────────────────────────────────────
    LERO.AL DESIGN SYSTEM — Real Estate Marketplace 2025-2026
@@ -48,7 +67,18 @@
   --color-brand-800: var(--brand-800);
   --color-brand-950: var(--brand-950);
 
-  /* Overlay tokens — always dark/light regardless of mode (photo overlays, lightbox) */
+  /* Overlay tokens — DELIBERATELY DUPLICATED, also declared in `:root` below (Task 693/D19,
+     superseding Task 690/D18). Task 690 moved these two out of `@theme` entirely to fix F1
+     (non-Tailwind `var(--color-overlay*)` consumers like `LightboxView.tsx` and
+     `MantineListingGalleryPattern.tsx` going stale whenever no `bg-overlay*`/
+     `text-overlay-foreground*` utility survived Tailwind's scan) — but that broke Tailwind's
+     ability to statically resolve the value, which it needs to composite the alpha-blended
+     static fallback for every opacity-modifier utility (`bg-overlay/30` etc.), silently
+     degrading that fallback tier to a bare, fully-opaque `var(--overlay)` (measured in
+     `docs/sessions/2026-07-30-task690-overlay-root-relocation.md`). This `@theme` copy restores
+     that static resolution; the `:root` copy below is what actually keeps F1 fixed (unconditional
+     emission, independent of the source scan). **Keep both copies byte-identical** — Task 692
+     will gate their sync; until then, changing one without the other is a silent regression. */
   --overlay:            oklch(0 0 0);       /* Pure black — for photo/lightbox overlays */
   --overlay-foreground: oklch(1 0 0);       /* Pure white — text on black overlays */
   --color-overlay:            var(--overlay);
@@ -225,7 +255,6 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   /* ListingCard brand-highlight ring/elevation — narrowly-scoped semantic tokens (Task 405, §22.3) */
   /* Consumed ONLY in ListingCard brand-highlight states (horizontal + vertical premium card). */
-  /* StoryListingCard uses same pattern — recorded cross-scope for Task 406. */
   --shadow-listing-card-ring:         0 0 0 1px oklch(0.700 0.162 65 / 0.2);
   --shadow-listing-card-elevation-md: 0 4px 16px oklch(0.700 0.162 65 / 0.25);
   --shadow-listing-card-elevation-lg: 0 8px 24px oklch(0.700 0.162 65 / 0.2);
@@ -238,9 +267,22 @@
   --shadow-theme-lg: 0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03);
 
   /* ── 4. Z-index — see ui-rules.md §16 ─────────────────────────── */
-  /* The real, working scale is numeric core utilities: z-30 (chrome) /
-     z-40 (scrim) / z-50 (floating), plus the allowlisted z-[9999] escape-hatch
-     (Combobox mobile sheet, PerfDevOverlay). No --z-* named tokens exist here. */
+  /* Named tokens for var(--z-*) access (Task 718, R1). Tailwind v4 has NO
+     --z-index-* theme namespace (measured: 0 occurrences in tailwindcss's
+     theme.css and dist/lib.js; z is a bare-value functional utility) — unlike
+     --space-N, these do NOT back a z-{name} Tailwind utility class; defining
+     --z-sticky cannot make a z-sticky class exist (docs/design-system.md
+     §22.3). The working UTILITY scale stays the numeric core classes: z-30
+     (chrome) / z-40 (scrim) / z-50 (floating), plus the allowlisted z-[9999]
+     escape-hatch (Combobox mobile sheet, PerfDevOverlay). Values below mirror
+     §22.3 / ui-rules.md §16 row-for-row. */
+  --z-base:     0;
+  --z-dropdown: 10;
+  --z-sticky:   30;
+  --z-overlay:  40;
+  --z-modal:    50;
+  --z-popover:  50;
+  --z-toast:    100;
 
   /* ── 5. Motion — durations + easing ─────────────────────────── */
   /* Durations derived from actual usage: backdrop=100ms, hover=200ms, image=300ms.
@@ -279,6 +321,15 @@
      NOT in the --container-* namespace (avoids max-w-max keyword clash). */
   --width-page-max: 88rem;  /* 1408px — access via var(--width-page-max) or .container-wide */
 
+  /* Home section vertical rhythm (Task 662) — preserve-existing values, byte-identical to the
+     prior `py-12 md:py-16 2xl:py-20` Tailwind utility chain (48/64/80px). Consumed by
+     MantineHomeSection's own Mantine `py` responsive style prop (base/md/xxl) — rebound off the
+     Tailwind-only 1536px step onto Mantine's own `xxl` (1440px) breakpoint, owner decision
+     2026-07-28, Task 669. */
+  --home-section-py-base: 3rem;   /* 48px — base */
+  --home-section-py-md:   4rem;   /* 64px — ≥768px */
+  --home-section-py-lg:   5rem;   /* 80px — ≥1440px (xxl) */
+
   /* ── 8. Listing layout — narrowly-scoped semantic layout tokens ─ */
   /* Listing gallery frame heights — consumed ONLY at the 4 named listing gallery call sites. */
   /* Do NOT apply to any other gallery/image/card surface. (Task 405, Epic JJ §22.5) */
@@ -297,20 +348,27 @@
    Muted fg on background: 5.2:1 (WCAG AA ✓)
    ───────────────────────────────────────────── */
 :root {
-  /* ── Brand shade scale (EC5447 official palette) ── */
-  /* Used ONLY for primary, badges, price, CTA — never for surfaces */
-  --brand-50:  oklch(0.969 0.010 18);   /* #FDEEED — very subtle tint for hover states */
-  --brand-100: oklch(0.932 0.020 20);   /* #FBDDDA */
-  --brand-200: oklch(0.895 0.031 20);   /* #F9CCC8 */
-  --brand-300: oklch(0.858 0.042 21);   /* #F7BBB5 */
-  --brand-400: oklch(0.820 0.054 21);   /* #F6AAA3 */
-  --brand-500: oklch(0.745 0.078 22);   /* #F2877E */
-  --brand-600: oklch(0.707 0.093 22);   /* #F0766C */
-  --brand-700: oklch(0.614 0.158 23);   /* #EC5447 — primary */
-  --brand-800: oklch(0.541 0.168 23);   /* #BD4339 — hover */
-  --brand-850: oklch(0.497 0.155 23);   /* #A53B32 */
-  --brand-900: oklch(0.452 0.142 23);   /* #8E322B */
-  --brand-950: oklch(0.132 0.022 23);   /* #180807 */
+  /* ── Brand shade scale (Task 661 — single-sourced from src/design-system/brand.ts) ── */
+  /* Used ONLY for primary, badges, price, CTA — never for surfaces. Each shade aliases
+     Mantine's own generated CSS variable (theme.ts brand tuple, primaryShade:7), so this
+     scale and Mantine `color="brand"` surfaces render the identical hex — no second
+     hand-authored source to drift out of sync (Task 660 finding). */
+  --brand-50:  var(--mantine-color-brand-0);  /* #FDEEED */
+  --brand-100: var(--mantine-color-brand-1);  /* #FBDDDA */
+  --brand-200: var(--mantine-color-brand-2);  /* #F9CCC8 */
+  --brand-300: var(--mantine-color-brand-3);  /* #F7BBB5 */
+  --brand-400: var(--mantine-color-brand-4);  /* #F6AAA3 */
+  --brand-500: var(--mantine-color-brand-5);  /* #F2877E */
+  --brand-600: var(--mantine-color-brand-6);  /* #F0766C */
+  --brand-700: var(--mantine-color-brand-7);  /* #EC5447 — primary */
+  --brand-800: var(--mantine-color-brand-8);  /* #BD4339 — hover */
+  --brand-900: var(--mantine-color-brand-9);  /* #8E322B */
+  /* --brand-850 removed (Task 661 OQ1): no Mantine index and grep-confirmed zero
+     consumers (only ever self-defined, never referenced). */
+  /* --brand-950 intentionally NOT tuple-derived (Task 661 OQ2): renders near-black
+     (#180807), not a red tint of the brand scale — kept hand-authored. Live consumers:
+     HeroSearch.stories.tsx, PopularLocationsView.tsx gradient stops. */
+  --brand-950: oklch(0.132 0.022 23);   /* #180807 — intentionally NOT brand-scale-derived */
 
   /* ── Neutral scale — all surfaces use these ── */
   --neutral-0:   oklch(1 0 0);          /* Pure white */
@@ -346,7 +404,7 @@
   --secondary-foreground: var(--neutral-900);
 
   /* Accent — subtle brand tint for hover backgrounds, chips */
-  --accent:              var(--brand-50);            /* #FDEEED — very subtle red tint */
+  --accent:              var(--mantine-color-brand-0); /* #FDEEED — very subtle red tint */
   --accent-foreground:   var(--brand-800);           /* Dark red text on tint */
 
   /* Destructive */
@@ -397,6 +455,20 @@
 
   /* Base radius */
   --radius: 0.75rem;
+
+  /* Overlay tokens — DELIBERATELY DUPLICATED, also declared in `@theme inline` above (Task
+     693/D19, superseding Task 690/D18). This `:root` copy is what actually closes Task 688
+     finding F1: it emits `--overlay`/`--overlay-foreground` unconditionally, independent of
+     whether any `bg-overlay*`/`text-overlay-foreground*` Tailwind utility survives the source
+     scan, so non-Tailwind consumers (`LightboxView.tsx`'s inline `style`,
+     `MantineListingGalleryPattern.tsx`'s `c=` prop) never see a stale/missing variable. The
+     `@theme` copy exists solely so Tailwind can still statically resolve the value and composite
+     the alpha-blended static fallback for opacity-modifier utilities — removing it re-breaks that
+     fallback tier exactly as Task 690 did (see
+     `docs/sessions/2026-07-30-task690-overlay-root-relocation.md`). **Keep both copies
+     byte-identical** — Task 692 will gate their sync. */
+  --overlay:            oklch(0 0 0);       /* Pure black — for photo/lightbox overlays */
+  --overlay-foreground: oklch(1 0 0);       /* Pure white — text on black overlays */
 }
 
 /* ─────────────────────────────────────────────
@@ -426,10 +498,12 @@
   --muted:               var(--neutral-100);
   --muted-foreground:    var(--neutral-500);         /* 4.9:1 on dark ✓ */
 
-  /* Brand shades for dark — primary slightly brighter for contrast */
-  --brand-50:  oklch(0.220 0 0);        /* Accent hover bg on dark */
-  --brand-700: oklch(0.648 0.200 22);   /* Brighter #EC5447 on dark */
-  --brand-800: oklch(0.700 0.190 22);   /* Hover — lighter on dark */
+  /* Brand shades for dark (Task 661 OQ4): dark mode has no reachable UI toggle
+     (MantineRootProvider defaultColorScheme="light", no scheme-switcher found) — treated
+     as dormant. No dark-specific --brand-* override remains here; the scale falls through
+     to :root's Mantine-sourced values (identical hex, since theme.ts primaryShade:7 is a
+     bare number and resolves the same shade in both Mantine color schemes — Task 660
+     finding). This intentionally drops the old divergent hand-authored dark brightening. */
 
   --primary:             var(--brand-700);
   --primary-foreground:  oklch(1 0 0);
@@ -438,8 +512,10 @@
   --secondary:           var(--neutral-100);
   --secondary-foreground: var(--neutral-900);
 
-  --accent:              oklch(0.614 0.158 23 / 15%); /* Brand tint at 15% on dark */
-  --accent-foreground:   oklch(0.648 0.200 22);
+  /* Brand tint at 15% on dark (Task 661 OQ3) — color-mix over the single-sourced
+     Mantine brand-7 var instead of a hardcoded oklch literal duplicating its LCH. */
+  --accent:              color-mix(in srgb, var(--mantine-color-brand-7) 15%, transparent);
+  --accent-foreground:   var(--mantine-color-brand-7);
 
   --destructive:         oklch(0.520 0.215 17);
   --destructive-foreground: oklch(1 0 0);

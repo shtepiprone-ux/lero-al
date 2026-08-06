@@ -10,9 +10,9 @@ Every kickoff and review must name one QA profile:
 | Profile | Use when | Required evidence |
 |---|---|---|
 | `Q0 Docs/Governance` | The task changes only rules, docs, prompts, reports, or task files. | Read-after-write check, markdown structure/reference validation, contradiction scan against affected rules, and no product validation unless a referenced command is changed. |
-| `Q1 Targeted` | Non-UI code, localized copy, small isolated fixes, tests, internal helpers, or low-blast-radius behavior. | Targeted tests or commands for the touched area, typecheck when source code changes, i18n key parity when messages change, file-integrity/mojibake checks for touched text files. |
+| `Q1 Targeted` | Non-UI code, localized copy, small isolated fixes, tests, internal helpers, or low-blast-radius behavior. | Targeted tests or commands for the touched area, typecheck when source code changes, the final production build (`npm run build`) with exit code 0, i18n key parity when messages change, and file-integrity/mojibake checks for touched text files. |
 | `Q2 Standard UI` | A UI change that touches an existing surface but does not create or migrate a primitive, overlay, table strategy, page shell, or major responsive layout. | `Q1` plus rendered checks at minimum `320`, `390`, `768`, `1024`, and one desktop width (`1440` or `1920`); `uk@320` is mandatory. Check all four locales at `320` and the selected desktop width; when user-facing text changes, check all four locales at every required Q2 width. |
-| `Q3 Full Visual Matrix` | New or migrated Mantine primitive, overlay/popup, table/card switch, page shell, navigation/header/footer, Storybook governance, TailAdmin conformance slice, high-risk responsive work, or any task the owner marks visual-critical. | Full canonical visual evidence for the relevant proof path: all required Storybook/app widths and all four locales, including mobile stress cells; TailAdmin side-by-side evidence when styling/chrome is in scope. |
+| `Q3 Full Visual Matrix` | New or migrated Mantine primitive, overlay/popup, table/card switch, page shell, navigation/header/footer, Storybook governance, TailAdmin conformance slice, high-risk responsive work, or any task the owner marks visual-critical. | `Q1` gates, including the final zero-exit production build, plus full canonical visual evidence for the relevant proof path: all required Storybook/app widths and all four locales, including mobile stress cells; TailAdmin side-by-side evidence when styling/chrome is in scope. |
 | `Q4 Release/Critical Flow` | Release readiness, auth/account lifecycle, RLS/write-path security, data loss risk, payment/moderation/reporting critical flows, or changes touching `docs/critical-flow-registry.md`. | `Q1`/`Q2`/`Q3` as applicable plus regression baseline, changed-behavior test, planted-violation failure proof when a gate is claimed, and owner-native or CI evidence for security/integrity-sensitive checks. |
 
 ## UI evidence routing
@@ -34,6 +34,17 @@ Older references to 7-width, 9-width, or 12-width sets are historical unless the
 
 Some legacy proof commands capture an additional ultrawide viewport (15 cells instead of this 14-width canon).
 That is an acceptable superset, not a competing canonical matrix.
+
+**Per-story viewport sets are not uniform.** The `--mantine-only` rendered matrix assigns viewports per story, so a
+story enrolled at 4 viewports (e.g. `HowItWorksSteps/Default`, `HomepageListingGrids/Default` — mobile-320/375/390 +
+desktop-1024) proves nothing above 1024px. Before claiming a breakpoint tier is covered, read the tier's widths out of
+the manifest for that specific story; do not infer coverage from the union of all viewports in the run. See
+`docs/storybook-governance.md` §14.9.17 for the per-story mechanism.
+
+**Comparing a rendered run against a baseline.** When a task's claim is that nothing rendered differently, the
+comparator and the tolerance for md5-changed cells are governed by `docs/storybook-governance.md` §14.11 (D26,
+sub-perceptual rasterization delta) together with the empirically measured harness-noise set. Do not invent a
+per-task pixel tolerance.
 
 ## Negative-flow applicability
 

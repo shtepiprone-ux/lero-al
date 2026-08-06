@@ -11,7 +11,7 @@ import { PasswordRequirementsHint } from '@/components/ui/PasswordRequirementsHi
 import { allPasswordRulesMet } from '@/lib/passwordRules'
 import { changeCabinetPassword } from '@/modules/cabinet/actions'
 import { signOut } from '@/lib/auth/browser'
-import { toast } from 'sonner'
+import { toast } from '@/lib/toast'
 
 export function CabinetPasswordSection() {
   const t = useTranslations('cabinet')

@@ -637,10 +637,11 @@ describe('§H — undefined CSS custom-property reference coverage (Task 718, R4
     expect(findings[0].match).toBe('VAR(--phantom-f)')
   })
 
-  it('does NOT flag a var() reference on a line whose first non-space character is "*" — shouldSkipLine treats it as a comment line before any category runs; documented coverage limitation, 719 owns the cross-category fix (§23.6.c)', () => {
+  it('DOES flag a var() reference on a line whose first non-space character is "*" — Task 719 closed the cross-category shouldSkipLine blind spot (§23.6.c)', () => {
     const findings = scanContent('*, *::before { color: var(--phantom-b); }', CSS_FIXTURE_PATH, {})
       .filter(f => f.cat === 'css-undefined-var')
-    expect(findings).toHaveLength(0)
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('var(--phantom-b)')
   })
 
   it('does NOT flag a var(...) call split across physical lines — the scan is line-based by design (§3.4); documented architectural limitation, unowned (§23.6.c)', () => {
@@ -669,5 +670,63 @@ describe('§H — undefined CSS custom-property reference coverage (Task 718, R4
     expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-modal')).toBe(true)
     expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-popover')).toBe(true)
     expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-toast')).toBe(true)
+  })
+})
+
+describe('§I — universal-selector line skip: shouldSkipLine cross-category blind spot (Task 719, R1-R3)', () => {
+  // R2 — one planted arm per category shouldSkipLine blinded (§3.2 of the kickoff). Each
+  // fails before R1 lands (the leading `*` on a universal-selector line is treated as a
+  // comment, so scanContent never reaches the declaration) and passes after (the .css skip
+  // decision consults the CSS-comment-stripped line instead of guessing from the raw one).
+
+  it('flags css-length on a universal-selector line (R2 arm 1)', () => {
+    const findings = findingsOfCss('* { margin: 10px; }').filter(f => f.cat === 'css-length')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('margin: 10px')
+  })
+
+  it('flags css-duration on a universal-selector line (R2 arm 2)', () => {
+    const findings = findingsOfCss('* { transition-duration: 250ms; }').filter(f => f.cat === 'css-duration')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('transition-duration: 250ms')
+  })
+
+  it('flags css-zindex on a universal-selector line (R2 arm 3)', () => {
+    const findings = findingsOfCss('* { z-index: 42; }').filter(f => f.cat === 'css-zindex')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('z-index: 42')
+  })
+
+  it('flags css-undefined-var on a universal-selector line (R2 arm 4)', () => {
+    const findings = scanContent('* { color: var(--phantom); }', CSS_FIXTURE_PATH, {})
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('var(--phantom)')
+  })
+
+  // R3 — regression lock. The fix asks the CSS-comment stripper whether a line is blank
+  // (A3/A4); it must not start scanning a genuine comment continuation line, and it must
+  // not move the .ts/.tsx path at all (A2).
+
+  it('does NOT flag a value written on a .css multi-line comment continuation line (R3 arm 1, A4)', () => {
+    const content = [
+      '/*',
+      ' * old rule, do not use: margin: 999px;',
+      ' */',
+      '.a { margin: 10px; }',
+    ].join('\n')
+    const findings = findingsOfCss(content).filter(f => f.cat === 'css-length')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('margin: 10px')
+  })
+
+  it('does NOT flag a .tsx JSDoc continuation line — the .ts/.tsx path is unchanged (R3 arm 2, A2)', () => {
+    const content = [
+      '/**',
+      ' * Example: className="text-[10px]"',
+      ' */',
+      'function f() {}',
+    ].join('\n')
+    expect(regular(content)).toHaveLength(0)
   })
 })

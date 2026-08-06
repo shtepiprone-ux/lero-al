@@ -578,12 +578,22 @@ export function extractCssCustomPropertyDefinitions(content) {
 }
 
 // ── Skip heuristics ───────────────────────────────────────────────────────────
-function shouldSkipLine(line) {
+// Task 719, R1: in .css, CSS comments have already been stripped into
+// cssStrippedLine (Task 714 A2) by the time this runs, so a leading `*` there
+// is the universal selector, not a comment — ask the stripper whether
+// anything real survived instead of guessing from the raw line's first
+// character. In .ts/.tsx, nothing else strips `/** ... */` JSDoc continuation
+// lines, so the leading-`*`/`/*` heuristic stays exactly as it was for those
+// files (A2 of the kickoff — this branch must not move).
+function shouldSkipLine(line, isCssFile, cssStrippedLine) {
   const trimmed = line.trimStart();
   // Comment-only lines (value inside a trailing // comment is not runtime code)
-  if (trimmed.startsWith('//') || trimmed.startsWith('*') || trimmed.startsWith('/*')) return true;
-  // CSS comment lines
-  if (trimmed.startsWith('/*') || trimmed.startsWith('*')) return true;
+  if (trimmed.startsWith('//')) return true;
+  if (isCssFile) {
+    if (cssStrippedLine.trim() === '') return true;
+  } else if (trimmed.startsWith('*') || trimmed.startsWith('/*')) {
+    return true;
+  }
   // Import / type declarations — no runtime style values
   if (/^\s*(import\s|export\s+type|type\s+\w|interface\s+\w)/.test(line)) return true;
   return false;
@@ -742,7 +752,7 @@ export function scanContent(content, relPath, allowlist = {}, globalsDefinedProp
     const line = lines[i];
     const lineNum = i + 1;
 
-    if (shouldSkipLine(line)) continue;
+    if (shouldSkipLine(line, isCssFile, isCssFile ? cssStrippedLines[i] : null)) continue;
 
     // Strip trailing // comment before detection so that the marker text itself
     // (which contains the suppressed value string) is not scanned as a violation.

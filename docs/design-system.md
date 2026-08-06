@@ -1162,12 +1162,15 @@ so `src/design-system/mantine/**` is exempt from `css-undefined-var` too. Narrow
 entirely (unchanged), so a self-referential mistake inside `globals.css` itself (e.g. one token
 defined in terms of a misspelled sibling) is not caught by this category.
 
-**A7 — known coverage limitation, not closed here (718R):** a `var(` reference on a line whose
-first non-space character is `*` is silently not a finding, because `shouldSkipLine` treats any such
-line as a comment before any category runs — a CSS-comment heuristic that is also the universal
-selector. This blind spot is **cross-category** (`css-length`, `css-duration`, `css-zindex` and
-`css-undefined-var` are all affected, not just this one), so fixing it here would exceed this task's
-scope. Owner: **719**.
+**A7 — closed by Task 719.** A `var(` reference — and, cross-category, a `css-length`/`css-duration`/
+`css-zindex` declaration too — on a line whose first non-space character is `*` used to be silently
+not a finding, because `shouldSkipLine` treated any such line as a comment before any category ran,
+conflating the CSS-comment heuristic with the universal selector. Task 719 made the `.css` skip
+decision consult the already CSS-comment-stripped line (Task 714 A2) and skip only when that line is
+blank, so a universal-selector rule is scanned like any other; the `.ts`/`.tsx` leading-`*`/`/*` JSDoc
+heuristic is unchanged, because nothing else strips those continuation lines. Proof: four planted
+arms, one per blinded category, each failing before the fix and passing after
+(`scripts/__tests__/check-design-tokens.test.ts` §I).
 
 **A8 — known coverage limitation, not closed here (718R):** a `var(` call split across physical
 lines (the opening paren on one line, its contents or closing paren on another) is silently not a

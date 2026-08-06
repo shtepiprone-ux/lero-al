@@ -1632,6 +1632,64 @@ Session: `docs/sessions/2026-08-05-task712-homepage-route-shell-de-tailwind.md`.
 
 ---
 
+### §14.9.25 — `design-tokens-allow` marker carry-across into a `.module.css`: the detector is Tailwind-syntax-shaped, not value-shaped (Task 713, 2026-08-05)
+
+**Why.** `MobileBottomNavView.tsx` was the first D28 de-Tailwind migration carrying pre-existing
+`design-tokens-allow` markers into a `.module.css`. The kickoff's premise — 4 markers, one per
+pre-migration TSX site — did not survive contact with how `scripts/check-design-tokens.mjs`'s
+`DETECTION_PATTERNS` actually work: most of them match **Tailwind's own bracket/function syntax**
+(`shadow-\[...\]`, `\b[\w-]+-\[[\d.]+(?:px|rem)\]`, an inline-style quoted px/rem string), not
+arbitrary CSS property values. A plain CSS declaration like `font-size: 10px;` never matches any
+of those patterns — the "length" bracket pattern requires the literal `word-[` substring, which
+plain CSS syntax never produces.
+
+**What this means for a marker carry-across.** Measured, not assumed (A1's rule, generalized):
+
+1. **A marker protecting a Tailwind *arbitrary-bracket* utility** (`shadow-[...]`, `text-[10px]`,
+   `z-[N]`, `duration-[...]`) may or may not have a post-migration equivalent, depending on whether
+   the compiled declaration you write happens to contain a substring one of the OTHER patterns
+   (hex color, `rgb()`/`color-mix` function, etc.) still matches. `text-[10px]` compiled to plain
+   `font-size: 10px` and stopped matching anything — 2 of this task's 4 pre-migration markers
+   (sites :92/:101, already consolidated to one shared class per the "N sites, 1 shared class"
+   `HeaderView.module.css`/`FooterView.module.css` precedent) and 1 more (site :56, the FAB label)
+   had **zero** post-migration detector hits. Adding a marker to a line with no violation is an
+   immediate `stale-marker` failure (`:224`) — do not add one defensively "to be safe."
+2. **A migration can introduce a *brand-new* violation a Tailwind-syntax scan never saw.** This
+   task's `shadow-lg` (a **named** utility, never scanned as a literal value pre-migration) compiles
+   to `--tw-shadow:...var(--tw-shadow-color,#0000001a)...` — the literal hex fallback is real CSS
+   text now, and the `color: hex color` pattern (a general pattern, not shadow-specific) catches it.
+   This is not a regression in the gate; it is the gate correctly scanning source text that only
+   became literal because of the migration.
+3. **Net result for this task:** 4 pre-migration markers → 2 post-migration markers, one carried
+   (`#00000014`, the bespoke upward-shadow arbitrary value, site :36) and one new (`#0000001a`,
+   `shadow-lg`'s compiled color fallback, site :50). Both were determined by I4 arm 1's actual
+   failure output (A1), never guessed. `check:design-tokens` → `0 violations / 0 stale-markers /
+   0 missing-reason` with exactly these two markers; adding markers for the 3 dropped sites was
+   verified to immediately regress to `stale-marker` and was not shipped.
+
+**A CSS-comment-specific trap (found and fixed in this session, not shipped broken).** The
+detector's `codeOnly` line-scrubbing (`scanContent`, `:355`) only strips a trailing `// comment` —
+built for JSX/TS. A `.module.css`'s `/* design-tokens-allow: ... — reason */` marker comment is
+**not** stripped before pattern-matching, so any Tailwind-bracket-shaped substring written inside
+your OWN reason text (e.g., quoting the original utility as `shadow-[0_-2px_16px_rgba(0,0,0,0.08)]`
+for readability) is scanned as if it were live code and produces a **second, self-inflicted**
+violation on the same line. Multi-line `/* ... */` block comments where every continuation line
+starts with `*` ARE skipped by `shouldSkipLine` (`:206-215`) — only a marker sharing a physical line
+with real code is at risk. **Rule: never quote Tailwind's own `word-[...]` bracket syntax inside a
+`.module.css` marker's reason text; describe the original utility in prose instead.**
+
+**The two-armed proof, reusable shape.** Write the moved declaration(s) with **no** marker first,
+run `npm run check:design-tokens`, and persist the failing transcript — it names the exact detected
+substring for anything that still matches, and its ABSENCE for anything that doesn't (which is
+itself the proof that no marker belongs there). Only then add markers using the exact strings the
+failure named, and re-run to `0/0/0`. A single green run proves nothing; the failing arm is the
+proof that the suppression is real, not vacuous — same shape as `check:assertion-liveness`'s
+`DEAD-NEW` detection (§14.9.23) and `check-design-tokens.mjs`'s own stale-marker rule.
+
+Session: `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md`.
+
+---
+
 ### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
 
 **Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date

@@ -12,7 +12,26 @@
  */
 
 import { describe, it, expect } from 'vitest'
-import { scanContent, stripJsxComments, parseInlineMarkers, REPORT_ONLY_CATEGORIES } from '../check-design-tokens.mjs'
+import { readFileSync } from 'node:fs'
+import {
+  scanContent,
+  stripJsxComments,
+  parseInlineMarkers,
+  REPORT_ONLY_CATEGORIES,
+  extractCssCustomPropertyDefinitions,
+} from '../check-design-tokens.mjs'
+
+// Task 718: the REAL src/app/globals.css definitions, read once — used as the
+// default globalsDefinedProps for the shared CSS helpers below so that
+// pre-existing fixtures referencing real tokens (--space-6, --border,
+// --foreground, --primary, etc.) resolve exactly as they do in production,
+// instead of every one of them becoming a spurious css-undefined-var finding
+// under the new category. This is not a "filesystem fixture" in the §23.5
+// sense (planted CONTENT stays in-memory strings) — it is the same resolution
+// source run() itself reads, so the test harness matches real behavior.
+const REAL_GLOBALS_DEFINED_PROPS = extractCssCustomPropertyDefinitions(
+  readFileSync('src/app/globals.css', 'utf8')
+)
 
 // A fixture path that does not match any scripts/design-tokens-allowlist.json
 // path-prefix entry, so allowlist short-circuiting never hides a planted finding.
@@ -195,7 +214,7 @@ describe('§C row 2 — function-wrapped (calc/min/max/clamp) raw px/rem (Task 4
 const CSS_FIXTURE_PATH = 'src/components/ui/__fixture-task714__.css'
 
 function findingsOfCss(content: string) {
-  return scanContent(content, CSS_FIXTURE_PATH, {})
+  return scanContent(content, CSS_FIXTURE_PATH, {}, REAL_GLOBALS_DEFINED_PROPS)
 }
 
 function regularCss(content: string) {
@@ -244,7 +263,7 @@ describe('§D — plain CSS declaration coverage: length/duration/z-index (Task 
   })
 
   it('does NOT flag a calc(var(...)) length declaration', () => {
-    expect(regularCss('.x { width: calc(var(--x) * 2); }')).toHaveLength(0)
+    expect(regularCss('.x { width: calc(var(--space-6) * 2); }')).toHaveLength(0)
   })
 
   it('does NOT flag zero values (0, 0px, 0rem)', () => {
@@ -362,7 +381,7 @@ describe('§E — shorthand/function-wrapped CSS declaration coverage (Task 716)
   })
 
   it('does NOT flag a calc() built entirely from a var() and a unitless number (R3)', () => {
-    expect(regularCss('.x { width: calc(var(--x) * 2); }')).toHaveLength(0)
+    expect(regularCss('.x { width: calc(var(--space-6) * 2); }')).toHaveLength(0)
   })
 
   it('does NOT flag zero/unitless/keyword multi-value forms (A2)', () => {
@@ -379,7 +398,7 @@ describe('§E — shorthand/function-wrapped CSS declaration coverage (Task 716)
   })
 
   it('exempts a literal inside a function whose SAME function also contains a var() reference (A4 nested — matches the frozen Task 408 rounded-[calc(var(--radius)-5px)] precedent)', () => {
-    expect(regularCss('.x { width: calc(var(--x) + 2px); }')).toHaveLength(0)
+    expect(regularCss('.x { width: calc(var(--space-6) + 2px); }')).toHaveLength(0)
   })
 
   it('flags every unit literal in a var()-free nested function (A4 — clamp with no token anchor)', () => {
@@ -484,5 +503,171 @@ describe('§F — reason-less CSS marker reports missing-reason, not stale-marke
     const all = findingsOf(`const style = { zIndex: 9999 } // design-tokens-allow: zIndex: 9999`)
     expect(all.some(f => f.cat === 'missing-reason')).toBe(true)
     expect(all.some(f => f.cat === 'stale-marker')).toBe(false)
+  })
+})
+
+describe('§H — undefined CSS custom-property reference coverage (Task 718, R4)', () => {
+  // These arms call scanContent directly (not the shared findingsOfCss/regularCss
+  // helpers) so each test controls its own globalsDefinedProps input explicitly —
+  // hermetic per-arm proof of each of R4's three resolution sources, rather than
+  // relying on the shared helper's REAL_GLOBALS_DEFINED_PROPS default.
+
+  it('flags a var() reference with no resolvable definition anywhere (R4/AC4 branch: undefined)', () => {
+    const findings = scanContent('.x { z-index: var(--z-does-not-exist); }', CSS_FIXTURE_PATH, {})
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-undefined-var', match: 'var(--z-does-not-exist)' })
+  })
+
+  it('does NOT flag a var() reference defined in globals.css (R4/AC4 branch: globals-defined)', () => {
+    const findings = scanContent(
+      '.x { color: var(--brand-only-in-globals); }',
+      CSS_FIXTURE_PATH,
+      {},
+      new Set(['--brand-only-in-globals'])
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag a var() reference defined locally in the same file (R4/AC4 branch: same-file-defined)', () => {
+    const findings = scanContent(
+      ':root {\n  --local-only: 4px;\n}\n.x {\n  gap: var(--local-only);\n}',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag var(--tw-...) or var(--mantine-...) — measured external prefixes (R4/AC4 branch: external-prefix, R6)', () => {
+    const findings = scanContent(
+      '.x {\n  color: var(--tw-ring-color);\n  background: var(--mantine-color-red-6);\n}',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag the measured Tailwind exact-name externals --spacing / --default-transition-timing-function (R6)', () => {
+    const findings = scanContent(
+      '.x {\n  width: calc(var(--spacing) * 4);\n  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));\n}',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag a var() reference inside a CSS comment (R4/AC4 branch: in-comment, A3)', () => {
+    const findings = scanContent(
+      '.x {\n  /* color: var(--totally-phantom-token); */\n  color: red;\n}',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag var(--x, fallback) even when --x is undefined (R4/AC4 branch: with-fallback, A5 decision)', () => {
+    const findings = scanContent(
+      '.x { color: var(--totally-phantom-token, red); }',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('DOES flag the same phantom token once its fallback is removed (control for the fallback arm above)', () => {
+    const findings = scanContent(
+      '.x { color: var(--totally-phantom-token); }',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('var(--totally-phantom-token)')
+  })
+
+  it('a var() used as ANOTHER var()\'s fallback is still independently resolved (real MobileBottomNavView.module.css:92 shape)', () => {
+    const findings = scanContent(
+      '.x { transition-timing-function: var(--tw-ease, var(--totally-phantom-token)); }',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('var(--totally-phantom-token)')
+  })
+
+  it('a path the path-level allowlist short-circuits is not scanned for css-undefined-var either (A4 — 717 owns narrowing this)', () => {
+    const findings = scanContent(
+      '.x { color: var(--totally-phantom-token); }',
+      'src/design-system/mantine/patterns/__fixture-task718__.module.css',
+      { 'src/design-system/mantine': 'test allowlist entry' }
+    )
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT run css-undefined-var on a .tsx file (cssOnly — zero non-CSS behavior change)', () => {
+    const findings = scanContent(
+      'const x = "var(--totally-phantom-token)"',
+      'src/components/ui/__fixture-task718b__.tsx',
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('a same-line design-tokens-allow marker suppresses a css-undefined-var finding', () => {
+    const suppressed = scanContent(
+      '.x { color: var(--totally-phantom-token); /* design-tokens-allow: var(--totally-phantom-token) — legacy override pending cleanup */ }',
+      CSS_FIXTURE_PATH,
+      {}
+    ).filter(f => f.cat === 'css-undefined-var')
+    expect(suppressed).toHaveLength(0)
+  })
+
+  it('an orphaned design-tokens-allow marker on a css-undefined-var value is a stale-marker', () => {
+    const all = scanContent(
+      '.x { color: red; /* design-tokens-allow: var(--totally-phantom-token) — declaration removed */ }',
+      CSS_FIXTURE_PATH,
+      {}
+    )
+    expect(all.some(f => f.cat === 'stale-marker' && f.match === 'var(--totally-phantom-token)')).toBe(true)
+  })
+
+  it('flags an uppercase VAR(--missing) reference the same as var(--missing) — CSS function names are case-insensitive (718R R1)', () => {
+    const findings = scanContent('.w { color: VAR(--phantom-f); }', CSS_FIXTURE_PATH, {})
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('VAR(--phantom-f)')
+  })
+
+  it('does NOT flag a var() reference on a line whose first non-space character is "*" — shouldSkipLine treats it as a comment line before any category runs; documented coverage limitation, 719 owns the cross-category fix (§23.6.c)', () => {
+    const findings = scanContent('*, *::before { color: var(--phantom-b); }', CSS_FIXTURE_PATH, {})
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag a var(...) call split across physical lines — the scan is line-based by design (§3.4); documented architectural limitation, unowned (§23.6.c)', () => {
+    const findings = scanContent('.z { color: var(\n  --phantom-e\n ); }', CSS_FIXTURE_PATH, {})
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('extractCssCustomPropertyDefinitions finds a custom property regardless of indentation/block nesting', () => {
+    const defs = extractCssCustomPropertyDefinitions('@theme inline {\n  --z-base: 0;\n  --z-toast: 100;\n}\n')
+    expect(defs.has('--z-base')).toBe(true)
+    expect(defs.has('--z-toast')).toBe(true)
+    expect(defs.has('--z-sticky')).toBe(false)
+  })
+
+  it('extractCssCustomPropertyDefinitions ignores a definition-shaped string inside a comment', () => {
+    const defs = extractCssCustomPropertyDefinitions('/* --z-commented: 5; */\n.x { color: red; }')
+    expect(defs.has('--z-commented')).toBe(false)
+  })
+
+  it('the real src/app/globals.css defines all 7 --z-* tokens at their §22.3 values (R1 regression lock)', () => {
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-base')).toBe(true)
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-dropdown')).toBe(true)
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-sticky')).toBe(true)
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-overlay')).toBe(true)
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-modal')).toBe(true)
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-popover')).toBe(true)
+    expect(REAL_GLOBALS_DEFINED_PROPS.has('--z-toast')).toBe(true)
   })
 })

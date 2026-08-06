@@ -656,28 +656,40 @@ Do NOT apply to panels, galleries, admin tables, dialogs, or generic cards.
 
 **Z-index** (reconciles `ui-rules.md §16`: Chrome=30 / Scrim=40 / Floating=50)
 
-> ⚠️ **NOT IMPLEMENTED — target state only. Do NOT write `var(--z-*)` in any stylesheet (Task 718).**
-> None of the `--z-*` tokens below is defined in `src/app/globals.css`, which states the opposite
-> explicitly at `:269-272`: *"No `--z-*` named tokens exist here."* A grep for `^\s*--z-[a-z-]+\s*:`
-> in `globals.css` returns zero matches, and no production build defines one. Consuming
-> `var(--z-sticky)` makes the declaration invalid at computed-value time; since `z-index` does not
-> inherit, it silently computes to `auto`. **The working scale is the numeric Tailwind utilities
-> (`z-30`/`z-40`/`z-50`) and raw `z-index: N` in `.module.css` with a `design-tokens-allow` marker.**
-> `check:design-tokens` cannot catch the mistake — it exempts anything shaped like `var(--token)`
-> without checking that the token resolves. Task 715 shipped this error into two chrome surfaces and
-> caught it only at review. **718** owns reconciling this table with `globals.css`.
+> ✅ **Defined by Task 718 (2026-08-06).** All seven `--z-*` tokens below are now real custom
+> properties in `src/app/globals.css`'s `@theme inline` block (`:279-285`), at exactly the values in
+> this table — `^\s*--z-[a-z-]+\s*:` returns 7 matches. `var(--z-sticky)` and its siblings resolve.
+> The prior ⚠️ NOT-IMPLEMENTED banner (added by Task 715's review, F1) is retired: Task 715 had
+> shipped `var(--z-sticky)` into two chrome surfaces while the token was tabled here but undefined in
+> `globals.css`, caught only at review. **718 also closed the detector blind spot** that let that
+> ship silently — `check:design-tokens` now has a `css-undefined-var` category (§23.6.c) that fails
+> closed on any `var(--x)` in `src/**/*.css` that does not resolve.
+>
+> **The "Use via" column below states the two forms that actually exist — not three.** Tailwind v4
+> has no `--z-index-*` theme namespace (measured: 0 occurrences in `tailwindcss`'s `theme.css` and
+> `dist/lib.js`; `z` is a bare-value functional utility, unlike `--space-N`'s bridge into
+> `--spacing-N`). Defining `--z-sticky` makes `var(--z-sticky)` resolve; it **cannot** make a
+> `z-sticky` utility class exist. Use `var(--z-*)` directly in CSS/inline style, or the bare-value
+> `z-30`/`z-40`/`z-50` Tailwind utilities — never a `z-{name}` class, which Tailwind will not generate.
 
 | Token | Value | Tier | Use via |
 |---|---|---|---|
-| `--z-base` | `0` | base | `z-base` or `z-0` — base page content |
-| `--z-dropdown` | `10` | within-card | `z-dropdown` or `z-10` — sticky cols, count badges, abs-within-card |
-| `--z-sticky` | `30` | chrome | `z-sticky` or `z-30` — site header, bottom nav, sticky admin header |
-| `--z-overlay` | `40` | scrim | `z-overlay` or `z-40` — sheet/dialog backdrop (covers chrome) |
-| `--z-modal` | `50` | floating | `z-modal` or `z-50` — dialog/sheet panels |
-| `--z-popover` | `50` | floating | `z-popover` or `z-50` — combobox, dropdowns (same tier as modal) |
-| `--z-toast` | `100` | highest | `z-toast` — Sonner toasts, ListingGallery lightbox (Task 405) |
+| `--z-base` | `0` | base | `var(--z-base)` or `z-0` — base page content |
+| `--z-dropdown` | `10` | within-card | `var(--z-dropdown)` or `z-10` — sticky cols, count badges, abs-within-card |
+| `--z-sticky` | `30` | chrome | `var(--z-sticky)` or `z-30` — site header, bottom nav, sticky admin header |
+| `--z-overlay` | `40` | scrim | `var(--z-overlay)` or `z-40` — sheet/dialog backdrop (covers chrome) |
+| `--z-modal` | `50` | floating | `var(--z-modal)` or `z-50` — dialog/sheet panels |
+| `--z-popover` | `50` | floating | `var(--z-popover)` or `z-50` — combobox, dropdowns (same tier as modal) |
+| `--z-toast` | `100` | highest | `var(--z-toast)` — Sonner toasts, ListingGallery lightbox (Task 405) |
 
 Exception: `z-[9999]` (Combobox mobile bottom sheet, PerfDevOverlay) is intentionally above the scale and stays as an allowlisted arbitrary value.
+
+**Zero rendered delta from this definition (Task 718, R2).** As of 2026-08-06, no `.css` or `.tsx`
+file under `src/` consumes any `--z-*` token — the two former consumers
+(`HeaderView.module.css:35`, `MobileBottomNavView.module.css:55`) carry a marked, unconsumed
+`z-index: 30` instead (Task 715 §5.3). Defining the tokens therefore cannot change a rendered pixel;
+it only makes the documentation and `globals.css` agree, and makes the next `var(--z-sticky)`
+consumption resolve instead of silently computing to `auto`.
 
 ### §22.4 — Motion tokens
 
@@ -1096,6 +1108,80 @@ against §22.3's z-index table. That table is documentation-only — see its ⚠
 entry allowlists the whole directory at the path level, exempting
 `MantineListingCardPattern.module.css` from token enforcement entirely regardless of this flip —
 registered as **717**, out of scope for Task 715 (its own blast radius across a whole library).
+
+### §23.6.c — Undefined CSS custom-property references: `css-undefined-var` (Task 718, R4)
+
+> **Origin.** Every category above validates *syntax* — `var(--token)` is exempt everywhere it
+> appears, regardless of whether `--token` is actually defined. Task 715 shipped `var(--z-sticky)`
+> into two chrome surfaces on the strength of §22.3's table alone; `--z-sticky` did not exist in
+> `globals.css`, so the declaration was invalid at computed-value time and silently computed to
+> `auto` — caught only at review (Task 715 §5.3, F1). `css-undefined-var` closes that blind spot:
+> **blocking from the start**, no report-only staging, because the pre-existing baseline measured 0
+> (§3.6 of the Task 718 kickoff).
+
+**Scope:** `.css` files only (`cssOnly`), a `var(--x)` reference with NO resolvable definition. A
+reference resolves against exactly three sources:
+
+1. **`src/app/globals.css`** — the token source of truth. It is itself excluded from scanning
+   (`SKIP_FILES`), so `run()` reads it once and threads its definitions through every `.css` scan as
+   `globalsDefinedProps`.
+2. **The same file being scanned** — a `--x:` declaration anywhere in that file (position-independent
+   — the detector does not model selector/media scoping, a documented simplification consistent with
+   the rest of this file's line-based design).
+3. **A measured external prefix/exact-name list** — variables a framework supplies at build time that
+   this repo does not define. Every entry is proven present in the production build and/or
+   `node_modules` (measured 2026-08-06):
+
+   | Entry | Kind | Proof |
+   |---|---|---|
+   | `--tw-` | prefix | Tailwind v4 internal utility vars (`--tw-shadow`, `--tw-ring-color`, …) — present in `.next/static/css/*.css`, generated by every Tailwind utility class |
+   | `--mantine-` | prefix | Mantine v9 `createTheme()` output — present in `.next/static/css/*.css` and every `node_modules/@mantine/core/styles/*.css` |
+   | `--spacing` | exact name | Tailwind v4's own base spacing-scale unit (`--spacing: .25rem`) — `node_modules/tailwindcss/theme.css:325`, also in the production build. **Distinct** from this repo's `--spacing-N` named tokens |
+   | `--default-transition-timing-function` | exact name | Tailwind v4's own base easing variable — `node_modules/tailwindcss/theme.css:493`, also in the production build. Consumed as the fallback arm of a nested `var(--tw-ease, var(--default-transition-timing-function))` at `MobileBottomNavView.module.css:92` |
+
+   `--z-` is deliberately **absent** — it is the token family this task defines in `globals.css`; if
+   it needed the external list, R1 failed.
+
+**A5 — the `var(--x, fallback)` decision:** a reference **with** a fallback is treated as resolved,
+even when `--x` itself is undefined — it cannot silently fall back to the property's initial value,
+which is the exact failure mode this category exists to catch. Only a `var()` with **no** fallback
+and no resolvable definition is a finding. A fallback is detected as a top-level comma inside the
+`var(...)` call, scoped to that call's own paren depth, so a nested reference used *as* another
+`var()`'s fallback (the real `MobileBottomNavView.module.css:92` shape) is still independently
+checked for its own resolution.
+
+**A3 — comment stripping reused, not duplicated:** runs on the same CSS-comment-stripped source
+(`codeOnlyCss`) the shorthand `css-length`/`css-duration`/`css-zindex` scanner already uses.
+
+**A4 — known coverage limitation, not closed here:** the path-level allowlist
+(`scripts/design-tokens-allowlist.json`) still short-circuits a whole file before any category runs,
+so `src/design-system/mantine/**` is exempt from `css-undefined-var` too. Narrowing that allowlist is
+**717**'s blast radius, not this task's.
+
+**A6 — known coverage limitation, not closed here:** `globals.css` is excluded from the scanner
+entirely (unchanged), so a self-referential mistake inside `globals.css` itself (e.g. one token
+defined in terms of a misspelled sibling) is not caught by this category.
+
+**A7 — known coverage limitation, not closed here (718R):** a `var(` reference on a line whose
+first non-space character is `*` is silently not a finding, because `shouldSkipLine` treats any such
+line as a comment before any category runs — a CSS-comment heuristic that is also the universal
+selector. This blind spot is **cross-category** (`css-length`, `css-duration`, `css-zindex` and
+`css-undefined-var` are all affected, not just this one), so fixing it here would exceed this task's
+scope. Owner: **719**.
+
+**A8 — known coverage limitation, not closed here (718R):** a `var(` call split across physical
+lines (the opening paren on one line, its contents or closing paren on another) is silently not a
+finding, because `findUndefinedCssVarReferences` scans one physical line and bails on an unbalanced
+paren. This is deliberate and consistent with the whole file's line-based scan model (§3.4 of the
+718R kickoff) — making one category multi-line would give it a different source model from every
+other category in the same loop. Owner: none — architectural, unowned; fixing it is a
+scanner-architecture task, not a regex change.
+
+**Proof (Task 718 R5, D32):** a planted `var(--z-does-not-exist)` in a scanned `.css` file makes
+`npm run check:design-tokens` exit non-zero, naming it; removing the plant restores exit 0 — both
+arms captured unpiped, `git status` confirming the plant is gone. Detector unit suite: 16 new arms
+(§H) covering all seven branches above, `npx vitest run scripts/__tests__/check-design-tokens.test.ts`
+— 85/85 passing (69 pre-existing + 16 new).
 
 ---
 

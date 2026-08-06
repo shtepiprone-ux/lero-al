@@ -3,10 +3,10 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — 719 + 720 ✅ approved → archived; Sprint 52's design-token half is closed
+## Last Session (2026-08-06) — design-token arc closed (714→720, archived); **711** kickoff filed; **721** + **722** registered
 
-- **719 + 720 `APPROVED WITH NOTES`** — archive ledger. Sprint 52's design-token arc (714 · 716 · 715 · 718 · 718R · 719 · 720) is complete; **711** and **717** are all that remain in the sprint.
-- **Rule defect fixed, not an executor lapse:** `ai-behavior.md` step 5 ordered the counting gates *"before writing the session log"*, which cannot reconcile — the log and this file are themselves `git status` paths. 719 and 720 both shipped a false "N modified, 0 untracked" claim by following it. New **step 5a** mandates the two-pass pattern (integrity early, both gates again after the path set is final). Both session logs corrected at review.
+- **711 `KICKOFF FILED`** — re-anchor the two assertions dead in **0/852** applicable cells. Design measured the manifest rather than trusting the registry: 852 of 1184 cells really are <640, so the viewport set is **not** the cause and the `data-slot` selectors are. Owner split the four 710-review findings into **721** (after 711 — `LIVE-THIN` needs 711's live ratios).
+- **722 registered — a third dead gate, found during 711's design.** `fullWidthControlsAtMobile` reports `{"true": 852}` across every applicable cell and never `false`, including on a story with no form controls, because `check-stories-rendered.mjs:1112-1145` has no `checkedAny` guard. It is **vacuously true**, and `check-assertion-liveness.mjs` — which detects null-ness only — calls it LIVE.
 
 ## Open — needs action
 
@@ -35,12 +35,12 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. Remaining: **711** · **717** reserved. 🟠 OPEN.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. Remaining: **711** (kickoff filed) → **721** · **722** · **717**. 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **720**, NEXT FREE **721**
+## Task registry — single source for every open number. Last used **722**, NEXT FREE **723**
 
 | # | State | What |
 |---|---|---|
@@ -53,7 +53,9 @@
 | 695 | reserved, blocked on 691 — Sprint 46 | **De-Tailwind exit condition for the overlay pair** — drop the `@theme inline` copy + `--color-overlay*` namespace once the last of **33** overlay utilities across **7** files is gone (`PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGallery` 5 · `LightboxView` 4 · `MantineListingGalleryPattern` 3 · `ImageUpload` 3 · `AdminUserAvatar` 1). **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 + 662 F2. |
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
-| 711 | reserved — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM; their selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) Mantine never renders — the §14.9.9 `PORTAL_SELECTOR` defect again. Planted proof per assertion. **Must fold in four 710-review findings:** `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · the `critical-flow-registry` row-50 + `2026-08-0X` citation fixes · a `LIVE-THIN` threshold (`heroSearchWrapInBand` resolves in only 4/1184 cells). |
+| 711 | **KICKOFF FILED** — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` (`check-stories-rendered.mjs:1161`, `:1185-1192`) onto **measured** Mantine DOM — both are **0/852** applicable cells; `data-slot` is shadcn-only (**0** files under `design-system/mantine`). Viewport excluded as cause: 852 of 1184 cells really are <640. Census-before-selector (**D33**), honest `checkedAny→null` contract, planted proof ×2, plus the free `STALE-ENTRY` comparator. `Sprint_52_kickoff_prompt_Task_711_…md`. |
+| 721 | reserved, after 711 — Sprint 52 | The four 710-review findings, split out of 711 (owner, 2026-08-06): `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · `LIVE-THIN` threshold (needs 711's live ratios first) · the 2 surviving `2026-08-0X` citations (`design-system.md:1086`, `storybook-governance.md:1586`). **F3's "row 50" is unresolvable from the repo** — no numbered rows in `critical-flow-registry.md`, no mention in 710's log; locate or report `BLOCKED`. |
+| 722 | reserved, independent — Sprint 52 | **`fullWidthControlsAtMobile` is vacuously true.** `{"true": 852}` across all 852 applicable cells, never `false`, including on `Alert/Default` which renders no control (its sibling honestly reports `null` there). `check-stories-rendered.mjs:1112-1145` has **no `checkedAny` guard**, so a zero-match cell returns `true`; 2 of its 3 arms are the same shadcn `data-slot` selectors. `check-assertion-liveness.mjs` sees null-ness only → classifies it **LIVE**. Found during 711's design. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.

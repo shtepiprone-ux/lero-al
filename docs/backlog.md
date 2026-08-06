@@ -3,10 +3,10 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — 710 · 712 · 713 · 714 approved and archived; 716 implemented, awaiting review
+## Last Session (2026-08-06) — 710 · 712 · 713 · 714 archived; 715 corrected + approved; 716 awaiting review
 
-- **Review queue cleared.** 710 (assertion-liveness meta-gate) · 712 (route-shell de-Tailwind + cl. 16c story parity) · 713 (MobileBottomNav + app-shell) · 714 (CSS-declaration token coverage), all `APPROVED WITH NOTES`. Sprints **49 · 50 · 51** closed — detail in the archive ledger.
-- **716 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** (`sessions/2026-08-06-task716-…md`): shorthand/function-wrapped `css-length`/`css-duration`/`css-zindex` coverage + CSS marker missing-reason fix. Re-run census: **60 literals/6 files (+15 vs 714's 45)**. **715 runs next** once reviewed, per owner sequence.
+- **Review queue cleared.** 710 · 712 · 713 · 714 all `APPROVED WITH NOTES`; Sprints **49 · 50 · 51** closed — archive ledger. **716** awaiting review (shorthand `css-length`/`css-duration`/`css-zindex` coverage + CSS marker fix; census 60/6 files).
+- **715 `APPROVED WITH NOTES`** — all 60 items remediated (**30 tokenized / 30 marked**), `REPORT_ONLY_CATEGORIES` flipped empty, both plant arms proven, 166/168 md5 (2 documented harness-noise), 69/69 tests, build 0. Review **F1**: 2 sites had consumed `var(--z-sticky)`, a §22.3 **doc-only** token `globals.css` never defines → would compute to `z-index:auto`; corrected in-session to marked `z-index: 30` under owner waiver. **718** registered.
 
 ## Open — needs action
 
@@ -35,12 +35,12 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **716 IMPLEMENTED, AWAITING REVIEW** · **715 runs next** · 711 reserved. 🟠 OPEN.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **715 ✅** · **716 IMPLEMENTED, AWAITING REVIEW** (last of the design-token half) · 711 · **717** (path allowlist, §3.6) · **718** (§22.3 phantom `--z-*` tokens) reserved. 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **716**, NEXT FREE **717**
+## Task registry — single source for every open number. Last used **718**, NEXT FREE **719**
 
 | # | State | What |
 |---|---|---|
@@ -54,8 +54,10 @@
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
 | 711 | reserved — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM; their selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) Mantine never renders — the §14.9.9 `PORTAL_SELECTOR` defect again. Planted proof per assertion. **Must fold in four 710-review findings:** `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · the `critical-flow-registry` row-50 + `2026-08-0X` citation fixes · a `LIVE-THIN` threshold (`heroSearchWrapInBand` resolves in only 4/1184 cells). |
-| 715 | blocked on 716 review — Sprint 52, **runs next** | Strict flip of `css-length`/`css-duration`/`css-zindex` + remediation. **Consume 716's 60-item re-run inventory** (`task716-css-declaration-inventory.md`), **not 714's 45-item one**. Owns the N1-vs-artifact policy call, incl. `font-size:10px` vs `--text-2xs` (§22.2 disallows it for nav labels). |
+| 715 | ✅ **APPROVED WITH NOTES** — Sprint 52 | Remediated all 60 items from 716's inventory (**30** tokenized against §22, **30** marked), restored the pre-713 nav-label `10px` reasons verbatim, flipped `REPORT_ONLY_CATEGORIES` to empty (`check-design-tokens.mjs:262`, one line). Review F1 corrected 2 `var(--z-sticky)` consumptions of a non-existent token → marked `z-index: 30`. `sessions/2026-08-06-task715-…md`. |
 | 716 | **IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** — Sprint 52 | Shorthand/function-wrapped `css-length`/`css-duration`/`css-zindex` detection landed (per-literal, function-scoped `var()` exemption — Task 408's whole-match filter generalized correctly for declaration lists). Fixed the reason-less CSS marker `stale-marker` misreport → `missing-reason`. 1px policy: single-value-only exemption. `sessions/2026-08-06-task716-…md`. |
+| 718 | reserved — Sprint 52 | **`docs/design-system.md` §22.3 documents 7 `--z-*` tokens that do not exist.** `globals.css` defines none and says so at `:269-272`; no build defines one. Consuming `var(--z-sticky)` → invalid-at-computed-value → `z-index:auto`. Shipped into 2 chrome surfaces by 715, caught at review (F1). Table now carries a ⚠️ NOT-IMPLEMENTED banner; 718 decides **define the tokens or delete the table**, and adds the gate half — `check:design-tokens` exempts anything shaped like `var(--token)` without checking it resolves (adjacent to reserved **700**). |
+| 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
 - **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).

@@ -12,7 +12,7 @@
  */
 
 import { describe, it, expect } from 'vitest'
-import { scanContent, stripJsxComments, parseInlineMarkers } from '../check-design-tokens.mjs'
+import { scanContent, stripJsxComments, parseInlineMarkers, REPORT_ONLY_CATEGORIES } from '../check-design-tokens.mjs'
 
 // A fixture path that does not match any scripts/design-tokens-allowlist.json
 // path-prefix entry, so allowlist short-circuiting never hides a planted finding.
@@ -437,6 +437,22 @@ describe('§E — shorthand/function-wrapped CSS declaration coverage (Task 716)
       '.x {\n  border-bottom: 1px solid var(--border); /* design-tokens-allow: border-bottom: 1px — hairline divider inside a shorthand, no scale token */\n}'
     )
     expect(suppressed).toHaveLength(0)
+  })
+})
+
+describe('§G — REPORT_ONLY_CATEGORIES strict flip (Task 715 R4)', () => {
+  it('is empty — css-length/css-duration/css-zindex are no longer report-only', () => {
+    expect(REPORT_ONLY_CATEGORIES.size).toBe(0)
+    expect(REPORT_ONLY_CATEGORIES.has('css-length')).toBe(false)
+    expect(REPORT_ONLY_CATEGORIES.has('css-duration')).toBe(false)
+    expect(REPORT_ONLY_CATEGORIES.has('css-zindex')).toBe(false)
+  })
+
+  it('a raw css-length literal is a regular (blocking) finding, not filtered as report-only', () => {
+    const findings = regularCss('.x {\n  margin-top: 5px;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'margin-top: 5px' })
+    expect(REPORT_ONLY_CATEGORIES.has(findings[0].cat)).toBe(false)
   })
 })
 

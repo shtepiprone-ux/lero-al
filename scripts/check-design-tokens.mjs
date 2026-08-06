@@ -259,7 +259,7 @@ export const DETECTION_PATTERNS = [
 // their own heading, but never counted toward the strict/blocking exit code.
 // 715 owns the strict flip once the pre-existing inventory (Task 714 R6) is
 // remediated or explicitly marker-suppressed.
-export const REPORT_ONLY_CATEGORIES = new Set(['css-length', 'css-duration', 'css-zindex']);
+export const REPORT_ONLY_CATEGORIES = /** @type {Set<string>} */ (new Set([]));
 
 // ── Shorthand / function-wrapped CSS declaration coverage (Task 716) ─────────
 //

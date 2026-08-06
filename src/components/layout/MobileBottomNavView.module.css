@@ -52,12 +52,12 @@
     bottom: var(--space-0); /* bottom-0 */
     left: var(--space-0); /* left-0 */
     right: var(--space-0); /* right-0 */
-    z-index: 30; /* z-30 — no --z-* named token exists (globals.css, HeaderView.module.css:35 precedent) */
+    z-index: 30; /* z-30 — no --z-* named token exists (globals.css:269-272, HeaderView.module.css:35 precedent) */ /* design-tokens-allow: z-index: 30 — chrome stacking level; docs/design-system.md §22.3 tables a --z-sticky at 30 but globals.css defines no --z-* custom property, so consuming it would be invalid-at-computed-value and fall back to z-index:auto (Task 718) */
     background-color: var(--card); /* bg-card */
     border-top-style: var(--tw-border-style); /* border-t */
     border-top-width: 1px; /* border-t */
     border-top-color: var(--border); /* border-t — ambient shadcn `* { border-border }` base rule, measured I1 */
-    --tw-shadow: 0 -2px 16px var(--tw-shadow-color, #00000014); /* design-tokens-allow: #00000014 — bespoke upward nav shadow (negative-y offset), the prior arbitrary shadow utility from MobileBottomNavView.tsx:36; no --shadow-* token matches upward direction (Task 408 detector blind spot); rawValue determined by the I4 arm-1 failure, not guessed (Task 713 A1) */
+    --tw-shadow: 0 -2px 16px var(--tw-shadow-color, #00000014); /* design-tokens-allow: #00000014 — bespoke upward nav shadow (negative-y offset), the prior arbitrary shadow utility from MobileBottomNavView.tsx:36; no --shadow-* token matches upward direction (Task 408 detector blind spot); rawValue determined by the I4 arm-1 failure, not guessed (Task 713 A1) */ /* design-tokens-allow: --tw-shadow: -2px — bespoke upward nav shadow Y-offset; no --shadow-* token composes a single offset value (Task 716 delta, marked Task 715) */ /* design-tokens-allow: --tw-shadow: 16px — same bespoke shadow, blur-radius component (Task 716 delta, marked Task 715) */
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     display: flex; /* flex */
     align-items: stretch; /* items-stretch */
@@ -80,18 +80,18 @@
   .fab {
     height: var(--space-12); /* h-12 */
     width: var(--space-12); /* w-12 */
-    border-radius: 3.40282e38px; /* rounded-full */
+    border-radius: 3.40282e38px; /* rounded-full */ /* design-tokens-allow: border-radius: 3.40282e38px — rounded-full's own compiled magic number; Tailwind's infinity-approximation constant for a full pill radius, no §22 token represents an unbounded circle (Task 715) */
     display: flex; /* flex */
     align-items: center; /* items-center */
     justify-content: center; /* justify-center */
-    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color,#0000001a), 0 4px 6px -4px var(--tw-shadow-color,#0000001a); /* design-tokens-allow: #0000001a — Tailwind's own compiled shadow-lg color fallback; a NEW finding, not one of the 4 pre-migration TSX markers: the raw-value scanner only matches Tailwind's own arbitrary-bracket shadow syntax, so the named shadow-lg utility was never scanned as a literal hex in the pre-migration .tsx source — the D28 migration made it literal, scannable CSS text for the first time (Task 713) */
+    --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color,#0000001a), 0 4px 6px -4px var(--tw-shadow-color,#0000001a); /* design-tokens-allow: #0000001a — Tailwind's own compiled shadow-lg color fallback; a NEW finding, not one of the 4 pre-migration TSX markers: the raw-value scanner only matches Tailwind's own arbitrary-bracket shadow syntax, so the named shadow-lg utility was never scanned as a literal hex in the pre-migration .tsx source — the D28 migration made it literal, scannable CSS text for the first time (Task 713) */ /* design-tokens-allow: --tw-shadow: 10px — Tailwind's own compiled shadow-lg numeric expansion (matches --shadow-lg's composite value, §22.3); the composite already has a token, but no per-offset length token exists to substitute this one component (Task 716 delta, marked Task 715) */ /* design-tokens-allow: --tw-shadow: 15px — same shadow-lg expansion (Task 715) */ /* design-tokens-allow: --tw-shadow: -3px — same shadow-lg expansion (Task 715) */ /* design-tokens-allow: --tw-shadow: 4px — same shadow-lg expansion (coincidentally equals --space-1's 4px, but this is a shadow offset, not a spacing usage — not N1, Task 715) */ /* design-tokens-allow: --tw-shadow: 6px — same shadow-lg expansion (Task 715) */ /* design-tokens-allow: --tw-shadow: -4px — same shadow-lg expansion (Task 715) */
     --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color,currentcolor); /* ring-2 */
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
     --tw-ring-color: var(--background); /* ring-background */
     transition-property: transform, translate, scale, rotate; /* transition-transform */
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: .15s; /* duration-150 */
-    --tw-duration: .15s;
+    transition-duration: .15s; /* duration-150 */ /* design-tokens-allow: transition-duration: .15s — 150ms matches no §22.4 duration token (fast=100ms/base=200ms/slow=300ms, Task 715) */
+    --tw-duration: .15s; /* design-tokens-allow: --tw-duration: .15s — custom-property mirror of the same 150ms value above (Task 715) */
     background-color: var(--primary); /* bg-primary — the active.add === false branch */
   }
   .fabLink:active .fab {
@@ -120,7 +120,7 @@
 
   /* Site :56 — FAB label span */
   .fabLabel {
-    font-size: 10px;
+    font-size: 10px; /* design-tokens-allow: font-size: 10px — primary MobileBottomNav FAB label; interactive/mobile-critical nav text (MobileBottomNav protection) — restored verbatim from the pre-713 marker (git show 8199a5aae^:src/components/layout/MobileBottomNavView.tsx:56, Task 715 R3) */
     --tw-font-weight: 500; /* font-medium */
     font-weight: 500;
     color: var(--muted-foreground); /* text-muted-foreground */
@@ -138,7 +138,7 @@
     gap: calc(var(--spacing) * .5); /* gap-0.5 */
     transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to; /* transition-colors */
     transition-timing-function: cubic-bezier(.4, 0, .2, 1); /* --default-transition-timing-function, resolved (I2) */
-    transition-duration: .15s; /* --default-transition-duration, resolved (I2) */
+    transition-duration: .15s; /* --default-transition-duration, resolved (I2) */ /* design-tokens-allow: transition-duration: .15s — 150ms matches no §22.4 duration token (fast=100ms/base=200ms/slow=300ms, Task 715) */
     min-height: 100%; /* min-h-full */
     color: var(--muted-foreground); /* the inactive branch */
   }
@@ -161,7 +161,7 @@
 
   /* Sites :92/:101 — nav item label (shared — see header comment) */
   .navItemLabel {
-    font-size: 10px;
+    font-size: 10px; /* design-tokens-allow: font-size: 10px — primary MobileBottomNav nav item label; interactive/mobile-critical nav text (MobileBottomNav protection) — restored verbatim from the pre-713 markers (git show 8199a5aae^:src/components/layout/MobileBottomNavView.tsx:92,:101 — both TSX sites shared this exact reason and are consolidated into this one shared class, Task 715 R3) */
     --tw-font-weight: 500; /* font-medium */
     font-weight: 500;
     --tw-leading: 1; /* leading-none */

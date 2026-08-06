@@ -32,12 +32,12 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 30; /* z-30 — no --z-* named token exists (globals.css:264-266) */
+  z-index: 30; /* z-30 — no --z-* named token exists (globals.css:269-272) */ /* design-tokens-allow: z-index: 30 — chrome stacking level; docs/design-system.md §22.3 tables a --z-sticky at 30 but globals.css defines no --z-* custom property, so consuming it would be invalid-at-computed-value and fall back to z-index:auto (Task 718) */
   width: 100%;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--border); /* design-tokens-allow: border-bottom: 1px — hairline border-width, no §22.1 spacing token targets border-width (Task 715) */
   background-color: color-mix(in oklab, var(--background) 95%, transparent); /* bg-background/95 fallback */
-  backdrop-filter: blur(8px); /* backdrop-blur — unconditional in the compiled Tailwind output */
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px); /* backdrop-blur — unconditional in the compiled Tailwind output */ /* design-tokens-allow: backdrop-filter: 8px — no §22 token category exists for blur radius (Task 715) */
+  -webkit-backdrop-filter: blur(8px); /* design-tokens-allow: -webkit-backdrop-filter: 8px — vendor-prefixed twin of the blur radius above, same reasoning (Task 715) */
 }
 @supports (backdrop-filter: blur(0px)) {
   .header {
@@ -52,13 +52,13 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.5rem; /* gap-2 — measured 8px, I2 */
-  padding-block: 0.5rem; /* py-2 — measured 8px @<390, I2 */
+  gap: var(--space-2); /* gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
+  padding-block: var(--space-2); /* py-2 — measured 8px @<390, I2; --space-2 = 0.5rem (§22.1) */
 }
 @media (min-width: 390px) {
   .bar {
     flex-wrap: nowrap;
-    height: 4rem; /* h-16 — measured 64px @>=390, I2 */
+    height: var(--space-16); /* h-16 — measured 64px @>=390, I2; --space-16 = 4rem (§22.1) */
     padding-block: 0;
   }
 }
@@ -67,10 +67,10 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.25rem; /* gap-1 — measured 4px, I2 */
+  gap: var(--space-1); /* gap-1 — measured 4px, I2; --space-1 = 0.25rem (§22.1) */
   font-weight: 700; /* font-bold */
-  font-size: 1.25rem; /* text-xl — measured 20px, I2 */
-  line-height: 1.75rem; /* text-xl's own line-height (compiled Tailwind output), I2 */
+  font-size: var(--text-xl); /* text-xl — measured 20px, I2; --text-xl = 1.25rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--text-xl--line-height); /* text-xl's own line-height (compiled Tailwind output), I2; --text-xl--line-height = 1.75rem (§22.2) */
 }
 
 /* Site #6 — brand <Text unstyled component="span"> */
@@ -87,18 +87,18 @@
 .desktopNav {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* gap-6 — measured 24px, I2 */
+  gap: var(--space-6); /* gap-6 — measured 24px, I2; --space-6 = 1.5rem (§22.1) */
 }
 
 /* Sites #1 / #2 — NavLinks <Anchor unstyled component={Link}> (shared) */
 .navLink {
-  font-size: 0.875rem; /* text-sm — measured 14px, I2 */
-  line-height: 1.25rem; /* text-sm's own line-height (compiled Tailwind output), I2 */
+  font-size: var(--text-sm); /* text-sm — measured 14px, I2; --text-sm = 0.875rem (§22.2), paired with line-height below (A2) */
+  line-height: var(--text-sm--line-height); /* text-sm's own line-height (compiled Tailwind output), I2; --text-sm--line-height = 1.25rem (§22.2) */
   font-weight: 500; /* font-medium */
   color: color-mix(in oklab, var(--foreground) 80%, transparent); /* text-foreground/80 */
   transition-property: color, background-color, border-color, outline-color, text-decoration-color,
     fill, stroke; /* transition-colors — measured, I2 */
-  transition-duration: 0.15s;
+  transition-duration: 0.15s; /* design-tokens-allow: transition-duration: 0.15s — Tailwind's default 150ms transition duration, no §22.4 duration token matches (fast=100ms/base=200ms/slow=300ms, Task 715) */
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .navLink:hover {
@@ -111,7 +111,7 @@
   align-items: center;
   width: 100%; /* w-full — measured, I2 */
   justify-content: space-between;
-  gap: 0.5rem; /* gap-2 — measured 8px, I2 */
+  gap: var(--space-2); /* gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
 }
 @media (min-width: 390px) {
   .rightCluster {
@@ -124,5 +124,5 @@
 .userMenuSlot {
   display: flex;
   align-items: center;
-  gap: 0.5rem; /* gap-2 — measured 8px, I2 */
+  gap: var(--space-2); /* gap-2 — measured 8px, I2; --space-2 = 0.5rem (§22.1) */
 }

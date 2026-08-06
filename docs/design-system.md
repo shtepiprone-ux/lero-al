@@ -656,6 +656,17 @@ Do NOT apply to panels, galleries, admin tables, dialogs, or generic cards.
 
 **Z-index** (reconciles `ui-rules.md §16`: Chrome=30 / Scrim=40 / Floating=50)
 
+> ⚠️ **NOT IMPLEMENTED — target state only. Do NOT write `var(--z-*)` in any stylesheet (Task 718).**
+> None of the `--z-*` tokens below is defined in `src/app/globals.css`, which states the opposite
+> explicitly at `:269-272`: *"No `--z-*` named tokens exist here."* A grep for `^\s*--z-[a-z-]+\s*:`
+> in `globals.css` returns zero matches, and no production build defines one. Consuming
+> `var(--z-sticky)` makes the declaration invalid at computed-value time; since `z-index` does not
+> inherit, it silently computes to `auto`. **The working scale is the numeric Tailwind utilities
+> (`z-30`/`z-40`/`z-50`) and raw `z-index: N` in `.module.css` with a `design-tokens-allow` marker.**
+> `check:design-tokens` cannot catch the mistake — it exempts anything shaped like `var(--token)`
+> without checking that the token resolves. Task 715 shipped this error into two chrome surfaces and
+> caught it only at review. **718** owns reconciling this table with `globals.css`.
+
 | Token | Value | Tier | Use via |
 |---|---|---|---|
 | `--z-base` | `0` | base | `z-base` or `z-0` — base page content |
@@ -977,15 +988,11 @@ marker must reproduce byte-for-byte. Task 716 keeps this convention for shorthan
 excludes preludes without special-casing. Proven with a dedicated test — including a Task 716
 regression arm confirming the shorthand-scanning code path is equally excluded.
 
-**Report-only, not silent (R3/A4):** `REPORT_ONLY_CATEGORIES` (`css-length`, `css-duration`,
-`css-zindex`) are excluded from the strict/blocking exit-code computation and from the main
-per-area violation printout, but always printed under their own `CSS DECLARATION LITERALS —
-report-only, not blocking` heading with an explicit count — never silently absorbed. **Superseded
-by the Task 716 measurement below.**
-
-**715** owns the strict flip (removing these categories from `REPORT_ONLY_CATEGORIES`) and the
-remediation/marker-suppression of the inventory below, per the N1-vs-compiled-artifact policy call
-surfaced (not decided) here.
+**Report-only, not silent (R3/A4), historical:** `REPORT_ONLY_CATEGORIES` (`css-length`,
+`css-duration`, `css-zindex`) were excluded from the strict/blocking exit-code computation and from
+the main per-area violation printout, but always printed under their own `CSS DECLARATION LITERALS —
+report-only, not blocking` heading with an explicit count — never silently absorbed. **Superseded by
+Task 715 (§23.6.b) — the categories now block.**
 
 ### §23.6.a — Shorthand / function-wrapped generalization (Task 716)
 
@@ -1051,6 +1058,44 @@ weakening: (1) the 1px-in-shorthand assertion (now split so the single-value cas
 new §E arm proves the shorthand case is a finding, per A3/AC1); (2) the reason-less-CSS-marker
 assertion (flipped from asserting the `stale-marker` bug to asserting the `missing-reason` fix, per
 R4/AC4). **67 total, all passing** (`npx vitest run scripts/__tests__/check-design-tokens.test.ts`).
+
+### §23.6.b — Strict flip and inventory closure (Task 715)
+
+**`css-length`/`css-duration`/`css-zindex` are now BLOCKING.** `REPORT_ONLY_CATEGORIES` is empty
+(`scripts/check-design-tokens.mjs:262`) — `npm run check:design-tokens` (which already runs
+`--strict`, Task 407) now exits non-zero on any raw length, duration, or z-index literal in a
+`.css` file under `src/**`, matching the treatment every other category already received.
+
+**The 716 60-item inventory is closed.** Every item was either tokenized (`N1-VIOLATION`, consuming
+its §22 token — value verified equal, not assumed) or marked with a `design-tokens-allow` reason
+(`COMPILED-ARTIFACT`) across the six owning files (`FooterView`, `HeaderView`,
+`MobileBottomNavView`, `FeaturedListingsView`, `LatestListingsView`, `PopularLocationsView`
+`.module.css`). Full literal → token → §22-value substitution table and every marker string:
+`docs/sessions/2026-08-0X-task715-design-tokens-strict-flip-and-remediation.md`.
+
+**The nav-label `10px` decision (§3.3 of the Task 715 kickoff) is a restoration, not a new policy
+call.** `MobileBottomNavView.module.css`'s `.fabLabel`/`.navItemLabel` `font-size: 10px` sites carry
+`design-tokens-allow` markers reusing the exact reason text from the pre-Task-713 TSX markers
+(`git show 8199a5aae^:src/components/layout/MobileBottomNavView.tsx:56,:92,:101`) — consistent with
+this section's own `--text-2xs` prohibition (§22.2: "Do NOT use for … nav labels"). `--text-2xs` was
+never substituted here.
+
+**Two remediated files have no rendered Storybook coverage** (`FeaturedListingsView.module.css`,
+`LatestListingsView.module.css` — no story lives under the `--mantine-only` `Mantine/Primitives/` or
+`Patterns/Mantine/` title prefixes). Their substitutions are proven by a numeric literal→token
+equality table instead of the rendered comparator — recorded in the Task 715 session log, not
+papered over.
+
+**The `z-index: 30` sites are marked, not tokenized (review finding F1).** 716's inventory classified
+`HeaderView.module.css:35` and `MobileBottomNavView.module.css:55` as `N1-VIOLATION → --z-sticky (30)`
+against §22.3's z-index table. That table is documentation-only — see its ⚠️ banner. Both sites keep
+`z-index: 30` with a `design-tokens-allow` marker, matching `PopularLocationsView.module.css:56`'s
+`z-index: 1`. Final split: **30 tokenized / 30 marked**.
+
+**Standing gap, not closed here:** `scripts/design-tokens-allowlist.json`'s `src/design-system/mantine`
+entry allowlists the whole directory at the path level, exempting
+`MantineListingCardPattern.module.css` from token enforcement entirely regardless of this flip —
+registered as **717**, out of scope for Task 715 (its own blast radius across a whole library).
 
 ---
 

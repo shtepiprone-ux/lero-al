@@ -19,15 +19,15 @@
 /* Site #1 — CardSkeleton root <Box> (rounded-xl border bg-card overflow-hidden) */
 .skeletonCard {
   border-radius: calc(var(--radius) * 1.5); /* rounded-xl — measured 18px, I2 */
-  border: 1px solid var(--border); /* border — measured 1px solid, resolves to neutral-200, I2 */
+  border: 1px solid var(--border); /* border — measured 1px solid, resolves to neutral-200, I2 */ /* design-tokens-allow: border: 1px — hairline border-width, no §22.1 spacing token targets border-width (Task 715) */
   background-color: var(--card); /* bg-card — measured, resolves to neutral-0 (pure white), I2 */
   overflow: hidden;
 }
 
 /* Site #2 — CardSkeleton body <Box> (p-3 space-y-2) */
 .skeletonBody {
-  padding: 0.75rem; /* p-3 — measured 12px, I2 */
+  padding: var(--space-3); /* p-3 — measured 12px, I2; --space-3 = 0.75rem (§22.1). No rendered story covers this file — numeric equality proven in the session log, not pixels (§3.5) */
 }
 .skeletonBody > :not(:last-child) {
-  margin-bottom: 0.5rem; /* space-y-2's own compiled sibling-margin rule — measured 8px, I2; not a gap */
+  margin-bottom: var(--space-2); /* space-y-2's own compiled sibling-margin rule — measured 8px, I2; not a gap. --space-2 = 0.5rem (§22.1). No rendered story covers this file (§3.5) */
 }

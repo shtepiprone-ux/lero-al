@@ -1127,7 +1127,15 @@ reference resolves against exactly three sources:
    `globalsDefinedProps`.
 2. **The same file being scanned** — a `--x:` declaration anywhere in that file (position-independent
    — the detector does not model selector/media scoping, a documented simplification consistent with
-   the rest of this file's line-based design).
+   the rest of this file's line-based design). `extractCssCustomPropertyDefinitions` registers **every**
+   top-level declaration, not only the first one on a physical line (Task 720, R1/R2): a declaration
+   start is recognized right after a top-level `{` or `;` (or at the very start of the source), where
+   "top-level" is tracked by a quote-state + paren-depth walk over the already CSS-comment-stripped
+   source — never inside a quoted string or inside `(...)` nesting. That is what makes
+   `.x { --local: 1px; width: var(--local); }` resolve correctly (a same-line define-and-use no longer
+   a phantom finding) while a declaration-shaped literal inside a `content` string or a data-URI value
+   is still never mistaken for a definition. Name case is never normalized — `--Foo` and `--foo` remain
+   two distinct entries.
 3. **A measured external prefix/exact-name list** — variables a framework supplies at build time that
    this repo does not define. Every entry is proven present in the production build and/or
    `node_modules` (measured 2026-08-06):

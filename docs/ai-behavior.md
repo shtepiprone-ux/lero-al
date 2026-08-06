@@ -151,6 +151,27 @@ and paste the output in the session log:
    A claimed `tsc=0`/gate-green contradicted by NUL bytes or a parse failure is a fabricated proof and a TASK FAILURE.
    Full rule: `docs/agent-contract.md` clause 14. Gate script: `scripts/check-file-integrity.mjs` (Task 400).
 
+   **5a. The counting gates run TWICE — this step is not the last one (Task 720 review, 2026-08-06).**
+   `check:file-integrity` and `check:mojibake` *count* what `git status` reports, and the session log and
+   `docs/backlog.md` are themselves files that `git status` reports. Running them only here — "before writing
+   the session log", as this step says — guarantees the persisted count is short by at least one and cannot
+   reconcile. **Tasks 719 and 720 both shipped a session log claiming "N modified files, 0 untracked" in a
+   file that was itself untracked**, because both followed this step literally and stopped. That is a rule
+   defect, not an executor lapse; 718R got it right only by re-running.
+
+   So:
+
+   - **Pass 1 — here.** Per-file integrity checks plus a `check:file-integrity` run, to catch a corrupt or
+     truncated file *before* you write it up. Not evidence of reconciliation.
+   - **Pass 2 — genuinely last.** After every artifact exists and the *path set* is final — implementation
+     files, `docs/backlog.md`, the session log, and after deleting every scratch file — re-run **both**
+     `check:file-integrity` and `check:mojibake`, persist them separately (e.g. `iN-final-*`), and reconcile
+     their counts to `git status --porcelain`.
+   - **The chicken-and-egg is resolved by path set, not by content.** The session log must be *created* before
+     pass 2 so it is counted; only its counting-gates section is *filled in* afterwards. Editing an
+     already-counted file does not change the count. If pass 2's number differs from `git status`, you have
+     created or deleted a path since — fix that, do not narrate around it.
+
 6. **Self-validation verdict line in the session log:**
    ```
    Self-validation: tsc=0 errors · build=passes · AC table=all green · runtime locale=uk PASS · scope=clean · integrity=PASS

@@ -556,11 +556,10 @@ export function stripCssComments(content) {
   );
 }
 
-// ── CSS custom-property definition extraction (Task 718, R4) ─────────────────
+// ── CSS custom-property definition extraction (Task 718, R4; Task 720, R1-R3) ─
 //
-// Returns the set of custom-property NAMES declared anywhere in `content`
-// (`--foo:` at the start of a declaration, any nesting/indentation), using the
-// same CSS-comment-stripped source as stripCssComments above (A3 — one
+// Returns the set of custom-property NAMES declared anywhere in `content`, using
+// the same CSS-comment-stripped source as stripCssComments above (A3 — one
 // stripper, reused). Position within the file does not matter for resolution:
 // a declaration is in scope for the whole cascade context it lives in, and
 // this detector does not model selector/media scoping (a documented
@@ -568,12 +567,40 @@ export function stripCssComments(content) {
 // Used for TWO resolution sources in scanContent: globals.css (called once in
 // run() against globals.css's own content, passed in as globalsDefinedProps)
 // and the same file being scanned (called per-file against its own content).
+//
+// Task 720, R1/R2: a declaration can start anywhere a top-level `{` or `;` just
+// ended (or at the very start of the source) — not only at the start of a
+// physical line, so a second same-line declaration is no longer invisible.
+// "Top-level" is tracked with a quote-state + paren-depth walk over the
+// stripped source, so a declaration-shaped literal inside a quoted value (a
+// `content` string, a data-URI) is never mistaken for a definition — deleting
+// the old `^` line anchor outright was rejected for exactly that reason (§3.4
+// of the kickoff): it would register `--fake` out of `content: "--fake: 1px"`.
+// Name case is never normalized (R3) — `--Foo` and `--foo` stay distinct.
 export function extractCssCustomPropertyDefinitions(content) {
   const stripped = stripCssComments(content);
   const defs = new Set();
-  const re = /^\s*(--[\w-]+)\s*:/gm;
-  let m;
-  while ((m = re.exec(stripped)) !== null) defs.add(m[1]);
+  const declRe = /\s*(--[\w-]+)\s*:/y;
+  const tryMatchAt = (pos) => {
+    declRe.lastIndex = pos;
+    const m = declRe.exec(stripped);
+    if (m) defs.add(m[1]);
+  };
+  tryMatchAt(0);
+  let parenDepth = 0;
+  let quote = null;
+  for (let i = 0; i < stripped.length; i++) {
+    const ch = stripped[i];
+    if (quote) {
+      if (ch === '\\') i++;
+      else if (ch === quote) quote = null;
+      continue;
+    }
+    if (ch === '"' || ch === "'") { quote = ch; continue; }
+    if (ch === '(') { parenDepth++; continue; }
+    if (ch === ')') { if (parenDepth > 0) parenDepth--; continue; }
+    if (parenDepth === 0 && (ch === '{' || ch === ';')) tryMatchAt(i + 1);
+  }
   return defs;
 }
 

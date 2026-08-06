@@ -3,9 +3,10 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — 719 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. ⚠️ **BACKLOG LIMIT BREACH** — file is at/over 80 lines; Opus consolidation needed.
+## Last Session (2026-08-06) — 719 + 720 ✅ approved → archived; Sprint 52's design-token half is closed
 
-- **719**: `shouldSkipLine`'s `.css` skip now consults the CSS-comment-stripped line (blank-only skip) instead of a raw leading-`*` guess; `.ts`/`.tsx` path byte-for-byte unchanged. Dead `:586` duplicate removed in the same edit (R4). 4 planted arms (one per blinded category) fail pre-fix, pass post-fix; 2 new R3 regression arms + §A's 2 pre-existing arms (zero diff) all pass; tree stays 0 findings. §23.6.c A7 retired with closure note, A8 untouched. Suite 94/94, `tsc`=0, `build`=0. Session: `sessions/2026-08-06-task719-skipline-universal-selector.md`. **720 next** (Sprint 52, sequenced).
+- **719 + 720 `APPROVED WITH NOTES`** — archive ledger. Sprint 52's design-token arc (714 · 716 · 715 · 718 · 718R · 719 · 720) is complete; **711** and **717** are all that remain in the sprint.
+- **Rule defect fixed, not an executor lapse:** `ai-behavior.md` step 5 ordered the counting gates *"before writing the session log"*, which cannot reconcile — the log and this file are themselves `git status` paths. 719 and 720 both shipped a false "N modified, 0 untracked" claim by following it. New **step 5a** mandates the two-pass pattern (integrity early, both gates again after the path set is final). Both session logs corrected at review.
 
 ## Open — needs action
 
@@ -34,7 +35,7 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **715 ✅** · **716 ✅** · **718 ✅** · **718R ✅** (`98bec3fa9`) · **719 AWAITING REVIEW** → **720** (next) · 711 · **717** reserved. **Order: 714 → 716 → 715 → 718 → 718R → 719 → 720.** 🟠 OPEN.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. Remaining: **711** · **717** reserved. 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
@@ -53,8 +54,6 @@
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
 | 711 | reserved — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM; their selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) Mantine never renders — the §14.9.9 `PORTAL_SELECTOR` defect again. Planted proof per assertion. **Must fold in four 710-review findings:** `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · the `critical-flow-registry` row-50 + `2026-08-0X` citation fixes · a `LIVE-THIN` threshold (`heroSearchWrapInBand` resolves in only 4/1184 cells). |
-| 719 | **IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** — Sprint 52 | `shouldSkipLine`'s `.css` skip now consults the CSS-comment-stripped line (blank-only), fixing the cross-category leading-`*` blind spot; `.ts`/`.tsx` unchanged; dead `:586` removed; §23.6.c A7 retired. Session: `sessions/2026-08-06-task719-skipline-universal-selector.md`. |
-| 720 | **KICKOFF FILED**, sequenced after 719 — Sprint 52 | `extractCssCustomPropertyDefinitions:574`'s `/^…/gm` registers at most **one** declaration per line and only as the first token: `.x { --local: 1px; width: var(--local); }` is a **false positive**, `'--Foo: 1px; --foo: 2px'` → `['--Foo']` only. Exposure **0**; fails **loud**, not silent. Naive `^`-removal **rejected** — it reads decl-shaped literals in `content` strings / data URIs as definitions, converting a loud false positive into a silent false negative; declaration-aware quote/paren-tracking scan required. Case-sensitivity preserved. `Sprint_52_kickoff_prompt_Task_720_…md`. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.

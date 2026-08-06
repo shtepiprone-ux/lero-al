@@ -730,3 +730,49 @@ describe('§I — universal-selector line skip: shouldSkipLine cross-category bl
     expect(regular(content)).toHaveLength(0)
   })
 })
+
+describe('§J — extractCssCustomPropertyDefinitions: line-anchored definitions (Task 720, R1-R4)', () => {
+  // R4(a) — end-to-end: a same-line define-and-use must not produce a phantom
+  // css-undefined-var finding. Before the fix, "--local:" is not the first token on its
+  // physical line (".x { " precedes it), so the line-anchored regex never registers it.
+
+  it('(a) a same-line define-and-use does not produce a phantom css-undefined-var finding', () => {
+    const findings = findingsOfCss('.x { --local: 1px; width: var(--local); }')
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(0)
+  })
+
+  // R4(b) — a second same-line declaration must be registered too, and case stays
+  // significant. Before the fix, `exec`'s `^`-anchored /gm walk advances past the first
+  // match and the second declaration on the same line is never reached.
+
+  it('(b) two different-case custom properties on the same line are both registered, distinctly', () => {
+    const defs = extractCssCustomPropertyDefinitions('--Foo: 1px; --foo: 2px')
+    expect(defs.has('--Foo')).toBe(true)
+    expect(defs.has('--foo')).toBe(true)
+    expect(defs.size).toBe(2)
+  })
+
+  // R4(c) — the guard against the rejected naive fix (§3.4). This already passes against
+  // today's line-anchored regex (neither literal starts a line) — it must keep passing
+  // after the fix too, or the declaration-aware scan is the rejected "delete the ^" repair
+  // wearing a disguise.
+
+  it('(c) a declaration-shaped literal inside a value is not registered — content string and data-URI', () => {
+    expect(
+      extractCssCustomPropertyDefinitions('.x {\n  content: "--fake: 1px";\n}').has('--fake')
+    ).toBe(false)
+    expect(
+      extractCssCustomPropertyDefinitions(
+        '.x {\n  background: url("data:image/svg+xml,<svg style=%27--fake2: 1%27/>");\n}'
+      ).has('--fake2')
+    ).toBe(false)
+  })
+
+  it('a var() differing only in case from a defined property is still a finding (R3 — case stays significant)', () => {
+    const findings = findingsOfCss('.x { --Foo: 1px; width: var(--foo); }')
+      .filter(f => f.cat === 'css-undefined-var')
+    expect(findings).toHaveLength(1)
+    expect(findings[0].match).toBe('var(--foo)')
+  })
+})

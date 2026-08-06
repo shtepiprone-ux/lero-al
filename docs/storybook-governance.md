@@ -1688,6 +1688,45 @@ proof that the suppression is real, not vacuous — same shape as `check:asserti
 
 Session: `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md`.
 
+### §14.9.26 — The Tailwind-syntax-shaped blind spot §14.9.25 named is now closed, report-only (Task 714, 2026-08-06)
+
+**What changed.** `scripts/check-design-tokens.mjs` now has three additional `DETECTION_PATTERNS`
+entries — `css-length`, `css-duration`, `css-zindex` — that read a plain CSS declaration whose value
+is a single bare `px`/`rem`/`em`/`s`/`ms`/unitless-integer token (`property: value;`), gated to
+`.css` files only. This is exactly the gap §14.9.25 documented: `font-size: 10px;` in a `.module.css`
+now matches. Full design, scope boundary, and rawValue convention: `docs/design-system.md` §23.6.
+
+**Proven, not assumed, against the real §14.9.25 site.** `MobileBottomNavView.module.css:123` and
+`:164` (the two `font-size: 10px` sites §14.9.25 confirmed had **zero** post-migration detector
+hits) are now both reported as `css-length` — read-only against the real, unmodified, still-approved
+file (zero diff). A throwaway in-memory copy proved both marker arms: a same-line
+`/* design-tokens-allow: font-size: 10px — reason */` suppresses it; the same marker with the
+declaration removed reports `stale-marker` — the identical two-armed mechanism §14.9.25 established
+for CSS colour markers, now proven for length. Evidence:
+`.screenshots/task714-evidence/i5-r4-r5-real-and-throwaway-proof.log`.
+
+**Staged report-only, per the repo's own 402→407 precedent (§23.4).** The three new categories are
+excluded from the strict/blocking exit-code computation — `npm run check:design-tokens` still exits
+**0** on the current tree — but print under their own `CSS DECLARATION LITERALS` heading with an
+explicit count (45, current tree) so the inventory is loud, not silently absorbed. A classified
+34 `N1-VIOLATION` / 11 `COMPILED-ARTIFACT` breakdown lives at
+`.screenshots/task714-evidence/task714-css-declaration-inventory.md`. **715** owns the strict flip
+and the remediation/marker-suppression pass; it must re-run the command against the tree at the time
+it starts, not inherit this task's numbers uncritically (same "re-measure, don't inherit" discipline
+as §14.9.25 and the standing backlog note on stale kickoff measurements).
+
+**Scope boundary, stated so 715 doesn't rediscover it the hard way.** The new patterns only match a
+declaration whose entire value is one bare token — multi-value/shorthand lists
+(`transition: transform 300ms ease-out, box-shadow 300ms ease-out;`) and function-wrapped values
+(`blur(8px)`, `calc(2px + var(--x))`) are out of scope. This is why
+`MantineListingCardPattern.module.css` — which only carries `300ms` inside a `transition:` shorthand
+— shows 0 findings under Task 714's detector despite the kickoff's own §3.5 pre-measurement claiming
+4. Generalizing to those forms needs the same nested-function handling Task 408 built for Tailwind's
+`calc/min/max/clamp` brackets (§23.1.b), applied to arbitrary CSS functions — named as a follow-on,
+not attempted here.
+
+Session: `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverage.md`.
+
 ---
 
 ### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)

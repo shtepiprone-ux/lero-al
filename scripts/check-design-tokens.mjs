@@ -180,7 +180,81 @@ export const DETECTION_PATTERNS = [
     cat: 'duration',
     label: 'inline duration value',
   },
+
+  // ── Plain CSS declaration coverage (Task 714, report-only category — see §23.6) ──
+  //
+  // The patterns above are all shaped around Tailwind's arbitrary-value bracket
+  // syntax (`*-[Npx]`) or inline style-object literals. A plain CSS declaration in
+  // a `.module.css` file — e.g. `font-size: 10px;`, `gap: 1.5rem;`,
+  // `transition-duration: .15s;`, `z-index: 30;` — matches none of them (Task 713
+  // moved 3 previously-detected `text-[10px]` sites into exactly this blind spot).
+  //
+  // Scope (deliberate, documented boundary — Task 714 A2/A3/A5):
+  //   - `cssOnly: true` — only ever runs against `.css` file content; `.tsx`/`.ts`
+  //     detection is byte-identical to before this task (R9).
+  //   - Matches ONLY a declaration whose value is a single bare numeric-unit token
+  //     (`property: <N unit>` followed by `;` or `}`) — i.e. plain, unambiguous,
+  //     directly-tokenizable declarations. Multi-value/shorthand lists
+  //     (`border-bottom: 1px solid var(--border)`) and function-wrapped values
+  //     (`blur(8px)`, `calc(...)`, `translateY(-2px)`) are OUT of scope: they need
+  //     the same nested-function handling Task 408 built for Tailwind's
+  //     calc/min/max/clamp brackets, generalized to arbitrary CSS functions — a
+  //     separate, harder follow-on, not required by R1/R2's "plain CSS
+  //     declaration" wording. Named as a limitation for a future task.
+  //   - Zero values (`0`, `0px`, `0rem`, `0em`) and the approved `1px`/`-1px`
+  //     hairline-border value (A3 — `HeaderView.module.css:37` precedent) are
+  //     exempt by value via the `filter` callback, not by regex shape.
+  //   - `@media (min-width: 40rem)`/`@supports (...)` preludes never match: the
+  //     condition's numeric token is always followed by `)`, never `;`/`}`, so the
+  //     terminator lookahead structurally excludes preludes (A5) without special
+  //     casing.
+  //   - rawValue reported is `property: value` (e.g. `font-size: 10px`), matching
+  //     the existing inline-zIndex convention — this disambiguates identical bare
+  //     values on one line coming from different properties, and is the exact
+  //     string a `design-tokens-allow` marker must reproduce (A1).
+  {
+    re: /([\w-]+)\s*:\s*(-?(?:\d+\.\d+|\.\d+|\d+)(?:e\d+)?(?:px|rem|em))(?=\s*[;}])/g,
+    cat: 'css-length',
+    label: 'raw CSS length declaration',
+    cssOnly: true,
+    filter: (m) => {
+      const v = m.match(/(-?(?:\d+\.\d+|\.\d+|\d+)(?:e\d+)?)(px|rem|em)$/);
+      if (!v) return true;
+      const num = parseFloat(v[1]);
+      if (num === 0) return false;
+      if (v[2] === 'px' && Math.abs(num) <= 1) return false; // A3: 0px/1px/-1px exempt
+      return true;
+    },
+  },
+  {
+    re: /([\w-]+)\s*:\s*(-?(?:\d+\.\d+|\.\d+|\d+)(?:ms|s))(?=\s*[;}])/g,
+    cat: 'css-duration',
+    label: 'raw CSS duration declaration',
+    cssOnly: true,
+    filter: (m) => {
+      const v = m.match(/(-?(?:\d+\.\d+|\.\d+|\d+))(ms|s)$/);
+      if (!v) return true;
+      return parseFloat(v[1]) !== 0;
+    },
+  },
+  {
+    re: /(z-index)\s*:\s*(-?\d+)(?=\s*[;}])/g,
+    cat: 'css-zindex',
+    label: 'raw CSS z-index declaration',
+    cssOnly: true,
+    filter: (m) => {
+      const v = m.match(/(-?\d+)$/);
+      if (!v) return true;
+      return parseInt(v[1], 10) !== 0;
+    },
+  },
 ];
+
+// Categories landed report-only by Task 714 (§23.6): detected and printed under
+// their own heading, but never counted toward the strict/blocking exit code.
+// 715 owns the strict flip once the pre-existing inventory (Task 714 R6) is
+// remediated or explicitly marker-suppressed.
+export const REPORT_ONLY_CATEGORIES = new Set(['css-length', 'css-duration', 'css-zindex']);
 
 // ── JSX comment stripping (Task 408, §A) ──────────────────────────────────────
 //
@@ -198,6 +272,24 @@ export const DETECTION_PATTERNS = [
 // working.
 export function stripJsxComments(content) {
   return content.replace(/\{\/\*[\s\S]*?\*\/\}/g, (match) =>
+    match.replace(/[^\n]/g, ' ')
+  );
+}
+
+// ── CSS comment stripping (Task 714, A2) ──────────────────────────────────────
+//
+// Replace every /* ... */ span (including multi-line) with whitespace of the
+// same shape, so line/column numbers of real code are unchanged. Used ONLY to
+// build the detection source for the cssOnly patterns above — the existing
+// color/Tailwind-bracket patterns keep reading the unstripped codeOnly source,
+// so their behavior on .css files is unchanged (R9). A `design-tokens-allow`
+// marker lives INSIDE a CSS comment, so this strip also removes the marker's own
+// text from the detection source — exactly like the existing trailing `//`
+// strip does for TSX — preventing the marker's embedded value string from being
+// double-counted as a live violation. Markers themselves are still parsed from
+// the original, unstripped physical line (parseInlineMarkers below).
+export function stripCssComments(content) {
+  return content.replace(/\/\*[\s\S]*?\*\//g, (match) =>
     match.replace(/[^\n]/g, ' ')
   );
 }
@@ -337,10 +429,15 @@ function collectFiles(dir, exts) {
 export function scanContent(content, relPath, allowlist = {}) {
   if (isAllowlisted(relPath, allowlist)) return [];
 
+  const isCssFile = relPath.endsWith('.css');
   const lines = content.split('\n');
   // §A: strip {/* ... */} JSX comment blocks (incl. multi-line) before detection.
   // Markers are still parsed from the ORIGINAL (unstripped) lines below.
   const strippedLines = stripJsxComments(content).split('\n');
+  // Task 714 A2: separate CSS-comment-stripped source, .css files only, used
+  // ONLY by the cssOnly patterns — existing patterns keep reading strippedLines
+  // so their behavior is unchanged (R9).
+  const cssStrippedLines = isCssFile ? stripCssComments(content).split('\n') : null;
   const findings = [];
 
   for (let i = 0; i < lines.length; i++) {
@@ -353,13 +450,16 @@ export function scanContent(content, relPath, allowlist = {}) {
     // (which contains the suppressed value string) is not scanned as a violation.
     // parseInlineMarkers runs on the full original line to find the markers.
     const codeOnly = strippedLines[i].replace(/\s*\/\/.*$/, '');
+    const codeOnlyCss = isCssFile ? cssStrippedLines[i].replace(/\s*\/\/.*$/, '') : null;
 
     // Collect all pattern matches on the code portion of this line
     const rawMatches = [];
-    for (const { re, cat, label, filter } of DETECTION_PATTERNS) {
+    for (const { re, cat, label, filter, cssOnly } of DETECTION_PATTERNS) {
+      if (cssOnly && !isCssFile) continue;
+      const source = cssOnly ? codeOnlyCss : codeOnly;
       re.lastIndex = 0;
       let m;
-      while ((m = re.exec(codeOnly)) !== null) {
+      while ((m = re.exec(source)) !== null) {
         if (filter && !filter(m[0])) continue;
         rawMatches.push({
           file: relPath,
@@ -472,11 +572,18 @@ function run() {
   // ── Separate finding types
   const missingReasonFindings = allFindings.filter(f => f.cat === 'missing-reason');
   const staleMarkerFindings = allFindings.filter(f => f.cat === 'stale-marker');
-  const regularFindings = allFindings.filter(f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker');
+  // Task 714 (§23.6): css-length/css-duration/css-zindex are report-only — never
+  // counted toward the strict/blocking exit code, printed under their own heading.
+  const cssDeclFindings = allFindings.filter(f => REPORT_ONLY_CATEGORIES.has(f.cat));
+  const regularFindings = allFindings.filter(
+    f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker' && !REPORT_ONLY_CATEGORIES.has(f.cat)
+  );
 
-  // ── Group findings by area → file → category
+  // ── Group findings by area → file → category (excludes report-only css-decl
+  // findings, which get their own dedicated section below — A4)
   const byArea = {};
   for (const finding of allFindings) {
+    if (REPORT_ONLY_CATEGORIES.has(finding.cat)) continue;
     (byArea[finding.area] ??= {})[finding.file] ??= [];
     byArea[finding.area][finding.file].push(finding);
   }
@@ -504,8 +611,27 @@ function run() {
     console.log('');
   }
 
+  // ── CSS declaration coverage — report-only (Task 714, §23.6). Own heading, own
+  // count, never counted toward the strict exit code (A4: report-only ≠ silent).
+  console.log(`  ── CSS DECLARATION LITERALS — report-only, not blocking (Task 714)  (${cssDeclFindings.length} finding${cssDeclFindings.length === 1 ? '' : 's'}) ──`);
+  if (cssDeclFindings.length === 0) {
+    console.log('  (none found)');
+  } else {
+    const byFile = {};
+    for (const f of cssDeclFindings) (byFile[f.file] ??= []).push(f);
+    for (const file of Object.keys(byFile).sort()) {
+      const items = byFile[file];
+      console.log(`  ${file}  (${items.length})`);
+      for (const { line, cat, label, match } of items) {
+        console.log(`    :${line}  [${cat}:${label}]  "${match}"`);
+      }
+    }
+  }
+  console.log(`  715 owns the strict flip + remediation of this inventory. Docs: docs/design-system.md §23.6.`);
+  console.log('');
+
   // ── Summary
-  console.log(`  Total: ${regularFindings.length} raw style-value violation(s) | ${staleMarkerFindings.length} stale-marker(s) | ${missingReasonFindings.length} missing-reason error(s)`);
+  console.log(`  Total: ${regularFindings.length} raw style-value violation(s) | ${staleMarkerFindings.length} stale-marker(s) | ${missingReasonFindings.length} missing-reason error(s) | ${cssDeclFindings.length} css-declaration literal(s) (report-only)`);
   if (Object.keys(catCounts).length > 0) {
     console.log('  By category (regular violations):');
     for (const [cat, count] of Object.entries(catCounts).sort((a, b) => b[1] - a[1])) {

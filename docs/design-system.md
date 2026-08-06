@@ -934,6 +934,70 @@ and a valid/commented/var/suppressed case (must NOT be caught or must be suppres
 This harness is the evidence that the gate's positive AND negative paths are exercised, and
 backs the Task 407 strict/blocking flip (now landed — see §23.4).
 
+### §23.6 — Plain CSS declaration coverage: `css-length`/`css-duration`/`css-zindex` (Task 714, report-only)
+
+> **Coverage decrease this closes:** every pattern in §23.1 is shaped around Tailwind's
+> arbitrary-value bracket syntax (`*-[Npx]`) or an inline style-object literal. A plain CSS
+> declaration in a `.module.css` file — `font-size: 10px;`, `gap: 1.5rem;`,
+> `transition-duration: .15s;`, `z-index: 30;` — matched none of them. Task 713's D28 migration
+> moved three previously-detected, explicitly-marked `text-[10px]` TSX sites into exactly this
+> blind spot (proof: `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md` §4); the
+> gate reported `0 violations` while the site-level protection was gone. Task 714 closes the gap.
+
+Three new categories, extending `DETECTION_PATTERNS`, `.css` files only:
+
+| Category | Matches | Does NOT match |
+|---|---|---|
+| `css-length` | A declaration whose value is a single bare `px`/`rem`/`em` literal (incl. scientific notation, e.g. `border-radius: 3.40282e38px`) followed by `;` or `}` | Zero values (`0`, `0px`, `0rem`, `0em`); the approved `1px`/`-1px` hairline-border value (A3 — `HeaderView.module.css:37` precedent); `var(--token)`; `calc(var(...))`; multi-value/shorthand declarations (`border-bottom: 1px solid var(--border)`); function-wrapped values (`blur(8px)`, `translateY(-2px)`) |
+| `css-duration` | A declaration whose value is a single bare `s`/`ms` literal (incl. leading-dot, e.g. `.15s`) | Zero values; the same multi-value/function-wrapped exclusions as above |
+| `css-zindex` | `z-index: N;` with a raw unitless integer | `z-index: 0`; `z-index: var(--z-toast)` |
+
+**Scope boundary (deliberate, documented — not a bug):** these patterns only match a declaration
+whose entire value is one bare token. A multi-value list (`transition: transform 300ms ease-out,
+box-shadow 300ms ease-out;`) or a function-wrapped value (`blur(8px)`, `calc(2px + var(--x))`) is
+out of scope — generalizing to those forms needs the same nested-function handling Task 408 built
+for Tailwind's `calc/min/max/clamp` brackets (§23.1.b), applied to arbitrary CSS functions. That is
+a materially larger follow-on, not required by the "plain CSS declaration" wording this task closes.
+
+**CSS comment stripping (A2):** a new `stripCssComments()` helper strips `/* ... */` spans (incl.
+multi-line) to whitespace, used only to build the detection source for these three patterns — the
+existing color/Tailwind-bracket patterns keep reading the unstripped source, so their behavior on
+`.css` files is byte-identical to before this task. `design-tokens-allow` markers are still parsed
+from the original, unstripped physical line — unchanged mechanism, first proven for CSS colour
+markers by Task 713 (`MobileBottomNavView.module.css:60`, `:87`), now proven for length too
+(Task 714 R5: suppression and orphaned-marker-as-stale-marker, both arms, on a throwaway copy).
+
+**rawValue convention (A1):** reported as `property: value` (e.g. `font-size: 10px`, `z-index:
+30`), matching the existing inline-`zIndex` convention — this disambiguates identical bare values
+on one line coming from different properties, and is the exact string a `design-tokens-allow`
+marker must reproduce byte-for-byte.
+
+**`@media`/`@supports` preludes (A5):** never match. A condition's numeric token (e.g. `(min-width:
+40rem)`) is always followed by `)`, never `;`/`}`, so the terminator lookahead structurally
+excludes preludes without special-casing. Proven with a dedicated test.
+
+**Report-only, not silent (R3/A4):** `REPORT_ONLY_CATEGORIES` (`css-length`, `css-duration`,
+`css-zindex`) are excluded from the strict/blocking exit-code computation and from the main
+per-area violation printout, but always printed under their own `CSS DECLARATION LITERALS —
+report-only, not blocking` heading with an explicit count — never silently absorbed. Measured
+2026-08-06 against the current tree: **45 literals across 6 files** (`npm run check:design-tokens`
+still exits **0**). Classified inventory (34 `N1-VIOLATION` / 11 `COMPILED-ARTIFACT`, per-file
+counts): `.screenshots/task714-evidence/task714-css-declaration-inventory.md` (local-only, D6),
+summarized in `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverage.md`. The
+kickoff's own §3.5 pre-measurement (49 across 7 files) does not reproduce under any single
+consistent methodology and is superseded by this measured table — **715 must re-run the command
+and re-derive its scope from the current tree, not inherit either number.**
+
+**Test coverage:** 18 new planted arms in `scripts/__tests__/check-design-tokens.test.ts` §D,
+following the existing plant-both-arms convention (violating case must be caught; negative/var/
+zero/comment/prelude case must NOT be caught; marker-suppression and orphaned-marker-as-stale-
+marker both proven). All pre-existing tests (25, not the kickoff's stated 26 — corrected by this
+task) remain unmodified and pass; **43 total, all passing.**
+
+**715** owns the strict flip (removing these categories from `REPORT_ONLY_CATEGORIES`) and the
+remediation/marker-suppression of the 45-item inventory above, per the N1-vs-compiled-artifact
+policy call surfaced (not decided) here.
+
 ---
 
 ## §24 — Forbidden responsive hardcodes and pseudo-fixes (A2 mandate, 2026-06-08)

@@ -190,6 +190,121 @@ describe('§C row 2 — function-wrapped (calc/min/max/clamp) raw px/rem (Task 4
   })
 })
 
+// A .css fixture path that does not match any scripts/design-tokens-allowlist.json
+// path-prefix entry, so allowlist short-circuiting never hides a planted finding.
+const CSS_FIXTURE_PATH = 'src/components/ui/__fixture-task714__.css'
+
+function findingsOfCss(content: string) {
+  return scanContent(content, CSS_FIXTURE_PATH, {})
+}
+
+function regularCss(content: string) {
+  return findingsOfCss(content).filter(f => f.cat !== 'missing-reason' && f.cat !== 'stale-marker')
+}
+
+describe('§D — plain CSS declaration coverage: length/duration/z-index (Task 714)', () => {
+  it('flags a raw px length in a plain CSS declaration', () => {
+    const findings = regularCss('.fabLabel {\n  font-size: 10px;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'font-size: 10px' })
+  })
+
+  it('flags a raw rem length in a plain CSS declaration', () => {
+    const findings = regularCss('.bar {\n  gap: 1.5rem;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'gap: 1.5rem' })
+  })
+
+  it('flags a scientific-notation px length', () => {
+    const findings = regularCss('.fab {\n  border-radius: 3.40282e38px;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'border-radius: 3.40282e38px' })
+  })
+
+  it('flags a raw duration (leading-dot seconds) in a plain CSS declaration', () => {
+    const findings = regularCss('.fab {\n  transition-duration: .15s;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-duration', match: 'transition-duration: .15s' })
+  })
+
+  it('flags a raw duration in milliseconds', () => {
+    const findings = regularCss('.card {\n  transition-duration: 300ms;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-duration', match: 'transition-duration: 300ms' })
+  })
+
+  it('flags a raw unitless z-index in a plain CSS declaration', () => {
+    const findings = regularCss('.navBar {\n  z-index: 30;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-zindex', match: 'z-index: 30' })
+  })
+
+  it('does NOT flag a var(--token) length declaration', () => {
+    expect(regularCss('.x { gap: var(--space-6); }')).toHaveLength(0)
+  })
+
+  it('does NOT flag a calc(var(...)) length declaration', () => {
+    expect(regularCss('.x { width: calc(var(--x) * 2); }')).toHaveLength(0)
+  })
+
+  it('does NOT flag zero values (0, 0px, 0rem)', () => {
+    expect(regularCss('.x { margin: 0; }')).toHaveLength(0)
+    expect(regularCss('.x { padding: 0px; }')).toHaveLength(0)
+    expect(regularCss('.x { top: 0rem; }')).toHaveLength(0)
+  })
+
+  it('does NOT flag 100% (not a px/rem/em length)', () => {
+    expect(regularCss('.x { width: 100%; }')).toHaveLength(0)
+  })
+
+  it('does NOT flag the approved 1px hairline-border value (A3 decision)', () => {
+    expect(regularCss('.x { border-top-width: 1px; }')).toHaveLength(0)
+    expect(regularCss('.x { border-bottom: 1px solid var(--border); }')).toHaveLength(0)
+  })
+
+  it('does NOT flag a literal inside a CSS comment', () => {
+    expect(regularCss('.x {\n  /* font-size: 10px; */\n  color: var(--foreground);\n}')).toHaveLength(0)
+  })
+
+  it('does NOT flag a length inside an @media prelude (A5)', () => {
+    const findings = regularCss('@media (min-width: 40rem) {\n  .foo { color: var(--foreground); }\n}')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT flag a length inside an @supports prelude (A5)', () => {
+    const findings = regularCss('@supports (min-width: 40rem) {\n  .foo { color: var(--foreground); }\n}')
+    expect(findings).toHaveLength(0)
+  })
+
+  it('does NOT run css-length/duration/zindex patterns on a .tsx file (R9 — zero TSX behavior change)', () => {
+    const findings = scanContent('.fabLabel {\n  font-size: 10px;\n}', 'src/components/ui/__fixture-task714b__.tsx', {})
+    expect(findings.filter(f => f.cat === 'css-length')).toHaveLength(0)
+  })
+
+  it('a same-line design-tokens-allow marker suppresses a css-length detection (R5 arm 1)', () => {
+    const suppressed = regularCss(
+      '.fabLabel {\n  font-size: 10px; /* design-tokens-allow: font-size: 10px — interactive/mobile-critical nav text (MobileBottomNav protection) */\n}'
+    )
+    expect(suppressed).toHaveLength(0)
+  })
+
+  it('an orphaned design-tokens-allow marker on a css-length value is a stale-marker (R5 arm 2)', () => {
+    const all = findingsOfCss(
+      '.fabLabel {\n  color: var(--foreground); /* design-tokens-allow: font-size: 10px — declaration removed */\n}'
+    )
+    expect(all.some(f => f.cat === 'stale-marker' && f.match === 'font-size: 10px')).toBe(true)
+  })
+
+  it('a css-length marker with no — separator does not silently suppress (pre-existing parseInlineMarkers behavior for block comments, unchanged by this task: the trailing */ is captured into rawValue, so it never matches the detected value and surfaces as stale-marker rather than missing-reason)', () => {
+    const all = findingsOfCss(
+      '.fabLabel {\n  font-size: 10px; /* design-tokens-allow: font-size: 10px */\n}'
+    )
+    expect(all.some(f => f.cat === 'stale-marker')).toBe(true)
+    expect(all.some(f => f.cat === 'css-length' && f.match === 'font-size: 10px')).toBe(true)
+  })
+
+})
+
 describe('parseInlineMarkers — value extraction (Task 408 widening for spaced values)', () => {
   it('extracts a single-token value (existing className/shadow form)', () => {
     expect(parseInlineMarkers('// design-tokens-allow: rounded-[4px] — 4px corner, no scale token'))

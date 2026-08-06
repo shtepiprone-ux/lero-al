@@ -3,10 +3,10 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE row at the TOP of the archive ledger. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-05) — 713 implemented, awaiting review; closes Sprint 50 pending approval
+## Last Session (2026-08-06) — 714 implemented, awaiting review
 
-- **713 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — `MobileBottomNavView`/`layout.tsx` de-Tailwind (11 sites, D34 `@layer utilities`); marker count deviation flagged (4 pre-migration → 2 post-migration, see session log §4/§11 and governance §14.9.25). 26/32 md5s hold vs `2026-08-05T17-47`; the other 6 (`uk` only) attributed to pre-existing harness noise with same-tree + historical zero-code-change controls, session log §6b. See `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md`.
-- **710/712 still `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** (unchanged this session) — see Task registry rows.
+- **714 `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — `check:design-tokens` now reads plain CSS declarations (`css-length`/`css-duration`/`css-zindex`, report-only, gated `.css`-only); 45 pre-existing literals inventoried + classified (34 N1-VIOLATION / 11 COMPILED-ARTIFACT); exit code unchanged (0). 43/43 detector tests pass (25 pre-existing + 18 new); pre-existing test count corrected 26→25 (kickoff was stale). Registers **715**. See `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverage.md`.
+- **710/712/713 still `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** (unchanged this session) — see Task registry rows.
 
 ## Open — needs action
 
@@ -40,7 +40,7 @@
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never to the root of `tasks/`; if no open sprint fits, open the next one first. Recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward. **Sprint 45** is the after-the-fact name for the unsprinted 621–705 period (`tasks/Sprints/Sprint_45_Unsprinted_Period_621_to_705.md`, 🟢 CLOSED) — one closed unit, kickoff paths unmoved; detail in the archive row of 2026-08-01.
 
-## Task registry — single source for every open number. Last used **713**, NEXT FREE **714**
+## Task registry — single source for every open number. Last used **714**, NEXT FREE **715**
 
 Closed tasks live in the archive ledger. Numbers owned by an epic are tracked in the Epics table, not duplicated here.
 
@@ -63,6 +63,8 @@ Closed tasks live in the archive ledger. Numbers owned by an epic are tracked in
 | 711 | reserved, blocked on 710 — **sprint not yet assigned** | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM. One root cause: their candidate selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) emitted only by `src/components/ui/*`, which Mantine-scope stories never render — the same defect governance §14.9.9 recorded for geometry's `PORTAL_SELECTOR`. Needs a planted proof per assertion. Open Sprint 51 before writing the kickoff (50 closes with 713). |
 | 712 | **`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — Sprint 51 | `page.tsx:29` de-Tailwind (dropped inert `relative`/`z-10`, A1 measured proof) + `HeroSearch.stories.tsx` cl. 16c parity fix (both stories now render the same `Box` composition production renders). 40/40 herosearch md5s hold vs `2026-08-05T11-33`; `check:assertion-liveness` 3/2/0/0 exit 0. Detail: `docs/sessions/2026-08-05-task712-homepage-route-shell-de-tailwind.md`. |
 | 713 | **`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — Sprint 50, closes the sprint pending approval | `MobileBottomNavView`/`layout.tsx` de-Tailwind, 11 sites, `@layer utilities` (D34). 4 pre-migration `design-tokens-allow` markers consolidated to 2 post-migration CSS markers (detector is Tailwind-syntax-shaped, not value-shaped — governance §14.9.25). 26/32 mobilebottomnavview md5s hold vs `2026-08-05T17-47`, other 6 (`uk` only) = pre-existing harness noise, controls in session log §6b. Detail: `docs/sessions/2026-08-05-task713-mobile-bottom-nav-de-tailwind.md`. |
+| 714 | **`IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`** — Sprint 52 | Closes the §14.9.25 blind spot: `css-length`/`css-duration`/`css-zindex` now read plain `.css` declarations (report-only, `REPORT_ONLY_CATEGORIES`); 45 literals inventoried/classified (34 N1 / 11 artifact), `check:design-tokens` exit unchanged (0). Real-file proof on `MobileBottomNavView.module.css:123`/`:164` (zero diff) + throwaway-copy marker suppress/stale-marker arms. Detail: `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverage.md`. |
+| 715 | reserved, blocked on 714 — Sprint 52 | Strict flip of `css-length`/`css-duration`/`css-zindex` + remediation of the 45-item inventory (34 N1-VIOLATION / 11 COMPILED-ARTIFACT, `.screenshots/task714-evidence/task714-css-declaration-inventory.md`). Owns the N1-vs-artifact policy call 714 surfaced but did not decide, incl. `MobileBottomNavView`'s `font-size:10px` vs `--text-2xs` (a token exists at that value, but §22.2 disallows `text-2xs` for nav labels — the exact use-case here). |
 
 - **In flight, described once under "Open — needs action":** 661 · 665 (no sprint — both predate the rule) · 691 (Sprint 46).
 - **Owned by epics, described once in the Epics table:** 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB).

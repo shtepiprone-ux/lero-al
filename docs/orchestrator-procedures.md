@@ -64,6 +64,11 @@ The preflight must distinguish these evidence layers:
 5. **Ownership and sequencing:** reconcile task-owned, unrelated, and ambiguous paths before task publication and
    before a handoff. A path containing unreviewed work from another task is ambiguous, not implicitly available to
    edit or stage.
+6. **Requirement feasibility and detector scope:** when a requirement depends on a static checker recognizing source
+   syntax—for example, a marker, suppression, allowlist, forbidden value, or a required pass/fail count—read the
+   detector and prove how it treats the target syntax before publishing the task. Do not carry forward a historical
+   marker count unless each post-change raw value is demonstrably detectable and suppressible. A green gate proves
+   only properties within that gate's actual detection scope.
 
 For every material claim, acceptance criterion, and proposed gate, attempt one concrete falsification before relying
 on it: inspect a counter-branch, an absent/missing baseline, a different matrix mode, a real enum, a narrow/long
@@ -74,6 +79,20 @@ Do not publish a task as ready for Sonnet when a required command has no valid i
 when a required artifact cannot represent the claimed property, or when a proposed rerun can overwrite the only
 baseline. Return `DRAFT — NEEDS EVIDENCE` or stop for an owner decision instead. Do not approve a review while the
 same gaps remain.
+
+### Detector-aware requirements and migrations
+
+When a migration changes the syntax through which a policy-sensitive value is expressed, Opus must establish whether
+the relevant detector still observes that value. Use a minimal, reversible failing arm and passing arm in the target
+syntax when feasible; otherwise record the detector blind spot explicitly.
+
+- Do not require historical markers or suppressions to be copied mechanically into syntax the detector does not
+  inspect. A stale-marker failure is evidence that the requirement is unsatisfiable, not an executor deviation.
+- If the migration moves a value outside detector coverage, the kickoff must either include detector support in the
+  same task or name a separately sequenced corrective task. Until then, describe the coverage decrease accurately;
+  never treat a green result as proof that the original site-level protection remains enforced.
+- When feasibility evidence contradicts a drafted acceptance criterion, correct the criterion before assigning the
+  task and record it as a task-design defect. Do not delegate the contradiction to Sonnet to resolve ad hoc.
 
 ### Additional rules for baselines, assertions, and revisions
 
@@ -293,5 +312,6 @@ Before returning a task or review:
 5. Did I verify applicable failure paths?
 6. Are findings specific and actionable?
 7. Does the decision match the evidence?
+8. Did each marker, suppression, or gate-based requirement remain satisfiable and enforced in the target syntax?
 
 If any answer exposes a gap, revise before returning.

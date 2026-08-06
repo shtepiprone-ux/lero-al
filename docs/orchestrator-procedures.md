@@ -94,6 +94,32 @@ syntax when feasible; otherwise record the detector blind spot explicitly.
 - When feasibility evidence contradicts a drafted acceptance criterion, correct the criterion before assigning the
   task and record it as a task-design defect. Do not delegate the contradiction to Sonnet to resolve ad hoc.
 
+### A documented token is not an implemented token — grep the definition, never the table
+
+Before writing any requirement, inventory row, or acceptance criterion that tells the executor to consume
+`var(--some-token)`, prove the custom property is *defined*, not merely *tabled*:
+
+```powershell
+Select-String -Path src\app\globals.css -Pattern '^\s*--some-token\s*:'
+```
+
+Zero matches means the token does not exist, no matter how completely `docs/design-system.md` §22 documents its
+value, tier and "Use via" column. **Quote the matched definition line in the task.** The same rule binds any
+`@theme` variable, Mantine theme key, or CSS custom property a task directs the executor to consume, and it binds
+the reviewer: an `N1-VIOLATION`-style "a token exists at this value" claim is not verified until the definition
+has been grepped.
+
+**This is a hard gate, not advice, because every gate the repo owns is blind to the failure.**
+`check:design-tokens` exempts anything *shaped* like `var(--token)` without resolving it (its own arm:
+`does NOT flag zIndex bound to a var(--token)`); `tsc` and `next build` never read CSS values; a rendered md5
+comparator cannot see a stacking-order change in an isolated story. The declaration becomes invalid at
+computed-value time and silently falls back to the property's initial value — for a non-inherited property such as
+`z-index`, that is `auto`.
+
+Tasks **714 → 716 → 715** carried `--z-sticky` — tabled in §22.3, defined nowhere — through two `APPROVED WITH
+NOTES` reviews and into a production build before the third review caught it. Both inventories classified against
+the documentation table rather than `globals.css`. See `docs/design-system.md` §22.3's ⚠️ banner and Task **718**.
+
 ### Additional rules for baselines, assertions, and revisions
 
 - Name matrices precisely. Never substitute a `fast`, subset, Storybook-only, route-only, or historical result for a

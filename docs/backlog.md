@@ -3,10 +3,10 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — 718R implemented (awaiting review); 719 blocked on it
+## Last Session (2026-08-06) — 718 + 718R ✅ archived (`98bec3fa9`, pushed); 719 unblocked; 720 filed
 
-- **718R `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, uncommitted (joins 718's same uncommitted state).** R1 (`i` flag on `callRe`, D32 failing-arm-first proven), R2 (3 new §H arms incl. 2 inversion-proven negatives), R3 (§23.6.c A7/A8 limitation entries, owners **719**/unowned), R4 (3 narrowed arms restored unfiltered on `--space-6`, no partial-delivery needed). 88/88 suite, gate 0/exit 0, build 0. `sessions/2026-08-06-task718R-css-undefined-var-coverage-gaps.md`.
-- **719 stays `KICKOFF FILED`, blocked on 718R's approval** (its own A1) — not started this session.
+- **718 + 718R `APPROVED WITH NOTES`**, reviewed as one unit, committed and pushed — archive ledger. Reviewer independently reproduced both plant arms, both R2 inversions, all 4 external-prefix proofs and 14 case/behavior probes; static arm count 88 corroborates the transcript. Notes: kickoff R7's "89" was an **orchestrator** arithmetic error (88 is right, restated per R7); `i4-remeasure-*.log` persisted a bare exit code where a count was asked for.
+- **719 unblocked** (its A1 stop condition cleared) — ready for `@executor`. **720 filed**: `extractCssCustomPropertyDefinitions` sees only the first declaration per line — a **loud** false positive, 0 exposure, kept separate from 719 by owner decision so the shared-heuristic fix keeps its narrow scope.
 
 ## Open — needs action
 
@@ -35,12 +35,12 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **715 ✅** · **716 ✅** · **718 ⚠️ NEEDS REVISION** (uncommitted) → **718R AWAITING REVIEW** → **719 KICKOFF FILED, blocked on 718R** · 711 · **717** reserved. **Order: 714 → 716 → 715 → 718 → 718R → 719.** 🟠 OPEN.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **715 ✅** · **716 ✅** · **718 ✅** · **718R ✅** (`98bec3fa9`) → **719** (unblocked) → **720** (after 719) · 711 · **717** reserved. **Order: 714 → 716 → 715 → 718 → 718R → 719 → 720.** 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **719**, NEXT FREE **720**
+## Task registry — single source for every open number. Last used **720**, NEXT FREE **721**
 
 | # | State | What |
 |---|---|---|
@@ -54,9 +54,8 @@
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
 | 711 | reserved — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM; their selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) Mantine never renders — the §14.9.9 `PORTAL_SELECTOR` defect again. Planted proof per assertion. **Must fold in four 710-review findings:** `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · the `critical-flow-registry` row-50 + `2026-08-0X` citation fixes · a `LIVE-THIN` threshold (`heroSearchWrapInBand` resolves in only 4/1184 cells). |
-| 718 | ⚠️ **NEEDS REVISION** (implemented, **uncommitted**) — Sprint 52 | 7 `--z-*` tokens defined in `globals.css` `@theme inline` at §22.3 values (owner route); §22.3 banner retired, "Use via" corrected (Tailwind v4 has no `--z-index-*` namespace, so no `z-sticky` class). **Blocking-from-start** `css-undefined-var` category; both plant arms + all 4 external-prefix proofs re-verified by the reviewer; 85/85; 0 `--z-*` consumers; build 0. **F1 (`P2`)** 3 missed shapes vs 2 documented limitations → **718R**; **F3** narrowed arms → 718R. `sessions/2026-08-06-task718-…md`. |
-| 718R | **IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** — Sprint 52 | Closes 718 **F1/F3**: `i` flag on `css-undefined-var`'s `var\(` landed (D32 failing-arm-first proven); §23.6.c A7/A8 document the 2 gaps it cannot close (`*`-line → **719**; multi-line `var(` → architectural, **unowned**); 88/88 suite, gate 0, build 0. `sessions/2026-08-06-task718R-css-undefined-var-coverage-gaps.md`. |
-| 719 | **KICKOFF FILED**, blocked on 718R — Sprint 52 | `shouldSkipLine:584` treats a leading `*` as a comment → **all 4** CSS categories miss a violation on a universal-selector line (`* { margin: 10px; }` MISSED, `.a {…}` control flagged). Exposure today is **0** (1 real `*` rule in `src/**/*.css`, in unscanned `globals.css`) but **4,058** `.ts`/`.tsx` JSDoc lines ride the same branch — `.css`-only fix via the already-stripped source, 4 planted proofs, `.tsx` path locked unchanged. Also drops the dead `:586` duplicate. `Sprint_52_kickoff_prompt_Task_719_…md`. |
+| 719 | **KICKOFF FILED**, unblocked (718R approved) — Sprint 52 | `shouldSkipLine:584` treats a leading `*` as a comment → **all 4** CSS categories miss a violation on a universal-selector line (`* { margin: 10px; }` MISSED, `.a {…}` control flagged). Exposure today is **0** (1 real `*` rule in `src/**/*.css`, in unscanned `globals.css`) but **4,058** `.ts`/`.tsx` JSDoc lines ride the same branch — `.css`-only fix via the already-stripped source, 4 planted proofs, `.tsx` path locked unchanged. Also drops the dead `:586` duplicate. Retires §23.6.c **A7**. `Sprint_52_kickoff_prompt_Task_719_…md`. |
+| 720 | **KICKOFF FILED**, sequenced after 719 — Sprint 52 | `extractCssCustomPropertyDefinitions:574`'s `/^…/gm` registers at most **one** declaration per line and only as the first token: `.x { --local: 1px; width: var(--local); }` is a **false positive**, `'--Foo: 1px; --foo: 2px'` → `['--Foo']` only. Exposure **0**; fails **loud**, not silent. Naive `^`-removal **rejected** — it reads decl-shaped literals in `content` strings / data URIs as definitions, converting a loud false positive into a silent false negative; declaration-aware quote/paren-tracking scan required. Case-sensitivity preserved. `Sprint_52_kickoff_prompt_Task_720_…md`. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.

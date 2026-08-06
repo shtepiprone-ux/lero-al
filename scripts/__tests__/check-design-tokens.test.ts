@@ -257,9 +257,8 @@ describe('§D — plain CSS declaration coverage: length/duration/z-index (Task 
     expect(regularCss('.x { width: 100%; }')).toHaveLength(0)
   })
 
-  it('does NOT flag the approved 1px hairline-border value (A3 decision)', () => {
+  it('does NOT flag the approved 1px hairline-border value when it IS the whole declaration value (A3 decision, single-value only — see Task 716 §E for the shorthand case, which is a finding as of Task 716 A3/AC1)', () => {
     expect(regularCss('.x { border-top-width: 1px; }')).toHaveLength(0)
-    expect(regularCss('.x { border-bottom: 1px solid var(--border); }')).toHaveLength(0)
   })
 
   it('does NOT flag a literal inside a CSS comment', () => {
@@ -295,11 +294,12 @@ describe('§D — plain CSS declaration coverage: length/duration/z-index (Task 
     expect(all.some(f => f.cat === 'stale-marker' && f.match === 'font-size: 10px')).toBe(true)
   })
 
-  it('a css-length marker with no — separator does not silently suppress (pre-existing parseInlineMarkers behavior for block comments, unchanged by this task: the trailing */ is captured into rawValue, so it never matches the detected value and surfaces as stale-marker rather than missing-reason)', () => {
+  it('a css-length marker with no — separator is a missing-reason error, not stale-marker (Task 716 R4 fix — corrects the Task 714 defect where the trailing */ was captured into rawValue and the marker misreported as stale-marker)', () => {
     const all = findingsOfCss(
       '.fabLabel {\n  font-size: 10px; /* design-tokens-allow: font-size: 10px */\n}'
     )
-    expect(all.some(f => f.cat === 'stale-marker')).toBe(true)
+    expect(all.some(f => f.cat === 'missing-reason' && f.match === 'font-size: 10px')).toBe(true)
+    expect(all.some(f => f.cat === 'stale-marker')).toBe(false)
     expect(all.some(f => f.cat === 'css-length' && f.match === 'font-size: 10px')).toBe(true)
   })
 
@@ -319,5 +319,154 @@ describe('parseInlineMarkers — value extraction (Task 408 widening for spaced 
   it('flags missing reason (nothing after —)', () => {
     expect(parseInlineMarkers('// design-tokens-allow: zIndex: 9999'))
       .toEqual([{ rawValue: 'zIndex: 9999', hasReason: false }])
+  })
+
+  it('strips a trailing */ from a reason-less CSS block-comment marker (Task 716 R4 fix)', () => {
+    expect(parseInlineMarkers('/* design-tokens-allow: font-size: 10px */'))
+      .toEqual([{ rawValue: 'font-size: 10px', hasReason: false }])
+  })
+
+  it('does NOT strip */ when a reason is present (only the no-reason branch is touched)', () => {
+    expect(parseInlineMarkers('/* design-tokens-allow: font-size: 10px — reason */'))
+      .toEqual([{ rawValue: 'font-size: 10px', hasReason: true }])
+  })
+})
+
+describe('§E — shorthand/function-wrapped CSS declaration coverage (Task 716)', () => {
+  it('flags a raw length inside a multi-value shorthand list (R1 — AC1)', () => {
+    const findings = regularCss('.x {\n  border-bottom: 1px solid var(--border);\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'border-bottom: 1px' })
+  })
+
+  it('flags a raw length inside a CSS function (R2 — AC2)', () => {
+    const findings = regularCss('.x {\n  filter: blur(8px);\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'filter: 8px' })
+  })
+
+  it('flags every raw literal in a plain multi-value list (margin: 4px 8px)', () => {
+    const findings = regularCss('.x {\n  margin: 4px 8px;\n}')
+    expect(findings).toHaveLength(2)
+    expect(findings.map(f => f.match).sort()).toEqual(['margin: 4px', 'margin: 8px'])
+  })
+
+  it('flags both raw durations in a comma-separated transition shorthand (real MantineListingCardPattern shape)', () => {
+    const findings = regularCss('.x {\n  transition: transform 300ms ease-out, box-shadow 300ms ease-out;\n}')
+    expect(findings).toHaveLength(2)
+    expect(findings.every(f => f.cat === 'css-duration')).toBe(true)
+  })
+
+  it('does NOT flag a shorthand where every literal is token-anchored (R3 — top-level var siblings, no raw literal present)', () => {
+    expect(regularCss('.x { padding: var(--space-2) var(--space-4); }')).toHaveLength(0)
+  })
+
+  it('does NOT flag a calc() built entirely from a var() and a unitless number (R3)', () => {
+    expect(regularCss('.x { width: calc(var(--x) * 2); }')).toHaveLength(0)
+  })
+
+  it('does NOT flag zero/unitless/keyword multi-value forms (A2)', () => {
+    expect(regularCss('.x { margin: 0 auto; }')).toHaveLength(0)
+    expect(regularCss('.x { flex: 1 1 0; }')).toHaveLength(0)
+    expect(regularCss('.x { border: 0; }')).toHaveLength(0)
+    expect(regularCss('.x { line-height: 1.5; }')).toHaveLength(0)
+    expect(regularCss('.x { scale: 0.95; }')).toHaveLength(0)
+  })
+
+  it('a shorthand mixing a raw literal AND a var() flags only the raw one (R1/A1)', () => {
+    const findings = regularCss('.x {\n  border-bottom: 1px solid var(--border);\n}')
+    expect(findings.map(f => f.match)).toEqual(['border-bottom: 1px'])
+  })
+
+  it('exempts a literal inside a function whose SAME function also contains a var() reference (A4 nested — matches the frozen Task 408 rounded-[calc(var(--radius)-5px)] precedent)', () => {
+    expect(regularCss('.x { width: calc(var(--x) + 2px); }')).toHaveLength(0)
+  })
+
+  it('flags every unit literal in a var()-free nested function (A4 — clamp with no token anchor)', () => {
+    const findings = regularCss('.x {\n  width: clamp(1rem, 2vw, 3rem);\n}')
+    expect(findings).toHaveLength(2)
+    expect(findings.map(f => f.match).sort()).toEqual(['width: 1rem', 'width: 3rem'])
+  })
+
+  it('does NOT flag a var()-only function with no unit literal present (color-mix)', () => {
+    expect(regularCss('.x { background: color-mix(in oklab, var(--primary) 90%, transparent); }')).toHaveLength(0)
+  })
+
+  it('flags raw lengths in a --* custom-property shorthand declaration (A5 decision — real --tw-shadow shape, MobileBottomNavView.module.css:60)', () => {
+    // The fixture's hex fallback also trips the unrelated, pre-existing `color`
+    // category (expected, not this test's concern) — scope to css-length only.
+    const findings = regularCss(
+      '.x {\n  --tw-shadow: 0 -2px 16px var(--tw-shadow-color, #00000014);\n}'
+    ).filter(f => f.cat === 'css-length')
+    expect(findings).toHaveLength(2)
+    expect(findings.map(f => f.match).sort()).toEqual(['--tw-shadow: -2px', '--tw-shadow: 16px'])
+  })
+
+  it('the 1px hairline exemption is single-value-only — 1px in a shorthand list IS a finding (A3 decision)', () => {
+    expect(regularCss('.x { border-top-width: 1px; }')).toHaveLength(0)
+    const shorthand = regularCss('.x { border-bottom: 1px solid var(--border); }')
+    expect(shorthand).toHaveLength(1)
+    expect(shorthand[0]).toMatchObject({ cat: 'css-length', match: 'border-bottom: 1px' })
+  })
+
+  it('does NOT double-count a single-bare-token value already reported by the single-value pattern', () => {
+    const findings = regularCss('.x {\n  font-size: 10px;\n}')
+    expect(findings).toHaveLength(1)
+    expect(findings[0]).toMatchObject({ cat: 'css-length', match: 'font-size: 10px' })
+  })
+
+  it('does NOT flag a length inside an @media prelude even with shorthand scanning active (A5 regression)', () => {
+    expect(regularCss('@media (min-width: 40rem) {\n  .foo { color: var(--foreground); }\n}')).toHaveLength(0)
+  })
+
+  it('does NOT flag a length inside an @supports prelude even with shorthand scanning active (A5 regression)', () => {
+    expect(regularCss('@supports (min-width: 40rem) {\n  .foo { color: var(--foreground); }\n}')).toHaveLength(0)
+  })
+
+  it('does NOT run shorthand css-length/duration/zindex scanning on a .tsx file (R9 — zero TSX behavior change)', () => {
+    const findings = scanContent(
+      '.x {\n  border-bottom: 1px solid var(--border);\n}',
+      'src/components/ui/__fixture-task716b__.tsx',
+      {}
+    )
+    expect(findings.filter(f => f.cat === 'css-length')).toHaveLength(0)
+  })
+
+  it('a same-line design-tokens-allow marker suppresses a shorthand css-length finding', () => {
+    const suppressed = regularCss(
+      '.x {\n  border-bottom: 1px solid var(--border); /* design-tokens-allow: border-bottom: 1px — hairline divider inside a shorthand, no scale token */\n}'
+    )
+    expect(suppressed).toHaveLength(0)
+  })
+})
+
+describe('§F — reason-less CSS marker reports missing-reason, not stale-marker (Task 716 R4)', () => {
+  it('a reason-less block-comment marker is missing-reason, not stale-marker (the fix)', () => {
+    const all = findingsOfCss(
+      '.fabLabel {\n  font-size: 10px; /* design-tokens-allow: font-size: 10px */\n}'
+    )
+    expect(all.some(f => f.cat === 'missing-reason' && f.match === 'font-size: 10px')).toBe(true)
+    expect(all.some(f => f.cat === 'stale-marker')).toBe(false)
+  })
+
+  it('a reasoned block-comment marker still suppresses (unchanged)', () => {
+    const suppressed = regularCss(
+      '.fabLabel {\n  font-size: 10px; /* design-tokens-allow: font-size: 10px — interactive/mobile-critical nav text */\n}'
+    )
+    expect(suppressed).toHaveLength(0)
+  })
+
+  it('a genuinely stale marker (value absent from the line) still reports stale-marker, not missing-reason (regression)', () => {
+    const all = findingsOfCss(
+      '.fabLabel {\n  color: var(--foreground); /* design-tokens-allow: font-size: 10px — declaration removed */\n}'
+    )
+    expect(all.some(f => f.cat === 'stale-marker' && f.match === 'font-size: 10px')).toBe(true)
+    expect(all.some(f => f.cat === 'missing-reason')).toBe(false)
+  })
+
+  it('the equivalent reason-less TSX marker is unaffected — still missing-reason (unchanged path)', () => {
+    const all = findingsOf(`const style = { zIndex: 9999 } // design-tokens-allow: zIndex: 9999`)
+    expect(all.some(f => f.cat === 'missing-reason')).toBe(true)
+    expect(all.some(f => f.cat === 'stale-marker')).toBe(false)
   })
 })

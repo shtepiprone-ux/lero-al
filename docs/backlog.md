@@ -3,10 +3,10 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — 710 · 712 · 713 · 714 approved and archived; backlog consolidated 102 → 80
+## Last Session (2026-08-06) — 710 · 712 · 713 · 714 approved and archived; 716 implemented, awaiting review
 
 - **Review queue cleared.** 710 (assertion-liveness meta-gate) · 712 (route-shell de-Tailwind + cl. 16c story parity) · 713 (MobileBottomNav + app-shell) · 714 (CSS-declaration token coverage), all `APPROVED WITH NOTES`. Sprints **49 · 50 · 51** closed — detail in the archive ledger.
-- **Sprint 52 is live.** 714 landed; **716** filed; **715 runs next**, per owner sequence 2026-08-06. Stale "pending approval" states and the `NEXT FREE` off-by-one are fixed.
+- **716 IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** (`sessions/2026-08-06-task716-…md`): shorthand/function-wrapped `css-length`/`css-duration`/`css-zindex` coverage + CSS marker missing-reason fix. Re-run census: **60 literals/6 files (+15 vs 714's 45)**. **715 runs next** once reviewed, per owner sequence.
 
 ## Open — needs action
 
@@ -35,7 +35,7 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **716 `KICKOFF FILED`** · **715 runs next** · 711 reserved. 🟠 OPEN.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): 714 ✅ · **716 IMPLEMENTED, AWAITING REVIEW** · **715 runs next** · 711 reserved. 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
@@ -54,8 +54,8 @@
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
 | 711 | reserved — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM; their selectors are shadcn `data-slot` names (`check-stories-rendered.mjs:1161`, `:1185-1192`) Mantine never renders — the §14.9.9 `PORTAL_SELECTOR` defect again. Planted proof per assertion. **Must fold in four 710-review findings:** `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · the `critical-flow-registry` row-50 + `2026-08-0X` citation fixes · a `LIVE-THIN` threshold (`heroSearchWrapInBand` resolves in only 4/1184 cells). |
-| 715 | blocked on 714 — Sprint 52, **runs next** | Strict flip of `css-length`/`css-duration`/`css-zindex` + remediation. **Consume 716's re-run inventory, not 714's 45-item one** — 714's census is bounded by the gap 716 closes. Owns the N1-vs-artifact policy call 714 surfaced but did not decide, incl. `font-size:10px` vs `--text-2xs` (a token exists at that value, but §22.2 disallows `text-2xs` for nav labels — the exact use-case here). |
-| 716 | **`KICKOFF FILED`** — Sprint 52 | Detect raw literals in **multi-value and function-wrapped** CSS declarations (`border-bottom: 1px solid var(--border)`, `blur(8px)`, `margin: 4px 8px` are invisible today) with a **per-literal** token-anchored exemption — Task 408's whole-match `var()` filter is wrong for declaration lists. Also fixes the reason-less CSS marker misreporting as `stale-marker`, and decides the `1px` policy 714 left implicit. |
+| 715 | blocked on 716 review — Sprint 52, **runs next** | Strict flip of `css-length`/`css-duration`/`css-zindex` + remediation. **Consume 716's 60-item re-run inventory** (`task716-css-declaration-inventory.md`), **not 714's 45-item one**. Owns the N1-vs-artifact policy call, incl. `font-size:10px` vs `--text-2xs` (§22.2 disallows it for nav labels). |
+| 716 | **IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW** — Sprint 52 | Shorthand/function-wrapped `css-length`/`css-duration`/`css-zindex` detection landed (per-literal, function-scoped `var()` exemption — Task 408's whole-match filter generalized correctly for declaration lists). Fixed the reason-less CSS marker `stale-marker` misreport → `missing-reason`. 1px policy: single-value-only exemption. `sessions/2026-08-06-task716-…md`. |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
 - **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).

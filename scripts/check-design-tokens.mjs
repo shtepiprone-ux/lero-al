@@ -59,6 +59,11 @@
  * Inline suppression added by Task 403 (Sprint 35, 2026-06-06). Epic JJ Phase 3.
  * Detector hardening (JSX-comment strip, inline zIndex marker, negative/var lock
  * tests) added by Task 408 (Sprint 35, 2026-06-13). Epic JJ Phase 4.
+ * Plain CSS declaration coverage (css-length/css-duration/css-zindex,
+ * single-value only, report-only) added by Task 714 (Sprint 52, 2026-08-06).
+ * Shorthand / function-wrapped generalization of those 3 categories (per-literal
+ * token-anchored exemption) + reason-less CSS marker missing-reason fix added by
+ * Task 716 (Sprint 52, 2026-08-06).
  * Docs: docs/design-system.md §23
  */
 
@@ -256,6 +261,148 @@ export const DETECTION_PATTERNS = [
 // remediated or explicitly marker-suppressed.
 export const REPORT_ONLY_CATEGORIES = new Set(['css-length', 'css-duration', 'css-zindex']);
 
+// ── Shorthand / function-wrapped CSS declaration coverage (Task 716) ─────────
+//
+// The css-length/css-duration/css-zindex DETECTION_PATTERNS entries above only
+// match a declaration whose ENTIRE value is one bare token (the §23.6 boundary
+// Task 714 documented and this task closes). This section generalizes them to a
+// raw literal that appears INSIDE a multi-value shorthand list
+// (`border-bottom: 1px solid var(--border)`) or wrapped in a CSS function
+// (`filter: blur(8px)`), following the SAME token-anchored exemption mechanism
+// Task 408 built for Tailwind's calc/min/max/clamp brackets (§23.1.b) — but
+// applied per-literal, scoped to the literal's OWN outermost enclosing function
+// call, not per-declaration (Task 716 A1): a raw literal sitting at the
+// declaration's TOP level (not inside any function) is never exempted just
+// because a var(--…) reference appears elsewhere in the same value. That is
+// exactly what makes `border-bottom: 1px solid var(--border)` detect the `1px`
+// (R1) while a function like `calc(var(--x) + 2px)` stays exempt (A4 — the
+// literal's own outermost function contains a var(--…) reference, matching the
+// frozen Task 408 `rounded-[calc(var(--radius)-5px)]` precedent exactly).
+//
+// A declaration whose value IS exactly one bare token is skipped here — the
+// dedicated single-value pattern above already reports it (incl. its own
+// zero/A3 1px-exemption), so this function never double-counts a finding.
+//
+// Task 716 A3 (the 1px policy, decided): the 1px/-1px hairline exemption is
+// SINGLE-VALUE-ONLY, unchanged above. The instant 1px co-occurs with any other
+// token in a shorthand list it is a full finding like any other raw literal —
+// proven by AC1's `border-bottom: 1px solid var(--border)` case. This is one
+// consistent rule ("the exemption applies only when 1px IS the whole value")
+// applied identically in both paths, not two different policies.
+//
+// Task 716 A5 (the --* decision): custom-property declarations are IN scope,
+// unchanged from the property-name shape already used above (`[\w-]+` matches
+// a leading `--`) — no special-casing needed or added.
+const SHORTHAND_CSS_SPECS = [
+  {
+    cat: 'css-length',
+    label: 'raw CSS length declaration (shorthand/function-wrapped)',
+    propertySource: '[\\w-]+',
+    unitSource: '-?(?:\\d+\\.\\d+|\\.\\d+|\\d+)(?:e\\d+)?(?:px|rem|em)',
+    isZero: (literal) => {
+      const m = literal.match(/^(-?(?:\d+\.\d+|\.\d+|\d+)(?:e\d+)?)(px|rem|em)$/);
+      return m ? parseFloat(m[1]) === 0 : false;
+    },
+  },
+  {
+    cat: 'css-duration',
+    label: 'raw CSS duration declaration (shorthand/function-wrapped)',
+    propertySource: '[\\w-]+',
+    unitSource: '-?(?:\\d+\\.\\d+|\\.\\d+|\\d+)(?:ms|s)',
+    isZero: (literal) => {
+      const m = literal.match(/^(-?(?:\d+\.\d+|\.\d+|\d+))(ms|s)$/);
+      return m ? parseFloat(m[1]) === 0 : false;
+    },
+  },
+  {
+    cat: 'css-zindex',
+    label: 'raw CSS z-index declaration (function-wrapped)',
+    propertySource: 'z-index',
+    unitSource: '-?\\d+',
+    isZero: (literal) => parseInt(literal, 10) === 0,
+  },
+];
+
+// Returns true when the literal starting at `litStart` inside `value` sits
+// within a CSS function call whose full parenthesized span (from its own `(`
+// to its matching `)`) contains a `var(--` reference ANYWHERE — the per-function
+// token-anchored exemption (A1/A4), generalizing Task 408's whole-bracket
+// var-anywhere rule from Tailwind's `*-[calc(...)]` syntax to arbitrary CSS
+// functions. A literal that is not inside any function at all (paren depth 0
+// at its own position) is never anchored — this is what makes a bare
+// shorthand token never inherit exemption from a sibling `var()` token.
+function isVarAnchoredLiteral(value, litStart) {
+  let depth = 0;
+  let outerStart = -1;
+  for (let i = 0; i < litStart; i++) {
+    if (value[i] === '(') {
+      if (depth === 0) outerStart = i;
+      depth++;
+    } else if (value[i] === ')') {
+      depth--;
+      if (depth === 0) outerStart = -1;
+    }
+  }
+  if (depth <= 0 || outerStart === -1) return false;
+  let d2 = 0;
+  let outerEnd = value.length - 1;
+  for (let i = outerStart; i < value.length; i++) {
+    if (value[i] === '(') d2++;
+    else if (value[i] === ')') {
+      d2--;
+      if (d2 === 0) { outerEnd = i; break; }
+    }
+  }
+  return /var\(--/.test(value.slice(outerStart, outerEnd + 1));
+}
+
+// Finds raw literals for one spec (css-length/css-duration/css-zindex) in
+// shorthand or function-wrapped declarations on a single, already
+// CSS-comment-stripped line. Declarations are located by scanning for
+// `property:` then walking forward tracking paren depth to find the
+// terminating `;`/`}` AT depth 0. This is what structurally excludes
+// @media/@supports preludes (A5) without special-casing: a prelude's condition
+// paren (e.g. `(min-width: 40rem)`) closes to a NEGATIVE depth relative to this
+// walk (the walk starts after the prelude's own property colon, so it never saw
+// the prelude's opening paren), so depth never returns to exactly 0 and no
+// terminator is ever found on that line — the candidate declaration is skipped.
+function findShorthandCssLiterals(line, spec) {
+  const results = [];
+  const declRe = new RegExp(`(${spec.propertySource})\\s*:\\s*`, 'g');
+  const soleTokenRe = new RegExp(`^${spec.unitSource}$`);
+  const literalRe = new RegExp(spec.unitSource, 'g');
+  let dm;
+  while ((dm = declRe.exec(line)) !== null) {
+    const property = dm[1];
+    const valueStart = declRe.lastIndex;
+    let depth = 0;
+    let valueEnd = -1;
+    for (let i = valueStart; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '(') depth++;
+      else if (ch === ')') depth--;
+      else if ((ch === ';' || ch === '}') && depth === 0) { valueEnd = i; break; }
+    }
+    if (valueEnd === -1) continue;
+    const value = line.slice(valueStart, valueEnd);
+
+    // Single-bare-token values are already reported by the dedicated
+    // single-value pattern above (incl. its own zero/A3 exemption) — skip
+    // here so this function never double-counts a finding.
+    if (soleTokenRe.test(value.trim())) continue;
+
+    literalRe.lastIndex = 0;
+    let lm;
+    while ((lm = literalRe.exec(value)) !== null) {
+      const literal = lm[0];
+      if (spec.isZero(literal)) continue;
+      if (isVarAnchoredLiteral(value, lm.index)) continue;
+      results.push({ cat: spec.cat, label: spec.label, match: `${property}: ${literal}` });
+    }
+  }
+  return results;
+}
+
 // ── JSX comment stripping (Task 408, §A) ──────────────────────────────────────
 //
 // Replace every {/* ... */} block (including multi-line spans) with whitespace
@@ -331,7 +478,16 @@ export function parseInlineMarkers(line) {
 
     const afterPrefix = line.slice(pos + ALLOW_MARKER_PREFIX.length);
     const dashIdx = afterPrefix.indexOf('—');
-    const valuePart = dashIdx === -1 ? afterPrefix : afterPrefix.slice(0, dashIdx);
+    // Task 716 R4: a reason-less CSS block-comment marker (`/* design-tokens-allow:
+    // <value> */`, no — separator) had its own `*/` terminator absorbed into
+    // valuePart, so the extracted value never matched the detected source text and
+    // the marker misreported as `stale-marker` instead of the documented
+    // missing-reason error. Strip a trailing `*/` ONLY when there is no reason — a
+    // marker WITH a reason never has `*/` before the — separator, so this never
+    // touches that path. The `//` (TSX) form has no terminator to strip, so this is
+    // a no-op there — the TSX path is unchanged.
+    let valuePart = dashIdx === -1 ? afterPrefix : afterPrefix.slice(0, dashIdx);
+    if (dashIdx === -1) valuePart = valuePart.replace(/\*\/\s*$/, '');
     const rawValue = valuePart.trim();
 
     if (!rawValue) {
@@ -469,6 +625,17 @@ export function scanContent(content, relPath, allowlist = {}) {
           match: m[0],
           area: getArea(relPath),
         });
+      }
+    }
+
+    // Task 716: shorthand / function-wrapped css-length/css-duration/css-zindex
+    // literals — only ever runs against .css content, on the same CSS-comment-
+    // stripped source the single-value cssOnly patterns above already use.
+    if (isCssFile) {
+      for (const spec of SHORTHAND_CSS_SPECS) {
+        for (const { cat, label, match } of findShorthandCssLiterals(codeOnlyCss, spec)) {
+          rawMatches.push({ file: relPath, line: lineNum, cat, label, match, area: getArea(relPath) });
+        }
       }
     }
 

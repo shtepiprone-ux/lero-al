@@ -948,16 +948,14 @@ Three new categories, extending `DETECTION_PATTERNS`, `.css` files only:
 
 | Category | Matches | Does NOT match |
 |---|---|---|
-| `css-length` | A declaration whose value is a single bare `px`/`rem`/`em` literal (incl. scientific notation, e.g. `border-radius: 3.40282e38px`) followed by `;` or `}` | Zero values (`0`, `0px`, `0rem`, `0em`); the approved `1px`/`-1px` hairline-border value (A3 — `HeaderView.module.css:37` precedent); `var(--token)`; `calc(var(...))`; multi-value/shorthand declarations (`border-bottom: 1px solid var(--border)`); function-wrapped values (`blur(8px)`, `translateY(-2px)`) |
-| `css-duration` | A declaration whose value is a single bare `s`/`ms` literal (incl. leading-dot, e.g. `.15s`) | Zero values; the same multi-value/function-wrapped exclusions as above |
-| `css-zindex` | `z-index: N;` with a raw unitless integer | `z-index: 0`; `z-index: var(--z-toast)` |
+| `css-length` | A declaration whose value is a single bare `px`/`rem`/`em` literal (incl. scientific notation, e.g. `border-radius: 3.40282e38px`) followed by `;` or `}`; **and, since Task 716, a raw `px`/`rem`/`em` literal anywhere inside a multi-value/shorthand declaration or a CSS function, per-literal (§23.6.a)** | Zero values (`0`, `0px`, `0rem`, `0em`); `var(--token)`; `calc(var(...))`; a literal whose own outermost enclosing function contains a `var(--…)` reference anywhere (§23.6.a A1/A4) |
+| `css-duration` | A declaration whose value is a single bare `s`/`ms` literal (incl. leading-dot, e.g. `.15s`); **and, since Task 716, the same shorthand/function-wrapped generalization** | Zero values; the same var-anchored exclusion as above |
+| `css-zindex` | `z-index: N;` with a raw unitless integer; **and, since Task 716, the same generalization for a function-wrapped z-index value** | `z-index: 0`; `z-index: var(--z-toast)` |
 
-**Scope boundary (deliberate, documented — not a bug):** these patterns only match a declaration
-whose entire value is one bare token. A multi-value list (`transition: transform 300ms ease-out,
-box-shadow 300ms ease-out;`) or a function-wrapped value (`blur(8px)`, `calc(2px + var(--x))`) is
-out of scope — generalizing to those forms needs the same nested-function handling Task 408 built
-for Tailwind's `calc/min/max/clamp` brackets (§23.1.b), applied to arbitrary CSS functions. That is
-a materially larger follow-on, not required by the "plain CSS declaration" wording this task closes.
+**Scope boundary as of Task 714 (superseded — kept for history):** these patterns originally matched
+only a declaration whose entire value was one bare token; a multi-value list or a function-wrapped
+value was explicitly out of scope, pending the same nested-function handling Task 408 built for
+Tailwind's `calc/min/max/clamp` brackets. **Task 716 closed that gap — see §23.6.a.**
 
 **CSS comment stripping (A2):** a new `stripCssComments()` helper strips `/* ... */` spans (incl.
 multi-line) to whitespace, used only to build the detection source for these three patterns — the
@@ -970,33 +968,89 @@ markers by Task 713 (`MobileBottomNavView.module.css:60`, `:87`), now proven for
 **rawValue convention (A1):** reported as `property: value` (e.g. `font-size: 10px`, `z-index:
 30`), matching the existing inline-`zIndex` convention — this disambiguates identical bare values
 on one line coming from different properties, and is the exact string a `design-tokens-allow`
-marker must reproduce byte-for-byte.
+marker must reproduce byte-for-byte. Task 716 keeps this convention for shorthand findings too:
+`property: literal` where `literal` is the one raw token found, not the whole multi-value list
+(e.g. `border-bottom: 1px`, not `border-bottom: 1px solid var(--border)`).
 
 **`@media`/`@supports` preludes (A5):** never match. A condition's numeric token (e.g. `(min-width:
 40rem)`) is always followed by `)`, never `;`/`}`, so the terminator lookahead structurally
-excludes preludes without special-casing. Proven with a dedicated test.
+excludes preludes without special-casing. Proven with a dedicated test — including a Task 716
+regression arm confirming the shorthand-scanning code path is equally excluded.
 
 **Report-only, not silent (R3/A4):** `REPORT_ONLY_CATEGORIES` (`css-length`, `css-duration`,
 `css-zindex`) are excluded from the strict/blocking exit-code computation and from the main
 per-area violation printout, but always printed under their own `CSS DECLARATION LITERALS —
-report-only, not blocking` heading with an explicit count — never silently absorbed. Measured
-2026-08-06 against the current tree: **45 literals across 6 files** (`npm run check:design-tokens`
-still exits **0**). Classified inventory (34 `N1-VIOLATION` / 11 `COMPILED-ARTIFACT`, per-file
-counts): `.screenshots/task714-evidence/task714-css-declaration-inventory.md` (local-only, D6),
-summarized in `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverage.md`. The
-kickoff's own §3.5 pre-measurement (49 across 7 files) does not reproduce under any single
-consistent methodology and is superseded by this measured table — **715 must re-run the command
-and re-derive its scope from the current tree, not inherit either number.**
-
-**Test coverage:** 18 new planted arms in `scripts/__tests__/check-design-tokens.test.ts` §D,
-following the existing plant-both-arms convention (violating case must be caught; negative/var/
-zero/comment/prelude case must NOT be caught; marker-suppression and orphaned-marker-as-stale-
-marker both proven). All pre-existing tests (25, not the kickoff's stated 26 — corrected by this
-task) remain unmodified and pass; **43 total, all passing.**
+report-only, not blocking` heading with an explicit count — never silently absorbed. **Superseded
+by the Task 716 measurement below.**
 
 **715** owns the strict flip (removing these categories from `REPORT_ONLY_CATEGORIES`) and the
-remediation/marker-suppression of the 45-item inventory above, per the N1-vs-compiled-artifact
-policy call surfaced (not decided) here.
+remediation/marker-suppression of the inventory below, per the N1-vs-compiled-artifact policy call
+surfaced (not decided) here.
+
+### §23.6.a — Shorthand / function-wrapped generalization (Task 716)
+
+Task 714's single-token-only boundary left every multi-value CSS declaration
+(`border-bottom: 1px solid var(--border)`) and every function-wrapped value (`filter: blur(8px)`)
+undetected. Task 716 generalizes all three categories to a **per-literal** scan of the declaration's
+full value, following the same token-anchored-exemption mechanism Task 408 built for Tailwind's
+`*-[calc/min/max/clamp(...)]` brackets, but corrected for the declaration-list case:
+
+- **A1 (the central design problem, resolved):** Task 408's filter exempts a match containing
+  `var(--` **anywhere in the same bracket**, which is correct when the bracket is one function-call
+  value. It is wrong applied to a whole *declaration list*, where `border-bottom: 1px solid
+  var(--border)` has THREE independent top-level tokens (`1px`, `solid`, `var(--border)`) — exempting
+  `1px` because a sibling token is a `var()` would be an over-exemption. The fix: the exemption is
+  **per-literal, scoped to that literal's own outermost enclosing function call** (`isVarAnchoredLiteral`
+  in `scripts/check-design-tokens.mjs`). A literal at the declaration's top level (no enclosing
+  function at all) is never exempted by a sibling `var()` — this is exactly what makes `1px` in
+  `border-bottom: 1px solid var(--border)` a finding. A literal genuinely INSIDE a function that also
+  contains a `var(--…)` reference anywhere within that same function (e.g. `calc(var(--x) + 2px)`)
+  stays exempt — the frozen Task 408 `rounded-[calc(var(--radius)-5px)]` precedent, generalized from
+  Tailwind brackets to arbitrary CSS functions.
+- **A2 (zero/unitless forms):** structurally silent without extra filtering — the unit regex requires
+  a `px`/`rem`/`em`/`s`/`ms` suffix, so unitless multi-value tokens (`flex: 1 1 0`, `border: 0`,
+  `line-height: 1.5`, `scale: 0.95`) never match at all; a zero-WITH-unit token (`margin: 0px 8px`)
+  is filtered by the same zero-value check the single-value pattern already used.
+- **A3 (the 1px policy, decided):** the 1px/-1px hairline exemption is **single-value-only** and
+  unchanged (`border-top-width: 1px;` stays silent). The instant `1px` co-occurs with any other token
+  in a shorthand list, it is a full finding like any other raw literal — one consistent rule ("the
+  exemption applies only when 1px IS the whole value"), not two different policies, proven by
+  `border-bottom: 1px solid var(--border)` now reporting `border-bottom: 1px`.
+- **A4 (nesting):** handled to arbitrary depth by walking paren balance rather than a fixed pattern —
+  `calc(var(--x) + 2px)` (var-anchored, exempt), `clamp(1rem, 2vw, 3rem)` (no var anywhere in the
+  function, both `1rem`/`3rem` flagged), `color-mix(in oklab, var(--primary) 90%, transparent)` (no
+  unit literal present, nothing to flag) are all proven with tests.
+- **A5 (`--*` custom properties, decided):** IN scope, unchanged from the property-name pattern
+  already in use (`[\w-]+` matches a leading `--`) — no special-casing needed. Proven against the
+  real `MobileBottomNavView.module.css:60`/`:87` `--tw-shadow` shapes.
+- **A declaration whose value IS exactly one bare token** is left to the pre-existing single-value
+  pattern (incl. its own zero/A3 exemption) so the two code paths never double-count a finding.
+
+**R4 — reason-less CSS marker diagnostic fix:** a `design-tokens-allow` marker with no `—` separator
+inside a CSS block comment (`/* design-tokens-allow: font-size: 10px */`) had its own comment
+terminator `*/` absorbed into the extracted value (`parseInlineMarkers`), so it never matched the
+detected source text and misreported as `stale-marker` instead of the documented missing-reason
+error. Fixed by stripping a trailing `*/` **only in the no-reason branch** (a marker with a reason
+never has `*/` before the `—` separator, so that path is untouched; the TSX `//` form has no
+terminator to strip, so it is unaffected).
+
+**Measured 2026-08-06 (re-run, supersedes Task 714's 45-item table):** **60 literals across the same
+6 files** (`npm run check:design-tokens` still exits **0**) — **delta: +15, 0 files added or
+removed**, all 15 newly-detected literals classified `COMPILED-ARTIFACT` (0 new `N1-VIOLATION`).
+`src/design-system/mantine/patterns/MantineListingCardPattern.module.css` is excluded at the
+path-level allowlist (`scripts/design-tokens-allowlist.json`) regardless of detector coverage — it
+was never in either census. Classified inventory:
+`.screenshots/task716-evidence/task716-css-declaration-inventory.md` (local-only, D6), summarized in
+`docs/sessions/2026-08-06-task716-design-tokens-shorthand-and-function-coverage.md`. **715 must scope
+its remediation from this 60-item table, not Task 714's 45-item one.**
+
+**Test coverage:** Task 714 shipped 18 planted arms (§D) on top of 25 pre-existing (43 total). Task
+716 adds 24 new arms (§E/§F, plus 2 `parseInlineMarkers` arms) and corrects 2 pre-existing §D
+assertions whose old behavior this task's own requirements mandate changing — not a silent
+weakening: (1) the 1px-in-shorthand assertion (now split so the single-value case stays exempt and a
+new §E arm proves the shorthand case is a finding, per A3/AC1); (2) the reason-less-CSS-marker
+assertion (flipped from asserting the `stale-marker` bug to asserting the `missing-reason` fix, per
+R4/AC4). **67 total, all passing** (`npx vitest run scripts/__tests__/check-design-tokens.test.ts`).
 
 ---
 

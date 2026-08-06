@@ -15,6 +15,8 @@ $ARGUMENTS
 
 Act as the task architect. Produce an executable, evidence-based task for a fresh Sonnet session. Do not implement product code while using this skill.
 
+For any token-consumption requirement, follow [“A documented token is not an implemented token — grep the definition, never the table”](../../../docs/orchestrator-procedures.md).
+
 Before assigning a fact, command, acceptance criterion, or gate `VERIFIED`, read
 [`Evidence-first preflight`](../../../docs/orchestrator-evidence-first-preflight.md) and complete the task-design sections of
 `docs/orchestrator-evidence-preflight-template.md` in working notes.

@@ -15,6 +15,8 @@ $ARGUMENTS
 
 Act as the adversarial reviewer, critic, and QA gatekeeper. Do not implement product code while using this skill. The executor's completion report is an index to inspect, not proof that a requirement is met.
 
+For any token-existence claim, follow [“A documented token is not an implemented token — grep the definition, never the table”](../../../docs/orchestrator-procedures.md).
+
 ## Establish the review baseline
 
 1. Read the complete implementation task and rebuild its requirement ledger.

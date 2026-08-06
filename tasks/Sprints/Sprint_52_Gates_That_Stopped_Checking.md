@@ -46,9 +46,15 @@ stopped seeing.
 |---|---|---|
 | **714** | `KICKOFF FILED` | Teach `check-design-tokens.mjs` to read CSS declarations for the non-colour categories; produce the classified inventory; prove F2 closure. Report-only for the new category. `Sprint_52_kickoff_prompt_Task_714_DesignTokens_CSS_Declaration_Coverage.md` |
 | **711** | reserved, blocked on nothing | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` onto Mantine DOM. Must fold in Task 710 review **F1** (`[no-boolean-assertions]` exit-2 arm), **F2** (`ORPHAN-ENTRY` exit-1 arm), **F3/F4** (the `critical-flow-registry` row-50 and `2026-08-0X` citation fixes) and **NOTE-1** (a `LIVE-THIN` threshold). Kickoff not yet written. |
-| **715** | reserved, blocked on 714 | Flip the new CSS category to strict and remediate the inventory 714 produces. Cannot be scoped until 714 has measured it. |
+| **715** | ✅ `APPROVED WITH NOTES` (`406470c47`) | Flipped the CSS categories to strict and remediated 716's 60-item inventory (30 tokenized / 30 marked). Review **F1** caught two substitutions consuming `--z-sticky`, a token tabled in §22.3 but defined nowhere — corrected to marked `z-index: 30`. `Sprint_52_kickoff_prompt_Task_715_DesignTokens_Strict_Flip_And_Remediation.md` |
+| **716** | ✅ `APPROVED WITH NOTES` (`fe21978d5`) | Generalized the 3 CSS categories to shorthand and function-wrapped declarations (per-literal token-anchored exemption), fixed the reason-less-marker `stale-marker` misreport, re-ran the census to 60/6 files. `Sprint_52_kickoff_prompt_Task_716_DesignTokens_Shorthand_And_Function_Coverage.md` |
+| **717** | reserved, kickoff not written | Narrow the `src/design-system/mantine` path allowlist (`design-tokens-allowlist.json:2`), which exempts the whole directory from token enforcement though its stated reason covers only `theme.ts`. Registered by 715 §3.6. |
+| **718** | `KICKOFF FILED` | Define the seven `--z-*` tokens §22.3 promises but `globals.css` never defined (owner decision, 2026-08-06), correct the "Use via" column Tailwind v4 cannot honour, and make an unresolvable `var(--x)` a **blocking** finding — the gate half of 715's F1. Folds in 716 review **F3**. `Sprint_52_kickoff_prompt_Task_718_ZIndexTokens_And_UndefinedVarGate.md` |
 
-**Order: 714 → 715.** 711 is independent and may run in parallel.
+**Order: 714 → 716 → 715 → 718.** 711 and 717 are independent and may run in parallel.
+
+> **Table corrected 2026-08-06:** 716, 717 and 718 were missing from this table — the same stale-record defect the
+> sprint exists to fix, in the sprint's own plan file. 715's row was still `reserved, blocked on 714`.
 
 ## 5. The collision this sprint must navigate — measured, not assumed
 

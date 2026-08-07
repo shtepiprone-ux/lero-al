@@ -3,33 +3,17 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-07) — **725** `BLOCKED` (owner scope call needed); **724R** `APPROVED WITH NOTES`
+## Last Session (2026-08-07) — Sprint 52's gate-suppression arc closed; **725** approved
 
-- **725** — root-caused the bottom-nav/homepage collision (R1, instrumented DOM measurement, not assumed): the
-  "View all" link that fails is `FeaturedListingsView`'s header CTA, ~800px into a ~4150px document — nowhere near
-  `<main>`'s trailing `pb` (irrelevant to this collision). At `mobile-320/375` the same link is already **below**
-  `window.innerHeight` (untested by the gate, not genuinely clear); only `mobile-390`'s taller viewport (844 vs
-  812) brings it into view, landing it in the nav's fixed 788–844 band. **A real fix needs either
-  `page.tsx`/`FeaturedListingsView.tsx` (not in the kickoff's authorized scope) or a sitewide app-shell scroll
-  restructure (blast radius exceeds the homepage)** — filed `BLOCKED` per the kickoff's own A4 stop-condition
-  rather than choosing either unilaterally. R4/R6/R8/R10 all verified clean (`FavoriteButton` doesn't reproduce;
-  CI gap confirmed = Task 727; nav untouched; `tsc`/`build` exit 0). Session: `sessions/2026-08-07-task725-…md`.
-- **724R** — closes 724's `role="group"` gate-suppression. Four additions removed; #2/#3 exempted by a DOM-measured
-  `isChipSetMember()` (row-wrap flex **or** ≥2-track grid · N≥3 · ≤3× median width · <80% row) proven by reverted
-  plants; #9/#10 Report fixed with real `fullWidth`; `NotificationCenter` back on 593's 390px (empty diff).
-  Matrix 1146/1184, 16 FAIL (`HeroSearch`×12 + `NotificationBellView`/390×4, both attributed), exit 1 = AV10;
-  `tsc`/`build` exit 0. Session: `sessions/2026-08-07-task724R-…md`.
-
-## Prior Session (2026-08-06) — **723** `APPROVED WITH NOTES`; **711** still awaiting review
-
-- **723** — Notifications click-shield fix + `check:click-shield`. Reviewed 2026-08-07 → **`APPROVED WITH NOTES`**.
-  The "blocking gate" flag is **resolved**: it is in no workflow, and that is correct — OQ2/OQ3 are unanswered owner
-  decisions and OQ3 gates it. Wording fix + CI wiring → **727**. AC3/AC7 gaps both root-caused off this diff.
-- **711** — re-anchored both dead assertions onto measured Mantine DOM (D33). Reviewed 2026-08-07 →
-  **`APPROVED WITH NOTES`**. All 4 plant arms re-verified by the reviewer directly from the surviving
-  manifests, not from transcripts. **`383 → 384` is struck** — 235 true + 148 false = **383**, confirmed in
-  `18-02/manifest.json` and both `check:assertion-liveness` runs; no `384` exists in any 711 context. `I6f`
-  re-capture → **728** (P3; the claim itself is proven). **R8** → 724, now largely closed by 724R.
+- **711 · 723 · 724R** all `APPROVED WITH NOTES` and committed; **724** superseded by 724R. Full account archived
+  in one ledger row → `backlog-archive.md` (2026-08-07). Residual notes carried as **726** · **727** · **728**.
+- **725** — `APPROVED WITH NOTES`. Round 1 refuted the kickoff's own clearance hypothesis and correctly returned
+  `BLOCKED`; owner re-scoped it (§16) from a layout fix to a **gate** fix. `check-click-shield.mjs` now decides
+  transient-vs-permanent overlap by scrolling to a DOM-computed offset and **re-hit-testing there** — the verdict
+  is always a measurement, never a property, so `position:fixed` grants no exemption. Found and fixed a real bug
+  mid-flight: `<html>{scroll-behavior:smooth}` made a bare `scrollTo()` animate, so every candidate looked falsely
+  uncleared. Final `Interceptions: 0, Cleared: 4` @ `scrollY=39`, `checked=208` unchanged, exit 0. Blind spot
+  found and filed → **729**. Session: `sessions/2026-08-07-task725-…md`.
 
 ## Open — needs action
 
@@ -58,14 +42,14 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. **711 and 723 both `APPROVED WITH NOTES` 2026-08-07**; 711's R8 finding became 724 → 724R, now largely closed. Remaining: **721** · **722** · **717** · **727** (CI-wire the click-shield gate, needs OQ2+OQ3) · **728** (`I6f` re-capture). 🟠 OPEN.
-**Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_…md`): **724** → **724R** `APPROVED WITH NOTES`; **726** reserved for its P3s. Exit criteria 2 and 3 corrected 2026-08-07: the gate's return to exit 0 is Sprint **49**'s criterion, not this sprint's, and no cell may pass because the gate stopped looking at it. 🟠 OPEN — closes with 726.
-**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725** returned `BLOCKED` on an R1 finding that **refuted the kickoff's hypothesis**; owner re-scoped it 2026-08-07 from a layout fix to a **gate** fix (§16). Sprint goal restated: the collision is not a layout defect — `check-click-shield` must distinguish transient overlap from permanent occlusion. 🟠 OPEN, ready to re-execute.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc and the 711/723 gate arc both **COMPLETE and archived**. Remaining: **721** · **722** · **717** · **727** (CI-wire click-shield, needs OQ2+OQ3) · **728** (`I6f` re-capture) · **729** (below-fold blind spot). 🟠 OPEN.
+**Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_…md`): 724 → **724R** approved and archived; **726** carries its residue. Exit criteria 2 and 3 corrected 2026-08-07: the gate's return to exit 0 is Sprint **49**'s criterion, not this sprint's, and no cell may pass because the gate stopped looking at it. 🟠 OPEN — closes with 726.
+**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725** `APPROVED WITH NOTES`. Sprint's lasting result is a correction of its own premise — the collision was never a layout defect; the gate was measuring reachability at one scroll position and calling it reachability. 🟠 OPEN — closes with 729.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **728**, NEXT FREE **729**
+## Task registry — single source for every open number. Last used **729**, NEXT FREE **730**
 
 | # | State | What |
 |---|---|---|
@@ -78,16 +62,14 @@
 | 695 | reserved, blocked on 691 — Sprint 46 | **De-Tailwind exit condition for the overlay pair** — drop the `@theme inline` copy + `--color-overlay*` namespace once the last of **33** overlay utilities across **7** files is gone (`PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGallery` 5 · `LightboxView` 4 · `MantineListingGalleryPattern` 3 · `ImageUpload` 3 · `AdminUserAvatar` 1). **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 + 662 F2. |
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
-| 711 | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 52 | Re-anchored `fullWidthButtonsAtMobile` (`.mantine-Button-root` + `.mantine-Button-label`, 383 live = 235T/148F) and `popupBottomSheetAtMobile` (`.mantine-Drawer-content[role="dialog"]`, 156 live = 156T/0F); both counts manifest-verified at review. R1–R11 all met. **R8 was the task's best moment** — 148 unplanted `false` across 13 stories, root-caused to `Group` vs `Stack` parenting, escalated instead of skipped or tolerance-loosened; it produced 724. Two notes → **726** (exclusion anchor) and **728** (`I6f` re-capture). Session: `sessions/2026-08-06-task711-…md`. |
 | 728 | reserved, P3 — Sprint 52 | Re-capture `I6f-plant-popup-matrix.txt`. The persisted file is a 460-byte truncated crash from manifest `20-16`; the run 711 actually cites is `20-17`, which has no transcript. **The claim is not in doubt** — the reviewer confirmed `popupBottomSheetAtMobile = false × 12` with `failingPopupSlots: ["mantine-Drawer-content[role=\"dialog\"]"]` straight from `20-17/manifest.json`. R7 asked for four transcripts; three exist. Cheap to close. |
 | 721 | reserved, after 711 — Sprint 52 | The four 710-review findings, split out of 711 (owner, 2026-08-06): `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · `LIVE-THIN` threshold (needs 711's live ratios first) · the 2 surviving `2026-08-0X` citations (`design-system.md:1086`, `storybook-governance.md:1586`). **F3's "row 50" is unresolvable from the repo** — no numbered rows in `critical-flow-registry.md`, no mention in 710's log; locate or report `BLOCKED`. |
 | 722 | reserved, independent — Sprint 52 | **`fullWidthControlsAtMobile` is vacuously true.** `{"true": 852}` across all 852 applicable cells, never `false`, including on `Alert/Default` which renders no control (its sibling honestly reports `null` there). `check-stories-rendered.mjs:1112-1145` has **no `checkedAny` guard**, so a zero-match cell returns `true`; 2 of its 3 arms are the same shadcn `data-slot` selectors. `check-assertion-liveness.mjs` sees null-ness only → classifies it **LIVE**. Found during 711's design. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
-| 723 | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 52 (P0) | R1–R5 all verified; gate matches R4's spec clause-for-clause. **AC3's "0 interceptions" was an orchestrator AC defect** — unsatisfiable by this task because 9/9 residual are the separate bottom-nav collision (→ **725**); corrected reading: 0 attributable to this diff, which is met. AC7 was un-runnable in a worktree holding 711's unreverted plant; **closed retroactively** by 724R's clean runs. `Sprint_52_kickoff_prompt_Task_723_…md`. |
 | 727 | **reserved, needs OQ2+OQ3 first** — Sprint 52 | Wire `check:click-shield` into `.github/workflows/governance-pr.yml`. The gate exists and exits non-zero but is in **no** workflow, so "blocking gate" is currently false in 723's log and Files Changed table. Correctly not wired: **OQ2** (CI scope: local build vs production URL) and **OQ3** (N6's blocking-on-modal-routes policy) are unanswered owner decisions, and OQ3 gates it explicitly. Precedent for the wiring shape: `check:listing-visibility` + `:verify` at `governance-pr.yml:112,115`. |
-| 724R | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 53 | Supersedes **724** (`NEEDS REVISION`, same sprint, archived with it). V1–V13 verified; matrix 1146/1184, 16 FAIL, exit 1 = AV10. Three P3s open, see Last Session. `sessions/2026-08-07-task724R-…md`. |
 | 726 | **reserved, opens on 724R + 711 notes** — Sprint 53 | ① **Root fix, one line:** `check-stories-rendered.mjs:1222`'s `[role="group"]` skip → `.mantine-ButtonGroup-root`. Mantine's `ButtonGroup` calls `useStyles({name:"ButtonGroup"})`, so it emits that component-specific static class — the same class of hook 711 correctly used for `.mantine-Button-root`. A generic ARIA role is author-appliable to any `div`, which is exactly how 724 silenced 48/136 cells (**724 F1**, P0). ② Only then can the chip rows regain a real `role="group"` + accessible name; today the leftover `ariaLabel` prop renders `aria-label` on a role-less `div` (ARIA 1.2 prohibited, exposed to nothing) and no production call site passes it. ③ Document `isChipSetMember`'s median-threshold sensitivity in §14.9.28. |
-| 725 | **`BLOCKED` → re-scoped, ready to re-execute** — Sprint 54 | R1 refuted the kickoff's own §3.6 hypothesis from instrumented DOM: the CTA is **not occluded**, it is transiently overlapped at `scrollY=0` and clears after **38px of a 3305px scroll range**; the permanent trailing-edge case is already covered by `FooterView`'s `padding-bottom: var(--space-14)` == nav height (56px). So the defect is in the gate, which hit-tests one scroll position. **Owner 2026-08-07: fix the gate, not the layout** — all production layout now zero-diff. Superseding **R2a/R2b/R3a/R5a/R12** in the kickoff's **§16**; R1/R4/R6/R8/R9/R10 stand and are not re-run. `sessions/2026-08-07-task725-…md`. |
+| 725 | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 54 | R2a/R2b/R3a/R5a/R12 all verified. Transient-vs-permanent decided by a real scroll + re-hit-test, so a `position:fixed` ancestor buys a **measurement**, not an exemption — structurally stronger than 724R's `isChipSetMember`, where the structural test *was* the verdict. `Interceptions: 0, Cleared: 4` @ `scrollY=39` (matches the reviewer's own arithmetic in §16.1), `checked=208` unchanged, exit 0. R12's fixture substitution accepted as **better** than the kickoff's suggested plant: two pages identical except total height, isolating the one variable the logic keys on. Note → **729**. `sessions/2026-08-07-task725-…md`. |
+| 729 | **reserved, P3 — Sprint 54** | **The gate never tests below the fold.** `check-click-shield.mjs` enumerates candidates once, at `scrollY=0`; phase 2 scrolls but does not re-enumerate. So an interactive control that is permanently occluded *and* below the fold is invisible to it — which is why 725's suggested `FooterView` plant produced zero output change. Found and honestly recorded by the executor (session log :358–361) as "this plant can't exercise the path", but the consequence — a coverage hole — was not carried forward. Decide: enumerate per scroll band, or document the boundary explicitly in §14.9.29. |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
 - **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).

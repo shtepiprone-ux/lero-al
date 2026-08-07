@@ -90,39 +90,120 @@ const INTENTIONAL_OVERLAY_SELECTOR = '.mantine-Overlay-root';
 
 // ── Core hit-test, runs inside the page ────────────────────────────────────────
 //
-// Returns { checked, violations[] }. A "violation" names both the blocked element and the
-// element that actually intercepted the click (R4's explicit requirement — "print the blocked
-// element and the intercepting element ... because 'something blocks clicks' without naming the
-// blocker is what made this defect survive a month").
-function describeElement(el) {
-  if (!el) return null;
-  const rect = el.getBoundingClientRect();
-  return {
-    tag: el.tagName.toLowerCase(),
-    class: (el.className ?? '').toString().slice(0, 120),
-    text: (el.textContent ?? '').trim().slice(0, 40),
-    rect: { x: Math.round(rect.x), y: Math.round(rect.y), width: Math.round(rect.width), height: Math.round(rect.height) },
-  };
-}
+// Returns { checked, violations[], cleared[] }. A "violation"/"cleared" entry names both the
+// blocked element and the element that actually intercepted the click (R4's explicit requirement
+// — "print the blocked element and the intercepting element ... because 'something blocks
+// clicks' without naming the blocker is what made this defect survive a month").
+//
+// All DOM-touching helpers below are defined INSIDE each `page.evaluate()` callback (Playwright
+// serializes the callback and runs it in the browser's own context — a module-level function
+// declared in this Node process is not reachable from inside it, so every helper the browser side
+// needs must be a nested function in the same closure, matching this file's existing convention).
+//
+// Task 725 R5a — fixed two diagnostic defects found while root-causing the bottom-nav collision:
+//   1. `(el.className ?? '').toString()` yields the literal string `"[object SVGAnimatedString]"`
+//      for SVG elements (`className` on an SVG element is an `SVGAnimatedString`, not a string).
+//      `el.getAttribute('class')` reads the real attribute regardless of element type.
+//   2. The interceptor's own `getBoundingClientRect()` can be a zero-width bbox (e.g. an SVG
+//      `<path>`), which does not mean a zero-width hit area — the actual clickable region is
+//      whatever `position:fixed`/`sticky` ancestor establishes the stacking context. Every
+//      description now also reports `nearestPositionedAncestor` (its own rect/position/z-index)
+//      so a reader is not misled by a raw interceptor's bbox.
+//
+// Task 725 R2a/R2b — transient-vs-permanent overlap. A `position:fixed`/`sticky` interceptor
+// (e.g. a bottom nav bar) occupies a viewport-relative band that never moves with scroll; a
+// candidate that fails the hit-test at the CURRENT scroll position may still be reachable at a
+// DIFFERENT one, if scrolling would move it clear of that band. Computed entirely from measured
+// DOM (real rects, real `scrollHeight`/`innerHeight`) — never a component name, story id, route
+// path, or author-applied attribute (R2b; Task 724 F1's opt-out test applies verbatim: if a
+// developer could make a future failing control pass by adding something to its container, this
+// would be an opt-out, not a rule — nothing here is author-applied, it is derived fresh from the
+// interceptor's own computed `position` and rect on every run).
+//
+// Only `position:fixed`/`sticky` interceptors are eligible — a normal document-flow overlap (the
+// Task 723 shape this gate was built to catch) moves WITH the page on scroll, so no scroll offset
+// changes its relative position to the candidate; treating it as clearable would silently reopen
+// exactly the blind spot this gate exists to close.
+//
+// Geometry: let `elDocTop`/`elDocBottom` be the candidate's DOCUMENT-relative top/bottom (its
+// viewport rect plus the current scroll offset — invariant under scrolling). Let `ancRect` be the
+// fixed/sticky ancestor's VIEWPORT-relative rect (invariant under scrolling, by definition of
+// `position:fixed`; `sticky` is treated as fixed for this purpose since once stuck, it behaves
+// identically). A scroll offset `s` clears the candidate from a bottom-anchored band when
+// `elDocBottom - s <= ancRect.top` (the candidate has scrolled up above the band) — solved for the
+// smallest such `s`. A scroll offset clears a top-anchored band when `elDocTop - s >= ancRect.bottom`
+// (scrolling up moves the candidate below/away from the band) — solved for the largest such `s`.
+// Both candidate offsets are clamped to `[0, maxScrollY]` (`document.documentElement.scrollHeight -
+// window.innerHeight`, floored at 0) — a candidate offset outside the page's real scrollable range
+// is not reachable and is discarded, which is exactly what makes a permanent trailing-edge
+// occlusion (content flush with the document's end, with no clearance before it) correctly stay
+// unclearable: the required offset would exceed `maxScrollY`.
 
 async function hitTestPage(page) {
-  return page.evaluate(
+  const startScrollY = await page.evaluate(() => window.scrollY);
+
+  // Phase 1 — hit-test at the current (start) scroll position; for any failure whose interceptor's
+  // nearest positioned ancestor is fixed/sticky, compute candidate clearing offsets from measured
+  // DOM (never guessed).
+  const phase1 = await page.evaluate(
     ({ selector, overlaySelector }) => {
+      function realClass(el) {
+        const attr = el.getAttribute && el.getAttribute('class');
+        return attr ?? '';
+      }
+      function nearestPositionedAncestorOf(el) {
+        let p = el.parentElement;
+        while (p) {
+          if (window.getComputedStyle(p).position !== 'static') return p;
+          p = p.parentElement;
+        }
+        return null;
+      }
       function describe(el) {
+        if (!el) return null;
         const rect = el.getBoundingClientRect();
+        const cs = window.getComputedStyle(el);
+        const ancestor = nearestPositionedAncestorOf(el);
+        let nearestPositionedAncestor = null;
+        if (ancestor) {
+          const aRect = ancestor.getBoundingClientRect();
+          const aCs = window.getComputedStyle(ancestor);
+          nearestPositionedAncestor = {
+            tag: ancestor.tagName.toLowerCase(),
+            class: realClass(ancestor).slice(0, 120),
+            rect: { x: Math.round(aRect.x), y: Math.round(aRect.y), width: Math.round(aRect.width), height: Math.round(aRect.height) },
+            position: aCs.position,
+            zIndex: aCs.zIndex,
+          };
+        }
         return {
           tag: el.tagName.toLowerCase(),
-          class: (el.className ?? '').toString().slice(0, 120),
+          class: realClass(el).slice(0, 120),
           text: (el.textContent ?? '').trim().slice(0, 40),
           rect: { x: Math.round(rect.x), y: Math.round(rect.y), width: Math.round(rect.width), height: Math.round(rect.height) },
+          position: cs.position,
+          zIndex: cs.zIndex,
+          nearestPositionedAncestor,
         };
+      }
+      function computeClearingOffsetCandidates(elRect, ancRect, maxScrollY) {
+        const elDocTop = elRect.top + window.scrollY;
+        const elDocBottom = elRect.bottom + window.scrollY;
+        const offsets = [];
+        const sClearBelow = elDocBottom - ancRect.top;
+        if (sClearBelow >= 0 && sClearBelow <= maxScrollY) offsets.push(Math.min(maxScrollY, Math.ceil(sClearBelow) + 1));
+        const sClearAbove = elDocTop - ancRect.bottom;
+        if (sClearAbove >= 0 && sClearAbove <= maxScrollY) offsets.push(Math.max(0, Math.floor(sClearAbove) - 1));
+        return offsets;
       }
 
       const candidates = Array.from(document.querySelectorAll(selector));
       let checked = 0;
-      const violations = [];
+      const results = [];
+      const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
-      for (const el of candidates) {
+      for (let i = 0; i < candidates.length; i++) {
+        const el = candidates[i];
         const rect = el.getBoundingClientRect();
         if (rect.width <= 0 || rect.height <= 0) continue;
 
@@ -133,7 +214,7 @@ async function hitTestPage(page) {
         checked++;
         const hit = document.elementFromPoint(cx, cy);
         if (!hit) {
-          violations.push({ element: describe(el), interceptor: null, reason: 'elementFromPoint returned null inside the viewport' });
+          results.push({ kind: 'violation', element: describe(el), interceptor: null, reason: 'elementFromPoint returned null inside the viewport' });
           continue;
         }
         if (hit === el || el.contains(hit) || hit.contains(el)) continue;
@@ -141,13 +222,79 @@ async function hitTestPage(page) {
         // N6 — genuinely intentional overlay exemption (Mantine Modal/Drawer backdrop).
         if (hit.closest(overlaySelector)) continue;
 
-        violations.push({ element: describe(el), interceptor: describe(hit) });
+        const ancestor = nearestPositionedAncestorOf(hit);
+        const ancPos = ancestor ? window.getComputedStyle(ancestor).position : null;
+        if (ancestor && (ancPos === 'fixed' || ancPos === 'sticky')) {
+          const ancRect = ancestor.getBoundingClientRect();
+          const offsets = computeClearingOffsetCandidates(rect, ancRect, maxScrollY);
+          if (offsets.length > 0) {
+            results.push({
+              kind: 'candidate-transient',
+              element: describe(el),
+              interceptor: describe(hit),
+              candidateOffsets: offsets,
+              selectorIndex: i,
+            });
+            continue;
+          }
+        }
+
+        results.push({ kind: 'violation', element: describe(el), interceptor: describe(hit) });
       }
 
-      return { checked, violations };
+      return { checked, results, maxScrollY };
     },
     { selector: CANDIDATE_SELECTOR, overlaySelector: INTENTIONAL_OVERLAY_SELECTOR }
   );
+
+  const violations = phase1.results.filter((r) => r.kind === 'violation');
+  const transientCandidates = phase1.results.filter((r) => r.kind === 'candidate-transient');
+  const cleared = [];
+
+  // Phase 2 — for each transient candidate, actually scroll to its computed offset and re-hit-test
+  // there (real measurement, not just the geometry that produced the candidate offset). The first
+  // offset that clears it wins; if none do, it reverts to a real violation.
+  for (const tc of transientCandidates) {
+    let resolvedOffset = null;
+    for (const offset of tc.candidateOffsets) {
+      const recheck = await page.evaluate(
+        ({ selector, selectorIndex, offset, overlaySelector }) => {
+          // `behavior: 'instant'` deliberately overrides any page-level `scroll-behavior: smooth`
+          // CSS (confirmed present on this project's `<html>`) — a smooth scroll animates
+          // asynchronously, so a synchronous re-read immediately after a bare `scrollTo(x, y)`
+          // captures the PRE-scroll rect, silently making every candidate offset look uncleared.
+          window.scrollTo({ top: offset, left: 0, behavior: 'instant' });
+          const el = Array.from(document.querySelectorAll(selector))[selectorIndex];
+          if (!el) return { cleared: false };
+          const rect = el.getBoundingClientRect();
+          const cx = rect.x + rect.width / 2;
+          const cy = rect.y + rect.height / 2;
+          if (cx < 0 || cy < 0 || cx >= window.innerWidth || cy >= window.innerHeight) return { cleared: false, offscreen: true };
+          const hit = document.elementFromPoint(cx, cy);
+          if (!hit) return { cleared: false };
+          if (hit === el || el.contains(hit) || hit.contains(el)) return { cleared: true };
+          if (hit.closest(overlaySelector)) return { cleared: true };
+          return { cleared: false };
+        },
+        { selector: CANDIDATE_SELECTOR, selectorIndex: tc.selectorIndex, offset, overlaySelector: INTENTIONAL_OVERLAY_SELECTOR }
+      );
+      if (recheck.cleared) {
+        resolvedOffset = offset;
+        break;
+      }
+    }
+    if (resolvedOffset !== null) {
+      cleared.push({ element: tc.element, interceptor: tc.interceptor, clearingScrollOffset: resolvedOffset });
+    } else {
+      violations.push({ element: tc.element, interceptor: tc.interceptor, reason: 'no reachable scroll offset cleared it — treated as a real violation' });
+    }
+  }
+
+  // Restore the page's original scroll position — later candidates in this same call must be
+  // measured from the same start state, not wherever phase 2 left off.
+  await page.evaluate((y) => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), startScrollY);
+
+  return { checked: phase1.checked, violations, cleared };
 }
 
 // ── Planted-violation self-test (--verify-gate) ────────────────────────────────
@@ -181,6 +328,42 @@ const OVERLAY_EXEMPT_PAGE_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Task 725 R12 — two more fixtures, added to prove the transient-vs-permanent redesign against a
+// controlled, deterministic, CI-safe page rather than the live homepage (whose exact geometry
+// shifts with content/translations). Both plant a `position:fixed` bottom bar 60px tall covering
+// the last 60px of a 300px-tall viewport, with a real button positioned at `top:250px` — inside
+// the bar's band at scroll=0 in both cases. The bar's own child `<span>` (not the bar div itself)
+// is what actually receives the click, so `elementFromPoint` returns a STATIC descendant whose
+// nearest positioned ancestor is the fixed bar — the same shape the real bottom-nav collision has
+// (a static `<path>` icon inside a `position:fixed` `<nav>`), not the bar itself being the hit
+// target. The only difference between the two fixtures is total page height, which is exactly
+// what determines whether a clearing scroll offset exists:
+//   - `TRANSIENT_PAGE_HTML`: `body` is 2000px tall (`maxScrollY = 2000 - 300 = 1700`) — scrolling
+//     down ~51px moves the button clear of the bar. Must resolve as CLEARED, not a violation.
+//   - `PERMANENT_PAGE_HTML`: `body` is exactly 300px tall, matching the viewport (`maxScrollY =
+//     0`) — there is no scroll offset at all, so the button can never clear the bar. Must FAIL.
+const TRANSIENT_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (transient overlap)</title></head>
+<body style="margin:0;height:2000px;position:relative;">
+  <button id="target" style="position:absolute;top:250px;left:40px;width:120px;height:40px;">Click me</button>
+  <div id="fixed-bar" style="position:fixed;bottom:0;left:0;right:0;height:60px;">
+    <span style="display:block;width:100%;height:100%;"></span>
+  </div>
+</body>
+</html>`;
+
+const PERMANENT_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (permanent occlusion)</title></head>
+<body style="margin:0;height:300px;position:relative;">
+  <button id="target" style="position:absolute;top:250px;left:40px;width:120px;height:40px;">Click me</button>
+  <div id="fixed-bar" style="position:fixed;bottom:0;left:0;right:0;height:60px;">
+    <span style="display:block;width:100%;height:100%;"></span>
+  </div>
+</body>
+</html>`;
+
 async function runGateSelfTest() {
   console.log('\n🔬 Click-shield gate self-test (--verify-gate)');
   console.log('   Purpose: prove the gate is NOT a no-op by planting the Task 723 defect shape.\n');
@@ -191,12 +374,14 @@ async function runGateSelfTest() {
   });
 
   let server;
-  const pages = { violation: null, clean: null, overlayExempt: null };
+  const pages = { violation: null, clean: null, overlayExempt: null, transient: null, permanent: null };
   const baseUrl = await new Promise((res, rej) => {
     server = createServer((req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       if (req.url === '/violation') res.end(VIOLATION_PAGE_HTML);
       else if (req.url === '/overlay-exempt') res.end(OVERLAY_EXEMPT_PAGE_HTML);
+      else if (req.url === '/transient') res.end(TRANSIENT_PAGE_HTML);
+      else if (req.url === '/permanent') res.end(PERMANENT_PAGE_HTML);
       else res.end(CLEAN_PAGE_HTML);
     });
     server.listen(0, '127.0.0.1', () => {
@@ -213,6 +398,11 @@ async function runGateSelfTest() {
     { url: `${baseUrl}/violation`, label: 'Planted shield (transparent div over a button)', expectFail: true },
     { url: `${baseUrl}/clean`, label: 'Clean page (no shield)', expectFail: false },
     { url: `${baseUrl}/overlay-exempt`, label: 'N6 exemption (mantine-Overlay-root shield)', expectFail: false },
+    // Task 725 R12 — arm ② (transient) and arm ① (permanent). Both plant an identical fixed
+    // bottom bar over an identically-positioned button; only the page's total scrollable height
+    // differs, which is exactly what should decide clearable vs. not.
+    { url: `${baseUrl}/transient`, label: 'R12 arm② — fixed bar, tall page (scroll clears it)', expectFail: false, expectCleared: true },
+    { url: `${baseUrl}/permanent`, label: 'R12 arm① — fixed bar, page height == viewport (no scroll offset exists)', expectFail: true },
   ];
 
   let allOk = true;
@@ -220,12 +410,19 @@ async function runGateSelfTest() {
     await page.goto(c.url, { waitUntil: 'domcontentloaded' });
     const result = await hitTestPage(page);
     const failed = result.violations.length > 0;
-    const ok = failed === c.expectFail;
-    console.log(`   ${ok ? '✅' : '❌'} ${c.label}: checked=${result.checked}, violations=${result.violations.length} (expected ${c.expectFail ? '>0' : '0'})`);
+    const clearedOk = c.expectCleared ? result.cleared.length > 0 : true;
+    const ok = failed === c.expectFail && clearedOk;
+    console.log(`   ${ok ? '✅' : '❌'} ${c.label}: checked=${result.checked}, violations=${result.violations.length}, cleared=${result.cleared.length} (expected ${c.expectFail ? 'violations>0' : c.expectCleared ? 'cleared>0, violations=0' : 'violations=0'})`);
     if (failed) {
       for (const v of result.violations) {
         console.log(`      blocked: ${v.element.tag}.${v.element.class} @ (${v.element.rect.x},${v.element.rect.y})`);
         console.log(`      interceptor: ${v.interceptor?.tag}.${v.interceptor?.class}`);
+        if (v.reason) console.log(`      reason: ${v.reason}`);
+      }
+    }
+    if (result.cleared.length > 0) {
+      for (const cl of result.cleared) {
+        console.log(`      cleared: ${cl.element.tag}.${cl.element.class} @ scrollY=${cl.clearingScrollOffset}`);
       }
     }
     if (!ok) allOk = false;
@@ -273,7 +470,7 @@ async function runChecks() {
         await page.waitForTimeout(500);
         result = await hitTestPage(page);
       } catch (err) {
-        result = { checked: 0, violations: [], error: String(err.message ?? err).slice(0, 200) };
+        result = { checked: 0, violations: [], cleared: [], error: String(err.message ?? err).slice(0, 200) };
       } finally {
         await page.close();
       }
@@ -289,6 +486,12 @@ async function runChecks() {
         for (const v of cell.violations) {
           console.log(`      blocked:      <${v.element.tag} class="${v.element.class}"> "${v.element.text}" @ (${v.element.rect.x},${v.element.rect.y} ${v.element.rect.width}x${v.element.rect.height})`);
           console.log(`      interceptor:  <${v.interceptor?.tag ?? '?'} class="${v.interceptor?.class ?? '?'}"> @ (${v.interceptor?.rect?.x},${v.interceptor?.rect?.y} ${v.interceptor?.rect?.width}x${v.interceptor?.rect?.height})`);
+          if (v.reason) console.log(`      reason:       ${v.reason}`);
+        }
+      } else if (cell.cleared.length > 0) {
+        console.log(`   ${route} × ${vp.name}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}`);
+        for (const c of cell.cleared) {
+          console.log(`      cleared:      <${c.element.tag} class="${c.element.class}"> "${c.element.text}" @ scrollY=${c.clearingScrollOffset} (fixed/sticky interceptor <${c.interceptor.tag} class="${c.interceptor.class}">, nearest positioned ancestor: <${c.interceptor.nearestPositionedAncestor?.tag ?? '?'} class="${c.interceptor.nearestPositionedAncestor?.class ?? '?'}"> @ (${c.interceptor.nearestPositionedAncestor?.rect?.x},${c.interceptor.nearestPositionedAncestor?.rect?.y} ${c.interceptor.nearestPositionedAncestor?.rect?.width}x${c.interceptor.nearestPositionedAncestor?.rect?.height}))`);
         }
       } else {
         console.log(`   ${route} × ${vp.name}: ✅ PASS — checked=${cell.checked}, 0 interceptions`);
@@ -300,9 +503,10 @@ async function runChecks() {
 
   const totalChecked = cells.reduce((s, c) => s + c.checked, 0);
   const totalViolations = cells.reduce((s, c) => s + c.violations.length, 0);
+  const totalCleared = cells.reduce((s, c) => s + c.cleared.length, 0);
 
   console.log('\n── Summary ──────────────────────────────────────────────────');
-  console.log(`   Cells: ${cells.length}  Elements checked: ${totalChecked}  Interceptions: ${totalViolations}  Empty-candidate cells: ${emptyCandidateCells}`);
+  console.log(`   Cells: ${cells.length}  Elements checked: ${totalChecked}  Interceptions: ${totalViolations}  Cleared (transient): ${totalCleared}  Empty-candidate cells: ${emptyCandidateCells}`);
 
   if (emptyCandidateCells > 0) {
     console.error('\n❌ At least one cell checked ZERO candidates — this is a harness failure, not a clean pass.');

@@ -1,8 +1,8 @@
 # Task 725 — The fixed bottom nav overlays and intercepts homepage content
 
 **Kickoff:** `tasks/Sprints/Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md`
-**Status:** `BLOCKED` — root cause fully measured (R1); fix requires an owner scope decision (see the stop-and-report
-in K2 and the Opus handoff below) before implementation can proceed.
+**Status:** `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW` (round 2, per kickoff §16's owner scope correction —
+supersedes the round-1 `BLOCKED` status below, which stands as the accepted R1 root-cause record).
 
 ---
 
@@ -256,4 +256,210 @@ task's own two pre-existing Sprint 54 files, unedited) = **4** — matches file-
   call, not an engineering one.
 - The 221→208 `check:click-shield` element-count delta (predates this task, also unexplained by Task 724) remains
   unexplained.
+- No mutating git command was run, emitted, or suggested.
+
+---
+
+# Round 2 — owner scope correction (kickoff §16, 2026-08-07)
+
+**Owner decision:** neither production-layout route from round 1 is authorized. Instead: fix
+`scripts/check-click-shield.mjs` itself to distinguish a **transient**, scroll-clearable overlap from a
+**permanent** occlusion. R1/R4/R6/R8/R9/R10 from round 1 stand unchanged and are not re-run. R2/R3/R5 are
+superseded by R2a/R2b/R3a/R5a; R12 (three-arm planted proof) is new.
+
+## Start-state hashes for the (now expanded) zero-diff scope — §16.4
+
+| Path | Hash | Status |
+|---|---|---|
+| `src/app/[locale]/layout.tsx` | `e14a16802110f17ff2f520dda50ce464435ca910` | unchanged |
+| `src/app/globals.css` | `e9fe1f92d9e4b74854d1252dc3606be7017579d5` | unchanged |
+| `src/app/[locale]/page.tsx` | `fa9f7ba100019575043caf72589a7482ef18c58b` | unchanged |
+| `src/modules/listings/components/FeaturedListingsView.tsx` | `930e8a9e603a1f5843443d22b6fe17f5f4211d06` | unchanged |
+| `src/components/layout/MobileBottomNavView.module.css` | `a06cf6b4108041be6e0ea703271e0951a8ac1a87` | unchanged |
+| `src/components/layout/MobileBottomNavView.tsx` | `e8dfb1ba8fc0da16344b59def8ff5ae28161773c` | unchanged |
+| `src/components/layout/FooterView.module.css` | `d2c6588aec6bba3c155ea2b68b4f7819c6139d9d` | **temporarily planted for R12 arm①, then reverted — see below; final hash confirmed identical** |
+| `scripts/check-click-shield.mjs` | `79f82a900f0456f1a130ff5873ebfc064cae09e7` | **OWNED, edited this round** |
+
+All 7 non-owned paths re-verified identical after this round's work completed (`git status --porcelain` shows
+only `scripts/check-click-shield.mjs` modified — confirmed below).
+
+## R2a/R2b — the redesigned condition
+
+Full implementation and reasoning: `docs/storybook-governance.md` §14.9.29 (quotes the condition in full). Summary:
+a candidate that fails because its interceptor's nearest positioned ancestor is `position:fixed`/`sticky` gets a
+computed clearing-offset candidate (from measured `getBoundingClientRect()`s and real `scrollHeight`/`innerHeight`
+— never a stored value); the gate then **actually scrolls there and re-hit-tests** before accepting it as cleared.
+A normal document-flow interceptor (the original Task 723 shield shape) is never eligible — this is what keeps
+R12's arm③ (the pre-existing self-test) passing unchanged.
+
+**A real implementation bug found and fixed during this round, not before landing:** the first version scrolled
+via a bare `window.scrollTo(0, offset)` and re-read the candidate's rect synchronously in the same script. Every
+real candidate on the live homepage came back "uncleared" — investigated with a standalone diagnostic
+(`document.scrollingElement`, `mouse.wheel` vs `scrollTo`) and root-caused to this project's `<html> { scroll-behavior:
+smooth }`: a bare `scrollTo` animates asynchronously, so the synchronous re-read captured the **pre-scroll**
+position. Fixed with `window.scrollTo({ top: offset, left: 0, behavior: 'instant' })`, which forces the jump to
+apply before the next read, confirmed via the same diagnostic (`scrollY` correct immediately afterward). This is
+recorded because it is exactly the kind of self-caught defect the task's evidence protocol exists to surface —
+found by inspecting actual behavior, not assumed from the code.
+
+**AC2b — no opt-out surface.** `git diff HEAD -- scripts/check-click-shield.mjs | grep -iE "componentName|storyId|route ?=|allowlist"` →
+
+```
+(no output)
+```
+
+The condition reads only `el.getAttribute('class')` (for display, not logic), `window.getComputedStyle(...).position`,
+and live rects/scroll metrics — no component name, story id, route path, or author-applied attribute anywhere in
+the diff. §4-style opt-out test: a developer cannot make a future single-CTA-under-fixed-chrome regression pass by
+adding anything to its own container — the ancestor's `position` is read from computed style, not declared.
+
+## R5a — both diagnostic defects fixed, before/after pair
+
+**Before** (round-1 baseline, `.screenshots/task725-evidence/K1-click-shield-baseline.log`):
+```
+interceptor:  <path class="[object SVGAnimatedString]"> @ (195,798 0x14)
+```
+
+**After** (`.screenshots/task725-evidence/K3-click-shield-truly-final.log`):
+```
+cleared:      <a ...> "View all" @ scrollY=39 (fixed/sticky interceptor <path class="">, nearest positioned
+              ancestor: <nav class="mobile-bottom-nav MobileBottomNavView_navBar__O_rgE mantine-hidden-from-md">
+              @ (0,788 390x56))
+```
+
+The SVG `<path>`'s class now reads as the real (empty) attribute instead of `"[object SVGAnimatedString]"`, and
+the nearest positioned ancestor — the actual `<nav>`, `position:fixed`, real 390×56 rect — is named alongside the
+raw interceptor's own (still-reported) zero-width bbox, so a reader is never misled by the bbox alone.
+
+## R3a — final click-shield run
+
+Rebuilt (`npm run build`, exit 0) and restarted (`npm start`) after reverting the R12 arm① plant, so this is the
+gate running against the exact code that ships. `.screenshots/task725-evidence/K3-click-shield-truly-final.log`:
+
+```
+Cells: 16  Elements checked: 208  Interceptions: 0  Cleared (transient): 4  Empty-candidate cells: 0
+EXIT_CODE=0
+```
+
+**Before (round-1 baseline, honest, pre-redesign):**
+```
+Cells: 16  Elements checked: 208  Interceptions: 4  Empty-candidate cells: 0
+EXIT_CODE=1
+```
+
+All 4 `mobile-390` "View all" cells (`sq`/`en`/`uk`/`it`) now resolve `✅ PASS (1 transient, scroll-cleared)`,
+each naming `scrollY=39` as the clearing offset and the nav's own rect as the ancestor. `checked=208` — identical
+to both round-1's own baseline and Task 724's recorded state; the redesign added zero new candidates and dropped
+none. `Empty-candidate cells: 0` throughout — port 3000 confirmed free before each server start.
+
+## R12 — three-arm planted proof
+
+Round 1's plan (temporarily remove `FooterView.module.css`'s `padding-bottom`) was **attempted and found
+untestable**: the footer's content is never a hit-test *candidate* in the first place, because it sits far below
+the fold at `scrollY = 0` and the gate's candidate selection only considers elements visible at the page's
+starting scroll position. Removing the padding produced **zero change** in the gate's output — not a defect in
+the fix, but proof that this specific plant mechanism cannot exercise the "permanent occlusion" path at all under
+this gate's methodology. The plant was reverted (`git hash-object src/components/layout/FooterView.module.css` →
+`d2c6588aec6bba3c155ea2b68b4f7819c6139d9d`, identical to the pre-task hash) and a different, fully-controlled
+mechanism substituted: two new fixtures added to the existing `--verify-gate` self-test
+(`scripts/check-click-shield.mjs`, CI-safe, no server/build required), reusing exactly the pre-existing
+synthetic-page-server pattern Task 723 already established for the same purpose.
+
+Both new fixtures plant an identical `position:fixed` 60px bottom bar over an identically-positioned button
+(`top:250px`), with a static `<span>` inside the bar as the actual click target — the same DOM shape as the real
+defect (`<path>` inside `<nav>`), not the fixed element itself being hit. The only variable is total page height:
+
+- **Arm ② (transient):** page height 2000px (`maxScrollY = 1700`) — must resolve **cleared**.
+- **Arm ① (permanent):** page height exactly 300px, matching the viewport (`maxScrollY = 0`) — no scroll offset
+  can exist — must **FAIL**.
+- **Arm ③:** the pre-existing Task 723 fixtures (planted shield / clean / N6-exempt) must keep passing unchanged.
+
+`npm run check:click-shield:verify` — `.screenshots/task725-evidence/K12-R12-three-arm-proof.log`:
+
+```
+✅ Planted shield (transparent div over a button): checked=1, violations=1, cleared=0 (expected violations>0)
+✅ Clean page (no shield): checked=1, violations=0, cleared=0 (expected violations=0)
+✅ N6 exemption (mantine-Overlay-root shield): checked=1, violations=0, cleared=0 (expected violations=0)
+✅ R12 arm② — fixed bar, tall page (scroll clears it): checked=1, violations=0, cleared=1 (expected cleared>0, violations=0)
+   cleared: button. @ scrollY=51
+✅ R12 arm① — fixed bar, page height == viewport (no scroll offset exists): checked=1, violations=1, cleared=0 (expected violations>0)
+   blocked: button. @ (40,250)
+   interceptor: span.
+
+✅ GATE IS FUNCTIONAL — planted shield detected, clean page passes, N6 overlay exemption works.
+EXIT_CODE=0
+```
+
+All 5 fixtures pass in one unpiped transcript. Arm ① genuinely fails (proving the plant is meaningful, per AC12's
+explicit requirement) and arm ② genuinely clears at the geometrically-expected offset (`250+40−240+1=51`, matching
+hand computation). This also directly satisfies R7/R12③ ("`check:click-shield:verify` still exits 0").
+
+## R7 (subsumed by R12③, still reported separately)
+
+`npm run check:click-shield:verify` — same transcript as R12 above, `EXIT_CODE=0`, all fixtures passing including
+the two pre-existing ones R7 originally named.
+
+## R8 (re-confirmed after this round)
+
+`git hash-object src/components/layout/MobileBottomNavView.module.css src/components/layout/MobileBottomNavView.tsx`
+→ `a06cf6b4108041be6e0ea703271e0951a8ac1a87` / `e8dfb1ba8fc0da16344b59def8ff5ae28161773c` — identical to round 1's
+hashes and to the file's actual current state. Untouched this round, as in round 1.
+
+## R10 — tsc and build, this round
+
+```
+npx tsc --noEmit → EXIT_CODE=0  (.screenshots/task725-evidence/K8-final-tsc.log)
+npm run build    → EXIT_CODE=0  (.screenshots/task725-evidence/K8-final-build.log)
+```
+
+Build ran twice this round: once with the R12 arm① `FooterView` plant active (confirming the plant compiled and
+was live, before discovering it was untestable), and once more after reverting it, clean, immediately before the
+final R3a click-shield run above — so R3a's evidence reflects the exact code that ships.
+
+## Files changed, this round
+
+| File | Reason |
+|---|---|
+| `scripts/check-click-shield.mjs` | R2a/R2b (transient-vs-permanent condition) + R5a (SVG class + nearest positioned ancestor fix) + R12 (two new self-test fixtures) |
+| `docs/storybook-governance.md` | New §14.9.29 documenting the rule, quoting the condition, recording the proof |
+| `docs/backlog.md` | Concise active-state update |
+| `docs/sessions/2026-08-07-task725-bottomnav-overlay-collision.md` | This section |
+
+**Confirmed via `git status --porcelain`:** only `scripts/check-click-shield.mjs` shows as modified source; all
+6 other §16.4-listed paths are absent from the diff (hash-verified above).
+
+## Counting gates — this round, two passes
+
+**Pass 1** (mid-round): `check:file-integrity` and `check:mojibake` — see the numbers folded into pass 2's
+reconciliation below, since this round's writes continued after pass 1.
+
+**Pass 2 — genuinely last, after this section, `docs/storybook-governance.md`, and `docs/backlog.md` all exist:**
+
+```
+check:file-integrity → 4 files checked, PASSED, EXIT_CODE=0
+check:mojibake       → 2097 files scanned, 0 artifacts, EXIT_CODE=0
+```
+
+**Composition reconciled to `git status --short`:**
+```
+ M docs/backlog.md
+ M docs/sessions/2026-08-07-task725-bottomnav-overlay-collision.md
+ M docs/storybook-governance.md
+ M scripts/check-click-shield.mjs
+```
+4 `M`, 0 `??` = **4** — matches file-integrity's count exactly. (Round 1's session log and the two Sprint 54 task
+files are now tracked — committed between rounds 1 and 2 — so this round shows them as `M`/absent rather than `??`.)
+
+## Assumptions, deviations, limitations — round 2
+
+- **Deviation from the kickoff's literal R12① example.** §16.3 suggested "temporarily remove
+  `FooterView.module.css`'s `padding-bottom`" — attempted first, found genuinely untestable under this gate's
+  scroll=0-only candidate selection (not a shortcut; the plant produced zero output change, which is itself a
+  finding, recorded above), and substituted with self-test fixtures that exercise the identical geometric
+  question in a controlled, deterministic, CI-safe way. This does not weaken AC12 — arm① still genuinely fails.
+- **A2's safe-area limitation still applies**: every measurement is headless; a real device's non-zero safe-area
+  inset would shrink the nav's clearance further, meaning the real clearing offset on-device is ≥39px measured
+  here, never smaller.
+- **`scroll-behavior: smooth` on `<html>`** is now a documented gotcha for any future Playwright scroll-and-remeasure
+  work in this codebase, not just this gate — noted in `docs/storybook-governance.md` §14.9.29 and here.
 - No mutating git command was run, emitted, or suggested.

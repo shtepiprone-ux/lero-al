@@ -1940,6 +1940,101 @@ Full detail, rendered evidence, and both R7 transcripts: `docs/sessions/2026-08-
 
 ---
 
+### §14.9.29 — `check:click-shield` distinguishes transient scroll-clearable overlap from permanent occlusion (Task 725, Sprint 54, 2026-08-07)
+
+**Why.** Task 725 root-caused the bottom-nav/homepage collision Task 723 found and Task 724 disproved one
+hypothesis about (`docs/sessions/2026-08-07-task725-bottomnav-overlay-collision.md`, first round): a real
+production hit-test at `mobile-390` showed `FeaturedListingsView`'s "View all" link failing because
+`MobileBottomNavView`'s fixed nav (`position:fixed`, `z-index:30`, band y 788–844) overlapped it at `scrollY = 0`.
+Measurement showed this was **transient, not permanent** — the link clears the band at `scrollY ≥ 39`, and the
+page has ~3300px of further scrollable height. `check:click-shield` hit-tests only at the page's initial scroll
+position and cannot itself tell "unreachable right now" apart from "unreachable, period." A layout fix would have
+treated a gate limitation as a product defect: `position:fixed` bottom chrome overlaying whatever currently
+occupies the bottom of the viewport is the pattern working as designed, and moving content only changes *which*
+element lands there at `scrollY = 0` — it does not close the underlying gap. Owner decision 2026-08-07: fix the
+gate, not the layout (`Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md` §16).
+
+**The rule.** When a hit-test candidate fails because the intercepting element's nearest positioned ancestor has
+computed `position: fixed` or `position: sticky`, the gate now computes whether **any reachable scroll offset**
+would clear the candidate from that ancestor's band, and **actually scrolls there and re-hit-tests** before
+deciding. A candidate only counts as a real violation when no such offset exists (or when it exists but the
+real re-hit-test does not confirm clearance). A **normal document-flow interceptor is never eligible** for this
+treatment — it moves with the page on scroll, same as the candidate, so no offset changes their relative
+position; treating it as clearable would silently reopen the exact blind spot `check:click-shield` was built to
+close (Task 723's full-viewport shield).
+
+**The condition, quoted in full** (`scripts/check-click-shield.mjs`, `hitTestPage()`'s phase-1 `page.evaluate`):
+
+```js
+function computeClearingOffsetCandidates(elRect, ancRect, maxScrollY) {
+  const elDocTop = elRect.top + window.scrollY;
+  const elDocBottom = elRect.bottom + window.scrollY;
+  const offsets = [];
+  const sClearBelow = elDocBottom - ancRect.top;
+  if (sClearBelow >= 0 && sClearBelow <= maxScrollY) offsets.push(Math.min(maxScrollY, Math.ceil(sClearBelow) + 1));
+  const sClearAbove = elDocTop - ancRect.bottom;
+  if (sClearAbove >= 0 && sClearAbove <= maxScrollY) offsets.push(Math.max(0, Math.floor(sClearAbove) - 1));
+  return offsets;
+}
+```
+
+`elRect`/`ancRect` are live `getBoundingClientRect()` reads; `maxScrollY` is
+`document.documentElement.scrollHeight - window.innerHeight`, floored at 0 — all measured fresh on every run, never
+a stored or hardcoded value. A candidate offset outside `[0, maxScrollY]` is discarded, which is exactly what
+makes a genuine trailing-edge occlusion (content flush with the document's end, no clearance before it) correctly
+stay a real violation: the offset the geometry needs exceeds what the page can actually scroll to. **Nothing in
+the condition reads a component name, story id, route path, or author-applied attribute** (AC2b) — it is derived
+solely from computed `position` and measured rects, so a developer cannot make a future single-CTA-under-fixed-chrome
+regression pass by adding anything to its container (the same opt-out test 724 F1 established: *"if a developer
+could make a future failing button pass by adding an attribute to its container, you have built an opt-out, not a
+rule"*).
+
+**Why two geometry directions.** `sClearBelow` solves for scrolling *down* far enough that the candidate moves
+above a bottom-anchored band (the bottom-nav case). `sClearAbove` solves for scrolling *up* far enough that the
+candidate moves below a top-anchored band (a sticky header, not yet observed in this codebase but structurally
+identical). Both are computed unconditionally; whichever lands inside `[0, maxScrollY]` is tried.
+
+**Real re-hit-test, not just geometry.** The computed offset is a candidate, not a verdict — phase 2 actually
+`window.scrollTo({ top: offset, left: 0, behavior: 'instant' })`s the real page and re-runs `elementFromPoint` at
+the candidate's new position before accepting it as cleared. This caught its own bug during development: this
+project's `<html>` has `scroll-behavior: smooth`, so a bare `scrollTo(x, y)` animates asynchronously and a
+synchronous re-read immediately afterward captured the pre-scroll rect, making every real candidate look
+uncleared. `{ behavior: 'instant' }` forces the jump to apply before the next read, overriding the page's own CSS.
+
+**R5a — the same pass also fixed two diagnostic defects** found while root-causing the collision:
+`(el.className ?? '').toString()` prints the literal string `"[object SVGAnimatedString]"` for an SVG
+interceptor (`className` on an SVG element is an `SVGAnimatedString`, not a string) — replaced with
+`el.getAttribute('class')`, which reads the real attribute regardless of element type. Every reported element now
+also carries its `nearestPositionedAncestor` (own rect/position/z-index), since a raw interceptor's own
+`getBoundingClientRect()` can be a zero-width bbox (e.g. an SVG `<path>`) that does not represent the actual
+clickable region.
+
+**Reporting.** A cleared candidate is never silently dropped from `checked` — it is counted, and printed as
+`✅ PASS (N transient, scroll-cleared) — checked=M` with the clearing `scrollY` and the interceptor's
+`nearestPositionedAncestor` named per cell. The run summary adds a `Cleared (transient): N` line alongside
+`Interceptions`, so a reviewer can always see how many cells passed via this path rather than assuming a bare `0
+interceptions` means nothing was ever blocked.
+
+**Proof (`docs/sessions/2026-08-07-task725-bottomnav-overlay-collision.md` §"R12"):** three arms, plus the
+pre-existing Task 723 self-test fixtures, all in one `npm run check:click-shield:verify` transcript —
+
+- The original planted shield (Task 723 shape, `position:fixed;inset:0`) still **fails** — a full-viewport band
+  has no reachable offset that both clears it and keeps the candidate on-screen.
+- A new fixture with a fixed 60px bottom bar over a button, on a 2000px-tall page (`maxScrollY = 1700`), resolves
+  as **cleared at `scrollY = 51`**.
+- An identical fixture, but the page is exactly viewport-height tall (`maxScrollY = 0`), **fails** — the required
+  offset does not exist.
+- Against the real production homepage: `mobile-390`'s 4 "View all" cells (one per locale) now resolve
+  `✅ PASS (1 transient, scroll-cleared) — checked=14`, each naming `scrollY=39` and the nav's own rect
+  (`(0,788 390x56)`) as the clearing offset and ancestor. Final summary: `Interceptions: 0`, `Cleared (transient): 4`,
+  `Empty-candidate cells: 0`, exit 0 — matching the honest baseline's `checked=208` exactly.
+
+**Scope note.** No production layout file changed — `page.tsx`, `FeaturedListingsView.tsx`,
+`MobileBottomNavView.*`, `FooterView.module.css`, `layout.tsx`, `globals.css` are all hash-verified byte-identical
+to their pre-task state. This is a gate-correctness fix, not a UI change.
+
+---
+
 ### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
 
 **Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date

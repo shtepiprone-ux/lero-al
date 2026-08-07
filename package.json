@@ -80,6 +80,8 @@
     "check:listing-visibility:verify": "node scripts/check-listing-visibility.mjs --verify-gate",
     "check:homepage-grid": "node scripts/check-homepage-grid.mjs",
     "check:homepage-grid:verify": "node scripts/check-homepage-grid.mjs --verify-gate",
+    "check:click-shield": "node scripts/check-click-shield.mjs",
+    "check:click-shield:verify": "node scripts/check-click-shield.mjs --verify-gate",
     "capture:admin-session": "node scripts/capture-admin-session.mjs",
     "new:story": "node scripts/scaffold-story.mjs"
   },

@@ -13,11 +13,11 @@
   grid loophole), all fixed. **Open P3s:** dead `ariaLabel` prop on role-less divs · 711's `role="group"` skip still
   live and exploitable · median-threshold sensitivity undocumented. Session: `sessions/2026-08-07-task724R-…md`.
 
-## Prior Session (2026-08-06) — **723** and **711** both `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`
+## Prior Session (2026-08-06) — **723** `APPROVED WITH NOTES`; **711** still awaiting review
 
-- **723** — Notifications click-shield fix + `check:click-shield`. AC3 not 100% (9/221 residual, 0 from its own diff,
-  all the bottom-nav collision → **725**). ⚠️ **Review must resolve:** the log calls the gate "blocking" but `grep`
-  finds it in **no** `.github/workflows/*.yml` — it blocks locally only.
+- **723** — Notifications click-shield fix + `check:click-shield`. Reviewed 2026-08-07 → **`APPROVED WITH NOTES`**.
+  The "blocking gate" flag is **resolved**: it is in no workflow, and that is correct — OQ2/OQ3 are unanswered owner
+  decisions and OQ3 gates it. Wording fix + CI wiring → **727**. AC3/AC7 gaps both root-caused off this diff.
 - **711** — re-anchored both dead assertions onto measured Mantine DOM (D33); 4 planted transcripts. **R8** → 724.
   Open: the `383 → 384` correction across six doc sites, and the re-captured `I6f` transcript.
 
@@ -50,12 +50,12 @@
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
 **Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. **711 IMPLEMENTED, awaiting review** → next: **721** · **722** · **717** · a new task for 711's R8 finding (13 stories, real `false`, owner call needed). 🟠 OPEN.
 **Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_…md`): **724** → **724R** `APPROVED WITH NOTES`; **726** reserved for its P3s. Exit criteria 2 and 3 corrected 2026-08-07: the gate's return to exit 0 is Sprint **49**'s criterion, not this sprint's, and no cell may pass because the gate stopped looking at it. 🟠 OPEN — closes with 726.
-**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725**. Opened 2026-08-07 after a recorded five-sprint fit check; **blocked on 723 landing** (its gate is 725's only comparator, D32). 🟠 OPEN.
+**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725** — **UNBLOCKED 2026-08-07** by 723's approval; **D32 satisfied** (AC6 showed the comparator failing on real app code: 36 interceptions, 33 naming `mantine-Notifications-root`, → 0). ⚠️ **725 must re-measure its own baseline** — 723 recorded 9/221 and 724R 4/208 on different builds; neither number is 725's comparator. 🟠 OPEN, ready for executor.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **726**, NEXT FREE **727**
+## Task registry — single source for every open number. Last used **727**, NEXT FREE **728**
 
 | # | State | What |
 |---|---|---|
@@ -72,7 +72,8 @@
 | 721 | reserved, after 711 — Sprint 52 | The four 710-review findings, split out of 711 (owner, 2026-08-06): `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · `LIVE-THIN` threshold (needs 711's live ratios first) · the 2 surviving `2026-08-0X` citations (`design-system.md:1086`, `storybook-governance.md:1586`). **F3's "row 50" is unresolvable from the repo** — no numbered rows in `critical-flow-registry.md`, no mention in 710's log; locate or report `BLOCKED`. |
 | 722 | reserved, independent — Sprint 52 | **`fullWidthControlsAtMobile` is vacuously true.** `{"true": 852}` across all 852 applicable cells, never `false`, including on `Alert/Default` which renders no control (its sibling honestly reports `null` there). `check-stories-rendered.mjs:1112-1145` has **no `checkedAny` guard**, so a zero-match cell returns `true`; 2 of its 3 arms are the same shadcn `data-slot` selectors. `check-assertion-liveness.mjs` sees null-ness only → classifies it **LIVE**. Found during 711's design. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
-| 723 | `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW` — Sprint 52 (P0, unrelated) | Notifications click-shield fix + new `check:click-shield` gate. AC3 not 100% — new unowned bottom-nav/homepage-content collision found, not fixed. `Sprint_52_kickoff_prompt_Task_723_…md`. |
+| 723 | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 52 (P0) | R1–R5 all verified; gate matches R4's spec clause-for-clause. **AC3's "0 interceptions" was an orchestrator AC defect** — unsatisfiable by this task because 9/9 residual are the separate bottom-nav collision (→ **725**); corrected reading: 0 attributable to this diff, which is met. AC7 was un-runnable in a worktree holding 711's unreverted plant; **closed retroactively** by 724R's clean runs. `Sprint_52_kickoff_prompt_Task_723_…md`. |
+| 727 | **reserved, needs OQ2+OQ3 first** — Sprint 52 | Wire `check:click-shield` into `.github/workflows/governance-pr.yml`. The gate exists and exits non-zero but is in **no** workflow, so "blocking gate" is currently false in 723's log and Files Changed table. Correctly not wired: **OQ2** (CI scope: local build vs production URL) and **OQ3** (N6's blocking-on-modal-routes policy) are unanswered owner decisions, and OQ3 gates it explicitly. Precedent for the wiring shape: `check:listing-visibility` + `:verify` at `governance-pr.yml:112,115`. |
 | 724R | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 53 | Supersedes **724** (`NEEDS REVISION`, same sprint, archived with it). V1–V13 verified; matrix 1146/1184, 16 FAIL, exit 1 = AV10. Three P3s open, see Last Session. `sessions/2026-08-07-task724R-…md`. |
 | 726 | **reserved, opens on 724R's P3s** — Sprint 53 | ① Chip rows lost their ARIA name when V1 removed `role="group"`; the surviving `ariaLabel` prop renders `aria-label` on a role-less `div` (ARIA 1.2 prohibited, exposed to nothing) and no production call site passes it. ② Restoring `role="group"` correctly is **blocked on** removing 711's `role="group"` skip at `check-stories-rendered.mjs:1222` — the two must move together. ③ Document `isChipSetMember`'s median-threshold sensitivity in §14.9.28. |
 | 725 | `KICKOFF FILED` — **Sprint 54** (new) | The fixed bottom nav (56px, `z-30`) overlays homepage content at mobile-390 (nav band y 788–844 vs CTA 782–826, centre 804). 724's full-width hypothesis **disproven** — collision is vertical. Root-cause + general clearance fix; gate to 0 interceptions. `Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md`. |

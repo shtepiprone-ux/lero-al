@@ -28,17 +28,15 @@ export function MantineRootProvider({ children }: MantineRootProviderProps) {
   return (
     <MantineProvider theme={theme} defaultColorScheme="light">
       <ModalsProvider>
-        {/* Task 684 (owner D3, 2026-07-29): `top` clears the sticky site header
-            (HeaderView.tsx, `sticky top-0 z-30`), replacing the package's own
-            16px inset rather than adding to it. Values are the measured
-            `header.site-header` height at each MANTINE_VIEWPORTS width
-            (scripts/check-stories-rendered.mjs:392): 97px at 320/375 (the
-            wrapped two-row header below the header's own 390px breakpoint,
-            Task 590) and 65px at 390/1024 (single h-16 row + 1px border-b).
-            `sm` (640px) is the smallest key in theme.ts's breakpoints at or
-            above that 390px wrap point, so it is the correct cutover — `xs`
-            (320px) would apply the 65px value too early and collide. */}
-        <Notifications position="top-right" top={{ base: 97, sm: 65 }} />
+        {/* Task 684's header-clearance offset moved to notification-chrome.css, scoped to
+            `[data-position^="top"]` (Task 723 fix, 2026-08-06). The component-level `top` prop
+            used here applied to Mantine's shared `.mantine-Notifications-root` class UNQUALIFIED
+            by data-position, reaching all six position containers — including the three bottom-*
+            ones, which then had both `top` (from this prop) and `bottom` (from Mantine's own
+            :where() rule) pinned, stretching them to full height and creating an invisible
+            click-shield over the page (P0, live on lero.al). See notification-chrome.css for the
+            scoped replacement and the R2 pointer-events shield. */}
+        <Notifications position="top-right" />
         {children}
       </ModalsProvider>
     </MantineProvider>

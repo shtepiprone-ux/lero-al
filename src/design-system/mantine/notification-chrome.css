@@ -37,3 +37,45 @@
 .mantine-Notification-closeButton {
   color: var(--mantine-color-gray-4); /* §6r-LIVE close button = gray-400 #98A2B3 */
 }
+
+/* Task 723 (P0, 2026-08-06) — header-clearance offset, SCOPED to the three top-* position
+   containers only. Task 684 applied this offset via a component-level `top` prop on
+   `<Notifications>`, which Mantine emits as a class rule unqualified by `[data-position]` —
+   it reached all six containers, including the three bottom-* ones. Those already carry
+   Mantine's own `bottom: var(--mantine-spacing-md)` (`:where([data-position='bottom-*'])`,
+   specificity 0), so the added `top` pinned BOTH edges and stretched them to full viewport
+   height — a transparent panel that swallowed clicks over most of the page (measured production
+   defect: 3 × 440×950 panels at x≈16/737/1458 on 1920px, six-container rect table in the task
+   kickoff). Values unchanged from Task 684 (owner D3): 97px = measured `header.site-header`
+   height <640px (wrapped two-row header, Task 590); 65px = measured height ≥640px (single h-16
+   row + 1px border-b). `40em` (640px) matches this file's own existing `min-width` breakpoint
+   above and Task 684's `sm` cutover — Mantine's style-prop resolver only accepts named
+   `theme.breakpoints` keys, this file is plain CSS so is not so constrained, but the same 640px
+   cutover is kept to preserve the exact previously-measured/approved offset schedule.
+   Mantine's per-position rules use `:where()` (specificity 0); a plain class + attribute selector
+   (specificity 0,2,0) wins without `!important`. */
+.mantine-Notifications-root[data-position^="top"] {
+  top: 97px;
+}
+
+@media (min-width: 40em) {
+  .mantine-Notifications-root[data-position^="top"] {
+    top: 65px;
+  }
+}
+
+/* R2 — defence-in-depth click shield. Even a correctly `height:0` container must never intercept
+   a click at its own coordinates; a future regression that re-stretches a container (as Task 684
+   did) must not be able to shield the page again. The individual notification element
+   (`.mantine-Notification-root`, SINGULAR — not the plural `.mantine-Notifications-root` position
+   container above) gets `pointer-events: auto` back so a rendered toast's own close/action
+   buttons stay clickable. Must live in a stylesheet, not `styles={{ root: ... }}` on the
+   component (§18 of docs/mantine-responsive-design-system.md): inline styles cannot express a
+   descendant override, so the notification's own `pointer-events:auto` would never reach it. */
+.mantine-Notifications-root {
+  pointer-events: none;
+}
+
+.mantine-Notification-root {
+  pointer-events: auto;
+}

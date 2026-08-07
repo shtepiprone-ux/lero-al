@@ -38,7 +38,8 @@ one of the 13 has a functional consequence in shipped code.
 | # | State | What |
 |---|---|---|
 | **724** | `NEEDS REVISION` (review 2026-08-07) | Classify all 13 stories into fix / tracked-defect / gate-defect, then remediate the confirmed defects. Starts with `HomepageListingGrids` and tests whether a full-width CTA also clears the click-shield interception. `Sprint_53_kickoff_prompt_Task_724_FullWidthButtons_13Story_Adjudication.md` — see its **§16** for the AC6 correction |
-| **724R** | `KICKOFF FILED` | Replace 724's `role="group"` gate-suppression with real remediation or a principled gate rule; restore Task 593's threshold; close the review's F1–F7. `Sprint_53_kickoff_prompt_Task_724R_FullWidthButtons_Revision.md` |
+| **724R** | ✅ `APPROVED WITH NOTES` (review 2026-08-07), committed `fdbaac46f` | Replaced 724's `role="group"` gate-suppression with the DOM-measured `isChipSetMember` predicate; restored Task 593's threshold; closed F1–F7. Three review rounds. Residual notes → **726**. `Sprint_53_kickoff_prompt_Task_724R_FullWidthButtons_Revision.md` |
+| **726** | **`KICKOFF FILED`** (owner-approved 2026-08-07) | Remove the author-appliable `[role="group"]` exclusion at `check-stories-rendered.mjs:1238`, proven by a reversible probe in the existing `Button.stories.tsx` (restored to `HEAD`), then give the chip rows a conditional **named** `role="group"` back. **No permanent Storybook markup.** Companions: execution contract + rule-compliance ledger. Closes 711 F1 and 724R N1/N2/N7. **Closes this sprint.** `Sprint_53_kickoff_prompt_Task_726_ButtonGroupExclusion_And_ChipRowAria.md` |
 
 Further tasks are opened from 724R's route election — deliberately not pre-numbered, because which stories need
 their own task is its V2 deliverable, not a guess made now.

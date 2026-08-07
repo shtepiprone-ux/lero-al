@@ -1,0 +1,35 @@
+# Task 726 — completed unwaivable rule-compliance ledger
+
+Companion artifact to `Sprint_53_kickoff_prompt_Task_726_ButtonGroupExclusion_And_ChipRowAria.md`.
+Completed 2026-08-07 by the Opus orchestrator, recomputed from the current kickoff text and the current worktree.
+Per ledger rule 5, a prior `COMPLIANT` does not survive a revision — every row below was re-derived for this draft.
+
+| Rule source and exact clause | Applicability evidence | Exact mandatory outcome | Evidence artifact / command | Result |
+|---|---|---|---|---|
+| `.claude/skills/create-task/SKILL.md` → "Permanent Storybook story creation gate" | The task's proof needs DOM from a story; the prior draft proposed permanent markup | *"markup … only to exercise a selector, gate, regression, or measurement … is a probe, not a permanent Storybook artifact. Use a reversible probe in an inspected existing story … restore the story byte-identical before final verification."* Permanent addition requires a named in-scope production consumer or quoted owner authorization | Kickoff §2.2 (inspected candidate + why no permanent addition is authorized), R2/R5, AC5, §10.1, §8; contract ckpt 1/5 | **COMPLIANT** |
+| Same → *"The absence of an API-specific story or a grep match is not by itself authorization to add markup"* | `Button.Group` has no story; the prior draft used that absence as authorization | No markup may be added on that basis | Kickoff §2.2 marks the absence as **context that authorizes nothing**; §4 records the rejected draft | **COMPLIANT** |
+| Same → *"exactly one active owner route"* | The prior draft carried a 3-branch R1b election | One active route; alternatives require separate contracts | Execution contract §1; kickoff §3 has no election | **COMPLIANT** |
+| Same → dirty-worktree rows (pre-write snapshot, content witness per claimed-untouched path, manifest) | Worktree is dirty, including two owner-authored skill files | Pre-write `git status --porcelain` + witness per entry; manifest completed | Kickoff §2.0 (Class A frozen / Class B recorded), R1, AC1; contract ckpt 0 | **COMPLIANT** |
+| `docs/agent-contract.md` cl. 1 (scope stays bounded) | Task touches a shared gate and two shared leaf components | No drive-by refactor or hidden architecture change | Kickoff §7/§8; R10's split zero-diff proof | **COMPLIANT** |
+| cl. 2 (no invented architecture; stop and ask) | Two conditions could tempt invention: a discovered `Button.Group` consumer, a missing locale key | Stop, do not infer | §11 stop branches; R12; §10.1/§10.6 | **COMPLIANT** |
+| cl. 3 (existing capabilities stay reachable) | `role="group"` is being removed from the gate and restored to the chip rows | No control or state may be lost | R6 restores the name; R7 audits all 13 sites | **COMPLIANT** |
+| cl. 7 (four locales) | ARIA names are user-facing | `sq`/`en`/`uk`/`it` coverage, runtime verified | R12 + AC12; names reuse existing `AccordionSection` titles, **no new keys** (§2.4) | **COMPLIANT** |
+| cl. 9 (validation evidence; `npm run build` exit 0 mandatory for non-Q0) | Q4 task | Final build exit 0 with the code inside the transcript | R11 + AC11; contract ckpt 10 | **COMPLIANT** |
+| cl. 11 (mobile full-width contract) | The gate under change is the clause-11 detector | The detector's exclusion must not let a real violation pass | R2/R4's before/after pair on a control `isChipSetMember` cannot absorb (N<3) | **COMPLIANT** |
+| cl. 13 (Storybook and no-hardcode gates remain enforceable) | A blocking gate's exclusion logic changes | Machine-produced rendered evidence; no weakening | R2/R4/R8 transcripts; R3 forbids any substitute selector; R10b bounds the change to six deleted lines and zero additions in `check-stories-rendered.mjs` | **COMPLIANT** |
+| cl. 14 (file integrity, two-pass counting) | Text/source files change | UTF-8, no BOM/NUL, gates run twice, final pass genuinely last | R13 + AC13; contract ckpt 11→12 ordering | **COMPLIANT** |
+| cl. 16 / 16a / 16b (TailAdmin provenance) | — | Visual chrome must trace to a reference row | **NOT APPLICABLE** — R6 adds only an ARIA attribute; no class, style, spacing, colour, radius, shadow or layout value changes anywhere in the write set (§11's last row) | **NOT APPLICABLE** |
+| cl. 16c (canonical Mantine Story is the visual source of truth) | The task probes a canonical story | A changed visible migrated artifact must have its Story preserved or updated | **NOT APPLICABLE** — no visible artifact changes. The story is touched only as a reversible probe and restored byte-identical (R5), so no Story boundary is crossed | **NOT APPLICABLE** |
+| cl. 15 (critical flows require regression proof) | — | Named registry entry + automated coverage | **NOT APPLICABLE pending J1** — `docs/critical-flow-registry.md` has no chip-row or `fullWidthButtonsAtMobile` entry. Kickoff A4 requires the executor to re-confirm at J1 and escalate if one exists | **NOT APPLICABLE** (verify at J1) |
+| cl. 10 / git policy (mutating git is owner-only) | The precondition needs `git checkout --` | Agents never run, emit or suggest mutating git; owner runs it natively | The hunk removal was put to the owner as a decision and was run by the owner 2026-08-07 (verified: path absent from `git status`, hash == `HEAD`); §10.12 binds the executor | **COMPLIANT** |
+| `docs/qa-profiles.md` → Q4 | Blocking CI gate + shipped ARIA in 4 locales + planted-violation clause | Full proof path incl. planted violation | Kickoff §13, 12 steps with exact commands | **COMPLIANT** |
+| **D32** (a migration may not be proven against a comparator not shown to fail) | The exclusion's removal needs a comparator | The comparator must be observed failing | ckpt 2 captures `true` **before** the delete; that captured value is ckpt 4's comparator | **COMPLIANT** |
+| **D6** (evidence is local-only) | Evidence written under `.screenshots/` | Not committed | `.screenshots/` is `.gitignore`d; contract §3 row 5 verified it is excluded from `git status` | **COMPLIANT** |
+| Owner decision, Task 607 review 2026-07-15 | `FULL_WIDTH_TOLERANCE` is in the edited file | Never widen it; never allowlist a confirmed true positive | R10(b) requires `FULL_WIDTH_TOLERANCE` still reads `= 8`; §10.4 | **COMPLIANT** |
+| Owner decision, Task 593, 2026-07-14 | `NotificationCenter`'s 390px threshold | Stands until superseded | R10(a) hash-verifies the file unchanged | **COMPLIANT** |
+| Owner rule, 2026-08-01 (every task belongs to a sprint) | New kickoff | Saved under `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md` + sprint table row | Path is `Sprint_53_kickoff_prompt_Task_726_…md`; Sprint 53 table row updated | **COMPLIANT** |
+
+**Publication status.** Every applicable row is `COMPLIANT` or a source-based `NOT APPLICABLE`, the ckpt-0
+precondition is satisfied (verified 2026-08-07), and the owner approved the revision 2026-08-07. Task 726 is
+**`KICKOFF FILED`**. This ledger authorises publication of the kickoff only; it does not approve the eventual
+implementation, which requires its own Opus review.

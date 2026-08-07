@@ -176,22 +176,45 @@ export function MantineListingContactPattern({
 
         {state === 'normal' && inquiryTrigger}
 
+        {/* Share is the single real CTA in this row — full-width alone (P0 mobile gate,
+            Task 724). A fixed-width sibling icon in the same row made `flex:1` mathematically
+            unable to satisfy the gate, which compares against the Group's FULL content width,
+            not "remaining space after the icon" (measured deficit 46px, R8-geometry-probe). */}
         {state === 'normal' && (
-          <Group gap="sm" wrap="wrap">
+          <Button
+            variant="default"
+            onClick={onShare}
+            leftSection={<Share2 size={16} />}
+            fullWidth
+          >
+            {labels.share}
+          </Button>
+        )}
+
+        {/* Favorite (icon-only ActionIcon — not a `.mantine-Button-root`, so clause 11's
+            full-width check never applies to it) gets its own compact row, same `Group
+            justify="flex-end"` container this pattern used for `reportTrigger` alone before
+            Task 724 (no new chrome). 724R review F6: no TailAdmin reference row exists for this
+            exact favorite-icon placement — clause-16a stop, documented in the 724R session log
+            V7/AV7; not a blocker since no new visual chrome (color/spacing/radius/shadow) is
+            introduced, only the pre-existing Group primitive. */}
+        {state === 'normal' && favorite && (
+          <Group justify="flex-end">
             {favorite}
-            <Button
-              variant="default"
-              onClick={onShare}
-              leftSection={<Share2 size={16} />}
-              style={{ flex: 1, minWidth: 0 }}
-            >
-              {labels.share}
-            </Button>
           </Group>
         )}
 
+        {/* Report listing — real full-width fix (724R V2 route a), same Mantine mechanism as
+            Share above (docs/mantine-responsive-design-system.md:622,
+            MantineResponsiveActionFooter.tsx:47-78): the consumer-supplied `reportTrigger` node
+            sets its own `fullWidth`, same as `inquiryTrigger`'s established convention in this
+            file's story. Pre-724 baseline already gave Report its own row
+            (`Group justify="flex-end"`); this restores that row and only changes the child's
+            width behavior — no new chrome. */}
         {state === 'normal' && reportTrigger && (
-          <Group justify="flex-end">{reportTrigger}</Group>
+          <Group justify="flex-end">
+            {reportTrigger}
+          </Group>
         )}
       </Stack>
     </Paper>

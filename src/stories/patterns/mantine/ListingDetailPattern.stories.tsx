@@ -49,7 +49,7 @@ function DemoInquiryTrigger({ l }: { l: string }) {
 
 function DemoReportTrigger({ l }: { l: string }) {
   return (
-    <Button variant="subtle" size="xs" color="gray">
+    <Button variant="subtle" size="xs" color="gray" fullWidth>
       {storyT(l, 'storybook.mantine.listing_detail_report')}
     </Button>
   );

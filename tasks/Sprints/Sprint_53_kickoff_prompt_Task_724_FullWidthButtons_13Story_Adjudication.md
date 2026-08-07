@@ -193,7 +193,7 @@ untouched, keep a before/after content witness — an equal porcelain line is no
 | R3 | R1, cl. 11, cl. 16 | Every `FIX` story is remediated using Mantine layout mechanisms (`fullWidth`, `Stack`, `grow`, responsive props) traced to `docs/mantine-responsive-design-system.md`; visual values trace to `docs/tailadmin-style-reference.md`. **No local utility chain, no inline width, no `!important`.** | P0 | AC3 | Confirmed |
 | R4 | §3.5 | Every `DEFER` story has a `MANTINE_PATTERN_KNOWN_FAILURES` entry with an exact pinned signature **and** a real follow-up task number filed in `docs/backlog.md`. A registry entry without a filed task is forbidden. | P0 | AC4 | Confirmed |
 | R5 | §3.5 | **Prove the registry mechanism works for this failure class before relying on it**: measure what `getPrimaryFailReason` returns for a `fullWidthButtonsAtMobile === false` cell, then plant a signature divergence and show the reconciliation reverts to a hard blocking failure with the mismatch message. Two transcripts. | P0 | AC5 | Confirmed |
-| R6 | §3.1 | `npm run screenshots:assert -- --mantine-only` exits **0**, with every residual failure reconciled to a registry entry or to `HeroSearch`'s documented Sprint-49 carve-out. `FULL_WIDTH_TOLERANCE` unchanged at 8 — verify by hash. | P0 | AC6 | Confirmed |
+| R6 | §3.1 | **CORRECTED 2026-08-07 (see §16).** `npm run screenshots:assert -- --mantine-only` reports **zero FAIL cells outside `HeroSearch/Default`**. `HeroSearch`'s 12 cells stay red by §3.7's mandate, so the run's **exit code is 1 and that is the accepted terminal state of this task** — returning the gate to exit 0 belongs to Sprint 49. Every residual non-pass cell is named. `FULL_WIDTH_TOLERANCE` unchanged at 8 — verify by hash. | P0 | AC6 | Corrected |
 | R7 | §3.6, D32 | **Planted proof for any gate change.** If any story is classified `GATE`, plant a violation the corrected gate must still catch, show `false`, remove it, show restoration. Skipped only if no story is classified `GATE` — state that explicitly. | P0 | AC7 | Confirmed |
 | R8 | cl. 7 | Any new or changed user-facing string is present in `sq`, `en`, `uk`, `it`, verified at runtime. If no strings change, state that. | P1 | AC8 | Confirmed |
 | R9 | scope | **Zero diff** in `HeroSearchView.tsx` + its module CSS + story, `MobileBottomNavView.tsx`, `FULL_WIDTH_TOLERANCE`, `check-assertion-liveness.mjs`, `assertion-liveness-registry.json`, `fullWidthControlsAtMobile`, `MANTINE_VIEWPORTS`, `package.json`, `governance-pr.yml`, `docs/critical-flow-registry.md`. Verify by hash. | P0 | AC9 | Confirmed |
@@ -297,9 +297,9 @@ CTA renders at 88px inside a 343px `Group` and is click-blocked by the bottom na
 **Required after:** every one of the 12 in-scope stories carries an evidenced disposition; every `FIX` story
 renders its text buttons at full available width below 640px using Mantine layout mechanisms; every `DEFER` story
 has a signature-pinned registry entry and a filed follow-up task; any `GATE` change is a principled condition
-with planted proof, never a story list; `--mantine-only` exits 0 with `HeroSearch`'s 12 cells reconciled to their
-Sprint-49 carve-out; `FULL_WIDTH_TOLERANCE` is still 8; and R2 states plainly whether the full-width CTA cleared
-the click-shield interception.
+with planted proof, never a story list; `--mantine-only` has **no FAIL cell outside `HeroSearch`**, whose 12 cells
+stay red under their Sprint-49 carve-out and hold the run at exit 1 (§16); `FULL_WIDTH_TOLERANCE` is still 8; and
+R2 states plainly whether the full-width CTA cleared the click-shield interception.
 
 ### Implementation sequence
 
@@ -313,7 +313,8 @@ the click-shield interception.
 - **I5 — Registry proof, then entries (R5 then R4).** Measure `getPrimaryFailReason`'s actual output for this
   failure class. Plant a signature divergence, show the hard blocking failure, remove it. Only then add entries.
 - **I6 — Any `GATE` change (R7).** Principled condition + planted proof, both arms.
-- **I7 — Final matrix (R6).** Exit 0, every residual failure reconciled by name.
+- **I7 — Final matrix (R6).** No FAIL cell outside `HeroSearch`; every residual cell reconciled by name; exit code
+  quoted as-is (expected 1, §16).
 - **I8 — Docs** (`storybook-governance.md`), then `npx tsc --noEmit`, then `npm run build`.
 - **I9 — Counting gates, two passes** per `ai-behavior.md` **5a** — the final one after the session log and
   backlog exist, reconciled to `git status`.
@@ -381,9 +382,13 @@ matrix exits 0 with `HeroSearch`'s 12 cells reconciled; build exits 0.
 - **AC5 [R5]** Given a `fullWidthButtonsAtMobile === false` cell, then the measured `getPrimaryFailReason` output
   is stated verbatim; and given a planted signature divergence, the reconciliation prints
   `TRACKED KNOWN-FAILURE SIGNATURE CHANGED` and the run blocks. Two transcripts, both unpiped.
-- **AC6 [R6]** Given the final matrix run, then `npm run screenshots:assert -- --mantine-only` exits **0**; every
-  remaining non-pass cell is named and reconciled to either a registry entry or `HeroSearch`'s §3.7 carve-out;
+- **AC6 [R6] — CORRECTED 2026-08-07 (§16).** Given the final matrix run, then the FAIL set contains **no story
+  other than `Mantine/Primitives/HeroSearch/Default`**; every residual non-pass cell (FAIL and AMBIGUOUS) is named
+  in the session log and reconciled to a registry entry, to `HeroSearch`'s §3.7 carve-out, or to a pre-existing
+  unrelated cause; the run's **exit code is quoted as-is and is expected to be 1** while `HeroSearch` is red;
   and `FULL_WIDTH_TOLERANCE` is hash-identical to `HEAD`.
+  **Do not attempt to force exit 0.** Any change that would produce exit 0 in this task necessarily violates
+  §3.7's zero-diff mandate or widens the registry prefix §3.5 forbids. Both are rejected alternatives.
 - **AC7 [R7]** Given any `GATE` classification, then a planted violation makes the corrected assertion report
   `false` and its removal restores the prior value — two transcripts. If no story is classified `GATE`, state
   that explicitly and mark AC7 `not applicable` with that reason.
@@ -417,7 +422,7 @@ AC2 requires a real production build.
 | 7 | `getPrimaryFailReason` measurement (I5) | actual return value quoted |
 | 8 | Planted signature divergence + removal (I5) | `SIGNATURE CHANGED`, blocking; then clean |
 | 9 | Any `GATE` change: plant → `false` → remove → restored (I6) | two transcripts, or `not applicable` stated |
-| 10 | **`npm run screenshots:assert -- --mantine-only`** (I7) | **exit 0 — hard gate** |
+| 10 | **`npm run screenshots:assert -- --mantine-only`** (I7) | **FAIL set ⊆ `HeroSearch/Default` — hard gate.** Exit 1 expected and accepted (§16) |
 | 11 | `npx tsc --noEmit` | 0 errors |
 | 12 | **`npm run build`** | **exit 0 — hard gate** |
 | 13 | `check:i18n` if strings changed | pass |
@@ -483,3 +488,32 @@ or delegate any mutating git command, including any form of `git push`.
 judgment call: a `Mantine/Primitives/*` story needing deferral the registry cannot express (§3.5); a
 `getPrimaryFailReason` value that makes signatures indistinguishable (R5); and story #3's missing component
 source (A6).
+
+---
+
+## 16. Correction record — R6/AC6 was unsatisfiable as originally written (2026-08-07)
+
+**This is an orchestrator task-design defect, not an executor failure.** The original R6/AC6 demanded
+`--mantine-only` exit **0** while three other clauses of this same kickoff made exit 0 unreachable:
+
+1. §3.7 mandates **zero diff** to `HeroSearchView.tsx`, its module CSS and its story, and states its 12 cells
+   "stay red at the end of this task."
+2. §3.5's reconciliation loop builds its prefix as `` `Patterns/Mantine/${componentName}/` ``, so
+   `Mantine/Primitives/HeroSearch` **cannot** be registered in `MANTINE_PATTERN_KNOWN_FAILURES` — and §3.5
+   forbids widening that prefix, making it a stop-and-report.
+3. §3.2 marks `HeroSearch` OUT OF SCOPE, so no `GATE` disposition and no R7 planted proof can attach to it.
+
+Twelve red cells that may not be fixed, may not be registered, and may not be exempted cannot yield exit 0.
+§11's own flow table already specified `stop and report` for this branch, and the executor took it correctly.
+
+**Correction applied:** R6/AC6 and QA step 10 now require the FAIL set to contain no story other than
+`HeroSearch/Default`, with the exit code quoted as-is (expected 1). The gate's return to exit 0 is Sprint 49's
+exit criterion, not this task's. Sprint 53's plan file exit criterion 2 is amended to match.
+
+**Standing lesson for future kickoffs** (add to the recurring-failure-mode list in `docs/backlog.md`): when a
+kickoff fences a failing artifact off as zero-diff, it must not simultaneously require the aggregate gate that
+measures that artifact to go green. State the *scoped* pass condition — "no failure outside X" — and assign the
+aggregate exit code to the task that owns X.
+
+**This correction does not close Task 724.** The 2026-08-07 implementation review returned `NEEDS REVISION` on
+findings unrelated to AC6; see `Sprint_53_kickoff_prompt_Task_724R_FullWidthButtons_Revision.md`.

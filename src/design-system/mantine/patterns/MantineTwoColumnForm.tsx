@@ -90,13 +90,28 @@ export function MantineTwoColumnForm({
           })}
         </SimpleGrid>
 
-        <Group gap="sm" grow>
+        <Group
+          gap="sm"
+          style={{ flexDirection: 'column' }}
+          styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+        >
           {cancelLabel && (
-            <Button variant="outline" color="gray" onClick={onCancel}>
+            <Button
+              variant="outline"
+              color="gray"
+              onClick={onCancel}
+              fullWidth
+              styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+            >
               {cancelLabel}
             </Button>
           )}
-          <Button type="submit" color="brand">
+          <Button
+            type="submit"
+            color="brand"
+            fullWidth
+            styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
+          >
             {submitLabel}
           </Button>
         </Group>

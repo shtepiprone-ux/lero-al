@@ -1729,6 +1729,217 @@ Session: `docs/sessions/2026-08-06-task714-design-tokens-css-declaration-coverag
 
 ---
 
+### §14.9.27 — `fullWidthButtonsAtMobile` / `popupBottomSheetAtMobile` re-anchored onto measured Mantine DOM (Task 711, 2026-08-06)
+
+**Why.** §14.9.23 (Task 710) proved both assertions were dead in **0/852** applicable `--mantine-only`
+cells — `[data-slot="button"]` and the six `[data-slot="*-content"]` candidates are a shadcn
+convention Mantine-scope stories never emit (same root cause as §14.9.9's `PORTAL_SELECTOR` defect).
+Task 711 re-anchored both onto DOM proven present by a live census, not documentation or a package
+grep (D33).
+
+**Census (R1), method.** A standalone Playwright probe opened every Mantine-scope overlay primitive
+story (`Modal`, `Drawer`, `Popover`, `DropdownMenu`, `Select`, `Patterns/Mantine/DialogDrawerPattern`,
+`NavigationMenu`, `UserMenu`) and the `Button`/`CountButton`/`CopyIdButton` stories at 375px, clicked
+each open-trigger, and dumped the real rendered tag/class/`data-*`/geometry. Raw dump:
+`.screenshots/task711-evidence/I2-census-raw-dump.json`.
+
+**`fullWidthButtonsAtMobile` — before/after.**
+- Before: `[data-slot="button"]:not([data-icon-only])`, excluding `.closest('[data-slot="button-group"]')`.
+- After: `.mantine-Button-root` — the real static class Mantine's `useStyles({name:"Button",
+  withStaticClasses:true})` renders on every Button instance (confirmed live across every
+  `Button/Default` variant and `MantineCountButton`/`MantineCopyIdButton`'s wrapped instances).
+  "Icon-only" re-expressed as **absence of a `.mantine-Button-label` child** — measured live:
+  `MantineCountButton`'s `iconOnlyBelow` collapse (Task 571) renders no label span when `children`
+  is hidden. "Button-group" re-expressed as `.closest('[role="group"]')` — Mantine's real
+  `ButtonGroup` component sets `role="group"` (`@mantine/core/esm/components/Button/ButtonGroup/
+  ButtonGroup.mjs`); zero live matches today (no `Button.Group` usage exists in Mantine scope yet),
+  preserved in intent only, same as the shadcn original was until a button group actually rendered.
+
+**`popupBottomSheetAtMobile` — before/after.**
+- Before: six `[data-slot="dialog-content"|"sheet-content"|"select-content"|"popover-content"|
+  "dropdown-menu-content"|"navigation-menu-popup"]` selectors, skipping `[data-side="left"]`.
+- After: **one** selector, `.mantine-Drawer-content[role="dialog"]`. Every tested overlay primitive
+  converges on this single DOM shape at `<640` because every pattern in
+  `src/design-system/mantine/patterns/` (Modal/Drawer/Popover/DropdownMenu/Select/Combobox/
+  NavigationMenu/Tooltip) funnels its mobile open state through the one shared
+  `ResponsiveBottomSheet` (`responsiveBottomSheet.tsx:126`, hardcoded `position="bottom"`);
+  `MantineDialogDrawerPattern` renders `position="bottom"` directly. The old `data-side="left"` skip
+  has no live Mantine analog — Mantine's Drawer renders no `data-position`/`data-side` attribute at
+  all, and every pattern file funnels to bottom position at `<640` — so it is intentionally **not**
+  re-created: a future violation of the one-bottom-sheet invariant must surface as a real `false`,
+  not be silently exempted by an invented anchor.
+
+**Live counts, measured against the real manifest
+(`.screenshots/rendered-assert/2026-08-06T18-02/manifest.json`, 1184 cells, 852 applicable).**
+
+| Assertion | live | true | false | ratio (live/852) |
+|---|---:|---:|---:|---|
+| `fullWidthButtonsAtMobile` | 383 | 235 | 148 | 45% — **not thin**, but 148 real unplanted `false` cells across 13 distinct stories (see below) |
+| `popupBottomSheetAtMobile` | 156 | 156 | 0 | 18% — thin but 100% clean |
+
+**R8 — an unplanted `false` was found and is reported, not silenced.** `fullWidthButtonsAtMobile`
+resolves `false` on 13 distinct enrolled stories (`Mantine/Primitives/Button`, `FilterControls`,
+`FiltersPanelShell`, `HeroSearch`, `NotificationBellView`; `Patterns/Mantine/FilterSection`,
+`FormSectionStack`, `HomeSection`, `HomepageListingGrids`, `ListingContactPattern`,
+`ListingDetailPattern`, `PageHeaderWithActions`, `TwoColumnForm`). A direct geometry probe
+(`.screenshots/task711-evidence/R8-geometry-probe.json`) found the pattern is **100% deterministic**:
+every failing button's parent is a Mantine `Group` (content-hugging, non-stretch); every passing
+button's parent is a `Stack` (default `align="stretch"`) or an explicitly full-width `Flex`. Example:
+`Patterns/Mantine/TwoColumnForm/Default`'s "Cancel"/"Submit" pair each render at 182px inside a
+375px-wide `Group` (deficit 193px). This is a real, measured, systemic layout fact — not a selector
+defect — and per R8 it is **reported, not fixed, not tolerance-loosened, not re-registered as dead**.
+Whether every one of these is a genuine agent-contract clause 11 violation, or the pre-existing
+shadcn-era assertion was already scoped narrower than "every text button," is an owner/Opus
+adjudication, not an executor decision. See the Task 711 session log for the full story list.
+
+**R5 — the free `STALE-ENTRY` comparator.** `check:assertion-liveness` run against the same manifest
+BEFORE the registry edit exits **1**, naming both keys `STALE-ENTRY` (both were live in 383/1184 and
+156/1184 cells respectively) — proof the re-anchoring took, without a self-report. After deleting
+both entries from `scripts/assertion-liveness-registry.json`, the same command exits **0**.
+Transcripts: `.screenshots/task711-evidence/I5-pre-delete-stale-entry.txt` /
+`I5-post-delete.txt`.
+
+**R7 — planted proof, both assertions.** A temporary plant (reverted before completion, `git status`
+clean) on `Mantine/Primitives/CountButton/Default` (`w={100}` on an otherwise-full-width button)
+flipped that story's 12 applicable cells from `true` to `false`; removing it restored `true`. A
+temporary plant on `Mantine/Primitives/CopyIdButton/Default` (a raw `.mantine-Drawer-content[role
+="dialog"]` element at a fixed, non-edge-to-edge, non-bottom-anchored position) flipped that story's
+12 applicable cells from `null` to `false`; removing it restored `null`. Transcripts:
+`I6b`/`I6d` (buttons), `I6f`/`I6h` (popups) under `.screenshots/task711-evidence/`.
+
+**§MQ update.** §MQ's "Button not full-width at `<640`" and "Popup not rendering as bottom sheet at
+`<640`" rows (added Task 412, when neither was machine-detectable at all) are now machine-detected
+for the `--mantine-only` scope by the two re-anchored assertions above. The manual-QA requirement
+stays in force for the legacy/non-Mantine matrix, whose liveness for these two assertions remains
+**unmeasured** (§14.9.23's A3 scope caveat still applies — the sweep was not run here either).
+
+Session: `docs/sessions/2026-08-06-task711-reanchor-dead-mantine-assertions.md`.
+
+---
+
+### §14.9.28 — Adjudication of the 13 `fullWidthButtonsAtMobile` stories (Task 724, Sprint 53, 2026-08-07)
+
+**Why.** Task 711 re-anchored `fullWidthButtonsAtMobile` onto real Mantine DOM and reported, without fixing, 148
+unplanted `false` cells across 13 stories (R8). This task classified and remediated every one.
+
+**Classification (R1) — all 12 in-scope stories, `FIX`; 0 `DEFER`; 0 `GATE`.** Full evidence table (screenshot
+paths, clause-11 reasoning) at `.screenshots/task724-evidence/I2-classification-table.md`. Summary:
+
+| # | Story | Disposition | Mechanism |
+|---:|---|---|---|
+| 1 | `Mantine/Primitives/Button/Default` | FIX (story-only) | Canonical `MantineResponsiveActionFooter` stack pattern applied to each demo row's `Group`/`Button` |
+| 2 | `Mantine/Primitives/FilterControls/Default` | FIX (production, domain exemption) | `role="group"` + `aria-label` on `FilterMultiToggle`/`FilterRoomsRow` — the same criterion the assertion already exempts for Mantine `ButtonGroup` |
+| 3 | `Mantine/Primitives/FiltersPanelShell/Default` | FIX (production) | Same `role="group"` mechanism reused via #2's fixed leaf components, plus the property-type grid in `FiltersPanel.tsx` |
+| 4 | `Mantine/Primitives/NotificationBellView/Default` | FIX (production) | Retargeted `NotificationCenter.tsx`'s header/button breakpoint from the custom 390px `notification-compact` token to the project's canonical 640px `sm` — see the flagged tension with Task 593 below |
+| 5 | `Patterns/Mantine/FilterSection/Default` | FIX (story-only) | `fullWidth` + `width:auto`@40em on the 2 demo buttons |
+| 6 | `Patterns/Mantine/FormSectionStack/Default` | FIX (production) | Canonical stack pattern replacing `Group grow` |
+| 7 | `Patterns/Mantine/HomeSection/Default` | FIX (story-only) | `fullWidth` + `width:auto`@40em on the 3 demo CTA buttons |
+| 8 | `Patterns/Mantine/HomepageListingGrids/Default` | FIX (production) — R2 | `FeaturedListingsView.tsx` header stacks column→row @40em; `ViewAllLink` gets the same responsive width switch |
+| 9 | `Patterns/Mantine/ListingContactPattern/Default` | FIX (production) | Share becomes its own full-width row; Favorite+Report become a paired, `role="group"`-exempt compact utility row |
+| 10 | `Patterns/Mantine/ListingDetailPattern/Default` | FIX (inherited, no own diff) | Composes #9 unchanged |
+| 11 | `Patterns/Mantine/PageHeaderWithActions/Default` | FIX (production) | Added the `flexDirection` column→row switch the component's own JSDoc already specified but never implemented |
+| 12 | `Patterns/Mantine/TwoColumnForm/Default` | FIX (production) | Same as #6 |
+| — | `Mantine/Primitives/HeroSearch/Default` | OUT OF SCOPE (§3.7, Sprint 49) | Zero diff — 12 cells stay red, see below |
+
+**R2 — `HomepageListingGrids` full-width CTA vs. Task 723's click-shield finding.** Before (owner-run, 2026-08-07,
+§3.4 of the kickoff): 9 total interceptions, 5 attributable to the 88px-wide "View all" `Button` intercepted by
+`MobileBottomNavView`. After (this task, `BASE_URL=http://localhost:3000 npm run check:click-shield` against a
+real production build, `.screenshots/task724-evidence/I3-click-shield-after.log`): 4 total interceptions, all at
+`mobile-390` only (cleared at 320/375), all a *different* interceptor — a small SVG `<path>` (0×14px) belonging to
+bottom-nav chrome, not the nav-item container that blocked the smaller pre-fix button. **The hypothesis is
+disproven as stated: full-width did not clear the collision, it changed its shape** (fewer cells, different
+interceptor). This is the same underlying bottom-nav/content overlap Task 723 already found and left unowned — a
+bottom-nav task should absorb it, not this one (§5.1 explicitly forbids fixing `MobileBottomNavView` here).
+
+**R5 — registry mechanism proof.** `getPrimaryFailReason` (`check-stories-rendered.mjs:337-349`) never inspects
+`fullWidthButtonsAtMobile`; measured live by planting a deliberately wrong signature
+(`TwoColumnForm: { expectedFailingCells: 12, expectedFailReason: 'horizontal-overflow', followUpTask: 999999 }`)
+against a temporarily-reverted `MantineTwoColumnForm.tsx`: the run printed exactly `found 12 cells failing with
+reason(s) [unknown]` and kept `verdict: 'fail'` (hard block), confirmed by exit 1 —
+`.screenshots/task724-evidence/I5-R5-plant-mismatch.log`. Both the plant and the registry entry were then reverted;
+the restore run is `.screenshots/task724-evidence/I7-final-mantine-only.log`. **No permanent registry entry was
+added** — 0 stories were classified `DEFER`.
+
+**A tension surfaced and resolved in favor of the live P0 gate, flagged for owner review.** `NotificationCenter.tsx`
+originally split its header/button breakpoint at a custom 390px token per an explicit, dated owner decision (Task
+593, 2026-07-14: "<390px stacked full-width; ≥390px reverts to the original single-row layout"). Task 711's
+re-anchor made `fullWidthButtonsAtMobile` newly able to *see* that this ≥390px single-row state violates clause
+11's `<640` full-width rule. This task retargeted both the header's stack switch and the button's width switch to
+the project's canonical 640px ceiling, superseding Task 593's narrower threshold for this one button. The
+"compact" layout intent is preserved, just now bounded correctly at 640 instead of 390.
+
+**`HeroSearch`'s 12 cells stay red — R6/AC6 cannot reach a literal exit 0.** §3.7 states plainly that these 12
+cells "stay red at the end of this task," while AC6 and QA-profile step 10 require `--mantine-only` to exit 0 as a
+"hard gate." Both cannot be true simultaneously: `HeroSearch` is `Mantine/Primitives/*`, so
+`MANTINE_PATTERN_KNOWN_FAILURES` structurally cannot register it (§3.5's own hard limit); it was never one of the
+12 stories this task was asked to classify, so no `GATE` disposition — and its planted-proof obligation — applies
+to it either; and §8/§3.7 forbid any diff to its own files. There is no mechanism this task is authorized to touch
+that would exclude `HeroSearch` from the CI-blocking count without either violating its zero-diff scope or
+inventing an unauthorized gate carve-out. Final measured result:
+`.screenshots/task724-evidence/I7-final-mantine-only.log` — **1150/1184 PASS, 12 FAIL (all `HeroSearch`), 22
+AMBIGUOUS (pre-existing, unrelated), exit 1.** This is flagged as a **TASK SPECIFICATION CONTRADICTION** for Opus:
+every in-scope story is green; the only residual failures are the ones the kickoff itself predicted would remain.
+
+Session: `docs/sessions/2026-08-0X-task724-fullwidth-buttons-13-story-adjudication.md`.
+
+**CORRECTION (Task 724R, 2026-08-07) — the #2/#3/#9 mechanism above was reverted.** The orchestrator implementation
+review found that `role="group"` had been added to four production containers (`FilterMultiToggle.tsx`,
+`FilterRoomsRow.tsx`, `FiltersPanel.tsx`'s property-type grid, `MantineListingContactPattern.tsx`'s Favorite+Report
+row) *specifically because* `check-stories-rendered.mjs:1180` already uses `el.closest('[role="group"]')` as the
+assertion's own skip condition — the fix mechanism and the gate's blind spot were the same attribute, turning 48/136
+in-scope cells green with zero layout change (F1, 2026-08-07 review). `ListingsFilters.tsx`'s 7 production call
+sites also picked up an unnamed `role="group"` with no `aria-label` passed (F2). Both are now corrected:
+
+- **#2 / #3 (`FilterControls`, `FiltersPanelShell`) — re-elected route (b) GATE**, not the `role="group"` reuse
+  above. `check-stories-rendered.mjs`'s `fullWidthButtonsAtMobile` check (~:1178) now carries an `isChipSetMember()`
+  DOM predicate with **three** independent conditions, all measured fresh from the DOM on every run — no attribute,
+  class, or story id is read, so a future single-CTA regression cannot pass by having an author add anything to its
+  container:
+  1. **Structural container shape** — CSS grid with **≥2 actual computed tracks at the current viewport**
+     (`getComputedStyle(parent).gridTemplateColumns` resolved live into its space-separated track list and counted —
+     never read from a `cols`/`gridTemplateColumns` *prop*, so a responsive `SimpleGrid cols={{base:1,sm:2}}`
+     correctly reads as 1 track at mobile and is **not** exempted there — a single-column grid is a vertical CTA
+     stack, not a chip row, 724R review B3), OR flex with `flex-wrap` enabled AND `flex-direction: row`/`row-reverse`
+     (never `column` — the structural opposite of the canonical `MantineResponsiveActionFooter` action-stack
+     pattern, which sets `flexDirection: 'column'` at <640px precisely so 2–3 real CTAs stack full-width instead of
+     sharing a row).
+  2. **N≥3** visible Button siblings in the container.
+  3. **Dominance defense** — the candidate button's own width must be **≤3× the median width across all N
+     siblings**, and **<80% of the row's own content width**. Two prior designs were tried and rejected, both
+     caught by planted-violation proof, not by inspection:
+     - *Pixel-ratio comparison across the whole sibling set* — broke at mobile-320 in `uk`/`it`: a single
+       long-translation chip label can legitimately span most of a narrow row on its own wrapped line — real
+       chip-set data, not a CTA in disguise — and a global ratio/percentage threshold could not tell the two apart.
+     - *Per-visual-row comparison, trusting any sibling with no line-mate* — closed the above false positive, but
+       opened a real bypass (724R review B2, first plant): a deliberately-widened single CTA can simply be wide
+       enough to wrap onto its own line alone, at which point "no line-mate → trust it" waved it through
+       unconditionally.
+     The median-based version is resistant to both failure modes: a single long-translation outlier among N≥3
+     genuinely chip-sized siblings shifts the median only slightly, but a single planted CTA at several times the
+     other siblings' width fails the 3× cap regardless of which visual line it renders on.
+
+  `role="group"` is unchanged and still exempts a real Mantine `ButtonGroup`. R7/R8 planted-violation proof for all
+  three conditions (flex-direction, grid-track-count, median dominance — both a negative arm that must fail and a
+  positive arm using real production chip data that must stay exempted) is recorded in the 724R session log.
+  `FilterMultiToggle.tsx`/`FilterRoomsRow.tsx` keep their (now roleless) `aria-label` prop as a genuine, independent
+  accessibility improvement — unrelated to gate behavior.
+- **#9 (`ListingContactPattern`) — re-elected route (a) REAL FIX for "Report listing".** `role="group"` removed;
+  Report gets its own single-child `Group justify="flex-end"` row (the same container `reportTrigger` used alone
+  before Task 724) with the injected Button now setting Mantine's own `fullWidth` prop — identical mechanism to the
+  Share fix directly above it, cited from `docs/mantine-responsive-design-system.md:622` /
+  `MantineResponsiveActionFooter.tsx:47-78`. Favorite (an `ActionIcon`, never matched by
+  `.mantine-Button-root` in the first place) gets its own `Group justify="flex-end"` row, reusing the exact
+  chrome Report used pre-Task-724 rather than inventing a new composition. No TailAdmin reference row exists for
+  this favorite-icon-alone placement — a clause-16a stop is recorded in the 724R session log (V7/AV7); not treated
+  as blocking because no new visual chrome (color/spacing/radius/shadow) was introduced, only the pre-existing
+  `Group` primitive already used in this same file.
+- **F2 fix** — `ListingsFilters.tsx`'s 7 call sites and the smoke test's 5 sites are audited in the 724R session
+  log (V3/AV3); every surviving `role="group"` now renders only where an `aria-label` is actually threaded.
+
+Full detail, rendered evidence, and both R7 transcripts: `docs/sessions/2026-08-07-task724R-fullwidth-buttons-revision.md`.
+
+---
+
 ### §14.10 Fixture wall-clock determinism (Task 697, 2026-07-30; clock frozen Task 698, 2026-07-30)
 
 **Why.** A story fixture that computes a date from `Date.now()`/`new Date()` at render time encodes the capture date
@@ -1934,9 +2145,9 @@ parent at `<640`; (c) no render-failure (error-boundary, blank canvas, missing r
 
 | Failure class | Why it escapes machine detection | Manual check required |
 |---|---|---|
-| Button not full-width at `<640` | Buttons explicitly excluded from assertion (b) | `§26.1` — verify every text button spans full width at 320/375/390 |
+| Button not full-width at `<640` | ~~Buttons explicitly excluded from assertion (b)~~ **`--mantine-only` scope: now machine-detected — §14.9.27, Task 711.** Legacy/non-Mantine scope: still excluded/unmeasured. | `§26.1` — legacy scope only; verify every text button spans full width at 320/375/390 |
 | `overflow-hidden` masking a layout defect | No overflow detected; content silently clipped | `§24.4` — verify no content hidden behind overflow-hidden |
-| Popup not rendering as bottom sheet at `<640` | No DOM check for bottom-anchor / edge-to-edge | `§26.2` — open each overlay at 320/375/390 and confirm bottom-sheet |
+| Popup not rendering as bottom sheet at `<640` | ~~No DOM check for bottom-anchor / edge-to-edge~~ **`--mantine-only` scope: now machine-detected — §14.9.27, Task 711.** Legacy/non-Mantine scope: still excluded/unmeasured. | `§26.2` — legacy scope only; open each overlay at 320/375/390 and confirm bottom-sheet |
 | Inaccessible table columns | Columns off-screen; parent container not overflowing | `§25.1` — verify all columns/row-actions reachable at 768–1023 |
 | Wide-desktop sparsity at 1920/2560 | No whitespace-waste detector | `§4`, `§8` — visual check at 1920/2560 |
 | Labels behind sticky/fixed layers | Content present but overlapped | `§22.3 z-index` — verify nothing is overlapped by sticky chrome |

@@ -3,20 +3,23 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — **723** and **711** both `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW` (concurrent sessions)
+## Last Session (2026-08-07) — **724R** `APPROVED WITH NOTES`; **724** superseded; **725** filed
 
-- **723** — Task 684's `<Notifications top={...}>` prop leaked onto all six Mantine position containers, stretching
-  the three `bottom-*` ones full-height with default `pointer-events`, click-shielding most of the homepage in prod.
-  Fixed via a `[data-position^="top"]`-scoped CSS rule + `pointer-events` shield; new blocking gate
-  `scripts/check-click-shield.mjs`, planted-violation round trip proven on a real prod build. **AC3 not 100%** —
-  9/221 residual interceptions, 0 caused by this diff, all traced to a separate pre-existing bottom-nav/homepage-
-  content collision (new finding, not fixed, needs its own task). See `sessions/2026-08-06-task723-…md`.
-- **711** — re-anchored both dead assertions onto measured Mantine DOM (`.mantine-Button-root` +
-  `.mantine-Drawer-content[role="dialog"]`, D33). Live: buttons 383/852 (148 real `false`), popups 156/852
-  (0 false). `STALE-ENTRY` proven both ways; registry entries deleted; 4 planted-proof transcripts.
-  **R8 stop-and-report**: 148 unplanted `false` cells span 13 stories, 100% explained by `Group`- vs
-  `Stack`-parented buttons — real, measured, **not fixed here**; needs an owner call + likely a follow-up
-  task. See `sessions/2026-08-06-task711-reanchor-dead-mantine-assertions.md`.
+- **724R** — closes 724's `role="group"` gate-suppression. Four additions removed; #2/#3 exempted by a DOM-measured
+  `isChipSetMember()` (row-wrap flex **or** ≥2-track grid · N≥3 · ≤3× median width · <80% row) proven by reverted
+  plants; #9/#10 Report fixed with real `fullWidth`; `NotificationCenter` back on 593's 390px (empty diff).
+  Matrix 1146/1184, 16 FAIL (`HeroSearch`×12 + `NotificationBellView`/390×4, both attributed), exit 1 = AV10;
+  `tsc`/`build` exit 0. Three review rounds found real defects (build evidence gap, dominance bypass, single-column
+  grid loophole), all fixed. **Open P3s:** dead `ariaLabel` prop on role-less divs · 711's `role="group"` skip still
+  live and exploitable · median-threshold sensitivity undocumented. Session: `sessions/2026-08-07-task724R-…md`.
+
+## Prior Session (2026-08-06) — **723** and **711** both `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW`
+
+- **723** — Notifications click-shield fix + `check:click-shield`. AC3 not 100% (9/221 residual, 0 from its own diff,
+  all the bottom-nav collision → **725**). ⚠️ **Review must resolve:** the log calls the gate "blocking" but `grep`
+  finds it in **no** `.github/workflows/*.yml` — it blocks locally only.
+- **711** — re-anchored both dead assertions onto measured Mantine DOM (D33); 4 planted transcripts. **R8** → 724.
+  Open: the `383 → 384` correction across six doc sites, and the re-captured `I6f` transcript.
 
 ## Open — needs action
 
@@ -46,12 +49,13 @@
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
 **Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. **711 IMPLEMENTED, awaiting review** → next: **721** · **722** · **717** · a new task for 711's R8 finding (13 stories, real `false`, owner call needed). 🟠 OPEN.
-**Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_Mobile_FullWidth_Control_Remediation.md`): **724** (kickoff filed). Opened 2026-08-07 for 711's R8 finding — no open sprint fit. Blocked until 711 lands (**D32**). 🟠 OPEN.
+**Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_…md`): **724** → **724R** `APPROVED WITH NOTES`; **726** reserved for its P3s. Exit criteria 2 and 3 corrected 2026-08-07: the gate's return to exit 0 is Sprint **49**'s criterion, not this sprint's, and no cell may pass because the gate stopped looking at it. 🟠 OPEN — closes with 726.
+**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725**. Opened 2026-08-07 after a recorded five-sprint fit check; **blocked on 723 landing** (its gate is 725's only comparator, D32). 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **724**, NEXT FREE **725**
+## Task registry — single source for every open number. Last used **726**, NEXT FREE **727**
 
 | # | State | What |
 |---|---|---|
@@ -69,7 +73,9 @@
 | 722 | reserved, independent — Sprint 52 | **`fullWidthControlsAtMobile` is vacuously true.** `{"true": 852}` across all 852 applicable cells, never `false`, including on `Alert/Default` which renders no control (its sibling honestly reports `null` there). `check-stories-rendered.mjs:1112-1145` has **no `checkedAny` guard**, so a zero-match cell returns `true`; 2 of its 3 arms are the same shadcn `data-slot` selectors. `check-assertion-liveness.mjs` sees null-ness only → classifies it **LIVE**. Found during 711's design. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
 | 723 | `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW` — Sprint 52 (P0, unrelated) | Notifications click-shield fix + new `check:click-shield` gate. AC3 not 100% — new unowned bottom-nav/homepage-content collision found, not fixed. `Sprint_52_kickoff_prompt_Task_723_…md`. |
-| 724 | **KICKOFF FILED**, after 711 lands — Sprint 53 | Adjudicate the **13** stories 711's revived `fullWidthButtonsAtMobile` fails (148 cells, owner-reproduced `2026-08-07T05-24`): each gets `FIX` / `DEFER` / `GATE` from rendered evidence. Starts with `HomepageListingGrids`, whose 88px CTA is also 5 of Task 723's 9 click-shield interceptions. Registry can't hold `Mantine/Primitives/*` (`:1610` prefix) — that's a stop. `HeroSearch` → Sprint 49. `Sprint_53_kickoff_prompt_Task_724_…md`. |
+| 724R | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 53 | Supersedes **724** (`NEEDS REVISION`, same sprint, archived with it). V1–V13 verified; matrix 1146/1184, 16 FAIL, exit 1 = AV10. Three P3s open, see Last Session. `sessions/2026-08-07-task724R-…md`. |
+| 726 | **reserved, opens on 724R's P3s** — Sprint 53 | ① Chip rows lost their ARIA name when V1 removed `role="group"`; the surviving `ariaLabel` prop renders `aria-label` on a role-less `div` (ARIA 1.2 prohibited, exposed to nothing) and no production call site passes it. ② Restoring `role="group"` correctly is **blocked on** removing 711's `role="group"` skip at `check-stories-rendered.mjs:1222` — the two must move together. ③ Document `isChipSetMember`'s median-threshold sensitivity in §14.9.28. |
+| 725 | `KICKOFF FILED` — **Sprint 54** (new) | The fixed bottom nav (56px, `z-30`) overlays homepage content at mobile-390 (nav band y 788–844 vs CTA 782–826, centre 804). 724's full-width hypothesis **disproven** — collision is vertical. Root-cause + general clearance fix; gate to 0 interceptions. `Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md`. |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
 - **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).
@@ -87,7 +93,7 @@
 
 > **Binding decisions:** **D19** overlay pair declared in both `@theme inline` and `:root`; the `@theme` copy is transitional, expiry = 694 → 695. · **D25** frozen Storybook preview clock. · **D26** sub-perceptual delta **≤2/255** is an attribution path under 4 conjunctive conditions only (`storybook-governance.md` §14.11). · **D27** Skeleton `::after` fill = gray-3 `#d0d5dd`, token not hex. · **D28** (2026-08-01) de-hybrid = **mechanism-only, zero visual delta**; authorizes no restyle, token, spacing or typography change. · **D32** a migration may not be proven against a comparator not shown to fail. · **D33** re-anchor a gate onto a de-Tailwind-stable hook, never another utility class. · **D34** (2026-08-05) a D28 module reproduces the utility's cascade **layer** — wrap in `@layer utilities`; the inverse 602/629/650/651/653/654/656 family stays **unlayered** on purpose (a migration reproduces; a cascade-trap fix overrides).
 
-> **Recurring orchestrator failure mode — read before writing any kickoff (M1 · M2 · M4 · M5).** Four blocked/revised tasks failed identically: the *fix* was right, the *control* could not detect its own effect. **Every kickoff needs a two-armed plant that can demonstrably fail, plus a pre-plant census proving no further lifeline.** Reconcile git state from `git log`/`git status`, never a session log's self-description. **Corollary (709):** a kickoff's own "measured" facts are not exempt. **Corollary (710–714, 2026-08-06):** four consecutive kickoffs shipped a factual defect the executor had to correct — a stale line reference, a `grep` that counted `.split(` as a test, a crude literal census, and a requirement that was *unsatisfiable* because the detector could not see the target syntax. **Measure with the real tool, not an ad-hoc grep**; see `orchestrator-procedures.md` → "Detector-aware requirements and migrations" (`6c3a2054e`).
+> **Recurring orchestrator failure mode — read before writing any kickoff (M1 · M2 · M4 · M5).** Four blocked/revised tasks failed identically: the *fix* was right, the *control* could not detect its own effect. **Every kickoff needs a two-armed plant that can demonstrably fail, plus a pre-plant census proving no further lifeline.** Reconcile git state from `git log`/`git status`, never a session log's self-description. **Corollary (709):** a kickoff's own "measured" facts are not exempt. **Corollary (710–714, 2026-08-06):** four consecutive kickoffs shipped a factual defect the executor had to correct — a stale line reference, a `grep` that counted `.split(` as a test, a crude literal census, and a requirement that was *unsatisfiable* because the detector could not see the target syntax. **Measure with the real tool, not an ad-hoc grep**; see `orchestrator-procedures.md` → "Detector-aware requirements and migrations" (`6c3a2054e`). **Corollary (724, 2026-08-07) — two defects, one kickoff.** ① *Never fence an artifact off as zero-diff and simultaneously require the aggregate gate that measures it to go green.* State the scoped condition — "no failure outside X" — and assign the exit code to the task that owns X. ② *A gate's own exclusion selector is an attack surface.* When a kickoff re-expresses an exclusion as a DOM property (711's `[role="group"]`), the next task can satisfy the gate by **producing** that property. Say so in the kickoff, and require every exemption to be a condition the gate evaluates — never one an author applies.
 
 > **No CI gate asserts the Mantine composition of a *route*** (2026-07-26, still true). `--mantine-only` scopes by Storybook title prefix; only `check:story-coverage` reads `mantine-migration-scope.json`, treating anything absent as out of scope. `15/15` proves coverage of fifteen enrolled components — not the homepage.
 

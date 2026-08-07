@@ -7,11 +7,13 @@ interface FilterRoomsRowProps {
   /** Selected room counts as strings (unified with URL string representation) */
   selected: string[]
   onToggle: (value: string) => void
+  /** Accessible name for the toggle-chip group (e.g. the section's own visible label). */
+  ariaLabel?: string
 }
 
-export function FilterRoomsRow({ selected, onToggle }: FilterRoomsRowProps) {
+export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRowProps) {
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div aria-label={ariaLabel} className="flex gap-2 flex-wrap">
       {ROOMS_OPTIONS.map(opt => {
         const strVal = String(opt)
         return (

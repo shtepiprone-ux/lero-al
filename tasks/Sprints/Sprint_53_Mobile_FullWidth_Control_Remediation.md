@@ -37,10 +37,11 @@ one of the 13 has a functional consequence in shipped code.
 
 | # | State | What |
 |---|---|---|
-| **724** | `KICKOFF FILED` | Classify all 13 stories into fix / tracked-defect / gate-defect, then remediate the confirmed defects. Starts with `HomepageListingGrids` and tests whether a full-width CTA also clears the click-shield interception. `Sprint_53_kickoff_prompt_Task_724_FullWidthButtons_13Story_Adjudication.md` |
+| **724** | `NEEDS REVISION` (review 2026-08-07) | Classify all 13 stories into fix / tracked-defect / gate-defect, then remediate the confirmed defects. Starts with `HomepageListingGrids` and tests whether a full-width CTA also clears the click-shield interception. `Sprint_53_kickoff_prompt_Task_724_FullWidthButtons_13Story_Adjudication.md` — see its **§16** for the AC6 correction |
+| **724R** | `KICKOFF FILED` | Replace 724's `role="group"` gate-suppression with real remediation or a principled gate rule; restore Task 593's threshold; close the review's F1–F7. `Sprint_53_kickoff_prompt_Task_724R_FullWidthButtons_Revision.md` |
 
-Further tasks are opened from 724's classification output — deliberately not pre-numbered, because which stories
-need their own task is 724's R1 deliverable, not a guess made now.
+Further tasks are opened from 724R's route election — deliberately not pre-numbered, because which stories need
+their own task is its V2 deliverable, not a guess made now.
 
 ## Preconditions
 
@@ -52,8 +53,15 @@ need their own task is 724's R1 deliverable, not a guess made now.
 ## Exit criteria
 
 1. Every one of the 13 stories carries exactly one classification with rendered evidence behind it.
-2. `npm run screenshots:assert -- --mantine-only` exits **0**, with any residual failure reconciled to a
-   signature-pinned `MANTINE_PATTERN_KNOWN_FAILURES` entry naming a real, filed follow-up task.
+2. **CORRECTED 2026-08-07.** `npm run screenshots:assert -- --mantine-only` has **no FAIL cell outside
+   `HeroSearch/Default`** (Sprint 49's carve-out) and any story this sprint deliberately leaves red with a named
+   attribution; every residual cell is reconciled by name, to a signature-pinned `MANTINE_PATTERN_KNOWN_FAILURES`
+   entry with a filed follow-up task where applicable. **The gate's return to exit 0 is Sprint 49's exit
+   criterion, not this sprint's** — `HeroSearch` cannot be fixed, registered or exempted here. Original wording
+   required exit 0 and was unsatisfiable; see Task 724 kickoff §16.
+3. **No cell passes because the gate stopped looking at it.** An exemption must be a documented condition the
+   gate evaluates from measured DOM, with planted proof — never an attribute a component author applies to opt
+   out (Task 724 review F1, 2026-08-07).
 3. `FULL_WIDTH_TOLERANCE` is unchanged at **8** (`check-stories-rendered.mjs:473`).
 4. No story is silenced by a per-story allowlist for a confirmed true positive — owner decision, Task 607 review,
    2026-07-15, restated at `check-stories-rendered.mjs:304-309`.
@@ -63,5 +71,7 @@ need their own task is 724's R1 deliverable, not a guess made now.
 - **`HeroSearch` belongs to Sprint 49**, which is ordered (708 blocks 709). Its failing button's parent is
   `_controls_blflv_68`, a CSS-module class — **not** a Mantine `Group` — so it is not the same defect shape as the
   other twelve. It is excluded from 724 and routed to Sprint 49.
-- **`MobileBottomNavView`** is Task 713's landed work (Sprint 50, closed). 724 may measure against it but must not
-  edit it; if the interception turns out to require a bottom-nav change, that is a new task.
+- **`MobileBottomNavView`** is Task 713's landed work (Sprint 50, closed). This sprint may measure against it but
+  must not edit it. **Resolved 2026-08-07:** 724's R2 disproved the full-width hypothesis — the CTA now spans the
+  full width and is still intercepted, because the collision is vertical. That finding became **Task 725**,
+  `tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`.

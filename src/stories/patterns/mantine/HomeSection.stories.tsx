@@ -37,19 +37,19 @@ export const Default: Story = {
         <MantineHomeSection variant="default">
           <Title order={3} mb="xs">{storyT(l, 'storybook.mantine.home_section_caption_default')}</Title>
           <Text c="dimmed" mb="md">{storyT(l, 'storybook.mantine.home_section_body')}</Text>
-          <Button>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
+          <Button fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
         </MantineHomeSection>
 
         <MantineHomeSection variant="muted">
           <Title order={3} mb="xs">{storyT(l, 'storybook.mantine.home_section_caption_muted')}</Title>
           <Text c="dimmed" mb="md">{storyT(l, 'storybook.mantine.home_section_body')}</Text>
-          <Button>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
+          <Button fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
         </MantineHomeSection>
 
         <MantineHomeSection variant="brandFade">
           <Title order={3} mb="xs">{storyT(l, 'storybook.mantine.home_section_caption_brandfade')}</Title>
           <Text c="dimmed" mb="md">{storyT(l, 'storybook.mantine.home_section_body')}</Text>
-          <Button>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
+          <Button fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
         </MantineHomeSection>
       </Stack>
     );

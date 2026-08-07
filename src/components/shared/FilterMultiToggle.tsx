@@ -10,13 +10,15 @@ interface FilterMultiToggleProps {
   getLabel: (key: string) => string
   /** Wrapper className — use 'flex-col gap-1.5' for vertical layout */
   className?: string
+  /** Accessible name for the toggle-chip group (e.g. the section's own visible label). */
+  ariaLabel?: string
 }
 
 export function FilterMultiToggle({
-  options, selected, onToggle, getLabel, className,
+  options, selected, onToggle, getLabel, className, ariaLabel,
 }: FilterMultiToggleProps) {
   return (
-    <div className={cn('flex flex-wrap gap-2', className)}>
+    <div aria-label={ariaLabel} className={cn('flex flex-wrap gap-2', className)}>
       {options.map(opt => (
         <Button
           key={opt.value}

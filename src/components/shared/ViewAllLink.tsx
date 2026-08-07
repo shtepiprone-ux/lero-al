@@ -15,6 +15,7 @@ export function ViewAllLink({ href, label }: ViewAllLinkProps) {
       href={href}
       variant="transparent"
       size="sm"
+      w={{ base: '100%', sm: 'auto' }}
       styles={{
         root: {
           display: 'inline-flex',

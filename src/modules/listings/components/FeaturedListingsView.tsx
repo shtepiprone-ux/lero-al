@@ -44,7 +44,13 @@ export function FeaturedListingsView({ listings, loading, rates, displayCurrency
   const t = useTranslations('listing')
 
   const header = (
-    <Group justify="space-between" align="center" wrap="nowrap" mb="xl">
+    <Group
+      justify="space-between"
+      wrap="nowrap"
+      mb="xl"
+      style={{ flexDirection: 'column', alignItems: 'flex-start' }}
+      styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+    >
       <Title order={2} fw={700} fz={SECTION_HEADING_FZ}>{t('featured')}</Title>
       {!loading && listings.length > 0 && (
         <ViewAllLink href={`/${locale}/listings?premium=true`} label={t('view_all')} />

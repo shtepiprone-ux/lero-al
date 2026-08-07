@@ -1942,7 +1942,10 @@
       "price_min": "Min",
       "price_max": "Maks",
       "condition_new_build": "Ndërtim i ri",
-      "condition_good": "Gjendje e mirë"
+      "condition_good": "Gjendje e mirë",
+      "condition_needs_repair": "Kërkon riparim",
+      "condition_needs_renovation": "Kërkon renovim",
+      "condition_under_construction": "Në ndërtim"
     },
     "pageheader": {
       "avail": "Njoftime të Disponueshme",

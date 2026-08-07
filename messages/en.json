@@ -1942,7 +1942,10 @@
       "price_min": "Min",
       "price_max": "Max",
       "condition_new_build": "New build",
-      "condition_good": "Good condition"
+      "condition_good": "Good condition",
+      "condition_needs_repair": "Needs repair",
+      "condition_needs_renovation": "Needs renovation",
+      "condition_under_construction": "Under construction"
     },
     "pageheader": {
       "avail": "Available Listings",

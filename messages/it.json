@@ -1942,7 +1942,10 @@
       "price_min": "Min",
       "price_max": "Max",
       "condition_new_build": "Nuova costruzione",
-      "condition_good": "Buone condizioni"
+      "condition_good": "Buone condizioni",
+      "condition_needs_repair": "Da riparare",
+      "condition_needs_renovation": "Da ristrutturare",
+      "condition_under_construction": "In costruzione"
     },
     "pageheader": {
       "avail": "Annunci Disponibili",

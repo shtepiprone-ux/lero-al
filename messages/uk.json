@@ -1942,7 +1942,10 @@
       "price_min": "Мін",
       "price_max": "Макс",
       "condition_new_build": "Нова будівля",
-      "condition_good": "Хороший стан"
+      "condition_good": "Хороший стан",
+      "condition_needs_repair": "Потребує ремонту",
+      "condition_needs_renovation": "Потребує реновації",
+      "condition_under_construction": "В процесі будівництва"
     },
     "pageheader": {
       "avail": "Доступні оголошення",

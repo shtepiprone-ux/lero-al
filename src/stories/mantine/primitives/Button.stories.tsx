@@ -29,20 +29,25 @@ export const Default: Story = {
             <Text size="xs" c="gray.5" fw={500}>
               variants — filled · default · subtle · light(red) · transparent
             </Text>
-            <Group gap="sm" wrap="wrap">
-              <Button variant="filled" color="brand">
+            <Group
+              gap="sm"
+              wrap="wrap"
+              style={{ flexDirection: 'column', alignItems: 'stretch' }}
+              styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+            >
+              <Button variant="filled" color="brand" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_variant_filled')}
               </Button>
-              <Button variant="default">
+              <Button variant="default" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_variant_default')}
               </Button>
-              <Button variant="subtle">
+              <Button variant="subtle" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_variant_subtle')}
               </Button>
-              <Button variant="light" color="red">
+              <Button variant="light" color="red" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_variant_light_red')}
               </Button>
-              <Button variant="transparent">
+              <Button variant="transparent" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_variant_transparent')}
               </Button>
             </Group>
@@ -53,11 +58,15 @@ export const Default: Story = {
             <Text size="xs" c="gray.5" fw={500}>
               sizes — xs · sm (no md per density rule)
             </Text>
-            <Group gap="sm" align="center">
-              <Button size="xs">
+            <Group
+              gap="sm"
+              style={{ flexDirection: 'column', alignItems: 'stretch' }}
+              styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+            >
+              <Button size="xs" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_xs')}
               </Button>
-              <Button size="sm">
+              <Button size="sm" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_sm')}
               </Button>
             </Group>
@@ -92,11 +101,16 @@ export const Default: Story = {
             <Text size="xs" c="gray.5" fw={500}>
               disabled — dimmed, no pointer, no hover
             </Text>
-            <Group gap="sm" wrap="wrap">
-              <Button variant="filled" color="brand" disabled>
+            <Group
+              gap="sm"
+              wrap="wrap"
+              style={{ flexDirection: 'column', alignItems: 'stretch' }}
+              styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+            >
+              <Button variant="filled" color="brand" disabled fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_save_changes')}
               </Button>
-              <Button variant="default" disabled>
+              <Button variant="default" disabled fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_cancel')}
               </Button>
             </Group>
@@ -131,13 +145,20 @@ export const Default: Story = {
             <Text size="xs" c="gray.5" fw={500}>
               link / tertiary (§6a-link) — transparent, no border, no hover fill
             </Text>
-            <Group gap="sm" wrap="wrap">
-              <Button variant="transparent">
+            <Group
+              gap="sm"
+              wrap="wrap"
+              style={{ flexDirection: 'column', alignItems: 'stretch' }}
+              styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+            >
+              <Button variant="transparent" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>
                 {t('button_link_no_icon')}
               </Button>
               <Button
                 variant="transparent"
                 leftSection={<ArrowRight size={16} aria-hidden />}
+                fullWidth
+                styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
               >
                 {t('button_link_with_icon')}
               </Button>
@@ -145,6 +166,8 @@ export const Default: Story = {
                 variant="transparent"
                 color="red"
                 leftSection={<LogOut size={16} aria-hidden />}
+                fullWidth
+                styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}
               >
                 {t('button_link_destructive')}
               </Button>

@@ -35,14 +35,14 @@ export const Default: Story = {
     return (
       <Stack gap={0}>
         <MantineFilterSection label={storyT(l, 'storybook.mantine.form_section_location')}>
-          <Button variant="default">{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
+          <Button variant="default" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
         </MantineFilterSection>
 
         <MantineFilterSection
           label={storyT(l, 'storybook.mantine.form_section_details')}
           withDivider
         >
-          <Button variant="light">{storyT(l, 'storybook.mantine.action_add_new')}</Button>
+          <Button variant="light" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>{storyT(l, 'storybook.mantine.action_add_new')}</Button>
         </MantineFilterSection>
 
         <MantineFilterSection
@@ -50,7 +50,7 @@ export const Default: Story = {
           withDivider
           action={<Text size="xs" c="dimmed">{storyT(l, 'storybook.mantine.action_filter')}</Text>}
         >
-          <Button variant="default">{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
+          <Button variant="default" fullWidth styles={{ root: { '@media (min-width: 40em)': { width: 'auto' } } }}>{storyT(l, 'storybook.mantine.home_section_cta')}</Button>
         </MantineFilterSection>
       </Stack>
     );

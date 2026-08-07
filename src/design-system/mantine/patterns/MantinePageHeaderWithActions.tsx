@@ -54,13 +54,18 @@ export function MantinePageHeaderWithActions({
             gap="sm"
             style={{
               width: '100%',
+              flexDirection: 'column',
+              alignItems: 'stretch',
             }}
             styles={{
               root: {
-                // At <sm (640px) each button fills full width (P0 mobile gate).
-                // At sm+ buttons auto-size and group right.
+                // At <sm (640px) actions stack vertically, each button fills full width
+                // (P0 mobile gate, Task 724 — the missing half of this component's own spec).
+                // At sm+ actions return to one row, auto-sized and grouped right.
                 '@media (min-width: 40em)': {
                   width: 'auto',
+                  flexDirection: 'row',
+                  alignItems: 'center',
                 },
               },
             }}
@@ -71,14 +76,6 @@ export function MantinePageHeaderWithActions({
                 variant={action.variant ?? (i === 0 ? 'filled' : 'outline')}
                 color={action.color ?? 'brand'}
                 onClick={action.onClick}
-                style={{ flex: 1 }}
-                styles={{
-                  root: {
-                    '@media (min-width: 40em)': {
-                      flex: 'unset',
-                    },
-                  },
-                }}
               >
                 {action.label}
               </Button>

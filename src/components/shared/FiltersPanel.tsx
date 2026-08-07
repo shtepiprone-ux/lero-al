@@ -132,7 +132,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
 
           {/* Property type */}
           <MantineFilterSection label={t('property_type')} withDivider={withTopDivider('property_type')}>
-            <SimpleGrid cols={2} spacing="xs">
+            <SimpleGrid cols={2} spacing="xs" aria-label={t('property_type')}>
               <Button
                 variant={!local.property_type ? 'light' : 'default'}
                 justify="flex-start"
@@ -219,6 +219,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   const next = current.includes(n) ? current.filter(r => r !== n) : [...current, n]
                   update({ rooms: next.length > 0 ? next : undefined })
                 }}
+                ariaLabel={t('rooms_label')}
               />
             </MantineFilterSection>
           )}
@@ -285,6 +286,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   update({ conditions: next.length > 0 ? next : undefined })
                 }}
                 getLabel={k => tl(k)}
+                ariaLabel={t('condition')}
               />
             </MantineFilterSection>
           )}
@@ -301,6 +303,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   update({ layout_features: next.length > 0 ? next : undefined })
                 }}
                 getLabel={k => tl(k)}
+                ariaLabel={t('layout_features')}
               />
             </MantineFilterSection>
           )}
@@ -317,6 +320,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   update({ heating_types: next.length > 0 ? next : undefined })
                 }}
                 getLabel={k => tl(k)}
+                ariaLabel={t('heating')}
               />
             </MantineFilterSection>
           )}
@@ -333,6 +337,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   update({ wall_types: next.length > 0 ? next : undefined })
                 }}
                 getLabel={k => tl(k)}
+                ariaLabel={t('wall_type')}
               />
             </MantineFilterSection>
           )}
@@ -349,6 +354,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   update({ offer_types: next.length > 0 ? next : undefined })
                 }}
                 getLabel={k => tl(k)}
+                ariaLabel={t('offer_type')}
               />
             </MantineFilterSection>
           )}
@@ -365,6 +371,7 @@ export function FiltersPanel({ open, onClose, values, onChange, onApply, locatio
                   update({ purchase_conditions: next.length > 0 ? next : undefined })
                 }}
                 getLabel={k => tl(k)}
+                ariaLabel={t('purchase_conditions')}
               />
             </MantineFilterSection>
           )}

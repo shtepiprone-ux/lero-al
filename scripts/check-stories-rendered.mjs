@@ -1145,6 +1145,23 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? fullWidthOk : null;
 
     // ── Assertion (d): Full-width TEXT BUTTONS at <640 ──
+    // Task 711 (D33) re-anchor. `[data-slot="button"]` was a shadcn-only convention this
+    // Mantine-scope gate never renders (governance §14.9.9's PORTAL_SELECTOR defect, same root
+    // cause) — dead in 0/852 applicable cells since Task 652. Re-anchored on `.mantine-Button-root`,
+    // the real static class Mantine's `useStyles({name:"Button", withStaticClasses:true})`
+    // renders on every Button instance — measured live at 375px across every Button/Default
+    // variant (filled/default/subtle/light/transparent, xs/sm, fullWidth, disabled, loading,
+    // long-label, link/icon) plus MantineCountButton/MantineCopyIdButton's wrapped instances
+    // (raw dump: `.screenshots/task711-evidence/I2-census-raw-dump.json`). "Icon-only" exclusion
+    // (previously `:not([data-icon-only])`, a shadcn attribute with no Mantine equivalent) is
+    // re-expressed on measured DOM: MantineCountButton's `iconOnlyBelow` collapse (Task 571)
+    // renders NO `.mantine-Button-label` span when `children` is hidden — confirmed live in the
+    // same dump — so requiring that span present is the real, DOM-observable substitute.
+    // "Button-group" exclusion (`[data-slot="button-group"]`) is re-expressed on Mantine's real
+    // `ButtonGroup` component, which renders `role="group"` (confirmed in
+    // `@mantine/core/esm/components/Button/ButtonGroup/ButtonGroup.mjs`) — currently zero live
+    // matches in Mantine scope (no `Button.Group` usage exists yet), same as the shadcn original
+    // was until a button group was actually rendered; preserved in intent, not invented.
     let fullWidthButtonsOk = true;
     let failingButtons = [];
     let checkedAnyButton = false;
@@ -1156,11 +1173,71 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
           const s = window.getComputedStyle(p);
           return p.clientWidth - (parseFloat(s.paddingLeft) || 0) - (parseFloat(s.paddingRight) || 0);
         }
+        // Task 724R (V2 route b, docs/storybook-governance.md §14.9.28) — chip/toggle-set
+        // exemption. A control that is one of N≥3 visible `.mantine-Button-root` siblings inside
+        // a row-wrapping, genuinely-multi-track container is a multi-select chip/toggle set, not
+        // a single CTA — clause 11's own "domain-specific exemptions must be explicit" carve-out,
+        // evaluated from measured DOM every run rather than an author-applied attribute (724 F1:
+        // an attribute a developer can hand-apply to any container is an opt-out a future
+        // violation could route around, not a rule — see the 724R session log's forbidden-path
+        // test). Three independent conditions, ALL measured from computed style/DOM, never from
+        // an attribute a developer applies — a container satisfying only one or two is NOT
+        // exempted:
+        //
+        //   1. Structural container shape — CSS grid with **≥2 actual computed tracks at the
+        //      current viewport** (`grid-template-columns` resolves to N space-separated track
+        //      sizes; counted live, not read from a `cols` prop, so a responsive
+        //      `SimpleGrid cols={{base:1,sm:2}}` correctly reads as 1 track at mobile — a
+        //      single-column grid is a vertical CTA stack, not a chip row, and must NOT be
+        //      exempted, 724R review B3), OR flex with `flex-wrap` enabled AND
+        //      `flex-direction: row`/`row-reverse` (never `column` — the exact opposite of the
+        //      canonical `MantineResponsiveActionFooter` action-stack pattern, which sets
+        //      `flexDirection: 'column'` at <640px so 2-3 real CTAs stack full-width instead of
+        //      sharing a row).
+        //   2. N≥3 real Button siblings in the container.
+        //   3. Dominance defense (724R review B2) — el's own width must be ≤3× the MEDIAN width
+        //      across ALL N siblings, and < 80% of the row's own content width. Median, not a
+        //      per-line pairwise comparison: a first attempt only compared siblings sharing el's
+        //      own visual row and unconditionally trusted an isolated singleton (no line-mate) —
+        //      that is exactly what let a deliberately-widened planted CTA escape detection by
+        //      simply being wide enough to wrap onto its own line alone (724R review B2 arm 1,
+        //      first attempt: the plant wrapped solo and the "no line-mate" branch waved it
+        //      through). The median of the FULL sibling set is resistant to a single outlier in
+        //      either direction — one long-translation chip label (e.g. "В процесі будівництва",
+        //      "Planimetria libera" — real chip-set data, not a CTA in disguise) shifts the
+        //      median only slightly among N≥3 genuinely chip-sized siblings, but a single planted
+        //      CTA at ~4.8× the other two siblings' width fails the 3× cap regardless of which
+        //      line it renders on. Proof: 724R session log R7/R8 (median-based redesign).
+        function isChipSetMember(el) {
+          const parent = el.parentElement;
+          if (!parent) return false;
+          const cs = window.getComputedStyle(parent);
+          const isRowWrapFlex = cs.display === 'flex' && cs.flexWrap !== 'nowrap' &&
+            (cs.flexDirection === 'row' || cs.flexDirection === 'row-reverse');
+          const gridTrackCount = cs.display === 'grid'
+            ? cs.gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length
+            : 0;
+          const isMultiTrackGrid = gridTrackCount >= 2;
+          if (!isRowWrapFlex && !isMultiTrackGrid) return false;
+          const siblings = Array.from(parent.children).filter((c) =>
+            c.classList?.contains('mantine-Button-root') &&
+            c.offsetWidth > 1 &&
+            c.querySelector('.mantine-Button-label'));
+          if (siblings.length < 3) return false;
+          const widths = siblings.map((s) => s.offsetWidth).sort((a, b) => a - b);
+          const mid = Math.floor(widths.length / 2);
+          const median = widths.length % 2 === 0 ? (widths[mid - 1] + widths[mid]) / 2 : widths[mid];
+          const rowWidth = parentContentWidth(el);
+          if (rowWidth <= 0 || median <= 0) return false;
+          return el.offsetWidth <= median * 3 && el.offsetWidth < rowWidth * 0.8;
+        }
         const failures = [];
         let checkedAny = false;
-        for (const el of document.querySelectorAll('[data-slot="button"]:not([data-icon-only])')) {
+        for (const el of document.querySelectorAll('.mantine-Button-root')) {
           if (el.offsetWidth <= 1) continue;
-          if (el.closest('[data-slot="button-group"]')) continue;
+          if (el.closest('[role="group"]')) continue;
+          if (isChipSetMember(el)) continue;
+          if (!el.querySelector('.mantine-Button-label')) continue;
           checkedAny = true;
           const pw = parentContentWidth(el);
           if (pw > 0 && el.offsetWidth < pw - tolerance) {
@@ -1177,36 +1254,41 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     if (failingButtons.length > 0) cell.assertions.failingButtonLabels = failingButtons;
 
     // ── Assertion (e): Open popups = bottom-anchored full-width at <640 ──
+    // Task 711 (D33) re-anchor. The 6 `[data-slot="*-content"]` candidates were the same dead
+    // shadcn convention as assertion (d) above — dead in 0/852 applicable cells. Live census
+    // (same dump as above) opened every Mantine-scope overlay primitive at 375px — Modal,
+    // Drawer, Popover, DropdownMenu, Select, `Patterns/Mantine/DialogDrawerPattern`,
+    // NavigationMenu, UserMenu — and every one converged on the SAME single DOM shape:
+    // `.mantine-Drawer-content[role="dialog"]`. This is not a coincidence to special-case per
+    // primitive: every pattern in `src/design-system/mantine/patterns/` (Modal/Drawer/Popover/
+    // DropdownMenu/Select/Combobox/NavigationMenu/Tooltip) funnels its <640 open state through
+    // the ONE shared `ResponsiveBottomSheet` (`responsiveBottomSheet.tsx:126`, hardcoded
+    // `position="bottom"`); `MantineDialogDrawerPattern` renders `position="bottom"` directly.
+    // The old `data-side="left"` skip has no live Mantine analog: Mantine's Drawer renders no
+    // `data-position`/`data-side` attribute at all (confirmed in the census dump), and every
+    // pattern file measured above hardcodes bottom position at <640 — a left/right side drawer
+    // is not a state this design system's mobile contract permits. The skip is intentionally
+    // NOT re-created: if a future component ever violates the one-bottom-sheet invariant, this
+    // assertion must catch it as a real `false` (R8), not silently exempt it the way an invented
+    // anchor would.
     let popupBottomSheetOk = true;
     let failingPopups = [];
     let checkedAnyPopup = false;
     if (viewport.width < 640) {
       const result = await page.evaluate((tolerance) => {
-        const selectors = [
-          '[data-slot="dialog-content"]',
-          '[data-slot="sheet-content"]',
-          '[data-slot="select-content"]',
-          '[data-slot="popover-content"]',
-          '[data-slot="dropdown-menu-content"]',
-          '[data-slot="navigation-menu-popup"]',
-        ];
         const failures = [];
         let checkedAny = false;
-        for (const sel of selectors) {
-          for (const el of document.querySelectorAll(sel)) {
-            if (el.getAttribute('data-side') === 'left') continue;
-            const rect = el.getBoundingClientRect();
-            if (rect.width === 0 || rect.height === 0) continue;
-            checkedAny = true;
-            const edgeToEdge =
-              rect.width >= window.innerWidth - tolerance &&
-              Math.abs(rect.left) <= tolerance &&
-              Math.abs(rect.right - window.innerWidth) <= tolerance;
-            const bottomAnchored = Math.abs(rect.bottom - window.innerHeight) <= tolerance;
-            if (!edgeToEdge || !bottomAnchored) {
-              const side = el.getAttribute('data-side');
-              failures.push(el.getAttribute('data-slot') + (side ? `[data-side=${side}]` : ''));
-            }
+        for (const el of document.querySelectorAll('.mantine-Drawer-content[role="dialog"]')) {
+          const rect = el.getBoundingClientRect();
+          if (rect.width === 0 || rect.height === 0) continue;
+          checkedAny = true;
+          const edgeToEdge =
+            rect.width >= window.innerWidth - tolerance &&
+            Math.abs(rect.left) <= tolerance &&
+            Math.abs(rect.right - window.innerWidth) <= tolerance;
+          const bottomAnchored = Math.abs(rect.bottom - window.innerHeight) <= tolerance;
+          if (!edgeToEdge || !bottomAnchored) {
+            failures.push('mantine-Drawer-content[role="dialog"]');
           }
         }
         return { failures, checkedAny };

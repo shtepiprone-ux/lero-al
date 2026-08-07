@@ -3,10 +3,20 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-06) — design-token arc closed (714→720, archived); **711** kickoff filed; **721** + **722** registered
+## Last Session (2026-08-06) — **723** and **711** both `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW` (concurrent sessions)
 
-- **711 `KICKOFF FILED`** — re-anchor the two assertions dead in **0/852** applicable cells. Design measured the manifest rather than trusting the registry: 852 of 1184 cells really are <640, so the viewport set is **not** the cause and the `data-slot` selectors are. Owner split the four 710-review findings into **721** (after 711 — `LIVE-THIN` needs 711's live ratios).
-- **722 registered — a third dead gate, found during 711's design.** `fullWidthControlsAtMobile` reports `{"true": 852}` across every applicable cell and never `false`, including on a story with no form controls, because `check-stories-rendered.mjs:1112-1145` has no `checkedAny` guard. It is **vacuously true**, and `check-assertion-liveness.mjs` — which detects null-ness only — calls it LIVE.
+- **723** — Task 684's `<Notifications top={...}>` prop leaked onto all six Mantine position containers, stretching
+  the three `bottom-*` ones full-height with default `pointer-events`, click-shielding most of the homepage in prod.
+  Fixed via a `[data-position^="top"]`-scoped CSS rule + `pointer-events` shield; new blocking gate
+  `scripts/check-click-shield.mjs`, planted-violation round trip proven on a real prod build. **AC3 not 100%** —
+  9/221 residual interceptions, 0 caused by this diff, all traced to a separate pre-existing bottom-nav/homepage-
+  content collision (new finding, not fixed, needs its own task). See `sessions/2026-08-06-task723-…md`.
+- **711** — re-anchored both dead assertions onto measured Mantine DOM (`.mantine-Button-root` +
+  `.mantine-Drawer-content[role="dialog"]`, D33). Live: buttons 383/852 (148 real `false`), popups 156/852
+  (0 false). `STALE-ENTRY` proven both ways; registry entries deleted; 4 planted-proof transcripts.
+  **R8 stop-and-report**: 148 unplanted `false` cells span 13 stories, 100% explained by `Group`- vs
+  `Stack`-parented buttons — real, measured, **not fixed here**; needs an owner call + likely a follow-up
+  task. See `sessions/2026-08-06-task711-reanchor-dead-mantine-assertions.md`.
 
 ## Open — needs action
 
@@ -35,12 +45,13 @@
 ## Sprints
 
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
-**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. Remaining: **711** (kickoff filed) → **721** · **722** · **717**. 🟠 OPEN.
+**Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. **711 IMPLEMENTED, awaiting review** → next: **721** · **722** · **717** · a new task for 711's R8 finding (13 stories, real `false`, owner call needed). 🟠 OPEN.
+**Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_Mobile_FullWidth_Control_Remediation.md`): **724** (kickoff filed). Opened 2026-08-07 for 711's R8 finding — no open sprint fit. Blocked until 711 lands (**D32**). 🟠 OPEN.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **722**, NEXT FREE **723**
+## Task registry — single source for every open number. Last used **724**, NEXT FREE **725**
 
 | # | State | What |
 |---|---|---|
@@ -53,10 +64,12 @@
 | 695 | reserved, blocked on 691 — Sprint 46 | **De-Tailwind exit condition for the overlay pair** — drop the `@theme inline` copy + `--color-overlay*` namespace once the last of **33** overlay utilities across **7** files is gone (`PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGallery` 5 · `LightboxView` 4 · `MantineListingGalleryPattern` 3 · `ImageUpload` 3 · `AdminUserAvatar` 1). **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 + 662 F2. |
 | 700 | reserved — Sprint 46 | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — Sprint 46 | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
-| 711 | **KICKOFF FILED** — Sprint 52 | Re-anchor `fullWidthButtonsAtMobile` + `popupBottomSheetAtMobile` (`check-stories-rendered.mjs:1161`, `:1185-1192`) onto **measured** Mantine DOM — both are **0/852** applicable cells; `data-slot` is shadcn-only (**0** files under `design-system/mantine`). Viewport excluded as cause: 852 of 1184 cells really are <640. Census-before-selector (**D33**), honest `checkedAny→null` contract, planted proof ×2, plus the free `STALE-ENTRY` comparator. `Sprint_52_kickoff_prompt_Task_711_…md`. |
+| 711 | **IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW** — Sprint 52 | Re-anchored `fullWidthButtonsAtMobile` (`.mantine-Button-root` + `.mantine-Button-label`) and `popupBottomSheetAtMobile` (`.mantine-Drawer-content[role="dialog"]`), both proven live (383/852, 156/852). **R8: 148 unplanted `false` cells across 13 stories, root-caused to `Group` vs `Stack` parenting — reported, not fixed.** Session: `sessions/2026-08-06-task711-…md`. |
 | 721 | reserved, after 711 — Sprint 52 | The four 710-review findings, split out of 711 (owner, 2026-08-06): `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · `LIVE-THIN` threshold (needs 711's live ratios first) · the 2 surviving `2026-08-0X` citations (`design-system.md:1086`, `storybook-governance.md:1586`). **F3's "row 50" is unresolvable from the repo** — no numbered rows in `critical-flow-registry.md`, no mention in 710's log; locate or report `BLOCKED`. |
 | 722 | reserved, independent — Sprint 52 | **`fullWidthControlsAtMobile` is vacuously true.** `{"true": 852}` across all 852 applicable cells, never `false`, including on `Alert/Default` which renders no control (its sibling honestly reports `null` there). `check-stories-rendered.mjs:1112-1145` has **no `checkedAny` guard**, so a zero-match cell returns `true`; 2 of its 3 arms are the same shadcn `data-slot` selectors. `check-assertion-liveness.mjs` sees null-ness only → classifies it **LIVE**. Found during 711's design. |
 | 717 | reserved — Sprint 52 | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
+| 723 | `IMPLEMENTED — AWAITING ORCHESTRATOR REVIEW` — Sprint 52 (P0, unrelated) | Notifications click-shield fix + new `check:click-shield` gate. AC3 not 100% — new unowned bottom-nav/homepage-content collision found, not fixed. `Sprint_52_kickoff_prompt_Task_723_…md`. |
+| 724 | **KICKOFF FILED**, after 711 lands — Sprint 53 | Adjudicate the **13** stories 711's revived `fullWidthButtonsAtMobile` fails (148 cells, owner-reproduced `2026-08-07T05-24`): each gets `FIX` / `DEFER` / `GATE` from rendered evidence. Starts with `HomepageListingGrids`, whose 88px CTA is also 5 of Task 723's 9 click-shield interceptions. Registry can't hold `Mantine/Primitives/*` (`:1610` prefix) — that's a stop. `HeroSearch` → Sprint 49. `Sprint_53_kickoff_prompt_Task_724_…md`. |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
 - **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).

@@ -1,19 +1,4 @@
 {
   "$schema-note": "One entry per (scope, assertion). An entry is a TRACKED DEAD GATE, not an exemption. check-assertion-liveness.mjs fails the build (STALE-ENTRY) if an entry's assertion resolves true/false in any cell of its named scope again.",
-  "entries": [
-    {
-      "scope": "mantine-only",
-      "assertion": "fullWidthButtonsAtMobile",
-      "followUpTask": 711,
-      "deadSince": "2026-08-05",
-      "reason": "Selector `[data-slot=\"button\"]` (check-stories-rendered.mjs:1161) is a shadcn convention emitted only by src/components/ui/*; Mantine-scope stories render no data-slot, so checkedAny is never true. Same root cause as governance §14.9.9's PORTAL_SELECTOR defect."
-    },
-    {
-      "scope": "mantine-only",
-      "assertion": "popupBottomSheetAtMobile",
-      "followUpTask": 711,
-      "deadSince": "2026-08-05",
-      "reason": "Six candidate selectors (check-stories-rendered.mjs:1185-1192), all `data-slot` names, are a shadcn convention emitted only by src/components/ui/*; Mantine-scope stories render no data-slot, so checkedAny is never true. Same root cause as governance §14.9.9's PORTAL_SELECTOR defect."
-    }
-  ]
+  "entries": []
 }

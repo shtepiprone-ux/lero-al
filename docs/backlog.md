@@ -3,15 +3,22 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-07) — **724R** `APPROVED WITH NOTES`; **724** superseded; **725** filed
+## Last Session (2026-08-07) — **725** `BLOCKED` (owner scope call needed); **724R** `APPROVED WITH NOTES`
 
+- **725** — root-caused the bottom-nav/homepage collision (R1, instrumented DOM measurement, not assumed): the
+  "View all" link that fails is `FeaturedListingsView`'s header CTA, ~800px into a ~4150px document — nowhere near
+  `<main>`'s trailing `pb` (irrelevant to this collision). At `mobile-320/375` the same link is already **below**
+  `window.innerHeight` (untested by the gate, not genuinely clear); only `mobile-390`'s taller viewport (844 vs
+  812) brings it into view, landing it in the nav's fixed 788–844 band. **A real fix needs either
+  `page.tsx`/`FeaturedListingsView.tsx` (not in the kickoff's authorized scope) or a sitewide app-shell scroll
+  restructure (blast radius exceeds the homepage)** — filed `BLOCKED` per the kickoff's own A4 stop-condition
+  rather than choosing either unilaterally. R4/R6/R8/R10 all verified clean (`FavoriteButton` doesn't reproduce;
+  CI gap confirmed = Task 727; nav untouched; `tsc`/`build` exit 0). Session: `sessions/2026-08-07-task725-…md`.
 - **724R** — closes 724's `role="group"` gate-suppression. Four additions removed; #2/#3 exempted by a DOM-measured
   `isChipSetMember()` (row-wrap flex **or** ≥2-track grid · N≥3 · ≤3× median width · <80% row) proven by reverted
   plants; #9/#10 Report fixed with real `fullWidth`; `NotificationCenter` back on 593's 390px (empty diff).
   Matrix 1146/1184, 16 FAIL (`HeroSearch`×12 + `NotificationBellView`/390×4, both attributed), exit 1 = AV10;
-  `tsc`/`build` exit 0. Three review rounds found real defects (build evidence gap, dominance bypass, single-column
-  grid loophole), all fixed. **Open P3s:** dead `ariaLabel` prop on role-less divs · 711's `role="group"` skip still
-  live and exploitable · median-threshold sensitivity undocumented. Session: `sessions/2026-08-07-task724R-…md`.
+  `tsc`/`build` exit 0. Session: `sessions/2026-08-07-task724R-…md`.
 
 ## Prior Session (2026-08-06) — **723** `APPROVED WITH NOTES`; **711** still awaiting review
 
@@ -53,7 +60,7 @@
 **Sprint 46 — ListingCard de-Tailwind + overlay exit** (`tasks/Sprints/Sprint_46_…md`): 691 · 694 · 695 · 700 · 702. 🟠 OPEN, **zero landed tasks**. **D34 binds it.**
 **Sprint 52 — Gates that stopped checking** (`tasks/Sprints/Sprint_52_Gates_That_Stopped_Checking.md`): design-token arc **COMPLETE** — 714 · 716 · 715 · 718 · 718R (`98bec3fa9`) · 719 (`13e8c3ddf`) · 720 all ✅, archived. **711 and 723 both `APPROVED WITH NOTES` 2026-08-07**; 711's R8 finding became 724 → 724R, now largely closed. Remaining: **721** · **722** · **717** · **727** (CI-wire the click-shield gate, needs OQ2+OQ3) · **728** (`I6f` re-capture). 🟠 OPEN.
 **Sprint 53 — Mobile full-width control remediation** (`tasks/Sprints/Sprint_53_…md`): **724** → **724R** `APPROVED WITH NOTES`; **726** reserved for its P3s. Exit criteria 2 and 3 corrected 2026-08-07: the gate's return to exit 0 is Sprint **49**'s criterion, not this sprint's, and no cell may pass because the gate stopped looking at it. 🟠 OPEN — closes with 726.
-**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725** — **UNBLOCKED 2026-08-07** by 723's approval; **D32 satisfied** (AC6 showed the comparator failing on real app code: 36 interceptions, 33 naming `mantine-Notifications-root`, → 0). ⚠️ **725 must re-measure its own baseline** — 723 recorded 9/221 and 724R 4/208 on different builds; neither number is 725's comparator. 🟠 OPEN, ready for executor.
+**Sprint 54 — Mobile bottom-nav overlay collision** (`tasks/Sprints/Sprint_54_MobileBottomNav_Overlay_Collision.md`): **725** returned `BLOCKED` on an R1 finding that **refuted the kickoff's hypothesis**; owner re-scoped it 2026-08-07 from a layout fix to a **gate** fix (§16). Sprint goal restated: the collision is not a layout defect — `check-click-shield` must distinguish transient overlap from permanent occlusion. 🟠 OPEN, ready to re-execute.
 🟢 **CLOSED → archive:** Sprint 45 (the unsprinted 621–705 period) · 46–48 · **49** (708 · 709 + 709-R · 710) · **50** (713) · **51** (712).
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
@@ -80,7 +87,7 @@
 | 727 | **reserved, needs OQ2+OQ3 first** — Sprint 52 | Wire `check:click-shield` into `.github/workflows/governance-pr.yml`. The gate exists and exits non-zero but is in **no** workflow, so "blocking gate" is currently false in 723's log and Files Changed table. Correctly not wired: **OQ2** (CI scope: local build vs production URL) and **OQ3** (N6's blocking-on-modal-routes policy) are unanswered owner decisions, and OQ3 gates it explicitly. Precedent for the wiring shape: `check:listing-visibility` + `:verify` at `governance-pr.yml:112,115`. |
 | 724R | **`APPROVED WITH NOTES`** (review 2026-08-07) — Sprint 53 | Supersedes **724** (`NEEDS REVISION`, same sprint, archived with it). V1–V13 verified; matrix 1146/1184, 16 FAIL, exit 1 = AV10. Three P3s open, see Last Session. `sessions/2026-08-07-task724R-…md`. |
 | 726 | **reserved, opens on 724R + 711 notes** — Sprint 53 | ① **Root fix, one line:** `check-stories-rendered.mjs:1222`'s `[role="group"]` skip → `.mantine-ButtonGroup-root`. Mantine's `ButtonGroup` calls `useStyles({name:"ButtonGroup"})`, so it emits that component-specific static class — the same class of hook 711 correctly used for `.mantine-Button-root`. A generic ARIA role is author-appliable to any `div`, which is exactly how 724 silenced 48/136 cells (**724 F1**, P0). ② Only then can the chip rows regain a real `role="group"` + accessible name; today the leftover `ariaLabel` prop renders `aria-label` on a role-less `div` (ARIA 1.2 prohibited, exposed to nothing) and no production call site passes it. ③ Document `isChipSetMember`'s median-threshold sensitivity in §14.9.28. |
-| 725 | `KICKOFF FILED` — **Sprint 54** (new) | The fixed bottom nav (56px, `z-30`) overlays homepage content at mobile-390 (nav band y 788–844 vs CTA 782–826, centre 804). 724's full-width hypothesis **disproven** — collision is vertical. Root-cause + general clearance fix; gate to 0 interceptions. `Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md`. |
+| 725 | **`BLOCKED` → re-scoped, ready to re-execute** — Sprint 54 | R1 refuted the kickoff's own §3.6 hypothesis from instrumented DOM: the CTA is **not occluded**, it is transiently overlapped at `scrollY=0` and clears after **38px of a 3305px scroll range**; the permanent trailing-edge case is already covered by `FooterView`'s `padding-bottom: var(--space-14)` == nav height (56px). So the defect is in the gate, which hit-tests one scroll position. **Owner 2026-08-07: fix the gate, not the layout** — all production layout now zero-diff. Superseding **R2a/R2b/R3a/R5a/R12** in the kickoff's **§16**; R1/R4/R6/R8/R9/R10 stand and are not re-run. `sessions/2026-08-07-task725-…md`. |
 
 - **Described once elsewhere:** 661 · 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.
 - **Standalone deferred:** **560** admin suspension-as-date-range — **sourced, keep** (split out at `Sprint_41_kickoff_prompt_Task_557_…md:26,:36`, DEFERRED 2026-07-06), blocked on the owner defining suspension-window semantics · **SaveToCollection dialog → Mantine** (654 follow-up, still shadcn).

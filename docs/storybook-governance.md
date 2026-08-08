@@ -1974,6 +1974,30 @@ wide "exempted" cell has the numeric bound rather than re-deriving it from the s
 
 Full detail, probe transcripts, and the R6 ARIA restoration: `docs/sessions/2026-08-08-task726-role-group-exclusion-and-chiprow-aria.md`.
 
+**§14.9.28 residual — `isChipSetMember`'s STRUCTURAL bound, two shapes it does not cover (Task 722 R9,
+Sprint 52, 2026-08-08).** Task 726 removed the `[role="group"]` skip and left `isChipSetMember` as the sole
+mechanism exempting a legitimate multi-select chip/toggle row from `fullWidthButtonsAtMobile`. Its three
+conditions (§14.9.28 above) are deliberately narrow, and two real chip-row shapes fall outside them by
+construction — recorded here, not fixed, per R10's requirement that `isChipSetMember` and its thresholds stay
+byte-identical this task:
+
+1. **N=2 groups.** Condition 2 requires **N≥3** real `.mantine-Button-root` siblings. A genuine two-option
+   toggle row (e.g. a binary sale/rent or yes/no chip pair) has only 2 members and is NOT exempted — each
+   button would be evaluated as a standalone CTA, and a narrow one could false-positive as a full-width
+   violation. No current Mantine production consumer has exactly 2 members (verified 2026-08-08: every live
+   chip row — rooms, layout/heating/wall — has ≥3 options), so this is a documented gap, not a live defect.
+2. **`flex-wrap: nowrap` horizontally-scrolling rows.** Condition 1 requires `flexWrap !== 'nowrap'` (row-WRAP
+   flex or a ≥2-track grid). A row that intentionally scrolls horizontally instead of wrapping —
+   `FavoritesTypeFilter.tsx:31`'s exact shape — is structurally excluded from `isChipSetMember` and would be
+   checked as ordinary CTAs if migrated to Mantine `.mantine-Button-root` buttons. It is safe **today** only
+   because that component is still shadcn (the gate reads `.mantine-Button-root`, which it does not render);
+   the bound would become live the moment it (or an equivalent) migrates.
+
+Both gaps are inherent to `isChipSetMember`'s current three conditions, not a regression this task introduces.
+Widening the predicate to cover either shape is out of scope here (R10 requires `isChipSetMember` unchanged) —
+a future task migrating a 2-member or nowrap-scrolling chip row to Mantine must extend `isChipSetMember` first,
+with its own planted-violation proof, rather than relying on today's exemption.
+
 ---
 
 ### §14.9.29 — `check:click-shield` distinguishes transient scroll-clearable overlap from permanent occlusion (Task 725, Sprint 54, 2026-08-07)

@@ -3,12 +3,12 @@
 > ⚠️ **ACTIVE STATE ONLY (~80 lines).** Closed tasks/sprints/epics → [`docs/backlog-archive.md`](backlog-archive.md), one ledger row each, newest first. Full detail → `docs/sessions/`. Kickoff detail stays in `tasks/` and is **not** restated here.
 > "Last Session" = 2–4 lines. On close, move the task to ONE archive row. Rules: `docs/ai-behavior.md` → "Backlog & Session Log Rules".
 
-## Last Session (2026-08-08) — **726** `APPROVED`, Sprint 53 closed
+## Last Session (2026-08-08) — **722** `APPROVED`, Sprint 52 advances to 52.2
 
-- **726** — verified against the real diff, not the report: probe revert hash-checked, both `.claude/skills/*`
-  byte-unchanged vs their J1 witness, R7's audit reproduced by independent grep, `K9` holds `1146/1184 PASS, 16
-  FAIL, 22 AMBIGUOUS, exit 1` verbatim. Reviewer fixed §14.9.28's dangling session-log ref. Findings → **730** ·
-  **731** · **732**. Backlog swept the same pass: 725 archived, two sprint-assignment contradictions corrected.
+- **722** — the vacuous `true` is gone: `checkedAny` guard + two census-proven dead arms re-anchored onto
+  live-dumped Mantine hooks. Matrix byte-identical (`1146/1184`, zero verdicts moved), liveness 5 LIVE / 0 DEAD.
+  Review found the executor undersold it — the flat 168 total hid a 12-in/12-out coverage swap (`Tabs` gained,
+  `FiltersPanelShell` lost), which is the actual proof arm 2 is load-bearing. Hole it exposed → **733**.
 
 ## Open — needs action
 
@@ -45,7 +45,7 @@
 
 **Owner rule, 2026-08-01: every task belongs to a sprint.** Kickoffs go to `tasks/Sprints/Sprint_NN_kickoff_prompt_Task_NNN_<Slug>.md`, never the root of `tasks/`; if no open sprint fits, open the next one first — recorded in `CLAUDE.md`, `.claude/skills/create-task/SKILL.md` (blocking pre-check) and `docs/ai-behavior.md`. Binds **706** onward.
 
-## Task registry — single source for every open number. Last used **732**, NEXT FREE **733**
+## Task registry — single source for every open number. Last used **733**, NEXT FREE **734**
 
 | # | State | What |
 |---|---|---|
@@ -58,10 +58,10 @@
 | 700 | reserved — **Sprint 46.3** | General `@theme`-dependency gate: fail when a `.module.css` consumes an `@theme` var whose last utility consumer disappears. Repo-wide. |
 | 702 | reserved — **Sprint 46.2** | `ListingCard.tsx` de-Tailwind (8 sites); marker classes stay verbatim. **D34 applies.** |
 | 721 | reserved — **Sprint 52.3**, folds 728 | The four 710-review findings, split out of 711 (owner, 2026-08-06): `[no-boolean-assertions]` exit-2 arm · `ORPHAN-ENTRY` exit-1 arm · `LIVE-THIN` threshold (needs 711's live ratios first) · the 2 surviving `2026-08-0X` citations (`design-system.md:1086`, `storybook-governance.md:1586`). **F3's "row 50" is unresolvable from the repo** — no numbered rows in `critical-flow-registry.md`, no mention in 710's log; locate or report `BLOCKED`. **Lead found 2026-08-08 while writing 722:** `docs/critical-flow-registry.md` has no numbered table rows, but its **line 50** is the "Listings filter controls" entry — a plausible referent for the unresolvable "row 50". Verify, do not assume. |
-| 722 | **`KICKOFF FILED`** — **Sprint 52.1**, folds 732 | **`fullWidthControlsAtMobile` is vacuously true.** `{"true": 852}` across all 852 applicable cells, never `false`, including on `Alert/Default` which renders no control (its sibling honestly reports `null` there). `check-stories-rendered.mjs:1112-1145` has **no `checkedAny` guard**, so a zero-match cell returns `true`; 2 of its 3 arms are the same shadcn `data-slot` selectors. `check-assertion-liveness.mjs` sees null-ness only → classifies it **LIVE**. Found during 711's design. **Kickoff:** `Sprint_52_kickoff_prompt_Task_722_FullWidthControls_VacuousAssertion.md` + execution contract + rule ledger. The replacement selectors are **deliberately withheld** from the kickoff — §7.2 requires a live DOM census, because 724's P0 was an orchestrator-supplied selector the next task then satisfied by producing it. |
 | 717 | reserved — **Sprint 52.2** | Narrow the `src/design-system/mantine` path allowlist (`scripts/design-tokens-allowlist.json:2`), which exempts the WHOLE directory (incl. `MantineListingCardPattern.module.css`) from token enforcement though its stated reason is only about `theme.ts`'s raw-value requirement. Own blast radius — deliberately deferred by 715 (§3.6). |
 | 727 | **parked — owner OQ2+OQ3** — Sprint 52 | Wire `check:click-shield` into `.github/workflows/governance-pr.yml`. The gate exists and exits non-zero but is in **no** workflow, so "blocking gate" is currently false in 723's log and Files Changed table. Correctly not wired: **OQ2** (CI scope: local build vs production URL) and **OQ3** (N6's blocking-on-modal-routes policy) are unanswered owner decisions, and OQ3 gates it explicitly. Precedent for the wiring shape: `check:listing-visibility` + `:verify` at `governance-pr.yml:112,115`. |
 | 729 | reserved, P3 — **Sprint 54**, closes it | **The gate never tests below the fold.** `check-click-shield.mjs` enumerates candidates once, at `scrollY=0`; phase 2 scrolls but does not re-enumerate. So an interactive control that is permanently occluded *and* below the fold is invisible to it — which is why 725's suggested `FooterView` plant produced zero output change. Found and honestly recorded by the executor (session log :358–361) as "this plant can't exercise the path", but the consequence — a coverage hole — was not carried forward. Decide: enumerate per scroll band, or document the boundary explicitly in §14.9.29. |
+| 733 | reserved — **Sprint 52.5** | **The full-width assertion has never checked an overlay-hosted control.** Arm 3 skips anything inside `[role="dialog"]` (`check-stories-rendered.mjs`, pre-dating 722), so every control in a Mantine Drawer or Modal is invisible to it. Hidden until now under a vacuous `true`; 722's guard made it visible — `FiltersPanelShell/Default` resolves `null` at all 3 mobile widths while `popupBottomSheetAtMobile` resolves `true` on the same cells, proving the dialog is there and its inputs are simply never measured. This is the one surface where full-width matters most: the `<640` bottom sheet, and the exact story covering `critical-flow-registry.md:50`. Decide whether the skip should exempt only *positioned* overlays, or be replaced by a bottom-sheet-aware measurement. |
 | 730 | reserved — **Sprint 55**, folds 731 | **The chip-row toggles announce no selected state.** 726 restored `role="group"` + a name on `FilterMultiToggle`/`FilterRoomsRow`, but neither sets `aria-pressed` — selection rides only on the Mantine `variant` (`filled` vs `default`), so AT hears "Condition, group" and then N plain buttons with no on/off. The two consumers 726's own §12/A2 cites as the correct precedent — `FavoritesTypeFilter.tsx:31` and `ListingsTab.tsx:171` — both **do** set `aria-pressed`; 726 shipped half the pattern. 14 live sites (7 `ListingsFilters` + 7 `FiltersPanel`). The same task must soften `storybook-governance.md` §14.9.28's "announce as named groups", which overstates what landed. |
 
 - **Described once elsewhere:** 665 · 691 (above) · 310 · 311 · 313 · 308–309 (HH) · 453 (KK.2) · 463 (BB) in Epics.

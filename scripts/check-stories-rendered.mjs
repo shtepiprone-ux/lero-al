@@ -1110,23 +1110,50 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     cell.assertions.noHorizontalOverflow = noOverflow;
 
     // ── Assertion (b): Full-width FORM CONTROLS at <640 ──
+    // Task 722 — `checkedAny` guard added (a zero-match cell now resolves `null`, never a
+    // vacuous `true`; mirrors assertion (d)'s Task 711 shape below). Arms 1–2 re-anchored: the
+    // live census (`.screenshots/task722-evidence/I2-census-summary.json`, 2026-08-08) measured
+    // `[data-slot="select-trigger"]` and `[data-slot="tabs-list"]` at 0/852 applicable cells —
+    // the same dead shadcn `data-slot` convention Task 711 already re-anchored for assertion
+    // (d) — while arm 3 (bare `<input>`) measured 168/852 live cells and needed no change.
+    // Re-anchored onto real Mantine DOM, live-dumped at 375px
+    // (`.screenshots/task722-evidence/I3-select-tabs-dump-stdout.txt`, 2026-08-08): Select's
+    // trigger renders `<input readonly class="mantine-Input-input mantine-Select-input"
+    // aria-haspopup="listbox">` (Mantine's own `useStyles({name:"Select"})` static class, the
+    // same `withStaticClasses:true` mechanism as assertion (d)'s `.mantine-Button-root`);
+    // Tabs' list renders `<div role="tablist" class="... mantine-Tabs-list">`
+    // (`useStyles({name:"Tabs"})`). Arm 1's element is ALSO a bare `<input>` and so already
+    // counted by arm 3's own selector — kept as its own arm anyway to preserve this
+    // assertion's three-category taxonomy (its own doc comment above, "Select triggers,
+    // TabsList, and form inputs") and to give a `false` cell an arm-specific failing label
+    // instead of a generic "input" one.
     let fullWidthOk = true;
+    let failingControls = [];
+    let checkedAnyControl = false;
     if (viewport.width < 640) {
-      fullWidthOk = await page.evaluate((tolerance) => {
+      const result = await page.evaluate((tolerance) => {
         function parentContentWidth(el) {
           const p = el.parentElement;
           if (!p) return 0;
           const s = window.getComputedStyle(p);
           return p.clientWidth - (parseFloat(s.paddingLeft) || 0) - (parseFloat(s.paddingRight) || 0);
         }
-        for (const el of document.querySelectorAll('[data-slot="select-trigger"]')) {
+        const failures = [];
+        let checkedAny = false;
+        for (const el of document.querySelectorAll('.mantine-Select-input')) {
           if (el.closest('[role="dialog"]')) continue;
+          checkedAny = true;
           const pw = parentContentWidth(el);
-          if (pw > 0 && el.offsetWidth < pw - tolerance) return false;
+          if (pw > 0 && el.offsetWidth < pw - tolerance) {
+            failures.push((el.getAttribute('placeholder') || el.value || '').trim().slice(0, 40) || '(select)');
+          }
         }
-        for (const el of document.querySelectorAll('[data-slot="tabs-list"]')) {
+        for (const el of document.querySelectorAll('.mantine-Tabs-list')) {
+          checkedAny = true;
           const pw = parentContentWidth(el);
-          if (pw > 0 && el.offsetWidth < pw - tolerance) return false;
+          if (pw > 0 && el.offsetWidth < pw - tolerance) {
+            failures.push('(tabs list)');
+          }
         }
         for (const inp of document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="search"], input:not([type])')) {
           if (inp.offsetWidth <= 1) continue;
@@ -1137,12 +1164,21 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
           if (parentFlex && parent.children.length > 1) continue;
           const pw = parentContentWidth(inp);
           if (pw < 50) continue;
-          if (pw > 0 && inp.offsetWidth < pw - tolerance) return false;
+          checkedAny = true;
+          if (pw > 0 && inp.offsetWidth < pw - tolerance) {
+            failures.push((inp.getAttribute('placeholder') || inp.value || '').trim().slice(0, 40) || '(input)');
+          }
         }
-        return true;
+        return { failures, checkedAny };
       }, FULL_WIDTH_TOLERANCE);
+      // Arm 1's element is also a bare `<input>` matched by arm 3 (see the comment above), so a
+      // single failing Select trigger is pushed by both loops — dedupe for a clean diagnostic.
+      failingControls = [...new Set(result.failures)];
+      checkedAnyControl = result.checkedAny;
+      fullWidthOk = failingControls.length === 0;
     }
-    cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? fullWidthOk : null;
+    cell.assertions.fullWidthControlsAtMobile = viewport.width < 640 ? (checkedAnyControl ? fullWidthOk : null) : null;
+    if (failingControls.length > 0) cell.assertions.failingControlLabels = failingControls;
 
     // ── Assertion (d): Full-width TEXT BUTTONS at <640 ──
     // Task 711 (D33) re-anchor. `[data-slot="button"]` was a shadcn-only convention this
@@ -1894,7 +1930,7 @@ async function runAssert() {
             console.error(`    ✗ render failure [${rc.failReason}]${detail ? ': ' + detail : ''}`);
           }
           if (!cell.assertions.noHorizontalOverflow) console.error('    ✗ horizontal overflow detected');
-          if (cell.assertions.fullWidthControlsAtMobile === false) console.error('    ✗ form control not full-width at <640');
+          if (cell.assertions.fullWidthControlsAtMobile === false) console.error(`    ✗ form control not full-width at <640: ${(cell.assertions.failingControlLabels ?? []).join(', ')}`);
           if (cell.assertions.fullWidthButtonsAtMobile === false) console.error(`    ✗ text button not full-width at <640: ${(cell.assertions.failingButtonLabels ?? []).join(', ')}`);
           if (cell.assertions.popupBottomSheetAtMobile === false) console.error(`    ✗ popup not bottom-sheet at <640: ${(cell.assertions.failingPopupSlots ?? []).join(', ')}`);
           if (cell.assertions.heroSearchWrapInBand === false) console.error('    ✗ HeroSearch: Search button did not wrap to row 2 in the 640-767 band (Task 573)');

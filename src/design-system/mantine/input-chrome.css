@@ -13,7 +13,7 @@
    `style` prop, so it never hits that guard. TextInput/Select/PasswordInput are plain <input>s
    (no autosize) — their theme.ts minHeight is safe and unaffected by this rule. */
 .mantine-Textarea-input {
-  min-height: 2.75rem; /* §6e/§6l field height 44px */
+  min-height: 2.75rem; /* §6e/§6l field height 44px */ /* design-tokens-allow: min-height: 2.75rem — 44px touch-target floor, established project convention (theme.ts rem-exemption note); not a rendered-value change */
 }
 .mantine-TextInput-input::placeholder,
 .mantine-Textarea-input::placeholder {
@@ -22,13 +22,13 @@
 .mantine-TextInput-input:focus,
 .mantine-Textarea-input:focus {
   border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-TextInput-input[data-error],
 .mantine-Textarea-input[data-error],
 .mantine-TextInput-input[data-error]:focus,
 .mantine-Textarea-input[data-error]:focus {
-  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
+  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */ /* design-tokens-allow: #d92d20 — value appears only inside a documentation comment; the live declaration already consumes a Mantine color variable */
   box-shadow: none;
 }
 
@@ -42,7 +42,7 @@
 }
 .mantine-PasswordInput-input:focus-within {
   border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-PasswordInput-input[data-error],
 .mantine-PasswordInput-input[data-error]:focus-within {
@@ -61,11 +61,11 @@
 }
 .mantine-Select-input:focus {
   border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Select-input[data-error],
 .mantine-Select-input[data-error]:focus {
-  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */
+  border-color: var(--mantine-color-red-6);           /* §6 ERROR border — error-600 (#d92d20) */ /* design-tokens-allow: #d92d20 — value appears only inside a documentation comment; the live declaration already consumes a Mantine color variable */
   box-shadow: none;
 }
 
@@ -75,7 +75,7 @@
    here (no new §6x extraction needed — not a new value, an additional selector on existing tokens):
    full border, shadow-xs resting, brand-3 focus ring, gray-4 placeholder — same as TextInput/Select. */
 .mantine-Combobox-search {
-  border: 1px solid var(--mantine-color-gray-3);      /* §6e resting border — gray-300 */
+  border: 1px solid var(--mantine-color-gray-3);      /* §6e resting border — gray-300 */ /* design-tokens-allow: border: 1px — hairline border width; no project token represents border width */
   border-radius: var(--mantine-radius-lg);            /* §6d/§6e radius — 8px */
   box-shadow: var(--mantine-shadow-xs);                /* §5 resting subtle shadow */
 }
@@ -84,10 +84,10 @@
 }
 .mantine-Combobox-search:focus {
   border-color: var(--mantine-color-brand-3);         /* §6 focus border — brand-300 */
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Combobox-search {
-  padding: 0.625rem 1rem;             /* §6l 10px vertical / 16px horizontal — no icon sections, unconditional */
+  padding: 0.625rem 1rem;             /* §6l 10px vertical / 16px horizontal — no icon sections, unconditional */ /* design-tokens-allow: padding: 0.625rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */ /* design-tokens-allow: padding: 1rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
   color: var(--mantine-color-gray-8); /* §6l/§6e text — gray-800 */
 }
 
@@ -118,25 +118,25 @@
 .mantine-TextInput-input,
 .mantine-Textarea-input,
 .mantine-Select-input {
-  padding-top: 0.625rem;    /* §6l 10px */
-  padding-bottom: 0.625rem; /* §6l 10px */
+  padding-top: 0.625rem;    /* §6l 10px */ /* design-tokens-allow: padding-top: 0.625rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
+  padding-bottom: 0.625rem; /* §6l 10px */ /* design-tokens-allow: padding-bottom: 0.625rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
   color: var(--mantine-color-gray-8); /* §6l/§6e text — gray-800; Select was missing this (audit: black resting text) */
 }
 .mantine-TextInput-wrapper:not([data-with-left-section]) .mantine-TextInput-input,
 .mantine-Textarea-input,
 .mantine-Select-wrapper:not([data-with-left-section]) .mantine-Select-input {
-  padding-inline-start: 1rem; /* §6l 16px */
+  padding-inline-start: 1rem; /* §6l 16px */ /* design-tokens-allow: padding-inline-start: 1rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
 }
 .mantine-TextInput-wrapper:not([data-with-right-section]) .mantine-TextInput-input,
 .mantine-Textarea-input,
 .mantine-Select-wrapper:not([data-with-right-section]) .mantine-Select-input {
-  padding-inline-end: 1rem; /* §6l 16px */
+  padding-inline-end: 1rem; /* §6l 16px */ /* design-tokens-allow: padding-inline-end: 1rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
 }
 /* PasswordInput — text lives on the absolutely-positioned innerInput (vertical centering via
    line-height, not padding — the outer 44px height already supplies it). Reveal toggle is ALWAYS
    present (permanent right section), so end-padding is intentionally left to Mantine's reservation. */
 .mantine-PasswordInput-input:not([data-with-left-section]) .mantine-PasswordInput-innerInput {
-  padding-inline-start: 1rem; /* §6l 16px */
+  padding-inline-start: 1rem; /* §6l 16px */ /* design-tokens-allow: padding-inline-start: 1rem — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists */
 }
 
 /* Disabled §6e — source-of-truth: the WHOLE CONTROL dims (label + field + trailing icon → opacity 0.5),
@@ -180,7 +180,7 @@
 .mantine-Checkbox-input:focus-visible {
   outline: none;
   border-color: var(--mantine-color-brand-7);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Checkbox-input:focus:not(:focus-visible) {
   outline: none;
@@ -192,7 +192,7 @@
    so the error rule wins via source order. checked+error: brand border wins, no ring. */
 .mantine-Checkbox-input[data-error]:not(:checked) {
   border-color: var(--mantine-color-red-6);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Checkbox-input[data-error]:checked {
   border-color: var(--mantine-color-brand-7); /* checked+error: brand border wins, no ring */
@@ -224,7 +224,7 @@
 .mantine-Radio-radio:focus-visible {
   outline: none;
   border-color: var(--mantine-color-brand-7);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Radio-radio:focus:not(:focus-visible) {
   outline: none;
@@ -236,7 +236,7 @@
    checked+error → brand border wins (§6g: aria-invalid:aria-checked:border-primary precedent). */
 .mantine-Radio-radio[data-error]:not(:checked) {
   border-color: var(--mantine-color-red-6);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-red-6) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Radio-radio[data-error]:checked {
   border-color: var(--mantine-color-brand-7); /* checked+error: brand border wins, no ring */
@@ -270,13 +270,13 @@
    default is gray-3 (#d0d5dd). Using the exact design-system token; owner to confirm in DevTools.
    :not(:checked) preserves the Mantine checked brand-fill; specificity (0,3,0). */
 .mantine-Switch-input:not(:checked) + .mantine-Switch-track {
-  background-color: var(--color-input); /* neutral-300 = #DEDEDE */
+  background-color: var(--color-input); /* neutral-300 = #DEDEDE */ /* design-tokens-allow: #DEDEDE — value appears only inside a documentation comment; the live declaration already consumes a Mantine color variable */
 }
 
 /* Focus — keyboard only via :focus-visible on the hidden input; ring appears on the visible track */
 .mantine-Switch-input:focus-visible + .mantine-Switch-track {
   outline: none;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-color-brand-5) 10%, transparent); /* design-tokens-allow: box-shadow: 3px — focus-ring width; no project token represents ring/border width */
 }
 .mantine-Switch-input:focus:not(:focus-visible) + .mantine-Switch-track {
   outline: none;
@@ -323,11 +323,11 @@
    `theme.styles` cannot express state selectors), so both are fixed here with real class + :not()
    selectors, which win on specificity + source order (this file loads after @mantine/core/styles.css). */
 .mantine-SegmentedControl-label:not([data-active]) {
-  color: var(--mantine-color-gray-5); /* §6c inactive — gray-500 #667085 */
+  color: var(--mantine-color-gray-5); /* §6c inactive — gray-500 #667085 */ /* design-tokens-allow: #667085 — value appears only inside a documentation comment; the live declaration already consumes a Mantine color variable */
 }
 @media (hover: hover) {
   .mantine-SegmentedControl-label:not([data-active]):not([data-disabled]):not([data-read-only]):hover {
-    color: var(--mantine-color-gray-7); /* §6c hover (inactive only) — gray-700 #344054 */
+    color: var(--mantine-color-gray-7); /* §6c hover (inactive only) — gray-700 #344054 */ /* design-tokens-allow: #344054 — value appears only inside a documentation comment; the live declaration already consumes a Mantine color variable */
   }
 }
 /* Item radius (§6c rounded-md/6px) also applies to the ::before fallback pseudo painted before the

@@ -127,7 +127,7 @@ it separately for changes to one file. They are now two:
 | Order | Task | Folds in | Why it sits here |
 |---|---|---|---|
 | **52.1** | **722** — ✅ `APPROVED` 2026-08-08, archived | **732** | Both are assertion-logic defects in adjacent functions of `check-stories-rendered.mjs`, provable in **one** sweep at a **fixed** 1184-cell denominator |
-| **52.2** | **717** — `KICKOFF FILED` | — | Independent of the matrix; no sweep needed |
+| **52.2** | **717** — ✅ `APPROVED` 2026-08-08, archived | — | Independent of the matrix; no sweep needed |
 | **52.3** | **721** | **728** | Documentation, citations and two manifest-reading gate arms. `check-assertion-liveness.mjs` never launches a browser, so this costs no sweep at all |
 | **52.4** | **678** | **687** | Both change the matrix **denominator**, so they must not share a session with 52.1 |
 | **52.5** | **733** | — | Overlay-hosted controls are never measured — the hole 722's guard exposed. Runnable now; independent of 52.2–52.4 |

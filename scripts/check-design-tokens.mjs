@@ -707,8 +707,14 @@ function loadAllowlist() {
 
 function isAllowlisted(relPath, allowlist) {
   for (const key of Object.keys(allowlist)) {
-    // Key is a path prefix (directory) or exact file match
-    if (relPath === key || relPath.startsWith(key + '/') || relPath.startsWith(key)) {
+    // Key is a path prefix (directory) or exact file match. The unbounded
+    // `relPath.startsWith(key)` third arm (no trailing slash) was removed by
+    // Task 717 R9: re-measured 0 files exempted only by it (K4-matcher.log),
+    // matching the kickoff's own 2026-08-08 measurement — the first two
+    // conditions cover every current match, and leaving it would give the
+    // new exact-file allowlist keys no real boundary (e.g. a bare `theme.ts`
+    // key would also exempt a sibling `theme.test.ts`).
+    if (relPath === key || relPath.startsWith(key + '/')) {
       return true;
     }
   }

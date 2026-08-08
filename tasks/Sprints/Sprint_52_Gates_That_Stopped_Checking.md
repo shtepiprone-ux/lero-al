@@ -112,3 +112,41 @@ literals are annotated reproductions of compiled Tailwind output — `gap: 1.5re
 `npm run check:design-tokens` is `--strict` (`package.json:66`) and CI runs `check:design-tokens:strict`
 (`governance-pr.yml:97`). Any new detection that defaults to blocking would turn CI red on 49 pre-existing
 literals across six closed tasks' files. That is why 714 is report-only and 715 is separate.
+
+---
+
+## 10. Remaining scope and execution order (revised 2026-08-08, after the Task 726 review)
+
+The design-token arc (714 · 715 · 716) and the 711/723/724R gate arc are **complete and archived**. What is left was
+re-audited against the repository on 2026-08-08; every claim below was re-verified, not carried forward on trust.
+
+**Numbers folded, to stop paying the same cost twice.** The dominant cost in this sprint is not the edit — it is
+`build-storybook` + the 1184-cell `--mantine-only` sweep, roughly an hour per run. Four tasks were each going to pay
+it separately for changes to one file. They are now two:
+
+| Order | Task | Folds in | Why it sits here |
+|---|---|---|---|
+| **52.1** | **722** | **732** | Both are assertion-logic defects in adjacent functions of `check-stories-rendered.mjs`, provable in **one** sweep at a **fixed** 1184-cell denominator |
+| **52.2** | **717** | — | Independent of the matrix; no sweep needed |
+| **52.3** | **721** | **728** | Documentation, citations and two manifest-reading gate arms. `check-assertion-liveness.mjs` never launches a browser, so this costs no sweep at all |
+| **52.4** | **678** | **687** | Both change the matrix **denominator**, so they must not share a session with 52.1 |
+| parked | **727** | — | Blocked on owner decisions **OQ2** and **OQ3**; OQ3 gates it explicitly. Do not schedule it until both are answered |
+
+**52.1 must precede 52.4, and this is the whole thesis of the sprint.** `fullWidthControlsAtMobile` is vacuously
+`true`: `check-stories-rendered.mjs:1112-1145` has no `checkedAny` guard and two of its three arms are shadcn
+`data-slot` selectors Mantine never renders, so a zero-match cell returns `true` (re-confirmed 2026-08-08). Enrolling
+`AdminUsersTable`'s 16 cells (687) or widening `MANTINE_VIEWPORTS` from 4 widths to 14 (678, `:392`) **before** that
+guard exists does not add coverage — it manufactures several thousand more cells of false green on a CI-blocking
+gate. Expanding a denominator under a vacuous assertion is the exact failure this sprint was opened to end.
+
+**52.1 also inherits 726's residue.** With the `[role="group"]` skip deleted, `isChipSetMember` is now the sole
+escape keeping legitimate chip rows out of `fullWidthButtonsAtMobile`. Every group clears it today, so 726 moved zero
+cells — but it does not hold for a 2-button Mantine group or a nowrap horizontally-scrolling chip row, which is the
+exact shape of `FavoritesTypeFilter.tsx:31`, safe only because that component is still shadcn and the gate reads
+`.mantine-Button-root`. 52.1 either records that bound in `storybook-governance.md` §14.9.28 beside the median
+example, or widens the predicate — and says which.
+
+**Stale reference corrected 2026-08-08:** 721's scope said two surviving `2026-08-0X` citations. There are **three** —
+`design-system.md:1086`, `storybook-governance.md:1586`, `storybook-governance.md:1883`. Its F3 "row 50" remains
+unresolvable from the repository (`critical-flow-registry.md` has no numbered rows); 721 reports `BLOCKED` on that
+sub-item rather than inventing a target.

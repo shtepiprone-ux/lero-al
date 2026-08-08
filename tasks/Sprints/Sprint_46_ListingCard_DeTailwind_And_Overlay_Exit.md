@@ -46,3 +46,22 @@ kickoffs for 694, 695, 700 and 702 must be written **inside this sprint's direct
 3. `check:homepage-grid` 260/260 and the D26 rendered matrix both green on every task.
 4. **Owner cleanup step 3 closed** — the 3 consolidated probes deleted, and a decision recorded on 670 and the other
    9 unwired probes.
+
+---
+
+## Execution order (added 2026-08-08)
+
+Re-audited against the repository on 2026-08-08. The overlay census still measures **exactly 33 utilities across 7
+files** — `PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGallery` 5 · `LightboxView` 4 ·
+`MantineListingGalleryPattern` 3 · `ImageUpload` 3 · `AdminUserAvatar` 1 — unchanged since it was recorded.
+
+| Order | Task | Gate |
+|---|---|---|
+| **46.1** | **694** | Runnable now, blocked by nothing. **Its line references were stale and are corrected here:** the `--overlay*` declarations are at `globals.css:82-85` and `:470-471`, not `:76-79`/`:451-452` |
+| **46.2** | **702** | `ListingCard.tsx`, 8 sites; marker classes stay verbatim; **D34** applies |
+| **46.3** | **700** | Repo-wide `@theme`-dependency gate; independent of 691 |
+| **46.4** | **691** | ⛔ **Blocked on the owner.** `/[locale]` First Load JS measures 618 kB against a 185 kB baseline and has not moved across the 710/712/713/714 builds. The number exists; the go/no-go does not. Do not schedule 691 until it is answered |
+| **46.5** | **695** | Blocked on 691 — it is the sprint's exit condition and cannot run before the work it measures |
+
+**Do not reorder 46.4 ahead of 46.1–46.3.** All three are runnable while the owner decision is outstanding, and
+leaving the sprint at zero landed tasks waiting on one decision is what has kept it open with nothing shipped.

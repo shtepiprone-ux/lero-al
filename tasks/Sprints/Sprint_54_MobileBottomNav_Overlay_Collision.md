@@ -86,3 +86,14 @@ all. **Task 725 must measure this, not inherit it.**
   survive intact — a collision fix is not a licence to re-hybridise the component.
 - **`FavoriteButton`'s `ActionIcon`** was one of the two blocked element classes in 723's run and did not
   reproduce in 724's. Treat it as unresolved, not as fixed.
+
+---
+
+## Execution order (added 2026-08-08)
+
+**729 is the only remaining task, and it closes the sprint.** It costs a `check:click-shield` run, not the 1184-cell
+matrix sweep, so it is independent of Sprint 52's ordering and can run in parallel with any of it.
+
+Its scope was double-assigned — the backlog listed 729 under Sprint 52's remaining tasks **and** under Sprint 54.
+Corrected 2026-08-08: **729 belongs to this sprint**, which is where its finding originated (Task 725) and which
+names it as the closing condition.

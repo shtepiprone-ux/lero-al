@@ -69,3 +69,16 @@ detector question must be answered explicitly rather than left implied.
 An exemption a component author can hand-apply is not an exemption the gate owns (724 F1, closed by 726). Any
 detector proposed under criterion 4 must key on a condition it evaluates itself, never on an attribute the
 component under test supplies.
+
+---
+
+## Execution order (added 2026-08-08)
+
+**One kickoff, not two: 730 absorbs 731.** Both are the same defect class inspected from two sides — an accessible
+name that conveys nothing — both are pure `src/` edits proven by smoke tests, and neither needs a matrix sweep,
+because the rendered gate measures geometry and never reads a role or a state attribute. Splitting them would buy
+two kickoffs, two reviews and two sessions for one repo-wide census.
+
+Internal order inside the single task: **the census first**, then the fixes. Establishing where `aria-label` sits on
+a role-less element (731's five known sites plus whatever the census adds) before editing keeps the count measured
+rather than assumed — the failure mode 726's own R7 audit hit when it queried only the role side.

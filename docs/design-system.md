@@ -1083,7 +1083,7 @@ its §22 token — value verified equal, not assumed) or marked with a `design-t
 (`COMPILED-ARTIFACT`) across the six owning files (`FooterView`, `HeaderView`,
 `MobileBottomNavView`, `FeaturedListingsView`, `LatestListingsView`, `PopularLocationsView`
 `.module.css`). Full literal → token → §22-value substitution table and every marker string:
-`docs/sessions/2026-08-0X-task715-design-tokens-strict-flip-and-remediation.md`.
+`docs/sessions/2026-08-06-task715-design-tokens-strict-flip-and-remediation.md`.
 
 **The nav-label `10px` decision (§3.3 of the Task 715 kickoff) is a restoration, not a new policy
 call.** `MobileBottomNavView.module.css`'s `.fabLabel`/`.navItemLabel` `font-size: 10px` sites carry

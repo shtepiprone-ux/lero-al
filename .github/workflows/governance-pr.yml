@@ -163,9 +163,20 @@ jobs:
       - name: Assertion-liveness meta-gate (Task 710 — a null-everywhere assertion is a dead gate, not a pass)
         # Reads the manifest.json the previous step just produced (default discovery: the latest
         # dir under .screenshots/rendered-assert/, which is exactly that run on a fresh checkout).
-        # Fails on a NEW dead assertion or a STALE registry entry; reports the two currently-tracked
-        # dead assertions (Task 711) loudly without blocking. Never launches a browser.
+        # Fails on a NEW dead assertion, a STALE or ORPHAN registry entry, or a manifest with no
+        # boolean-shaped assertion at all (Task 721); reports LIVE-THIN loudly without blocking.
+        # Never launches a browser.
         run: npm run check:assertion-liveness
+
+      - name: Assertion-liveness meta-gate self-test (Task 721 — the gate's own PLANTS harness, wired into CI so a broken arm cannot pass silently)
+        # In-memory only (synthetic fixture manifests, no browser, no dependency on the previous
+        # step's output) — sub-second, so wiring it costs effectively nothing. Proves DEAD-NEW,
+        # STALE-ENTRY, ORPHAN-ENTRY, NO-BOOLEAN-ASSERTIONS, and BAD-INPUT all genuinely fail, LIVE-
+        # THIN reports without blocking, and the real manifest from the previous step genuinely
+        # passes. Without this step, a future edit could silently break any of the gate's five arms
+        # and CI would never notice — the exact "stopped checking" failure this gate itself exists
+        # to catch, one layer up.
+        run: npm run check:assertion-liveness:verify
 
       - name: Upload rendered-assert report
         if: always()

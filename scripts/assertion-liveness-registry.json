@@ -1,4 +1,4 @@
 {
-  "$schema-note": "One entry per (scope, assertion). An entry is a TRACKED DEAD GATE, not an exemption. check-assertion-liveness.mjs fails the build (STALE-ENTRY) if an entry's assertion resolves true/false in any cell of its named scope again.",
+  "$schema-note": "One entry per (scope, assertion). An entry is a TRACKED DEAD GATE, not an exemption. check-assertion-liveness.mjs fails the build (STALE-ENTRY) if an entry's assertion resolves true/false in any cell of its named scope again, and fails the build (ORPHAN-ENTRY, Task 721) if the entry's (scope, assertion) pair never matches any boolean-shaped assertion key discovered in the manifest at all.",
   "entries": []
 }

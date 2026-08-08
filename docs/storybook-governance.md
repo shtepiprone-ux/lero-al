@@ -1583,7 +1583,7 @@ append the shell's exit-code variable as its own separate statement into that sa
 pipe a gate's output through another command (`| tee`, `| Select-Object`, etc.) and trust the
 piped exit code. This task's own evidence transcripts follow that rule throughout.
 
-Session: `docs/sessions/2026-08-0X-task710-assertion-liveness-meta-gate.md`.
+Session: `docs/sessions/2026-08-05-task710-assertion-liveness-meta-gate.md`.
 
 ---
 
@@ -1880,7 +1880,7 @@ inventing an unauthorized gate carve-out. Final measured result:
 AMBIGUOUS (pre-existing, unrelated), exit 1.** This is flagged as a **TASK SPECIFICATION CONTRADICTION** for Opus:
 every in-scope story is green; the only residual failures are the ones the kickoff itself predicted would remain.
 
-Session: `docs/sessions/2026-08-0X-task724-fullwidth-buttons-13-story-adjudication.md`.
+Session: `docs/sessions/2026-08-07-task724-fullwidth-buttons-13-story-adjudication.md`.
 
 **CORRECTION (Task 724R, 2026-08-07) — the #2/#3/#9 mechanism above was reverted.** The orchestrator implementation
 review found that `role="group"` had been added to four production containers (`FilterMultiToggle.tsx`,

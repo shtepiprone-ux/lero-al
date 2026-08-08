@@ -37,6 +37,27 @@ An unresolved owner decision produces a blocked decision note, not a multi-route
    is not canonical-source evidence.
 5. State verified facts separately from assumptions and unresolved questions.
 
+### Permanent Storybook story creation gate — blocking
+
+Before a task adds or permanently extends a Storybook story, record every inspected candidate story and source, why
+each existing candidate cannot provide the required proof, and the final `reuse`, `extend`, or `create canonical`
+disposition in the canonical UI decision record. The absence of an API-specific story or a grep match is **not** by
+itself authorization to add markup.
+
+When proposed story markup exists only to exercise a selector, gate, regression, or measurement — rather than to
+document an in-scope production consumer or an independently owner-approved canonical-coverage requirement — it is a
+probe, not a permanent Storybook artifact. Use a reversible probe in an inspected existing story, prove its
+before/after result, and restore the story byte-identical before final verification. Do not publish invented permanent
+UI merely to manufacture evidence for a gate.
+
+The kickoff must require the restoration **evidence**, not merely the restoration: the story's pre-probe
+`git hash-object` value, and the path's absence from `git status --porcelain` after the final gate run. A kickoff
+that asks only to "revert the probe" has specified a step no reviewer can check.
+
+`create canonical` or a permanent `extend` is allowed only when the task names the in-scope production consumer or
+quotes the owner authorization for independent canonical coverage. If neither exists, publish
+`BLOCKED -- STORY CREATION AUTHORIZATION REQUIRED`, not an implementation kickoff.
+
 Do not invent file paths, current behavior, APIs, commands, test results, or user decisions. Do not write `read all docs`; name the exact pre-read bundle needed by the executor.
 Do not call an exception "owner-approved" or "owner-acknowledged" unless the actual owner decision is quoted or
 precisely referenced with its date and scope. Otherwise stop for `BLOCKED -- OWNER DECISION REQUIRED`.
@@ -85,6 +106,10 @@ Do not publish the first draft. Check all of the following and revise the task i
 - Scope protects existing behavior and names what must not change.
 - For UI work, all publication checks in `references/ui-task-design.md` pass: current/legacy boundary, QA profile,
   source map, canonical decision record, and preservation classifications are explicit and evidenced.
+- Every permanent Storybook addition or extension passes the permanent-story creation gate: the decision record
+  names the inspected candidates, why reuse is insufficient, the production consumer or owner authorization, and
+  why the final markup is not merely a gate probe. Where a reversible probe is used instead, the task names the
+  restoration evidence it requires — the pre-probe `git hash-object` value and absence from `git status --porcelain`.
 - Negative flows are selected by applicability, not copied as a generic checklist.
 - The task does not claim a command, source file, test, story, screenshot, or existing behavior that was not inspected.
 - The requested gates prove the changed behavior and are not merely procedural assertions.

@@ -71,6 +71,17 @@ Before editing code:
      proof, and perform required catalog/coverage registration before consuming it. Do not create a local style as an
      interim answer.
 
+   A missing API-specific story does not authorize permanent story markup. When a proposed story change exists only
+   to exercise a selector, gate, regression, or measurement, treat it as a reversible probe in an inspected existing
+   story: capture the required before/after result, then restore the story byte-identical before final verification.
+   Prove the restoration; never assert it. Record the story's pre-probe `git hash-object` value and the path's
+   absence from `git status --porcelain`, both captured after the final gate run. A restoration claimed without
+   those two facts is unverifiable at review and is treated as unrestored.
+   A permanent Storybook addition or extension requires either a named in-scope production consumer or an explicit
+   owner authorization for independent canonical coverage. If the task does not supply one, stop before editing and
+   report `STORY CREATION AUTHORIZATION REQUIRED` to Opus; never manufacture permanent UI solely to create gate
+   evidence.
+
    If the task lacks this record, its search result is contradicted by the repository, it asks for a local style where
    a canonical source exists, or a needed visual value has no approved provenance, stop before implementation and
    report `CANONICAL UI SPECIFICATION GAP` or `CANONICAL STYLE DECISION REQUIRED` to Opus. A scanner allowlist does

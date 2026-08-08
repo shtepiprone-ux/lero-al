@@ -3,7 +3,7 @@
 **Status:** `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`. **Sprint 52.2.** **QA profile:** `Q1` Targeted.
 **Kickoff:** `tasks/Sprints/Sprint_52_kickoff_prompt_Task_717_DesignTokens_Allowlist_Narrowing.md` +
 `Sprint_52_Task_717_execution_contract.md` + `Sprint_52_Task_717_rule_compliance_ledger.md`.
-**Evidence root:** `docs/sessions/evidence/task717/`.
+**Evidence root:** `.screenshots/task717-evidence/`.
 
 ---
 
@@ -51,7 +51,7 @@ in a now-unexempted file is caught.
 | `src/design-system/mantine/patterns/MantineDialogDrawerPattern.tsx` | 4 `design-tokens-allow` markers added (comment-only) |
 | `src/design-system/mantine/patterns/responsiveBottomSheet.tsx` | 4 `design-tokens-allow` markers added (comment-only) |
 | `docs/backlog.md` | Task 717 state updated, Task 734 reservation filed, task registry counter advanced to 735 |
-| `docs/sessions/evidence/task717/*` | Checkpoint evidence artifacts (this task's own, counted in AC11's integrity/mojibake denominator both passes) |
+| `.screenshots/task717-evidence/*` | Checkpoint evidence artifacts (this task's own, counted in AC11's integrity/mojibake denominator both passes) |
 | `docs/sessions/2026-08-08-task717-design-tokens-allowlist-narrowing.md` | This session log |
 
 No production source file outside the design-tokens-allowlist mechanism was touched; `src/design-system/mantine/slider-chrome.css` was temporarily modified for the R5 plant and restored byte-identical (hash-verified, §2 R5 row) — it carries **no diff** in the final tree.
@@ -83,7 +83,7 @@ No production source file outside the design-tokens-allowlist mechanism was touc
 
 Pass-2 file counts (19→23 integrity, 2125→2128 mojibake) grew by exactly the session-log + backlog-update +
 evidence-directory files added between the two passes — reconciled against `git status --porcelain` at pass 2:
-7 modified + 2 untracked entries (`docs/sessions/2026-08-08-task717-*.md` and `docs/sessions/evidence/`).
+7 modified + 2 untracked entries (`docs/sessions/2026-08-08-task717-*.md` and `docs/sessions/evidence/`). **Relocated at review (2026-08-08):** the evidence directory was moved to `.screenshots/task717-evidence/` to match D6 and every prior task; `docs/sessions/evidence/` no longer exists, so the final tracked set is 7 modified + 1 untracked.
 
 ---
 

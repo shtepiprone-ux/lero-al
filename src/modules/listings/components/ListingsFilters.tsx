@@ -164,6 +164,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
             <FilterRoomsRow
               selected={selectedRooms}
               onToggle={v => toggleMulti('rooms', v)}
+              ariaLabel={tc('rooms_label')}
             />
           </AccordionSection>
         )}
@@ -240,6 +241,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               onToggle={v => toggleMulti('condition', v)}
               getLabel={k => t(k)}
               className="flex-col gap-1.5"
+              ariaLabel={tc('condition')}
             />
           </AccordionSection>
         )}
@@ -252,6 +254,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               selected={selectedLayoutFeatures}
               onToggle={v => toggleMulti('layout_features', v)}
               getLabel={k => t(k)}
+              ariaLabel={tc('layout_features')}
             />
           </AccordionSection>
         )}
@@ -284,6 +287,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               selected={selectedHeatingTypes}
               onToggle={v => toggleMulti('heating', v)}
               getLabel={k => t(k)}
+              ariaLabel={tc('heating')}
             />
           </AccordionSection>
         )}
@@ -296,6 +300,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               selected={selectedWallTypes}
               onToggle={v => toggleMulti('wall_type', v)}
               getLabel={k => t(k)}
+              ariaLabel={tc('wall_type')}
             />
           </AccordionSection>
         )}
@@ -309,6 +314,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               onToggle={v => toggleMulti('offer_type', v)}
               getLabel={k => t(k)}
               className="flex-col gap-1.5"
+              ariaLabel={tc('offer_type')}
             />
           </AccordionSection>
         )}
@@ -322,6 +328,7 @@ export function ListingsFilters({ locations, className, onClose }: Props) {
               onToggle={v => toggleMulti('purchase_conditions', v)}
               getLabel={k => t(k)}
               className="flex-col gap-1.5"
+              ariaLabel={tc('purchase_conditions')}
             />
           </AccordionSection>
         )}

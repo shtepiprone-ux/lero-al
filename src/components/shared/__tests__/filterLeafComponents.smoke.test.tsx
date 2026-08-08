@@ -151,3 +151,39 @@ describe('FilterRoomsRow — Mantine Button toggle swap', () => {
     expect(two.getAttribute('data-variant')).toBe('default')
   })
 })
+
+describe('FilterMultiToggle / FilterRoomsRow — ARIA group naming (Task 726)', () => {
+  it('renders no role and no aria-label on the container when unnamed', () => {
+    const { container: multiToggleContainer } = render(
+      withProvider(<FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} />),
+    )
+    const multiToggleRoot = multiToggleContainer.querySelector('.flex-wrap') as HTMLElement
+    expect(multiToggleRoot.getAttribute('role')).toBeNull()
+    expect(multiToggleRoot.getAttribute('aria-label')).toBeNull()
+
+    const { container: roomsContainer } = render(
+      withProvider(<FilterRoomsRow selected={[]} onToggle={vi.fn()} />),
+    )
+    const roomsRoot = roomsContainer.querySelector('.flex-wrap') as HTMLElement
+    expect(roomsRoot.getAttribute('role')).toBeNull()
+    expect(roomsRoot.getAttribute('aria-label')).toBeNull()
+  })
+
+  it('renders role="group" and aria-label on the container when a name is supplied', () => {
+    const { container: multiToggleContainer } = render(
+      withProvider(
+        <FilterMultiToggle options={OPTIONS} selected={[]} onToggle={vi.fn()} getLabel={getLabel} ariaLabel="Condition" />,
+      ),
+    )
+    const multiToggleRoot = multiToggleContainer.querySelector('.flex-wrap') as HTMLElement
+    expect(multiToggleRoot.getAttribute('role')).toBe('group')
+    expect(multiToggleRoot.getAttribute('aria-label')).toBe('Condition')
+
+    const { container: roomsContainer } = render(
+      withProvider(<FilterRoomsRow selected={[]} onToggle={vi.fn()} ariaLabel="Rooms" />),
+    )
+    const roomsRoot = roomsContainer.querySelector('.flex-wrap') as HTMLElement
+    expect(roomsRoot.getAttribute('role')).toBe('group')
+    expect(roomsRoot.getAttribute('aria-label')).toBe('Rooms')
+  })
+})

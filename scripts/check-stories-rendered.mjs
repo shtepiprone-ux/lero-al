@@ -1157,11 +1157,6 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     // re-expressed on measured DOM: MantineCountButton's `iconOnlyBelow` collapse (Task 571)
     // renders NO `.mantine-Button-label` span when `children` is hidden — confirmed live in the
     // same dump — so requiring that span present is the real, DOM-observable substitute.
-    // "Button-group" exclusion (`[data-slot="button-group"]`) is re-expressed on Mantine's real
-    // `ButtonGroup` component, which renders `role="group"` (confirmed in
-    // `@mantine/core/esm/components/Button/ButtonGroup/ButtonGroup.mjs`) — currently zero live
-    // matches in Mantine scope (no `Button.Group` usage exists yet), same as the shadcn original
-    // was until a button group was actually rendered; preserved in intent, not invented.
     let fullWidthButtonsOk = true;
     let failingButtons = [];
     let checkedAnyButton = false;
@@ -1235,7 +1230,6 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
         let checkedAny = false;
         for (const el of document.querySelectorAll('.mantine-Button-root')) {
           if (el.offsetWidth <= 1) continue;
-          if (el.closest('[role="group"]')) continue;
           if (isChipSetMember(el)) continue;
           if (!el.querySelector('.mantine-Button-label')) continue;
           checkedAny = true;

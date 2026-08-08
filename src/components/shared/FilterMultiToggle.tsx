@@ -18,7 +18,7 @@ export function FilterMultiToggle({
   options, selected, onToggle, getLabel, className, ariaLabel,
 }: FilterMultiToggleProps) {
   return (
-    <div aria-label={ariaLabel} className={cn('flex flex-wrap gap-2', className)}>
+    <div {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} className={cn('flex flex-wrap gap-2', className)}>
       {options.map(opt => (
         <Button
           key={opt.value}

@@ -1938,6 +1938,42 @@ sites also picked up an unnamed `role="group"` with no `aria-label` passed (F2).
 
 Full detail, rendered evidence, and both R7 transcripts: `docs/sessions/2026-08-07-task724R-fullwidth-buttons-revision.md`.
 
+**CORRECTION (Task 726, Sprint 53, 2026-08-08) — the `[role="group"]` skip at `:1238` (711 F1, 724 F1) removed;
+`isChipSetMember` is unchanged.** The re-anchor comment above still described a `[role="group"]` skip as the
+Mantine-equivalent "button-group" exclusion, preserved "in intent" for a `Button.Group` usage that never existed in
+production. Task 724 demonstrated the actual defect this created: `role="group"` is an attribute any component
+author can hand-apply to any container, so the skip was an unauthenticated opt-out from the gate itself, not a
+structural exemption. 724R already replaced the *chip-row* exemption mechanism with the DOM-measured
+`isChipSetMember` predicate (above); Task 726 completed the fix by deleting the `[role="group"]` skip line and its
+justifying comment entirely — no replacement selector, attribute, or allowlist. `isChipSetMember`'s three
+conditions and thresholds are untouched.
+
+**Probe/restore proof (R2–R5).** Because no production `Button.Group` consumer exists to demonstrate the skip live
+(§2.2 of the Task 726 kickoff), the removal was proven with a reversible probe in `Button.stories.tsx`'s existing
+`Default` story: the leading-icon Button (normally full-width via its `Stack` parent's `align="stretch"`) was
+temporarily narrowed (`w={100}`) and wrapped in a plain `<div role="group">`. With the skip still present, all 12
+`Button/Default` cells (4 locales × 3 mobile viewports) resolved `true` — the narrowed button was invisible to the
+assertion. With the skip deleted and the probe unchanged, the same 12 cells resolved `false`, each naming the
+planted button by its translated label ("Save changes" / "Ruaj ndryshimet" / "Зберегти зміни" / "Salva modifiche").
+The probe was then reverted byte-identical to `HEAD` (`git hash-object` confirmed) before any further verification
+ran, per the permanent-Storybook-story creation gate — no `Button.Group` markup ships from this task.
+
+**§14.9.28 residual — the median-dominance exemption's sensitivity, worked (R9).** `isChipSetMember`'s dominance
+defense exempts a candidate button when `el.offsetWidth <= median * 3` AND `el.offsetWidth < rowWidth * 0.8`
+(`check-stories-rendered.mjs`, current `isChipSetMember`). This is deliberately permissive for genuine chip-set
+data (§14.9.28 above already documents why: real translated chip labels can vary several-fold in width), but the
+same permissiveness has a numeric ceiling worth stating rather than leaving implicit. Worked example, verified
+against the shipped constants: a 358px-wide chip row holding three real siblings of 200px, 100px and 90px sorts to
+`[90, 100, 200]`; the median of an odd-length set is the middle value, `100`. The 200px candidate then checks
+`200 <= 100 * 3` (`200 <= 300`, true) and `200 < 358 * 0.8` (`200 < 286.4`, true) — **exempted at 200/358 ≈ 56% of
+the row's own content width.** A single control can therefore legitimately dominate over half a chip row's width
+and still be read as chip-set membership, provided at least two other real siblings anchor a small-enough median.
+This is not a defect: it is the median's designed tolerance for one long-translation outlier among N≥3 genuinely
+chip-sized siblings (§14.9.28 above, "Dominance defense"). It is recorded here so a future reviewer measuring a
+wide "exempted" cell has the numeric bound rather than re-deriving it from the source on each occasion.
+
+Full detail, probe transcripts, and the R6 ARIA restoration: `docs/sessions/2026-08-08-task726-role-group-exclusion-and-chiprow-aria.md`.
+
 ---
 
 ### §14.9.29 — `check:click-shield` distinguishes transient scroll-clearable overlap from permanent occlusion (Task 725, Sprint 54, 2026-08-07)

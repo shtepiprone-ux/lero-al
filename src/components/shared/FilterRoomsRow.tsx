@@ -13,7 +13,7 @@ interface FilterRoomsRowProps {
 
 export function FilterRoomsRow({ selected, onToggle, ariaLabel }: FilterRoomsRowProps) {
   return (
-    <div aria-label={ariaLabel} className="flex gap-2 flex-wrap">
+    <div {...(ariaLabel ? { role: 'group', 'aria-label': ariaLabel } : {})} className="flex gap-2 flex-wrap">
       {ROOMS_OPTIONS.map(opt => {
         const strVal = String(opt)
         return (

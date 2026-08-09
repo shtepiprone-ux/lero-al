@@ -267,125 +267,226 @@ async function openScenarioOverlay(page, scenario) {
 // is not reachable and is discarded, which is exactly what makes a permanent trailing-edge
 // occlusion (content flush with the document's end, with no clearance before it) correctly stay
 // unclearable: the required offset would exceed `maxScrollY`.
+//
+// Task 729 R3 — below/above-fold band scan. `document.querySelectorAll(selector)` at :330 (now
+// inside `runBand` below) already enumerates every candidate in the DOM regardless of scroll
+// position; the only thing the pre-729 gate never did was SCROLL anywhere to hit-test the ones
+// whose centre fell outside the viewport at scrollY=0. A Task 729 census against the real app
+// (docs/sessions/<date>-task729-below-fold-blind-spot.md) found ~900 such candidates on this
+// app's homepage/listing pages — real footer navigation links, listing cards, and action buttons,
+// not decorative or off-canvas elements — so §7.3's second branch applies: coverage must be
+// closed, not just documented.
+//
+// The chosen mechanism scans the page in bands of one viewport-height each, from the start
+// scroll position down to the document's `maxScrollY`, re-running the SAME hit-test loop at each
+// band and skipping any candidate index already resolved (checked, violated, or cleared) in an
+// earlier band. Cost is proportional to `document.scrollHeight ÷ window.innerHeight` (a handful
+// of extra full-page evaluate() passes per cell) — NOT to the excluded-candidate count. The
+// rejected alternative was a per-candidate scroll+recheck (reusing phase 2's existing
+// `selectorIndex` lookup for every excluded candidate individually): correct, but O(excluded)
+// round trips — ~900 extra Playwright IPC calls on this app's pages per full scenario sweep,
+// against O(bands) ≈ 4-5 for the band scan. Band-scanning is horizontal-scroll-blind by
+// construction (it only calls `window.scrollTo`) — a candidate excluded because it sits to the
+// right of the viewport inside a nested horizontally-scrollable container (e.g. a lightbox
+// thumbnail strip) stays excluded after every band, which is correct: that is a different
+// mechanism (container scroll, not window scroll) and a different, unaddressed gap, named as a
+// finding rather than fixed here per R7.
 
 async function hitTestPage(page) {
   const startScrollY = await page.evaluate(() => window.scrollY);
+  const { innerHeight, maxScrollY: initialMaxScrollY } = await page.evaluate(() => ({
+    innerHeight: window.innerHeight,
+    maxScrollY: Math.max(0, document.documentElement.scrollHeight - window.innerHeight),
+  }));
 
-  // Phase 1 — hit-test at the current (start) scroll position; for any failure whose interceptor's
-  // nearest positioned ancestor is fixed/sticky, compute candidate clearing offsets from measured
-  // DOM (never guessed).
-  const phase1 = await page.evaluate(
-    ({ selector, overlaySelector, dialogSelector, predicateBody }) => {
-      const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
-      function realClass(el) {
-        const attr = el.getAttribute && el.getAttribute('class');
-        return attr ?? '';
-      }
-      function nearestPositionedAncestorOf(el) {
-        let p = el.parentElement;
-        while (p) {
-          if (window.getComputedStyle(p).position !== 'static') return p;
-          p = p.parentElement;
+  const scanOffsets = [startScrollY];
+  for (let offset = startScrollY + innerHeight; offset < initialMaxScrollY; offset += innerHeight) {
+    scanOffsets.push(offset);
+  }
+  if (initialMaxScrollY > startScrollY) scanOffsets.push(initialMaxScrollY);
+
+  const resolved = new Set();
+  const allResults = [];
+  let checked = 0;
+  let finalExcluded = [];
+
+  // One hit-test pass at whatever scroll offset the page is currently at, skipping any candidate
+  // index already resolved by an earlier band. Identical hit-test logic to the pre-729 single-pass
+  // phase 1, generalized to run more than once and to dedupe across runs.
+  const runBand = (page_) =>
+    page_.evaluate(
+      ({ selector, overlaySelector, dialogSelector, predicateBody, resolvedIndices }) => {
+        const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
+        const resolvedSet = new Set(resolvedIndices);
+        function realClass(el) {
+          const attr = el.getAttribute && el.getAttribute('class');
+          return attr ?? '';
         }
-        return null;
-      }
-      function describe(el) {
-        if (!el) return null;
-        const rect = el.getBoundingClientRect();
-        const cs = window.getComputedStyle(el);
-        const ancestor = nearestPositionedAncestorOf(el);
-        let nearestPositionedAncestor = null;
-        if (ancestor) {
-          const aRect = ancestor.getBoundingClientRect();
-          const aCs = window.getComputedStyle(ancestor);
-          nearestPositionedAncestor = {
-            tag: ancestor.tagName.toLowerCase(),
-            class: realClass(ancestor).slice(0, 120),
-            rect: { x: Math.round(aRect.x), y: Math.round(aRect.y), width: Math.round(aRect.width), height: Math.round(aRect.height) },
-            position: aCs.position,
-            zIndex: aCs.zIndex,
+        function nearestPositionedAncestorOf(el) {
+          let p = el.parentElement;
+          while (p) {
+            if (window.getComputedStyle(p).position !== 'static') return p;
+            p = p.parentElement;
+          }
+          return null;
+        }
+        function describe(el) {
+          if (!el) return null;
+          const rect = el.getBoundingClientRect();
+          const cs = window.getComputedStyle(el);
+          const ancestor = nearestPositionedAncestorOf(el);
+          let nearestPositionedAncestor = null;
+          if (ancestor) {
+            const aRect = ancestor.getBoundingClientRect();
+            const aCs = window.getComputedStyle(ancestor);
+            nearestPositionedAncestor = {
+              tag: ancestor.tagName.toLowerCase(),
+              class: realClass(ancestor).slice(0, 120),
+              rect: { x: Math.round(aRect.x), y: Math.round(aRect.y), width: Math.round(aRect.width), height: Math.round(aRect.height) },
+              position: aCs.position,
+              zIndex: aCs.zIndex,
+            };
+          }
+          return {
+            tag: el.tagName.toLowerCase(),
+            class: realClass(el).slice(0, 120),
+            text: (el.textContent ?? '').trim().slice(0, 40),
+            rect: { x: Math.round(rect.x), y: Math.round(rect.y), width: Math.round(rect.width), height: Math.round(rect.height) },
+            position: cs.position,
+            zIndex: cs.zIndex,
+            nearestPositionedAncestor,
           };
         }
-        return {
-          tag: el.tagName.toLowerCase(),
-          class: realClass(el).slice(0, 120),
-          text: (el.textContent ?? '').trim().slice(0, 40),
-          rect: { x: Math.round(rect.x), y: Math.round(rect.y), width: Math.round(rect.width), height: Math.round(rect.height) },
-          position: cs.position,
-          zIndex: cs.zIndex,
-          nearestPositionedAncestor,
-        };
-      }
-      function computeClearingOffsetCandidates(elRect, ancRect, maxScrollY) {
-        const elDocTop = elRect.top + window.scrollY;
-        const elDocBottom = elRect.bottom + window.scrollY;
-        const offsets = [];
-        const sClearBelow = elDocBottom - ancRect.top;
-        if (sClearBelow >= 0 && sClearBelow <= maxScrollY) offsets.push(Math.min(maxScrollY, Math.ceil(sClearBelow) + 1));
-        const sClearAbove = elDocTop - ancRect.bottom;
-        if (sClearAbove >= 0 && sClearAbove <= maxScrollY) offsets.push(Math.max(0, Math.floor(sClearAbove) - 1));
-        return offsets;
-      }
-
-      const candidates = Array.from(document.querySelectorAll(selector));
-      let checked = 0;
-      const results = [];
-      const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-
-      for (let i = 0; i < candidates.length; i++) {
-        const el = candidates[i];
-        const rect = el.getBoundingClientRect();
-        if (rect.width <= 0 || rect.height <= 0) continue;
-
-        const cx = rect.x + rect.width / 2;
-        const cy = rect.y + rect.height / 2;
-        if (cx < 0 || cy < 0 || cx >= window.innerWidth || cy >= window.innerHeight) continue;
-
-        checked++;
-        const hit = document.elementFromPoint(cx, cy);
-        if (!hit) {
-          results.push({ kind: 'violation', element: describe(el), interceptor: null, reason: 'elementFromPoint returned null inside the viewport' });
-          continue;
+        function computeClearingOffsetCandidates(elRect, ancRect, maxScrollY) {
+          const elDocTop = elRect.top + window.scrollY;
+          const elDocBottom = elRect.bottom + window.scrollY;
+          const offsets = [];
+          const sClearBelow = elDocBottom - ancRect.top;
+          if (sClearBelow >= 0 && sClearBelow <= maxScrollY) offsets.push(Math.min(maxScrollY, Math.ceil(sClearBelow) + 1));
+          const sClearAbove = elDocTop - ancRect.bottom;
+          if (sClearAbove >= 0 && sClearAbove <= maxScrollY) offsets.push(Math.max(0, Math.floor(sClearAbove) - 1));
+          return offsets;
         }
-        if (hit === el || el.contains(hit) || hit.contains(el)) continue;
+        // Task 729 — the transient/permanent classification below needs the nearest ancestor that
+        // is SPECIFICALLY fixed/sticky, not merely the nearest non-static one.
+        // `nearestPositionedAncestorOf` (Task 725, kept above for `describe()`'s informational
+        // report) stops at the FIRST non-static ancestor, which is routinely a `position:relative`
+        // wrapper (e.g. Mantine's ActionIcon/UnstyledButton root — `position:relative` on every
+        // instance, for its own loader overlay) sitting between the interceptor and a genuinely
+        // fixed/sticky ancestor (e.g. `.site-header { position: sticky }`) one or more levels
+        // further up. That made a real, scroll-clearable header/bottom-nav collision misclassify as
+        // a permanent violation — confirmed live (docs/sessions/<date>-task729-*.md) — exposed for
+        // the first time by the below-fold band scan, since pre-729 coverage never hit-tested a
+        // candidate whose interceptor had this exact ancestor shape. Walks past any number of
+        // non-fixed/sticky positioned ancestors; keyed purely on computed `position`, never a
+        // component name or author-applied attribute (Task 724 F1).
+        function nearestFixedOrStickyAncestorOf(el) {
+          let p = el.parentElement;
+          while (p) {
+            const pos = window.getComputedStyle(p).position;
+            if (pos === 'fixed' || pos === 'sticky') return p;
+            p = p.parentElement;
+          }
+          return null;
+        }
 
-        // N6 — contextual overlay exemption (Task 727 R1): exempt only when the CANDIDATE sits
-        // outside any active dialog. A candidate inside [role="dialog"]/[role="alertdialog"]
-        // intercepted by the overlay backdrop is never exempt — see N6_EXEMPT_PREDICATE_BODY.
-        if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) continue;
+        const candidates = Array.from(document.querySelectorAll(selector));
+        let checked = 0;
+        const results = [];
+        const excluded = [];
+        const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 
-        const ancestor = nearestPositionedAncestorOf(hit);
-        const ancPos = ancestor ? window.getComputedStyle(ancestor).position : null;
-        if (ancestor && (ancPos === 'fixed' || ancPos === 'sticky')) {
-          const ancRect = ancestor.getBoundingClientRect();
-          const offsets = computeClearingOffsetCandidates(rect, ancRect, maxScrollY);
-          if (offsets.length > 0) {
-            results.push({
-              kind: 'candidate-transient',
+        for (let i = 0; i < candidates.length; i++) {
+          if (resolvedSet.has(i)) continue;
+          const el = candidates[i];
+          const rect = el.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) continue;
+
+          const cx = rect.x + rect.width / 2;
+          const cy = rect.y + rect.height / 2;
+          if (cx < 0 || cy < 0 || cx >= window.innerWidth || cy >= window.innerHeight) {
+            // Task 729 R1/R2 — still outside the viewport AT THIS BAND. Recorded with identifying
+            // detail + document-space position; only the FINAL band's leftover list (a candidate
+            // outside the viewport at every scanned band) is reported as genuinely excluded — see
+            // the caller. `checked=N` must stop silently implying full-page coverage regardless of
+            // which §7.3 branch the measurement selects.
+            const reason =
+              cy >= window.innerHeight ? 'below-fold' : cy < 0 ? 'above-fold' : cx >= window.innerWidth ? 'right-of-viewport' : 'left-of-viewport';
+            excluded.push({
+              index: i,
+              reason,
               element: describe(el),
-              interceptor: describe(hit),
-              candidateOffsets: offsets,
-              selectorIndex: i,
+              docTop: Math.round(rect.top + window.scrollY),
+              docLeft: Math.round(rect.left + window.scrollX),
             });
             continue;
           }
+
+          checked++;
+          const hit = document.elementFromPoint(cx, cy);
+          if (!hit) {
+            results.push({ index: i, kind: 'violation', element: describe(el), interceptor: null, reason: 'elementFromPoint returned null inside the viewport' });
+            continue;
+          }
+          if (hit === el || el.contains(hit) || hit.contains(el)) {
+            results.push({ index: i, kind: 'clean' });
+            continue;
+          }
+
+          // N6 — contextual overlay exemption (Task 727 R1): exempt only when the CANDIDATE sits
+          // outside any active dialog. A candidate inside [role="dialog"]/[role="alertdialog"]
+          // intercepted by the overlay backdrop is never exempt — see N6_EXEMPT_PREDICATE_BODY.
+          if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) {
+            results.push({ index: i, kind: 'clean' });
+            continue;
+          }
+
+          const fixedOrStickyAncestor = nearestFixedOrStickyAncestorOf(hit);
+          if (fixedOrStickyAncestor) {
+            const ancRect = fixedOrStickyAncestor.getBoundingClientRect();
+            const offsets = computeClearingOffsetCandidates(rect, ancRect, maxScrollY);
+            if (offsets.length > 0) {
+              results.push({
+                index: i,
+                kind: 'candidate-transient',
+                element: describe(el),
+                interceptor: describe(hit),
+                candidateOffsets: offsets,
+                selectorIndex: i,
+              });
+              continue;
+            }
+          }
+
+          results.push({ index: i, kind: 'violation', element: describe(el), interceptor: describe(hit) });
         }
 
-        results.push({ kind: 'violation', element: describe(el), interceptor: describe(hit) });
+        return { checked, results, excluded };
+      },
+      {
+        selector: CANDIDATE_SELECTOR,
+        overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
+        dialogSelector: DIALOG_SELECTOR,
+        predicateBody: N6_EXEMPT_PREDICATE_BODY,
+        resolvedIndices: Array.from(resolved),
       }
+    );
 
-      return { checked, results, maxScrollY };
-    },
-    {
-      selector: CANDIDATE_SELECTOR,
-      overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
-      dialogSelector: DIALOG_SELECTOR,
-      predicateBody: N6_EXEMPT_PREDICATE_BODY,
+  for (const bandOffset of scanOffsets) {
+    if (bandOffset !== startScrollY) {
+      await page.evaluate((y) => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), bandOffset);
     }
-  );
+    const band = await runBand(page);
+    checked += band.checked;
+    for (const r of band.results) {
+      resolved.add(r.index);
+      if (r.kind !== 'clean') allResults.push(r);
+    }
+    finalExcluded = band.excluded;
+  }
 
-  const violations = phase1.results.filter((r) => r.kind === 'violation');
-  const transientCandidates = phase1.results.filter((r) => r.kind === 'candidate-transient');
+  const violations = allResults.filter((r) => r.kind === 'violation');
+  const transientCandidates = allResults.filter((r) => r.kind === 'candidate-transient');
   const cleared = [];
 
   // Phase 2 — for each transient candidate, actually scroll to its computed offset and re-hit-test
@@ -439,10 +540,15 @@ async function hitTestPage(page) {
   }
 
   // Restore the page's original scroll position — later candidates in this same call must be
-  // measured from the same start state, not wherever phase 2 left off.
+  // measured from the same start state, not wherever phase 2 or the band scan left off.
   await page.evaluate((y) => window.scrollTo({ top: y, left: 0, behavior: 'instant' }), startScrollY);
 
-  return { checked: phase1.checked, violations, cleared };
+  // Task 729 R1/R2 — only a candidate outside the viewport at EVERY scanned band (the final
+  // band's leftover list) is a genuine exclusion; strip the internal band-dedupe `index` before
+  // returning.
+  const excluded = finalExcluded.map(({ index, ...rest }) => rest);
+
+  return { checked, violations, cleared, excluded };
 }
 
 // ── Planted-violation self-test (--verify-gate) ────────────────────────────────
@@ -684,12 +790,12 @@ async function runChecks() {
           await page.waitForTimeout(500);
           openResult = await openScenarioOverlay(page, scenario);
           if (scenario.trigger && !openResult.dialogPresent) {
-            result = { checked: 0, violations: [], cleared: [], error: openResult.error ?? 'dialog did not appear' };
+            result = { checked: 0, violations: [], cleared: [], excluded: [], error: openResult.error ?? 'dialog did not appear' };
           } else {
             result = await hitTestPage(page);
           }
         } catch (err) {
-          result = { checked: 0, violations: [], cleared: [], error: String(err.message ?? err).slice(0, 200) };
+          result = { checked: 0, violations: [], cleared: [], excluded: [], error: String(err.message ?? err).slice(0, 200) };
         } finally {
           await page.close();
         }
@@ -713,23 +819,28 @@ async function runChecks() {
           continue;
         }
 
+        // Task 729 R2 — the skipped-candidate count is part of the gate's normal output on every
+        // branch below, not behind a debug flag: `checked=N` must stop implying full-page coverage
+        // regardless of which §7.3 fix branch this run precedes or follows.
+        const excludedSuffix = `, excluded(below/above-fold)=${cell.excluded.length}`;
+
         if (cell.checked === 0) {
           emptyCandidateCells++;
-          console.log(`   ${label}: ❌ EMPTY CANDIDATE SET (checked=0)${cell.error ? ` — ${cell.error}` : ''}`);
+          console.log(`   ${label}: ❌ EMPTY CANDIDATE SET (checked=0)${excludedSuffix}${cell.error ? ` — ${cell.error}` : ''}`);
         } else if (cell.violations.length > 0) {
-          console.log(`   ${label}: ❌ FAIL — checked=${cell.checked}, ${cell.violations.length} interception(s)${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          console.log(`   ${label}: ❌ FAIL — checked=${cell.checked}${excludedSuffix}, ${cell.violations.length} interception(s)${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
           for (const v of cell.violations) {
             console.log(`      blocked:      <${v.element.tag} class="${v.element.class}"> "${v.element.text}" @ (${v.element.rect.x},${v.element.rect.y} ${v.element.rect.width}x${v.element.rect.height})`);
             console.log(`      interceptor:  <${v.interceptor?.tag ?? '?'} class="${v.interceptor?.class ?? '?'}"> @ (${v.interceptor?.rect?.x},${v.interceptor?.rect?.y} ${v.interceptor?.rect?.width}x${v.interceptor?.rect?.height})`);
             if (v.reason) console.log(`      reason:       ${v.reason}`);
           }
         } else if (cell.cleared.length > 0) {
-          console.log(`   ${label}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          console.log(`   ${label}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}${excludedSuffix}${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
           for (const c of cell.cleared) {
             console.log(`      cleared:      <${c.element.tag} class="${c.element.class}"> "${c.element.text}" @ scrollY=${c.clearingScrollOffset} (fixed/sticky interceptor <${c.interceptor.tag} class="${c.interceptor.class}">, nearest positioned ancestor: <${c.interceptor.nearestPositionedAncestor?.tag ?? '?'} class="${c.interceptor.nearestPositionedAncestor?.class ?? '?'}"> @ (${c.interceptor.nearestPositionedAncestor?.rect?.x},${c.interceptor.nearestPositionedAncestor?.rect?.y} ${c.interceptor.nearestPositionedAncestor?.rect?.width}x${c.interceptor.nearestPositionedAncestor?.rect?.height}))`);
           }
         } else {
-          console.log(`   ${label}: ✅ PASS — checked=${cell.checked}, 0 interceptions${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          console.log(`   ${label}: ✅ PASS — checked=${cell.checked}${excludedSuffix}, 0 interceptions${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
         }
       }
     }
@@ -740,12 +851,39 @@ async function runChecks() {
   const totalChecked = cells.reduce((s, c) => s + c.checked, 0);
   const totalViolations = cells.reduce((s, c) => s + c.violations.length, 0);
   const totalCleared = cells.reduce((s, c) => s + c.cleared.length, 0);
+  // Task 729 R1/R2 — the below/above-fold exclusion total, ships in every run's own output.
+  const totalExcluded = cells.reduce((s, c) => s + c.excluded.length, 0);
 
   console.log('\n── Summary ──────────────────────────────────────────────────');
-  console.log(`   Scenarios: ${scenariosToRun.length}  Cells: ${cells.length}  Elements checked: ${totalChecked}  Interceptions: ${totalViolations}  Cleared (transient): ${totalCleared}  Empty-candidate cells: ${emptyCandidateCells}  Scenario-open failures: ${scenarioOpenFailures}`);
+  console.log(
+    `   Scenarios: ${scenariosToRun.length}  Cells: ${cells.length}  Elements checked: ${totalChecked}  Excluded (below/above-fold): ${totalExcluded}  Interceptions: ${totalViolations}  Cleared (transient): ${totalCleared}  Empty-candidate cells: ${emptyCandidateCells}  Scenario-open failures: ${scenarioOpenFailures}`
+  );
   for (const scenario of scenariosToRun) {
     const scenarioCells = cells.filter((c) => c.scenario === scenario.name);
-    console.log(`   [${scenario.name}] cells=${scenarioCells.length}  checked=${scenarioCells.reduce((s, c) => s + c.checked, 0)}  violations=${scenarioCells.reduce((s, c) => s + c.violations.length, 0)}`);
+    console.log(
+      `   [${scenario.name}] cells=${scenarioCells.length}  checked=${scenarioCells.reduce((s, c) => s + c.checked, 0)}  excluded=${scenarioCells.reduce((s, c) => s + c.excluded.length, 0)}  violations=${scenarioCells.reduce((s, c) => s + c.violations.length, 0)}`
+    );
+  }
+
+  // Task 729 R1 — optional full per-candidate census dump (identifying detail per scenario × cell),
+  // used to produce the one-time measurement this task's fix decision is based on. Never required
+  // for a normal CI run — R2's count above ships unconditionally; this is the instrumentation.
+  const CENSUS_FILE = process.env.CLICK_SHIELD_CENSUS_FILE;
+  if (CENSUS_FILE) {
+    const { writeFileSync, mkdirSync } = await import('node:fs');
+    const { dirname } = await import('node:path');
+    mkdirSync(dirname(CENSUS_FILE), { recursive: true });
+    const census = cells.map((c) => ({
+      scenario: c.scenario,
+      locale: c.locale,
+      route: c.route,
+      viewport: c.viewport,
+      checked: c.checked,
+      excludedCount: c.excluded.length,
+      excluded: c.excluded,
+    }));
+    writeFileSync(CENSUS_FILE, JSON.stringify({ totalExcluded, cells: census }, null, 2));
+    console.log(`   Census written: ${CENSUS_FILE} (totalExcluded=${totalExcluded})`);
   }
 
   if (scenarioOpenFailures > 0) {

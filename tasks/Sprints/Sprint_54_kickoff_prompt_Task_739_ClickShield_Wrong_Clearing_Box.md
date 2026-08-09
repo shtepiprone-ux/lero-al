@@ -5,6 +5,9 @@
 
 > ## ⚠️ REWORK 2026-08-09 — attempt 1 rejected. Read this before §4.
 >
+> **Attempt 2's executable brief is `Sprint_54_Task_739_rework_brief_attempt_2.md`** — narrowed scope,
+> set-based acceptance, checkpoint deltas. This banner states *why*; that file states *what to do*.
+>
 > Attempt 1 replaced `ancRect` with `hit.getBoundingClientRect()`. **Do not land that diff.** It fixes the
 > *overhang* case and breaks the *containment* case, and the net effect on a CI-blocking gate is worse:
 > base **4 → 9**, `cleared:` detail lines **39 → 15**.

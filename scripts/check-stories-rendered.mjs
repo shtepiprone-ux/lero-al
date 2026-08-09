@@ -51,7 +51,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkGeometryIntegrity } from './geometry-integrity.mjs';
-import { MANTINE_STORY_TITLE_PREFIXES } from './lib/mantine-story-scope.mjs';
+import { MANTINE_STORY_TITLE_PREFIXES, MANTINE_STORY_ENROLLED_TITLES, isCanonicalMantineTitle } from './lib/mantine-story-scope.mjs';
 
 // Crash guards: ensure the process always exits with a controlled integer
 // code, never -1 (OS kill / unhandled exception). Exit 2 = harness crash
@@ -441,20 +441,35 @@ const MANTINE_STORY_EXTRA_VIEWPORTS = {
     { name: 'wide-1440', width: 1440, height: 1024 },
     { name: 'wide-1536', width: 1536, height: 1024 },
   ],
+  // Task 678 — persists rendered proof of `SECTION_HEADING_FZ`'s xxl (≥1440) step for
+  // `HowItWorksSteps`, the 2nd of 5 SECTION_HEADING_FZ use sites (measured 2026-08-08) and the
+  // only one still unproven at ≥1024 that a story can actually reach (the other two are the
+  // route-level page.tsx headings — see mantine-story-scope.mjs enrolment note / R5 disposition).
+  // Single width, not the HomeSection/PopularLocationsView 1200/1440/1536 triplet: this token has
+  // no retired 1536 step to disprove here, so proving the xxl value renders at 1440 is the whole
+  // requirement (AC4) — a second width would be extra cells with no additional claim to prove.
+  HowItWorksSteps: [
+    { name: 'wide-1440', width: 1440, height: 1024 },
+  ],
 };
 
 /**
- * Reads the already-parsed Storybook index and returns every story whose title starts with ANY
- * of `MANTINE_STORY_TITLE_PREFIXES` (`Mantine/Primitives/*` and, since Task 607,
- * `Patterns/Mantine/*`), flagging the ones that need a scripted open-trigger click. Never
- * hardcodes story IDs — a future story under either prefix is covered automatically.
+ * Reads the already-parsed Storybook index and returns every story in canonical-Mantine scope
+ * per `isCanonicalMantineTitle` (scripts/lib/mantine-story-scope.mjs) — title starts with ANY of
+ * `MANTINE_STORY_TITLE_PREFIXES` (`Mantine/Primitives/*` and, since Task 607, `Patterns/Mantine/*`)
+ * OR the title is a `MANTINE_STORY_ENROLLED_TITLES` key (Task 678 per-story enrolment) — flagging
+ * the ones that need a scripted open-trigger click. Never hardcodes story IDs — a future story
+ * under either prefix, or a newly enrolled title, is covered automatically.
  */
 function discoverMantinePrimitiveStories(indexData) {
   return Object.values(indexData.entries)
-    .filter((e) => e.type === 'story' && MANTINE_STORY_TITLE_PREFIXES.some(p => (e.title ?? '').startsWith(p)))
+    .filter((e) => e.type === 'story' && isCanonicalMantineTitle(e.title ?? ''))
     .map((e) => {
       const matchedPrefix = MANTINE_STORY_TITLE_PREFIXES.find(p => e.title.startsWith(p));
-      const componentName = e.title.slice(matchedPrefix.length);
+      // Task 678 — a per-story enrolment has no prefix to strip; derive componentName from the
+      // title's final path segment instead, matching the naming style the prefix-derived name
+      // already uses (the story file's default-exported component name).
+      const componentName = matchedPrefix ? e.title.slice(matchedPrefix.length) : e.title.split('/').pop();
       return {
         id: e.id,
         label: `${e.title}/${e.name}`,
@@ -1515,9 +1530,9 @@ async function runAssert() {
     // index is stale/wrong) is a DIFFERENT failure mode than "index unreadable" above, and needs
     // its own loud, non-zero-exit error — never a silent pass.
     if (mantineStories.length === 0) {
-      console.error(`❌ Task 529/607 gate: discovered ZERO stories matching any of [${MANTINE_STORY_TITLE_PREFIXES.join(', ')}] from the built index.`);
-      console.error(`   Checked: ${indexPath} — filtering entries with type==='story' and title starting with one of the prefixes above.`);
-      console.error('   This is a hard error, not a skip — either the index is stale/wrong, or a title prefix no longer matches story titles.');
+      console.error(`❌ Task 529/607 gate: discovered ZERO stories matching any of [${MANTINE_STORY_TITLE_PREFIXES.join(', ')}] or MANTINE_STORY_ENROLLED_TITLES [${Object.keys(MANTINE_STORY_ENROLLED_TITLES).join(', ')}] from the built index.`);
+      console.error(`   Checked: ${indexPath} — filtering entries with type==='story' and isCanonicalMantineTitle(title).`);
+      console.error('   This is a hard error, not a skip — either the index is stale/wrong, or scope no longer matches story titles.');
       process.exitCode = 1;
       return;
     }
@@ -1541,7 +1556,7 @@ async function runAssert() {
     if (MANTINE_ONLY) {
       console.log(`Mantine selected: ${mantineStories.length}; non-Mantine excluded: ${totalStoriesInIndex - mantineStories.length}`);
     } else {
-      console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
+      console.log(`    Mantine gate stories (Task 529/607 ENFORCED, always runs incl. --fast, prefixes: ${MANTINE_STORY_TITLE_PREFIXES.join(', ')}; enrolled: ${Object.keys(MANTINE_STORY_ENROLLED_TITLES).join(', ') || 'none'}): ${mantineStories.length} (${totalMantineCells} cells @ 320/375/390/1024 × 4 locales${extraMantineCellCount > 0 ? ` + ${extraMantineCellCount} per-story extra-viewport cells (Task 573)` : ''}; ${mantineStories.filter(s => s.openTrigger).length} overlay stories asserted OPENED via scripted click)`);
       console.log(`    Geometry-only stories: ${geometryOnlyStories.length} (${totalGeometryCells} cells at 320/375/390 × 4 locales)`);
     }
     console.log('');

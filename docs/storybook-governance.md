@@ -2210,6 +2210,83 @@ channel delta, differing-pixel count, the attribution mechanism, and the same-tr
 assertion payloads verified identical across all 91 changed cells and a same-tree control at
 `.screenshots/rendered-assert/2026-07-31T12-29/`).
 
+### §14.9.30 — Per-story gate enrolment; `AdminUsersTable` + `HowItWorksSteps` xxl closed, `System/*` pair reserved (Task 678, Sprint 52.4, 2026-08-09)
+
+**The root cause.** `scripts/lib/mantine-story-scope.mjs` scoped all three CI-blocking gates
+(`check-stories-rendered.mjs`, `check-locale-leak.mjs`, `check-story-coverage.mjs`) by **title prefix only** — no
+mechanism existed to enrol a single story without its siblings. Measured 2026-08-08: adding an `Admin/` prefix to
+close 687 (`AdminUsersTable`) would have enrolled all **21** `Admin/*` stories, of which only **1**
+(`AdminUsersTable`, the sole component migrated to `@mantine/core`) is actually canonical Mantine — the other 20
+are still shadcn. Owner decision 2026-08-08 also retired the backlog's "14-width matrix enrolment" framing for
+699's xxl gap: a global `MANTINE_VIEWPORTS` expansion measured at 4024 cells / ~102 min against the code's own
+documented rationale for staying at 4 widths — **surgical, not global**.
+
+**The mechanism.** `MANTINE_STORY_ENROLLED_TITLES` — a `Record<exactTitle, reason>` alongside
+`MANTINE_STORY_TITLE_PREFIXES` in `mantine-story-scope.mjs`. `isCanonicalMantineTitle()` now returns true iff the
+title starts with a prefix **or** is an exact key in this map — equality only, never prefix/substring. An empty map
+leaves the function byte-identical to the old prefix-only check (proven by unit test, `scripts/__tests__/mantine-story-scope.test.ts`).
+`check-locale-leak.mjs` and `check-story-coverage.mjs` already delegated fully to `isCanonicalMantineTitle()` and
+needed no code change; `check-stories-rendered.mjs`'s `discoverMantinePrimitiveStories()` previously re-implemented
+the prefix check locally (`MANTINE_STORY_TITLE_PREFIXES.some(p => title.startsWith(p))`) — switched to call the
+shared function, closing that drift.
+
+**Spent on `AdminUsersTable` (687).** Enrolled with a reason at its `MANTINE_STORY_ENROLLED_TITLES` entry. Verified
+2026-08-09: of the 21 `Admin/*` titles, exactly 1 (`Admin/AdminUsersTable`) resolves in scope, the other 20 do not
+(`K2-scope-delta.log`). `check:story-coverage`'s canonical count moved 67→68 (exactly +1). The rendered gate's
+`--mantine-only` denominator moved 1184→1204 (+16, the predicted single-story cost — the *cost estimate* was
+right, only the *mechanism* to enrol just one story was missing). Two of those 16 cells are new FAILs:
+`Admin/AdminUsersTable/Default` × `sq`/`uk` × `mobile-320` — horizontal overflow, the "Verified agents" tab pushed
+offscreen at 320px for the two longest-string locales. Real, newly-exposed defect; not remediated by this task
+(A2 — enrolling proves scope, fixing an admin component's responsive layout is separate work).
+`check:locale-leak --mantine-only` also newly fails on `Admin/AdminUsersTable`: 13 leaks, of which **2 are a real
+i18n gap** (`admin.users` namespace, `sq` locale: `role_admin`/`role_moderator` untranslated, literally identical
+to the English source across every namespace duplicate in `messages/sq.json`) and **11 are fixture proper nouns**
+("Tirana Real Estate Group", "Gentiana Hoxha", the ticket-number composite, "Online") now visible for the first
+time because `Admin/` was never scanned before — legitimately locale-invariant, just absent from the detector's
+allowlist. Both findings are escalated, not fixed, per A2.
+
+**Spent on `HowItWorksSteps` (699's xxl gap, symptom 1 of 3).** `MANTINE_STORY_EXTRA_VIEWPORTS.HowItWorksSteps =
+[{ name: 'wide-1440', width: 1440, height: 1024 }]` — single width, not the `HomeSection`/`PopularLocationsView`
+1200/1440/1536 triplet, because there is no retired 1536 step to disprove here; proving the xxl value renders at
+1440 is the whole AC4 requirement. +4 cells (1 story × 4 locales × 1 width), all PASS. Of `SECTION_HEADING_FZ`'s 5
+use sites, this is now the 2nd proven at ≥1440 (`PopularLocationsView` was already proven by Task 669).
+
+**The `System/*` pair (R5/OQ1) — resolved as two different dispositions, not one.** The kickoff named both
+`FeaturedListingsView` (`System/FeaturedListings`) and the page.tsx `{tl('latest')}` heading (labelled by its
+nearest story, `System/LatestListings`) as candidates. Investigation found they are not symmetric:
+
+- **`System/LatestListings` cannot prove its associated heading at all.** `LatestListingsView.tsx` does not render
+  a `<Title>` — the `{tl('latest')}` heading lives directly in `src/app/[locale]/page.tsx:50`, structurally
+  identical to the Agent CTA heading at `page.tsx:78` (route-level, no story renders it, already named out-of-scope
+  in the 678 kickoff §8, owned by Task 667's route inventory). Enrolling `System/LatestListings` would add cells
+  and prove nothing — the story's render tree never includes that heading. Disposition: **out of scope, extends
+  the existing route-level exclusion to both `page.tsx` sites explicitly**, no task number needed.
+- **`System/FeaturedListings` genuinely can prove its heading** — `FeaturedListingsView.tsx` renders
+  `<Title fz={SECTION_HEADING_FZ}>` internally, inside the story's own tree. Enrolling it plus a `wide-1440` extra
+  viewport (mirroring this task's `HowItWorksSteps` treatment) would close a 4th of the 5 `SECTION_HEADING_FZ`
+  sites. Not spent here — the 678 objective names only `AdminUsersTable` and `HowItWorksSteps` as "the two things"
+  this per-story mechanism exists to unblock; `System/*` was always OQ1, and reserving is an explicitly acceptable
+  disposition. **Reserved as Task 735** (`docs/backlog.md` task registry — 735 was the documented next-free number
+  at kickoff time, not a Sonnet-invented one).
+
+**Negative proof (R6/AC6).** `src/stories/Containers.stories.tsx`'s title was temporarily changed to
+`Admin/AdminUsersTableSibling` — a deliberate near-miss of the enrolled exact title, testing that matching is by
+string equality, never prefix/substring/adjacency. With the plant present, all three gates' scoped counts moved by
+exactly the `AdminUsersTable` contribution (e.g. rendered/locale-leak discovery: 71→72, not 73) and the plant title
+appears in none of the three gates' output. Reverted; `git hash-object` matches the pre-plant value, path absent
+from `git status --porcelain`, both captured after the final gate run. Evidence: `.screenshots/task678-evidence/`
+(local-only, D6) `K4-negative-plant.log`, `K5-restore.txt`.
+
+**Final `--mantine-only` matrix**, both PASS/FAIL/AMBIGUOUS distribution and total moved by exactly the
+`AdminUsersTable` + `HowItWorksSteps` contribution (+20 cells: +16 `AdminUsersTable`, +4 `HowItWorksSteps`); every
+moved cell is attributed above — see `docs/sessions/2026-08-09-task678-per-story-gate-enrolment.md` for the exact
+before/after figures.
+
+`MANTINE_VIEWPORTS` (`check-stories-rendered.mjs:392`) is byte-identical — no global viewport expansion, per the
+owner decision this section opens with.
+
+Session: `docs/sessions/2026-08-09-task678-per-story-gate-enrolment.md`.
+
 ---
 
 ## §15 — Story Coverage Gate (Task 398, 2026-06-06; rewritten Task Q0R, 2026-07-18)

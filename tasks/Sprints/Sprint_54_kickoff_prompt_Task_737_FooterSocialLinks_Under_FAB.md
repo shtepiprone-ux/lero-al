@@ -1,12 +1,35 @@
 # Task 737 — The footer's social links sit under the bottom-nav FAB
 
 **Sprint 54 — Mobile bottom-nav overlay collision. Closes the sprint.**
-**Status:** `KICKOFF FILED`. **QA profile:** `Q3` Full Visual Matrix.
+**Status:** ⛔ `BLOCKED` — closed 2026-08-09. **§3.2's root cause is REFUTED — read the correction below before this document.**
+**QA profile:** `Q3` Full Visual Matrix.
 **Companions:** `Sprint_54_Task_737_execution_contract.md` · `Sprint_54_Task_737_rule_compliance_ledger.md`.
 
-> **Ordering is load-bearing.** Task 727's `click-shield` CI job is blocking but cannot run until the owner adds
-> the Supabase repository secrets. This defect is what that job will report the moment it can run. **737 must land
-> before those secrets**, or every PR blocks on it. That is the reason this task is P1.
+> ## ⚠️ CORRECTION 2026-08-09 — this kickoff's premise was wrong. Do not execute it.
+>
+> **There is no product defect.** The executor measured live, refuted §3.2, and returned `BLOCKED`. The
+> orchestrator confirmed the refutation in source and accepted it. **The kickoff, not the executor, was wrong.**
+>
+> - §3.2 asserted `<main>`'s `pb={{ base: 'var(--space-14)' }}` (56px) was the footer's clearance. But
+>   `<Footer />` is a **sibling** of `<main>` (`src/app/[locale]/layout.tsx:53`), not a child — that padding
+>   never applied to it and never could. The footer's own clearance is `FooterView.module.css:35` (56px) +
+>   `:46` (48px) = **104px**. The links clear the FAB by ~44px at rest and hit-test as reachable, including in
+>   the six "failing" cells.
+> - The 6 violations are **false positives of a gate defect**: `scripts/check-click-shield.mjs:446-447` computes
+>   the clearing offset from the fixed/sticky **ancestor's** box (`.navBar`, 756px) while the element that
+>   actually occludes is `.fabLink`, which overhangs it by design (`margin-top: calc(var(--space-3) * -1)`,
+>   measured 745px). The ~11px undershoot makes a scroll-clearable link read as **permanent**.
+> - **Real work → Task 739**, which fixes the box the gate measures. Full verdict and reasoning:
+>   `docs/backlog-archive.md` (2026-08-09 row) and `docs/sessions/2026-08-09-task737-footer-social-links-under-fab.md`.
+> - **The ordering claim below transferred to 739.** 737 is not a precondition for the Supabase secrets; 739 is.
+>
+> The original text is kept verbatim for the record — a kickoff that was refuted is evidence, not a mistake to
+> erase. Read everything after this banner as a hypothesis that was tested and failed.
+
+> **~~Ordering is load-bearing.~~** *(superseded — see the correction above.)* Task 727's `click-shield` CI job
+> is blocking but cannot run until the owner adds the Supabase repository secrets. This defect is what that job
+> will report the moment it can run. **737 must land before those secrets**, or every PR blocks on it. That is the
+> reason this task is P1.
 
 ---
 

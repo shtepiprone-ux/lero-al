@@ -58,6 +58,12 @@ const VERIFY_GATE = args.includes('--verify-gate');
 const BASE_URL = process.env.BASE_URL ?? 'http://localhost:3000';
 const routeArg = args.find((a) => a.startsWith('--route='));
 const SINGLE_ROUTE = routeArg ? routeArg.slice('--route='.length) : null;
+const scenarioArg = args.find((a) => a.startsWith('--scenario='));
+// Task 727 R5/R6 — no flag = every scenario, full 16-cell matrix each (the actual
+// `npm run check:click-shield` invocation the CI job in R7 runs). `--scenario=` narrows to one,
+// for local debugging and for producing the per-scenario evidence logs this task's checkpoints
+// require (K3-modal.log / K4-drawer.log) without re-running the other two.
+const SINGLE_SCENARIO = scenarioArg ? scenarioArg.slice('--scenario='.length) : null;
 
 // Crash guard — always exit with a controlled integer code, never -1 (Task 723, same convention
 // as check-stories-rendered.mjs).
@@ -87,6 +93,129 @@ const CANDIDATE_SELECTOR = 'a, button, [role="button"], input, select';
 // node_modules/@mantine/core/esm/components/Overlay/Overlay.mjs — getStyles("root") emits the
 // stable `.mantine-Overlay-root` class). N6 exemption target.
 const INTENTIONAL_OVERLAY_SELECTOR = '.mantine-Overlay-root';
+
+// Task 727 R1 — every currently-live dialog surface (Modal.Content, Drawer.Content) renders
+// role="dialog"; role="alertdialog" is covered by the same rule per the owner decision (§3.1
+// OQ3) even though nothing in this repo renders it today (confirmed 2026-08-09 —
+// `grep -rc alertdialog src/` returns 0). Implemented, not exercised live.
+const DIALOG_SELECTOR = '[role="dialog"], [role="alertdialog"]';
+
+// Task 727 R1/R2 — the contextual N6 predicate, written ONCE here and reconstructed identically
+// inside BOTH hit-test page.evaluate() closures below (phase-1 direct path, formerly :223; phase-2
+// scroll-recheck path, formerly :276) via `new Function(...)`. Playwright serializes each
+// page.evaluate() callback independently — a Node-side function declared in this module is not
+// reachable inside the browser context, so a plain shared JS function cannot be called from both
+// closures directly (this file's existing convention already duplicates its DOM helpers for the
+// identical reason, see the hitTestPage docstring above). Passing this identical string as an
+// evaluate() argument and rebuilding the function from it at both sites is what makes the two
+// call sites agree BY CONSTRUCTION rather than by two hand-copied blocks that can drift apart
+// (the Task 725 §14.9.29 lesson: the scroll path and the direct path must not merely resemble
+// each other).
+//
+// The rule (owner decision, Task 727 kickoff §3.1, closing OQ3, quoted verbatim): a backdrop MAY
+// still exempt a candidate that sits OUTSIDE any active dialog — a modal/drawer intentionally
+// intercepts background-page clicks while open, and that remains allowed. A candidate INSIDE an
+// active [role="dialog"]/[role="alertdialog"] is NEVER exempt by this rule: if the interceptor at
+// that pixel is (or descends from) the overlay backdrop, the dialog's own backdrop is eating its
+// own control, which is the exact defect this task exists to catch (confirmed in source, kickoff
+// §3.2 — the prior unconditional form tested only the interceptor, never where the candidate
+// itself sat). Keyed entirely on measured DOM structure (`Element.closest()` against a real
+// rendered role attribute) — never a component name, route, or author-appliable class (Task 724
+// F1: an exemption an author can produce by adding something to their own markup is an opt-out,
+// not a rule; role="dialog" is Mantine's own accessibility contract for these primitives, not
+// something a consumer opts into per-instance to silence this gate).
+// Task 727 R1/R4 — driving a real Drawer live (session evidence, K4-drawer.log first pass)
+// proved the interceptor side of this rule cannot stay `.mantine-Overlay-root` alone: a real
+// open Drawer/Modal's own PANEL content (its header, its form fields — never just the semi-
+// transparent backdrop div) routinely paints over background-page elements too, especially the
+// mobile bottom-sheet variant, which can cover most of the viewport. Exempting only backdrop hits
+// reddened 136/324 candidates across a single 16-cell real-Drawer sweep — entirely background
+// elements the Drawer's panel visually sits on top of, not a single one of them reachable by a
+// real user while the Drawer is open. That is exactly the "turns every open modal red" failure R4
+// exists to prevent (N6's own warning: an unconditional-in-the-other-direction gate "will be
+// switched off within a week"). The interceptor side of the exemption therefore matches EITHER
+// the backdrop OR the active dialog's own content — an open dialog legitimately owns everything
+// it visually covers, backdrop or panel. The candidate side is unchanged and is what actually
+// implements R1/R3: a candidate INSIDE the dialog is never exempt, regardless of which of the two
+// the interceptor is (even the backdrop intercepting the dialog's own control is a violation).
+const N6_EXEMPT_PREDICATE_BODY = `
+  var hitIsOverlaySystem = !!(hit.closest(overlaySelector) || hit.closest(dialogSelector));
+  if (!hitIsOverlaySystem) return false;
+  return el.closest(dialogSelector) === null;
+`;
+
+// Task 727 R5 — the real listing this repository has today for the Modal scenario (verified live
+// 2026-08-09: `/en/listings/11-mr7ucly4` renders `.listing-gallery` with 5 images and its cover
+// opens `LightboxView`, a real Modal.Root/Modal.Content role="dialog"). The Task 612 fixture slug
+// (`test-7-molyl9c8`, used by scripts/task612-qa-listinggallery-lightbox-portal.mjs, 2026-07-16)
+// no longer resolves — confirmed 404 today — so listing slugs are not a stable long-term fixture;
+// overridable via CLICK_SHIELD_MODAL_SLUG for whoever next needs to replace this one. See the
+// Task 727 session log for the full repository search this scenario choice is based on: NO
+// production Mantine Modal is reachable from the homepage at all — MantineModal
+// (design-system/mantine/patterns/MantineModal.tsx) has zero production consumers, so the
+// homepage-only route set this gate used before this task cannot exercise a Modal scenario.
+const MODAL_SCENARIO_SLUG = process.env.CLICK_SHIELD_MODAL_SLUG ?? '11-mr7ucly4';
+
+// Task 727 R5 — three real scenarios driven against the running app (replacing the synthetic
+// self-test as the source of "did the fix work" evidence for CI). `trigger` is a Playwright
+// locator clicked before the hit-test runs; `null` for the untouched base scenario. Every
+// triggered scenario's cell is a HARD FAILURE (see openScenarioOverlay below) if the trigger
+// cannot be found/clicked or `[role="dialog"]` never appears — a scenario that silently failed to
+// open the overlay would report zero violations and look exactly like a clean pass, which is the
+// false-success shape this task's own kickoff (A2) pre-declares as the likeliest way this work
+// goes wrong.
+const SCENARIOS = [
+  {
+    name: 'base',
+    label: 'Base route (untouched)',
+    route: (locale) => `/${locale}`,
+    trigger: null,
+  },
+  {
+    name: 'drawer',
+    label: 'AuthSheet open (Mantine Drawer, role="dialog")',
+    // AuthSheet (src/modules/auth/components/AuthSheet.tsx) is a real controlled MantineDrawer
+    // mounted globally via Header.tsx on every route, including the homepage. Its trigger is the
+    // header Favorites heart ActionIcon — the ONE control in HeaderActions that opens it and
+    // stays visible at every click-shield viewport while logged out (the header's own
+    // login/register Buttons are `visibleFrom="md"`, invisible at 320/375/390 — see
+    // HeaderActions.tsx). Selector keys on lucide's stable icon class, not the translated
+    // aria-label, so it works identically across all 4 locales.
+    route: (locale) => `/${locale}`,
+    trigger: 'header button:has(svg.lucide-heart)',
+  },
+  {
+    name: 'modal',
+    label: 'Listing lightbox open (Mantine Modal, role="dialog")',
+    // LightboxView (src/modules/listings/components/LightboxView.tsx) — the ONLY production
+    // Mantine Modal (Modal.Root/Modal.Content, role="dialog") in the app. Reuses the Task 612
+    // precedent (scripts/task612-qa-listinggallery-lightbox-portal.mjs) for driving this exact
+    // component against a real listing rather than inventing a synthetic fixture for it.
+    route: (locale) => `/${locale}/listings/${MODAL_SCENARIO_SLUG}`,
+    trigger: '.listing-gallery .cursor-zoom-in',
+  },
+];
+
+// Opens a scenario's trigger (if any) and proves `[role="dialog"]`/`[role="alertdialog"]` is
+// genuinely present in the DOM before the caller hit-tests — never inferred from "the click
+// didn't throw". Returns `dialogPresent: false` (a hard scenario failure at the call site, not a
+// soft skip) when the trigger is missing, unclickable, or no dialog appears in time.
+async function openScenarioOverlay(page, scenario) {
+  if (!scenario.trigger) return { opened: true, dialogPresent: false, error: null };
+  const trigger = page.locator(scenario.trigger).first();
+  if ((await trigger.count()) === 0) {
+    return { opened: false, dialogPresent: false, error: `trigger not found: ${scenario.trigger}` };
+  }
+  try {
+    await trigger.click({ timeout: 10000 });
+    await page.waitForSelector(DIALOG_SELECTOR, { timeout: 5000 });
+  } catch (err) {
+    return { opened: false, dialogPresent: false, error: String(err.message ?? err).slice(0, 200) };
+  }
+  await page.waitForTimeout(300);
+  const dialogPresent = await page.evaluate((sel) => !!document.querySelector(sel), DIALOG_SELECTOR);
+  return { opened: true, dialogPresent, error: null };
+}
 
 // ── Core hit-test, runs inside the page ────────────────────────────────────────
 //
@@ -146,7 +275,8 @@ async function hitTestPage(page) {
   // nearest positioned ancestor is fixed/sticky, compute candidate clearing offsets from measured
   // DOM (never guessed).
   const phase1 = await page.evaluate(
-    ({ selector, overlaySelector }) => {
+    ({ selector, overlaySelector, dialogSelector, predicateBody }) => {
+      const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
       function realClass(el) {
         const attr = el.getAttribute && el.getAttribute('class');
         return attr ?? '';
@@ -219,8 +349,10 @@ async function hitTestPage(page) {
         }
         if (hit === el || el.contains(hit) || hit.contains(el)) continue;
 
-        // N6 — genuinely intentional overlay exemption (Mantine Modal/Drawer backdrop).
-        if (hit.closest(overlaySelector)) continue;
+        // N6 — contextual overlay exemption (Task 727 R1): exempt only when the CANDIDATE sits
+        // outside any active dialog. A candidate inside [role="dialog"]/[role="alertdialog"]
+        // intercepted by the overlay backdrop is never exempt — see N6_EXEMPT_PREDICATE_BODY.
+        if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) continue;
 
         const ancestor = nearestPositionedAncestorOf(hit);
         const ancPos = ancestor ? window.getComputedStyle(ancestor).position : null;
@@ -244,7 +376,12 @@ async function hitTestPage(page) {
 
       return { checked, results, maxScrollY };
     },
-    { selector: CANDIDATE_SELECTOR, overlaySelector: INTENTIONAL_OVERLAY_SELECTOR }
+    {
+      selector: CANDIDATE_SELECTOR,
+      overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
+      dialogSelector: DIALOG_SELECTOR,
+      predicateBody: N6_EXEMPT_PREDICATE_BODY,
+    }
   );
 
   const violations = phase1.results.filter((r) => r.kind === 'violation');
@@ -258,7 +395,8 @@ async function hitTestPage(page) {
     let resolvedOffset = null;
     for (const offset of tc.candidateOffsets) {
       const recheck = await page.evaluate(
-        ({ selector, selectorIndex, offset, overlaySelector }) => {
+        ({ selector, selectorIndex, offset, overlaySelector, dialogSelector, predicateBody }) => {
+          const isN6Exempt = new Function('el', 'hit', 'overlaySelector', 'dialogSelector', predicateBody);
           // `behavior: 'instant'` deliberately overrides any page-level `scroll-behavior: smooth`
           // CSS (confirmed present on this project's `<html>`) — a smooth scroll animates
           // asynchronously, so a synchronous re-read immediately after a bare `scrollTo(x, y)`
@@ -273,10 +411,20 @@ async function hitTestPage(page) {
           const hit = document.elementFromPoint(cx, cy);
           if (!hit) return { cleared: false };
           if (hit === el || el.contains(hit) || hit.contains(el)) return { cleared: true };
-          if (hit.closest(overlaySelector)) return { cleared: true };
+          // N6 — contextual overlay exemption (Task 727 R1/R2): same shared predicate as
+          // hitTestPage's phase-1 direct path, reconstructed identically from the same source
+          // string so this scroll-recheck path cannot silently diverge from it (§14.9.29).
+          if (isN6Exempt(el, hit, overlaySelector, dialogSelector)) return { cleared: true };
           return { cleared: false };
         },
-        { selector: CANDIDATE_SELECTOR, selectorIndex: tc.selectorIndex, offset, overlaySelector: INTENTIONAL_OVERLAY_SELECTOR }
+        {
+          selector: CANDIDATE_SELECTOR,
+          selectorIndex: tc.selectorIndex,
+          offset,
+          overlaySelector: INTENTIONAL_OVERLAY_SELECTOR,
+          dialogSelector: DIALOG_SELECTOR,
+          predicateBody: N6_EXEMPT_PREDICATE_BODY,
+        }
       );
       if (recheck.cleared) {
         resolvedOffset = offset;
@@ -364,6 +512,45 @@ const PERMANENT_PAGE_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Task 727 R10/AC8 — three fixtures proving the contextual N6 rule itself (not the pre-existing
+// transient/permanent scroll mechanism above). All three keep the shield as a plain sibling
+// `<div>` after the dialog in document order with no CSS transform anywhere on the page, so plain
+// DOM-order paint stacking puts it on top — no coordinate-drift caveat here (see the live-plant
+// note in the session log for why a REAL Mantine Drawer/Modal needs the shield appended to
+// document.body instead: its content animates via `transform`, which becomes the containing
+// block for `position:fixed` descendants too).
+const DIALOG_VIOLATION_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (contextual N6 — inside dialog, violation)</title></head>
+<body style="margin:0">
+  <div role="dialog" aria-modal="true" style="position:fixed;top:40px;left:40px;width:200px;height:150px;">
+    <button id="target" style="position:absolute;top:20px;left:20px;width:120px;height:40px;">Click me</button>
+  </div>
+  <div class="mantine-Overlay-root" style="position:fixed;inset:0;background:transparent;"></div>
+</body>
+</html>`;
+
+const DIALOG_CLEAN_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (contextual N6 — inside dialog, no shield)</title></head>
+<body style="margin:0">
+  <div role="dialog" aria-modal="true" style="position:fixed;top:40px;left:40px;width:200px;height:150px;">
+    <button id="target" style="position:absolute;top:20px;left:20px;width:120px;height:40px;">Click me</button>
+  </div>
+</body>
+</html>`;
+
+const ALERTDIALOG_VIOLATION_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (contextual N6 — inside alertdialog, violation)</title></head>
+<body style="margin:0">
+  <div role="alertdialog" aria-modal="true" style="position:fixed;top:40px;left:40px;width:200px;height:150px;">
+    <button id="target" style="position:absolute;top:20px;left:20px;width:120px;height:40px;">Click me</button>
+  </div>
+  <div class="mantine-Overlay-root" style="position:fixed;inset:0;background:transparent;"></div>
+</body>
+</html>`;
+
 async function runGateSelfTest() {
   console.log('\n🔬 Click-shield gate self-test (--verify-gate)');
   console.log('   Purpose: prove the gate is NOT a no-op by planting the Task 723 defect shape.\n');
@@ -382,6 +569,9 @@ async function runGateSelfTest() {
       else if (req.url === '/overlay-exempt') res.end(OVERLAY_EXEMPT_PAGE_HTML);
       else if (req.url === '/transient') res.end(TRANSIENT_PAGE_HTML);
       else if (req.url === '/permanent') res.end(PERMANENT_PAGE_HTML);
+      else if (req.url === '/dialog-violation') res.end(DIALOG_VIOLATION_PAGE_HTML);
+      else if (req.url === '/dialog-clean') res.end(DIALOG_CLEAN_PAGE_HTML);
+      else if (req.url === '/alertdialog-violation') res.end(ALERTDIALOG_VIOLATION_PAGE_HTML);
       else res.end(CLEAN_PAGE_HTML);
     });
     server.listen(0, '127.0.0.1', () => {
@@ -403,6 +593,17 @@ async function runGateSelfTest() {
     // differs, which is exactly what should decide clearable vs. not.
     { url: `${baseUrl}/transient`, label: 'R12 arm② — fixed bar, tall page (scroll clears it)', expectFail: false, expectCleared: true },
     { url: `${baseUrl}/permanent`, label: 'R12 arm① — fixed bar, page height == viewport (no scroll offset exists)', expectFail: true },
+    // Task 727 R1/R3/R10 — the contextual N6 rule itself. A candidate INSIDE an active dialog is
+    // never exempt, even when the interceptor is the genuine `.mantine-Overlay-root` backdrop
+    // (this is the exact defect the task exists to close — a modal whose own backdrop covers its
+    // own button used to pass silently); a candidate inside a dialog with nothing shielding it
+    // stays clean (proves the dialog-context check alone introduces no false positive); the same
+    // rule covers `[role="alertdialog"]` per the owner decision (§3.1), even though nothing in
+    // this repo renders that role live today (§3.5) — implemented and self-tested, not claimed as
+    // exercised against the real app.
+    { url: `${baseUrl}/dialog-violation`, label: 'Contextual N6 — candidate INSIDE [role="dialog"] intercepted by its own Overlay backdrop (must now FAIL)', expectFail: true },
+    { url: `${baseUrl}/dialog-clean`, label: 'Contextual N6 — candidate INSIDE [role="dialog"], no shield (must PASS)', expectFail: false },
+    { url: `${baseUrl}/alertdialog-violation`, label: 'Contextual N6 — candidate INSIDE [role="alertdialog"] intercepted by Overlay (rule covers both roles, must FAIL)', expectFail: true },
   ];
 
   let allOk = true;
@@ -448,53 +649,88 @@ async function runChecks() {
     process.exit(1);
   });
 
-  const routes = SINGLE_ROUTE ? [SINGLE_ROUTE] : LOCALES.map((l) => `/${l}`);
+  const scenariosToRun = SINGLE_SCENARIO ? SCENARIOS.filter((s) => s.name === SINGLE_SCENARIO) : SCENARIOS;
+  if (scenariosToRun.length === 0) {
+    console.error(`❌ unknown --scenario= value "${SINGLE_SCENARIO}" — expected one of: ${SCENARIOS.map((s) => s.name).join(', ')}`);
+    process.exit(2);
+  }
 
   console.log('\n🔍 Click-shield hit-test gate');
   console.log(`   Target: ${BASE_URL}`);
-  console.log(`   Routes: ${routes.join(', ')}`);
+  console.log(`   Scenarios: ${scenariosToRun.map((s) => s.name).join(', ')}`);
+  console.log(`   Locales: ${LOCALES.join(', ')}`);
   console.log(`   Viewports: ${VIEWPORTS.map((v) => v.name).join(', ')}`);
   console.log('');
 
   const browser = await chromium.launch({ headless: true });
   const cells = [];
   let emptyCandidateCells = 0;
+  let scenarioOpenFailures = 0;
 
-  for (const route of routes) {
-    for (const vp of VIEWPORTS) {
-      const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
-      const url = `${BASE_URL}${route}`;
-      let result;
-      try {
-        await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-        await page.waitForTimeout(500);
-        result = await hitTestPage(page);
-      } catch (err) {
-        result = { checked: 0, violations: [], cleared: [], error: String(err.message ?? err).slice(0, 200) };
-      } finally {
-        await page.close();
-      }
-
-      const cell = { route, viewport: vp.name, width: vp.width, ...result };
-      cells.push(cell);
-
-      if (cell.checked === 0) {
-        emptyCandidateCells++;
-        console.log(`   ${route} × ${vp.name}: ❌ EMPTY CANDIDATE SET (checked=0)${cell.error ? ` — ${cell.error}` : ''}`);
-      } else if (cell.violations.length > 0) {
-        console.log(`   ${route} × ${vp.name}: ❌ FAIL — checked=${cell.checked}, ${cell.violations.length} interception(s)`);
-        for (const v of cell.violations) {
-          console.log(`      blocked:      <${v.element.tag} class="${v.element.class}"> "${v.element.text}" @ (${v.element.rect.x},${v.element.rect.y} ${v.element.rect.width}x${v.element.rect.height})`);
-          console.log(`      interceptor:  <${v.interceptor?.tag ?? '?'} class="${v.interceptor?.class ?? '?'}"> @ (${v.interceptor?.rect?.x},${v.interceptor?.rect?.y} ${v.interceptor?.rect?.width}x${v.interceptor?.rect?.height})`);
-          if (v.reason) console.log(`      reason:       ${v.reason}`);
+  for (const scenario of scenariosToRun) {
+    console.log(`\n── Scenario: ${scenario.name} — ${scenario.label} ──`);
+    for (const locale of LOCALES) {
+      // `--route=` remains a base-scenario-only manual debug override (its pre-existing purpose,
+      // Task 723) — the drawer/modal scenarios always drive their own named route since that
+      // route IS the scenario (a drawer/modal reachable there is the thing being proven).
+      const route = SINGLE_ROUTE && scenario.name === 'base' ? SINGLE_ROUTE : scenario.route(locale);
+      for (const vp of VIEWPORTS) {
+        const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
+        const url = `${BASE_URL}${route}`;
+        let result;
+        let openResult = { opened: true, dialogPresent: false, error: null };
+        try {
+          await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
+          await page.waitForTimeout(500);
+          openResult = await openScenarioOverlay(page, scenario);
+          if (scenario.trigger && !openResult.dialogPresent) {
+            result = { checked: 0, violations: [], cleared: [], error: openResult.error ?? 'dialog did not appear' };
+          } else {
+            result = await hitTestPage(page);
+          }
+        } catch (err) {
+          result = { checked: 0, violations: [], cleared: [], error: String(err.message ?? err).slice(0, 200) };
+        } finally {
+          await page.close();
         }
-      } else if (cell.cleared.length > 0) {
-        console.log(`   ${route} × ${vp.name}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}`);
-        for (const c of cell.cleared) {
-          console.log(`      cleared:      <${c.element.tag} class="${c.element.class}"> "${c.element.text}" @ scrollY=${c.clearingScrollOffset} (fixed/sticky interceptor <${c.interceptor.tag} class="${c.interceptor.class}">, nearest positioned ancestor: <${c.interceptor.nearestPositionedAncestor?.tag ?? '?'} class="${c.interceptor.nearestPositionedAncestor?.class ?? '?'}"> @ (${c.interceptor.nearestPositionedAncestor?.rect?.x},${c.interceptor.nearestPositionedAncestor?.rect?.y} ${c.interceptor.nearestPositionedAncestor?.rect?.width}x${c.interceptor.nearestPositionedAncestor?.rect?.height}))`);
+
+        const cell = {
+          scenario: scenario.name,
+          locale,
+          route,
+          viewport: vp.name,
+          width: vp.width,
+          dialogPresent: openResult.dialogPresent,
+          ...result,
+        };
+        cells.push(cell);
+
+        const label = `[${scenario.name}] ${route} × ${vp.name}`;
+
+        if (scenario.trigger && !openResult.dialogPresent) {
+          scenarioOpenFailures++;
+          console.log(`   ${label}: ❌ SCENARIO OVERLAY NEVER OPENED — ${cell.error} (A2: a zero-violation result here would mean nothing)`);
+          continue;
         }
-      } else {
-        console.log(`   ${route} × ${vp.name}: ✅ PASS — checked=${cell.checked}, 0 interceptions`);
+
+        if (cell.checked === 0) {
+          emptyCandidateCells++;
+          console.log(`   ${label}: ❌ EMPTY CANDIDATE SET (checked=0)${cell.error ? ` — ${cell.error}` : ''}`);
+        } else if (cell.violations.length > 0) {
+          console.log(`   ${label}: ❌ FAIL — checked=${cell.checked}, ${cell.violations.length} interception(s)${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          for (const v of cell.violations) {
+            console.log(`      blocked:      <${v.element.tag} class="${v.element.class}"> "${v.element.text}" @ (${v.element.rect.x},${v.element.rect.y} ${v.element.rect.width}x${v.element.rect.height})`);
+            console.log(`      interceptor:  <${v.interceptor?.tag ?? '?'} class="${v.interceptor?.class ?? '?'}"> @ (${v.interceptor?.rect?.x},${v.interceptor?.rect?.y} ${v.interceptor?.rect?.width}x${v.interceptor?.rect?.height})`);
+            if (v.reason) console.log(`      reason:       ${v.reason}`);
+          }
+        } else if (cell.cleared.length > 0) {
+          console.log(`   ${label}: ✅ PASS (${cell.cleared.length} transient, scroll-cleared) — checked=${cell.checked}${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+          for (const c of cell.cleared) {
+            console.log(`      cleared:      <${c.element.tag} class="${c.element.class}"> "${c.element.text}" @ scrollY=${c.clearingScrollOffset} (fixed/sticky interceptor <${c.interceptor.tag} class="${c.interceptor.class}">, nearest positioned ancestor: <${c.interceptor.nearestPositionedAncestor?.tag ?? '?'} class="${c.interceptor.nearestPositionedAncestor?.class ?? '?'}"> @ (${c.interceptor.nearestPositionedAncestor?.rect?.x},${c.interceptor.nearestPositionedAncestor?.rect?.y} ${c.interceptor.nearestPositionedAncestor?.rect?.width}x${c.interceptor.nearestPositionedAncestor?.rect?.height}))`);
+          }
+        } else {
+          console.log(`   ${label}: ✅ PASS — checked=${cell.checked}, 0 interceptions${scenario.trigger ? ` (dialog present: ${openResult.dialogPresent})` : ''}`);
+        }
       }
     }
   }
@@ -506,7 +742,18 @@ async function runChecks() {
   const totalCleared = cells.reduce((s, c) => s + c.cleared.length, 0);
 
   console.log('\n── Summary ──────────────────────────────────────────────────');
-  console.log(`   Cells: ${cells.length}  Elements checked: ${totalChecked}  Interceptions: ${totalViolations}  Cleared (transient): ${totalCleared}  Empty-candidate cells: ${emptyCandidateCells}`);
+  console.log(`   Scenarios: ${scenariosToRun.length}  Cells: ${cells.length}  Elements checked: ${totalChecked}  Interceptions: ${totalViolations}  Cleared (transient): ${totalCleared}  Empty-candidate cells: ${emptyCandidateCells}  Scenario-open failures: ${scenarioOpenFailures}`);
+  for (const scenario of scenariosToRun) {
+    const scenarioCells = cells.filter((c) => c.scenario === scenario.name);
+    console.log(`   [${scenario.name}] cells=${scenarioCells.length}  checked=${scenarioCells.reduce((s, c) => s + c.checked, 0)}  violations=${scenarioCells.reduce((s, c) => s + c.violations.length, 0)}`);
+  }
+
+  if (scenarioOpenFailures > 0) {
+    console.error('\n❌ At least one triggered scenario never got its overlay open (dialog absent from the DOM) —');
+    console.error('   a zero-violation result from that cell would mean nothing (Task 727 A2). This is a harness');
+    console.error('   failure, not a clean pass.\n');
+    process.exit(2);
+  }
 
   if (emptyCandidateCells > 0) {
     console.error('\n❌ At least one cell checked ZERO candidates — this is a harness failure, not a clean pass.');

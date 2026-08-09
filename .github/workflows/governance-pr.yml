@@ -256,3 +256,96 @@ jobs:
           name: locale-leak-report
           path: .screenshots/locale-leak/
           retention-days: 7
+
+  click-shield:
+    name: Click-Shield Gate (blocking)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    # Task 727 (Sprint 52, closing task) — owner decision 2026-08-09, quoted verbatim in the
+    # kickoff (tasks/Sprints/Sprint_52_kickoff_prompt_Task_727_ClickShield_CI_And_Contextual_N6.md
+    # §3.1): "CI запускає gate на локальному production build і він blocking. Не на production
+    # URL. У PR CI: npm ci → Playwright Chromium → npm run build → npm start → wait-for-ready →
+    # check:click-shield. Команда має йти з BASE_URL=http://127.0.0.1:3000, без continue-on-error;
+    # ненульовий exit code блокує merge." No prior job in this file builds/starts the real Next.js
+    # app (all four existing jobs use build-storybook) — this is new infrastructure, not a copy of
+    # an existing job.
+    #
+    # ⚠️ KNOWN PRECONDITION, not yet satisfied as of this task (session log,
+    # docs/sessions/2026-08-09-task727-click-shield-ci-and-contextual-n6.md): `npm start` boots
+    # cleanly with NO Supabase env vars, but every request 500s at runtime ("Your project's URL
+    # and Key are required to create a Supabase client!", thrown from middleware on every route,
+    # verified empirically by removing .env.local and hitting a fresh `next start`). No workflow
+    # in this repository currently references any Supabase secret (grep across .github/workflows/
+    # confirms zero hits), and `.env.local` is gitignored/untracked, so a fresh checkout has none
+    # of these values. Until NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY exist as
+    # repository secrets (owner action — outside git, cannot be done from this task's write set),
+    # this job will build successfully and then fail at the wait-for-ready step (every route
+    # 500s). Wired below by name so it starts working the moment those secrets are added.
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium --with-deps
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Start production server
+        # Backgrounded within the job's persistent shell so it stays alive into the next step
+        # (GitHub Actions runs every step's shell in the same process/session on the same runner).
+        # Logged to a file rather than left attached to the step's own stdout, which closes when
+        # the step returns.
+        run: nohup npm start > server.log 2>&1 &
+
+      - name: Wait for server readiness
+        # A real readiness probe (repeated HTTP check), not a fixed sleep (Task 727 §7.3) — a
+        # fixed sleep is exactly the kind of flakiness source that gets a blocking gate disabled.
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://127.0.0.1:3000/; then
+              echo "server ready after ${i} attempt(s)"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "server did not become ready within 60s" >&2
+          cat server.log
+          exit 1
+
+      - name: Click-shield gate (blocking — base route, Drawer, and Modal scenarios, no continue-on-error)
+        env:
+          BASE_URL: http://127.0.0.1:3000
+        # Redirected to a file (as its own statement, per this project's evidence-capture rule —
+        # never trust a piped command's exit code) so the gate's own transcript survives as an
+        # artifact independent of the ephemeral job log; the shell's real exit code still fails
+        # the step because it is not piped through anything.
+        run: |
+          npm run check:click-shield > click-shield.log 2>&1
+          exit_code=$?
+          cat click-shield.log
+          exit $exit_code
+
+      - name: Upload click-shield evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: click-shield-report
+          path: |
+            click-shield.log
+            server.log
+          retention-days: 7

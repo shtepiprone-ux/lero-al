@@ -2289,6 +2289,98 @@ Session: `docs/sessions/2026-08-09-task678-per-story-gate-enrolment.md`.
 
 ---
 
+### §14.9.31 — `check:click-shield` becomes CI-blocking; the N6 exemption keys on the candidate, not just the interceptor (Task 727, Sprint 52 closing task, 2026-08-09)
+
+**The defect (owner decision 2026-08-09, closing OQ2/OQ3 from Task 723 §10).** `check-click-shield.mjs`'s N6
+exemption tested only the *interceptor* (`hit.closest('.mantine-Overlay-root')`), at both hit-test call sites
+(`hitTestPage`'s phase-1 direct path and Task 725's phase-2 scroll-recheck path). It never asked where the
+*candidate* itself sat, so a real interactive control **inside** an open Modal/Drawer, intercepted by that same
+dialog's own backdrop, was silently exempted — the gate reported clean on a modal nobody could use. The rule is
+now contextual: an interception clears only when the **candidate** is outside an active
+`[role="dialog"]`/`[role="alertdialog"]`; a candidate inside one is never exempt, regardless of what the
+interceptor is.
+
+**One predicate, two call sites, by construction.** Playwright serializes each `page.evaluate()` closure
+independently (this file's established convention — DOM helpers are already duplicated per closure for the same
+reason). `N6_EXEMPT_PREDICATE_BODY` is a single Node-level string constant, deserialized identically at both call
+sites via `new Function(...)`, so the direct path and the scroll-recheck path cannot drift apart the way two
+hand-copied blocks could (the §14.9.29 lesson).
+
+**A live Drawer immediately widened the rule further than the kickoff anticipated.** Driving a real Mantine Drawer
+(AuthSheet, opened via the header Favorites icon) with only the backdrop-vs-dialog check above produced **136
+false violations across 324 candidates** — every one a background-page element (HeroSearch inputs, the mobile
+bottom nav, header controls) that the Drawer's own **panel content** (not the semi-transparent `.mantine-Overlay-
+root` backdrop) happened to paint over. This is exactly the "turns every open modal red" failure R4/N6 warned
+against, just from a source the kickoff's `.mantine-Overlay-root`-only framing didn't name: a real dialog's panel,
+not only its backdrop, legitimately owns everything it visually covers. The interceptor side of the predicate was
+widened to match either the backdrop *or* the active dialog's own content; the candidate-side restriction (never
+exempt once the candidate is inside the dialog) is unchanged and is what still catches the original defect. After
+widening, both real scenarios (below) run clean at full scale — 0 violations across 704 candidates total.
+
+**Three real scenarios, not synthetic-only.** `check-click-shield.mjs` now drives three named scenarios
+(`SCENARIOS`), each sweeping the full 16-cell locale × viewport matrix and recording DOM proof the overlay was
+genuinely open before hit-testing (a scenario whose trigger doesn't produce `[role="dialog"]`/`[role="alertdialog"]`
+is a hard failure, exit 2 — never a silent zero-violation "pass", the A2 failure mode the kickoff pre-declared as
+most likely):
+
+- **`base`** — the pre-existing homepage sweep, unchanged behavior (verdicts byte-identical before/after the R1/R2
+  fix).
+- **`drawer`** — `AuthSheet` (`src/modules/auth/components/AuthSheet.tsx`), a real controlled `MantineDrawer`,
+  opened via the header Favorites `ActionIcon` — the one HeaderActions trigger that stays visible at every
+  click-shield viewport while logged out (the header's own login/register `Button`s are `visibleFrom="md"`,
+  invisible at 320/375/390).
+- **`modal`** — `LightboxView` (`src/modules/listings/components/LightboxView.tsx`), the **only** production
+  Mantine Modal (`Modal.Root`/`Modal.Content`, `role="dialog"`) in the entire app — confirmed by repository search;
+  `MantineModal` (`design-system/mantine/patterns/MantineModal.tsx`) has zero production consumers. Not reachable
+  from the homepage at all, so this scenario targets a real seeded listing (`/[locale]/listings/11-mr7ucly4`,
+  verified live 2026-08-09), reusing the Task 612 precedent
+  (`scripts/task612-qa-listinggallery-lightbox-portal.mjs`) for driving this exact component rather than inventing
+  a second mechanism. The Task 612 fixture slug itself (`test-7-molyl9c8`) no longer resolves a month later —
+  listing slugs are not a stable long-term fixture; overridable via `CLICK_SHIELD_MODAL_SLUG`.
+
+**Both directions proven live, not just synthetically.** A shield injected at runtime (`document.body.appendChild`
+— never a `src/` edit, outside this task's allowed write set) onto the real Drawer's own close button reproduced
+the exact "modal whose own backdrop covers its own button" shape: the gate failed 16/16 cells, correctly naming
+`mantine-CloseButton-root` as blocked and `.mantine-Overlay-root` as the interceptor. The injection was then
+removed; `git hash-object scripts/check-click-shield.mjs` matched its pre-plant value exactly, proving no residue.
+A first attempt at this plant, appended inside the dialog's own DOM subtree, silently landed the shield in the
+wrong screen position and produced inconsistent per-viewport results — root cause: Mantine's Drawer/Modal content
+animates via CSS `transform`, which becomes the containing block for `position:fixed` **descendants** too, not
+only `absolute` ones, so a `position:fixed` shield appended inside the dialog gets its coordinates silently
+reinterpreted relative to the transformed ancestor instead of the viewport. Appending to `document.body` instead
+resolved it. `--verify-gate`'s synthetic fixtures (flat pages, no transform) don't hit this caveat, which is why
+it only surfaced against the live app — recorded here so a future live-app plant against this gate doesn't
+rediscover it from scratch.
+
+**`--verify-gate` extended**, not just the live scenarios: three new fixtures — a candidate inside
+`[role="dialog"]` intercepted by `.mantine-Overlay-root` (must fail), the same shape with no shield (must pass,
+proving the dialog-context check alone introduces no false positive), and the `[role="alertdialog"]` equivalent
+(the rule covers both roles per the owner decision; only `role="dialog"` is exercised live in this app today — no
+`alertdialog` renders anywhere, confirmed by repository search — so `alertdialog` coverage is implemented and
+self-tested, not claimed as exercised against production).
+
+**CI wiring (`.github/workflows/governance-pr.yml`, new `click-shield` job).** The owner's exact sequence: `npm ci`
+→ Playwright Chromium → `npm run build` → `npm start` → a real HTTP readiness probe (retried `curl`, never a fixed
+sleep) → `BASE_URL=http://127.0.0.1:3000 npm run check:click-shield`, no `continue-on-error`, log artifact upload
+`if: always()`. No prior job in this file builds/starts the real Next.js app (all four existing jobs use
+`build-storybook`) — new infrastructure, not a copy of an existing job.
+
+**Known precondition, not yet satisfied.** `npm start` boots cleanly with no Supabase env vars, but every request
+500s at runtime (`Error: Your project's URL and Key are required to create a Supabase client!`, thrown from
+middleware — verified empirically by removing `.env.local` and hitting a fresh `next start`). No workflow in this
+repository currently references any Supabase secret, and `.env.local` is gitignored/untracked, so a fresh CI
+checkout has none of these values. The new job is wired to consume `NEXT_PUBLIC_SUPABASE_URL` /
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` as repository secrets by name, but until the owner adds them (outside git, outside
+this task's write set), the job will build successfully and then fail at the wait-for-ready step. This is a new
+dependency this job introduces — no prior job in this pipeline has ever needed a live Supabase connection.
+
+**Out of scope, per R9.** No production-URL job was added; a post-deploy monitor remains a reserved idea, not
+built here.
+
+Session: `docs/sessions/2026-08-09-task727-click-shield-ci-and-contextual-n6.md`.
+
+---
+
 ## §15 — Story Coverage Gate (Task 398, 2026-06-06; rewritten Task Q0R, 2026-07-18)
 
 **Why.** The render gates (`check:locale-leak`, `screenshots:assert`) only run over canonical Mantine stories as their sole mandatory CI scope (Task Q0R — see §14.9 for the rendered-proof gate this criterion originated from). This gate ensures that a component enrolled in the Mantine migration actually has a canonical Mantine story proving it, so the migration can't silently regress (a component moved into scope, then its story quietly stops importing it) without CI catching it.

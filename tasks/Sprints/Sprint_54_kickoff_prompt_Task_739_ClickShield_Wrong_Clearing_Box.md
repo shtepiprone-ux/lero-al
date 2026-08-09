@@ -1,7 +1,65 @@
 # Task 739 — `check-click-shield` computes its clearing offset from the wrong box
 
 **Sprint 54 — Mobile bottom-nav overlay collision. Closes the sprint.**
-**Status:** `KICKOFF FILED`. **QA profile:** `Q4` — CI-blocking gate logic + planted-violation proof.
+**Status:** ⚠️ `REWORK REQUIRED` — attempt 1 rejected at review 2026-08-09. **QA profile:** `Q4`.
+
+> ## ⚠️ REWORK 2026-08-09 — attempt 1 rejected. Read this before §4.
+>
+> Attempt 1 replaced `ancRect` with `hit.getBoundingClientRect()`. **Do not land that diff.** It fixes the
+> *overhang* case and breaks the *containment* case, and the net effect on a CI-blocking gate is worse:
+> base **4 → 9**, `cleared:` detail lines **39 → 15**.
+>
+> **Proof it is a regression, from attempt 1's own evidence** (`.screenshots/task739-evidence/`):
+> `FavoriteButton_control` at `(333,15 32x32)`, intercepted by `svg.lucide-menu`, reads
+> `cleared: … @ scrollY=793` in `I1-baseline.log` and `blocked:` in `K3-sweep-after.log` — same candidate,
+> same interceptor, ×4 locales, stable across 3 reruns. `svg.lucide-menu` is a 20px icon inside the 65px
+> `.site-header`; clearing the icon's own box does not clear the header. Attribution to the known 723/724
+> `FavoriteButton` defect is refuted by that before/after pair.
+>
+> **Why only 2 of 6 targets cleared:** §2's census records `re-lands on .fabLink` for **all six** rows, while
+> `hit` varies (`.fabLink` 745 · `.navItem` 757 · `.fabLabel` 792). The element that blocks is the same in
+> every case regardless of which one `elementFromPoint` returned. Targeting the interceptor therefore fixes
+> only the two rows where the interceptor *happened to be* the blocker.
+>
+> ### Corrected C1 — the original wording was ambiguous and this is the orchestrator's error
+>
+> C1 said *"bounds what actually occludes the candidate **at the tested point**, not merely a box that
+> contains it."* That phrasing licensed interceptor-only and pushed away from the ancestor. It should have
+> read:
+>
+> > **C1 (corrected).** The geometry must bound everything scroll-invariant that can occlude the candidate
+> > **at the offsets it generates** — not only what occludes it at the current scroll position. For a fixed
+> > or sticky bar that is the bar's **extent**: its own rect unioned with the rects of descendants that
+> > overflow it. Neither the ancestor's box alone (undershoots on overhang) nor the interceptor's box alone
+> > (undershoots on containment) satisfies this.
+>
+> ### OQ2 is reopened, and its previous answer is falsified
+>
+> Attempt 1 answered *"kept at 2 … no evidence a third hypothesis would change any outcome."* Its own data
+> refutes that: an offset generated from the ancestor's box clears the header cases, one generated from the
+> system's extent clears all six footer cases. **Emitting hypotheses from more than one box is now required
+> unless you can show a single box that satisfies corrected C1 in both directions.** Phase 2 already
+> arbitrates (C3), so an extra hypothesis costs a recheck and cannot manufacture a false `cleared`.
+>
+> ### Two additional requirements
+>
+> **R12 — a containment control fixture.** R4's overhang fixtures were shaped so that the interceptor is a
+> *superset* of its fixed ancestor, which is why they pass under a wrong fix. Add the mirror case: an
+> interceptor strictly **smaller** than its fixed ancestor (a small icon inside a tall bar), where the
+> candidate must still resolve `cleared`. Show it FAILING under attempt 1's diff — that is what makes it a
+> control rather than decoration.
+>
+> **R13 — compare violation *sets*, not counts.** Attempt 1 reported "base is 9, not 0" without diffing the
+> identities. Report added/removed violations by element + rect + interceptor. Any candidate that was
+> `cleared` before and is `blocked` after is a regression and must be named as one, whatever else it may
+> also be.
+>
+> **Keep from attempt 1:** the §2 census, the R2 blast radius, the OQ1 sticky measurement, the corrected
+> comments, the plant round-trip, and the two overhang fixtures. All sound. Only the chosen box is wrong.
+>
+> **Not filed as follow-ups:** the three residual "findings" attempt 1 named. (a) and (c) are the corrected-C1
+> defect itself; (b) is the regression above. Reserving numbers for artifacts of a rejected diff would add
+> registry noise for work that disappears when the box is right.
 **Companions:** `Sprint_54_Task_739_execution_contract.md` · `Sprint_54_Task_739_rule_compliance_ledger.md`.
 
 > **Read the correction banner at the top of `Sprint_54_kickoff_prompt_Task_737_FooterSocialLinks_Under_FAB.md`

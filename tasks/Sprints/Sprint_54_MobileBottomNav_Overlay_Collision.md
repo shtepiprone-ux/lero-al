@@ -62,7 +62,8 @@ all. **Task 725 must measure this, not inherit it.**
 | **725** | `KICKOFF FILED` | Root-cause and fix the collision; prove it with `check:click-shield` at 0 interceptions across all 16 cells, plus a planted round trip. `Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md` |
 | **729** | ✅ `APPROVED`, archived 2026-08-09 | Below-fold blind spot: the gate scanned one viewport and discarded **900 of 1812** candidates. Band scan → `checked` 912 → 1772, `excluded` → 40. Fixed a pre-existing 725 ancestor-walk bug. `Sprint_54_kickoff_prompt_Task_729_BelowFold_Blind_Spot.md` |
 | **737** | ⛔ `BLOCKED`, archived 2026-08-09 — **correctly** | Live measurement refuted the kickoff's root cause: `<Footer />` is a *sibling* of `<main>`, the footer's own clearance is **104px**, and the links hit-test as reachable. **No product defect.** The kickoff carries a correction banner. `Sprint_54_kickoff_prompt_Task_737_FooterSocialLinks_Under_FAB.md` |
-| **739** | `KICKOFF FILED`, **P1** — closes the sprint | `check-click-shield.mjs:446-447` generates clearing offsets from the fixed/sticky **ancestor's** box while the element that occludes (`.fabLink`) overhangs it by 12px — the ~11px undershoot that produced 729's 6 false positives. Fix the box, not the app. `Sprint_54_kickoff_prompt_Task_739_ClickShield_Wrong_Clearing_Box.md` |
+| **739** | ✅ `APPROVED WITH NOTES`, archived 2026-08-09 | `check-click-shield.mjs:446-447` generates clearing offsets from the fixed/sticky **ancestor's** box while the element that occludes (`.fabLink`) overhangs it by 12px — the ~11px undershoot that produced 729's 6 false positives. Fix the box, not the app. `Sprint_54_kickoff_prompt_Task_739_ClickShield_Wrong_Clearing_Box.md` |
+| **740** | `KICKOFF FILED`, **P1** — closes the sprint | **The box must be the fixed system's whole extent.** 739 landed `union(hit, ancestor)`, which covers only the one descendant that happened to be `hit`. `.fabLink` (745) blocks all six footer identities and is `hit` in two, so four still undershoot by ~11px. Required: ancestor ∪ every hit-testable descendant that overflows it, with justified exclusions. `Sprint_54_kickoff_prompt_Task_740_ClickShield_System_Extent.md` |
 
 ## Preconditions
 
@@ -122,3 +123,6 @@ into the *gate* rather than the product: **725** refuted its own premise · **72
 725 bug · **737** refuted 729's finding and proved the app correct · **739** fixes the measurement that produced
 it. The sprint's transferable output is that a gate reporting a number which reads as coverage — `checked`,
 `violations`, `cleared` — must be able to prove what that number excludes.
+
+
+**Task 740 kickoff filed 2026-08-09** — the sprint's last task. Three box errors in a row: the interceptor's box (rejected), `union(hit, ancestor)` (landed, partial), the ancestor's extent (740). Each was found by the acceptance discipline the previous one lacked — which is the sprint's real transferable output.

@@ -60,6 +60,9 @@ all. **Task 725 must measure this, not inherit it.**
 | # | State | What |
 |---|---|---|
 | **725** | `KICKOFF FILED` | Root-cause and fix the collision; prove it with `check:click-shield` at 0 interceptions across all 16 cells, plus a planted round trip. `Sprint_54_kickoff_prompt_Task_725_BottomNav_Overlay_Collision.md` |
+| **729** | ✅ `APPROVED`, archived 2026-08-09 | Below-fold blind spot: the gate scanned one viewport and discarded **900 of 1812** candidates. Band scan → `checked` 912 → 1772, `excluded` → 40. Fixed a pre-existing 725 ancestor-walk bug. `Sprint_54_kickoff_prompt_Task_729_BelowFold_Blind_Spot.md` |
+| **737** | ⛔ `BLOCKED`, archived 2026-08-09 — **correctly** | Live measurement refuted the kickoff's root cause: `<Footer />` is a *sibling* of `<main>`, the footer's own clearance is **104px**, and the links hit-test as reachable. **No product defect.** The kickoff carries a correction banner. `Sprint_54_kickoff_prompt_Task_737_FooterSocialLinks_Under_FAB.md` |
+| **739** | `KICKOFF FILED`, **P1** — closes the sprint | `check-click-shield.mjs:446-447` generates clearing offsets from the fixed/sticky **ancestor's** box while the element that occludes (`.fabLink`) overhangs it by 12px — the ~11px undershoot that produced 729's 6 false positives. Fix the box, not the app. `Sprint_54_kickoff_prompt_Task_739_ClickShield_Wrong_Clearing_Box.md` |
 
 ## Preconditions
 
@@ -99,4 +102,23 @@ Corrected 2026-08-08: **729 belongs to this sprint**, which is where its finding
 names it as the closing condition.
 
 
-**Task 729 kickoff filed 2026-08-09** — `Sprint_54_kickoff_prompt_Task_729_BelowFold_Blind_Spot.md`, with execution contract and rule-compliance ledger. It is the sprint’s only remaining task and its stated closing condition.
+**Task 729 kickoff filed 2026-08-09** — `Sprint_54_kickoff_prompt_Task_729_BelowFold_Blind_Spot.md`, with execution contract and rule-compliance ledger. It closed `APPROVED` and did **not** close the sprint: its widened gate reported 6 new violations, filed as 737.
+
+---
+
+## Execution order (revised 2026-08-09, after 737)
+
+**739 is the only remaining task and it closes the sprint.** Cost is one production build + a 48-cell
+`check:click-shield` sweep (~90s), so it stays independent of Sprint 52's matrix ordering.
+
+**Ordering against the owner's Supabase secrets is strict and now belongs to 739, not 737.** Task 727's blocking
+CI job cannot run until `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` exist as repository secrets;
+until 739 lands, that job would fail every PR on false positives. **739 lands first.**
+
+### What this sprint turned out to be about
+
+It opened on a suspected layout collision and never found one. Each task located the defect one layer further
+into the *gate* rather than the product: **725** refuted its own premise · **729** widened coverage and exposed a
+725 bug · **737** refuted 729's finding and proved the app correct · **739** fixes the measurement that produced
+it. The sprint's transferable output is that a gate reporting a number which reads as coverage — `checked`,
+`violations`, `cleared` — must be able to prove what that number excludes.

@@ -97,3 +97,6 @@ matrix sweep, so it is independent of Sprint 52's ordering and can run in parall
 Its scope was double-assigned — the backlog listed 729 under Sprint 52's remaining tasks **and** under Sprint 54.
 Corrected 2026-08-08: **729 belongs to this sprint**, which is where its finding originated (Task 725) and which
 names it as the closing condition.
+
+
+**Task 729 kickoff filed 2026-08-09** — `Sprint_54_kickoff_prompt_Task_729_BelowFold_Blind_Spot.md`, with execution contract and rule-compliance ledger. It is the sprint’s only remaining task and its stated closing condition.

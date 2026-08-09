@@ -1142,6 +1142,26 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
     // assertion's three-category taxonomy (its own doc comment above, "Select triggers,
     // TabsList, and form inputs") and to give a `false` cell an arm-specific failing label
     // instead of a generic "input" one.
+    //
+    // Task 733 (2026-08-09) — both `if (el.closest('[role="dialog"]')) continue;` skips (arms 1
+    // and 3; arm 2/Tabs never had one) removed, matching assertion (d) below, which has never
+    // excluded overlay content (Task 421 Slice 6) and already catches 4 real overlay-hosted
+    // failures (`NotificationBellView` "Mark all as read" × 4 locales). Census
+    // (`.screenshots/task733-evidence/I2-overlay-dump.json`, 2026-08-09): opened all 10
+    // dialog-hosting-but-blind stories at 375px — 9 of 10 (Drawer, DropdownMenu, MobileNavDrawer,
+    // Modal, NavigationMenu, NotificationBellView, Popover, Tooltip,
+    // `Patterns/Mantine/DialogDrawerPattern`) render ZERO Select/Tabs/text-input candidates
+    // inside their open dialog at all (their story fixtures hold no form control — the skip was
+    // never the reason they read `null`, and removing it correctly leaves them `null`, still
+    // protected by `checkedAny`, since a control-free cell must never read `false`). The 10th,
+    // `FiltersPanelShell`, DOES render 5 `TextInput`s inside its bottom sheet, all already
+    // `offsetWidth === parentContentWidth` (`fullWidth:true` for all 5) — a bottom sheet is
+    // full-bleed by construction (Task 711's convergence census), so the comparison is not
+    // meaningless for any of the 10 (answers OQ1: no narrowed-condition case exists; removal,
+    // not narrowing, is correct). The condition removed here was `el.closest('[role="dialog"]')`,
+    // an author-appliable DOM property (724 F1) that any component could satisfy — not a value
+    // the gate itself measures, so removing it (never narrowing it to another such property)
+    // is the correct fix per D33/726.
     let fullWidthOk = true;
     let failingControls = [];
     let checkedAnyControl = false;
@@ -1156,7 +1176,6 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
         const failures = [];
         let checkedAny = false;
         for (const el of document.querySelectorAll('.mantine-Select-input')) {
-          if (el.closest('[role="dialog"]')) continue;
           checkedAny = true;
           const pw = parentContentWidth(el);
           if (pw > 0 && el.offsetWidth < pw - tolerance) {
@@ -1172,7 +1191,6 @@ async function captureCell(browser, storyUrl, story, locale, viewport, filename,
         }
         for (const inp of document.querySelectorAll('input[type="text"], input[type="email"], input[type="password"], input[type="search"], input:not([type])')) {
           if (inp.offsetWidth <= 1) continue;
-          if (inp.closest('[role="dialog"]')) continue;
           const parent = inp.parentElement;
           if (!parent) continue;
           const parentFlex = window.getComputedStyle(parent).display === 'flex';

@@ -130,7 +130,7 @@ it separately for changes to one file. They are now two:
 | **52.2** | **717** — ✅ `APPROVED` 2026-08-08, archived | — | Independent of the matrix; no sweep needed |
 | **52.3** | **721** — ✅ `APPROVED` 2026-08-08, archived | **728** | Documentation, citations and two manifest-reading gate arms. `check-assertion-liveness.mjs` never launches a browser, so this costs no sweep at all |
 | **52.4** | **678** — ✅ `APPROVED` 2026-08-09, archived | **687** | Both change the matrix **denominator**, so they must not share a session with 52.1 |
-| **52.5** | **733** — `KICKOFF FILED` | — | Overlay-hosted controls are never measured — the hole 722's guard exposed. Runnable now; independent of 52.2–52.4 |
+| **52.5** | **733** — ✅ `APPROVED` 2026-08-09, archived | — | Overlay-hosted controls are never measured — the hole 722's guard exposed. Runnable now; independent of 52.2–52.4 |
 | parked | **727** | — | Blocked on owner decisions **OQ2** and **OQ3**; OQ3 gates it explicitly. Do not schedule it until both are answered |
 
 **52.1 must precede 52.4, and this is the whole thesis of the sprint.** `fullWidthControlsAtMobile` is vacuously

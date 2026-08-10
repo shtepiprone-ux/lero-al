@@ -366,9 +366,9 @@
   /* --brand-850 removed (Task 661 OQ1): no Mantine index and grep-confirmed zero
      consumers (only ever self-defined, never referenced). */
   /* --brand-950 intentionally NOT tuple-derived (Task 661 OQ2): renders near-black
-     (#180807), not a red tint of the brand scale — kept hand-authored. Live consumers:
+     (#0F0504), not a red tint of the brand scale — kept hand-authored. Live consumers:
      HeroSearch.stories.tsx, PopularLocationsView.tsx gradient stops. */
-  --brand-950: oklch(0.132 0.022 23);   /* #180807 — intentionally NOT brand-scale-derived */
+  --brand-950: oklch(0.132 0.022 23);   /* #0F0504 — intentionally NOT brand-scale-derived */
 
   /* ── Neutral scale — all surfaces use these ── */
   --neutral-0:   oklch(1 0 0);          /* Pure white */

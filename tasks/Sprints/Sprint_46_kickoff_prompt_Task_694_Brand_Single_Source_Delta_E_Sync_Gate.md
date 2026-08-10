@@ -363,7 +363,14 @@ been run.
 
 | ID | Plant | Must fail | Expected in the message |
 |---|---|---|---|
-| **P1** | `brand.ts` `#EC5447` → `#D25656` | B, C, E | ΔE00 `6.8074` |
+| **P1** | `brand.ts` `#EC5447` → `#D25656` | ~~B, C, E~~ → **B, E** | ΔE00 `6.8074` |
+
+> **Correction, 2026-08-10 (review).** P1's row originally read "B, C, E". **Assertion C compares `--accent`'s
+> comment against `brand[0]`; P1 edits `brand[7]`, so C structurally cannot fire.** The executor measured B + E,
+> recorded the discrepancy, and correctly did **not** widen C to react to an unrelated index. Reviewer reproduced
+> B + E independently. Recorded as the sixth entry in the kickoff-fact corollary chain (`docs/backlog.md` →
+> Standing notes) and the first authored by the orchestrator in the same session that executed it. **A plant
+> matrix must state which assertion consumes which input, not merely which assertions exist.**
 | **P2** | one alias comment `#EC5447` → `#ED5447` | B | ΔE00 `0.1838` |
 | **P3** | `--brand-700: var(--mantine-color-brand-8)` | B | index mapping, not a ΔE |
 | **P4** | `theme.ts` `colors: { brand, … }` → an inline literal tuple with **identical values** | A | identity, not equality |

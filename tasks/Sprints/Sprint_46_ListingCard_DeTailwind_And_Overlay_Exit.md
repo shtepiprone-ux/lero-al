@@ -32,9 +32,13 @@ kickoffs for 694, 695, 700 and 702 must be written **inside this sprint's direct
 
 ## Preconditions before 691 starts
 
-- **Measure `/[locale]` First Load JS first.** The 671/675 review recorded **618 kB against a 185 kB baseline** while
-  a server component imports the client-component patterns barrel (`F3`, `NEEDS VERIFICATION`). 691 adds to that
-  route — take the reading before, not after.
+- **Measure `/[locale]` First Load JS first — and treat it as a delta, not a budget (D36, owner, 2026-08-10).**
+  Record the number at I0 and again at the end; **stop the task on any increase**. Do **not** copy a figure from any
+  document: the long-standing "618 kB against a 185 kB baseline" is wrong twice — the build at `0dac78755` measures
+  route **619 kB** and shared **184 kB**, and route First Load JS is not comparable to shared JS at all, so their
+  difference was never a valid pre/post base for 691. The unattributed remainder (**435 kB**) is **744**'s subject,
+  and the barrel suspicion (`F3`) is still `NEEDS VERIFICATION` — a hypothesis, not a finding. 691 adds no new
+  client boundary and no new page dependency, which is why D36 allows it to run while attribution is outstanding.
 - Extend `MantineListingCardPattern.module.css` (Task 602). Mantine's `Card` CSS is **unlayered** and per the Cascade
   Layers spec always beats Tailwind's `@layer utilities`, so a `hover:shadow-*` can never win — never `!important`,
   never a layer override.
@@ -65,8 +69,11 @@ files** — `PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGall
 | **46.3** | **700** | CSS var resolvability gate, Q4; independent of 691. **Runnable now.** Re-scoped 2026-08-10 — the reserved `@theme`-dependency premise was falsified by measurement before the kickoff was written (see the Tasks table). Its CI step goes in the `click-shield` job, the only one that runs `npm run build`, so it costs no new build |
 | **46.7** | **742** | The `--mantine-only`/anchor-row pairing defect 702 exposed (C3). Documentation-level fix to the shared kickoff template; **741 · 691 · 695 all inherit the same pairing**, so land it before any of them |
 | **46.8** | **743** | The ownership blind spot 700 cannot see (700 F1): deleting a token from `globals.css` un-owns it *and* its orphaned consumers, so `check:css-vars` goes silent — reproduced in review at `0 violations, exit 0` with 6 live consumers left in place. Must decide a scoping rule that does not reopen the 112 Mantine false positives, and prove it with a planted deletion. **Runnable now**, independent of 691 |
-| **46.4** | **691** | ⛔ **Blocked on the owner.** `/[locale]` First Load JS measures 618 kB against a 185 kB baseline and has not moved across the 710/712/713/714 builds. The number exists; the go/no-go does not. Do not schedule 691 until it is answered |
+| **46.4** | **691** | ✅ **UNBLOCKED — D36** (owner, 2026-08-10). Runs under a **no-increase** perf condition: record `/[locale]` First Load JS at I0 and at the end, **stop on any increase**. **Re-measure at I0** — the standing "618 vs 185 kB" is wrong twice (build at `0dac78755`: route **619 kB**, shared **184 kB**) and compares two non-comparable quantities, which is why it was never a valid pre/post base. The unattributed **435 kB** is **744**, deliberately kept separate |
 | **46.5** | **695** | Blocked on 691 — it is the sprint's exit condition and cannot run before the work it measures |
+| **46.9** | **744** | `/[locale]` client-chunk attribution: name what the 435 kB route-specific JS contains, starting with the patterns barrel and the homepage client islands. **Attribution only, no remediation** (D36). Independent of 691, runnable now |
 
-**Do not reorder 46.4 ahead of 46.1–46.3.** All three are runnable while the owner decision is outstanding, and
-leaving the sprint at zero landed tasks waiting on one decision is what has kept it open with nothing shipped.
+**The 46.1–46.3 rule stands, for a different reason now.** It was written because the sprint sat at zero landed
+tasks waiting on one owner decision; that decision arrived as **D36** on 2026-08-10 and three tasks (694, 702, 700)
+had already landed by then, which is the argument for it having been the right rule. Keep 691 after them anyway:
+it is the sprint's only visually-risky task, and 741 · 695 both re-anchor onto what it lands.

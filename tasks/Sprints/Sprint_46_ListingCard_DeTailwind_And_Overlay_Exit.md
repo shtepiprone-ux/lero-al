@@ -20,8 +20,8 @@ close until 691 and 702 land.
 |---|---|---|---|
 | **691** | `KICKOFF FILED`, Q3 | `MantineListingCardPattern.tsx` de-Tailwind — 25 editable `className` sites (28 `className=` minus the 3 cross-file contract strings). Overlay chips → `var(--overlay*)`. Comparator = the D26 rendered matrix **plus** `check:homepage-grid`, both required. | 692 · 693 · 701 (all landed) |
 | **702** | reserved | `ListingCard.tsx` de-Tailwind — exactly 8 `className=` sites (icon sizing + `shadow-sm`). Marker classes stay verbatim: **`.listing-card` is load-bearing**, anchoring stories in `check-stories-rendered.mjs` and acting as the grid locator in `check:homepage-grid`. | 691 |
-| **694** | reserved | Alias `--overlay`/`--overlay-foreground` → `var(--mantine-color-black/white)` per the 660/661 no-second-hand-authored-source convention. Declarations are at `globals.css:76-79` (`@theme inline`) + `:451-452` (`:root`). Runnable independently of 691/702. | — |
-| **695** | reserved | **Exit condition.** Delete the `@theme inline` `--overlay*` copy **and** the `--color-overlay*` namespace once the last of the **33** overlay utilities across **7** files is gone. **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 `P3` and 662 F2 `P3`. | 691 · 702 · 694 |
+| **694** | `KICKOFF FILED` 2026-08-10, Q4 | **RE-SCOPED 2026-08-10 — the overlay alias is closed by D35, not deferred** (measured: it reproduces Task 690's fallback regression on `tailwindcss@4.3.0`). Now the brand single-source **ΔE sync gate** 661's review spawned on 2026-07-23 and that sat unfiled for sixteen days — `scripts/__tests__/brand-single-source.test.ts` — plus one comment-only correction to `--brand-950` (ΔE00 **3.645**). Touches no overlay token; zero rendered delta. `Sprint_46_kickoff_prompt_Task_694_Brand_Single_Source_Delta_E_Sync_Gate.md`. | — |
+| **695** | reserved | **Exit condition.** Delete the `@theme inline` `--overlay*` copy **and** the `--color-overlay*` namespace once the last of the **33** overlay utilities across **7** files is gone. **Must UPDATE 692's gate, not delete it.** Folds in 692 F1 `P3` and 662 F2 `P3`. **694 is no longer a dependency** — it stopped touching the pair on 2026-08-10 (D35), so 695's blockers are 691 · 702 alone. | 691 · 702 |
 | **700** | reserved | The general `@theme`-dependency gate — fail when any `.module.css` consumes an `@theme` var whose last Tailwind-utility consumer disappears. Repo-wide scan; own blast radius, deliberately not a rider on 695. | — |
 
 Carried in from Sprint 45 — all five numbers were issued during the unsprinted period and never executed.
@@ -57,7 +57,7 @@ files** — `PerfDevOverlay` 11 · `MantineListingCardPattern` 6 · `ListingGall
 
 | Order | Task | Gate |
 |---|---|---|
-| **46.1** | **694** | Runnable now, blocked by nothing. **Its line references were stale and are corrected here:** the `--overlay*` declarations are at `globals.css:82-85` and `:470-471`, not `:76-79`/`:451-452` |
+| **46.1** | **694** | Runnable now, blocked by nothing — **but not the task this row originally described.** The 2026-08-10 preflight measured the alias reproducing Task 690's static-fallback regression on `tailwindcss@4.3.0` and the owner closed that scope as **D35**; 694 is now the brand ΔE sync gate. For the record, the overlay declarations are at `globals.css:82-85` and `:470-471` (the backlog's `:76-79`/`:451-452` were stale) — **695 owns them now, and 694 does not touch them** |
 | **46.2** | **702** | `ListingCard.tsx`, 8 sites; marker classes stay verbatim; **D34** applies |
 | **46.3** | **700** | Repo-wide `@theme`-dependency gate; independent of 691 |
 | **46.4** | **691** | ⛔ **Blocked on the owner.** `/[locale]` First Load JS measures 618 kB against a 185 kB baseline and has not moved across the 710/712/713/714 builds. The number exists; the go/no-go does not. Do not schedule 691 until it is answered |

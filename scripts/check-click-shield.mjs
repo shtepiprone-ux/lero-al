@@ -256,26 +256,33 @@ async function openScenarioOverlay(page, scenario) {
 //
 // Geometry: let `elDocTop`/`elDocBottom` be the candidate's DOCUMENT-relative top/bottom (its
 // viewport rect plus the current scroll offset — invariant under scrolling). Let `occluderRect` be
-// the VIEWPORT-relative UNION of `hit`'s rect and its nearest fixed/sticky ancestor's rect — the
-// fixed/sticky SYSTEM's extent (Task 739 attempt 2, corrected C1). Neither box alone is sufficient:
-// the ancestor's rect alone undershoots when `hit` OVERHANGS it (`.fabLink`'s `margin-top:-12px`
-// extends it above `.navBar`, 729's 6 false positives); `hit`'s rect alone undershoots the other way
-// when `hit` is CONTAINED by a larger ancestor (`svg.lucide-menu`, a 20px icon, sits inside
-// `.site-header`'s full 65px box — clearing the icon's own box still leaves the candidate under the
-// header, attempt 1's shipped regression). The union equals whichever box is larger in each
-// direction, so it is correct for both shapes — measured against 3 candidate boxes on both real
-// cases before adopting this (docs/sessions/2026-08-09-task739-clickshield-wrong-clearing-box-attempt2.md
-// §"R2 — box comparison"). `occluderRect` is invariant under scrolling because both of its inputs
-// are: `hit` is a descendant of a fixed/sticky ancestor with no other scroll container between
-// them, exactly as scroll-invariant as the ancestor itself — `sticky` is treated as fixed for this
-// purpose since this app's one sticky element (`.site-header`, `top:0`) is the first node in the
-// document and is therefore already in its stuck position for every reachable `scrollY`, so it
-// behaves identically to `fixed` across the whole scroll range this generator ever runs in
-// (verified 2026-08-09, not merely assumed — OQ1). A scroll offset `s` clears the candidate from a
-// bottom-anchored band when `elDocBottom - s <= occluderRect.top` (the candidate has scrolled up
-// above the band) — solved for the smallest such `s`. A scroll offset clears a top-anchored band
-// when `elDocTop - s >= occluderRect.bottom` (scrolling up moves the candidate below/away from the
-// band) — solved for the largest such `s`.
+// the VIEWPORT-relative EXTENT of the candidate's nearest fixed/sticky ancestor — that ancestor's
+// own rect, unioned with the rect of every one of its descendants that is actually hit-testable and
+// overflows it (`computeAncestorExtent`/`isHitTestableForExtent`, Task 740, corrected C1, plural).
+// Two prior, narrower boxes each undershot in one direction: the ancestor's rect alone undershoots
+// when an overflowing descendant OVERHANGS it (`.fabLink`'s `margin-top:-12px` extends it above
+// `.navBar`, 729's 6 false positives — Task 739's fix); `union(hit, ancestor)` (Task 739, as landed)
+// still undershoots whenever the TRUE overhanging descendant is not the one `elementFromPoint`
+// happened to report as `hit` — `.fabLink` blocks all six footer identities but was only `hit` in
+// two of them, so four candidates re-landed on `.fabLink` regardless (Task 740's own census). The
+// full extent is correct because it does not depend on which single descendant `hit` happened to
+// be — measured against the landed `union(hit, ancestor)` box on all four real survivors, 3 runs
+// each, before adopting this (docs/sessions/2026-08-09-task740-clickshield-system-extent.md, R1).
+// Non-hit-testable overflow (`pointer-events:none`, `visibility:hidden`, `display:none`, zero-area)
+// is excluded by construction — an unfiltered union-everything rule would over-extend the box,
+// generate an offset past `maxScrollY`, and get it discarded, turning a genuinely clearable
+// candidate into a reported-permanent one (R6's over-extension control fixture proves this both
+// ways). `occluderRect` is invariant under scrolling because every rect it unions is a descendant of
+// the fixed/sticky ancestor with no other scroll container between them, exactly as scroll-invariant
+// as the ancestor itself — `sticky` is treated as fixed for this purpose since this app's one sticky
+// element (`.site-header`, `top:0`) is the first node in the document and is therefore already in
+// its stuck position for every reachable `scrollY`, so it behaves identically to `fixed` across the
+// whole scroll range this generator ever runs in (verified 2026-08-09, not merely assumed — OQ1). A
+// scroll offset `s` clears the candidate from a bottom-anchored band when
+// `elDocBottom - s <= occluderRect.top` (the candidate has scrolled up above the band) — solved for
+// the smallest such `s`. A scroll offset clears a top-anchored band when
+// `elDocTop - s >= occluderRect.bottom` (scrolling up moves the candidate below/away from the band)
+// — solved for the largest such `s`.
 // Both candidate offsets are clamped to `[0, maxScrollY]` (`document.documentElement.scrollHeight -
 // window.innerHeight`, floored at 0) — a candidate offset outside the page's real scrollable range
 // is not reachable and is discarded, which is exactly what makes a permanent trailing-edge
@@ -404,6 +411,59 @@ async function hitTestPage(page) {
           return null;
         }
 
+        // Task 740 R2 — the inclusion rule, as prose: a descendant of the fixed/sticky ancestor
+        // counts toward the ancestor's occluding EXTENT only if it can actually receive a real
+        // click at its own position — i.e. it is hit-testable. Excluded, each for a stated
+        // hit-testing reason (not because exclusion improves any count):
+        //   - `pointer-events: none` — the browser's `elementFromPoint`/click dispatch skips these
+        //     entirely; a decoration with this property physically cannot intercept a click, however
+        //     large its box.
+        //   - `visibility: hidden` — removed from hit-testing (and painting) by the CSS spec; present
+        //     in the DOM/layout but not clickable.
+        //   - `display: none` — not rendered at all; `getBoundingClientRect()` on such an element is
+        //     degenerate (zero-area) by construction, listed separately only for clarity.
+        //   - zero-area (`width<=0` or `height<=0`) — nothing to hit-test regardless of the above.
+        // Every check is computed style or geometry — R3/Task 724 F1: no class name, component name,
+        // `data-*` attribute or module hash anywhere in this predicate.
+        function isHitTestableForExtent(el) {
+          const cs = window.getComputedStyle(el);
+          if (cs.pointerEvents === 'none') return false;
+          if (cs.visibility === 'hidden') return false;
+          if (cs.display === 'none') return false;
+          const r = el.getBoundingClientRect();
+          if (r.width <= 0 || r.height <= 0) return false;
+          return true;
+        }
+
+        // OQ2 — is the extent stable across bands and cells? A fixed/sticky ancestor's descendant
+        // structure does not change with scroll (only viewport-relative position does, and every
+        // rect read here is viewport-relative already), so the extent is stable across scroll BUT
+        // not across cells (different locale/viewport/DOM state, e.g. an open Drawer/Modal, can
+        // change which descendants exist or their sizes) — so `extentCache` is scoped to this one
+        // `runBand` invocation only (one band, one cell), never persisted across `page.evaluate()`
+        // calls. R4 cost: this is O(ancestor's descendant count) the FIRST time a given ancestor is
+        // seen in this band, then O(1) for every other candidate that shares it (`.navBar` and
+        // `.site-header` are each reused by many candidates within one cell) — cached per ancestor,
+        // not recomputed per candidate.
+        const extentCache = new Map();
+        function computeAncestorExtent(ancestor) {
+          if (extentCache.has(ancestor)) return extentCache.get(ancestor);
+          const ar = ancestor.getBoundingClientRect();
+          let top = ar.top;
+          let bottom = ar.bottom;
+          const descendants = ancestor.querySelectorAll('*');
+          for (let j = 0; j < descendants.length; j++) {
+            const d = descendants[j];
+            if (!isHitTestableForExtent(d)) continue;
+            const dr = d.getBoundingClientRect();
+            if (dr.top < top) top = dr.top;
+            if (dr.bottom > bottom) bottom = dr.bottom;
+          }
+          const extent = { top, bottom };
+          extentCache.set(ancestor, extent);
+          return extent;
+        }
+
         const candidates = Array.from(document.querySelectorAll(selector));
         let checked = 0;
         const results = [];
@@ -455,33 +515,33 @@ async function hitTestPage(page) {
             continue;
           }
 
-          // Task 739 attempt 2 — corrected C1: the geometry must bound the fixed/sticky SYSTEM's
-          // extent, not either box alone. `nearestFixedOrStickyAncestorOf(hit)` proves scroll
-          // invariance (a descendant of a fixed/sticky ancestor, with no other scroll container
-          // between them, is exactly as scroll-invariant as the ancestor itself) — it does NOT by
-          // itself decide which box occludes. Two failure directions, both measured live
-          // (docs/sessions/2026-08-09-task739-clickshield-wrong-clearing-box-attempt2.md):
-          //   - OVERHANG: `.fabLink`'s `margin-top:-12px` extends it above `.navBar`'s own box
-          //     (745 vs 756) — the ANCESTOR's rect alone undershoots (729's 6 false positives).
-          //   - CONTAINMENT: `svg.lucide-menu` (a 20px icon) sits INSIDE `.site-header`'s full 65px
-          //     box — the HIT's rect alone undershoots the other way: clearing the icon's own small
-          //     box still leaves the candidate under the header, which attempt 1 shipped as a
-          //     regression (`FavoriteButton` went `cleared` → `blocked` at the same rect, 4
-          //     locales, 3/3 reruns — see the attempt-1 REJECTED banner on the kickoff).
-          // The union of the two rects is correct in both directions: it equals `hit`'s rect when
-          // `hit` overhangs its ancestor, and the ancestor's rect when `hit` is contained by it —
-          // measured against 3 candidate boxes (ancestor-only, hit-only, union) on both real cases
-          // before adopting this, not assumed from the box's shape. Phase 2 (`:495-539`) remains the
-          // sole arbiter regardless — a wrong hypothesis here still fails its real `scrollTo` +
-          // `elementFromPoint` recheck and falls through to `violation`.
+          // Task 740 — corrected C1, plural (739's own review note N2): the geometry must bound the
+          // fixed/sticky SYSTEM's whole EXTENT — its own rect union every hit-testable descendant
+          // that overflows it — not `union(hit, ancestor)`, which covers only the one descendant
+          // that happened to be `hit`. `.fabLink` (`.navBar`'s own box starts at 756; `.fabLink`
+          // overhangs to 745 via `margin-top:-12px`) is the element that actually blocks all six
+          // footer identities — confirmed in 739's own census, `re-lands on .fabLink` in every row —
+          // but it is the *reported* `hit` in only two of them; in the other four, `hit` is
+          // `.navItem` (757) or `.fabLabel` (792), both themselves inside `.navBar`'s own box, so
+          // `union(hit, ancestor)` collapsed to 756 and still undershot by the same ~11px `.fabLink`
+          // adds — 739's shipped 4 residual false positives. `nearestFixedOrStickyAncestorOf(hit)`
+          // still proves scroll invariance (unchanged justification); `computeAncestorExtent` walks
+          // every descendant of that ancestor and unions in only the hit-testable ones
+          // (`isHitTestableForExtent`, R2/R3 above) — measured against the landed `union(hit,
+          // ancestor)` box on all four real survivors, 3 runs each, before adopting this
+          // (docs/sessions/2026-08-09-task740-clickshield-system-extent.md, R1 census): the extent's
+          // computed top (745) matches `.fabLink`'s own top exactly and resolves all four survivors
+          // `cleared` in all 12 measurements, where the landed box resolved inconsistently. Phase 2
+          // (`:495-539`) remains the sole arbiter regardless — a wrong hypothesis here still fails
+          // its real `scrollTo` + `elementFromPoint` recheck and falls through to `violation`, so an
+          // over-inclusive extent cannot manufacture a false `cleared` — it can only inflate the
+          // offset past `maxScrollY` and get it discarded, which is why R2's hit-testability filter
+          // (excluding `pointer-events:none`, hidden, and zero-area descendants) is load-bearing, not
+          // decorative: an unfiltered union-everything rule turns clearable candidates into
+          // permanent violations the moment a decorative overflow is large enough (R6's control).
           const fixedOrStickyAncestor = nearestFixedOrStickyAncestorOf(hit);
           if (fixedOrStickyAncestor) {
-            const hitRect = hit.getBoundingClientRect();
-            const ancRect = fixedOrStickyAncestor.getBoundingClientRect();
-            const occluderRect = {
-              top: Math.min(hitRect.top, ancRect.top),
-              bottom: Math.max(hitRect.bottom, ancRect.bottom),
-            };
+            const occluderRect = computeAncestorExtent(fixedOrStickyAncestor);
             const offsets = computeClearingOffsetCandidates(rect, occluderRect, maxScrollY);
             if (offsets.length > 0) {
               results.push({
@@ -663,10 +723,14 @@ const PERMANENT_PAGE_HTML = `<!DOCTYPE html>
 // as `.fabLink`'s `margin-top:-12px` overhang beyond `.navBar` (docs/sessions/2026-08-09-task739-*.md
 // §3.4). The target button sits at `top:225px;height:10px` (viewport 220-300 is the bar+overhang's
 // real hit-box; 240-300 is the bar's OWN box; the button's 220-235 band is reachable ONLY inside the
-// overhang, not the bar) — this isolates exactly the geometry Task 739 fixes: the pre-fix generator
-// (ancestor's box, top:240) undershoots by the same ~20px the overhang adds, the post-fix generator
-// (`hit`'s own box, top:220) does not. Same page-height convention as R12's pair decides
-// transient vs. permanent:
+// overhang, not the bar) — this isolates exactly the geometry Task 739 fixes: the pre-Task-739
+// generator (ancestor's box alone, top:240) undershoots by the same ~20px the overhang adds. Task
+// 740's extent (`computeAncestorExtent`, top:220 — the `#overhang` span is `hit`, and it is also the
+// one overflowing descendant, so the extent and `hit`'s own box coincide here) correctly clears it;
+// so did Task 739's landed `union(hit, ancestor)`, since `#overhang` happened to be `hit` in this
+// specific fixture — this fixture alone could not have caught 739's own gap (Task 740, kickoff §3.2:
+// `.fabLink` is not always `hit`). Same page-height convention as R12's pair decides transient vs.
+// permanent:
 //   - `OVERHANG_TRANSIENT_PAGE_HTML`: `body` 2000px tall — must resolve CLEARED post-fix (and FAIL
 //     pre-fix, proving this fixture actually expresses the defect rather than passing by accident).
 //   - `OVERHANG_PERMANENT_PAGE_HTML`: `body` exactly 300px, `maxScrollY = 0` — must FAIL in both the
@@ -734,6 +798,45 @@ const CONTAINMENT_PERMANENT_PAGE_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Task 740 R6 — the control for the OPPOSITE failure direction from the overhang/containment pairs
+// above: over-extension. `#decoration` is `pointer-events:none`, `top:-500px;height:560px` inside a
+// `position:fixed;height:60px` bar — a huge, purely visual overflow that CANNOT receive a real
+// click. The target button sits inside the bar's own solid box (`top:250px`, matching R12 arm②'s
+// original convention exactly), so it genuinely needs clearing — `hit` is the bar's own `<span>`, not
+// the decoration. A rule that unions every descendant's rect regardless of `pointer-events` (the
+// naive rule this fixture is built to catch) inflates the extent to `-260..300`, generates an
+// offset that either exceeds `maxScrollY` or lands the candidate off-screen, and the candidate falls
+// through to a reported `violation` — even though it is, in reality, trivially clearable by scrolling
+// the bar's own 60px out of the way. `isHitTestableForExtent`'s `pointer-events:none` exclusion
+// (R2) is what keeps this fixture passing under the correct rule.
+//   - `OVEREXTENSION_TRANSIENT_PAGE_HTML`: `body` 2000px tall — must FAIL under a deliberately naive
+//     union-everything rule, and resolve CLEARED under the correct, filtered extent.
+//   - `OVEREXTENSION_PERMANENT_PAGE_HTML`: `body` exactly 300px, `maxScrollY = 0` — must FAIL under
+//     both rules, the same C5/generosity-is-bounded proof the other two permanent twins give.
+const OVEREXTENSION_TRANSIENT_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (over-extension control, transient)</title></head>
+<body style="margin:0;height:2000px;position:relative;">
+  <button id="target" style="position:absolute;top:250px;left:40px;width:120px;height:40px;">Click me</button>
+  <div id="fixed-bar" style="position:fixed;bottom:0;left:0;right:0;height:60px;">
+    <span style="display:block;width:100%;height:100%;"></span>
+    <div id="decoration" style="position:absolute;top:-500px;left:0;right:0;height:560px;pointer-events:none;"></div>
+  </div>
+</body>
+</html>`;
+
+const OVEREXTENSION_PERMANENT_PAGE_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Click-shield gate self-test (over-extension control, permanent)</title></head>
+<body style="margin:0;height:300px;position:relative;">
+  <button id="target" style="position:absolute;top:250px;left:40px;width:120px;height:40px;">Click me</button>
+  <div id="fixed-bar" style="position:fixed;bottom:0;left:0;right:0;height:60px;">
+    <span style="display:block;width:100%;height:100%;"></span>
+    <div id="decoration" style="position:absolute;top:-500px;left:0;right:0;height:560px;pointer-events:none;"></div>
+  </div>
+</body>
+</html>`;
+
 // Task 727 R10/AC8 — three fixtures proving the contextual N6 rule itself (not the pre-existing
 // transient/permanent scroll mechanism above). All three keep the shield as a plain sibling
 // `<div>` after the dialog in document order with no CSS transform anywhere on the page, so plain
@@ -795,6 +898,8 @@ async function runGateSelfTest() {
       else if (req.url === '/overhang-permanent') res.end(OVERHANG_PERMANENT_PAGE_HTML);
       else if (req.url === '/containment-transient') res.end(CONTAINMENT_TRANSIENT_PAGE_HTML);
       else if (req.url === '/containment-permanent') res.end(CONTAINMENT_PERMANENT_PAGE_HTML);
+      else if (req.url === '/overextension-transient') res.end(OVEREXTENSION_TRANSIENT_PAGE_HTML);
+      else if (req.url === '/overextension-permanent') res.end(OVEREXTENSION_PERMANENT_PAGE_HTML);
       else if (req.url === '/dialog-violation') res.end(DIALOG_VIOLATION_PAGE_HTML);
       else if (req.url === '/dialog-clean') res.end(DIALOG_CLEAN_PAGE_HTML);
       else if (req.url === '/alertdialog-violation') res.end(ALERTDIALOG_VIOLATION_PAGE_HTML);
@@ -830,6 +935,11 @@ async function runGateSelfTest() {
     // extent) and PASS after the union-of-extent rework.
     { url: `${baseUrl}/containment-transient`, label: 'Task 739 attempt 2 — contained interceptor, tall page (scroll clears it)', expectFail: false, expectCleared: true },
     { url: `${baseUrl}/containment-permanent`, label: 'Task 739 attempt 2 — contained interceptor, page height == viewport (no scroll offset exists)', expectFail: true },
+    // Task 740 R6 — the over-extension control: a huge `pointer-events:none` decoration must NOT
+    // count toward the extent. Must FAIL under a deliberately naive union-everything rule, PASS
+    // under the correct, filtered extent.
+    { url: `${baseUrl}/overextension-transient`, label: 'Task 740 — over-extension control, tall page (decoration excluded, scroll clears it)', expectFail: false, expectCleared: true },
+    { url: `${baseUrl}/overextension-permanent`, label: 'Task 740 — over-extension control, page height == viewport (no scroll offset exists)', expectFail: true },
     // Task 727 R1/R3/R10 — the contextual N6 rule itself. A candidate INSIDE an active dialog is
     // never exempt, even when the interceptor is the genuine `.mantine-Overlay-root` backdrop
     // (this is the exact defect the task exists to close — a modal whose own backdrop covers its

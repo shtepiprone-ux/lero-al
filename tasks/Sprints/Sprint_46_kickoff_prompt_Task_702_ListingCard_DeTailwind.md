@@ -4,6 +4,32 @@
 **Sprint:** 46 — ListingCard de-Tailwind + overlay exit, order **46.2**
 **Executor:** Sonnet, via `.claude/skills/execute-task/SKILL.md`
 **Filed:** 2026-08-10, after 694 landed as the sprint's first task
+**Status:** ✅ `APPROVED WITH NOTES` 2026-08-10 — session log
+`docs/sessions/2026-08-10-task702-listingcard-detailwind.md`
+
+---
+
+## 0. Post-review corrections (2026-08-10)
+
+Three of this kickoff's own §3/§13 facts were wrong. All three were caught during execution or review, none
+changed the implementation's outcome, and all three are corrected in place below. Recorded here rather than
+silently patched because **700** (46.3) inherits §13.2's proof surface and **741** (46.6) inherits §3.5/§3.9's
+shadow-and-scanner problem verbatim.
+
+| # | Section | What the kickoff claimed | What is true | Who caught it |
+|---:|---|---|---|---|
+| C1 | §3.5 | `PopularLocationsView.module.css` (688) "already reproduces this composition — read its `box-shadow` rule and follow it" | 688 **hand-flattens** to a literal 5-layer list (`.card:focus-visible`, `:30-36`). The `--tw-*` var-composition precedent is `MobileBottomNavView.module.css` (713) `.fab`, `:87`. Following 688 as written produced a `check:design-tokens` failure. | Executor, mid-task |
+| C2 | §3.9 | "the file is at **0 violations now and must be at 0 after** — no marker carry-across is needed (unlike 713)" | True of `ListingCard.tsx`, false of the module it creates. Reproducing a *named* shadow utility as CSS **text** makes its literals scannable for the first time — 713's own documented finding, which §3.5 cited without connecting to §3.9. Five inline `design-tokens-allow` markers were required. | Executor, mid-task |
+| C3 | §13.2 cmd 5 | `screenshots:assert --mantine-only` is the rendered-matrix command | That invocation **skips the anchor phase entirely** (`check-stories-rendered.mjs:1634` — `MANTINE_ONLY ? [] : ASSERT_STORIES`), so the command list as written cannot prove AC2's four `.listing-card` anchor rows. | Reviewer |
+
+**C3 did not require a re-run.** `check-homepage-grid.mjs:86` assigns `system-featuredlistings--default` the
+`mechanism-agnostic` locator, whose `find()` predicate is
+`getComputedStyle(el).display === 'grid' && el.querySelector('.listing-card')` — a live marker-existence assertion
+on one of the four named stories, which failed closed if the marker vanished. It returned 88/88 PASS with
+before/after transcripts byte-identical. The other three rows use locators that carry no `.listing-card`
+requirement (`first-grid` for Latest, `tailwind-tokens` for Similar) — but `.listing-card` has exactly one producer
+in the repo (`ListingCard.tsx:203`/`:299`) and no per-story branch, so one passing witness settles all four.
+**For 700: fix the command list, do not add a second gate.**
 
 ---
 
@@ -116,8 +142,21 @@ which D28 forbids. Re-read these from the current build before writing; do not t
 
 Two rules, and the five-layer `box-shadow` depends on `--tw-inset-shadow` / `--tw-inset-ring-shadow` /
 `--tw-ring-offset-shadow` / `--tw-ring-shadow` being initialised by Tailwind's own `@property` block.
-`PopularLocationsView.module.css` (Task 688) already reproduces this composition — **read its `box-shadow` rule and
-follow it.** Do not flatten to a two-layer `box-shadow` without proving the serialized `getComputedStyle` value is
+
+> **C1 — corrected 2026-08-10.** This paragraph originally read: *"`PopularLocationsView.module.css` (Task 688)
+> already reproduces this composition — **read its `box-shadow` rule and follow it.**"* **That is wrong.** 688's
+> `.card:focus-visible` (`:30-36`) hand-flattens `ring-2` into a literal 5-layer list
+> (`transparent 0 0 0 0, …, var(--ring) 0 0 0 2px, …`); it never touches a `--tw-*` custom property. Following it
+> as instructed produces a computed-style match **and** a `check:design-tokens` failure (see C2).
+>
+> **The correct precedent is `MobileBottomNavView.module.css` (Task 713) `.fab` at `:87`:** set `--tw-shadow`
+> locally to the utility's own compiled value and keep `box-shadow` as the five `var()` references. The four
+> inset/ring properties then stay at Tailwind's globally-registered `@property` initial (`0 0 #0000`) because
+> nothing sets them locally. **Read 713, not 688, for this one declaration.** 688 remains the right precedent for
+> §3.4's reproduce-the-compiled-output convention generally — it is only its shadow *technique* that does not
+> transfer.
+
+Do not flatten to a two-layer `box-shadow` without proving the serialized `getComputedStyle` value is
 identical; a flattened form is a different computed string even when it looks the same.
 
 `.shadow-sm` shares its first rule with `.shadow-theme-lg`, which survives this task, so the `@property` block and
@@ -188,6 +227,22 @@ module's header comment** so the next reader does not "fix" the inconsistency.
 - `ListingCard.tsx` is **not** in `scripts/design-tokens-allowlist.json` and carries **0** inline
   `design-tokens-allow` markers. Every utility it uses today is a *named* utility the scanner does not flag, so the
   file is at **0 violations now and must be at 0 after** — no marker carry-across is needed (unlike 713).
+
+  > **C2 — corrected 2026-08-10.** The last clause is true of `ListingCard.tsx` and **false of the module this task
+  > creates.** The scanner reads CSS text, and a *named* utility hides its literals only while it stays a name. The
+  > moment `shadow-sm` is reproduced as CSS, `0 1px 3px 0 …#0000001a…` becomes scannable text and trips
+  > `css-length` + raw-colour — which is **713's own documented finding**, cited in §3.5 for the layer question and
+  > not carried into this bullet. Landed reality: `.overlayFavorite` needs **5** inline `design-tokens-allow`
+  > markers (one colour + four lengths), formatted as the detector's exact `property: value` string.
+  >
+  > "0 violations" therefore means *0 unmarked violations plus 0 stale markers*. Confirm both arms — the reviewer's
+  > re-run reported `0 raw style-value violation(s) | 0 stale-marker(s) | 0 missing-reason error(s)`, and the
+  > zero-stale arm is what proves the markers are live-matched rather than blanket suppression. Neither
+  > `ListingCard.tsx` nor `ListingCard.module.css` was added to `design-tokens-allowlist.json`, and adding either
+  > would have been out of scope.
+  >
+  > **741 inherits this exactly.** `CLOSED_OVERLAY_STYLE`'s `bg-status-info/80` family compiles to
+  > `color-mix(in oklab, …)`; budget for the same marker work and do not plan around a 0-marker outcome.
 
 ### 3.10 Preservation hazards that are NOT this task's to fix
 
@@ -337,8 +392,14 @@ compute identically to the pre-task capture; the markers still anchor all four g
   runs, *then* no Tailwind utility appears in any `className=` value; only `styles.*`, `cn(...)` and the three marker
   tokens do. `CLOSED_OVERLAY_STYLE` at `:56-59` still appears, unchanged (R5).
 - **AC2 [R2]** — *Given* the rendered story, *then* `.listing-card`, `.listing-card--horizontal` and
-  `.listing-card--vertical` are present in the DOM exactly as before, and `check:homepage-grid` and
-  `check:stories-rendered`'s four `.listing-card` anchor rows are green.
+  `.listing-card--vertical` are present in the DOM exactly as before, and `check:homepage-grid` is green —
+  specifically its `system-featuredlistings--default` step matrix, which resolves its grid through the
+  `mechanism-agnostic` locator's `el.querySelector('.listing-card')` predicate (`check-homepage-grid.mjs:86,204`)
+  and so fails closed if any marker is dropped.
+  **C3 — corrected 2026-08-10.** This AC originally also required "`check:stories-rendered`'s four `.listing-card`
+  anchor rows are green", which §13.2's command list could not deliver (see §0 C3 and §13.2 cmd 5). The
+  `check:homepage-grid` arm above is the stronger and actually-executed witness; the anchor rows are redundant
+  against it given the single-producer argument in §0. **Do not add a run to satisfy the old wording.**
 - **AC3 [R3, R6]** — *Given* the step-2 baseline and the step-5 re-capture, *then* every captured property is
   identical, and the rendered matrix over the **16** cells shows no verdict change (D26 / §14.11 governs any
   md5-changed cell; **do not invent a per-task pixel tolerance**).
@@ -374,8 +435,14 @@ proof is required. Not `Q2` — styling-only on a manifest-enrolled primitive is
 2. md5 witnesses at I0 and at the end for the six AC5 paths plus `ListingCard.tsx` and `ListingCard.smoke.test.tsx`.
 3. `npm run build` — **before** the edit, to read §3.4/§3.5 out of the current bundle; and after, exit 0.
 4. The computed-style capture, before and after (§10 steps 2 and 5), persisted under `.screenshots/`.
-5. `npm run screenshots:assert --mantine-only` — the 16 `ListingCard/Default` cells plus the rest of the run;
+5. `npm run screenshots:assert -- --mantine-only` — the 16 `ListingCard/Default` cells plus the rest of the run;
    report the full pass/fail/ambiguous triple and the comparator you used.
+   **C3 — corrected 2026-08-10.** Know what this flag does **not** run: `check-stories-rendered.mjs:1634` reads
+   `for (const story of MANTINE_ONLY ? [] : ASSERT_STORIES)`, so `--mantine-only` skips the anchor phase for
+   **every** story — including `patterns-mantine-homepagelistinggrids--default`, whose 16 PNGs in the run
+   directory are matrix cells, not anchor assertions. The three `system-*` anchor stories are not rendered at all.
+   Do not read "1204 cells passed" as covering any anchor row. AC2's marker arm is carried by command 6's
+   `check:homepage-grid` instead. **Task 700 must fix this pairing before reusing this command list.**
 6. `npm run check:homepage-grid` · `check:story-coverage` · `check:locale-leak` · `check:design-tokens` ·
    `check:stories` · `check:mojibake` · `check:file-integrity` — each before and after.
 7. `npx vitest run src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx`, then the full
@@ -418,7 +485,7 @@ Report as `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` 
 | Scope names what must not change | **Yes** — §8, the marker tokens, the six AC5 md5 witnesses |
 | Comparator shown able to fail | **Yes** — the computed-style capture is per-property, and §10 step 5 defines the failure action; the rendered matrix carries D26's own comparator |
 | Pre-plant census / no further lifeline | **N/A** — no gate is authored; the equivalent is §3.6's last-consumer census, measured |
-| No claimed command, file, value or behavior went uninspected | **Yes** — every §3 fact re-derived 2026-08-10 |
+| No claimed command, file, value or behavior went uninspected | ~~**Yes** — every §3 fact re-derived 2026-08-10~~ → **No, and this row was the defect.** Three claims shipped uninspected: §3.5's precedent (C1), §3.9's marker forecast (C2), §13.2 cmd 5's coverage (C3). All three are *derived* claims about what another file or flag does — precisely the class this row asserts was checked. The §3 **measurements** did hold under re-derivation; the reasoning laid over them did not. **The seventh consecutive kickoff to ship a factual defect.** For 700: inspecting a value is not inspecting the claim built on it — open the cited file and the cited flag's code path, not just the number. |
 | Owner-only exceptions traceable | **Yes** — D28, D34 and the 691 blocking decision are all pre-existing owner decisions, cited with dates |
 | Sprint assignment | **Yes** — Sprint 46, order 46.2, filed inside `tasks/Sprints/` |
 | Permanent Storybook creation gate | **N/A** — no story added, extended or probed; §8 forbids it explicitly |

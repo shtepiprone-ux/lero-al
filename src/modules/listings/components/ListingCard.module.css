@@ -1,0 +1,85 @@
+/*
+ * ListingCard.module.css — Task 702 (D28 de-Tailwind, Sprint 46.2). Reproduces the 8 prior
+ * Tailwind utility sites' OWN compiled output exactly (verified against the built
+ * `.next/static/css` bundle AND a live `getComputedStyle` capture on the canonical
+ * `Mantine/Primitives/ListingCard` story, Task 702 §3.4/§3.5/§10 I2), same reproduce-the-
+ * compiled-output convention as `PopularLocationsView.module.css` (Task 688) and
+ * `MantineHomeSection.module.css` (Task 662).
+ *
+ * D34 (2026-08-05): a D28 de-Tailwind module reproduces the utility's own cascade LAYER, so
+ * every rule below is wrapped in `@layer utilities` — same as `HeroSearchView.module.css`
+ * (709-R) and `MobileBottomNavView.module.css` (713).
+ *
+ * The two modules sitting closest to this one — `FavoriteButton.module.css` (653) and
+ * `MantineListingCardPattern.module.css` (602) — are correctly UNLAYERED, and that is not an
+ * inconsistency to "fix": D34 distinguishes by intent. A D28 migration (this file) reproduces
+ * a utility's own losing cascade standing, so it must stay layered to keep losing to Mantine's
+ * unlayered component CSS exactly as the utility it replaces did. FavoriteButton/
+ * MantineListingCardPattern instead fix a CASCADE-TRAP utility that never actually took effect
+ * against Mantine's own unlayered CSS — those must stay unlayered so the fix can win. Task 702
+ * §3.7 measured that `.inlineFavorite`/`.overlayFavorite` below do not contend with
+ * FavoriteButton.module.css on any property (no shared background-color/color/opacity/cursor),
+ * so layering this module does not reopen that fix.
+ *
+ * `.overlayFavorite`'s box-shadow reproduces Tailwind's own `--tw-inset-shadow,
+ * --tw-inset-ring-shadow,--tw-ring-offset-shadow,--tw-ring-shadow,--tw-shadow` composition by
+ * referencing the same custom properties `MobileBottomNavView.module.css` (713) does, rather
+ * than hand-flattening to a literal box-shadow list — `--tw-inset-shadow`/`--tw-inset-ring-
+ * shadow`/`--tw-ring-offset-shadow`/`--tw-ring-shadow` stay at Tailwind's own globally-registered
+ * `@property` initial value (`0 0 #0000`) because nothing here sets them; only `--tw-shadow` is
+ * set locally, to `.shadow-sm`'s own compiled value. Verified live via `getComputedStyle`, not
+ * derived from the source text alone (Task 702 §3.5/§10 I2): byte-identical to the pre-edit
+ * capture, `diffCount: 0`.
+ */
+
+@layer utilities {
+  /* Sites #4/#8 — the two <Link> wrappers (Task 702 §3.1). Markers (`listing-card
+     listing-card--horizontal`/`listing-card--vertical`) stay literal Tailwind-adjacent strings
+     on the element via `cn()`, untouched by this module — see ListingCard.tsx. */
+  .card {
+    display: block; /* block — I1 */
+  }
+
+  .cardVertical {
+    height: 100%; /* h-full — I1 */
+  }
+
+  /* Site #1 — no-cover-image fallback icon, horizontal card (`:153`). */
+  .placeholderIcon {
+    height: var(--space-6); /* h-6 — I1, N1: integer step resolves to the named token */
+    width: var(--space-6); /* w-6 — I1 */
+    color: var(--muted-foreground); /* text-muted-foreground — I1 */
+  }
+
+  /* Site #5 — no-cover-image fallback icon, vertical card (`:244`). */
+  .placeholderIconLarge {
+    height: var(--space-8); /* h-8 — I1 */
+    width: var(--space-8); /* w-8 — I1 */
+    color: var(--muted-foreground); /* text-muted-foreground — I1 */
+  }
+
+  /* Sites #3/#7 — ListingFeatureIcon svg sizing (`:173`, `:271`). Forwarded as the icon's ONLY
+     className (ListingFeatureIcon.tsx has no default/merge), so this class alone must size it. */
+  .featureIcon {
+    height: calc(var(--spacing) * 3.5); /* h-3.5 — I1, N1: fractional step keeps the calc() form */
+    width: calc(var(--spacing) * 3.5); /* w-3.5 — I1 */
+  }
+
+  /* Site #2 — inline FavoriteButton self-position, horizontal/list card (`:166`). Merged with
+     FavoriteButton's own `styles.control` via `cn()` inside FavoriteButton.tsx — does not
+     contend with it on any property (§3.7: control sets background-color/color/opacity/cursor
+     only). */
+  .inlineFavorite {
+    flex-shrink: 0; /* shrink-0 — I1 */
+    margin-top: calc(var(--spacing) * -0.5); /* -mt-0.5 — I1 */
+    margin-right: calc(var(--space-1) * -1); /* -mr-1 — I1 */
+  }
+
+  /* Site #6 — overlay FavoriteButton shadow, vertical card (`:259`). See header comment for the
+     composition this reproduces — same `--tw-shadow`-plus-var()-composition technique as
+     `MobileBottomNavView.module.css` (713) `.navBar`/`.fab`. */
+  .overlayFavorite {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, #0000001a), 0 1px 2px -1px var(--tw-shadow-color, #0000001a); /* design-tokens-allow: #0000001a — Tailwind's own compiled shadow-sm color fallback (MobileBottomNavView.module.css:87 precedent for the same raw value on shadow-lg); no §22 token represents this specific alpha-black */ /* design-tokens-allow: --tw-shadow: 1px — shadow-sm's own compiled offset-y/blur expansion, no §22.4 length token composes this box-shadow layer (Task 715 precedent, MobileBottomNavView.module.css:87) */ /* design-tokens-allow: --tw-shadow: 3px — same shadow-sm expansion */ /* design-tokens-allow: --tw-shadow: 2px — same shadow-sm expansion */ /* design-tokens-allow: --tw-shadow: -1px — same shadow-sm expansion */
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); /* shadow-sm */
+  }
+}

@@ -305,6 +305,17 @@ jobs:
       - name: Build production bundle
         run: npm run build
 
+      - name: CSS var() resolvability gate (Task 700 — blocking, no continue-on-error)
+        # Reads the just-built .next/static/css bundle (Arm A) and src/**/*.{css,tsx,ts}
+        # (Arm B), so it must run after "Build production bundle" and needs no server.
+        # Redirected to a file, exit code captured as its own statement — never trust a
+        # piped command's exit code (this project's evidence-capture rule).
+        run: |
+          npm run check:css-vars > css-vars.log 2>&1
+          exit_code=$?
+          cat css-vars.log
+          exit $exit_code
+
       - name: Start production server
         # Backgrounded within the job's persistent shell so it stays alive into the next step
         # (GitHub Actions runs every step's shell in the same process/session on the same runner).

@@ -27,6 +27,20 @@ valid.
 
 No row may claim more than its command or artifact actually observes.
 
+### 2b. API and data-flow absence claims (when applicable)
+
+Complete one row for every material claim that a prop, field, callback, selector, or token consumer is `dead`,
+`unread`, `unused`, `never passed`, `never forwarded`, `only` used by a named site, or otherwise absent. Do not
+collapse same-named fields from different types into one row.
+
+| Claim | Exact property identity and enclosing declaration | Runtime reads | Production/story/test constructors, forwarding, spreads, and nested paths | Search plus contrary probe | Conclusion / status |
+|---|---|---|---|---|---|
+| | `Type.field` + path/line and enclosing block | path/line or none | path/line or none, with branch scope | exact query, raw result, and same-name/indirect counter-check | `VERIFIED` / `UNKNOWN` / `BLOCKED` |
+
+`VERIFIED dead` requires the declaration identity and a complete runtime-read census. `VERIFIED nobody supplies it`
+also requires the construction/forwarding census. If a nested or indirect path remains uninspected, use `UNKNOWN`;
+do not state the claim as a confirmed requirement, AC, scope boundary, or handoff fact.
+
 ### 2a. Review-source and conclusion audit (implementation reviews)
 
 List the evidence you personally opened, not files merely named by the executor. Every P0/P1 AC and every material
@@ -93,6 +107,7 @@ non-growing consolidation plan. Scope, Out of scope, verification, completion re
 | Dirty-worktree manifest or clean isolation | Every starting porcelain entry covered by `orchestrator-dirty-worktree-manifest-template.md`, or recorded proof of an isolated clean worktree | `VERIFIED` / `BLOCKED` |
 | Stateful measurement timing | Every new scanned/input artifact named, with its creation point relative to each baseline/count/manifest command | `VERIFIED` / `BLOCKED` |
 | Revision consistency | Every step/phase/AC reference and current self-check recomputed after the last edit; superseded claims marked historical | `VERIFIED` / `BLOCKED` |
+| API/data-flow revision check | Every material absence/API trace in §2b re-run after the final textual revision; no current section still asserts a superseded identity or conclusion | `VERIFIED` / `BLOCKED` |
 
 Never use the task document itself as evidence of owner approval. A raw final status is not a delta in a dirty
 worktree. If an artifact could change the measured input set, the task must either schedule it after the measurement
@@ -136,6 +151,11 @@ unexpected path and a changed value; manual quotation is not a gate.
 - [ ] Exact baseline/count/manifest assertions account for the timing of every task-created input artifact.
 - [ ] The current task text has no stale step reference or self-check claim contradicted by its latest revision.
 - [ ] Every material claim has a recorded falsification attempt.
+- [ ] Every material absence/API claim has a complete §2b trace: exact enclosing type, runtime reads,
+      production/story/test construction paths, and a contrary probe. Same-named root and nested fields are not
+      conflated.
+- [ ] No `Confirmed` requirement, AC, scope boundary, or handoff fact is deferred to the executor for its first
+      verification; material API/data-flow traces were re-run after the final textual revision.
 - [ ] Unresolved rows are labelled `ASSUMED`, `UNKNOWN`, or `BLOCKED`; none is presented as verified.
 - [ ] For an implementation review, the source-and-conclusion audit covers every P0/P1 AC and material conclusion.
 - [ ] Every statement of exclusivity, causality, or flakiness has a recorded counter-check; otherwise it is labelled

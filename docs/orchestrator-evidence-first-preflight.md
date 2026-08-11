@@ -35,6 +35,26 @@ For every material requirement, acceptance criterion, or gate, record:
 Inspect the code that produces every cited verdict, enum, baseline count, exit code, selector, default, or
 allowlist behavior. A name, comment, prior report, or configuration entry is not proof of the emitted state.
 
+### Trace API and data-flow absence claims
+
+For a claim that a prop, object field, callback, selector, or token consumer is `dead`, `unread`, `unused`, `never
+passed`, `never forwarded`, `only` used by a named site, or otherwise absent, record a separate API/data-flow trace
+in the completed preflight. The trace must include:
+
+1. the exact declaration and its enclosing interface/type or object shape;
+2. every runtime read of that exact property identity;
+3. every production, story, and test construction, forwarding, spread, and nested-object path that can supply it;
+4. the search/query and raw result used to find those paths; and
+5. one contrary probe: a same-named field on another type, a nested object, or an indirect/spread caller where one
+   exists.
+
+Do not infer that `ComponentProps.className` is absent or dead from a JSX invocation that lacks `className` when a
+nested `Overlay.className`, configuration object, or spread can still carry a different field with the same name.
+Read the enclosing block, not just the matching line. A property is `VERIFIED` as dead only when the trace establishes
+both its declaration identity and the absence of a runtime read; a claim that nobody supplies it additionally requires
+the caller/constructor census. Otherwise label the claim `UNKNOWN`, preserve the interface, and keep it out of a
+`Confirmed` requirement or AC until it is resolved.
+
 For every command, establish its real reads, writes or overwrites, output schema, matrix, and exit semantics. A
 command proves only what its own artifact observes. A missing baseline cell, selector, rendered page, or infrastructure
 result must fail an assertion; a diagnostic reason alone is not a passing check.
@@ -90,6 +110,10 @@ leave this timing to executor convention.
 After revising a task, recompute its current quality gate. Verify every cited step, phase, AC, and artifact against
 the actual execution order, and remove or clearly mark superseded statements. A task may preserve historical context,
 but a current self-check must not report a retracted waiver, status, or route as passing.
+
+Re-run every material API/data-flow trace after the final textual revision. A correction narrative elsewhere in the
+document is not a correction if the current verified context, requirements, ACs, scope, or handoff still asserts the
+superseded API fact.
 
 ## Separate UI evidence layers
 

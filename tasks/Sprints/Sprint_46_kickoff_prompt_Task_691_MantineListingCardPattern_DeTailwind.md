@@ -16,7 +16,7 @@ criteria and describes a contract that does not exist.
 
 | # | Draft-1 claim | Measured 2026-08-11 |
 |---:|---|---|
-| **A1** | §3.4 contract 1: *"Card root class · producer `ListingCard.tsx:201/:297` · consumer pattern `className` prop → `cn(...)` at `:162`/`:290`"* | **Wrong in both directions.** `ListingCard.tsx` renders the pattern at `:208`/`:304` and passes **no** `className`; the marker string is on the wrapping `<Link>`, now `:203`/`:299` (702 moved it). And the pattern's `className?: string` at `:40` is **never read** — `cn()` at `:162`/`:290` does not receive it, no consumer passes it, and the only other `className` hits in the file are comments plus `:315 overlay.className` (which is 741's `CLOSED_OVERLAY_STYLE`). **It is dead API surface.** 702's §3.10 flagged half of this; the full measurement is here. |
+| **A1** | §3.4 contract 1: *"Card root class · producer `ListingCard.tsx:201/:297` · consumer pattern `className` prop → `cn(...)` at `:162`/`:290`"* | **Void — the prop never existed.** `MantineListingCardPatternProps` (opens `:52`) declares no `className`. `ListingCard.tsx` renders the pattern at `:208`/`:304` passing none, and the marker string is on the wrapping `<Link>`, now `:203`/`:299` (702 moved it). 702 §3.10 flagged the producer half; §3.2 has the rest. **This row itself was wrong in a pre-handoff revision** — it called `:40` a dead pattern prop when `:40` is `MantineListingCardOverlay.className`, live and read at `:315`. See §3.2. |
 | **A2** | §3.4 contract 2: `shrink-0 -mt-0.5 -mr-1` at `ListingCard.tsx:166` must survive byte-identical | **That string no longer exists.** 702 replaced it with `className={styles.inlineFavorite}` at `:168`. The pattern's JSDoc at `:73` still quotes it as a contract — a stale comment, not a live coupling. |
 | **A3** | *"Changing any of them belongs to Task 702"* | 702 **landed** (`0dac78755`). Contract 3 (`CLOSED_OVERLAY_STYLE`) is **741**'s, and 741 is blocked on this task. |
 | **A4** | *"25 className sites (28 minus the 3 contracts)"* | **27 code sites.** `grep -c "className="` returns 28, but `:73` is inside a JSDoc block — the same grep artifact 702 §3.2 hit. Re-derive the dispositions against 27. |
@@ -57,23 +57,32 @@ numbers were right when written and four of them are now wrong, which is the poi
 
 ### 3.1 The 27 sites — and why the grep says 28
 
-`grep -c "className=" ` → **28**. One is prose: `:73`, inside the JSDoc block at `:71-74`, quoting
-`className="shrink-0 -mt-0.5 -mr-1"` as a contract that **702 already dissolved** (A2). **27 code sites**, at
+`grep -c "className=" ` → **28**. One is prose: `:73`, inside the JSDoc block at `:71-74` that documents
+`favorite?: ReactNode` **inside `MantineListingCardPatternProps`**, quoting `className="shrink-0 -mt-0.5 -mr-1"`
+as a contract that **702 already dissolved** (A2). **27 code sites**, at
 `:162 · 172 · 178 · 188 · 189 · 195 · 205 · 210 · 229 · 235 · 268 · 270 · 271 · 272 · 290 · 298 · 302 · 312 · 313 ·
 323 · 324 · 338 · 342 · 343 · 348 · 372 · 375`.
 
 Re-derive the A–F disposition groups from draft 1 §3.5 against **these 27**, and state any site whose group changed.
 
-### 3.2 The `className` prop is dead — measured, and it is 741's decision, not this task's
+### 3.2 The pattern has no `className` prop at all — and `overlay.className` is a live contract
 
-`className?: string` is declared at `:40` and read **nowhere**. No consumer passes it: `ListingCard.tsx:208/:304`
-(no prop), `ListingCardPattern.stories.tsx:124` (no prop), `MantineListingCardPattern.smoke.test.tsx:56`
-(`{...props}`, and the test does not set it).
+**Corrected 2026-08-11 in owner review, before handoff.** An earlier revision of this section claimed
+`className?: string` at `:40` was a dead prop on the pattern. **That was wrong, and it contradicted §3.3 in this
+same document.** `:40` is a field of **`MantineListingCardOverlay`** (interface opens at `:36`), documented there as
+*"Status color classes (e.g. `bg-status-info/80 border-status-info`)"*. It is **read** at `:315` via
+`overlay.className` and **fed** from `ListingCard.tsx:268`, `ListingCardPattern.stories.tsx:120` and the smoke test.
 
-**Do not remove it.** Deleting public API is an interface change outside a mechanism-only migration, and **741** was
-split out precisely to decide whether the pattern keeps accepting arbitrary class strings. **Record the measurement
-in the completion report so 741 inherits it** — 741's premise ("whether the pattern keeps accepting arbitrary class
-strings") is now answerable: nothing passes one today.
+`MantineListingCardPatternProps` opens at `:52` and declares **no** `className` prop. Its only `className` text is
+the stale JSDoc at `:73` documenting `favorite?: ReactNode` (§3.1) — verified by scanning the interface body, not by
+grepping the file. So draft 1's §3.4 contract 1
+is void because the prop never existed — not because it exists unread. Nothing here is dead, nothing is 691's to
+remove, and `overlay.className` stays a live pass-through owned by **741** (§3.3).
+
+**The lesson is the method, not the fact.** The wrong claim came from `grep -n "className" | grep -v "^\s*\*"`,
+which stripped the JSDoc line that says which interface the field belongs to. **Filtering away comments also filters
+away the context that identifies a declaration.** Read the enclosing block, not the matching line — §14.9 applies
+this to you.
 
 ### 3.3 What must not change — the real cross-file couplings
 
@@ -171,7 +180,7 @@ Tree clean at `HEAD`; `docs/backlog.md` is **80** lines after the 2026-08-11 con
 | R7 | §3.7 | `check:homepage-grid`, `check:css-vars`, `check:design-tokens`, `check:stories`, both smoke tests unchanged | P0 | AC7 | Confirmed |
 | R8 | §3.8 | `--color-badge-premium` and `--shadow-listing-card-elevation-lg` still referenced from this module, or their loss is reported | P0 | AC8 | Confirmed |
 | R9 | §3.9, D36 | `/[locale]` First Load JS recorded at I0 and final; **any increase stops the task** | P0 | AC9 | Confirmed |
-| R10 | §3.2 | The dead `className` prop is **left in place**, and the measurement is reported for 741 | P1 | AC10 | Confirmed |
+| R10 | §3.6, D34 | A **property-level `getComputedStyle` capture** is taken before any edit and re-taken after; every captured property is identical | P0 | AC10 | Confirmed |
 | R11 | Standing | `npm run build` exit 0; `typecheck` exit 0 | P0 | AC11 | Confirmed |
 | R12 | Backlog rules | Concise `docs/backlog.md` update (**≤80 lines**) + session log | P1 | AC12 | Confirmed |
 
@@ -204,7 +213,8 @@ Task-specific, required:
 - `src/design-system/mantine/patterns/MantineListingCardPattern.tsx` — all 397 lines.
 - `src/design-system/mantine/patterns/MantineListingCardPattern.module.css` — all 82, **including the header**.
 - `src/modules/listings/components/ListingCard.tsx` `:203`, `:299`, `:208`, `:304` — to confirm §3.2/§3.3 yourself.
-- `tasks/Sprints/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md` §0.2 and §3.4/§3.5 — the compiled-output
+- `tasks/Sprints/Sprint_46_kickoff_prompt_Task_702_ListingCard_DeTailwind.md` **§0** (C1–C3), §3.4/§3.5 and
+  **§10.2/§10.5** — the compiled-output
   discipline and the three defects that document trail cost.
 - `src/components/shared/HeroSearchView.module.css:40-60` — D34's layered precedent.
 - The superseded `tasks/kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md` §3.5 — the A–F group
@@ -230,7 +240,8 @@ Any other path is out of scope. If the `.grayscale.opacity-60` decision (§3.3) 
 
 - **`ListingCard.tsx`** — 702 closed it. md5 it at I0 and at the end.
 - **`CLOSED_OVERLAY_STYLE` / `overlay.className`** — 741.
-- **Removing the dead `className` prop** — 741 (§3.2).
+- **`overlay.className` and the `MantineListingCardOverlay` shape** — 741 (§3.2/§3.3). Pass it through untouched;
+  do not narrow, rename or remove the field, and do not migrate the `bg-status-*` strings it carries.
 - The `@theme inline` overlay copy and the `--color-overlay*` namespace — **695**.
 - `mantine-migration-scope.json`, any story, any viewport, any `MANTINE_STORY_EXTRA_VIEWPORTS` entry.
 - The 435 kB attribution (**744**) and the capture-validity guard (**745**).
@@ -256,12 +267,19 @@ not increased.
    disagrees with this document, the tree wins** — record the discrepancy. Draft 1's numbers were correct on
    2026-08-01 and four are wrong today.
 2. **Capture the comparators before editing:** I0 md5 of `ListingCard.tsx` and both smoke tests; the I0
-   `/[locale]` First Load JS (R9); a `--mantine-only` baseline is **not** needed — §3.4's standing comparator is the
-   baseline, and a second full run is the expensive way to learn what is already known.
+   `/[locale]` First Load JS (R9); and — **mandatory, R10** — a **property-level `getComputedStyle` baseline** over
+   all 27 sites on `patterns-mantine-listingcardpattern--default` **and** `mantine-primitives-listingcard--default`,
+   recording exactly the properties each utility sets. Follow Task 702 §10.2/§10.5: capture, edit, re-capture, diff
+   per property, and treat any moved property as a D28 violation to fix or report. **This is the only evidence that
+   settles §3.6's D34 question** — the rendered matrix compares images, not cascade standing, so it cannot show that
+   a utility which was losing has started to win. Persist both captures and the diff script in the session log.
+   A `--mantine-only` baseline is **not** needed — §3.4's standing comparator is the baseline.
 3. **Per-site disposition table before any edit** — all 27, each with its group, its compiled output, and its D34
    layer decision (§3.6). This is the artifact the review will read first.
 4. **Reproduce compiled output, never intent.** Especially the six overlay utilities (§3.5).
-5. **Do not** add `!important`, raise specificity to win, touch `cn()`, or alter the `className` prop.
+5. **Re-capture and diff** the computed styles from step 2. Any property that moved is a D28 violation — fix it or
+   stop and report. **Do not** add `!important`, raise specificity to win, touch `cn()`, or alter
+   `overlay.className`.
 6. **Stop conditions — report, do not route around:** an overlay utility whose compiled form you cannot reproduce;
    a site that was losing to Mantine (§3.6); a First Load JS increase (§3.9); a `.grayscale.opacity-60` re-anchor
    that needs a test edit (§3.3).
@@ -308,8 +326,9 @@ identically to the pre-task capture; the grid gates and both smoke tests stay gr
   are still referenced, or their removal is reported with the consequence stated.
 - **AC9 [R9]** — `/[locale]` First Load JS quoted at I0 and final. **Any increase ends the task as
   `PARTIALLY IMPLEMENTED`**, not as a note.
-- **AC10 [R10]** — the report states that `className?: string` at `:40` is dead, names the four consumers checked,
-  and flags it for 741.
+- **AC10 [R10]** — *Given* the before/after computed-style captures over all 27 sites, *then* **every captured
+  property is identical** and the diff count is **0**. Both captures and the diff are persisted in the session log.
+  A rendered matrix cannot show that `flex-shrink` or a cascade winner survived — Task 702 §10.2 exists for this.
 - **AC11 [R11]** — `npm run build` exit 0 (**53** route rows, `40/40` static pages — re-measure and quote what you
   see); `typecheck` exit 0.
 - **AC12 [R12]** — `docs/backlog.md` updated concisely and **≤80 lines**; session log at the §7 path.
@@ -331,7 +350,10 @@ behavior, and say so either way.
 
 ### 13.2 Commands — record the actual result of each
 
-1. `git --no-optional-locks status --porcelain` at I0; `git show HEAD:docs/backlog.md | wc -l` before any edit.
+1. `git --no-optional-locks status --porcelain` at I0; the backlog baseline **before any edit** —
+   PowerShell has no `wc`, and **`Measure-Object -Line` is wrong here** — it counts lines *inside* each emitted
+   string, and a blank line contributes 0, so it returns **57** for an 80-line file (23 blanks). Use
+   `(git show HEAD:docs/backlog.md | Measure-Object).Count`, which counts the emitted objects and returns **80**.
 2. `npm run build` **before** editing — for the compiled CSS (§10.1) **and** the I0 `/[locale]` First Load JS (R9).
 3. md5 at I0 and final: `ListingCard.tsx`, `ListingCard.smoke.test.tsx`, `MantineListingCardPattern.smoke.test.tsx`.
 4. The per-site disposition table (§10.3) — persist it.
@@ -360,12 +382,17 @@ Report as `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` 
 5. The I0 vs final md5 table (§13.2.3).
 6. `/[locale]` First Load JS at I0 and final, with the delta stated explicitly (R9/AC9).
 7. The rendered set comparison — `0 added, 0 removed` — with the method, not just totals.
-8. The §3.8 token check, and the §3.2 dead-prop measurement flagged for **741**.
+8. The §3.8 token check, and confirmation that the **741 boundary held**: `overlay.className` at `:315` still
+   receives `CLOSED_OVERLAY_STYLE` from `ListingCard.tsx:268` unchanged, the `MantineListingCardOverlay` interface
+   at `:36-41` is untouched, and no `bg-status-*` string moved. Quote the interface and the `:315` call site.
 9. Assumptions, deviations, limitations. **This kickoff's own facts are not exempt.** Draft 1 shipped nine wrong
    claims because it aged ten days; 700 took three drafts and 742 was downgraded post-review — in every case the
    defect was a *derived* claim about what another file does. The derived claims here are: that `:73` is the only
-   comment-borne `className=`, that the `className` prop is read nowhere, that exactly six overlay utilities exist,
-   that both §3.8 tokens have no other consumer, and that `ListingDetailPattern` shares no code. **Open each.**
+   comment-borne `className=`, that `MantineListingCardPatternProps` declares no `className`, that exactly six
+   overlay utilities exist, that both §3.8 tokens have no other consumer, and that `ListingDetailPattern` shares no
+   code. **Open each — and read the enclosing block, not the matching line.** §3.2 records what that costs: a
+   pre-handoff revision of this document called `:40` a dead prop because a `grep -v` filter had removed the JSDoc
+   that identified its interface. The owner caught it; the kickoff contradicted itself two sections apart.
 10. Confirmation of the `docs/critical-flow-registry.md` row disposition (§13.1).
 
 ---
@@ -377,9 +404,9 @@ Report as `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`, `PARTIALLY IMPLEMENTED` 
 | Executable by a fresh Sonnet with no chat context | **Yes** — every site, count, coupling and comparator is in §3 |
 | Every primary requirement has a binary AC and a verification method | **Yes** — R1–R12 → AC1–AC12 |
 | Scope protects existing behavior and names what must not change | **Yes** — §8, plus four explicit stop conditions in §10.6 |
-| Comparator shown able to fail | **Yes** — the fail set is compared as a set with a fixed baseline re-confirmed twice; `check:homepage-grid` fails closed on a dropped marker; the per-site table makes a silent promotion visible |
+| Comparator shown able to fail | **Yes, and it is the property-level capture that earns this — R10/AC10.** The rendered matrix compares images and cannot show that a utility which was losing to Mantine has started to win, which is exactly §3.6's D34 risk; a per-property `getComputedStyle` diff can, and exits non-zero on any moved property (Task 702 §10.2/§10.5). `check:homepage-grid` additionally fails closed on a dropped marker, and the fail set is compared as a **set** against a baseline re-confirmed twice. **This row was `Yes` on the rendered matrix alone in a pre-handoff revision — that comparator could not have failed for the D34 case.** |
 | Pre-plant census / no further lifeline | **N/A** — no gate is authored. The equivalent is §3.8's last-consumer measurement, taken |
-| No claimed command, file, value or behavior went uninspected | **Partial, stated.** Every §3 figure was measured today against `HEAD`. Five derived claims are named for re-check in §14.9. Draft 1 marked this "Yes" and carried nine defects |
+| No claimed command, file, value or behavior went uninspected | **Partial, stated.** Every §3 figure was measured today against `HEAD`, and the full evidence trace was **re-run after the final textual revision** per the create-task rule — it caught one stale line reference (`MantineListingCardPatternProps` opens `:52`, not `:51`) and confirmed the §3.2 absence claim by scanning the interface body rather than the file. Five derived claims remain named for re-check in §14.9. Draft 1 marked this "Yes" and carried nine defects |
 | Owner-only exceptions traceable | **Yes** — D36 (2026-08-10) and D37 (2026-08-11) are quoted owner decisions; D28/D33/D34/D35 are cited with dates. No exception is invented here |
 | Sprint assignment | **Yes** — Sprint 46, order 46.4, filed inside `tasks/Sprints/` (draft 1's root path is grandfathered and superseded) |
 | Permanent Storybook creation gate | **N/A** — no story added, extended or probed; §8 forbids it |

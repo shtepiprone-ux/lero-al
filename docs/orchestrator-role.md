@@ -148,6 +148,9 @@ Approval requires:
 10. For UI work, the canonical UI decision record matches the real diff: reused sources are consumed without copied
    styles; extensions and new canonical sources have their canonical stories and required registrations in the same
    diff; no component-local hardcode is disguised as a scanner exception.
+11. A persisted `docs/reviews/*.review-ledger.json` covers every P0/P1/P2 criterion, passes
+    `npm run check:review-ledger`, and permits the chosen decision and handoff. A reviewable PR with no changed
+    valid ledger is not ready for approval.
 
 ## Owner-native validation handoff
 

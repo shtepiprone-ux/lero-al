@@ -1,0 +1,595 @@
+#!/usr/bin/env node
+/**
+ * check-review-ledger.mjs — fail-closed approval-evidence validator.
+ *
+ * A persisted review ledger is intentionally stricter than a Markdown summary:
+ * it records the final subject, required scope, exact evidence, counter-check,
+ * and verdict for every primary acceptance criterion. This script validates the
+ * ledger shape, artifact paths, declared tuple coverage, exact-generated-rule
+ * records, and approval/handoff consistency.
+ *
+ * Modes:
+ *   npm run check:review-ledger -- --file docs/reviews/<task>.review-ledger.json
+ *   npm run check:review-ledger                         # validate all retained ledgers
+ *   npm run check:review-ledger -- --ci                 # validate PR ledgers and require one
+ *   npm run check:review-ledger:verify                  # in-memory failing-arm self-test
+ *
+ * Rule: docs/agent-contract.md §9a; docs/orchestrator-procedures.md
+ *       "Approval-closure gate".
+ */
+
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { dirname, join, relative, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = resolve(__dirname, '..');
+const REVIEW_DIR = join(ROOT, 'docs', 'reviews');
+
+const args = process.argv.slice(2);
+const VALID_DECISIONS = new Set([
+  'APPROVED',
+  'APPROVED WITH NOTES',
+  'NEEDS REVISION',
+  'PARTIALLY VERIFIED',
+  'BLOCKED',
+]);
+const VALID_STATUSES = new Set(['VERIFIED', 'UNVERIFIED', 'INFERENCE', 'UNKNOWN', 'BLOCKED']);
+const VALID_PRIORITIES = new Set(['P0', 'P1', 'P2', 'P3', 'NOTE']);
+const PRIMARY_PRIORITIES = new Set(['P0', 'P1', 'P2']);
+const SCOPE_DIMENSIONS = ['subjects', 'stories', 'locales', 'viewports', 'states', 'phases'];
+const ENVELOPE_FIELDS = [
+  'selector',
+  'media',
+  'supports',
+  'layer',
+  'specificity',
+  'sourceOrder',
+  'declarations',
+  'customProperties',
+];
+const MAX_SCOPE_TUPLES = 20_000;
+
+function isObject(value) {
+  return value !== null && typeof value === 'object' && !Array.isArray(value);
+}
+
+function isNonBlankString(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function addError(errors, message) {
+  errors.push(message);
+}
+
+function requireString(value, label, errors) {
+  if (!isNonBlankString(value)) addError(errors, `${label} must be a non-empty string`);
+  return isNonBlankString(value) ? value.trim() : '';
+}
+
+function requireArray(value, label, errors, { min = 1 } = {}) {
+  if (!Array.isArray(value)) {
+    addError(errors, `${label} must be an array`);
+    return [];
+  }
+  if (value.length < min) addError(errors, `${label} must contain at least ${min} item(s)`);
+  return value;
+}
+
+function normalizedRepoPath(value, label, errors, { checkExists = true } = {}) {
+  const path = requireString(value, label, errors);
+  if (!path) return null;
+  const absolute = resolve(ROOT, path);
+  const rel = relative(ROOT, absolute);
+  if (rel === '' || rel === '..' || rel.startsWith(`..${sep}`) || resolve(ROOT, rel) !== absolute) {
+    addError(errors, `${label} must stay inside the repository: ${path}`);
+    return null;
+  }
+  if (checkExists && !existsSync(absolute)) addError(errors, `${label} does not exist: ${path}`);
+  return rel.replaceAll('\\', '/');
+}
+
+function validateScope(value, label, errors, { allowNotApplicable = false } = {}) {
+  if (!isObject(value)) {
+    addError(errors, `${label} must be an object`);
+    return {};
+  }
+
+  const scope = {};
+  for (const dimension of SCOPE_DIMENSIONS) {
+    if (value[dimension] === undefined) continue;
+    const values = requireArray(value[dimension], `${label}.${dimension}`, errors);
+    const cleaned = [];
+    const seen = new Set();
+    for (const item of values) {
+      if (!isNonBlankString(item)) {
+        addError(errors, `${label}.${dimension} values must be non-empty strings`);
+        continue;
+      }
+      const normalized = item.trim();
+      if (seen.has(normalized)) {
+        addError(errors, `${label}.${dimension} contains duplicate value "${normalized}"`);
+        continue;
+      }
+      seen.add(normalized);
+      cleaned.push(normalized);
+    }
+    scope[dimension] = cleaned;
+  }
+
+  if (value.notApplicable === undefined) {
+    if (allowNotApplicable) {
+      for (const dimension of SCOPE_DIMENSIONS.filter(dimension => dimension !== 'subjects')) {
+        if (value[dimension] === undefined) {
+          addError(errors, `${label}.${dimension} must be named or explicitly declared notApplicable with a concrete reason`);
+        }
+      }
+    }
+    return scope;
+  }
+
+  if (!allowNotApplicable) {
+    addError(errors, `${label}.notApplicable is allowed only in requirements[].requiredScope`);
+    return scope;
+  }
+  if (!isObject(value.notApplicable)) {
+    addError(errors, `${label}.notApplicable must be an object mapping dimensions to concrete reasons`);
+    return scope;
+  }
+
+  for (const [dimension, reason] of Object.entries(value.notApplicable)) {
+    if (!SCOPE_DIMENSIONS.includes(dimension) || dimension === 'subjects') {
+      addError(errors, `${label}.notApplicable may name only stories, locales, viewports, states, or phases`);
+      continue;
+    }
+    if (value[dimension] !== undefined) {
+      addError(errors, `${label}.${dimension} cannot be both scoped and notApplicable`);
+    }
+    requireString(reason, `${label}.notApplicable.${dimension}`, errors);
+  }
+
+  for (const dimension of SCOPE_DIMENSIONS.filter(dimension => dimension !== 'subjects')) {
+    if (value[dimension] === undefined && value.notApplicable[dimension] === undefined) {
+      addError(errors, `${label}.${dimension} must be named or explicitly declared notApplicable with a concrete reason`);
+    }
+  }
+  return scope;
+}
+
+function tupleCount(scope) {
+  return Object.values(scope).reduce((count, values) => count * values.length, 1);
+}
+
+function expandScope(scope) {
+  const dimensions = Object.keys(scope).filter(dimension => scope[dimension].length > 0);
+  if (dimensions.length === 0) return [{}];
+  const tuples = [{}];
+  for (const dimension of dimensions) {
+    const next = [];
+    for (const tuple of tuples) {
+      for (const value of scope[dimension]) next.push({ ...tuple, [dimension]: value });
+    }
+    tuples.splice(0, tuples.length, ...next);
+  }
+  return tuples;
+}
+
+function scopeCoversTuple(scope, tuple) {
+  return Object.entries(tuple).every(([dimension, value]) =>
+    Array.isArray(scope[dimension]) && scope[dimension].includes(value),
+  );
+}
+
+function validateRequiredCoverage(requiredScope, evidenceScopes, label, errors) {
+  const tupleTotal = tupleCount(requiredScope);
+  if (tupleTotal > MAX_SCOPE_TUPLES) {
+    addError(errors, `${label}.requiredScope expands to ${tupleTotal} tuples; split the ledger row into smaller auditable scopes`);
+    return;
+  }
+
+  const uncovered = [];
+  for (const tuple of expandScope(requiredScope)) {
+    if (!evidenceScopes.some(scope => scopeCoversTuple(scope, tuple))) uncovered.push(tuple);
+  }
+  if (uncovered.length > 0) {
+    const preview = uncovered.slice(0, 6).map(tuple => JSON.stringify(tuple)).join(', ');
+    const more = uncovered.length > 6 ? ` (+${uncovered.length - 6} more)` : '';
+    addError(errors, `${label} has ${uncovered.length} required scope tuple(s) with no evidence: ${preview}${more}`);
+  }
+}
+
+function validateEvidence(evidence, label, errors, { checkPaths }) {
+  const rows = requireArray(evidence, label, errors);
+  const scopes = [];
+  for (const [index, row] of rows.entries()) {
+    const entryLabel = `${label}[${index}]`;
+    if (!isObject(row)) {
+      addError(errors, `${entryLabel} must be an object`);
+      continue;
+    }
+    normalizedRepoPath(row.path, `${entryLabel}.path`, errors, { checkExists: checkPaths });
+    requireString(row.command, `${entryLabel}.command`, errors);
+    requireString(row.observable, `${entryLabel}.observable`, errors);
+    requireString(row.freshness, `${entryLabel}.freshness`, errors);
+    scopes.push(validateScope(row.scope, `${entryLabel}.scope`, errors));
+  }
+  return scopes;
+}
+
+function validateCounterChecks(counterChecks, label, errors, { checkPaths }) {
+  const rows = requireArray(counterChecks, label, errors);
+  for (const [index, row] of rows.entries()) {
+    const entryLabel = `${label}[${index}]`;
+    if (!isObject(row)) {
+      addError(errors, `${entryLabel} must be an object`);
+      continue;
+    }
+    requireString(row.claim, `${entryLabel}.claim`, errors);
+    requireString(row.kind, `${entryLabel}.kind`, errors);
+    normalizedRepoPath(row.path, `${entryLabel}.path`, errors, { checkExists: checkPaths });
+    requireString(row.result, `${entryLabel}.result`, errors);
+  }
+}
+
+function validateExactSemantics(value, label, errors, { checkPaths }) {
+  if (!isObject(value)) {
+    addError(errors, `${label} must be an object when exact generated semantics are required`);
+    return;
+  }
+  requireString(value.input, `${label}.input`, errors);
+  normalizedRepoPath(value.generatedArtifact, `${label}.generatedArtifact`, errors, { checkExists: checkPaths });
+  if (!isObject(value.envelope)) {
+    addError(errors, `${label}.envelope must be an object`);
+  } else {
+    for (const field of ENVELOPE_FIELDS) requireString(value.envelope[field], `${label}.envelope.${field}`, errors);
+  }
+  if (!isObject(value.negativeCondition)) {
+    addError(errors, `${label}.negativeCondition must be an object`);
+  } else {
+    requireString(value.negativeCondition.condition, `${label}.negativeCondition.condition`, errors);
+    normalizedRepoPath(value.negativeCondition.path, `${label}.negativeCondition.path`, errors, { checkExists: checkPaths });
+    requireString(value.negativeCondition.result, `${label}.negativeCondition.result`, errors);
+  }
+}
+
+function validateRequirement(requirement, index, errors, { checkPaths }) {
+  const label = `requirements[${index}]`;
+  if (!isObject(requirement)) {
+    addError(errors, `${label} must be an object`);
+    return { id: '', priority: '', status: '' };
+  }
+
+  const id = requireString(requirement.id, `${label}.id`, errors);
+  const priority = requireString(requirement.priority, `${label}.priority`, errors);
+  if (priority && !VALID_PRIORITIES.has(priority)) addError(errors, `${label}.priority must be one of ${[...VALID_PRIORITIES].join(', ')}`);
+  const status = requireString(requirement.status, `${label}.status`, errors);
+  if (status && !VALID_STATUSES.has(status)) addError(errors, `${label}.status must be one of ${[...VALID_STATUSES].join(', ')}`);
+
+  if (!isObject(requirement.finalSubject)) {
+    addError(errors, `${label}.finalSubject must be an object`);
+  } else {
+    normalizedRepoPath(requirement.finalSubject.path, `${label}.finalSubject.path`, errors, { checkExists: checkPaths });
+    requireString(requirement.finalSubject.symbol, `${label}.finalSubject.symbol`, errors);
+    const hunks = requireArray(requirement.finalSubject.diffHunks, `${label}.finalSubject.diffHunks`, errors);
+    for (const [hunkIndex, hunk] of hunks.entries()) requireString(hunk, `${label}.finalSubject.diffHunks[${hunkIndex}]`, errors);
+  }
+
+  const requiredScope = validateScope(requirement.requiredScope, `${label}.requiredScope`, errors, { allowNotApplicable: true });
+  if (!Array.isArray(requiredScope.subjects) || requiredScope.subjects.length === 0) {
+    addError(errors, `${label}.requiredScope.subjects must name the final subject(s) this row covers`);
+  }
+  const evidenceScopes = validateEvidence(requirement.evidence, `${label}.evidence`, errors, { checkPaths });
+  validateRequiredCoverage(requiredScope, evidenceScopes, label, errors);
+
+  if (PRIMARY_PRIORITIES.has(priority)) validateCounterChecks(requirement.counterChecks, `${label}.counterChecks`, errors, { checkPaths });
+  else if (requirement.counterChecks !== undefined) validateCounterChecks(requirement.counterChecks, `${label}.counterChecks`, errors, { checkPaths });
+
+  if (PRIMARY_PRIORITIES.has(priority) && !isObject(requirement.semanticCheck)) {
+    addError(errors, `${label}.semanticCheck is mandatory for every primary criterion`);
+  } else if (isObject(requirement.semanticCheck)) {
+    const mode = requireString(requirement.semanticCheck.mode, `${label}.semanticCheck.mode`, errors);
+    if (!new Set(['EXACT_GENERATED', 'NOT_APPLICABLE']).has(mode)) {
+      addError(errors, `${label}.semanticCheck.mode must be EXACT_GENERATED or NOT_APPLICABLE`);
+    }
+    requireString(requirement.semanticCheck.reason, `${label}.semanticCheck.reason`, errors);
+    if (mode === 'EXACT_GENERATED' && requirement.exactGeneratedSemantics === undefined) {
+      addError(errors, `${label}.exactGeneratedSemantics is required when semanticCheck.mode is EXACT_GENERATED`);
+    }
+  }
+
+  if (requirement.exactGeneratedSemantics !== undefined) {
+    validateExactSemantics(requirement.exactGeneratedSemantics, `${label}.exactGeneratedSemantics`, errors, { checkPaths });
+  }
+
+  return { id, priority, status };
+}
+
+function validateFinding(finding, index, errors) {
+  const label = `findings[${index}]`;
+  if (!isObject(finding)) {
+    addError(errors, `${label} must be an object`);
+    return { priority: '', status: '' };
+  }
+  requireString(finding.id, `${label}.id`, errors);
+  const priority = requireString(finding.priority, `${label}.priority`, errors);
+  if (priority && !VALID_PRIORITIES.has(priority)) addError(errors, `${label}.priority must be one of ${[...VALID_PRIORITIES].join(', ')}`);
+  const status = requireString(finding.status, `${label}.status`, errors);
+  if (status && !new Set(['OPEN', 'RESOLVED', 'NOTE']).has(status)) addError(errors, `${label}.status must be OPEN, RESOLVED, or NOTE`);
+  requireString(finding.requirements, `${label}.requirements`, errors);
+  requireString(finding.evidence, `${label}.evidence`, errors);
+  return { priority, status };
+}
+
+function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval = false } = {}) {
+  const errors = [];
+  if (!isObject(ledger)) return [`${fileLabel}: root must be an object`];
+
+  if (ledger.schemaVersion !== 1) addError(errors, `${fileLabel}.schemaVersion must equal 1`);
+  requireString(ledger.task, `${fileLabel}.task`, errors);
+
+  if (!isObject(ledger.review)) {
+    addError(errors, `${fileLabel}.review must be an object`);
+  } else {
+    const decision = requireString(ledger.review.decision, `${fileLabel}.review.decision`, errors);
+    if (decision && !VALID_DECISIONS.has(decision)) addError(errors, `${fileLabel}.review.decision is not an allowed decision`);
+    requireString(ledger.review.reviewedRevision, `${fileLabel}.review.reviewedRevision`, errors);
+    const reviewedPaths = requireArray(ledger.review.reviewedPaths, `${fileLabel}.review.reviewedPaths`, errors);
+    for (const [index, path] of reviewedPaths.entries()) normalizedRepoPath(path, `${fileLabel}.review.reviewedPaths[${index}]`, errors, { checkExists: checkPaths });
+  }
+
+  const requirements = requireArray(ledger.requirements, `${fileLabel}.requirements`, errors);
+  const rows = requirements.map((requirement, index) => validateRequirement(requirement, index, errors, { checkPaths }));
+  const ids = new Set();
+  for (const row of rows) {
+    if (!row.id) continue;
+    if (ids.has(row.id)) addError(errors, `${fileLabel}.requirements contains duplicate id ${row.id}`);
+    ids.add(row.id);
+  }
+
+  const findings = requireArray(ledger.findings, `${fileLabel}.findings`, errors, { min: 0 });
+  const findingRows = findings.map((finding, index) => validateFinding(finding, index, errors));
+
+  if (!isObject(ledger.handoff)) {
+    addError(errors, `${fileLabel}.handoff must be an object`);
+  } else {
+    const commitPush = requireString(ledger.handoff.commitPush, `${fileLabel}.handoff.commitPush`, errors);
+    if (!new Set(['ALLOWED', 'PROHIBITED']).has(commitPush)) addError(errors, `${fileLabel}.handoff.commitPush must be ALLOWED or PROHIBITED`);
+  }
+
+  if (!isObject(ledger.attestation)) {
+    addError(errors, `${fileLabel}.attestation must be an object`);
+  } else {
+    const lowest = requireString(ledger.attestation.lowestEvidenceRequirement, `${fileLabel}.attestation.lowestEvidenceRequirement`, errors);
+    if (lowest && !ids.has(lowest)) addError(errors, `${fileLabel}.attestation.lowestEvidenceRequirement must reference a requirement id`);
+    requireString(ledger.attestation.reviewer, `${fileLabel}.attestation.reviewer`, errors);
+  }
+
+  const decision = ledger.review?.decision;
+  const approval = decision === 'APPROVED' || decision === 'APPROVED WITH NOTES';
+  if (requireApproval && !approval) {
+    addError(errors, `${fileLabel}: reviewable PR requires APPROVED or APPROVED WITH NOTES, received ${decision || '<missing>'}`);
+  }
+  if (approval) {
+    for (const row of rows) {
+      if (PRIMARY_PRIORITIES.has(row.priority) && row.status !== 'VERIFIED') {
+        addError(errors, `${fileLabel}: ${decision} is forbidden while ${row.id} (${row.priority}) is ${row.status || 'missing status'}`);
+      }
+    }
+    for (const finding of findingRows) {
+      if (PRIMARY_PRIORITIES.has(finding.priority) && finding.status === 'OPEN') {
+        addError(errors, `${fileLabel}: ${decision} is forbidden with an OPEN ${finding.priority} finding`);
+      }
+    }
+  } else if (ledger.handoff?.commitPush !== 'PROHIBITED') {
+    addError(errors, `${fileLabel}: non-approved decision ${decision || '<missing>'} must prohibit commit/push handoff`);
+  }
+
+  return errors;
+}
+
+function walkLedgers(dir, out = []) {
+  if (!existsSync(dir)) return out;
+  for (const entry of readdirSync(dir)) {
+    const full = join(dir, entry);
+    const stat = statSync(full);
+    if (stat.isDirectory()) walkLedgers(full, out);
+    else if (entry.endsWith('.review-ledger.json')) out.push(full);
+  }
+  return out;
+}
+
+function readLedger(path, errors) {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch (error) {
+    addError(errors, `${relative(ROOT, path)}: invalid JSON — ${error.message}`);
+    return null;
+  }
+}
+
+function gitDiffNames(base) {
+  const result = spawnSync('git', ['diff', '--name-only', `${base}...HEAD`], { cwd: ROOT, encoding: 'utf8' });
+  if (result.status !== 0) throw new Error((result.stderr || result.stdout || 'git diff failed').trim());
+  return result.stdout.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+}
+
+function isReviewableChange(path) {
+  return path.startsWith('src/') ||
+    path.startsWith('scripts/') ||
+    path.startsWith('tasks/') ||
+    path.startsWith('.github/workflows/') ||
+    path === 'package.json' ||
+    path === 'eslint.config.mjs' ||
+    path === 'docs/agent-contract.md' ||
+    path === 'docs/orchestrator-procedures.md' ||
+    path === 'docs/orchestrator-role.md' ||
+    path === 'docs/qa-profiles.md' ||
+    path === 'docs/storybook-governance.md' ||
+    path === 'docs/critical-flow-registry.md' ||
+    path === 'docs/review-ledger.schema.json' ||
+    path === 'docs/review-ledger-template.json' ||
+    path.startsWith('docs/reviews/');
+}
+
+function validFixture({
+  status = 'VERIFIED',
+  decision = 'APPROVED',
+  includeMedia = true,
+  completeScope = true,
+  handoff = 'ALLOWED',
+  declareUnusedScopes = true,
+} = {}) {
+  const scope = completeScope
+    ? { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] }
+    : { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] };
+  if (declareUnusedScopes) {
+    scope.notApplicable = {
+      locales: 'fixture has no user-facing locale dimension',
+      viewports: 'fixture is not rendered UI',
+      states: 'fixture has no independent runtime state dimension',
+    };
+  }
+  const evidenceScope = completeScope
+    ? { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] }
+    : { subjects: ['fixture subject'], stories: ['Pattern'], phases: ['before'] };
+  return {
+    schemaVersion: 1,
+    task: 'fixture',
+    review: { decision, reviewedRevision: 'fixture', reviewedPaths: ['package.json'] },
+    requirements: [{
+      id: 'AC1',
+      priority: 'P0',
+      status,
+      finalSubject: { path: 'package.json', symbol: 'fixture', diffHunks: ['package.json:1'] },
+      requiredScope: scope,
+      evidence: [{ path: 'package.json', command: 'node fixture', observable: 'fixture result', freshness: 'final', scope: evidenceScope }],
+      counterChecks: [{ claim: 'fixture counterexample', kind: 'EXECUTED', path: 'package.json', result: 'fixture passed' }],
+      semanticCheck: { mode: 'EXACT_GENERATED', reason: 'fixture requires exact generated semantics' },
+      exactGeneratedSemantics: {
+        input: 'fixture-token',
+        generatedArtifact: 'package.json',
+        envelope: {
+          selector: 'verified',
+          media: includeMedia ? 'verified' : '',
+          supports: 'none verified',
+          layer: 'verified',
+          specificity: 'verified',
+          sourceOrder: 'verified',
+          declarations: 'verified',
+          customProperties: 'verified',
+        },
+        negativeCondition: { condition: 'fixture negative condition', path: 'package.json', result: 'verified' },
+      },
+    }],
+    findings: [],
+    handoff: { commitPush: handoff },
+    attestation: { lowestEvidenceRequirement: 'AC1', reviewer: 'fixture' },
+  };
+}
+
+function runSelfTest() {
+  const cases = [
+    ['valid approval', validFixture(), true],
+    ['unverified primary AC blocks approval', validFixture({ status: 'UNVERIFIED' }), false],
+    ['missing tuple coverage blocks approval', validFixture({ completeScope: false }), false],
+    ['missing media envelope blocks exact semantics', validFixture({ includeMedia: false }), false],
+    ['missing explicit not-applicable scope declaration blocks approval', validFixture({ declareUnusedScopes: false }), false],
+    ['non-approved decision prohibits handoff', validFixture({ decision: 'PARTIALLY VERIFIED', handoff: 'ALLOWED' }), false],
+    ['CI rejects a non-approved reviewable PR ledger', validFixture({ decision: 'PARTIALLY VERIFIED', handoff: 'PROHIBITED' }), false, true],
+  ];
+  let failures = 0;
+  for (const [name, fixture, shouldPass, requireApproval] of cases) {
+    const errors = validateLedger(fixture, `fixture:${name}`, { checkPaths: true, requireApproval: Boolean(requireApproval) });
+    const passed = errors.length === 0;
+    if (passed !== shouldPass) {
+      failures++;
+      console.error(`  FAIL ${name}: expected ${shouldPass ? 'pass' : 'fail'}, got ${passed ? 'pass' : 'fail'}`);
+      for (const error of errors) console.error(`    ${error}`);
+    } else {
+      console.log(`  PASS ${name}`);
+    }
+  }
+  if (failures > 0) {
+    console.error(`❌ check:review-ledger self-test FAILED — ${failures} unexpected result(s)`);
+    return 1;
+  }
+  console.log('✅ check:review-ledger self-test PASSED — valid ledger accepted; six failing arms rejected');
+  return 0;
+}
+
+function parseFileArgument() {
+  const index = args.indexOf('--file');
+  if (index === -1) return null;
+  if (!args[index + 1]) throw new Error('--file requires a repository-relative ledger path');
+  return resolve(ROOT, args[index + 1]);
+}
+
+function runValidation() {
+  const ciMode = args.includes('--ci');
+  const explicitFile = parseFileArgument();
+  let ledgerPaths;
+  let requireApproval = false;
+
+  if (explicitFile) {
+    ledgerPaths = [explicitFile];
+  } else if (ciMode) {
+    const base = process.env.REVIEW_LEDGER_BASE_SHA;
+    if (!isNonBlankString(base)) throw new Error('--ci requires REVIEW_LEDGER_BASE_SHA from the PR base commit');
+    const changed = gitDiffNames(base);
+    const changedLedgers = changed
+      .filter(path => path.startsWith('docs/reviews/') && path.endsWith('.review-ledger.json'))
+      .map(path => resolve(ROOT, path));
+    const reviewable = changed.filter(isReviewableChange);
+    if (reviewable.length > 0 && changedLedgers.length === 0) {
+      throw new Error(`reviewable PR changes require a changed docs/reviews/*.review-ledger.json; found: ${reviewable.join(', ')}`);
+    }
+    ledgerPaths = changedLedgers;
+    requireApproval = reviewable.length > 0;
+  } else {
+    ledgerPaths = walkLedgers(REVIEW_DIR);
+  }
+
+  if (ledgerPaths.length === 0) {
+    console.log('✅ check:review-ledger PASSED — no retained ledger requires validation');
+    return 0;
+  }
+
+  let failures = 0;
+  for (const ledgerPath of ledgerPaths) {
+    const label = relative(ROOT, ledgerPath).replaceAll('\\', '/');
+    if (!existsSync(ledgerPath)) {
+      console.error(`❌ ${label}: ledger file does not exist`);
+      failures++;
+      continue;
+    }
+    const parseErrors = [];
+    const ledger = readLedger(ledgerPath, parseErrors);
+    const errors = ledger ? [...parseErrors, ...validateLedger(ledger, label, { checkPaths: true, requireApproval })] : parseErrors;
+    if (errors.length === 0) {
+      console.log(`✅ ${label} — valid fail-closed review ledger`);
+    } else {
+      failures++;
+      console.error(`❌ ${label} — ${errors.length} ledger violation(s)`);
+      for (const error of errors) console.error(`   - ${error}`);
+    }
+  }
+
+  if (failures > 0) {
+    console.error(`❌ check:review-ledger FAILED — ${failures} invalid ledger file(s)`);
+    return 1;
+  }
+  console.log(`✅ check:review-ledger PASSED — ${ledgerPaths.length} ledger file(s) validated`);
+  return 0;
+}
+
+if (args.includes('--verify-gate')) {
+  process.exitCode = runSelfTest();
+} else {
+  try {
+    process.exitCode = runValidation();
+  } catch (error) {
+    console.error(`❌ check:review-ledger FAILED — ${error.message}`);
+    process.exitCode = 1;
+  }
+}

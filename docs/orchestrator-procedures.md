@@ -280,6 +280,13 @@ diff**. For each row, the review record must carry a scope certificate with all 
 | Counter-check | The most direct contrary branch, artifact, or generated form inspected, with its observed result |
 | Verdict | `VERIFIED`, `INFERENCE`, `UNKNOWN`, or `BLOCKED` — never a bare checkmark |
 
+Persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json`, using
+`docs/review-ledger-template.json`, and run `npm run check:review-ledger -- --file <ledger>`. The validator checks
+retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, decision consistency,
+and the non-approved handoff ban. CI requires a changed **approved** valid ledger for any reviewable task, source,
+workflow, or review-governance change. `requiredScope.notApplicable` is the only allowed way to declare a dimension
+not applicable, and it requires a concrete reason; leaving the dimension out is an evidence gap.
+
 The reviewer must compare the certificate's required scope to the artifact's real scope before using the result.
 A capture of one story, locale, viewport, state, or synthetic node does not cover another required one; a visual
 matrix does not substitute for a required computed-style/cascade capture; a count does not substitute for the set or

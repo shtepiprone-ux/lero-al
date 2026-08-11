@@ -8,6 +8,16 @@ on:
       - 'scripts/**'
       - 'eslint.config.mjs'
       - 'package.json'
+      - 'tasks/**'
+      - 'docs/agent-contract.md'
+      - 'docs/orchestrator-procedures.md'
+      - 'docs/orchestrator-role.md'
+      - 'docs/review-ledger.schema.json'
+      - 'docs/review-ledger-template.json'
+      - 'docs/qa-profiles.md'
+      - 'docs/storybook-governance.md'
+      - 'docs/critical-flow-registry.md'
+      - 'docs/reviews/**'
       - 'messages/**'
       - '.github/workflows/**'
 
@@ -20,6 +30,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -35,6 +47,14 @@ jobs:
 
       - name: ESLint (with governance rules)
         run: npm run lint
+
+      - name: Review-ledger gate (fail-closed approval evidence)
+        env:
+          REVIEW_LEDGER_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: npm run check:review-ledger -- --ci
+
+      - name: Review-ledger gate self-test (valid ledger plus six failing arms)
+        run: npm run check:review-ledger:verify
 
       - name: Gate unit tests (check-stories gate correctness)
         run: npm test

@@ -81,6 +81,11 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     `UNVERIFIED`, `INFERENCE`, `UNKNOWN`, or `BLOCKED`, the only allowed decisions are `NEEDS REVISION`,
     `PARTIALLY VERIFIED`, or `BLOCKED`; no commit or push handoff may accompany them.
 
+    The completed ledger is a retained JSON artifact at `docs/reviews/*.review-ledger.json`, created from
+    `docs/review-ledger-template.json` and accepted by `npm run check:review-ledger`. A reviewable PR without a
+    changed **approved** valid ledger is blocked in CI. Markdown prose may explain the verdict but cannot replace
+    this artifact.
+
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a
     "Files Changed" table matching the real diff. Sonnet does not add detailed history to the backlog and flags a

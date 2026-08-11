@@ -1,0 +1,97 @@
+{
+  "$schema": "./review-ledger.schema.json",
+  "schemaVersion": 1,
+  "task": "Task-000 — short outcome",
+  "review": {
+    "decision": "PARTIALLY VERIFIED",
+    "reviewedRevision": "worktree or immutable commit identity inspected after the final change",
+    "reviewedPaths": [
+      "src/example.ts",
+      "docs/sessions/2026-01-01-task000-example.md"
+    ]
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "UNVERIFIED",
+      "finalSubject": {
+        "path": "src/example.ts",
+        "symbol": "ExampleComponent",
+        "diffHunks": ["src/example.ts:42"]
+      },
+      "requiredScope": {
+        "subjects": ["ExampleComponent/default"],
+        "stories": ["patterns-example--default"],
+        "locales": ["en", "sq", "uk", "it"],
+        "viewports": ["320", "1024"],
+        "states": ["rest", "hover"],
+        "phases": ["before", "after"],
+        "notApplicable": {}
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-01-01-task000-example.md",
+          "command": "npm run screenshots:assert -- --mantine-only",
+          "observable": "Persisted manifest records the exact visual verdict for the listed tuples.",
+          "freshness": "final build for the reviewed diff",
+          "scope": {
+            "subjects": ["ExampleComponent/default"],
+            "stories": ["patterns-example--default"],
+            "locales": ["en", "sq", "uk", "it"],
+            "viewports": ["320", "1024"],
+            "states": ["rest", "hover"],
+            "phases": ["before", "after"]
+          }
+        }
+      ],
+      "counterChecks": [
+        {
+          "claim": "The negative interaction/state cannot pass through the positive-path assertion.",
+          "kind": "EXECUTED",
+          "path": "docs/sessions/2026-01-01-task000-example.md",
+          "result": "Quote the observed failing arm or a concrete contradictory artifact."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "Use EXACT_GENERATED for generated CSS/selectors/policy-sensitive syntax; otherwise use NOT_APPLICABLE with the concrete reason."
+      },
+      "exactGeneratedSemantics": {
+        "input": "Removed generated selector or policy-sensitive syntax, when this criterion needs it.",
+        "generatedArtifact": "docs/sessions/2026-01-01-task000-example.md",
+        "envelope": {
+          "selector": "Exact selector and ancestor/descendant relation inspected.",
+          "media": "Every @media condition, or 'none verified'.",
+          "supports": "Every @supports condition, or 'none verified'.",
+          "layer": "Cascade layer or unlayered status.",
+          "specificity": "Specificity comparison where it can affect the result.",
+          "sourceOrder": "Relevant source-order observation, or 'not applicable with reason'.",
+          "declarations": "Exact declarations and values inspected.",
+          "customProperties": "Custom-property reads, writes, fallbacks, and negative-condition behavior."
+        },
+        "negativeCondition": {
+          "condition": "The guard/state that must remain false or unavailable.",
+          "path": "docs/sessions/2026-01-01-task000-example.md",
+          "result": "Observed result; do not write an inference as a verified result."
+        }
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P1",
+      "status": "OPEN",
+      "requirements": "AC1 / R1",
+      "evidence": "Path and observed behavior. An OPEN P0/P1/P2 finding forbids an approval decision."
+    }
+  ],
+  "handoff": {
+    "commitPush": "PROHIBITED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC1 / R1",
+    "reviewer": "Opus"
+  }
+}

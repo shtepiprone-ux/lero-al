@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lero.al/schemas/review-ledger-v1.json",
+  "title": "Fail-closed implementation review ledger",
+  "description": "The executable validation rules live in scripts/check-review-ledger.mjs. This schema provides editor guidance; the script additionally verifies artifact existence, tuple coverage, and approval/handoff consistency.",
+  "type": "object",
+  "required": ["schemaVersion", "task", "review", "requirements", "findings", "handoff", "attestation"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "task": { "type": "string", "minLength": 1 },
+    "review": {
+      "type": "object",
+      "required": ["decision", "reviewedRevision", "reviewedPaths"],
+      "properties": {
+        "decision": { "enum": ["APPROVED", "APPROVED WITH NOTES", "NEEDS REVISION", "PARTIALLY VERIFIED", "BLOCKED"] },
+        "reviewedRevision": { "type": "string", "minLength": 1 },
+        "reviewedPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "requirements": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/requirement" }
+    },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "handoff": {
+      "type": "object",
+      "required": ["commitPush"],
+      "properties": { "commitPush": { "enum": ["ALLOWED", "PROHIBITED"] } }
+    },
+    "attestation": {
+      "type": "object",
+      "required": ["lowestEvidenceRequirement", "reviewer"],
+      "properties": {
+        "lowestEvidenceRequirement": { "type": "string", "minLength": 1 },
+        "reviewer": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "scope": {
+      "type": "object",
+      "properties": {
+        "subjects": { "$ref": "#/$defs/nonEmptyStrings" },
+        "stories": { "$ref": "#/$defs/nonEmptyStrings" },
+        "locales": { "$ref": "#/$defs/nonEmptyStrings" },
+        "viewports": { "$ref": "#/$defs/nonEmptyStrings" },
+        "states": { "$ref": "#/$defs/nonEmptyStrings" },
+        "phases": { "$ref": "#/$defs/nonEmptyStrings" }
+      }
+    },
+    "requiredScope": {
+      "type": "object",
+      "properties": {
+        "subjects": { "$ref": "#/$defs/nonEmptyStrings" },
+        "stories": { "$ref": "#/$defs/nonEmptyStrings" },
+        "locales": { "$ref": "#/$defs/nonEmptyStrings" },
+        "viewports": { "$ref": "#/$defs/nonEmptyStrings" },
+        "states": { "$ref": "#/$defs/nonEmptyStrings" },
+        "phases": { "$ref": "#/$defs/nonEmptyStrings" },
+        "notApplicable": {
+          "type": "object",
+          "description": "Only for dimensions absent from this criterion; map each to a concrete reason. Do not also provide that dimension as an array.",
+          "properties": {
+            "stories": { "type": "string", "minLength": 1 },
+            "locales": { "type": "string", "minLength": 1 },
+            "viewports": { "type": "string", "minLength": 1 },
+            "states": { "type": "string", "minLength": 1 },
+            "phases": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "requirement": {
+      "type": "object",
+      "required": ["id", "priority", "status", "finalSubject", "requiredScope", "evidence", "semanticCheck"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "priority": { "enum": ["P0", "P1", "P2", "P3", "NOTE"] },
+        "status": { "enum": ["VERIFIED", "UNVERIFIED", "INFERENCE", "UNKNOWN", "BLOCKED"] },
+        "finalSubject": {
+          "type": "object",
+          "required": ["path", "symbol", "diffHunks"],
+          "properties": {
+            "path": { "type": "string", "minLength": 1 },
+            "symbol": { "type": "string", "minLength": 1 },
+            "diffHunks": { "$ref": "#/$defs/nonEmptyStrings" }
+          }
+        },
+        "requiredScope": { "$ref": "#/$defs/requiredScope" },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["path", "command", "observable", "freshness", "scope"],
+            "properties": {
+              "path": { "type": "string", "minLength": 1 },
+              "command": { "type": "string", "minLength": 1 },
+              "observable": { "type": "string", "minLength": 1 },
+              "freshness": { "type": "string", "minLength": 1 },
+              "scope": { "$ref": "#/$defs/scope" }
+            }
+          }
+        },
+        "counterChecks": { "type": "array", "minItems": 1 },
+        "semanticCheck": {
+          "type": "object",
+          "required": ["mode", "reason"],
+          "properties": {
+            "mode": { "enum": ["EXACT_GENERATED", "NOT_APPLICABLE"] },
+            "reason": { "type": "string", "minLength": 1 }
+          }
+        },
+        "exactGeneratedSemantics": { "type": "object" }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "required": ["id", "priority", "status", "requirements", "evidence"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "priority": { "enum": ["P0", "P1", "P2", "P3", "NOTE"] },
+        "status": { "enum": ["OPEN", "RESOLVED", "NOTE"] },
+        "requirements": { "type": "string", "minLength": 1 },
+        "evidence": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

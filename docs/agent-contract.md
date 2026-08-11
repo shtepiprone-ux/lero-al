@@ -58,6 +58,29 @@ convenient interpretation. Clause identifiers are intentionally stable because o
    is part of the same task, never an out-of-scope cleanup. Report each command's real exit status; do not call the
    work clean, complete, validated, or ready for review while any required check is unrun or failing.
 
+9a. **Approval evidence is exact, complete, and fail-closed.** An approval is a proof about the final reviewed
+    diff, not a judgment that the executor's narrative sounds plausible. For every P0/P1 acceptance criterion, the
+    reviewer must verify the complete required scope: each named source/consumer, state branch, Storybook story,
+    locale, viewport, baseline/final phase, and required command artifact. Evidence for one tuple never proves a
+    different tuple merely because the component, values, or visual result look similar. A missing tuple is
+    `UNVERIFIED`, not a note.
+
+    When a task reproduces generated CSS, a selector, a policy-sensitive syntax, or a cascade outcome, equivalence
+    includes the *whole emitted rule*: selector/ancestor relationship, `@media` and `@supports` conditions,
+    cascade layer, source order/specificity where relevant, declarations, and custom-property semantics. Matching a
+    declaration while dropping a guard or wrapper is a behavioral change. The reviewer must inspect the exact
+    generated form for the changed input, not infer it from a nearby utility, a comment, or a generic example.
+
+    A zero-diff artifact proves only the measurements it actually captured. Its review record must name its target
+    scope and explicitly identify every required dimension it did not cover. A stale, pre-final, narrowed, or
+    scope-mismatched artifact is missing evidence. No summary, aggregate count, reported command result, likely
+    mechanism, or proposed follow-up can promote it to `VERIFIED`.
+
+    Before emitting `APPROVED`, `APPROVED WITH NOTES`, or any commit/push handoff, the reviewer must have a
+    completed proof-carrying ledger and adversarial pass for all primary criteria. If any required row is
+    `UNVERIFIED`, `INFERENCE`, `UNKNOWN`, or `BLOCKED`, the only allowed decisions are `NEEDS REVISION`,
+    `PARTIALLY VERIFIED`, or `BLOCKED`; no commit or push handoff may accompany them.
+
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a
     "Files Changed" table matching the real diff. Sonnet does not add detailed history to the backlog and flags a

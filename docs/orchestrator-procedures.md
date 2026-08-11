@@ -266,6 +266,44 @@ After the evidence pass, perform an adversarial pass: for each material conclusi
 branch, artifact, or counterexample that could falsify it and inspect it. Record the result. If that pass changes a
 conclusion, revise the ledger and decision rather than retaining the earlier narrative.
 
+### Approval-closure gate (mandatory, fail-closed)
+
+Do not choose an approval decision until the reviewer has closed every P0/P1 ledger row against the **final reviewed
+diff**. For each row, the review record must carry a scope certificate with all applicable fields:
+
+| Required field | What the reviewer records |
+|---|---|
+| Final subject | Changed source path/symbol and the exact final diff hunk it proves |
+| Required scope | Every named consumer, branch/state, Storybook ID, locale, viewport, matrix mode, and before/final phase |
+| Exact evidence | Artifact path plus the command/result/schema actually opened; build or manifest freshness where relevant |
+| Observable claim | The specific source, computed, geometric, rendered, or gate property that artifact can prove |
+| Counter-check | The most direct contrary branch, artifact, or generated form inspected, with its observed result |
+| Verdict | `VERIFIED`, `INFERENCE`, `UNKNOWN`, or `BLOCKED` — never a bare checkmark |
+
+The reviewer must compare the certificate's required scope to the artifact's real scope before using the result.
+A capture of one story, locale, viewport, state, or synthetic node does not cover another required one; a visual
+matrix does not substitute for a required computed-style/cascade capture; a count does not substitute for the set or
+per-cell records the criterion requires. `diffCount: 0` proves only the named fields for the targets actually
+captured. Every omitted required target is `UNVERIFIED` and blocks approval.
+
+For generated CSS, selectors, policy-sensitive syntax, or cascade migrations, inspect the exact generated rule for
+the input removed or replaced. Compare its full semantic envelope — ancestor/descendant relation, selector
+specificity, `@media`/`@supports` wrappers, layer, source-order dependence, declarations, and custom-property
+behavior — rather than comparing only computed desktop values or declaration text. A replacement that drops any
+behavioral guard is a P0 regression unless an owner decision explicitly authorizes that behavior change. The
+adversarial counter-check must exercise or otherwise prove the removed guard's negative condition when it is
+applicable.
+
+For retry-based evidence, read the binding decision and the task's acceptance criterion before classifying runs.
+Record every execution separately as invalid/contaminated, initial valid result, or authorized re-run with its
+reason. Do not infer a retry count from the number of command executions, relabel a contaminated run as an
+authorized retry, or replace an `UNATTRIBUTED` result with a causal story that was not measured.
+
+The final review must state the lowest-evidence row, not only the strongest result. If an artifact is stale,
+missing, narrower than required, or contradictory, downgrade the decision before writing required-next-actions.
+Owner commit/push commands may be emitted only after this locked decision; a non-approved decision must contain no
+commit or push handoff.
+
 Allowed decisions:
 
 - `APPROVED`

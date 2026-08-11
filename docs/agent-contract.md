@@ -82,9 +82,11 @@ convenient interpretation. Clause identifiers are intentionally stable because o
     `PARTIALLY VERIFIED`, or `BLOCKED`; no commit or push handoff may accompany them.
 
     The completed ledger is a retained JSON artifact at `docs/reviews/*.review-ledger.json`, created from
-    `docs/review-ledger-template.json` and accepted by `npm run check:review-ledger`. A reviewable PR without a
-    changed **approved** valid ledger is blocked in CI. Markdown prose may explain the verdict but cannot replace
-    this artifact.
+    `docs/review-ledger-template.json` and accepted by `npm run check:review-ledger`. For exact generated semantics,
+    schema v2 requires an immutable base revision, the exact candidate (never a sibling), structured before/after
+    envelopes, retained raw rules, explicit owner authorization for every envelope delta, and an equivalent negative
+    probe. A reviewable PR without a changed **approved** valid ledger is blocked in CI. Markdown prose may explain
+    the verdict but cannot replace this artifact.
 
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a

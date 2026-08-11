@@ -296,10 +296,12 @@ captured. Every omitted required target is `UNVERIFIED` and blocks approval.
 For generated CSS, selectors, policy-sensitive syntax, or cascade migrations, inspect the exact generated rule for
 the input removed or replaced. Compare its full semantic envelope — ancestor/descendant relation, selector
 specificity, `@media`/`@supports` wrappers, layer, source-order dependence, declarations, and custom-property
-behavior — rather than comparing only computed desktop values or declaration text. A replacement that drops any
-behavioral guard is a P0 regression unless an owner decision explicitly authorizes that behavior change. The
-adversarial counter-check must exercise or otherwise prove the removed guard's negative condition when it is
-applicable.
+behavior — rather than comparing only computed desktop values or declaration text. Schema v2 records this as
+machine-compared before/after values: retain the base revision, exact candidate, compiler input/version, and each
+raw rule. A sibling utility, a nearby example, a comment, or a final bundle that no longer contains the removed rule
+is not evidence. Every changed envelope field must cite a retained owner decision; an uncited guard, declaration,
+or custom-property delta is a P0 regression. The adversarial counter-check must persist a negative probe with the
+same before/after outcome when it is applicable.
 
 For retry-based evidence, read the binding decision and the task's acceptance criterion before classifying runs.
 Record every execution separately as invalid/contaminated, initial valid result, or authorized re-run with its

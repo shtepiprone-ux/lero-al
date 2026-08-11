@@ -1,9 +1,10 @@
 {
   "$schema": "./review-ledger.schema.json",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "task": "Task-000 — short outcome",
   "review": {
     "decision": "PARTIALLY VERIFIED",
+    "baseRevision": "immutable pre-change commit or worktree identity used to generate the before rule",
     "reviewedRevision": "worktree or immutable commit identity inspected after the final change",
     "reviewedPaths": [
       "src/example.ts",
@@ -58,23 +59,67 @@
         "reason": "Use EXACT_GENERATED for generated CSS/selectors/policy-sensitive syntax; otherwise use NOT_APPLICABLE with the concrete reason."
       },
       "exactGeneratedSemantics": {
-        "input": "Removed generated selector or policy-sensitive syntax, when this criterion needs it.",
-        "generatedArtifact": "docs/sessions/2026-01-01-task000-example.md",
-        "envelope": {
-          "selector": "Exact selector and ancestor/descendant relation inspected.",
-          "media": "Every @media condition, or 'none verified'.",
-          "supports": "Every @supports condition, or 'none verified'.",
-          "layer": "Cascade layer or unlayered status.",
-          "specificity": "Specificity comparison where it can affect the result.",
-          "sourceOrder": "Relevant source-order observation, or 'not applicable with reason'.",
-          "declarations": "Exact declarations and values inspected.",
-          "customProperties": "Custom-property reads, writes, fallbacks, and negative-condition behavior."
+        "candidate": "The exact removed candidate; never a sibling utility or example.",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "Record the exact compiler command that generated the before rule.",
+          "version": "tailwindcss 4.x actually used",
+          "inputCss": "@tailwind utilities;",
+          "candidate": "Must exactly equal exactGeneratedSemantics.candidate."
         },
-        "negativeCondition": {
-          "condition": "The guard/state that must remain false or unavailable.",
-          "path": "docs/sessions/2026-01-01-task000-example.md",
-          "result": "Observed result; do not write an inference as a verified result."
-        }
+        "before": {
+          "artifact": "docs/sessions/2026-01-01-task000-before-generated.css",
+          "rawRule": "The exact generated before-rule, including every @media/@supports wrapper, retained verbatim in the artifact.",
+          "envelope": {
+            "selector": "Normalized semantic selector relation, with exact syntax retained in rawRule.",
+            "media": ["(hover: hover)"],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Concrete source-order observation.",
+            "declarations": ["--text-color: var(--primary)"],
+            "customProperties": {
+              "reads": ["--primary"],
+              "writes": ["--text-color"],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/example.module.css",
+          "rawRule": "The exact replacement rule, including every @media/@supports wrapper, retained verbatim in the artifact.",
+          "envelope": {
+            "selector": "Normalized semantic selector relation, with exact syntax retained in rawRule.",
+            "media": ["(hover: hover)"],
+            "supports": [],
+            "layer": "unlayered",
+            "specificity": "(0,1,0)",
+            "sourceOrder": "Concrete source-order observation.",
+            "declarations": ["--text-color: var(--primary)"],
+            "customProperties": {
+              "reads": ["--primary"],
+              "writes": ["--text-color"],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "layer",
+            "ownerDecisionArtifact": "tasks/example-owner-decision.md",
+            "reason": "An owner decision explicitly authorizes this otherwise observable cascade change."
+          }
+        ],
+        "negativeProbes": [
+          {
+            "condition": "hover: none",
+            "command": "Run a persisted browser probe under both before and after builds.",
+            "artifact": "docs/sessions/2026-01-01-task000-negative-probe.json",
+            "beforeOutcome": "The declaration is inactive.",
+            "afterOutcome": "The declaration is inactive.",
+            "equivalent": true
+          }
+        ]
       }
     }
   ],

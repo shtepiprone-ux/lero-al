@@ -53,7 +53,7 @@ jobs:
           REVIEW_LEDGER_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: npm run check:review-ledger -- --ci
 
-      - name: Review-ledger gate self-test (valid ledger plus six failing arms)
+      - name: Review-ledger gate self-test (valid ledger plus ten failing arms)
         run: npm run check:review-ledger:verify
 
       - name: Gate unit tests (check-stories gate correctness)

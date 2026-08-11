@@ -39,7 +39,8 @@ const VALID_STATUSES = new Set(['VERIFIED', 'UNVERIFIED', 'INFERENCE', 'UNKNOWN'
 const VALID_PRIORITIES = new Set(['P0', 'P1', 'P2', 'P3', 'NOTE']);
 const PRIMARY_PRIORITIES = new Set(['P0', 'P1', 'P2']);
 const SCOPE_DIMENSIONS = ['subjects', 'stories', 'locales', 'viewports', 'states', 'phases'];
-const ENVELOPE_FIELDS = [
+const SCHEMA_VERSION = 2;
+const SEMANTIC_ENVELOPE_FIELDS = [
   'selector',
   'media',
   'supports',
@@ -50,6 +51,21 @@ const ENVELOPE_FIELDS = [
   'customProperties',
 ];
 const MAX_SCOPE_TUPLES = 20_000;
+const TAILWIND_PROBE_SCRIPT = [
+  "import { compile } from 'tailwindcss';",
+  'const compiler = await compile(process.env.REVIEW_LEDGER_TAILWIND_INPUT_CSS);',
+  'process.stdout.write(compiler.build([process.env.REVIEW_LEDGER_TAILWIND_CANDIDATE]));',
+].join('\n');
+const SELF_TEST_TAILWIND_RULE = String.raw`/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
+.group-hover\:\[--text-color\:var\(--primary\)\] {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      --text-color: var(--primary);
+    }
+  }
+}`;
+const SELF_TEST_AFTER_RULE = '@media (hover: hover) { .fixture-card:hover .fixture-card-title { --text-color: var(--primary); } }';
+const SELF_TEST_UNGUARDED_AFTER_RULE = '.fixture-card:hover .fixture-card-title { --text-color: var(--primary); }';
 
 function isObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -75,6 +91,26 @@ function requireArray(value, label, errors, { min = 1 } = {}) {
   }
   if (value.length < min) addError(errors, `${label} must contain at least ${min} item(s)`);
   return value;
+}
+
+function requireStringArray(value, label, errors, { min = 0 } = {}) {
+  const values = requireArray(value, label, errors, { min });
+  const cleaned = [];
+  const seen = new Set();
+  for (const item of values) {
+    if (!isNonBlankString(item)) {
+      addError(errors, `${label} values must be non-empty strings`);
+      continue;
+    }
+    const normalized = item.trim();
+    if (seen.has(normalized)) {
+      addError(errors, `${label} contains duplicate value "${normalized}"`);
+      continue;
+    }
+    seen.add(normalized);
+    cleaned.push(normalized);
+  }
+  return cleaned;
 }
 
 function normalizedRepoPath(value, label, errors, { checkExists = true } = {}) {
@@ -232,25 +268,194 @@ function validateCounterChecks(counterChecks, label, errors, { checkPaths }) {
   }
 }
 
+function canonicalCss(value) {
+  return value
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s+/g, '')
+    .replace(/;}/g, '}');
+}
+
+function wrapperConditions(css, atRule) {
+  const matcher = new RegExp(`@${atRule}\\s*([^{}]+)\\{`, 'g');
+  const conditions = [];
+  for (const match of css.matchAll(matcher)) {
+    const condition = match[1].trim().replace(/\s+/g, ' ');
+    if (!conditions.includes(condition)) conditions.push(condition);
+  }
+  return conditions;
+}
+
+function valuesMatch(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
+function validateSemanticEnvelope(value, label, errors) {
+  if (!isObject(value)) {
+    addError(errors, `${label} must be an object`);
+    return {};
+  }
+  const customProperties = value.customProperties;
+  if (!isObject(customProperties)) {
+    addError(errors, `${label}.customProperties must be an object`);
+  }
+  return {
+    selector: requireString(value.selector, `${label}.selector`, errors),
+    media: requireStringArray(value.media, `${label}.media`, errors),
+    supports: requireStringArray(value.supports, `${label}.supports`, errors),
+    layer: requireString(value.layer, `${label}.layer`, errors),
+    specificity: requireString(value.specificity, `${label}.specificity`, errors),
+    sourceOrder: requireString(value.sourceOrder, `${label}.sourceOrder`, errors),
+    declarations: requireStringArray(value.declarations, `${label}.declarations`, errors, { min: 1 }),
+    customProperties: isObject(customProperties)
+      ? {
+        reads: requireStringArray(customProperties.reads, `${label}.customProperties.reads`, errors),
+        writes: requireStringArray(customProperties.writes, `${label}.customProperties.writes`, errors),
+        fallbacks: requireStringArray(customProperties.fallbacks, `${label}.customProperties.fallbacks`, errors),
+      }
+      : {},
+  };
+}
+
+function validateSemanticSide(value, label, errors, { checkPaths }) {
+  if (!isObject(value)) {
+    addError(errors, `${label} must be an object`);
+    return { envelope: {} };
+  }
+  const artifact = normalizedRepoPath(value.artifact, `${label}.artifact`, errors, { checkExists: checkPaths });
+  const rawRule = requireString(value.rawRule, `${label}.rawRule`, errors);
+  if (checkPaths && artifact && rawRule) {
+    try {
+      const artifactText = readFileSync(resolve(ROOT, artifact), 'utf8');
+      if (!canonicalCss(artifactText).includes(canonicalCss(rawRule))) {
+        addError(errors, `${label}.rawRule is not retained verbatim in ${artifact}`);
+      }
+    } catch (error) {
+      addError(errors, `${label}.artifact could not be read: ${error.message}`);
+    }
+  }
+  const envelope = validateSemanticEnvelope(value.envelope, `${label}.envelope`, errors);
+  if (rawRule) {
+    const media = wrapperConditions(rawRule, 'media');
+    const supports = wrapperConditions(rawRule, 'supports');
+    if (!valuesMatch(media, envelope.media)) {
+      addError(errors, `${label}.envelope.media does not match wrappers retained in ${label}.rawRule`);
+    }
+    if (!valuesMatch(supports, envelope.supports)) {
+      addError(errors, `${label}.envelope.supports does not match wrappers retained in ${label}.rawRule`);
+    }
+  }
+  return { artifact, rawRule, envelope };
+}
+
+function validateAllowedSemanticDeltas(value, before, after, label, errors, { checkPaths }) {
+  const rows = requireArray(value, label, errors, { min: 0 });
+  const allowed = new Map();
+  for (const [index, row] of rows.entries()) {
+    const entryLabel = `${label}[${index}]`;
+    if (!isObject(row)) {
+      addError(errors, `${entryLabel} must be an object`);
+      continue;
+    }
+    const field = requireString(row.field, `${entryLabel}.field`, errors);
+    if (field && !SEMANTIC_ENVELOPE_FIELDS.includes(field)) {
+      addError(errors, `${entryLabel}.field must be one of ${SEMANTIC_ENVELOPE_FIELDS.join(', ')}`);
+    }
+    if (field && allowed.has(field)) addError(errors, `${entryLabel}.field duplicates ${field}`);
+    normalizedRepoPath(row.ownerDecisionArtifact, `${entryLabel}.ownerDecisionArtifact`, errors, { checkExists: checkPaths });
+    requireString(row.reason, `${entryLabel}.reason`, errors);
+    if (field) allowed.set(field, row);
+  }
+
+  for (const field of SEMANTIC_ENVELOPE_FIELDS) {
+    const changed = !valuesMatch(before.envelope[field], after.envelope[field]);
+    if (changed && !allowed.has(field)) {
+      addError(errors, `${label} lacks an owner-authorized delta for changed ${field}`);
+    }
+    if (!changed && allowed.has(field)) {
+      addError(errors, `${label} declares an unused delta for unchanged ${field}`);
+    }
+  }
+}
+
+function validateNegativeProbes(value, label, errors, { checkPaths }) {
+  const rows = requireArray(value, label, errors);
+  for (const [index, row] of rows.entries()) {
+    const entryLabel = `${label}[${index}]`;
+    if (!isObject(row)) {
+      addError(errors, `${entryLabel} must be an object`);
+      continue;
+    }
+    requireString(row.condition, `${entryLabel}.condition`, errors);
+    requireString(row.command, `${entryLabel}.command`, errors);
+    normalizedRepoPath(row.artifact, `${entryLabel}.artifact`, errors, { checkExists: checkPaths });
+    const beforeOutcome = requireString(row.beforeOutcome, `${entryLabel}.beforeOutcome`, errors);
+    const afterOutcome = requireString(row.afterOutcome, `${entryLabel}.afterOutcome`, errors);
+    if (beforeOutcome && afterOutcome && beforeOutcome !== afterOutcome) {
+      addError(errors, `${entryLabel} must preserve the negative-condition outcome`);
+    }
+    if (row.equivalent !== true) addError(errors, `${entryLabel}.equivalent must be true`);
+  }
+}
+
+function validateTailwindCompiler(compiler, candidate, before, label, errors) {
+  if (!isObject(compiler)) {
+    addError(errors, `${label}.compiler must be an object`);
+    return;
+  }
+  const kind = requireString(compiler.kind, `${label}.compiler.kind`, errors);
+  requireString(compiler.command, `${label}.compiler.command`, errors);
+  requireString(compiler.version, `${label}.compiler.version`, errors);
+  const compilerCandidate = requireString(compiler.candidate, `${label}.compiler.candidate`, errors);
+  if (compilerCandidate && candidate && compilerCandidate !== candidate) {
+    addError(errors, `${label}.compiler.candidate must equal the exact removed candidate, not a sibling utility`);
+  }
+  if (kind !== 'TAILWIND_V4') {
+    if (kind !== 'ARTIFACT_ONLY') addError(errors, `${label}.compiler.kind must be TAILWIND_V4 or ARTIFACT_ONLY`);
+    return;
+  }
+
+  const inputCss = requireString(compiler.inputCss, `${label}.compiler.inputCss`, errors);
+  if (!inputCss || !candidate) return;
+  const result = spawnSync(process.execPath, ['--input-type=module', '--eval', TAILWIND_PROBE_SCRIPT], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    timeout: 10_000,
+    maxBuffer: 2 * 1024 * 1024,
+    env: {
+      ...process.env,
+      REVIEW_LEDGER_TAILWIND_INPUT_CSS: inputCss,
+      REVIEW_LEDGER_TAILWIND_CANDIDATE: candidate,
+    },
+  });
+  if (result.status !== 0) {
+    addError(errors, `${label}.compiler could not compile the exact candidate: ${(result.stderr || result.stdout || 'unknown failure').trim()}`);
+    return;
+  }
+  const compiled = result.stdout;
+  if (canonicalCss(compiled) !== canonicalCss(before.rawRule)) {
+    addError(errors, `${label}.before.rawRule does not equal the current Tailwind output for the exact candidate`);
+  }
+  const media = wrapperConditions(compiled, 'media');
+  const supports = wrapperConditions(compiled, 'supports');
+  if (!valuesMatch(media, before.envelope.media)) {
+    addError(errors, `${label}.before.envelope.media does not match the exact compiled candidate`);
+  }
+  if (!valuesMatch(supports, before.envelope.supports)) {
+    addError(errors, `${label}.before.envelope.supports does not match the exact compiled candidate`);
+  }
+}
+
 function validateExactSemantics(value, label, errors, { checkPaths }) {
   if (!isObject(value)) {
     addError(errors, `${label} must be an object when exact generated semantics are required`);
     return;
   }
-  requireString(value.input, `${label}.input`, errors);
-  normalizedRepoPath(value.generatedArtifact, `${label}.generatedArtifact`, errors, { checkExists: checkPaths });
-  if (!isObject(value.envelope)) {
-    addError(errors, `${label}.envelope must be an object`);
-  } else {
-    for (const field of ENVELOPE_FIELDS) requireString(value.envelope[field], `${label}.envelope.${field}`, errors);
-  }
-  if (!isObject(value.negativeCondition)) {
-    addError(errors, `${label}.negativeCondition must be an object`);
-  } else {
-    requireString(value.negativeCondition.condition, `${label}.negativeCondition.condition`, errors);
-    normalizedRepoPath(value.negativeCondition.path, `${label}.negativeCondition.path`, errors, { checkExists: checkPaths });
-    requireString(value.negativeCondition.result, `${label}.negativeCondition.result`, errors);
-  }
+  const candidate = requireString(value.candidate, `${label}.candidate`, errors);
+  const before = validateSemanticSide(value.before, `${label}.before`, errors, { checkPaths });
+  const after = validateSemanticSide(value.after, `${label}.after`, errors, { checkPaths });
+  validateTailwindCompiler(value.compiler, candidate, before, label, errors);
+  validateAllowedSemanticDeltas(value.allowedSemanticDeltas, before, after, label, errors, { checkPaths });
+  validateNegativeProbes(value.negativeProbes, `${label}.negativeProbes`, errors, { checkPaths });
 }
 
 function validateRequirement(requirement, index, errors, { checkPaths }) {
@@ -325,7 +530,7 @@ function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval 
   const errors = [];
   if (!isObject(ledger)) return [`${fileLabel}: root must be an object`];
 
-  if (ledger.schemaVersion !== 1) addError(errors, `${fileLabel}.schemaVersion must equal 1`);
+  if (ledger.schemaVersion !== SCHEMA_VERSION) addError(errors, `${fileLabel}.schemaVersion must equal ${SCHEMA_VERSION}`);
   requireString(ledger.task, `${fileLabel}.task`, errors);
 
   if (!isObject(ledger.review)) {
@@ -333,6 +538,7 @@ function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval 
   } else {
     const decision = requireString(ledger.review.decision, `${fileLabel}.review.decision`, errors);
     if (decision && !VALID_DECISIONS.has(decision)) addError(errors, `${fileLabel}.review.decision is not an allowed decision`);
+    requireString(ledger.review.baseRevision, `${fileLabel}.review.baseRevision`, errors);
     requireString(ledger.review.reviewedRevision, `${fileLabel}.review.reviewedRevision`, errors);
     const reviewedPaths = requireArray(ledger.review.reviewedPaths, `${fileLabel}.review.reviewedPaths`, errors);
     for (const [index, path] of reviewedPaths.entries()) normalizedRepoPath(path, `${fileLabel}.review.reviewedPaths[${index}]`, errors, { checkExists: checkPaths });
@@ -439,6 +645,10 @@ function validFixture({
   completeScope = true,
   handoff = 'ALLOWED',
   declareUnusedScopes = true,
+  includeSupports = true,
+  exactCandidate = true,
+  preserveNegativeOutcome = true,
+  dropAfterMedia = false,
 } = {}) {
   const scope = completeScope
     ? { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] }
@@ -454,9 +664,9 @@ function validFixture({
     ? { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] }
     : { subjects: ['fixture subject'], stories: ['Pattern'], phases: ['before'] };
   return {
-    schemaVersion: 1,
+    schemaVersion: SCHEMA_VERSION,
     task: 'fixture',
-    review: { decision, reviewedRevision: 'fixture', reviewedPaths: ['package.json'] },
+    review: { decision, baseRevision: 'fixture-base', reviewedRevision: 'fixture-final', reviewedPaths: ['package.json'] },
     requirements: [{
       id: 'AC1',
       priority: 'P0',
@@ -467,19 +677,51 @@ function validFixture({
       counterChecks: [{ claim: 'fixture counterexample', kind: 'EXECUTED', path: 'package.json', result: 'fixture passed' }],
       semanticCheck: { mode: 'EXACT_GENERATED', reason: 'fixture requires exact generated semantics' },
       exactGeneratedSemantics: {
-        input: 'fixture-token',
-        generatedArtifact: 'package.json',
-        envelope: {
-          selector: 'verified',
-          media: includeMedia ? 'verified' : '',
-          supports: 'none verified',
-          layer: 'verified',
-          specificity: 'verified',
-          sourceOrder: 'verified',
-          declarations: 'verified',
-          customProperties: 'verified',
+        candidate: 'group-hover:[--text-color:var(--primary)]',
+        compiler: {
+          kind: 'TAILWIND_V4',
+          command: 'node --input-type=module semantic probe',
+          version: 'tailwindcss 4.3.0',
+          inputCss: '@tailwind utilities;',
+          candidate: exactCandidate ? 'group-hover:[--text-color:var(--primary)]' : 'group-hover:opacity-100',
         },
-        negativeCondition: { condition: 'fixture negative condition', path: 'package.json', result: 'verified' },
+        before: {
+          artifact: 'scripts/check-review-ledger.mjs',
+          rawRule: SELF_TEST_TAILWIND_RULE,
+          envelope: {
+            selector: 'ancestor hover descendant relation',
+            media: includeMedia ? ['(hover: hover)'] : [],
+            supports: includeSupports ? [] : ['(color: color-mix(in lab, red, red))'],
+            layer: '@layer utilities',
+            specificity: '(0,1,0)',
+            sourceOrder: 'not decisive',
+            declarations: ['--text-color: var(--primary)'],
+            customProperties: { reads: ['--primary'], writes: ['--text-color'], fallbacks: [] },
+          },
+        },
+        after: {
+          artifact: 'scripts/check-review-ledger.mjs',
+          rawRule: dropAfterMedia ? SELF_TEST_UNGUARDED_AFTER_RULE : SELF_TEST_AFTER_RULE,
+          envelope: {
+            selector: 'ancestor hover descendant relation',
+            media: ['(hover: hover)'],
+            supports: [],
+            layer: '@layer utilities',
+            specificity: '(0,1,0)',
+            sourceOrder: 'not decisive',
+            declarations: ['--text-color: var(--primary)'],
+            customProperties: { reads: ['--primary'], writes: ['--text-color'], fallbacks: [] },
+          },
+        },
+        allowedSemanticDeltas: [],
+        negativeProbes: [{
+          condition: 'hover: none',
+          command: 'fixture negative probe',
+          artifact: 'package.json',
+          beforeOutcome: 'declaration inactive',
+          afterOutcome: preserveNegativeOutcome ? 'declaration inactive' : 'declaration active',
+          equivalent: true,
+        }],
       },
     }],
     findings: [],
@@ -493,7 +735,11 @@ function runSelfTest() {
     ['valid approval', validFixture(), true],
     ['unverified primary AC blocks approval', validFixture({ status: 'UNVERIFIED' }), false],
     ['missing tuple coverage blocks approval', validFixture({ completeScope: false }), false],
-    ['missing media envelope blocks exact semantics', validFixture({ includeMedia: false }), false],
+    ['compiled media guard mismatch blocks exact semantics', validFixture({ includeMedia: false }), false],
+    ['dropped after media guard blocks exact semantics', validFixture({ dropAfterMedia: true }), false],
+    ['compiled supports mismatch blocks exact semantics', validFixture({ includeSupports: false }), false],
+    ['sibling candidate blocks exact semantics', validFixture({ exactCandidate: false }), false],
+    ['negative guard outcome mismatch blocks exact semantics', validFixture({ preserveNegativeOutcome: false }), false],
     ['missing explicit not-applicable scope declaration blocks approval', validFixture({ declareUnusedScopes: false }), false],
     ['non-approved decision prohibits handoff', validFixture({ decision: 'PARTIALLY VERIFIED', handoff: 'ALLOWED' }), false],
     ['CI rejects a non-approved reviewable PR ledger', validFixture({ decision: 'PARTIALLY VERIFIED', handoff: 'PROHIBITED' }), false, true],
@@ -514,7 +760,7 @@ function runSelfTest() {
     console.error(`❌ check:review-ledger self-test FAILED — ${failures} unexpected result(s)`);
     return 1;
   }
-  console.log('✅ check:review-ledger self-test PASSED — valid ledger accepted; six failing arms rejected');
+  console.log('✅ check:review-ledger self-test PASSED — valid ledger accepted; ten failing arms rejected');
   return 0;
 }
 

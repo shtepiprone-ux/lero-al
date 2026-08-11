@@ -1,18 +1,19 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://lero.al/schemas/review-ledger-v1.json",
+  "$id": "https://lero.al/schemas/review-ledger-v2.json",
   "title": "Fail-closed implementation review ledger",
-  "description": "The executable validation rules live in scripts/check-review-ledger.mjs. This schema provides editor guidance; the script additionally verifies artifact existence, tuple coverage, and approval/handoff consistency.",
+  "description": "The executable validation rules live in scripts/check-review-ledger.mjs. Schema v2 records a reproducible baseline revision and machine-checkable before/after semantic evidence; the script additionally verifies artifact existence, tuple coverage, exact Tailwind candidates, and approval/handoff consistency.",
   "type": "object",
   "required": ["schemaVersion", "task", "review", "requirements", "findings", "handoff", "attestation"],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
     "task": { "type": "string", "minLength": 1 },
     "review": {
       "type": "object",
-      "required": ["decision", "reviewedRevision", "reviewedPaths"],
+      "required": ["decision", "baseRevision", "reviewedRevision", "reviewedPaths"],
       "properties": {
         "decision": { "enum": ["APPROVED", "APPROVED WITH NOTES", "NEEDS REVISION", "PARTIALLY VERIFIED", "BLOCKED"] },
+        "baseRevision": { "type": "string", "minLength": 1 },
         "reviewedRevision": { "type": "string", "minLength": 1 },
         "reviewedPaths": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } }
       }
@@ -78,6 +79,90 @@
       "uniqueItems": true,
       "items": { "type": "string", "minLength": 1 }
     },
+    "stringList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "semanticEnvelope": {
+      "type": "object",
+      "required": ["selector", "media", "supports", "layer", "specificity", "sourceOrder", "declarations", "customProperties"],
+      "properties": {
+        "selector": { "type": "string", "minLength": 1 },
+        "media": { "$ref": "#/$defs/stringList" },
+        "supports": { "$ref": "#/$defs/stringList" },
+        "layer": { "type": "string", "minLength": 1 },
+        "specificity": { "type": "string", "minLength": 1 },
+        "sourceOrder": { "type": "string", "minLength": 1 },
+        "declarations": { "$ref": "#/$defs/nonEmptyStrings" },
+        "customProperties": {
+          "type": "object",
+          "required": ["reads", "writes", "fallbacks"],
+          "properties": {
+            "reads": { "$ref": "#/$defs/stringList" },
+            "writes": { "$ref": "#/$defs/stringList" },
+            "fallbacks": { "$ref": "#/$defs/stringList" }
+          }
+        }
+      }
+    },
+    "semanticSide": {
+      "type": "object",
+      "required": ["artifact", "rawRule", "envelope"],
+      "properties": {
+        "artifact": { "type": "string", "minLength": 1 },
+        "rawRule": { "type": "string", "minLength": 1 },
+        "envelope": { "$ref": "#/$defs/semanticEnvelope" }
+      }
+    },
+    "exactGeneratedSemantics": {
+      "type": "object",
+      "required": ["candidate", "compiler", "before", "after", "allowedSemanticDeltas", "negativeProbes"],
+      "properties": {
+        "candidate": { "type": "string", "minLength": 1 },
+        "compiler": {
+          "type": "object",
+          "required": ["kind", "command", "version", "candidate"],
+          "properties": {
+            "kind": { "enum": ["TAILWIND_V4", "ARTIFACT_ONLY"] },
+            "command": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 },
+            "inputCss": { "type": "string", "minLength": 1 },
+            "candidate": { "type": "string", "minLength": 1 }
+          }
+        },
+        "before": { "$ref": "#/$defs/semanticSide" },
+        "after": { "$ref": "#/$defs/semanticSide" },
+        "allowedSemanticDeltas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["field", "ownerDecisionArtifact", "reason"],
+            "properties": {
+              "field": { "enum": ["selector", "media", "supports", "layer", "specificity", "sourceOrder", "declarations", "customProperties"] },
+              "ownerDecisionArtifact": { "type": "string", "minLength": 1 },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "negativeProbes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["condition", "command", "artifact", "beforeOutcome", "afterOutcome", "equivalent"],
+            "properties": {
+              "condition": { "type": "string", "minLength": 1 },
+              "command": { "type": "string", "minLength": 1 },
+              "artifact": { "type": "string", "minLength": 1 },
+              "beforeOutcome": { "type": "string", "minLength": 1 },
+              "afterOutcome": { "type": "string", "minLength": 1 },
+              "equivalent": { "const": true }
+            }
+          }
+        }
+      }
+    },
     "requirement": {
       "type": "object",
       "required": ["id", "priority", "status", "finalSubject", "requiredScope", "evidence", "semanticCheck"],
@@ -119,7 +204,7 @@
             "reason": { "type": "string", "minLength": 1 }
           }
         },
-        "exactGeneratedSemantics": { "type": "object" }
+        "exactGeneratedSemantics": { "$ref": "#/$defs/exactGeneratedSemantics" }
       }
     },
     "finding": {

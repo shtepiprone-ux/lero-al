@@ -754,6 +754,15 @@ including under `--fast` (unlike the pre-existing Phase 2 geometry-only sweep, w
 fast local iteration and for the anti-no-op planted-break proofs below — it does not change what those phases do
 when the flag is absent.
 
+**An acceptance criterion that depends on Phase 1 anchors cannot be proven by `--mantine-only`** — that flag skips
+Phase 1 for every story, including the 4 `.listing-card` anchor rows (`system-featuredlistings--default`,
+`system-latestlistings--default`, `system-similarlistings--default`, `patterns-mantine-homepagelistinggrids--default`
+— `check-stories-rendered.mjs:173-175,181`). Task 702 AC2 required those anchor rows to be green while its own
+§13.2 prescribed `--mantine-only`, the one invocation that cannot produce them (filed as Task 742 C3).
+`manifest.json`'s `runMode`/`phasesSkipped` fields and the inventory header (Task 742,
+`scripts/lib/rendered-run-mode.mjs`) now state which phases a given run actually executed — check them before
+citing a run as proof of an anchor-dependent claim.
+
 ### 14.9.3 Opened-overlay state (the actual D3-class defect surface)
 
 7 of the 21 (`Modal`, `Drawer`, `Popover`, `DropdownMenu`, `NavigationMenu`, `Select`, `Tooltip` —

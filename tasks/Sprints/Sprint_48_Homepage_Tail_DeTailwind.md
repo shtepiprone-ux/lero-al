@@ -25,7 +25,7 @@ utility classes and their rendered output is unchanged.
 | `HeaderView` | 10, all `styles.*` | 706 | ✅ landed `911852104` |
 | `PopularLocationsView` | 5, all `styles.*` | 688 | ✅ |
 | `HeroSearch` · `HeroSearchFallback` · `HowItWorksSteps` · `ViewAllLink` | 0 | — | ✅ |
-| `MantineListingCardPattern` | 28 (25 editable) | **691** | Sprint 46, kickoff filed |
+| `MantineListingCardPattern` | **27 code sites** (`grep` says 28; `:73` is JSDoc) | **691** | Sprint 46.4, draft 2 filed 2026-08-11. The old "25 editable" figure is void — two of its three "contracts" do not exist (691 draft 2 §0 A1/A2) |
 | `ListingCard` | 8 | **702** | Sprint 46, blocked on 691 |
 | `FeaturedListingsView` | 3 — **2 raw** + 1 marker | **707** | **this sprint** |
 | `LatestListingsView` | 3 — **2 raw** + 1 marker | **707** | **this sprint** |

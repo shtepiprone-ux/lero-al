@@ -1,3 +1,15 @@
+> # ⛔ SUPERSEDED — DO NOT EXECUTE
+> Replaced 2026-08-11 by **`tasks/Sprints/Sprint_46_kickoff_prompt_Task_691_MantineListingCardPattern_DeTailwind.md`**.
+>
+> This draft was written 2026-08-01 and is now wrong in nine measured places — see §0 of the replacement. The three
+> that would actively mislead: §3.4's contract 1 describes a `className` pass-through that exists in **neither**
+> direction (the prop at `:40` is dead and no consumer passes it); contract 2's `shrink-0 -mt-0.5 -mr-1` was
+> dissolved by Task 702; and AC3/AC5/AC6 are unsatisfiable (`0 FAIL` against an 18-FAIL comparator, a 54-row route
+> table that is 53, and an exact 80-line backlog pin).
+>
+> **§3.5's A–F disposition groups remain useful as input to re-derive** — the replacement's §10.3 says so. Nothing
+> else here should be trusted without re-measurement.
+
 # Task 691 — De-Tailwind `MantineListingCardPattern`
 
 ## 1. Mode and task type

@@ -234,6 +234,38 @@ Review implementation evidence, not the author's explanation.
    `create canonical` was selected. A missing record or uncited "no story" claim is missing P1 evidence.
 10. Produce exactly one decision.
 
+### Proof-carrying review and adversarial pass (mandatory)
+
+Complete the review sections of `docs/orchestrator-evidence-preflight-template.md` before choosing a decision. The
+review record must list every task/rule file, changed source/test file, producing implementation, and validation
+artifact actually opened. Reading a worker report, a task title, or a quoted command result does not satisfy any of
+those entries.
+
+For every P0/P1 acceptance criterion, record all of the following in the requirement ledger or review evidence:
+
+| AC / conclusion | Observed result | Exact producing source inspected | Exact artifact or command output inspected | Counter-check | Classification |
+|---|---|---|---|---|---|
+| | | path + symbol/line | manifest/log/screenshot/diff + command where applicable | contradictory branch, alternate input, or failure path | `VERIFIED` / `INFERENCE` / `UNKNOWN` / `BLOCKED` |
+
+- Before saying a function or condition "only", "never", or "always" does something, read its complete relevant
+  body and enumerate every return/override branch that can affect the claim. A short line window or a matching
+  `rg` hit is not enough.
+- Keep source semantics, command/artifact semantics, computed state, geometry, and rendered pixels separate. A
+  screenshot does not prove a causal mechanism; a computed style does not prove the geometry it supposedly caused.
+- A claim that a regression is a flake or "not caused by this diff" needs a controlled A/B comparison, reproduction,
+  or another concrete falsification. A diff that does not touch an obvious assertion is useful evidence, but is not
+  sufficient causal proof; report the cell as `UNATTRIBUTED`/`INFERENCE` until the cause is established.
+- For every changed cell in a rendered baseline/fail-set comparison, inspect the complete before/after manifest
+  entries, the relevant screenshots when available, and the exact assertion and readiness/validity guards that
+  produced the verdict. A count or one diagnostic signal alone cannot settle the cell's cause.
+- Verify final repository reality as well as task behavior: final diff/status paths, scope, session-log path,
+  backlog references, and every proposed follow-up's actual filed or reserved state. A proposed or unfiled task is
+  not a correction.
+
+After the evidence pass, perform an adversarial pass: for each material conclusion, identify the most direct source
+branch, artifact, or counterexample that could falsify it and inspect it. Record the result. If that pass changes a
+conclusion, revise the ledger and decision rather than retaining the earlier narrative.
+
 Allowed decisions:
 
 - `APPROVED`
@@ -253,6 +285,11 @@ Decision criteria:
   remains.
 - `PARTIALLY VERIFIED`: actual implementation was inspected, but only part of the required evidence is available.
 - `BLOCKED`: required access, context, owner decision, environment, or dependency prevents meaningful review.
+
+These decision rules are fail-closed: an unmet, changed, or unverified P0/P1/P2 acceptance criterion is never
+converted into an approval by asserting that its intent was met, by a likely-cause explanation, or by promising a
+follow-up. Use `NEEDS REVISION`, `PARTIALLY VERIFIED`, or `BLOCKED` as the evidence warrants. A requirement may be
+changed only by an explicit owner decision recorded before the verdict.
 
 ### Owner-native validation handoff
 

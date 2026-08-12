@@ -39,7 +39,7 @@ const VALID_STATUSES = new Set(['VERIFIED', 'UNVERIFIED', 'INFERENCE', 'UNKNOWN'
 const VALID_PRIORITIES = new Set(['P0', 'P1', 'P2', 'P3', 'NOTE']);
 const PRIMARY_PRIORITIES = new Set(['P0', 'P1', 'P2']);
 const SCOPE_DIMENSIONS = ['subjects', 'stories', 'locales', 'viewports', 'states', 'phases'];
-const SCHEMA_VERSION = 2;
+const SCHEMA_VERSION = 3;
 const SEMANTIC_ENVELOPE_FIELDS = [
   'selector',
   'media',
@@ -51,10 +51,14 @@ const SEMANTIC_ENVELOPE_FIELDS = [
   'customProperties',
 ];
 const MAX_SCOPE_TUPLES = 20_000;
+const TAILWIND_DEPENDENCY_MARKER = '__REVIEW_LEDGER_TAILWIND_DEPENDENCIES__';
 const TAILWIND_PROBE_SCRIPT = [
-  "import { compile } from 'tailwindcss';",
-  'const compiler = await compile(process.env.REVIEW_LEDGER_TAILWIND_INPUT_CSS);',
+  "import { compile } from '@tailwindcss/node';",
+  'const css = process.env.REVIEW_LEDGER_TAILWIND_INPUT_CSS;',
+  'const dependencies = [];',
+  "const compiler = await compile(css, { base: process.env.REVIEW_LEDGER_TAILWIND_BASE_DIR, from: process.env.REVIEW_LEDGER_TAILWIND_INPUT_PATH, onDependency(path) { dependencies.push(path); } });",
   'process.stdout.write(compiler.build([process.env.REVIEW_LEDGER_TAILWIND_CANDIDATE]));',
+  "process.stderr.write('__REVIEW_LEDGER_TAILWIND_DEPENDENCIES__' + JSON.stringify(dependencies));",
 ].join('\n');
 const SELF_TEST_TAILWIND_RULE = String.raw`/*! tailwindcss v4.3.0 | MIT License | https://tailwindcss.com */
 .group-hover\:\[--text-color\:var\(--primary\)\] {
@@ -66,6 +70,18 @@ const SELF_TEST_TAILWIND_RULE = String.raw`/*! tailwindcss v4.3.0 | MIT License 
 }`;
 const SELF_TEST_AFTER_RULE = '@media (hover: hover) { .fixture-card:hover .fixture-card-title { --text-color: var(--primary); } }';
 const SELF_TEST_UNGUARDED_AFTER_RULE = '.fixture-card:hover .fixture-card-title { --text-color: var(--primary); }';
+
+function gitCommand(args, { allowFailure = false } = {}) {
+  const result = spawnSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+  if (result.status !== 0 && !allowFailure) {
+    throw new Error((result.stderr || result.stdout || `git ${args.join(' ')} failed`).trim());
+  }
+  return result;
+}
+
+function currentHeadRevision() {
+  return gitCommand(['rev-parse', 'HEAD']).stdout.trim();
+}
 
 function isObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -124,6 +140,28 @@ function normalizedRepoPath(value, label, errors, { checkExists = true } = {}) {
   }
   if (checkExists && !existsSync(absolute)) addError(errors, `${label} does not exist: ${path}`);
   return rel.replaceAll('\\', '/');
+}
+
+function immutableCommit(value, label, errors) {
+  const revision = requireString(value, label, errors).toLowerCase();
+  if (!revision) return '';
+  if (!/^[0-9a-f]{40}$/.test(revision)) {
+    addError(errors, `${label} must be a full 40-character immutable commit SHA`);
+    return '';
+  }
+  const result = gitCommand(['cat-file', '-e', `${revision}^{commit}`], { allowFailure: true });
+  if (result.status !== 0) addError(errors, `${label} does not resolve to a local commit: ${revision}`);
+  return revision;
+}
+
+function readGitRevisionFile(revision, path, label, errors) {
+  if (!revision || !path) return '';
+  const result = gitCommand(['show', `${revision}:${path}`], { allowFailure: true });
+  if (result.status !== 0) {
+    addError(errors, `${label} does not exist at ${revision}: ${path}`);
+    return '';
+  }
+  return result.stdout;
 }
 
 function validateScope(value, label, errors, { allowNotApplicable = false } = {}) {
@@ -397,7 +435,117 @@ function validateNegativeProbes(value, label, errors, { checkPaths }) {
   }
 }
 
-function validateTailwindCompiler(compiler, candidate, before, label, errors) {
+function escapedCssClass(candidate) {
+  return candidate.replace(/[^a-zA-Z0-9_-]/g, character => `\\${character}`);
+}
+
+function extractCandidateRule(css, candidate) {
+  const start = css.indexOf(`.${escapedCssClass(candidate)}`);
+  if (start === -1) return '';
+  const openBrace = css.indexOf('{', start);
+  if (openBrace === -1) return '';
+  let depth = 0;
+  for (let index = openBrace; index < css.length; index++) {
+    if (css[index] === '{') depth++;
+    if (css[index] === '}') {
+      depth--;
+      if (depth === 0) return css.slice(start, index + 1);
+    }
+  }
+  return '';
+}
+
+function installedTailwindVersion() {
+  try {
+    return JSON.parse(readFileSync(join(ROOT, 'node_modules', 'tailwindcss', 'package.json'), 'utf8')).version;
+  } catch {
+    return '';
+  }
+}
+
+function tailwindCompilerDependencies(stderr, label, errors) {
+  const markerIndex = stderr.lastIndexOf(TAILWIND_DEPENDENCY_MARKER);
+  if (markerIndex === -1) {
+    addError(errors, `${label}.compiler did not report the stylesheet dependencies it read`);
+    return [];
+  }
+  try {
+    const dependencies = JSON.parse(stderr.slice(markerIndex + TAILWIND_DEPENDENCY_MARKER.length));
+    if (!Array.isArray(dependencies) || dependencies.some(dependency => !isNonBlankString(dependency))) {
+      throw new Error('expected an array of absolute stylesheet paths');
+    }
+    return [...new Set(dependencies.map(dependency => resolve(dependency)))];
+  } catch (error) {
+    addError(errors, `${label}.compiler reported unreadable stylesheet dependencies: ${error.message}`);
+    return [];
+  }
+}
+
+function validateTailwindDependencySnapshot(dependencies, baseRevision, label, errors) {
+  const nodeModulesRoot = resolve(ROOT, 'node_modules');
+  const nodeModulesPrefix = `${nodeModulesRoot}${sep}`;
+  let baseLock;
+  let baseLockLoaded = false;
+
+  function readBaseLock() {
+    if (baseLockLoaded) return baseLock;
+    baseLockLoaded = true;
+    const lockText = readGitRevisionFile(baseRevision, 'package-lock.json', `${label}.compiler`, errors);
+    if (!lockText) return null;
+    try {
+      baseLock = JSON.parse(lockText);
+      return baseLock;
+    } catch (error) {
+      addError(errors, `${label}.compiler could not parse package-lock.json at the base revision: ${error.message}`);
+      return null;
+    }
+  }
+
+  function validateNodeModuleDependency(dependency) {
+    const dependencyPath = relative(nodeModulesRoot, dependency);
+    const segments = dependencyPath.split(sep);
+    const packageSegmentCount = segments[0]?.startsWith('@') ? 2 : 1;
+    const packagePath = join(nodeModulesRoot, ...segments.slice(0, packageSegmentCount));
+    const lockKey = `node_modules/${segments.slice(0, packageSegmentCount).join('/')}`;
+    try {
+      const installed = JSON.parse(readFileSync(join(packagePath, 'package.json'), 'utf8'));
+      const base = readBaseLock()?.packages?.[lockKey];
+      if (!isNonBlankString(base?.version)) {
+        addError(errors, `${label}.compiler dependency is not locked at the base revision: ${lockKey}`);
+      } else if (installed.version !== base.version) {
+        addError(errors, `${label}.compiler dependency version differs from the base revision: ${lockKey} (${installed.version} != ${base.version})`);
+      }
+    } catch (error) {
+      addError(errors, `${label}.compiler dependency package metadata could not be read: ${lockKey} (${error.message})`);
+    }
+  }
+
+  for (const dependency of dependencies) {
+    if (dependency.startsWith(nodeModulesPrefix)) {
+      validateNodeModuleDependency(dependency);
+      continue;
+    }
+
+    const repositoryPath = relative(ROOT, dependency);
+    if (repositoryPath === '' || repositoryPath === '..' || repositoryPath.startsWith(`..${sep}`)) {
+      addError(errors, `${label}.compiler read an unpinned external stylesheet dependency: ${dependency}`);
+      continue;
+    }
+    const normalizedPath = repositoryPath.replaceAll('\\', '/');
+    const baseContent = readGitRevisionFile(baseRevision, normalizedPath, `${label}.compiler dependency`, errors);
+    if (!baseContent) continue;
+    try {
+      const worktreeContent = readFileSync(dependency, 'utf8');
+      if (worktreeContent !== baseContent) {
+        addError(errors, `${label}.compiler dependency differs from the base revision: ${normalizedPath}`);
+      }
+    } catch (error) {
+      addError(errors, `${label}.compiler dependency could not be read from the worktree: ${normalizedPath} (${error.message})`);
+    }
+  }
+}
+
+function validateTailwindCompiler(compiler, candidate, before, label, errors, { baseRevision }) {
   if (!isObject(compiler)) {
     addError(errors, `${label}.compiler must be an object`);
     return;
@@ -409,13 +557,37 @@ function validateTailwindCompiler(compiler, candidate, before, label, errors) {
   if (compilerCandidate && candidate && compilerCandidate !== candidate) {
     addError(errors, `${label}.compiler.candidate must equal the exact removed candidate, not a sibling utility`);
   }
+  if (candidate.includes(',')) {
+    addError(errors, `${label}.candidate must name exactly one generated candidate; make one exact-semantics row per utility`);
+  }
   if (kind !== 'TAILWIND_V4') {
     if (kind !== 'ARTIFACT_ONLY') addError(errors, `${label}.compiler.kind must be TAILWIND_V4 or ARTIFACT_ONLY`);
     return;
   }
 
-  const inputCss = requireString(compiler.inputCss, `${label}.compiler.inputCss`, errors);
-  if (!inputCss || !candidate) return;
+  const installedVersion = installedTailwindVersion();
+  const version = requireString(compiler.version, `${label}.compiler.version`, errors);
+  if (installedVersion && version && version !== `tailwindcss ${installedVersion}`) {
+    addError(errors, `${label}.compiler.version must equal the installed compiler version tailwindcss ${installedVersion}`);
+  }
+  if (!isObject(compiler.input)) {
+    addError(errors, `${label}.compiler.input must identify the exact base-revision source file`);
+    return;
+  }
+  const inputKind = requireString(compiler.input.kind, `${label}.compiler.input.kind`, errors);
+  if (inputKind !== 'BASE_REVISION_FILE') {
+    addError(errors, `${label}.compiler.input.kind must be BASE_REVISION_FILE`);
+    return;
+  }
+  const inputPath = normalizedRepoPath(compiler.input.path, `${label}.compiler.input.path`, errors, { checkExists: false });
+  const inputRevision = immutableCommit(compiler.input.revision, `${label}.compiler.input.revision`, errors);
+  if (inputRevision && baseRevision && inputRevision !== baseRevision) {
+    addError(errors, `${label}.compiler.input.revision must equal review.baseRevision`);
+  }
+  const inputCss = readGitRevisionFile(inputRevision, inputPath, `${label}.compiler.input`, errors);
+  if (!inputCss || !candidate || candidate.includes(',')) return;
+
+  const probeInputPath = join(ROOT, inputPath);
   const result = spawnSync(process.execPath, ['--input-type=module', '--eval', TAILWIND_PROBE_SCRIPT], {
     cwd: ROOT,
     encoding: 'utf8',
@@ -423,6 +595,8 @@ function validateTailwindCompiler(compiler, candidate, before, label, errors) {
     maxBuffer: 2 * 1024 * 1024,
     env: {
       ...process.env,
+      REVIEW_LEDGER_TAILWIND_BASE_DIR: ROOT,
+      REVIEW_LEDGER_TAILWIND_INPUT_PATH: probeInputPath,
       REVIEW_LEDGER_TAILWIND_INPUT_CSS: inputCss,
       REVIEW_LEDGER_TAILWIND_CANDIDATE: candidate,
     },
@@ -431,9 +605,15 @@ function validateTailwindCompiler(compiler, candidate, before, label, errors) {
     addError(errors, `${label}.compiler could not compile the exact candidate: ${(result.stderr || result.stdout || 'unknown failure').trim()}`);
     return;
   }
-  const compiled = result.stdout;
+  const dependencies = tailwindCompilerDependencies(result.stderr, label, errors);
+  validateTailwindDependencySnapshot(dependencies, baseRevision, label, errors);
+  const compiled = extractCandidateRule(result.stdout, candidate);
+  if (!compiled) {
+    addError(errors, `${label}.compiler output does not contain the exact candidate`);
+    return;
+  }
   if (canonicalCss(compiled) !== canonicalCss(before.rawRule)) {
-    addError(errors, `${label}.before.rawRule does not equal the current Tailwind output for the exact candidate`);
+    addError(errors, `${label}.before.rawRule does not equal the exact compiled rule for the candidate`);
   }
   const media = wrapperConditions(compiled, 'media');
   const supports = wrapperConditions(compiled, 'supports');
@@ -445,7 +625,7 @@ function validateTailwindCompiler(compiler, candidate, before, label, errors) {
   }
 }
 
-function validateExactSemantics(value, label, errors, { checkPaths }) {
+function validateExactSemantics(value, label, errors, { checkPaths, baseRevision }) {
   if (!isObject(value)) {
     addError(errors, `${label} must be an object when exact generated semantics are required`);
     return;
@@ -453,12 +633,12 @@ function validateExactSemantics(value, label, errors, { checkPaths }) {
   const candidate = requireString(value.candidate, `${label}.candidate`, errors);
   const before = validateSemanticSide(value.before, `${label}.before`, errors, { checkPaths });
   const after = validateSemanticSide(value.after, `${label}.after`, errors, { checkPaths });
-  validateTailwindCompiler(value.compiler, candidate, before, label, errors);
+  validateTailwindCompiler(value.compiler, candidate, before, label, errors, { baseRevision });
   validateAllowedSemanticDeltas(value.allowedSemanticDeltas, before, after, label, errors, { checkPaths });
   validateNegativeProbes(value.negativeProbes, `${label}.negativeProbes`, errors, { checkPaths });
 }
 
-function validateRequirement(requirement, index, errors, { checkPaths }) {
+function validateRequirement(requirement, index, errors, { checkPaths, baseRevision }) {
   const label = `requirements[${index}]`;
   if (!isObject(requirement)) {
     addError(errors, `${label} must be an object`);
@@ -504,7 +684,7 @@ function validateRequirement(requirement, index, errors, { checkPaths }) {
   }
 
   if (requirement.exactGeneratedSemantics !== undefined) {
-    validateExactSemantics(requirement.exactGeneratedSemantics, `${label}.exactGeneratedSemantics`, errors, { checkPaths });
+    validateExactSemantics(requirement.exactGeneratedSemantics, `${label}.exactGeneratedSemantics`, errors, { checkPaths, baseRevision });
   }
 
   return { id, priority, status };
@@ -526,8 +706,58 @@ function validateFinding(finding, index, errors) {
   return { priority, status };
 }
 
+function validateCoverageSummary(review, rows, findings, fileLabel, errors) {
+  if (!isObject(review.coverage)) {
+    addError(errors, `${fileLabel}.review.coverage must be an object`);
+    return;
+  }
+  const primaryRows = rows.filter(row => PRIMARY_PRIORITIES.has(row.priority));
+  const expected = {
+    total: primaryRows.length,
+    verified: primaryRows.filter(row => row.status === 'VERIFIED').length,
+    unverified: primaryRows.filter(row => row.status !== 'VERIFIED').length,
+    openP0: findings.filter(finding => finding.priority === 'P0' && finding.status === 'OPEN').length,
+    openP1: findings.filter(finding => finding.priority === 'P1' && finding.status === 'OPEN').length,
+    openP2: findings.filter(finding => finding.priority === 'P2' && finding.status === 'OPEN').length,
+  };
+  for (const [field, expectedValue] of Object.entries(expected)) {
+    if (!Number.isInteger(review.coverage[field]) || review.coverage[field] !== expectedValue) {
+      addError(errors, `${fileLabel}.review.coverage.${field} must equal the ledger-derived value ${expectedValue}`);
+    }
+  }
+}
+
+function validateGateReceipt(review, fileLabel, priorErrors, errors) {
+  if (!isObject(review.ledgerGate)) {
+    addError(errors, `${fileLabel}.review.ledgerGate must record the final validator result`);
+    return;
+  }
+  const receiptErrorCount = errors.length;
+  const command = requireString(review.ledgerGate.command, `${fileLabel}.review.ledgerGate.command`, errors);
+  if (command && !command.includes('check:review-ledger')) {
+    addError(errors, `${fileLabel}.review.ledgerGate.command must invoke check:review-ledger for this ledger`);
+  }
+  const status = requireString(review.ledgerGate.status, `${fileLabel}.review.ledgerGate.status`, errors);
+  if (!new Set(['PASSED', 'FAILED']).has(status)) {
+    addError(errors, `${fileLabel}.review.ledgerGate.status must be PASSED or FAILED`);
+  }
+  const exitCode = review.ledgerGate.exitCode;
+  if (exitCode !== 0 && exitCode !== 1) {
+    addError(errors, `${fileLabel}.review.ledgerGate.exitCode must be 0 or 1`);
+  }
+  const expectedStatus = priorErrors.length === 0 && errors.length === receiptErrorCount ? 'PASSED' : 'FAILED';
+  const expectedExitCode = expectedStatus === 'PASSED' ? 0 : 1;
+  if (status && status !== expectedStatus) {
+    addError(errors, `${fileLabel}.review.ledgerGate.status claims ${status}, but this ledger evaluates to ${expectedStatus}`);
+  }
+  if ((exitCode === 0 || exitCode === 1) && exitCode !== expectedExitCode) {
+    addError(errors, `${fileLabel}.review.ledgerGate.exitCode claims ${exitCode}, but this ledger evaluates to ${expectedExitCode}`);
+  }
+}
+
 function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval = false } = {}) {
   const errors = [];
+  let baseRevision = '';
   if (!isObject(ledger)) return [`${fileLabel}: root must be an object`];
 
   if (ledger.schemaVersion !== SCHEMA_VERSION) addError(errors, `${fileLabel}.schemaVersion must equal ${SCHEMA_VERSION}`);
@@ -538,14 +768,14 @@ function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval 
   } else {
     const decision = requireString(ledger.review.decision, `${fileLabel}.review.decision`, errors);
     if (decision && !VALID_DECISIONS.has(decision)) addError(errors, `${fileLabel}.review.decision is not an allowed decision`);
-    requireString(ledger.review.baseRevision, `${fileLabel}.review.baseRevision`, errors);
+    baseRevision = immutableCommit(ledger.review.baseRevision, `${fileLabel}.review.baseRevision`, errors);
     requireString(ledger.review.reviewedRevision, `${fileLabel}.review.reviewedRevision`, errors);
     const reviewedPaths = requireArray(ledger.review.reviewedPaths, `${fileLabel}.review.reviewedPaths`, errors);
     for (const [index, path] of reviewedPaths.entries()) normalizedRepoPath(path, `${fileLabel}.review.reviewedPaths[${index}]`, errors, { checkExists: checkPaths });
   }
 
   const requirements = requireArray(ledger.requirements, `${fileLabel}.requirements`, errors);
-  const rows = requirements.map((requirement, index) => validateRequirement(requirement, index, errors, { checkPaths }));
+  const rows = requirements.map((requirement, index) => validateRequirement(requirement, index, errors, { checkPaths, baseRevision }));
   const ids = new Set();
   for (const row of rows) {
     if (!row.id) continue;
@@ -555,6 +785,8 @@ function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval 
 
   const findings = requireArray(ledger.findings, `${fileLabel}.findings`, errors, { min: 0 });
   const findingRows = findings.map((finding, index) => validateFinding(finding, index, errors));
+
+  if (isObject(ledger.review)) validateCoverageSummary(ledger.review, rows, findingRows, fileLabel, errors);
 
   if (!isObject(ledger.handoff)) {
     addError(errors, `${fileLabel}.handoff must be an object`);
@@ -590,6 +822,8 @@ function validateLedger(ledger, fileLabel, { checkPaths = true, requireApproval 
   } else if (ledger.handoff?.commitPush !== 'PROHIBITED') {
     addError(errors, `${fileLabel}: non-approved decision ${decision || '<missing>'} must prohibit commit/push handoff`);
   }
+
+  if (isObject(ledger.review)) validateGateReceipt(ledger.review, fileLabel, [...errors], errors);
 
   return errors;
 }
@@ -647,9 +881,16 @@ function validFixture({
   declareUnusedScopes = true,
   includeSupports = true,
   exactCandidate = true,
+  multipleCandidates = false,
   preserveNegativeOutcome = true,
   dropAfterMedia = false,
+  compilerInputRevision = currentHeadRevision(),
+  wrongCoverage = false,
+  ledgerGateCommand = 'npm run check:review-ledger -- --file docs/reviews/fixture.review-ledger.json',
+  ledgerGateStatus = 'PASSED',
+  ledgerGateExitCode = 0,
 } = {}) {
+  const baseRevision = currentHeadRevision();
   const scope = completeScope
     ? { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] }
     : { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] };
@@ -663,10 +904,22 @@ function validFixture({
   const evidenceScope = completeScope
     ? { subjects: ['fixture subject'], stories: ['Pattern', 'Primitive'], phases: ['before', 'after'] }
     : { subjects: ['fixture subject'], stories: ['Pattern'], phases: ['before'] };
+  const candidate = multipleCandidates
+    ? 'group-hover:[--text-color:var(--primary)], group-hover:opacity-100'
+    : 'group-hover:[--text-color:var(--primary)]';
   return {
     schemaVersion: SCHEMA_VERSION,
     task: 'fixture',
-    review: { decision, baseRevision: 'fixture-base', reviewedRevision: 'fixture-final', reviewedPaths: ['package.json'] },
+    review: {
+      decision,
+      baseRevision,
+      reviewedRevision: 'fixture-final',
+      reviewedPaths: ['package.json'],
+      coverage: wrongCoverage
+        ? { total: 1, verified: 0, unverified: 1, openP0: 0, openP1: 0, openP2: 0 }
+        : { total: 1, verified: status === 'VERIFIED' ? 1 : 0, unverified: status === 'VERIFIED' ? 0 : 1, openP0: 0, openP1: 0, openP2: 0 },
+      ledgerGate: { command: ledgerGateCommand, status: ledgerGateStatus, exitCode: ledgerGateExitCode },
+    },
     requirements: [{
       id: 'AC1',
       priority: 'P0',
@@ -677,13 +930,13 @@ function validFixture({
       counterChecks: [{ claim: 'fixture counterexample', kind: 'EXECUTED', path: 'package.json', result: 'fixture passed' }],
       semanticCheck: { mode: 'EXACT_GENERATED', reason: 'fixture requires exact generated semantics' },
       exactGeneratedSemantics: {
-        candidate: 'group-hover:[--text-color:var(--primary)]',
+        candidate,
         compiler: {
           kind: 'TAILWIND_V4',
           command: 'node --input-type=module semantic probe',
-          version: 'tailwindcss 4.3.0',
-          inputCss: '@tailwind utilities;',
-          candidate: exactCandidate ? 'group-hover:[--text-color:var(--primary)]' : 'group-hover:opacity-100',
+          version: `tailwindcss ${installedTailwindVersion()}`,
+          input: { kind: 'BASE_REVISION_FILE', path: 'src/app/globals.css', revision: compilerInputRevision },
+          candidate: exactCandidate ? candidate : 'group-hover:opacity-100',
         },
         before: {
           artifact: 'scripts/check-review-ledger.mjs',
@@ -739,7 +992,12 @@ function runSelfTest() {
     ['dropped after media guard blocks exact semantics', validFixture({ dropAfterMedia: true }), false],
     ['compiled supports mismatch blocks exact semantics', validFixture({ includeSupports: false }), false],
     ['sibling candidate blocks exact semantics', validFixture({ exactCandidate: false }), false],
+    ['multiple candidates in one semantics row are rejected', validFixture({ multipleCandidates: true }), false],
+    ['non-immutable compiler input blocks exact semantics', validFixture({ compilerInputRevision: '0'.repeat(40) }), false],
     ['negative guard outcome mismatch blocks exact semantics', validFixture({ preserveNegativeOutcome: false }), false],
+    ['incorrect coverage summary blocks approval', validFixture({ wrongCoverage: true }), false],
+    ['passed gate receipt cannot conceal a failed ledger', validFixture({ status: 'UNVERIFIED', ledgerGateStatus: 'PASSED', ledgerGateExitCode: 0 }), false],
+    ['invalid gate command invalidates a passed ledger', validFixture({ ledgerGateCommand: 'npm test' }), false],
     ['missing explicit not-applicable scope declaration blocks approval', validFixture({ declareUnusedScopes: false }), false],
     ['non-approved decision prohibits handoff', validFixture({ decision: 'PARTIALLY VERIFIED', handoff: 'ALLOWED' }), false],
     ['CI rejects a non-approved reviewable PR ledger', validFixture({ decision: 'PARTIALLY VERIFIED', handoff: 'PROHIBITED' }), false, true],
@@ -760,7 +1018,7 @@ function runSelfTest() {
     console.error(`❌ check:review-ledger self-test FAILED — ${failures} unexpected result(s)`);
     return 1;
   }
-  console.log('✅ check:review-ledger self-test PASSED — valid ledger accepted; ten failing arms rejected');
+  console.log('✅ check:review-ledger self-test PASSED — valid ledger accepted; fifteen failing arms rejected');
   return 0;
 }
 

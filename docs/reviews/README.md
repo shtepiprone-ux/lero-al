@@ -20,14 +20,21 @@ For every required-scope dimension other than `subjects`, either list the comple
 `requiredScope.notApplicable`; omission is invalid. Evidence rows may cover only real values, never an invented
 "not applicable" tuple.
 
-Schema v2 never accepts an exact-generated conclusion as prose alone. Record the immutable `review.baseRevision`,
-the exact removed `candidate`, the compiler/version/input used for it, and retained verbatim `before.rawRule` and
-`after.rawRule` artifacts **including every enclosing `@media` and `@supports` wrapper**. `TAILWIND_V4` rows are
-recompiled by the validator from the exact candidate; a sibling
-utility cannot stand in for it. `media`, `supports`, declarations, and custom-property reads/writes are structured
-before/after values. Every changed envelope field needs a retained owner-decision artifact; every row also needs a
-persisted negative probe whose before/after outcomes match. A v1 ledger is intentionally rejected rather than
-silently interpreted under this stricter protocol.
+Schema v3 never accepts an exact-generated conclusion as prose alone. Record a full immutable
+`review.baseRevision`, exactly one removed `candidate`, the compiler/version/input used for it, and retained verbatim
+`before.rawRule` and `after.rawRule` artifacts **including every enclosing `@media` and `@supports` wrapper**.
+For `TAILWIND_V4`, `compiler.input` must be a `BASE_REVISION_FILE` whose path is read via
+`git show <review.baseRevision>:<path>` and whose revision exactly equals `review.baseRevision`. The validator then
+recompiles that one candidate from that source; it never treats a CSS string, a current-worktree file, or a sibling
+utility as proof. Imported repository stylesheets must still equal the base revision, and imported package styles
+must match the base `package-lock.json`. `media`, `supports`, declarations, and custom-property reads/writes are structured before/after
+values. Every changed envelope field needs a retained owner-decision artifact; every row also needs a persisted
+negative probe whose before/after outcomes match.
+
+`review.coverage` is an exact summary derived from primary ledger rows and open findings. `review.ledgerGate` must
+record the final `check:review-ledger` command with the matching pass/fail status and exit code. The validator
+recomputes both, so claims in Markdown, summaries, or the ledger itself cannot conceal a failed primary row. A v1 or
+v2 ledger is intentionally rejected rather than silently interpreted under this stricter protocol.
 
 CI receives the PR base SHA and requires a changed **approved** ledger whenever reviewable implementation, workflow,
 task, or review-governance files change. A ledger therefore must describe the final PR diff, not a preliminary

@@ -149,11 +149,12 @@ Approval requires:
    styles; extensions and new canonical sources have their canonical stories and required registrations in the same
    diff; no component-local hardcode is disguised as a scanner exception.
 11. A persisted `docs/reviews/*.review-ledger.json` covers every P0/P1/P2 criterion, passes
-    `npm run check:review-ledger`, and permits the chosen decision and handoff. A reviewable PR with no changed
-    valid ledger is not ready for approval.
-12. For any generated selector, utility, policy-sensitive syntax, or cascade migration, the ledger is schema v2
-    and its exact candidate, raw before/after rules, semantic-delta authorization, and negative probe all pass the
-    review-ledger gate; a structural pass alone is not semantic approval.
+    `npm run check:review-ledger`, and permits the chosen decision and handoff. Its derived coverage summary and
+    gate receipt must match that validator result; a reviewable PR with no changed valid ledger is not ready for
+    approval.
+12. For any generated selector, utility, policy-sensitive syntax, or cascade migration, the ledger is schema v3
+    and its one exact candidate, raw before/after rules, semantic-delta authorization, negative probe, and
+    base-revision compiler proof all pass the review-ledger gate; a structural pass alone is not semantic approval.
 
 ## Owner-native validation handoff
 

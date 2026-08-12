@@ -1,15 +1,28 @@
 {
   "$schema": "./review-ledger.schema.json",
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "task": "Task-000 — short outcome",
   "review": {
     "decision": "PARTIALLY VERIFIED",
-    "baseRevision": "immutable pre-change commit or worktree identity used to generate the before rule",
+    "baseRevision": "0000000000000000000000000000000000000000",
     "reviewedRevision": "worktree or immutable commit identity inspected after the final change",
     "reviewedPaths": [
       "src/example.ts",
       "docs/sessions/2026-01-01-task000-example.md"
-    ]
+    ],
+    "coverage": {
+      "total": 1,
+      "verified": 0,
+      "unverified": 1,
+      "openP0": 0,
+      "openP1": 1,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger -- --file docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json",
+      "status": "FAILED",
+      "exitCode": 1
+    }
   },
   "requirements": [
     {
@@ -63,8 +76,12 @@
         "compiler": {
           "kind": "TAILWIND_V4",
           "command": "Record the exact compiler command that generated the before rule.",
-          "version": "tailwindcss 4.x actually used",
-          "inputCss": "@tailwind utilities;",
+          "version": "tailwindcss <installed-version>",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "0000000000000000000000000000000000000000"
+          },
           "candidate": "Must exactly equal exactGeneratedSemantics.candidate."
         },
         "before": {

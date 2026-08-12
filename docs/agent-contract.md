@@ -83,10 +83,16 @@ convenient interpretation. Clause identifiers are intentionally stable because o
 
     The completed ledger is a retained JSON artifact at `docs/reviews/*.review-ledger.json`, created from
     `docs/review-ledger-template.json` and accepted by `npm run check:review-ledger`. For exact generated semantics,
-    schema v2 requires an immutable base revision, the exact candidate (never a sibling), structured before/after
-    envelopes, retained raw rules, explicit owner authorization for every envelope delta, and an equivalent negative
-    probe. A reviewable PR without a changed **approved** valid ledger is blocked in CI. Markdown prose may explain
-    the verdict but cannot replace this artifact.
+    schema v3 requires a full immutable base commit, exactly one candidate per semantic row (never a sibling or a
+    comma-separated set), structured before/after envelopes, retained raw rules, explicit owner authorization for
+    every envelope delta, and an equivalent negative probe. For `TAILWIND_V4`, `compiler.input` is a
+    `BASE_REVISION_FILE` whose revision exactly equals `review.baseRevision`; the validator reads that CSS with
+    `git show <base>:<path>` and recompiles the candidate itself. It rejects any imported repository stylesheet that
+    differs from that base and checks imported package styles against the base `package-lock.json`. A path string or
+    current-worktree input is not compiler evidence. The ledger's `review.coverage` and `review.ledgerGate` must equal values derived by the
+    validator; neither a narrative pass claim nor a hand-written aggregate can override a failed row. A reviewable
+    PR without a changed **approved** valid ledger is blocked in CI. Markdown prose may explain the verdict but
+    cannot replace this artifact.
 
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a

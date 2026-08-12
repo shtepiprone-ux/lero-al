@@ -282,10 +282,13 @@ diff**. For each row, the review record must carry a scope certificate with all 
 
 Persist this table as `docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json`, using
 `docs/review-ledger-template.json`, and run `npm run check:review-ledger -- --file <ledger>`. The validator checks
-retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, decision consistency,
-and the non-approved handoff ban. CI requires a changed **approved** valid ledger for any reviewable task, source,
-workflow, or review-governance change. `requiredScope.notApplicable` is the only allowed way to declare a dimension
-not applicable, and it requires a concrete reason; leaving the dimension out is an evidence gap.
+retained artifact paths, tuple coverage, mandatory counter-checks, generated-rule envelopes, derived coverage
+totals, gate receipt consistency, decision consistency, and the non-approved handoff ban. CI requires a changed
+**approved** valid ledger for any reviewable task, source, workflow, or review-governance change.
+`requiredScope.notApplicable` is the only allowed way to declare a dimension not applicable, and it requires a
+concrete reason; leaving the dimension out is an evidence gap. Copy `review.coverage` and `review.ledgerGate` only
+from the final validator run: they are checked against the ledger's actual rows and findings, so a prose or JSON
+claim that the gate passed cannot make a failing ledger pass.
 
 The reviewer must compare the certificate's required scope to the artifact's real scope before using the result.
 A capture of one story, locale, viewport, state, or synthetic node does not cover another required one; a visual
@@ -296,12 +299,15 @@ captured. Every omitted required target is `UNVERIFIED` and blocks approval.
 For generated CSS, selectors, policy-sensitive syntax, or cascade migrations, inspect the exact generated rule for
 the input removed or replaced. Compare its full semantic envelope — ancestor/descendant relation, selector
 specificity, `@media`/`@supports` wrappers, layer, source-order dependence, declarations, and custom-property
-behavior — rather than comparing only computed desktop values or declaration text. Schema v2 records this as
-machine-compared before/after values: retain the base revision, exact candidate, compiler input/version, and each
-raw rule. A sibling utility, a nearby example, a comment, or a final bundle that no longer contains the removed rule
-is not evidence. Every changed envelope field must cite a retained owner decision; an uncited guard, declaration,
-or custom-property delta is a P0 regression. The adversarial counter-check must persist a negative probe with the
-same before/after outcome when it is applicable.
+behavior — rather than comparing only computed desktop values or declaration text. Schema v3 records this as
+machine-compared before/after values: retain the full 40-character base commit, exactly one candidate, compiler
+version, and each raw rule. For Tailwind, `compiler.input` must be a `BASE_REVISION_FILE` at that identical base
+commit; the validator fetches the CSS through `git show <base>:<path>` and compiles the named candidate, rather than
+trusting a CSS string, a path value, a sibling utility, or the current worktree. It also rejects imported repository
+stylesheets that changed since the base and checks imported package styles against the base lockfile. A nearby example, a comment, or a
+final bundle that no longer contains the removed rule is not evidence. Every changed envelope field must cite a
+retained owner decision; an uncited guard, declaration, or custom-property delta is a P0 regression. The adversarial
+counter-check must persist a negative probe with the same before/after outcome when it is applicable.
 
 For retry-based evidence, read the binding decision and the task's acceptance criterion before classifying runs.
 Record every execution separately as invalid/contaminated, initial valid result, or authorized re-run with its

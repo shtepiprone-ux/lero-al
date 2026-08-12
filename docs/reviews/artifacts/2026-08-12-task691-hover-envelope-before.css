@@ -1,0 +1,42 @@
+/* Task 691 review (2026-08-12) — BEFORE side of the exact-generated-semantics row for AC2/R2.
+ *
+ * Candidate: group-hover:[--text-color:var(--primary)]
+ * Base revision: 2ad067bc1f845a4328f4850e02e25164d15cf0cd
+ * Compiler input: src/app/globals.css at that base revision (unchanged since 10bc8966c; clean in the worktree)
+ * Compiler: tailwindcss 4.3.0
+ *
+ * PROVENANCE — COMPILER-CONFIRMED 2026-08-12 (owner-native run).
+ *
+ * Origin: transcribed from the repository's own committed expectation for this exact candidate,
+ * scripts/check-review-ledger.mjs SELF_TEST_TAILWIND_RULE (:63-70), because the review sandbox is
+ * Linux while node_modules carries win32-only native binaries (lightningcss.linux-x64-gnu.node
+ * missing, @tailwindcss/oxide-win32-x64-msvc), so `@tailwindcss/node`'s compile() cannot execute
+ * there. Corroborated at transcription time by two observations that need no compiler:
+ *   1. tailwindcss 4.3.0 variant definition, node_modules/tailwindcss/dist/lib.js:16 —
+ *      r.static("hover", c=>{c.nodes=[G("&:hover",[W("@media","(hover: hover)",c.nodes)])]})
+ *   2. the shipped bundle .next/static/css/3b5759d2e996cb5d.css, where sibling group-hover:*
+ *      utilities are emitted inside @media (hover:hover), e.g.
+ *      @media (hover:hover){.group-hover\:text-primary:is(:where(.group):hover *){color:var(--primary)}}
+ *
+ * CONFIRMATION: the owner ran `npm.cmd run check:review-ledger -- --file <this ledger>` natively on
+ * 2026-08-12. The validator recompiled this one candidate from src/app/globals.css read via
+ * `git show 2ad067bc1f845a4328f4850e02e25164d15cf0cd:src/app/globals.css` and raised NONE of the
+ * mismatch errors it raises on divergence — not `before.rawRule does not equal the exact compiled
+ * rule for the candidate`, not `before.envelope.media does not match the exact compiled candidate`,
+ * and no pinned-dependency or compiler-version error. The sandbox-only error
+ * `compiler could not compile the exact candidate` disappeared, taking the violation count 11 -> 10.
+ * This rule is therefore COMPILED-EQUIVALENT for the named base revision, not merely transcribed.
+ *
+ * Still ANALYTICAL, and not upgraded by that run: the runtime consequence on a coarse pointer.
+ * The compiler proves the guard existed in the baseline and is absent from the replacement; it does
+ * not prove what a touch device does. That is the negative probe specified in the ledger row and
+ * still unexecuted.
+ */
+
+.group-hover\:\[--text-color\:var\(--primary\)\] {
+  &:is(:where(.group):hover *) {
+    @media (hover: hover) {
+      --text-color: var(--primary);
+    }
+  }
+}

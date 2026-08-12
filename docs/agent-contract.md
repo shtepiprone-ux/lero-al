@@ -83,16 +83,26 @@ convenient interpretation. Clause identifiers are intentionally stable because o
 
     The completed ledger is a retained JSON artifact at `docs/reviews/*.review-ledger.json`, created from
     `docs/review-ledger-template.json` and accepted by `npm run check:review-ledger`. For exact generated semantics,
-    schema v3 requires a full immutable base commit, exactly one candidate per semantic row (never a sibling or a
-    comma-separated set), structured before/after envelopes, retained raw rules, explicit owner authorization for
-    every envelope delta, and an equivalent negative probe. For `TAILWIND_V4`, `compiler.input` is a
+    schema v4 requires a full immutable base commit, exactly one candidate per semantic row (never a sibling or a
+    comma-separated set), structured before/after envelopes, and retained raw rules. An `EQUIVALENT` semantic
+    assessment requires explicit owner authorization for every envelope delta and an equivalent negative probe. A
+    non-approved `MISMATCH_RECORDED` assessment instead lists every unapproved changed field in
+    `observedSemanticDeltas`, with an open P0/P1/P2 finding for each; an unequal negative probe must cite that same
+    finding. The two forms are mutually exclusive for a field. Required tuple scope is similarly fail-closed:
+    only evidence with `coverageRole: "COVERS"` closes a tuple; every exact remaining tuple must be declared in
+    `coverageGaps` and linked to an open primary finding. Each non-`VERIFIED` primary row names its open finding in
+    `findingIds`, and the finding names the same row in `requirementIds`. For `TAILWIND_V4`, `compiler.input` is a
     `BASE_REVISION_FILE` whose revision exactly equals `review.baseRevision`; the validator reads that CSS with
     `git show <base>:<path>` and recompiles the candidate itself. It rejects any imported repository stylesheet that
     differs from that base and checks imported package styles against the base `package-lock.json`. A path string or
-    current-worktree input is not compiler evidence. The ledger's `review.coverage` and `review.ledgerGate` must equal values derived by the
-    validator; neither a narrative pass claim nor a hand-written aggregate can override a failed row. A reviewable
-    PR without a changed **approved** valid ledger is blocked in CI. Markdown prose may explain the verdict but
-    cannot replace this artifact.
+    current-worktree input is not compiler evidence. The ledger's `review.coverage` and `review.ledgerGate` must
+    equal values derived by the validator; the gate attests to ledger integrity, while the decision, finding state,
+    and handoff attest to implementation outcome. Thus a complete `NEEDS REVISION` ledger passes locally with a
+    prohibited handoff, but can never satisfy the reviewable-PR approval gate. Neither a narrative pass claim nor a
+    hand-written aggregate can override a failed row. A reviewable PR without a changed **approved** valid ledger is
+    blocked in CI. A `.review-ledger.DRAFT.json` inside `docs/reviews/` fails the all-ledger gate, and a
+    `.review-ledger.SUPERSEDED.json` must be named in the valid successor's `review.supersedes`; neither filename is
+    an exclusion mechanism. Markdown prose may explain the verdict but cannot replace this artifact.
 
 10. **Session evidence, backlog, and git ownership stay accurate.** Every completed implementation task updates
     `docs/backlog.md` with concise current task state and adds a session log under `docs/sessions/` with a

@@ -1,6 +1,6 @@
 {
   "$schema": "./review-ledger.schema.json",
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "task": "Task-000 — short outcome",
   "review": {
     "decision": "PARTIALLY VERIFIED",
@@ -10,6 +10,7 @@
       "src/example.ts",
       "docs/sessions/2026-01-01-task000-example.md"
     ],
+    "supersedes": [],
     "coverage": {
       "total": 1,
       "verified": 0,
@@ -20,8 +21,8 @@
     },
     "ledgerGate": {
       "command": "npm.cmd run check:review-ledger -- --file docs/reviews/YYYY-MM-DD-taskNNN-short-name.review-ledger.json",
-      "status": "FAILED",
-      "exitCode": 1
+      "status": "PASSED",
+      "exitCode": 0
     }
   },
   "requirements": [
@@ -29,6 +30,7 @@
       "id": "AC1 / R1",
       "priority": "P0",
       "status": "UNVERIFIED",
+      "findingIds": ["F1"],
       "finalSubject": {
         "path": "src/example.ts",
         "symbol": "ExampleComponent",
@@ -49,6 +51,7 @@
           "command": "npm run screenshots:assert -- --mantine-only",
           "observable": "Persisted manifest records the exact visual verdict for the listed tuples.",
           "freshness": "final build for the reviewed diff",
+          "coverageRole": "COVERS",
           "scope": {
             "subjects": ["ExampleComponent/default"],
             "stories": ["patterns-example--default"],
@@ -59,6 +62,7 @@
           }
         }
       ],
+      "coverageGaps": [],
       "counterChecks": [
         {
           "claim": "The negative interaction/state cannot pass through the positive-path assertion.",
@@ -73,6 +77,7 @@
       },
       "exactGeneratedSemantics": {
         "candidate": "The exact removed candidate; never a sibling utility or example.",
+        "assessment": "EQUIVALENT",
         "compiler": {
           "kind": "TAILWIND_V4",
           "command": "Record the exact compiler command that generated the before rule.",
@@ -127,6 +132,7 @@
             "reason": "An owner decision explicitly authorizes this otherwise observable cascade change."
           }
         ],
+        "observedSemanticDeltas": [],
         "negativeProbes": [
           {
             "condition": "hover: none",
@@ -146,6 +152,7 @@
       "priority": "P1",
       "status": "OPEN",
       "requirements": "AC1 / R1",
+      "requirementIds": ["AC1 / R1"],
       "evidence": "Path and observed behavior. An OPEN P0/P1/P2 finding forbids an approval decision."
     }
   ],

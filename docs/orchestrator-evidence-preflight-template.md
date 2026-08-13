@@ -154,8 +154,9 @@ unexpected path and a changed value; manual quotation is not a gate.
 - [ ] Every material absence/API claim has a complete §2b trace: exact enclosing type, runtime reads,
       production/story/test construction paths, and a contrary probe. Same-named root and nested fields are not
       conflated.
-- [ ] No `Confirmed` requirement, AC, scope boundary, or handoff fact is deferred to the executor for its first
-      verification; material API/data-flow traces were re-run after the final textual revision.
+- [ ] No `Confirmed` requirement, AC, scope boundary, or handoff fact has its first or only verification deferred
+      to the executor. Any executor I0 re-measure is explicitly freshness validation of a retained author trace;
+      material API/data-flow traces were re-run after the final textual revision.
 - [ ] Unresolved rows are labelled `ASSUMED`, `UNKNOWN`, or `BLOCKED`; none is presented as verified.
 - [ ] For an implementation review, the source-and-conclusion audit covers every P0/P1 AC and material conclusion.
 - [ ] Every statement of exclusivity, causality, or flakiness has a recorded counter-check; otherwise it is labelled

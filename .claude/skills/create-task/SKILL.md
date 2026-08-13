@@ -140,9 +140,11 @@ Do not publish the first draft. Check all of the following and revise the task i
   creation order.
 - After the final revision, every cited step/phase/AC matches the actual plan and no current self-check repeats a
   superseded claim.
-- No requirement, AC, scope boundary, or handoff asserts a material fact as `Confirmed` while telling the executor
-  to establish or re-establish that same fact. Re-run its evidence trace after the final textual revision; otherwise
-  label it `UNKNOWN` and publish `DRAFT — NEEDS EVIDENCE` or `BLOCKED`, not a ready kickoff.
+- No requirement, AC, scope boundary, or handoff asserts a material fact as `Confirmed` when its first or only
+  verification is deferred to the executor. A task may require an I0 re-measure of an author-verified fact when
+  state can drift, but it must retain the author's complete trace and name the re-measure as freshness validation.
+  Re-run its evidence trace after the final textual revision; otherwise label it `UNKNOWN` and publish
+  `DRAFT — NEEDS EVIDENCE` or `BLOCKED`, not a ready kickoff.
 - Assumptions and unresolved decisions are visible to the executor and reviewer.
 
 ## Sprint assignment — blocking, check this first

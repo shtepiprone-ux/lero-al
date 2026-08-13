@@ -1,0 +1,7 @@
+expectedPerPhase=120 beforeTupleCount=120 afterTupleCount=120 commonTupleCount=120
+totalDiffCount=0 tuplesWithDiffs=0 erroredTuples=0
+missingFromBefore=[] missingFromAfter=[]
+movedPropertyNames=[]
+assertionPassed=true
+Wrote C:\Claude_Code_Projects\lero-al\.screenshots\task691-delta\diff-240-result.json
+EXIT_CODE=0

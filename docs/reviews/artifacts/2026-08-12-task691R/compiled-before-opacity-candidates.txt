@@ -1,0 +1,36 @@
+Compiled before-side, base 2ad067bc1f845a4328f4850e02e25164d15cf0cd, input src/app/globals.css
+
+=== bg-overlay/60  (photoCountList, photoCountGrid) ===
+  .bg-overlay\/60 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
+    }
+  }
+
+=== bg-overlay/30  (overlayCenter) ===
+  .bg-overlay\/30 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 30%, transparent);
+    }
+  }
+
+=== text-muted-foreground/70  (originalPriceList, priceMetaRow) ===
+  .text-muted-foreground\/70 {
+    color: var(--muted-foreground);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--muted-foreground) 70%, transparent);
+    }
+  }
+
+=== text-overlay-foreground  (photoCountList, photoCountGrid, overlayLabel (no modifier)) ===
+  .text-overlay-foreground {
+    color: var(--overlay-foreground);
+  }
+
+=== text-muted-foreground  (typeLabel/metaRow/metaRowBordered/locationIconGrid (no modifier)) ===
+  .text-muted-foreground {
+    color: var(--muted-foreground);
+  }
+

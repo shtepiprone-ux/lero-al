@@ -1,0 +1,11 @@
+{
+  "beforeTupleCount": 80,
+  "afterTupleCount": 80,
+  "commonTupleCount": 80,
+  "missingFromBefore": [],
+  "missingFromAfter": [],
+  "totalDiffCount": 0,
+  "tuplesWithDiffs": 0,
+  "movedPropertyNames": [],
+  "perTupleDiffs": {}
+}

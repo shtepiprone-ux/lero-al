@@ -1,0 +1,2 @@
+Wrote C:\Claude_Code_Projects\lero-al\.screenshots\task691-delta\computed-before-240.json — 120/120 tuples captured, 0 missing
+EXIT_CODE=0

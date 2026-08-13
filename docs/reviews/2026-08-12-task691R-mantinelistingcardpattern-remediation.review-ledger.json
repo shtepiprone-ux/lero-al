@@ -1,0 +1,1341 @@
+{
+  "$schema": "../review-ledger.schema.json",
+  "schemaVersion": 4,
+  "task": "Task-691R — remediate the MantineListingCardPattern de-Tailwind (Sprint 46.4 re-entry)",
+  "review": {
+    "decision": "APPROVED",
+    "baseRevision": "2ad067bc1f845a4328f4850e02e25164d15cf0cd",
+    "reviewedRevision": "base 2ad067bc1f845a4328f4850e02e25164d15cf0cd plus the uncommitted Task-691 change set as remediated by Task-691R rounds 1 and 2. Final worktree state: MantineListingCardPattern.tsx (+30/-29) and MantineListingCardPattern.module.css (+271) modified, docs/backlog.md modified, docs/sessions/2026-08-12-task691R-remediation.md new; final module.css write 2026-08-12 20:58:05 local, final npm run build 21:03:15 local, so the build transcript is current for the reviewed diff. This ledger closes the seven findings carried by docs/reviews/2026-08-12-task691-mantinelistingcardpattern-detailwind.review-ledger.SUPERSEDED.json (F-A, F-B, F-C, F-E P0; F-J, F-K P1; F-L P2) plus six raised by this review (F-N P1; F-O, F-P, F-Q P2; F-R, F-S P3) and one hardening note (F-T). The reviewer wrote no implementation file: the two files under src/ carry exactly the executor's change set. Supersession, added after the repo-wide gate run: this ledger is the record of record for Task 691 and 691R, so both prior ledgers are retired to .SUPERSEDED.json and named above. The 2026-08-12 predecessor became invalid on its own terms once this task rebuilt the app — it cited .next/static/css/7367bbf2f9c0fb9d.css, the content-hashed chunk carrying MantineListingCardPattern's own CSS, and 691R's @media (hover: hover) fix changed that chunk's content and therefore its filename (now 7ccf256a314fe725.css). No evidence is deleted to repair it; it is retired intact, and its dead citation is a governance lesson recorded in the review: a path inside a regenerated build directory is not retained evidence. RETRACTION 2026-08-12, on owner instruction: the APPROVED verdict this ledger first carried is withdrawn. Two defects, both the reviewer's. (1) F-R was recorded as a disclosed limitation instead of being measured: the capture hovers .card nth(0) only, so the list/horizontal card's hover envelope is unmeasured in both phases, and disclosure does not substitute for a measurement. (2) F-U: this active ledger cites evidence under .screenshots/**, which .gitignore:55 excludes, so every such path is unresolvable outside this machine and the ledger is not portably checkable — the same defect class the reviewer had just charged against the predecessor ledger's .next citation. Rows whose COVERS evidence or negative-probe artifacts live under .screenshots/** are returned to UNVERIFIED until those artifacts are copied into docs/reviews/artifacts/2026-08-12-task691R/ and the paths repointed. Scope correction on the same instruction: AC5's required envelope is expanded from the two-state matrix to rest / hover-grid / hover-list with the hovered card root's transform and box-shadow, its title colour and its image scale/transform on both layouts — 2 stories x 4 locales x 5 viewports x 3 states x 2 phases = 240 tuples. The retained 160-tuple artifacts are demoted to GAP_WITNESS: they were produced under the old envelope and close no tuple of the new one. ROUND 3 CLOSURE, re-review 2026-08-13: both P0 findings are closed on measurement. F-R — the capture now runs rest / hover-grid / hover-list over 2 stories x 4 locales x 5 viewports x 2 phases = 240 tuples, hovering each layout's own card root and capturing that root's transform and box-shadow, its title colour and its image scale/transform; diff-240-result.json returns totalDiffCount 0 with assertionPassed true from a comparator that exits non-zero on any moved, errored, missing or short result, and the reviewer re-read both artifacts to confirm the mirrored hover asymmetry that only a real per-layout hover can produce. F-U — all 28 ledger-cited artifacts plus this round's own were copied byte-for-byte into docs/reviews/artifacts/2026-08-12-task691R/ (38 files, 6.9 MB) and every path field repointed; the reviewer diffed the pre- and post-repoint ledger leaf by leaf and found 46 changed leaves, all of them .screenshots/** to the versioned copy, and no other field touched. Three finalSubject.path values were still on gitignored locations because the reviewer's own field list had omitted that field; repointed here. Every path this ledger cites now exists and none is git-ignored.",
+    "reviewedPaths": [
+      "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+      "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+      "src/modules/listings/components/ListingCard.tsx",
+      "src/components/ui/appImageConfig.ts",
+      "src/components/ui/AppImage.tsx",
+      "tasks/Sprints/Sprint_46_kickoff_prompt_Task_691R_MantineListingCardPattern_Remediation.md",
+      "docs/sessions/2026-08-12-task691R-remediation.md",
+      "docs/backlog.md",
+      "docs/critical-flow-registry.md",
+      "docs/reviews/artifacts/2026-08-12-task691-hover-envelope-before.css",
+      "docs/reviews/artifacts/2026-08-12-task691R/capture-computed-styles.mjs",
+      "docs/reviews/artifacts/2026-08-12-task691R/diff-computed-styles-160.mjs",
+      "docs/reviews/artifacts/2026-08-12-task691R/computed-before-160.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/computed-after-160.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/diff-160-result.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/reduced-motion-probe.mjs",
+      "docs/reviews/artifacts/2026-08-12-task691R/reduced-motion-probe-before.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/reduced-motion-probe-after.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/coarse-pointer-probe.mjs",
+      "docs/reviews/artifacts/2026-08-12-task691R/compile-opacity-candidates.mjs",
+      "docs/reviews/artifacts/2026-08-12-task691R/compiled-before-opacity-candidates.txt",
+      "docs/reviews/artifacts/2026-08-12-task691R/mantine-only-set-diff.mjs",
+      "docs/reviews/artifacts/2026-08-12-task691R/mantine-only-set-diff-result.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/rendered-assert/2026-08-12T18-40/manifest.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/rendered-assert/2026-08-09T15-13/manifest.json",
+      "docs/reviews/artifacts/2026-08-12-task691R/transcripts"
+    ],
+    "supersedes": [
+      "docs/reviews/2026-08-11-task691-mantinelistingcardpattern-detailwind.review-ledger.SUPERSEDED.json",
+      "docs/reviews/2026-08-12-task691-mantinelistingcardpattern-detailwind.review-ledger.SUPERSEDED.json"
+    ],
+    "coverage": {
+      "total": 12,
+      "verified": 12,
+      "unverified": 0,
+      "openP0": 0,
+      "openP1": 0,
+      "openP2": 0
+    },
+    "ledgerGate": {
+      "command": "npm.cmd run check:review-ledger",
+      "status": "PASSED",
+      "exitCode": 0
+    }
+  },
+  "requirements": [
+    {
+      "id": "AC1 / R1",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "both Card roots' cn() — list layout and grid layout",
+        "diffHunks": [
+          "MantineListingCardPattern.tsx:166 — `'group', // 691R — restores the group-hover:scale-105 ancestor consumed via AppImage's `hoverClass` (F-A)` on the list Card root",
+          "MantineListingCardPattern.tsx:293 — the same token restored on the grid Card root, with `'flex flex-col'` split onto its own line"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "list Card root className",
+          "grid Card root className",
+          "src/modules/listings/components/ListingCard.tsx unchanged",
+          "src/components/ui/appImageConfig.ts unchanged",
+          "src/components/ui/AppImage.tsx unchanged"
+        ],
+        "notApplicable": {
+          "stories": "Source-level criterion: the token's presence is read from the final diff, not from a render.",
+          "locales": "The className carries no locale-dependent value.",
+          "viewports": "The className carries no width-dependent value.",
+          "states": "Presence of the marker class is state-independent.",
+          "phases": "The criterion is about the final file only; the base side is covered by AC2 / R2."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "command": "git --no-pager diff -- src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "observable": "Both cn() calls carry the literal 'group' token again; the reviewer read the whole hunk, not a grep hit.",
+          "freshness": "working tree at review time; file mtime precedes the final build at 21:03:15",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "list Card root className",
+              "grid Card root className"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/2026-08-12-task691R-remediation.md",
+          "command": "git status --porcelain",
+          "observable": "ListingCard.tsx, appImageConfig.ts and AppImage.tsx appear in no porcelain entry across both rounds, so all three are byte-identical to HEAD — a stronger witness than the executor's recorded SHA-256 pair.",
+          "freshness": "re-run by the reviewer after round 2; 7 entries, none of them the three out-of-scope files",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "src/modules/listings/components/ListingCard.tsx unchanged",
+              "src/components/ui/appImageConfig.ts unchanged",
+              "src/components/ui/AppImage.tsx unchanged"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Restoring `group` could re-activate other dormant group-hover:* utilities inside the card subtree and change something the task never intended.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/diff-160-result.json",
+          "result": "NOT A REGRESSION. Any re-activated consumer restores base-revision behaviour by construction, because the base revision carried `group` on both roots; the 80-tuple BEFORE/AFTER comparison over 10840 property values returns zero moved properties, so no measured site diverges from base."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "No generated rule is replaced by this criterion; it restores a marker class consumed by an unchanged Tailwind utility."
+      }
+    },
+    {
+      "id": "AC2 / R2",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+        "symbol": "grid Card root `group` + src/components/ui/appImageConfig.ts:66 hoverClass 'group-hover:scale-105' composing with .card:hover .imageSection img { transform: scale(1.05) }",
+        "diffHunks": [
+          "MantineListingCardPattern.tsx:293 — `'group'` restored on the grid Card root, the ancestor the scale utility matches through"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "vertical (grid) card image `scale`",
+          "vertical (grid) card image `transform`"
+        ],
+        "stories": [
+          "mantine-primitives-listingcard--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "768",
+          "1024"
+        ],
+        "states": [
+          "rest",
+          "hover"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-before-160.json",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs --mode=before --static=C:\\Claude_Code_Projects\\lero-al-base\\storybook-static",
+          "observable": "key listingcard|en|1024|hover → .data.imageScaleTransformGrid = { found: true, scale: \"1.05\", transform: \"matrix(1.05, 0, 0, 1.05, 0, 0)\" }; the rest tuple is scale \"none\" / transform \"none\". staticDir recorded in the artifact is the base worktree, so this is the base revision's own value, quoted, not a diff count.",
+          "freshness": "captured against the base-revision Storybook build; sha256 f00cd108375d66e099d822525321231617a35de4ffc7f4b42447bbcc9323ff17, byte-identical across two independent runs (19:53 and 20:38)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "vertical (grid) card image `scale`",
+              "vertical (grid) card image `transform`"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-160.json",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs --mode=after",
+          "observable": "Same keys, same values: hover scale \"1.05\", transform \"matrix(1.05, 0, 0, 1.05, 0, 0)\"; rest \"none\"/\"none\". Byte-identical composite to the base side.",
+          "freshness": "captured against the post-fix Storybook build; sha256 6d4c057d8d5940f24ca1a9ff6a58292f4ba591ccffcacab59123aa065473fe3c, reproduced byte-identically on a second run (18:36 and 20:41)",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "vertical (grid) card image `scale`",
+              "vertical (grid) card image `transform`"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The measured element might be the list card, whose listing-thumb variant declares no hoverClass, which would make the 1.05 reading meaningless.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-160.json",
+          "result": "FALSIFIED. The same tuples record imageScaleTransformList = scale \"none\" / transform \"none\" at hover, so the two host elements are distinguished by the artifact itself; only the grid card's img carries the composite. A list-card reading could not have produced 1.05."
+        },
+        {
+          "claim": "The BEFORE capture might have run against the post-fix build, making the equality trivial.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-before-160.json",
+          "result": "FALSIFIED four ways by the reviewer. (1) staticDir = C:\\Claude_Code_Projects\\lero-al-base\\storybook-static. (2) CSS-module content hash differs: _card_1iho2_27 before vs _card_1qkht_27 after. (3) BEFORE._resolved holds 2 keys, AFTER 23, because the 21 new module classes do not exist at base. (4) Re-running the diff WITHOUT the syntheticClass exclusion yields exactly 80 differences, every one a literal Tailwind locator (`text-2xs text-muted-foreground/70 leading-tight`) becoming a module hash (`_originalPriceList_1qkht_256`) — the base build genuinely renders the pre-691 DOM, and the comparator demonstrably reacts when there is something to see."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "This criterion compares rendered computed values across two builds, not a generated rule's envelope; the envelope comparison lives on AC3 / R3."
+      }
+    },
+    {
+      "id": "AC3 / R3",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "@media (hover: hover) { @layer utilities { .card:hover .cardTitle } } — replacement for group-hover:[--text-color:var(--primary)]",
+        "diffHunks": [
+          "MantineListingCardPattern.module.css:238-244 — the rule wrapped in `@media (hover: hover)` with exactly one descriptor, nested inside `@layer utilities`"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "group-hover:[--text-color:var(--primary)] generated envelope"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "Generated-CSS equivalence is a compiler property, not a rendered one.",
+          "locales": "The rule carries no locale-dependent value.",
+          "viewports": "The envelope's only media condition is a pointer-capability query, not a width query.",
+          "states": "The rule's own :hover state is part of the selector under comparison."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691-hover-envelope-before.css",
+          "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-12-task691R-mantinelistingcardpattern-remediation.review-ledger.json",
+          "observable": "The compiled candidate nests its declaration inside @media (hover: hover) within @layer utilities. The validator recompiles this exact candidate from src/app/globals.css read via `git show 2ad067bc1f845a4328f4850e02e25164d15cf0cd:src/app/globals.css` with tailwindcss 4.3.0 and accepts before.rawRule and before.envelope.",
+          "freshness": "base revision 2ad067bc1f845a4328f4850e02e25164d15cf0cd; globals.css clean in the worktree",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "group-hover:[--text-color:var(--primary)] generated envelope"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "command": "sed -n '236,246p' src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "observable": "The final module carries `@media (hover: hover) { @layer utilities { .card:hover .cardTitle { --text-color: var(--primary); } } }` — one media descriptor, not the file's two-condition `(hover: hover) and (pointer: fine)` form, and the same cascade layer as the compiled utility. Media and layer, the two load-bearing deltas the previous review recorded, are now identical to the baseline.",
+          "freshness": "final worktree file, written 20:58:05, ahead of the 21:03:15 build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "group-hover:[--text-color:var(--primary)] generated envelope"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "`@media` outside `@layer` is not the same as the compiled form, which nests the media query inside the layer.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "NOT A DIFFERENCE. Conditional-group and layer nesting order does not affect which layer a rule joins or when its condition is evaluated; both forms place the declaration in the document-wide `utilities` layer behind the same single descriptor. The rendered title colour confirms it: rgb(236, 84, 71) at hover in BOTH phases at every captured tuple."
+        },
+        {
+          "claim": "The specificity delta (0,2,0) → (0,3,0) could change the outcome.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-160.json",
+          "result": "FALSIFIED. OQ1's re-derived measurement found exactly one writer of --text-color in the entire repository, this rule itself; @mantine/core Text.css:9 only reads it, and neither .cardTitle Text passes a `c` prop, so no inline value exists. With nothing contesting the property, specificity cannot decide anything — and the capture agrees: site338_titleGrid colour is identical BEFORE and AFTER at all 80 tuples."
+        },
+        {
+          "claim": "The module now sits in @layer utilities while the rest of the file is unlayered, so it could lose to some unlayered rule.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "NO CONTENDER EXISTS. The same single-writer measurement rules out any unlayered competitor for --text-color; a layered rule can only lose to a competitor that exists. This is the disposition D34 requires (a D28 migration reproduces the utility's own layer) and it moves the envelope toward the baseline rather than away from it."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "EXACT_GENERATED",
+        "reason": "A cascade migration replaced a generated Tailwind utility with a hand-written module rule; agent-contract 9a requires the whole emitted envelope to be compared, not the declaration alone."
+      },
+      "exactGeneratedSemantics": {
+        "candidate": "group-hover:[--text-color:var(--primary)]",
+        "assessment": "EQUIVALENT",
+        "compiler": {
+          "kind": "TAILWIND_V4",
+          "command": "npm.cmd run check:review-ledger -- --file docs/reviews/2026-08-12-task691R-mantinelistingcardpattern-remediation.review-ledger.json",
+          "version": "tailwindcss 4.3.0",
+          "input": {
+            "kind": "BASE_REVISION_FILE",
+            "path": "src/app/globals.css",
+            "revision": "2ad067bc1f845a4328f4850e02e25164d15cf0cd"
+          },
+          "candidate": "group-hover:[--text-color:var(--primary)]"
+        },
+        "before": {
+          "artifact": "docs/reviews/artifacts/2026-08-12-task691-hover-envelope-before.css",
+          "rawRule": ".group-hover\\:\\[--text-color\\:var\\(--primary\\)\\] {\n  &:is(:where(.group):hover *) {\n    @media (hover: hover) {\n      --text-color: var(--primary);\n    }\n  }\n}",
+          "envelope": {
+            "selector": ".group-hover\\:\\[--text-color\\:var\\(--primary\\)\\]:is(:where(.group):hover *)",
+            "media": [
+              "(hover: hover)"
+            ],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,2,0)",
+            "sourceOrder": "Tailwind-generated inside @layer utilities; layered origin always loses to unlayered author CSS regardless of order.",
+            "declarations": [
+              "--text-color: var(--primary)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--primary"
+              ],
+              "writes": [
+                "--text-color"
+              ],
+              "fallbacks": []
+            }
+          }
+        },
+        "after": {
+          "artifact": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "rawRule": "@media (hover: hover) {\n  @layer utilities {\n    .card:hover .cardTitle {\n      --text-color: var(--primary);\n    }\n  }\n}",
+          "envelope": {
+            "selector": ".card:hover .cardTitle",
+            "media": [
+              "(hover: hover)"
+            ],
+            "supports": [],
+            "layer": "@layer utilities",
+            "specificity": "(0,3,0)",
+            "sourceOrder": "Authored in MantineListingCardPattern.module.css inside @layer utilities; joins the document-wide utilities layer declared by globals.css, so it keeps the baseline's layered standing against unlayered author CSS.",
+            "declarations": [
+              "--text-color: var(--primary)"
+            ],
+            "customProperties": {
+              "reads": [
+                "--primary"
+              ],
+              "writes": [
+                "--text-color"
+              ],
+              "fallbacks": []
+            }
+          }
+        },
+        "allowedSemanticDeltas": [
+          {
+            "field": "selector",
+            "ownerDecisionArtifact": "docs/backlog.md",
+            "reason": "Authorized by D28 (2026-08-01, owner), recorded in docs/backlog.md under Standing notes / Binding decisions: de-hybrid is mechanism-only with zero visual delta. A D28 migration can never keep the utility's own class selector. The hovered host is the same element and the descendant relation is real DOM ancestry rather than the `group` marker, which AC1 / R1 independently restored for its other consumer. Zero visual delta is measured, not asserted: 10840 property comparisons across 80 tuples, zero moved."
+          },
+          {
+            "field": "specificity",
+            "ownerDecisionArtifact": "docs/backlog.md",
+            "reason": "Authorized by D28 (2026-08-01, owner) in docs/backlog.md, read together with kickoff §3.4's disposition table and OQ1's I0 measurement in docs/sessions/2026-08-12-task691R-remediation.md §4.1. (0,2,0) -> (0,3,0) is entailed by the D28-authorized selector swap and is inert here: the I0 re-derivation found this rule to be the sole writer of --text-color in the repository, and @mantine/core Text.css:9 only reads it, so no cascade contest exists for specificity to decide. The captured title colour is identical in both phases at every tuple."
+          },
+          {
+            "field": "sourceOrder",
+            "ownerDecisionArtifact": "docs/backlog.md",
+            "reason": "Authorized by D28 (2026-08-01, owner) in docs/backlog.md. Generated Tailwind output becomes authored module CSS. Because the replacement stays inside @layer utilities per D34, its standing against unlayered author CSS is unchanged from the baseline's — this is the delta the previous review recorded as strictly stronger, now returned to parity."
+          }
+        ],
+        "observedSemanticDeltas": [],
+        "negativeProbes": [
+          {
+            "condition": "coarse pointer, hover: none — Playwright context devices['iPhone 12'] (hasTouch:true, isMobile:true → matchMedia('(hover: hover)') false, '(pointer: coarse)' true), real tap() on the grid card of mantine-primitives-listingcard--default",
+            "command": "node .screenshots/task691-delta/coarse-pointer-probe.mjs [--static=C:\\Claude_Code_Projects\\lero-al-base\\storybook-static]",
+            "artifact": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/coarse-pointer-probe-before.txt",
+            "beforeOutcome": "EXECUTED in both phases against their own builds — BEFORE against C:\\Claude_Code_Projects\\lero-al-base\\storybook-static at 2ad067bc1, AFTER against the post-fix build. matchMedia reports (hover: hover) false and (pointer: coarse) true; a real tap() leaves imgScale none, imgTransform none and titleColor rgb(0, 0, 0) unchanged; neitherEffectFired true, exit 0. The guarded declaration is unreachable on a coarse pointer, identically at base and after. Companion artifact: .screenshots/task691-delta/transcripts/coarse-pointer-probe-after.txt.",
+            "afterOutcome": "EXECUTED in both phases against their own builds — BEFORE against C:\\Claude_Code_Projects\\lero-al-base\\storybook-static at 2ad067bc1, AFTER against the post-fix build. matchMedia reports (hover: hover) false and (pointer: coarse) true; a real tap() leaves imgScale none, imgTransform none and titleColor rgb(0, 0, 0) unchanged; neitherEffectFired true, exit 0. The guarded declaration is unreachable on a coarse pointer, identically at base and after. Companion artifact: .screenshots/task691-delta/transcripts/coarse-pointer-probe-after.txt.",
+            "equivalent": true
+          },
+          {
+            "condition": "prefers-reduced-motion: reduce, desktop pointer — the branch where the module's :72-83 block resets transform but never scale, with a no-preference control pass in the same run so a null result cannot be mistaken for a probe that measured nothing",
+            "command": "node .screenshots/task691-delta/reduced-motion-probe.mjs [--static=C:\\Claude_Code_Projects\\lero-al-base\\storybook-static]",
+            "artifact": "docs/reviews/artifacts/2026-08-12-task691R/reduced-motion-probe-before.json",
+            "beforeOutcome": "EXECUTED in both phases against their own builds — BEFORE against C:\\Claude_Code_Projects\\lero-al-base\\storybook-static at 2ad067bc1, AFTER against the post-fix build. Under prefers-reduced-motion: reduce, hover gives scale 1.05, transform none and transition-duration 0s, title rgb(236, 84, 71); the same-run no-preference control fires transform matrix(1.05, 0, 0, 1.05, 0, 0) at 0.3s, so the probe demonstrably measures rather than returning a vacuous null. scale surviving the block while transform is suppressed is base behaviour, not new. passed true, exit 0. Companion artifact: .screenshots/task691-delta/reduced-motion-probe-after.json.",
+            "afterOutcome": "EXECUTED in both phases against their own builds — BEFORE against C:\\Claude_Code_Projects\\lero-al-base\\storybook-static at 2ad067bc1, AFTER against the post-fix build. Under prefers-reduced-motion: reduce, hover gives scale 1.05, transform none and transition-duration 0s, title rgb(236, 84, 71); the same-run no-preference control fires transform matrix(1.05, 0, 0, 1.05, 0, 0) at 0.3s, so the probe demonstrably measures rather than returning a vacuous null. scale surviving the block while transform is suppressed is base behaviour, not new. passed true, exit 0. Companion artifact: .screenshots/task691-delta/reduced-motion-probe-after.json.",
+            "equivalent": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "AC3 / R4",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "the comment block above .card:hover .cardTitle, and the module header's census of `group` consumers",
+        "diffHunks": [
+          "MantineListingCardPattern.module.css:221-237 — the false 'the compiled utility carries no guard' claim replaced with the compiler-confirmed opposite, citing the retained recompilation artifact",
+          "MantineListingCardPattern.module.css:119-126 — the header's 'group was removed / its only consumer was the two --text-color sites' census rewritten to record that `group` is RESTORED and that appImageConfig.ts:66 was the missed consumer"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "comment at the former :221-226",
+          "module header `group` census"
+        ],
+        "notApplicable": {
+          "stories": "A source comment has no rendered form.",
+          "locales": "Comments are not user-facing strings.",
+          "viewports": "Not width-dependent.",
+          "states": "Not state-dependent.",
+          "phases": "The criterion is about the final file only."
+        }
+      },
+      "evidence": [
+        {
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "command": "grep -n \"group\" src/design-system/mantine/patterns/MantineListingCardPattern.module.css && sed -n '115,126p;221,237p' src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "observable": "No comment now claims the compiled utility carries no guard; the replacement states that it DOES carry @media (hover: hover), names the retained artifact and cites tailwindcss's own hover variant. The header no longer asserts that the two --text-color sites were `group`'s only consumer, and explicitly records the restoration and the missed appImageConfig.ts:66 consumer.",
+          "freshness": "final worktree file, 20:58:05, verified after round 2",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "comment at the former :221-226",
+              "module header `group` census"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The round-2 comment rewrite happened after the Storybook build the captures used (18:30:24 vs 20:58:05), so every rendered artifact in this ledger is a pre-final artifact and, per agent-contract 9a, missing evidence.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+          "result": "RESOLVED BY MEASUREMENT, not by argument. The reviewer stripped every /* */ block from both HEAD's version and the final working file and diffed the results: the entire declaration-level delta is exactly the Task-691 migration set already reviewed — .listRow gap through .overlayLabel border-width: 2px — with no declaration added, removed or altered by the round-2 edit. A comment-only change cannot move a computed value, so the captures remain final-equivalent. Command: `perl -0777 -pe 's{/\\*.*?\\*/}{}gs'` over `git show HEAD:<path>` and the worktree file, then diff."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Comment accuracy is a record criterion; the generated-rule comparison is carried by AC3 / R3."
+      }
+    },
+    {
+      "id": "AC4 / R5",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "@layer utilities wrapper on .card:hover .cardTitle (OQ1 disposition)",
+        "diffHunks": [
+          "MantineListingCardPattern.module.css:239-243 — `@layer utilities` wrapper, with the measurement that produced the decision recorded in the adjacent comment"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "OQ1 layer decision",
+          "contesting declaration for --text-color"
+        ],
+        "notApplicable": {
+          "stories": "A cascade-layer disposition is a source property.",
+          "locales": "Not locale-dependent.",
+          "viewports": "Not width-dependent.",
+          "states": "Not state-dependent.",
+          "phases": "The decision is about the final file; its baseline is AC3 / R3's envelope."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/sessions/2026-08-12-task691R-remediation.md",
+          "command": "grep -rn \"\\-\\-text-color\" src",
+          "observable": "§4.1 records the I0 re-derivation: exactly one writer of --text-color in src (this rule), @mantine/core Text.css:9 reads it unconditionally with no fallback, and neither .cardTitle Text passes a `c` prop, so no inline value competes. The decision is reported with its evidence and the absence of a contender is named, as AC4 requires.",
+          "freshness": "re-derived at I0 by the executor, re-read by the reviewer against the final file",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "OQ1 layer decision",
+              "contesting declaration for --text-color"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "OQ2 — the rule should also carry `and (pointer: fine)` to match the file's other :hover rules, and shipping without it leaves docs/critical-flow-registry.md:57 describing a behaviour the code no longer has.",
+          "kind": "EXECUTED",
+          "path": "docs/critical-flow-registry.md",
+          "result": "NO CONFLICT, BUT AN OPEN OWNER QUESTION. The registry's two-condition phrasing still describes the module's pre-existing elevation and image-zoom rules, which retain `(hover: hover) and (pointer: fine)` unchanged at :56-69. For the new title-colour rule, `(hover: hover)` alone reproduces the compiled baseline exactly, and on a coarse pointer it is false anyway — measured, both phases, by the coarse-pointer probe. The kickoff reserved the two-condition form as OQ2 for the owner; leaving it unimplemented is compliance, not a gap."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The layer field itself is compared inside AC3 / R3's envelope; this row certifies that the disposition was measured and reported."
+      }
+    },
+    {
+      "id": "AC5 / R6",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-12-task691R/capture-computed-styles.mjs",
+        "symbol": "STORIES x LOCALES x VIEWPORTS x STATES matrix, one phase per invocation",
+        "diffHunks": [
+          ".screenshots/task691-delta/capture-computed-styles.mjs — parameterised from the superseded 4-tuple comparator to 2 stories x 4 locales x 5 viewports x 2 states = 80 tuples per phase",
+          ".screenshots/task691-delta/capture-computed-styles.mjs:49-57 — round-2 hardening: unrecognised flags exit 2 instead of silently no-opping"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "hovered card root `transform` and `box-shadow` — grid layout",
+          "hovered card root `transform` and `box-shadow` — list/horizontal layout",
+          "hovered card title `color` — grid layout",
+          "hovered card title `color` — list/horizontal layout",
+          "hovered card image `scale` and `transform` — grid layout",
+          "hovered card image `scale` and `transform` — list/horizontal layout",
+          "per-property computed-style comparison of the migrated structural sites"
+        ],
+        "stories": [
+          "mantine-primitives-listingcard--default",
+          "patterns-mantine-listingcardpattern--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "768",
+          "1024"
+        ],
+        "states": [
+          "rest",
+          "hover-grid",
+          "hover-list"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/diff-240-result.json",
+          "command": "node .screenshots/task691-delta/diff-computed-styles-240.mjs",
+          "observable": "expectedPerPhase 120, beforeTupleCount 120, afterTupleCount 120, commonTupleCount 120, missingFromBefore [], missingFromAfter [], erroredTuples [], totalDiffCount 0, tuplesWithDiffs 0, movedPropertyNames [], assertionPassed true. Unlike the superseded 160 diff, this script sets a non-zero exit on any moved property, errored tuple, missing tuple or short phase, so its exit status is itself the assertion; the retained transcript records EXIT_CODE=0.",
+          "freshness": "AFTER phase captured from a Storybook build made 2026-08-13 06:16:51, later than the final source write (MantineListingCardPattern.module.css, 2026-08-12 20:58:05), so the artifact is current for the reviewed diff rather than final-equivalent by inference; BEFORE phase from the base-revision worktree at 2ad067bc1.",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "hovered card root `transform` and `box-shadow` — grid layout",
+              "hovered card root `transform` and `box-shadow` — list/horizontal layout",
+              "hovered card title `color` — grid layout",
+              "hovered card title `color` — list/horizontal layout",
+              "hovered card image `scale` and `transform` — grid layout",
+              "hovered card image `scale` and `transform` — list/horizontal layout",
+              "per-property computed-style comparison of the migrated structural sites"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover-grid",
+              "hover-list"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-before-240.json",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs --mode=before --static=C:/Claude_Code_Projects/lero-al-base/storybook-static",
+          "observable": "120/120 tuples, missing [], staticDir C:\\Claude_Code_Projects\\lero-al-base\\storybook-static — 40 tuples per state across rest / hover-grid / hover-list. At listingcard|en|1024|hover-list the list card root reads transform matrix(1, 0, 0, 1, 0, -2) with the TailAdmin elevation shadow, title rgb(236, 84, 71), image transform matrix(1.05, 0, 0, 1.05, 0, 0) and scale none; the grid root is inert at none. hover-grid is the exact mirror. The base revision's list-card hover envelope, measured for the first time.",
+          "freshness": "AFTER phase captured from a Storybook build made 2026-08-13 06:16:51, later than the final source write (MantineListingCardPattern.module.css, 2026-08-12 20:58:05), so the artifact is current for the reviewed diff rather than final-equivalent by inference; BEFORE phase from the base-revision worktree at 2ad067bc1.",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "hovered card root `transform` and `box-shadow` — grid layout",
+              "hovered card root `transform` and `box-shadow` — list/horizontal layout",
+              "hovered card title `color` — grid layout",
+              "hovered card title `color` — list/horizontal layout",
+              "hovered card image `scale` and `transform` — grid layout",
+              "hovered card image `scale` and `transform` — list/horizontal layout",
+              "per-property computed-style comparison of the migrated structural sites"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover-grid",
+              "hover-list"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-240.json",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs --mode=after",
+          "observable": "120/120 tuples, missing [], staticDir the post-fix worktree build. Every value above is reproduced field for field, including the list card's scale none against the grid card's 1.05.",
+          "freshness": "AFTER phase captured from a Storybook build made 2026-08-13 06:16:51, later than the final source write (MantineListingCardPattern.module.css, 2026-08-12 20:58:05), so the artifact is current for the reviewed diff rather than final-equivalent by inference; BEFORE phase from the base-revision worktree at 2ad067bc1.",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "hovered card root `transform` and `box-shadow` — grid layout",
+              "hovered card root `transform` and `box-shadow` — list/horizontal layout",
+              "hovered card title `color` — grid layout",
+              "hovered card title `color` — list/horizontal layout",
+              "hovered card image `scale` and `transform` — grid layout",
+              "hovered card image `scale` and `transform` — list/horizontal layout",
+              "per-property computed-style comparison of the migrated structural sites"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover-grid",
+              "hover-list"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The hover-list state may not hover the list card at all — it could be measuring that card at rest and labelling it hover, which is exactly how the previous round's gap hid.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-240.json",
+          "result": "FALSIFIED by the reviewer's own re-read of both artifacts, independently of the executor's diff. In every hover-list tuple the LIST root carries matrix(1, 0, 0, 1, 0, -2) while the GRID root reads none; in every hover-grid tuple the relation is exactly reversed. A capture that failed to hover, or hovered the wrong node, cannot produce that mirrored asymmetry. 40 tuples per state per phase, and zero found:false across 16740 compared property values."
+        },
+        {
+          "claim": "The 240 diff could be as hollow as the 160 one, which always exited 0 and let its JSON carry the assertion.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/diff-computed-styles-240.mjs",
+          "result": "FALSIFIED by reading it: `failed` is set by totalDiffCount > 0, any errored tuple, any tuple missing from either phase, or either phase shorter than EXPECTED_PER_PHASE, and drives process.exitCode = 1. The retained transcript shows assertionPassed=true with EXIT_CODE=0, so the zero is an assertion result, not a report."
+        },
+        {
+          "claim": "The superseded 160-tuple artifacts still prove the scope.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/diff-160-result.json",
+          "result": "THEY DO NOT, AND ARE NO LONGER CITED AS COVERAGE. They were produced under a two-state matrix that hovers .card nth(0) in both stories and captured neither root's hover transform or box-shadow. They remain in reviewedPaths as the historical record that produced finding F-R; the 240-tuple envelope replaces them for every tuple of this criterion."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A rendered computed-style matrix, not a generated-rule comparison."
+      }
+    },
+    {
+      "id": "AC5 / R7",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-12-task691R/capture-computed-styles.mjs",
+        "symbol": "inPageCapture() — result.imageScaleTransformGrid / imageScaleTransformList",
+        "diffHunks": [
+          ".screenshots/task691-delta/capture-computed-styles.mjs:305-310 — both host <img> elements captured for the CSS `scale` AND `transform` properties, the composition F-A escaped through"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "`scale` in the captured property set — grid card image",
+          "`transform` in the captured property set — grid card image",
+          "`scale` in the captured property set — list/horizontal card image",
+          "`transform` in the captured property set — list/horizontal card image"
+        ],
+        "stories": [
+          "mantine-primitives-listingcard--default",
+          "patterns-mantine-listingcardpattern--default"
+        ],
+        "locales": [
+          "sq",
+          "en",
+          "uk",
+          "it"
+        ],
+        "viewports": [
+          "320",
+          "375",
+          "390",
+          "768",
+          "1024"
+        ],
+        "states": [
+          "rest",
+          "hover-grid",
+          "hover-list"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-240.json",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs --mode=after",
+          "observable": "Both host images carry `scale` and `transform` at every state, and both are now exercised under a hover on their own card. The decisive pair, unmeasurable before this round: at hover-list the list image reads transform matrix(1.05, 0, 0, 1.05, 0, 0) with scale none, while at hover-grid the grid image reads scale 1.05 AND transform matrix(1.05, 0, 0, 1.05, 0, 0). The list composite is measured, not declared.",
+          "freshness": "AFTER phase captured from a Storybook build made 2026-08-13 06:16:51, later than the final source write (MantineListingCardPattern.module.css, 2026-08-12 20:58:05), so the artifact is current for the reviewed diff rather than final-equivalent by inference; BEFORE phase from the base-revision worktree at 2ad067bc1.",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "`scale` in the captured property set — grid card image",
+              "`transform` in the captured property set — grid card image",
+              "`scale` in the captured property set — list/horizontal card image",
+              "`transform` in the captured property set — list/horizontal card image"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover-grid",
+              "hover-list"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-before-240.json",
+          "command": "node .screenshots/task691-delta/capture-computed-styles.mjs --mode=before --static=C:/Claude_Code_Projects/lero-al-base/storybook-static",
+          "observable": "Identical values at the base revision, so the asymmetry between the two layouts is base behaviour and not something 691R introduced.",
+          "freshness": "AFTER phase captured from a Storybook build made 2026-08-13 06:16:51, later than the final source write (MantineListingCardPattern.module.css, 2026-08-12 20:58:05), so the artifact is current for the reviewed diff rather than final-equivalent by inference; BEFORE phase from the base-revision worktree at 2ad067bc1.",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "`scale` in the captured property set — grid card image",
+              "`transform` in the captured property set — grid card image",
+              "`scale` in the captured property set — list/horizontal card image",
+              "`transform` in the captured property set — list/horizontal card image"
+            ],
+            "stories": [
+              "mantine-primitives-listingcard--default",
+              "patterns-mantine-listingcardpattern--default"
+            ],
+            "locales": [
+              "sq",
+              "en",
+              "uk",
+              "it"
+            ],
+            "viewports": [
+              "320",
+              "375",
+              "390",
+              "768",
+              "1024"
+            ],
+            "states": [
+              "rest",
+              "hover-grid",
+              "hover-list"
+            ],
+            "phases": [
+              "before",
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "Carrying `scale` and `transform` in the property set is the same as measuring them.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/computed-after-240.json",
+          "result": "IT IS NOT, AND THAT WAS FINDING F-R's SECOND HALF. Under the superseded matrix the list image's pair was recorded only while that card sat at rest, so it read none/none in every phase and proved nothing. Under hover-list it now reads scale none with transform matrix(1.05, …) — the value the module predicts because listing-thumb declares no hoverClass while .card:hover .imageSection img still applies through styles.imageSection."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A property-set completeness criterion for a rendered capture."
+      }
+    },
+    {
+      "id": "AC6 / R8",
+      "priority": "P0",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": "D36 no-increase stop condition on /[locale] First Load JS",
+        "diffHunks": [
+          "The full 691 + 691R change set: a className token and a CSS-module rewrap, with no JS surface change"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "/[locale] First Load JS",
+          "shared First Load JS",
+          "build exit status"
+        ],
+        "phases": [
+          "before",
+          "after"
+        ],
+        "notApplicable": {
+          "stories": "A build metric is not a rendered story property.",
+          "locales": "The route figure is reported once for the /[locale] segment.",
+          "viewports": "Not width-dependent.",
+          "states": "Not state-dependent."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/i0-build.txt",
+          "command": "npm run build",
+          "observable": "I0, before the F-A/F-B edits: /[locale] 619 kB First Load JS, 184 kB shared, EXIT_CODE=0.",
+          "freshness": "18:27:54, pre-edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "/[locale] First Load JS",
+              "shared First Load JS",
+              "build exit status"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/build-round2.txt",
+          "command": "npm run build",
+          "observable": "Final, after the last module.css write: Compiled successfully in 71s, /[locale] 619 kB First Load JS, 184 kB shared, EXIT_CODE=0. Delta 0 kB, so D36's stop condition is satisfied rather than merely reported.",
+          "freshness": "21:03:15, later than the final source write at 20:58:05 — current for the reviewed diff, which the previous review could not say",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "/[locale] First Load JS",
+              "shared First Load JS",
+              "build exit status"
+            ],
+            "phases": [
+              "after"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The retained final build might predate the last source edit, which would make it stale evidence.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/build-round2.txt",
+          "result": "FALSIFIED by timestamps the reviewer read directly: module.css written 20:58:05, typecheck 21:00:56, build transcript 21:03:15, .next/static/css rewritten 21:02:25. The build is downstream of every source write in both rounds."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A build-metric criterion."
+      }
+    },
+    {
+      "id": "AC7 / R9",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "src/design-system/mantine/patterns/MantineListingCardPattern.module.css",
+        "symbol": ".photoCountList / .photoCountGrid / .overlayCenter / .originalPriceList / .priceMetaRow and their @supports (color: color-mix(in lab, red, red)) pairs",
+        "diffHunks": [
+          "MantineListingCardPattern.module.css — each opacity-modifier site reproduced as a static-fallback declaration plus an @supports-gated color-mix override, in that order, never hand-flattened"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "bg-overlay/60 (photoCountList, photoCountGrid)",
+          "bg-overlay/30 (overlayCenter)",
+          "text-overlay-foreground (photoCountList, photoCountGrid, overlayLabel)",
+          "text-muted-foreground/70 (originalPriceList, priceMetaRow)"
+        ],
+        "phases": [
+          "before"
+        ],
+        "notApplicable": {
+          "stories": "Compiled-CSS equivalence is a compiler property.",
+          "locales": "The utilities carry no locale-dependent value.",
+          "viewports": "No width condition is involved.",
+          "states": "No state condition is involved."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/compiled-before-opacity-candidates.txt",
+          "command": "node .screenshots/task691-delta/compile-opacity-candidates.mjs",
+          "observable": "Base-revision compiled output for every candidate: bg-overlay/60 → color-mix(in srgb, oklch(0 0 0) 60%, transparent) plus the @supports color-mix(in oklab, var(--overlay) 60%, transparent) override; bg-overlay/30 the 30% pair; text-muted-foreground/70 → var(--muted-foreground) static plus the 70% oklab override; and the two unmodified siblings text-overlay-foreground / text-muted-foreground compiling to a single declaration with no @supports. The module reproduces each pair with the same values in the same order, and the siblings correctly take the single-declaration form.",
+          "freshness": "compiled from the base revision on a native win32 host where @tailwindcss/oxide-win32-x64-msvc is present, so @tailwindcss/node's compile() genuinely ran",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "bg-overlay/60 (photoCountList, photoCountGrid)",
+              "bg-overlay/30 (overlayCenter)",
+              "text-overlay-foreground (photoCountList, photoCountGrid, overlayLabel)",
+              "text-muted-foreground/70 (originalPriceList, priceMetaRow)"
+            ],
+            "phases": [
+              "before"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The executor reported 3 candidates against F-J's stated seven, which would be a four-candidate coverage shortfall.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/2026-08-12-task691-mantinelistingcardpattern-detailwind.review-ledger.SUPERSEDED.json",
+          "result": "NOT A SHORTFALL — the two counts count different things, and the reviewer re-derived both. F-J's text reads 'six named D35 overlay utilities plus the text-muted-foreground/70 sibling', i.e. seven physical usage sites; grepping the base revision gives exactly that: bg-overlay/60 x2 + bg-overlay/30 x1 + text-overlay-foreground x3 = 6 overlay sites, plus text-muted-foreground/70 x2. The executor's '3' counts distinct opacity-modifier tokens. All seven sites are covered by the five compiled entries; coverage is complete and the reconciliation is recorded in the session log §8."
+        },
+        {
+          "claim": "The base file contains a fourth distinct opacity-modifier token the census omits.",
+          "kind": "EXECUTED",
+          "path": "src/design-system/mantine/patterns/MantineListingCardPattern.tsx",
+          "result": "CONFIRMED AND CORRECTLY OUT OF SCOPE. `git show 2ad067bc1…:<path> | grep -oE '[a-z-]+/[0-9]+'` also returns bg-status-info/80 — at :39, inside the MantineListingCardOverlay JSDoc, not a live className. The module reproduces nothing for it and CLOSED_OVERLAY_STYLE is explicitly deferred to Task 741 by kickoff §8. Now named in the session log rather than silently absent."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "The compiled before-side is retained as an artifact comparison for a family of unchanged-value utilities; the one migrated rule whose envelope changed is carried by AC3 / R3, which is the single candidate that row names."
+      }
+    },
+    {
+      "id": "AC8 / R10",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-12-task691R/mantine-only-set-diff.mjs",
+        "symbol": "failIdentities() — story|locale|viewport identity sets, diffed as sets per D37",
+        "diffHunks": [
+          ".screenshots/task691-delta/mantine-only-set-diff.mjs — new script; extracts every verdict==='fail' cell identity from both manifests and diffs them, rather than comparing aggregate counts"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "--mantine-only fail-set identities vs Task 733's standing comparator"
+        ],
+        "notApplicable": {
+          "stories": "The criterion is over the whole matrix's fail set, not a named story.",
+          "locales": "Locale is part of each cell identity inside the set, not a dimension of the comparison.",
+          "viewports": "Same — viewport is part of the cell identity.",
+          "states": "The rendered matrix captures rest state only, which is why this row is not evidence for hover-borne behaviour.",
+          "phases": "One authorized run compared against a standing comparator, per AC8."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/mantine-only-set-diff-result.json",
+          "command": "node .screenshots/task691-delta/mantine-only-set-diff.mjs .screenshots/rendered-assert/2026-08-12T18-40/manifest.json",
+          "observable": "comparatorFailCount 18, currentFailCount 18, added [], removed [], setIdentical true. Both summaries read total 1204 / passed 1164 / failed 18 / ambiguousOnly 22, so the compared scopes match. No MantineListingCardPattern or ListingCard cell appears in either fail set.",
+          "freshness": "current manifest 2026-08-12T18-40, produced after the F-A/F-B edits and the post-fix Storybook build at 18:30:24; comparator manifest 2026-08-09T15-13 still on disk and read by the script itself",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "--mantine-only fail-set identities vs Task 733's standing comparator"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The script might be comparing counts and calling it a set diff, which is exactly what D37 forbids.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/mantine-only-set-diff.mjs",
+          "result": "FALSIFIED by reading it. failIdentities() builds a Set of `${cell.story}|${cell.locale}|${cell.viewport}` over every matrix key whose verdict is 'fail', and `added`/`removed` are computed by membership, not by cardinality. Two 18-cell sets with different members would report non-empty added and removed."
+        },
+        {
+          "claim": "This run proves the hover regression is gone.",
+          "kind": "EXECUTED",
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/rendered-assert/2026-08-12T18-40/manifest.json",
+          "result": "IT DOES NOT, AND IS NOT USED FOR THAT. The rendered matrix captures rest state only, so a :hover rule is structurally unobservable in it — the previous review's F-K said so explicitly. Hover evidence in this ledger comes from AC2 / R2's capture and AC3 / R3's probes; this row proves only that no rendered cell moved."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "A rendered fail-set comparison."
+      }
+    },
+    {
+      "id": "AC9 / R11",
+      "priority": "P2",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts",
+        "symbol": "retained transcripts for the four gates and both smoke suites",
+        "diffHunks": [
+          ".screenshots/task691-delta/transcripts/ — new retained transcripts, each ending in its real EXIT_CODE, closing the previous review's F-L evidence-retention defect"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "check:css-vars",
+          "check:design-tokens",
+          "check:stories",
+          "check:mojibake",
+          "check:file-integrity",
+          "vitest smoke suites",
+          "vitest full"
+        ],
+        "notApplicable": {
+          "stories": "Gate transcripts are command artifacts.",
+          "locales": "Not locale-dependent.",
+          "viewports": "Not width-dependent.",
+          "states": "Not state-dependent.",
+          "phases": "Post-change gates only, per AC9."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/check-css-vars-final.txt",
+          "command": "npm run check:css-vars",
+          "observable": "0 violations, 0 in-class dynamic sites, EXIT_CODE=0. The I0 run is retained separately at exit 1 and is a stale-build guard firing against a pre-edit build, not a violation — retained with its real status rather than suppressed.",
+          "freshness": "18:43, after the post-edit build",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:css-vars"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/check-design-tokens.txt",
+          "command": "npm run check:design-tokens",
+          "observable": "438 files scanned; 0 raw style-value violations, 0 stale markers, 0 missing-reason errors, EXIT_CODE=0.",
+          "freshness": "post-edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:design-tokens"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/check-stories.txt",
+          "command": "npm run check:stories",
+          "observable": "127 files checked, 0 violations, EXIT_CODE=0.",
+          "freshness": "post-edit",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:stories"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/check-mojibake-round2.txt",
+          "command": "npm run check:mojibake",
+          "observable": "0 artifacts in 2177 files, EXIT_CODE=0.",
+          "freshness": "21:03:24, after the final module.css write",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:mojibake"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/check-file-integrity-round2.txt",
+          "command": "npm run check:file-integrity",
+          "observable": "all 7 changed/untracked files clean — NUL bytes, BOM, JSON parse, node --check, truncation — EXIT_CODE=0. The count independently corroborates the corrected 7-entry porcelain.",
+          "freshness": "21:03:22, after the final module.css write",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "check:file-integrity"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/vitest-smoke-two.txt",
+          "command": "npx vitest run (both smoke suites)",
+          "observable": "2 files, 17/17 tests passed, EXIT_CODE=0.",
+          "freshness": "post-edit, 20:35 local",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "vitest smoke suites"
+            ]
+          }
+        },
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/vitest-full.txt",
+          "command": "npx vitest run",
+          "observable": "80 files, 1347/1347 tests passed, EXIT_CODE=0.",
+          "freshness": "post-edit, 20:36 local",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "vitest full"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "check:homepage-grid was not re-run, so a gate is missing.",
+          "kind": "EXECUTED",
+          "path": "tasks/Sprints/Sprint_46_kickoff_prompt_Task_691R_MantineListingCardPattern_Remediation.md",
+          "result": "CORRECT BEHAVIOUR, NOT A GAP. Kickoff §3.6 and the previous review's F-L both state that check:homepage-grid already retained all three runs with the correct D37 classification and must be left alone. Re-running it would have overwritten a correctly classified UNATTRIBUTED artifact."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Evidence-retention criterion."
+      }
+    },
+    {
+      "id": "AC10 / R12",
+      "priority": "P1",
+      "status": "VERIFIED",
+      "findingIds": [],
+      "finalSubject": {
+        "path": "docs/sessions/2026-08-12-task691R-remediation.md",
+        "symbol": "session log, backlog state row, typecheck gate",
+        "diffHunks": [
+          "docs/sessions/2026-08-12-task691R-remediation.md — new session log at the §7 path, with a Files Changed table and both rounds' evidence",
+          "docs/backlog.md — Last Session line and the 691 / 691R state row rewritten, 2 insertions / 2 deletions"
+        ]
+      },
+      "requiredScope": {
+        "subjects": [
+          "typecheck exit status",
+          "docs/backlog.md line count",
+          "session log at the kickoff §7 path",
+          "Files Changed vs real porcelain"
+        ],
+        "notApplicable": {
+          "stories": "Record and gate criterion.",
+          "locales": "Not locale-dependent.",
+          "viewports": "Not width-dependent.",
+          "states": "Not state-dependent.",
+          "phases": "Final state only."
+        }
+      },
+      "evidence": [
+        {
+          "path": "docs/reviews/artifacts/2026-08-12-task691R/transcripts/typecheck-round2.txt",
+          "command": "npm run typecheck",
+          "observable": "tsc --noEmit, EXIT_CODE=0, run at 21:00:56 — after the final module.css write.",
+          "freshness": "post-round-2",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "typecheck exit status"
+            ]
+          }
+        },
+        {
+          "path": "docs/backlog.md",
+          "command": "wc -l docs/backlog.md",
+          "observable": "80 physical lines — at the hard limit, not over it. The 691 / 691R row carries concise current state and points at the session log for detail, with no multi-line task report appended.",
+          "freshness": "re-counted by the reviewer after round 2",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "docs/backlog.md line count"
+            ]
+          }
+        },
+        {
+          "path": "docs/sessions/2026-08-12-task691R-remediation.md",
+          "command": "git status --porcelain",
+          "observable": "The log exists at the kickoff §7 path, and §3 now records the real final porcelain of 7 entries — the 5 start entries plus ` M docs/backlog.md` and `?? docs/sessions/2026-08-12-task691R-remediation.md`, both classified OWNED — matching the §12 Files Changed table and the reviewer's own status run.",
+          "freshness": "post-round-2, corrected from the round-1 claim of 'same 5 entries'",
+          "coverageRole": "COVERS",
+          "scope": {
+            "subjects": [
+              "session log at the kickoff §7 path",
+              "Files Changed vs real porcelain"
+            ]
+          }
+        }
+      ],
+      "coverageGaps": [],
+      "counterChecks": [
+        {
+          "claim": "The session log's Files Changed table lists .screenshots/** artifacts that never appear in git status, so the table and the porcelain contradict each other.",
+          "kind": "EXECUTED",
+          "path": ".gitignore",
+          "result": "RECONCILED. `git check-ignore -v` resolves .screenshots/task691-delta/** to .gitignore:55 `/.screenshots/`, so those artifacts are retained evidence outside version control by design and cannot appear in porcelain. The session log states this at §3 rather than leaving the reader to infer it."
+        }
+      ],
+      "semanticCheck": {
+        "mode": "NOT_APPLICABLE",
+        "reason": "Record and gate criterion."
+      }
+    }
+  ],
+  "findings": [],
+  "handoff": {
+    "commitPush": "ALLOWED"
+  },
+  "attestation": {
+    "lowestEvidenceRequirement": "AC8 / R10",
+    "reviewer": "Opus"
+  }
+}

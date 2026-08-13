@@ -163,19 +163,20 @@ export function MantineListingCardPattern({
           styles.card,
           styles.listRow,
           isPremium && styles.premium,
-          'group gap-3 overflow-hidden',
+          'group', // 691R — restores the group-hover:scale-105 ancestor consumed via AppImage's `hoverClass` (F-A)
+          'overflow-hidden', // Task 691 — D34-loses to Card's own unlayered overflow:hidden, see module header
           isArchived && 'grayscale opacity-60',
         )}
         style={{ cursor: onClick ? 'pointer' : undefined }}
       >
         <Box
-          className={cn(styles.imageSection, 'relative w-32 shrink-0 sm:w-44 self-stretch min-h-20 overflow-hidden bg-muted')}
+          className={cn(styles.imageSection, styles.listImage)}
           onClick={() => onClick?.(data.id)}
         >
           {image}
 
           {badges && badges.length > 0 && (
-            <Box className="absolute top-2 left-2 flex flex-col gap-1">
+            <Box className={styles.badgesList}>
               {badges.map(b => (
                 <Badge key={b.label} variant="filled" color={b.color}>
                   {b.label}
@@ -185,14 +186,14 @@ export function MantineListingCardPattern({
           )}
 
           {!!photoCount && photoCount > 0 && (
-            <Group gap={4} className="absolute bottom-2 left-2 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
-              <Camera className="h-3 w-3" />
+            <Group gap={4} className={styles.photoCountList}>
+              <Camera className={styles.cardIcon} />
               {photoCount}
             </Group>
           )}
         </Box>
 
-        <Stack justify="space-between" gap={0} py="sm" pr="sm" className="flex-1 min-w-0" onClick={() => onClick?.(data.id)}>
+        <Stack justify="space-between" gap={0} py="sm" pr="sm" className={styles.infoColumn} onClick={() => onClick?.(data.id)}>
           <Box>
             <Group justify="space-between" align="flex-start" wrap="nowrap" gap={4} mb={4}>
               {typeLabel && (
@@ -202,12 +203,12 @@ export function MantineListingCardPattern({
               )}
               {favorite}
             </Group>
-            <Text component="h3" fw={600} size="sm" lineClamp={2} className="leading-snug group-hover:[--text-color:var(--primary)] transition-colors">
+            <Text component="h3" fw={600} size="sm" lineClamp={2} className={cn(styles.cardTitle, 'leading-snug')}>
               {data.title}
             </Text>
           </Box>
           <Box>
-            <Box className="w-full mt-2">
+            <Box className={styles.priceWrapper}>
               <Group justify="space-between" align="baseline" wrap="wrap" gap="0.125rem 0.75rem">
                 <Group align="baseline" wrap="wrap" gap="xs">
                   <Text component="span" size="md" fw={700} c="brand" style={{ whiteSpace: 'nowrap' }}>
@@ -226,13 +227,13 @@ export function MantineListingCardPattern({
                 )}
               </Group>
               {originalPriceStr && (
-                <Box component="span" className="text-2xs text-muted-foreground/70 leading-tight">
+                <Box component="span" className={styles.originalPriceList}>
                   {originalPriceStr}
                 </Box>
               )}
             </Box>
             {features && features.length > 0 && (
-              <Group gap="0.25rem 0.75rem" wrap="wrap" mt={6} className="text-xs text-muted-foreground">
+              <Group gap="0.25rem 0.75rem" wrap="wrap" mt={6} className={styles.metaRow}>
                 {features.map((f, i) => (
                   <Group key={i} component="span" gap={4} wrap="nowrap">
                     {f.icon}
@@ -265,11 +266,11 @@ export function MantineListingCardPattern({
               className would be silently defeated) reproducing the same asymmetric 4px/8px
               row/column gap via the CSS `gap` shorthand's two-value form.
             */}
-            <Group wrap="wrap" gap="0.25rem 0.5rem" mt={4} className="text-xs text-muted-foreground">
+            <Group wrap="wrap" gap="0.25rem 0.5rem" mt={4} className={styles.metaRow}>
               {data.location && (
-                <Group component="span" gap={4} wrap="nowrap" className="min-w-0 max-w-full shrink-0">
-                  <MapPin className="h-3 w-3 shrink-0" />
-                  <Text component="span" inherit truncate className="min-w-0">
+                <Group component="span" gap={4} wrap="nowrap" className={styles.locationRow}>
+                  <MapPin className={styles.locationIcon} />
+                  <Text component="span" inherit truncate className={styles.locationText}>
                     {data.location}
                   </Text>
                 </Group>
@@ -289,8 +290,10 @@ export function MantineListingCardPattern({
       withBorder
       className={cn(
         styles.card,
+        styles.cardGrid,
         isPremium && styles.premium,
-        'group flex h-full flex-col',
+        'group', // 691R — restores the group-hover:scale-105 ancestor consumed via AppImage's `hoverClass` (F-A)
+        'flex flex-col', // Task 691 — D34-loses to Card's own unlayered display:flex/flex-direction:column, see module header
         isArchived && 'grayscale opacity-60',
       )}
       style={{ cursor: onClick ? 'pointer' : undefined }}
@@ -299,7 +302,7 @@ export function MantineListingCardPattern({
         {image}
 
         {badges && badges.length > 0 && (
-          <Box className="absolute top-2 left-2 flex flex-wrap gap-1">
+          <Box className={styles.badgesGrid}>
             {badges.map(b => (
               <Badge key={b.label} variant="filled" color={b.color}>
                 {b.label}
@@ -309,19 +312,16 @@ export function MantineListingCardPattern({
         )}
 
         {overlay && (
-          <Center pos="absolute" inset={0} className="bg-overlay/30">
-            <Box component="span" className={cn(
-              'text-overlay-foreground font-bold text-sm px-3 py-1.5 rounded-xl rotate-[-8deg] border-2',
-              overlay.className,
-            )}>
+          <Center pos="absolute" inset={0} className={styles.overlayCenter}>
+            <Box component="span" className={cn(styles.overlayLabel, overlay.className)}>
               {overlay.label}
             </Box>
           </Center>
         )}
 
         {!!photoCount && photoCount > 0 && (
-          <Group gap={4} className="absolute bottom-2 right-2 bg-overlay/60 text-overlay-foreground text-xs px-2 py-0.5 rounded-full">
-            <Camera className="h-3 w-3" />
+          <Group gap={4} className={styles.photoCountGrid}>
+            <Camera className={styles.cardIcon} />
             {photoCount}
           </Group>
         )}
@@ -335,17 +335,17 @@ export function MantineListingCardPattern({
             {typeLabel}
           </Text>
         )}
-        <Text component="h3" fw={600} size="sm" lineClamp={2} className="leading-snug group-hover:[--text-color:var(--primary)] transition-colors">
+        <Text component="h3" fw={600} size="sm" lineClamp={2} className={cn(styles.cardTitle, 'leading-snug')}>
           {data.title}
         </Text>
         <Group gap={4} wrap="nowrap">
-          <MapPin className="h-3 w-3 shrink-0 text-muted-foreground" />
-          <Text size="xs" c="dimmed" truncate className="min-w-0">
+          <MapPin className={styles.locationIconGrid} />
+          <Text size="xs" c="dimmed" truncate className={styles.locationText}>
             {data.location}
           </Text>
         </Group>
         {features && features.length > 0 && (
-          <Group gap="sm" wrap="wrap" className="text-xs text-muted-foreground border-t pt-2">
+          <Group gap="sm" wrap="wrap" className={styles.metaRowBordered}>
             {features.map((f, i) => (
               <Group key={i} component="span" gap={4} wrap="nowrap">
                 {f.icon}
@@ -369,10 +369,10 @@ export function MantineListingCardPattern({
           </Text>
         )}
         {(originalPriceStr || pricePerSqmStr) && (
-          <Group justify="space-between" gap={8} className="text-2xs text-muted-foreground/70">
+          <Group justify="space-between" gap={8} className={styles.priceMetaRow}>
             <Box component="span">{originalPriceStr}</Box>
             {pricePerSqmStr && (
-              <Box component="span" className="ml-auto whitespace-nowrap">{pricePerSqmStr}</Box>
+              <Box component="span" className={styles.priceMetaAuto}>{pricePerSqmStr}</Box>
             )}
           </Group>
         )}

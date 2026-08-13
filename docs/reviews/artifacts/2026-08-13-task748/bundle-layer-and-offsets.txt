@@ -1,0 +1,18 @@
+bundle: .next/static/css/fe50ab4dfb399a68.css (final build, content-hashed - see README on hash volatility)
+offset 9497 braceDepth 0       @layer utilities{
+offset 43977 braceDepth 1      .text-destructive
+offset 44085 braceDepth 1      .text-foreground
+offset 70481 braceDepth 2      .hover\:text-foreground:hover
+offset 66652 braceDepth 2      .hover\:bg-muted:hover
+NOT FOUND                      .text-overlay-foreground
+
+rule bodies:
+  .text-destructive{color:var(--destructive)}
+  .hover\:text-foreground:hover{color:var(--foreground)}
+  .hover\:bg-muted:hover{background-color:var(--muted)}
+
+surviving overlay utilities anywhere in .next/static/css:
+  fe50ab4dfb399a68.css :: .bg-overlay{background-color:var(--overlay)}
+  fe50ab4dfb399a68.css :: .bg-overlay\/95{background-color:#000000f2}
+  fe50ab4dfb399a68.css :: .bg-overlay\/95{background-color:color-mix(in oklab,var(--overlay) 95%,transparent)}
+  count=3

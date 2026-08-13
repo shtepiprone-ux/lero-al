@@ -1,0 +1,6 @@
+$ git --no-optional-locks diff src/app/globals.css
+(no output — the diff is empty; AC6/R6 holds)
+EXIT_CODE=0
+
+$ git --no-optional-locks status --porcelain -- src/app/globals.css
+(no output — the file is not modified in the worktree at all)

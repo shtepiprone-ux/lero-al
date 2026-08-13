@@ -1,0 +1,30 @@
+$ node docs/reviews/artifacts/2026-08-13-task748/cascade-repro.mjs \
+    --chromium /opt/pw-browsers/chromium-1194/chrome-linux/chrome
+(reviewer's Linux container, Playwright Chromium build 1194, 2026-08-13)
+
+OK    F-A   fa-before    rest  color             expected oklch(0.58 0.22 27)    actual oklch(0.58 0.22 27)
+OK    F-A   fa-after     rest  color             expected oklab(1 0 0 / 0.7)     actual oklab(1 0 0 / 0.7)
+OK    F-B   fb-before    rest  color             expected oklch(1 0 0)           actual oklch(1 0 0)
+OK    F-B   fb-after     rest  color             expected oklch(1 0 0)           actual oklch(1 0 0)
+OK    F-B   fb-before    hover color             expected oklch(0.15 0 0)        actual oklch(0.15 0 0)
+OK    F-B   fb-after     hover color             expected oklch(1 0 0)           actual oklch(1 0 0)
+OK    F-B   fb-before    hover background-color  expected oklab(0 0 0 / 0.7)     actual oklab(0 0 0 / 0.7)
+OK    F-B   fb-after     hover background-color  expected oklab(0 0 0 / 0.7)     actual oklab(0 0 0 / 0.7)
+OK    F-A   fa-before    hover color             expected oklch(0.58 0.22 27)    actual oklch(0.58 0.22 27)
+OK    F-A   fa-after     hover color             expected oklab(1 0 0 / 0.7)     actual oklab(1 0 0 / 0.7)
+OK    ctrl  ctrl-before  rest  color             expected oklab(1 0 0 / 0.7)     actual oklab(1 0 0 / 0.7)
+OK    ctrl  ctrl-after   rest  color             expected oklab(1 0 0 / 0.7)     actual oklab(1 0 0 / 0.7)
+OK    ctrl  ctrl-before  hover color             expected oklab(1 0 0 / 0.7)     actual oklab(1 0 0 / 0.7)
+OK    ctrl  ctrl-after   hover color             expected oklab(1 0 0 / 0.7)     actual oklab(1 0 0 / 0.7)
+
+cells: 14, failures: 0
+
+F-A  PerfDevOverlay over-budget row: red BEFORE, 70% white AFTER  -> warning colour lost.
+     Measured in both rest and hover: these rows carry no hover rule on either side,
+     so the delta is state-independent.
+F-B  ListingGallery photo-count Button hovered text: --foreground BEFORE,
+     --overlay-foreground AFTER -> the utility was a hover-state D34 LOSER and
+     the unlayered module rule promotes it. Background is unchanged either way.
+ctrl A site where twMerge was doing no work: identical before and after, both states.
+CASCADE-REPRO: PASS (the recorded deltas reproduce exactly)
+EXIT_CODE=0

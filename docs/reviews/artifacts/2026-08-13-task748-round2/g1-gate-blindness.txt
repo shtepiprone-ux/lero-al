@@ -1,0 +1,24 @@
+PROOF G1 - the RR4 regression gate cannot fail on the three sites it exists to protect.
+
+Method: the submitted harness, byte-identical except that the RR1 fix is REVERTED in the
+two E*b after-side expressions (module class unconditionally present again = finding F-A's
+exact state). A gate that protects RR1 must redden.
+
+$ node docs/reviews/artifacts/2026-08-13-task748-round2/g1-gate-blindness-probe.mjs
+>> DELTA  E6b PerfDevOverlay.tsx priority row (priorityOver=true)
+     before: text-destructive font-bold
+     after : Component_metricRow__h4sh text-destructive font-bold
+     !! OVERLAY DECLARATION ADDED (twMerge had deleted the utility before)
+--
+>> DELTA  E7b PerfDevOverlay.tsx predictive row (predictiveOver=true)
+     before: text-destructive font-bold
+     after : Component_metricRow__h4sh text-destructive font-bold
+     !! OVERLAY DECLARATION ADDED (twMerge had deleted the utility before)
+
+Elements checked: 19, moved: 3, unexpected (not already known/fixed): 0
+PASS: only the already-known, already-addressed F-A/F-B sites show a moved declaration set (expected, RR1/RR2 fixed them explicitly at the CSS-module level, not by restoring the deleted-utility className behavior).
+EXIT_CODE=0
+
+VERDICT: a full RR1 regression is reported as DELTA and then forgiven by the id-keyed
+whitelist; unexpectedMoves stays 0 and the gate exits 0. The whitelist must key on the
+EXPECTED DELTA SIGNATURE, not the site id.

@@ -1,0 +1,95 @@
+Compiled before-side, base d3ffd6d6c51d9e968a47aabaaff46dcd69055a0f, input src/app/globals.css
+
+=== text-overlay-foreground/70  (PerfDevOverlay.tsx:31,56,59,74,79) ===
+  .text-overlay-foreground\/70 {
+    color: color-mix(in srgb, oklch(1 0 0) 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--overlay-foreground) 70%, transparent);
+    }
+  }
+
+=== text-overlay-foreground  (PerfDevOverlay.tsx:46 · ListingGallery.tsx:107,120 · ImageUpload.tsx:164 · MantineListingGalleryPattern.tsx:57) ===
+  .text-overlay-foreground {
+    color: var(--overlay-foreground);
+  }
+
+=== bg-overlay/60  (ListingGallery.tsx:120 · ImageUpload.tsx:164 · MantineListingGalleryPattern.tsx:57,80) ===
+  .bg-overlay\/60 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
+    }
+  }
+
+=== bg-overlay/50  (ListingGallery.tsx:107 · ImageUpload.tsx:114) ===
+  .bg-overlay\/50 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 50%, transparent);
+    }
+  }
+
+=== bg-overlay/85  (PerfDevOverlay.tsx:46) ===
+  .bg-overlay\/85 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 85%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 85%, transparent);
+    }
+  }
+
+=== bg-overlay/70  (ListingGallery.tsx:120) ===
+  .bg-overlay\/70 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 70%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 70%, transparent);
+    }
+  }
+
+=== bg-overlay/30  (AdminUserAvatar.tsx:169) ===
+  .bg-overlay\/30 {
+    background-color: color-mix(in srgb, oklch(0 0 0) 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--overlay) 30%, transparent);
+    }
+  }
+
+=== text-overlay-foreground/80  (LightboxView.tsx:87) ===
+  .text-overlay-foreground\/80 {
+    color: color-mix(in srgb, oklch(1 0 0) 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--overlay-foreground) 80%, transparent);
+    }
+  }
+
+=== text-overlay-foreground/60  (PerfDevOverlay.tsx:86) ===
+  .text-overlay-foreground\/60 {
+    color: color-mix(in srgb, oklch(1 0 0) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--overlay-foreground) 60%, transparent);
+    }
+  }
+
+=== text-overlay-foreground/50  (PerfDevOverlay.tsx:50) ===
+  .text-overlay-foreground\/50 {
+    color: color-mix(in srgb, oklch(1 0 0) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--overlay-foreground) 50%, transparent);
+    }
+  }
+
+=== text-overlay-foreground/40  (PerfDevOverlay.tsx:81) ===
+  .text-overlay-foreground\/40 {
+    color: color-mix(in srgb, oklch(1 0 0) 40%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--overlay-foreground) 40%, transparent);
+    }
+  }
+
+=== border-overlay-foreground/20  (PerfDevOverlay.tsx:64) ===
+  .border-overlay-foreground\/20 {
+    border-color: color-mix(in srgb, oklch(1 0 0) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--overlay-foreground) 20%, transparent);
+    }
+  }
+

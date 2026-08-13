@@ -18,6 +18,18 @@
  * after the Task 748 change set, on the two sites the task's own 168-cell
  * comparator does not contain.
  *
+ * CORRECTION (reviewer, 2026-08-13, round 2): `--destructive` in the :root block
+ * below is a PLACEHOLDER chosen by this harness, not the project's value. The real
+ * chain is globals.css:411 `--destructive: var(--brand-900)` -> :365
+ * `--brand-900: var(--mantine-color-brand-9)`, which MantineProvider injects at
+ * RUNTIME and which is absent from `.next/static/css` (real value #8E322B). The
+ * F-A finding is a DELTA claim - before != after - and the delta is unaffected by
+ * which concrete red stands in for --destructive. But `oklch(0.58 0.22 27)` must
+ * not be quoted as this project's production destructive colour; it is this file's
+ * own stand-in. A harness page that omits Mantine's runtime variables will render
+ * that row `rgb(0, 0, 0)` (invalid at computed-value time -> UA default), which is
+ * a measurement artefact of the harness, not a rendered value of the app.
+ *
  * Run:  node docs/reviews/artifacts/2026-08-13-task748/cascade-repro.mjs
  *       [--chromium /path/to/chrome]
  * Exit: 0 if every measured value matches the recorded expectation below,

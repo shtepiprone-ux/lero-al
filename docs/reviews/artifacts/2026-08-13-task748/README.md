@@ -39,3 +39,14 @@ the same Windows-binary/Linux-bridge mismatch that blocks `vitest` here. The two
 `.SUPERSEDED.json` failures in that run are downstream of 691R being judged invalid in it. This is
 an environment limitation of the review run, not a repo regression, and the owner should re-run the
 repo-wide gate natively before landing anything.
+
+## Correction, round 2 (2026-08-13)
+
+`cascade-repro.mjs` defines `--destructive: oklch(.58 .22 27)` in its own `:root`. That is a
+**placeholder**, not this project's value, and the file now says so. The real chain is
+`globals.css:411 --destructive: var(--brand-900)` -> `:365 --brand-900: var(--mantine-color-brand-9)`,
+injected by MantineProvider at runtime and **absent from `.next/static/css`** (real value `#8E322B`).
+F-A is a delta claim and the delta stands on any stand-in red — but `oklch(0.58 0.22 27)` must not be
+cited as the app's production destructive colour, and a harness page without Mantine's runtime
+variables will report `rgb(0, 0, 0)` for that row, which is an artefact of the harness rather than a
+value the app renders.

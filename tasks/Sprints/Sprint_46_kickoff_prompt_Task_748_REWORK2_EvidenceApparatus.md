@@ -1,7 +1,7 @@
 # Task 748 REWORK 2 — the code is right; the apparatus that proves it is not
 
 **Status: `REWORK` (round 3, narrow).** 695 stays blocked.
-Review of record: `docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.json`
+Review of record: `docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json`
 (`NEEDS REVISION`, gate `PASSED`/0, `commitPush: PROHIBITED`, **1 open P0**, 3 open P1, 4 open P2).
 Round 1 ledger retired to `…-task748-overlay-utility-exit.review-ledger.SUPERSEDED.json`.
 Reviewer evidence: `docs/reviews/artifacts/2026-08-13-task748-round2/` — re-runnable, but **not yet
@@ -173,7 +173,7 @@ wrong. The fresh-clone clause governs. Reviewer's wording error.)
 
 §R3 records the RR2 owner answer as prose with nothing to point at. The owner has confirmed it to
 the reviewer, and
-`docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.json` finding **G6** is
+`docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json` finding **G6** is
 that citation. Reference it from §R3 so the record is self-contained. Nothing else about RR2 changes.
 
 ---

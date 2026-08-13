@@ -44,21 +44,73 @@
  * Fail-closed: exits 1 on any moved property, missing/errored cell, or short phase.
  * `--plant` corrupts the AFTER-side (subject) measurement of one specific cell before comparison —
  * not the expectation — to prove the comparator reddens on a real subject defect.
+ *
+ * REWORK2 fixes (findings G3/G4/G5, all in this apparatus, none in src/):
+ *   - RW3/G3: the two PerfDevOverlay Part B cells measured `rgb(0, 0, 0)` on both sides because
+ *     `.text-destructive{color:var(--destructive)}` chains through `--brand-900` to
+ *     `--mantine-color-brand-9`, which MantineProvider injects at runtime and which a static
+ *     harness page never mounts — so the property was unresolved on both sides and the comparator
+ *     scored that shared fallback as agreement. Fixed two ways: (a) the harness stylesheet now
+ *     defines `--mantine-color-brand-9` itself, from `src/design-system/brand.ts`'s brand[9]
+ *     (`#8E322B`) — the app is light-only (`MantineRootProvider.tsx` — `defaultColorScheme="light"`,
+ *     no dark theme), so this is a static constant, not a placeholder; (b) independently of that,
+ *     every Part B cell now also measures an unstyled control element in the same harness and fails
+ *     closed if the probe's value doesn't differ from it, so an unresolved custom property can never
+ *     again be scored as a match, on this or any future property. `--omit-mantine-vars` disables (a)
+ *     to prove (b) reddens on its own (AC3's "deliberately absent" run).
+ *   - RW4/G4: the Part B `ListingGallery` BEFORE strings are no longer a hand-typed fixture; they
+ *     are computed by calling the real `cn()` (`twMerge(clsx(...))`, same as
+ *     `twmerge-class-resolution-all18.mjs`'s E12 case) against the exact same source expressions,
+ *     so tailwind-merge's own conflict resolution (which deletes `text-foreground`/`hover:bg-muted`
+ *     here) runs for real instead of being asserted.
+ *   - RW5/G5: see the path-resolution block below — no absolute machine-local path remains.
  */
 import { writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { extname, join, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { twMerge } from 'tailwind-merge';
+import { clsx } from 'clsx';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..', '..', '..');
-const BEFORE_STATIC = 'C:/Claude_Code_Projects/lero-al-i0-d3ffd6/storybook-static';
+
+// REWORK2/RW5 (finding G5). Round 1 hardcoded an absolute machine-local path
+// (`C:/Claude_Code_Projects/lero-al-i0-d3ffd6/...`), so this script only ran on the one machine
+// that happened to hold that export at that exact location — not reproducible from a fresh clone.
+// Fixed: resolve the I0 export relative to the repo root (a sibling directory next to this
+// worktree, overridable via LERO_I0_EXPORT_DIR for a differently-placed export), and fail with a
+// clear, actionable message naming the revision to export if it is absent, instead of a bare ENOENT
+// deep inside a static-file server. No absolute path remains in the script.
+const I0_REVISION = 'd3ffd6d6c51d9e968a47aabaaff46dcd69055a0f';
+const I0_EXPORT_DIR = process.env.LERO_I0_EXPORT_DIR
+  ? resolve(process.env.LERO_I0_EXPORT_DIR)
+  : resolve(ROOT, '..', 'lero-al-i0-d3ffd6');
+const BEFORE_STATIC = join(I0_EXPORT_DIR, 'storybook-static');
+const BEFORE_NEXT_CSS_DIR = join(I0_EXPORT_DIR, '.next', 'static', 'css');
 const AFTER_STATIC = join(ROOT, 'storybook-static');
+const AFTER_NEXT_CSS_DIR = join(ROOT, '.next', 'static', 'css');
 const BEFORE_PORT = 6501;
 const AFTER_PORT = 6502;
 const PLANT = process.argv.includes('--plant');
+const OMIT_MANTINE_VARS = process.argv.includes('--omit-mantine-vars');
+
+function requireI0Export() {
+  if (existsSync(BEFORE_STATIC) && existsSync(BEFORE_NEXT_CSS_DIR)) return;
+  console.error(`I0 export not found at ${I0_EXPORT_DIR}`);
+  console.error(`This comparator needs a clean, already-built export of revision ${I0_REVISION}`);
+  console.error('(both storybook-static/ and .next/static/css/ populated), because BEFORE is the');
+  console.error('pre-migration tree and this worktree cannot hold two builds of two revisions at');
+  console.error('once. Create it with:');
+  console.error(`  git archive ${I0_REVISION} | tar -x -C <target-dir>`);
+  console.error('  cd <target-dir> && npm ci && npm run build-storybook && npm run build');
+  console.error('...then either place it at a sibling directory named lero-al-i0-d3ffd6 next to');
+  console.error('this repo root, or point LERO_I0_EXPORT_DIR at wherever you built it.');
+  process.exit(1);
+}
 
 const LOCALES = ['sq', 'en', 'uk', 'it'];
 const VIEWPORTS = [320, 375, 390, 480, 560, 680, 768, 810, 960, 1024, 1200, 1440, 1920, 2560];
@@ -175,32 +227,60 @@ async function capturePartACell(beforePage, afterPage, site, locale, viewport) {
 }
 
 // ── PART B: witnesses (no story — harness page technique) ──────────────────
-// className strings verified byte-identical to the real component's output via
-// twmerge-class-resolution-all18.mjs (E6b/E7b priorityOver=true/predictiveOver=true; E12 rest+hover).
+// REWORK2/RW4 (finding G4): these className strings are no longer a typed fixture ASSERTED as
+// byte-identical to twmerge-class-resolution-all18.mjs's output — they ARE that output, computed
+// right here with the exact same `cn()` = `twMerge(clsx(...))` against the exact same source
+// expressions (E6b/E7b priorityOver=true/predictiveOver=true; E12 rest+hover). Round 1 hand-typed
+// the ListingGallery BEFORE fixture verbatim from the source JSX; real tailwind-merge deletes
+// `text-foreground` and `hover:bg-muted` from it (both lose to `.text-overlay-foreground`/
+// `hover:bg-overlay/70` in the same conflict groups) — see
+// docs/reviews/artifacts/2026-08-13-task748-round2/g4-fixture-vs-real-classlist.mjs. Computing it
+// here instead of hand-typing it removes that gap.
+const cn = (...a) => twMerge(clsx(a));
+const MODULE_PLACEHOLDER = '__PHOTO_COUNT_MODULE_HASH__';
+const GHOST = 'text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50';
+const PHOTO_COUNT_BEFORE = cn(GHOST, 'gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70');
+const PHOTO_COUNT_AFTER_TEMPLATE = cn(GHOST, `${MODULE_PLACEHOLDER} gap-1.5 text-sm px-3 py-1.5 rounded-full z-10 h-auto`).replace(MODULE_PLACEHOLDER, '{HASH}');
+const PERF_OVER_BEFORE = cn('text-overlay-foreground/70', true && 'text-destructive font-bold');
+const PERF_OVER_AFTER = cn(false, true && 'text-destructive font-bold'); // RR1: module class conditionally omitted when over budget
+
 const PART_B_WITNESSES = [
   {
     key: 'perfDevOverlay-priorityRow-over',
-    before: { className: 'text-destructive font-bold', prop: 'color' },
-    after: { className: 'text-destructive font-bold', prop: 'color' }, // RR1 fix: module class conditionally OMITTED — identical class list both phases
+    before: { className: PERF_OVER_BEFORE, prop: 'color' },
+    after: { className: PERF_OVER_AFTER, prop: 'color' },
   },
   {
     key: 'perfDevOverlay-predictiveRow-over',
-    before: { className: 'text-destructive font-bold', prop: 'color' },
-    after: { className: 'text-destructive font-bold', prop: 'color' },
+    before: { className: PERF_OVER_BEFORE, prop: 'color' },
+    after: { className: PERF_OVER_AFTER, prop: 'color' },
   },
   {
     key: 'listingGallery-photoCountButton-rest',
-    before: { className: 'text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70', prop: 'color', requireHashed: null },
-    after: { classNameTemplate: 'text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 {HASH} gap-1.5 text-sm px-3 py-1.5 rounded-full z-10 h-auto', prop: 'color', requireHashed: 'photoCountButton' },
+    before: { className: PHOTO_COUNT_BEFORE, prop: 'color', requireHashed: null },
+    after: { classNameTemplate: PHOTO_COUNT_AFTER_TEMPLATE, prop: 'color', requireHashed: 'photoCountButton' },
     state: 'rest',
   },
   {
     key: 'listingGallery-photoCountButton-hover',
-    before: { className: 'text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70', prop: 'color', requireHashed: null },
-    after: { classNameTemplate: 'text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 {HASH} gap-1.5 text-sm px-3 py-1.5 rounded-full z-10 h-auto', prop: 'color', requireHashed: 'photoCountButton' },
+    before: { className: PHOTO_COUNT_BEFORE, prop: 'color', requireHashed: null },
+    after: { classNameTemplate: PHOTO_COUNT_AFTER_TEMPLATE, prop: 'color', requireHashed: 'photoCountButton' },
     state: 'hover',
   },
 ];
+
+// REWORK2/RW3 (finding G3). Mantine generates `--mantine-color-brand-9` at runtime via
+// `MantineProvider` and injects it client-side (src/design-system/mantine/MantineRootProvider.tsx:
+// `<MantineProvider theme={theme} defaultColorScheme="light">`); a static harness page never mounts
+// React, so `.text-destructive{color:var(--destructive)}` -> `--brand-900` ->
+// `--mantine-color-brand-9` (globals.css:365,411) was unresolved on BOTH sides here, and the
+// comparator scored that shared UA/inherited fallback (`rgb(0, 0, 0)`) as agreement — G3. The app is
+// light-only (no dark theme, see MantineRootProvider.tsx), so the value is a static constant:
+// src/design-system/brand.ts's `brand[9]` (`#8E322B`). Injected into both harness stylesheets below
+// unless `--omit-mantine-vars` is passed (used to prove the independent fail-closed check further
+// down still reddens without this injection — AC3's "deliberately absent" run).
+const MANTINE_BRAND_9 = '#8E322B'; // src/design-system/brand.ts brand[9] — light-only theme, static
+const MANTINE_RUNTIME_VARS_CSS = `:root{--mantine-color-brand-9:${MANTINE_BRAND_9};}`;
 
 // Harness pages: a real Next.js production build ALWAYS bundles every Tailwind-scanned utility
 // and every imported CSS Module project-wide (unlike Storybook's per-story Vite chunks, which only
@@ -223,7 +303,8 @@ function startHarnessServer(cssText, port) {
     // "visible" actionability check (needs a non-empty bounding box) even though nothing is
     // display:none/visibility:hidden — the initial run's `waitForSelector('body')` timeouts were
     // this, not a plant or a stylesheet bug. Explicit min-height fixes it.
-    const html = `<!doctype html><html><head><style>${cssText}</style></head><body style="min-height:100vh">harness</body></html>`;
+    const runtimeVars = OMIT_MANTINE_VARS ? '' : MANTINE_RUNTIME_VARS_CSS;
+    const html = `<!doctype html><html><head><style>${runtimeVars}${cssText}</style></head><body style="min-height:100vh">harness</body></html>`;
     const server = createServer((req, resp) => {
       resp.writeHead(200, { 'Content-Type': 'text/html' });
       resp.end(html);
@@ -272,10 +353,24 @@ async function capturePartBCell(page, spec, viewport, isBefore) {
     await page.waitForTimeout(50);
   }
 
+  // REWORK2/RW3 (finding G3): refuse to score an unresolved custom property as a match. Measure an
+  // unstyled control button in this same harness alongside the probe; if the probe's value doesn't
+  // differ from the control's, the property under test never actually resolved through the probe's
+  // className — it fell back to whatever an element with NO relevant class also gets (UA default or
+  // inherited initial value) — and the cell can neither confirm nor deny the real rule. This is
+  // environment-agnostic (no hardcoded `rgb(0, 0, 0)`) and applies to every Part B cell, not only the
+  // one this finding was filed against.
   const cs = await page.evaluate((prop) => {
     const el = [...document.querySelectorAll('button')].find(b => b.textContent === 'probe');
     if (!el) return { found: false };
-    return { found: true, value: getComputedStyle(el)[prop] };
+    const control = document.createElement('button');
+    control.type = 'button';
+    control.style.position = 'fixed'; control.style.top = '-9999px'; control.style.left = '-9999px';
+    document.body.appendChild(control);
+    const value = getComputedStyle(el)[prop];
+    const controlValue = getComputedStyle(control)[prop];
+    control.remove();
+    return { found: true, value, controlValue };
   }, side.prop);
 
   await page.evaluate(() => {
@@ -283,14 +378,19 @@ async function capturePartBCell(page, spec, viewport, isBefore) {
     if (el) el.remove();
   });
 
-  return { status: cs.found ? 'OK' : 'MISSING', value: cs.value, className: result.className };
+  if (!cs.found) return { status: 'MISSING', className: result.className };
+  if (cs.value === cs.controlValue) {
+    return { status: 'UNRESOLVED', value: cs.value, controlValue: cs.controlValue, className: result.className };
+  }
+  return { status: 'OK', value: cs.value, className: result.className };
 }
 
 async function main() {
+  requireI0Export();
   const beforeServer = await startStaticServer(BEFORE_STATIC, BEFORE_PORT);
   const afterServer = await startStaticServer(AFTER_STATIC, AFTER_PORT);
-  const beforeCss = await buildHarnessCss('C:/Claude_Code_Projects/lero-al-i0-d3ffd6/.next/static/css');
-  const afterCss = await buildHarnessCss(join(ROOT, '.next/static/css'));
+  const beforeCss = await buildHarnessCss(BEFORE_NEXT_CSS_DIR);
+  const afterCss = await buildHarnessCss(AFTER_NEXT_CSS_DIR);
   const harnessServerBefore = await startHarnessServer(beforeCss, HARNESS_PORT_BEFORE);
   const harnessServerAfter = await startHarnessServer(afterCss, HARNESS_PORT_AFTER);
   const browser = await chromium.launch();
@@ -347,7 +447,8 @@ async function main() {
             after = { ...after, value: 'rgb(9, 9, 9)' };
           }
           if (before.status !== 'OK' || after.status !== 'OK') {
-            results.partB.push({ cellKey, status: 'MISSING', before, after });
+            const status = (before.status === 'UNRESOLVED' || after.status === 'UNRESOLVED') ? 'UNRESOLVED' : 'MISSING';
+            results.partB.push({ cellKey, status, before, after });
             failCount++;
             continue;
           }
@@ -373,7 +474,18 @@ async function main() {
 
   const totalCells = results.partA.length + results.partB.length;
   const summary = { plant: PLANT, totalCells, failCount, partA: results.partA, partB: results.partB };
-  const outPath = join(__dirname, PLANT ? 'real-comparator-PLANTED.json' : 'real-comparator-result.json');
+  // Round-3 review, finding H1 (fix applied by the reviewer, 2026-08-13): `--omit-mantine-vars`
+  // previously fell through to the clean artifact's filename and overwrote it, which is what
+  // produced the omit transcript that says `Wrote ...real-comparator-result.json`. Each mode now
+  // writes its own file. This changes only the output filename — no measurement, no cell, no
+  // comparison — so the three result JSONs, all written before this edit, remain valid for the
+  // runs they record.
+  const outName = PLANT
+    ? 'real-comparator-PLANTED.json'
+    : OMIT_MANTINE_VARS
+      ? 'real-comparator-OMIT-MANTINE-VARS.json'
+      : 'real-comparator-result.json';
+  const outPath = join(__dirname, outName);
   await writeFile(outPath, JSON.stringify(summary, null, 2));
   console.log(`Wrote ${outPath}`);
   console.log(`Part A cells: ${results.partA.length}, Part B cells: ${results.partB.length}, total failures: ${failCount}`);

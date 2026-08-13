@@ -5,6 +5,7 @@ import { Modal, ActionIcon, UnstyledButton } from '@mantine/core'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import { AppImage } from '@/components/ui/AppImage'
 import { cn } from '@/lib/utils'
+import styles from './LightboxView.module.css'
 
 interface LightboxImage {
   url: string
@@ -103,7 +104,7 @@ export function LightboxView({
             </ActionIcon>
 
             {/* Counter */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 text-overlay-foreground/80 text-sm">
+            <div className={cn(styles.counter, 'absolute top-4 left-1/2 -translate-x-1/2 text-sm')}>
               {labels.counter(activeIndex + 1, images.length)}
             </div>
 

@@ -1,0 +1,80 @@
+/*
+ * Task 748 — the 5 `--color-overlay*`-derived Tailwind utility sites in ListingGallery.tsx,
+ * reproduced as CSS-module rules reading the `:root` `--overlay`/`--overlay-foreground` pair
+ * (never `--color-overlay*`, which Task 695 removes — see globals.css:70-85/:459-471).
+ *
+ * D34, RE-MEASURED under the REWORK's corrected contest definition (748 REWORK RR4 — the
+ * original pass only checked ancestor/component CSS and missed same-element `cn()`/tailwind-merge
+ * conflict resolution and `hover:`/`aria-*:`/`dark:` variants of the component's own `cva`
+ * classes):
+ *
+ * - `.morePhotosOverlay` sits on a plain `div` inside `AppImage`'s children slot — AppImage sets
+ *   no `background-color`/`color` on its children, `cn()` is not used at this call site (a bare
+ *   string), so nothing contests this element. WINNER, unchanged from the original pass.
+ *
+ * - `.photoCountButton` sits on a base-ui `Button` (`variant="ghost"`, cva classes: `text-foreground
+ *   hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground
+ *   dark:hover:bg-muted/50`). Per-state re-measurement, real production bundle
+ *   (`.next/static/css`), `docs/reviews/artifacts/2026-08-13-task748/twmerge-class-resolution.txt`:
+ *
+ *   | State | Contesting declaration | Pre-migration result | Was WINNER or LOSER |
+ *   |---|---|---|---|
+ *   | rest `background-color` | none (ghost sets no unconditional `bg-*`) | `bg-overlay/60` wins | WINNER |
+ *   | rest `color` | `.text-foreground` (0-1-0, `@layer utilities`) vs `.text-overlay-foreground` (0-1-0) — later source-order wins (`.text-overlay-foreground` at byte 46187 > `.text-foreground` at 44970) | overlay wins | WINNER |
+ *   | hover `background-color` | `.hover\:bg-muted:hover` (byte 68517) vs `.hover\:bg-overlay\/70:hover` (byte 69979) — later wins | overlay wins | WINNER |
+ *   | hover `color` | **`.hover\:text-foreground:hover` (0-2-0, `@layer utilities`) beats `.text-overlay-foreground` (0-1-0) on SPECIFICITY, which cascade layers do not touch (both same layer)** | `--foreground` (dark) wins, NOT overlay | **LOSER** |
+ *   | `aria-expanded` `background-color`/`color` | `.aria-expanded\:bg-muted[aria-expanded]`/`.aria-expanded\:text-foreground[aria-expanded]` | N/A — this Button never receives an `aria-expanded` attribute: base-ui's `Button` primitive (`node_modules/@base-ui/react/button/Button.js`) never sets it itself, and this call site (`ListingGallery.tsx:121-129`) never passes it as a prop. Selector structurally cannot match. | N/A — not a live state |
+ *   | `dark:hover:bg-muted/50` `background-color` | `.dark` ancestor class | N/A — no `ThemeProvider`/`next-themes`/any `.dark`-class toggle exists anywhere in `src/` (`grep -rn "next-themes\|ThemeProvider\|classList.add('dark')" src/` → 0 matches); `.dark` can never be an ancestor of any element in this app | N/A — not a live state |
+ *
+ *   **Hover-state `color` was a genuine D34 LOSER** — the plain-migrated unlayered module rule
+ *   would have promoted it (regression F-B, 748 REWORK review). **Owner-authorized disposition
+ *   (2026-08-13, 748 REWORK): implement exact equivalence** — the rule below reproduces BOTH the
+ *   rest-state winning outcome (`var(--overlay-foreground)`) AND the hover-state losing outcome
+ *   (`var(--foreground)`) explicitly, rather than relying on unlayered-vs-layered load order for
+ *   `color`. `background-color` keeps the plain D34-winning unlayered form (both its states were
+ *   already winners — no equivalence gap there).
+ *
+ * D35: all 3 opacity-modifier utilities below reproduce Tailwind's own compiled two-rule form —
+ * static fallback, then `@supports (color: color-mix(in lab, red, red))` — in that order, values
+ * verbatim from the real `npm run build` output, not an isolated single-class `compile()` call.
+ * `hover:bg-overlay/70` additionally reproduces its `@media (hover: hover)` wrapper — confirmed
+ * present around this project's plain `hover:` variant in the real bundle (unlike a naive
+ * transcription would assume).
+ */
+
+.morePhotosOverlay {
+  background-color: #00000080; /* bg-overlay/50 static fallback */ /* design-tokens-allow: #00000080 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+  color: var(--overlay-foreground); /* text-overlay-foreground */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .morePhotosOverlay {
+    background-color: color-mix(in oklab, var(--overlay) 50%, transparent);
+  }
+}
+
+.photoCountButton {
+  background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+  color: var(--overlay-foreground); /* text-overlay-foreground, rest-state winner */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .photoCountButton {
+    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
+  }
+}
+@media (hover: hover) {
+  .photoCountButton:hover {
+    background-color: #000000b3; /* hover:bg-overlay/70 static fallback */ /* design-tokens-allow: #000000b3 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+    /* RR2 (748 REWORK, owner-authorized 2026-08-13): reproduces the pre-migration hover-state
+       LOSS explicitly — `ghost`'s own `hover:text-foreground` (0-2-0) beat the plain
+       `.text-overlay-foreground` utility (0-1-0) on hover, so the real production text colour on
+       hover was always `var(--foreground)`, never the overlay colour. */
+    color: var(--foreground);
+  }
+}
+@supports (color: color-mix(in lab, red, red)) {
+  @media (hover: hover) {
+    .photoCountButton:hover {
+      background-color: color-mix(in oklab, var(--overlay) 70%, transparent);
+    }
+  }
+}

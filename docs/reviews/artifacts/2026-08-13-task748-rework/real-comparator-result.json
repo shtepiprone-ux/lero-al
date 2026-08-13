@@ -2136,15 +2136,15 @@
     {
       "cellKey": "perfDevOverlay-priorityRow-over|1024",
       "status": "OK",
-      "before": "rgb(0, 0, 0)",
-      "after": "rgb(0, 0, 0)",
+      "before": "rgb(142, 50, 43)",
+      "after": "rgb(142, 50, 43)",
       "className": "text-destructive font-bold"
     },
     {
       "cellKey": "perfDevOverlay-predictiveRow-over|1024",
       "status": "OK",
-      "before": "rgb(0, 0, 0)",
-      "after": "rgb(0, 0, 0)",
+      "before": "rgb(142, 50, 43)",
+      "after": "rgb(142, 50, 43)",
       "className": "text-destructive font-bold"
     },
     {

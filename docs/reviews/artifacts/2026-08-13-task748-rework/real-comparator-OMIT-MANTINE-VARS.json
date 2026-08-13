@@ -1,5 +1,5 @@
 {
-  "plant": true,
+  "plant": false,
   "totalCells": 176,
   "failCount": 2,
   "partA": [
@@ -229,17 +229,17 @@
     },
     {
       "cellKey": "photoCountBadge|en|320",
-      "status": "MOVED",
+      "status": "OK",
       "diffs": {
         "backgroundColor": {
           "before": "oklab(0 0 0 / 0.6)",
-          "after": "rgb(9, 9, 9)",
-          "same": false
+          "after": "oklab(0 0 0 / 0.6)",
+          "same": true
         },
         "color": {
           "before": "oklch(1 0 0)",
-          "after": "rgb(9, 9, 9)",
-          "same": false
+          "after": "oklch(1 0 0)",
+          "same": true
         }
       }
     },
@@ -2135,17 +2135,35 @@
   "partB": [
     {
       "cellKey": "perfDevOverlay-priorityRow-over|1024",
-      "status": "OK",
-      "before": "rgb(142, 50, 43)",
-      "after": "rgb(142, 50, 43)",
-      "className": "text-destructive font-bold"
+      "status": "UNRESOLVED",
+      "before": {
+        "status": "UNRESOLVED",
+        "value": "rgb(0, 0, 0)",
+        "controlValue": "rgb(0, 0, 0)",
+        "className": "text-destructive font-bold"
+      },
+      "after": {
+        "status": "UNRESOLVED",
+        "value": "rgb(0, 0, 0)",
+        "controlValue": "rgb(0, 0, 0)",
+        "className": "text-destructive font-bold"
+      }
     },
     {
       "cellKey": "perfDevOverlay-predictiveRow-over|1024",
-      "status": "OK",
-      "before": "rgb(142, 50, 43)",
-      "after": "rgb(142, 50, 43)",
-      "className": "text-destructive font-bold"
+      "status": "UNRESOLVED",
+      "before": {
+        "status": "UNRESOLVED",
+        "value": "rgb(0, 0, 0)",
+        "controlValue": "rgb(0, 0, 0)",
+        "className": "text-destructive font-bold"
+      },
+      "after": {
+        "status": "UNRESOLVED",
+        "value": "rgb(0, 0, 0)",
+        "controlValue": "rgb(0, 0, 0)",
+        "className": "text-destructive font-bold"
+      }
     },
     {
       "cellKey": "listingGallery-photoCountButton-rest|320",
@@ -2170,9 +2188,9 @@
     },
     {
       "cellKey": "listingGallery-photoCountButton-hover|320",
-      "status": "MOVED",
+      "status": "OK",
       "before": "oklch(0.145 0 0)",
-      "after": "rgb(9, 9, 9)",
+      "after": "oklch(0.145 0 0)",
       "className": "text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 ListingGallery_photoCountButton__QdMR9 gap-1.5 text-sm px-3 py-1.5 rounded-full z-10 h-auto"
     },
     {

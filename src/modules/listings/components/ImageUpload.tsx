@@ -10,6 +10,7 @@ import {
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
+import styles from './ImageUpload.module.css'
 
 const MAX_IMAGES = 20
 
@@ -114,7 +115,7 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
               )}
 
               {/* Hover overlay with actions */}
-              <div className="absolute inset-0 bg-overlay/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2">
+              <div className={cn(styles.hoverOverlay, 'absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2')}>
                 {/* Top row: set cover */}
                 <div className="flex justify-end">
                   {!img.is_cover && (
@@ -164,7 +165,7 @@ export function ImageUpload({ images, onChange, uploadPreset, uploadFolder, maxI
               </div>
 
               {/* Order number */}
-              <span className="absolute bottom-2 left-2 h-5 w-5 rounded-full bg-overlay/60 text-overlay-foreground text-2xs font-bold flex items-center justify-center">
+              <span className={cn(styles.orderBadge, 'absolute bottom-2 left-2 h-5 w-5 rounded-full text-2xs font-bold flex items-center justify-center')}>
                 {index + 1}
               </span>
             </AppImage>

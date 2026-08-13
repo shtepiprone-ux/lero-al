@@ -1,0 +1,39 @@
+/*
+ * Task 748 — the 3 `--color-overlay*`-derived Tailwind utility sites in
+ * MantineListingGalleryPattern.tsx, reproduced as CSS-module rules reading the `:root`
+ * `--overlay`/`--overlay-foreground` pair (never `--color-overlay*`, which Task 695 removes —
+ * see globals.css:70-85/:459-471).
+ *
+ * D34 (2026-08-13): both sites are measured cascade WINNERS — each `bg-overlay/60` div is a
+ * plain child of a Mantine `UnstyledButton`, not the button itself; `UnstyledButton`'s own reset
+ * CSS never sets `background-color`/`color` on a nested child, so nothing contests either
+ * element. Stays unlayered, same as MantineListingCardPattern.module.css's D34-winning rules.
+ *
+ * D35: both `bg-overlay/60` sites reproduce Tailwind's own compiled two-rule form — static
+ * fallback, then `@supports (color: color-mix(in lab, red, red))` — in that order, values
+ * verbatim from the real `npm run build` output, not an isolated single-class `compile()` call.
+ *
+ * Note for Task 695: this component's `Text c=` prop (`:91`) reads the `--color-overlay-foreground`
+ * custom property directly — a non-Tailwind consumer, already named in `globals.css:463-464` as
+ * the reason the `:root` copy must emit unconditionally. It is not a `className` utility and is
+ * out of this task's R1/scope — left untouched.
+ */
+
+.photoCountBadge {
+  background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+  color: var(--overlay-foreground); /* text-overlay-foreground */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .photoCountBadge {
+    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
+  }
+}
+
+.extraCountOverlay {
+  background-color: #0009; /* bg-overlay/60 static fallback */ /* design-tokens-allow: #0009 — Tailwind's own compiled opacity-modifier static fallback, D35 family, reproduced exactly */
+}
+@supports (color: color-mix(in lab, red, red)) {
+  .extraCountOverlay {
+    background-color: color-mix(in oklab, var(--overlay) 60%, transparent);
+  }
+}

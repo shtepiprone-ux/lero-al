@@ -2,7 +2,23 @@
 
 **Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.** Never self-approved.
 
-**2026-08-13 UPDATE — REWORK completed.** This submission was reviewed (`docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.json`, decision `NEEDS REVISION`) and found two real rendered-colour regressions the original §6 comparator could not see (F-A, F-B) plus a methodology defect in that comparator itself (F-C). §REWORK below (end of this file) is the complete rework record: RR1–RR7, the owner's RR2 disposition, the new real before/after comparator, and the re-run D34 pass. Sections 1–12 below are the **original submission**, kept for the record; §REWORK supersedes §4–§6's conclusions where they conflict. Read §REWORK first.
+**2026-08-13 UPDATE — REWORK completed.** This submission was reviewed (`docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.SUPERSEDED.json`, decision `NEEDS REVISION`) and found two real rendered-colour regressions the original §6 comparator could not see (F-A, F-B) plus a methodology defect in that comparator itself (F-C). §REWORK below (end of this file) is the complete rework record: RR1–RR7, the owner's RR2 disposition, the new real before/after comparator, and the re-run D34 pass. Sections 1–12 below are the **original submission**, kept for the record; §REWORK supersedes §4–§6's conclusions where they conflict. Read §REWORK first.
+
+> **Path liveness (round-3 review, 2026-08-13).** Two ledgers were superseded during this task and renamed. Every *citation* in this log points at the current filename; two *command transcripts* (§7 and §S7's `check:review-ledger --file` rows) keep the filename that was live when the command actually ran, because rewriting them would misstate what was executed. Rename map:
+>
+> - `…task748-overlay-utility-exit.review-ledger.json` → `….SUPERSEDED.json` (round 1)
+> - `…task748-rework-overlay-utility-exit.review-ledger.json` → `….SUPERSEDED.json` (round 2)
+> - record of record is now `docs/reviews/2026-08-13-task748-rework2-evidence-apparatus.review-ledger.json`
+
+
+**2026-08-13 UPDATE — REWORK2 completed.** REWORK was reviewed a second time
+(`docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json`, round 2, decision
+`NEEDS REVISION`). Both `src/` fixes (RR1, RR2) were re-derived independently and confirmed
+correct — this round touches **only the evidence apparatus**: the RR4 regression gate's whitelist
+(G1/G2), the RR3 comparator's unresolved-custom-property false match (G3, the one P0), a false
+fixture-provenance claim (G4), a hardcoded absolute path (G5), and a missing citation (G6). §REWORK2
+below (end of this file) is the complete record. §R2 and §R4 within §REWORK carry inline correction
+notes pointing to §REWORK2 where their original numbers/diagnosis were wrong.
 
 ## 1. Task path and status
 
@@ -326,12 +342,33 @@ prescribed form (RR1). Verified two independent ways:
 
 1. `twmerge-class-resolution-all18.mjs` (RR4, §R4 below): with `priorityOver`/`predictiveOver =
    true`, before and after resolve to the byte-identical string `"text-destructive font-bold"`.
-2. The real before/after comparator (§R4a): `perfDevOverlay-priorityRow-over|1024` and
-   `-predictiveRow-over|1024` both report `before === after` (`rgb(0, 0, 0)` in this harness's
-   concatenated-bundle context — the reviewer's own reduced-stylesheet `cascade-repro.mjs` measured
-   the real production value as `oklch(0.58 0.22 27)` both sides; both methods independently agree
-   on **zero delta**, which is what AC1 requires — the absolute value differs only because that
-   harness uses a purpose-built reduced stylesheet and mine uses the full concatenated bundle).
+2. The real before/after comparator (§R4a).
+
+**§REWORK2 correction (finding G3, P0):** the paragraph originally here reported
+`perfDevOverlay-priorityRow-over|1024`/`-predictiveRow-over|1024` as `before === after` at
+`rgb(0, 0, 0)` and attributed that value to "a purpose-built reduced stylesheet vs the full
+concatenated bundle." That diagnosis was wrong, and the cited `oklch(0.58 0.22 27)` was a
+**placeholder** in the reviewer's own harness, not a real measurement — both corrected below.
+
+The real cause: `.text-destructive{color:var(--destructive)}` chains through `--brand-900`
+(`globals.css:365`) to `--mantine-color-brand-9`, which `MantineProvider` injects **at runtime**
+(`src/design-system/mantine/MantineRootProvider.tsx`) and which is absent from any static
+`.next/static/css` bundle — confirmed by
+`docs/reviews/artifacts/2026-08-13-task748-round2/g3-destructive-var-chain.txt`. A static harness
+page never mounts React, so the chain was unresolved on **both** phases, `color` fell back to the
+UA/inherited default for a bare `<button>`, and the comparator scored that shared fallback as
+agreement rather than rejecting it — a false green, not a real zero-delta proof. The real production
+value is `#8E322B` (`src/design-system/brand.ts` brand[9]; the app is light-only, no dark theme, so
+this is a static constant).
+
+Fixed in `real-before-after-comparator.mjs`: the harness stylesheet now defines
+`--mantine-color-brand-9: #8E322B` itself, so the PerfDevOverlay Part B cells resolve a real,
+non-fallback value on both sides. Independently, every Part B cell now also measures an unstyled
+control element in the same harness and reports `UNRESOLVED` (a failure, not a match) if the probe's
+value doesn't differ from the control's — so an unresolved custom property can no longer be scored
+as agreement, regardless of which property triggers it. `--omit-mantine-vars` reproduces the
+original failure mode on demand to prove this reddens (AC3). See §REWORK2 below for the actual run
+output.
 
 ## R3. RR2 — `ListingGallery.tsx:123` disposition (owner-answered)
 
@@ -346,6 +383,11 @@ var(--foreground)`; plus a corrected-D34 pass covering every applicable `ghost`-
 (`aria-expanded:`, `dark:`), reproducing each live state or recording DOM evidence it cannot occur.
 Explicitly: do not claim this alone fully unblocks 695 (the 7 live `var(--color-overlay*)` refs,
 §R5, still block it).
+
+**Citation (§REWORK2/RW6, finding G6):** this authorisation was originally recorded here as prose
+with nothing to point at. The owner has since confirmed it directly to the reviewer, and
+`docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json` finding **G6** is
+that citation — RR2 is `VERIFIED` on it. Referenced here per RW6 so this record is self-contained.
 
 **Implemented** — `src/modules/listings/components/ListingGallery.module.css`, `.photoCountButton`:
 
@@ -403,8 +445,31 @@ from `git show d3ffd6d6c:<path>`; "after" from the current tree. The script itse
 if any element **other than** the three already-known, already-fixed F-A/F-B elements shows a moved
 declaration set.
 
-**Result:** `Elements checked: 19, moved: 3, unexpected: 0` — exit 0
-(`docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt`).
+**§REWORK2 correction (findings G1, G2):** this originally reported `Elements checked: 19, moved: 3,
+unexpected: 0`. Two defects in the script itself, both now fixed — see §REWORK2 below for the full
+account:
+
+- **G1 (P1):** the whitelist that suppressed E6/E7/E12 from `unexpectedMoves` keyed on the case id
+  string alone, unconditional on what the actual delta was — a full revert of the RR1 fix still
+  matched the id and the gate still exited 0. Fixed by keying each of the three sites on its own
+  expected delta *signature* (module-class presence + the exact set of utilities allowed to newly
+  survive), so a different delta, or a delta where none is expected, now reddens.
+- **G2 (P2):** E6b/E7b printed `DELTA`/`OVERLAY DECLARATION ADDED` even though their before/after
+  strings are byte-identical, because the detector only asked whether an overlay utility reached the
+  element *before*, never whether `after` still carries a module class. Fixed: E6b/E7b now correctly
+  print `stable` (no delta) once RR1's conditional omission is in effect, matching
+  `rr1-branch-equivalence.txt`.
+- A third, unrelated latent bug found while fixing the above: the `E7` placeholder case was never
+  added to the `CASES` array, so the script's own `idx7 = CASES.findIndex(...)` returned `-1` and
+  `CASES.splice(-1, 1, ...)` silently deleted `E18` (`AdminUserAvatar.tsx`) instead of replacing a
+  real placeholder — `E18` never ran, despite the header's "all 18 distinct JSX elements" claim.
+  Fixed by restoring the missing `E7` placeholder; `E18` is present and stable again.
+
+**Corrected result:** `Elements checked: 20, moved: 1, unexpected (not already known/fixed): 0` —
+exit 0 (`docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt`). The
+one moved site is `E12` (`text-foreground`/`hover:bg-muted` newly survive because the overlay
+utility they used to lose to is gone — exactly RR2's intended effect); `E6b`/`E7b` print `stable`,
+matching the byte-identical strings `rr1-branch-equivalence.txt` already established.
 
 **Restated summary line (replaces the original's "24 winners / 0 losers"): 21 of 24 utility sites
 were always winners and remain so; 3 sites (the two `PerfDevOverlay` budget rows' over-budget state,
@@ -526,7 +591,7 @@ own folder) and its ledger were not edited, moved, or superseded.
 | `npm run check:mojibake` | **0 artifacts, 2297 files** |
 | `npm run check:file-integrity` | **71/71 clean** |
 | `npm run typecheck` | **exit 0** |
-| `npm run check:review-ledger -- --file docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.json` | **PASSED, exit 0** |
+| `npm run check:review-ledger -- --file docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.json` (that ledger's filename at the time this ran; superseded and renamed since — see the path-liveness note at the top) | **PASSED, exit 0** |
 | `npm run check:review-ledger` (repo-wide, run natively — the reviewer's Linux bridge could not) | **PASSED, exit 0, 2/2 ledger files valid** |
 
 All transcripts retained under `docs/reviews/artifacts/2026-08-13-task748-rework/`.
@@ -562,3 +627,249 @@ none of the existing D35 static-fallback/`@supports` pairs).
 - **Cleanup available to the owner, not performed by this session:** `C:\Claude_Code_Projects\
   lero-al-i0-d3ffd6` is a plain directory (not a registered git worktree — `git archive`
   created it), so a normal recursive delete is sufficient once review is complete.
+
+# §REWORK2 — Task 748 REWORK2, evidence apparatus only
+(`tasks/Sprints/Sprint_46_kickoff_prompt_Task_748_REWORK2_EvidenceApparatus.md`)
+
+**Status: `IMPLEMENTED - AWAITING ORCHESTRATOR REVIEW`.** Never self-approved. `src/` is untouched —
+this round is entirely `docs/reviews/artifacts/2026-08-13-task748-rework/` and this session log.
+RR1/RR2 are not "improved"; neither reviewer artifact folder nor either ledger was edited.
+
+## S1. RW1/RW2 — the RR4 gate (findings G1, G2)
+
+`twmerge-class-resolution-all18.mjs`'s regression gate had two defects, both in the same
+`isKnown`/verdict logic:
+
+- **G1:** the whitelist forgave any case whose id matched `'priority row'`/`'predictive row'`/
+  `'photoCountButton'`, unconditional on the actual delta — a full revert of the RR1 fix still
+  matched the id and the gate still exited 0.
+- **G2:** the detector flagged `E6b`/`E7b` as `DELTA`/`OVERLAY DECLARATION ADDED` by checking only
+  whether an overlay utility reached the element in `before`, never whether `after` still carried a
+  module class — so a byte-identical before/after pair (exactly what the correct RR1 fix produces)
+  was misreported as a moved delta.
+
+**Fix:** each of the three known sites (`E6b`, `E7b`, `E12`) is now keyed on its own expected delta
+*signature* — module-class presence plus the exact set of utilities allowed to newly survive — instead
+of the case id. A case reddens whenever its actual signature differs from its declared one, for any
+site, known or not.
+
+**Third defect found while fixing the above (not in the ledger, same file):** the `E7` placeholder
+case was missing from `CASES`, so `idx7 = CASES.findIndex(...)` returned `-1` and
+`CASES.splice(-1, 1, ...)` silently deleted `E18` (`AdminUserAvatar.tsx`) — the actual last array
+element — instead of replacing a real placeholder. `E18` never ran, despite the file's own header
+claiming coverage of "all 18 distinct JSX elements." Fixed by restoring the missing placeholder.
+
+**Corrected result** (`twmerge-class-resolution-all18.txt`):
+
+```
+Elements checked: 20, moved: 1, unexpected (not already known/fixed): 0
+PASS: E6b/E7b are byte-identical before/after ... E12 is the one genuine moved site ...
+EXIT_CODE=0
+```
+
+`E18` present and `stable`. `E12` is the only `DELTA` line, with a fixed-verdict tag `(expected,
+RR1/RR2 fix)`. `E6b`/`E7b` print `stable` — no delta at all, per AC2.
+
+**AC1 — proof the fixed gate can fail** (`rw1-gate-blindness-probe.mjs`/`.txt`, a new file in this
+same folder; the round-2 reviewer's own `g1-gate-blindness-probe.mjs` embeds the OLD detector logic
+and cannot be reused to test the NEW one, and that reviewer folder may not be edited):
+
+```
+$ node rw1-gate-blindness-probe.mjs   (E6b/E7b's RR1 fix reverted — module unconditionally present)
+Elements checked: 20, moved: 3, unexpected (not already known/fixed): 2
+FAIL (expected for this probe): ...
+EXIT_CODE=1
+
+$ node twmerge-class-resolution-all18.mjs   (real tree, RR1 fix present)
+Elements checked: 20, moved: 1, unexpected (not already known/fixed): 0
+PASS: ...
+EXIT_CODE=0
+```
+
+Reverted run fails, real tree passes — AC1 met.
+
+## S2. RW3 — the comparator scoring an unresolved variable as a match (finding G3, P0)
+
+Root cause confirmed independently (not just cited from the reviewer's `g3-destructive-var-chain.txt`):
+`.text-destructive{color:var(--destructive)}` → `globals.css:411 --destructive: var(--brand-900)` →
+`globals.css:365 --brand-900: var(--mantine-color-brand-9)`. `grep`ing the current
+`.next/static/css/*.css` finds `--mantine-color-brand-9` only as a *reference*
+(`--brand-900:var(--mantine-color-brand-9)`), never as a *definition* — `MantineProvider` injects the
+definition client-side at runtime (`src/design-system/mantine/MantineRootProvider.tsx`), which a
+static harness page never mounts. The app is light-only (`defaultColorScheme="light"`, no dark
+theme), so the correct value is the static constant `src/design-system/brand.ts` `brand[9]` =
+`#8E322B`.
+
+**Fix, both authorized alternatives applied together:**
+
+1. The harness stylesheet now defines `--mantine-color-brand-9: #8E322B` itself (one `:root` rule,
+   sourced and commented against `brand.ts`).
+2. Independently, every Part B cell now also measures an unstyled control element in the same
+   harness; if the probe's value doesn't differ from the control's, the cell reports `UNRESOLVED`
+   (a failure) instead of `OK`. This is environment-agnostic (no hardcoded `rgb(0, 0, 0)`) and
+   protects every Part B cell, not only the two this finding named.
+
+**Clean run** (`real-run-transcript.txt`, `real-comparator-result.json`):
+
+```
+Part A cells: 168, Part B cells: 8, total failures: 0
+COMPARATOR: PASS, diffCount: 0
+EXIT_CODE=0
+```
+
+The two PerfDevOverlay Part B cells now measure a real, non-fallback value on both sides:
+`perfDevOverlay-priorityRow-over|1024` and `-predictiveRow-over|1024` both report
+`before: "rgb(142, 50, 43)", after: "rgb(142, 50, 43)"` — `rgb(142, 50, 43)` is `#8E322B` — status
+`OK`, not the false `rgb(0, 0, 0)` match this finding was filed against.
+
+**Plant re-confirmed** (`plant-run-transcript.txt`, `real-comparator-PLANTED.json`, unchanged from
+round 1): `Part A cells: 168, Part B cells: 8, total failures: 2`, `EXIT_CODE=1` — the two planted
+cells only.
+
+**AC3 — the "deliberately absent" run** (`omit-mantine-vars-run-transcript.txt`,
+`real-comparator-OMIT-MANTINE-VARS.json`, new files):
+
+```
+$ node real-before-after-comparator.mjs --omit-mantine-vars
+Part A cells: 168, Part B cells: 8, total failures: 2
+COMPARATOR: FAIL
+EXIT_CODE=1
+```
+
+Both failures are `perfDevOverlay-priorityRow-over|1024` and `-predictiveRow-over|1024`, both sides
+`status: "UNRESOLVED", value: "rgb(0, 0, 0)", controlValue: "rgb(0, 0, 0)"` — the fail-closed control
+check catches the exact condition G3 was filed against, on demand, without the injected var. AC3 met.
+
+**§R2 diagnosis correction:** the original §R2 (above) attributed the `rgb(0, 0, 0)` reading to "a
+purpose-built reduced stylesheet vs the full concatenated bundle" and cited `oklch(0.58 0.22 27)` as
+the real production value. Both are wrong; corrected inline in §R2 with the real cause and the real
+value (`#8E322B`).
+
+## S3. RW4 — fixture provenance (finding G4)
+
+The Part B `ListingGallery` `before` className was a hand-typed literal that claimed to be "verified
+byte-identical against `twmerge-class-resolution-all18.mjs`'s output, not invented" — it wasn't:
+real tailwind-merge deletes `text-foreground`/`hover:bg-muted` from it (both lose to
+`.text-overlay-foreground`/`hover:bg-overlay/70` in the same conflict groups).
+
+**Fix:** `real-before-after-comparator.mjs` now imports `tailwind-merge`/`clsx` and computes
+`PHOTO_COUNT_BEFORE`/`PHOTO_COUNT_AFTER_TEMPLATE` by calling the real `cn()` against the exact same
+source expressions used in `twmerge-class-resolution-all18.mjs`'s `E12` case, with an opaque
+placeholder token standing in for the hashed module class (replaced with `{HASH}` after computation).
+Verified directly:
+
+```
+BEFORE:         hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground
+                dark:hover:bg-muted/50 gap-1.5 bg-overlay/60 text-overlay-foreground text-sm
+                px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70
+AFTER_TEMPLATE: text-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted
+                aria-expanded:text-foreground dark:hover:bg-muted/50 {HASH} gap-1.5 text-sm
+                px-3 py-1.5 rounded-full z-10 h-auto
+```
+
+`text-foreground`/`hover:bg-muted` are correctly absent from `BEFORE` (matching `E12`'s own before
+computation) and correctly present in `AFTER_TEMPLATE`. The claim is now true by construction, not
+asserted. AC4 met.
+
+## S4. RW5 — fresh-clone reproducibility (finding G5)
+
+`BEFORE_STATIC` and the I0 `.next/static/css` argument hardcoded
+`C:/Claude_Code_Projects/lero-al-i0-d3ffd6/...`, an absolute path outside the repository. Fixed:
+the I0 export path is resolved relative to the repo root (`resolve(ROOT, '..',
+'lero-al-i0-d3ffd6')`), overridable via `LERO_I0_EXPORT_DIR`, with a `requireI0Export()` preflight
+that exits with an actionable message naming revision `d3ffd6d6c51d9e968a47aabaaff46dcd69055a0f` and
+the exact `git archive`/build commands if the export is absent — never a bare `ENOENT`. `grep -n
+"C:/" real-before-after-comparator.mjs` finds exactly **1** match, inside the RW5 explanatory comment
+itself (quoting the old path as history, `// ("C:/Claude_Code_Projects/lero-al-i0-d3ffd6/...")`) — no
+live code path. AC5 met.
+
+## S5. RW6 — citation (finding G6)
+
+§R3's owner-answer paragraph now cites
+`docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json` finding **G6**
+directly, so the authorisation record is self-contained. AC6 met.
+
+## S6. RW7 — commit status (finding G8)
+
+**This finding is not something this session closes — it was already resolved by the owner before
+this session started.** `git log` shows commit `647b95adf` ("docs(task-748): checkpoint rework
+evidence"), which committed `docs/reviews/artifacts/2026-08-13-task748-rework/` (as it stood at that
+point), `docs/reviews/artifacts/2026-08-13-task748-round2/`, both ledgers, and the round-1 `.SUPERSEDED`
+rename. Verified directly, not inferred from the finding text:
+
+| Path | `git ls-files` count | Status |
+|---|---|---|
+| `docs/reviews/artifacts/2026-08-13-task748/` (round-1 reviewer) | **14** | committed |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/` (this task's target) | **63** | committed (base), **6 files modified + 4 new untracked by this session — see below** |
+| `docs/reviews/artifacts/2026-08-13-task748-round2/` (round-2 reviewer, untouched) | **9** | committed |
+| `docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.SUPERSEDED.json` | **1** | committed (renamed from `…review-ledger.json` by the round-3 review) |
+| `docs/reviews/2026-08-13-task748-overlay-utility-exit.review-ledger.SUPERSEDED.json` | **1** | committed |
+| `tasks/Sprints/Sprint_46_kickoff_prompt_Task_748_REWORK2_EvidenceApparatus.md` | **1** | committed |
+
+AC7's `git ls-files`/`git archive HEAD | tar -t` spot-check is satisfied for every path the previous
+round's report/ledger cited — G8, as originally filed, is resolved.
+
+**What is NOT yet committed — this session's own new edits**, per AC8 (do not describe as tracked):
+
+- **Modified (tracked, uncommitted — `M`):** `README.md`, `real-before-after-comparator.mjs`,
+  `real-comparator-PLANTED.json`, `real-comparator-result.json`, `twmerge-class-resolution-all18.mjs`,
+  `twmerge-class-resolution-all18.txt`, `docs/sessions/2026-08-13-task748-overlay-utility-exit.md`.
+- **New, untracked (`??`):** `rw1-gate-blindness-probe.mjs`, `rw1-gate-blindness-probe.txt`,
+  `real-comparator-OMIT-MANTINE-VARS.json`, `omit-mantine-vars-run-transcript.txt`.
+- **`docs/backlog.md`** — modified, tracked, uncommitted (this session's concise state update, §S8).
+
+Per the executor's git boundary, Sonnet does not run, emit, or suggest `git add`/`git commit`. This
+is a normal mid-implementation state, not a defect: it is expected to reach a fresh clone only after
+Opus reviews this diff and, if the review is not `NEEDS REVISION`/`BLOCKED`, emits the owner-run
+docs-only commit handoff for exactly these paths — the same shape as `647b95adf` and `ce22b1b5e`.
+
+## S7. AC9 — `src/` untouched, standing gates
+
+| Check | Result |
+|---|---|
+| `git status --porcelain -- src/` | **identical 12 lines** to this session's starting `gitStatus` (6 `M`, 6 `??` — the pre-existing RR1/RR2 change set; none touched further) |
+| `git diff src/app/globals.css` | **0 lines** |
+| Overlay-utility grep across `src/` (`bg\|text\|border-overlay`) | **1 match**, `globals.css:4` (the `@theme inline` copy, RR5-scoped, expected) |
+| `npm run check:mojibake` | **0 artifacts, 2318 files**, exit 0 |
+| `npm run check:file-integrity` (git-changed + untracked) | **23/23 clean**, exit 0 |
+| `npm run typecheck` | exit **0** |
+| `npm run check:review-ledger -- --file docs/reviews/2026-08-13-task748-rework-overlay-utility-exit.review-ledger.json` (the ledger's filename at the time this ran; the round-3 review has since superseded it to `…review-ledger.SUPERSEDED.json` — see finding H6) | **PASSED**, exit 0 |
+| `npm run check:review-ledger` (repo-wide) | **PASSED, 2/2 ledger files valid**, exit 0 |
+| `npm run build` | exit **0**, `/[locale]` = **619 kB** (unchanged) |
+
+Neither reviewer artifact folder (`2026-08-13-task748/`, `2026-08-13-task748-round2/`) nor either
+ledger was modified — confirmed by `git status --porcelain` showing no entry for either path.
+
+## S8. Files changed, this REWORK2
+
+| File | Change |
+|---|---|
+| `docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.mjs` | RW1/RW2 — signature-keyed gate; restored missing `E7` placeholder (fixes silent `E18` deletion) |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/twmerge-class-resolution-all18.txt` | re-run transcript, `moved: 1` |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/rw1-gate-blindness-probe.mjs` / `.txt` | new — AC1 revert-probe and its transcript |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/real-before-after-comparator.mjs` | RW3 (Mantine var injection + fail-closed control check + `--omit-mantine-vars`), RW4 (`cn()`-derived fixtures), RW5 (relative I0 path + actionable failure message) |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-result.json` / `real-comparator-PLANTED.json` | re-run against the fixed comparator |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/real-comparator-OMIT-MANTINE-VARS.json` | new — AC3 proof run |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/real-run-transcript.txt` / `plant-run-transcript.txt` / `omit-mantine-vars-run-transcript.txt` | re-run transcripts |
+| `docs/reviews/artifacts/2026-08-13-task748-rework/README.md` | documents the REWORK2 fixes |
+| `docs/sessions/2026-08-13-task748-overlay-utility-exit.md` | §R2/§R3/§R4 correction notes, this §REWORK2 section |
+| `docs/backlog.md` | concise state update |
+
+Nothing under `src/`, neither reviewer artifact folder, and neither ledger was touched.
+
+## S9. Opus handoff
+
+- **The one P0 (G3) is closed two independent ways** — inspect both: the injected
+  `--mantine-color-brand-9` (real value on both sides) and the fail-closed control check
+  (`--omit-mantine-vars` run reddens on the same two cells G3 named).
+- **Verify AC1 independently:** `rw1-gate-blindness-probe.mjs` is a new file, not a reviewer artifact
+  — re-run both it and `twmerge-class-resolution-all18.mjs` directly.
+- **RW7/G8:** confirm the `git ls-files` counts in §S6 independently; the previous round's finding is
+  resolved by a commit this session did not make (`647b95adf`) — this session's own new edits are the
+  only uncommitted paths, and per the executor's git boundary, closing that is the next Opus/owner
+  step, not something this session could do itself.
+- **Not re-verified by this session:** `npx vitest run` (full suite) was not re-run — no `src/`
+  change in this round, so the round-2 ledger's carried 1347/1347 result stands unless Opus wants a
+  fresh number.
+- **Still unresolved, unchanged from round 2:** the 7 live `var(--color-overlay*)` references (§R6)
+  still block 695's exit condition — this round did not touch that question.

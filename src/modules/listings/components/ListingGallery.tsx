@@ -6,6 +6,8 @@ import { AppImage } from '@/components/ui/AppImage'
 import { Camera, Maximize2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LightboxView } from './LightboxView'
+import { cn } from '@/lib/utils'
+import styles from './ListingGallery.module.css'
 
 interface GalleryImage { url: string; is_cover: boolean; order: number }
 
@@ -106,7 +108,7 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
             {/* "View all" overlay lives inside AppImage's positioned container */}
             <AppImage variant="gallery-side" src={img.url} alt={`${title} ${i + 2}`}>
               {i === 3 && sorted.length > 5 && (
-                <div className="absolute inset-0 bg-overlay/50 flex flex-col items-center justify-center text-overlay-foreground gap-1">
+                <div className={cn(styles.morePhotosOverlay, 'absolute inset-0 flex flex-col items-center justify-center gap-1')}>
                   <Camera className="h-6 w-6" />
                   <span className="text-sm font-semibold">+{sorted.length - 5} {t('photo_count')}</span>
                 </div>
@@ -120,7 +122,7 @@ export function ListingGallery({ images, title }: ListingGalleryProps) {
         <div className="md:hidden absolute top-3 right-3">
           <Button
             variant="ghost"
-            className="gap-1.5 bg-overlay/60 text-overlay-foreground text-sm px-3 py-1.5 rounded-full z-10 h-auto hover:bg-overlay/70"
+            className={cn(styles.photoCountButton, 'gap-1.5 text-sm px-3 py-1.5 rounded-full z-10 h-auto')}
             onClick={() => setLightboxIndex(0)}
             aria-label={t('all_photos')}
           >

@@ -6,6 +6,7 @@ import { usePredictiveImageCount, MAX_PREDICTIVE_PRELOADS } from '@/lib/performa
 import { useGuardStats } from '@/lib/performance/imageGuard'
 import { MAX_PRIORITY_IMAGES } from '@/lib/imageDelivery'
 import { cn } from '@/lib/utils'
+import styles from './PerfDevOverlay.module.css'
 
 // Dev-only performance overlay — stripped from production bundles via static
 // process.env.NODE_ENV check (build-time constant, not a runtime branch).
@@ -29,7 +30,7 @@ function PerfOverlayContent() {
   const pressureClass =
     pressure === 'high' ? 'text-destructive font-bold' :
     pressure === 'normal' ? 'text-[var(--color-status-warning)]' :
-    'text-overlay-foreground/70'
+    styles.metricRow
 
   const priorityOver = priorityCount > MAX_PRIORITY_IMAGES
   const predictiveOver = predictiveCount > MAX_PREDICTIVE_PRELOADS
@@ -44,25 +45,25 @@ function PerfOverlayContent() {
       role="presentation"
       aria-hidden="true"
     >
-      <div className="bg-overlay/85 text-overlay-foreground rounded-lg px-3 py-2 font-mono text-[10px] leading-relaxed space-y-0.5 shadow-lg">
+      <div className={cn(styles.badge, 'rounded-lg px-3 py-2 font-mono text-[10px] leading-relaxed space-y-0.5 shadow-lg')}>
         {/* Tier: color-coded + lock status + source */}
         <div className={cn('font-bold flex items-center gap-1', tierClass)}>
           <span>⚡ {tier.toUpperCase()}</span>
-          <span className="text-overlay-foreground/50">
+          <span className={styles.sourceLabel}>
             {isLocked ? '🔒' : '◌'} {sourceLabel}
           </span>
         </div>
 
         {/* Web Vitals */}
-        <div className="text-overlay-foreground/70">
+        <div className={styles.metricRow}>
           LCP {lcp !== null ? `${Math.round(lcp)}ms` : '—'}
         </div>
-        <div className="text-overlay-foreground/70">
+        <div className={styles.metricRow}>
           INP {inp !== null ? `${Math.round(inp)}ms` : '—'}
         </div>
 
         {/* Divider */}
-        <div className="border-t border-overlay-foreground/20 my-0.5" />
+        <div className={cn(styles.divider, 'border-t my-0.5')} />
 
         {/* Image pressure — only shown when NORMAL/HIGH. LOW is default browsing state. */}
         {pressure !== 'low' && (
@@ -71,20 +72,27 @@ function PerfOverlayContent() {
           </div>
         )}
 
-        {/* Priority budget */}
-        <div className={cn('text-overlay-foreground/70', priorityOver && 'text-destructive font-bold')}>
+        {/* Priority budget — RR1 (748 REWORK): pre-migration `cn('text-overlay-foreground/70',
+            priorityOver && 'text-destructive font-bold')` had tailwind-merge DELETE the overlay
+            utility whenever priorityOver is true (same `text-*` conflict group), so the row
+            rendered `--destructive`. A CSS-module class does not participate in tailwind-merge
+            conflict resolution and is emitted unlayered (always beats `@layer utilities`), so
+            keeping both classes present would silently keep the overlay colour and lose the
+            warning signal. Conditionally omit the module class instead, reproducing the exact
+            pre-migration deletion. */}
+        <div className={cn(!priorityOver && styles.metricRow, priorityOver && 'text-destructive font-bold')}>
           pri {priorityCount}/{MAX_PRIORITY_IMAGES}{priorityOver ? ' ⚠' : ''}
         </div>
 
-        {/* Predictive budget */}
-        <div className={cn('text-overlay-foreground/70', predictiveOver && 'text-destructive font-bold')}>
+        {/* Predictive budget — RR1, same reasoning as the priority row above. */}
+        <div className={cn(!predictiveOver && styles.metricRow, predictiveOver && 'text-destructive font-bold')}>
           pred {predictiveCount}/{MAX_PREDICTIVE_PRELOADS}{predictiveOver ? ' ⚠' : ''}
-          {tier === 'low' && <span className="text-overlay-foreground/40"> off</span>}
+          {tier === 'low' && <span className={styles.offLabel}> off</span>}
         </div>
 
         {/* Guard stats — only show when non-zero */}
         {(conflicts > 0 || suppressed > 0) && (
-          <div className="text-overlay-foreground/60">
+          <div className={styles.guardStats}>
             {conflicts > 0 && `dup×${conflicts}`}
             {conflicts > 0 && suppressed > 0 && ' '}
             {suppressed > 0 && `sup×${suppressed}`}

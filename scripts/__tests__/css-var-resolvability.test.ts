@@ -195,15 +195,20 @@ describe('extractOwnedNames (R3, A2) — scoped to @theme / @theme inline / :roo
     expect(owned.size).toBe(0)
   })
 
-  it('matches the real globals.css measured count (259) — 2026-08-10 re-derivation', () => {
+  it('matches the real globals.css measured count (257) — Task 695 re-derivation', () => {
     const raw = readFileSync('src/app/globals.css', 'utf8')
     const owned = extractOwnedNames(raw)
-    expect(owned.size).toBe(259)
+    // 259 -> 257 (Task 695): --color-overlay and --color-overlay-foreground no
+    // longer exist anywhere in globals.css (the @theme inline overlay copy was
+    // deleted once its last Tailwind-scanned utility was gone), so the owned
+    // set shrinks by exactly those two names. Measured 2026-08-13.
+    expect(owned.size).toBe(257)
     // --spacing-N is prose inside a comment at globals.css:146-150 (draft 1's
     // own D2 defect) — must never be counted.
     expect(owned.has('--spacing-N')).toBe(false)
-    // --overlay-foreground is declared in BOTH @theme inline and :root — must
-    // still be exactly one entry in the owned set (A2).
+    // --overlay-foreground is declared once, in :root only, since Task 695
+    // deleted the @theme inline copy — still exactly one entry in the owned
+    // set either way (A2 dedupes by name, not by declaration site).
     expect(owned.has('--overlay-foreground')).toBe(true)
   })
 })

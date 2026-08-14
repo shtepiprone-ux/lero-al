@@ -90,7 +90,7 @@ export function MantineListingGalleryPattern({ images, title, labels }: MantineL
                 <Image src={img.url} alt="" radius="md" fit="cover" className="h-full w-full" />
                 {isLastVisible && (
                   <div className={cn(styles.extraCountOverlay, 'absolute inset-0 flex items-center justify-center')}>
-                    <Text size="sm" fw={600} c="var(--color-overlay-foreground)">
+                    <Text size="sm" fw={600} c="var(--overlay-foreground)">
                       +{extraCount}
                     </Text>
                   </div>

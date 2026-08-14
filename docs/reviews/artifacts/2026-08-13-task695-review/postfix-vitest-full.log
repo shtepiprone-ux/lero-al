@@ -1,0 +1,425 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.6 [39m[90mC:/Claude_Code_Projects/lero-al[39m
+
+ [32m✓[39m scripts/__tests__/check-stories.test.ts [2m([22m[2m116 tests[22m[2m)[22m[33m 1368[2mms[22m[39m
+[90mstderr[2m | src/lib/auth/__tests__/controller.test.ts[2m > [22m[2mScenario 5 — Server restart recovery[2m > [22m[2mfetch failure → error state; subsequent visibility sync recovers to authenticated
+[22m[39mAuthController: server sync failed {
+  error: Error: fetch failed
+      at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/controller.test.ts:444:51
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:302:11
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:1903:26
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2326:20
+      at new Promise (<anonymous>)
+      at runWithCancel [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2323:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2305:20
+      at new Promise (<anonymous>)
+      at runWithTimeout [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2272:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2955:64
+}
+
+[90mstderr[2m | src/lib/auth/__tests__/controller.test.ts[2m > [22m[2mScenario 5 — Server restart recovery[2m > [22m[2merror state does not block future syncs — controller is not frozen
+[22m[39mAuthController: server sync failed {
+  error: Error: network error
+      at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/controller.test.ts:459:51
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:302:11
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:1903:26
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2326:20
+      at new Promise (<anonymous>)
+      at runWithCancel [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2323:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2305:20
+      at new Promise (<anonymous>)
+      at runWithTimeout [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2272:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2955:64
+}
+
+ [32m✓[39m src/lib/__tests__/date-format-ssr-parity.smoke.test.ts [2m([22m[2m25 tests[22m[2m)[22m[33m 837[2mms[22m[39m
+     [33m[2m✓[22m[39m formatDateTime output is byte-identical under TZ=UTC and TZ=America/New_York [33m 820[2mms[22m[39m
+[90mstderr[2m | src/lib/auth/__tests__/controller.test.ts[2m > [22m[2mScenario 7 — Network failure recovery[2m > [22m[2mthrown network error → controller enters error state without crashing
+[22m[39mAuthController: server sync failed {
+  error: Error: ERR_NETWORK_CHANGED
+      at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/controller.test.ts:619:51
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:302:11
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:1903:26
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2326:20
+      at new Promise (<anonymous>)
+      at runWithCancel [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2323:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2305:20
+      at new Promise (<anonymous>)
+      at runWithTimeout [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2272:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2955:64
+}
+
+[90mstderr[2m | src/lib/auth/__tests__/controller.test.ts[2m > [22m[2mScenario 7 — Network failure recovery[2m > [22m[2merror state followed by successful sync recovers to authenticated
+[22m[39mAuthController: server sync failed {
+  error: Error: network error
+      at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/controller.test.ts:630:30
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:302:11
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:1903:26
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2326:20
+      at new Promise (<anonymous>)
+      at runWithCancel [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2323:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2305:20
+      at new Promise (<anonymous>)
+      at runWithTimeout [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2272:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2955:64
+}
+
+[90mstderr[2m | src/lib/auth/__tests__/controller.test.ts[2m > [22m[2mScenario 7 — Network failure recovery[2m > [22m[2merror state followed by successful visibility sync recovers — no manual reload needed
+[22m[39mAuthController: server sync failed {
+  error: Error: network error
+      at C:/Claude_Code_Projects/lero-al/src/lib/auth/__tests__/controller.test.ts:645:30
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:302:11
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:1903:26
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2326:20
+      at new Promise (<anonymous>)
+      at runWithCancel [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2323:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2305:20
+      at new Promise (<anonymous>)
+      at runWithTimeout [90m(file:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2272:10[90m)[39m
+      at [90mfile:///C:/Claude_Code_Projects/lero-al/[39mnode_modules/[4m@vitest/runner[24m/dist/chunk-artifact.js:2955:64
+}
+
+[90mstderr[2m | src/lib/auth/__tests__/controller.test.ts[2m > [22m[2mScenario 8 — UI state stability[2m > [22m[2mvalid state invariant — no unauthenticated state with a user
+[22m[39mAuthController: server sync failed {
+  error: TypeError: Cannot read properties of undefined (reading 'ok')
+      at fetchServerUser (C:/Claude_Code_Projects/lero-al/src/lib/auth/controller.ts:55:12)
+      at AuthController.syncFromServer (C:/Claude_Code_Projects/lero-al/src/lib/auth/controller.ts:132:20)
+}
+
+[90mstderr[2m | src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx[2m > [22m[2mAdminUsersTable — verify/revoke handler (Task 483)[2m > [22m[2mrevoke button calls toggleUserVerified(userId, false) for verified user + shows toast
+[22m[39mReact does not recognize the `leftSection` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `leftsection` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+Invalid value for prop `component` on <button> tag. Either remove it from the element, or pass a string or number value to keep it in the DOM. For details, see https://react.dev/link/attribute-behavior 
+
+ [32m✓[39m src/modules/listings/components/__tests__/ReportListingDialog.smoke.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[32m 255[2mms[22m[39m
+ [32m✓[39m src/lib/auth/__tests__/controller.test.ts [2m([22m[2m44 tests[22m[2m)[22m[33m 1837[2mms[22m[39m
+ [32m✓[39m src/components/admin/__tests__/AdminReportsManager.smoke.test.tsx [2m([22m[2m11 tests[22m[2m)[22m[33m 350[2mms[22m[39m
+ [32m✓[39m src/components/admin/__tests__/AdminUsersTable.smoke.test.tsx [2m([22m[2m21 tests[22m[2m)[22m[33m 555[2mms[22m[39m
+[90mstderr[2m | src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts[2m > [22m[2mResetPasswordClient — mount behavior smoke (AC3, Task 441)[2m > [22m[2mtokenHash + type=recovery: shows form WITHOUT calling verifyOtp on mount
+[22m[39mReact does not recognize the `inputState` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `inputstate` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+
+ [32m✓[39m src/modules/auth/components/__tests__/ResetPasswordClient.smoke.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 125[2mms[22m[39m
+ [32m✓[39m src/components/shared/__tests__/filterLeafComponents.smoke.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[33m 329[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/MantineCombobox.smoke.test.tsx [2m([22m[2m10 tests[22m[2m)[22m[33m 808[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/MantineCountButton.smoke.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 392[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/MantinePagination.smoke.test.tsx [2m([22m[2m22 tests[22m[2m)[22m[33m 417[2mms[22m[39m
+ [32m✓[39m src/app/[locale]/auth/verified/__tests__/page.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 79[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/MantinePopover.smoke.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 378[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/MantineListingCardPattern.smoke.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 224[2mms[22m[39m
+ [32m✓[39m src/modules/listings/components/__tests__/FavoriteButton.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 576[2mms[22m[39m
+ [32m✓[39m src/modules/listings/components/__tests__/ListingGallery.portal.smoke.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 1262[2mms[22m[39m
+     [33m[2m✓[22m[39m lightbox dialog is portaled OUTSIDE the gallery ancestor stacking context, with a real (non-auto) resolved z-index greater than the header [33m 345[2mms[22m[39m
+     [33m[2m✓[22m[39m closes on the close button and unmounts cleanly [33m 385[2mms[22m[39m
+     [33m[2m✓[22m[39m Arrow-key Next/Previous cycle the counter while the dialog stays open; arrows do nothing once closed [33m 403[2mms[22m[39m
+ [32m✓[39m src/modules/auth/__tests__/AuthContext.test.tsx [2m([22m[2m16 tests[22m[2m)[22m[32m 176[2mms[22m[39m
+ [32m✓[39m src/modules/__tests__/rls-write-guards.smoke.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 153[2mms[22m[39m
+ [32m✓[39m src/modules/admin/actions/__tests__/hardDeleteUser.smoke.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 139[2mms[22m[39m
+ [32m✓[39m src/lib/__tests__/toast.smoke.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 84[2mms[22m[39m
+ [32m✓[39m src/i18n/__tests__/i18n-render-parity.smoke.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 79[2mms[22m[39m
+ [32m✓[39m src/modules/listings/actions/__tests__/updateListing.smoke.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32m✓[39m src/modules/listings/actions/__tests__/deleteReport.smoke.test.ts [2m([22m[2m21 tests[22m[2m)[22m[32m 197[2mms[22m[39m
+ [32m✓[39m src/modules/auth/actions/__tests__/requestPasswordReset.smoke.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 111[2mms[22m[39m
+ [32m✓[39m src/modules/listings/actions/__tests__/createListing.smoke.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 117[2mms[22m[39m
+ [32m✓[39m src/modules/admin/actions/__tests__/clearHistory.smoke.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m src/components/layout/__tests__/mobileBottomNav.smoke.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 121[2mms[22m[39m
+[90mstderr[2m | src/modules/listings/actions/submitListingInquiry.test.ts[2m > [22m[2msubmitListingInquiry[2m > [22m[2mreturns save_failed when the insert fails
+[22m[39m[listing-inquiry] insert failed { message: [32m'db error'[39m }
+
+[90mstderr[2m | src/modules/listings/actions/submitListingInquiry.test.ts[2m > [22m[2msubmitListingInquiry[2m > [22m[2mreturns email_transient (treated as partial success by the UI) when the owner notification email fails (row already persisted)
+[22m[39m[listing-inquiry] email notification failed { reason: [32m'unverified_sender'[39m }
+
+ [32m✓[39m src/modules/listings/actions/submitListingInquiry.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 209[2mms[22m[39m
+ [32m✓[39m src/hooks/__tests__/useAdminPageFreshness.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/modules/listings/actions/__tests__/submitListingInquiry.smoke.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m src/modules/notifications/hooks/__tests__/useNotifications.smoke.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m src/lib/__tests__/formatters.test.ts [2m([22m[2m35 tests[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m src/modules/admin/actions/__tests__/updateUserProfileFull.smoke.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/check-design-tokens.test.ts [2m([22m[2m98 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m src/modules/listings/domain/listingTransitionEngine.test.ts [2m([22m[2m130 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/modules/listings/lib/savedSearchCanonicalize.test.ts [2m([22m[2m36 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m src/modules/listings/lib/__tests__/visibility.test.ts [2m([22m[2m66 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m src/app/auth/confirm/__tests__/route.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32m✓[39m src/app/api/auth-email-hook/__tests__/recoveryUrl.smoke.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 93[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/rendered-gate-exit-code.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m src/modules/listings/actions/__tests__/reportListing.smoke.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+[90mstderr[2m | src/modules/listings/actions/applyListingTransition.test.ts[2m > [22m[2mapplyListingTransition — DB error[2m > [22m[2mreturns db_error when DB update fails
+[22m[39mapplyListingTransition: DB write failed {
+  error: { message: [32m'connection timeout'[39m },
+  listingId: [32m'l1'[39m,
+  from: [32m'active'[39m,
+  to: [32m'archived'[39m,
+  actor: [32m'admin_panel'[39m
+}
+
+[90mstderr[2m | src/modules/listings/actions/applyListingTransition.test.ts[2m > [22m[2mapplyListingTransitionByStatus — privileged any-status access[2m > [22m[2madmin: sold → active (privileged any-status, beyond base matrix)
+[22m[39m[notifications] listing_status_change notify failed Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+    at createAdminClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/admin.ts:9:11)
+    at createNotification (C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/mutations.ts:26:14)
+    at writeListingStatus (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/applyListingTransition.ts:116:5)
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+
+ [32m✓[39m src/modules/listings/actions/applyListingTransition.test.ts [2m([22m[2m53 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+[90mstderr[2m | src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts[2m > [22m[2mdeleteOwnAccount — smoke tests (Task 441)[2m > [22m[2mauth-delete fail → { error: "profile_deleted_auth_failed" } — NOT false success
+[22m[39mdeleteOwnAccount: auth delete failed {
+  error: { message: [32m'Auth user not found'[39m, status: [33m404[39m },
+  userId: [32m'user-cabinet-1'[39m
+}
+
+[90mstderr[2m | src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts[2m > [22m[2mdeleteOwnAccount — smoke tests (Task 441)[2m > [22m[2mprofile-delete fail → { error: "delete_failed" }, auth.admin.deleteUser NOT called
+[22m[39mdeleteOwnAccount: profile delete failed {
+  error: { message: [32m'FK violation'[39m, code: [32m'23503'[39m },
+  userId: [32m'user-cabinet-1'[39m
+}
+
+ [32m✓[39m src/modules/cabinet/actions/__tests__/deleteOwnAccount.smoke.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/brand-single-source.test.ts [2m([22m[2m31 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/css-var-resolvability.test.ts [2m([22m[2m27 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+[90mstdout[2m | src/app/api/cron/listings-expiry/__tests__/route.test.ts[2m > [22m[2mPOST /api/cron/listings-expiry[2m > [22m[2mauthorized, lapsed active listings → expired count matches
+[22m[39m[cron/listings-expiry] complete {
+  expired: [33m2[39m,
+  errors: [33m0[39m,
+  null_expiry_active: [33m0[39m,
+  null_expiry_note: [32m'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)'[39m,
+  at: [32m'2026-08-14T10:12:55.345Z'[39m
+}
+
+[90mstdout[2m | src/app/api/cron/listings-expiry/__tests__/route.test.ts[2m > [22m[2mPOST /api/cron/listings-expiry[2m > [22m[2mauthorized, nothing lapsed → expired = 0, no updates
+[22m[39m[cron/listings-expiry] complete {
+  expired: [33m0[39m,
+  errors: [33m0[39m,
+  null_expiry_active: [33m0[39m,
+  null_expiry_note: [32m'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)'[39m,
+  at: [32m'2026-08-14T10:12:55.347Z'[39m
+}
+
+[90mstdout[2m | src/app/api/cron/listings-expiry/__tests__/route.test.ts[2m > [22m[2mPOST /api/cron/listings-expiry[2m > [22m[2mNULL-expiry active rows reported but NOT mutated
+[22m[39m[cron/listings-expiry] complete {
+  expired: [33m0[39m,
+  errors: [33m0[39m,
+  null_expiry_active: [33m3[39m,
+  null_expiry_note: [32m'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)'[39m,
+  at: [32m'2026-08-14T10:12:55.349Z'[39m
+}
+
+[90mstdout[2m | src/app/api/cron/listings-expiry/__tests__/route.test.ts[2m > [22m[2mPOST /api/cron/listings-expiry[2m > [22m[2mstatus set to engine-resolved value (expired), not raw string
+[22m[39m[cron/listings-expiry] complete {
+  expired: [33m1[39m,
+  errors: [33m0[39m,
+  null_expiry_active: [33m0[39m,
+  null_expiry_note: [32m'NULL-expiry active rows are NOT auto-expired by this sweep (owner decision #3)'[39m,
+  at: [32m'2026-08-14T10:12:55.350Z'[39m
+}
+
+ [32m✓[39m src/app/api/cron/listings-expiry/__tests__/route.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m src/modules/listings/domain/filterEngine.test.ts [2m([22m[2m38 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/modules/listings/domain/listingSemanticHelpers.test.ts [2m([22m[2m51 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/overlay-dual-declaration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m src/modules/auth/actions/__tests__/signUpWithCaptcha.smoke.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+[90mstderr[2m | src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts[2m > [22m[2mgateway — applyListingTransitionByStatus (smoke)[2m > [22m[2madmin: pending → active (privileged) → { ok: true, nextStatus: "active" }
+[22m[39m[notifications] listing_status_change notify failed Error: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY env variables. Add SUPABASE_SERVICE_ROLE_KEY to .env.local (Supabase Dashboard → Settings → API → service_role).
+    at createAdminClient (C:/Claude_Code_Projects/lero-al/src/lib/supabase/admin.ts:9:11)
+    at createNotification (C:/Claude_Code_Projects/lero-al/src/modules/notifications/lib/mutations.ts:26:14)
+    at writeListingStatus (C:/Claude_Code_Projects/lero-al/src/modules/listings/actions/applyListingTransition.ts:116:5)
+[90m    at processTicksAndRejections (node:internal/process/task_queues:103:5)[39m
+
+ [32m✓[39m src/modules/listings/actions/__tests__/listingStatusChange.smoke.test.ts [2m([22m[2m13 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/modules/cabinet/actions/__tests__/saveSavedSearch.dedup.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 14043[2mms[22m[39m
+     [33m[2m✓[22m[39m dedup: re-saving order-reversed condition returns already_exists [33m 14023[2mms[22m[39m
+ [32m✓[39m src/lib/auth/__tests__/browser.smoke.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m src/modules/listings/domain/listingPermissions.test.ts [2m([22m[2m23 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/rendered-run-mode.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/modules/listings/actions/__tests__/reStampExpiresAt.smoke.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+[90mstdout[2m | scripts/__tests__/check-i18n-parity.test.ts
+[22m[39m── Part 1: Locale key-set parity ──────────────────────────────
+  ✅ en  — 2218 keys (matches sq)
+  ✅ uk  — 2218 keys (matches sq)
+  ✅ it  — 2218 keys (matches sq)
+
+── Part 2: Raw-enum leak scan ──────────────────────────────────
+  ✅ No suspicious raw-enum patterns detected in .tsx files.
+
+✅ Parity PASSED — all 4 locale files have identical key sets (2218 keys).
+
+ [32m✓[39m scripts/__tests__/check-i18n-parity.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m src/lib/__tests__/price-format-ssr-parity.smoke.test.ts [2m([22m[2m22 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m src/lib/__tests__/cloudinaryDelete.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m src/lib/__tests__/date-format-icu-independence.smoke.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/mantine-story-scope.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/modules/auth/lib/__tests__/sanitizeReturnTo.test.ts [2m([22m[2m24 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m scripts/__tests__/preview-clock-anchor.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+[90mstdout[2m | scripts/__tests__/scan-ssr.test.ts
+[22m[39m
+=== SSR / HYDRATION GOVERNANCE SCAN ===
+CRITICAL: 0  HIGH: 0  MEDIUM: 0  LOW: 0
+✅ No SSR/hydration violations found.
+
+ [32m✓[39m scripts/__tests__/scan-ssr.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m src/modules/listings/domain/__tests__/listingConstants.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m src/modules/listings/components/__tests__/favoritesShell.liveCounts.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m src/modules/listings/components/__tests__/realtimeRaceGuard.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+ [32m✓[39m src/components/shared/__tests__/LocationCombobox.smoke.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[33m 4619[2mms[22m[39m
+     [33m[2m✓[22m[39m toggle opens the panel; Cancel closes it, resets fields, no persist call [33m 1776[2mms[22m[39m
+     [33m[2m✓[22m[39m Add is disabled until both name and region are set [33m 887[2mms[22m[39m
+     [33m[2m✓[22m[39m Add calls onAddLocation with the exact {name_al, region_id} shape; success closes + resets + commits onChange [33m 1112[2mms[22m[39m
+     [33m[2m✓[22m[39m failure ({error}/no id): panel STAYS open, localized generic error shown, adding resets [33m 816[2mms[22m[39m
+ [32m✓[39m src/modules/listings/components/__tests__/ListingCard.smoke.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[33m 3615[2mms[22m[39m
+     [33m[2m✓[22m[39m renders the preserved content set through MantineListingCardPattern [33m 1540[2mms[22m[39m
+     [33m[2m✓[22m[39m reduced-price listing (price_old > price) shows old price struck through + new price [33m 309[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/RangeDatePickerLocalization.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 5196[2mms[22m[39m
+     [33m[2m✓[22m[39m sq: month header + weekday row render Albanian, not English [33m 3433[2mms[22m[39m
+     [33m[2m✓[22m[39m it: month header + weekday row render Italian, not English [33m 1676[2mms[22m[39m
+ [32m✓[39m src/lib/phone/__tests__/phone.test.ts [2m([22m[2m56 tests[22m[2m)[22m[32m 156[2mms[22m[39m
+ [32m✓[39m src/components/shared/__tests__/PhoneField.smoke.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 3403[2mms[22m[39m
+     [33m[2m✓[22m[39m country change rebuilds the E.164 value with the new dial code [33m 1977[2mms[22m[39m
+     [33m[2m✓[22m[39m national-number change emits an updated E.164 value [33m 893[2mms[22m[39m
+     [33m[2m✓[22m[39m rejected paste fires onPasteError and does not mutate the field [33m 495[2mms[22m[39m
+ [32m✓[39m src/components/shared/__tests__/DatePicker.localization.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 1802[2mms[22m[39m
+     [33m[2m✓[22m[39m sq: weekday row, month header, and today label render Albanian even when Intl.DateTimeFormat throws [33m 1272[2mms[22m[39m
+     [33m[2m✓[22m[39m uk: today label uses the genitive (formatting) month form, never the nominative or English [33m 508[2mms[22m[39m
+[90mstderr[2m | src/components/shared/__tests__/heroSearch.smoke.test.tsx[2m > [22m[2mHeroSearch — Mantine Button migration (Task 568)[2m > [22m[2mthe filters button collapses to icon+count below the iconOnlyBelow=860 threshold, keeping the aria-label accessible name (Task 571)
+[22m[39mIn HTML, <div> cannot be a descendant of <p>.
+This will cause a hydration error.
+
+  ...
+    <@mantine/core/Box ref={function} mod={[...]} className="m_fd1ab0aa..." style={{...}} variant={undefined} ...>
+      <section ref={function} style={{...}} className="m_fd1ab0aa..." data-variant={undefined} data-size={undefined} ...>
+        <NativeScrollArea style={{height:"ca..."}}>
+          <@mantine/core/DrawerHeader>
+            <@mantine/core/ModalBaseHeader ref={null} className="m_5a7c2c9 ..." style={{...}}>
+              <@mantine/core/Box component="header" ref={null} className="m_b5489c3c..." style={{...}}>
+                <header ref={null} style={{...}} className="m_b5489c3c..." data-variant={undefined} data-size={undefined} ...>
+                  <@mantine/core/DrawerTitle>
+                    <@mantine/core/ModalBaseTitle ref={null} className="mantine-Dr..." style={{width:"100%"}}>
+                      <@mantine/core/Box component="h2" ref={null} className="m_615af6c9..." style={{width:"100%"}} ...>
+                        <h2 ref={null} style={{width:"100%"}} className="m_615af6c9..." data-variant={undefined} ...>
+                          <@mantine/core/Box>
+                            <div ref={null} style={{}} className="" data-variant={undefined} data-size={undefined} ...>
+                              <DragHandle>
+                              <@mantine/core/Text fw={600} size="sm" c="gray.8">
+                                <@mantine/core/Box className="mantine-fo..." style={{...}} ref={null} component="p" ...>
+>                                 <p
+>                                   ref={null}
+>                                   style={{--text-fz:"var(--mant...",--text-lh:"var(--mant...",color:"var(--mant...",fontWeight:600}}
+>                                   className="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+>                                   data-variant={undefined}
+>                                   data-size="sm"
+>                                   size={undefined}
+>                                 >
+                                    <@mantine/core/Group gap="xs">
+                                      <@mantine/core/Box className="m_4081bf90..." style={{...}} ref={null} ...>
+>                                       <div
+>                                         ref={null}
+>                                         style={{--group-gap:"var(--mant...",--group-align:"center",--group-justify:"flex-start", ...}}
+>                                         className="m_4081bf90 mantine-Group-root"
+>                                         data-variant={undefined}
+>                                         data-size={undefined}
+>                                         size={undefined}
+>                                       >
+          ...
+
+<p> cannot contain a nested <div>.
+See this log for the ancestor stack trace.
+
+ [32m✓[39m src/components/shared/__tests__/heroSearch.smoke.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 11029[2mms[22m[39m
+     [33m[2m✓[22m[39m clicking Search pushes /{locale}/listings with the current filter state [33m 2529[2mms[22m[39m
+     [33m[2m✓[22m[39m switching to the Rent tab then searching pushes type=rent [33m 1125[2mms[22m[39m
+     [33m[2m✓[22m[39m clicking the filters button opens FiltersPanel [33m 2662[2mms[22m[39m
+     [33m[2m✓[22m[39m the active count badge is absent with no filters, and shows the count inline in the button after Apply (Task 571: MantineCountButton rightSection badge) [33m 3880[2mms[22m[39m
+     [33m[2m✓[22m[39m the filters button collapses to icon+count below the iconOnlyBelow=860 threshold, keeping the aria-label accessible name (Task 571) [33m 491[2mms[22m[39m
+ [32m✓[39m src/components/shared/__tests__/filtersRangeDatePicker.smoke.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[33m 9535[2mms[22m[39m
+     [33m[2m✓[22m[39m hydrates the trigger from values.date_from/date_to [33m 3442[2mms[22m[39m
+     [33m[2m✓[22m[39m picking a range then Apply filters commits BOTH date_from + date_to atomically [33m 3282[2mms[22m[39m
+     [33m[2m✓[22m[39m Reset clears date_from + date_to (along with every other filter) [33m 1212[2mms[22m[39m
+     [33m[2m✓[22m[39m picking a range pushes BOTH date_from + date_to in ONE router.push call [33m 940[2mms[22m[39m
+ [32m✓[39m src/modules/notifications/components/__tests__/NotificationItem.priceChange.smoke.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 179[2mms[22m[39m
+ [32m✓[39m src/modules/notifications/components/__tests__/NotificationItem.templateLocalization.smoke.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 192[2mms[22m[39m
+ [32m✓[39m src/components/layout/__tests__/header-hydration-id-parity.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[33m 1075[2mms[22m[39m
+       [33m[2m✓[22m[39m ASYMMETRIC tree (bell absent server / present client, the pre-Task-599 shape) → onRecoverableError fires — planted-violation proof [33m 755[2mms[22m[39m
+[90mstderr[2m | src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx[2m > [22m[2mFiltersPanel shell — round-2 Fix 4 blast-radius: mobile bottom-sheet pinned footer[2m > [22m[2mthe mobile bottom-sheet footer is ALSO NOT a descendant of the scrollable content container
+[22m[39mIn HTML, <div> cannot be a descendant of <p>.
+This will cause a hydration error.
+
+  ...
+    <@mantine/core/Box ref={function} mod={[...]} className="m_fd1ab0aa..." style={{...}} variant={undefined} ...>
+      <section ref={function} style={{...}} className="m_fd1ab0aa..." data-variant={undefined} data-size={undefined} ...>
+        <NativeScrollArea style={{height:"ca..."}}>
+          <@mantine/core/DrawerHeader>
+            <@mantine/core/ModalBaseHeader ref={null} className="m_5a7c2c9 ..." style={{...}}>
+              <@mantine/core/Box component="header" ref={null} className="m_b5489c3c..." style={{...}}>
+                <header ref={null} style={{...}} className="m_b5489c3c..." data-variant={undefined} data-size={undefined} ...>
+                  <@mantine/core/DrawerTitle>
+                    <@mantine/core/ModalBaseTitle ref={null} className="mantine-Dr..." style={{width:"100%"}}>
+                      <@mantine/core/Box component="h2" ref={null} className="m_615af6c9..." style={{width:"100%"}} ...>
+                        <h2 ref={null} style={{width:"100%"}} className="m_615af6c9..." data-variant={undefined} ...>
+                          <@mantine/core/Box>
+                            <div ref={null} style={{}} className="" data-variant={undefined} data-size={undefined} ...>
+                              <DragHandle>
+                              <@mantine/core/Text fw={600} size="sm" c="gray.8">
+                                <@mantine/core/Box className="mantine-fo..." style={{...}} ref={null} component="p" ...>
+>                                 <p
+>                                   ref={null}
+>                                   style={{--text-fz:"var(--mant...",--text-lh:"var(--mant...",color:"var(--mant...",fontWeight:600}}
+>                                   className="mantine-focus-auto m_b6d8b162 mantine-Text-root"
+>                                   data-variant={undefined}
+>                                   data-size="sm"
+>                                   size={undefined}
+>                                 >
+                                    <@mantine/core/Group gap="xs">
+                                      <@mantine/core/Box className="m_4081bf90..." style={{...}} ref={null} ...>
+>                                       <div
+>                                         ref={null}
+>                                         style={{--group-gap:"var(--mant...",--group-align:"center",--group-justify:"flex-start", ...}}
+>                                         className="m_4081bf90 mantine-Group-root"
+>                                         data-variant={undefined}
+>                                         data-size={undefined}
+>                                         size={undefined}
+>                                       >
+          ...
+
+<p> cannot contain a nested <div>.
+See this log for the ancestor stack trace.
+
+ [32m✓[39m src/components/shared/__tests__/filtersPanelShell.smoke.test.tsx [2m([22m[2m19 tests[22m[2m)[22m[33m 22968[2mms[22m[39m
+     [33m[2m✓[22m[39m Apply fires onApply with the composed local values [33m 4933[2mms[22m[39m
+     [33m[2m✓[22m[39m Reset clears all filters via the existing handleReset semantics [33m 2791[2mms[22m[39m
+     [33m[2m✓[22m[39m clicking a type chip selects it (data-variant="light"); "All types" is deselected [33m 2719[2mms[22m[39m
+     [33m[2m✓[22m[39m clicking the active type again clears it back to "All types" [33m 1601[2mms[22m[39m
+     [33m[2m✓[22m[39m clicking a market type selects it; "All" clears it [33m 1367[2mms[22m[39m
+     [33m[2m✓[22m[39m typing fires update with the typed string (via onApply after Apply) [33m 923[2mms[22m[39m
+     [33m[2m✓[22m[39m clearing to empty maps to undefined (via onApply after Apply) [33m 1013[2mms[22m[39m
+     [33m[2m✓[22m[39m the built-in Drawer close (X) fires onClose [33m 611[2mms[22m[39m
+     [33m[2m✓[22m[39m a toggle Button label resolves wordBreak:normal + overflowWrap:break-word (the theme fix) [33m 609[2mms[22m[39m
+     [33m[2m✓[22m[39m the market-type row wraps whole buttons at ≥640px (Mantine Flex column→row, nowrap→wrap) — never a flex-1 squeeze [33m 628[2mms[22m[39m
+     [33m[2m✓[22m[39m desktop Drawer header (title present) has the canonical gray-3 bottom border [33m 589[2mms[22m[39m
+     [33m[2m✓[22m[39m the Apply button count is a normal-flow descendant (Badge), never position:absolute [33m 753[2mms[22m[39m
+     [33m[2m✓[22m[39m the footer node is NOT a descendant of the scrollable content container [33m 982[2mms[22m[39m
+     [33m[2m✓[22m[39m the mobile bottom-sheet footer is ALSO NOT a descendant of the scrollable content container [33m 872[2mms[22m[39m
+     [33m[2m✓[22m[39m the mobile bottom-sheet header (title present) ALSO gets the canonical gray-3 bottom border [33m 698[2mms[22m[39m
+     [33m[2m✓[22m[39m the title renders as a <span>, not a <p> (no <p>-in-<p> nesting on the bottom-sheet path) [33m 429[2mms[22m[39m
+     [33m[2m✓[22m[39m (a) the first visible section (Location) has no top divider; a later section (Property type) does [33m 545[2mms[22m[39m
+     [33m[2m✓[22m[39m (b) after a shows()-changing property-type selection, Location remains the undivided first section, the still-visible sections keep their rule, and hidden sections are genuinely absent (not just collapsed) [33m 598[2mms[22m[39m
+ [32m✓[39m src/design-system/mantine/patterns/__tests__/RangeDatePicker.smoke.test.tsx [2m([22m[2m14 tests[22m[2m)[22m[33m 26498[2mms[22m[39m
+     [33m[2m✓[22m[39m picking from+to (fresh, no pre-existing value) then Apply fires ONE onChange({from,to}) [33m 5248[2mms[22m[39m
+     [33m[2m✓[22m[39m end-before-start is swapped so from <= to [33m 2328[2mms[22m[39m
+     [33m[2m✓[22m[39m single day then Apply commits a single-day range {from:X, to:X} (Task 561 D1) [33m 2093[2mms[22m[39m
+     [33m[2m✓[22m[39m a day past maxDate is disabled; clicking it does NOT stage a new endpoint [33m 1088[2mms[22m[39m
+     [33m[2m✓[22m[39m a day past maxDate cannot become `from` on a fresh (empty) selection [33m 848[2mms[22m[39m
+     [33m[2m✓[22m[39m Cancel discards the staged range — fires nothing, panel closes [33m 824[2mms[22m[39m
+     [33m[2m✓[22m[39m disablePastDates disables a day before today [33m 375[2mms[22m[39m
+     [33m[2m✓[22m[39m disablePastDates omitted (default false): a day before today is selectable [33m 377[2mms[22m[39m
+     [33m[2m✓[22m[39m tapping days alone does NOT fire onChange; only Confirm commits [33m 6491[2mms[22m[39m
+     [33m[2m✓[22m[39m single day then Confirm (enabled) commits a single-day range {from:X, to:X} (Task 561 D1) [33m 4562[2mms[22m[39m
+     [33m[2m✓[22m[39m disablePastDates excludes past month sections entirely (no cell to find, not disabled-in-place) [33m 896[2mms[22m[39m
+     [33m[2m✓[22m[39m disablePastDates omitted (default false): a past month section is rendered and selectable [33m 1258[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m80 passed[39m[22m[90m (80)[39m
+[2m      Tests [22m [1m[32m1351 passed[39m[22m[90m (1351)[39m
+[2m   Start at [22m 12:12:20
+[2m   Duration [22m 61.37s[2m (transform 20.51s, setup 10.87s, import 266.81s, tests 116.12s, environment 432.14s)[22m
+
+npm notice
+npm notice New major version of npm available! 11.16.0 -> 12.0.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2
+npm notice To update run: npm install -g npm@12.0.2
+npm notice
+
+EXIT_CODE=0

@@ -67,23 +67,6 @@
   --color-brand-800: var(--brand-800);
   --color-brand-950: var(--brand-950);
 
-  /* Overlay tokens — DELIBERATELY DUPLICATED, also declared in `:root` below (Task 693/D19,
-     superseding Task 690/D18). Task 690 moved these two out of `@theme` entirely to fix F1
-     (non-Tailwind `var(--color-overlay*)` consumers like `LightboxView.tsx` and
-     `MantineListingGalleryPattern.tsx` going stale whenever no `bg-overlay*`/
-     `text-overlay-foreground*` utility survived Tailwind's scan) — but that broke Tailwind's
-     ability to statically resolve the value, which it needs to composite the alpha-blended
-     static fallback for every opacity-modifier utility (`bg-overlay/30` etc.), silently
-     degrading that fallback tier to a bare, fully-opaque `var(--overlay)` (measured in
-     `docs/sessions/2026-07-30-task690-overlay-root-relocation.md`). This `@theme` copy restores
-     that static resolution; the `:root` copy below is what actually keeps F1 fixed (unconditional
-     emission, independent of the source scan). **Keep both copies byte-identical** — Task 692
-     will gate their sync; until then, changing one without the other is a silent regression. */
-  --overlay:            oklch(0 0 0);       /* Pure black — for photo/lightbox overlays */
-  --overlay-foreground: oklch(1 0 0);       /* Pure white — text on black overlays */
-  --color-overlay:            var(--overlay);
-  --color-overlay-foreground: var(--overlay-foreground);
-
   /* Semantic tokens — Real Estate specific */
   --color-price:                 var(--price);
   --color-price-reduced:         var(--price-reduced);
@@ -456,17 +439,19 @@
   /* Base radius */
   --radius: 0.75rem;
 
-  /* Overlay tokens — DELIBERATELY DUPLICATED, also declared in `@theme inline` above (Task
-     693/D19, superseding Task 690/D18). This `:root` copy is what actually closes Task 688
-     finding F1: it emits `--overlay`/`--overlay-foreground` unconditionally, independent of
-     whether any `bg-overlay*`/`text-overlay-foreground*` Tailwind utility survives the source
-     scan, so non-Tailwind consumers (`LightboxView.tsx`'s inline `style`,
-     `MantineListingGalleryPattern.tsx`'s `c=` prop) never see a stale/missing variable. The
-     `@theme` copy exists solely so Tailwind can still statically resolve the value and composite
-     the alpha-blended static fallback for opacity-modifier utilities — removing it re-breaks that
-     fallback tier exactly as Task 690 did (see
-     `docs/sessions/2026-07-30-task690-overlay-root-relocation.md`). **Keep both copies
-     byte-identical** — Task 692 will gate their sync. */
+  /* Overlay tokens — single source (Task 695 closed D19; previously DELIBERATELY DUPLICATED
+     into `@theme inline` too — Task 693/D19, superseding Task 690/D18). This `:root`
+     declaration is what closes Task 688 finding F1: it emits `--overlay`/`--overlay-foreground`
+     unconditionally, independent of Tailwind's source scan, so every consumer
+     (`LightboxView.tsx`'s inline `style`, `MantineListingGalleryPattern.tsx`'s `c=` prop, and
+     every `.module.css` file listed in Task 695's session log) always resolves a live value.
+     The `@theme inline` copy that used to sit alongside this one existed only so Tailwind could
+     statically resolve the value for a `bg`/`text` opacity-modifier utility's compiled static
+     fallback (see `docs/sessions/2026-07-30-task690-overlay-root-relocation.md` for what
+     happens if that copy is removed while such a utility is still scanned). Task 695 rewrote
+     the one remaining scannable comment down to zero generated overlay utilities, then removed
+     the `@theme` copy — there is no compiled Tailwind consumer left to protect, so this single
+     declaration is the whole story now. */
   --overlay:            oklch(0 0 0);       /* Pure black — for photo/lightbox overlays */
   --overlay-foreground: oklch(1 0 0);       /* Pure white — text on black overlays */
 }

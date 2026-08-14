@@ -1,0 +1,695 @@
+{
+  "plant": true,
+  "plantPinnedAt": {
+    "locale": "en",
+    "viewport": "desktop-1024"
+  },
+  "locales": [
+    "sq",
+    "en",
+    "uk",
+    "it"
+  ],
+  "viewports": [
+    "mobile-320",
+    "mobile-375",
+    "mobile-390",
+    "desktop-1024"
+  ],
+  "totalCells": 112,
+  "failCount": 2,
+  "cells": [
+    {
+      "cellKey": "lightbox|mobile-320|sq|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|sq|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|sq|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|sq|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|sq|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|sq|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-320|sq|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|en|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|en|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|en|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|en|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|en|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|en|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-320|en|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|uk|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|uk|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|uk|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|uk|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|uk|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|uk|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-320|uk|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|it|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|it|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|it|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|it|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|it|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-320|it|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-320|it|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|sq|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|sq|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|sq|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|sq|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|sq|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|sq|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-375|sq|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|en|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|en|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|en|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|en|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|en|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|en|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-375|en|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|uk|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|uk|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|uk|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|uk|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|uk|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|uk|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-375|uk|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|it|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|it|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|it|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|it|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|it|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-375|it|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-375|it|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|sq|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|sq|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|sq|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|sq|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|sq|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|sq|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-390|sq|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|en|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|en|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|en|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|en|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|en|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|en|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-390|en|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|uk|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|uk|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|uk|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|uk|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|uk|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|uk|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-390|uk|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|it|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|it|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|it|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|it|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|it|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|mobile-390|it|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|mobile-390|it|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|sq|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|sq|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|sq|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|sq|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|sq|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|sq|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|desktop-1024|sq|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|en|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|en|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|en|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|en|actionIconHover.backgroundColor",
+      "status": "MOVED",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "rgb(9, 9, 9)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|en|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|en|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|desktop-1024|en|extraCountText.color",
+      "status": "MOVED",
+      "before": "oklch(1 0 0)",
+      "after": "rgb(9, 9, 9)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|uk|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|uk|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|uk|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|uk|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|uk|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|uk|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|desktop-1024|uk|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|it|modalScrim.backgroundColor",
+      "status": "OK",
+      "before": "oklab(0 0 0 / 0.95)",
+      "after": "oklab(0 0 0 / 0.95)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|it|actionIconRest.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.1)",
+      "after": "oklab(1 0 0 / 0.1)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|it|actionIconRest.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|it|actionIconHover.backgroundColor",
+      "status": "OK",
+      "before": "oklab(1 0 0 / 0.2)",
+      "after": "oklab(1 0 0 / 0.2)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|it|actionIconHover.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "lightbox|desktop-1024|it|thumbBorder.borderColor",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    },
+    {
+      "cellKey": "gallery|desktop-1024|it|extraCountText.color",
+      "status": "OK",
+      "before": "oklch(1 0 0)",
+      "after": "oklch(1 0 0)"
+    }
+  ]
+}

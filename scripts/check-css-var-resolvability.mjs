@@ -27,8 +27,8 @@
  * (`var(--${name})`). It instead asserts a SCOPED invariant (R6, kickoff §3.4): for each dynamic
  * `var()` construction site, take the literal text between `var(--` and the first `${` — the
  * "prefix". A site is reported iff some OWNED name starts with `--<prefix>`. The 8 measured
- * `var(--mantine-color-${color}-N)` sites share the prefix `mantine-color-`, and zero of the 259
- * owned names start with `--mantine`, so they are out-of-class and silent; a new prefix that COULD
+ * `var(--mantine-color-${color}-N)` sites share the prefix `mantine-color-`, and NO owned name
+ * starts with `--mantine`, so they are out-of-class and silent; a new prefix that COULD
  * name an owned token (e.g. `--space-`) fails the gate for a human to resolve.
  *
  * Two more resolution rules, both found by measurement (kickoff §3.5):
@@ -756,17 +756,37 @@ function runPlantP2(tree) {
 }
 
 function runPlantP3(tree) {
-  // P3 (Arm B) — --color-overlay-foreground. Measured precondition: 0 var()
-  // REFERENCES to this name in shipped CSS (its one occurrence there is the
-  // declaration itself) — confirmed 2026-08-10 against the real build. Remove
-  // ONLY its one shipped @layer theme declaration; do NOT touch
-  // --overlay-foreground (a different name, live CSS var() consumers — §0.3
-  // E2, draft 2's error). globals.css is left untouched: the token stays
-  // owned via its single @theme inline declaration there, which is what lets
-  // Arm B evaluate it at all (removing it from globals.css would un-own it —
-  // the same self-immunization P1/P2 avoid).
-  const name = '--color-overlay-foreground';
-  const untouchedName = '--overlay-foreground';
+  // P3 (Arm B) — --text-3xl. Task 695 deleted --color-overlay-foreground (this
+  // plant's original target) along with the rest of the `@theme inline`
+  // overlay copy, so a token with the same shape had to be found: exactly 1
+  // shipped declaration site and 0 shipped var() REFERENCES (confirmed
+  // 2026-08-13 against the real build — Tailwind's own `.text-3xl` utility
+  // inlines the literal `1.875rem` rather than emitting `var(--text-3xl)`, so
+  // the declaration `--text-3xl:1.875rem;` is the only place the name appears
+  // in shipped CSS), plus a live TSX consumer outside cssDir
+  // (`src/app/[locale]/page.tsx`'s `fz={{ base: 'var(--text-3xl)', … }}`) so
+  // Arm B actually fires when the declaration disappears. `--overlay-foreground`
+  // is NOT a valid substitute after this task: it now has live CSS Module
+  // var() consumers (`LightboxView.module.css` and siblings, §3.4 of the
+  // kickoff) as well as the migrated inline-style consumers, so its shipped
+  // reference count is no longer 0 — it would fail this plant's own
+  // pre-plant census, the same self-immunization P1/P2/P3 all guard against.
+  // Remove ONLY the one shipped declaration. globals.css is left untouched: the
+  // token stays owned via its single @theme declaration there, which is what
+  // lets Arm B evaluate it at all (removing it from globals.css would un-own it
+  // — the same self-immunization P1/P2 avoid).
+  //
+  // OVER-MATCH GUARD (Task 695 review, F1). The re-point to --text-3xl retired
+  // the previous named-sibling guard: it compared the declaration-site count of
+  // `--text-3xl--line-height` before and after, and that name is NOT emitted in
+  // the shipped bundle at all (Tailwind inlines `line-height` into the utility),
+  // so the comparison was 0 -> 0 unconditionally and could not have come out
+  // wrong — the exact defect class this gate exists to prevent, introduced into
+  // the gate's own self-test. The guard below is name-agnostic and structurally
+  // always live instead: `declaredBefore` is non-empty by construction (the
+  // census above proved `name` is declared in this file), and it catches ANY
+  // over-match, not only the one sibling somebody thought to name.
+  const name = '--text-3xl';
   const declSites = countDeclarationSites(tree.cssDir, name);
   const refCountBefore = listCssDirFiles(tree.cssDir).reduce((sum, f) =>
     sum + findVarReferences(stripComments(readFileSync(f, 'utf8'), true)).filter((r) => r.name === name).length, 0);
@@ -776,12 +796,13 @@ function runPlantP3(tree) {
   }
   const declFile = findFirstDeclarationSite(tree.cssDir, name);
   const original = readFileSync(declFile, 'utf8');
-  const untouchedBefore = countDeclarationSites(tree.cssDir, untouchedName);
+  const declaredBefore = extractCssDeclaredNames(original);
   removeDeclarationLine(declFile, name);
   try {
-    const untouchedAfter = countDeclarationSites(tree.cssDir, untouchedName);
-    if (untouchedAfter !== untouchedBefore) {
-      record('P3', 'FAIL', false, `plant corrupted ${untouchedName} (${untouchedBefore} -> ${untouchedAfter} declaration sites) — must remove ONLY ${name}`);
+    const declaredAfter = extractCssDeclaredNames(readFileSync(declFile, 'utf8'));
+    const removedNames = [...declaredBefore].filter((n) => !declaredAfter.has(n));
+    if (removedNames.length !== 1 || removedNames[0] !== name) {
+      record('P3', 'FAIL', false, `plant removed ${removedNames.length} declared name(s) [${removedNames.join(', ') || 'none'}] from ${declFile} — must remove exactly one, ${name}`);
       return;
     }
     touchCssDir(tree.cssDir);
@@ -863,7 +884,10 @@ function runControlC3(tree) {
   // copy, proving the tokenizer strips both forms correctly.
   const globalsRaw = readFileSync(tree.globalsPath, 'utf8');
   const ownedSet = extractOwnedNames(globalsRaw);
-  const blockOk = ownedSet.size === 259 && !ownedSet.has('--spacing-N');
+  // 259 -> 257 (Task 695): --color-overlay and --color-overlay-foreground no
+  // longer exist anywhere in globals.css, so the owned set shrinks by exactly
+  // those two names. Measured against the real post-695 tree, 2026-08-13.
+  const blockOk = ownedSet.size === 257 && !ownedSet.has('--spacing-N');
 
   const themePath = join(tree.srcDir, 'design-system/mantine/theme.ts');
   let lineOk = true;
@@ -890,7 +914,7 @@ function runControlC3(tree) {
   }
   const ok = blockOk && lineOk;
   record('C3', 'PASS', ok,
-    `block: owned=${ownedSet.size} (expect 259), --spacing-N excluded=${!ownedSet.has('--spacing-N')} | line: ${lineDetail}`);
+    `block: owned=${ownedSet.size} (expect 257), --spacing-N excluded=${!ownedSet.has('--spacing-N')} | line: ${lineDetail}`);
 }
 
 function runControlC4(tree) {

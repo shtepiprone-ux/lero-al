@@ -72,14 +72,19 @@ function PerfOverlayContent() {
           </div>
         )}
 
-        {/* Priority budget — RR1 (748 REWORK): pre-migration `cn('text-overlay-foreground/70',
-            priorityOver && 'text-destructive font-bold')` had tailwind-merge DELETE the overlay
-            utility whenever priorityOver is true (same `text-*` conflict group), so the row
-            rendered `--destructive`. A CSS-module class does not participate in tailwind-merge
-            conflict resolution and is emitted unlayered (always beats `@layer utilities`), so
-            keeping both classes present would silently keep the overlay colour and lose the
-            warning signal. Conditionally omit the module class instead, reproducing the exact
-            pre-migration deletion. */}
+        {/* Priority budget — RR1 (748 REWORK): the pre-migration Tailwind opacity-modifier
+            overlay-foreground utility (70% alpha), combined via `cn(...)` with
+            `priorityOver && 'text-destructive font-bold'`, had tailwind-merge DELETE that
+            overlay class whenever priorityOver is true (same `text-*` conflict group), so the
+            row rendered `--destructive`. A CSS-module class does not participate in
+            tailwind-merge conflict resolution and is emitted unlayered (always beats `@layer
+            utilities`), so keeping both classes present would silently keep the overlay colour
+            and lose the warning signal. Conditionally omit the module class instead,
+            reproducing the exact pre-migration deletion. (Task 695: the historical utility
+            name above is deliberately not spelled out as a literal className — this file is
+            Tailwind-scanned, and writing it verbatim previously kept two dead overlay rules
+            alive in the shipped bundle with zero real consumer, the D35 fallback-generation
+            hazard.) */}
         <div className={cn(!priorityOver && styles.metricRow, priorityOver && 'text-destructive font-bold')}>
           pri {priorityCount}/{MAX_PRIORITY_IMAGES}{priorityOver ? ' ⚠' : ''}
         </div>

@@ -1,0 +1,9 @@
+Wrote C:\Claude_Code_Projects\lero-al\docs\reviews\artifacts\2026-08-13-task695\real-comparator-PLANTED.json
+Total cells: 112, failures: 2
+node : COMPARATOR: FAIL
+At line:1 char:1
++ node docs/reviews/artifacts/2026-08-13-task695/real-before-after-comp ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (COMPARATOR: FAIL:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

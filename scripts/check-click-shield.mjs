@@ -149,16 +149,6 @@ const N6_EXEMPT_PREDICATE_BODY = `
 // production LightboxView under the ordinary locale layout. It is reachable only when the
 // workflow sets CLICK_SHIELD_CI_FIXTURE=1; every ordinary runtime returns 404. This preserves a
 // real Modal.Root/Modal.Content interaction without making CI depend on a database row.
-//
-// The ordinary homepage also fetches live listing data. A missing or unavailable CI data service
-// can therefore turn the whole response into an error page, making the hit-test see zero
-// candidates before it reaches either overlay scenario. In the CI-fixture mode all three
-// scenarios use the guarded page instead: it still renders the normal locale layout and Header
-// (including the production AuthSheet Drawer), plus the production LightboxView. Local runs
-// without the CI flag retain the homepage sweep for base and Drawer coverage.
-const USE_CI_FIXTURE = process.env.CLICK_SHIELD_CI_FIXTURE === '1';
-const routeForBaseOrDrawer = (locale) =>
-  USE_CI_FIXTURE ? `/${locale}/ci/click-shield-modal` : `/${locale}`;
 
 // Task 727 R5 — three scenarios driven against the running app (replacing the synthetic
 // self-test as the source of "did the fix work" evidence for CI). `trigger` is a Playwright
@@ -171,8 +161,8 @@ const routeForBaseOrDrawer = (locale) =>
 const SCENARIOS = [
   {
     name: 'base',
-    label: USE_CI_FIXTURE ? 'CI fixture route (untouched)' : 'Base route (untouched)',
-    route: routeForBaseOrDrawer,
+    label: 'Base route (untouched)',
+    route: (locale) => `/${locale}`,
     trigger: null,
   },
   {
@@ -185,7 +175,7 @@ const SCENARIOS = [
     // login/register Buttons are `visibleFrom="md"`, invisible at 320/375/390 — see
     // HeaderActions.tsx). Selector keys on lucide's stable icon class, not the translated
     // aria-label, so it works identically across all 4 locales.
-    route: routeForBaseOrDrawer,
+    route: (locale) => `/${locale}`,
     trigger: 'header button:has(svg.lucide-heart)',
   },
   {

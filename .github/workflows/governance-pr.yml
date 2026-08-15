@@ -56,6 +56,11 @@ jobs:
       - name: Review-ledger gate self-test (valid ledger plus fifteen failing arms)
         run: npm run check:review-ledger:verify
 
+      - name: Build production bundle for compiled-bundle unit tests
+        # overlay-dual-declaration.test.ts verifies the shipped CSS under .next/static/css; it
+        # is a compiled-bundle test, so the bundle must exist before the generic npm test step.
+        run: npm run build
+
       - name: Gate unit tests (check-stories gate correctness)
         run: npm test
 

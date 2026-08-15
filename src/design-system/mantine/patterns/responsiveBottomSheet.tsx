@@ -63,7 +63,13 @@ export function useResponsiveDropdown() {
 // never duplicate. Justified raw sizes: 2.5rem × 0.25rem P0 exemption.
 export function DragHandle() {
   return (
-    <Box style={{ display: 'flex', justifyContent: 'center', paddingBottom: '0.5rem' }}> // design-tokens-allow: : '0.5rem' — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists
+    <Box
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingBottom: '0.5rem', // design-tokens-allow: : '0.5rem' — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists
+      }}
+    >
       <Box
         style={{
           width: '2.5rem', // design-tokens-allow: : '2.5rem' — canonical drag-handle geometry — non-tokenized affordance per the original allowlist reason, no project token represents this fixed swipe-affordance size

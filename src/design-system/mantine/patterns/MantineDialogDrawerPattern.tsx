@@ -77,7 +77,13 @@ export function MantineDialogDrawerPattern({
           title={
             <Box>
               {/* Visible drag handle — swipe affordance */}
-              <Box style={{ display: 'flex', justifyContent: 'center', paddingBottom: '0.5rem' }}> // design-tokens-allow: : '0.5rem' — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists
+              <Box
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  paddingBottom: '0.5rem', // design-tokens-allow: : '0.5rem' — genuine N1, reserved Task 734, not remediated here per Task 717 R7; an exact project spacing token exists
+                }}
+              >
                 <Box
                   style={{
                     width: '2.5rem', // design-tokens-allow: : '2.5rem' — drag-handle geometry, matches the canonical DragHandle definition in responsiveBottomSheet.tsx — non-tokenized affordance per the original allowlist reason

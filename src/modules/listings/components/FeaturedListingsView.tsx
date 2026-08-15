@@ -48,8 +48,7 @@ export function FeaturedListingsView({ listings, loading, rates, displayCurrency
       justify="space-between"
       wrap="nowrap"
       mb="xl"
-      style={{ flexDirection: 'column', alignItems: 'flex-start' }}
-      styles={{ root: { '@media (min-width: 40em)': { flexDirection: 'row', alignItems: 'center' } } }}
+      className={styles.headerRow}
     >
       <Title order={2} fw={700} fz={SECTION_HEADING_FZ}>{t('featured')}</Title>
       {!loading && listings.length > 0 && (

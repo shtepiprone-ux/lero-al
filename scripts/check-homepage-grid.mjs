@@ -119,20 +119,39 @@ const GAP_STORIES = [
   { id: 'system-latestlistings--loading', component: 'Latest', branch: 'loading' },
 ];
 
-// ── I-C — transcribed verbatim from scripts/task668-qa-header-geometry.mjs. ──
+// ── I-C — Featured header geometry. Task 724R deliberately made the header stack at
+// <640px so its title and View all action retain usable inline space on narrow screens. The
+// original Task 668 probe predates that responsive contract and incorrectly required the wide
+// row at 320px. Keep the same wide-row assertion from 640px upward, and assert the intentional
+// compact column branch at 320px. ──
 
 const HEADER_STORY_ID = 'system-featuredlistings--default';
 const HEADER_WIDTHS = [320, 640, 1440];
 const RECT_EPSILON_PX = 0.5;
 const HEADER_EXPECTED_RULES = {
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  flexWrap: 'nowrap',
-  marginBottom: '24px',
-  columnGap: '16px',
+  compact: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    flexWrap: 'nowrap',
+    marginBottom: '24px',
+    columnGap: '16px',
+  },
+  wide: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    marginBottom: '24px',
+    columnGap: '16px',
+  },
 };
+
+function headerExpectedRules(width) {
+  return width < 640 ? HEADER_EXPECTED_RULES.compact : HEADER_EXPECTED_RULES.wide;
+}
 
 // ── Static server (shared boilerplate, verbatim pattern from all three source probes). ──
 
@@ -383,7 +402,7 @@ function rectDelta(a, b) {
 }
 function maxOf(delta) { return Math.max(delta.x, delta.y, delta.width, delta.height); }
 
-function evaluateHeaderRow({ geometry, error }) {
+function evaluateHeaderRow({ geometry, error, width }) {
   const row = { pass: true, reasons: [] };
   if (error) {
     row.pass = false;
@@ -403,7 +422,8 @@ function evaluateHeaderRow({ geometry, error }) {
     row.reasons.push(`synthetic probe ineffective: columnGap=${synthetic.computed.columnGap} expected=0px`);
   }
 
-  for (const [prop, expected] of Object.entries(HEADER_EXPECTED_RULES)) {
+  const expectedRules = headerExpectedRules(width);
+  for (const [prop, expected] of Object.entries(expectedRules)) {
     if (live.computed[prop] !== expected) {
       row.pass = false;
       row.reasons.push(`computed ${prop}=${live.computed[prop]} expected=${expected}`);
@@ -422,9 +442,14 @@ function evaluateHeaderRow({ geometry, error }) {
   row.liveOverflowPx = liveOverflow;
   row.syntheticOverflowPx = syntheticOverflow;
 
-  if (groupDeltaMax > RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`Group rect delta ${groupDeltaMax.toFixed(2)}px > ${RECT_EPSILON_PX}px`); }
-  if (titleDeltaMax > RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`Title rect delta ${titleDeltaMax.toFixed(2)}px > ${RECT_EPSILON_PX}px`); }
-  if (linkDeltaMax > RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`ViewAllLink rect delta ${linkDeltaMax.toFixed(2)}px > ${RECT_EPSILON_PX}px`); }
+  // In the intentional compact column branch, setting the synthetic gap to 0 necessarily moves
+  // the second flex child vertically. The probe still proves it can change `--group-gap`, but
+  // zero geometry delta is only a meaningful wide-row invariant.
+  if (width >= 640) {
+    if (groupDeltaMax > RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`Group rect delta ${groupDeltaMax.toFixed(2)}px > ${RECT_EPSILON_PX}px`); }
+    if (titleDeltaMax > RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`Title rect delta ${titleDeltaMax.toFixed(2)}px > ${RECT_EPSILON_PX}px`); }
+    if (linkDeltaMax > RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`ViewAllLink rect delta ${linkDeltaMax.toFixed(2)}px > ${RECT_EPSILON_PX}px`); }
+  }
   if (liveOverflow > syntheticOverflow + RECT_EPSILON_PX) { row.pass = false; row.reasons.push(`worse overflow with real gap than synthetic gap:0 (${liveOverflow.toFixed(2)}px > ${syntheticOverflow.toFixed(2)}px)`); }
 
   return row;
@@ -597,9 +622,9 @@ async function runHeaderMatrix(browser, baseUrl, { onlyWidths, onlyLocales, plan
           { plantGapPx: plantGapPx ?? null }
         );
         if (outcome.renderFailed) {
-          Object.assign(row, evaluateHeaderRow({ error: outcome.error }));
+          Object.assign(row, evaluateHeaderRow({ error: outcome.error, width }));
         } else {
-          Object.assign(row, evaluateHeaderRow({ geometry: outcome.result }));
+          Object.assign(row, evaluateHeaderRow({ geometry: outcome.result, width }));
         }
       } catch (err) {
         row.pass = false;
